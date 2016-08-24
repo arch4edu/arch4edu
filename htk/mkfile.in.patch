@@ -1,0 +1,10 @@
+--- src/htk/HLMTools/Makefile.in	2009-03-11 11:07:18.000000000 +0100
++++ Makefile.in.hlmtools	2014-04-02 15:42:04.257826690 +0200
+@@ -74,6 +74,6 @@
+ 	for program in $(PROGS) ; do $(INSTALL) -m 755 $${program}@BINARY_EXTENSION@ $(bindir) ; done
+ 
+ mkinstalldir:
+-        if [ ! -d $(bindir) -a X_@TRADHTK@ = X_yes ] ; then mkdir -p $(bindir) ; fi
++	if [ ! -d $(bindir) -a X_@TRADHTK@ = X_yes ] ; then mkdir -p $(bindir) ; fi
+ 
+ .PHONY: all strip clean cleanup distclean install mkinstalldir

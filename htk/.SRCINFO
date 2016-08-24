@@ -1,0 +1,17 @@
+pkgbase = htk
+	pkgdesc = A portable toolkit primarily used for speech recognition research
+	pkgver = 3.4.1
+	pkgrel = 3
+	url = http://htk.eng.cam.ac.uk/
+	arch = x86_64
+	license = custom: Proprietary
+	makedepends = wget
+	makedepends = gcc-multilib
+	depends = lib32-glibc
+	depends = lib32-libx11
+	options = !makeflags
+	source = mkfile.in.patch
+	md5sums = 10eec9a139acea719c0b9f451d8f7807
+
+pkgname = htk
+
