@@ -1,0 +1,18 @@
+post_install() {
+    echo "
+    >>> Copy the /usr/share/vim/vimfiles/eclim/resources
+    >>> directory to ~/.eclim/resources
+    "
+
+    # rebuild the vim documentation tags
+    vim -e -u NONE --cmd "helptags /usr/share/vim/vimfiles/eclim/doc/" --cmd quit
+}
+post_upgrade() {
+    echo "
+    >>> Copy the /usr/share/vim/vimfiles/eclim/resources
+    >>> directory to ~/.eclim/resources
+    "
+}
+post_remove() {
+    /bin/true
+}
