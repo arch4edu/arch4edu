@@ -1,3 +1,4 @@
+# Maintainer: Daniel Milde <daniel at milde dot cz>
 pkgname=python2-leveldb
 _pkgname=leveldb
 pkgver=0.193
