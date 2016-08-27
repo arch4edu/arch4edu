@@ -1,5 +1,5 @@
 pkgname=devtools-arch4edu
-pkgver=5.55a12a7
+pkgver=6.5223128
 pkgrel=1
 pkgdesc='Tools for Arch Linux Chinese Community package maintainers'
 arch=('any')
