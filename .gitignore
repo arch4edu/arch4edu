@@ -27,3 +27,6 @@ trunk/
 old_ver.txt
 new_ver.txt
 linux.install.pkg
+matlab*/*.iso
+matlab*/*.fik
+matlab*/*.lic
