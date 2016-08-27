@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Categories=Development;Science;Math;Database;Java;
+Name=Weka
+Comment=A data mining and machine learning toolkit
+Comment[de]=Werkzeuge für Datenfilterung und Lernen durch Maschine
+Comment[en]=A data mining and machine learning toolkit
+Comment[es]=Herramientas para minería de datos y aprendizaje de máquinas
+Comment[fr]=Outils pour l'extraction de connaissances a partir des données
+Comment[it]=Attrezzi per l'estrazione di dati ed imparare di macchina
+Comment[pt]=Ferramentas para a extração de dados e a aprendizagem de máquina
+Icon=weka.png
+TryExec=/usr/bin/weka
+Exec=/usr/bin/weka
+URL=http://www.cs.waikato.ac.nz/ml/weka/
+StartupNotify=false
+Terminal=false
+Type=Application
