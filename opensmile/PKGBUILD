@@ -20,7 +20,7 @@ build() {
   ./configure \
     --prefix="/usr" --with-portaudio="yes" \
     CXXFLAGS="-O2 -mfpmath=sse -march=native -Wno-narrowing"
-  make
+  make -j1
 }
 
 package() {
