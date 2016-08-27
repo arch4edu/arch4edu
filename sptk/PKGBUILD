@@ -2,7 +2,7 @@
 # Contributor: Sebastien <sebcactus@gmail.com>
 
 pkgname=sptk
-pkgver=3.8
+pkgver=3.9
 pkgrel=1
 pkgdesc="A suite of speech signal processing tools."
 arch=('any')
@@ -12,7 +12,7 @@ depends=('glibc')
 makedepends=('tcsh')
 optdepends=('libx11: for XY-plotter' 'tcsh: for helper scripts')
 source=(http://downloads.sourceforge.net/sp-tk/SPTK-$pkgver.tar.gz ${pkgname}.sh)
-sha256sums=('028d6b3230bee73530f3d67d64eafa32cf23eaa987545975d260d0aaf6953f2b'
+sha256sums=('94a8c4e9a43b853a5ce6693aa259c62af15bf641346d991e2b5c5d88705184ce'
             'b5afaf60414297bd359f73dbe14ae2a3608f9c52301cc5801c9708ceb710d416')
 build()
 {
