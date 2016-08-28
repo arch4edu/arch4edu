@@ -1,10 +1,10 @@
 # Maintainer: Adria Arrufat (archdria) <adria.arrufat+AUR@protonmail.ch>
 # Contributor: Vladislav Odobesku <positivcheg94@gmail.com>
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
-# Contributor: Jinbei Li (Petron) <i@jingbei.li>
+# Contributor: Jingbei Li (Petron) <i@jingbei.li>
 
 pkgname=python-tensorflow-git
-pkgver=0.10.0rc0.r1017.gf9ae4fe
+pkgver=0.10.0rc0.r1018.g4c49dbe
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs."
