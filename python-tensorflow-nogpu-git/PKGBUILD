@@ -3,18 +3,18 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 # Contributor: Jinbei Li (Petron) <i@jingbei.li>
 
-pkgname=python-tensorflow-git
-pkgver=0.10.0rc0.r778.g6d04d60
+pkgname=python-tensorflow-nogpu-git
+pkgver=0.10.0rc0.r1018.g4c49dbe
 pkgrel=1
 
-pkgdesc="Open source software library for numerical computation using data flow graphs."
+pkgdesc="Open source software library for numerical computation using data flow graphs.(no GPU support)"
 url="https://tensorflow.org/"
 license=('Apache2')
 
 arch=('i686' 'x86_64')
 
 provides=('python-tensorflow')
-conflicts=('python-tensorflow')
+conflicts=('python-tensorflow' "python-tensorflow-git" "python-tensorflow-gpu5.2-git")
 depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf3')
 makedepends=('git' 'python-pip' 'bazel' 'rsync' 'gcc5')
 optdepends=('cuda: GPU support'
@@ -26,6 +26,7 @@ md5sums=('SKIP'
          'SKIP'
          '3db030a479228df99419145f77571981')
 
+optdepends=()
 pkgver() {
   cd "${srcdir}/tensorflow"
   git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//'
@@ -76,7 +77,8 @@ build() {
 
   cd "${srcdir}/tensorflow"
 
-  PYTHON_BIN_PATH=/usr/bin/python ./configure
+  export TF_NEED_GCP=0
+  echo -e "/usr/lib/python3.5/site-packages"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
   bazel build -c opt ${_build_opts} //tensorflow/tools/pip_package:build_pip_package
 
   msg2 "Building pip package..."
