@@ -1,9 +1,9 @@
 # Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
 pkgdesc='A powerful (and blazing fast) argument checker and function overloading system for Lua or LuaJIT'
 pkgname='torch7-argcheck-git'
-pkgver=r131.3cab0ae
+pkgver=r139.b3b32c0
 pkgrel=1
-makedepends=('cmake')
+makedepends=('cmake' 'git')
 depends=('torch7-git>=r819')
 conflicts=('torch7-argcheck')
 provides=('torch7-argcheck')
