@@ -1,6 +1,6 @@
 # Maintainer: rmanne <rahul_manne@hotmail.com>
 pkgname=praat-git
-pkgver=r491.f9a62ee
+pkgver=r1059.51c7b7b
 pkgver() {
     cd "${pkgname%-git}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
@@ -10,8 +10,8 @@ pkgdesc="A tool for 'Doing Phonetics by computer'"
 arch=('x86_64' 'i686')
 url="http://www.fon.hum.uva.nl/praat/"
 license=('GPL')
-depends=('alsa-lib' 'gtk2')
-makedepends=('pkg-config')
+depends=('gtk2' 'alsa-lib')
+makedepends=('git' 'pkg-config' 'gtk2' 'alsa-lib')
 optdepends=('ttf-sil-fonts')
 provides=('praat')
 conflicts=('praat')
