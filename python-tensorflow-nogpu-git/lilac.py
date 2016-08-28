@@ -28,14 +28,18 @@ def pre_build():
 
   for line in edit_file('PKGBUILD'):
     # edit PKGBUILD
-    if 'pkgname' in line:
+    if 'pkgname=' in line:
         print('pkgname=python-tensorflow-nogpu-git')
     elif 'pkgdesc' in line:
-        print(line+'(no GPU support)'))
+        print(line.replace('."','.(no GPU support)"'))
+    elif 'pkgver()' in line:
+        print('optdepends=()')
+        print(line)
     elif 'conflicts' in line:
         print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-gpu5.2-git")'))
     elif './configure' in line:
-        print(line.replace('./configure','echo -e "/usr/lib/python3.5/site-packages"| ./configure'))
+        print('  export TF_NEED_GCP=0')
+        print('  echo -e "/usr/lib/python3.5/site-packages"|'+line)
     else:
         print(line)
 
