@@ -1,8 +1,8 @@
 # Maintainer: Kevin Slagle <kjslag at gmail dot com>
 
 pkgname='loadcaffe-git'
-pkgver=r98.b6b436a
-pkgrel=2
+pkgver=r102.9be65cf
+pkgrel=1
 pkgdesc='Load Caffe networks in Torch7'
 arch=('x86_64' 'i686')
 url='https://github.com/szagoruyko/loadcaffe'
