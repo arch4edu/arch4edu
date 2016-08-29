@@ -1,10 +1,10 @@
-# Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
-pkgdesc='Neural networks package for Torch7'
+# Maintainer: Jingbei Li <i@jingbei.li>
+pkgdesc='A CUDA backend for Torch7'
 pkgname='torch7-cutorch-git'
-pkgver=r521.7d2a5d5
+pkgver=r603.1c2e80c
 pkgrel=1
 makedepends=('cmake' 'git')
-depends=('torch7-git>=r819')
+depends=('torch7-git>=r819' 'cuda')
 conflicts=('torch7-cutorch')
 provides=('torch7-cutorch')
 arch=('x86_64' 'i686')
@@ -24,13 +24,15 @@ pkgver () {
 
 build () {
 	cd "${pkgname}"
+	export CC=gcc-5
+	export CXX=g++-5
 	cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-	make -j32
+	make
 }
 
 package () {
 	cd "${pkgname}"
-	make DESTDIR="${pkgdir}" install -j32
+	make DESTDIR="${pkgdir}" install
 
 	# Move Lua C module
 	mkdir -p "${pkgdir}/usr/lib/lua/5.1"
