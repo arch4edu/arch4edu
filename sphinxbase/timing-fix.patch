@@ -1,0 +1,23 @@
+commit a1d18a46aeec2022e64fa1b11b08b5721bc9f98f
+Author: Mladen Milinkovic <max@smoothware.net>
+Date:   Fri May 20 04:45:53 2016 +0200
+
+    fe_process_frames_ext() wasn't updating fe sample_counter in some cases
+    
+    When there wasn't enough samples in buffer to fill one frame,
+    sample_counter wasn't updated with samples that were stored in overflow
+    buffer.
+
+diff --git a/src/libsphinxbase/fe/fe_interface.c b/src/libsphinxbase/fe/fe_interface.c
+index 1cc3566..d090b6e 100644
+--- a/src/libsphinxbase/fe/fe_interface.c
++++ b/src/libsphinxbase/fe/fe_interface.c
+@@ -471,6 +471,8 @@ fe_process_frames_ext(fe_t *fe,
+             memcpy(fe->overflow_samps + fe->num_overflow_samps,
+                    *inout_spch, *inout_nsamps * (sizeof(int16)));
+             fe->num_overflow_samps += *inout_nsamps;
++            /* Update global sample counter with number of samples */
++            fe->sample_counter += *inout_nsamps;
+             /* Update input-output pointers and counters. */
+             *inout_spch += *inout_nsamps;
+             *inout_nsamps = 0;
