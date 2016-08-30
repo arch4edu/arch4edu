@@ -2,7 +2,7 @@
 pkgdesc='Neural networks package for Torch7'
 pkgname='torch7-image-git'
 pkgver=1.0.1.0.r271.ga7af1af
-pkgrel=1
+pkgrel=2
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819' 'libjpeg-turbo' 'libpng')
 conflicts=('torch7-image')
