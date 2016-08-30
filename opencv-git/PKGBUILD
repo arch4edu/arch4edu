@@ -1,0 +1,90 @@
+# $Id: PKGBUILD 266135 2016-04-24 17:36:21Z bpiotrowski $
+# Maintainer: Ray Rashif <schiv@archlinux.org>
+# Contributor: Tobias Powalowski <tpowa@archlinux.org>
+
+pkgname=opencv-git
+_pkgname=opencv
+pkgver=3.1.0.r1238.g4e8f892
+pkgrel=1
+pkgdesc="Open Source Computer Vision Library"
+arch=('i686' 'x86_64')
+provides=('opencv')
+conflicts=('opencv')
+license=('BSD')
+url="http://opencv.org/"
+depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'gtkglext' 'hdf5-cpp-fortran' 'gcc5')
+makedepends=('cmake' 'python-numpy' 'python2-numpy' 'mesa' 'eigen' 'git')
+optdepends=('opencv-samples'
+            'eigen'
+            'libcl: For coding with OpenCL'
+            'python-numpy: Python 3 interface'
+            'python2-numpy: Python 2 interface')
+source=("git+https://github.com/Itseez/opencv"
+        "git+https://github.com/Itseez/opencv_contrib")
+md5sums=('SKIP'
+         'SKIP')
+
+_cmakeopts=('-D WITH_OPENCL=ON'
+            '-D WITH_OPENGL=ON'
+            '-D WITH_TBB=ON'
+            '-D WITH_XINE=ON'
+            '-D WITH_GSTREAMER=OFF'
+            '-D BUILD_WITH_DEBUG_INFO=OFF'
+            '-D BUILD_TESTS=OFF'
+            '-D BUILD_PERF_TESTS=OFF'
+            '-D BUILD_EXAMPLES=ON'
+            '-D INSTALL_C_EXAMPLES=ON'
+            '-D INSTALL_PYTHON_EXAMPLES=ON'
+            '-D CMAKE_BUILD_TYPE=Release'
+            '-D CMAKE_INSTALL_PREFIX=/usr'
+            '-D CMAKE_SKIP_RPATH=ON'
+            #'-D WITH_IPP=ON'
+            #'-D INSTALL_CREATE_DISTRIB=ON'
+            '-D CMAKE_CXX_COMPILER=g++-5'
+            '-D CMAKE_C_COMPILER=gcc-5'
+            )
+
+# SSE only available from Pentium 3 onwards (i686 is way older)
+[[ "$CARCH" = 'i686' ]] && \
+  _cmakeopts+=('-D ENABLE_SSE=OFF'
+               '-D ENABLE_SSE2=OFF'
+               '-D ENABLE_SSE3=OFF')
+
+pkgver() {
+  cd "${srcdir}/$_pkgname"
+  git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "$srcdir/$_pkgname"
+
+  cmake ${_cmakeopts[@]} \
+    -DOPENCV_EXTRA_MODULES_PATH="$srcdir/opencv_contrib/modules" \
+    .
+
+  make
+}
+
+package() {
+  options=('staticlibs')
+
+  cd "$srcdir/$_pkgname"
+
+  make DESTDIR="$pkgdir" install
+
+  # install license file
+  install -Dm644 "$srcdir/$_pkgname/LICENSE" \
+    "$pkgdir/usr/share/licenses/$_pkgname/LICENSE"
+
+  cd "$pkgdir/usr/share"
+
+  # separate samples package; also be -R friendly
+  if [[ -d OpenCV/samples ]]; then
+    mv OpenCV/samples "$srcdir/$_pkgname-samples"
+    mv OpenCV $_pkgname # otherwise folder naming is inconsistent
+  elif [[ ! -d OpenCV ]]; then
+    warning "Directory naming issue; samples package may not be built!"
+  fi
+}
+
+# vim:set ts=2 sw=2 et:
