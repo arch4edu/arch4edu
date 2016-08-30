@@ -1,8 +1,8 @@
-# Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
-pkgdesc='Neural networks package for Torch7'
+# Maintainer: Jingbei Li <i@jingbei.li>
+pkgdesc='A numeric optimization package for Torch.'
 pkgname='torch7-optim-git'
 pkgver=1.0.3.0.r214.gafd54e6
-pkgrel=2
+pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819')
 conflicts=('torch7-optim')
