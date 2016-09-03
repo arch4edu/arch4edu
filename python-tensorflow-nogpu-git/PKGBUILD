@@ -4,7 +4,7 @@
 # Contributor: Jinbei Li (Petron) <i@jingbei.li>
 
 pkgname=python-tensorflow-nogpu-git
-pkgver=0.10.0rc0.r1144.g461caa8
+pkgver=0.10.0rc0.r1152.g8cb0558
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(no GPU support)"
@@ -78,6 +78,8 @@ build() {
   cd "${srcdir}/tensorflow"
 
   export TF_NEED_GCP=0
+  export CC=gcc-5
+  export CXX=g++-5
   echo -e "/usr/lib/python3.5/site-packages"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
   bazel build -c opt ${_build_opts} //tensorflow/tools/pip_package:build_pip_package
 
