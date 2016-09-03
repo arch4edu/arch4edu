@@ -39,6 +39,8 @@ def pre_build():
         print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-gpu5.2-git")'))
     elif './configure' in line:
         print('  export TF_NEED_GCP=0')
+        print('  export CC=gcc-5')
+        print('  export CXX=g++-5')
         print('  echo -e "/usr/lib/python3.5/site-packages"|'+line)
     else:
         print(line)

@@ -43,6 +43,8 @@ def pre_build():
         print('    export TF_CUDA_COMPUTE_CAPABILITIES=5.2')
     elif './configure' in line:
         print('  export TF_NEED_GCP=0')
+        print('  export CC=gcc-5')
+        print('  export CXX=g++-5')
         print('  echo -e "/usr/lib/python3.5/site-packages"|'+line)
     else:
         print(line)
