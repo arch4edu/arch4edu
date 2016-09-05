@@ -4,7 +4,7 @@
 # Contributor: Jinbei Li (Petron) <i@jingbei.li>
 
 pkgname=python-tensorflow-gpu5.2-git
-pkgver=0.10.0rc0.r1157.g68a74ea
+pkgver=0.10.0rc0.r1158.g2ab7e63
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(support NVIDIA GPUs with Compute Capability 5.2)"
