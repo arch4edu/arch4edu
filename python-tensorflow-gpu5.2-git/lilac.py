@@ -38,7 +38,7 @@ def pre_build():
         print('optdepends=()')
         print(line)
     elif 'conflicts' in line:
-        print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-nogpu-git")'))
+        print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-nogpu-git" "python-tensorflow-gpu6.1-git")'))
     elif 'TF_CUDA_COMPUTE_CAPABILITIES' in line:
         print('    export TF_CUDA_COMPUTE_CAPABILITIES=5.2')
     elif './configure' in line:

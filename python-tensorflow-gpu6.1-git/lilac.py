@@ -29,14 +29,18 @@ def pre_build():
   for line in edit_file('PKGBUILD'):
     # edit PKGBUILD
     if 'pkgname=' in line:
-        print('pkgname=python-tensorflow-nogpu-git')
+        print('pkgname=python-tensorflow-gpu6.1-git')
     elif 'pkgdesc' in line:
-        print(line.replace('."','.(no GPU support)"'))
+        print(line.replace('."','.(support NVIDIA GPUs with Compute Capability 6.1)"'))
+    elif 'depends' in line:
+        print(line.replace(')',' "cuda8" "cudnn-cuda8")'))
     elif 'pkgver()' in line:
         print('optdepends=()')
         print(line)
     elif 'conflicts' in line:
-        print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-gpu5.2-git" "python-tensorflow-gpu6.1-git")'))
+        print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-nogpu-git" "python-tensorflow-gpu5.2-git")'))
+    elif 'TF_CUDA_COMPUTE_CAPABILITIES' in line:
+        print('    export TF_CUDA_COMPUTE_CAPABILITIES=6.1')
     elif './configure' in line:
         print('  export TF_NEED_GCP=0')
         print('  export CC=gcc-5')
