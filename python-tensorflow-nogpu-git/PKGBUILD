@@ -4,7 +4,7 @@
 # Contributor: Jinbei Li (Petron) <i@jingbei.li>
 
 pkgname=python-tensorflow-nogpu-git
-pkgver=0.10.0rc0.r1158.g2ab7e63
+pkgver=0.10.0rc0.r1162.g90581c5
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(no GPU support)"
@@ -14,7 +14,7 @@ license=('Apache2')
 arch=('i686' 'x86_64')
 
 provides=('python-tensorflow')
-conflicts=('python-tensorflow' "python-tensorflow-git" "python-tensorflow-gpu5.2-git")
+conflicts=('python-tensorflow' "python-tensorflow-git" "python-tensorflow-gpu5.2-git" "python-tensorflow-gpu6.1-git")
 depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf3')
 makedepends=('git' 'python-pip' 'bazel' 'rsync' 'gcc5')
 optdepends=('cuda: GPU support'
