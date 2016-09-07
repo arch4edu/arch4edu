@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgdesc='A numeric optimization package for Torch.'
 pkgname='torch7-optim-git'
-pkgver=1.0.3.0.r214.gafd54e6
+pkgver=1.0.3.0.r217.g0154acd
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819')
