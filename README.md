@@ -4,7 +4,7 @@ Making your Archlinux better for researching and developing. (x86_64 only)
 
 ### Introduction
 
-Arch4edu is a community repository for Archlinux that strives to provide the lastest versions of most software used by colleague students.
+Arch4edu is a community repository for Archlinux that strives to provide the lastest versions of most softwares used by colleague students.
 
 ### Usage and more information
 Please visit the [wiki](../../wiki) site for usage and more information.
