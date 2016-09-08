@@ -4,7 +4,7 @@
 # Contributor: Jinbei Li (Petron) <i@jingbei.li>
 
 pkgname=python-tensorflow-gpu6.1-git
-pkgver=0.10.0rc0.r1279.gf71cc62
+pkgver=0.10.0rc0.r1282.g2a6d751
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(support NVIDIA GPUs with Compute Capability 6.1)"
