@@ -12,6 +12,7 @@ pkgdesc="A general multi-lingual speech synthesis system (built with gcc5 and ad
 arch=(i686 x86_64)
 url="http://www.cstr.ed.ac.uk/projects/festival/"
 license=(BSD GPL custom)
+depends=(perl alsa-lib gcc5)
 provides=('festival')
 conflicts=('festival')
 options=('!makeflags')
