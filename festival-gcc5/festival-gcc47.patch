@@ -1,0 +1,59 @@
+This patch allows compiling of festival on gcc 4.7 and clang 3.0.
+Both these compilers are stricter of unqualified method calls in
+templates than previous versions of gcc.
+This patch should not alter the code in a substantive way as it
+only qualifies method calls which were assumed in previous compilers.
+No copyright subsists in this patch as it is too trivial.
+
+Author: Peter Drysdale <drysdalepete@gmail.com>
+
+--- speech-tools-2.1~release.orig/base_class/EST_TSimpleVector.cc
++++ speech_tools/base_class/EST_TSimpleVector.cc
+@@ -43,5 +43,6 @@
+ #include "EST_TSimpleVector.h"
+ #include "EST_matrix_support.h"
+ #include <fstream>
++#include <cstring>
+ #include "EST_cutils.h"
+ #include <string.h>
+
+ template<class T> void EST_TSimpleVector<T>::copy(const EST_TSimpleVector<T> &a)
+@@ -52,7 +53,7 @@ template<class T> void EST_TSimpleVector
+   if (this->p_column_step==1 && a.p_column_step==1)
+     {
+     resize(a.n(), FALSE);
+-    memcpy((void *)(this->p_memory), (const void *)(a.p_memory), this->n() * sizeof(T));
++    std::memcpy((void *)(this->p_memory), (const void *)(a.p_memory), this->n() * sizeof(T));
+     }
+ else
+   ((EST_TVector<T> *)this)->copy(a);
+@@ -141,7 +142,7 @@ template<class T> EST_TSimpleVector<T> &
+ template<class T> void EST_TSimpleVector<T>::zero()
+ {
+   if (this->p_column_step==1)
+-    memset((void *)(this->p_memory), 0, this->n() * sizeof(T));
++    std::memset((void *)(this->p_memory), 0, this->n() * sizeof(T));
+   else
+     ((EST_TVector<T> *)this)->fill(*this->def_val);
+ }
+
+--- speech-tools-2.1~release.orig/base_class/EST_TSimpleMatrix.cc
++++ speech_tools/base_class/EST_TSimpleMatrix.cc
+@@ -44,5 +44,6 @@
+ #include "EST_TVector.h"
+ #include <fstream>
+ #include <iostream>
++#include <cstring>
+ #include "EST_cutils.h"
+ #include <string.h>
+
+ template<class T>
+@@ -52,7 +53,7 @@ void EST_TSimpleMatrix<T>::copy_data(con
+ {
+
+   if (!a.p_sub_matrix && !this->p_sub_matrix)
+-    memcpy((void *)&this->a_no_check(0,0),
++    std::memcpy((void *)&this->a_no_check(0,0),
+ 	   (const void *)&a.a_no_check(0,0),
+ 	   this->num_rows()*this->num_columns()*sizeof(T)
+ 	   );
