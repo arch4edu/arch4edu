@@ -1,8 +1,8 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgdesc='A CUDA backend for Torch7'
 pkgname='torch7-cutorch-git'
-pkgver=r607.04c3dbc
-pkgrel=2
+pkgver=r617.d59eb52
+pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819' 'cuda')
 conflicts=('torch7-cutorch')
