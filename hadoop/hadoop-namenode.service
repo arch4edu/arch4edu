@@ -1,0 +1,12 @@
+[Unit]
+Description=Hadoop Namenode
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/conf.d/hadoop
+ExecStart=/usr/bin/hadoop namenode
+User=hadoop
+Group=hadoop
+
+[Install]
+WantedBy=multi-user.target

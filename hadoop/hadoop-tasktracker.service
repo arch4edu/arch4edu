@@ -1,0 +1,13 @@
+[Unit]
+Description=Hadoop Tasktracker
+Requires=hadoop-jobtracker.service
+After=hadoop-jobtracker.service
+
+[Service]
+EnvironmentFile=/etc/conf.d/hadoop
+ExecStart=/usr/bin/hadoop tasktracker
+User=hadoop
+Group=hadoop
+
+[Install]
+WantedBy=multi-user.target
