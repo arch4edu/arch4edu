@@ -5,6 +5,7 @@
 ## The default installation behavior is to install all licensed products whether or not they are available in the iso file. To install only a subset of licensed products either provide a $_products array or set $_partialinstall and remove unwanted entries from the provided $_products array. To perform a network install set $_networkinstall.
 
 pkgname=matlab-r2015b-thu
+_pkgname=matlab
 pkgver=08.06.00
 pkgrel=1
 pkgdesc='A high-level language for numerical computation and visualization'
@@ -32,26 +33,26 @@ depends=('gconf'
          'xerces-c')
 optdepends=('gcc47: For MEX support'
             'gcc47-fortran: For MEX support')
-source=("${pkgname}.iso"
-        "${pkgname}.fik")
+source=("${_pkgname}.iso"
+        "${_pkgname}.fik")
 md5sums=('SKIP'
          'SKIP')
 
 prepare() {
   msg2 'Creating desktop file'
-  gendesk -f -n --pkgname "${pkgname}" --pkgdesc "${pkgdesc}" --categories "Development;Education;Science;Mathematics;IDE" > /dev/null
-  sed -i "/^Exec=/ s,$, -desktop," "${srcdir}/${pkgname}.desktop"
+  gendesk -f -n --pkgname "${_pkgname}" --pkgdesc "${pkgdesc}" --categories "Development;Education;Science;Mathematics;IDE" > /dev/null
+  sed -i "/^Exec=/ s,$, -desktop," "${srcdir}/${_pkgname}.desktop"
 
   msg2 'Extracting file installation key'
-  _fik=$(grep -o [0-9-]* ${pkgname}.fik)
+  _fik=$(grep -o [0-9-]* ${_pkgname}.fik)
 
   msg2 'Modifying the installer settings'
-  sed -i "s,^# destinationFolder=,destinationFolder=${pkgdir}/opt/tmw/${pkgname}/," "${srcdir}/installer_input.txt"
+  sed -i "s,^# destinationFolder=,destinationFolder=${pkgdir}/opt/tmw/${_pkgname}/," "${srcdir}/installer_input.txt"
   sed -i "s,^# agreeToLicense=,agreeToLicense=yes," "${srcdir}/installer_input.txt"
   sed -i "s,^# mode=,mode=silent," "${srcdir}/installer_input.txt"
   sed -i "s,^# fileInstallationKey=,fileInstallationKey=${_fik}," "${srcdir}/installer_input.txt"
   if [ ! -z ${_networkinstall+isSet} ]; then
-    sed -i "s,^# licensePath=,licensePath=${srcdir}/${pkgname}.lic," "${srcdir}/installer_input.txt"
+    sed -i "s,^# licensePath=,licensePath=${srcdir}/${_pkgname}.lic," "${srcdir}/installer_input.txt"
   fi
   if [ ! -z ${_products+isSet} ]; then
     msg2 'Building a package with a subset of the licensed products.'
@@ -66,35 +67,34 @@ package() {
   "${srcdir}/install" -t -inputFile "${srcdir}/installer_input.txt" -mode silent &> /dev/null
 
   msg2 'Installing license'
-  install -D -m644 "${pkgdir}/opt/tmw/${pkgname}/license_agreement.txt" "${pkgdir}/usr/share/licenses/tmw/${pkgname}/LICENSE"
+  install -D -m644 "${pkgdir}/opt/tmw/${_pkgname}/license_agreement.txt" "${pkgdir}/usr/share/licenses/tmw/${_pkgname}/LICENSE"
 
   msg2 'Creating links for license.lic'
-  ln -s "/etc/tmw/${pkgname}/licenses/" "${pkgdir}/opt/tmw/${pkgname}/licenses"
+  ln -s "/etc/tmw/${_pkgname}/licenses/" "${pkgdir}/opt/tmw/${_pkgname}/licenses"
 
   msg2 'Creating links for executables'
-  _release=${pkgname#*-}
   install -d -m755 "${pkgdir}/usr/bin/"
   for _executable in deploytool matlab mbuild mcc mex; do
-    ln -s "/opt/tmw/${pkgname}/bin/${_executable}" "${pkgdir}/usr/bin/${_executable}-${_release}"
+    ln -s "/opt/tmw/${_pkgname}/bin/${_executable}" "${pkgdir}/usr/bin/${_executable}"
   done
 
   msg2 'Installing desktop files'
-  install -D -m644 "${pkgname}.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
-  install -D -m644 "${pkgdir}/opt/tmw/${pkgname}/help/matlab/matlab_env/matlab_desktop_icon.png" "${pkgdir}/usr/share/pixmaps/${pkgname}.png"
+  install -D -m644 "${_pkgname}.desktop" "${pkgdir}/usr/share/applications/${_pkgname}.desktop"
+  install -D -m644 "${pkgdir}/opt/tmw/${_pkgname}/help/matlab/matlab_env/matlab_desktop_icon.png" "${pkgdir}/usr/share/pixmaps/${_pkgname}.png"
 
   msg2 'Configuring mex options'
-  sed -i "s#CC='gcc'#CC='gcc-4.7'#g" "${pkgdir}/opt/tmw/${pkgname}/bin/mexopts.sh"
-  sed -i "s#CXX='g++'#CXX='g++-4.7'#g" "${pkgdir}/opt/tmw/${pkgname}/bin/mexopts.sh"
-  sed -i "s#FC='gfortran'#FC='gfortran-4.7'#g" "${pkgdir}/opt/tmw/${pkgname}/bin/mexopts.sh"
+  sed -i "s#CC='gcc'#CC='gcc-4.7'#g" "${pkgdir}/opt/tmw/${_pkgname}/bin/mexopts.sh"
+  sed -i "s#CXX='g++'#CXX='g++-4.7'#g" "${pkgdir}/opt/tmw/${_pkgname}/bin/mexopts.sh"
+  sed -i "s#FC='gfortran'#FC='gfortran-4.7'#g" "${pkgdir}/opt/tmw/${_pkgname}/bin/mexopts.sh"
 
   ## See $MATLABROOT/sys/os/glnxa64/README.libstdc++
   msg2 'Removing unused library files'
-  rm ${pkgdir}/opt/tmw/${pkgname}/sys/os/glnxa64/{libstdc++.so.6.0.17,libstdc++.so.6,libgcc_s.so.1,libgfortran.so.3.0.0,libgfortran.so.3,libquadmath.so.0.0.0,libquadmath.so.0}
+  rm ${pkgdir}/opt/tmw/${_pkgname}/sys/os/glnxa64/{libstdc++.so.6.0.17,libstdc++.so.6,libgcc_s.so.1,libgfortran.so.3.0.0,libgfortran.so.3,libquadmath.so.0.0.0,libquadmath.so.0}
 }
 
 ## For network installations, apparently, a license file needs to be used for the installation.
 if [ ! -z ${_networkinstall+isSet} ]; then
-  source+=("${pkgname}.lic")
+  source+=("${_pkgname}.lic")
   md5sums+=('SKIP')
 fi
 
