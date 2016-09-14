@@ -4,7 +4,7 @@
 # Contributor: Jinbei Li (Petron) <i@jingbei.li>
 
 pkgname=python-tensorflow-nogpu-git
-pkgver=0.10.0rc0.r1461.g91a70cb
+pkgver=0.10.0rc0.r1545.gbc64f05
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(no GPU support)"
