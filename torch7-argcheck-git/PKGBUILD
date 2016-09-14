@@ -1,4 +1,4 @@
-# Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
+# Maintainer: Jingbei Li <i@jingbei.li>
 pkgdesc='A powerful (and blazing fast) argument checker and function overloading system for Lua or LuaJIT'
 pkgname='torch7-argcheck-git'
 pkgver=r139.b3b32c0
