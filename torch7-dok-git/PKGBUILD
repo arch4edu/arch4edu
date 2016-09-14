@@ -24,7 +24,7 @@ pkgver () {
 build () {
 	cd "${pkgname}"
 	cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-	make -j32
+	make
 }
 
 package () {
