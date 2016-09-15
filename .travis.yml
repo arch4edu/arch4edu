@@ -1,0 +1,6 @@
+language: python
+python: 3.5
+# command to install dependencies
+install: true
+# command to run tests
+script: python pre-commit
