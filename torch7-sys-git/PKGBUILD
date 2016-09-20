@@ -1,7 +1,7 @@
 # Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
 pkgdesc='A system utility package for Torch.'
 pkgname='torch7-sys-git'
-pkgver=1.1.0.r21.gd9803f4
+pkgver=1.1.0.r23.g512e61a
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819')
