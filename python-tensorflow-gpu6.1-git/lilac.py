@@ -40,7 +40,7 @@ def pre_build():
     elif 'conflicts' in line:
         print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-nogpu-git" "python-tensorflow-gpu5.2-git")'))
     elif 'pacman' in line:
-        print(line.replace('cuda','cuda8').replace('cudnn','cudnn8'))
+        print(line.replace('cuda','cuda8').replace('cudnn','cudnn-cuda8'))
     elif 'TF_CUDA_COMPUTE_CAPABILITIES' in line:
         print('    export TF_CUDA_COMPUTE_CAPABILITIES=6.1')
     elif './configure' in line:
