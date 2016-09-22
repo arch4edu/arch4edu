@@ -4,7 +4,7 @@
 pkgbase="python-keras"
 pkgname=("python-keras" "python2-keras")
 _pkgname="keras"
-pkgver="1.0.8"
+pkgver="1.1.0"
 pkgrel="1"
 pkgdesc="Theano-based Deep Learning library (convnets, recurrent neural networks, and more)"
 arch=('any')
@@ -14,7 +14,7 @@ makedepends=('python' 'python-setuptools' 'python-numpy' 'python-scipy' 'python-
              'python2' 'python2-setuptools' 'python2-numpy' 'python2-scipy' 'python2-h5py'
             )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/fchollet/${_pkgname}/archive/${pkgver}.tar.gz")
-sha256sums=('be572836df58f578c727ae0b015d25f14fb3dbdcb484067ebd8c8e6c09125610')
+sha256sums=('5dc69abb2b66e8e825d0c48037a334d0cd2f3d9e27bb1dcf20c8ba16c8b21c96')
 
 prepare() {
   cd "$srcdir/"
