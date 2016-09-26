@@ -3,11 +3,11 @@
 pkgname=eclim
 pkgver=2.6.0
 pkgrel=1.1
-pkgdesc="Brings Eclipse functionality to Vim"
+pkgdesc="Brings Eclipse functionality to Vim. Built with eclipse-java."
 url="http://eclim.org/"
 license=('GPL3')
 arch=(i686 x86_64)
-depends=('vim' 'eclipse')
+depends=('vim' 'eclipse-java')
 makedepends=('apache-ant' 'python2-sphinx' 'groovy')
 optdepends=('eclipse-pdt: Eclipse PHP Development Tools support'
             'eclipse-cdt: Eclipse C/C++ Plugin support'
@@ -20,6 +20,7 @@ source=("https://github.com/ervandew/eclim/releases/download/$pkgver/${pkgname}_
 md5sums=('74557a1d0c2fb22ec7ae46e7ad200e49')
 
 prepare() {
+  export LANG=en_US.UTF-8
   cd $srcdir/${pkgname}_$pkgver
 
   # fix build, thanks to mikezackles
