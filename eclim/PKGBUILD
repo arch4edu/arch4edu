@@ -2,7 +2,7 @@
 
 pkgname=eclim
 pkgver=2.6.0
-pkgrel=1
+pkgrel=1.1
 pkgdesc="Brings Eclipse functionality to Vim"
 url="http://eclim.org/"
 license=('GPL3')

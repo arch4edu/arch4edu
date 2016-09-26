@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
-#
-# This file is the most simple lilac.py file,
-# and it suits for most packages in AUR.
-#
 
 from lilaclib import *
 
 build_prefix = 'extra-x86_64'
-pre_build = aur_pre_build
+def pre_build():
+  aur_pre_build()
+  for line in edit_file('PKGBUILD'):
+    if 'pkgdesc=' in line:
+        print(line[0:-1]+'. Built with eclipse-java."')
+    elif line[0:8]=='depends=':
+        print(line.replace('eclipse','eclipse-java'))
+    elif 'prepare' in line:
+        print(line)
+        print('  export LANG=en_US.UTF-8')
+    else:
+        print(line)
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
