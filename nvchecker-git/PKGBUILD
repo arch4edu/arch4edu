@@ -3,7 +3,7 @@
 
 pkgname=nvchecker-git
 pkgver=v0.4.2.r7.gaa418ab
-pkgrel=1
+pkgrel=1.0
 pkgdesc="a tool for checking if a new version of some software has been released."
 arch=('any')
 url="https://github.com/lilydjwg/nvchecker"
