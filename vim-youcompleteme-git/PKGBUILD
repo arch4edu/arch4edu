@@ -15,7 +15,7 @@
 # Contributor: Andy Weidenbaum <archbaum@gmail.com>
 
 pkgname=vim-youcompleteme-git
-pkgver=1869.f928f7d
+pkgver=1881.c1cd62d
 _CLANG_VERSION=3.8.1
 pkgrel=1
 pkgdesc="A code-completion engine for Vim"
