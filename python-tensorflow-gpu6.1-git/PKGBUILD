@@ -4,7 +4,7 @@
 
 pkgname=python-tensorflow-gpu6.1-git
 pkgver=0.11.0rc0.r521.g36ebbf1
-pkgrel=1
+pkgrel=1.0
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(support NVIDIA GPUs with Compute Capability 6.1)"
 url="https://tensorflow.org/"
