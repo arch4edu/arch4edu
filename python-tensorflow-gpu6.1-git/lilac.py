@@ -24,7 +24,8 @@ def pre_build():
     elif './configure' in line:
         print('  export TF_NEED_GCP=0')
         print('  export TF_NEED_HDFS=0')
-        print('  echo -e "\n\n\n"|'+line)
+        print('  export CC=gcc-5')
+        print('  echo -e "\\n\\n\\n"|'+line)
     else:
         print(line)
 
