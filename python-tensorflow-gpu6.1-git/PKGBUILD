@@ -4,7 +4,7 @@
 
 pkgname=python-tensorflow-gpu6.1-git
 pkgver=0.11.0rc0.r521.g36ebbf1
-pkgrel=1.0
+pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(support NVIDIA GPUs with Compute Capability 6.1)"
 url="https://tensorflow.org/"
@@ -23,7 +23,7 @@ source=("git+https://github.com/tensorflow/tensorflow"
 md5sums=('SKIP'
          '3db030a479228df99419145f77571981')
 
-optdepends=()
+unset optdepends
 pkgver() {
   cd "${srcdir}/tensorflow"
   git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//'
@@ -45,7 +45,7 @@ prepare() {
 
   # setup environment variables
   export GCC_HOST_COMPILER_PATH=/usr/bin/gcc-5
-  if (pacman -Q cuda8 &>/dev/null && pacman -Q cudnn-cuda8 &>/dev/null); then
+  if (pacman -Q cuda &>/dev/null && pacman -Q cudnn &>/dev/null); then
     msg2 "CUDA support enabled"
     _build_opts="--config=cuda"
     export TF_NEED_CUDA=1
@@ -73,10 +73,8 @@ build() {
 
   export TF_NEED_GCP=0
   export TF_NEED_HDFS=0
-  echo -e "
-
-
-"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
+  export CC=gcc-5
+  echo -e "\n\n\n"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
   bazel build -c opt ${_build_opts} //tensorflow/tools/pip_package:build_pip_package
 
   msg2 "Building pip package..."
