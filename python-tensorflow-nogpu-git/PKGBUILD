@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-nogpu-git
-pkgver=0.11.0rc0.r313.g1926380
+pkgver=0.11.0rc0.r521.g36ebbf1
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(no GPU support)"
@@ -14,8 +14,8 @@ arch=('i686' 'x86_64')
 
 provides=('python-tensorflow')
 conflicts=('python-tensorflow' "python-tensorflow-git" "python-tensorflow-gpu5.2-git" "python-tensorflow-gpu6.1-git")
-depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf3')
-makedepends=('git' 'python-pip' 'bazel' 'rsync' 'gcc5')
+depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf3' "gcc5")
+makedepends=('git' 'python-pip' 'bazel' 'rsync' 'gcc5' "gcc5")
 optdepends=('cuda: GPU support'
             'cudnn: GPU support')
 source=("git+https://github.com/tensorflow/tensorflow"
@@ -23,7 +23,7 @@ source=("git+https://github.com/tensorflow/tensorflow"
 md5sums=('SKIP'
          '3db030a479228df99419145f77571981')
 
-optdepends=()
+unset optdepends
 pkgver() {
   cd "${srcdir}/tensorflow"
   git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//'
@@ -72,9 +72,9 @@ build() {
   cd "${srcdir}/tensorflow"
 
   export TF_NEED_GCP=0
+  export TF_NEED_HDFS=0
   export CC=gcc-5
-  export CXX=g++-5
-  echo -e "/usr/lib/python3.5/site-packages"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
+  echo -e "\n\n\n"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
   bazel build -c opt ${_build_opts} //tensorflow/tools/pip_package:build_pip_package
 
   msg2 "Building pip package..."
