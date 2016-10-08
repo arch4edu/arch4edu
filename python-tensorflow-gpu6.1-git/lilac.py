@@ -7,9 +7,6 @@ build_prefix = 'arch4edu-x86_64'
 def pre_build():
   aur_pre_build('python-tensorflow-git')
 
-  import os
-  os.environ['https_proxy']='127.0.0.1:8123'
-
   for line in edit_file('PKGBUILD'):
     if 'pkgname=' in line:
         print('pkgname=python-tensorflow-gpu6.1-git')
@@ -18,12 +15,10 @@ def pre_build():
     elif 'depends' in line:
         print(line.replace(')',' "cuda8" "cudnn-cuda8")'))
     elif 'pkgver()' in line:
-        print('optdepends=()')
+        print('unset optdepends')
         print(line)
     elif 'conflicts' in line:
         print(line.replace(')',' "python-tensorflow-git" "python-tensorflow-nogpu-git" "python-tensorflow-gpu5.2-git")'))
-    elif 'pacman' in line:
-        print(line.replace('cuda','cuda8').replace('cudnn','cudnn-cuda8'))
     elif 'TF_CUDA_COMPUTE_CAPABILITIES' in line:
         print('    export TF_CUDA_COMPUTE_CAPABILITIES=6.1')
     elif './configure' in line:
