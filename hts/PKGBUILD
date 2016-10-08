@@ -1,4 +1,4 @@
-# Maintainer: Moritz Maxeiner <moritz@ucworks.org>
+# Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=hts
 pkgver=2.3
 _htkver=3.4.1
@@ -11,30 +11,31 @@ depends=('libx11')
 makedepends=('patch')
 conflicts=(htk)
 source=(http://hts.sp.nitech.ac.jp/archives/$pkgver/HTS-${pkgver}_for_HTK-$_htkver.tar.bz2
-        HTK-$_htkver.tar.gz
-        HDecode-$_htkver.tar.gz)
+HTK-$_htkver.tar.gz # Download it yourself from http://htk.eng.cam.ac.uk/
+HDecode-$_htkver.tar.gz # Download it yourself from http://htk.eng.cam.ac.uk/
+)
 md5sums=('cb8e68a2ea2320b0e8fb519f86fa429d'
-         'b3fc12006b0af12f59cd573c07aa4c1d'
-         '4e332a7fea6db58751cec878b80c3575')
+'b3fc12006b0af12f59cd573c07aa4c1d'
+'4e332a7fea6db58751cec878b80c3575')
 
 build() {
-  cd $srcdir/htk
-  echo "Patching HTK source code to HTS..."
-  patch -p1 -t -d . < "./../HTS-${pkgver}_for_HTK-$_htkver.patch"
+	cd $srcdir/htk
+	echo "Patching HTK source code to HTS..."
+	patch -p1 -t -d . < "./../HTS-${pkgver}_for_HTK-$_htkver.patch"
 
-  echo "Beginning build..."
-  CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -DARCH=\'$CARCH\'" ./configure --prefix=/usr
-  make
+	echo "Beginning build..."
+	CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=2/} -DARCH=\'$CARCH\'" ./configure --prefix=/usr
+	make
 }
 
 package() {
-  cd "$srcdir/htk"
-  make prefix="$pkgdir/usr" install
+	cd "$srcdir/htk"
+	make prefix="$pkgdir/usr" install
 
-  # The HTK license applying to the package
-  install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/$pkgname/LICENSE-HTK
-  # The HDecode extension license
-  install -D -m644 HTKLVRec/HDecode-license.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-HDecode
-  # The HTS license applying to the patch
-  install -D -m644 $srcdir/COPYING ${pkgdir}/usr/share/licenses/$pkgname/COPYING-HTS
+	# The HTK license applying to the package
+	install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/$pkgname/LICENSE-HTK
+	# The HDecode extension license
+	install -D -m644 HTKLVRec/HDecode-license.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-HDecode
+	# The HTS license applying to the patch
+	install -D -m644 $srcdir/COPYING ${pkgdir}/usr/share/licenses/$pkgname/COPYING-HTS
 }
