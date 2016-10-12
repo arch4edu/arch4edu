@@ -4,7 +4,7 @@
 
 pkgname=opencv-git
 _pkgname=opencv
-pkgver=3.1.0.r1483.g73a8fa8
+pkgver=3.1.0.r1496.g994815f
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 arch=('i686' 'x86_64')
