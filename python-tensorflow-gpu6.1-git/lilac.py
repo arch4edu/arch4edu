@@ -12,8 +12,6 @@ def pre_build():
         print('pkgname=python-tensorflow-gpu6.1-git')
     elif 'pkgdesc' in line:
         print(line.replace('."','.(support NVIDIA GPUs with Compute Capability 6.1)"'))
-    elif 'depends' in line:
-        print(line.replace(')',' "cuda8" "cudnn-cuda8")'))
     elif 'pkgver()' in line:
         print('unset optdepends')
         print(line)
