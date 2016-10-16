@@ -5,7 +5,7 @@
 pkgname=weka
 pkgver=3.8.0
 _dlver=${pkgver//./-}
-pkgrel=1
+pkgrel=1.0
 pkgdesc="A collection of machine learning algorithms for data mining tasks"
 url="http://www.cs.waikato.ac.nz/ml/weka/"
 license=("GPL")
