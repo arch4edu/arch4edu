@@ -5,7 +5,7 @@
 
 pkgname=sphinxbase
 pkgver=5prealpha
-pkgrel=5.0
+pkgrel=6
 pkgdesc='Common library for sphinx speech recognition.'
 url='http://cmusphinx.sourceforge.net/'
 arch=('i686' 'x86_64')
@@ -15,7 +15,7 @@ depends=('python2' 'python' 'lapack' 'libpulse') # not sure if libsamplerate is 
 source=("http://downloads.sourceforge.net/project/cmusphinx/${pkgname}/${pkgver}/$pkgname-$pkgver.tar.gz"
         "https://raw.githubusercontent.com/cmusphinx/sphinxbase/master/LICENSE"
         "timing-fix.patch")
-sha256sums=('06971dbe272d2f73bde0ef7b3538c0c8f8ea885cb171fd6b17a5975bced66e64'
+sha256sums=('f72bdb59e50b558bed47cc2105777200d2b246a0f328e913de16a9b22f9a246f'
             '8b4bc30d2a57839cba678bb84472a9b0b4c84725ed04b37508e5ed3476f03c19'
             '5e8b2bac5d9f84a1c7b7fd774ef2b3f8f6cfc9dcb415b10a66ef439f91f3d4c5')
 options=('!libtool')
@@ -23,8 +23,9 @@ options=('!libtool')
 prepare() {
   cd "$pkgname-$pkgver"
 
-  msg2 "Applying timing fix patch"
-  patch -p1 < "$srcdir/timing-fix.patch"
+  #as release 6 seems the patch is no longer needed
+  #msg2 "Applying timing fix patch"
+  #patch -p1 < "$srcdir/timing-fix.patch"
 
   msg2 "Reconfiguring project for current version of Automake"
   autoreconf -ivf > /dev/null
