@@ -2,7 +2,7 @@
 
 pkgname='loadcaffe-git'
 pkgver=r104.6b6c588
-pkgrel=1.1
+pkgrel=1
 pkgdesc='Load Caffe networks in Torch7'
 arch=('x86_64' 'i686')
 url='https://github.com/szagoruyko/loadcaffe'
