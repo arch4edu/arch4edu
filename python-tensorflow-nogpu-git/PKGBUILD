@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-nogpu-git
-pkgver=0.11.0rc0.r790.gf794cd3
+pkgver=0.11.0rc0.r807.gb53b9dd
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(no GPU support)"
