@@ -14,7 +14,7 @@ arch=('any')
 url="http://www.eclipse.org/modeling/emf/"
 license=('EPL')
 depends=('eclipse>=3.5')
-_mirror="http://www.eclipse.org/downloads/download.php?r=1&file="
+_mirror=http://mirrors.ustc.edu.cn/eclipse
 source=("$_mirror/modeling/emf/emf/downloads/drops/${pkgver}/R${_reldate}/emf-runtime-${pkgver}.zip"
 	"$_mirror/modeling/emf/emf/downloads/drops/${pkgver}/R${_reldate}/xsd-runtime-${pkgver}.zip")
 md5sums=('fccaa15ebfc51357ae1d2fffe3574efc'

@@ -14,7 +14,7 @@ depends=( 'eclipse' 'eclipse-emf' 'eclipse-gef' 'java-runtime>=5' )
 optdepends=("java-environment>=5" "eclipse-dtp")
 provides=('eclipse-wtp-wst')
 options=(!strip)
-_mirror="http://www.eclipse.org/downloads/download.php?r=1&mirror_id=1&file="
+_mirror=http://mirrors.ustc.edu.cn/eclipse
 source=("$_mirror/webtools/downloads/drops/R$pkgver/R-$pkgver-$_pkgdate/wtp-repo-R-$pkgver-$_pkgdate.zip")
 sha256sums=('86f558189ced7dba01e40074ae862a710c6dd3bd81c81ad0d0bdcacab2e0a507')
 

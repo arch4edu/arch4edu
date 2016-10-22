@@ -14,7 +14,7 @@ arch=(any)
 url=http://www.eclipse.org/gef/
 license=(EPL)
 depends=(eclipse)
-_mirror="http://www.eclipse.org/downloads/download.php?r=1&mirror_id=1&file="
+_mirror=http://mirrors.ustc.edu.cn/eclipse
 source=("$_mirror/tools/gef/downloads/drops/gef4/${pkgver}/R${_reldate}/GEF4-Update-${pkgver}.zip")
 
 md5sums=('080a895db5956569c6de09bb3bdb1bb9')
