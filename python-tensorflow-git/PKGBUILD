@@ -6,7 +6,7 @@ pkgname=python-tensorflow-git
 pkgver=0.11.0rc0.r1234.gc6af51e
 pkgrel=1
 
-pkgdesc="Open source software library for numerical computation using data flow graphs.(support NVIDIA GPUs with Compute Capability 5.2,6.1)"
+pkgdesc="Open source software library for numerical computation using data flow graphs.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"
 url="https://tensorflow.org/"
 license=('Apache2')
 
@@ -54,7 +54,7 @@ prepare() {
     # adapt to your needs
     # export TF_CUDA_VERSION=7.5
     # export TF_CUDNN_VERSION=5
-    # export TF_CUDA_COMPUTE_CAPABILITIES=5.2,6.1
+    export TF_CUDA_COMPUTE_CAPABILITIES="5.2,6.1"
   else
     msg2 "CUDA support disabled"
     export TF_NEED_CUDA=0
@@ -73,7 +73,7 @@ build() {
   export TF_NEED_GCP=0
   export TF_NEED_HDFS=0
   export CC=gcc-5
-  PYTHON_BIN_PATH=/usr/bin/python ./configure
+  echo -e "\n\n\n"|  PYTHON_BIN_PATH=/usr/bin/python ./configure
   bazel build -c opt ${_build_opts} //tensorflow/tools/pip_package:build_pip_package
 
   msg2 "Building pip package..."
