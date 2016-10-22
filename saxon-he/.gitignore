@@ -1,0 +1,5 @@
+*.gz
+*.xz
+*.zip
+/pkg
+/src
