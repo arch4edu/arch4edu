@@ -1,7 +1,7 @@
 # Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
 pkgdesc='A REPL for Torch'
 pkgname='torch7-trepl-git'
-pkgver=r160.47fec15
+pkgver=r162.2165316
 pkgrel=1
 depends=('torch7-git' 'lua51-penlight')
 makedepends=('git')
