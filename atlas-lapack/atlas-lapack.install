@@ -1,0 +1,16 @@
+post_install() {
+  echo "On multi-core/thread systems libf77blas.so, libstcblas.so and"
+  echo "liblapack.so.3.4.1 are single-threaded, libptcblas.so, libptf77blas.so"
+  echo "and libptlapack.so.3.4.1 are multi-threaded. By default"
+  echo "libcblas.so, libblas.so and liblapack.so point to the multi-threaded"
+  echo "versions."
+  echo "The default can be changed by making libcblas.so, libblas.so and"
+  echo "liblapack.so.3 point to the single threaded libraries, i.e."
+  echo ""
+  echo "ln -sf libf77blas.so libblas.so; ln -sf libstcblas.so libcblas.so;"
+  echo "ln -sf liblapack.so.3.4.1 liblapack.so.3"
+}
+
+post_upgrade() {
+   post_install $1
+}
