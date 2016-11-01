@@ -2,7 +2,7 @@
 
 from lilaclib import *
 
-build_prefix = 'extra-x86_64'
+build_prefix = 'arch4edu-x86_64'
 depends = ['android-sdk', 'android-sdk-platform-tools']
 def pre_build():
     aur_pre_build()
