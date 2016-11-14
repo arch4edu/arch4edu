@@ -4,7 +4,7 @@
 
 pkgname=scilab
 pkgver=5.5.2
-pkgrel=12
+pkgrel=13
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
@@ -69,14 +69,14 @@ build() {
     --with-matio \
     --with-umfpack \
     --with-fftw \
-    --without-modelica \
+    --with-modelica \
     --without-emf \
     --with-install-help-xml \
     --enable-build-help \
     --enable-build-localization \
     --disable-static-system-lib
 
-  make all
+  make all -j1
   make doc
 }
 
