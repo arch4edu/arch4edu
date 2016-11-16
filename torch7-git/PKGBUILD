@@ -1,7 +1,7 @@
 # Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
 pkgdesc='LuaJIT-based scientific computing framework'
 pkgname='torch7-git'
-pkgver=r1101.a7d9af3
+pkgver=r1104.552b086
 pkgrel=1
 url='http://torch.ch'
 source=("${pkgname}::git://github.com/torch/torch7")
