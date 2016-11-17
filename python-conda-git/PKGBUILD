@@ -2,7 +2,7 @@
 
 _gitname=conda
 pkgname=python-${_gitname}-git
-pkgver=4.2.12.r418.gab8ec3c
+pkgver=4.2.12.r525.g5f9121a
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
 arch=('any')
