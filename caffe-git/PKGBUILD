@@ -1,7 +1,7 @@
 # Maintainer:  Drew Noel <drewmnoel@gmail.com>
 
 pkgname=caffe-git
-pkgver=rc3.r286.g28c135c
+pkgver=rc3.r290.g473f143
 pkgrel=1
 pkgdesc='A fast framework for deep learning built in C++ for speed with a Python 2 interface'
 arch=(x86_64)
