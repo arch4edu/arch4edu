@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=r6844.1a8a3ad
+pkgver=r6848.bfe3159
 pkgrel=1
 makedepends=('cuda' 'git')
 depends=('python2' 'openfst-kaldi' 'openblas-lapack')
@@ -44,7 +44,10 @@ build () {
 
 package () {
 	cd $srcdir/$pkgname/src
-	mkdir -p $pkgdir/opt/$pkgname
-	rm bin/{*.o,*.cc,Makefile}
-	cp -rL bin lib doc ../egs $pkgdir/opt/$pkgname
+	mkdir -p $pkgdir/opt/$pkgname/bin
+	find *bin -executable -type f -exec install -Dm755 {} $pkgdir/opt/$pkgname/bin/ \;
+	cp -rL lib doc ../egs $pkgdir/opt/$pkgname
+
+	install -dm755 "$pkgdir"/etc/ld.so.conf.d/
+	echo '/opt/kaldi/lib' > "$pkgdir"/etc/ld.so.conf.d/kaldi.conf
 }
