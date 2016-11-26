@@ -7,4 +7,13 @@ Making your Archlinux better for researching and developing. (x86_64 only)
 Arch4edu is a community repository for Archlinux that strives to provide the lastest versions of most softwares used by colleague students.
 
 ### Usage and more information
-Please visit the [wiki](../../wiki) site for usage and more information.
+
+Please add
+```
+[arch4edu]
+SigLevel = Never
+Server = http://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
+```
+to your `/etc/pacman.conf`.
+
+Please visit the [wiki](../../wiki) site for more information.
