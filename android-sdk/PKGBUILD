@@ -3,11 +3,11 @@
 # Contributor: Gordin <9ordin@gmail.com>
 
 pkgname=android-sdk
-pkgver=25.2.2
+pkgver=25.2.3
 pkgrel=1
 pkgdesc='Google Android SDK'
 arch=('x86_64' 'i686')
-url='http://developer.android.com/sdk/'
+url='https://developer.android.com/studio/releases/sdk-tools.html'
 license=('custom')
 depends_x86_64=('java-environment' 'lib32-alsa-lib' 'lib32-openal'
   'lib32-libstdc++5' 'lib32-libxv' 'lib32-mesa' 'lib32-ncurses' 'lib32-sdl'
@@ -24,7 +24,7 @@ source=("https://dl.google.com/android/repository/tools_r${pkgver}-linux.zip"
         "$pkgname.csh"
         "$pkgname.conf"
         'license.html')
-sha1sums=('99257925a3d8b46fee948a7520d7b7e3e3e1890e'
+sha1sums=('aafe7f28ac51549784efc2f3bdfc620be8a08213'
           'f359ac923ed008dae3a007a513d26cfbaf025626'
           '8f886de363ad91a7f93a0c6ded993e99bef3e1a7'
           'ab7251df3a382a920e81663f25d4a7813918ae1c'
