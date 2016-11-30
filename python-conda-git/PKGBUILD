@@ -2,25 +2,20 @@
 
 _gitname=conda
 pkgname=python-${_gitname}-git
-pkgver=4.2.12.r562.g08d71a7
+pkgver=4.2.12.r578.gd147182
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
 arch=('any')
 url="http://conda.pydata.org/docs/"
-license=('custom')
-groups=()
+license=('BSD')
 depends=('python' 'python-psutil' 'python-pycosat' 'python-requests' 'python-ruamel.yaml-hg')
 optdepends=(
-  'python-conda-env: to use the conda env command'
   'python-conda-build: to use the conda build command'
 )
 makedepends=('git')
 provides=('activate' 'conda' 'deactivate')
 conflicts=('python-conda')
-replaces=()
-backup=()
 options=(!emptydirs)
-install=
 source=("git+https://github.com/$_gitname/$_gitname")
 md5sums=('SKIP')
 
@@ -32,6 +27,7 @@ pkgver() {
 package() {
   cd "$srcdir/${_gitname}"
   python setup.py install --root="$pkgdir/" --optimize=1
+  install -Dm 644 shell/conda.fish $pkgdir/usr/share/fish/functions/conda.fish
   install -Dm 644 LICENSE.txt $pkgdir/usr/share/licenses/${pkgname}/LICENSE.txt
 }
 
