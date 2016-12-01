@@ -2,12 +2,12 @@
 
 pkgname=brackets
 pkgver=1.8
-pkgrel=0
+pkgrel=1
 pkgdesc="An open source code editor for the web, written in JavaScript, HTML and CSS. Stable git Tags."
 arch=('i686' 'x86_64')
 url="http://brackets.io"
 license=('MIT')
-depends=(alsa-lib nodejs npm desktop-file-utils gconf libgcrypt15 libudev0 "nss")
+depends=(alsa-lib nodejs npm desktop-file-utils gconf libgcrypt15 libudev0 nss)
 optdepends=(
 	"google-chrome: to enable Live Preview"
 	"gnuplot: to enable node benchmarking"
