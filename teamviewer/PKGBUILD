@@ -2,7 +2,7 @@
 
 pkgname=teamviewer
 pkgver=12.0.71510
-pkgrel=5
+pkgrel=6
 pkgdesc='All-In-One Software for Remote Support and Online Meetings'
 arch=('i686' 'x86_64')
 url='http://www.teamviewer.com'
@@ -48,8 +48,6 @@ package() {
 	install -D -m0644 "${pkgdir}"/opt/teamviewer/tv_bin/script/teamviewerd.service \
 		"${pkgdir}"/usr/lib/systemd/system/teamviewerd.service
 	install -d -m0755 "${pkgdir}"/usr/{share/applications,share/licenses/teamviewer}
-	ln -s /opt/teamviewer/tv_bin/desktop/com.teamviewer.TeamViewer.desktop \
-		"${pkgdir}"/usr/share/applications/teamviewer.desktop
 	ln -s /opt/teamviewer/License.txt \
 		"${pkgdir}"/usr/share/licenses/teamviewer/LICENSE
 }
