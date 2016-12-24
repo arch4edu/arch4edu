@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-git
-pkgver=0.12.0.rc0.r415.g32b584d
+pkgver=0.12.0.rc1.r1296.g35cf4653e
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"
@@ -15,7 +15,7 @@ arch=('i686' 'x86_64')
 provides=('python-tensorflow')
 conflicts=('python-tensorflow')
 depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf')
-makedepends=('git' 'python-pip' 'bazel' 'rsync' 'gcc5' "cuda" "cudnn")
+makedepends=('git' 'python-pip' 'bazel' 'rsync' "cuda" "cudnn")
 optdepends=('cuda: GPU support'
             'cudnn: GPU support')
 source=("git+https://github.com/tensorflow/tensorflow")
@@ -37,12 +37,13 @@ prepare() {
   fi
 
   # setup environment variables
-  export GCC_HOST_COMPILER_PATH=/usr/bin/gcc-5
   export PYTHON_BIN_PATH=/usr/bin/python
   export PYTHON_LIB_PATH=/usr/lib/python3.5/site-packages
   if (pacman -Q cuda &>/dev/null && pacman -Q cudnn &>/dev/null); then
     msg2 "CUDA support enabled"
     _build_opts="--config=cuda"
+    makedepends+=gcc-5
+    export GCC_HOST_COMPILER_PATH=/usr/bin/gcc-5
     export TF_NEED_CUDA=1
     export TF_UNOFFICIAL_SETTING=1
     export CUDA_TOOLKIT_PATH=/opt/cuda
