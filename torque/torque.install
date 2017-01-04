@@ -1,0 +1,3 @@
+post_install() {
+        echo "Torque needs to be configured! Please refer to 'https://wiki.archlinux.org/index.php/TORQUE'."
+}
