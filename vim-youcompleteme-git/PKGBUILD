@@ -15,36 +15,41 @@
 # Contributor: Andy Weidenbaum <archbaum@gmail.com>
 
 pkgname=vim-youcompleteme-git
-pkgver=1969.8161d350
-_CLANG_VERSION=3.9.0
+pkgver=1974.3828cfd2
+_CLANG_VERSION_MAX=4.0
+_CLANG_VERSION_MIN=3.9
 pkgrel=1
 pkgdesc="A code-completion engine for Vim"
 arch=('i686' 'x86_64')
 url='http://valloric.github.com/YouCompleteMe/'
 license=('GPL3')
 groups=('vim-plugins')
-depends=('python2' 'vim' 'clang='$_CLANG_VERSION
-         'python2-bottle' 'python2-future' 'python2-requests'
-         'python2-waitress' 'python2-jedi' 'python2-futures')
+depends=('python' 'vim' "clang>=$_CLANG_VERSION_MIN" "clang<$_CLANG_VERSION_MAX"
+         'python-bottle' 'python-future' 'python-requests'
+         'python-waitress' 'python-jedi')
 optdepends=('mono: for C# completer'
             'nodejs: for nodejs completer'
-            'rust: for rust completer')
-makedepends=('cargo' 'cmake' 'git' 'go' 'make' 'mono' 'npm' 'nodejs' 'rust')
+            'rust: for rust completer'
+            'racerd: for rust completer'
+            'go: for go completer'
+            'godef: for go completer'
+            'gocode: for gocompleter')
+makedepends=('cmake' 'git' 'make' 'mono' 'npm')
+#makedepends+=('python-psutil' 'python-nose' 'python-mock'
+#              'python-pyhamcrest' 'python-webtest' 'flake8')
 source=('git+https://github.com/Valloric/YouCompleteMe.git'
         'git+https://github.com/ross/requests-futures.git'
         'git+https://github.com/Valloric/ycmd.git'
-        'git+https://github.com/bewest/argparse.git'
         'frozendict::git+https://github.com/slezica/python-frozendict.git'
         'git+https://github.com/vheon/JediHTTP.git'
-        'git+https://github.com/nsf/gocode.git'
-        'git+https://github.com/Manishearth/godef.git'
         'git+https://github.com/nosami/OmniSharpServer.git'
         'git+https://github.com/icsharpcode/NRefactory.git'
         'git+https://github.com/jbevain/cecil.git'
-        'git+https://github.com/jwilm/racerd.git')
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
-            'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
-install=install
+        'use-system-completer.patch'
+        'use-python3.patch')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
+            'c99613a2b43e2f0eefc1a0c7d8ef42760428ae65b05c8a9920648938130aac21'
+            '36712bac48fa10777ea213b51fbf77c5bc67732cd4af21b47a73bad030ed1577')
 _COMPLETER="USE_CLANG_COMPLETER"
 _SYSTEM_LIBCLANG="USE_SYSTEM_LIBCLANG"
 
@@ -56,6 +61,8 @@ pkgver() {
 prepare() {
   msg2 'Setting up Git submodules...'
 
+  patch -Np1 -i "$srcdir/use-python3.patch"
+
   cd "$srcdir/YouCompleteMe"
   git submodule init
   for _m in requests-futures ycmd; do
@@ -64,8 +71,9 @@ prepare() {
   done
 
   cd "$srcdir/YouCompleteMe/third_party/ycmd"
+  patch -Np1 -i "$srcdir/use-system-completer.patch"
   git submodule init
-  for _m in argparse JediHTTP gocode godef OmniSharpServer racerd frozendict; do
+  for _m in JediHTTP OmniSharpServer frozendict; do
     git config submodule.third_party/$_m.url "$srcdir/$_m"
     git submodule update third_party/$_m
   done
@@ -83,34 +91,56 @@ build() {
   msg2 'Building ycmd...' # BuildYcmdLibs()
   mkdir -p "$srcdir/ycmd_build"
   cd "$srcdir/ycmd_build"
-  cmake -G "Unix Makefiles" -D${_COMPLETER}=1 -D${_SYSTEM_LIBCLANG}=1 . "$srcdir/YouCompleteMe/third_party/ycmd/cpp"
+  cmake -G "Unix Makefiles" -DUSE_PYTHON2=0 -D${_COMPLETER}=1 -D${_SYSTEM_LIBCLANG}=1 . "$srcdir/YouCompleteMe/third_party/ycmd/cpp"
   make ycm_core
 
   msg2 'Building OmniSharp completer...' # BuildOmniSharp()
   cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/OmniSharpServer"
   xbuild /property:Configuration=Release
 
-  msg2 'Building Gocode completer...' # BuildGoCode()
-  cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/gocode"
-  go build
-  cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/godef"
-  go build
-
-  msg2 'Building Rust completer...' # BuildRacerd()
-  cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/racerd"
-  cargo build --release
-
   msg2 'Building Tern completer...' # SetUpTern()
   cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/tern_runtime"
-  npm install --production --python=python2
+  npm install --production
   # }}}
+
+  for _m in requests-futures retries; do
+    cd "$srcdir/YouCompleteMe/third_party/$_m"
+    python3 -m compileall -x 'setup.py' .
+  done
+
+  for _m in JediHTTP frozendict; do
+    cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/$_m"
+    python3 -m compileall -x '(tests/|setup.py)' .
+  done
+
+  cd "$srcdir/YouCompleteMe/third_party/ycmd/ycmd"
+  python3 -m compileall -x 'tests/' .
+
+  cd "$srcdir/YouCompleteMe/python/ycm/"
+  python3 -m compileall -x 'tests/' .
 }
 
+#check() {
+#  export LANG=en_US.utf8
+#  cd "$srcdir/YouCompleteMe/third_party/ycmd/"
+#  python run_tests.py --skip-build
+#  cd "$srcdir/YouCompleteMe/"
+#  python run_tests.py --skip-build
+#}
+
 package() {
+  for _f in .git .gitignore .gitmodules .hgignore .hgtags .travis.yml; do
+    find "$srcdir" -name "$_f" -delete
+  done
+  rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/third_party/JediHTTP/jedihttp/tests"
+  rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/third_party/JediHTTP/vendor/*"
+  rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/third_party/JediHTTP/travis"
+  rm -fr "$srcdir/YouCompleteMe/third_party/requests-futures/setup.py"
+  rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/third_party/frozendict/setup.py"
+  rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/ycmd/tests"
+  rm -fr "$srcdir/YouCompleteMe/python/ycm/tests"
+
   mkdir -p "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/OmniSharpServer/OmniSharp/bin/Release"
-  mkdir -p "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/gocode"
-  mkdir -p "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/godef"
-  mkdir -p "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/racerd/target/release"
 
   cp -r "$srcdir/YouCompleteMe/"{autoload,doc,plugin,python} \
     "$pkgdir/usr/share/vim/vimfiles"
@@ -119,21 +149,13 @@ package() {
   cp -r "$srcdir/YouCompleteMe/third_party/ycmd/"{ycmd,ycm_core.so,CORE_VERSION} \
     "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd"
 
-  ln -s "/usr/lib/clang/${_CLANG_VERSION}" \
+  ln -s "/usr/lib/clang/${_CLANG_VERSION_MIN}" \
     "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/clang_includes"
 
-  cp -r "$srcdir/YouCompleteMe/third_party/ycmd/third_party/"{argparse,frozendict,JediHTTP,tern_runtime} \
+  cp -r "$srcdir/YouCompleteMe/third_party/ycmd/third_party/"{frozendict,JediHTTP,tern_runtime} \
     "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party"
 
-  cp    "$srcdir/YouCompleteMe/third_party/ycmd/third_party/gocode/gocode" \
-    "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/gocode/gocode"
-  cp    "$srcdir/YouCompleteMe/third_party/ycmd/third_party/godef/godef" \
-    "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/godef/godef"
   cp -r "$srcdir/YouCompleteMe/third_party/ycmd/third_party/OmniSharpServer/OmniSharp/bin/Release" \
     "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/OmniSharpServer/OmniSharp/bin"
-  cp    "$srcdir/YouCompleteMe/third_party/ycmd/third_party/racerd/target/release/racerd" \
-    "$pkgdir/usr/share/vim/vimfiles/third_party/ycmd/third_party/racerd/target/release/racerd"
-
-  find "$pkgdir" -name .git -exec rm -fr {} +
 }
 # vim:set ts=2 sw=2 et:
