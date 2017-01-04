@@ -15,7 +15,7 @@
 # Contributor: Andy Weidenbaum <archbaum@gmail.com>
 
 pkgname=vim-youcompleteme-git
-pkgver=1974.3828cfd2
+pkgver=1976.3fde57b0
 _CLANG_VERSION_MAX=4.0
 _CLANG_VERSION_MIN=3.9
 pkgrel=1
@@ -130,7 +130,7 @@ build() {
 
 package() {
   for _f in .git .gitignore .gitmodules .hgignore .hgtags .travis.yml; do
-    find "$srcdir" -name "$_f" -delete
+    find "$srcdir" -name "$_f" -exec rm -rf {} +
   done
   rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/third_party/JediHTTP/jedihttp/tests"
   rm -fr "$srcdir/YouCompleteMe/third_party/ycmd/third_party/JediHTTP/vendor/*"
