@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgdesc='A fast parallel implementation of CTC, on both CPU and GPU.'
 pkgname='torch7-warp-ctc'
-pkgver=v1.0.r21.gbd535c8
+pkgver=v1.0.r26.gf6efaf4
 pkgrel=1
 makedepends=('cmake' 'git' 'torch7-cutorch-git' "torch7-cutorch-git")
 depends=('torch7-git>=r819')
