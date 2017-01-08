@@ -4,7 +4,7 @@
 
 pkgname=android-ndk
 pkgver=r13
-pkgrel=1
+pkgrel=1.1
 pkgdesc='Android C/C++ developer kit'
 arch=('x86_64')
 url='https://developer.android.com/ndk/'
