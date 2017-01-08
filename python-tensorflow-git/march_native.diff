@@ -1,0 +1,12 @@
+diff --git a/third_party/eigen3/BUILD b/third_party/eigen3/BUILD
+index a921fa022..ec9cb0cb5 100644
+--- a/third_party/eigen3/BUILD
++++ b/third_party/eigen3/BUILD
+@@ -24,6 +24,7 @@ cc_library(
+         "unsupported/Eigen/CXX11/ThreadPool",
+         "unsupported/Eigen/CXX11/Tensor",
+         "unsupported/Eigen/CXX11/FixedPoint",
++        "unsupported/Eigen/CXX11/src/Tensor/TensorContractionThreadPool.h",
+     ],
+     visibility = ["//visibility:public"],
+     deps = [
