@@ -3,7 +3,9 @@
 from lilaclib import *
 import os
 
-build_prefix = 'extra-x86_64'
+build_prefix = 'arch4edu-x86_64'
+depends=['openblas-lapack']
+
 def pre_build():
     aur_pre_build()
     os.environ['https_proxy']='127.0.0.1:8123'
