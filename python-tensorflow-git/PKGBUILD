@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-git
-pkgver=0.12.1+1723+gf94e20f2c
+pkgver=0.12.1+1738+g1e4d6f1c3
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"
@@ -18,13 +18,8 @@ depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf')
 makedepends=('git' 'python-pip' 'bazel' 'rsync' "cuda" "cudnn")
 optdepends=('cuda: GPU support'
             'cudnn: GPU support')
-source=("git+https://github.com/tensorflow/tensorflow"
-        "march_native.diff"
-        "https://bitbucket.org/eigen/eigen/raw/9ba936354ee8b73fb1966dcb2d3506387bb357f1/unsupported/Eigen/CXX11/src/Tensor/TensorContractionThreadPool.h")
-
-md5sums=('SKIP'
-         '696beeb14be1d669066ce51819eb6044'
-         '1bf688d25c599906f0ffddde97aca1ed')
+source=("git+https://github.com/tensorflow/tensorflow")
+md5sums=('SKIP')
 
 pkgver() {
   cd "${srcdir}/tensorflow"
@@ -68,15 +63,17 @@ prepare() {
   export TF_NEED_HDFS=0
   # disable OpenCL support
   export TF_NEED_OPENCL=0
+  # disable XLA JIT compiler
+  export TF_ENABLE_XLA=0
 
   # make sure the proxy variables are in all caps, otherwise bazel ignores them
   export HTTP_PROXY=`echo $http_proxy | sed -e 's/\/$//'`
   export HTTPS_PROXY=`echo $https_proxy | sed -e 's/\/$//'`
 
   # hack to enable build with -march=native from: https://github.com/tensorflow/tensorflow/issues/6558
-  mkdir -p third_party/eigen3/unsupported/Eigen/CXX11/src/Tensor
-  cp ../TensorContractionThreadPool.h third_party/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorContractionThreadPool.h
-  patch -Np1 -i ../march_native.diff
+  # mkdir -p third_party/eigen3/unsupported/Eigen/CXX11/src/Tensor
+  # cp ../TensorContractionThreadPool.h third_party/eigen3/unsupported/Eigen/CXX11/src/Tensor/TensorContractionThreadPool.h
+  # patch -Np1 -i ../march_native.diff
 }
 
 build() {
