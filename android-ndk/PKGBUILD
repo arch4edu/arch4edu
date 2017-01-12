@@ -3,8 +3,8 @@
 # Contributor: frownlee <florez.brownlee@gmail.com>
 
 pkgname=android-ndk
-pkgver=r13
-pkgrel=1.3
+pkgver=r13b
+pkgrel=1
 pkgdesc='Android C/C++ developer kit'
 arch=('x86_64')
 url='https://developer.android.com/ndk/'
@@ -17,7 +17,7 @@ replaces=('android-ndk64')
 depends=('ncurses5-compat-libs')
 source=('android-ndk.sh' "http://dl.google.com/android/repository/${pkgname}-${pkgver/_/}-linux-x86_64.zip")
 sha256sums=('5bc58ccd7e7de03c9656ca8f13fb9bf9dff2eeee31a2670ce04a4b97be73dc95'
-            '0a1dbd216386399e2979c17a48f65b962bf7ddc0c2311ef35d902b90c298c400')
+            '3524d7f8fca6dc0d8e7073a7ab7f76888780a22841a6641927123146c3ffd29c')
 
 package() {
   install -d "$pkgdir/opt"
