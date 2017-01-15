@@ -4,7 +4,7 @@ pkgbase="python-theano"
 pkgname=("python-theano" "python2-theano")
 _pkgname="Theano"
 pkgver="0.8.2"
-pkgrel="3"
+pkgrel="6"
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
 url='http://www.deeplearning.net/software/theano/'
@@ -14,14 +14,19 @@ depends=('python'  'python-numpy'
 makedepends=('python-distribute' 'python2-distribute')
 checkdepends=('python-nose' 'python-nose-parameterized' 'python2-nose' 'python2-nose-parameterized')
 optdepends=('python-sympy: Recommended'
-            'cuda>=7.0:'    #Can cause tests to fail
+            'python-scipy: Recommended'
+            'python-pycuda:'
             'python-pydot-ng: Preferred over python-pydot'
             'python-pydot'
-            'python-pygpu: minimal support for opencl' # Can cause tests to fail
+            'python-pygpu'
+            'python-scikit-sparse'
+            'python-mpi4py: minimal support for opencl'
             'python2-sympy'
+            'python2-scipy'
+            'python2-pycuda'
             'python2-pydot-ng'
-            'python-pydot'
-            'pygpu2-git')
+            'python2-pydot'
+            'python2-mpi4py')
 source=("http://pypi.python.org/packages/30/3d/2354fac96ca9594b755ec22d91133522a7db0caa0877165a522337d0ed73/Theano-${pkgver}.tar.gz")
 sha256sums=('7463c8f7ed1a787bf881f36d38a38607150186697e7ce7e78bfb94b7c6af8930')
          
@@ -43,34 +48,28 @@ build() {
   msg "Building Python 2"
   cd "$srcdir/${_pkgname}-${pkgver}-py2"
   python2 setup.py build
-  cp -f build/scripts-2.7/* bin/
+  cp -fr build/scripts-2.7/* bin/
 
 
   msg "Building Python 3"
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py build
-  cp -f build/scripts-3.5/* bin/
+  cp -fr build/scripts-3.6* bin/
 }
 
-# Test takes 4+ hours and over 10Gb of RAM/SWAP
-# All tests passed on my machine
+# Test takes 4+ hours & over 10Gb of RAM/SWAP
+# CPU-only tests always pass on my machine
+# My Nvidia 9600GT is old & requires cuda65 to work
+# many tests utilizing the GPU fail on my machine.
 #-------------------------------------------------
 #check() {
 #  msg "Checking Python 2"
 #  cd "$srcdir/${_pkgname}-${pkgver}-py2"/build/lib/theano/
-#    THEANO_FLAGS='device=cpu,\
-#                optdb.max_use_ratio=200,\
-#                exception_verbosity=high' \
-#                OMP_NUM_THREADS=4 \
-#                nosetests2 -v -d
+#  THEANO_FLAGS=exception_verbosity=high nosetests2 -v -d
 #
 #  msg "Checking Python 3"
 #  cd "$srcdir/${_pkgname}-${pkgver}"/build/lib/theano/
-#  THEANO_FLAGS='device=cpu,\
-#                optdb.max_use_ratio=200,\
-#                exception_verbosity=high' \
-#                OMP_NUM_THREADS=4 \
-#                nosetests3 -v -d
+#  THEANO_FLAGS=exception_verbosity=high nosetests3 -v -d
 #}
 
 package_python2-theano() {
