@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-git
-pkgver=0.12.1+1934+g27fca7d32
+pkgver=0.12.1.1936.g128830165
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"
@@ -15,7 +15,7 @@ arch=('i686' 'x86_64')
 provides=('python-tensorflow')
 conflicts=('python-tensorflow')
 depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf')
-makedepends=('git' 'python-pip' 'bazel' 'rsync' "cuda" "cudnn")
+makedepends=('git' 'python-pip' 'bazel' 'rsync' "cuda" "cudnn" "hadoop")
 optdepends=('cuda: GPU support'
             'cudnn: GPU support')
 source=("git+https://github.com/tensorflow/tensorflow")
@@ -23,7 +23,7 @@ md5sums=('SKIP')
 
 pkgver() {
   cd ${srcdir}/tensorflow
-  git describe --tags | sed 's/-/+/g'
+  git describe --tags | sed 's/-/./g'
 }
 
 prepare() {
@@ -79,7 +79,7 @@ build() {
   cd ${srcdir}/tensorflow
 
   export TF_NEED_GCP=0
-  export TF_NEED_HDFS=0
+  export TF_NEED_HDFS=1
   export CC=gcc-5
   echo -e "\n\n\n"|  ./configure
   bazel build -c opt ${_build_opts} --copt=${CC_OPT_FLAGS} //tensorflow/tools/pip_package:build_pip_package
