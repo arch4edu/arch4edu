@@ -1,0 +1,11 @@
+--- bin/scilab	2016-08-09 15:08:31.708445393 +0200
++++ bin/scilab	2016-08-09 15:10:30.285575525 +0200
+@@ -808,7 +808,7 @@
+ if test -d $SCI/lib/thirdparty; then
+     SCILIB=$SCI/lib/thirdparty:$SCILIB;
+ fi
+-LD_LIBRARY_PATH=$SCILIB${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
++LD_LIBRARY_PATH=$SCILIB${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}:/usr/lib/scilab
+ 
+ case $OS in
+     *darwin* | *Darwin*) # MacOS X
