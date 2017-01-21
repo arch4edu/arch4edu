@@ -1,0 +1,33 @@
+diff -aur root-6.08.00_old/bindings/pyroot/JupyROOT/cppcompleter.py root-6.08.00/bindings/pyroot/JupyROOT/cppcompleter.py
+--- root-6.08.00_old/bindings/pyroot/JupyROOT/cppcompleter.py	2016-11-16 22:45:36.414079070 +0000
++++ root-6.08.00/bindings/pyroot/JupyROOT/cppcompleter.py	2016-11-16 22:47:02.314603898 +0000
+@@ -5,7 +5,7 @@
+ #  Author: Enric Tejedor <enric.tejedor.saavedra@cern.ch> CERN
+ #-----------------------------------------------------------------------------
+ 
+-import utils
++from JupyROOT import utils
+ import ROOT
+ 
+ # Jit a wrapper for the ttabcom
+diff -aur root-6.08.00_old/bindings/pyroot/JupyROOT/utils.py root-6.08.00/bindings/pyroot/JupyROOT/utils.py
+--- root-6.08.00_old/bindings/pyroot/JupyROOT/utils.py	2016-11-16 22:45:36.414079070 +0000
++++ root-6.08.00/bindings/pyroot/JupyROOT/utils.py	2016-11-16 22:47:33.781463543 +0000
+@@ -14,7 +14,7 @@
+ import itertools
+ import re
+ import fnmatch
+-import handlers
++from JupyROOT import handlers
+ import time
+ from hashlib import sha1
+ from contextlib import contextmanager
+@@ -24,7 +24,7 @@
+ from IPython.core.extensions import ExtensionManager
+ import IPython.display
+ import ROOT
+-import cppcompleter
++from JupyROOT import cppcompleter
+ 
+ # We want iPython to take over the graphics
+ ROOT.gROOT.SetBatch()
