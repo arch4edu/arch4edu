@@ -22,5 +22,5 @@ package() {
     python3 setup.py install -O2 --skip-build --prefix=/usr --root=${pkgdir}
 
     # Make em.py executable
-    chmod a+x ${pkgdir}/usr/lib/python3.5/site-packages/em.py
+    chmod a+x ${pkgdir}/usr/lib/python3.6/site-packages/em.py
 }
