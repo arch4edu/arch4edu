@@ -1,0 +1,14 @@
+diff -aur root-6.08.00_old/bindings/pyroot/JupyROOT/utils.py root-6.08.00/bindings/pyroot/JupyROOT/utils.py
+--- root-6.08.00_old/bindings/pyroot/JupyROOT/utils.py	2016-11-17 09:04:38.877776779 +0000
++++ root-6.08.00/bindings/pyroot/JupyROOT/utils.py	2016-11-17 09:09:08.511122309 +0000
+@@ -289,8 +289,8 @@
+         out = self.ioHandler.GetStdout()
+         err = self.ioHandler.GetStderr()
+         if not transformers:
+-            self.nbOutStream.write(out)
+-            self.nbErrStream.write(err)
++            self.nbOutStream.write(out.decode(sys.stdout.encoding))
++            self.nbErrStream.write(err.decode(sys.stderr.encoding))
+         else:
+             for t in transformers:
+                 (out, err, otype) = t(out, err)

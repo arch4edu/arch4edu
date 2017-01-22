@@ -1,0 +1,10 @@
+post_install () {
+    echo "Optional packages/features will only be activated"
+    echo "if the optional dependencies are installed before"
+    echo "the package compilation has started. Please reco-"
+    echo "mpile as needed."
+}
+
+post_upgrade () {
+    post_install
+}
