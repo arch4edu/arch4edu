@@ -5,12 +5,12 @@ pkgname=pythia8
 _pkgname=pythia
 pkgver=8.2.19
 _pkgid=$_pkgname`echo ${pkgver} | tr -d '.'`
-pkgrel=3
+pkgrel=4
 pkgdesc="Generation of high-energy physics events."
 arch=('i686' 'x86_64')
 url="http://home.thep.lu.se/Pythia/"
 license=('GPL')
-depends=('bash' 'boost-libs')
+depends=('bash' 'boost-libs' "python")
 provides=('pythia')
 conflicts=('pythia')
 source=("http://home.thep.lu.se/~torbjorn/${pkgname}/${_pkgid}.tgz"
@@ -33,8 +33,8 @@ build(){
     --with-gzip-include=/usr/include/ \
     --with-gzip-lib=/usr/lib/ \
     --with-python \
-    --with-python-include=/usr/include/python3.5m/ \
-    --with-python-lib=/usr/lib/python3.5/ \
+    --with-python-include=/usr/include/python3.6m/ \
+    --with-python-lib=/usr/lib/python3.6/ \
     --cxx-common='-fPIC -O3 -march=native'
 
     make ${MAKEFLAGS}
@@ -50,6 +50,6 @@ package() {
     cp -r "${srcdir}/${_pkgid}/examples" "${pkgdir}/usr/share/Pythia8/"
 
     install -Dm755 "${srcdir}/${_pkgid}/lib/libpythia8.so" "${pkgdir}/usr/lib/libpythia8.so"
-    install -Dm755 "${srcdir}/${_pkgid}/lib/_pythia8.so" "${pkgdir}/usr/lib/python3.5/site-packages/_pythia8.so"
-    install -Dm755 "${srcdir}/${_pkgid}/lib/pythia8.py" "${pkgdir}/usr/lib/python3.5/site-packages/pythia8.py"
+    install -Dm755 "${srcdir}/${_pkgid}/lib/_pythia8.so" "${pkgdir}/usr/lib/python3.6/site-packages/_pythia8.so"
+    install -Dm755 "${srcdir}/${_pkgid}/lib/pythia8.py" "${pkgdir}/usr/lib/python3.6/site-packages/pythia8.py"
 }
