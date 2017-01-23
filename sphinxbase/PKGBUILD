@@ -5,7 +5,7 @@
 
 pkgname=sphinxbase
 pkgver=5prealpha
-pkgrel=6.1
+pkgrel=7
 pkgdesc='Common library for sphinx speech recognition.'
 url='http://cmusphinx.sourceforge.net/'
 arch=('i686' 'x86_64')
@@ -66,5 +66,5 @@ package() {
 
   libtool --finish "$pkgdir/usr/lib"
   libtool --finish "$pkgdir/usr/lib/python2.7/site-packages/sphinxbase"
-  libtool --finish "$pkgdir/usr/lib/python3.5/site-packages/sphinxbase"
+  libtool --finish "$pkgdir/usr/lib/python3.6/site-packages/sphinxbase"
 }
