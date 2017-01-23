@@ -3,9 +3,9 @@
 # Contributor: Stefano Campanella < stefanocampanella1729 at gmail dot com >
 pkgname=pythia8
 _pkgname=pythia
-pkgver=8.2.19
+pkgver=8.2.23
 _pkgid=$_pkgname`echo ${pkgver} | tr -d '.'`
-pkgrel=4
+pkgrel=1
 pkgdesc="Generation of high-energy physics events."
 arch=('i686' 'x86_64')
 url="http://home.thep.lu.se/Pythia/"
@@ -15,7 +15,7 @@ provides=('pythia')
 conflicts=('pythia')
 source=("http://home.thep.lu.se/~torbjorn/${pkgname}/${_pkgid}.tgz"
 'pythia.sh')
-md5sums=('3459b52b5da1deae52cbddefa6196feb'
+md5sums=('ccb52b9172ffcdc426732a95f7bf4dbb'
          '0320534e1be7155cfb8ee19c7f8480cc')
 _srcpath=${srcdir}/${_pkgid}
 options=('!emptydirs')
