@@ -3,7 +3,7 @@
 _pyname=pycosat
 pkgname=python-$_pyname
 pkgver=0.6.1
-pkgrel=1
+pkgrel=1.1
 pkgdesc="Python bindings to picosat (a SAT solver)"
 arch=('any')
 url="https://github.com/ContinuumIO/pycosat"
