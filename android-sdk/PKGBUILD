@@ -3,7 +3,7 @@
 # Contributor: Gordin <9ordin@gmail.com>
 
 pkgname=android-sdk
-pkgver=25.2.4
+pkgver=25.2.5
 pkgrel=1
 pkgdesc='Google Android SDK'
 arch=('x86_64' 'i686')
@@ -24,7 +24,7 @@ source=("https://dl.google.com/android/repository/tools_r${pkgver}-linux.zip"
         "$pkgname.csh"
         "$pkgname.conf"
         'license.html')
-sha1sums=('36131a908e436d5c9911a25fa1a70494deb69eb2'
+sha1sums=('72df3aa1988c0a9003ccdfd7a13a7b8bd0f47fc1'
           'f359ac923ed008dae3a007a513d26cfbaf025626'
           '8f886de363ad91a7f93a0c6ded993e99bef3e1a7'
           'ab7251df3a382a920e81663f25d4a7813918ae1c'
