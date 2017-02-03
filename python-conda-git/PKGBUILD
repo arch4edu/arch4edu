@@ -2,7 +2,7 @@
 
 _gitname=conda
 pkgname=python-${_gitname}-git
-pkgver=4.3.6.r57.gd9e4e202
+pkgver=4.3.9.r42.g9e38d0b3
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
 arch=('any')
@@ -13,7 +13,7 @@ optdepends=(
   'python-conda-build: to use the conda build command'
 )
 makedepends=('git')
-provides=('activate' 'conda' 'deactivate')
+provides=('python-conda')
 conflicts=('python-conda')
 options=(!emptydirs)
 source=("git+https://github.com/$_gitname/$_gitname")
@@ -27,7 +27,7 @@ pkgver() {
 package() {
   cd "$srcdir/${_gitname}"
   echo $pkgver > conda/.version
-  python setup.py install --root="$pkgdir/" --optimize=1
+  python utils/setup-testing.py install --root="$pkgdir/" --optimize=1
   install -Dm 644 shell/conda.fish $pkgdir/usr/share/fish/functions/conda.fish
   install -Dm 644 LICENSE.txt $pkgdir/usr/share/licenses/${pkgname}/LICENSE.txt
 }
