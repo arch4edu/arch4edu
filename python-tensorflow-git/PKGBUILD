@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-git
-pkgver=0.12.1.2628.gac352bc807
+pkgver=1.0.0.rc1.786.g4357dc70b0
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"
@@ -23,7 +23,7 @@ md5sums=('SKIP')
 
 pkgver() {
   cd ${srcdir}/tensorflow
-  git describe --tags | sed 's/-/./g'
+  git describe --tags | sed 's/-/./g;s/v//;'
 }
 
 prepare() {
@@ -63,8 +63,8 @@ prepare() {
   export TF_NEED_HDFS=0
   # disable OpenCL support
   export TF_NEED_OPENCL=0
-  # disable XLA JIT compiler
-  export TF_ENABLE_XLA=0
+  # enable XLA JIT compiler
+  export TF_ENABLE_XLA=1
   # enable jemalloc support
   export TF_NEED_JEMALLOC=1
   # set up architecture dependent optimization flags
