@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgdesc='Torch-7 FFI bindings for NVIDIA CuDNN'
 pkgname='torch7-cudnn-git'
-pkgver=r450.99592ae
+pkgver=r452.c5ab04a
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819' 'cudnn')
