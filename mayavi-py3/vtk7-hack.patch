@@ -1,0 +1,15 @@
+Index: mayavi-4.5.0/tvtk/vtk_parser.py
+===================================================================
+--- mayavi-4.5.0.orig/tvtk/vtk_parser.py
++++ mayavi-4.5.0/tvtk/vtk_parser.py
+@@ -645,6 +645,10 @@ class VTKMethodParser:
+                     if klass_name in ['vtkPolyData', 'vtkContext2D']:
+                         # Evil hack, these classes segfault!
+                         default = None
++                    elif klass_name in ['vtkLineIntegralConvolution2D', 'vtkPLineIntegralConvolution2D'] \
++                        and key == 'Communicator':
++                        # Evil hack, these classes segfault in vtk 7.0!
++                        default = None
+                     elif klass_name == 'vtkHyperOctree' and \
+                             key == 'Dimension':
+                         # This class breaks standard VTK conventions.
