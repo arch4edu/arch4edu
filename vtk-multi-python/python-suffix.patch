@@ -1,0 +1,41 @@
+diff -Naurp VTK-7.1.0.orig/CMake/vtkModuleMacros.cmake VTK-7.1.0/CMake/vtkModuleMacros.cmake
+--- VTK-7.1.0.orig/CMake/vtkModuleMacros.cmake	2017-01-11 13:25:54.749566881 +0100
++++ VTK-7.1.0/CMake/vtkModuleMacros.cmake	2017-01-11 13:39:14.654326081 +0100
+@@ -706,6 +706,27 @@ VTK_AUTOINIT(${vtk-module})
+ #endif")
+   endif()
+ 
++  # If module has vtkPython as a dependency, add PyXY to OUTPUT_NAME
++  set(_stack ${vtk-module})
++  set(_link_depends)
++  while(_stack)
++    list(GET _stack 0 _front)
++    list(REMOVE_AT _stack 0)
++    list(APPEND _stack ${${_front}_LINK_DEPENDS})
++    list(APPEND _link_depends ${${_front}_LINK_DEPENDS})
++  endwhile()
++  if(_link_depends)
++    list(FIND _link_depends vtkPython _index)
++    if(${_index} GREATER -1)
++      find_package(PythonLibs REQUIRED)
++      set(_py_suffix Py${PYTHON_MAJOR_VERSION}${PYTHON_MINOR_VERSION})
++      get_property(_output_name TARGET ${vtk-module} PROPERTY OUTPUT_NAME)
++      string(REPLACE "${vtk-module}" "${vtk-module}${_py_suffix}"
++             _output_name "${_output_name}")
++      set_property(TARGET ${vtk-module} PROPERTY OUTPUT_NAME ${_output_name})
++    endif()
++  endif()
++
+   # Generate the export macro header for symbol visibility/Windows DLL declspec
+   if(target_suffix)
+     set(${vtk-module}${target_suffix}_EXPORT_CODE
+diff -Naurp VTK-7.1.0.orig/Wrapping/PythonCore/CMakeLists.txt VTK-7.1.0/Wrapping/PythonCore/CMakeLists.txt
+--- VTK-7.1.0.orig/Wrapping/PythonCore/CMakeLists.txt	2017-01-11 13:25:56.542938555 +0100
++++ VTK-7.1.0/Wrapping/PythonCore/CMakeLists.txt	2017-01-11 13:39:38.301621247 +0100
+@@ -44,6 +44,3 @@ set(${vtk-module}_INCLUDE_DIRS)
+ 
+ set(XY ${PYTHON_MAJOR_VERSION}${PYTHON_MINOR_VERSION})
+ vtk_module_library(${vtk-module} ${Module_SRCS})
+-get_property(output_name TARGET ${vtk-module} PROPERTY OUTPUT_NAME)
+-string(REPLACE "Python" "Python${XY}" output_name "${output_name}")
+-set_property(TARGET ${vtk-module} PROPERTY OUTPUT_NAME ${output_name})

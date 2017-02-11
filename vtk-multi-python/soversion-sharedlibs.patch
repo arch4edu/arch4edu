@@ -1,0 +1,26 @@
+diff -Naurp VTK-7.1.0.orig/CMake/vtkModuleMacros.cmake VTK-7.1.0/CMake/vtkModuleMacros.cmake
+--- VTK-7.1.0.orig/CMake/vtkModuleMacros.cmake	2017-01-11 13:25:54.749566881 +0100
++++ VTK-7.1.0/CMake/vtkModuleMacros.cmake	2017-01-11 13:34:22.100415955 +0100
+@@ -414,8 +414,8 @@ endfunction()
+ function(vtk_target_name _name)
+   get_property(_type TARGET ${_name} PROPERTY TYPE)
+   if(NOT "${_type}" STREQUAL EXECUTABLE AND NOT VTK_JAVA_INSTALL)
+-    set_property(TARGET ${_name} PROPERTY VERSION 1)
+-    set_property(TARGET ${_name} PROPERTY SOVERSION 1)
++    set_property(TARGET ${_name} PROPERTY VERSION ${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}.${VTK_BUILD_VERSION})
++    set_property(TARGET ${_name} PROPERTY SOVERSION ${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION})
+   endif()
+   if("${_name}" MATCHES "^[Vv][Tt][Kk]")
+     set(_vtk "")
+diff -Naurp VTK-7.1.0.orig/Rendering/Tk/CMakeLists.txt VTK-7.1.0/Rendering/Tk/CMakeLists.txt
+--- VTK-7.1.0.orig/Rendering/Tk/CMakeLists.txt	2017-01-11 13:25:56.109595957 +0100
++++ VTK-7.1.0/Rendering/Tk/CMakeLists.txt	2017-01-11 13:35:31.808573343 +0100
+@@ -118,7 +118,7 @@ if(TK_FOUND AND VTK_USE_TK)
+     vtk_target_install(vtkRenderingPythonTkWidgets)
+ 
+     set_property(TARGET vtkRenderingPythonTkWidgets PROPERTY OUTPUT_NAME
+-         vtkRenderingPythonTkWidgets-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION})
++         vtkRenderingPythonTkWidgets)
+ 
+     set(Module_PYTHON_LIBS ${VTK_TK_LIBRARIES})
+     if(VTK_USE_X)
