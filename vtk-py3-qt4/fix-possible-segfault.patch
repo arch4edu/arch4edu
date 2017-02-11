@@ -1,0 +1,92 @@
+commit 786281d4bf895824c321e4c2b2a1bfdb04117eda
+Author: Tim Thirion <tim.thirion@kitware.com>
+Date:   Wed Jul 6 11:53:30 2016 -0400
+
+    Add NULL checks to LIC2D setters
+
+diff --git a/Rendering/LICOpenGL2/vtkLineIntegralConvolution2D.cxx b/Rendering/LICOpenGL2/vtkLineIntegralConvolution2D.cxx
+index 8c8eb05..b5f464e 100644
+--- a/Rendering/LICOpenGL2/vtkLineIntegralConvolution2D.cxx
++++ b/Rendering/LICOpenGL2/vtkLineIntegralConvolution2D.cxx
+@@ -1176,48 +1176,73 @@ void vtkLineIntegralConvolution2D::SetNormalizeVectors(int val)
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetVTShader(vtkShaderProgram * prog)
+ {
+-  this->VTShader->Program = prog;
++  if (this->VTShader)
++    {
++    this->VTShader->Program = prog;
++    }
+ }
+ 
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetLIC0Shader(vtkShaderProgram * prog)
+ {
+-  this->LIC0Shader->Program = prog;
++  if (this->LIC0Shader)
++    {
++    this->LIC0Shader->Program = prog;
++    }
+ }
+ 
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetLICIShader(vtkShaderProgram * prog)
+ {
+-  this->LICIShader->Program = prog;
++  if (this->LICIShader)
++    {
++    this->LICIShader->Program = prog;
++    }
+ }
+ 
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetLICNShader(vtkShaderProgram * prog)
+ {
+-  this->LICNShader->Program = prog;
++  if (this->LICNShader)
++    {
++    this->LICNShader->Program = prog;
++    }
+ }
+ 
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetEEShader(vtkShaderProgram * prog)
+ {
+-  this->EEShader->Program = prog;
++  if (this->EEShader)
++    {
++    this->EEShader->Program = prog;
++    }
+ }
++
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetCEShader(vtkShaderProgram * prog)
+ {
+-  this->CEShader->Program = prog;
++  if (this->CEShader)
++    {
++    this->CEShader->Program = prog;
++    }
+ }
+ 
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetAAHShader(vtkShaderProgram * prog)
+ {
+-  this->AAHShader->Program = prog;
++  if (this->AAHShader)
++    {
++    this->AAHShader->Program = prog;
++    }
+ }
+ 
+ // ----------------------------------------------------------------------------
+ void vtkLineIntegralConvolution2D::SetAAVShader(vtkShaderProgram * prog)
+ {
+-  this->AAVShader->Program = prog;
++  if (this->AAVShader)
++    {
++    this->AAVShader->Program = prog;
++    }
+ }
+ 
+ namespace {

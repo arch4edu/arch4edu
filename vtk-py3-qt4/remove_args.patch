@@ -1,0 +1,35 @@
+diff --git a/CMake/GenerateExportHeader.cmake b/CMake/GenerateExportHeader.cmake
+index eaa6a8e..11e7fad 100644
+--- a/CMake/GenerateExportHeader.cmake
++++ b/CMake/GenerateExportHeader.cmake
+@@ -163,7 +163,7 @@ endmacro()
+ macro(_test_compiler_hidden_visibility)
+ 
+   if(CMAKE_COMPILER_IS_GNUCXX)
+-    execute_process(COMMAND ${CMAKE_C_COMPILER} ARGS --version
++    execute_process(COMMAND ${CMAKE_C_COMPILER} --version
+       OUTPUT_VARIABLE _gcc_version_info
+       ERROR_VARIABLE _gcc_version_info)
+     string(REGEX MATCH "[3456]\\.[0-9]\\.[0-9]*"
+@@ -181,7 +181,7 @@ macro(_test_compiler_hidden_visibility)
+   endif()
+ 
+   if(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+-    execute_process(COMMAND ${CMAKE_CXX_COMPILER} ARGS -V
++    execute_process(COMMAND ${CMAKE_CXX_COMPILER} -V
+       OUTPUT_VARIABLE _intel_version_info
+       ERROR_VARIABLE _intel_version_info)
+     string(REGEX REPLACE ".*Version ([0-9]+(\\.[0-9]+)+).*" "\\1"
+diff --git a/CMake/vtkCompilerExtras.cmake b/CMake/vtkCompilerExtras.cmake
+index 628b9d7..68c5980 100644
+--- a/CMake/vtkCompilerExtras.cmake
++++ b/CMake/vtkCompilerExtras.cmake
+@@ -28,7 +28,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
+   endif()
+ 
+   # Now check if we can use visibility to selectively export symbols
+-  execute_process(COMMAND ${CMAKE_C_COMPILER} ARGS --version
++  execute_process(COMMAND ${CMAKE_C_COMPILER} --version
+     OUTPUT_VARIABLE _gcc_version_info
+     ERROR_VARIABLE _gcc_version_info)
+ 
