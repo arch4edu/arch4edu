@@ -2,7 +2,7 @@
 # Contributor: Jan Kašpar < jan.kaspar at gmail dot com >
 pkgname=xrootd-abi0
 _pkgname=xrootd
-pkgver=4.5.0
+pkgver=4.6.0
 pkgrel=1
 pkgdesc="A project that aims at giving high performance, scalable fault tolerant access to data repositories of many kinds."
 provides=('xrootd'
@@ -15,12 +15,13 @@ depends=('ceph'
 'libxml2'
 )
 makedepends=('make' 'cmake')
+options=('!emptydirs')
 
 source=(
 	"http://xrootd.org/download/v$pkgver/xrootd-$pkgver.tar.gz"
 )
 
-sha256sums=('27a8e4ef1e6bb6bfe076fef50afe474870edd198699d43359ef01de2f446c670')
+sha256sums=('b50f7c64ed2a4aead987de3fdf6fce7ee082407ba9297b6851cd917db72edd1d')
 build() {
 	cd "$srcdir"
 
