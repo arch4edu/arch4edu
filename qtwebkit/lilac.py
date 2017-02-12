@@ -2,8 +2,7 @@
 
 from lilaclib import *
 
-build_prefix = 'arch4edu-x86_64'
-depends = ['vtk-py3-qt4']
+build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build
 
