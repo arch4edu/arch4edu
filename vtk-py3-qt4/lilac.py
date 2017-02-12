@@ -4,7 +4,16 @@ from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
 depends = ['qtwebkit']
-pre_build = aur_pre_build
+
+def pre_build():
+  aur_pre_build()
+
+  for line in edit_file('PKGBUILD'):
+    if 'makedepends=(' in line:
+        print(line.replace(')',' "qt5-webkit")'))
+    else:
+        print(line)
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
