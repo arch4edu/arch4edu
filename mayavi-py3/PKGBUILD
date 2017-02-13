@@ -9,7 +9,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/enthought/mayavi"
 license=('BSD')
 depends=('vtk-py3-qt4' 'python-traitsui' 'python-configobj' 'python-envisage' 'wxpython')
-makedepends=('python-setuptools' 'python-sphinx' 'python-mock')
+makedepends=('python-setuptools' 'python-sphinx' 'python-mock' "openmpi" "gdal" "unixodbc" "tk" "ffmpeg" "jsoncpp" "gcc-libs")
 provides=('python-mayavi')
 options=(!emptydirs)
 
@@ -24,6 +24,8 @@ prepare() {
    cd "$srcdir"/mayavi-$pkgver
    patch -p1 < ../vtk7-hack.patch
    patch -p1 < ../python35-ast.patch
+   #To strip non-ascii characters from docs
+   sed "166s/doc/doc.encode('ascii',errors='ignore').decode('ascii')/" -i tvtk/indenter.py
 }
 
 build() {
