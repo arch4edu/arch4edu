@@ -9,7 +9,9 @@ def pre_build():
   aur_pre_build()
 
   for line in edit_file('PKGBUILD'):
-    if 'makedepends=(' in line:
+    if 'depends=(' in line and not 'makedepends=(' in line:
+        print(line.replace(')',' "qt4")'))
+    elif 'makedepends=(' in line:
         print(line.replace(')',' "qt5-webkit")'))
     else:
         print(line)
