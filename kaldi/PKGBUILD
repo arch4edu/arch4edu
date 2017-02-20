@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=r7063.68cee215c
+pkgver=5.1.r7242.d218412ac
 pkgrel=1
 makedepends=('cuda' 'git' 'wget' 'subversion')
 depends=('python2' 'openblas-lapack')
@@ -19,6 +19,7 @@ pkgver () {
 	cd "${pkgname}"
 	(
 		set -o pipefail
+		echo -n `cat src/.version`.
 		git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
 		printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 	)
@@ -32,14 +33,13 @@ prepare(){
 build () {
 	cd $srcdir/$pkgname/tools
 	sed \
-		-e 's/^OPENFST_VERSION = 1\.3\.4$/OPENFST_VERSION = 1.4.1/' \
 		-e '/^sclite_compiled/s/ sctk_configured//' \
 		-i Makefile
 	sed 's/^exit/# exit/' -i extras/check_dependencies.sh
-	make sph2pipe openfst sctk_configured
+	make CXX=g++-5 sph2pipe openfst sctk_configured
 	sed '/^DEFS/s/ -Dsize_t=unsigned//' -i sctk/src/sclite/makefile
 	make sclite
-	CXX=g++-5 extras/install_irstlm.sh
+	#CXX=g++-5 extras/install_irstlm.sh
 	extras/install_kaldi_lm.sh
 	ln -sf $srcdir/srilm.tgz .
 	extras/install_srilm.sh
@@ -49,10 +49,9 @@ build () {
 		--shared \
 		--openblas-root=/usr \
 		--threaded-math=yes \
-		--use-cuda=yes \
 		--cudatk-dir=/opt/cuda
-	make depend
-	make
+	make CXX=g++-5 depend
+	make CXX=g++-5
 }
 
 package () {
