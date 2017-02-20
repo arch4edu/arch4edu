@@ -2,7 +2,7 @@
 pkgname=python2-leveldb
 _pkgname=leveldb
 pkgver=0.20
-pkgrel=1
+pkgrel=1.1
 pkgdesc="Python bindings for leveldb database library"
 url="https://pypi.python.org/pypi/leveldb"
 arch=('any')
