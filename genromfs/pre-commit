@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Hook to automatically create/update .SRCINFO file and add it to every commit
+# mksrcinfo is from package pkgbuild-introspection
+# To activate, copy into .git/hooks
+mksrcinfo &&
+git add .SRCINFO
