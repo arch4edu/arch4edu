@@ -6,7 +6,7 @@ pkgbase='distccd-arm'
 _subarchs=(v6h v7h v8)
 pkgname=("${_subarchs[@]/#/$pkgbase}")
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Distcc services package for ARM"
 arch=('x86_64')
 license=('GPL' )
@@ -24,6 +24,7 @@ md5sums=(
 _package_subarch() {
   arch_tag=arm$1
   depends+=("x-tools-${arch_tag%h}-bin")
+  pkgdesc=${pkgdesc/ARM/$arch_tag}
 
   config_file_path="etc/conf.d/distccd-$arch_tag"
 
