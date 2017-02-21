@@ -12,7 +12,7 @@ def pre_build():
         if 'build() {' in line:
             print(line)
             print('  export JAVA_HOME=/usr/lib/jvm/default')
-        elif:
+        else:
             print(line)
 
 post_build = aur_post_build
