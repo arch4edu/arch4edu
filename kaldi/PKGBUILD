@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.1.r7244.483192ed4
+pkgver=5.1.r7250.70f536071
 pkgrel=1
 makedepends=('cuda' 'git' 'wget' 'subversion')
 depends=('python2' 'openblas-lapack')
@@ -39,7 +39,7 @@ build () {
 	make CXX=g++-5 sph2pipe openfst sctk_configured
 	sed '/^DEFS/s/ -Dsize_t=unsigned//' -i sctk/src/sclite/makefile
 	make sclite
-	#CXX=g++-5 extras/install_irstlm.sh
+	CXX=g++-5 extras/install_irstlm.sh
 	extras/install_kaldi_lm.sh
 	ln -sf $srcdir/srilm.tgz .
 	extras/install_srilm.sh
