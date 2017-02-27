@@ -11,21 +11,18 @@ def pre_build():
     if 'pkgdesc' in line:
         print(line.replace('."','.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"'))
     elif 'makedepends' in line:
-        print(line.replace(')',' "cuda" "cudnn" "hadoop")'))
+        print(line.replace(')',' "cuda" "cudnn")'))
     elif 'TF_CUDA_COMPUTE_CAPABILITIES' in line:
         print('    export TF_CUDA_COMPUTE_CAPABILITIES="5.2,6.1"')
-    elif 'git describe' in line:
-        print(line.replace('+','.'))
+    elif 'TF_ENABLE_XLA' in line:
+        print(line.replace('1','0'))
     elif './configure' in line:
-        print('  export TF_NEED_GCP=0')
-        print('  export TF_NEED_HDFS=1')
-        print('  export CC=gcc-5')
-        print('  echo -e "\\n\\n\\n"|'+line)
+        print('  yes "" |'+line)
     else:
         print(line)
 
   import os
-  os.environ['https_proxy']='127.0.0.1:8123'
+  os.environ['http_proxy']='127.0.0.1:8123'
 
 post_build = aur_post_build
 
