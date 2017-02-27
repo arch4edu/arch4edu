@@ -3,63 +3,58 @@
 # Contributor: Victor Dmitriyev <mrvvitek@gmail.com>
 
 pkgname=scilab
-pkgver=5.5.2
-pkgrel=14
+pkgver=6.0.0
+pkgrel=1
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
-license=('BSD' 'custom:CeCILL')
-depends=('suitesparse>=4.4.1'  'arpack' 'fftw'
+license=('BSD' 'custom:CeCILL' 'GPL2')
+depends=('suitesparse>=4.4.1'  'arpack' 'fftw' 'eigen'
          'hdf5'
          'libmatio' 'tk' 'curl'
-         'java-runtime=7'
+         'java-runtime>=8'
          'beanshell' 'eclipse-ecj' 'java-flexdock>=1.2.4' 'fop-hyph'
          'jeuclid-core' 'jgraphx>=2.0.0.1' 'javahelp2'
          'saxon-he' 'jlatexmath-fop>=1.0.3' 'jrosetta>=1.0.4' 'jgoodies-looks' 'java-qdox'
          'java-skinlf' 'java-testng' 'xalan-java' 'docbook-xsl'
-         'jogl>=2.3.2'
+         'jogl>=2.3.2' 'apache-lucene>=6'
          'java-batik>=1.8' 'java-xmlgraphics-commons>=2.0')
-makedepends=('java-environment=7' 'apache-ant'
-             'ocaml' 'gcc-fortran' )
-conflicts=('scilab-git' 'scilab-bin')
-
+makedepends=('java-environment>=8' 'apache-ant' 'ocaml' 'gcc-fortran' )
 source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
-        "${pkgname}-${pkgver}-batik-1.8.patch"
-        "${pkgname}-${pkgver}-fop-2.0.patch"
-        "${pkgname}-${pkgver}-hdf5-1.8.10.patch::http://bugzilla.scilab.org/attachment.cgi?id=4382"
-        "${pkgname}-${pkgver}-xmlgraphics-common-2.0.patch"
-        "${pkgname}-${pkgver}-strict-jar.patch"
-        "${pkgname}-${pkgver}-jogl.patch")
-sha256sums=('a734519de96d35b8f081768a5584086e46db089ab11c021744897b22ec4d0f5e'
-            '4f243e32be0aa2755405e121e7a23a370276c98e00d1b016bd43df56a76782ca'
-            'a8e03352cdaa5955414945e3fc8f56a035793869934345eef301cc6124b7ec95'
-            'ed8572b978ef7ad5d22b7f7346af139d771c7397cd0de2220e49621b59521bca'
-            '64de4a044fb7228cae7003e6f86f6f0958ea10049f2fb24a11a07b0087e4ef36'
-            'cda2635f25a56f3c423f7a88791222aae3caad53c086cedc0cfe48011936a5a8'
-            '1796919522e00f6f0a38677ba1b79498822a9e75a7e7da2c31ebaa935153d92e')
+        "${pkgname}-jogl-2.3.2.patch"
+        "${pkgname}-LD_LIBRARY_PATH.patch"
+        "${pkgname}-strict-jar.patch"
+        "${pkgname}-lucene-6.patch"
+        "${pkgname}-hdf5-type.patch"
+        "${pkgname}-hdf5-1.8.10.patch")
+sha256sums=('b71bde8e397173a713493159a5b559de2e049b493985663418c79b2de0f23137'
+            'f19f173e989f72bd55bda35e271b3c180ecef4e29da964df3f230fce8b1330fc'
+            '37f649fea0196b255e5a8576dd1e8c5fd219c6e8c600b703b35303fb90b6a7e0'
+            '38aa094951338fa1d267dc6f397552e175213b0f8ba7b35727c178607861f6dd'
+            'ba7969fff7f839562120534222fbb6421e204f6a382654d80bbab19e0c7a2c66'
+            'c992a4f230dac60c3e217efee04b678c58d856f2aafa6173f742d4c5b050ab9d'
+            '2dee1346c240d09ce7870bbbeb3318e0ac5d78f249d855df313e9cb7a2ef7fc0')
 
 prepare(){
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  # http://bugzilla.scilab.org/show_bug.cgi?id=13813
-  patch -p2 < "${srcdir}"/${pkgname}-${pkgver}-batik-1.8.patch
-  # http://bugzilla.scilab.org/show_bug.cgi?id=14009
-  patch -p2 < "${srcdir}"/${pkgname}-${pkgver}-fop-2.0.patch
-  # http://bugzilla.scilab.org/show_bug.cgi?id=13724
-  patch -p2 < "${srcdir}"/${pkgname}-${pkgver}-xmlgraphics-common-2.0.patch
-  # http://bugzilla.scilab.org/show_bug.cgi?id=13809
-  patch -p1 < "${srcdir}"/${pkgname}-${pkgver}-jogl.patch
-  # Linked to https://codereview.scilab.org/#/c/18089/
-  patch < "${srcdir}"/${pkgname}-${pkgver}-strict-jar.patch
   # http://bugzilla.scilab.org/show_bug.cgi?id=14539
-  patch -p1 < "${srcdir}"/${pkgname}-${pkgver}-hdf5-1.8.10.patch
+  patch -p1 < "${srcdir}"/${pkgname}-hdf5-1.8.10.patch
+  # https://codereview.scilab.org/#/c/17530/
+  patch -p2 < "${srcdir}"/${pkgname}-jogl-2.3.2.patch
+  # Linked to: https://codereview.scilab.org/#/c/18089/
+  patch < "${srcdir}"/${pkgname}-strict-jar.patch
+  # Fix to build with lucene >= 6
+  patch -p0 < "${srcdir}"/${pkgname}-lucene-6.patch
+  # Fix hdf5 type
+  patch -p0 < "${srcdir}"/${pkgname}-hdf5-type.patch
+  # Fix for LD_LIBRARY_PATH
+  patch bin/scilab "${srcdir}"/${pkgname}-LD_LIBRARY_PATH.patch
 }
 
 build() {
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
   cd "${srcdir}/${pkgname}-${pkgver}"
-
-  # Newer version (>7) of java does not work
-  export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
 
   ./configure \
     --prefix=/usr \
@@ -76,7 +71,7 @@ build() {
     --enable-build-localization \
     --disable-static-system-lib
 
-  make all -j1
+  make
   make doc
 }
 
@@ -95,8 +90,6 @@ package(){
 
   install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING" \
     "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
-  install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING-FR" \
-    "${pkgdir}/usr/share/licenses/${pkgname}/COPYING-FR"
   install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING-BSD" \
     "${pkgdir}/usr/share/licenses/${pkgname}/COPYING-BSD"
 }

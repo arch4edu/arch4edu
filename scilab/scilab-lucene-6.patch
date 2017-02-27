@@ -1,0 +1,11 @@
+--- modules/xcos/src/java/org/scilab/modules/xcos/palette/PaletteSearcher.java	2017-02-15 19:48:09.065311738 +0100
++++ modules/xcos/src/java/org/scilab/modules/xcos/palette/PaletteSearcher.java.new	2017-02-15 19:43:03.057878902 +0100
+@@ -52,7 +52,7 @@
+      */
+     public List<Document> search(String str) {
+         List<Document> found = new ArrayList<>();
+-        try (IndexReader reader = DirectoryReader.open(mgr.getIndexWriter(), true)) {
++        try (IndexReader reader = DirectoryReader.open(mgr.getIndexWriter(), true, true)) {
+             IndexSearcher searcher = new IndexSearcher(reader);
+ 
+             StandardQueryParser queryParserHelper = new StandardQueryParser();
