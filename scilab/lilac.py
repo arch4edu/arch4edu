@@ -11,7 +11,7 @@ def pre_build():
     for line in edit_file('PKGBUILD'):
         if 'build() {' in line:
             print(line)
-            print('  export JAVA_HOME=/usr/lib/jvm/default')
+            print('  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk')
         else:
             print(line)
 
