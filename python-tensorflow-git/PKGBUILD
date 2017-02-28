@@ -3,7 +3,7 @@
 # Contributor: Julien Deswaef (juego) <juego@requiem4tv.com>
 
 pkgname=python-tensorflow-git
-pkgver=1.0.0.1306.g69638e5f0
+pkgver=1.0.0+1535+gdc7293fe0f
 pkgrel=1
 
 pkgdesc="Open source software library for numerical computation using data flow graphs.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"
@@ -15,7 +15,7 @@ arch=('i686' 'x86_64')
 provides=('python-tensorflow')
 conflicts=('python-tensorflow')
 depends=('python-numpy' 'swig' 'python-wheel' 'python-protobuf')
-makedepends=('git' 'python-pip' 'bazel' 'rsync' "cuda" "cudnn" "hadoop")
+makedepends=('git' 'python-pip' 'bazel' 'rsync' "cuda" "cudnn")
 optdepends=('cuda: GPU support'
             'cudnn: GPU support')
 source=("git+https://github.com/tensorflow/tensorflow")
@@ -23,7 +23,7 @@ md5sums=('SKIP')
 
 pkgver() {
   cd ${srcdir}/tensorflow
-  git describe --tags | sed 's/-/./g;s/v//;'
+  git describe --tags | sed 's/-/+/g;s/v//;'
 }
 
 prepare() {
@@ -64,7 +64,7 @@ prepare() {
   # disable OpenCL support
   export TF_NEED_OPENCL=0
   # enable XLA JIT compiler
-  export TF_ENABLE_XLA=1
+  export TF_ENABLE_XLA=0
   # enable jemalloc support
   export TF_NEED_JEMALLOC=1
   # set up architecture dependent optimization flags
@@ -78,10 +78,7 @@ prepare() {
 build() {
   cd ${srcdir}/tensorflow
 
-  export TF_NEED_GCP=0
-  export TF_NEED_HDFS=1
-  export CC=gcc-5
-  echo -e "\n\n\n"|  ./configure
+  yes "" |  ./configure
   bazel build -c opt ${_build_opts} --copt=${CC_OPT_FLAGS} //tensorflow/tools/pip_package:build_pip_package
 
   msg2 "Building pip package..."
