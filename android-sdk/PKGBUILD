@@ -4,7 +4,7 @@
 
 pkgname=android-sdk
 pkgver=25.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Google Android SDK'
 arch=('x86_64' 'i686')
 url='https://developer.android.com/studio/releases/sdk-tools.html'
@@ -27,8 +27,8 @@ source=("https://dl.google.com/android/repository/tools_r${pkgver}-linux.zip"
 sha1sums=('72df3aa1988c0a9003ccdfd7a13a7b8bd0f47fc1'
           'f359ac923ed008dae3a007a513d26cfbaf025626'
           '8f886de363ad91a7f93a0c6ded993e99bef3e1a7'
-          'ab7251df3a382a920e81663f25d4a7813918ae1c'
-          '5430d75f38ff74667919efc13f380bef0d67e8ff'
+          '30a6ed281d54f8b7be08663a18c367f79c0d8d47'
+          '1bd09bf137fd09171cb426daa5748f117cfb3c25'
           '145bdf3eb41a56574b289c1577a24bc47097ec83'
           'bfb91be7e0b602d765b7a1fcaf0ce1b7e1a93faa')
 
@@ -64,5 +64,5 @@ package() {
 }
 
 # getver: developer.android.com/tools/sdk/tools-notes.html
-# see https://dl.google.com/android/repository/repository-11.xml for new versions
+# see https://dl.google.com/android/repository/repository-12.xml for new versions
 # vim:set ts=2 sw=2 et:
