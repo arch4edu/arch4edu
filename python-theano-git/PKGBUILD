@@ -4,7 +4,7 @@
 pkgbase="python-theano-git"
 pkgname=("python-theano-git" "python2-theano-git")
 _pkgname="Theano"
-pkgver=0.9.0rc1.r59.183b5f1a4
+pkgver=0.9.0rc2.r16.674f8d514
 pkgrel=1
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
@@ -12,7 +12,7 @@ url='http://www.deeplearning.net/software/theano/'
 license=('BSD')
 depends=('python'  'python-numpy'
 	'python2' 'python2-numpy')
-makedepends=('python-distribute' 'python2-distribute')
+makedepends=('python-distribute' 'python2-distribute' 'git')
 checkdepends=('python-nose' 'python-nose-parameterized' 'python2-nose' 'python2-nose-parameterized')
 optdepends=('python-sympy: Recommended'
 	'python-scipy: Recommended'
@@ -69,6 +69,8 @@ build() {
 
 package_python2-theano-git() {
 	depends=('python2' 'python2-numpy')
+	provides=('python2-theano')
+	conflicts=('python2-theano')
 	cd "$srcdir/${_pkgname}-py2"
 	python2 setup.py install --root="$pkgdir"/ --optimize=1
 	mv "${pkgdir}/usr/bin/theano-cache" "${pkgdir}/usr/bin/theano2-cache"
@@ -79,6 +81,8 @@ package_python2-theano-git() {
 
 package_python-theano-git() {
 	depends=('python' 'python-numpy')
+	provides=('python-theano')
+	conflicts=('python-theano')
 	cd "$srcdir/${_pkgname}"
 	python setup.py install --root="$pkgdir"/ --optimize=1
 	install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-theano/LICENSE.txt"
