@@ -12,6 +12,8 @@ def pre_build():
         print(line.replace('."','.(added support for NVIDIA GPUs with compute capability 5.2,6.1)"'))
     elif 'makedepends' in line:
         print(line.replace(')',' "cuda" "cudnn")'))
+    elif 'git describe' in line:
+        print(line.replace('+','.'))
     elif 'TF_CUDA_COMPUTE_CAPABILITIES' in line:
         print('    export TF_CUDA_COMPUTE_CAPABILITIES="5.2,6.1"')
     elif 'TF_ENABLE_XLA' in line:
