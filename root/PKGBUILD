@@ -5,7 +5,7 @@
 # Contributor: Sebastian Voecking < voeck at web dot de >
 
 pkgname=root
-pkgver=6.08.04
+pkgver=6.08.06
 pkgrel=1
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
@@ -46,7 +46,7 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
 'root.xml'
 'rootd'
 'settings.cmake')
-sha256sums=('51d8fb902b29223f4c621f7f316e3b9d9fe41cd53403e7274cb5cf47ade9c500'
+sha256sums=('ea31b047ba6fc04b0b312667349eaf1498a254ccacd212144f15ffcb3f5c0592'
             'dbf08ee3b506a2089f58d55ec9b1e6b77f337a6d2ebbb081e69cf729e531da3f'
             'a17309295f998ed826dcbf1b5d04de7ed44d64c35221806c75b775796578783d'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
@@ -58,8 +58,8 @@ prepare(){
     cd ${pkgname}-${pkgver}
 
     # Fix JupyROOT issues until upstream releases arrive
+    patch -p1 -i ${srcdir}/JupyROOT_encoding.patch
     # patch -p1 -i ${srcdir}/JupyROOT_fix.patch
-    # patch -p1 -i ${srcdir}/JupyROOT_encoding.patch
 
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
 }
