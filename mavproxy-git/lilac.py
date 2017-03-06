@@ -2,15 +2,16 @@
 
 from lilaclib import *
 
-build_prefix = 'extra-x86_64'
+build_prefix = 'arch4edu-x86_64'
 depends = ["python2-pymavlink-git"]
 
 def pre_build():
   aur_pre_build()
 
   for line in edit_file('PKGBUILD'):
-    if 'makedepends' in line:
-        print(line.replace(')',' "git")'))
+    if 'depends=(' in line:
+        print(line)
+        print('makedepends=("python2-setuptools" "git")')
     else:
         print(line)
 
