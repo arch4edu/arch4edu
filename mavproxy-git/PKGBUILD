@@ -2,13 +2,14 @@
 
 _pkgname="mavproxy"
 pkgname="$_pkgname-git"
-pkgver='r1385.c5a8643'
-pkgrel='1'
+pkgver=r1585.4c4506d
+pkgrel=1
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
 url='https://dronecode.github.io/MAVProxy/html/index.html'
 license=('GPL3')
 depends=('python2-pymavlink-git')
+makedepends=("python2-setuptools" "git")
 provides=("$_pkgname")
 conflicts=("$_pkgname")
 source=('git+https://github.com/Dronecode/MAVProxy.git')
