@@ -10,6 +10,8 @@ def pre_build():
   for line in edit_file('PKGBUILD'):
     if 'makedepends' in line:
         print(line.replace(')',' "python2-setuptools")'))
+    elif 'depends' in line:
+        print(line.replace(')',' "python2-future")'))
     else:
         print(line)
 
