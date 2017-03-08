@@ -4,7 +4,7 @@
 pkgbase="python-theano-git"
 pkgname=("python-theano-git" "python2-theano-git")
 _pkgname="Theano"
-pkgver=0.9.0rc2.r40.27a681ce3
+pkgver=0.9.0rc3.r0.ee9eaeb04
 pkgrel=1
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
@@ -75,7 +75,6 @@ package_python2-theano-git() {
 	python2 setup.py install --root="$pkgdir"/ --optimize=1
 	mv "${pkgdir}/usr/bin/theano-cache" "${pkgdir}/usr/bin/theano2-cache"
 	mv "${pkgdir}/usr/bin/theano-nose" "${pkgdir}/usr/bin/theano2-nose"
-	mv "${pkgdir}/usr/bin/theano-test" "${pkgdir}/usr/bin/theano2-test"
 	install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python2-theano/LICENSE.txt"
 }
 
