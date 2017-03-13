@@ -10,14 +10,14 @@
 pkgname=vtk-py3-qt4
 pkgver=7.0.0
 _majorver=7.0
-pkgrel=3.1
+pkgrel=4
 pkgdesc='A software system for 3D computer graphics, image processing, and visualization, build with python3 and qt4 bindings'
 arch=('i686' 'x86_64')
 url='http://www.vtk.org/'
 license=('BSD')
-depends=('gcc-libs' 'gl2ps' "qt4")
+depends=('gcc-libs' 'gl2ps' 'qt4' "qt4")
 coflicts=('vtk')
-makedepends=('boost' 'cmake' 'ninja' 'java-environment' 'doxygen' 'gnuplot' 'tk' 'wget' 'python-matplotlib' 'python-twisted' 'python-mpi4py' 'python-autobahn' 'unixodbc' 'gdal' 'openmpi' 'mariadb' 'glew' 'ffmpeg' 'lesstif' 'qt4' 'qtwebkit' 'jsoncpp' "qt5-webkit")
+makedepends=('boost' 'cmake' 'ninja' 'java-environment' 'doxygen' 'gnuplot' 'tk' 'wget' 'python-matplotlib' 'python-twisted' 'python-mpi4py' 'python-autobahn' 'unixodbc' 'gdal' 'openmpi' 'mariadb' 'glew' 'ffmpeg' 'lesstif' 'qtwebkit' 'qt5-webkit' 'jsoncpp' "qt5-webkit")
 optdepends=('python: python bindings'
             'java-runtime: java bindings'
             'tk: tcl bindings'
