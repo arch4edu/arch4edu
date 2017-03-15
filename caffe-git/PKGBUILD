@@ -1,7 +1,7 @@
 # Maintainer:  Drew Noel <drewmnoel@gmail.com>
 
 pkgname=caffe-git
-pkgver=rc5.r3.ge687a71fa
+pkgver=rc5.r5.g317d162ac
 pkgrel=1
 pkgdesc='A fast framework for deep learning built in C++ for speed with a Python 2 interface'
 arch=(x86_64)
@@ -10,7 +10,7 @@ license=('custom')
 
 # if using an AWS EC2 make sure to use the community repo for cuda and not the ec2 repo. 
 depends=('cuda'
-         'opencv'
+         "opencv2"
          'openblas-lapack'
          'google-glog'
          'gflags'
@@ -42,12 +42,12 @@ depends=('cuda'
 source=('git+https://github.com/BVLC/caffe.git'
         'classify-print-results.py'
         'Makefile.config')
-makedepends=('git' 'python2-setuptools' 'gcc-fortran' 'wget')
+makedepends=('git' 'python2-setuptools' 'gcc-fortran' 'wget' "cudnn")
 provides=('caffe' 'pycaffe' 'python2-pycaffe' )
 conflicts=('caffe' 'pycaffe' 'python2-pycaffe' 'pycaffe-git' 'python2-pycaffe-git')
 sha256sums=('SKIP'
             'c12ddbd524c1b5871cb42a8775cf17a3ef86ae8a859837a6c6c4e2c19deca3d5'
-            '35fa1150f5a5b3909e96422f1efe10d43bdd8cef6c0c5d5528c53f0bc579dd74')
+            'SKIP')
 
 pkgver() {
   cd $srcdir/caffe
