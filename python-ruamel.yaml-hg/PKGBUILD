@@ -2,7 +2,7 @@
 
 pkgname=python-ruamel.yaml-hg
 _hgname=yaml
-pkgver=0.13.14.r2.588838739732
+pkgver=0.14.1.r1.726fd5ccf505
 pkgrel=1
 pkgdesc="YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
 arch=('i686' 'x86_64')
