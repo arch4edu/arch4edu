@@ -9,6 +9,13 @@ depends=['openblas-lapack']
 def pre_build():
     aur_pre_build()
     os.environ['https_proxy']='127.0.0.1:8123'
+
+    for line in edit_file('PKGBUILD'):
+        if 'makedepends=(' in line:
+            print(line.replace(')',' "cuda")'))
+        else:
+            print(line)
+
 def post_build():
     aur_post_build()
     del os.environ['https_proxy']
