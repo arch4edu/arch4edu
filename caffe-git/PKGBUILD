@@ -1,187 +1,169 @@
-# Maintainer:  Drew Noel <drewmnoel@gmail.com>
+# Maintainer : Daniel Bermond < yahoo-com: danielbermond >
+# Contributor: Drew Noel <drewmnoel@gmail.com>
+# Contributor: Jonathan Yantis
 
 pkgname=caffe-git
-pkgver=rc5.r5.g317d162ac
+pkgver=rc5.r9.g793bd9635
 pkgrel=1
-pkgdesc='A fast framework for deep learning built in C++ for speed with a Python 2 interface'
-arch=(x86_64)
-url='https://github.com/BVLC/caffe'
-license=('custom')
+pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
+arch=('x86_64')
+url="http://caffe.berkeleyvision.org/"
+license=('BSD')
+depends=( # binary repositories:
+          'boost-libs' 'protobuf' 'google-glog' 'gflags' 'hdf5' 'opencv' 'leveldb'
+          'lmdb' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
+          'python-matplotlib' 'ipython' 'python-h5py' 'python-networkx' 'python-nose'
+          'python-pandas' 'python-dateutil' 'python-protobuf' 'python-gflags'
+          'python-yaml' 'python-pillow' 'python-six'
+          # AUR:
+          'openblas-lapack' 'cudnn' 'nccl' 'python-leveldb' 'python-scikit-image'
+          'python-pydot')
+makedepends=('git' 'doxygen' 'texlive-core')
+provides=('caffe' 'caffe-cpu' 'caffe-cpu-git')
+conflicts=('caffe' 'caffe-cpu' 'caffe-cpu-git' 'caffe-dr-git' 'caffe-mnc-dr-git')
+source=("${pkgname}"::"git+https://github.com/BVLC/caffe.git")
+sha256sums=('SKIP')
 
-# if using an AWS EC2 make sure to use the community repo for cuda and not the ec2 repo. 
-depends=('cuda'
-         "opencv2"
-         'openblas-lapack'
-         'google-glog'
-         'gflags'
-         'lmdb'
-         'cython2'
-         'ipython2'
-         'python2-pillow'
-         'python2-numpy'
-         'python2-yaml'
-         'python2-numpy'
-         'python2-scipy'
-         'python2-scikit-image'
-         'python2-scikit-learn'
-         'python2-matplotlib'
-         'python2-h5py'
-         'python2-leveldb'
-         'python2-networkx'
-         'python2-nose'
-         'python2-pandas'
-         'python2-dateutil'
-         'python2-protobuf'
-         'python2-gflags'
-         'python2-pandas'
-         'boost'
-         'boost-libs'
-         'bc'
-        )
-
-source=('git+https://github.com/BVLC/caffe.git'
-        'classify-print-results.py'
-        'Makefile.config')
-makedepends=('git' 'python2-setuptools' 'gcc-fortran' 'wget' "cudnn")
-provides=('caffe' 'pycaffe' 'python2-pycaffe' )
-conflicts=('caffe' 'pycaffe' 'python2-pycaffe' 'pycaffe-git' 'python2-pycaffe-git')
-sha256sums=('SKIP'
-            'c12ddbd524c1b5871cb42a8775cf17a3ef86ae8a859837a6c6c4e2c19deca3d5'
-            'SKIP')
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    
+    # prepare to configure options in Makefile.config
+    cp -f Makefile.config.example Makefile.config
+    
+    # enable cuDNN acceleration switch
+    sed -i '/USE_CUDNN/s/^#[[:space:]]//g' Makefile.config
+    
+    # enable NCCL acceleration switch
+    sed -i '/USE_NCCL/s/^#[[:space:]]//g' Makefile.config
+    
+    # strictly enable I/O dependencies
+    sed -i '/USE_OPENCV/s/^#[[:space:]]//;/USE_OPENCV/s/0/1/'   Makefile.config
+    sed -i '/USE_LEVELDB/s/^#[[:space:]]//;/USE_LEVELDB/s/0/1/' Makefile.config
+    sed -i '/USE_LMDB/s/^#[[:space:]]//;/USE_LMDB/s/0/1/'       Makefile.config
+    sed -i '/OPENCV_VERSION/s/^#[[:space:]]//g'                 Makefile.config
+    
+    # use gcc5 (gcc6 do not work)
+    sed -i '/CUSTOM_CXX/s/^#[[:space:]]//;/CUSTOM_CXX/s/$/-5/' Makefile.config
+    
+    # set CUDA directory
+    sed -i '/CUDA_DIR/s/\/usr\/local\/cuda/\/opt\/cuda/' Makefile.config
+    
+    # set OpenBLAS as the BLAS provider and adjust its directories
+    sed -i '/BLAS[[:space:]]\:=[[:space:]]atlas/s/atlas/open/'                                 Makefile.config
+    sed -i 's/.*BLAS_INCLUDE[[:space:]]\:=[[:space:]]\/path.*/BLAS_INCLUDE := \/usr\/include/' Makefile.config
+    sed -i 's/.*BLAS_LIB[[:space:]]\:=[[:space:]]\/path.*/BLAS_LIB := \/usr\/lib/'             Makefile.config
+    
+    # python3 settings
+    _py2inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python2\.7/='  Makefile.config)"
+    _py3inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python3\.5m/=' Makefile.config)"
+    _py3libs_line="$(sed -n '/PYTHON_LIBRARIES/=' Makefile.config)"
+    sed -i "$((_py2inc_line))s/^/# /"  Makefile.config # comment python2 lines
+    sed -i "$((_py2inc_line+1))s/^/#/" Makefile.config
+    sed -i "$((_py3inc_line))s/^#[[:space:]]//"   Makefile.config # uncomment python3 PYTHON_INCLUDE lines
+    sed -i "$((_py3inc_line+1))s/^#//"            Makefile.config
+    sed -i "$((_py3libs_line))s/^#[[:space:]]//"  Makefile.config # uncomment PYTHON_LIBRARIES line
+    sed -i "$((_py3libs_line))s/5/6/"             Makefile.config # change version in PYTHON_LIBRARIES
+    sed -i "$((_py3inc_line))s/5/6/"              Makefile.config # change version in python3 PYTHON_INCLUDE
+    sed -i "$((_py3inc_line+1))s/5/6/;$((_py3inc_line+1))s/dist/site/" Makefile.config
+    
+    # use python layers
+    sed -i '/WITH_PYTHON_LAYER/s/^#[[:space:]]//g' Makefile.config
+    
+    # python2 settings
+    #     if you want to use python2 _instead_ of python3:
+    #         - uncomment this block
+    #         - comment the python3 block
+    #         - change python3 depends and optdepends to python2
+    #         - NOTE: do not enable both python2 and python3 blocks. choose only one.
+    #         - NOTE: python2 is the Caffe default but this package uses python3 by default
+    #_py2inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python2\.7/=' Makefile.config)"
+    #sed -i "$((_py2inc_line+1))s/dist/site/" Makefile.config
+}
 
 pkgver() {
-  cd $srcdir/caffe
-  set -o pipefail
-  git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+    cd "${srcdir}/${pkgname}"
+    
+    # git, tags available
+    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-  # You can modify this file and do some stuff like turn off using the GPU etc
-  cp Makefile.config $srcdir/caffe
-
-  # Modified classify.py for testing that will output results
-  cp classify-print-results.py $srcdir/caffe/python/
-
-  cd $srcdir/caffe
-
-  # Patch any #!/usr/bin/python to #!/usr/bin/python2
-  for file in $(find . -name '*.py' -print); do
-    sed -r -i 's_^#!.*/usr/bin/python(\s|$)_#!/usr/bin/python2_' $file
-    sed -r -i 's_^#!.*/usr/bin/env(\s)*python(\s|$)_#!/usr/bin/env python2_' $file
-  done
- # Do the same for python examples
-  for file in $(find . -name '*.py.example' -print); do
-    sed -r -i 's_^#!.*/usr/bin/python(\s|$)_#!/usr/bin/python2_' $file
-    sed -r -i 's_^#!.*/usr/bin/env(\s)*python(\s|$)_#!/usr/bin/env python2_' $file
-  done
-
-  # If the user has colormake installed then use that instead of make.
-  if hash colormake 2>/dev/null; then
-    colormake all
-    colormake pycaffe
-  else
+    cd "${srcdir}/${pkgname}"
+    msg2 "Building target 'all'..."
     make all
+    msg2 "Building target 'pycaffe'..."
     make pycaffe
-  fi
-
-  msg "Downloading the ImageNet Caffe model and labels" 
-  python2 scripts/download_model_binary.py models/bvlc_reference_caffenet # 232 MB
-  sh data/ilsvrc12/get_ilsvrc_aux.sh # 17 MB
-
-  msg "Downloading the mnist data"
-  sh data/mnist/get_mnist.sh #10 MB
+    rm -rf doxygen
+    msg2 "Building target 'docs'..."
+    make docs
+    msg2 "Building target 'distribute'..."
+    make distribute
 }
-
-# check() {
-#   cd caffe
-
-#   # Unrem these next two lines to run the 838 tests
-#   # make test
-#   # make runtest
-
-#   # A simple test to make sure its working (Attempt to classify a picture of a cat)
-#   # Expected result: [('tabby', '0.27933'), ('tiger cat', '0.21915'), ('Egyptian cat', '0.16064'), ('lynx', '0.12844'), ('kit fox', '0.05155')]
-#   python2 python/classify-print-results.py --print_results examples/images/cat.jpg foo
-#   msg "Tested that everything works.. you should see some cat type classifiations above this message"
-# }
 
 package() {
-  cd $srcdir/caffe
-
-  # Setup Python by hand since no setup.py 
-  mkdir -p $pkgdir/usr/lib/python2.7/site-packages/caffe/
-  cp -R python/caffe/* $pkgdir/usr/lib/python2.7/site-packages/caffe/
-
-  # Add missing __init__.py file to ensure that the modules are detected.
-  find "$pkgdir/usr/lib/python2.7/site-packages/caffe" -type d -exec touch '{}'/__init__.py \;
-
-  # Still leaving a copy of the python code in the main caffe directory since it might be useful for some
-  # Though because of that namcap will give this error:
-  # caffe-git E: ELF file ('opt/caffe/python/caffe/_caffe.so') outside of a valid path.
-
-  # Install shared libraries
-  mkdir -p $pkgdir/usr/lib/
-  install -Dm644 build/lib/* "${pkgdir}/usr/lib/"
-
-  ### Install all the execulables ###
-  mkdir -p $pkgdir/usr/bin/
-
-  # Primary executable
-  install -D -m755 build/tools/caffe.bin "$pkgdir/usr/bin/caffe"
-
-  # Conversion executables 
-  install -D -m755 build/examples/cifar10/convert_cifar_data.bin "$pkgdir/usr/bin/convert_cifar_data"
-  install -D -m755 build/examples/mnist/convert_mnist_data.bin "$pkgdir/usr/bin/convert_mnist_data"
-  install -D -m755 build/examples/siamese/convert_mnist_siamese_data.bin "$pkgdir/usr/bin/convert_mnist_siamese_data"
-
-  # Depreciated executables. All in caffe executable now but included here for backwards compatiblity
-  install -D -m755 build/tools/finetune_net.bin "$pkgdir/usr/bin/finetune_net"
-  install -D -m755 build/tools/train_net.bin "$pkgdir/usr/bin/train_net"
-  install -D -m755 build/tools/device_query.bin "$pkgdir/usr/bin/device_query"
-  install -D -m755 build/tools/net_speed_benchmark.bin "$pkgdir/usr/bin/net_speed_benchmark"
-  install -D -m755 build/tools/compute_image_mean.bin "$pkgdir/usr/bin/compute_image_mean"
-  install -D -m755 build/tools/convert_imageset.bin "$pkgdir/usr/bin/convert_imageset"
-  install -D -m755 build/tools/test_net.bin "$pkgdir/usr/bin/test_net"
-  install -D -m755 build/tools/upgrade_net_proto_text.bin "$pkgdir/usr/bin/upgrade_net_proto_text"
-  # install -D -m755 build/tools/dump_network.bin "$pkgdir/usr/bin/dump_network"
-  install -D -m755 build/tools/extract_features.bin "$pkgdir/usr/bin/extract_features"
-
-  # Make main target dir
-  mkdir -p $pkgdir/opt/caffe
-
-  # Copy all source files over
-  cp .Doxyfile $pkgdir/opt/caffe/
-  cp .travis.yml $pkgdir/opt/caffe/
-  cp CMakeLists.txt $pkgdir/opt/caffe/
-  cp CONTRIBUTING.md $pkgdir/opt/caffe/
-  cp CONTRIBUTORS.md $pkgdir/opt/caffe/
-  cp INSTALL.md $pkgdir/opt/caffe/
-  cp LICENSE $pkgdir/opt/caffe/
-  cp Makefile $pkgdir/opt/caffe/
-  cp README.md $pkgdir/opt/caffe/
-  cp caffe.cloc $pkgdir/opt/caffe/
-  cp -r cmake $pkgdir/opt/caffe/
-  cp -r data $pkgdir/opt/caffe/
-  cp -r distribute $pkgdir/opt/caffe/
-  cp -r docker $pkgdir/opt/caffe/
-  cp -r docs $pkgdir/opt/caffe/
-  cp -r examples $pkgdir/opt/caffe/
-  cp -r include $pkgdir/opt/caffe/
-  cp -r matlab $pkgdir/opt/caffe/
-  cp -r models $pkgdir/opt/caffe/
-  cp -r python $pkgdir/opt/caffe/
-  cp -r scripts $pkgdir/opt/caffe/
-  cp -r src $pkgdir/opt/caffe/
-  cp -r tools $pkgdir/opt/caffe/
-
-  # Remove residual git files
-  find $pkgdir/opt/caffe/ -name .gitignore -delete
-
-  # Install BSD2 License (not in common licenses so lets make it custom)
-  install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-
-  # Install Documentation
-  install -D -m644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+    # directories creation
+    mkdir -p "${pkgdir}/usr/bin"
+    mkdir -p "${pkgdir}/usr/include/caffe/"{layers,proto,test,util}
+    mkdir -p "${pkgdir}/usr/lib/python3.6/site-packages/caffe/"{imagenet,proto,test}
+    mkdir -p "${pkgdir}/usr/share/"{caffe,doc/"${pkgname}"/search,licenses/"${pkgname}"}
+    
+    cd "${pkgname}/distribute"
+    
+    # binaries
+    cd bin
+    install -D -m755 * "${pkgdir}/usr/bin"
+    
+    # libraries
+    cd ../lib
+    install -D -m755 *.so "${pkgdir}/usr/lib"
+    
+    # includes
+    cd ../include/caffe
+    install -D -m644 *.hpp "${pkgdir}/usr/include/caffe"
+    for _dir in layers proto test util
+    do
+        cd "${srcdir}/${pkgname}/distribute/include/caffe/${_dir}"
+        install -D -m644 * "${pkgdir}/usr/include/caffe/${_dir}"
+    done
+    
+    # python
+    cd ../../../python
+    install -D -m755 *.py "${pkgdir}/usr/bin"
+    rm -rf python # remove duplicated 'python' folder
+    
+    cd caffe
+    for _file in *
+    do
+        [ -d "$_file" ] && continue # skip directories
+        _mode="$(stat --format '%a' "$_file")"
+        install -D -m"$_mode" "$_file" "${pkgdir}/usr/lib/python3.6/site-packages/caffe"
+    done
+    
+    for _dir in imagenet proto test
+    do
+        cd "${srcdir}/${pkgname}/distribute/python/caffe/$_dir"
+        for _file in *
+        do
+            _mode="$(stat --format '%a' "$_file")"
+            install -D -m"$_mode" "$_file" "${pkgdir}/usr/lib/python3.6/site-packages/caffe/${_dir}"
+        done
+    done
+    
+    # proto
+    cd ../../../proto
+    install -D -m644 * "${pkgdir}/usr/share/caffe"
+    
+    # docs
+    cd ../../doxygen/html
+    for _file in *
+    do
+        [ -d "$_file" ] && continue # skip directories
+        install -D -m644 "$_file" "${pkgdir}/usr/share/doc/${pkgname}"
+    done
+    cd search
+    install -D -m644 * "${pkgdir}/usr/share/doc/${pkgname}/search"
+    
+    # license
+    cd "${srcdir}/${pkgname}"
+    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
 }
-
-# vim:set ts=2 sw=2 et:
