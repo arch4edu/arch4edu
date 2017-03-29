@@ -1,0 +1,120 @@
+From 39662e94dca4d3c71ba0e7792de2d200f0ec7a08 Mon Sep 17 00:00:00 2001
+From: Clément DAVID <clement.david@esi-group.com>
+Date: Mon, 27 Mar 2017 17:45:41 +0200
+Subject: [PATCH] Fix build with ocaml 4.0.4
+
+Change-Id: I962fe026f1c44f7f76435db0b4838b0d936994c8
+---
+
+diff --git a/scilab/modules/scicos/Makefile.in b/scilab/modules/scicos/Makefile.in
+index bbd4676..033120d 100644
+--- a/scilab/modules/scicos/Makefile.in
++++ b/scilab/modules/scicos/Makefile.in
+@@ -490,7 +490,7 @@
+ @OCAML_TRUE@@XCOS_TRUE@	modelicat$(EXEEXT)
+ PROGRAMS = $(bin_PROGRAMS)
+ am__XML2Modelica_SOURCES_DIST = $(srcdir)/src/xml2modelica/xMLTree.ml \
+-	$(srcdir)/src/xml2modelica/linenum.mll \
++	$(srcdir)/src/modelica_compiler/linenum.mll \
+ 	$(srcdir)/src/xml2modelica/stringParser.ml \
+ 	$(srcdir)/src/xml2modelica/stringLexer.ml \
+ 	$(srcdir)/src/xml2modelica/xMLParser.ml \
+@@ -1266,7 +1266,7 @@
+ ### XML2Modelica
+ @OCAML_TRUE@@XCOS_TRUE@XML2Modelica_SOURCES = \
+ @OCAML_TRUE@@XCOS_TRUE@	$(srcdir)/src/xml2modelica/xMLTree.ml \
+-@OCAML_TRUE@@XCOS_TRUE@	$(srcdir)/src/xml2modelica/linenum.mll \
++@OCAML_TRUE@@XCOS_TRUE@	$(srcdir)/src/modelica_compiler/linenum.mll \
+ @OCAML_TRUE@@XCOS_TRUE@	$(srcdir)/src/xml2modelica/stringParser.ml \
+ @OCAML_TRUE@@XCOS_TRUE@	$(srcdir)/src/xml2modelica/stringLexer.ml \
+ @OCAML_TRUE@@XCOS_TRUE@	$(srcdir)/src/xml2modelica/xMLParser.ml \
+@@ -3826,10 +3826,10 @@
+ @OCAML_TRUE@@XCOS_TRUE@    ./src/xml2modelica/xMLTree.ml
+ @OCAML_TRUE@@XCOS_TRUE@./src/xml2modelica/xMLTree.cmx ./src/xml2modelica/xMLTree.o \
+ @OCAML_TRUE@@XCOS_TRUE@    ./src/xml2modelica/xMLTree.cmi : ./src/xml2modelica/xMLTree.ml
+-@OCAML_TRUE@@XCOS_TRUE@./src/xml2modelica/linenum.cmo ./src/xml2modelica/linenum.cmi : \
+-@OCAML_TRUE@@XCOS_TRUE@    ./src/xml2modelica/linenum.ml
+-@OCAML_TRUE@@XCOS_TRUE@./src/xml2modelica/linenum.cmx ./src/xml2modelica/linenum.o \
+-@OCAML_TRUE@@XCOS_TRUE@    ./src/xml2modelica/linenum.cmi : ./src/xml2modelica/linenum.ml
++@OCAML_TRUE@@XCOS_TRUE@./src/modelica_compiler/linenum.cmo ./src/modelica_compiler/linenum.cmi : \
++@OCAML_TRUE@@XCOS_TRUE@    ./src/modelica_compiler/linenum.ml
++@OCAML_TRUE@@XCOS_TRUE@./src/modelica_compiler/linenum.cmx ./src/modelica_compiler/linenum.o \
++@OCAML_TRUE@@XCOS_TRUE@    ./src/modelica_compiler/linenum.cmi : ./src/modelica_compiler/linenum.ml
+ @OCAML_TRUE@@XCOS_TRUE@./src/xml2modelica/stringParser.cmo ./src/xml2modelica/stringParser.cmi : \
+ @OCAML_TRUE@@XCOS_TRUE@    ./src/xml2modelica/stringParser.ml
+ @OCAML_TRUE@@XCOS_TRUE@./src/xml2modelica/stringParser.cmx ./src/xml2modelica/stringParser.o \
+diff --git a/scilab/modules/scicos/Makefile.modelica.am b/scilab/modules/scicos/Makefile.modelica.am
+index 01fd5f1..d12f7d6 100644
+--- a/scilab/modules/scicos/Makefile.modelica.am
++++ b/scilab/modules/scicos/Makefile.modelica.am
+@@ -29,7 +29,7 @@
+ 
+ XML2Modelica_SOURCES = \
+ 	$(srcdir)/src/xml2modelica/xMLTree.ml \
+-	$(srcdir)/src/xml2modelica/linenum.mll \
++	$(srcdir)/src/modelica_compiler/linenum.mll \
+ 	$(srcdir)/src/xml2modelica/stringParser.ml \
+ 	$(srcdir)/src/xml2modelica/stringLexer.ml \
+ 	$(srcdir)/src/xml2modelica/xMLParser.ml \
+diff --git a/scilab/modules/scicos/src/xml2modelica/linenum.mll b/scilab/modules/scicos/src/xml2modelica/linenum.mll
+deleted file mode 100644
+index c043e44..0000000
+--- a/scilab/modules/scicos/src/xml2modelica/linenum.mll
++++ /dev/null
+@@ -1,56 +0,0 @@
+-(*
+- *  Translator from Modelica 2.x to flat Modelica
+- *
+- *  Copyright (C) 2005 - 2007 Imagine S.A.
+- *  For more information or commercial use please contact us at www.amesim.com
+- *
+- *  This program is free software; you can redistribute it and/or
+- *  modify it under the terms of the GNU General Public License
+- *  as published by the Free Software Foundation; either version 2
+- *  of the License, or (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, write to the Free Software
+- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+- *
+- *)
+-
+-{
+-
+-(** Convert {! Parser.location } to line and column numbers. *)
+-
+-let linenum = ref 0
+-let linebeg = ref 0
+-
+-}
+-
+-rule skip_line = parse
+-  | [^ '\n' '\r']* ('\n' | '\r' | "\r\n")
+-      { incr linenum;
+-        linebeg := Lexing.lexeme_start lexbuf;
+-        Lexing.lexeme_end lexbuf }
+-  | [^ '\n' '\r']* eof
+-      { incr linenum;
+-        linebeg := Lexing.lexeme_start lexbuf;
+-        raise End_of_file }
+-
+-{
+-
+-let for_position file loc =
+-  let ic = open_in_bin file in
+-  let lb = Lexing.from_channel ic in
+-  linenum := 1;
+-  linebeg := 0;
+-  begin try
+-    while skip_line lb <= loc do () done
+-  with End_of_file -> ()
+-  end;
+-  close_in ic;
+-  (!linenum - 1, !linebeg)
+-
+-}
