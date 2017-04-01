@@ -3,7 +3,7 @@
 # Contributor: Jonathan Yantis
 
 pkgname=caffe-git
-pkgver=rc5.r9.g793bd9635
+pkgver=rc5.r14.gc0597b159
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
@@ -11,7 +11,7 @@ url="http://caffe.berkeleyvision.org/"
 license=('BSD')
 depends=( # binary repositories:
           'boost-libs' 'protobuf' 'google-glog' 'gflags' 'hdf5' 'opencv' 'leveldb'
-          'lmdb' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
+          'lmdb' 'cuda' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
           'python-matplotlib' 'ipython' 'python-h5py' 'python-networkx' 'python-nose'
           'python-pandas' 'python-dateutil' 'python-protobuf' 'python-gflags'
           'python-yaml' 'python-pillow' 'python-six'
@@ -25,7 +25,7 @@ source=("${pkgname}"::"git+https://github.com/BVLC/caffe.git")
 sha256sums=('SKIP')
 
 prepare() {
-    cd "${srcdir}/${pkgname}"
+    cd "$pkgname"
     
     # prepare to configure options in Makefile.config
     cp -f Makefile.config.example Makefile.config
@@ -69,26 +69,26 @@ prepare() {
     # use python layers
     sed -i '/WITH_PYTHON_LAYER/s/^#[[:space:]]//g' Makefile.config
     
+    # if you want to use python2 _instead_ of python3:
+    #     - uncomment this block
+    #     - comment the python3 block
+    #     - change python3 dependencies to python2
+    #     - NOTE: do not enable both python2 and python3 blocks. choose only one.
+    #     - NOTE: python2 is the Caffe default but this package uses python3 by default
     # python2 settings
-    #     if you want to use python2 _instead_ of python3:
-    #         - uncomment this block
-    #         - comment the python3 block
-    #         - change python3 depends and optdepends to python2
-    #         - NOTE: do not enable both python2 and python3 blocks. choose only one.
-    #         - NOTE: python2 is the Caffe default but this package uses python3 by default
     #_py2inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python2\.7/=' Makefile.config)"
     #sed -i "$((_py2inc_line+1))s/dist/site/" Makefile.config
 }
 
 pkgver() {
-    cd "${srcdir}/${pkgname}"
+    cd "$pkgname"
     
     # git, tags available
     git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-    cd "${srcdir}/${pkgname}"
+    cd "$pkgname"
     msg2 "Building target 'all'..."
     make all
     msg2 "Building target 'pycaffe'..."
@@ -99,6 +99,16 @@ build() {
     msg2 "Building target 'distribute'..."
     make distribute
 }
+
+# uncomment this block if you want to run the checks/tests
+# (usually takes a lot of time; it will prevent package to be built in case of error)
+#check() {
+#    cd "$pkgname"
+#    msg2 "Building target 'test'..."
+#    make test
+#    msg2 "Making target 'runtest'..."
+#    make runtest
+#}
 
 package() {
     # directories creation
