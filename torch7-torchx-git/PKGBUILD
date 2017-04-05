@@ -2,7 +2,7 @@
 # Contributor: Ziwei Zhu <zhuziwei1@outlook.com>
 pkgdesc='torch extensions'
 pkgname='torch7-torchx-git'
-pkgver=r61.06cdbd3
+pkgver=r62.2802676
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git' 'torch7-paths-git' 'torch7-sys-git')
