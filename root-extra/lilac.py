@@ -3,7 +3,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['libafterimage', 'unuran', 'xrootd-abi0', 'pythia8']
+depends=['libafterimage', 'unuran', 'xrootd', 'pythia']
 pre_build = aur_pre_build
 post_build = aur_post_build
 
