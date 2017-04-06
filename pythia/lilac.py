@@ -10,8 +10,6 @@ def pre_build():
   for line in edit_file('PKGBUILD'):
     if 'depends' in line:
         print(line.replace(')',' "python")'))
-    elif 'python3.5' in line:
-        print(line.replace('python3.5','python3.6'))
     else:
         print(line)
 
