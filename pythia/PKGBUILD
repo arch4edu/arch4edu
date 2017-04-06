@@ -11,7 +11,7 @@ arch=('i686' 'x86_64')
 url="http://home.thep.lu.se/Pythia/"
 license=('GPL')
 provides=('pythia' 'pythia8')
-depends=('bash' 'boost' 'boost-libs')
+depends=('bash' 'boost' 'boost-libs' "python")
 optdepends=('fastjet: fast jet finding in pp and e+e- collisions'
             'hepmc: storing collisions from Monte Carlo'
             'lhapdf: evaluate PDFs from discretised data files'
