@@ -3,6 +3,9 @@
   <mime-type type="application/x-root">
     <comment>ROOT file</comment>
     <comment xml:lang="de">ROOT-Datei</comment>
+    <comment xml:lang="en">ROOT-File</comment>
+    <comment xml:lang="fr">ROOT-Fichier</comment>
+    <comment xml:lang="it">ROOT-File</comment>
     <glob pattern="*.root"/>
     <magic priority="80">
       <match value="root" type="string" offset="0:64"/>
