@@ -5,7 +5,7 @@ pkgname='torch7-qtlua-git'
 pkgver=r81.a29e8a7
 pkgrel=1
 makedepends=('cmake' 'git')
-depends=('torch7-git>=r819' 'qt5-base')
+depends=('torch7-git>=r819' 'qt4')
 conflicts=('torch7-qtlua')
 provides=('torch7-qtlua')
 arch=('x86_64' 'i686')
