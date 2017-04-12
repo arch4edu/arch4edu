@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.1.r7293.015768678
+pkgver=5.1.r7294.d9efe6efa
 pkgrel=1
 makedepends=('gcc5' 'git' 'wget' 'subversion' "cuda")
 depends=('python2' 'openblas-lapack')
@@ -74,7 +74,7 @@ build () {
 
 package () {
 	cd $srcdir/$pkgname
-	for i in "*.tar*" "*.c" "*.cc" "*.cu" "*.cpp" "*.h" "*.o" "*.a" "*.lo" "*.la" "*.mk" "Makefile*" "makefile*" "*.bak" "*.log" "*.status" "*.~*"
+	for i in "*.tar*" "*.c" "*.cc" "*.cu" "*.cpp" "*.o" "*.a" "*.lo" "*.la" "*.mk" "Makefile*" "makefile*" "*.bak" "*.log" "*.status" "*.~*"
 	do
 		find . -type f -name "$i" -exec rm -f {} \;
 	done
