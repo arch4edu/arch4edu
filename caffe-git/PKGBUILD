@@ -3,7 +3,7 @@
 # Contributor: Jonathan Yantis
 
 pkgname=caffe-git
-pkgver=rc5.r32.g31a18c222
+pkgver=rc5.r43.gfecee6c3f
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
