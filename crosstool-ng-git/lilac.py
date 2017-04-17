@@ -8,7 +8,7 @@ def pre_build():
     aur_pre_build()
     for line in edit_file('PKGBUILD'):
         if 'git describe' in line:
-            print('line'.replace("s/-/./'","s/-/./g'"))
+            print(line.replace("s/-/./'","s/-/./g'"))
         else:
             print(line)
 
