@@ -4,7 +4,7 @@
 
 pkgname=crosstool-ng-git
 epoch=1
-pkgver=1.22.0.r709.g8dfe2a09
+pkgver=1.23.0rc2.r17.g368a0169
 pkgrel=1
 pkgdesc="crosstool-NG aims at building toolchains."
 arch=('i686' 'x86_64')
@@ -20,7 +20,7 @@ md5sums=('SKIP')
 pkgver() {
 	cd crosstool-ng
 
-	git describe --long --tags | sed 's/^crosstool-ng-//;s/-/.r/;s/-/./'
+	git describe --long --tags | sed 's/^crosstool-ng-//;s/-rc/rc/;s/-/.r/;s/-/./g'
 }
 
 build () {
