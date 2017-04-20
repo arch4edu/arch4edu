@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.1.r7302.81346fc4b
+pkgver=5.1.r7304.72234621b
 pkgrel=1
 makedepends=('gcc5' 'git' 'wget' 'subversion' "cuda")
 depends=('python2' 'openblas-lapack')
@@ -11,11 +11,11 @@ url='https://github.com/kaldi-asr/kaldi'
 license=('APACHE')
 source=("${pkgname}::git+${url}"
 "srilm.tgz::https://www.dropbox.com/s/41y27or8lco4fju/srilm-1.7.2.tar.gz?dl=1"
-"env.sh")
+)
 noextract=('srilm.tgz')
 sha256sums=('SKIP'
 'a528a778f881c679233f94d7b26d6f795129fa6009b32305c8ce769f66e223b4'
-'c5a6996059077a2988a10344e07ad278f17552cc0d9ea0a3f074fa27c1ed387a')
+)
 
 pkgver () {
 	cd "${pkgname}"
@@ -84,20 +84,15 @@ package () {
 	rm tools/srilm.tgz
 	rm tools/srilm/lm/src/Dependencies.i686-m64
 
-	mkdir -p $pkgdir/opt/$pkgname/tools
+	for i in `grep $srcdir . -rIl`
+	do
+		sed -i "s|$srcdir|/opt|g" $i
+	done
+
+	mkdir -p $pkgdir/opt/$pkgname
 	cp -rL src $pkgdir/opt/$pkgname
-	cp -r misc egs $pkgdir/opt/$pkgname
-	cp -r tools/CLAPACK \
-		tools/config \
-		$startdir/env.sh \
-		tools/extras \
-		tools/irstlm \
-		tools/kaldi_lm \
-		tools/liblbfgs* \
-		tools/openfst* \
-		tools/s* \
-		$pkgdir/opt/$pkgname/tools
+	cp -r misc egs tools $pkgdir/opt/$pkgname
 
 	install -dm755 "$pkgdir"/etc/ld.so.conf.d/
-	echo '/opt/kaldi/src/lib' > "$pkgdir"/etc/ld.so.conf.d/kaldi.conf
+	echo "/opt/$pkgname/src/lib" > "$pkgdir"/etc/ld.so.conf.d/$pkgname.conf
 }
