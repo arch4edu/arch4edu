@@ -4,7 +4,7 @@
 
 pkgname=scilab
 pkgver=6.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
@@ -27,7 +27,8 @@ source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
         "${pkgname}-lucene-6.patch"
         "${pkgname}-hdf5-type.patch"
         "${pkgname}-hdf5-1.8.10.patch"
-        "${pkgname}-fix-ocaml-4.0.4.diff")
+        "${pkgname}-fix-ocaml-4.0.4.diff"
+        "${pkgname}-type.patch")
 sha256sums=('b71bde8e397173a713493159a5b559de2e049b493985663418c79b2de0f23137'
             'f19f173e989f72bd55bda35e271b3c180ecef4e29da964df3f230fce8b1330fc'
             '37f649fea0196b255e5a8576dd1e8c5fd219c6e8c600b703b35303fb90b6a7e0'
@@ -35,7 +36,8 @@ sha256sums=('b71bde8e397173a713493159a5b559de2e049b493985663418c79b2de0f23137'
             'ba7969fff7f839562120534222fbb6421e204f6a382654d80bbab19e0c7a2c66'
             'c992a4f230dac60c3e217efee04b678c58d856f2aafa6173f742d4c5b050ab9d'
             '2dee1346c240d09ce7870bbbeb3318e0ac5d78f249d855df313e9cb7a2ef7fc0'
-            '4288f98e34d0351c21b79bfc5b9fddabdee143965420fd3187d133e5d53ee20e')
+            '4288f98e34d0351c21b79bfc5b9fddabdee143965420fd3187d133e5d53ee20e'
+            '93597034c6866c3a4aaa7ef92b4588d2753383545ed3366be6cdb404edf949bd')
 
 prepare(){
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -54,6 +56,8 @@ prepare(){
   patch bin/scilab "${srcdir}"/${pkgname}-LD_LIBRARY_PATH.patch
   # Fix build with ocaml 4.0.4, https://codereview.scilab.org/#/c/19232
   patch -p2 < "${srcdir}"/${pkgname}-fix-ocaml-4.0.4.diff
+  # Fix type
+  patch -p0 < "${srcdir}"/${pkgname}-type.patch
 }
 
 build() {
