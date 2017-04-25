@@ -6,15 +6,15 @@
 
 _pkgname=lua-penlight
 pkgname=lua51-penlight
-pkgver=1.3.2
-pkgrel=3
+pkgver=1.5.2
+pkgrel=1
 pkgdesc="Lua libraries focusing on input data handling"
 arch=("any")
 url="https://github.com/stevedonovan/penlight"
 license=("custom")
 depends=("lua51" "lua51-filesystem")
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/stevedonovan/penlight/archive/$pkgver.tar.gz")
-md5sums=("0315a39834bb6fab07741ec04ede1bf4")
+md5sums=('aeb611a124774a6347f31bda0caa93b7')
 
 check() {
 	cd "$srcdir/Penlight-$pkgver"
