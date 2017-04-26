@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.1.r7311.1f51ef5d0
+pkgver=5.1.r7313.8b9e8743c
 pkgrel=1
 makedepends=('gcc5' 'git' 'wget' 'subversion' "cuda")
 depends=('python2' 'openblas-lapack')
@@ -41,17 +41,11 @@ prepare(){
 
 build () {
 	cd $srcdir/$pkgname/tools
-	sed -e '/^sclite_compiled/s/ sctk_configured//' \
-		-e 's?^\(\tcd openfst-[^\s]* \./configure --prefix\)=`pwd`?\1=/opt/'$pkgname'/tools/openfst-$(OPENFST_VERSION)?' \
-		-e 's?^\(\t\$(MAKE) -C openfst-[^\s]*\) \(install\)?\1 DESTDIR='$srcdir/$pkgname' \2?' \
+	sed \
+		-e '/^sclite_compiled/s/ sctk_configured//' \
 		-i Makefile
 	sed 's/^exit/# exit/' -i extras/check_dependencies.sh
 	make CXX=g++-5 sph2pipe openfst sctk_configured
-
-	OPENFST=../opt/$pkgname/tools/openfst-*
-	mv openfst-*/Makefile $OPENFST/
-	rm -r openfst-*/
-	mv $OPENFST ./
 
 	sed '/^DEFS/s/ -Dsize_t=unsigned//' -i sctk/src/sclite/makefile
 	make sclite
@@ -88,6 +82,9 @@ package () {
 	do
 		sed -i "s|$srcdir|/opt|g" $i
 	done
+
+	echo "export OPENFST=$(find tools -type d -name 'openfst*')" >> tools/env.sh
+	echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:${OPENFST}/lib' >> tools/env.sh
 
 	mkdir -p $pkgdir/opt/$pkgname
 	cp -rL src $pkgdir/opt/$pkgname
