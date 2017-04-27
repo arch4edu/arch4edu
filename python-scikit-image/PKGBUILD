@@ -5,8 +5,8 @@
 
 pkgbase=python-scikit-image
 pkgname=('python2-scikit-image' 'python-scikit-image')
-pkgver=0.12.3
-pkgrel=1.1
+pkgver=0.13.0
+pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
 url="http://scikit-image.org/"
@@ -14,8 +14,8 @@ license=('BSD')
 makedepends=('cython2' 'cython' 'python2-six' 'python-six' 'python2-scipy' 'python-scipy' 'python2-matplotlib'
              'python-matplotlib' 'python2-networkx' 'python-networkx' 'python2-pillow' 'python-pillow')
 options=(!emptydirs)
-source=(https://pypi.python.org/packages/source/s/scikit-image/scikit-image-${pkgver}.tar.gz)
-sha256sums=('82da192f0e524701e89c5379c79200bc6dc21373f48bf7778a864c583897d7c7')
+source=(https://pypi.python.org/packages/f0/a2/918366ba9095ed4c07646be903c795f375d978ee418136eecb0571559719/scikit-image-${pkgver}.tar.gz)
+sha256sums=('77a636bdc08c7668a15951894548c527f0c8c5c2abc86cb850de17551af51e3e')
 
 prepare() {
   cd "$srcdir"
