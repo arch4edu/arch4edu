@@ -1,7 +1,7 @@
 # Maintainer : Daniel Bermond < yahoo-com: danielbermond >
  
 pkgname=nccl
-_srcver=1.3.0
+_srcver=1.3.4
 _srcrel=1
 pkgver="${_srcver}.${_srcrel}"
 pkgrel=5
@@ -13,7 +13,7 @@ depends=('cuda')
 optdepends=("openmpi: To use 'ncclCommInitRank' in multi-process applications")
 conflicts=('nccl-git')
 source=("${pkgname}-${_srcver}-${_srcrel}.tar.gz"::"https://github.com/NVIDIA/nccl/archive/v${_srcver}-${_srcrel}.tar.gz")
-sha256sums=('53f36151061907bdcafad1c26c1d9370a0a8400f561a83704a5138213ba51003')
+sha256sums=('11e4eb44555bb28b9cbad973dacb4640b82710c9769e719afc2013b63ffaf884')
 
 prepare() {
     cd "${pkgname}-${_srcver}-${_srcrel}"
