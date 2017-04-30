@@ -9,7 +9,7 @@
 
 set -u
 pkgname='hadoop'
-pkgver=2.7.3
+pkgver=2.8.0
 pkgrel=1
 pkgdesc='Hadoop - MapReduce implementation and distributed filesystem'
 arch=('i686' 'x86_64')
@@ -40,7 +40,7 @@ backup=(
 options=('!strip')
 install="${pkgname}.install"
 source=(
-  "http://mirrors.gigenet.com/apache/"
+  "http://www-us.apache.org/dist/"
   # "http://mirror3.layerjet.com/apache/"
   # "http://apache.openmirror.de/"
   # "http://mirror.serversupportforum.de/apache/"
@@ -67,7 +67,7 @@ source=(
 )
 _verwatch=("${source[0]}hadoop/common/" '.*href="hadoop-\([0-9\.]\+\)/.*' 'f')
 source[0]="${source[0]}hadoop/common/hadoop-${pkgver}/hadoop-${pkgver}.tar.gz"
-sha256sums=('d489df3808244b906eb38f4d081ba49e50c4603db03efd5e594a1e98b09259c2'
+sha256sums=('3c0c6053651970c3ce283c100ee3e4e257c7f2dd7d7f92c98c8b0a3a440c04a0'
             'b6607cb8531244d9be9241d8d4980d5695869f89fa598c8d24b35ec503df413b'
             'e584c32246fd23fe5f35b13399372419584c27a234364b12d1479f3c87e70748'
             '93cb40f76f6bb0c1924b7ef083b82d39bf32190f86c28fc6304839703cdda7b1'
