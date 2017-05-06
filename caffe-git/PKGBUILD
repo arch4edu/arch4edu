@@ -3,24 +3,35 @@
 # Contributor: Jonathan Yantis
 
 pkgname=caffe-git
-pkgver=1.0.r2.geeebdab16
+_srcname=caffe
+pkgver=1.0.r5.g7d3f8a7ea
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
 url="http://caffe.berkeleyvision.org/"
 license=('BSD')
-depends=( # binary repositories:
-          'boost-libs' 'protobuf' 'google-glog' 'gflags' 'hdf5' 'opencv' 'leveldb'
-          'lmdb' 'cuda' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
-          'python-matplotlib' 'ipython' 'python-h5py' 'python-networkx' 'python-nose'
-          'python-pandas' 'python-dateutil' 'python-protobuf' 'python-gflags'
-          'python-yaml' 'python-pillow' 'python-six'
-          # AUR:
-          'openblas-lapack' 'cudnn' 'nccl' 'python-leveldb' 'python-scikit-image'
-          'python-pydot')
-makedepends=('git' 'doxygen' 'texlive-core')
-provides=('caffe' 'caffe-cpu' 'caffe-cpu-git')
-conflicts=('caffe' 'caffe-cpu' 'caffe-cpu-git' 'caffe-dr-git' 'caffe-mnc-dr-git')
+depends=(
+    # binary repositories:
+        'boost-libs' 'protobuf' 'google-glog' 'gflags' 'hdf5' 'opencv' 'leveldb'
+        'lmdb' 'cuda' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
+        'python-matplotlib' 'ipython' 'python-h5py' 'python-networkx' 'python-nose'
+        'python-pandas' 'python-dateutil' 'python-protobuf' 'python-gflags'
+        'python-yaml' 'python-pillow' 'python-six'
+    # AUR:
+        # required:
+            'openblas-lapack'
+        # not required but enabled in build:
+            'cudnn' 'nccl'
+        #python:
+            'python-leveldb' 'python-scikit-image' 'python-pydotplus'
+    # NOTE:
+    # python-pydotplus (or python-pydot) is required by python executable draw_net.py
+    # https://github.com/BVLC/caffe/blob/eeebdab16155d34ff8f5f42137da7df4d1c7eab0/python/caffe/draw.py#L7-L22
+)
+makedepends=('git' 'gcc5' 'doxygen' 'texlive-core')
+provides=('caffe')
+conflicts=('caffe' 'caffe-cpu' 'caffe-cpu-git' 'caffe-dr-git' 'caffe-mnc-dr-git'
+           'caffe2' 'caffe2-git' 'caffe2-cpu' 'caffe2-cpu-git')
 source=("${pkgname}"::"git+https://github.com/BVLC/caffe.git")
 sha256sums=('SKIP')
 
@@ -42,7 +53,7 @@ prepare() {
     sed -i '/USE_LMDB/s/^#[[:space:]]//;/USE_LMDB/s/0/1/'       Makefile.config
     sed -i '/OPENCV_VERSION/s/^#[[:space:]]//g'                 Makefile.config
     
-    # use gcc5 (gcc6 do not work)
+    # use gcc5 (CUDA code requires gcc5)
     sed -i '/CUSTOM_CXX/s/^#[[:space:]]//;/CUSTOM_CXX/s/$/-5/' Makefile.config
     
     # set CUDA directory
@@ -73,6 +84,7 @@ prepare() {
     #     - uncomment this block
     #     - comment the python3 block
     #     - change python3 dependencies to python2
+    #     - change python2 directories in package() to python3
     #     - NOTE: do not enable both python2 and python3 blocks. choose only one.
     #     - NOTE: python2 is the Caffe default but this package uses python3 by default
     # python2 settings
@@ -101,7 +113,6 @@ build() {
 }
 
 # uncomment this block if you want to run the checks/tests
-# (usually takes a lot of time; it will prevent package to be built in case of error)
 #check() {
 #    cd "$pkgname"
 #    msg2 "Building target 'test'..."
@@ -115,20 +126,18 @@ package() {
     mkdir -p "${pkgdir}/usr/bin"
     mkdir -p "${pkgdir}/usr/include/caffe/"{layers,proto,test,util}
     mkdir -p "${pkgdir}/usr/lib/python3.6/site-packages/caffe/"{imagenet,proto,test}
-    mkdir -p "${pkgdir}/usr/share/"{caffe,doc/"${pkgname}"/search,licenses/"${pkgname}"}
-    
-    cd "${pkgname}/distribute"
+    mkdir -p "${pkgdir}/usr/share/"{caffe,doc/"${_srcname}"/search,licenses/"${pkgname}"}
     
     # binaries
-    cd bin
+    cd "${srcdir}/${pkgname}/distribute/bin"
     install -D -m755 * "${pkgdir}/usr/bin"
     
     # libraries
-    cd ../lib
+    cd "${srcdir}/${pkgname}/distribute/lib"
     install -D -m755 *.so "${pkgdir}/usr/lib"
     
     # includes
-    cd ../include/caffe
+    cd "${srcdir}/${pkgname}/distribute/include/caffe"
     install -D -m644 *.hpp "${pkgdir}/usr/include/caffe"
     for _dir in layers proto test util
     do
@@ -137,7 +146,7 @@ package() {
     done
     
     # python
-    cd ../../../python
+    cd "${srcdir}/${pkgname}/distribute/python"
     install -D -m755 *.py "${pkgdir}/usr/bin"
     rm -rf python # remove duplicated 'python' folder
     
@@ -151,7 +160,7 @@ package() {
     
     for _dir in imagenet proto test
     do
-        cd "${srcdir}/${pkgname}/distribute/python/caffe/$_dir"
+        cd "${srcdir}/${pkgname}/distribute/python/caffe/${_dir}"
         for _file in *
         do
             _mode="$(stat --format '%a' "$_file")"
@@ -160,18 +169,18 @@ package() {
     done
     
     # proto
-    cd ../../../proto
+    cd "${srcdir}/${pkgname}/distribute/proto"
     install -D -m644 * "${pkgdir}/usr/share/caffe"
     
     # docs
-    cd ../../doxygen/html
+    cd "${srcdir}/${pkgname}/doxygen/html"
     for _file in *
     do
         [ -d "$_file" ] && continue # skip directories
-        install -D -m644 "$_file" "${pkgdir}/usr/share/doc/${pkgname}"
+        install -D -m644 "$_file" "${pkgdir}/usr/share/doc/${_srcname}"
     done
     cd search
-    install -D -m644 * "${pkgdir}/usr/share/doc/${pkgname}/search"
+    install -D -m644 * "${pkgdir}/usr/share/doc/${_srcname}/search"
     
     # license
     cd "${srcdir}/${pkgname}"
