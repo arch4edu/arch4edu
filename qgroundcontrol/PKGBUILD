@@ -1,6 +1,6 @@
 # Maintainer: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=3.1.0
+pkgver=3.1.3
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('any')
@@ -12,7 +12,7 @@ depends=(\
   'qt5-quickcontrols')
 
 source=('https://github.com/mavlink/qgroundcontrol/releases/download/v'${pkgver}'/qgroundcontrol.tar.bz2')
-md5sums=('f8810764874b76f2bfe47e2381d23379')
+md5sums=('371d5fe68360aa10ada6647814a544bc')
 
 package() {
   mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin"
