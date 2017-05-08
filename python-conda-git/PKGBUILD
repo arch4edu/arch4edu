@@ -2,13 +2,13 @@
 
 _gitname=conda
 pkgname=python-${_gitname}-git
-pkgver=4.3.15.r109.g00a05b899
+pkgver=4.3.17.r523.g0ecfda0a0
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
 arch=('any')
 url="http://conda.pydata.org/docs/"
 license=('BSD')
-depends=('python' 'python-psutil' 'python-pycosat' 'python-requests' 'python-ruamel.yaml-hg')
+depends=('python' 'python-psutil' 'python-pycosat' 'python-requests' 'python-ruamel-yaml')
 optdepends=(
   'python-conda-build: to use the conda build command'
 )
@@ -28,7 +28,7 @@ package() {
   cd "$srcdir/${_gitname}"
   echo $pkgver > conda/.version
   python utils/setup-testing.py install --root="$pkgdir/" --optimize=1
-  install -Dm 644 shell/conda.fish $pkgdir/usr/share/fish/functions/conda.fish
+  install -Dm 644 shell/conda.xsh $pkgdir/usr/share/fish/functions/conda.xsh
   install -Dm 644 LICENSE.txt $pkgdir/usr/share/licenses/${pkgname}/LICENSE.txt
 }
 
