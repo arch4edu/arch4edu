@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.1.r7322.578c17622
+pkgver=5.1.r7323.6eebc0482
 pkgrel=1
 makedepends=('gcc5' 'git' 'wget' 'subversion' "cuda")
 depends=('python2' 'openblas-lapack')
@@ -83,7 +83,7 @@ package () {
 		sed -i "s|$srcdir|/opt|g" $i
 	done
 
-	echo "export OPENFST=$(find tools -type d -name 'openfst*')" >> tools/env.sh
+	echo "export OPENFST=/opt/kaldi/$(find tools -type d -name 'openfst*')" >> tools/env.sh
 	echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:${OPENFST}/lib' >> tools/env.sh
 
 	mkdir -p $pkgdir/opt/$pkgname
