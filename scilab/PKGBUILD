@@ -4,14 +4,15 @@
 
 pkgname=scilab
 pkgver=6.0.0
-pkgrel=4
+pkgrel=5
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
 license=('BSD' 'custom:CeCILL' 'GPL2')
 depends=('suitesparse>=4.4.1'  'arpack' 'fftw' 'eigen'
-         'hdf5'
-         'libmatio' 'tk' 'curl'
+         'hdf5' 'libmatio'
+         'tk' 'bwidget'
+         'curl'
          'java-runtime>=8'
          'beanshell' 'eclipse-ecj' 'java-flexdock>=1.2.4' 'fop-hyph'
          'jeuclid-core' 'jgraphx>=2.0.0.1' 'javahelp2'
