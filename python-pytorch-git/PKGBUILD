@@ -3,7 +3,7 @@
 pkgbase="python-pytorch-git"
 pkgname=("python-pytorch-git" "python2-pytorch-git")
 _pkgname="pytorch"
-pkgver=0.1.11.r383.g8aa011f5
+pkgver=0.1.11.r391.gcb79c24d
 pkgrel=1
 pkgdesc="Tensors and Dynamic neural networks in Python with strong GPU acceleration"
 arch=('x86_64')
