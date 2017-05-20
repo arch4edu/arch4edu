@@ -6,15 +6,14 @@ _cubver=1.6.4
 _eigenver=3.3.3
 _gtestver=1.8.0
 _ncclver=1.3.4-1
-_protover=3.2.0
+_protover=3.3.1
 _pybindver=2.1.1
-_pthrpver=0.1
 _gitver=gitmaster
 _gitwebver=master
 
 pkgname=caffe2
 pkgver=0.7.0
-pkgrel=3
+pkgrel=6
 pkgdesc="A new lightweight, modular, and scalable deep learning framework (gpu enabled)"
 arch=('x86_64')
 url="http://caffe2.ai/"
@@ -23,6 +22,7 @@ depends=(
     # binary repositories:
         # required:
             'google-glog' 'protobuf' 'python2' 'python2-numpy' 'python2-protobuf' 'cuda'
+            'cudnn'
         # not required but enabled in build:
             'gflags' 'gtest' 'openmp' 'leveldb' 'lmdb' 'opencv' 'openmpi' 'snappy'
             'zeromq' 'hiredis'
@@ -32,8 +32,6 @@ depends=(
             'python2-scipy' 'python2-setuptools' 'python2-tornado' 'python2-pyzmq'
             'python2-gflags'
     # AUR:
-        # required:
-            'cudnn'
         # not required but enabled in build:
             'nccl'
         # python2:
@@ -65,7 +63,7 @@ source=(
         "thirdparty-FP16-${_gitver}.zip"::"https://github.com/Maratyszcza/FP16/archive/${_gitwebver}.zip"
         "thirdparty-FXdiv-${_gitver}.zip"::"https://github.com/Maratyszcza/FXdiv/archive/${_gitwebver}.zip"
         "thirdparty-psimd-${_gitver}.zip"::"https://github.com/Maratyszcza/psimd/archive/${_gitwebver}.zip"
-        "thirdparty-pthreadpool-${_pthrpver}.tar.gz"::"https://github.com/Maratyszcza/pthreadpool/archive/${_pthrpver}.tar.gz"
+        "thirdparty-pthreadpool-${_gitver}.zip"::"https://github.com/Maratyszcza/pthreadpool/archive/${_gitwebver}.zip"
 )
 noextract=("thirdparty-android-cmake-${_gitver}.zip"
            "thirdparty-benchmark-${_benchver}.tar.gz"
@@ -83,7 +81,7 @@ noextract=("thirdparty-android-cmake-${_gitver}.zip"
            "thirdparty-FP16-${_gitver}.zip"
            "thirdparty-FXdiv-${_gitver}.zip"
            "thirdparty-psimd-${_gitver}.zip"
-           "thirdparty-pthreadpool-${_pthrpver}.tar.gz"
+           "thirdparty-pthreadpool-${_gitver}.zip"
 )
 sha256sums=('b8f266ed283efc172fa96c06c878ed7f125755f89cde480580b754c1f03c0bab'
             'SKIP'
@@ -97,12 +95,12 @@ sha256sums=('b8f266ed283efc172fa96c06c878ed7f125755f89cde480580b754c1f03c0bab'
             '11e4eb44555bb28b9cbad973dacb4640b82710c9769e719afc2013b63ffaf884'
             'SKIP'
             'SKIP'
-            '2a25c2b71c707c5552ec9afdfb22532a93a339e1ca5d38f163fe4107af08c54c'
+            '30f23a45c6f4515598702a6d19c4295ba92c4a635d7ad8d331a4db9fccff392d'
             'f2c6874f1ea5b4ad4ffffe352413f7d2cd1a49f9050940805c2a082348621540'
             'SKIP'
             'SKIP'
             'SKIP'
-            '05d3f79647b7f54ed3be7c2e1fa0accc1d9e0f26e3dca9ab22c211a039ed2539'
+            'SKIP'
 )
 
 prepare() {
