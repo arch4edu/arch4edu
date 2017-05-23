@@ -6,30 +6,33 @@
 
 pkgname=javahelp2
 pkgver=2.0.05.r89
-pkgrel=1
+pkgrel=2
 pkgdesc="Java based help system"
 arch=('any')
-url="https://javahelp.java.net/"
+# Old URLs
+#"https://javahelp.java.net/"
 #"https://java.net/projects/javahelp/"
-license=(GPL2)
-makedepends=('apache-ant' 'subversion')
+# New URL
+url="https://javaee.github.io/javahelp/"
+license=('custom' 'CDDL' 'GPL2')
+#makedepends=('apache-ant' 'git')
+makedepends=('apache-ant')
 depends=('java-runtime')
-source=("${pkgname}::svn+https://svn.java.net/svn/javahelp~svn")
-sha256sums=('SKIP')
-
-pkgver() {
-    cd "$srcdir/${pkgname}"
-    local ver="$(svnversion | tr -d '[:alpha:]')"
-    printf "2.0.05.r%s" "$ver"
-}
+# Old source
+#source=("${pkgname}::svn+https://svn.java.net/svn/javahelp~svn")
+# New source
+# currently lacks everything
+#source=("${pkgname}::git+https://github.com/javaee/javahelp.git")
+source=("${pkgname}-${pkgver}.tar.xz::https://www.dropbox.com/s/ywczc6bdrh7h2hj/javahelp2.tar.xz?dl=1")
+sha256sums=('9047c842ff7963b2cc3116d59c796450609597a09c722a5fa918e14c82912e7b')
 
 build(){
-    cd "${srcdir}/${pkgname}/trunk/javahelp_nbproject"
+    cd "${srcdir}/${pkgname}/javahelp_nbproject"
     ant release
 }
 
 package() {
-    cd "${srcdir}/${pkgname}/trunk/javahelp_nbproject/dist/lib"
+    cd "${srcdir}/${pkgname}/javahelp_nbproject/dist/lib"
     install -dm755 "${pkgdir}/usr/share/java/javahelp"
     install -m644 -- *.jar "${pkgdir}/usr/share/java/javahelp"
     cd ../bin
