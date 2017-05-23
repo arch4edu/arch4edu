@@ -2,7 +2,7 @@
 # Contributor: Ziwei Zhu <zhuziwei1@outlook.com>
 pkgdesc="Recurrent Neural Network library for Torch7's nn"
 pkgname='torch7-rnn-git'
-pkgver=r617.a572cbc
+pkgver=r621.0130194
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-cunnx-git' 'torch7-dpnn-git' 'torch7-git' 'torch7-nn-git' 'torch7-nnx-git' 'torch7-torchx-git')
