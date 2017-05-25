@@ -2,7 +2,7 @@
 # Contributor: Ziwei Zhu <zhuziwei1@outlook.com>
 pkgdesc="A completely unstable and experimental package that extends Torch's builtin nn library "
 pkgname='torch7-nnx-git'
-pkgver=0.1.0.r254.g2241454
+pkgver=0.1.0.r256.gc5c4d6a
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git' 'torch7-xlua-git')
