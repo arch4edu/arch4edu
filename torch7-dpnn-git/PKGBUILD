@@ -2,7 +2,7 @@
 # Contributor: Ziwei Zhu <zhuziwei1@outlook.com>
 pkgdesc='deep extension to nn Modules and Criterions for Torch7'
 pkgname='torch7-dpnn-git'
-pkgver=r528.c86a9d3
+pkgver=r529.bf77980
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git' 'torch7-nn-git' 'torch7-nnx-git' 'lua-moses-git')
