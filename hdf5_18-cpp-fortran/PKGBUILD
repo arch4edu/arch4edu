@@ -2,8 +2,8 @@
 
 pkgname=hdf5_18-cpp-fortran
 _pkgname=hdf5
-pkgver=1.8.17
-pkgrel=3
+pkgver=1.8.18
+pkgrel=1
 arch=('i686' 'x86_64')
 pkgdesc="General purpose library and file format for storing scientific data"
 url="http://www.hdfgroup.org/HDF5/"
@@ -12,8 +12,8 @@ depends=('zlib' 'sh' 'gcc-libs')
 makedepends=('time' 'gcc-fortran')
 provides=('hdf5_18')
 conflicts=('hdf5_18')
-source=(ftp://ftp.hdfgroup.org/HDF5/releases/${_pkgname}-${pkgver/_/-}/src/${_pkgname}-${pkgver/_/-}.tar.bz2)
-sha1sums=('640f1a46cb1b353339695355b4fca42df05be765')
+source=("https://support.hdfgroup.org/ftp/HDF5/current18/src/${_pkgname}-${pkgver}.tar.bz2")
+sha1sums=('d7e008cbfcf5cb6913b5327a81bbcaf34cc9436d')
 
 build() {
 	cd "$srcdir/${_pkgname}-${pkgver/_/-}"
