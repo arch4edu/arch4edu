@@ -1,0 +1,1 @@
+complete -f -o default -X '!*.@(geo|pos|msh|mesh|stp|step|igs|iges|brep|unv|diff|vtk|med|mmed|rmed|bdf|nas|p3d|stl|wrl|vrml)'  gmsh
