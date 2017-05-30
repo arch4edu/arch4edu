@@ -1,16 +1,7 @@
-diff -ura pythia8223.old/examples/Makefile pythia8223.new/examples/Makefile
---- pythia8223.old/examples/Makefile	2017-03-23 02:43:36.788435229 +0200
-+++ pythia8223.new/examples/Makefile	2017-03-23 02:45:02.142402751 +0200
-@@ -27,7 +27,7 @@
- endif
- 
- # Check distribution (use local version first, then installed version).
--ifneq ("$(wildcard ../lib/libpythia8.a)","")
-+ifneq ("$(wildcard ../lib/libpythia8$(LIB_SUFFIX))","")
-   PREFIX_LIB=../lib
-   PREFIX_INCLUDE=../include
- endif
-@@ -51,16 +51,16 @@
+diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
+--- pythia8226-old/examples/Makefile	2017-04-26 14:08:44.000000000 +0200
++++ pythia8226-new/examples/Makefile	2017-05-30 14:08:10.583587697 +0200
+@@ -52,16 +52,16 @@
                  in the top PYTHIA directory)
  
  # PYTHIA libraries.
@@ -22,32 +13,41 @@ diff -ura pythia8223.old/examples/Makefile pythia8223.new/examples/Makefile
  # Examples without external dependencies.
 -main% : main%.cc $(PREFIX_LIB)/libpythia8.a
 +main% : main%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $^ -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON)
  
  # GZIP (required).
 -main34: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main34: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(GZIP_USE),true)
- 	$(CXX) $^ -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON)
  else
-@@ -69,7 +69,7 @@
+@@ -70,7 +70,7 @@
  
  # HEPMC2.
  main41 main42 main43 main85 main86 main87 main88 main89: $$@.cc\
 -	$(PREFIX_LIB)/libpythia8.a
 +	$(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(HEPMC2_USE),true)
- 	$(CXX) $^ -o $@ -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
+ 	$(CXX) $< -o $@ -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
  	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC
-@@ -78,7 +78,7 @@
+@@ -79,7 +79,7 @@
  endif
  
  # PROMC.
 -main46: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main46: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(PROMC_USE),true)
- 	$(CXX) $^ -o $@ -I$(PROMC_INCLUDE)/src -I$(PROMC_INCLUDE)/include\
+ 	$(CXX) $< -o $@ -I$(PROMC_INCLUDE)/src -I$(PROMC_INCLUDE)/include\
  	 $(CXX_COMMON) -DPROMC=\"$(PROMC_INCLUDE)\" -Wno-long-long\
+@@ -90,7 +90,7 @@
+ endif
+ 
+ # EVTGEN (and HEPMC2).
+-main48: $$@.cc $(PREFIX_LIB)/libpythia8.a
++main48: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
+ ifeq ($(EVTGEN_USE)$(HEPMC2_USE)$(ENABLE_SHARED),truetruetrue)
+ 	$(CXX) $< -o $@ -I$(EVTGEN_INCLUDE) $(CXX_COMMON)\
+ 	 -DEVTGEN_PYTHIA -DEVTGEN_EXTERNAL -Wl,-rpath,$(HEPMC2_LIB)\
 @@ -100,7 +100,7 @@
  endif
  
@@ -55,55 +55,64 @@ diff -ura pythia8223.old/examples/Makefile pythia8223.new/examples/Makefile
 -main71 main72: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main71 main72: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(FASTJET3_USE),true)
- 	$(CXX) $^ -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
+ 	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
  	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet
 @@ -109,7 +109,7 @@
+ endif
+ 
+ # FASTJET3 with modified Mass-Drop Tagger.
+-main74: $$@.cc $(PREFIX_LIB)/libpythia8.a
++main74: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
+ ifeq ($(FASTJET3_USE),true)
+ 	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
+ 	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet -lRecursiveTools
+@@ -118,7 +118,7 @@
  endif
  
  # FASTJET3 and HEPMC2.
 -main81 main82 main83 main84: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main81 main82 main83 main84: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(FASTJET3_USE)$(HEPMC2_USE),truetrue)
- 	$(CXX) $^ -o $@ -I$(FASTJET3_INCLUDE) -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
+ 	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
  	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC\
-@@ -119,7 +119,7 @@
+@@ -128,7 +128,7 @@
  endif
  
  # ROOT (turn off all warnings for readability).
 -main91: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main91: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(ROOT_USE),true)
- 	$(CXX) $^ -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
+ 	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags`\
-@@ -127,7 +127,7 @@
+@@ -136,7 +136,7 @@
  else
  	@echo "Error: $@ requires ROOT"
  endif
 -main92: $$@.cc $(PREFIX_LIB)/libpythia8.a main92.so
 +main92: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX) main92.so
  ifeq ($(ROOT_USE),true)
- 	$(CXX) $^ -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
+ 	$(CXX) $< main92.so -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags` -Wl,-rpath,./\
-@@ -135,7 +135,7 @@
+@@ -144,7 +144,7 @@
  else
  	@echo "Error: $@ requires ROOT"
  endif
 -main92.so: main92Dct.cc $(PREFIX_LIB)/libpythia8.a
 +main92.so: main92Dct.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $^ -o $@ -w -I$(ROOT_INCLUDE) $(CXX_SHARED) $(CXX_COMMON)\
+ 	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_SHARED) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags`
  main92Dct.cc: main92.h main92LinkDef.h
-@@ -143,11 +143,11 @@
+@@ -152,11 +152,11 @@
  	 $(ROOT_BIN)rootcint -f $@ -c -I$(PREFIX_INCLUDE) $^
  
  # User-written examples for tutorials, without external dependencies.
 -mymain% : mymain%.cc $(PREFIX_LIB)/libpythia8.a
 +mymain% : mymain%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $^ -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON)
  
  # Internally used tests, without external dependencies.
 -test% : test%.cc $(PREFIX_LIB)/libpythia8.a
 +test% : test%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $^ -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON)
  
  # Clean.
