@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgdesc="Utility library for functional programming in Lua"
 pkgname='lua-moses-git'
-pkgver=Moses.1.6.1.1.r6.gd7417d9
+pkgver=Moses.1.6.1.1.r9.g57864a9
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('lua')
