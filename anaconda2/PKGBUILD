@@ -3,7 +3,7 @@
 # Contributor : Jingbei Li <i@jingbei.li>
 
 pkgname=anaconda2
-pkgver=4.3.1
+pkgver=4.4.0
 pkgrel=1
 pkgdesc="Completely free enterprise-ready Python distribution for large-scale data processing, predictive analytics, and scientific computing."
 arch=('x86' 'x86_64')
@@ -14,7 +14,7 @@ source=("http://repo.continuum.io/archive/Anaconda2-${pkgver}-Linux-x86_64.sh"
         "install.py.patch"
         "$pkgname.install")
 options=(!strip libtool)
-sha256sums=('e9b8f2645df6b1527ba56d61343162e0794acc3ee8dde2a6bba353719e2d878d'
+sha256sums=('2d30b91ed4d215b6b4a15162a3389e9057b15445a0c02da71bd7bd272e7b824e'
             '04b4ea775ba805ff24e93162b6679e65d00b997a46cde11fd76602db4e824dc7'
             'c491735df1753335c6aa5b3b71bd936ccb4ff5622fedbf22d1d6d9da5bd45fbc')
 _pythonver='2.7.13-0'
