@@ -5,8 +5,8 @@
 # Contributor: Sebastian Voecking < voeck at web dot de >
 
 pkgname=root
-pkgver=6.08.06
-pkgrel=2
+pkgver=6.10.00
+pkgrel=1
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
 url='http://root.cern.ch'
@@ -37,16 +37,12 @@ optdepends=('blas: Optional extensions to TMVA'
 options=('!emptydirs')
 install=root.install
 source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
-        'JupyROOT_encoding.patch'
-        'JupyROOT_fix.patch'
         'root.install'
         'root.sh'
         'root.xml'
         'rootd'
         'settings.cmake')
-sha256sums=('ea31b047ba6fc04b0b312667349eaf1498a254ccacd212144f15ffcb3f5c0592'
-            'dbf08ee3b506a2089f58d55ec9b1e6b77f337a6d2ebbb081e69cf729e531da3f'
-            'a17309295f998ed826dcbf1b5d04de7ed44d64c35221806c75b775796578783d'
+sha256sums=('5753eede44dcd1898804fb0127e4a3e9c1acf6ac03ae5e5eec7aace0f065b8e7'
             '72ba38e0faffa084ac2f787f360201f72b1733d27e36c3cb88eb2f3a4716fa61'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
@@ -54,11 +50,6 @@ sha256sums=('ea31b047ba6fc04b0b312667349eaf1498a254ccacd212144f15ffcb3f5c0592'
             'a8db29f6acf32659daca8de35481b25ed847b2182e6033940f3568f3d1ad22fb')
 prepare() {
     cd "${pkgname}-${pkgver}"
-
-    msg2 'Applying patches...'
-    # Fix JupyROOT issues until upstream releases arrive
-    patch -p1 -i "${srcdir}/JupyROOT_encoding.patch"
-    patch -p1 -i "${srcdir}/JupyROOT_fix.patch"
 
     msg2 'Adjusting to Python3...'
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
