@@ -6,8 +6,8 @@
 
 pkgname=root-extra
 _pkgname=root
-pkgver=6.08.06
-pkgrel=2
+pkgver=6.10.00
+pkgrel=1
 provides=('root' 'root-extra')
 conflicts=('root')
 pkgdesc='C++ data analysis framework and interpreter from CERN with extra features enabled.'
@@ -42,16 +42,12 @@ optdepends=('blas: Optional extensions to TMVA'
 options=('!emptydirs')
 install=root-extra.install
 source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
-        'JupyROOT_encoding.patch'
-        'JupyROOT_fix.patch'
         'root-extra.install'
         'root.sh'
         'root.xml'
         'rootd'
         'settings.cmake')
-sha256sums=('ea31b047ba6fc04b0b312667349eaf1498a254ccacd212144f15ffcb3f5c0592'
-            'dbf08ee3b506a2089f58d55ec9b1e6b77f337a6d2ebbb081e69cf729e531da3f'
-            'a17309295f998ed826dcbf1b5d04de7ed44d64c35221806c75b775796578783d'
+sha256sums=('5753eede44dcd1898804fb0127e4a3e9c1acf6ac03ae5e5eec7aace0f065b8e7'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
@@ -59,11 +55,6 @@ sha256sums=('ea31b047ba6fc04b0b312667349eaf1498a254ccacd212144f15ffcb3f5c0592'
             '40503aebd8a0ab5380a24d69145cf7d93d483d4d9330e4c23fb04e55c9ed2caf')
 prepare() {
     cd "${_pkgname}-${pkgver}"
-
-    msg2 'Applying patches...'
-    # Apply optional JupyROOT fixes while waiting for upstream to release
-    patch -p1 -i "${srcdir}/JupyROOT_encoding.patch"
-    patch -p1 -i "${srcdir}/JupyROOT_fix.patch"
 
     msg2 'Adjusting to Python3...'
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
