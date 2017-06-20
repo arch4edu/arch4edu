@@ -9,7 +9,7 @@
 # Contributor: chuckdaniels
 
 pkgname=paraview
-_pkgver=5.3.0
+_pkgver=5.4.0
 pkgver=${_pkgver//-/.}
 pkgrel=3
 pkgdesc='Parallel Visualization Application using VTK'
@@ -17,19 +17,16 @@ arch=('i686' 'x86_64')
 url='http://www.paraview.org'
 license=('custom')
 depends=('qt5-tools' 'qt5-x11extras'  'qt5-xmlpatterns'
-         'openmpi' 'python-matplotlib' 'python-numpy' 'ffmpeg' 'boost' 'glew'
+         'openmpi' 'python-matplotlib' 'python-numpy'
+         'ffmpeg' 'boost' 'glew' 'protobuf'
          'expat' 'freetype2' 'libjpeg' 'libxml2' 'libtheora' 'libpng' 'libtiff' 'zlib'
          'ospray' 'cgns')
 makedepends=('cmake' 'mesa' 'gcc-fortran')
-source=("http://paraview.org/files/v${pkgver:0:3}/ParaView-v${_pkgver}.tar.gz"
-        'paraview-desktop.patch')
-sha1sums=('c8a31039b189e63b20618bbfa91e89555ce62b6d'
-          'd7da23daca34cd015294c4d2f702cdc4a81f0853')
+source=("http://paraview.org/files/v${pkgver:0:3}/ParaView-v${_pkgver}.tar.gz")
+sha1sums=('d1bc9112d76f603d3232069b4ea9c507c4e1b1a7')
 
 prepare() {
   cd "${srcdir}/ParaView-v${_pkgver}"
-
-  patch -p1 -i ../paraview-desktop.patch
 
   #rm -rf "${srcdir}/build"
   mkdir -p "${srcdir}/build"
@@ -39,12 +36,13 @@ build() {
   cd "${srcdir}/build"
 
   # flags to enable system libs
-  # add PROTOBUF when https://gitlab.kitware.com/paraview/paraview/issues/13656 gets fixed
   local VTK_USE_SYSTEM_LIB=""
-  for lib in EXPAT FREETYPE GLEW HDF5 JPEG LIBXML2 OGGTHEORA PNG TIFF ZLIB; do
+  for lib in CGNS EXPAT FREETYPE GLEW HDF5 JPEG LIBXML2 OGGTHEORA PNG PROTOBUF TIFF ZLIB
+  do
     VTK_USE_SYSTEM_LIB+="-DVTK_USE_SYSTEM_${lib}:BOOL=ON "
   done
 
+  # VisitBridge bug: https://gitlab.kitware.com/paraview/paraview/issues/17456
   cmake \
     -DBUILD_DOCUMENTATION:BOOL=OFF \
     -DBUILD_EXAMPLES:BOOL=ON \
@@ -63,13 +61,14 @@ build() {
     -DPARAVIEW_INSTALL_DEVELOPMENT_FILES:BOOL=ON \
     -DPARAVIEW_QT_VERSION=5 \
     -DPARAVIEW_USE_MPI:BOOL=ON \
-    -DPARAVIEW_USE_VISITBRIDGE:BOOL=ON \
+    -DPARAVIEW_USE_VISITBRIDGE:BOOL=OFF \
     -DPARAVIEW_USE_OSPRAY:BOOL=ON \
     -DVISIT_BUILD_READER_CGNS:BOOL=ON \
     -DVTK_PYTHON_VERSION=3 \
     -DVTK_QT_VERSION=5 \
     -DVTK_RENDERING_BACKEND:STRING=OpenGL2 \
     -DVTK_SMP_IMPLEMENTATION_TYPE:STRING=OpenMP \
+    -DVTK_USE_TK:BOOL=ON \
     ${VTK_USE_SYSTEM_LIB} \
     ../ParaView-v${_pkgver}
 
