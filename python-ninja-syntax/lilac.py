@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
+
 from lilaclib import *
 
-build_prefix = 'arch4edu-x86_64'
-depends = ['python-ninja-syntax', ('python-ninja-syntax', 'python2-ninja-syntax')]
+build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build
 
