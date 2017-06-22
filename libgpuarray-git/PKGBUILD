@@ -2,7 +2,7 @@
 # Contributor: Jon Gjengset <jon@thesquareplanet.com>
 pkgname=libgpuarray-git
 _gitname=libgpuarray
-pkgver=0.6.1.4.g56b2df4
+pkgver=0.6.7
 pkgrel=1
 pkgdesc="Library to manipulate tensors on the GPU"
 arch=('i686' 'x86_64')
