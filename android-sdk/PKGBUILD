@@ -3,19 +3,31 @@
 # Contributor: Daniel Micay <danielmicay@gmail.com>
 # Contributor: Gordin <9ordin@gmail.com>
 
+# Finding dependencies:
+# ELF dependencies:
+# cd /lib/ && find /opt/android-sdk/tools/ -type f -executable \
+#   | LANG=C xargs readelf -d 2>/dev/null \
+#   | grep -oP '(?<=Shared library: \[).*(?=\])' | LANG=C xargs pacman -Qo \
+#   | cut -d' ' -f5 | sort | uniq
+# .so in JAR files:
+# find /opt/android-sdk/tools/ -type f -exec unzip -l {} 2>&1 \; \
+#   | grep -P '^Archive:|\.so$' \
+#   | awk 'BEGIN { archive = ""; } { if (NF == 2) { archive = $0; } else { \
+#     if (length(archive) > 0) { print archive; archive="" } print $0; } }'
+# Note that dependency on libxtst is from swt.
+
 pkgname=android-sdk
 pkgver=26.0.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Google Android SDK'
 arch=('x86_64' 'i686')
 url='https://developer.android.com/studio/releases/sdk-tools.html'
 license=('custom')
-depends_i686=('java-environment' 'alsa-lib' 'openal' 'libstdc++5' 'libxv' 'sdl'
-              'ncurses' 'swt' 'zlib')
-depends_x86_64=('java-environment' 'lib32-alsa-lib' 'lib32-openal'
-               'lib32-libstdc++5' 'lib32-libxv' 'lib32-mesa' 'lib32-ncurses'
-               'lib32-sdl' 'lib32-zlib' 'lib32-fontconfig' 'lib32-libpulse'
-               'swt')
+depends_i686=('java-environment' 'libxtst' 'fontconfig' 'freetype2' 'gcc-libs'
+              'libx11' 'libxext' 'libxrender' 'zlib')
+depends_x86_64=('java-environment' 'libxtst' 'fontconfig' 'freetype2'
+                'lib32-gcc-libs' 'lib32-glibc' 'libx11' 'libxext' 'libxrender'
+                'zlib')
 optdepends=('android-emulator: emulator has become standalone since 25.3.0'
             'android-sdk-platform-tools: adb, aapt, aidl, dexdump and dx'
             'android-udev: udev rules for Android devices')
