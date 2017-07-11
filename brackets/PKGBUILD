@@ -1,8 +1,8 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 
 pkgname=brackets
-pkgver=1.9
-pkgrel=4
+pkgver=1.10
+pkgrel=1
 pkgdesc="An open source code editor for the web, written in JavaScript, HTML and CSS. Stable git Tags."
 arch=('i686' 'x86_64')
 url="http://brackets.io"
@@ -19,7 +19,7 @@ conflicts=("brackets-git" "brackets-bin")
 makedepends=('git' 'unzip' 'gtk2' 'python2' 'npm')
 install=${pkgname}.install
 source=("git+https://github.com/adobe/brackets-shell.git#branch=linux-1547"
-	#"brackets-shell::git+https://github.com/adobe/brackets-shell.git#tag=release-${pkgver}"
+	#"git+https://github.com/adobe/brackets-shell.git#tag=release-${pkgver}"
 	"git+https://github.com/adobe/brackets.git#tag=release-${pkgver}"
 )
 md5sums=('SKIP' 'SKIP')
