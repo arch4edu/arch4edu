@@ -2,7 +2,7 @@
 
 pkgdesc='Lua interface to QT library'
 pkgname='torch7-qtlua-git'
-pkgver=r81.a29e8a7
+pkgver=r83.8b80419
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819' 'qt4')
