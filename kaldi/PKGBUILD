@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.2.r7498.28c613966
+pkgver=5.2.r7501.97922a856
 pkgrel=1
 makedepends=('gcc5' 'git' 'wget' 'subversion' "cuda")
 depends=('python2' 'openblas-lapack')
@@ -58,12 +58,12 @@ build () {
 	extras/install_srilm.sh
 
 	cd $srcdir/$pkgname/src
-	./configure $_cuda_config_opts \
+	CXX=g++-5 ./configure $_cuda_config_opts \
 		--shared \
 		--openblas-root=/usr \
 		--threaded-math=yes
-	make CXX=g++-5 depend
-	make CXX=g++-5
+	make depend
+	make
 }
 
 package () {
