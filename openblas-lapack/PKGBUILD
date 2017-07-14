@@ -8,7 +8,7 @@ _pkgname=openblas
 pkgver=0.2.19
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.6.0
-pkgrel=2.1
+pkgrel=3
 pkgdesc="Optimized BLAS library based on GotoBLAS2 1.13 BSD (providing blas, lapack, and cblas)"
 arch=('any')
 url="http://www.openblas.net/"
@@ -54,11 +54,15 @@ package(){
   ln -sf libopenblas.so libblas.so.${_lapackver}
   # CBLAS
   ln -sf libopenblas.so libcblas.so
+  ln -sf libopenblas.so libcblas.so.${_lapackver:0:1}
+  ln -sf libopenblas.so libcblas.so.${_lapackver}
   # LAPACK
   ln -sf libopenblas.so liblapack.so
   ln -sf libopenblas.so liblapack.so.${_lapackver:0:1}
   ln -sf libopenblas.so liblapack.so.${_lapackver}
   # LAPACKE
   ln -sf libopenblas.so liblapacke.so
+  ln -sf libopenblas.so liblapacke.so.${_lapackver:0:1}
+  ln -sf libopenblas.so liblapacke.so.${_lapackver}
 }
 # vim:set ts=2 sw=2 et:
