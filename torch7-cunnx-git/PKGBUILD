@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgdesc='Experimental cuda nn package'
 pkgname='torch7-cunnx-git'
-pkgver=r184.80e55ad
+pkgver=r185.3307c4a
 pkgrel=1
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819' 'torch7-nn-git' 'torch7-cunn-git' 'torch7-nnx-git' 'torch7-cutorch-git' 'cuda')
