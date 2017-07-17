@@ -2,7 +2,7 @@
 
 pkgname=brackets
 pkgver=1.10
-pkgrel=1
+pkgrel=2
 pkgdesc="An open source code editor for the web, written in JavaScript, HTML and CSS. Stable git Tags."
 arch=('i686' 'x86_64')
 url="http://brackets.io"
@@ -16,7 +16,7 @@ optdepends=(
 	"hicolor-icon-theme: for hicolor theme hierarchy"
 )
 conflicts=("brackets-git" "brackets-bin")
-makedepends=('git' 'unzip' 'gtk2' 'python2' 'npm')
+makedepends=('git' 'unzip' 'gtk2' 'python2' 'npm' 'gcc5')
 install=${pkgname}.install
 source=("git+https://github.com/adobe/brackets-shell.git#branch=linux-1547"
 	#"git+https://github.com/adobe/brackets-shell.git#tag=release-${pkgver}"
@@ -40,10 +40,8 @@ build() {
 	npm install
 	##### environment cleaning due to branch switch ####
 	rm -rf out
-	node_modules/grunt-cli/bin/grunt cef-clean
-	####################################################
 	node_modules/grunt-cli/bin/grunt setup
-	make
+	LINK=g++-5 make
 }
 
 package() {
