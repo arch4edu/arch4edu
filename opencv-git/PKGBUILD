@@ -12,7 +12,7 @@
 
 _name=opencv
 pkgname="${_name}-git"
-pkgver=3.3.0.rc.r126.g9313978f61
+pkgver=3.3.0.rc.r134.g432d0fd707
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="http://opencv.org/"
