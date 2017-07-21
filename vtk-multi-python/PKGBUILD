@@ -6,13 +6,14 @@
 
 pkgbase='vtk-multi-python'
 pkgname=('vtk-base' 'python2-vtk' 'python-vtk')
-pkgver=7.1.0
+pkgver=7.1.1
 _majorver=7.1
-pkgrel=3
+pkgrel=1
 arch=('i686' 'x86_64')
 url='http://www.vtk.org/'
 license=('BSD')
 depends=('gcc-libs')
+conflicts=('vtk' 'vtk6')
 makedepends=('boost' 'cmake' 'ninja' 'java-environment' 'doxygen' 'gnuplot' 'tk' 'wget' 'python2-matplotlib' 'python2-twisted' 'python2-mpi4py' 'python2-autobahn' 'python-matplotlib' 'python-twisted' 'python-mpi4py' 'python-autobahn' 'unixodbc' 'gdal' 'openmpi' 'mariadb' 'glew' 'ffmpeg' 'lesstif' 'qt5-base' 'qt5-x11extras' 'qt5-tools' 'qt5-webkit' 'jsoncpp')
 optdepends=('java-runtime: java bindings'
             'tk: tcl bindings'
@@ -35,9 +36,9 @@ source=("http://www.vtk.org/files/release/${_majorver}/VTK-${pkgver}.tar.gz"
 	'soversion-sharedlibs.patch'
 	'python-suffix.patch')
 options=(staticlibs !emptydirs)
-sha1sums=('d3701ff23cb935e107e00174cf75d45a7a9cbdda'
-          'd67694b32b8720a081fefac3a26b317b81e785c2'
-          'bfcf4f87e53f81b7e6bd980e7b0137cef156f66c'
+sha1sums=('8b3433e408ba3408354356dee4d295ea599a817c'
+          'e0021056162e72e0dac20fa833ea4f9ee29dee48'
+          '1ba20c351ac8237c168198a89504c3d93ea699c7'
           '823f10356ddc86d22629ee5a804f22145af91b6d'
           'a597aa42e6f623b346c16db36aea31df29bdd8da')
 
