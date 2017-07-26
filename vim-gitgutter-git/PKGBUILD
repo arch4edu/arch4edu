@@ -1,10 +1,10 @@
-# Maintainer: Eli Schwartz <eschwartz93@gmail.com>
+# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
 # Contributor: Joris Steyn <jorissteyn@gmail.com>
 
 # All my PKGBUILDs are managed at https://github.com/eli-schwartz/pkgbuilds
 
 pkgname=vim-gitgutter-git
-pkgver=409.gdcac1f7
+pkgver=410.gc92f61a
 pkgrel=1
 pkgdesc="A Vim plugin which shows a git diff in the 'gutter'"
 arch=('any')
