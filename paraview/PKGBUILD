@@ -22,14 +22,19 @@ depends=('qt5-tools' 'qt5-x11extras'  'qt5-xmlpatterns'
          'expat' 'freetype2' 'libjpeg' 'libxml2' 'libtheora' 'libpng' 'libtiff' 'zlib'
          'ospray' 'cgns')
 makedepends=('cmake' 'mesa' 'gcc-fortran' 'ninja')
-source=("http://paraview.org/files/v${pkgver:0:3}/ParaView-v${_pkgver}.tar.gz")
-sha1sums=('d1bc9112d76f603d3232069b4ea9c507c4e1b1a7')
+source=("http://paraview.org/files/v${pkgver:0:3}/ParaView-v${_pkgver}.tar.gz"
+        "visit_fix_gcc7.patch")
+sha1sums=('d1bc9112d76f603d3232069b4ea9c507c4e1b1a7'
+          'f86feb14e7e17ce3ad5341ee4f52b40111cecbec')
 
 prepare() {
   cd "${srcdir}/ParaView-v${_pkgver}"
 
   #rm -rf "${srcdir}/build"
   mkdir -p "${srcdir}/build"
+
+  patch Utilities/VisItBridge/databases/readers/Vs/VsStaggeredField.C \
+    "${srcdir}/visit_fix_gcc7.patch"
 }
 
 build() {
@@ -42,7 +47,6 @@ build() {
     VTK_USE_SYSTEM_LIB+="-DVTK_USE_SYSTEM_${lib}:BOOL=ON "
   done
 
-  # VisitBridge bug: https://gitlab.kitware.com/paraview/paraview/issues/17456
   cmake \
     -DBUILD_DOCUMENTATION:BOOL=OFF \
     -DBUILD_EXAMPLES:BOOL=ON \
@@ -60,7 +64,7 @@ build() {
     -DPARAVIEW_INSTALL_DEVELOPMENT_FILES:BOOL=ON \
     -DPARAVIEW_QT_VERSION:STRING=5 \
     -DPARAVIEW_USE_MPI:BOOL=ON \
-    -DPARAVIEW_USE_VISITBRIDGE:BOOL=OFF \
+    -DPARAVIEW_USE_VISITBRIDGE:BOOL=ON \
     -DPARAVIEW_USE_OSPRAY:BOOL=ON \
     -DVISIT_BUILD_READER_CGNS:BOOL=ON \
     -DVTK_PYTHON_FULL_THREADSAFE:BOOL=ON \
