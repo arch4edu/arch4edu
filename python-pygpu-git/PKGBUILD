@@ -2,7 +2,7 @@
 # Contributor: David McInnis <davidm@eagles.ewu.edu>
 pkgbase='python-pygpu-git'
 pkgname=('python-pygpu-git' 'python2-pygpu-git')
-pkgver=0.6.9.6.gd4578db
+pkgver=0.6.9.10.gab2a43a
 _gitname="libgpuarray"
 pkgrel=1
 pkgdesc="Python bindings for libgpuarray"
