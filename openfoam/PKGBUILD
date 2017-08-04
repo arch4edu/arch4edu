@@ -7,18 +7,19 @@ pkgname=openfoam
 
 # The distributors package name
 _distpkgname=OpenFOAM
-_gitname=$_distpkgname-4.x
+_gitname=$_distpkgname-5.x
 
-pkgver=4.1
+pkgver=5.0
 pkgrel=1
 pkgdesc="The open source CFD toolbox"
 arch=('x86_64')
 url="http://www.openfoam.org"
 license=("GPL")
 depends=('bzip2' 'paraview' 'parmetis' 'scotch' 'boost' 'flex' 'cgal')
+makedepends=('bash')
 source=("https://github.com/OpenFOAM/$_gitname/archive/version-$pkgver.tar.gz")
 install="${pkgname}.install"
-md5sums=('318a446c4ae6366c7296b61184acd37c')
+md5sums=('a46b4e5b56af513ce2e695bd976c5f58')
 
 prepare() {
   mv $srcdir/$_gitname-version-$pkgver $srcdir/$_distpkgname-$pkgver
@@ -39,23 +40,23 @@ prepare() {
   echo "export SCOTCH_VERSION=scotch_${_sversion}" > ${srcdir}/scotch.sh
   echo "export SCOTCH_ARCH_PATH=/usr" >> ${srcdir}/scotch.sh
   cp ${srcdir}/scotch.sh ${srcdir}/${_distpkgname}-${pkgver}/etc/config #|| return 1
-
-  sed '35a#include "CGAL/number_utils.h"' -i $srcdir/$_distpkgname-$pkgver/applications/utilities/mesh/generation/foamyMesh/foamyQuadMesh/CGALTriangulation2DKernel.H
 }
 
 build() {
   # Setup the build environment
   export FOAM_INST_DIR=${srcdir}
   foamDotFile=${srcdir}/${_distpkgname}-${pkgver}/etc/bashrc
-  [ -f ${foamDotFile} ] && . ${foamDotFile} #|| return 1
+  echo $foamDotFile
+  [ -f ${foamDotFile} ] || return 1
+  bash -c "source ${foamDotFile}
 
   # Enter build directory
-  cd ${srcdir}/${_distpkgname}-${pkgver} #|| return 1
+  cd ${srcdir}/${_distpkgname}-${pkgver}
 
   # Build and clean up OpenFOAM
   ./Allwmake || return 1
   wclean all || return 1
-  wmakeLnIncludeAll || return 1
+  wmakeLnIncludeAll || return 1"
 }
 
 package() {
