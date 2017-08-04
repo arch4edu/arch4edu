@@ -8,16 +8,16 @@
 # Contributor: Thomas Dziedzic < gostrc at gmail >
 
 pkgname=vtk-py3-qt4
-pkgver=7.0.0
-_majorver=7.0
+pkgver=8.0.0
+_majorver=8.0
 pkgrel=4
 pkgdesc='A software system for 3D computer graphics, image processing, and visualization, build with python3 and qt4 bindings'
 arch=('i686' 'x86_64')
 url='http://www.vtk.org/'
 license=('BSD')
-depends=('gcc-libs' 'gl2ps' 'qt4' "qt4")
+depends=('gcc-libs' 'gl2ps' 'qt4')
 coflicts=('vtk')
-makedepends=('boost' 'cmake' 'ninja' 'java-environment' 'doxygen' 'gnuplot' 'tk' 'wget' 'python-matplotlib' 'python-twisted' 'python-mpi4py' 'python-autobahn' 'unixodbc' 'gdal' 'openmpi' 'mariadb' 'glew' 'ffmpeg' 'lesstif' 'qtwebkit' 'qt5-webkit' 'jsoncpp' "qt5-webkit")
+makedepends=('boost' 'cmake' 'ninja' 'java-environment' 'doxygen' 'gnuplot' 'tk' 'wget' 'python-matplotlib' 'python-twisted' 'python-mpi4py' 'python-autobahn' 'unixodbc' 'gdal' 'openmpi' 'mariadb' 'glew' 'ffmpeg' 'lesstif' 'qtwebkit' 'qt5-webkit' 'jsoncpp')
 optdepends=('python: python bindings'
             'java-runtime: java bindings'
             'tk: tcl bindings'
@@ -37,33 +37,15 @@ optdepends=('python: python bindings'
 source=("http://www.vtk.org/files/release/${_majorver}/VTK-${pkgver}.tar.gz"
         "http://www.vtk.org/files/release/${_majorver}/VTKData-${pkgver}.tar.gz"
         "http://www.vtk.org/files/release/${_majorver}/VTKLargeData-${pkgver}.tar.gz"
-        gdal2.patch
-        ffmpeg3_compat.patch
-        remove_args.patch
-        find_gcc6.patch
-        fix-possible-segfault.patch
-        fix-qt4-moc.patch)
+        )
 options=(staticlibs !strip)
-sha1sums=('7719fac36b36965eaf5076542166ba49bbe7afbb'
-          '1bbaa642a3e3676a58a08c956df73645326c2859'
-          '8d16a1fba15e4eb95c03fe97937488ddcdd7fbd0'
-          'c60610e7c8cf0ad93d7c02cbf8a20fc415f59b3e'
-          'a78177f8dd6dedd9ad189fa12730ec53c7d02508'
-          'd880f0f7d979cc9efa9246eda82880fef29172c2'
-          '127d302f46e2691980af83350542243ab76ca75f'
-          '1b04eadd40b823092d620914ce5bc8314e1e4980'
-          '9b1523da7b111a02390e85a5eee2b015680d05ea')
+sha1sums=('a1bc6a8335b02f01a23cb6e96c4613d12ab598ed'
+          'e4d7315f27f42ce0820721b5d4304913fd4720c3'  
+          '2167822c8ebda61e04c3fce71692621f2b24d06b' 
+          )
 
 prepare() {
   cd "${srcdir}"/VTK-$pkgver
-
-  patch -p1 < ../ffmpeg3_compat.patch # http://www.vtk.org/Bug/view.php?id=16001
-  patch -p1 < ../gdal2.patch # https://github.com/Kitware/VTK/pull/21
-  patch -p1 < ../remove_args.patch # https://gitlab.kitware.com/vtk/vtk/commit/52501fd085a64b55d1b53d40c1d3f86c6ce9addd
-  patch -p1 < ../find_gcc6.patch # https://gitlab.kitware.com/vtk/vtk/commit/06e2a00bf8accb04db63b3c1c7a454e4afc6fea6
-  patch -p1 < ../fix-possible-segfault.patch
-  patch -p1 < ../fix-qt4-moc.patch
-
 }
 
 build() {
@@ -71,6 +53,8 @@ build() {
   test -d build && msg2 "note: using existing build directory"
   mkdir -p build
   cd build
+  # HACK: vtk does not install if this directory is not created
+  mkdir -p Utilities/Doxygen/doc/html
 
   # to help cmake find java
   export JAVA_HOME=/usr/lib/jvm/default
@@ -81,11 +65,14 @@ build() {
   # VTK fails to compile with recent netcdf-cxx package, VTK should be ported to the latest API
   # VTK does not work with XDMF2 compiled from git. TODO: make vtk compatible with system XDMF library. 
   # Note: VTK explicitly disables system GLEW dependency, it uses embedded sources with modifications
-  for lib in EXPAT FREETYPE JPEG PNG TIFF ZLIB LIBXML2 OGGTHEORA TWISTED ZOPE SIX AUTOBAHN MPI4PY JSONCPP GLEW GL2PS; do
+  for lib in EXPAT FREETYPE JPEG PNG TIFF ZLIB LIBXML2 OGGTHEORA TWISTED ZOPE SIX AUTOBAHN MPI4PY JSONCPP GLEW; do
     cmake_system_flags+="-DVTK_USE_SYSTEM_${lib}:BOOL=ON "
   done
 
   local _tkver=$(echo 'puts $tcl_version' | tclsh)
+
+  # Compilation bug http://www.vtk.org/Bug/view.php?id=16083
+  # requires -DVTK_USE_SYSTEM_GL2PS=OFF
 
   cmake \
     -Wno-dev \
@@ -104,6 +91,7 @@ build() {
     -DVTK_WRAP_PYTHON:BOOL=ON \
     -DVTK_PYTHON_VERSION="3" \
     -DVTK_WRAP_TCL:BOOL=ON \
+    -DVTK_USE_SYSTEM_GL2PS=OFF \
     -DCMAKE_CXX_FLAGS="-D__STDC_CONSTANT_MACROS" \
     -DVTK_CUSTOM_LIBRARY_SUFFIX="" \
     -DVTK_INSTALL_INCLUDE_DIR:PATH=include/vtk \
