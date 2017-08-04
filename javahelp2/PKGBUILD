@@ -5,26 +5,17 @@
 # Contributor: Simon Lipp <sloonz+aur at gmail dot com>
 
 pkgname=javahelp2
-pkgver=2.0.05.r89
-pkgrel=2
+pkgver=2.0.05.r90
+pkgrel=1
+# manual versioning
+source=("${pkgname}::git+https://github.com/javaee/javahelp.git#commit=3ca862d8626096770598a3a256886d205246f4a4")
+sha256sums=('SKIP')
 pkgdesc="Java based help system"
 arch=('any')
-# Old URLs
-#"https://javahelp.java.net/"
-#"https://java.net/projects/javahelp/"
-# New URL
 url="https://javaee.github.io/javahelp/"
 license=('custom' 'CDDL' 'GPL2')
-#makedepends=('apache-ant' 'git')
-makedepends=('apache-ant')
+makedepends=('apache-ant' 'git')
 depends=('java-runtime')
-# Old source
-#source=("${pkgname}::svn+https://svn.java.net/svn/javahelp~svn")
-# New source
-# currently lacks everything
-#source=("${pkgname}::git+https://github.com/javaee/javahelp.git")
-source=("${pkgname}-${pkgver}.tar.xz::https://www.dropbox.com/s/ywczc6bdrh7h2hj/javahelp2.tar.xz?dl=1")
-sha256sums=('9047c842ff7963b2cc3116d59c796450609597a09c722a5fa918e14c82912e7b')
 
 build(){
     cd "${srcdir}/${pkgname}/javahelp_nbproject"
@@ -40,4 +31,7 @@ package() {
     cd ../../lib
     # These are jars from tomcat5 and jdic-stub.jar
     install -m644 -- *.jar "${pkgdir}/usr/share/java/javahelp"
+
+    install -dm755 "${pkgdir}/usr/share/licenses"
+    install -D -m644 -- "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
