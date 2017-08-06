@@ -4,7 +4,7 @@
 
 pkgname=caffe-git
 _srcname=caffe
-pkgver=1.0.r22.g7ad1342ae
+pkgver=1.0.r24.g86d451e96
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
