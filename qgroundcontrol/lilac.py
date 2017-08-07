@@ -3,7 +3,10 @@
 from lilaclib import *
 
 build_prefix = 'extra-x86_64'
-pre_build = aur_pre_build
+def pre_build():
+    run_cmd(['rm', '-f', 'qgroundcontrol.tar.bz2'])
+    aur_pre_build()
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
