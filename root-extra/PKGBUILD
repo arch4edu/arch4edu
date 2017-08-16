@@ -6,7 +6,7 @@
 
 pkgname=root-extra
 _pkgname=root
-pkgver=6.10.02
+pkgver=6.10.04
 pkgrel=1
 provides=('root' 'root-extra')
 conflicts=('root')
@@ -47,7 +47,7 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
         'root.xml'
         'rootd'
         'settings.cmake')
-sha256sums=('6c268d2e483a0946c3b065e8e2b070141475416042086d14ec76dd7ed248d7e7'
+sha256sums=('461bde21d78608422310f04c599e84ce8dfbdd91caf12c2a54db6c01f8228f5b'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
