@@ -4,7 +4,7 @@
 
 pkgname=caffe-git
 _srcname=caffe
-pkgver=1.0.r24.g86d451e96
+pkgver=1.0.r25.g1de4cebfb
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
@@ -13,7 +13,7 @@ license=('BSD')
 depends=(
     # official repositories:
         'boost-libs' 'protobuf' 'google-glog' 'gflags' 'hdf5' 'opencv' 'leveldb'
-        'lmdb' 'cuda' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
+        'lmdb' 'cuda' 'cudnn' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
         'python-matplotlib' 'ipython' 'python-h5py' 'python-networkx' 'python-nose'
         'python-pandas' 'python-dateutil' 'python-protobuf' 'python-gflags'
         'python-yaml' 'python-pillow' 'python-six'
@@ -21,7 +21,7 @@ depends=(
         # required:
             'openblas-lapack'
         # not required but enabled in build:
-            'cudnn' 'nccl'
+            'nccl'
         #python:
             'python-leveldb' 'python-scikit-image' 'python-pydotplus'
     # NOTE:
