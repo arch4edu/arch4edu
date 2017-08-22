@@ -5,5 +5,13 @@
  
  LIB_LIBS = \
 -    -L$(SCOTCH_ROOT)/lib -L$(FOAM_EXT_LIBBIN)/$(FOAM_MPI) -lptscotch -lptscotcherrexit -lscotch ${LINK_FLAGS} -lrt
-+    -L$(SCOTCH_ROOT)/lib -L$(FOAM_EXT_LIBBIN)/$(FOAM_MPI) -lptscotch -lscotch -lptscotcherrexit -lscotcherrexit ${LINK_FLAGS} -lrt
++    -L$(SCOTCH_ROOT)/lib -L$(FOAM_EXT_LIBBIN)/$(FOAM_MPI) -lptscotch -lscotch -lptscotcherrexit -lscotcherrexit ${LINK_FLAGS} -lbz2 -lrt
+--- src/OpenFOAM-3.0.x/src/parallel/decompose/scotchDecomp/Make/options
++++ src/OpenFOAM-3.0.x/src/parallel/decompose/scotchDecomp/Make/options
+@@ -13,4 +13,4 @@ EXE_INC = \
+     -I../decompositionMethods/lnInclude
+ 
+ LIB_LIBS = \
+-    -L$(SCOTCH_ROOT)/lib -L$(FOAM_EXT_LIBBIN) -lscotch -lscotcherrexit -lrt
++    -L$(SCOTCH_ROOT)/lib -L$(FOAM_EXT_LIBBIN) -lscotch -lscotcherrexit -lbz2 -lrt
 
