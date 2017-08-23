@@ -1,0 +1,20 @@
+--- src/OpenFOAM-3.0.x/applications/utilities/mesh/generation/foamyMesh/foamyHexMesh/Make/options	2016-04-23 10:46:06.634726444 -0400
++++ src/OpenFOAM-3.0.x/applications/utilities/mesh/generation/foamyMesh/foamyHexMesh/Make/options	2016-04-23 10:50:35.496222009 -0400
+@@ -35,4 +35,5 @@ EXE_LIBS = \
+     -lfileFormats \
+     -ltriSurface \
+     -ldynamicMesh \
+-    -lsampling
++    -lsampling \
++    -lboost_thread
+
+--- src/OpenFOAM-3.0.x/applications/utilities/mesh/generation/foamyMesh/foamyQuadMesh/Make/options	2016-04-23 10:46:06.634726444 -0400
++++ src/OpenFOAM-3.0.x/applications/utilities/mesh/generation/foamyMesh/foamyQuadMesh/Make/options	2016-04-23 10:48:25.558854579 -0400
+@@ -38,4 +38,5 @@ EXE_LIBS = \
+     -ldecompositionMethods \
+     -L$(FOAM_LIBBIN)/dummy -lptscotchDecomp \
+     -lsampling \
+-    -lfileFormats
++    -lfileFormats \
++    -lboost_thread
+
