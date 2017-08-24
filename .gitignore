@@ -25,7 +25,6 @@ trunk/
 *.orig
 *.run
 *.old
-*.png
 old_ver.txt
 new_ver.txt
 linux.install.pkg
