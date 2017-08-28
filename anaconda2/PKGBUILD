@@ -4,7 +4,7 @@
 
 pkgname=anaconda2
 pkgver=4.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Completely free enterprise-ready Python distribution for large-scale data processing, predictive analytics, and scientific computing."
 arch=('x86' 'x86_64')
 url="https://store.continuum.io/cshop/anaconda/"
@@ -13,7 +13,7 @@ makedepends=('patch')
 source=("http://repo.continuum.io/archive/Anaconda2-${pkgver}-Linux-x86_64.sh"
         "install.py.patch"
         "$pkgname.install")
-options=(!strip libtool)
+options=(!strip libtool staticlibs)
 sha256sums=('2d30b91ed4d215b6b4a15162a3389e9057b15445a0c02da71bd7bd272e7b824e'
             '04b4ea775ba805ff24e93162b6679e65d00b997a46cde11fd76602db4e824dc7'
             'c491735df1753335c6aa5b3b71bd936ccb4ff5622fedbf22d1d6d9da5bd45fbc')
