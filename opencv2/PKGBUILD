@@ -1,4 +1,5 @@
-# Maintainer: Joshua Schüler <joshua.schueler at gmail dotcom>
+# Maintainer: Johannes Janosovits <johannes@walnutempire.de>
+# Contributor: Joshua Schüler <joshua.schueler at gmail dotcom>
 # Contributor: Ray Rashif <schiv@archlinux.org>
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
@@ -40,23 +41,21 @@ _FORCE_AVX2=OFF
 _pkgbase=opencv
 pkgbase=opencv2
 pkgname=('opencv2' 'opencv2-samples')
-pkgver=2.4.13
+pkgver=2.4.13.3
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library (Legacy Version)"
 arch=('i686' 'x86_64')
 license=('BSD')
 url="http://opencv.org/"
 depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'gtkglext')
-makedepends=('cmake' 'python2-numpy' 'mesa' 'eigen2')
+makedepends=('cmake' 'python2-numpy' 'mesa')
 optdepends=('opencv-samples'
             'eigen2'
             'libcl: For coding with OpenCL'
             'python2-numpy: Python 2.x interface')
 
-source=("$_pkgbase-$pkgver.zip::https://github.com/Itseez/opencv/archive/$pkgver.zip"
-        "opencv_a0fdc91a14f07de25d858037940fcd3ba859b4e2.patch")
-md5sums=('886b0c511209b2f3129649928135967c'
-         'aebe7878a572a2dc26a434bf08b8d851')
+source=("$pkgver.zip::https://codeload.github.com/opencv/opencv/zip/$pkgver")
+sha256sums=('838a2ef5821db868f71c26e248427d7be9f35f2fb996acd1b973150c8dd11656')
 
 _cmakeopts=('-D WITH_CUDA=OFF' # Disable CUDA for now because GCC 6.1.1 and nvcc don't play along yet
             '-D WITH_OPENCL=ON'
@@ -89,18 +88,14 @@ _cmakeopts=('-D WITH_CUDA=OFF' # Disable CUDA for now because GCC 6.1.1 and nvcc
                "-D ENABLE_AVX=$_FORCE_AVX"
                "-D ENABLE_AVX2=$_FORCE_AVX2")
 
-prepare() {
-  cd $_pkgbase-$pkgver
-# Patch for gcc 6
-# See https://github.com/Itseez/opencv/issues/6517
-  patch -p1 -i ../opencv_a0fdc91a14f07de25d858037940fcd3ba859b4e2.patch
-}
-
 build() {
   cd "$srcdir/$_pkgbase-$pkgver"
+  mkdir -p build
+  cd build
 
-  cmake ${_cmakeopts[@]} .
+  cmake ${_cmakeopts[@]} ..
 
+  # change this to i. e. make -j16 if your CPUs have 16 threads to speed up build process
   make
 }
 
@@ -108,7 +103,7 @@ package_opencv2() {
   options=('staticlibs')
   conflicts=('opencv')
 
-  cd "$srcdir/$_pkgbase-$pkgver"
+  cd "$srcdir/$_pkgbase-$pkgver/build"
 
   make DESTDIR="$pkgdir" install
 
