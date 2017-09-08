@@ -2,9 +2,13 @@
 # Contributor: Drew Noel <drewmnoel@gmail.com>
 # Contributor: Jonathan Yantis
 
+# NOTE:
+# In order to build with NCCL support, uncomment the NCCL
+# lines in 'depends' and 'preprare()'.
+
 pkgname=caffe-git
 _srcname=caffe
-pkgver=1.0.r25.g1de4cebfb
+pkgver=1.0.r27.gea455eb29
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
@@ -20,8 +24,8 @@ depends=(
     # AUR:
         # required:
             'openblas-lapack'
-        # not required but enabled in build:
-            'nccl'
+        # not required:
+            # 'nccl'
         #python:
             'python-leveldb' 'python-scikit-image' 'python-pydotplus'
     # NOTE:
@@ -45,7 +49,7 @@ prepare() {
     sed -i '/USE_CUDNN/s/^#[[:space:]]//g' Makefile.config
     
     # enable NCCL acceleration switch
-    sed -i '/USE_NCCL/s/^#[[:space:]]//g' Makefile.config
+    # sed -i '/USE_NCCL/s/^#[[:space:]]//g' Makefile.config
     
     # strictly enable I/O dependencies
     sed -i '/USE_OPENCV/s/^#[[:space:]]//;/USE_OPENCV/s/0/1/'   Makefile.config
