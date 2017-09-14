@@ -4,7 +4,7 @@
 pkgbase="python-theano-git"
 pkgname=("python-theano-git" "python2-theano-git")
 _pkgname="Theano"
-pkgver=0.10.0beta2.r23.3b2f7b8a6
+pkgver=0.10.0beta2.r52.f39edc124
 pkgrel=1
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
