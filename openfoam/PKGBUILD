@@ -10,7 +10,7 @@ _distpkgname=OpenFOAM
 _gitname=$_distpkgname-5.x
 
 pkgver=5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="The open source CFD toolbox"
 arch=('x86_64')
 url="http://www.openfoam.org"
@@ -19,7 +19,7 @@ depends=('bzip2' 'paraview' 'parmetis' 'scotch' 'boost' 'flex' 'cgal')
 makedepends=('bash')
 source=("https://github.com/OpenFOAM/$_gitname/archive/version-$pkgver.tar.gz")
 install="${pkgname}.install"
-md5sums=('a46b4e5b56af513ce2e695bd976c5f58')
+md5sums=('cd8c5bdd3ff39c34f61747c8e55f59d1')
 
 prepare() {
   mv $srcdir/$_gitname-version-$pkgver $srcdir/$_distpkgname-$pkgver
