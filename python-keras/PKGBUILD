@@ -1,10 +1,10 @@
 # Maintainer: Fabien Dubosson <fabien.dubosson@gmail.com>
-# Contributer: David McInnis <davidm@eagles.ewu.ewu>
+# Contributer: David McInnis <dave@dave3.xyz>
 
 pkgbase="python-keras"
 pkgname=("python-keras" "python2-keras")
 _pkgname="keras"
-pkgver="2.0.6"
+pkgver="2.0.8"
 pkgrel="1"
 pkgdesc="Deep Learning library (convnets, recurrent neural networks, and more)"
 arch=('any')
@@ -14,7 +14,7 @@ makedepends=('python'  'python-setuptools'  'python-numpy'  'python-scipy'  'pyt
              'python2' 'python2-setuptools' 'python2-numpy' 'python2-scipy' 'python2-h5py' 'python2-yaml'
             )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/fchollet/${_pkgname}/archive/${pkgver}.tar.gz")
-sha256sums=('039be98eb77c1ab4c370f15574532cd4728f42d7fbea7ee7031915928fa9b155')
+sha256sums=('ba73d1a041d06c6909db8782933b9420a38192ace05497b5b1d2b0f89b688025')
 
 prepare() {
   cd "$srcdir/"
