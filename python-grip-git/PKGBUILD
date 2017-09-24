@@ -1,6 +1,6 @@
 # Maintainer: XZS <d dot f dot fischer at web dot de>
 pkgname=python-grip-git
-pkgver=4.3.2.r499.b246a5c
+pkgver=4.3.2.r507.f17a68a
 pkgrel=1
 pkgdesc="Preview GitHub Markdown files like Readme locally before committing them."
 arch=('any')
