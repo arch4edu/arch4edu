@@ -23,7 +23,7 @@ _protobuf_version='3.1.0' # commit 'a428e42072765993ff674fda72863c9f1aa2d268' is
 
 pkgname=caffe2
 pkgver=0.8.1
-pkgrel=5
+pkgrel=6
 pkgdesc='A new lightweight, modular, and scalable deep learning framework (gpu enabled)'
 arch=('x86_64')
 url='http://caffe2.ai/'
@@ -93,7 +93,7 @@ sha256sums=('2b7938514caf626da3fdde51e88771adc863cbe496d0fc4ae1122603a945e9a8'
             'SKIP'
             'SKIP'
             'SKIP'
-            '0a0ae63cbffc274efb573bdde9a253e3f32e458c41261df51c5dbc5ad541e8f7'
+            'fb2a314f4be897491bb2446697be693d489af645cb0e165a85e7e64e07eb134d'
             'SKIP'
             'SKIP'
             'SKIP'
