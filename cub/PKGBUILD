@@ -12,7 +12,7 @@ optdepends=('cuda')
 
 source=("https://github.com/NVlabs/cub/archive/${pkgver}.zip"
         "cub.pc")
-sha256sums=('f464eda366e4dfe0c1d9ae2a6bbc22c5804cf131f8a67974c01fae4ae8213e8b'
+sha256sums=('7c3784cf59f02d4a88099d6a11e357032bac9eac2b9c78aaec947d1270e21871'
             'de2d52cbdb9a81936c7cc519cc5a68c4c62012755c2ab3a07bba158a9d4626c4')
 
 package() {
