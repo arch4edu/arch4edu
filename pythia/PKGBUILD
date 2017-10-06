@@ -3,9 +3,9 @@
 # Contributor: Stefano Campanella < stefanocampanella1729 at gmail dot com >
 
 pkgname=pythia
-pkgver=8.2.26
+pkgver=8.2.30
 _pkgid="${pkgname}${pkgver//./}"
-pkgrel=3
+pkgrel=1
 pkgdesc="High-energy physics events generator."
 arch=('i686' 'x86_64')
 url="http://home.thep.lu.se/Pythia/"
@@ -21,10 +21,10 @@ source=("http://home.thep.lu.se/~torbjorn/pythia8/${_pkgid}.tgz"
         "pythia.sh"
         "pythia.install"
         "respect_lib_suffix.patch")
-sha256sums=('8ff4281bce9d22b17f1ec88e9e9353e8172512d5ef96296ace9486860e9ed2c9'
+sha256sums=('332fad0ed4f12e6e0cb5755df0ae175329bc16bfaa2ae472d00994ecc99cd78d'
             '12fabaa56db80537b94a89de18f688f1258f467ed01b1ee6595efe75cde801d2'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
-            '528c2b89df60e2c9845d215792e241806189417a782fda1fbdb85d8f18fc21e1')
+            'c9c31223c0c38f8d844ee1f8c984d4b723b7d960f2e13fe7847325785736127b')
 options=('!emptydirs')
 _srcpath="${srcdir}/${_pkgid}"
 

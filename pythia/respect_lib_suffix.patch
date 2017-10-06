@@ -1,7 +1,7 @@
-diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
---- pythia8226-old/examples/Makefile	2017-04-26 14:08:44.000000000 +0200
-+++ pythia8226-new/examples/Makefile	2017-05-30 14:08:10.583587697 +0200
-@@ -52,16 +52,16 @@
+diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
+--- pythia8230-old/examples/Makefile	2017-10-06 17:05:13.369384386 +0200
++++ pythia8230-new/examples/Makefile	2017-10-06 17:07:05.411143081 +0200
+@@ -52,20 +52,20 @@
                  in the top PYTHIA directory)
  
  # PYTHIA libraries.
@@ -15,13 +15,18 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
 +main% : main%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  	$(CXX) $< -o $@ $(CXX_COMMON)
  
+ # MixMax.
+-main23: $$@.cc $(PREFIX_LIB)/libpythia8.a
++main23: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
+ 	$(CXX) $< -o $@ -std=c++11 -w $(CXX_COMMON)
+ 
  # GZIP (required).
 -main34: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main34: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(GZIP_USE),true)
  	$(CXX) $< -o $@ $(CXX_COMMON)
  else
-@@ -70,7 +70,7 @@
+@@ -74,7 +74,7 @@
  
  # HEPMC2.
  main41 main42 main43 main85 main86 main87 main88 main89: $$@.cc\
@@ -30,7 +35,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(HEPMC2_USE),true)
  	$(CXX) $< -o $@ -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
  	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC
-@@ -79,7 +79,7 @@
+@@ -83,7 +83,7 @@
  endif
  
  # PROMC.
@@ -39,7 +44,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(PROMC_USE),true)
  	$(CXX) $< -o $@ -I$(PROMC_INCLUDE)/src -I$(PROMC_INCLUDE)/include\
  	 $(CXX_COMMON) -DPROMC=\"$(PROMC_INCLUDE)\" -Wno-long-long\
-@@ -90,7 +90,7 @@
+@@ -94,7 +94,7 @@
  endif
  
  # EVTGEN (and HEPMC2).
@@ -48,16 +53,16 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(EVTGEN_USE)$(HEPMC2_USE)$(ENABLE_SHARED),truetruetrue)
  	$(CXX) $< -o $@ -I$(EVTGEN_INCLUDE) $(CXX_COMMON)\
  	 -DEVTGEN_PYTHIA -DEVTGEN_EXTERNAL -Wl,-rpath,$(HEPMC2_LIB)\
-@@ -100,7 +100,7 @@
+@@ -104,7 +104,7 @@
  endif
  
  # FASTJET3.
--main71 main72: $$@.cc $(PREFIX_LIB)/libpythia8.a
-+main71 main72: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
+-main71 main72 main75: $$@.cc $(PREFIX_LIB)/libpythia8.a
++main71 main72 main75: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(FASTJET3_USE),true)
  	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
  	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet
-@@ -109,7 +109,7 @@
+@@ -113,7 +113,7 @@
  endif
  
  # FASTJET3 with modified Mass-Drop Tagger.
@@ -66,7 +71,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(FASTJET3_USE),true)
  	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
  	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet -lRecursiveTools
-@@ -118,7 +118,7 @@
+@@ -122,7 +122,7 @@
  endif
  
  # FASTJET3 and HEPMC2.
@@ -75,7 +80,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(FASTJET3_USE)$(HEPMC2_USE),truetrue)
  	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
  	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC\
-@@ -128,7 +128,7 @@
+@@ -132,7 +132,7 @@
  endif
  
  # ROOT (turn off all warnings for readability).
@@ -84,7 +89,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(ROOT_USE),true)
  	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags`\
-@@ -136,7 +136,7 @@
+@@ -140,7 +140,7 @@
  else
  	@echo "Error: $@ requires ROOT"
  endif
@@ -93,7 +98,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  ifeq ($(ROOT_USE),true)
  	$(CXX) $< main92.so -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags` -Wl,-rpath,./\
-@@ -144,7 +144,7 @@
+@@ -148,7 +148,7 @@
  else
  	@echo "Error: $@ requires ROOT"
  endif
@@ -102,7 +107,7 @@ diff -aur pythia8226-old/examples/Makefile pythia8226-new/examples/Makefile
  	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_SHARED) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags`
  main92Dct.cc: main92.h main92LinkDef.h
-@@ -152,11 +152,11 @@
+@@ -156,11 +156,11 @@
  	 $(ROOT_BIN)rootcint -f $@ -c -I$(PREFIX_INCLUDE) $^
  
  # User-written examples for tutorials, without external dependencies.
