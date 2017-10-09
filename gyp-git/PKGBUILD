@@ -1,7 +1,7 @@
 #Maintainer: M0Rf30
 
 pkgname=gyp-git
-pkgver=2100.940a15e
+pkgver=2122.365ffa05
 pkgrel=1
 pkgdesc="GYP can Generate Your Projects."
 url="http://code.google.com/p/gyp/"
