@@ -9,7 +9,7 @@ url="http://www.afterstep.org/afterimage"
 license=('GPL')
 depends=('libpng' 'libtiff' 'freetype2' 'libxext')
 arch=('i686' 'x86_64')
-source=(ftp://ftp.afterstep.org/stable/libAfterImage/libAfterImage-${pkgver}.tar.bz2
+source=(https://downloads.sourceforge.net/project/afterstep/libAfterImage/1.20/libAfterImage-1.20.tar.bz2
         libafterimage-libpng15.patch)
 md5sums=('17a0ab8a2e6b253f222934418705963e'
          'bdb49e626cb91b2c218193f3d36c9f91')
