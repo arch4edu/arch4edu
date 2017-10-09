@@ -1,8 +1,7 @@
 # Maintainer: Francois Boulogne <fboulogne at april dot org>
 # Contributor: Jingbei Li <i@jingbei.li>
 pkgbase=python-pywavelets
-#pkgname=(python-pywavelets python2-pywavelets)
-pkgname=python-pywavelets
+pkgname=(python-pywavelets python2-pywavelets)
 _pkgname=pywt
 pkgver=0.5.2
 pkgrel=1
