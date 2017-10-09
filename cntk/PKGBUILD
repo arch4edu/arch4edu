@@ -41,7 +41,7 @@ prepare(){
 		-e 's|$(CUDNN_PATH)/cuda|$(CUDNN_PATH)|g'\
 		-i Makefile
 	sed \
-		-e 's|libmpi.so.12|libmpi.so|g'
+		-e 's|libmpi.so.12|libmpi.so|g' \
 		-i bindings/python/cntk/train/distributed.py
 }
 
