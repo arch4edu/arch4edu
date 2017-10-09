@@ -1,0 +1,14 @@
+--- OpenCVCompilerOptions.cmake	2017-09-09 16:20:07.966725688 +0200
++++ OpenCVCompilerOptions.cmake.fixed	2017-09-09 16:15:54.000000000 +0200
+@@ -18,9 +18,9 @@
+         message(STATUS "Unable to compile program with enabled ccache, reverting...")
+         set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${__OLD_RULE_LAUNCH_COMPILE}")
+       endif()
+-    else()
+-      message(STATUS "Looking for ccache - not found")
+     endif()
++  else()
++    message(STATUS "Looking for ccache - not found")
+   endif()
+ endif()
+ 
