@@ -1,0 +1,20 @@
+Description: Copy/paste segfaults on i386
+Forwarded: yes
+Author: Hans de Goede <hdegoede@redhat.com>
+diff -up lesstif-0.95.2/lib/Xm-2.1/CutPaste.c.long64 lesstif-0.95.2/lib/Xm-2.1/CutPaste.c
+--- lesstif-0.95.2/lib/Xm-2.1/CutPaste.c.long64	2007-09-12 22:05:58.000000000 +0200
++++ lesstif-0.95.2/lib/Xm-2.1/CutPaste.c	2009-07-28 11:32:20.000000000 +0200
+@@ -1028,9 +1028,11 @@ _XmClipboardReplaceItem(Display *display
+ 	/* XChangeProperty expects a buffer of longs when receiving 32 bits
+ 	   data, MEUHH */
+ 	if (sizeof(long) != 4)
++	{
+ 	    convert_buf = XtMalloc(len * sizeof(long));
+-        for (i = 0; i < len; i++)
+-            convert_buf[i] = data[i];
++	    for (i = 0; i < len; i++)
++                convert_buf[i] = data[i];
++	}
+ 	break;
+ 
+     case 16:
