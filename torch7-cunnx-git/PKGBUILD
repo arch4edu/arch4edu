@@ -23,6 +23,9 @@ pkgver () {
 }
 
 build () {
+	CFLAGS="${CFLAGS/-fno-plt/}"
+	CXXFLAGS="${CFLAGS/-fno-plt/}"
+
 	cd "${pkgname}"
 	cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_COMPILER=g++-5 -DCMAKE_C_COMPILER=gcc-5 -DCMAKE_BUILD_TYPE=Release
 	make
