@@ -22,6 +22,9 @@ pkgver () {
 }
 
 build () {
+	CFLAGS="${CFLAGS/-fno-plt/} -fPIC"
+	CXXFLAGS="${CXXFLAGS/-fno-plt/} -fPIC"
+
 	cd "${pkgname}"
 	sed 's/luajit/luajit-5.1/g' -i CMakeLists.txt
 	# Uncomment this line if you are using a Pascal GPU
@@ -32,12 +35,5 @@ build () {
 
 package () {
 	cd "${pkgname}"
-	# Move Lua C module
-	mkdir -p "${pkgdir}/usr/lib/lua/5.1"
-	install -Dm755 "libwarpctc.so" "${pkgdir}/usr/lib/"
-	install -Dm755 "libwarp_ctc.so" "${pkgdir}/usr/lib/lua/5.1/"
-
-	# Move pure Lua modules
-	mkdir -p "${pkgdir}/usr/share/lua/5.1/warp_ctc"
-	install -Dm644 "torch_binding/init.lua" "${pkgdir}/usr/share/lua/5.1/warp_ctc"
+	make DESTDIR=$pkgdir install
 }
