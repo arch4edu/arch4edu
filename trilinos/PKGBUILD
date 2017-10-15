@@ -4,7 +4,7 @@
 
 pkgname=trilinos
 _gitname=Trilinos
-pkgver=12.10.1
+pkgver=12.12.1
 pkgrel=1
 pkgdesc="An effort to develop algorithms and enabling technologies within an object-oriented software framework for the solution of large-scale, complex multi-physics engineering and scientific problems."
 arch=('i686' 'x86_64')
@@ -12,7 +12,7 @@ url="http://trilinos.org"
 license=('LGPL3')
 depends=('lapack' 'openmpi' 'python2' 'boost' 'netcdf' 'libmatio' 'libx11')
 source=("https://github.com/trilinos/$_gitname/archive/trilinos-release-${pkgver//./-}.tar.gz")
-md5sums=('40f28628b63310f9bd17c26d9ebe32b1')
+md5sums=('ecd4606fa332212433c98bf950a69cc7')
 makedepends=('python2-numpy' 'swig' 'gcc-fortran' 'perl' 'blas' 'cmake' 'gtest' 'doxygen')
 
 prepare() {
