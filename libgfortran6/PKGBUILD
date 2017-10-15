@@ -1,27 +1,31 @@
-# Maintainer: Hao Zhang <theivorytower [at] gmail [dot] com> 
+# Maintainer: Hao Zhang <hao [at] hao-zhang [dot] com> 
 
 pkgname=('libgfortran6')
-pkgver=6.3.1
-_islver=0.16.1
+pkgver=6.4.1
+_islver=0.17
+_cloogver=0.18.4
 pkgrel=1
-_commit=4fc407888a30c5d953816b05c8a8e98ec2ab3101
+_commit=878763634f0a75699559b3c0b90d466954a6510f
 pkgdesc="Fortran runtime libraries shipped by GCC6"
 arch=('i686' 'x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="http://gcc.gnu.org"
 makedepends=('binutils>=2.28' 'libmpc' 'git')
 source=(git+https://gcc.gnu.org/git/gcc.git#commit=${_commit}
-        http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2)
-md5sums=('SKIP'
-         'ac1f25a0677912952718a51f5bc20f32')
+        http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2
+        http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz)
+sha1sums=('SKIP'
+          '6243384d1b1d4b3043037698485a468a485b111a'
+          '8f7568ca1873f8d55bb694c8b9b83f7f4c6c1aa5')
 
-_libdir="usr/lib/gcc/$CHOST/$pkgver"
+_libdir="/usr/lib/gcc/$CHOST/$pkgver"
 
 prepare() {
   cd ${srcdir}/gcc
 
-  # link isl for in-tree build
-  ln -s ../isl-${_islver} isl
+  # Link isl/cloog for in-tree builds
+  ln -sf ../isl-${_islver} isl
+  ln -sf ../cloog-${_cloogver} cloog
 
   # Do not run fixincludes
   sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
@@ -64,12 +68,14 @@ build() {
       --enable-linker-build-id \
       --enable-lto \
       --enable-plugin \
-      --enable-install-libiberty \
       --with-linker-hash-style=gnu \
       --enable-gnu-indirect-function \
       --disable-multilib \
       --disable-werror \
-      --enable-checking=release
+      --enable-checking=release \
+      --enable-default-pie \
+      --enable-default-ssp \
+      --build="${CHOST}"
 
   make
 }
