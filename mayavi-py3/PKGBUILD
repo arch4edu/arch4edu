@@ -1,15 +1,15 @@
-# $Id$
-# Mainteiner: Alex Maystrenko <alexeytech@gmail.com>
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Contributor: Alex Maystrenko <alexeytech@gmail.com>
 
 pkgname=mayavi-py3
 pkgver=4.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A 3-dimensional visualizer of scientific data, build with python3 bindings"
 arch=('i686' 'x86_64')
 url="https://github.com/enthought/mayavi"
 license=('BSD')
 depends=('vtk-py3-qt4' 'python-traitsui' 'python-configobj' 'python-envisage' 'wxpython')
-makedepends=('python-setuptools' 'python-sphinx' 'python-mock' "openmpi" "gdal" "unixodbc" "tk" "ffmpeg" "jsoncpp" "gcc-libs")
+makedepends=('python-setuptools' 'python-sphinx' 'python-mock' 'openmpi' 'gdal' 'glew' 'unixodbc' 'tk' 'ffmpeg' 'jsoncpp' 'gcc-libs')
 provides=('python-mayavi')
 options=(!emptydirs)
 
@@ -24,8 +24,9 @@ prepare() {
    cd "$srcdir"/mayavi-$pkgver
    patch -p1 < ../vtk7-hack.patch
    patch -p1 < ../python35-ast.patch
+
    #To strip non-ascii characters from docs
-   sed "166s/doc/doc.encode('ascii',errors='ignore').decode('ascii')/" -i tvtk/indenter.py
+   sed "166s/doc/doc.encode(\'ascii\',errors=\'ignore\').decode(\'ascii\')/" -i tvtk/indenter.py
 }
 
 build() {
