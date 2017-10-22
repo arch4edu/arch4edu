@@ -1,14 +1,11 @@
 --- db/nist/CMakeLists.txt
 +++ db/nist/CMakeLists.txt
-@@ -1,11 +1,4 @@
- set(NIST_SAMPLE_STEP_MODELS
--  NIST_MBE_PMI_1.stp
--  NIST_MBE_PMI_2.stp
--  NIST_MBE_PMI_3.stp
--  NIST_MBE_PMI_4.stp
--  NIST_MBE_PMI_5.stp
--  NIST_MBE_PMI_6.stp
--  NIST_MBE_PMI_11.stp
- )
- set(NIST_SAMPLE_3DM_MODELS
-   NIST_MBE_PMI_7-10.3dm
+@@ -89,7 +89,7 @@
+ 
+ 
+ foreach(step_input ${NIST_SAMPLE_STEP_MODELS})
+-  ADD_NIST_STEP_TARGET(${step_input} "BRL-CAD Geometry Models/Sample")
++  #ADD_NIST_STEP_TARGET(${step_input} "BRL-CAD Geometry Models/Sample")
+ endforeach(step_input ${NIST_SAMPLE_STEP_MODELS})
+ CMAKEFILES(${NIST_SAMPLE_STEP_MODELS})
+ 
