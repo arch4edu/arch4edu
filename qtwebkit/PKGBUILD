@@ -3,7 +3,7 @@
 
 pkgname=qtwebkit
 pkgver=2.3.4
-pkgrel=5
+pkgrel=6
 arch=('i686' 'x86_64')
 url='http://trac.webkit.org/wiki/QtWebKit'
 pkgdesc='An open source web browser engine (Qt port)'
@@ -20,7 +20,8 @@ sha1sums=('31bc60de1cf26bb0766d539b4d564651ddbb0650'
           '76aef40335c0701e5be7bb3a9101df5d22fe3666'
           '315b6ff603f35e5492a036f7082f6aa075dfb607'
           'c3df6107233f466a032e36681cee07f16536657c'
-          '5d506578ea30daeeeb1e91ab83876fe6d5669715')
+          '5d506578ea30daeeeb1e91ab83876fe6d5669715'
+          '412a58db507fa14268c9f30627d62fd448f9dccb')
 
 prepare() {
   cd ${pkgname}-${pkgver}
@@ -37,7 +38,7 @@ prepare() {
 build() {
   cd ${pkgname}-${pkgver}
 
-  OPTS="--no-webkit2"
+  OPTS="--no-webkit2 --no-xslt"
   if [ "${CARCH}" = "i686" ]; then
       # FS#33418
       OPTS="${OPTS} --no-force-sse2"
@@ -69,9 +70,4 @@ package() {
   # Fix wrong path in prl file
   sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' "${pkgdir}"/usr/lib/libQtWebKit.prl
 }
-sha1sums=('31bc60de1cf26bb0766d539b4d564651ddbb0650'
-          '76aef40335c0701e5be7bb3a9101df5d22fe3666'
-          '315b6ff603f35e5492a036f7082f6aa075dfb607'
-          'c3df6107233f466a032e36681cee07f16536657c'
-          '5d506578ea30daeeeb1e91ab83876fe6d5669715'
-          '412a58db507fa14268c9f30627d62fd448f9dccb')
+
