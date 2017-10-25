@@ -4,7 +4,7 @@ from lilaclib import *
 import os
 
 build_prefix = 'arch4edu-x86_64'
-depends=['openblas-lapack']
+depends=['gcc5', 'openblas-lapack']
 
 def pre_build():
     aur_pre_build()

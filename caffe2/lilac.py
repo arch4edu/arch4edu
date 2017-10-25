@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['confu-git', 'python-peachpy-git', 'python-scikit-image', 'python-lmdb', 'python-leveldb', 'python-glog', 'python-nvd3', 'python-slugify']
+depends=['confu-git', 'gcc5', 'python-peachpy-git', 'python-scikit-image', 'python-lmdb', 'python-leveldb', 'python-glog', 'python-nvd3', 'python-slugify']
 pre_build = aur_pre_build
 post_build = aur_post_build
 
