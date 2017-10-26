@@ -6,8 +6,8 @@
 pkgname=('gcc5')
 pkgver=5.5.0
 _pkgver=5
-_islver=0.15
-pkgrel=1
+_islver=0.18
+pkgrel=2
 pkgdesc="The GNU Compiler Collection (5.x.x)"
 arch=('i686' 'x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
@@ -17,7 +17,7 @@ options=('!emptydirs')
 source=(ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz
         http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2)
 md5sums=('0f70424213b4a1113c04ba66ddda0c1f'
-         '8428efbbc6f6e2810ce5c1ba73ecf98c')
+         '11436d6b205e516635b666090b94ab32')
 
 _basedir=gcc-${pkgver}
 
