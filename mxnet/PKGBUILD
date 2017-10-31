@@ -1,63 +1,53 @@
-# Maintainer: Carl Åkerlindh <carl.akerlindh at gmail dot com>
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgname=mxnet
-pkgver=0.9.3a
-pkgrel=3
+_gitname=incubator-mxnet
+pkgver=0.12.0
+pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
-license=('Apache-2.0' 'BSD-3-Clause')
-depends=('cblas')
+license=('Apache')
+depends=('hdf5' 'openblas-lapack' 'python-numpy' 'python-requests')
 optdepends=('cuda: GPU support'
-            'cudnn: GPU support'
-            # 'intel-mkl: MKL support'
-            'opencv: computer vision support')
-makedepends=('git' 'wget' "cuda" "cudnn" "openblas-lapack" "opencv")
+	'cudnn: GPU support'
+	'python-graphviz')
+makedepends=('git' 'opencv' 'cudnn' 'cuda' 'cython' "cuda" "cudnn" "openblas-lapack" "opencv")
 provides=(libmxnet)
-source=("$pkgname::git+https://github.com/dmlc/mxnet")
+source=("git+https://github.com/apache/$_gitname")
 md5sums=('SKIP')
 
 prepare() {
-  cd "$srcdir/$pkgname"
-  git checkout "v$pkgver"
-  git submodule update --init --recursive
-  cp make/config.mk .
-  if (pacman -Q cuda &>/dev/null && pacman -Q cudnn &>/dev/null); then
-    msg2 "CUDA support enabled"
-    echo "USE_CUDA = 1" >> config.mk
-    echo "USE_CUDA_PATH = /opt/cuda" >> config.mk
-    echo "USE_CUDNN = 1" >> config.mk
-    echo "ADD_LDFLAGS = -L/opt/cuda/lib64/stubs" >> config.mk
-  else
-    msg2 "CUDA support disabled"
-  fi
-  echo "MKLML_ROOT = $srcdir/mklml" >> config.mk
-  echo "USE_MKL2017 = 1" >> config.mk
-  echo "USE_MKL2017_EXPERIMENTAL = 1" >> config.mk
-  # if (pacman -Q intel-mkl &>/dev/null); then
-  #   msg2 "MKL support enabled"
-  #   echo "USE_BLAS=mkl" >>config.mk
-  #   echo "USE_INTEL_PATH=/opt/intel/composerxe/linux" >>config.mk
-  #   echo "USE_STATIC_MKL=1" >>config.mk
-  # else
-  #   msg2 "MKL support disabled"
-  # fi
-  if (pacman -Q opencv &>/dev/null); then
-    msg2 "OpenCV support enabled"
-  else
-    msg2 "OpenCV support disabled"
-    echo "USE_OPENCV = 0" >> config.mk
-  fi
+	cd "$srcdir/$_gitname"
+	git submodule update --init --recursive
+	export flags="USE_BLAS=openblas USE_LAPACK=1"
+	if (pacman -Q cuda &>/dev/null && pacman -Q cudnn &>/dev/null); then
+		msg2 "CUDA support enabled"
+		flags="$flags USE_CUDA=1 USE_CUDA_PATH=/opt/cuda USE_CUDNN=1 ADD_LDFLAGS=-L/opt/cuda/lib64/stubs"
+	else
+		msg2 "CUDA support disabled"
+	fi
+	if (pacman -Q opencv &>/dev/null); then
+		msg2 "OpenCV support enabled"
+		flags="$flags USE_OPENCV=1"
+	else
+		msg2 "OpenCV support disabled"
+		flags="$flags USE_OPENCV=0"
+	fi
 }
 
 build() {
-  cd "$srcdir/$pkgname"
-  make
+	cd "$srcdir/$_gitname"
+	make $flags
+
+	cd python
+	python setup.py build --with-cython
 }
 
 package() {
-  cd "$pkgdir"
-  install -D "$srcdir/$pkgname/lib/libmxnet.so" "$pkgdir/usr/lib/libmxnet.so"
-  install -D "$srcdir/mklml/lib/libmklml_intel.so" "$pkgdir/usr/lib/libmklml_intel.so"
-  install -D "$srcdir/mklml/lib/libiomp5.so" "$pkgdir/usr/lib/libiomp5.so"
-  install -D "$srcdir/mklml/license.txt" "$pkgdir/usr/lib/LICENCE"
+	cd "$srcdir/$_gitname/python"
+	python setup.py install --root="$pkgdir"/ --optimize=1 --with-cython
+	mv $pkgdir/usr/$pkgname/* $pkgdir/usr/lib/python3.6/site-packages/$pkgname/
+
+	install -Dm644 "$srcdir/$_gitname/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
