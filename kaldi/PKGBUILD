@@ -1,21 +1,21 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.2.r7614.3c7f0ddb2
+pkgver=5.2.r7627.323100178
 pkgrel=1
-makedepends=('gcc5' 'git' 'wget' 'subversion' "cuda")
-depends=('python2' 'openblas-lapack')
-optdepends=('cuda: For GPU support')
+makedepends=('git' 'wget' 'python' 'python2' 'subversion' 'gcc6' "cuda")
+depends=('python2' 'kaldi-openfst' 'openblas-lapack' 'sed')
+optdepends=('cuda: For GPU support'
+	'kaldi-irstlm'
+	'kaldi-kaldi_lm'
+	'kaldi-sctk'
+	'kaldi-sph2pipe'
+	)
 arch=('x86_64' 'i686')
 url='https://github.com/kaldi-asr/kaldi'
 license=('APACHE')
-source=("${pkgname}::git+${url}"
-"srilm.tgz::https://www.dropbox.com/s/41y27or8lco4fju/srilm-1.7.2.tar.gz?dl=1"
-)
-noextract=('srilm.tgz')
-sha256sums=('SKIP'
-'a528a778f881c679233f94d7b26d6f795129fa6009b32305c8ce769f66e223b4'
-)
+source=("git+${url}")
+sha256sums=('SKIP')
 
 pkgver () {
 	cd "${pkgname}"
@@ -40,28 +40,11 @@ prepare(){
 }
 
 build () {
-	CFLAGS="${CFLAGS/-fno-plt/}"
-	CXXFLAGS="${CFLAGS/-fno-plt/}"
-	cd $srcdir/$pkgname/tools
-	sed \
-		-e '/^sclite_compiled/s/ sctk_configured//' \
-		-i Makefile
-	sed 's/^exit/# exit/' -i extras/check_dependencies.sh
-	make CXX=g++-5 sph2pipe openfst sctk_configured
-
-	sed '/^DEFS/s/ -Dsize_t=unsigned//' -i sctk/src/sclite/makefile
-	make sclite
-
-	CXX=g++-5 extras/install_irstlm.sh
-	extras/install_kaldi_lm.sh
-	chmod +rx kaldi_lm
-
-	ln -sf $srcdir/srilm.tgz .
-	extras/install_srilm.sh
-
 	cd $srcdir/$pkgname/src
-	CXX=g++-5 ./configure $_cuda_config_opts \
+	CXX=g++-6 \
+	./configure $_cuda_config_opts \
 		--shared \
+		--fst-root=/opt/kaldi/tools/openfst \
 		--openblas-root=/usr \
 		--threaded-math=yes
 	make depend
@@ -69,29 +52,33 @@ build () {
 }
 
 package () {
-	cd $srcdir/$pkgname
-	for i in "*.tar*" "*.c" "*.cc" "*.cu" "*.cpp" "*.o" "*.a" "*.lo" "*.la" "*.mk" "Makefile*" "makefile*" "*.bak" "*.log" "*.status" "*.~*"
-	do
-		find . -type f -name "$i" -exec rm -f {} \;
-	done
+	cd  $srcdir/$pkgname
 
+	for i in src/lib/*.so
+	do
+		mv `realpath $i` $i
+	done
+	rm src/*/*.{cc,cu,o,a,orig}
+	rm -r src/{doc,feat/test_data,lm/examples,lm/test_data,makefiles,onlinebin,probe}
+	find src \
+		-name 'Makefile*' \
+		-or -name 'README' \
+		-exec rm {} \;
+	find src \
+		-name '*.mk' \
+		-not -name 'kaldi.mk' \
+		-exec rm {} \;
+	find src -maxdepth 1 -type f -not -name 'kaldi.mk' -exec rm {} \;
+	rm -r tools/{ATLAS_headers,CLAPACK,INSTALL,Makefile}
+
+	sed "s|$srcdir|/opt|g" -i `grep $srcdir . -rIl`
 	find . -name 'path.sh' -exec sed 's?^\(export KALDI_ROOT\)=.*$?\1=/opt/'$pkgname'?' -i {} \;
-
-	rm tools/srilm.tgz
-	rm tools/srilm/lm/src/Dependencies.i686-m64
-
-	for i in `grep $srcdir . -rIl`
-	do
-		sed -i "s|$srcdir|/opt|g" $i
-	done
-
 	echo "export OPENFST=/opt/kaldi/$(find tools -type d -name 'openfst*')" >> tools/env.sh
 	echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:${OPENFST}/lib' >> tools/env.sh
 
-	mkdir -p $pkgdir/opt/$pkgname
-	cp -rL src $pkgdir/opt/$pkgname
-	cp -r misc egs tools $pkgdir/opt/$pkgname
-
 	install -dm755 "$pkgdir"/etc/ld.so.conf.d/
 	echo "/opt/$pkgname/src/lib" > "$pkgdir"/etc/ld.so.conf.d/$pkgname.conf
+
+	mkdir -p $pkgdir/opt/$pkgname
+	cp -r src egs tools $pkgdir/opt/$pkgname
 }
