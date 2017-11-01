@@ -3,7 +3,7 @@ pkgname='kaldi-openfst'
 _pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
 pkgver=1.6.2
-pkgrel=1
+pkgrel=2
 makedepends=('git' 'wget' 'python' 'python2' 'subversion')
 arch=('x86_64' 'i686')
 url='https://github.com/kaldi-asr/kaldi'
@@ -20,5 +20,5 @@ package () {
 	mkdir -p $pkgdir/opt/$_pkgname/tools/openfst-$pkgver
 	cd $pkgdir/opt/$_pkgname/tools
 	ln -s openfst-$pkgver openfst
-	cp -r $srcdir/$_pkgname-master/tools/openfst-$pkgver/{bin,include,lib} openfst-$pkgver
+	cp -r $srcdir/$_pkgname-master/tools/openfst-$pkgver/{bin,include,lib,Makefile} openfst-$pkgver
 }
