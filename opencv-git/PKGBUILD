@@ -11,29 +11,23 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 _name=opencv
-pkgname="${_name}-git"
-pkgver=3.3.1.r85.g18a4ced07a
+pkgname="$_name-git"
+pkgver=3.3.1.r92.gf9ac1665b6
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="http://opencv.org/"
-license=('BSD')
-arch=('i686' 'x86_64')
-depends=('intel-tbb'
-         'openexr'
-         'xine-lib'
-         'libdc1394'
-         'hdf5'
-         'gst-plugins-base-libs'
-         'gtk3'
-         'protobuf')
-makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen')
+license=(BSD)
+arch=(i686 x86_64)
+depends=(intel-tbb openexr xine-lib libdc1394 hdf5 gst-plugins-base-libs
+         gtk3 protobuf)
+makedepends=(git cmake python2-numpy python-numpy mesa eigen)
 optdepends=('opencv-samples'
-            'eigen'
+            'hdf5: Support for HDF5 format'
             'opencl-icd-loader: For coding with OpenCL'
             'python-numpy: Python 3 interface'
             'python2-numpy: Python 2 interface')
-conflicts=('opencv' 'opencv-git')
-provides=("${_name}=${pkgver}")
+conflicts=(opencv)
+provides=("$_name=$pkgver")
 source=('git+https://github.com/opencv/opencv.git'
         'git+https://github.com/opencv/opencv_contrib.git')
 sha512sums=('SKIP'
@@ -43,6 +37,7 @@ _cmakeopts=('-D WITH_OPENCL=ON'
             '-D WITH_OPENGL=ON'
             '-D WITH_TBB=ON'
             '-D WITH_XINE=ON'
+            '-D WITH_GSTREAMER=OFF'
             '-D BUILD_WITH_DEBUG_INFO=OFF'
             '-D BUILD_TESTS=OFF'
             '-D BUILD_PERF_TESTS=OFF'
@@ -60,14 +55,17 @@ _cmakeopts=('-D WITH_OPENCL=ON'
                  '-D ENABLE_SSE3=OFF')
 
 pkgver() {
-    cd "${srcdir}/${_name}"
+    cd "$srcdir/$_name"
     git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
 }
 
 build() {
+    mkdir -p build
+    cd build
+
     cmake ${_cmakeopts[@]} \
-          -DOPENCV_EXTRA_MODULES_PATH="${srcdir}/opencv_contrib/modules" \
-          ${_name}
+          -DOPENCV_EXTRA_MODULES_PATH="$srcdir/opencv_contrib/modules" \
+          ../$_name
 
     make
 }
@@ -75,8 +73,9 @@ build() {
 package() {
     options=('staticlibs')
 
-    make DESTDIR="${pkgdir}" install
+    cd build
+    make DESTDIR="$pkgdir" install
 
     # install LICENSE file
-    install -Dm644 "${srcdir}/${_name}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -Dm644 "$srcdir/$_name/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
