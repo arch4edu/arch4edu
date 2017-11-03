@@ -12,7 +12,7 @@
 
 _name=opencv
 pkgname="$_name-git"
-pkgver=3.3.1.r92.gf9ac1665b6
+pkgver=3.3.1.r99.gd7a1d2230f
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="http://opencv.org/"
@@ -46,7 +46,8 @@ _cmakeopts=('-D WITH_OPENCL=ON'
             '-D INSTALL_PYTHON_EXAMPLES=ON'
             '-D CMAKE_BUILD_TYPE=Release'
             '-D CMAKE_INSTALL_PREFIX=/usr'
-            '-D CMAKE_SKIP_RPATH=ON')
+            '-D CMAKE_SKIP_RPATH=ON'
+            '-D CMAKE_INSTALL_LIBDIR=/usr/lib')
 
 # SSE only available from Pentium 3 onwards (i686 is way older)
 [[ "$CARCH" = 'i686' ]] && \
