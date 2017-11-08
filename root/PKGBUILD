@@ -5,7 +5,7 @@
 # Contributor: Sebastian Voecking < voeck at web dot de >
 
 pkgname=root
-pkgver=6.10.06
+pkgver=6.10.08
 pkgrel=1
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
@@ -42,7 +42,7 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
         'root.xml'
         'rootd'
         'settings.cmake')
-sha256sums=('02ba62b2a732f4f8d7beecb29556545cc30d122bc87da904473de69a8972ed74'
+sha256sums=('2cd276d2ac365403c66f08edd1be62fe932a0334f76349b24d8c737c0d6dad8a'
             '72ba38e0faffa084ac2f787f360201f72b1733d27e36c3cb88eb2f3a4716fa61'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
