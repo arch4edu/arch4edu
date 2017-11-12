@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.2.r7638.221664ea4
+pkgver=5.2.r7643.b952cf33a
 pkgrel=1
 makedepends=('git' 'wget' 'python' 'python2' 'subversion' 'gcc6' "cuda")
 depends=('python2' 'kaldi-openfst' 'openblas-lapack' 'sed')
@@ -10,6 +10,7 @@ optdepends=('cuda: For GPU support'
 	'kaldi-kaldi_lm'
 	'kaldi-sctk'
 	'kaldi-sph2pipe'
+	'kaldi-srilm'
 	)
 arch=('x86_64' 'i686')
 url='https://github.com/kaldi-asr/kaldi'
@@ -58,7 +59,7 @@ package () {
 	do
 		mv `realpath $i` $i
 	done
-	rm src/*/*.{cc,cu,o,a,orig}
+	rm -f src/*/*.{cc,cu,o,a,orig}
 	rm -r src/{doc,feat/test_data,lm/examples,lm/test_data,makefiles,onlinebin,probe}
 	find src \
 		-name 'Makefile*' \
@@ -75,6 +76,8 @@ package () {
 	find . -name 'path.sh' -exec sed 's?^\(export KALDI_ROOT\)=.*$?\1=/opt/'$pkgname'?' -i {} \;
 	echo "export OPENFST=/opt/kaldi/$(find tools -type d -name 'openfst*')" >> tools/env.sh
 	echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:${OPENFST}/lib' >> tools/env.sh
+	echo "export IRSTLM=/opt/kaldi/tools/irstlm" >> tools/env.sh
+	echo "export export PATH=${PATH}:${IRSTLM}/bin" >> tools/env.sh
 
 	install -dm755 "$pkgdir"/etc/ld.so.conf.d/
 	echo "/opt/$pkgname/src/lib" > "$pkgdir"/etc/ld.so.conf.d/$pkgname.conf
