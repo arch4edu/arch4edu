@@ -12,21 +12,21 @@
 
 _name=opencv
 pkgname="$_name-git"
-pkgver=3.3.1.r145.gfcdd833059
+pkgver=3.3.1.r157.ge730048f69
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="http://opencv.org/"
-license=(BSD)
-arch=(i686 x86_64)
-depends=(intel-tbb openexr xine-lib libdc1394 hdf5 gst-plugins-base-libs
-         gtk3 protobuf)
-makedepends=(git cmake python2-numpy python-numpy mesa eigen)
+license=('BSD')
+arch=('i686' 'x86_64')
+depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'hdf5' 'gst-plugins-base-libs'
+         'gtk3' 'protobuf')
+makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen')
 optdepends=('opencv-samples'
             'hdf5: Support for HDF5 format'
             'opencl-icd-loader: For coding with OpenCL'
             'python-numpy: Python 3 interface'
             'python2-numpy: Python 2 interface')
-conflicts=(opencv)
+conflicts=('opencv')
 provides=("$_name=$pkgver")
 source=('git+https://github.com/opencv/opencv.git'
         'git+https://github.com/opencv/opencv_contrib.git')
@@ -64,9 +64,9 @@ build() {
     mkdir -p build
     cd build
 
-    cmake ${_cmakeopts[@]} \
-          -DOPENCV_EXTRA_MODULES_PATH="$srcdir/opencv_contrib/modules" \
-          ../$_name
+    cmake "${_cmakeopts[@]}" \
+          -DOPENCV_EXTRA_MODULES_PATH="$srcdir"/opencv_contrib/modules \
+          ../"$_name"
 
     make
 }
@@ -78,5 +78,5 @@ package() {
     make DESTDIR="$pkgdir" install
 
     # install LICENSE file
-    install -Dm644 "$srcdir/$_name/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "$srcdir"/"$_name"/LICENSE "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE
 }
