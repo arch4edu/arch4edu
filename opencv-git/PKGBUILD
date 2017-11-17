@@ -12,12 +12,12 @@
 
 _name=opencv
 pkgname="$_name-git"
-pkgver=3.3.1.r157.ge730048f69
+pkgver=3.3.1.r168.g3e33820ee5
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="http://opencv.org/"
 license=('BSD')
-arch=('i686' 'x86_64')
+arch=('x86_64')
 depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'hdf5' 'gst-plugins-base-libs'
          'gtk3' 'protobuf')
 makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen')
@@ -48,12 +48,6 @@ _cmakeopts=('-D WITH_OPENCL=ON'
             '-D CMAKE_INSTALL_PREFIX=/usr'
             '-D CMAKE_SKIP_RPATH=ON'
             '-D CMAKE_INSTALL_LIBDIR=/usr/lib')
-
-# SSE only available from Pentium 3 onwards (i686 is way older)
-[[ "$CARCH" = 'i686' ]] && \
-    _cmakeopts+=('-D ENABLE_SSE=OFF'
-                 '-D ENABLE_SSE2=OFF'
-                 '-D ENABLE_SSE3=OFF')
 
 pkgver() {
     cd "$srcdir/$_name"
