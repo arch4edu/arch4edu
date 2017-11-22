@@ -12,15 +12,15 @@
 
 _name=opencv
 pkgname="$_name-git"
-pkgver=3.3.1.r184.gc3cced0f89
+pkgver=3.3.1.r195.gf8ad289311
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
-url="http://opencv.org/"
+url="https://opencv.org/"
 license=('BSD')
-arch=('x86_64')
-depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'hdf5' 'gst-plugins-base-libs'
+arch=('i686' 'x86_64')
+depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'gst-plugins-base-libs'
          'gtk3' 'protobuf')
-makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen')
+makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen' 'hdf5')
 optdepends=('opencv-samples'
             'hdf5: Support for HDF5 format'
             'opencl-icd-loader: For coding with OpenCL'
@@ -33,21 +33,25 @@ source=('git+https://github.com/opencv/opencv.git'
 sha512sums=('SKIP'
             'SKIP')
 
-_cmakeopts=('-D WITH_OPENCL=ON'
-            '-D WITH_OPENGL=ON'
-            '-D WITH_TBB=ON'
-            '-D WITH_XINE=ON'
-            '-D WITH_GSTREAMER=OFF'
-            '-D BUILD_WITH_DEBUG_INFO=OFF'
-            '-D BUILD_TESTS=OFF'
-            '-D BUILD_PERF_TESTS=OFF'
-            '-D BUILD_EXAMPLES=ON'
-            '-D INSTALL_C_EXAMPLES=ON'
-            '-D INSTALL_PYTHON_EXAMPLES=ON'
-            '-D CMAKE_BUILD_TYPE=Release'
-            '-D CMAKE_INSTALL_PREFIX=/usr'
-            '-D CMAKE_SKIP_RPATH=ON'
-            '-D CMAKE_INSTALL_LIBDIR=/usr/lib')
+_cmakeopts=('-DWITH_OPENCL=ON'
+            '-DWITH_OPENGL=ON'
+            '-DWITH_TBB=ON'
+            '-DWITH_XINE=ON'
+            '-DWITH_GSTREAMER=OFF'
+            '-DBUILD_WITH_DEBUG_INFO=OFF'
+            '-DBUILD_TESTS=OFF'
+            '-DBUILD_PERF_TESTS=OFF'
+            '-DBUILD_EXAMPLES=ON'
+            '-DINSTALL_C_EXAMPLES=ON'
+            '-DINSTALL_PYTHON_EXAMPLES=ON'
+            '-DCMAKE_BUILD_TYPE=Release'
+            '-DCMAKE_INSTALL_PREFIX=/usr'
+            '-DCMAKE_SKIP_RPATH=ON'
+            '-DCMAKE_INSTALL_LIBDIR=/usr/lib')
+
+# SSE only available from Pentium 3 onwards (i686 is way older)
+[[ "$CARCH" = 'i686' ]] && _cmakeopts+=('-DCPU_BASELINE_DISABLE=SSE2')
+[[ "$CARCH" = 'x86_64' ]] && _cmakeopts+=('-DCPU_BASELINE_DISABLE=SSE3 -DCPU_BASELINE_REQUIRE=SSE2')
 
 pkgver() {
     cd "$srcdir/$_name"
@@ -73,4 +77,8 @@ package() {
 
     # install LICENSE file
     install -Dm644 "$srcdir"/"$_name"/LICENSE "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE
+
+    cd "$pkgdir"/usr/share
+
+    mv OpenCV opencv  # NOTE: Make the name casing consistent with what extra/opencv provides
 }
