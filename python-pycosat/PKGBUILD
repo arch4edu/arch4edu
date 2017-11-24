@@ -2,8 +2,8 @@
 
 _pyname=pycosat
 pkgname=python-$_pyname
-pkgver=0.6.1
-pkgrel=1.1
+pkgver=0.6.3
+pkgrel=1
 pkgdesc="Python bindings to picosat (a SAT solver)"
 arch=('any')
 url="https://github.com/ContinuumIO/pycosat"
@@ -18,7 +18,7 @@ backup=()
 options=(!emptydirs)
 install=
 source=("https://github.com/ContinuumIO/$_pyname/archive/$pkgver.tar.gz")
-sha512sums=('58b8f1c10d43eb525d4df7a3810fb33f3d57028cf72619baa8ed6ebefcd66b6a5112dc9f127bf18d570d5fa058b08f553abd539fb3ee7c73da6fbaafa97baacd')
+sha512sums=('6163f9879d4ed98486f36990f0134db0a9b6096a8507312a1013d707b0dcb7e963845a5959c601f672a53a5db8c80b63d3184a0ef906b2ec563ca1a4c63850fa')
 
 package() {
   cd "$srcdir/${_pyname}-$pkgver"
