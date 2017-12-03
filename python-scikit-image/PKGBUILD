@@ -1,10 +1,10 @@
-# Maintainer: Jaroslav Lichtblau <svetlemodry@archlinux.org>
+# Maintainer: Jaroslav Lichtblau <dragonlord@aur.archlinux.org>
 # Contributor: Andrzej Giniewicz <gginiu@gmail.com>
 
 pkgbase=python-scikit-image
 pkgname=('python2-scikit-image' 'python-scikit-image')
-pkgver=0.13.0
-pkgrel=2
+pkgver=0.13.1
+pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
 url="http://scikit-image.org/"
@@ -13,8 +13,8 @@ makedepends=('cython2' 'cython' 'python2-six' 'python-six' 'python2-scipy' 'pyth
             'python2-matplotlib' 'python-matplotlib' 'python2-networkx' 'python-networkx'
             'python2-pillow' 'python-pillow' 'python2-pywavelets' 'python-pywavelets')
 options=('!emptydirs')
-source=(https://pypi.python.org/packages/f0/a2/918366ba9095ed4c07646be903c795f375d978ee418136eecb0571559719/scikit-image-${pkgver}.tar.gz)
-sha256sums=('77a636bdc08c7668a15951894548c527f0c8c5c2abc86cb850de17551af51e3e')
+source=(https://pypi.python.org/packages/83/2a/c5a39c12c196c19a443fa4d17c0768a24231e46ae952930a9d66bad45557/scikit-image-$pkgver.tar.gz)
+sha256sums=('353879ddf7483f4621872c49cd9bc8a0ad1c3154ac0670b70799922f4cb899e8')
 
 prepare() {
   cd "${srcdir}"
