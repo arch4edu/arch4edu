@@ -1,6 +1,6 @@
 Name: cub
 Description: A flexible library of cooperative threadblock primitives and other utilities for CUDA kernel programming.
 Requires:
-Version: 1.4.1
+Version: 1.7.4
 Libs:
 Cflags: -I/usr/include/cub
