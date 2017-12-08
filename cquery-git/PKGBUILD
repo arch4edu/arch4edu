@@ -2,7 +2,7 @@
 
 pkgname=cquery-git
 _pkgname=cquery
-pkgver=695.336ba46
+pkgver=791.ebad9e2
 pkgrel=1
 pkgdesc='Low-latency vscode language server for large C++ code-bases, powered by libclang.'
 arch=('any')
@@ -18,14 +18,14 @@ md5sums=(
 
 pkgver() {
     cd $_pkgname
-    echo $(git rev-list --count master).$(git rev-parse --short master)
+    printf "%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
     cd $_pkgname
     git submodule update --init --recursive
     sed -e "s/, '-Werror'//g" -i ./wscript
-    sed -e "s/rpath=\[CLANG_LIB_DIR\]/rpath=\['lib'\]/g" -i ./wscript
+    sed -e "s/rpath=.*,/rpath=\['lib'\],/g" -i ./wscript
 }
 
 build() {
@@ -38,7 +38,8 @@ build() {
 
 check() {
     cd $_pkgname/build
-    yes | ./app --test-unit --test-index
+    ln -sf ../tests tests
+    yes | ./app --test-unit --test-index --clang-sanity-check
 }
 
 package() {
