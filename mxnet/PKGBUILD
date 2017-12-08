@@ -2,7 +2,7 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgname=mxnet
 _gitname=incubator-mxnet
-pkgver=0.12.0
+pkgver=1.0.0
 pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
