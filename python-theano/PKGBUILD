@@ -1,10 +1,10 @@
-# Maintainer: David McInnis <davidm@eagles.ewu.edu>
+# Maintainer: David McInnis <dave@dave3.xyz>
 
 pkgbase="python-theano"
 pkgname=("python-theano" "python2-theano")
 _pkgname="Theano"
-pkgver="0.9.0"
-pkgrel=1
+pkgver="1.0.0"
+pkgrel="1"
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
 url='http://www.deeplearning.net/software/theano/'
@@ -12,24 +12,25 @@ license=('BSD')
 depends=('python'  'python-numpy' 
          'python2' 'python2-numpy')
 makedepends=('python-distribute' 'python2-distribute')
-checkdepends=('python-nose' 'python-nose-parameterized' 'python2-nose' 'python2-nose-parameterized')
+checkdepends=('python-nose' 'python-parameterized' 'python2-nose' 'python2-parameterized')
 optdepends=('python-sympy: Recommended'
             'python-scipy: Recommended'
-            'python-pycuda:'
+            'python-pycuda'
             'python-pydot-ng: Preferred over python-pydot'
             'python-pydot'
-            'python-pygpu'
+            'python-pygpu-git'
             'python-scikit-sparse'
             'python-mpi4py: minimal support for opencl'
             'python2-sympy'
             'python2-scipy'
             'python2-pycuda'
             'python2-pydot-ng'
+            'python2-pygpu-git'
             'python2-pydot'
             'python2-mpi4py')
-source=("http://pypi.python.org/packages/28/03/6af9ff242da966f89de6ab81164db0d1a36fd89379b7370f07043de62f10/Theano-${pkgver}.tar.gz")
-sha256sums=('745d66716531f9063127274b40503fbc21f931f78b7b03e79e5523d50078bc17')
-         
+source=("https://pypi.python.org/packages/8d/74/99cc011153b3a566e98729cfee1b8b00af157e2b6047d23ee0871fd5e706/Theano-${pkgver}.tar.gz")
+sha256sums=('7bc82e4fcaac023cac23c390b30d5df81bc09d33568812df75b0bd2b86d2fa8f')
+
 prepare() {
   cd "${_pkgname}-${pkgver}"
   chmod +x "${_pkgname}.egg-info"
@@ -54,22 +55,18 @@ build() {
   python setup.py build
 }
 
-# All CPU tests for Python2 pass on my machine, but the 
-# theano.tensor.tests.test_mpi.test_mpi_roundtrip test
-# for Python3 Hangs indefinitely
-# many CUDA tests fail on my machine
-# My Nvidia 9600GT is old & requires cuda65 to work
+# Tests take many hours and need over 8G of memory
+# All Python and Python2 tests pass except theano.tensor.tests.test_mpi.test_mpi_roundtrip
+#
 #-------------------------------------------------
 #check() {
 #  msg "Checking Python 2"
 #  cd "$srcdir/${_pkgname}-${pkgver}-py2"/build/lib/theano/
-#  ../../../bin/theano-cache clear
-#  THEANO_FLAGS=cuda.enabled=False nosetests2 -v -d
+#  nosetests2 -vv -d
 #
 #  msg "Checking Python 3"
 #  cd "$srcdir/${_pkgname}-${pkgver}"/build/lib/theano/
-#  ../../../bin/theano-cache clear
-#  THEANO_FLAGS=cuda.enabled=False nosetests3 -v -d
+#  nosetests3 -vv -d
 #}
 
 package_python2-theano() {
