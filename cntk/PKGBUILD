@@ -1,13 +1,13 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=cntk
 _gitname=CNTK
-pkgver=2.2
+pkgver=2.3
 pkgrel=1
 pkgdesc="Microsoft Cognitive Toolkit (CNTK), an open source deep-learning toolkit"
 arch=('x86_64')
 url="https://github.com/Microsoft/$_gitname"
 license=('CUSTOM')
-depends=('boost' 'cub' 'cuda' 'cudnn6' 'libzip' 'nccl' 'nvidia-utils' 'openblas' 'opencv' 'openmpi' 'protobuf' 'python-numpy' 'python-scipy')
+depends=('boost' 'cub' 'cuda' 'cudnn6' 'libzip' 'nccl' 'nvidia-utils' 'openblas-lapack' 'opencv' 'openmp' 'openmpi' 'protobuf' 'python-numpy' 'python-scipy')
 makedepends=('cmake' 'git' 'inetutils' 'java-environment' 'python-pip' 'python-setuptools' 'python-wheel' 'swig' )
 optdepends=('swig' 'java-environment' )
 source=("git+$url#tag=v$pkgver")
@@ -16,11 +16,19 @@ md5sums=('SKIP')
 prepare(){
 	cd $srcdir/$_gitname
 	git submodule update --init --recursive
-	sed '24a#include <cmath>' -i Source/CNTKv2LibraryDll/API/CNTKLibrary.h
+
+	# https://github.com/Microsoft/CNTK/pull/2429
+	# https://github.com/Microsoft/CNTK/pull/2186
+	sed '115s/);/, CUB_PTX_WARP_THREADS, 0xffffffff);/' -i Source/Math/CntkBatchNormalization.cuh
+
 	sed \
 		-e 's|libprotobuf.a|libprotobuf.so|' \
 		-e 's|cuda/include/cudnn.h|include/cudnn.h|' \
 		-i configure
+
+	# https://github.com/Microsoft/CNTK/issues/62
+	sed 's|/var/lock/|/tmp/cntk/|g' -i `grep '/var/lock' . -rIl`
+
 	mkdir -p build
 	./configure \
 		--with-build-top=build \
@@ -39,6 +47,10 @@ prepare(){
 	sed \
 		-e 's| $(PROTOBUF_PATH)/lib/libprotobuf.a| -lprotobuf|' \
 		-e 's|$(CUDNN_PATH)/cuda|$(CUDNN_PATH)|g'\
+		-e '/DOpenMP/s/""/"-fopenmp"/g' \
+		-e '/DOpenMP_C_FLAGS/a\\t\t-DMPI_LIBRARY="/usr/include" \\' \
+		-e '/DOpenMP_C_FLAGS/a\\t\t-DMPI_LIBRARIES="/usr/include" \\' \
+		-e '/DOpenMP_C_FLAGS/a\\t\t-DMPI_CXX_LIBRARIES="/usr/include" \\' \
 		-i Makefile
 	sed \
 		-e 's|libmpi.so.12|libmpi.so|g' \
@@ -58,4 +70,6 @@ package() {
 
 	cd $srcdir/$_gitname/build/python
 	pip install --root=$pkgdir $pkgname-$pkgver-cp36-cp36m-linux_x86_64.whl
+
+	install -Dm644 $srcdir/$_gitname/LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
