@@ -3,13 +3,13 @@
 # Contributor: Alex Pearce < alex at alexpearce dot me >
 pkgname=xrootd
 pkgver=4.7.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Software framework for fast, low latency, scalable and fault tolerant data access."
 provides=('xrootd' 'xrootd-abi0')
 arch=('i686' 'x86_64')
 url="http://xrootd.org/"
 license=('LGPL3')
-depends=('ceph' 'libxml2' 'python')
+depends=('ceph' 'libxml2')
 makedepends=('cmake')
 options=('!emptydirs')
 source=("http://xrootd.org/download/v${pkgver}/xrootd-${pkgver}.tar.gz")
@@ -27,8 +27,9 @@ prepare() {
     cmake "${srcdir}/${pkgname}-${pkgver}" \
           -DCMAKE_BUILD_TYPE:STRING=Release \
           -DCMAKE_INSTALL_LIBDIR:PATH=lib \
-          -DCMAKE_INSTALL_PREFIX:PATH=/usr \
-          -DXRD_PYTHON_REQ_VERSION=$( python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))' )
+          -DCMAKE_INSTALL_PREFIX:PATH=/usr
+          # Currently Python3 is incompatible
+          # -DXRD_PYTHON_REQ_VERSION=$( python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))' )
 }
 
 build() {
