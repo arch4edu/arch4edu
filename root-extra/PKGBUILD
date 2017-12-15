@@ -6,7 +6,7 @@
 
 pkgname=root-extra
 _pkgname=root
-pkgver=6.10.08
+pkgver=6.12.04
 pkgrel=1
 provides=('root' 'root-extra')
 conflicts=('root')
@@ -16,6 +16,7 @@ url='http://root.cern.ch'
 license=('LGPL2.1')
 makedepends=('cmake')
 depends=('cfitsio'
+         'fcgi'
          'fftw'
          'ftgl'
          'gl2ps'
@@ -37,8 +38,12 @@ depends=('cfitsio'
          'xmlrpc-c'
          'xrootd>=4.6.0-2')
 optdepends=('blas: Optional extensions to TMVA'
+            'go: Go language support'
             'gcc-fortran: Enable the Fortran components of ROOT'
-            'tcsh: Legacy CSH support')
+            'ocaml: OCAML support'
+            'python-numpy: numpy bindings'
+            'tcsh: Legacy CSH support'
+            'z3: Z3 Theorem prover support')
 options=('!emptydirs')
 install=root-extra.install
 source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
@@ -47,7 +52,7 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
         'root.xml'
         'rootd'
         'settings.cmake')
-sha256sums=('2cd276d2ac365403c66f08edd1be62fe932a0334f76349b24d8c737c0d6dad8a'
+sha256sums=('f438f2ae6e25496fa81df525935fb0bf2a403855d95c40b3e0f3a3e1e861a085'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
