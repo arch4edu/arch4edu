@@ -50,11 +50,11 @@ _remove_static_objects_ipp=false
 ########################################
 
 _year='2018'
-_v_a='0'
-_v_b='128'
+_v_a='1'
+_v_b='163'
 # year, version a and version b found in /opt/intel/compilers_and_libraries_YEAR_A_B
 
-_update=''
+_update='1'
 
 pkgrel=2
 
@@ -76,7 +76,7 @@ _advisor_man_ver='1.0.523188'
 
 pkgver=${_year}.${_icc_ver}.${_v_a}.${_v_b}
 
-_dir_nr='12062'
+_dir_nr='12375'
 
 options=(strip libtool staticlibs)
 
@@ -85,7 +85,7 @@ arch=('x86_64')
 license=('custom')
 makedepends=('libarchive' 'sed' 'gzip' 'lzop')
 
-_parallel_studio_xe_dir="parallel_studio_xe${_year:+_${_year}}${_sp:+_${_sp}}${_update:+_update${_update}}"
+_parallel_studio_xe_dir="parallel_studio_xe${_year:+_${_year}}${_update:+_update${_update}}${_sp:+_${_sp}}"
 
 source=(
   "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/${_dir_nr}/${_parallel_studio_xe_dir}.tgz"
@@ -109,7 +109,7 @@ source=(
 )
 
 
-sha256sums=('72308ffa088391ea65726a79d7a73738206fbb1d8ed8563e3d06eab3120fb1a0'
+sha256sums=('dd3e118069d87eebb614336732323b48172c8c8a653cde673a8ef02f7358e94d'
             '75fcdfc246949341afddcf51b2037f606f25612a04c199ac1a743247aa7c4ea5'
             '278f9545d14c1fbec737bbfbcafb1b9090d35aab0dfeddc99d4c6e296b56057b'
             'e3103fb1c5e2ec9f0cc4090abb7e273563e735d88e185f527c66b2aebd52e733'
@@ -332,6 +332,7 @@ package_intel-compiler-base() {
   extract_rpms 'intel-icc*.rpm'  $xe_build_dir
   extract_rpms 'intel-comp*.rpm'  $xe_build_dir
   extract_rpms 'intel-openmp*.rpm'  $xe_build_dir
+  extract_rpms 'intel-c-*.rpm'  $xe_build_dir
 
 
   echo -e " # intel_compiler-base: Editing variables"
