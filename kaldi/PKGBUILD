@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.3.r7696.2ec515d78
+pkgver=5.3.r7698.04458f7a2
 pkgrel=1
 makedepends=('git' 'wget' 'python' 'python2' 'subversion' 'gcc6' "cuda")
 depends=('python2' 'kaldi-openfst' 'openblas-lapack' 'sed')
