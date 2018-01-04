@@ -4,7 +4,7 @@
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
 pkgver=6.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A software package for numerical computation, providing a powerful computing environment for engineering and scientific applications."
 arch=("x86_64" "i686")
 license=("BSD" "custom:CeCILL")
@@ -37,4 +37,6 @@ package() {
   install -Dm 644 share/applications/*.desktop "${pkgdir}/usr/share/applications"
   install -d "${pkgdir}/usr/share/icons"
   cp -a share/icons/hicolor "${pkgdir}/usr/share/icons"
+  # Fix bug: http://bugzilla.scilab.org/show_bug.cgi?id=15145
+  rm -f -- "${pkgdir}/opt/${_pkgname}/lib/thirdparty/libz.so"*
 }
