@@ -4,7 +4,7 @@
 
 pkgname=scilab
 pkgver=6.0.0
-pkgrel=11
+pkgrel=12
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
@@ -18,14 +18,14 @@ depends=('suitesparse>=4.4.1'  'arpack' 'fftw' 'eigen'
          'jeuclid-core' 'jgraphx>=2.0.0.1' 'javahelp2'
          'saxon-he' 'jlatexmath-fop>=1.0.3' 'jrosetta>=1.0.4' 'jgoodies-looks' 'java-qdox'
          'java-skinlf' 'java-testng' 'xalan-java' 'docbook-xsl'
-         'jogl>=2.3.2' 'apache-lucene>=6'
+         'jogl>=2.3.2' 'apache-lucene>=7'
          'java-batik>=1.8' 'java-xmlgraphics-commons>=2.0')
 makedepends=('java-environment>=8' 'apache-ant' 'ocaml' 'gcc-fortran' )
 source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
         "${pkgname}-jogl-2.3.2.patch"
         "${pkgname}-LD_LIBRARY_PATH.patch"
         "${pkgname}-strict-jar.patch"
-        "${pkgname}-lucene-6.patch"
+        "${pkgname}-lucene.patch"
         "${pkgname}-hdf5-type.patch"
         "${pkgname}-hdf5-1.8.10.patch"
         "${pkgname}-fix-ocaml-4.0.4.diff"
@@ -35,7 +35,7 @@ sha256sums=('b71bde8e397173a713493159a5b559de2e049b493985663418c79b2de0f23137'
             'f19f173e989f72bd55bda35e271b3c180ecef4e29da964df3f230fce8b1330fc'
             '37f649fea0196b255e5a8576dd1e8c5fd219c6e8c600b703b35303fb90b6a7e0'
             '38aa094951338fa1d267dc6f397552e175213b0f8ba7b35727c178607861f6dd'
-            'ba7969fff7f839562120534222fbb6421e204f6a382654d80bbab19e0c7a2c66'
+            'b1fb3e4b08b3c17f267c213d954c704cb95225cf1445cf92892e205a4ca14d76'
             'c992a4f230dac60c3e217efee04b678c58d856f2aafa6173f742d4c5b050ab9d'
             '2dee1346c240d09ce7870bbbeb3318e0ac5d78f249d855df313e9cb7a2ef7fc0'
             '4288f98e34d0351c21b79bfc5b9fddabdee143965420fd3187d133e5d53ee20e'
@@ -51,8 +51,8 @@ prepare(){
   patch -p2 < "${srcdir}"/${pkgname}-jogl-2.3.2.patch
   # Linked to: https://codereview.scilab.org/#/c/18089/
   patch < "${srcdir}"/${pkgname}-strict-jar.patch
-  # Fix to build with lucene >= 6
-  patch -p0 < "${srcdir}"/${pkgname}-lucene-6.patch
+  # Fix to build with lucene >= 7
+  patch -p0 < "${srcdir}"/${pkgname}-lucene.patch
   # Fix hdf5 type
   patch -p0 < "${srcdir}"/${pkgname}-hdf5-type.patch
   # Fix for LD_LIBRARY_PATH
