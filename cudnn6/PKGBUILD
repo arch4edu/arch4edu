@@ -5,7 +5,7 @@
 # Contributor: Yunhui Fu <yhfdev@gmail.com>
 pkgname=cudnn6
 pkgver=6.0.21
-pkgrel=3
+pkgrel=4
 pkgdesc="NVIDIA CUDA Deep Neural Network library (version 6)"
 arch=('x86_64')
 url="https://developer.nvidia.com/cuDNN"
