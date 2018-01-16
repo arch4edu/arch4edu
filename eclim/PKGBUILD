@@ -1,13 +1,13 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributor: Andrea Fagiani <andfagiani_at_gmail_dot_com>
 pkgname=eclim
-pkgver=2.7.0
+pkgver=2.7.1
 pkgrel=1
 pkgdesc="Brings Eclipse functionality to Vim. Built with eclipse-java."
 url="http://eclim.org/"
 license=('GPL3')
 arch=(i686 x86_64)
-depends=('vim' 'eclipse-java')
+depends=('vim' 'eclipse-java' 'java-environment')
 makedepends=('apache-ant' 'python2-sphinx' 'groovy')
 optdepends=('eclipse-pdt: Eclipse PHP Development Tools support'
             'eclipse-cdt: Eclipse C/C++ Plugin support'
@@ -17,7 +17,7 @@ optdepends=('eclipse-pdt: Eclipse PHP Development Tools support'
 conflicts=('eclim-git')
 install=$pkgname.install
 source=("https://github.com/ervandew/eclim/releases/download/$pkgver/${pkgname}_$pkgver.tar.gz")
-md5sums=('8d23eb014423bf481349e854e21d18d0')
+md5sums=('b7c283fff4813617eaf2c67c96072b9a')
 
 prepare() {
   export LANG=en_US.UTF-8
