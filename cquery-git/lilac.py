@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-build_prefix = 'arch4edu-x86_64'
-depends=['libtinfo5']
+build_prefix = 'extra-x86_64'
+makechrootpkg_args = '-D $(realpath cquery)'.split(' ')
 
 def pre_build():
     run_cmd('sh update-submodules.sh cquery'.split(' '))
