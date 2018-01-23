@@ -8,9 +8,9 @@ makechrootpkg_args = ['-D', os.path.realpath('cquery')]
 def pre_build():
     run_cmd('sh update-submodules.sh cquery'.split(' '))
     aur_pre_build(do_vcs_update=False)
+    git_add_files('update-submodules.sh')
 
 def post_build():
-    git_add_files('update-submodules.sh')
     aur_post_build()
 
 if __name__ == '__main__':
