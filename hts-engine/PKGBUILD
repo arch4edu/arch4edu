@@ -1,9 +1,9 @@
 # Maintainer: Moritz Maxeiner <moritz@ucworks.org>
 pkgname=hts-engine
 pkgver=1.10
-pkgrel=1
+pkgrel=2
 pkgdesc="Engine to synthesize speech waveform from HMMs trained by hts."
-arch=('i686' 'x86_64')
+arch=('i686' 'x86_64' 'armv7h')
 url="http://hts-engine.sourceforge.net/"
 license=('BSD')
 depends=('glibc')
