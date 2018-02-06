@@ -6,7 +6,7 @@
 
 pkgname=root
 pkgver=6.12.04
-pkgrel=1
+pkgrel=2
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
 url='http://root.cern.ch'
@@ -54,7 +54,7 @@ sha256sums=('f438f2ae6e25496fa81df525935fb0bf2a403855d95c40b3e0f3a3e1e861a085'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
-            'a8db29f6acf32659daca8de35481b25ed847b2182e6033940f3568f3d1ad22fb')
+            '386a62013e10130b6d0fffcee3ea31abf9e125a14e38a513eb8142fec6bf4410')
 prepare() {
     cd "${pkgname}-${pkgver}"
 
@@ -91,6 +91,7 @@ package() {
 
     install -D -m644 "${srcdir}/${pkgname}-${pkgver}/build/package/debian/root-system-bin.desktop.in" \
         "${pkgdir}/usr/share/applications/root-system-bin.desktop"
+
     # replace @prefix@ with /usr for the desktop
     sed -e 's_@prefix@_/usr_' -i "${pkgdir}/usr/share/applications/root-system-bin.desktop"
 
