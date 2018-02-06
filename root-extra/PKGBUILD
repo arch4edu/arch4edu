@@ -7,7 +7,7 @@
 pkgname=root-extra
 _pkgname=root
 pkgver=6.12.04
-pkgrel=1
+pkgrel=2
 provides=('root' 'root-extra')
 conflicts=('root')
 pkgdesc='C++ data analysis framework and interpreter from CERN with extra features enabled.'
@@ -57,7 +57,7 @@ sha256sums=('f438f2ae6e25496fa81df525935fb0bf2a403855d95c40b3e0f3a3e1e861a085'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
-            '40503aebd8a0ab5380a24d69145cf7d93d483d4d9330e4c23fb04e55c9ed2caf')
+            '0878ab24974c7548ddda5619d24d07d7cea14af92de2d8ed3ccef394feaf1d87')
 prepare() {
     cd "${_pkgname}-${pkgver}"
 
@@ -94,6 +94,7 @@ package() {
 
     install -D -m644 "${srcdir}/${_pkgname}-${pkgver}/build/package/debian/root-system-bin.desktop.in" \
         "${pkgdir}/usr/share/applications/root-system-bin.desktop"
+
     # replace @prefix@ with /usr for the desktop
     sed -e 's_@prefix@_/usr_' -i "${pkgdir}/usr/share/applications/root-system-bin.desktop"
 
