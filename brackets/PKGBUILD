@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=brackets
 pkgver=1.12
-pkgrel=1
+pkgrel=2
 pkgdesc="An open source code editor for the web, written in JavaScript, HTML and CSS."
 arch=('i686' 'x86_64')
 url="http://brackets.io"
@@ -29,13 +29,6 @@ prepare() {
 }
 
 build() {
-	#`npm install package` fails with https://registry.npmjs.org/
-	npm_registry=$(npm config get registry)
-	cd ${srcdir}/brackets
-	npm config set registry "https://registry.npm.taobao.org"
-	npm install package
-	npm config set registry "$npm_registry"
-
 	cd ${srcdir}/brackets
 	npm install
 	sed "/'npm-install',$/d" -i Gruntfile.js
