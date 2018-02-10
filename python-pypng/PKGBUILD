@@ -1,0 +1,24 @@
+# Maintainer: Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
+
+pkgname=python-pypng
+pkgver=0.0.18
+pkgrel=1
+pkgdesc="Pure Python library for PNG image encoding/decoding"
+arch=(any)
+url="https://github.com/drj11/pypng"
+license=('MIT')
+depends=('python-requests' 'python-six')
+makedepends=('python-setuptools')
+source=("$url/archive/pypng-$pkgver.tar.gz")
+
+build() {
+    cd "$srcdir"/pypng-pypng-$pkgver
+    python setup.py build
+}
+
+package() {
+    cd "$srcdir"/pypng-pypng-$pkgver
+    python setup.py install -O1 --skip-build --root="$pkgdir"
+}
+
+sha256sums=('6daa52c8b36c51acd86218353a7147692ade70ba2f25b124fbc56ffe3b8ca4df')
