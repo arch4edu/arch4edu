@@ -1,0 +1,19 @@
+pkgbase = python-parsimonious
+	pkgver = 0.8.0
+	pkgrel = 1
+	url = https://pypi.python.org/pypi/parsimonious/0.8.0
+	arch = any
+	license = MIT
+	makedepends = python-setuptools
+	makedepends = python2-setuptools
+	source = https://files.pythonhosted.org/packages/source/p/parsimonious/parsimonious-0.8.0.tar.gz
+	sha256sums = ae0869d72a6e57703f24313a5f5748e73ebff836e6fe8b3ddf34ea0dc00d086b
+
+pkgname = python-parsimonious
+	pkgdesc = Fast parser based on parsing expression grammars (PEGs) - Python 3 version.
+	depends = python>=3.3
+
+pkgname = python2-parsimonious
+	pkgdesc = Fast parser based on parsing expression grammars (PEGs) - Python 2 version.
+	depends = python>=2.7
+
