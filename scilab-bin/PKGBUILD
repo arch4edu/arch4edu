@@ -3,20 +3,18 @@
 
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
-pkgver=6.0.0
-pkgrel=5
+pkgver=6.0.1
+pkgrel=1
 pkgdesc="A software package for numerical computation, providing a powerful computing environment for engineering and scientific applications."
-arch=("x86_64" "i686")
+arch=("x86_64")
 license=("BSD" "custom:CeCILL")
 url="https://www.scilab.org"
 # Standalone package
 depends=()
 conflicts=('scilab')
 options=(!strip)
-source_x86_64=("http://www.scilab.org/download/${pkgver}/scilab-${pkgver}.bin.linux-x86_64.tar.gz")
-source_i686=("http://www.scilab.org/download/${pkgver}/scilab-${pkgver}.bin.linux-i686.tar.gz")
-sha256sums_x86_64=("2d09e7ae7b7e01ef4e56fa138ebeaac78f225c3e657c569a09bfff67117de7d6")
-sha256sums_i686=("c61bd5dd8f02675649e198dccb32ba7b114a254e984b48f73e7aaf8ddb8f1b52")
+source=("http://www.scilab.org/download/${pkgver}/scilab-${pkgver}.bin.linux-x86_64.tar.gz")
+sha256sums=("ad8c66cf6df3d761c830c52e1dfe2ca0f3cb5ec241e107def79b04663fe59ae9")
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}/share/applications"
@@ -39,6 +37,4 @@ package() {
   install -Dm 644 share/applications/*.desktop "${pkgdir}/usr/share/applications"
   install -d "${pkgdir}/usr/share/icons"
   cp -a share/icons/hicolor "${pkgdir}/usr/share/icons"
-  # Fix bug: http://bugzilla.scilab.org/show_bug.cgi?id=15145
-  rm -f -- "${pkgdir}/opt/${_pkgname}/lib/thirdparty/libz.so"*
 }
