@@ -2,7 +2,7 @@
 # Contributor : Martin Wimpress <code@flexion.org>
 # Contributor : Jingbei Li <i@jingbei.li>
 pkgname=anaconda2
-pkgver=5.0.1
+pkgver=5.1.0
 pkgrel=1
 pkgdesc="Completely free enterprise-ready Python distribution for large-scale data processing, predictive analytics, and scientific computing."
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=("custom")
 source=("http://repo.continuum.io/archive/Anaconda2-${pkgver}-Linux-x86_64.sh"
 "$pkgname.install")
 options=(!strip libtool staticlibs)
-sha256sums=('23c676510bc87c95184ecaeb327c0b2c88007278e0d698622e2dd8fb14d9faa4'
+sha256sums=('5f26ee92860d1dffdcd20910ff2cf75572c39d2892d365f4e867a611cca2af5b'
             'c491735df1753335c6aa5b3b71bd936ccb4ff5622fedbf22d1d6d9da5bd45fbc')
 install="$pkgname.install"
 
