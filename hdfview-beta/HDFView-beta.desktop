@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=HDFView-beta
+Comment=HDFView is a GUI tool for browsing and editing HDF4 and HDF5 files.
+Exec=/usr/bin/hdfview-beta.sh
+Icon=/usr/share/pixmaps/HDFView-beta.ico
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Utility;
+StartupNotify=false
