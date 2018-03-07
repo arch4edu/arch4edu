@@ -1,0 +1,6 @@
+*~
+pkg/
+src/
+plantuml-*.tar.gz
+*.tar.xz
+tests/
