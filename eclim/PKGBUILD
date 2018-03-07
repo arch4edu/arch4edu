@@ -2,13 +2,13 @@
 # Contributor: Andrea Fagiani <andfagiani_at_gmail_dot_com>
 pkgname=eclim
 pkgver=2.7.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Brings Eclipse functionality to Vim. Built with eclipse-java."
 url="http://eclim.org/"
 license=('GPL3')
 arch=(i686 x86_64)
 depends=('vim' 'eclipse-java' 'java-environment')
-makedepends=('apache-ant' 'python2-sphinx' 'groovy')
+makedepends=('apache-ant' 'python2-sphinx' 'python2-docutils' 'groovy')
 optdepends=('eclipse-pdt: Eclipse PHP Development Tools support'
             'eclipse-cdt: Eclipse C/C++ Plugin support'
             'eclipse-dltk-core: Eclipse Dynamic Languagues Toolkit support'
@@ -34,6 +34,9 @@ prepare() {
   source /etc/profile.d/apache-ant.sh
 
   chmod +x org.eclim/nailgun/configure bin/sphinx
+
+  # Sphinx 1.6 => 1.7 compatibility issue
+  sed 's|sphinx.util.compat|docutils.parsers.rst|' -i doc/extension/plantuml.py
 }
 
 build() {
