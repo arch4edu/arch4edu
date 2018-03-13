@@ -1,8 +1,8 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributor: Andrea Fagiani <andfagiani_at_gmail_dot_com>
 pkgname=eclim
-pkgver=2.7.1
-pkgrel=2
+pkgver=2.7.2
+pkgrel=1
 pkgdesc="Brings Eclipse functionality to Vim. Built with eclipse-java."
 url="http://eclim.org/"
 license=('GPL3')
@@ -17,7 +17,7 @@ optdepends=('eclipse-pdt: Eclipse PHP Development Tools support'
 conflicts=('eclim-git')
 install=$pkgname.install
 source=("https://github.com/ervandew/eclim/releases/download/$pkgver/${pkgname}_$pkgver.tar.gz")
-md5sums=('b7c283fff4813617eaf2c67c96072b9a')
+md5sums=('dbcc44556fc04491894ff61774ca7aa4')
 
 prepare() {
   export LANG=en_US.UTF-8
@@ -37,6 +37,9 @@ prepare() {
 
   # Sphinx 1.6 => 1.7 compatibility issue
   sed 's|sphinx.util.compat|docutils.parsers.rst|' -i doc/extension/plantuml.py
+
+  # ant/build.gant syntax error
+  sed '68,71d' -i ant/build.gant
 }
 
 build() {
