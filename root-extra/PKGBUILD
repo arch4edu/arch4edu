@@ -7,7 +7,7 @@
 pkgname=root-extra
 _pkgname=root
 pkgver=6.12.06
-pkgrel=1
+pkgrel=2
 provides=('root' 'root-extra')
 conflicts=('root')
 pkgdesc='C++ data analysis framework and interpreter from CERN with extra features enabled.'
@@ -57,7 +57,7 @@ sha256sums=('aedcfd2257806e425b9f61b483e25ba600eb0ea606e21262eafaa9dc745aa794'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
-            '0878ab24974c7548ddda5619d24d07d7cea14af92de2d8ed3ccef394feaf1d87')
+            'bfc4f0177f7825984db5f23cb998ddaa325ec101664d22da6f74bc79bd73db6f')
 prepare() {
     cd "${_pkgname}-${pkgver}"
 
