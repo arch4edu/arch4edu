@@ -6,7 +6,7 @@
 
 pkgname=root
 pkgver=6.12.06
-pkgrel=1
+pkgrel=2
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
 url='http://root.cern.ch'
@@ -54,32 +54,32 @@ sha256sums=('aedcfd2257806e425b9f61b483e25ba600eb0ea606e21262eafaa9dc745aa794'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
-            '386a62013e10130b6d0fffcee3ea31abf9e125a14e38a513eb8142fec6bf4410')
+            'a50f00f91814dc246cd925790aa3266135954f1d1ac50100213e95ef0f763bff')
 prepare() {
     cd "${pkgname}-${pkgver}"
 
     msg2 'Adjusting to Python3...'
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
+
+    mkdir -p "${srcdir}/build"
+    cd "${srcdir}/build"
+
+    CFLAGS="${CFLAGS} -pthread" \
+    CXXFLAGS="${CXXFLAGS} -pthread" \
+    LDFLAGS="${LDFLAGS} -pthread -Wl,--no-undefined" \
+    cmake -C "${srcdir}/settings.cmake" "${srcdir}/${pkgname}-${pkgver}"
 }
 
 build() {
     mkdir -p "${srcdir}/build"
     cd "${srcdir}/build"
 
-    msg2 'Configuring...'
-    CFLAGS="${CFLAGS} -pthread" \
-    CXXFLAGS="${CXXFLAGS} -pthread" \
-    LDFLAGS="${LDFLAGS} -pthread -Wl,--no-undefined" \
-    cmake -C "${srcdir}/settings.cmake" "${srcdir}/${pkgname}-${pkgver}"
-
-    msg2 'Compiling...'
     make ${MAKEFLAGS}
 }
 
 package() {
     cd "${srcdir}/build"
 
-    msg2 'Installing...'
     make DESTDIR="${pkgdir}" install
 
     install -D "${srcdir}/root.sh" \
