@@ -15,7 +15,9 @@ def pre_build():
         else:
             print(line)
 
-post_build = aur_post_build
+def post_build():
+    run_cmd('git add -f plantuml.run'.split(' '))
+    aur_post_build
 
 if __name__ == '__main__':
   single_main(build_prefix)
