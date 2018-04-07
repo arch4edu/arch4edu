@@ -10,8 +10,8 @@ arch=('x86_64')
 url='http://www.pycryptodome.org/'
 makedepends=('gmp' 'python-setuptools' 'python2-setuptools')
 source=("${_name}-${pkgver}.tar.gz::https://github.com/Legrandin/${_name}/archive/v${pkgver}.tar.gz")
-sha256sums=('14184ec53a736d59321008b132997f5dcf4eb48883f35a4d307ef33b5a0c4bfa')
-sha512sums=('2212cc088e72fcd76ae9e4bdbbff4eebaaed6f874b374d6bcbbf87071b9397e871ccc2caa5a007314bb3291288e46185376dc0462016218cde0993bea5b01256')
+sha256sums=('56bc658818b125a773de9c5b9c30010ba939f9a600266cdd6dd85795e7223eba')
+sha512sums=('23caffb79b909fcda0908d13220f72810854281d8cab59811dd6c364c715b7d2ec88a8cc036db4e87dc7a9240ba1cbfe29db2d3b8d97eef3590137053e868938')
 
 prepare() {
   cp -a "pycryptodome-$pkgver"{,-python2}
