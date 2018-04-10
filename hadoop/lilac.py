@@ -10,7 +10,7 @@ def pre_build():
     if 'PKGEXT=' in line:
         continue
     if 'http://www-us.apache.org/dist/|' in line:
-        print(line.replace('http://www-us.apache.org/dist/|', 'http://mirrors.tuna.tsinghua.edu.cn/apache/'))
+        print(line.replace('http://www-us.apache.org/dist/|', 'https://mirrors.tuna.tsinghua.edu.cn/apache/'))
     else:
         print(line)
 
