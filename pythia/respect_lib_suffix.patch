@@ -1,7 +1,7 @@
-diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
---- pythia8230-old/examples/Makefile	2017-10-06 17:05:13.369384386 +0200
-+++ pythia8230-new/examples/Makefile	2017-10-06 17:07:05.411143081 +0200
-@@ -52,20 +52,20 @@
+diff -aur pythia8235-old/examples/Makefile pythia8235-new/examples/Makefile
+--- pythia8235-new/examples/Makefile	2018-03-27 19:15:17.000000000 +0200
++++ pythia8235-new/examples/Makefile	2018-04-16 13:45:00.155056245 +0200
+@@ -54,20 +54,20 @@
                  in the top PYTHIA directory)
  
  # PYTHIA libraries.
@@ -13,20 +13,20 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  # Examples without external dependencies.
 -main% : main%.cc $(PREFIX_LIB)/libpythia8.a
 +main% : main%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $< -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
  
  # MixMax.
 -main23: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main23: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $< -o $@ -std=c++11 -w $(CXX_COMMON)
+ 	$(CXX) $< -o $@ -std=c++11 -w $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
  
  # GZIP (required).
 -main34: $$@.cc $(PREFIX_LIB)/libpythia8.a
 +main34: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(GZIP_USE),true)
- 	$(CXX) $< -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
  else
-@@ -74,7 +74,7 @@
+@@ -76,7 +76,7 @@
  
  # HEPMC2.
  main41 main42 main43 main85 main86 main87 main88 main89: $$@.cc\
@@ -34,8 +34,8 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
 +	$(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(HEPMC2_USE),true)
  	$(CXX) $< -o $@ -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
- 	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC
-@@ -83,7 +83,7 @@
+ 	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC\
+@@ -86,7 +86,7 @@
  endif
  
  # PROMC.
@@ -44,7 +44,7 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  ifeq ($(PROMC_USE),true)
  	$(CXX) $< -o $@ -I$(PROMC_INCLUDE)/src -I$(PROMC_INCLUDE)/include\
  	 $(CXX_COMMON) -DPROMC=\"$(PROMC_INCLUDE)\" -Wno-long-long\
-@@ -94,7 +94,7 @@
+@@ -97,7 +97,7 @@
  endif
  
  # EVTGEN (and HEPMC2).
@@ -53,7 +53,7 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  ifeq ($(EVTGEN_USE)$(HEPMC2_USE)$(ENABLE_SHARED),truetruetrue)
  	$(CXX) $< -o $@ -I$(EVTGEN_INCLUDE) $(CXX_COMMON)\
  	 -DEVTGEN_PYTHIA -DEVTGEN_EXTERNAL -Wl,-rpath,$(HEPMC2_LIB)\
-@@ -104,7 +104,7 @@
+@@ -108,7 +108,7 @@
  endif
  
  # FASTJET3.
@@ -61,8 +61,8 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
 +main71 main72 main75: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(FASTJET3_USE),true)
  	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
- 	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet
-@@ -113,7 +113,7 @@
+ 	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet\
+@@ -118,7 +118,7 @@
  endif
  
  # FASTJET3 with modified Mass-Drop Tagger.
@@ -70,8 +70,8 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
 +main74: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
  ifeq ($(FASTJET3_USE),true)
  	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
- 	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet -lRecursiveTools
-@@ -122,7 +122,7 @@
+ 	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet -lRecursiveTools\
+@@ -128,7 +128,7 @@
  endif
  
  # FASTJET3 and HEPMC2.
@@ -80,7 +80,7 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  ifeq ($(FASTJET3_USE)$(HEPMC2_USE),truetrue)
  	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) -I$(HEPMC2_INCLUDE) $(CXX_COMMON)\
  	 -L$(HEPMC2_LIB) -Wl,-rpath,$(HEPMC2_LIB) -lHepMC\
-@@ -132,7 +132,7 @@
+@@ -139,7 +139,7 @@
  endif
  
  # ROOT (turn off all warnings for readability).
@@ -89,7 +89,7 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  ifeq ($(ROOT_USE),true)
  	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags`\
-@@ -140,7 +140,7 @@
+@@ -147,7 +147,7 @@
  else
  	@echo "Error: $@ requires ROOT"
  endif
@@ -98,7 +98,7 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  ifeq ($(ROOT_USE),true)
  	$(CXX) $< main92.so -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags` -Wl,-rpath,./\
-@@ -148,7 +148,7 @@
+@@ -155,7 +155,7 @@
  else
  	@echo "Error: $@ requires ROOT"
  endif
@@ -107,17 +107,35 @@ diff -aur pythia8230-old/examples/Makefile pythia8230-new/examples/Makefile
  	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_SHARED) $(CXX_COMMON)\
  	 `$(ROOTBIN)root-config --cflags`
  main92Dct.cc: main92.h main92LinkDef.h
-@@ -156,11 +156,11 @@
- 	 $(ROOT_BIN)rootcint -f $@ -c -I$(PREFIX_INCLUDE) $^
+@@ -164,7 +164,7 @@
+ 
+ # main93 with several dependencies. It is assumed that
+ # Rivet and YODA are installed to system path or appended to it.
+-main93: $$@.cc $(PREFIX_LIB)/libpythia8.a main93.so
++main93: $$@.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX) main93.so
+ ifeq ($(ROOT_USE),true)
+ 	$(CXX) $< main93.so -o $@ -DUSE_ROOT -DUSE_YODA -std=c++11 -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
+ 	 `$(ROOTBIN)root-config --cflags` -Wl,-rpath,./\
+@@ -174,7 +174,7 @@
+ 	$(CXX) $< -o $@ -DUSE_YODA -std=c++11 -w $(CXX_COMMON) -lYODA\
+ 	 -lHepMC -lRivet  $(GZIP_INC) $(GZIP_FLAGS)
+ endif
+-main93.so: main93Dct.cc $(PREFIX_LIB)/libpythia8.a
++main93.so: main93Dct.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
+ ifeq ($(ROOT_USE),true)
+ 	$(CXX) $< -o $@ -w -I$(ROOT_INCLUDE) $(CXX_SHARED) $(CXX_COMMON)\
+ 	 `$(ROOTBIN)root-config --cflags`
+@@ -190,11 +190,11 @@
+ endif
  
  # User-written examples for tutorials, without external dependencies.
 -mymain% : mymain%.cc $(PREFIX_LIB)/libpythia8.a
 +mymain% : mymain%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $< -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
  
  # Internally used tests, without external dependencies.
 -test% : test%.cc $(PREFIX_LIB)/libpythia8.a
 +test% : test%.cc $(PREFIX_LIB)/libpythia8$(LIB_SUFFIX)
- 	$(CXX) $< -o $@ $(CXX_COMMON)
+ 	$(CXX) $< -o $@ $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
  
  # Clean.

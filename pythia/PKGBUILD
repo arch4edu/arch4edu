@@ -3,7 +3,7 @@
 # Contributor: Stefano Campanella < stefanocampanella1729 at gmail dot com >
 
 pkgname=pythia
-pkgver=8.2.30
+pkgver=8.2.35
 _pkgid="${pkgname}${pkgver//./}"
 pkgrel=1
 pkgdesc="High-energy physics events generator."
@@ -21,10 +21,10 @@ source=("http://home.thep.lu.se/~torbjorn/pythia8/${_pkgid}.tgz"
         "pythia.sh"
         "pythia.install"
         "respect_lib_suffix.patch")
-sha256sums=('332fad0ed4f12e6e0cb5755df0ae175329bc16bfaa2ae472d00994ecc99cd78d'
+sha256sums=('e82f0d6165a8250a92e6aa62fb53201044d8d853add2fdad6d3719b28f7e8e9d'
             '12fabaa56db80537b94a89de18f688f1258f467ed01b1ee6595efe75cde801d2'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
-            'c9c31223c0c38f8d844ee1f8c984d4b723b7d960f2e13fe7847325785736127b')
+            '4eb15725cfb5e287fdd9520cb4211b88ebc38a690b7522690ba0664d50bc8669')
 options=('!emptydirs')
 _srcpath="${srcdir}/${_pkgid}"
 
@@ -32,10 +32,7 @@ prepare() {
     cd "${srcdir}/${_pkgid}"
     msg2 'Applying patches...'
     patch -p1 -i "${srcdir}/respect_lib_suffix.patch"
-}
 
-build() {
-    cd "${srcdir}/${_pkgid}"
     _inc=/usr/include/
     _lib=/usr/lib/
 
@@ -80,6 +77,10 @@ build() {
                 --with-root \
                 --with-root-include=/usr/include/root/ \
                 --with-root-lib=/usr/lib/root/
+}
+
+build() {
+    cd "${srcdir}/${_pkgid}"
     make ${MAKEFLAGS}
 }
 
