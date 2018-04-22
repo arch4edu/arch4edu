@@ -2,13 +2,12 @@
 
 pkgname=sublime-text-dev-imfix2
 pkgver=3.3164
-pkgrel=1
+pkgrel=2
 pkgdesc="Sophisticated text editor for code, markup and prose - Dev build with input method support for CJK users"
 arch=('i686' 'x86_64')
 url="https://www.sublimetext.com/3dev"
 license=('custom')
 depends=('libpng' 'gtk2')
-optdepends=('gksu: sudo-save support')
 conflicts=('sublime-text' 'sublime-text-dev' 'sublime-text-nightly' 'sublime-text-dev-imfix')
 provides=('sublime-text' 'sublime-text-dev' 'sublime-text-nightly' 'sublime-text-dev-imfix')
 
