@@ -4,7 +4,7 @@
 
 pkgname=crosstool-ng-git
 epoch=1
-pkgver=1.23.0.r321.g7c342267
+pkgver=1.23.0.r364.g90d14443
 pkgrel=1
 pkgdesc="crosstool-NG aims at building toolchains."
 arch=('i686' 'x86_64')
@@ -35,5 +35,4 @@ package () {
 	cd crosstool-ng
 
 	make DESTDIR="$pkgdir" install
-	install -Dm644 ct-ng.comp "$pkgdir/etc/bash_completion.d/ct-ng"
 }
