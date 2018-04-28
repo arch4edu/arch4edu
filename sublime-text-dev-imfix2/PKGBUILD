@@ -1,8 +1,8 @@
 # Maintainer: Bian Jiaping <ssbianjp@gmail.com>
 
 pkgname=sublime-text-dev-imfix2
-pkgver=3.3164
-pkgrel=2
+pkgver=3.3165
+pkgrel=1
 pkgdesc="Sophisticated text editor for code, markup and prose - Dev build with input method support for CJK users"
 arch=('i686' 'x86_64')
 url="https://www.sublimetext.com/3dev"
