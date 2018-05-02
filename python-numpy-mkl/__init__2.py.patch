@@ -1,0 +1,7 @@
+432,433c432,434
+<             raise CompilerNotFound()
+<         return version
+---
+>             pass
+>             #raise CompilerNotFound()
+>         return '18.0'
