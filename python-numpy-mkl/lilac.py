@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends = ['intel-parallel-studio-xe']
+depends = [('intel-parallel-studio-xe', 'intel-compiler-base'), ('intel-parallel-studio-xe', 'intel-fortran-compiler')]
 makechrootpkg_args = ['-D', '/opt/intel/licenses']
 
 def pre_build():
