@@ -26,6 +26,7 @@ sha256sums=('e8e7b08f43519a2c4b0c7f511543ac665b46d7edd755cf9f3b0b23d0adde7eb2' #
 )
 
 build() {
+	export __INTEL_PRE_CFLAGS="$__INTEL_PRE_CFLAGS -D__PURE_INTEL_C99_HEADERS__ -D_Float32=float -D_Float64=double -D_Float128=\"long double\" -D_Float32x=_Float64 -D_Float64x=_Float128"
 
 	cd "${srcdir}"
 
