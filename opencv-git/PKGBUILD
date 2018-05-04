@@ -12,16 +12,16 @@
 
 _name=opencv
 pkgname="$_name-git"
-pkgver=3.4.1.r410.g84b3b5b4a4
+pkgver=3.4.1.cvsdk.r454.g000a13b6a3
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="https://opencv.org/"
 license=('BSD')
 arch=('i686' 'x86_64')
-depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'gst-plugins-base-libs'
-         'gtk3' 'protobuf')
-makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen' 'hdf5')
+depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'cblas' 'lapack' 'jasper' 'libgphoto2')
+makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen' 'hdf5' 'lapacke' 'gtkglext')
 optdepends=('opencv-samples'
+            'gtkglext: for the HighGUI module'
             'hdf5: Support for HDF5 format'
             'opencl-icd-loader: For coding with OpenCL'
             'python-numpy: Python 3 interface'
@@ -44,10 +44,9 @@ _cmakeopts=('-DWITH_OPENCL=ON'
             '-DBUILD_EXAMPLES=ON'
             '-DINSTALL_C_EXAMPLES=ON'
             '-DINSTALL_PYTHON_EXAMPLES=ON'
-            '-DCMAKE_BUILD_TYPE=Release'
             '-DCMAKE_INSTALL_PREFIX=/usr'
-            '-DCMAKE_SKIP_RPATH=ON'
-            '-DCMAKE_INSTALL_LIBDIR=/usr/lib')
+            '-DCMAKE_INSTALL_LIBDIR=/usr/lib'
+            '-DCUDA_NVCC_FLAGS="--expt-relaxed-constexpr"')
 
 # SSE only available from Pentium 3 onwards (i686 is way older)
 [[ "$CARCH" = 'i686' ]] && _cmakeopts+=('-DCPU_BASELINE_DISABLE=SSE2')
@@ -64,6 +63,9 @@ build() {
 
     cmake "${_cmakeopts[@]}" \
           -DOPENCV_EXTRA_MODULES_PATH="$srcdir"/opencv_contrib/modules \
+          -DLAPACK_LIBRARIES="/usr/lib/liblapack.so;/usr/lib/libblas.so;/usr/lib/libcblas.so" \
+          -DLAPACK_CBLAS_H="/usr/include/cblas.h" \
+          -DLAPACK_LAPACKE_H="/usr/include/lapacke.h" \
           ../"$_name"
 
     make
