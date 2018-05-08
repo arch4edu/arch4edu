@@ -9,7 +9,7 @@ def pre_build():
         if 'git describe' in line:
             print(line.replace("s/-/./'","s/-/./g'"))
         elif 'makedepends' in line:
-            print(line.replace(')',' "unzip")')
+            print(line.replace(')',' "unzip")'))
         else:
             print(line)
 
