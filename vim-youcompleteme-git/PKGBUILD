@@ -15,7 +15,7 @@
 # Contributor: Andy Weidenbaum <archbaum@gmail.com>
 
 pkgname=vim-youcompleteme-git
-pkgver=2337.68611cf8
+pkgver=2339.c027b16c
 _CLANG_VERSION_MAX=6.1
 _CLANG_VERSION_MIN=6.0
 pkgrel=1
