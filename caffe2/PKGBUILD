@@ -41,7 +41,7 @@ _ptver=0.4.0 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_ptver}"
-pkgrel=1
+pkgrel=2
 pkgdesc='A new lightweight, modular, and scalable deep learning framework (gpu enabled)'
 arch=('x86_64')
 url='http://caffe2.ai/'
@@ -66,7 +66,7 @@ depends=(
             'python-nvd3' 'python-scikit-image' 'python-glog' 'python-leveldb'
             'python-lmdb'
 )
-makedepends=('git' 'cmake' 'gcc5')
+makedepends=('git' 'cmake')
 conflicts=('caffe' 'caffe-cpu' 'caffe-git' 'caffe-cpu-git'
            'caffe2-git' 'caffe2-cpu' 'caffe2-cpu-git')
 options=('!emptydirs')
