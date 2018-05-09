@@ -3,7 +3,7 @@ pkgname='kaldi-sph2pipe'
 _pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
 pkgver=2.5
-pkgrel=1
+pkgrel=2
 makedepends=('git' 'wget' 'python' 'python2' 'subversion')
 depends=('glibc')
 arch=('x86_64' 'i686')
@@ -18,5 +18,5 @@ build() {
 }
 
 package() {
-	install -Dm755 $srcdir/$_pkgname-master/tools/sph2pipe_v$pkgver/sph2pipe $pkgdir/opt/$_pkgname/tools/sph2pipe-v$pkgver/sph2pipe
+	install -Dm755 $srcdir/$_pkgname-master/tools/sph2pipe_v$pkgver/sph2pipe $pkgdir/opt/$_pkgname/tools/sph2pipe_v$pkgver/sph2pipe
 }
