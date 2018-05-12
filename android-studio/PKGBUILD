@@ -1,9 +1,10 @@
-# Maintainer:  danyf90 <daniele.formichelli@gmail.com>
+# Contributor:  danyf90 <daniele.formichelli@gmail.com>
 # Contributor: Philipp 'TamCore' B. <philipp [at] tamcore [dot] eu>
 # Contributor: Jakub Schmidtke <sjakub-at-gmail-dot-com>
 # Contributor: Christoph Brill <egore911-at-gmail-dot-com>
 # Contributor: Lubomir 'Kuci' Kucera <kuci24-at-gmail-dot-com>
-# Contributor: Tad Fisher <tadfisher at gmail dot com>
+# Maintainer: Tad Fisher <tadfisher at gmail dot com>
+# Maintainer: Philippe Hürlimann <p@hurlimann.org>
 
 pkgname=android-studio
 pkgver=3.1.2.0
