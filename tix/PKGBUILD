@@ -1,12 +1,12 @@
-# $Id: PKGBUILD 266875 2017-11-15 14:29:11Z foutrelis $
-# Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Maintainer: Brian Bidulock <bidulock@openss7.org>
+# Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
 # Contributor: Brice Méalier <mealier_brice@yahoo.fr>
 
 pkgname=tix
 pkgver=8.4.3
 pkgrel=5
 pkgdesc="Tk Interface eXtension, a powerful set of user interface components"
-arch=('x86_64')
+arch=('x86_64' 'i686')
 url="http://tix.sourceforge.net/"
 license=("BSD")
 depends=('tk' 'libx11')
