@@ -26,7 +26,7 @@ prepare() {
    patch -p1 < ../python35-ast.patch
 
    #To strip non-ascii characters from docs
-   sed "166s/doc/doc.encode(\'ascii\',errors=\'ignore\').decode(\'ascii\')/" -i tvtk/indenter.py
+   sed "166s/doc/doc.encode('ascii',errors='ignore').decode('ascii')/" -i tvtk/indenter.py
 }
 
 build() {
