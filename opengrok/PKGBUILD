@@ -3,12 +3,12 @@
 # Contributor: Vojtech Horky <vojta . horky at-symbol seznam . cz>
 pkgname=opengrok
 pkgver=1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="A fast and usable source code search and cross reference engine, written in Java"
 url="https://oracle.github.io/opengrok/"
 arch=('any')
 license=('CDDL')
-depends=('tomcat8' 'sh' 'java-runtime>=8' 'ctags' 'unzip')
+depends=('tomcat8' 'sh' 'java-runtime=8' 'ctags' 'unzip')
 makedepends=('apache-ant' 'jdk8-openjdk')
 source=(${pkgname}-${pkgver}.tar.gz::"https://github.com/oracle/opengrok/archive/1.0.tar.gz")
 sha1sums=('d1bbcdb4ceae2f631a44cd78bff9a361c83ca42e')
@@ -16,7 +16,7 @@ sha1sums=('d1bbcdb4ceae2f631a44cd78bff9a361c83ca42e')
 prepare() {
   cd ${pkgname}-${pkgver}
   # jre7 unsupported and doesn't work, hardcode jre8 java
-  # note: jre9 might work, but untested
+  # note: jre9 won't work as build.xml hardcodes dependency on Java 8.
   sed -i '2iJAVA=/usr/lib/jvm/java-8-openjdk/bin/java' OpenGrok
 }
 
