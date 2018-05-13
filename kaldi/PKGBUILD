@@ -1,17 +1,11 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.4.r8016.080129e97
+pkgver=5.4.r8023.90363ea38
 pkgrel=1
-makedepends=('git' 'wget' 'python' 'python2' 'subversion' 'gcc6' "cuda")
-depends=('python2' 'kaldi-openfst' 'openblas-lapack' 'sed')
-optdepends=('cuda: For GPU support'
-	'kaldi-irstlm'
-	'kaldi-kaldi_lm'
-	'kaldi-sctk'
-	'kaldi-sph2pipe'
-	'kaldi-srilm'
-	)
+depends=('cblas' 'kaldi-openfst' 'lapack' 'python2')
+optdepends=('cuda' 'kaldi-irstlm' 'kaldi-kaldi_lm' 'kaldi-sctk' 'kaldi-sph2pipe' 'kaldi-srilm')
+makedepends=('git' 'wget' 'sed' 'gcc6' "cuda")
 arch=('x86_64' 'i686')
 url='https://github.com/kaldi-asr/kaldi'
 license=('APACHE')
@@ -43,10 +37,11 @@ prepare(){
 build () {
 	cd $srcdir/$pkgname/src
 	CXX=g++-6 \
+	LDFLAGS='-lcblas -llapack' \
 	./configure $_cuda_config_opts \
 		--shared \
 		--fst-root=/opt/kaldi/tools/openfst \
-		--openblas-root=/usr \
+		--clapack-root=/usr \
 		--threaded-math=yes
 	make depend
 	make
