@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=brackets
 pkgver=1.12
-pkgrel=2
+pkgrel=3
 pkgdesc="An open source code editor for the web, written in JavaScript, HTML and CSS."
 arch=('i686' 'x86_64')
 url="http://brackets.io"
@@ -29,11 +29,6 @@ prepare() {
 }
 
 build() {
-	cd ${srcdir}/brackets
-	npm install
-	sed "/'npm-install',$/d" -i Gruntfile.js
-	node_modules/grunt-cli/bin/grunt build
-
 	cd ${srcdir}/brackets-shell
 	sed -i 's/python/python2/' gyp/gyp
 	npm install
@@ -42,6 +37,11 @@ build() {
 	node_modules/grunt-cli/bin/grunt cef icu node create-project
 	#use g++-5 to solve icu ABI issue
 	LINK=g++-5 make
+
+	cd ${srcdir}/brackets
+	npm install
+	sed "/'npm-install',$/d" -i Gruntfile.js
+	../brackets-shell/deps/node/bin/Brackets-node node_modules/grunt-cli/bin/grunt build
 }
 
 package() {
