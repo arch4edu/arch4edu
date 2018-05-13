@@ -2,7 +2,7 @@
 # Contributor: Jan Kašpar < jan.kaspar at gmail dot com >
 # Contributor: Alex Pearce < alex at alexpearce dot me >
 pkgname=xrootd
-pkgver=4.8.2
+pkgver=4.8.3
 pkgrel=1
 pkgdesc="Software framework for fast, low latency, scalable and fault tolerant data access."
 provides=('xrootd' 'xrootd-abi0')
@@ -12,10 +12,15 @@ license=('LGPL3')
 depends=('ceph' 'libxml2')
 makedepends=('cmake')
 options=('!emptydirs')
-source=("http://xrootd.org/download/v${pkgver}/xrootd-${pkgver}.tar.gz")
-sha256sums=('8f28ec53e799d4aa55bd0cc4ab278d9762e0e57ac40a4b02af7fc53dcd1bef39')
+source=("http://xrootd.org/download/v${pkgver}/xrootd-${pkgver}.tar.gz"
+        'fix_buffer_overflow.patch')
+sha256sums=('9cd30a343758b8f50aea4916fa7bd37de3c37c5b670fe059ae77a8b2bbabf299'
+            'd52b193d3e8c96064f2d151484abd433dd47835cfe0031b31bcfab2c17b69b85')
 
 prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    patch -p1 -i "${srcdir}/fix_buffer_overflow.patch"
+
     rm -rf "${srcdir}/build"
     mkdir -p "${srcdir}/build"
     cd "${srcdir}/build"
