@@ -6,16 +6,24 @@
 
 pkgname=javahelp2
 pkgver=2.0.05.r90
-pkgrel=1
+pkgrel=2
 # manual versioning
-source=("${pkgname}::git+https://github.com/javaee/javahelp.git#commit=3ca862d8626096770598a3a256886d205246f4a4")
-sha256sums=('SKIP')
+source=("${pkgname}::git+https://github.com/javaee/javahelp.git#commit=3ca862d8626096770598a3a256886d205246f4a4"
+# https://github.com/javaee/javahelp/issues/47
+        'compilation-version.patch')
+sha256sums=('SKIP'
+            'a65f356660a82d06a24cd21957c717e2abd87a809ef37700eab1826eb9b2ec2c')
 pkgdesc="Java based help system"
 arch=('any')
 url="https://javaee.github.io/javahelp/"
 license=('custom' 'CDDL' 'GPL2')
 makedepends=('apache-ant' 'git')
 depends=('java-runtime')
+
+prepare(){
+    cd "${srcdir}/${pkgname}"
+    patch -p1 < "${srcdir}/compilation-version.patch"
+}
 
 build(){
     cd "${srcdir}/${pkgname}/javahelp_nbproject"
