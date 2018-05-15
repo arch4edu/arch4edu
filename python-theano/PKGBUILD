@@ -3,8 +3,8 @@
 pkgbase="python-theano"
 pkgname=("python-theano" "python2-theano")
 _pkgname="Theano"
-pkgver="1.0.0"
-pkgrel=1
+pkgver="1.0.1"
+pkgrel="1"
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
 url='http://www.deeplearning.net/software/theano/'
@@ -28,8 +28,8 @@ optdepends=('python-sympy: Recommended'
             'python2-pygpu-git'
             'python2-pydot'
             'python2-mpi4py')
-source=("https://pypi.python.org/packages/8d/74/99cc011153b3a566e98729cfee1b8b00af157e2b6047d23ee0871fd5e706/Theano-${pkgver}.tar.gz")
-sha256sums=('7bc82e4fcaac023cac23c390b30d5df81bc09d33568812df75b0bd2b86d2fa8f')
+source=("https://pypi.python.org/packages/62/da/ab486aae8e538d8ae91fa0e6ab26d3a454d7c5c7a66541f40300e58a3314/Theano-${pkgver}.tar.gz")
+sha256sums=('88d8aba1fe2b6b75eacf455d01bc7e31e838c5a0fb8c13dde2d9472495ff4662')
 
 prepare() {
   cd "${_pkgname}-${pkgver}"
@@ -58,7 +58,7 @@ build() {
 # Tests take many hours and need over 8G of memory
 # All Python and Python2 tests pass except theano.tensor.tests.test_mpi.test_mpi_roundtrip
 #
-#-------------------------------------------------
+# -------------------------------------------------
 #check() {
 #  msg "Checking Python 2"
 #  cd "$srcdir/${_pkgname}-${pkgver}-py2"/build/lib/theano/
