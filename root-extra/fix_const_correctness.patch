@@ -1,0 +1,22 @@
+From e344f02dd86c04672355bbba88b1c0bee6d4edf4 Mon Sep 17 00:00:00 2001
+From: Axel Naumann <Axel.Naumann@cern.ch>
+Date: Tue, 8 May 2018 17:58:13 +0200
+Subject: [PATCH] Fix const-correctness (ROOT-9396).
+
+---
+ core/clingutils/res/TClingUtils.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/clingutils/res/TClingUtils.h b/core/clingutils/res/TClingUtils.h
+index da1a0e31751..c7e3e555122 100644
+--- a/core/clingutils/res/TClingUtils.h
++++ b/core/clingutils/res/TClingUtils.h
+@@ -276,7 +276,7 @@ class AnnotatedRecordDecl {
+    }
+ 
+    struct CompareByName {
+-      bool operator() (const AnnotatedRecordDecl& right, const AnnotatedRecordDecl& left)
++      bool operator() (const AnnotatedRecordDecl& right, const AnnotatedRecordDecl& left) const
+       {
+          return left.fNormalizedName < right.fNormalizedName;
+       }
