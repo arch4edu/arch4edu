@@ -3,8 +3,17 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['libafterimage', 'unuran', 'xrootd', 'pythia']
-pre_build = aur_pre_build
+depends=['libafterimage', 'pythia', 'root', 'unuran']
+
+def pre_build():
+    aur_pre_build()
+
+    for line in edit_file('PKGBUILD'):
+        if 'makedepends=(' in line:
+            print(line.replace(')', ' "blas" "go" "gcc-fortran" "ocaml" "python-numpy" "tcsh" "z3")'))
+        else:
+            print(line)
+
 post_build = aur_post_build
 
 if __name__ == '__main__':

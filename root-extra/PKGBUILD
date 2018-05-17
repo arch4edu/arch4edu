@@ -7,7 +7,7 @@
 pkgname=root-extra
 _pkgname=root
 pkgver=6.12.06
-pkgrel=4
+pkgrel=4.1
 provides=('root' 'root-extra')
 conflicts=('root')
 pkgdesc='C++ data analysis framework and interpreter from CERN with extra features enabled.'
