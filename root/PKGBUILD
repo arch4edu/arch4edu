@@ -6,7 +6,7 @@
 
 pkgname=root
 pkgver=6.12.06
-pkgrel=3
+pkgrel=3.1
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
 url='http://root.cern.ch'
