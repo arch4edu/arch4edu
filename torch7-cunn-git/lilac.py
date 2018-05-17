@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['gcc5', 'torch7-git']
+depends=['torch7-git']
 pre_build = aur_pre_build
 post_build = aur_post_build
 
