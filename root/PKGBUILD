@@ -11,7 +11,7 @@ pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
 url='http://root.cern.ch'
 license=('LGPL2.1')
-makedepends=('cmake')
+makedepends=('cmake' "blas" "fcgi" "go" "gcc-fortran" "ocaml" "pythia" "python-numpy" "tcsh" "xrootd" "z3")
 depends=('cfitsio'
          'fftw'
          'ftgl'
