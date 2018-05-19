@@ -3,7 +3,7 @@
 pkgname=mxnet
 _gitname=incubator-mxnet
 pkgver=1.1.0
-pkgrel=2
+pkgrel=4
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
@@ -22,6 +22,11 @@ prepare() {
 		echo "USE_BLAS=blas"
 		echo "USE_LAPACK=1"
 		echo "ADD_LDFLAGS+=-lcblas"
+
+		# https://github.com/apache/incubator-mxnet/issues/8569
+		echo "USE_GPERFTOOLS=0"
+		echo "USE_JEMALLOC=0"
+
 		if (pacman -Q cuda &>/dev/null && pacman -Q cudnn &>/dev/null); then
 			msg2 "CUDA support enabled"
 			echo "USE_CUDA=1"
