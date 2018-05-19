@@ -12,7 +12,7 @@ Please add
 ```
 [arch4edu]
 SigLevel = Never
-Server = http://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
+Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
 ```
 to your `/etc/pacman.conf`.
 
