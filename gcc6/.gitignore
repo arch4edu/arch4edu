@@ -1,0 +1,7 @@
+gcc6-*.pkg.tar.xz
+*.tar.*
+pkg/
+src/
+isl-*.tar.bz2
+gcc/
+*.log
