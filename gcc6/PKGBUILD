@@ -18,7 +18,7 @@ pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
 url="https://gcc.gnu.org/gcc-6/"
-makedepends=(binutils libmpc doxygen svn java-environment-common zip jdk8-openjdk gtk2 libart-lgpl libxtst)
+makedepends=(binutils libmpc doxygen subversion java-environment-common zip jdk8-openjdk gtk2 libart-lgpl libxtst)
 checkdepends=('dejagnu' 'inetutils')
 options=(!emptydirs)
 source=(gcc::svn://gcc.gnu.org/svn/gcc/branches/gcc-${_ver}-branch#revision=$_svnrev
