@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends = ['intel-tbb-gcc6', 'openblas-lapack']
+depends = ['gcc6', 'intel-tbb-gcc6', 'openblas-lapack']
 pre_build = aur_pre_build
 post_build = aur_post_build
 

@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['kaldi-openfst', 'openblas-lapack']
+depends=['gcc6', 'kaldi-openfst', 'openblas-lapack']
 
 def pre_build():
     aur_pre_build()
