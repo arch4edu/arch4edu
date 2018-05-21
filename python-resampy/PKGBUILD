@@ -3,7 +3,7 @@
 pkgbase=python-resampy
 pkgname=(python-resampy python2-resampy)
 _pkgname=resampy
-pkgver=0.1.5
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="Efficient sample rate conversion in python"
 arch=('any')
@@ -11,7 +11,7 @@ url="https://github.com/bmcfee/resampy"
 license=('ISC')
 makedepends=('python-setuptools' 'python2-setuptools' 'python-numpy' 'python2-numpy' 'cython' 'cython2')
 source=("$url/archive/${pkgver}.tar.gz")
-md5sums=('9b26b4c718bb6f5277813609a13dc1b4')
+md5sums=('30091b28cdbe51e19282966e036672e9')
 
 prepare() {
   cd "$srcdir/"
