@@ -2,7 +2,7 @@
 pkgname=cntk
 _gitname=CNTK
 pkgver=2.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Microsoft Cognitive Toolkit (CNTK), an open source deep-learning toolkit"
 arch=('x86_64')
 url="https://github.com/Microsoft/$_gitname"
@@ -71,7 +71,7 @@ package() {
 	cp -r bin lib $pkgdir/usr
 
 	cd $srcdir/$_gitname/build/python
-	pip install --root=$pkgdir ${pkgname}_gpu-$pkgver-cp36-cp36m-linux_x86_64.whl
+	PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-deps ${pkgname}_gpu-$pkgver-cp36-cp36m-linux_x86_64.whl
 
 	rm -rf $pkgdir/usr/lib/python3.6/site-packages/$pkgname/libs
 
