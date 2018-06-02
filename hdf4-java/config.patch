@@ -1,0 +1,14 @@
+diff --git a/src/hdf-4.2.13/configure.ac b/src/hdf-4.2.13/configure.ac
+index 3030bad..6d7f654 100644
+--- a/src/hdf-4.2.13/configure.ac
++++ b/src/hdf-4.2.13/configure.ac
+@@ -685,6 +685,9 @@ case "$host" in
+   *-pc-cygwin*)
+     LIBS="$LIBS -ltirpc"
+     CPPFLAGS="$CPPFLAGS -I/usr/include/tirpc"  ;;
++  *-linux-gnu*)
++    LIBS="$LIBS -ltirpc"
++    CPPFLAGS="$CPPFLAGS -I/usr/include/tirpc"  ;;
+   *) ;;
+ esac
+ 
