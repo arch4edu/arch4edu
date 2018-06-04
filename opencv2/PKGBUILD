@@ -41,7 +41,7 @@ _FORCE_AVX2=OFF
 _pkgbase=opencv
 pkgbase=opencv2
 pkgname=('opencv2' 'opencv2-samples')
-pkgver=2.4.13.3
+pkgver=2.4.13.6
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library (Legacy Version)"
 arch=('i686' 'x86_64')
@@ -54,10 +54,8 @@ optdepends=('opencv-samples'
             'libcl: For coding with OpenCL'
             'python2-numpy: Python 2.x interface')
 
-source=("$pkgver.zip::https://codeload.github.com/opencv/opencv/zip/$pkgver"
-        "cmake_ccache.patch")
-sha256sums=('838a2ef5821db868f71c26e248427d7be9f35f2fb996acd1b973150c8dd11656'
-            '1a8afc6bf9c9a80204385911749250d179709f915e416fe2791fdfc2a7b4012a')
+source=("$pkgver.zip::https://codeload.github.com/opencv/opencv/zip/$pkgver")
+sha256sums=('8fbe6005d2266e4a725a5ef7a27365d763ce4ad5a7f38045288a3cad8a18d759')
 
 _cmakeopts=('-D WITH_CUDA=OFF' # Disable CUDA for now because GCC 6.1.1 and nvcc don't play along yet
             '-D WITH_OPENCL=ON'
@@ -90,10 +88,11 @@ _cmakeopts=('-D WITH_CUDA=OFF' # Disable CUDA for now because GCC 6.1.1 and nvcc
                "-D ENABLE_AVX=$_FORCE_AVX"
                "-D ENABLE_AVX2=$_FORCE_AVX2")
 prepare() {
-  cd "$_pkgbase-$pkgver/cmake"
-# Patch for broken CMake file
-# See https://github.com/opencv/opencv/pull/9408
-  patch -p0 -i ../../cmake_ccache.patch
+  cd "$_pkgbase-$pkgver/"
+  # https://stackoverflow.com/questions/46884682/error-in-building-opencv-with-ffmpeg
+  sed "1i\#define AVFMT_RAWPICTURE 0x0020" -i modules/highgui/src/cap_ffmpeg_impl.hpp
+  sed "1i\#define CODEC_FLAG_GLOBAL_HEADER AV_CODEC_FLAG_GLOBAL_HEADER" -i modules/highgui/src/cap_ffmpeg_impl.hpp
+  sed "1i\#define AV_CODEC_FLAG_GLOBAL_HEADER (1 << 22)" -i modules/highgui/src/cap_ffmpeg_impl.hpp
 }
 
 build() {
@@ -103,8 +102,6 @@ build() {
 
   cmake ${_cmakeopts[@]} ..
 
-  # change this to i. e. make -j16 if your CPUs have 16 threads to speed up build process
-  # make -j16
   make
 }
 
