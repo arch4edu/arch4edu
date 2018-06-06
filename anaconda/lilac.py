@@ -7,7 +7,7 @@ def pre_build():
   aur_pre_build()
 
   for line in edit_file('PKGBUILD'):
-      if 'http://repo.continuum.io/' in line:
+    if 'http://repo.continuum.io/' in line:
         print(line.replace('http://repo.continuum.io/', 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/'))
     else:
         print(line)
