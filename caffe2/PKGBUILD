@@ -41,7 +41,7 @@ _ptver=0.4.0 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_ptver}"
-pkgrel=2
+pkgrel=4
 pkgdesc='A new lightweight, modular, and scalable deep learning framework (gpu enabled)'
 arch=('x86_64')
 url='http://caffe2.ai/'
@@ -66,7 +66,7 @@ depends=(
             'python-nvd3' 'python-scikit-image' 'python-glog' 'python-leveldb'
             'python-lmdb'
 )
-makedepends=('git' 'cmake')
+makedepends=('git' 'cmake' 'gcc54')
 conflicts=('caffe' 'caffe-cpu' 'caffe-git' 'caffe-cpu-git'
            'caffe2-git' 'caffe2-cpu' 'caffe2-cpu-git')
 options=('!emptydirs')
@@ -80,7 +80,7 @@ source=(
         'caffe2-thirdparty-nanopb-git'::"git+https://github.com/nanopb/nanopb.git#commit=${_nanopb_commit}"
         'caffe2-thirdparty-pybind11-git'::"git+https://github.com/pybind/pybind11.git#commit=${_pybind11_commit}"
         'caffe2-thirdparty-cub-git'::"git+https://github.com/NVlabs/cub.git#commit=${_cub_commit}"
-        'caffe2-thirdparty-eigen-git'::"git+https://github.com/RLovelett/eigen.git#commit=${_eigen_commit}"
+        'caffe2-thirdparty-eigen-git'::"git+https://github.com/eigenteam/eigen-git-mirror.git#commit=${_eigen_commit}"
         'caffe2-thirdparty-googletest-git'::"git+https://github.com/google/googletest.git#commit=${_googletest_commit}"
         'caffe2-thirdparty-nervanagpu-git'::"git+https://github.com/NervanaSystems/nervanagpu.git#commit=${_nervanagpu_commit}"
         'caffe2-thirdparty-benchmark-git'::"git+https://github.com/google/benchmark.git#commit=${_benchmark_commit}"
@@ -105,7 +105,7 @@ noextract=("caffe2-thirdparty-aten-tbb-${_aten_tbb_version}.tar.gz"
            "thirdparty-protobuf-${_protobuf_version}.tar.gz"
            "caffe2-thirdparty-python-six-${_python_six_version}.tar.gz"
 )
-sha256sums=('9ea4cbcab3852a25b8240e27f979d822c2f6f7934cd37033208dc13a8cad9e72'
+sha256sums=('f91c059710f802c91bed8207f2d461851b1bc2d44f7cd6e9aaa548392db9412f'
             'SKIP'
             '78bb9bae474736d213342f01fe1a6d00c6939d5c75b367e2e43e7bf29a6d8eca'
             '3938bc896f8de570bc56d25606fc128437ee53590a95cf3e005710176a1a1ce4'
