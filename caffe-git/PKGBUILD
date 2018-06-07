@@ -8,7 +8,7 @@
 
 pkgname=caffe-git
 _srcname=caffe
-pkgver=1.0.r108.g864520713
+pkgver=1.0.r112.ga357693a0
 pkgrel=1
 pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
 arch=('x86_64')
@@ -32,7 +32,7 @@ depends=(
     # python-pydotplus (or python-pydot) is required by python executable draw_net.py
     # https://github.com/BVLC/caffe/blob/691febcb83d6a3147be8e9583c77aefaac9945f8/python/caffe/draw.py#L7-L22
 )
-makedepends=('git' 'gcc6' 'doxygen' 'texlive-core')
+makedepends=('git' 'gcc7' 'doxygen' 'texlive-core')
 provides=('caffe')
 conflicts=('caffe' 'caffe-cpu' 'caffe-cpu-git' 'caffe-dr-git' 'caffe-mnc-dr-git'
            'caffe2' 'caffe2-git' 'caffe2-cpu' 'caffe2-cpu-git')
@@ -57,8 +57,8 @@ prepare() {
     sed -i '/USE_LMDB/s/^#[[:space:]]//;/USE_LMDB/s/0/1/'       Makefile.config
     sed -i '/OPENCV_VERSION/s/^#[[:space:]]//g'                 Makefile.config
     
-    # use gcc6 (CUDA 9.0 code requires gcc6)
-    sed -i '/CUSTOM_CXX/s/^#[[:space:]]//;/CUSTOM_CXX/s/$/-6/' Makefile.config
+    # use gcc6 (CUDA 9.2 code requires gcc7)
+    sed -i '/CUSTOM_CXX/s/^#[[:space:]]//;/CUSTOM_CXX/s/$/-7/' Makefile.config
     
     # set CUDA directory
     sed -i '/CUDA_DIR/s/\/usr\/local\/cuda/\/opt\/cuda/' Makefile.config
