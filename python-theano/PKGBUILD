@@ -3,7 +3,7 @@
 pkgbase="python-theano"
 pkgname=("python-theano" "python2-theano")
 _pkgname="Theano"
-pkgver="1.0.1"
+pkgver="1.0.2"
 pkgrel="1"
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
@@ -28,8 +28,8 @@ optdepends=('python-sympy: Recommended'
             'python2-pygpu-git'
             'python2-pydot'
             'python2-mpi4py')
-source=("https://pypi.python.org/packages/62/da/ab486aae8e538d8ae91fa0e6ab26d3a454d7c5c7a66541f40300e58a3314/Theano-${pkgver}.tar.gz")
-sha256sums=('88d8aba1fe2b6b75eacf455d01bc7e31e838c5a0fb8c13dde2d9472495ff4662')
+source=("https://pypi.python.org/packages/99/dd/e43e3da5dd52f1468def552ed3e752bfd6958369478cc906ff07b21af92e/Theano-${pkgver}.tar.gz")
+sha256sums=('6768e003d328a17011e6fca9126fbb8a6ffd3bb13cb21c450f3e724cca29abde')
 
 prepare() {
   cd "${_pkgname}-${pkgver}"
