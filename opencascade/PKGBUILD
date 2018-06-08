@@ -5,9 +5,9 @@
 # Contributor: Michele Mocciola <mickele>
 
 pkgname=opencascade
-pkgver=7.2.0p1
+pkgver=7.3.0
 _pkgver=V${pkgver//./_}
-pkgrel=2
+pkgrel=1
 pkgdesc="Open CASCADE Technology, 3D modeling & numerical simulation"
 arch=('x86_64')
 url="http://www.opencascade.org"
@@ -16,18 +16,16 @@ depends=('tk' 'vtk' 'gl2ps' 'ffmpeg' 'freeimage' 'intel-tbb')
 makedepends=('cmake' 'qt5-base') # VTK requires Qt5 to build
 source=("opencascade-${pkgver}.tar.gz::http://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/${_pkgver};sf=tgz"
         'opencascade.sh' 'fix-install-dir-references.patch'
-        'configuration-problem-glibc-2.26.patch' 'vtk7.patch' 'ffmpeg4.patch')
-sha256sums=('530f9981e6026e6cc04c462ab039b4977a568f943d6086dc502262d100a07a79'
+        'vtk7.patch' 'ffmpeg4.patch')
+sha256sums=('7298c5eadc6dd0aeb6265ff2958e8e742d6e3aa65227acce8094f96f1bf6d2ac'
             '2064536a85d46fee368a8f1a712b2c6c77ca79c5bffcc68cba79d70d36efa2f4'
             'afb584aa453993ae8d9e2b983594558531ede735a5892754b812be30650c9fb5'
-            '2850a1551085c43f88f134466e3acad950e05e8d46ad04057ea671db0c8a8138'
             'bd230962173a80a971c8da9d3dc07238f249544bb67ee834be7d6466391d0315'
             '461c44a1b635c09f23283c0b8f583a0d38079a1e20338c009776a621d0ed6efe')
 
 prepare() {
   cd "occt-${_pkgver}"
   patch -Np1 -i "$srcdir/fix-install-dir-references.patch"
-  patch -Np1 -i "$srcdir/configuration-problem-glibc-2.26.patch"
   patch -Np1 -i "$srcdir/vtk7.patch"
   patch -Np1 -i "$srcdir/ffmpeg4.patch"
 }
