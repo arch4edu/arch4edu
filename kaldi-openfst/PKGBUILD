@@ -2,7 +2,7 @@
 pkgname='kaldi-openfst'
 _pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=1.6.5
+pkgver=1.6.7
 pkgrel=1
 depends=('gcc-libs')
 makedepends=('git' 'wget' 'python' 'python2' 'subversion')
