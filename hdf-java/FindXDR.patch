@@ -1,0 +1,21 @@
+diff --git a/hdf-4.2.13/config/cmake/FindXDR.cmake b/hdf-4.2.13/config/cmake/FindXDR.cmake
+index 127e573..48a3945 100644
+--- a/hdf-4.2.13/config/cmake/FindXDR.cmake
++++ b/hdf-4.2.13/config/cmake/FindXDR.cmake
+@@ -21,7 +21,7 @@ find_path(XDR_INCLUDE_DIR NAMES rpc/types.h PATHS "/usr/include" "/usr/include/t
+     set(XDR_INT_FOUND)
+     CHECK_FUNCTION_EXISTS(xdr_int XDR_INT_FOUND)
+     if (NOT XDR_INT_FOUND)
+-        foreach(lib nsl rpc tirpc)
++        foreach(lib tirpc)
+             ## Try to find the corresponding lib
+             set(XDR_INT_LIBRARY)
+             find_library(XDR_INT_LIBRARY ${lib})
+@@ -35,6 +35,7 @@ find_path(XDR_INCLUDE_DIR NAMES rpc/types.h PATHS "/usr/include" "/usr/include/t
+                 set(XDR_INT_FOUND TRUE)
+                 break()
+             endif()
++            unset(XDR_INT_LIBRARY CACHE)
+         endforeach()
+     endif()
+ 
