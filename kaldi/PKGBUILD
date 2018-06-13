@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.4.r8070.be96725a7
+pkgver=5.4.r8071.1e4957873
 pkgrel=1
 depends=('cblas' 'kaldi-openfst' 'lapack' 'python2')
 optdepends=('cuda' 'kaldi-irstlm' 'kaldi-kaldi_lm' 'kaldi-sctk' 'kaldi-sph2pipe' 'kaldi-srilm')
@@ -69,7 +69,7 @@ package () {
 
 	sed "s|$srcdir|/opt|g" -i `grep $srcdir . -rIl`
 	find . -name 'path.sh' -exec sed 's?^\(export KALDI_ROOT\)=.*$?\1=/opt/'$pkgname'?' -i {} \;
-	echo "export OPENFST=/opt/kaldi/$(find tools -type d -name 'openfst*')" >> tools/env.sh
+	echo "export OPENFST=/opt/$pkgname/$(find /opt/$pkgname/tools -type d -name 'openfst*')" >> tools/env.sh
 	echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:${OPENFST}/lib' >> tools/env.sh
 	echo "export IRSTLM=/opt/kaldi/tools/irstlm" >> tools/env.sh
 	echo "export export PATH=${PATH}:${IRSTLM}/bin" >> tools/env.sh
