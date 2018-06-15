@@ -8,8 +8,10 @@ def pre_build():
     aur_pre_build()
 
     for line in edit_file('PKGBUILD'):
-        if 'java-environment' in line or 'java-runtime' in line:
+        if 'java-environment' in line:
             print(line.replace('>=8', '=8'))
+        elif './configure' in line:
+            print('  ./configure --with-jdk=/usr/lib/jvm/java-8-openjdk \\')
         else:
             print(line)
 
