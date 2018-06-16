@@ -1,26 +1,12 @@
-From 39662e94dca4d3c71ba0e7792de2d200f0ec7a08 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Cl=C3=A9ment=20DAVID?= <clement.david@esi-group.com>
-Date: Mon, 27 Mar 2017 17:45:41 +0200
-Subject: [PATCH] Fix build with ocaml 4.0.4
-
-Change-Id: I962fe026f1c44f7f76435db0b4838b0d936994c8
----
- scilab/modules/scicos/Makefile.in                  | 12 ++---
- scilab/modules/scicos/Makefile.modelica.am         |  2 +-
- scilab/modules/scicos/src/xml2modelica/linenum.mll | 56 ----------------------
- 4 files changed, 11 insertions(+), 67 deletions(-)
- delete mode 100644 scilab/modules/scicos/src/xml2modelica/linenum.mll
-
-Index: scilab-6.0.0/modules/scicos/src/modelica_compiler/optimization.ml
-===================================================================
---- scilab-6.0.0.orig/modules/scicos/src/modelica_compiler/optimization.ml
-+++ scilab-6.0.0/modules/scicos/src/modelica_compiler/optimization.ml
-@@ -162,7 +162,7 @@ let num_of_float f =
-   let num_of_positive_float f =
+--- modules/scicos/src/modelica_compiler/optimization.ml.orig	2018-05-16 19:42:49.168681800 +0200
++++ modules/scicos/src/modelica_compiler/optimization.ml	2018-05-16 19:44:53.999181477 +0200
+@@ -163,7 +163,8 @@
      let m, e = frexp f in
      let sm = string_of_float m in
--    let s = String.make 16 '0' in
-+    let s = Bytes.make 16 '0' in
-     String.blit sm 2 s 0 (String.length sm - 2);
+     let s = String.make 16 '0' in
+-    String.blit sm 2 s 0 (String.length sm - 2);
++    let sss = Bytes.make 16 '0' in
++    String.blit sm 2 sss 0 (String.length sm - 2);
      let e' = Num.power_num (Num.Int 2) (Num.num_of_int e) in
      Num.div_num (Num.mult_num (Num.num_of_string s) e') scaling_factor
+   in

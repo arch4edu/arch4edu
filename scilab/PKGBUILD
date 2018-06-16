@@ -4,12 +4,12 @@
 
 pkgname=scilab
 pkgver=6.0.1
-pkgrel=1
+pkgrel=4
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
 license=('BSD' 'custom:CeCILL' 'GPL2')
-depends=('suitesparse>=4.4.1'  'arpack' 'fftw' 'eigen'
+depends=('suitesparse>=4.4.1' 'arpack' 'fftw' 'eigen'
          'hdf5' 'libmatio'
          'tk' 'bwidget'
          'curl' 'inetutils'
@@ -20,7 +20,8 @@ depends=('suitesparse>=4.4.1'  'arpack' 'fftw' 'eigen'
          'java-skinlf' 'java-testng' 'xalan-java' 'docbook-xsl'
          'jogl>=2.3.2' 'apache-lucene>=7'
          'java-batik>=1.8' 'java-xmlgraphics-commons>=2.0.1')
-makedepends=('java-environment>=8' 'apache-ant>=1.9.0' 'ocaml-num' 'gcc-fortran' )
+makedepends=('java-environment=8' 'apache-ant>=1.9.0'
+             'ocaml-findlib' 'ocaml-num' 'gcc-fortran')
 source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
         "${pkgname}-jogl-2.3.2.patch"
         "${pkgname}-strict-jar.patch"
@@ -29,6 +30,8 @@ source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
         "${pkgname}-hdf5-1.8.10.patch"
         "${pkgname}-type.patch"
         "${pkgname}-num.patch"
+        "${pkgname}-size-node.patch"
+        "${pkgname}-LD_LIBRARY_PATH.patch"
         "${pkgname}-0004-Fix-build-with-ocaml-4.0.4.patch")
 sha256sums=('e459dd5a918626567e3513ab106a68bee5a1085a8713020cba214e5d4c075a4f'
             'f19f173e989f72bd55bda35e271b3c180ecef4e29da964df3f230fce8b1330fc'
@@ -38,7 +41,9 @@ sha256sums=('e459dd5a918626567e3513ab106a68bee5a1085a8713020cba214e5d4c075a4f'
             '2dee1346c240d09ce7870bbbeb3318e0ac5d78f249d855df313e9cb7a2ef7fc0'
             '93597034c6866c3a4aaa7ef92b4588d2753383545ed3366be6cdb404edf949bd'
             '31e757bdb2086e08e2477118fceddcdd50f3c2fcad5c86cf5de8ec06009f34ed'
-            '682f4056aabdc14b9f20ea4b2369ab759f50cd7bbc6ab6867cfaae14028f7622')
+            '984dd6e01631e5b30bde8587e435770c948f887c60d3d353c2e703e6d8b1fe99'
+            'a39277cb8cfc3d7929c73ce6d707dc24e3df4b8d8f2d587f075efebda79ff4db'
+            '6712c6db2f3ba365d150e1feb1c71bf691f8aa3b45d5a872b05a42f0daf23392')
 
 prepare(){
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -55,16 +60,20 @@ prepare(){
   patch -p0 < "${srcdir}"/${pkgname}-hdf5-type.patch
   # Fix type
   patch -p0 < "${srcdir}"/${pkgname}-type.patch
+  # Size of node
+  patch -p0 < "${srcdir}"/${pkgname}-size-node.patch
+  # Fix path, to avoid the following error:
+  # An error has been detected while loading /usr/share/scilab//modules/functions/.libs/libscifunctions.so: /usr/share/scilab//modules/functions/.libs/libscifunctions.so: cannot open shared object file: No such file or directory
+  patch -p0 < "${srcdir}"/${pkgname}-LD_LIBRARY_PATH.patch
   # OCaml
-  patch -p1 < "${srcdir}"/${pkgname}-0004-Fix-build-with-ocaml-4.0.4.patch
+  patch -p0 < "${srcdir}"/${pkgname}-0004-Fix-build-with-ocaml-4.0.4.patch
   patch -p0 < "${srcdir}"/${pkgname}-num.patch
 }
 
 build() {
-  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  ./configure \
+  ./configure --with-jdk=/usr/lib/jvm/java-8-openjdk \
     --prefix=/usr \
     --with-gcc \
     --with-gfortran \
@@ -72,7 +81,7 @@ build() {
     --with-matio \
     --with-umfpack \
     --with-fftw \
-    --without-modelica \
+    --with-modelica \
     --without-emf \
     --with-install-help-xml \
     --enable-build-help \
