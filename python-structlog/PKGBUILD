@@ -2,7 +2,7 @@
 pkgbase=('python-structlog')
 pkgname=('python-structlog')
 _module='structlog'
-pkgver='17.2.0'
+pkgver='18.1.0'
 pkgrel=1
 pkgdesc="Structured Logging for Python"
 url="http://www.structlog.org/"
@@ -11,7 +11,7 @@ makedepends=('python-setuptools')
 license=('Apache' 'MIT')
 arch=('any')
 source=("https://files.pythonhosted.org/packages/source/s/structlog/structlog-${pkgver}.tar.gz")
-md5sums=('ef9e2f7c72e7f2aa95969b4919930e97')
+md5sums=('9a6cbd3dc2f1ccd5519d876eddaf692a')
 
 build() {
     cd "${srcdir}/${_module}-${pkgver}"
