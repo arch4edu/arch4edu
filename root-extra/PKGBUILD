@@ -6,8 +6,8 @@
 
 pkgname=root-extra
 _pkgname=root
-pkgver=6.12.06
-pkgrel=4.1
+pkgver=6.14.00
+pkgrel=2
 provides=('root' 'root-extra')
 conflicts=('root')
 pkgdesc='C++ data analysis framework and interpreter from CERN with extra features enabled.'
@@ -16,6 +16,7 @@ url='http://root.cern.ch'
 license=('LGPL2.1')
 makedepends=('cmake' "blas" "go" "gcc-fortran" "ocaml" "python-numpy" "tcsh" "z3")
 depends=('cfitsio'
+         'cern-vdt'
          'fcgi'
          'fftw'
          'ftgl'
@@ -35,6 +36,7 @@ depends=('cfitsio'
          'tex-gyre-fonts'  # solve the pixelized font problem as per Arch Wiki
          'unixodbc'
          'unuran'
+         'cern-vdt'
          'xmlrpc-c'
          'xrootd>=4.6.0-2')
 optdepends=('blas: Optional extensions to TMVA'
@@ -52,21 +54,21 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
         'root.xml'
         'rootd'
         'settings.cmake'
-        'fix_const_correctness.patch')
-sha256sums=('aedcfd2257806e425b9f61b483e25ba600eb0ea606e21262eafaa9dc745aa794'
+        'fix_use_of_tstring.patch')
+sha256sums=('7946430373489310c2791ff7a3520e393dc059db1371272bcd9d9cf0df347a0b'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
             '6e8c4c4045fdc5a93045c2174c11d156b9f98c3042bd39d89713f4f1be375cd4'
-            '68f7007650e163bd337ecdf5a70fdfd683def5c10c07a6f26f3d41a572341511')
+            '59d9e5b3647469fbb0b0cd5f159b7dbbe9257e479ed0c87d77ce73a384efa257')
 prepare() {
     cd "${_pkgname}-${pkgver}"
 
     msg2 'Adjusting to Python3...'
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
 
-    patch -p1 -i "${srcdir}/fix_const_correctness.patch"
+    patch -p1 -i "${srcdir}/fix_use_of_tstring.patch"
 
     mkdir -p "${srcdir}/build"
     cd "${srcdir}/build"
