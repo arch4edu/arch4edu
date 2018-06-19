@@ -1,5 +1,6 @@
 # $Id$
 # Maintainer : George Eleftheriou <eleftg>
+# Contributor: Jingbei Li <petronny>
 # Contributor: Ronald van Haren <ronald.archlinux.org>
 # Contributor: Bruno Pagani (a.k.a. ArchangeGabriel) <archange@archlinux.org>
 # Contributor: Stefan Husmann <stefan-husmann@t-online.de>
@@ -11,24 +12,27 @@
 _pkgname=hdf5
 _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
-pkgver=1.10.1
-pkgrel=1
+pkgver=1.10.2
+pkgrel=2
 pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version) (full version including its Java Native Interfaces)"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="https://www.hdfgroup.org/HDF5/"
 license=('custom')
-depends=('zlib' 'openmpi')
+depends=('zlib' 'libaec' 'bash' 'openmpi')
 makedepends=('time' 'gcc-fortran' 'java-environment')
 provides=('hdf5-openmpi' 'hdf5' 'hdf5-cpp-fortran' "hdf5-fortran-${_mpi}")
 conflicts=('hdf5' 'hdf5-openmpi')
 replaces=("hdf5-fortran-${_mpi}")
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver/_/-}/src/${_pkgname}-${pkgver/_/-}.tar.bz2"
         'mpi.patch')
-md5sums=('d89893c05ee7ea8611b51bb39450d64e'
+md5sums=('41fb9347801b546fba323523a1c1af51'
          'dfa8dd50b8a7ebb3ad7249c627156cf9')
 
 prepare() {
     cd ${_pkgname}-${pkgver/_/-}
+
+    # Fix building with GCC 8.1
+    sed 's/\(.*\)(void) HDF_NO_UBSAN/HDF_NO_UBSAN \1(void)/' -i src/H5detect.c
 
     # FS#33343
     patch -p1 -i ../mpi.patch
@@ -43,21 +47,37 @@ build() {
         F9X="mpif90" \
         RUNPARALLEL="mpirun" \
         OMPI_MCA_disable_memory_allocator=1 \
+        JAVADOC='javadoc -Xdoclint:none' \
         --prefix=/usr \
+        --docdir=/usr/share/doc/hdf5 \
         --disable-static \
-        --enable-hl \
-        --enable-build-mode=production \
-        --with-pic \
-        --docdir=/usr/share/doc/hdf5/ \
         --disable-sharedlib-rpath \
+        --enable-build-mode=production \
+        --enable-hl \
         --enable-cxx \
         --enable-fortran \
-        --enable-fortran2003 \
         --enable-java \
         --enable-parallel \
         --enable-unsupported \
-        --with-zlib
+        --with-pic \
+        --with-zlib \
+        --with-szlib
     make
+}
+
+check() {
+    cd ${_pkgname}-${pkgver/_/-}
+    # Without exporting LD_LIBRARY_PATH, tests fail being unable to
+    # locate the newly built (not installed yet) hdf5 runtime
+    export LD_LIBRARY_PATH="${srcdir}"/${pkgname}-${pkgver/_/-}/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/c++/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/fortran/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/c++/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/fortran/src/.libs/
+    # This is a parallel build, there will always be some OpenMPI bugs,
+    # so skip failures and don't kill the entire packaging process
+    make check || warning "Some tests failed"
 }
 
 package() {
@@ -65,10 +85,8 @@ package() {
 
     make -j1 DESTDIR="${pkgdir}" install
 
-    rm -rf "${pkgdir}"/usr/lib/libdynlib*.so
-
-    install -dm755 "${pkgdir}"/usr/share/${_pkgname}
-    mv "${pkgdir}"/usr/share/{hdf5_examples,${_pkgname}/examples}
+    install -dm755 "${pkgdir}"/usr/share/doc/${_pkgname}
+    mv "${pkgdir}"/usr/share/{hdf5_examples,doc/${_pkgname}/examples}
 
     install -Dm644 COPYING "${pkgdir}"/usr/share/licenses/${_pkgname}/LICENSE
 }
