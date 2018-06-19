@@ -7,8 +7,8 @@ pkgdesc='A vectorised math library from CERN'
 arch=('i686' 'x86_64')
 url='https://github.com/dpiparo/vdt'
 license=('LGPL3')
-depends=()
-makedepends=('cmake'  'git')
+depends=('glibc')
+makedepends=('cmake' 'git' 'python')
 source=("git+git://github.com/dpiparo/vdt.git#tag=v${pkgver}")
 md5sums=('SKIP')
 
