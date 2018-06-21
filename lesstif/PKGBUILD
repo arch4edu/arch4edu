@@ -3,13 +3,14 @@
 
 pkgname=lesstif
 pkgver=0.95.2
-pkgrel=7
+pkgrel=8
 pkgdesc="LGPL'd re-implementation of Motif"
 arch=('i686' 'x86_64')
 url="http://sourceforge.net/projects/lesstif/"
 license=('LGPL' 'MIT')
 depends=('freetype2' 'libxt' 'libxp')
 options=('!makeflags' '!buildflags')
+conflicts=('openmotif')
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.bz2"
         'LICENSE'
         '040_fedora_XxxxProperty-64bit.diff')
