@@ -2,14 +2,15 @@
 
 pkgname=qgis-git
 _pkgname=qgis
-pkgver=48422.506f028e4f
+pkgver=3.1.0_master.r48475.39f09228c8
+_pkgver=3.1.0_master
 pkgrel=1
 pkgdesc='Geographic Information System (GIS) that supports vector, raster & database formats - Development master'
 url='http://qgis.org/'
 license=('GPL')
 arch=('i686' 'x86_64')
 depends=('qt5-tools' 'qt5-script' 'qtkeychain' 'qca-qt5' 'qt5-webkit' 'qt5-3d' 'proj' 'geos' 'sqlite' 'python-gdal' 'python-owslib' 'python-future' 'python-sip' 'python-psycopg2' 'python-yaml' 'python-numpy' 'python-jinja' 'python-pygments' 'qwtpolar' 'expat' 'python-qscintilla-qt5' 'spatialindex' 'gsl' 'libzip')
-makedepends=('git' 'cmake' 'txt2tags' 'grass')
+makedepends=('git' 'cmake' 'txt2tags')
 optdepends=('grass: for GRASS providers and plugin (6 or 7)'
 #            'gsl: for georeferencer'
             'postgresql: for postgis and SPIT support'
@@ -20,12 +21,11 @@ optdepends=('grass: for GRASS providers and plugin (6 or 7)'
 #install="$_pkgname.install"
 source=("${_pkgname}::git://github.com/qgis/QGIS.git")
 md5sums=('SKIP')
-provides=('qgis')
 conflicts=('qgis')
 
 pkgver(){
   cd "$_pkgname"
-  printf "%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  printf "%s.r%s" "$_pkgver" "$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
 }
 
 prepare() {
