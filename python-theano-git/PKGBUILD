@@ -4,7 +4,7 @@
 pkgbase="python-theano-git"
 pkgname=("python-theano-git" "python2-theano-git")
 _pkgname="Theano"
-pkgver=1.0.2.r0.3b51141a4
+pkgver=1.0.2.r3.3b8a5b342
 pkgrel=1
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
@@ -16,10 +16,10 @@ makedepends=('python-distribute' 'python2-distribute' 'git')
 checkdepends=('python-nose' 'python-nose-parameterized' 'python2-nose' 'python2-nose-parameterized')
 optdepends=('python-sympy: Recommended'
 	'python-scipy: Recommended'
-	'python-pycuda:'
+	'python-pycuda'
 	'python-pydot-ng: Preferred over python-pydot'
 	'python-pydot'
-	'python-pygpu'
+	'python-pygpu-git'
 	'python-scikit-sparse'
 	'python-mpi4py: minimal support for opencl'
 	'python2-sympy'
