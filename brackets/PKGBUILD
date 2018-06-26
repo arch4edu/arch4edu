@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=brackets
-pkgver=1.12
-pkgrel=3
+pkgver=1.13
+pkgrel=1
 pkgdesc="An open source code editor for the web, written in JavaScript, HTML and CSS."
 arch=('i686' 'x86_64')
 url="http://brackets.io"
@@ -67,4 +67,5 @@ package() {
 	cd ${srcdir}/${pkgname}
 	cp -R "samples" "${pkgdir}/opt/brackets/samples"
 	cp -R "dist" "${pkgdir}/opt/brackets/www"
+	#cp -R "node_modules" "${pkgdir}/opt/brackets/www"
 }
