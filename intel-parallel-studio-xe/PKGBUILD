@@ -1,7 +1,7 @@
 # Maintainer: Ignat Harczuk: ignathe -at- gmail com
 # Previous Maintainer: Mark Wells: mwellsa -at- gmail com
 # Contributor: simone riva: siomone.rva -a- gmail com
-# Intel Parallel Studio XE 2017 for Linux - ( Intel compiler icc suite )
+# Intel Parallel Studio XE 2018 for Linux - ( Intel compiler icc suite )
 ##########################################################################
 # this PKGBUILD splits the main Parallel Studio XE package in 9 sub-packages:
 #
@@ -50,34 +50,33 @@ _remove_static_objects_ipp=false
 ########################################
 
 _year='2018'
-_v_a='1'
-_v_b='163'
+_v_a='3'
+_v_b='222'
 # year, version a and version b found in /opt/intel/compilers_and_libraries_YEAR_A_B
 
-_update='1'
+_update='3'
 
-pkgrel=3
+pkgrel=1
 
 
 _sp='professional_edition'
-_icc_ver='18.0.4'
-_mpi_ver='5.1.3'
-_mkl_ver="11.3.3"
-_tbb_ver='4.4.3'
-_vtune_ver='0.2.525261'
-_inspector_ver='1.0.522981'
-_advisor_ver='1.0.523188'
+_icc_ver='18.0.3'
+_mpi_ver='2018.3.222'
+_mkl_ver='2018.3.222'
+_tbb_ver='2018.3.222'
+_vtune_ver='2018.3.0.558279'
+_inspector_ver='2018.3.0.558189'
+_advisor_ver='2018.3.0.558307'
 
-# Same version from update 4 2017
-_vtune_man_ver='0.2.525261'
-_inspector_man_ver='1.0.522981'
-_advisor_man_ver='1.0.523188'
+_vtune_man_ver='2018.3.0.558279'
+_inspector_man_ver='2018.3.0.558189'
+_advisor_man_ver='2018.3.0.558307'
 
 
-pkgver=${_year}.${_icc_ver}.${_v_a}.${_v_b}
+pkgver=${_year}.${_v_a}.${_v_b}
 
-_dir_nr='12375'
-_mpi_dir_nr='12414'
+_dir_nr='12999'
+_mpi_dir_nr='13063'
 
 options=(strip libtool staticlibs)
 
@@ -111,8 +110,8 @@ source=(
 )
 
 
-sha256sums=('dd3e118069d87eebb614336732323b48172c8c8a653cde673a8ef02f7358e94d'
-            '130b11571c3f71af00a722fa8641db5a1552ac343d770a8304216d8f5d00e75c'
+sha256sums=('3d8e72ccad31f243e43b72a925ad4a6908e2955682433898640ab783decf9960'
+            '5021d14b344fc794e89f146e4d53d70184d7048610895d7a6a1e8ac0cf258999'
             '75fcdfc246949341afddcf51b2037f606f25612a04c199ac1a743247aa7c4ea5'
             '278f9545d14c1fbec737bbfbcafb1b9090d35aab0dfeddc99d4c6e296b56057b'
             'e3103fb1c5e2ec9f0cc4090abb7e273563e735d88e185f527c66b2aebd52e733'
@@ -164,7 +163,7 @@ extract_mpi_rpms() {
 }
 
 set_build_vars() {
-  _pkg_ver=${_year}.${_icc_ver}.${_v_a}.${_v_b}
+  _pkg_ver=${pkgver}
   _composer_xe_dir="compilers_and_libraries_${_year}.${_v_a}.${_v_b}"
   rpm_dir=${srcdir}/${_parallel_studio_xe_dir}/rpm
   mpi_rpm_dir=${srcdir}/l_mpi_${_year}.${_v_a}.${_v_b}/rpm
@@ -232,7 +231,7 @@ build() {
     echo -e "\e[1mNo license files found in ${base_dir}."
     echo -e "Remember to place license files in one of these locations:"
     echo -e "    /opt/intel/licenses"
-    echo -e "    ~/intel/licenses"
+    echo -e "    ~/Licenses"
     echo -e "Or the compiler will not work!\e[0m"
   fi
   echo -e "-----------------------------------------------------------------------------------"
