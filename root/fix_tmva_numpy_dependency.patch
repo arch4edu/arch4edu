@@ -1,0 +1,16 @@
+diff -aur root-6.14.00-old/cmake/modules/SearchInstalledSoftware.cmake root-6.14.00-new/cmake/modules/SearchInstalledSoftware.cmake
+--- root-6.14.00-old/cmake/modules/SearchInstalledSoftware.cmake	2018-06-13 12:10:40.000000000 +0200
++++ root-6.14.00-new/cmake/modules/SearchInstalledSoftware.cmake	2018-07-06 17:35:20.679662343 +0200
+@@ -448,11 +448,7 @@
+   find_package(PythonInterp ${python_version} REQUIRED)
+   find_package(PythonLibs ${python_version} REQUIRED)
+   if (tmva)
+-    if(fail-on-missing)
+-      find_package(NumPy REQUIRED)
+-    else()
+-      find_package(NumPy)
+-    endif()
++    find_package(NumPy)
+   endif()
+ endif()
+ 
