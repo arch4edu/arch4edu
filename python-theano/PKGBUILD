@@ -4,7 +4,7 @@ pkgbase="python-theano"
 pkgname=("python-theano" "python2-theano")
 _pkgname="Theano"
 pkgver="1.0.2"
-pkgrel="1"
+pkgrel=2
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
 url='http://www.deeplearning.net/software/theano/'
@@ -70,7 +70,6 @@ build() {
 #}
 
 package_python2-theano() {
-  depends=('python2' 'python2-numpy')
   cd "$srcdir/${_pkgname}-${pkgver}-py2"
   python2 setup.py install --root="$pkgdir"/ --optimize=1
   mv "${pkgdir}/usr/bin/theano-cache" "${pkgdir}/usr/bin/theano2-cache"
@@ -79,7 +78,6 @@ package_python2-theano() {
 }
 
 package_python-theano() {
-  depends=('python' 'python-numpy')
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py install --root="$pkgdir"/ --optimize=1
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-theano/LICENSE.txt"
