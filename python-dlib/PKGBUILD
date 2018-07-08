@@ -42,11 +42,11 @@ build(){
 	cd "${srcdir}/${_pkgname}-${pkgver}-py2"
 	python2 setup.py build --no DLIB_USE_CUDA
 
-	cd "${srcdir}/${_pkgname}-${pkgver}-cuda"
-	CC=gcc-7 CXX=g++-7 python setup.py build --yes DLIB_USE_CUDA
+	#cd "${srcdir}/${_pkgname}-${pkgver}-cuda"
+	#CC=gcc-7 CXX=g++-7 python setup.py build --yes DLIB_USE_CUDA
 
-	cd "${srcdir}/${_pkgname}-${pkgver}-py2-cuda"
-	CC=gcc-7 CXX=g++-7 python2 setup.py build --yes DLIB_USE_CUDA
+	#cd "${srcdir}/${_pkgname}-${pkgver}-py2-cuda"
+	#CC=gcc-7 CXX=g++-7 python2 setup.py build --yes DLIB_USE_CUDA
 }
 
 
