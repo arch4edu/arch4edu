@@ -1,4 +1,4 @@
-# Maintainer: Andrew Crerar <andrew (at) crerar (dot) io>
+# Maintainer: Andrew Crerar <crerar@archlinux.org>
 # Contributor: Valentin Churavy <v.churavy@gmail.com>
 # Contributor: Romain Reignier <rom.reignier@gmail.com>
 # Contributor: Fabien Dubosson <fabien.dubosson@gmail.com>
@@ -12,32 +12,31 @@
 
 _name=opencv
 pkgname="$_name-git"
-pkgver=3.4.1.cvsdk.r837.g43f821afb9
+pkgver=3.4.2.r46.g875f23881f
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library"
 url="https://opencv.org/"
 license=('BSD')
 arch=('i686' 'x86_64')
-depends=('intel-tbb' 'openexr' 'xine-lib' 'libdc1394' 'cblas' 'lapack' 'jasper' 'libgphoto2')
-makedepends=('git' 'cmake' 'python2-numpy' 'python-numpy' 'mesa' 'eigen' 'hdf5' 'lapacke' 'gtkglext')
-optdepends=('opencv-samples'
-            'gtkglext: for the HighGUI module'
+depends=('intel-tbb' 'openexr' 'gst-plugins-base' 'libdc1394' 'cblas' 'lapack' 'libgphoto2' 'jasper')
+makedepends=('git' 'cmake' 'python-numpy' 'python2-numpy' 'mesa' 'eigen' 'hdf5' 'lapacke' 'gtk3')
+optdepends=('opencv-samples: samples'
+            'gtk3: for the HighGUI module'
             'hdf5: Support for HDF5 format'
             'opencl-icd-loader: For coding with OpenCL'
             'python-numpy: Python 3 interface'
             'python2-numpy: Python 2 interface')
 conflicts=('opencv')
 provides=("$_name=$pkgver")
-source=('git+https://github.com/opencv/opencv.git'
-        'git+https://github.com/opencv/opencv_contrib.git')
+source=('git+https://github.com/opencv/opencv.git#branch=3.4'
+        'git+https://github.com/opencv/opencv_contrib.git#branch=3.4')
 sha512sums=('SKIP'
             'SKIP')
 
 _cmakeopts=('-DWITH_OPENCL=ON'
             '-DWITH_OPENGL=ON'
             '-DWITH_TBB=ON'
-            '-DWITH_XINE=ON'
-            '-DWITH_GSTREAMER=OFF'
+            '-DOpenGL_GL_PREFERENCE=GLVND'
             '-DBUILD_WITH_DEBUG_INFO=OFF'
             '-DBUILD_TESTS=OFF'
             '-DBUILD_PERF_TESTS=OFF'
@@ -45,7 +44,7 @@ _cmakeopts=('-DWITH_OPENCL=ON'
             '-DINSTALL_C_EXAMPLES=ON'
             '-DINSTALL_PYTHON_EXAMPLES=ON'
             '-DCMAKE_INSTALL_PREFIX=/usr'
-            '-DCMAKE_INSTALL_LIBDIR=/usr/lib'
+            '-DCMAKE_INSTALL_LIBDIR=lib'
             '-DCUDA_NVCC_FLAGS="--expt-relaxed-constexpr"')
 
 # SSE only available from Pentium 3 onwards (i686 is way older)
@@ -78,7 +77,7 @@ package() {
     make DESTDIR="$pkgdir" install
 
     # install LICENSE file
-    install -Dm644 "$srcdir"/"$_name"/LICENSE "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE
+    install -Dm644 "$srcdir"/"$_name"/LICENSE "$pkgdir"/usr/share/licenses/"$pkgname"
 
     cd "$pkgdir"/usr/share
 
