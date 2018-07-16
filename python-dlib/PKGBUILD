@@ -9,7 +9,7 @@ pkgname=python-dlib
 #pkgname=('python-dlib' 'python2-dlib' 'python-dlib-cuda' 'python2-dlib-cuda')
 pkgname=('python-dlib' 'python2-dlib')
 _pkgname=dlib
-pkgver=19.13
+pkgver=19.15
 pkgrel=1
 pkgdesc="Dlib is a general purpose cross-platform C++ library designed using contract programming and modern C++ techniques."
 arch=('x86_64')
@@ -20,7 +20,7 @@ depends=('libx11')
 optdepends=('cblas' 'lapack' 'libjpeg-turbo' 'libpng' 'sqlite')
 makedepends=(${optdepends[@]} 'cmake' 'boost' 'python-setuptools' 'python2-setuptools')
 source=("$url/files/${_pkgname}-${pkgver}.tar.bz2")
-md5sums=('69d806dea72789f1c0f43843f4007776')
+md5sums=('7f168578b024689be707d6dde5cfa0e9')
 
 prepare() {
 	cd "$srcdir/"
@@ -63,12 +63,18 @@ package_python2-dlib(){
 }
 package_python-dlib-cuda(){
 	depends+=('cuda' 'cudnn' 'python')
+	conflicts=('python-dlib')
+	provides=('python-dlib')
+	replaces=('python-dlib')
 	cd "${srcdir}/${_pkgname}-${pkgver}-cuda"
 	python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
 }
 
 package_python2-dlib-cuda(){
 	depends+=('cuda' 'cudnn' 'python2')
+	conflicts=('python2-dlib')
+	provides=('python2-dlib')
+	replaces=('python2-dlib')
 	cd "${srcdir}/${_pkgname}-${pkgver}-py2-cuda"
 	python2 setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
 }
