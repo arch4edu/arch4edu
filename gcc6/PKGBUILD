@@ -7,13 +7,13 @@
 # Contributor: Allan McRae <allan@archlinux.org>
 
 pkgbase=gcc6
-pkgname=('gcc6' 'gcc6-libs' 'gcc6-fortran' 'gcc6-objc' 'gcc6-go' 'gcc6-gcj')
+pkgname=('gcc6' 'gcc6-libs' 'gcc6-fortran' 'gcc6-gcj')
 pkgver=6.4.1
 _ver=6
-_svnrev=253363
+_svnrev=262598
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=5
+pkgrel=6
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -50,7 +50,6 @@ prepare() {
   sed -i '1s+python+python2+' libjava/contrib/aot-compile.in
 
   mkdir -p "${srcdir}/gcc-build"
-
 }
 
 build() {
@@ -67,7 +66,7 @@ build() {
       --mandir=/usr/share/man \
       --infodir=/usr/share/info \
       --with-bugurl=https://bugs.archlinux.org/ \
-      --enable-languages=c,c++,fortran,go,lto,objc,obj-c++,java \
+      --enable-languages=c,c++,fortran,lto,java \
       --enable-shared \
       --enable-threads=posix \
       --enable-libmpx \
@@ -102,19 +101,6 @@ build() {
   make -C ${CHOST}/libstdc++-v3/doc doc-man-doxygen
 }
 
-check() {
-  cd gcc-build
-
-  # increase stack size to prevent test failures
-  # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  ulimit -s 32768
-
-  # do not abort on error as some are "expected"
-  make -k check || true
-  ${srcdir}/gcc/contrib/test_summary
-}
-
-
 package_gcc6-libs() {
   pkgdesc="Runtime libraries shipped by GCC"
   depends=('glibc>=2.25')
@@ -128,8 +114,6 @@ package_gcc6-libs() {
              libcilkrts \
              libjava \
              libgfortran \
-             libgo \
-             libgomp \
              libitm \
              libquadmath \
              libsanitizer/{a,l,ub}san \
@@ -141,21 +125,17 @@ package_gcc6-libs() {
 
   make -C $CHOST/libsanitizer/tsan DESTDIR=${pkgdir} install-toolexeclibLTLIBRARIES
 
-  make -C $CHOST/libobjc DESTDIR=${pkgdir} install-libs
   make -C $CHOST/libstdc++-v3/po DESTDIR=${pkgdir} install
   make -C $CHOST/libmpx DESTDIR=${pkgdir} install
   rm ${pkgdir}/${_libdir}/libmpx.spec
 
-  for lib in libgomp libitm libquadmath
+  for lib in libitm libquadmath
   do
     make -C $CHOST/$lib DESTDIR=${pkgdir} install-info
   done
 
   # Lazy way of dealing with conflicting files...
   rm -rf ${pkgdir}/usr/share/{info,locale,man}
-
-  # Remove libs that conflict with gcc6_go.
-  rm -rf ${pkgdir}/${_libdir}/libgo*
 
   # Install Runtime Library Exception
   install -Dm644 ${srcdir}/gcc/COPYING.RUNTIME \
@@ -201,8 +181,6 @@ package_gcc6() {
 
   make -C $CHOST/libcilkrts DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS \
     install-nodist_cilkincludeHEADERS
-  make -C $CHOST/libgomp DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS \
-    install-nodist_libsubincludeHEADERS
   make -C $CHOST/libitm DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
   make -C $CHOST/libquadmath DESTDIR=${pkgdir} install-nodist_libsubincludeHEADERS
   make -C $CHOST/libsanitizer DESTDIR=${pkgdir} install-nodist_{saninclude,toolexeclib}HEADERS
@@ -214,8 +192,8 @@ package_gcc6() {
   #install -m644 ${srcdir}/gcc-${_snapshot}/gcc-build/libiberty/pic/libiberty.a ${pkgdir}/${_libdir}/
 
   make -C gcc DESTDIR=${pkgdir} install-man install-info
-  rm ${pkgdir}/usr/share/man/man1/{gccgo-${_ver},gfortran-${_ver}}.1
-  rm ${pkgdir}/usr/share/info/{gccgo,gfortran}.info
+  rm ${pkgdir}/usr/share/man/man1/gfortran-${_ver}.1
+  rm ${pkgdir}/usr/share/info/gfortran.info
 
   make -C libcpp DESTDIR=${pkgdir} install
   make -C gcc DESTDIR=${pkgdir} install-po
@@ -276,7 +254,6 @@ package_gcc6-fortran() {
   cd gcc-build
   make -C $CHOST/libgfortran DESTDIR=$pkgdir install-cafexeclibLTLIBRARIES \
     install-{toolexeclibDATA,nodist_fincludeHEADERS}
-  make -C $CHOST/libgomp DESTDIR=$pkgdir install-nodist_fincludeHEADERS
   make -C gcc DESTDIR=$pkgdir fortran.install-common
   install -Dm755 gcc/f951 $pkgdir/${_libdir}/f951
 
@@ -284,41 +261,6 @@ package_gcc6-fortran() {
 
   # Install Runtime Library Exception
   install -d ${pkgdir}/usr/share/licenses/$pkgname
-  ln -s ../gcc-libs/RUNTIME.LIBRARY.EXCEPTION ${pkgdir}/usr/share/licenses/$pkgname/
-}
-
-package_gcc6-objc() {
-  pkgdesc="Objective-C front-end for GCC"
-  depends=("gcc6=$pkgver-$pkgrel")
-
-  cd gcc-build
-  make DESTDIR=$pkgdir -C $CHOST/libobjc install-headers
-  install -dm755 $pkgdir/${_libdir}
-  install -m755 gcc/cc1obj     $pkgdir/${_libdir}/cc1obj
-  install -m755 gcc/cc1objplus $pkgdir/${_libdir}/cc1objplus
-
-  # Install Runtime Library Exception
-  install -d ${pkgdir}/usr/share/licenses/$pkgname/
-  ln -s ../gcc-libs/RUNTIME.LIBRARY.EXCEPTION ${pkgdir}/usr/share/licenses/$pkgname/
-}
-
-package_gcc6-go() {
-  pkgdesc="Go front-end for GCC"
-  depends=("gcc6=$pkgver-$pkgrel")
-  conflicts=('go')
-  options=('!emptydirs')
-
-  cd gcc-build/
-
-  make -C $CHOST/libgo DESTDIR=$pkgdir install-exec-am
-  rm ${pkgdir}/${_libdir}/libgo.so*
-  make -C gcc DESTDIR=$pkgdir go.install-common
-  install -Dm755 gcc/go1 $pkgdir/${_libdir}/go1
-
-  make DESTDIR=${pkgdir} install-gotools
-
-  # Install Runtime Library Exception
-  install -d ${pkgdir}/usr/share/licenses/$pkgname/
   ln -s ../gcc-libs/RUNTIME.LIBRARY.EXCEPTION ${pkgdir}/usr/share/licenses/$pkgname/
 }
 
