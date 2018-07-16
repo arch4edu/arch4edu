@@ -3,14 +3,13 @@
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 
-pkgname=openfoam
-
 # The distributors package name
 _distpkgname=OpenFOAM
 _gitname=$_distpkgname-5.x
 
+pkgname=openfoam
 pkgver=5.0
-pkgrel=2
+pkgrel=3
 pkgdesc="The open source CFD toolbox"
 arch=('x86_64')
 url="http://www.openfoam.org"
@@ -46,17 +45,20 @@ build() {
   # Setup the build environment
   export FOAM_INST_DIR=${srcdir}
   foamDotFile=${srcdir}/${_distpkgname}-${pkgver}/etc/bashrc
-  echo $foamDotFile
   [ -f ${foamDotFile} ] || return 1
-  bash -c "source ${foamDotFile}
 
   # Enter build directory
   cd ${srcdir}/${_distpkgname}-${pkgver}
 
+  # Patches
+  sed '550s| \*this||' -i src/OpenFOAM/containers/Lists/PackedList/PackedListI.H
+  sed '35,40d' -i src/thermophysicalModels/specie/reaction/Reactions/Reaction/ReactionI.H
+
   # Build and clean up OpenFOAM
-  ./Allwmake || return 1
-  wclean all || return 1
-  wmakeLnIncludeAll || return 1"
+  bash -c "source ${foamDotFile}
+  ./Allwmake || exit 1
+  wclean all || exit 1
+  wmakeLnIncludeAll || exit 1"
 }
 
 package() {
