@@ -8,7 +8,7 @@ def pre_build():
     aur_pre_build()
 
     for line in edit_file('PKGBUILD'):
-        if line.startwith('depends='):
+        if line.startswith('depends='):
             print(line.replace(')', ' "sip")'))
         else:
             print(line)
