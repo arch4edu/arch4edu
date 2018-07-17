@@ -13,7 +13,7 @@ _ver=6
 _svnrev=262598
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=6
+pkgrel=7
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -114,6 +114,7 @@ package_gcc6-libs() {
              libcilkrts \
              libjava \
              libgfortran \
+             libgomp \
              libitm \
              libquadmath \
              libsanitizer/{a,l,ub}san \
@@ -129,7 +130,7 @@ package_gcc6-libs() {
   make -C $CHOST/libmpx DESTDIR=${pkgdir} install
   rm ${pkgdir}/${_libdir}/libmpx.spec
 
-  for lib in libitm libquadmath
+  for lib in libgomp libitm libquadmath
   do
     make -C $CHOST/$lib DESTDIR=${pkgdir} install-info
   done
@@ -181,6 +182,8 @@ package_gcc6() {
 
   make -C $CHOST/libcilkrts DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS \
     install-nodist_cilkincludeHEADERS
+  make -C $CHOST/libgomp DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS \
+    install-nodist_libsubincludeHEADERS
   make -C $CHOST/libitm DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
   make -C $CHOST/libquadmath DESTDIR=${pkgdir} install-nodist_libsubincludeHEADERS
   make -C $CHOST/libsanitizer DESTDIR=${pkgdir} install-nodist_{saninclude,toolexeclib}HEADERS
@@ -254,6 +257,7 @@ package_gcc6-fortran() {
   cd gcc-build
   make -C $CHOST/libgfortran DESTDIR=$pkgdir install-cafexeclibLTLIBRARIES \
     install-{toolexeclibDATA,nodist_fincludeHEADERS}
+  make -C $CHOST/libgomp DESTDIR=$pkgdir install-nodist_fincludeHEADERS
   make -C gcc DESTDIR=$pkgdir fortran.install-common
   install -Dm755 gcc/f951 $pkgdir/${_libdir}/f951
 
