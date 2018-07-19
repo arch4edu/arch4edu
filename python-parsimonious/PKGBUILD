@@ -3,7 +3,7 @@ _name="parsimonious"
 
 pkgbase="python-${_name}"
 pkgname=("python-${_name}" "python2-${_name}")
-pkgver=0.8.0
+pkgver=0.8.1
 pkgrel=1
 arch=('any')
 url="https://pypi.python.org/pypi/${_name}/${pkgver}"
@@ -11,7 +11,7 @@ license=('MIT')
 makedepends=('python-setuptools' 'python2-setuptools')
 pkgdesc="Fast parser based on parsing expression grammars (PEGs)"
 source=("https://files.pythonhosted.org/packages/source/${_name:0:1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha256sums=('ae0869d72a6e57703f24313a5f5748e73ebff836e6fe8b3ddf34ea0dc00d086b')
+sha256sums=('3add338892d580e0cb3b1a39e4a1b427ff9f687858fdd61097053742391a9f6b')
 
 prepare() {
     cp -r "${srcdir}/${_name}-${pkgver}" "${srcdir}/${_name}-${pkgver}-python2"
