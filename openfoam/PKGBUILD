@@ -3,22 +3,20 @@
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 
-# The distributors package name
-_distpkgname=OpenFOAM
-_gitname=$_distpkgname-5.x
-
 pkgname=openfoam
-pkgver=5.0
-pkgrel=3
+pkgver=6
+pkgrel=1
 pkgdesc="The open source CFD toolbox"
+_distpkgname=OpenFOAM
+_gitname=$_distpkgname-$pkgver
 arch=('x86_64')
 url="http://www.openfoam.org"
 license=("GPL")
 depends=('bzip2' 'paraview' 'parmetis' 'scotch' 'boost' 'flex' 'cgal')
 makedepends=('bash')
-source=("https://github.com/OpenFOAM/$_gitname/archive/version-$pkgver.tar.gz")
+source=("https://github.com/OpenFOAM/$_gitname/archive/version-$pkgver.tar.gz" "${pkgname}.install")
 install="${pkgname}.install"
-md5sums=('cd8c5bdd3ff39c34f61747c8e55f59d1')
+md5sums=('f40aa39d4d5dfe7ea8d9a58f2625037a' '906a97732076501f3899d72d3a7393b3')
 
 prepare() {
   mv $srcdir/$_gitname-version-$pkgver $srcdir/$_distpkgname-$pkgver
@@ -39,6 +37,11 @@ prepare() {
   echo "export SCOTCH_VERSION=scotch_${_sversion}" > ${srcdir}/scotch.sh
   echo "export SCOTCH_ARCH_PATH=/usr" >> ${srcdir}/scotch.sh
   cp ${srcdir}/scotch.sh ${srcdir}/${_distpkgname}-${pkgver}/etc/config #|| return 1
+
+  # Patches
+  #cd ${srcdir}/${_distpkgname}-${pkgver}
+  #sed '550s| \*this||' -i src/OpenFOAM/containers/Lists/PackedList/PackedListI.H
+  #sed '35,40d' -i src/thermophysicalModels/specie/reaction/Reactions/Reaction/ReactionI.H
 }
 
 build() {
@@ -49,10 +52,6 @@ build() {
 
   # Enter build directory
   cd ${srcdir}/${_distpkgname}-${pkgver}
-
-  # Patches
-  sed '550s| \*this||' -i src/OpenFOAM/containers/Lists/PackedList/PackedListI.H
-  sed '35,40d' -i src/thermophysicalModels/specie/reaction/Reactions/Reaction/ReactionI.H
 
   # Build and clean up OpenFOAM
   bash -c "source ${foamDotFile}
