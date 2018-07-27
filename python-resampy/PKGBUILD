@@ -3,15 +3,15 @@
 pkgbase=python-resampy
 pkgname=(python-resampy python2-resampy)
 _pkgname=resampy
-pkgver=0.2.0
+pkgver=0.2.1
 pkgrel=1
 pkgdesc="Efficient sample rate conversion in python"
 arch=('any')
 url="https://github.com/bmcfee/resampy"
 license=('ISC')
-makedepends=('python-setuptools' 'python2-setuptools' 'python-numpy' 'python2-numpy' 'cython' 'cython2')
+makedepends=('cython' 'cython2' 'python-setuptools' 'python2-setuptools' 'python-numba' 'python2-numba' 'python-numpy' 'python2-numpy' 'python-scipy' 'python2-scipy' 'python-six' 'python2-six')
 source=("$url/archive/${pkgver}.tar.gz")
-md5sums=('30091b28cdbe51e19282966e036672e9')
+md5sums=('36762050a95e624a1c52b597ad1ba053')
 
 prepare() {
   cd "$srcdir/"
@@ -34,14 +34,14 @@ build() {
 }
 
 package_python2-resampy() {
-  depends=('python2')
+  depends=('python2-numba' 'python2-numpy' 'python2-scipy' 'python2-six')
   cd "$srcdir/${_pkgname}-${pkgver}-py2"
   python2 setup.py install --root="$pkgdir"/ --optimize=1
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 
 package_python-resampy() {
-  depends=('python')
+  depends=('python-numba' 'python-numpy' 'python-scipy' 'python-six')
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py install --root="$pkgdir"/ --optimize=1
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
