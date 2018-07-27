@@ -1,32 +1,32 @@
---- pyglossary-3.0.4/setup.py.orig	2016-11-07 23:02:42.000000000 +0300
-+++ pyglossary-3.0.4/setup.py	2017-01-04 21:07:23.436142650 +0300
-@@ -49,7 +49,7 @@
-         'AUTHORS',
-     ]),
-     (relRootDir+'/ui', glob.glob('ui/*.py')),
--    (relRootDir+'/ui/glade', glob.glob('ui/glade/*')),
-+    (relRootDir+'/ui/gtk3_utils', glob.glob('ui/gtk3_utils/*')),
-     (relRootDir+'/res', glob.glob('res/*')),
-     ('share/doc/pyglossary', []),
-     ('share/doc/pyglossary/non-gui_examples', glob.glob('doc/non-gui_examples/*')),
-@@ -112,9 +112,9 @@
+--- pyglossary-3.1.0/setup.py.orig	2018-07-27 01:18:25.762327253 +0300
++++ pyglossary-3.1.0/setup.py	2018-07-27 01:18:59.632701040 +0300
+@@ -54,7 +54,6 @@
+ 		"config.json",
+ 	]),
+ 	(relRootDir+"/ui", glob.glob("ui/*.py")),
+-	(relRootDir+"/ui/glade", glob.glob("ui/glade/*")),
+ 	(relRootDir+"/ui/gtk3_utils", glob.glob("ui/gtk3_utils/*.py")),
+ 	(relRootDir+"/res", glob.glob("res/*")),
+ 	("share/doc/pyglossary", []),
+@@ -131,9 +130,9 @@
  setup(
-     name = 'pyglossary',
-     version = VERSION,
--    cmdclass = {
--        'install': my_install,
--    },
-+    #cmdclass = {
-+    #    'install': my_install,
-+    #},
-     description = 'A tool for workig with dictionary databases',
-     author = 'Saeed Rasooli',
-     author_email = 'saeed.gnu@gmail.com',
-@@ -130,6 +130,7 @@
-         'pyglossary': [
-             'plugins/*.py',
-             'plugin_lib/*.py',
-+            'plugin_lib/py36/*.py'
-         ] + [
-             # safest way found so far to include every resource of plugins
-             # producing plugins/pkg/*, plugins/pkg/sub1/*, ... except .pyc/.pyo
+ 	name="pyglossary",
+ 	version=VERSION,
+-	cmdclass={
+-		"install": my_install,
+-	},
++	#cmdclass={
++	#	"install": my_install,
++	#},
+ 	description="A tool for workig with dictionary databases",
+ 	author="Saeed Rasooli",
+ 	author_email="saeed.gnu@gmail.com",
+@@ -149,7 +148,7 @@
+ 		"pyglossary": [
+ 			"plugins/*.py",
+ 			"plugin_lib/*.py",
+-			"plugin_lib/py*/*.py",
++			"plugin_lib/py36/*.py",
+ 		] + [
+ 			# safest way found so far to include every resource of plugins
+ 			# producing plugins/pkg/*, plugins/pkg/sub1/*, ... except .pyc/.pyo
