@@ -1,43 +1,37 @@
 # Maintainer : Daniel Bermond < yahoo-com: danielbermond >
 
-# NOTE:
-# In order to build with NCCL support, follow these steps:
-#   1) uncomment the nccl line in 'depends'
-#   2) in 'build()', change '-DUSE_NCCL:BOOL=OFF' from 'OFF' to 'ON'
-#   3) add these options to cmake command line:
-#       -DNCCL_INCLUDE_DIR:PATH='/opt/cuda/include'
-#       -DNCCL_ROOT_DIR:PATH='/opt/cuda'
-
 # third_party with no stable release at the target commit
-_aten_cpuinfo_commit='d0222b47948234cc01983243a2e0ede018f97f3a'
 _nanopb_commit='14efb1a47a496652ab08b1ebcefb0ea24ae4a5e4'
 _pybind11_commit='add56ccdcac23a6c522a2c1174a866e293c61dab'
 _cub_commit='285aeebaa34b0e8a7670867a2e66c1a52d998d6a'
-_eigen_commit='5a0ab9ff4e258b860470afe36e83a3e88b3ce14c'
+_eigen_commit='e9e95489a0b241412e31f0525e85b2fab386c786'
 _googletest_commit='69e48e92de43960a316a826293510b7b3deb9eca'
 _nervanagpu_commit='d4eefd50fbd7d34a17dddbc829888835d67b5f4a'
-_benchmark_commit='491360b833aaab96818dce256a8409f6296dd995'
+_benchmark_commit='505be96ab23056580a3a2315abba048f4428b04e'
 _ios_cmake_commit='8abaed637d56f1337d6e1d2c4026e25c1eade724'
-_nnpack_commit='b63fe1ba8963f1756b8decc593766615cee99c35'
-_gloo_commit='aad0002fb40612e991390d8e807f247ed23f13c5'
+_nnpack_commit='3eb0d453662d05a708f43b108bed9e17b705383e'
+_gloo_commit='69eef748cc1dfbe0fefed69b34e6545495f67ac5'
 _nnpdeps_pthreadp_commit='2b06b31f6a315162348e1f3c24325eedaf6cc559'
 _nnpdeps_fxdiv_commit='811b482bcd9e8d98ad80c6c78d5302bb830184b0'
 _nnpdeps_fp16_commit='43d6d17df48ebf622587e7ed9472ea76573799b9'
 _nnpdeps_psimd_commit='4ac61b112252778b174575931c641bef661ab3cd'
 _zstd_commit='aec56a52fbab207fc639a1937d1e708a282edca8'
-_cpuinfo_commit='831dc28341b5f20d13e840caf87eaba644d82643'
+_cpuinfo_commit='1e6c8c99d27f2b5eb9d2e6231055c6a4115b85e5'
 _python_enum_commit='4cfedc426c4e2fc52e3f5c2b4297e15ed8d6b8c7'
 _python_peachpy_commit='07d8fde8ac45d7705129475c0f94ed8925b93473'
 _computelibrary_commit='292227986edb37b01061afcad6df18ba9d6ccbeb'
-_onnx_commit='7e1bed51cc508a25b22130de459830b5d5063c41'
+_onnx_commit='b2817a682f25f960586f06caa539bbbd7a96b859'
+_onnx_tensorrt_commit='fa0964e8477fc004ee2f49ee77ffce0bf7f711a9'
+_sleef_commit='6ff7a135a1e31979d1e1844a2e7171dfbd34f54f'
 
 # third_party with stable release at the target commit
-_aten_tbb_version='2018_U2'  # commit '4c73c3b5d7f78c40f69e0c04fd4afb9f48add1e6' is version '2018_U2'
-_aten_catch_version='2.2.1'  # commit '0a34cc201ef28bf25c88b0062f331369596cb7b7' is version '2.2.1'
+_catch_version='2.2.1'       # commit '0a34cc201ef28bf25c88b0062f331369596cb7b7' is version '2.2.1'
 _protobuf_version='3.5.0'    # commit '2761122b810fe8861004ae785cc3ab39f384d342' is version '3.5.0'
 _python_six_version='1.11.0' # commit '15e31431af97e5e64b80af0a3f598d382bcdd49a' is version '1.11.0'
+_cereal_version='1.2.2'      # commit '51cbda5f30e56c801c07fe3d3aba5d7fb9e6cca4' is version '1.2.2'
+_ideep_version='2.0.0_b1'    # commit '4bd9a6800bf7db068187619e0582d34dec9651dc' is version '2.0.0_b1'
 
-_ptver=0.4.0 # pytorch stable release version
+_ptver=0.4.1 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_ptver}"
@@ -61,7 +55,7 @@ depends=(
             'python-tornado' 'python-gflags' 'python-pyzmq'
     # AUR:
         # not required and disabled in build:
-            #'nccl'
+            'libibverbs'
         # python:
             'python-nvd3' 'python-scikit-image' 'python-glog' 'python-leveldb'
             'python-lmdb'
@@ -74,9 +68,7 @@ source=(
     # main source:
         "pytorch-${_ptver}.tar.gz"::"https://github.com/pytorch/pytorch/archive/v${_ptver}.tar.gz"
     # third party:
-        'caffe2-thirdparty-aten-cpuinfo-git'::"git+https://github.com/Maratyszcza/cpuinfo#commit=${_aten_cpuinfo_commit}"
-        "caffe2-thirdparty-aten-tbb-${_aten_tbb_version}.tar.gz"::"https://github.com/01org/tbb/archive/${_aten_tbb_version}.tar.gz"
-        "caffe2-thirdparty-aten-catch-${_aten_catch_version}.tar.gz"::"https://github.com/catchorg/Catch2/archive/v${_aten_catch_version}.tar.gz"
+        "caffe2-thirdparty-catch-${_catch_version}.tar.gz"::"https://github.com/catchorg/Catch2/archive/v${_catch_version}.tar.gz"
         'caffe2-thirdparty-nanopb-git'::"git+https://github.com/nanopb/nanopb.git#commit=${_nanopb_commit}"
         'caffe2-thirdparty-pybind11-git'::"git+https://github.com/pybind/pybind11.git#commit=${_pybind11_commit}"
         'caffe2-thirdparty-cub-git'::"git+https://github.com/NVlabs/cub.git#commit=${_cub_commit}"
@@ -99,15 +91,18 @@ source=(
         "caffe2-thirdparty-python-six-${_python_six_version}.tar.gz"::"https://github.com/benjaminp/six/archive/${_python_six_version}.tar.gz"
         'caffe2-thirdparty-ComputeLibrary-git'::"git+https://github.com/ARM-software/ComputeLibrary.git#commit=${_computelibrary_commit}"
         'caffe2-thirdparty-onnx-git'::"git+https://github.com/onnx/onnx.git#commit=${_onnx_commit}"
+        "caffe2-thirdparty-cereal-${_cereal_version}.tar.gz"::"https://github.com/USCiLab/cereal/archive/v${_cereal_version}.tar.gz"
+        'caffe2-thirdparty-onnx-tensorrt-git'::"git+https://github.com/onnx/onnx-tensorrt.git#commit=${_onnx_tensorrt_commit}"
+        'caffe2-thirdparty-sleef-git'::"git+https://github.com/shibatch/sleef.git#commit=${_sleef_commit}"
+        "caffe2-thirdparty-ideep-${_ideep_version}.tar.gz"::"https://github.com/intel/ideep/archive/v${_ideep_version}.tar.gz"
 )
-noextract=("caffe2-thirdparty-aten-tbb-${_aten_tbb_version}.tar.gz"
-           "caffe2-thirdparty-aten-catch-${_aten_catch_version}.tar.gz"
-           "thirdparty-protobuf-${_protobuf_version}.tar.gz"
+noextract=("caffe2-thirdparty-catch-${_catch_version}.tar.gz"
+           "caffe2-thirdparty-protobuf-${_protobuf_version}.tar.gz"
            "caffe2-thirdparty-python-six-${_python_six_version}.tar.gz"
+           "caffe2-thirdparty-cereal-${_cereal_version}.tar.gz"
+           "caffe2-thirdparty-ideep-${_ideep_version}.tar.gz"
 )
-sha256sums=('f91c059710f802c91bed8207f2d461851b1bc2d44f7cd6e9aaa548392db9412f'
-            'SKIP'
-            '78bb9bae474736d213342f01fe1a6d00c6939d5c75b367e2e43e7bf29a6d8eca'
+sha256sums=('6ab03fa707909e5fb6209a3a98d24c25cd64d9590f3e05d6e8490e4d07b3a765'
             '3938bc896f8de570bc56d25606fc128437ee53590a95cf3e005710176a1a1ce4'
             'SKIP'
             'SKIP'
@@ -130,30 +125,34 @@ sha256sums=('f91c059710f802c91bed8207f2d461851b1bc2d44f7cd6e9aaa548392db9412f'
             'SKIP'
             '927dc6fcfccd4e32e1ce161a20bf8cda39d8c9d5f7a845774486907178f69bd4'
             'SKIP'
-            'SKIP')
+            'SKIP'
+            '1921f26d2e1daf9132da3c432e2fd02093ecaedf846e65d7679ddf868c7289c4'
+            'SKIP'
+            'SKIP'
+            '9fa1e75035273494d12425194140b3a884b2e70552b4bad3a111e861881876b5')
 
 prepare() {
     local _thirdparty_git_list="nanopb pybind11 cub eigen googletest nervanagpu \
                                 benchmark ios-cmake NNPACK gloo zstd cpuinfo \
-                                python-enum python-peachpy ComputeLibrary onnx"
+                                python-enum python-peachpy ComputeLibrary onnx \
+                                onnx-tensorrt sleef"
                                 
     local _nnpackdeps_list='pthreadpool FXdiv FP16 psimd'
     
-    cd "pytorch-${_ptver}/aten/src/ATen/cpu"
-    rm -rf cpuinfo
-    ln -sf "${srcdir}/caffe2-thirdparty-aten-cpuinfo-git" cpuinfo
-    
-    cd "${srcdir}/pytorch-${_ptver}/aten/src/ATen/cpu/tbb/tbb_remote"
-    bsdtar -xf "${srcdir}/caffe2-thirdparty-aten-tbb-${_aten_tbb_version}.tar.gz" -s'|[^/]*/||'
-    
-    cd "${srcdir}/pytorch-${_ptver}/aten/src/ATen/utils/catch"
-    bsdtar -xf "${srcdir}/caffe2-thirdparty-aten-catch-${_aten_catch_version}.tar.gz" -s'|[^/]*/||'
+    cd "${srcdir}/pytorch-${_ptver}/third_party/catch"
+    bsdtar -xf "${srcdir}/caffe2-thirdparty-catch-${_catch_version}.tar.gz" -s'|[^/]*/||'
     
     cd "${srcdir}/pytorch-${_ptver}/third_party/protobuf"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-protobuf-${_protobuf_version}.tar.gz" -s'|[^/]*/||'
     
     cd "${srcdir}/pytorch-${_ptver}/third_party/python-six"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-python-six-${_python_six_version}.tar.gz" -s'|[^/]*/||'
+    
+    cd "${srcdir}/pytorch-${_ptver}/third_party/cereal"
+    bsdtar -xf "${srcdir}/caffe2-thirdparty-cereal-${_cereal_version}.tar.gz" -s'|[^/]*/||'
+    
+    cd "${srcdir}/pytorch-${_ptver}/third_party/ideep"
+    bsdtar -xf "${srcdir}/caffe2-thirdparty-ideep-${_ideep_version}.tar.gz" -s'|[^/]*/||'
     
     cd "${srcdir}/pytorch-${_ptver}/third_party"
     
@@ -236,28 +235,40 @@ build() {
         -DUSE_ASAN:BOOL='OFF' \
         -DUSE_ATEN:BOOL='OFF' \
         -DUSE_CUDA:BOOL='ON' \
+        -DUSE_CUDNN:BOOL='ON' \
+        -DUSE_DISTRIBUTED:BOOL='OFF' \
+        -DUSE_DISTRIBUTED_MW:BOOL='OFF' \
         -DUSE_FFMPEG:BOOL='ON' \
         -DUSE_GFLAGS:BOOL='ON' \
         -DUSE_GLOG:BOOL='ON' \
         -DUSE_GLOO:BOOL='ON' \
+        -DUSE_GLOO_IBVERBS:BOOL='ON' \
+        -DUSE_IBVERBS:BOOL='ON' \
+        -DUSE_IDEEP:BOOL='ON' \
         -DUSE_LEVELDB:BOOL='ON' \
         -DUSE_LITE_PROTO:BOOL='OFF' \
         -DUSE_LMDB:BOOL='ON' \
         -DUSE_METAL:BOOL='OFF' \
+        -DUSE_MKLDNN:BOOL='OFF' \
+        -DUSE_MKLML:BOOL='OFF' \
         -DUSE_MOBILE_OPENGL:BOOL='OFF' \
         -DUSE_MPI:BOOL='ON' \
-        -DUSE_NCCL:BOOL='OFF' \
+        -DUSE_NCCL:BOOL='ON' \
         -DUSE_NERVANA_GPU:BOOL='OFF' \
         -DUSE_NNAPI:BOOL='OFF' \
         -DUSE_NNPACK:BOOL='ON' \
         -DUSE_NUMA:BOOL='ON' \
+        -DUSE_NVRTC:BOOL='ON' \
         -DUSE_OBSERVERS:BOOL='ON' \
+        -DUSE_OPENCL:BOOL='OFF' \
         -DUSE_OPENCV:BOOL='OFF' \
         -DUSE_OPENMP:BOOL='ON' \
         -DUSE_PROF:BOOL='OFF' \
         -DUSE_REDIS:BOOL='ON' \
         -DUSE_ROCKSDB:BOOL='OFF' \
+        -DUSE_ROCM:BOOL='OFF' \
         -DUSE_SNPE:BOOL='OFF' \
+        -DUSE_SYSTEM_NCCL:BOOL='OFF' \
         -DUSE_TENSORRT:BOOL='OFF' \
         -DUSE_ZMQ:BOOL='ON' \
         -DUSE_ZSTD:BOOL='ON' \
@@ -280,17 +291,23 @@ package() {
     make DESTDIR="$pkgdir" install
     
     # remove unneeded files
-    rm -rf "${pkgdir}/usr/include/google"
-    rm -rf "${pkgdir}/usr/lib/cmake/protobuf"
-    rm -f "$pkgdir"/usr/bin/{protoc,unzstd,zstd{cat,mt,}}
-    rm -f "$pkgdir"/usr/include/{{bitcasts,cpuinfo,fp16,fxdiv,nnpack,psimd,pthreadpool,zbuff,zdict,zstd*}.h,{__init__,avx{,2}}.py}
-    rm -f "$pkgdir"/usr/lib/lib{{cpuinfo,nnpack,protobuf-lite,protobuf,protoc,pthreadpool,zstd}.a,zstd.so*}
-    rm -f "$pkgdir"/usr/lib/pkgconfig/{protobuf-lite,protobuf}.pc
-    rm -f "$pkgdir"/usr/share/pkgconfig/libzstd.pc
-    rm -f "$pkgdir"/usr/share/man/man1/{unzstd,zstd{cat,}}.1
+    local _exclude_dirs=($(find "$pkgdir" -mindepth 1 -maxdepth 1 -type d ! -name 'usr'))
+    local _exclude_dirs+=($(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*'))
+    local _exclude_libs=($(find -L "${pkgdir}/usr/lib" -maxdepth 1 -type f ! -name 'libcaffe*'))
+    rm -f  "$pkgdir"/usr/bin/{protoc,unzstd,zstd{cat,mt,}}
+    rm -f  "$pkgdir"/usr/include/{*.h,*.py}
+    rm -rf "$pkgdir"/usr/lib/cmake/protobuf
+    rm -f  "$pkgdir"/usr/lib/pkgconfig/{protobuf-lite,protobuf}.pc
+    rm -rf "$pkgdir"/usr/share/pkgconfig
+    rm -rf "$pkgdir"/usr/share/{ATen,cmake/ATen}
+    rm -f  "$pkgdir"/usr/share/man/man1/{unzstd,zstd{cat,}}.1
+    for _entry in ${_exclude_dirs[@]} ${_exclude_libs[@]}
+    do
+        rm -rf "$_entry"
+    done
     
     # license
     cd "${srcdir}/pytorch-${_ptver}"
-    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    install -D -m644 NOTICE  "${pkgdir}/usr/share/licenses/${pkgname}/NOTICE"
+    install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -D -m644 NOTICE  -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
