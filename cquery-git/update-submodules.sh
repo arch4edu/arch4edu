@@ -25,3 +25,8 @@ done
 
 git add .
 git commit -m 'makepkg'
+
+rm -r $(ls -a -I .git -I . -I ..)
+mv .git/* .
+rmdir .git
+git config --local --bool core.bare true
