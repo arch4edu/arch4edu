@@ -1,7 +1,7 @@
 # Maintainer: Francois Boulogne <fboulogne at april dot org>
 pkgname=python-joblib
 pkgver=0.11
-pkgrel=1
+pkgrel=1.1
 pkgdesc="Joblib is a set of tools to provide lightweight pipelining in Python."
 url="http://pypi.python.org/pypi/joblib"
 arch=(any)

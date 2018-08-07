@@ -3,7 +3,7 @@ _pkgname=keras-applications
 pkgbase=python-keras-applications
 pkgname=("python-keras-applications" "python2-keras-applications")
 pkgver=1.0.4
-pkgrel=1
+pkgrel=1.1
 # Needs git as a makedep
 #pkgver() {
 #   git ls-remote $url | sort -Vr | \

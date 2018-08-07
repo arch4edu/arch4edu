@@ -35,7 +35,7 @@ _ptver=0.4.1 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_ptver}"
-pkgrel=4
+pkgrel=4.1
 pkgdesc='A new lightweight, modular, and scalable deep learning framework (gpu enabled)'
 arch=('x86_64')
 url='http://caffe2.ai/'

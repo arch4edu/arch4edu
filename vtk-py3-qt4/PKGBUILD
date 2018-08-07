@@ -10,7 +10,7 @@
 pkgname=vtk-py3-qt4
 pkgver=8.0.0
 _majorver=8.0
-pkgrel=5
+pkgrel=5.1
 pkgdesc='A software system for 3D computer graphics, image processing, and visualization, build with python3 and qt4 bindings'
 arch=('i686' 'x86_64')
 url='http://www.vtk.org/'

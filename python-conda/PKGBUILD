@@ -3,7 +3,7 @@
 _pyname=conda
 pkgname=python-conda
 pkgver=4.5.8
-pkgrel=1
+pkgrel=1.1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
 arch=('any')
 url="http://conda.pydata.org/docs/"

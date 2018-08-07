@@ -3,7 +3,7 @@
 pkgbase=python-nvd3
 pkgname=('python-nvd3' 'python2-nvd3')
 pkgver=0.14.2
-pkgrel=1
+pkgrel=1.1
 arch=('any')
 url='https://github.com/areski/python-nvd3/'
 license=('MIT')

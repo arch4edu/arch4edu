@@ -3,7 +3,7 @@
 pkgbase=python-ninja-syntax
 pkgname=('python-ninja-syntax' 'python2-ninja-syntax')
 pkgver=1.7.2
-pkgrel=1
+pkgrel=1.1
 _commondesc="module for generating .ninja files"
 arch=('any')
 url="https://pypi.python.org/pypi/ninja_syntax/"
