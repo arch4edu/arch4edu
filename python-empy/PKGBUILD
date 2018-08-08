@@ -1,10 +1,11 @@
-# Maintainer: Benjamin Chretien <chretien at lirmm dot fr>
+# Maintainer: Kartik Mohta <kartikmohta@gmail.com>
+# Contributor: Benjamin Chretien <chretien at lirmm dot fr>
 # Contributor: Andrew Conkling <andrewski@fr.st>
 pkgname=python-empy
 pkgver=3.3.3
 pkgrel=1.1
 pkgdesc="A powerful and robust templating system for Python."
-arch=(i686 x86_64)
+arch=('any')
 url="http://www.alcyone.com/software/empy"
 depends=('python')
 license=('LGPL')
@@ -19,7 +20,4 @@ build() {
 package() {
     cd "${srcdir}/empy-${pkgver}"
     python3 setup.py install -O2 --skip-build --prefix=/usr --root="${pkgdir}"
-
-    # Make em.py executable
-    chmod a+x "${pkgdir}/usr/lib/python3.6/site-packages/em.py"
 }
