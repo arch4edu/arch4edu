@@ -5,7 +5,7 @@ pkgbase="python-keras"
 pkgname=("python-keras" "python2-keras")
 _pkgname="keras"
 pkgver="2.2.2"
-pkgrel=4
+pkgrel=5
 pkgdesc="Deep Learning library (convnets, recurrent neural networks, and more)"
 arch=('any')
 url="https://github.com/fchollet/keras"
@@ -19,7 +19,7 @@ sha256sums=('76a7110a0f7b6114bfcf9453057a7e3c65e3957791336423b09a7420fc3de3a8')
 prepare() {
   cd "$srcdir/"
   cp -a "${_pkgname}-${pkgver}" "${_pkgname}-${pkgver}-py2"
-  cd "${_pkgname}-${pkgver}"
+  cd "${_pkgname}-${pkgver}-py2"
   sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
       -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
       -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
