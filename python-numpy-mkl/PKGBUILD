@@ -7,8 +7,8 @@ pkgbase="python-numpy-mkl"
 pkgname="python-numpy-mkl"
 true && pkgname=('python-numpy-mkl' 'python2-numpy-mkl')
 #pkgname=('python-numpy')
-pkgver=1.14.5
-pkgrel=1.1
+pkgver=1.15.0
+pkgrel=1
 pkgdesc="Scientific tools for Python compiled with intel mkl"
 arch=('i686' 'x86_64')
 license=('custom')
@@ -20,7 +20,7 @@ makedepends=('python-setuptools' 'python2-setuptools' 'intel-compiler-base' 'int
 source=(https://github.com/numpy/numpy/archive/v${pkgver}.tar.gz
 	'site64.cfg' 'site32.cfg')
 
-sha256sums=('ce171fc7c23e24c9e559febf43db94660a0f265bde0f64a77b9c944e5c1e2d4b' # main pkg§
+sha256sums=('fec926cc3f157f4023e4126597dd5b9056778094393db01a3751b5e816a4a9ec' # main pkg§
 	'86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1' # site64
 	'882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df' # site32
 )
@@ -116,6 +116,10 @@ package_python2-numpy-mkl() {
 		-e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
 		-e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
 		$(find ${pkgdir} -name '*.py')
+
+	for _exe in conv-template f2py from-template; do
+		mv "$pkgdir"/usr/bin/"$_exe"{,2}
+	done
 }
 
 package_python-numpy-mkl() {
