@@ -1,13 +1,13 @@
 # Maintainer: Frank Siegert <frank.siegert@googlemail.com>
 pkgname=fastjet
 pkgver=3.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A particle physics package for jet finding in pp and e+e- collisions."
 arch=('x86_64' 'i686')
 url="http://fastjet.fr"
 license=('GPL2')
 groups=()
-depends=()
+depends=(bash)
 makedepends=(gcc-fortran python)
 checkdepends=()
 optdepends=()
