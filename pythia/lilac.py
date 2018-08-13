@@ -2,14 +2,16 @@
 
 from lilaclib import *
 
-build_prefix = 'extra-x86_64'
+build_prefix = 'arch4edu-x86_64'
+depends = ['fastjet', 'hempc', 'lhapdf']
 
 def pre_build():
   aur_pre_build()
 
   for line in edit_file('PKGBUILD'):
-    if 'depends' in line:
-        print(line.replace(')',' "python")'))
+    if line.startswith('depends='):
+        print(line)
+        print('makedepends=("fastjet" "hempc" "lhapdf" "root")')
     else:
         print(line)
 

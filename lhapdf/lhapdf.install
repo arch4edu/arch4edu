@@ -1,0 +1,20 @@
+# arg 1:  the new package version
+post_install() {
+        echo 'You can download PDF sets with the "lhapdf" command like:'
+        echo '    $ lhapdf ls'
+        echo '    $ sudo lhapdf install CT10'
+}
+
+# arg 1:  the new package version
+# arg 2:  the old package version
+post_upgrade() {
+        newver=(${1//./ })
+        oldver=(${2//./ })
+        if test ${newver[0]} -ne ${oldver[0]} -o ${newver[1]} -ne ${oldver[1]}; then
+           echo 'You have updated LHAPDF from version '$2' to a new major version '$1'. I will now update your PDF sets using the built-in command "lhapdf install `lhapdf list --outdated`". This could take a while...'
+           sleep 10;
+        fi
+
+        # we always run the update (even for minor versions) because there could have been bugfixes in the PDF sets.
+        lhapdf install $(lhapdf list --outdated)
+}
