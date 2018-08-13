@@ -9,7 +9,7 @@ license=('BSD')
 depends=('python' 'llvm>=6.0.0' 'llvm<6.1.0' 'llvm-libs')
 makedepends=('cython' 'llvm')
 source=("https://github.com/numba/llvmlite/archive/v$pkgver.tar.gz")
-sha256sums=('e4aac880b7cb23cabd1e3414436295cc4da2926f4ea9207d234d48ca20881575')
+sha256sums=('456b9d9f6329e578b2f10db16067db6eab0efb296b8381a95b2285c394fa3173')
 
 build() {
   cd "$srcdir/llvmlite-$pkgver"
