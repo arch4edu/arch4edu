@@ -3,7 +3,7 @@
 pkgname=(python-slugify python2-slugify)
 pkgbase=python-slugify
 pkgver=1.2.5
-pkgrel=2
+pkgrel=2.1
 pkgdesc="A Python slugify application that handles unicode"
 arch=(any)
 url="https://github.com/un33k/python-slugify"
