@@ -1,13 +1,13 @@
 # Maintainer: Frank Siegert <frank.siegert@googlemail.com>
 pkgname=hepmc
 pkgver=2.06.09
-pkgrel=1
+pkgrel=2
 pkgdesc="A particle physics package for storing collision events from Monte Carlo generators."
 arch=('x86_64' 'i686')
 url="http://lcgapp.cern.ch/project/simu/HepMC/"
 license=('GPL2')
 groups=()
-depends=()
+depends=(bash)
 makedepends=()
 checkdepends=()
 optdepends=()
