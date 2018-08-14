@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
@@ -11,7 +10,7 @@ def pre_build():
   for line in edit_file('PKGBUILD'):
     if line.startswith('depends='):
         print(line)
-        print('makedepends=("fastjet" "hempc" "lhapdf" "root")')
+        print('makedepends=("fastjet" "hepmc" "lhapdf" "root")')
     else:
         print(line)
 
