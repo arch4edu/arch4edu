@@ -5,13 +5,14 @@
 pkgname=pythia
 pkgver=8.2.35
 _pkgid="${pkgname}${pkgver//./}"
-pkgrel=1.1
+pkgrel=5
 pkgdesc="High-energy physics events generator."
 arch=('i686' 'x86_64')
 url="http://home.thep.lu.se/Pythia/"
 license=('GPL')
 provides=('pythia' 'pythia8')
-depends=('bash' 'boost' 'boost-libs' "python")
+depends=('boost' 'boost-libs' 'python')
+makedepends=("fastjet" "hepmc" "lhapdf" "root")
 optdepends=('fastjet: fast jet finding in pp and e+e- collisions'
             'hepmc: storing collisions from Monte Carlo'
             'lhapdf: evaluate PDFs from discretised data files'
@@ -26,11 +27,12 @@ sha256sums=('e82f0d6165a8250a92e6aa62fb53201044d8d853add2fdad6d3719b28f7e8e9d'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
             '4eb15725cfb5e287fdd9520cb4211b88ebc38a690b7522690ba0664d50bc8669')
 options=('!emptydirs')
-_srcpath="${srcdir}/${_pkgid}"
+get_pyver () {
+    python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'
+}
 
 prepare() {
     cd "${srcdir}/${_pkgid}"
-    msg2 'Applying patches...'
     patch -p1 -i "${srcdir}/respect_lib_suffix.patch"
 
     _inc=/usr/include/
@@ -72,8 +74,8 @@ prepare() {
                 --with-promc-include=${_inc} \
                 --with-promc-lib=${_lib} \
                 --with-python \
-                --with-python-include=/usr/include/python3.6m/ \
-                --with-python-lib=/usr/lib/python3.6/ \
+                --with-python-include="/usr/include/python$(get_pyver)m/" \
+                --with-python-lib="/usr/lib/python$(get_pyver)/" \
                 --with-root \
                 --with-root-include=/usr/include/root/ \
                 --with-root-lib=/usr/lib/root/
@@ -81,7 +83,7 @@ prepare() {
 
 build() {
     cd "${srcdir}/${_pkgid}"
-    make ${MAKEFLAGS}
+    make "${MAKEFLAGS}"
 }
 
 package() {
@@ -94,6 +96,6 @@ package() {
     cp -r "${srcdir}/${_pkgid}/examples" "${pkgdir}/usr/share/Pythia8/"
 
     install -Dm755 "${srcdir}/${_pkgid}/lib/libpythia8.so" "${pkgdir}/usr/lib/libpythia8.so"
-    install -Dm755 "${srcdir}/${_pkgid}/lib/_pythia8.so" "${pkgdir}/usr/lib/python3.6/site-packages/_pythia8.so"
-    install -Dm755 "${srcdir}/${_pkgid}/lib/pythia8.py" "${pkgdir}/usr/lib/python3.6/site-packages/pythia8.py"
+    install -Dm755 "${srcdir}/${_pkgid}/lib/_pythia8.so" "${pkgdir}/usr/lib/python$(get_pyver)/site-packages/_pythia8.so"
+    install -Dm755 "${srcdir}/${_pkgid}/lib/pythia8.py" "${pkgdir}/usr/lib/python$(get_pyver)/site-packages/pythia8.py"
 }
