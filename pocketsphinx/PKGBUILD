@@ -57,5 +57,5 @@ package() {
   libtool --finish "$pkgdir/usr/lib"
   libtool --finish "$pkgdir/usr/lib/gstreamer-1.0"
   libtool --finish "$pkgdir/usr/lib/python2.7/site-packages/pocketsphinx"
-  libtool --finish "$pkgdir/usr/lib/python3.6/site-packages/pocketsphinx"
+  libtool --finish "$pkgdir/usr/lib/python3.7/site-packages/pocketsphinx"
 }
