@@ -6,8 +6,8 @@
 
 pkgname=root-extra
 _pkgname=root
-pkgver=6.14.00
-pkgrel=5
+pkgver=6.14.02
+pkgrel=1
 provides=('root' 'root-extra')
 conflicts=('root')
 pkgdesc='C++ data analysis framework and interpreter from CERN with extra features enabled.'
@@ -56,24 +56,24 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
         'root.xml'
         'rootd'
         'settings.cmake'
-        'fix_tmva_numpy_dependency.patch'
-        'fix_use_of_tstring.patch')
-sha256sums=('7946430373489310c2791ff7a3520e393dc059db1371272bcd9d9cf0df347a0b'
+        'fix_pyroot_for_python3.7.patch'
+        'fix_tmva_numpy_dependency.patch')
+sha256sums=('93816519523e87ac75924178d87112d1573eaa108fc65691aea9a9dd5bc05b3e'
             'f1796729b0403026382bca43329692f5356c8ec46fc2c09f799a8b3d12d49a6f'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
             '5e8478d2e7dd79c0a85ca26d8c55004776023d02aade0d9d945fb9a334355369'
-            'bc0a31992c0da5004d6d9be8f0236e77185245f218ec49a6d86d9279c7bbb868'
-            '59d9e5b3647469fbb0b0cd5f159b7dbbe9257e479ed0c87d77ce73a384efa257')
+            '1861c566c1748fd9a486800a2a806589a7b88a9c20cb76b59ac1ccc34ef60b57'
+            'bc0a31992c0da5004d6d9be8f0236e77185245f218ec49a6d86d9279c7bbb868')
 prepare() {
     cd "${_pkgname}-${pkgver}"
 
     msg2 'Adjusting to Python3...'
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
 
+    patch -p1 -i "${srcdir}/fix_pyroot_for_python3.7.patch"
     patch -p1 -i "${srcdir}/fix_tmva_numpy_dependency.patch"
-    patch -p1 -i "${srcdir}/fix_use_of_tstring.patch"
 
     mkdir -p "${srcdir}/build"
     cd "${srcdir}/build"
