@@ -31,42 +31,42 @@ _python_six_version='1.11.0' # commit '15e31431af97e5e64b80af0a3f598d382bcdd49a'
 _cereal_version='1.2.2'      # commit '51cbda5f30e56c801c07fe3d3aba5d7fb9e6cca4' is version '1.2.2'
 _ideep_version='2.0.0_b1'    # commit '4bd9a6800bf7db068187619e0582d34dec9651dc' is version '2.0.0_b1'
 
-_ptver=0.4.1 # pytorch stable release version
+_pytorchver=0.4.1 # pytorch stable release version
 
 pkgname=caffe2
-pkgver="0.8.2.pytorch.${_ptver}"
-pkgrel=4.1
-pkgdesc='A new lightweight, modular, and scalable deep learning framework (gpu enabled)'
-arch=('x86_64')
+pkgver="0.8.2.pytorch.${_pytorchver}"
+pkgrel=2
+pkgdesc='A new lightweight, modular, and scalable deep learning framework'
+arch=('i686' 'x86_64')
 url='http://caffe2.ai/'
 license=('BSD')
 depends=(
     # official repositories:
         # required:
             'google-glog' 'protobuf' 'lapack' 'python' 'python-numpy' 'python-protobuf'
-            'cuda' 'cudnn'
         # not required but enabled in build:
             'gflags' 'gtest' 'openmp' 'leveldb' 'lmdb' 'numactl' 'openmpi' 'snappy'
-            'zeromq' 'hiredis' 'ffmpeg'
+            'zeromq' 'hiredis' 'ocl-icd' 'opencv' 'gtk3' 'ffmpeg'
         # python:
             'python-flask' 'python-future' 'graphviz' 'python-hypothesis'
             'python-jupyter_core' 'python-matplotlib' 'python-pydot' 'python-yaml'
             'python-requests' 'python-scipy' 'python-setuptools' 'python-six'
             'python-tornado' 'python-gflags' 'python-pyzmq'
     # AUR:
-        # not required and disabled in build:
+        # not required but enabled in build:
             'libibverbs'
         # python:
             'python-nvd3' 'python-scikit-image' 'python-glog' 'python-leveldb'
             'python-lmdb'
 )
-makedepends=('git' 'cmake' 'gcc54')
-conflicts=('caffe' 'caffe-cpu' 'caffe-git' 'caffe-cpu-git'
-           'caffe2-git' 'caffe2-cpu' 'caffe2-cpu-git')
+makedepends=('git' 'cmake' 'opencl-headers')
+conflicts=('caffe2-git' 'caffe2-cuda' 'caffe2-cuda-git' 'caffe2-cpu' 'caffe2-cpu-git'
+           'caffe' 'caffe-git' 'caffe-cuda' 'caffe-cuda-git')
+replaces=('caffe2-cpu')
 options=('!emptydirs')
 source=(
     # main source:
-        "pytorch-${_ptver}.tar.gz"::"https://github.com/pytorch/pytorch/archive/v${_ptver}.tar.gz"
+        "pytorch-${_pytorchver}.tar.gz"::"https://github.com/pytorch/pytorch/archive/v${_pytorchver}.tar.gz"
     # third party:
         "caffe2-thirdparty-catch-${_catch_version}.tar.gz"::"https://github.com/catchorg/Catch2/archive/v${_catch_version}.tar.gz"
         'caffe2-thirdparty-nanopb-git'::"git+https://github.com/nanopb/nanopb.git#commit=${_nanopb_commit}"
@@ -139,22 +139,24 @@ prepare() {
                                 
     local _nnpackdeps_list='pthreadpool FXdiv FP16 psimd'
     
-    cd "${srcdir}/pytorch-${_ptver}/third_party/catch"
+    local _component
+    
+    cd "${srcdir}/pytorch-${_pytorchver}/third_party/catch"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-catch-${_catch_version}.tar.gz" -s'|[^/]*/||'
     
-    cd "${srcdir}/pytorch-${_ptver}/third_party/protobuf"
+    cd "${srcdir}/pytorch-${_pytorchver}/third_party/protobuf"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-protobuf-${_protobuf_version}.tar.gz" -s'|[^/]*/||'
     
-    cd "${srcdir}/pytorch-${_ptver}/third_party/python-six"
+    cd "${srcdir}/pytorch-${_pytorchver}/third_party/python-six"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-python-six-${_python_six_version}.tar.gz" -s'|[^/]*/||'
     
-    cd "${srcdir}/pytorch-${_ptver}/third_party/cereal"
+    cd "${srcdir}/pytorch-${_pytorchver}/third_party/cereal"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-cereal-${_cereal_version}.tar.gz" -s'|[^/]*/||'
     
-    cd "${srcdir}/pytorch-${_ptver}/third_party/ideep"
+    cd "${srcdir}/pytorch-${_pytorchver}/third_party/ideep"
     bsdtar -xf "${srcdir}/caffe2-thirdparty-ideep-${_ideep_version}.tar.gz" -s'|[^/]*/||'
     
-    cd "${srcdir}/pytorch-${_ptver}/third_party"
+    cd "${srcdir}/pytorch-${_pytorchver}/third_party"
     
     for _component in $_thirdparty_git_list
     do
@@ -167,18 +169,13 @@ prepare() {
         rm -rf "$_component"
         ln -sf "${srcdir}/caffe2-thirdparty-NNPACK_deps-${_component}-git" "${_component}"
     done
-    
-    # fix build if eigen is installed (use eigen from third_party folder)
-    cd "${srcdir}/pytorch-${_ptver}"
-    local _eigen='  message(STATUS "Using Eigen third party subdirectory for compatibility.")'
-    sed -i '/find_package(Eigen3)/s/^/#/' cmake/Dependencies.cmake
-    sed -i "/Did[[:space:]]not[[:space:]]find[[:space:]]system[[:space:]]Eigen/s/.*/${_eigen}/" cmake/Dependencies.cmake
 }
 
 build() {
-    cd "pytorch-${_ptver}"
+    cd "pytorch-${_pytorchver}"
     
-    local _pythonver="$(python --version | sed 's/^Python[[:space:]]//' | grep -o '^[0-9]*\.[0-9]*')"
+    local _pythonver
+    _pythonver="$(python --version | awk '{ print $2 }' | grep -o '^[0-9]*\.[0-9]*')"
     
     mkdir -p build
     cd build
@@ -193,35 +190,11 @@ build() {
         \
         -DBUILD_TEST:BOOL='OFF' \
         \
-        -DCMAKE_COLOR_MAKEFILE:BOOL='ON' \
-        -DCMAKE_CXX_COMPILER='/usr/bin/g++-5' \
-        -DCMAKE_CXX_FLAGS:STRING="${CXXFLAGS/-fno-plt/}" \
-        -DCMAKE_C_COMPILER='/usr/bin/gcc-5' \
-        -DCMAKE_C_FLAGS:STRING="${CFLAGS/-fno-plt/}" \
         -DCMAKE_INSTALL_LIBDIR:PATH='lib' \
         -DCMAKE_INSTALL_PREFIX:PATH='/usr' \
         -DCMAKE_SKIP_INSTALL_RPATH:BOOL='NO' \
         -DCMAKE_SKIP_RPATH:BOOL='NO' \
         -DCMAKE_VERBOSE_MAKEFILE:BOOL='FALSE' \
-        \
-        -DCUDA_ARCH_NAME:STRING='Auto' \
-        -DCUDA_64_BIT_DEVICE_CODE:BOOL='ON' \
-        -DCUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE:BOOL='ON' \
-        -DCUDA_BUILD_CUBIN:BOOL='OFF' \
-        -DCUDA_BUILD_EMULATION:BOOL='OFF' \
-        -DCUDA_HOST_COMPILATION_CPP:BOOL='ON' \
-        -DCUDA_HOST_COMPILER:FILEPATH='/usr/bin/gcc-5' \
-        -DCUDA_NVCC_EXECUTABLE:FILEPATH='/opt/cuda/bin/nvcc' \
-        -DCUDA_PROPAGATE_HOST_FLAGS:BOOL='ON' \
-        -DCUDA_SDK_ROOT_DIR:PATH='/opt/cuda' \
-        -DCUDA_SEPARABLE_COMPILATION:BOOL='OFF' \
-        -DCUDA_TOOLKIT_INCLUDE:PATH='/opt/cuda/include' \
-        -DCUDA_TOOLKIT_ROOT_DIR:PATH='/opt/cuda' \
-        -DCUDA_USE_STATIC_CUDA_RUNTIME:BOOL='OFF' \
-        -DCUDA_VERBOSE_BUILD:BOOL='OFF' \
-        -DCUDNN_INCLUDE_DIR:PATH='/opt/cuda/include' \
-        -DCUDNN_LIBRARY:FILEPATH='/opt/cuda/lib64/libcudnn.so' \
-        -DCUDNN_ROOT_DIR:PATH='/opt/cuda' \
         \
         -DGLOO_STATIC_OR_SHARED:STRING='STATIC' \
         \
@@ -232,10 +205,10 @@ build() {
         -DPYTHON_LIBRARY:FILEPATH="/usr/lib/libpython${_pythonver}m.so" \
         \
         -DUSE_ACL:BOOL='OFF' \
-        -DUSE_ASAN:BOOL='OFF' \
+        -DUSE_ASAN:BOOL='ON' \
         -DUSE_ATEN:BOOL='OFF' \
-        -DUSE_CUDA:BOOL='ON' \
-        -DUSE_CUDNN:BOOL='ON' \
+        -DUSE_CUDA:BOOL='OFF' \
+        -DUSE_CUDNN:BOOL='OFF' \
         -DUSE_DISTRIBUTED:BOOL='OFF' \
         -DUSE_DISTRIBUTED_MW:BOOL='OFF' \
         -DUSE_FFMPEG:BOOL='ON' \
@@ -253,15 +226,15 @@ build() {
         -DUSE_MKLML:BOOL='OFF' \
         -DUSE_MOBILE_OPENGL:BOOL='OFF' \
         -DUSE_MPI:BOOL='ON' \
-        -DUSE_NCCL:BOOL='ON' \
+        -DUSE_NCCL:BOOL='OFF' \
         -DUSE_NERVANA_GPU:BOOL='OFF' \
         -DUSE_NNAPI:BOOL='OFF' \
         -DUSE_NNPACK:BOOL='ON' \
         -DUSE_NUMA:BOOL='ON' \
-        -DUSE_NVRTC:BOOL='ON' \
+        -DUSE_NVRTC:BOOL='OFF' \
         -DUSE_OBSERVERS:BOOL='ON' \
-        -DUSE_OPENCL:BOOL='OFF' \
-        -DUSE_OPENCV:BOOL='OFF' \
+        -DUSE_OPENCL:BOOL='ON' \
+        -DUSE_OPENCV:BOOL='ON' \
         -DUSE_OPENMP:BOOL='ON' \
         -DUSE_PROF:BOOL='OFF' \
         -DUSE_REDIS:BOOL='ON' \
@@ -276,24 +249,20 @@ build() {
         -Wno-dev \
         ..
         
-    # NOTE:
-    # The recommended approach of running make in build() and make install in
-    # package() produces two compilations (being the second one unnecessary).
-    # A workaround is to suppress make in build() and run only make install
-    # in package().
-    
-    #make
+    make
 }
 
 package() {
-    cd "pytorch-${_ptver}/build"
+    cd "pytorch-${_pytorchver}/build"
     
     make DESTDIR="$pkgdir" install
     
     # remove unneeded files
-    local _exclude_dirs=($(find "$pkgdir" -mindepth 1 -maxdepth 1 -type d ! -name 'usr'))
-    local _exclude_dirs+=($(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*'))
-    local _exclude_libs=($(find -L "${pkgdir}/usr/lib" -maxdepth 1 -type f ! -name 'libcaffe*'))
+    local _entry
+    local _exclude_dirs
+    local _exclude_lib
+    _exclude_dirs=($(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*'))
+    _exclude_libs=($(find -L "${pkgdir}/usr/lib" -maxdepth 1 -type f ! -name 'libcaffe*'))
     rm -f  "$pkgdir"/usr/bin/{protoc,unzstd,zstd{cat,mt,}}
     rm -f  "$pkgdir"/usr/include/{*.h,*.py}
     rm -rf "$pkgdir"/usr/lib/cmake/protobuf
@@ -307,7 +276,7 @@ package() {
     done
     
     # license
-    cd "${srcdir}/pytorch-${_ptver}"
+    cd "${srcdir}/pytorch-${_pytorchver}"
     install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
     install -D -m644 NOTICE  -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
