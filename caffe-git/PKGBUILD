@@ -2,102 +2,67 @@
 # Contributor: Drew Noel <drewmnoel@gmail.com>
 # Contributor: Jonathan Yantis
 
-# NOTE:
-# In order to build with NCCL support, uncomment the NCCL
-# lines in 'depends' and 'preprare()'.
-
 pkgname=caffe-git
-_srcname=caffe
-pkgver=1.0.r117.g2a1c552b6
-pkgrel=1.2
-pkgdesc="A deep learning framework made with expression, speed, and modularity in mind (git version, gpu enabled)"
-arch=('x86_64')
-url="http://caffe.berkeleyvision.org/"
+pkgver=1.0.r132.g99bd99795
+pkgrel=1
+pkgdesc='A deep learning framework made with expression, speed, and modularity in mind (cpu only, git version)'
+arch=('i686' 'x86_64')
+url='http://caffe.berkeleyvision.org/'
 license=('BSD')
 depends=(
     # official repositories:
-        'boost-libs' 'protobuf' 'google-glog' 'gflags' 'hdf5' 'opencv' 'leveldb'
-        'lmdb' 'cuda' 'cudnn' 'python' 'boost' 'cython' 'python-numpy' 'python-scipy'
-        'python-matplotlib' 'ipython' 'python-h5py' 'python-networkx' 'python-nose'
-        'python-pandas' 'python-dateutil' 'python-protobuf' 'python-gflags'
-        'python-yaml' 'python-pillow' 'python-six'
+        'openblas' 'lapack' 'boost-libs' 'protobuf' 'google-glog' 'gflags'
+        'hdf5' 'opencv' 'leveldb' 'lmdb' 'python' 'cython'
+        'python-numpy' 'python-scipy' 'python-matplotlib' 'ipython'
+        'python-h5py' 'python-networkx' 'python-nose' 'python-pandas'
+        'python-dateutil' 'python-protobuf' 'python-gflags' 'python-yaml'
+        'python-pillow' 'python-six'
     # AUR:
-        # required:
-            'openblas-lapack'
-        # not required:
-            # 'nccl'
-        #python:
-            'python-leveldb' 'python-scikit-image' 'python-pydotplus'
+        'python-leveldb' 'python-scikit-image' 'python-pydotplus'
     # NOTE:
-    # python-pydotplus (or python-pydot) is required by python executable draw_net.py
-    # https://github.com/BVLC/caffe/blob/691febcb83d6a3147be8e9583c77aefaac9945f8/python/caffe/draw.py#L7-L22
+    # python-pydotplus (or python-pydot) is required by python executable 'draw_net.py'
+    # https://github.com/BVLC/caffe/blob/99bd99795dcdf0b1d3086a8d67ab1782a8a08383/python/caffe/draw.py#L7-L22
 )
-makedepends=('git' 'gcc7' 'doxygen' 'texlive-core')
-provides=('caffe')
-conflicts=('caffe' 'caffe-cpu' 'caffe-cpu-git' 'caffe-dr-git' 'caffe-mnc-dr-git'
-           'caffe2' 'caffe2-git' 'caffe2-cpu' 'caffe2-cpu-git')
-source=("${pkgname}"::"git+https://github.com/BVLC/caffe.git")
-sha256sums=('SKIP')
+makedepends=('git' 'boost' 'doxygen' 'texlive-core')
+provides=('caffe' 'caffe-cpu' 'caffe-cpu-git')
+conflicts=('caffe' 'caffe-cuda' 'caffe-cuda-git' 'caffe-cpu' 'caffe-cpu-git'
+           'caffe2' 'caffe2-cuda')
+replaces=('caffe-cpu-git')
+source=("$pkgname"::'git+https://github.com/BVLC/caffe.git'
+        'Makefile.config')
+sha256sums=('SKIP'
+            '9cbe8ea31d70904ec02a4ca3978aa072c99f10aff0629e7616c51bf4a6ca92f5')
 
 prepare() {
     cd "$pkgname"
     
-    # prepare to configure options in Makefile.config
-    cp -f Makefile.config.example Makefile.config
+    local _pythonver
+    local _pythonmaj
+    local _opencvmaj
     
-    # enable cuDNN acceleration switch
-    sed -i '/USE_CUDNN/s/^#[[:space:]]//g' Makefile.config
+    _pythonver="$(python --version | awk '{ print $2 }' | grep -o '^[0-9]*\.[0-9]*')"
+    _pythonmaj="$(python --version | awk '{ print $2 }' | awk -F'.' '{ print $1 }')"
+    _opencvmaj="$(opencv_version | awk -F'.' '{ print $1 }')"
     
-    # enable NCCL acceleration switch
-    # sed -i '/USE_NCCL/s/^#[[:space:]]//g' Makefile.config
+    # copy configuration options
+    cp -af "${srcdir}/Makefile.config" .
     
-    # strictly enable I/O dependencies
-    sed -i '/USE_OPENCV/s/^#[[:space:]]//;/USE_OPENCV/s/0/1/'   Makefile.config
-    sed -i '/USE_LEVELDB/s/^#[[:space:]]//;/USE_LEVELDB/s/0/1/' Makefile.config
-    sed -i '/USE_LMDB/s/^#[[:space:]]//;/USE_LMDB/s/0/1/'       Makefile.config
-    sed -i '/OPENCV_VERSION/s/^#[[:space:]]//g'                 Makefile.config
+    # make sure to use the correct versions of python and opencv
     
-    # use gcc6 (CUDA 9.2 code requires gcc7)
-    sed -i '/CUSTOM_CXX/s/^#[[:space:]]//;/CUSTOM_CXX/s/$/-7/' Makefile.config
+    if ! grep -q "python${_pythonver}" Makefile.config
+    then
+        sed -i "s/python[0-9]*\.[0-9]*/python${_pythonver}/" Makefile.config
+    fi
     
-    # set CUDA directory
-    sed -i '/CUDA_DIR/s/\/usr\/local\/cuda/\/opt\/cuda/' Makefile.config
+    if ! grep -q "boost_python${_pythonmaj}" Makefile.config
+    then
+        sed -i "/boost_python[0-9]/s/[0-9]/${_pythonmaj}/" Makefile.config
+    fi
     
-    # remove gpu architectures not supported by CUDA 9.0
-    sed -i 's/-gencode[[:space:]]arch=compute_20,code=sm_20//' Makefile.config
-    sed -i 's/-gencode[[:space:]]arch=compute_20,code=sm_21//' Makefile.config
-    
-    # set OpenBLAS as the BLAS provider and adjust its directories
-    sed -i '/BLAS[[:space:]]\:=[[:space:]]atlas/s/atlas/open/'                                 Makefile.config
-    sed -i 's/.*BLAS_INCLUDE[[:space:]]\:=[[:space:]]\/path.*/BLAS_INCLUDE := \/usr\/include/' Makefile.config
-    sed -i 's/.*BLAS_LIB[[:space:]]\:=[[:space:]]\/path.*/BLAS_LIB := \/usr\/lib/'             Makefile.config
-    
-    # python3 settings
-    _py2inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python2\.7/='  Makefile.config)"
-    _py3inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python3\.5m/=' Makefile.config)"
-    _py3libs_line="$(sed -n '/PYTHON_LIBRARIES/=' Makefile.config)"
-    sed -i "$((_py2inc_line))s/^/# /"  Makefile.config # comment python2 lines
-    sed -i "$((_py2inc_line+1))s/^/#/" Makefile.config
-    sed -i "$((_py3inc_line))s/^#[[:space:]]//"   Makefile.config # uncomment python3 PYTHON_INCLUDE lines
-    sed -i "$((_py3inc_line+1))s/^#//"            Makefile.config
-    sed -i "$((_py3libs_line))s/^#[[:space:]]//"  Makefile.config # uncomment PYTHON_LIBRARIES line
-    sed -i "$((_py3libs_line))s/5/6/"             Makefile.config # change version in PYTHON_LIBRARIES
-    sed -i "$((_py3inc_line))s/5/6/"              Makefile.config # change version in python3 PYTHON_INCLUDE
-    sed -i "$((_py3inc_line+1))s/5/6/;$((_py3inc_line+1))s/dist/site/" Makefile.config
-    
-    # use python layers
-    sed -i '/WITH_PYTHON_LAYER/s/^#[[:space:]]//g' Makefile.config
-    
-    # if you want to use python2 _instead_ of python3:
-    #     - uncomment this block
-    #     - comment the python3 block
-    #     - change python3 dependencies to python2
-    #     - change python2 directories in package() to python3
-    #     - NOTE: do not enable both python2 and python3 blocks. choose only one.
-    #     - NOTE: python2 is the Caffe default but this package uses python3 by default
-    # python2 settings
-    #_py2inc_line="$(sed -n '/PYTHON_INCLUDE[[:space:]]\:=[[:space:]]\/usr\/include\/python2\.7/=' Makefile.config)"
-    #sed -i "$((_py2inc_line+1))s/dist/site/" Makefile.config
+    if ! grep -q "OPENCV_VERSION[[:space:]]:=[[:space:]]${_opencvmaj}" Makefile.config
+    then
+        sed -i "/OPENCV_VERSION/s/[0-9]*$/${_opencvmaj}/" Makefile.config
+    fi
 }
 
 pkgver() {
@@ -134,67 +99,35 @@ build() {
 #}
 
 package() {
-    # directories creation
-    mkdir -p "${pkgdir}/usr/bin"
-    mkdir -p "${pkgdir}/usr/include/caffe/"{layers,proto,test,util}
-    mkdir -p "${pkgdir}/usr/lib/python3.6/site-packages/caffe/"{imagenet,proto,test}
-    mkdir -p "${pkgdir}/usr/share/"{caffe,doc/"${_srcname}"/search,licenses/"${pkgname}"}
+    local _pythonver
+    _pythonver="$(python --version | awk '{ print $2 }' | grep -o '^[0-9]*\.[0-9]*')"
+    
+    mkdir -p "$pkgdir"/usr/{bin,include,lib/python"$_pythonver"/site-packages,share/doc}
+    
+    cd "${pkgname}/distribute"
     
     # binaries
-    cd "${pkgname}/distribute/bin"
-    install -D -m755 * "${pkgdir}/usr/bin"
+    install -m755 bin/* "${pkgdir}/usr/bin"
     
-    # libraries
-    cd "${srcdir}/${pkgname}/distribute/lib"
-    install -D -m755 *.so "${pkgdir}/usr/lib"
+    # library
+    cp -af lib/libcaffe.so* "${pkgdir}/usr/lib"
+    chmod 755 "${pkgdir}/usr/lib"/libcaffe.so.*.*.*
     
-    # includes
-    cd "${srcdir}/${pkgname}/distribute/include/caffe"
-    install -D -m644 *.hpp "${pkgdir}/usr/include/caffe"
-    for _dir in layers proto test util
-    do
-        cd "${srcdir}/${pkgname}/distribute/include/caffe/${_dir}"
-        install -D -m644 * "${pkgdir}/usr/include/caffe/${_dir}"
-    done
+    # headers
+    cp -af include "${pkgdir}/usr"
     
     # python
-    cd "${srcdir}/${pkgname}/distribute/python"
-    install -D -m755 *.py "${pkgdir}/usr/bin"
-    rm -rf python # remove duplicated 'python' folder
-    
-    cd caffe
-    for _file in *
-    do
-        [ -d "$_file" ] && continue # skip directories
-        _mode="$(stat --format '%a' "$_file")"
-        install -D -m"$_mode" "$_file" "${pkgdir}/usr/lib/python3.6/site-packages/caffe"
-    done
-    
-    for _dir in imagenet proto test
-    do
-        cd "${srcdir}/${pkgname}/distribute/python/caffe/${_dir}"
-        for _file in *
-        do
-            _mode="$(stat --format '%a' "$_file")"
-            install -D -m"$_mode" "$_file" "${pkgdir}/usr/lib/python3.6/site-packages/caffe/${_dir}"
-        done
-    done
+    install -m755 python/*.py "${pkgdir}/usr/bin"
+    cp -af python/caffe "${pkgdir}/usr/lib/python${_pythonver}/site-packages"
     
     # proto
-    cd "${srcdir}/${pkgname}/distribute/proto"
-    install -D -m644 * "${pkgdir}/usr/share/caffe"
+    install -D -m644 proto/caffe.proto -t "${pkgdir}/usr/share/caffe"
+    
+    cd "${srcdir}/${pkgname}"
     
     # docs
-    cd "${srcdir}/${pkgname}/doxygen/html"
-    for _file in *
-    do
-        [ -d "$_file" ] && continue # skip directories
-        install -D -m644 "$_file" "${pkgdir}/usr/share/doc/${_srcname}"
-    done
-    cd search
-    install -D -m644 * "${pkgdir}/usr/share/doc/${_srcname}/search"
+    cp -af doxygen/html "${pkgdir}/usr/share/doc/${pkgname}"
     
     # license
-    cd "${srcdir}/${pkgname}"
-    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
