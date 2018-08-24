@@ -1,10 +1,10 @@
 # Maintainer: gborzi <gborzi@ieee.org>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=gmsh
-pkgver=3.0.6
-pkgrel=2.1
+pkgver=4.0.0
+pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://gmsh.info/"
 license=('custom')
 depends=('fltk' 'lapack' 'med' 'opencascade' 'cairo')
@@ -14,11 +14,11 @@ optdepends=('gmsh-docs: docs for gmsh'
             'python: for onelab.py')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
-sha256sums=('9700bcc440d7a6b16a49cbfcdcdc31db33efe60e1f5113774316b6fa4186987b'
+sha256sums=('fb0c8afa37425c6f4315ab3b3124e9e102fcf270a35198423a4002796f04155f'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
-build() {
+prepare() {
    cd "${srcdir}/${pkgname}-${pkgver}-source"
 
    # Help links to local doc (package gmsh-docs)
@@ -26,6 +26,11 @@ build() {
        -i Fltk/graphicWindow.cpp
    sed -e "s|http://gmsh.info/doc/|file:///usr/share/licenses/gmsh/|" \
        -i Fltk/helpWindow.cpp
+
+}
+
+build() {
+   cd "${srcdir}/${pkgname}-${pkgver}-source"
 
    mkdir -p build
 
@@ -41,9 +46,11 @@ package() {
 
    cd "${srcdir}/${pkgname}-${pkgver}-source/build"
    make DESTDIR=${pkgdir} install
-   install -D -m644 "${pkgdir}/usr/bin/onelab.py" "${pkgdir}/usr/lib/python2.7/site-packages/onelab.py"
-   install -D -m644 "${pkgdir}/usr/bin/onelab.py" "${pkgdir}/usr/lib/python3.6/site-packages/onelab.py"
-   rm "${pkgdir}/usr/bin/onelab.py"
+   mv "${pkgdir}/usr/lib64" "${pkgdir}/usr/lib"
+   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
+   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.7/site-packages/gmsh.py"
+   rm "${pkgdir}/usr/lib/gmsh.py"
+   rm -rf "${pkgdir}/home"
 
    install -d "${pkgdir}/usr/share/pixmaps/${pkgname}"
    install -m644 ../utils/icons/*.png "${pkgdir}/usr/share/pixmaps/${pkgname}"
