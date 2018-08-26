@@ -7,7 +7,7 @@
 pkgname=libsvm
 pkgver=3.23
 _srcver="${pkgver/./}"
-pkgrel=1.1
+pkgrel=3
 pkgdesc='A library for Support Vector Machines classification (includes binaries and bindings for python and java)'
 arch=('i686' 'x86_64')
 url='http://www.csie.ntu.edu.tw/~cjlin/libsvm/'
@@ -15,8 +15,8 @@ license=('BSD')
 depends=('gcc-libs')
 makedepends=('qt5-base' 'python')
 optdepends=('qt5-base: for Qt5 interface with svm-toy'
-            'python: for python modules and tools'
-            'java-environment: for java bindings')
+            'python: for python modules and CLI tools'
+            'java-runtime: for java bindings')
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/cjlin1/libsvm/archive/v${_srcver}.tar.gz")
 sha256sums=('7a466f90f327a98f8ed1cb217570547bcb00077933d1619f3cb9e73518f38196')
 
@@ -40,9 +40,11 @@ build() {
 package() {
     cd "${pkgname}-${_srcver}"
     
-    local _pyver="$(python --version | sed 's/^Python[[:space:]]//' | grep -o '^[0-9]*\.[0-9]*')"
+    local _pyver
+    local _sover
     
-    local _sover="$(find . -maxdepth 1 -type f -name 'libsvm.so.*' | awk -F'.' '{ print $4 }')"
+    _pyver="$(python --version | awk '{ print $2 }' | grep -o '^[0-9]*\.[0-9]*')"
+    _sover="$(find . -maxdepth 1 -type f -name 'libsvm.so.*' | awk -F'.' '{ print $4 }')"
     
     # binaries
     install -D -m755 svm-predict        -t "${pkgdir}/usr/bin"
@@ -60,12 +62,16 @@ package() {
     install -D -m644 svm.h -t "${pkgdir}/usr/include"
     
     # python modules
+    ## NOTE: 'grid.py' can be used either as a python module or a CLI/tool
+    ## https://github.com/cjlin1/libsvm/blob/v323/tools/README#L163-L164
     cd "${srcdir}/${pkgname}-${_srcver}/python"
-    install -D -m644 svm.py     -t "${pkgdir}/usr/lib/python${_pyver}"
-    install -D -m644 svmutil.py -t "${pkgdir}/usr/lib/python${_pyver}"
-    
-    # python tools
+    install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python${_pyver}"
+    install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python${_pyver}"
+    install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python${_pyver}"
     cd "${srcdir}/${pkgname}-${_srcver}/tools"
+    install -D -m644 grid.py       -t "${pkgdir}/usr/lib/python${_pyver}"
+    
+    # python CLI/tools
     install -D -m755 checkdata.py -t "${pkgdir}/usr/bin"
     install -D -m755 easy.py      -t "${pkgdir}/usr/bin"
     install -D -m755 grid.py      -t "${pkgdir}/usr/bin"
