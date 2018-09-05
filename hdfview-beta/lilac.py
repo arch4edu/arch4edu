@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['hdf4-java', 'hdf5-openmpi-java']
+depends=['hdf4', 'hdf5-openmpi-java']
 pre_build = aur_pre_build
 post_build = aur_post_build
 
