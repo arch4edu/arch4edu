@@ -1,6 +1,6 @@
 # Maintainer: JKA Network (JoseluCross, Kprkpr, Yukialba) <contacto@jkanetwork.com>
 pkgname=x-tools-armv6-bin
-pkgver=7.3.1
+pkgver=8.2.0
 pkgrel=1
 pkgdesc="crosstool-ng toolchain - x-tools package for armv6h compiling"
 arch=('x86_64')
@@ -10,10 +10,10 @@ provides=('x-tools-armv6')
 depends=('xz')
 options=(!emptydirs)
 source=("https://archlinuxarm.org/builder/xtools/${pkgver}-1/x-tools6h.tar.xz")
-md5sums=('c8358365b4cb77f7faf9bb9e041a4e5f')
+md5sums=('539f306529d2e5512e8d17e7f0002582')
 install=$pkgname.install
 noextract=('x-tools6h.tar.xz')
 package() {
-	mkdir -p "$pkgdir/usr/x-tools"
-	tar -Jxf "$srcdir/x-tools6h.tar.xz" -C "$pkgdir/usr/x-tools" 
+	mkdir -p "$pkgdir/opt/x-tools"
+	tar -Jxf "$srcdir/x-tools6h.tar.xz" -C "$pkgdir/opt/x-tools" 
 }
