@@ -1,14 +1,14 @@
 # Maintainer: Kye Morton <pryre.dev@outlook.com>
 pkgname=qgroundcontrol
 pkgver=3.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Ground control for unmanned vehicles."
 arch=('any')
 url="http://qgroundcontrol.org/"
 license=('GPL3')
 depends=(\
   'espeak'  # optional but you have to decide if you want it at built-time\
-  'qt5-svg' 'qt5-graphicaleffects' 'qt5-webkit' 'phonon-qt4' 'qt5-serialport'\
+  'qt5-svg' 'qt5-graphicaleffects' 'qt5-webkit' 'qt5-serialport'\
   'qt5-quickcontrols')
 
 source=('qgroundcontrol-'${pkgver}'-'${pkgrel}'::https://github.com/mavlink/qgroundcontrol/releases/download/v'${pkgver}'/qgroundcontrol.tar.bz2')
