@@ -5,25 +5,19 @@
 
 pkgname=sphinxbase
 pkgver=5prealpha
-pkgrel=9.1
+pkgrel=10
 pkgdesc='Common library for sphinx speech recognition.'
 url='http://cmusphinx.sourceforge.net/'
 arch=('i686' 'x86_64')
 license=('BSD')
 makedepends=('bison' 'swig')
 depends=('python2' 'python' 'lapack' 'libpulse') # not sure if libsamplerate is needed 'libsamplerate'
-source=("http://downloads.sourceforge.net/project/cmusphinx/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.gz"
-        "timing-fix.patch")
-sha256sums=('f72bdb59e50b558bed47cc2105777200d2b246a0f328e913de16a9b22f9a246f'
-            '5e8b2bac5d9f84a1c7b7fd774ef2b3f8f6cfc9dcb415b10a66ef439f91f3d4c5')
+source=("http://downloads.sourceforge.net/project/cmusphinx/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('f72bdb59e50b558bed47cc2105777200d2b246a0f328e913de16a9b22f9a246f')
 options=('!libtool')
 
 prepare() {
   cd "${pkgname}-${pkgver}"
-
-  #as release 6 seems the patch is no longer needed
-  #msg2 "Applying timing fix patch"
-  #patch -p1 < "$srcdir/timing-fix.patch"
 
   msg2 "Reconfiguring project for current version of Automake"
   autoreconf -ivf > /dev/null
@@ -61,8 +55,4 @@ package() {
   install -d "${pkgdir}/usr/share/licenses/${pkgname}"
   install -m644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
                 "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-
-  libtool --finish "${pkgdir}/usr/lib"
-  libtool --finish "${pkgdir}/usr/lib/python2.7/site-packages/sphinxbase"
-  libtool --finish "${pkgdir}/usr/lib/python3.7/site-packages/sphinxbase"
 }
