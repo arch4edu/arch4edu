@@ -1,6 +1,6 @@
 # Maintainer: rmanne <rahul_manne@hotmail.com>
 pkgname=praat-git
-pkgver=r2743.f104d896
+pkgver=r2745.5a627c19
 pkgver() {
     cd "${pkgname%-git}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
