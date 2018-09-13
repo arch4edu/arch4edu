@@ -5,7 +5,7 @@
 pkgname=trilinos
 _gitname=Trilinos
 pkgver=12.12.1
-pkgrel=1
+pkgrel=2
 pkgdesc="An effort to develop algorithms and enabling technologies within an object-oriented software framework for the solution of large-scale, complex multi-physics engineering and scientific problems."
 arch=('i686' 'x86_64')
 url="http://trilinos.org"
@@ -24,7 +24,7 @@ prepare() {
 
 build() {
 	cd $srcdir/$_gitname
-	mkdir build
+	mkdir -p build
 	cd build
 	cmake .. \
 		-DTrilinos_ENABLE_ALL_OPTIONAL_PACKAGES:BOOL=ON \
