@@ -1,7 +1,7 @@
 # Maintainer: Francois Boulogne <fboulogne at april dot org>
 # Contributor: Davide Lasagna <davide.lasagna@polito.it>
 pkgname=python2-joblib
-pkgver=0.12.2
+pkgver=0.12.5
 pkgrel=1
 pkgdesc="Set of tools to provide lightweight pipelining in Python."
 url="http://pypi.python.org/pypi/joblib"
@@ -16,4 +16,4 @@ package() {
     cd $srcdir/joblib-"$pkgver"
     python2 setup.py install --root="$pkgdir/" --optimize=1
 }
-md5sums=('afe047f519506e05c9afb53c079ec66f')
+md5sums=('7687884346aad93aa607c176d0668279')
