@@ -1,7 +1,7 @@
 # Maintainer: ssfdust <ssfdust@gmail.com>
 pkgname=ycm-generator-git
 pkgbase=ycm-generator-git
-pkgver=r122.4d92151
+pkgver=r123.461e304
 pkgrel=1
 pkgdesc="Generates config files for YouCompleteMe (https://github.com/Valloric/YouCompleteMe)"
 arch=('any')
