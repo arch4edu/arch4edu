@@ -5,7 +5,7 @@
 # Contributor: Sebastian Voecking < voeck at web dot de >
 
 pkgname=root
-pkgver=6.14.02
+pkgver=6.14.04
 pkgrel=1
 pkgdesc='C++ data analysis framework and interpreter from CERN.'
 arch=('i686' 'x86_64')
@@ -51,15 +51,13 @@ source=("https://root.cern.ch/download/root_v${pkgver}.source.tar.gz"
         'root.xml'
         'rootd'
         'settings.cmake'
-        'fix_pyroot_for_python3.7.patch'
         'fix_tmva_numpy_dependency.patch')
-sha256sums=('93816519523e87ac75924178d87112d1573eaa108fc65691aea9a9dd5bc05b3e'
+sha256sums=('463ec20692332a422cfb5f38c78bedab1c40ab4d81be18e99b50cf9f53f596cf'
             '72ba38e0faffa084ac2f787f360201f72b1733d27e36c3cb88eb2f3a4716fa61'
             '9d1f8e7ad923cb5450386edbbce085d258653c0160419cdd6ff154542cc32bd7'
             '50c08191a5b281a39aa05ace4feb8d5405707b4c54a5dcba061f954649c38cb0'
             '3c45b03761d5254142710b7004af0077f18efece7c95511910140d0542c8de8a'
             '0a614a23794495d917fc4060d184be06e78fde5f5e343b70920c77a80ae0abbf'
-            '1861c566c1748fd9a486800a2a806589a7b88a9c20cb76b59ac1ccc34ef60b57'
             'bc0a31992c0da5004d6d9be8f0236e77185245f218ec49a6d86d9279c7bbb868')
 prepare() {
     cd "${pkgname}-${pkgver}"
@@ -67,7 +65,6 @@ prepare() {
     msg2 'Adjusting to Python3...'
     2to3 -w etc/dictpch/makepch.py 2>&1 > /dev/null
 
-    patch -p1 -i "${srcdir}/fix_pyroot_for_python3.7.patch"
     patch -p1 -i "${srcdir}/fix_tmva_numpy_dependency.patch"
 
     mkdir -p "${srcdir}/build"
