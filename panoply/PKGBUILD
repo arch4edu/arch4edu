@@ -1,7 +1,7 @@
 # Maintainer: MadPhysicist <jfoxrabinovitz at gmail dot com>
 pkgname=panoply
-pkgver="$(curl https://www.giss.nasa.gov/tools/panoply/download/ 2>/dev/null | sed -n 's/The current version of Panoply is \([[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\).*/\1/p')"
-pkgrel=1
+pkgver=4.9.4
+pkgrel=5
 pkgdesc='NetCDF, HDF and GRIB Data Viewer by NASA GISS'
 arch=('any')
 url='http://www.giss.nasa.gov/tools/panoply/'
