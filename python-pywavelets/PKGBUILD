@@ -3,15 +3,15 @@
 pkgbase=python-pywavelets
 pkgname=(python-pywavelets python2-pywavelets)
 _pkgname=pywt
-pkgver=1.0.0
-pkgrel=2
+pkgver=1.0.1
+pkgrel=1
 pkgdesc="Discrete Wavelet Transforms in Python"
 arch=('x86_64' 'i686')
 url="https://github.com/PyWavelets/pywt"
 license=('MIT')
 makedepends=('python-setuptools' 'python2-setuptools' 'cython' 'cython2' 'python-numpy' 'python2-numpy')
 source=("https://github.com/PyWavelets/pywt/archive/v$pkgver.tar.gz")
-sha256sums=('1696cbbbb74d670dda6bb75c0628fd1f82d98750661fcd9bd375082559252de8')
+sha256sums=('8d3eead94a3426d59444f3b63660d89ea5a9bad49f0b4a9aad3adc4cb75fbfc2')
 
 prepare() {
   cd "$srcdir/"
