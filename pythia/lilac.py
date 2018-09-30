@@ -2,7 +2,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends = ['fastjet', 'hepmc', 'lhapdf']
+depends = ['hepmc', 'lhapdf']
 
 def pre_build():
   aur_pre_build()
