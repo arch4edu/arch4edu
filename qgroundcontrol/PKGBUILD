@@ -1,18 +1,37 @@
 # Maintainer: Kye Morton <pryre.dev@outlook.com>
 pkgname=qgroundcontrol
-pkgver=3.4.1
-pkgrel=2
+pkgver=3.4.4
+pkgrel=1
 pkgdesc="Ground control for unmanned vehicles."
 arch=('any')
 url="http://qgroundcontrol.org/"
 license=('GPL3')
-depends=(\
-  'espeak'  # optional but you have to decide if you want it at built-time\
-  'qt5-svg' 'qt5-graphicaleffects' 'qt5-webkit' 'qt5-serialport'\
-  'qt5-quickcontrols')
+depends=( 'bzip2' \
+		  'dbus' \
+		  'flac' \
+		  'gst-plugins-base-libs' \
+		  'libasyncns' \
+		  'libffi' \
+		  'libgcrypt' \
+		  'libgpg-error' \
+		  'libogg' \
+		  'libsndfile' \
+		  'libsystemd' \
+		  'libunwind' \
+		  'libx11' \
+		  'libxau' \
+		  'libxcb' \
+		  'libxdmcp' \
+		  'libxext' \
+		  'lz4' \
+		  'orc' \
+		  'pcre' \
+		  'sdl2' \
+		  'xz' \
+		  'zlib')
 
 source=('qgroundcontrol-'${pkgver}'-'${pkgrel}'::https://github.com/mavlink/qgroundcontrol/releases/download/v'${pkgver}'/qgroundcontrol.tar.bz2')
-sha256sums=('24d56ec916943c94439bbb55e74af72e352d21f174973ea78c07879a8750284f')
+sha256sums=('7eca7d9bf921dea381728f2914d260b926b5807df5e0d463c25beb7f92acbfc3')
 
 build() {
   echo "[Desktop Entry]
