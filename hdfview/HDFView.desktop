@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=HDFView
 Comment=HDFView is a GUI tool for browsing and editing HDF4 and HDF5 files.
-Exec=/usr/bin/HDFView %F
+Exec=/usr/bin/hdfview.sh %F
 Icon=/usr/share/pixmaps/HDFView.ico
 Terminal=false
 Type=Application
