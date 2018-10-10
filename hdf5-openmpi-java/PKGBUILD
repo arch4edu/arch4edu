@@ -11,24 +11,26 @@
 _pkgname=hdf5
 _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
+_prefix=/usr
 pkgver=1.10.3
-pkgrel=1
+pkgrel=3
 pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version) (full version including its Java Native Interfaces)"
 arch=('x86_64')
 url="https://portal.hdfgroup.org/display/support"
 license=('custom')
-depends=('zlib' 'libaec' "${_mpi}")
-makedepends=('time' 'gcc-fortran' 'java-environment')
+depends=('bash' 'libaec' "${_mpi}")
+makedepends=('cmake' 'time' 'java-environment' 'gcc-fortran')
+options=('staticlibs')
 provides=('hdf5-openmpi' 'hdf5' 'hdf5-cpp-fortran' "hdf5-fortran-${_mpi}")
 conflicts=('hdf5' 'hdf5-openmpi')
 replaces=("hdf5-fortran-${_mpi}")
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver}/src/${_pkgname}-${pkgver}.tar.bz2"
         'mpi.patch')
 md5sums=('56c5039103c51a40e493b43c504ce982'
-         'dfa8dd50b8a7ebb3ad7249c627156cf9')
+         '63b43e3d4a5bbea4bcecc84874e08913')
 
 prepare() {
-    [ ! -d build ] && mkdir -p build
+    mkdir -p build
     cd "${_pkgname}-${pkgver}"
 
     # FS#33343
@@ -38,6 +40,35 @@ prepare() {
 build() {
     cd build
 
+    # Crazy workaround: run CMake to generate pkg-config file
+    RUNPARALLEL="mpirun" \
+    OMPI_MCA_disable_memory_allocator=1 \
+    JAVADOC='javadoc -Xdoclint:none' \
+    cmake ../${_pkgname}-${pkgver}  \
+        -DCMAKE_CXX_COMPILER=mpicxx \
+        -DCMAKE_C_COMPILER=mpicc \
+        -DCMAKE_Fortran_COMPILER=mpif90 \
+        -DCMAKE_C_FLAGS="${CPPFLAGS} ${CFLAGS}" \
+        -DCMAKE_CXX_FLAGS="${CPPFLAGS} ${CXXFLAGS}" \
+        -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}" \
+        -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS}" \
+        -DCMAKE_MODULE_LINKER_FLAGS="${LDFLAGS}" \
+        -DCMAKE_INSTALL_RPATH="" \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="${_prefix}" \
+        -DALLOW_UNSUPPORTED=ON \
+        -DHDF5_BUILD_HL_LIB=ON \
+        -DHDF5_BUILD_CPP_LIB=ON \
+        -DHDF5_BUILD_FORTRAN=ON \
+        -DHDF5_BUILD_JAVA=ON \
+        -DHDF5_ENABLE_Z_LIB_SUPPORT=ON \
+        -DHDF5_ENABLE_SZIP_SUPPORT=ON \
+        -DHDF5_ENABLE_SZIP_ENCODING=ON \
+        -DHDF5_ENABLE_PARALLEL=ON \
+        -DBUILD_TESTING=OFF
+
+    # But don’t build with it, it’s quite broken
     "${srcdir}/${_pkgname}-${pkgver}"/configure \
         CXX="mpicxx" \
         CC="mpicc" \
@@ -46,8 +77,9 @@ build() {
         RUNPARALLEL="mpirun" \
         OMPI_MCA_disable_memory_allocator=1 \
         JAVADOC='javadoc -Xdoclint:none' \
-        --prefix=/usr \
-        --disable-static \
+        --prefix="${_prefix}" \
+        --docdir="${_prefix}/share/doc/${_pkgname}" \
+        --enable-static \
         --disable-sharedlib-rpath \
         --enable-build-mode=production \
         --enable-hl \
@@ -63,21 +95,21 @@ build() {
     make
 }
 
-check() {
-    cd build
-
-    # This is a parallel build, there will always be some MPI bugs,
-    # so skip failures and don't kill the entire packaging process
-    make check || warning "Some tests failed"
-}
-
 package() {
     cd build
 
-    make -j1 DESTDIR="${pkgdir}" install
+    make DESTDIR="${pkgdir}" install
 
-    install -dm755 "${pkgdir}/usr/share/doc/${_pkgname}"
-    mv "${pkgdir}"/usr/share/{hdf5_examples,doc/${_pkgname}/examples}
+    # Remove leftover test files
+    rm "${pkgdir}${_prefix}"/include/tst{ds,image,lite,table}{,_tests}.mod
 
-    install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/COPYING" "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
+    # Move examples to a proper place
+    install -dm755 "${pkgdir}${_prefix}/share/doc/${_pkgname}"
+    mv "${pkgdir}${_prefix}"/share/{hdf5_examples,doc/${_pkgname}/examples}
+
+    install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/COPYING" \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
+    install -Dm644 CMakeFiles/hdf5{,_hl}{,_cpp}-${pkgver}.pc \
+        -t "${pkgdir}${_prefix}"/lib/pkgconfig
 }
