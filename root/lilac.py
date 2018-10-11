@@ -3,7 +3,7 @@
 from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
-depends=['cern-vdt', 'pythia', 'xrootd']
+depends=['cern-vdt', 'llvm50', 'pythia', 'xrootd']
 
 def pre_build():
     aur_pre_build()
