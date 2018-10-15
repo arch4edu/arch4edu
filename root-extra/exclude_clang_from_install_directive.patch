@@ -1,0 +1,22 @@
+From b6922a7500a398ade56488166e9a65ead2e27c79 Mon Sep 17 00:00:00 2001
+From: Konstantin Gizdov <kgizdov@gmail.com>
+Date: Fri, 21 Sep 2018 10:14:46 +0200
+Subject: [PATCH] exclude clang from install directive
+
+---
+ interpreter/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/interpreter/CMakeLists.txt b/interpreter/CMakeLists.txt
+index 62d6bdbfa62..3faff61f102 100644
+--- a/interpreter/CMakeLists.txt
++++ b/interpreter/CMakeLists.txt
+@@ -375,7 +375,7 @@ Please install Python or specify the PYTHON_EXECUTABLE CMake variable.")
+ 
+ 
+ if (builtin_clang)
+-  add_subdirectory(llvm/src/tools/clang)
++  add_subdirectory(llvm/src/tools/clang EXCLUDE_FROM_ALL)
+ else()
+   add_subdirectory(cling)
+ endif()
