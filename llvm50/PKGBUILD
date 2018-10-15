@@ -1,8 +1,9 @@
 # $Id$
 # Maintainer: Solomon Choina <shlomochoina@gmail.com>
+# Co-Maintainer: Konstantin Gizdov <arch@kge.pw>
 # Contributor: Jan "heftig" Steffens <jan.steffens@gmail.com>
 # Contributor: Sebastian Nowicki <sebnow@gmail.com>
-# Contributor: Devin Cofer <ranguvar{AT]archlinux[DOT}us>
+# Contributor: Devin Cofer <ranguvar@archlinux.us>
 # Contributor: Tobias Kieslich <tobias@justdreams.de>
 # Contributor: Geoffroy Carrier <geoffroy.carrier@aur.archlinux.org>
 # Contributor: Tomas Lindquist Olsen <tomas@famolsen.dk>
@@ -12,7 +13,7 @@
 
 pkgname=('llvm50' 'llvm50-libs' 'clang50')
 pkgver=5.0.2
-pkgrel=5
+pkgrel=6
 _prefix="/usr/lib/llvm-5.0"
 arch=('i686' 'x86_64')
 url="http://llvm.org/"
@@ -38,11 +39,10 @@ sha256sums=('d522eda97835a9c75f0b88ddc81437e5edbb87dc2740686cb8647763855c2b3c'
             '4f9e747b4c79f1357ae885f81ef1115e7144ba553dabd0484e87bc5ea69cb0b4')
 
 prepare() {
-  cd "$srcdir/llvm-$pkgver.src"
-  mkdir build
+  cd "${srcdir}/llvm-${pkgver}.src"
 
-  mv "$srcdir/cfe-$pkgver.src" tools/clang
-  mv "$srcdir/compiler-rt-$pkgver.src" projects/compiler-rt
+  mv "${srcdir}/cfe-${pkgver}.src" tools/clang
+  mv "${srcdir}/compiler-rt-${pkgver}.src" projects/compiler-rt
 
   # Disable test that fails when compiled as PIE
   # https://bugs.llvm.org/show_bug.cgi?id=31870
@@ -54,11 +54,8 @@ prepare() {
   patch -Np1 -i ../gcc-build-fix.patch
   patch -Np1 -i ../glibc.diff
 
-}
-
-build() {
-  cd "$srcdir/llvm-$pkgver.src/build"
-
+  mkdir -p build
+  cd build
   cmake .. -G 'Unix Makefiles' \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="${_prefix}" \
@@ -72,12 +69,13 @@ build() {
     -DCLANG_INSTALL_SCANBUILD=OFF \
     -DCLANG_INSTALL_SCANVIEW=OFF \
     -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
-    -DLLVM_BINUTILS_INCDIR=/usr/include 
+    -DLLVM_BINUTILS_INCDIR=/usr/include
+}
 
-  make all
-  cd docs
-  make ocaml_doc
-  cd ..
+build() {
+  cd "${srcdir}/llvm-${pkgver}.src/build"
+
+  make all  # if we want ocaml bindings and docs, we need ocaml-ctypes
 
   # Disable automatic installation of components that go into subpackages
   sed -i '/clang\/cmake_install.cmake/d' tools/cmake_install.cmake
@@ -86,31 +84,31 @@ build() {
 }
 
 check() {
-  cd "$srcdir/llvm-$pkgver.src/build"
-  #make check-{llvm,clang}
+  cd "${srcdir}/llvm-${pkgver}.src/build"
+  # make check-{llvm,clang}
 }
 
 package_llvm50() {
   pkgdesc="Low Level Virtual Machine"
   depends=('llvm50-libs' 'perl')
-  
-  cd "$srcdir/llvm-$pkgver.src"
 
-  make -C build DESTDIR="$pkgdir" install
+  cd "${srcdir}/llvm-${pkgver}.src"
+
+  make -C build DESTDIR="${pkgdir}" install
 
   # The runtime libraries go into llvm-libs
-  mv -f "${pkgdir}${_prefix}"/lib/lib{LLVM,LTO}*.so* "$srcdir"
-  mv -f "${pkgdir}${_prefix}"/lib/LLVMgold.so "$srcdir"
-  
-  #remove ocaml files
-  rm -rf $pkgdir/usr/lib/ocaml
+  mv -f "${pkgdir}${_prefix}/"lib/lib{LLVM,LTO}*.so* "${srcdir}"
+  mv -f "${pkgdir}${_prefix}/"lib/LLVMgold.so "${srcdir}"
+
+  # remove ocaml files
+  rm -rf "${pkgdir}/usr/lib/ocaml"  # shouldn't be there if ocaml is disabled anyway
   install -Dm644 LICENSE.TXT "${pkgdir}${_prefix}/share/licenses/llvm/LICENSE"
 
   # add symbolic links in /usr/bin
-  mkdir -p "$pkgdir/usr/bin"
-  cd "${pkgdir}${_prefix}"/bin
+  mkdir -p "${pkgdir}/usr/bin"
+  cd "${pkgdir}${_prefix}/"bin
   for f in *; do
-    ln -s "${_prefix}/bin/$f" "$pkgdir/usr/bin/${f%-5.0}-5.0"
+    ln -s "${_prefix}/bin/$f" "${pkgdir}/usr/bin/${f%-5.0}-5.0"
   done
 }
 
@@ -120,16 +118,16 @@ package_llvm50-libs() {
 
   install -d "${pkgdir}${_prefix}/lib"
   cp -P \
-    "$srcdir"/lib{LLVM,LTO}*.so* \
-    "$srcdir"/LLVMgold.so \
+    "${srcdir}/"lib{LLVM,LTO}*.so* \
+    "${srcdir}/"LLVMgold.so \
     "${pkgdir}${_prefix}/lib/"
 
-  install -d $pkgdir/usr/lib
-  cd ${pkgdir}/usr/lib/
+  install -d "${pkgdir}/usr/lib"
+  cd "${pkgdir}/usr/lib/"
   ln -s llvm-5.0/lib/lib{LLVM,LTO}*.so* ./
-  rm $pkgdir/usr/lib/lib{LLVM,LTO}.so
+  rm "${pkgdir}/"usr/lib/lib{LLVM,LTO}.so
 
-  install -Dm644 "$srcdir/llvm-$pkgver.src/LICENSE.TXT" \
+  install -Dm644 "${srcdir}/llvm-${pkgver}.src/LICENSE.TXT" \
     "${pkgdir}${_prefix}/share/licenses/llvm-libs/LICENSE"
 }
 
@@ -139,22 +137,22 @@ package_clang50() {
   depends=('llvm50-libs' 'gcc' 'libxml2')
   optdepends=('openmp: OpenMP support in clang with -fopenmp')
 
-  cd "$srcdir/llvm-$pkgver.src"
+  cd "${srcdir}/llvm-${pkgver}.src"
 
-  make -C build/tools/clang DESTDIR="$pkgdir" install
-  make -C build/projects/compiler-rt DESTDIR="$pkgdir" install
+  make -C build/tools/clang DESTDIR="${pkgdir}" install
+  make -C build/projects/compiler-rt DESTDIR="${pkgdir}" install
   install -Dm644 tools/clang/LICENSE.TXT \
-    "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-    
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
   # add symbolic links in /usr/bin
-  mkdir -p "$pkgdir/usr/bin"
-  cd "${pkgdir}${_prefix}"/bin
+  mkdir -p "${pkgdir}/usr/bin"
+  cd "${pkgdir}${_prefix}/"bin
   for f in *; do
-    ln -f -s "${_prefix}/bin/$f" "$pkgdir/usr/bin/${f%-5.0}-5.0"
+    ln -f -s "${_prefix}/bin/$f" "${pkgdir}/usr/bin/${f%-5.0}-5.0"
   done
-  
-  cd ${pkgdir}${_prefix}/lib
-  ln -s *clang*.*so* ${pkgdir}/usr/lib
-  rm ${pkgdir}/usr/lib/libclang.so
+
+  cd "${pkgdir}${_prefix}/"lib
+  ln -s *clang*.*so* "${pkgdir}/usr/lib"
+  rm "${pkgdir}/usr/lib/libclang.so"
 }
 # vim:set ts=2 sw=2 et:
