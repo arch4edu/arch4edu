@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-update_on = {'aur': None}
+update_on = {'aur': 'llvm50'}
 build_prefix = 'arch4edu-x86_64'
 depends=['icu59']
 pre_build = aur_pre_build
