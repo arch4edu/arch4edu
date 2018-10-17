@@ -12,8 +12,8 @@ _pkgname=hdf5
 _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
 _prefix=/usr
-pkgver=1.10.3
-pkgrel=3
+pkgver=1.10.4
+pkgrel=1
 pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version) (full version including its Java Native Interfaces)"
 arch=('x86_64')
 url="https://portal.hdfgroup.org/display/support"
@@ -26,7 +26,7 @@ conflicts=('hdf5' 'hdf5-openmpi')
 replaces=("hdf5-fortran-${_mpi}")
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver}/src/${_pkgname}-${pkgver}.tar.bz2"
         'mpi.patch')
-md5sums=('56c5039103c51a40e493b43c504ce982'
+md5sums=('886148d0cc9ffd3c8e1fce0bd75ed07b'
          '63b43e3d4a5bbea4bcecc84874e08913')
 
 prepare() {
