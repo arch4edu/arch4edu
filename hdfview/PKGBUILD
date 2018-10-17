@@ -7,7 +7,7 @@ pkgname=hdfview
 _pkgname=HDFView
 pkgver=3.0
 _pkgver=${pkgver}.0
-pkgrel=2
+pkgrel=3
 pkgdesc="a GUI browser for reading hdf5 files"
 arch=('x86_64')
 url="https://www.hdfgroup.org/downloads/hdfview/"
@@ -32,6 +32,11 @@ prepare() {
 }
 
 build() {
+  # workaround for java exception thrown @ build.xml:838
+  # [...] error=7 chmod  [...] argument list too long
+  # when building with java 10
+  ulimit -s unlimited
+
   cd "${pkgname}-${pkgver}"
   HDFLIBS=/opt/hdf4 HDF5LIBS=/usr ant package
 }
