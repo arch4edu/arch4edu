@@ -3,7 +3,7 @@
 
 pkgname=cquery-git
 _pkgname=cquery
-pkgver=1965.dcc8eb28
+pkgver=1969.85c70b81
 pkgrel=1
 pkgdesc='Low-latency vscode language server for large C++ code-bases, powered by libclang.'
 arch=('x86_64')
