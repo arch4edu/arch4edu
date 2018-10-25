@@ -1,4 +1,4 @@
-# Maintainer : Daniel Bermond < yahoo-com: danielbermond >
+# Maintainer : Daniel Bermond < gmail-com: danielbermond >
 # Contributor: saxonbeta <saxonbeta at gmail>
 # Contributor: Pierre Gueth <pierre.gueth at gmail>
 # Contributor: Daniel YC Lin <dlin.tw at gmail>
@@ -7,7 +7,7 @@
 pkgname=libsvm
 pkgver=3.23
 _srcver="${pkgver/./}"
-pkgrel=3
+pkgrel=4
 pkgdesc='A library for Support Vector Machines classification (includes binaries and bindings for python and java)'
 arch=('i686' 'x86_64')
 url='http://www.csie.ntu.edu.tw/~cjlin/libsvm/'
@@ -16,6 +16,7 @@ depends=('gcc-libs')
 makedepends=('qt5-base' 'python')
 optdepends=('qt5-base: for Qt5 interface with svm-toy'
             'python: for python modules and CLI tools'
+            'python2: for python2 modules'
             'java-runtime: for java bindings')
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/cjlin1/libsvm/archive/v${_srcver}.tar.gz")
 sha256sums=('7a466f90f327a98f8ed1cb217570547bcb00077933d1619f3cb9e73518f38196')
@@ -27,12 +28,11 @@ prepare() {
 }
 
 build() {
-    msg2 'Building library and CLI binaries...'
+    printf '%s\n' '  -> Building library and CLI binaries...'
     cd "${pkgname}-${_srcver}"
-    make lib
-    make all
+    make lib all
     
-    msg2 'Building Qt5 interface...'
+    printf '%s\n' '  -> Building Qt5 interface...'
     cd svm-toy/qt
     make
 }
@@ -55,9 +55,9 @@ package() {
     # library
     install -D -m755 "libsvm.so.${_sover}" -t "${pkgdir}/usr/lib"
     cd "${pkgdir}/usr/lib"
-    ln -sf "libsvm.so.${_sover}" libsvm.so
+    ln -s "libsvm.so.${_sover}" libsvm.so
     
-    # include
+    # header
     cd "${srcdir}/${pkgname}-${_srcver}"
     install -D -m644 svm.h -t "${pkgdir}/usr/include"
     
@@ -66,10 +66,15 @@ package() {
     ## https://github.com/cjlin1/libsvm/blob/v323/tools/README#L163-L164
     cd "${srcdir}/${pkgname}-${_srcver}/python"
     install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python${_pyver}"
+    install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python2.7"
     install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python${_pyver}"
+    install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python2.7"
     install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python${_pyver}"
+    install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python2.7"
     cd "${srcdir}/${pkgname}-${_srcver}/tools"
     install -D -m644 grid.py       -t "${pkgdir}/usr/lib/python${_pyver}"
+    install -D -m644 grid.py       -t "${pkgdir}/usr/lib/python2.7"
+    sed -i '1s/python$/python2/' "${pkgdir}/usr/lib/python2.7/"{commonutil,grid,svm,svmutil}.py
     
     # python CLI/tools
     install -D -m755 checkdata.py -t "${pkgdir}/usr/bin"
