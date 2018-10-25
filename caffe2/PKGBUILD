@@ -1,4 +1,4 @@
-# Maintainer : Daniel Bermond < yahoo-com: danielbermond >
+# Maintainer : Daniel Bermond < gmail-com: danielbermond >
 
 _catch_commit='0a34cc201ef28bf25c88b0062f331369596cb7b7'
 _pybind11_commit='5c8746ff135abb390bf95944be593e895a586a50'
@@ -31,7 +31,7 @@ _pytorchver=1.0rc1 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_pytorchver}"
-pkgrel=2
+pkgrel=3
 pkgdesc='A new lightweight, modular, and scalable deep learning framework'
 arch=('i686' 'x86_64')
 url='http://caffe2.ai/'
@@ -50,13 +50,14 @@ depends=(
             'python-tornado' 'python-gflags' 'python-pyzmq'
     # AUR:
         # not required but enabled in build:
-            'libibverbs'
+            'rdma-core'
         # python:
             'python-nvd3' 'python-scikit-image' 'python-glog' 'python-leveldb'
             'python-lmdb'
 )
 makedepends=('git' 'cmake')
-conflicts=('caffe2-git' 'caffe2-cuda' 'caffe2-cuda-git')
+provides=('caffe2-cpu')
+conflicts=('caffe2-cpu')
 replaces=('caffe2-cpu')
 options=('!emptydirs')
 source=(
