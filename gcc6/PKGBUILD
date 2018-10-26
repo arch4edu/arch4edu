@@ -8,35 +8,28 @@
 
 pkgbase=gcc6
 pkgname=('gcc6' 'gcc6-libs' 'gcc6-fortran' 'gcc6-gcj')
-pkgver=6.4.1
+pkgver=6.5.0
 _ver=6
-_svnrev=263436
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=8
+pkgrel=1
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
 url="https://gcc.gnu.org/gcc-6/"
 makedepends=(binutils libmpc doxygen subversion java-environment-common zip jdk8-openjdk gtk2 libart-lgpl libxtst)
-checkdepends=('dejagnu' 'inetutils')
 options=(!emptydirs)
-source=(gcc::svn://gcc.gnu.org/svn/gcc/branches/gcc-${_ver}-branch#revision=$_svnrev
+source=(https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz
         http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2
-        http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz
-        glibc2.28-ustat.patch)
-sha512sums=('SKIP'
+        http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz)
+sha512sums=('ce046f9a50050fd54b870aab764f7db187fe7ea92eb4aaffb7c3689ca623755604e231f2af97ef795f41c406bb80c797dd69957cfdd51dfa2ba60813f72b7eac'
             '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94'
-            'd35d67b08ffe13c1a010b65bfe4dd02b0ae013d5b489e330dc950bd3514defca8f734bd37781856dcedf0491ff6122c34eecb4b0fe32a22d7e6bdadea98c8c23'
-            'db5d70f6f556c8b17bba89f29487136ce948f82afd064c1715fa1228cfa07e17724f65d3325312d833d2c9bfe37faa85721fa839d4f53c6b6bf1bc3c3e21dafb')
+            'd35d67b08ffe13c1a010b65bfe4dd02b0ae013d5b489e330dc950bd3514defca8f734bd37781856dcedf0491ff6122c34eecb4b0fe32a22d7e6bdadea98c8c23')
 
 _libdir="/usr/lib/gcc/$CHOST/$pkgver"
 
 prepare() {
-  cd gcc
-
-  # Fix build with glibc 2.28, which removes <sys/ustat.h>
-  patch -p0 -i "$srcdir/glibc2.28-ustat.patch"
+  cd gcc-$pkgver
 
   # Link isl/cloog for in-tree builds
   ln -sf ../isl-${_islver} isl
@@ -65,7 +58,7 @@ build() {
   CFLAGS=${CFLAGS/-pipe/}
   CXXFLAGS=${CXXFLAGS/-pipe/}
 
-  "${srcdir}/gcc/configure" --prefix=/usr \
+  "${srcdir}/gcc-$pkgver/configure" --prefix=/usr \
       --libdir=/usr/lib \
       --libexecdir=/usr/lib \
       --mandir=/usr/share/man \
@@ -144,7 +137,7 @@ package_gcc6-libs() {
   rm -rf ${pkgdir}/usr/share/{info,locale,man}
 
   # Install Runtime Library Exception
-  install -Dm644 ${srcdir}/gcc/COPYING.RUNTIME \
+  install -Dm644 ${srcdir}/gcc-$pkgver/COPYING.RUNTIME \
     ${pkgdir}/usr/share/licenses/$pkgname/RUNTIME.LIBRARY.EXCEPTION
 }
 
@@ -194,10 +187,6 @@ package_gcc6() {
   make -C $CHOST/libsanitizer DESTDIR=${pkgdir} install-nodist_{saninclude,toolexeclib}HEADERS
   make -C $CHOST/libsanitizer/asan DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
   make -C $CHOST/libmpx DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
-
-  #make -C libiberty DESTDIR=${pkgdir} install
-  # install PIC version of libiberty
-  #install -m644 ${srcdir}/gcc-${_snapshot}/gcc-build/libiberty/pic/libiberty.a ${pkgdir}/${_libdir}/
 
   make -C gcc DESTDIR=${pkgdir} install-man install-info
   rm ${pkgdir}/usr/share/man/man1/gfortran-${_ver}.1
