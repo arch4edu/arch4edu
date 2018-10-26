@@ -2,12 +2,12 @@
 # Maintainer: jpate <jkpate@jkpate.net>
 pkgname=praat
 pkgver=6.0.43
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for 'Doing Phonetics by computer'"
 arch=('x86_64')
 url="http://www.fon.hum.uva.nl/praat/"
 license=('GPL')
-depends=( 'alsa-lib' 'gtk2' )
+depends=( 'alsa-lib' 'gtk2' 'libpulse' )
 makedepends=('pkg-config' 'gtk2' 'alsa-lib')
 optdepends=( 'ttf-sil-fonts' )
 
