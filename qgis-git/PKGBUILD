@@ -2,8 +2,8 @@
 
 pkgname=qgis-git
 _pkgname=qgis
-pkgver=3.3.0_master.r51449.f346dceeaf
-_pkgver=3.3.0_master
+pkgver=3.5.0_master.r51688.b00b3f68fc
+_pkgver=3.5.0_master
 pkgrel=1
 pkgdesc='Geographic Information System (GIS) that supports vector, raster & database formats - Development master'
 url='http://qgis.org/'
@@ -19,10 +19,8 @@ optdepends=('grass: for GRASS providers and plugin (6 or 7)'
             'ocilib: oracle provider')
 
 #install="$_pkgname.install"
-source=("${_pkgname}::git://github.com/qgis/QGIS.git"
-qgis-3-fix-sip-name.patch)
-md5sums=('SKIP'
-         '4a228a44a93e07a3fda8063022aff8f8')
+source=("${_pkgname}::git://github.com/qgis/QGIS.git")
+md5sums=('SKIP')
 #conflicts=('qgis')
 
 pkgver(){
@@ -32,9 +30,6 @@ pkgver(){
 
 prepare() {
   cd $_pkgname
-  
-  # Fix Python SIP PyCapsule_GetPointer error
-  patch -p1 < ../qgis-3-fix-sip-name.patch
 
   # Fix desktop file for /usr/bin/qgis-github
   
