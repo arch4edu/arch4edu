@@ -3,10 +3,10 @@
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
 pkgver=2.12
-pkgrel=1
+pkgrel=2
 
 pkgname=$_pkgname-bin
-arch=('x86_64')
+arch=('x86_64' 'i686' 'aarch64')
 url="http://wiki.qemu.org"
 license=('GPL2' 'LGPL2.1')
 depends=()
@@ -15,13 +15,18 @@ provides=("$_pkgname" "qemu-user")
 conflicts=("$_pkgname" "qemu-user")
 
 if [ "$CARCH" = 'x86_64' ] ; then
-  _arch=amd64
-  _csum=2961c16d42c06b733fed23bddf688cf06c1f7aa312de45f86a19a1e1b08549d4
+  _debsrc="${_pkgname}_${pkgver}+dfsg-3+b1_amd64.deb"
+  _csum=09c28d8f84763c61f8c94c513ef83667f241db1a0d69bf7f673ca5470fc0a719
+elif [ "$CARCH" = 'i686' ] ; then
+  _debsrc="${_pkgname}_${pkgver}+dfsg-3+b1_i386.deb"
+  _csum=32f349a0049b08b4afe68c3a3481650cc55a2a2f0ab51a10a727a62141a23ee9
+elif [ "$CARCH" = 'aarch64' ] ; then
+  _debsrc="${_pkgname}_${pkgver}+dfsg-3_arm64.deb"
+  _csum=578626a9288de229172adf4121a73335db4bec29a2eb74ff41b27b8e1405fac4
 else
-  _arch="$CARCH"
+  _debsrc="${_pkgname}_${pkgver}+dfsg-3_${CARCH}.deb"
   _csum=SKIP
 fi
-_debsrc="${_pkgname}_${pkgver}+dfsg-3_${_arch}.deb"
 
 source=(
   "qemu-user-static.deb::http://ftp.debian.org/debian/pool/main/q/qemu/${_debsrc}"
@@ -94,6 +99,11 @@ create_binfmts() {
       if [ "$i" = "i386" ] || \
          [ "$i" = "i486" ] || \
          [ "$i" = "x86_64" ] ; then
+        continue
+      fi
+    elif [ "$CARCH" = "i686" ] ; then
+      if [ "$i" = "i386" ] || \
+         [ "$i" = "i486" ] ; then
         continue
       fi
     fi
