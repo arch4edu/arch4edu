@@ -2,14 +2,14 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgname=mxnet
 _gitname=incubator-mxnet
-pkgver=1.2.1
+pkgver=1.3.0
 pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
 license=('Apache')
-depends=('hdf5' 'cblas' 'lapack' 'python-numpy' 'python-requests' 'intel-tbb-gcc6')
-optdepends=('cairo' 'cuda' 'cudnn' 'gtk3' 'gtkglext' 'python-graphviz' 'opencv')
+depends=('hdf5' 'cblas' 'lapack' 'python-numpy' 'python-requests' 'intel-tbb')
+optdepends=('cairo' 'cuda' 'cudnn' 'gtk3' 'gtkglext' 'python-graphviz' 'opencv' 'vtk' 'glew')
 makedepends=(${optdepends[@]} 'git' 'cython')
 source=("git+https://github.com/apache/$_gitname")
 md5sums=('SKIP')
@@ -18,7 +18,7 @@ prepare() {
 	cd "$srcdir/$_gitname"
 	git submodule update --init --recursive
 	(
-		echo "CXX=g++-6"
+		echo "CXX=g++-7"
 		echo "USE_BLAS=blas"
 		echo "USE_LAPACK=1"
 		echo "ADD_LDFLAGS+=-lcblas"
