@@ -9,9 +9,9 @@ def pre_build():
 
     for line in edit_file('PKGBUILD'):
         if line.startswith('depends=('):
-            line.replace("'eclipse'", '')
+            print(line.replace("'eclipse'", ''))
         elif line.startswith('makedepends=('):
-            line.replace(')', '"eclipse-jee")')
+            print(line.replace(')', '"eclipse-jee")'))
         elif line.startswith('package()'):
             print(line)
             print('  depends+=("eclipse")')
