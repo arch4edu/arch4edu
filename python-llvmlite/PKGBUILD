@@ -1,7 +1,7 @@
 # Maintainer: Michael Schubert <mschu.dev at gmail>
 pkgname=python-llvmlite
 pkgver=0.25.0
-pkgrel=1
+pkgrel=1.1
 pkgdesc="Lightweight LLVM python binding for writing JIT compilers"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
