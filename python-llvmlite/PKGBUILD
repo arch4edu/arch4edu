@@ -6,8 +6,8 @@ pkgdesc="Lightweight LLVM python binding for writing JIT compilers"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
 license=('BSD')
-depends=('python' 'llvm>=6.0.0' 'llvm<6.1.0' 'llvm-libs')
-makedepends=('cython' 'llvm')
+depends=('python' "llvm6" 'llvm6-libs')
+makedepends=('cython')
 source=("https://github.com/numba/llvmlite/archive/v$pkgver.tar.gz")
 sha256sums=('e9a48e4f4fa086e513782bb3cc1f6d5084c49eed77f5913c5920f67cbc6abe43')
 
