@@ -1,16 +1,16 @@
 # Maintainer : George Eleftheriou <eleftg>
+# Maintainer : XavierCLL <xavier dot corredor dot llano at gmail dot com>
 # Contributor: Jingbei Li <petronny>
-# Contributor: XavierCLL <xavier dot corredor dot llano at gmail dot com>
 # Contributor: David Scholl <djscholl at gmail dot com>
 
 pkgname=hdf4
 pkgver=4.2.14
-pkgrel=3
+pkgrel=4
 pkgdesc="General purpose library and file format for storing scientific data (full version including the FORTRAN and the Java Native Interfaces - JNI)"
 arch=('x86_64')
 url="https://portal.hdfgroup.org/display/support/HDF+4.2.14"
 license=('custom')
-depends=('libaec' 'libjpeg-turbo' 'libtirpc')
+depends=('libaec' 'zlib' 'libjpeg-turbo' 'libtirpc')
 makedepends=('java-environment' 'gcc-fortran')
 conflicts=('hdf4-java')
 provides=('hdf4-java')
@@ -52,6 +52,9 @@ build() {
 package() {
     cd build
     make -j1 DESTDIR="${pkgdir}" install
-    mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
-    cp "${srcdir}/hdf-${pkgver}/COPYING" "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -dm 755 "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -Dm 644 "${srcdir}/hdf-${pkgver}/COPYING" "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -dm 755 "${pkgdir}/etc/ld.so.conf.d"
+    echo "/opt/${pkgname}/lib" > "${pkgdir}"/etc/ld.so.conf.d/${pkgname}.conf
 }
+
