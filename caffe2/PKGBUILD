@@ -31,10 +31,10 @@ _pytorchver=1.0rc1 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_pytorchver}"
-pkgrel=3
+pkgrel=4
 pkgdesc='A new lightweight, modular, and scalable deep learning framework'
 arch=('i686' 'x86_64')
-url='http://caffe2.ai/'
+url='https://caffe2.ai/'
 license=('BSD')
 depends=(
     # official repositories:
@@ -231,8 +231,8 @@ package() {
     local _entry
     local _exclude_dirs
     local _exclude_libs
-    _exclude_dirs=($(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*'))
-    _exclude_libs=($(find -L "${pkgdir}/usr/lib" -maxdepth 1 -type f ! -name 'libcaffe*'))
+    mapfile -t -d '' _exclude_dirs < <(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*' -print0)
+    mapfile -t -d '' _exclude_libs < <(find -L "${pkgdir}/usr/lib" -maxdepth 1 -type f ! -name 'libcaffe*' -print0)
     rm -f  "$pkgdir"/usr/bin/{protoc,unzstd,zstd{cat,mt,}}
     rm -f  "$pkgdir"/usr/include/{*.h,*.py}
     rm -rf "$pkgdir"/usr/lib/cmake/protobuf
@@ -240,7 +240,7 @@ package() {
     rm -rf "$pkgdir"/usr/share/pkgconfig
     rm -rf "$pkgdir"/usr/share/{ATen,cmake/{ATen,ONNX}}
     rm -f  "$pkgdir"/usr/share/man/man1/{unzstd,zstd{cat,}}.1
-    for _entry in ${_exclude_dirs[@]} ${_exclude_libs[@]}
+    for _entry in "${_exclude_dirs[@]}" "${_exclude_libs[@]}"
     do
         rm -rf "$_entry"
     done
