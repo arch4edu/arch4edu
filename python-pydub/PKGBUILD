@@ -5,6 +5,7 @@ pkgver=0.23.0
 pkgrel=1
 pkgdesc="Manipulate audio with an simple and easy high level interface"
 url="http://pydub.com"
+makedepends=("python-setuptools" "python2-setuptools")
 license=('MIT')
 arch=('any')
 source=("https://github.com/jiaaro/pydub/archive/v$pkgver.tar.gz")
@@ -23,14 +24,14 @@ check() {
 }
 
 package_python-pydub() {
-  depends=('python' 'python-setuptools')
+  depends=('python')
   cd $srcdir/pydub-$pkgver
   python3 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
 package_python2-pydub() {
-  depends=('python2' 'python2-setuptools')
+  depends=('python2')
   cd $srcdir/pydub2-$pkgver
   python2 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
