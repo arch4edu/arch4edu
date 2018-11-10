@@ -11,10 +11,10 @@ _protobuf_commit='2761122b810fe8861004ae785cc3ab39f384d342'
 _ios_cmake_commit='8abaed637d56f1337d6e1d2c4026e25c1eade724'
 _nnpack_commit='af40ea7d12702f8ae55aeb13701c09cad09334c3'
 _gloo_commit='aa0d2e3f8aa4f9cee5ffa46070491cf1ed6aae70'
-_nnpdeps_pthreadp_commit='2b06b31f6a315162348e1f3c24325eedaf6cc559'
-_nnpdeps_fxdiv_commit='811b482bcd9e8d98ad80c6c78d5302bb830184b0'
-_nnpdeps_fp16_commit='43d6d17df48ebf622587e7ed9472ea76573799b9'
-_nnpdeps_psimd_commit='4ac61b112252778b174575931c641bef661ab3cd'
+_pthreadpool_commit='2b06b31f6a315162348e1f3c24325eedaf6cc559'
+_fxdiv_commit='811b482bcd9e8d98ad80c6c78d5302bb830184b0'
+_fp16_commit='43d6d17df48ebf622587e7ed9472ea76573799b9'
+_psimd_commit='4ac61b112252778b174575931c641bef661ab3cd'
 _zstd_commit='aec56a52fbab207fc639a1937d1e708a282edca8'
 _cpuinfo_commit='4e8f04355892c5deb64a51731a6afdb544a4294d'
 _python_enum_commit='4cfedc426c4e2fc52e3f5c2b4297e15ed8d6b8c7'
@@ -31,7 +31,7 @@ _pytorchver=1.0rc1 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_pytorchver}"
-pkgrel=4
+pkgrel=5
 pkgdesc='A new lightweight, modular, and scalable deep learning framework'
 arch=('i686' 'x86_64')
 url='https://caffe2.ai/'
@@ -64,32 +64,32 @@ source=(
     # main source:
         "pytorch-${_pytorchver}.tar.gz"::"https://github.com/pytorch/pytorch/archive/v${_pytorchver}.tar.gz"
     # third party:
-        'caffe2-thirdparty-catch-git'::"git+https://github.com/catchorg/Catch2.git#commit=${_catch_commit}"
-        'caffe2-thirdparty-pybind11-git'::"git+https://github.com/pybind/pybind11.git#commit=${_pybind11_commit}"
-        'caffe2-thirdparty-cub-git'::"git+https://github.com/NVlabs/cub.git#commit=${_cub_commit}"
-        'caffe2-thirdparty-eigen-git'::"git+https://github.com/eigenteam/eigen-git-mirror.git#commit=${_eigen_commit}"
-        'caffe2-thirdparty-googletest-git'::"git+https://github.com/google/googletest.git#commit=${_googletest_commit}"
-        'caffe2-thirdparty-nervanagpu-git'::"git+https://github.com/NervanaSystems/nervanagpu.git#commit=${_nervanagpu_commit}"
-        'caffe2-thirdparty-benchmark-git'::"git+https://github.com/google/benchmark.git#commit=${_benchmark_commit}"
-        'caffe2-thirdparty-protobuf-git'::"git+https://github.com/google/protobuf.git#commit=${_protobuf_commit}"
-        'caffe2-thirdparty-ios-cmake-git'::"git+https://github.com/Yangqing/ios-cmake.git#commit=${_ios_cmake_commit}"
-        'caffe2-thirdparty-NNPACK-git'::"git+https://github.com/Maratyszcza/NNPACK.git#commit=${_nnpack_commit}"
-        'caffe2-thirdparty-gloo-git'::"git+https://github.com/facebookincubator/gloo.git#commit=${_gloo_commit}"
-        'caffe2-thirdparty-NNPACK_deps-pthreadpool-git'::"git+https://github.com/Maratyszcza/pthreadpool.git#commit=${_nnpdeps_pthreadp_commit}"
-        'caffe2-thirdparty-NNPACK_deps-FXdiv-git'::"git+https://github.com/Maratyszcza/FXdiv.git#commit=${_nnpdeps_fxdiv_commit}"
-        'caffe2-thirdparty-NNPACK_deps-FP16-git'::"git+https://github.com/Maratyszcza/FP16.git#commit=${_nnpdeps_fp16_commit}"
-        'caffe2-thirdparty-NNPACK_deps-psimd-git'::"git+https://github.com/Maratyszcza/psimd.git#commit=${_nnpdeps_psimd_commit}"
-        'caffe2-thirdparty-zstd-git'::"git+https://github.com/facebook/zstd.git#commit=${_zstd_commit}"
-        'caffe2-thirdparty-cpuinfo-git'::"git+https://github.com/Maratyszcza/cpuinfo.git#commit=${_cpuinfo_commit}"
-        'caffe2-thirdparty-python-enum-git'::"git+https://github.com/PeachPy/enum34.git#commit=${_python_enum_commit}"
-        'caffe2-thirdparty-python-peachpy-git'::"git+https://github.com/Maratyszcza/PeachPy.git#commit=${_python_peachpy_commit}"
-        'caffe2-thirdparty-python-six-git'::"git+https://github.com/benjaminp/six.git#commit=${_python_six_commit}"
-        'caffe2-thirdparty-ComputeLibrary-git'::"git+https://github.com/ARM-software/ComputeLibrary.git#commit=${_computelibrary_commit}"
-        'caffe2-thirdparty-onnx-git'::"git+https://github.com/onnx/onnx.git#commit=${_onnx_commit}"
-        'caffe2-thirdparty-cereal-git'::"git+https://github.com/USCiLab/cereal.git#commit=${_cereal_commit}"
-        'caffe2-thirdparty-onnx-tensorrt-git'::"git+https://github.com/onnx/onnx-tensorrt.git#commit=${_onnx_tensorrt_commit}"
-        'caffe2-thirdparty-sleef-git'::"git+https://github.com/shibatch/sleef.git#commit=${_sleef_commit}"
-        'caffe2-thirdparty-ideep-git'::"git+https://github.com/intel/ideep.git#commit=${_ideep_commit}"
+        "git+https://github.com/catchorg/Catch2.git#commit=${_catch_commit}"
+        "git+https://github.com/pybind/pybind11.git#commit=${_pybind11_commit}"
+        "git+https://github.com/NVlabs/cub.git#commit=${_cub_commit}"
+        "git+https://github.com/eigenteam/eigen-git-mirror.git#commit=${_eigen_commit}"
+        "git+https://github.com/google/googletest.git#commit=${_googletest_commit}"
+        "git+https://github.com/NervanaSystems/nervanagpu.git#commit=${_nervanagpu_commit}"
+        "git+https://github.com/google/benchmark.git#commit=${_benchmark_commit}"
+        "git+https://github.com/google/protobuf.git#commit=${_protobuf_commit}"
+        "git+https://github.com/Yangqing/ios-cmake.git#commit=${_ios_cmake_commit}"
+        "git+https://github.com/Maratyszcza/NNPACK.git#commit=${_nnpack_commit}"
+        "git+https://github.com/facebookincubator/gloo.git#commit=${_gloo_commit}"
+        "git+https://github.com/Maratyszcza/pthreadpool.git#commit=${_pthreadpool_commit}"
+        "git+https://github.com/Maratyszcza/FXdiv.git#commit=${_fxdiv_commit}"
+        "git+https://github.com/Maratyszcza/FP16.git#commit=${_fp16_commit}"
+        "git+https://github.com/Maratyszcza/psimd.git#commit=${_psimd_commit}"
+        "git+https://github.com/facebook/zstd.git#commit=${_zstd_commit}"
+        "git+https://github.com/Maratyszcza/cpuinfo.git#commit=${_cpuinfo_commit}"
+        "git+https://github.com/PeachPy/enum34.git#commit=${_python_enum_commit}"
+        "git+https://github.com/Maratyszcza/PeachPy.git#commit=${_python_peachpy_commit}"
+        "git+https://github.com/benjaminp/six.git#commit=${_python_six_commit}"
+        "git+https://github.com/ARM-software/ComputeLibrary.git#commit=${_computelibrary_commit}"
+        "git+https://github.com/onnx/onnx.git#commit=${_onnx_commit}"
+        "git+https://github.com/USCiLab/cereal.git#commit=${_cereal_commit}"
+        "git+https://github.com/onnx/onnx-tensorrt.git#commit=${_onnx_tensorrt_commit}"
+        "git+https://github.com/shibatch/sleef.git#commit=${_sleef_commit}"
+        "git+https://github.com/intel/ideep.git#commit=${_ideep_commit}"
 )
 sha256sums=('473cd4af032ddec4279cf3a90dd9508b6fa0be5cd89c842945f88b5a576a4231'
             'SKIP'
@@ -122,26 +122,25 @@ sha256sums=('473cd4af032ddec4279cf3a90dd9508b6fa0be5cd89c842945f88b5a576a4231'
 prepare() {
     cd "${srcdir}/pytorch-${_pytorchver}/third_party"
     
-    local _thirdparty_list="catch pybind11 cub eigen googletest nervanagpu \
-                            benchmark protobuf ios-cmake NNPACK gloo zstd \
-                            cpuinfo python-enum python-peachpy python-six \
-                            ComputeLibrary onnx cereal onnx-tensorrt sleef \
-                            ideep"
-                                
-    local _nnpackdeps_list='pthreadpool FXdiv FP16 psimd'
-    
     local _component
+    local _thirdparty_list="pybind11 cub googletest nervanagpu benchmark \
+                            protobuf ios-cmake NNPACK pthreadpool FXdiv FP16 \
+                            psimd gloo zstd cpuinfo ComputeLibrary onnx cereal \
+                            onnx-tensorrt sleef ideep"
+                            
+    # third_party which clone dir does not coincide with the third_party name
+    rm -rf catch eigen python-enum python-peachpy python-six
+    ln -sf "${srcdir}/Catch2" catch
+    ln -sf "${srcdir}/eigen-git-mirror" eigen
+    ln -sf "${srcdir}/enum34" python-enum
+    ln -sf "${srcdir}/PeachPy" python-peachpy
+    ln -sf "${srcdir}/six" python-six
     
+    # third_party which clone dir coincide with the third_party name
     for _component in $_thirdparty_list
     do
         rm -rf "$_component"
-        ln -sf "${srcdir}/caffe2-thirdparty-${_component}-git" "${_component}"
-    done
-    
-    for _component in $_nnpackdeps_list
-    do
-        rm -rf "$_component"
-        ln -sf "${srcdir}/caffe2-thirdparty-NNPACK_deps-${_component}-git" "${_component}"
+        ln -sf "${srcdir}/${_component}" "${_component}"
     done
 }
 
@@ -149,7 +148,7 @@ build() {
     cd "pytorch-${_pytorchver}"
     
     local _pythonver
-    _pythonver="$(python --version | awk '{ print $2 }' | grep -o '^[0-9]*\.[0-9]*')"
+    _pythonver="$(python -c 'import sys; print("%s.%s" %sys.version_info[0:2])')"
     
     mkdir -p build
     cd build
@@ -161,8 +160,6 @@ build() {
         -DBUILD_DOCS:BOOL='OFF' \
         -DBUILD_PYTHON:BOOL='ON' \
         -DBUILD_SHARED_LIBS:BOOL='ON' \
-        \
-        -DBUILD_TEST:BOOL='OFF' \
         \
         -DCMAKE_INSTALL_LIBDIR:PATH='lib' \
         -DCMAKE_INSTALL_PREFIX:PATH='/usr' \
