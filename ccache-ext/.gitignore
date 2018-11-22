@@ -1,9 +1,0 @@
-*
-!.gitignore
-!.SRCINFO
-!PKGBUILD
-!*.install
-!*.patch
-!*.diff
-!*.sh
-!*.hook
