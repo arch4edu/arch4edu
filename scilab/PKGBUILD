@@ -4,7 +4,7 @@
 
 pkgname=scilab
 pkgver=6.0.1
-pkgrel=4
+pkgrel=5
 pkgdesc='A scientific software package for numerical computations.'
 arch=('i686' 'x86_64')
 url='https://www.scilab.org'
@@ -20,7 +20,7 @@ depends=('suitesparse>=4.4.1' 'arpack' 'fftw' 'eigen'
          'java-skinlf' 'java-testng' 'xalan-java' 'docbook-xsl'
          'jogl>=2.3.2' 'apache-lucene>=7'
          'java-batik>=1.8' 'java-xmlgraphics-commons>=2.0.1')
-makedepends=('java-environment=8' 'apache-ant>=1.9.0'
+makedepends=('java-environment=8' 'ant>=1.9.0'
              'ocaml-findlib' 'ocaml-num' 'gcc-fortran')
 source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
         "${pkgname}-jogl-2.3.2.patch"
