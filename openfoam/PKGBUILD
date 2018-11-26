@@ -5,7 +5,7 @@
 
 pkgname=openfoam
 pkgver=6
-pkgrel=1
+pkgrel=3
 pkgdesc="The open source CFD toolbox"
 _distpkgname=OpenFOAM
 _gitname=$_distpkgname-$pkgver
