@@ -31,7 +31,7 @@ _pytorchver=1.0rc1 # pytorch stable release version
 
 pkgname=caffe2
 pkgver="0.8.2.pytorch.${_pytorchver}"
-pkgrel=7
+pkgrel=8
 pkgdesc='A new lightweight, modular, and scalable deep learning framework'
 arch=('i686' 'x86_64')
 url='https://caffe2.ai/'
@@ -92,6 +92,7 @@ source=(
         "git+https://github.com/intel/ideep.git#commit=${_ideep_commit}"
     # patches:
         'caffe2-1.0rc1-add-full-relro.patch'
+        'caffe2-1.0rc1-opencv4-fix.patch'
 )
 sha256sums=('473cd4af032ddec4279cf3a90dd9508b6fa0be5cd89c842945f88b5a576a4231'
             'SKIP'
@@ -120,7 +121,8 @@ sha256sums=('473cd4af032ddec4279cf3a90dd9508b6fa0be5cd89c842945f88b5a576a4231'
             'SKIP'
             'SKIP'
             'SKIP'
-            'c41dd34bdf0bfbe62bba8527e950a14b356bef136edc53ea40c6469644502583')
+            'c41dd34bdf0bfbe62bba8527e950a14b356bef136edc53ea40c6469644502583'
+            '058d05d3fdf9e4d688dc29475265c69f99892ccc5f9926d45b26da9616eb936c')
 
 prepare() {
     cd "pytorch-${_pytorchver}/third_party"
@@ -149,6 +151,9 @@ prepare() {
     # add full relro
     cd "${srcdir}/pytorch-${_pytorchver}"
     patch -Np1 -i "${srcdir}/caffe2-1.0rc1-add-full-relro.patch"
+    
+    # opencv 4.0 fix
+    patch -Np1 -i "${srcdir}/caffe2-1.0rc1-opencv4-fix.patch"
 }
 
 build() {
