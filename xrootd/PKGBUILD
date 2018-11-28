@@ -1,32 +1,29 @@
 # Maintainer: Konstantin Gizdov < arch at kge dot pw >
 # Contributor: Jan Kašpar < jan.kaspar at gmail dot com >
 # Contributor: Alex Pearce < alex at alexpearce dot me >
-pkgname=xrootd
-pkgver=4.8.5
-pkgrel=3
+pkgbase=xrootd
+pkgname=('xrootd' 'python-xrootd' 'python-pyxrootd' 'python2-xrootd' 'python2-pyxrootd')
 pkgdesc="Software framework for fast, low latency, scalable and fault tolerant data access."
-provides=('xrootd')
+pkgver=4.8.5
+pkgrel=4
 arch=('x86_64')
 url="http://xrootd.org"
 license=('LGPL3')
-depends=('ceph' 'python' 'cppunit')
 makedepends=('ceph' 'cmake' 'python')
 checkdepends=('cppunit')
-provides=('python2-xrootd' 'python2-pyxrootd'
-          'python-xrootd' 'python-pyxrootd')
 source=("${url}/download/v${pkgver}/xrootd-${pkgver}.tar.gz")
 sha256sums=('42e4d2cc6f8b442135f09bcc12c7be38b1a0c623a005cb5e69ff3d27997bdf73')
 
 prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgbase}-${pkgver}"
 
     mkdir -p "${srcdir}/build"
     cd "${srcdir}/build"
 
     # LDFLAGS="${LDFLAGS} -pthread -Wl,--no-undefined" \  # fails to compile tests
     CFLAGS="${CFLAGS}" \
-    CXXFLAGS="${CXXFLAGS} -pthread" \
-    LDFLAGS="${LDFLAGS} -pthread" \
+    CXXFLAGS="${CXXFLAGS}" \
+    LDFLAGS="${LDFLAGS}" \
     cmake -DCMAKE_BUILD_TYPE:STRING=Release \
           -DCMAKE_INSTALL_LIBDIR:PATH=lib \
           -DCMAKE_INSTALL_PREFIX:PATH=/usr \
@@ -35,16 +32,16 @@ prepare() {
           -DCPPUNIT_INCLUDE_DIRS=/usr/include \
           -DCPPUNIT_LIBRARIES=/usr/lib/libcppunit.so \
           -DXRD_PYTHON_REQ_VERSION=$( python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))' ) \
-          "${srcdir}/${pkgname}-${pkgver}"
+          "${srcdir}/${pkgbase}-${pkgver}"
 
     cd "${srcdir}"
     mv "${srcdir}/build" "${srcdir}/build-py3"
     mkdir -p "${srcdir}/build"
     cd "${srcdir}/build"
     # LDFLAGS="${LDFLAGS} -pthread -Wl,--no-undefined" \  # fails to compile tests
-    CFLAGS="${CFLAGS} -pthread" \
-    CXXFLAGS="${CXXFLAGS} -pthread" \
-    LDFLAGS="${LDFLAGS} -pthread" \
+    CFLAGS="${CFLAGS}" \
+    CXXFLAGS="${CXXFLAGS}" \
+    LDFLAGS="${LDFLAGS}" \
     cmake -DCMAKE_BUILD_TYPE:STRING=Release \
           -DCMAKE_INSTALL_LIBDIR:PATH=lib \
           -DCMAKE_INSTALL_PREFIX:PATH=/usr \
@@ -53,7 +50,7 @@ prepare() {
           -DCPPUNIT_INCLUDE_DIRS=/usr/include \
           -DCPPUNIT_LIBRARIES=/usr/lib/libcppunit.so \
           -DXRD_PYTHON_REQ_VERSION=$( python2 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))' ) \
-          "${srcdir}/${pkgname}-${pkgver}"
+          "${srcdir}/${pkgbase}-${pkgver}"
     mv "${srcdir}/build/bindings/python"  "${srcdir}/build-py3/bindings/python2"
     cd "${srcdir}"
     rm -rf "${srcdir}/build"
@@ -71,6 +68,7 @@ build() {
     mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python2"
     mv "${srcdir}/build/bindings/python3" "${srcdir}/build/bindings/python"
     make -f "bindings/python/Makefile"
+    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python3"
 }
 
 check() {
@@ -95,15 +93,75 @@ check() {
     # ./common/text-runner ./XrdClTests/libXrdClTests.so "All Tests"
 }
 
-package() {
+package_xrootd() {
+    pkgdesc="Software framework for fast, low latency, scalable and fault tolerant data access."
+    depends=('ceph' 'python' 'cppunit')
     cd "${srcdir}/build"
-    # Python2 first
-    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python3"
-    mv "${srcdir}/build/bindings/python2" "${srcdir}/build/bindings/python"
-    make DESTDIR="${pkgdir}" install
 
-    # Python3 second
-    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python2"
+    # Python2 first
+    mv "${srcdir}/build/bindings/python3" "${srcdir}/build/bindings/python"
+    make DESTDIR="${pkgdir}" install
+    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python3"
+
+    rm -rf "${pkgdir}/usr/lib"/python*
+}
+
+package_python-xrootd() {
+    pkgdesc="Python Client API for XRootD"
+    depends=('xrootd')
+    cd "${srcdir}/build"
+    # Python3
     mv "${srcdir}/build/bindings/python3" "${srcdir}/build/bindings/python"
     make -f "bindings/python/Makefile" DESTDIR="${pkgdir}" install
+    rm -rf "${pkgdir}/usr/bin"
+    rm -rf "${pkgdir}/usr/include"
+    rm -rf "${pkgdir}/usr/share"
+    rm -rf "${pkgdir}/usr/lib/"lib*.so*
+    rm -rf "${pkgdir}/usr/lib/"python*/site-packages/pyxrootd*
+    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python3"
+}
+
+package_python-pyxrootd() {
+    pkgdesc="Python bindings for XRootD"
+    depends=('python-xrootd')
+    cd "${srcdir}/build"
+    # Python3
+    mv "${srcdir}/build/bindings/python3" "${srcdir}/build/bindings/python"
+    make -f "bindings/python/Makefile" DESTDIR="${pkgdir}" install
+    rm -rf "${pkgdir}/usr/bin"
+    rm -rf "${pkgdir}/usr/include"
+    rm -rf "${pkgdir}/usr/share"
+    rm -rf "${pkgdir}/usr/lib/"lib*.so*
+    rm -rf "${pkgdir}/usr/lib/"python*/site-packages/XRootD
+    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python3"
+}
+
+package_python2-xrootd() {
+    pkgdesc="Python2 Client API for XRootD"
+    depends=('xrootd')
+    cd "${srcdir}/build"
+    # Python2
+    mv "${srcdir}/build/bindings/python2" "${srcdir}/build/bindings/python"
+    make -f "bindings/python/Makefile" DESTDIR="${pkgdir}" install
+    rm -rf "${pkgdir}/usr/bin"
+    rm -rf "${pkgdir}/usr/include"
+    rm -rf "${pkgdir}/usr/share"
+    rm -rf "${pkgdir}/usr/lib/"lib*.so*
+    rm -rf "${pkgdir}/usr/lib/"python*/site-packages/pyxrootd*
+    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python2"
+}
+
+package_python2-pyxrootd() {
+    pkgdesc="Python2 bindings for XRootD"
+    depends=('python2-xrootd')
+    cd "${srcdir}/build"
+    # Python3
+    mv "${srcdir}/build/bindings/python2" "${srcdir}/build/bindings/python"
+    make -f "bindings/python/Makefile" DESTDIR="${pkgdir}" install
+    rm -rf "${pkgdir}/usr/bin"
+    rm -rf "${pkgdir}/usr/include"
+    rm -rf "${pkgdir}/usr/share"
+    rm -rf "${pkgdir}/usr/lib/"lib*.so*
+    rm -rf "${pkgdir}/usr/lib/"python*/site-packages/XRootD
+    mv "${srcdir}/build/bindings/python" "${srcdir}/build/bindings/python2"
 }
