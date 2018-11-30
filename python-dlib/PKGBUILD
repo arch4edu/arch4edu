@@ -6,21 +6,21 @@
 # Contributor: xsmile
 
 pkgname=python-dlib
-#pkgname=('python-dlib' 'python2-dlib' 'python-dlib-cuda' 'python2-dlib-cuda')
 pkgname=('python-dlib' 'python2-dlib')
+#pkgname+=('python-dlib-cuda' 'python2-dlib-cuda')
 _pkgname=dlib
-pkgver=19.15
-pkgrel=1.1
+pkgver=19.16
+pkgrel=1
 pkgdesc="Dlib is a general purpose cross-platform C++ library designed using contract programming and modern C++ techniques."
 arch=('x86_64')
 url="http://www.dlib.net/"
-license=('Boost Software License')
-depends=('libx11')
-#optdepends=('cblas' 'cuda' 'cudnn' 'lapack' 'libjpeg-turbo' 'libpng' 'sqlite')
-optdepends=('cblas' 'lapack' 'libjpeg-turbo' 'libpng' 'sqlite')
+license=('Boost')
+depends=('cblas' 'giflib' 'lapack' 'libjpeg-turbo' 'libpng' 'libx11')
+optdepends=('sqlite')
+#optdepends+=('cuda' 'cudnn' 'ccache-ext')
 makedepends=(${optdepends[@]} 'cmake' 'boost' 'python-setuptools' 'python2-setuptools')
 source=("$url/files/${_pkgname}-${pkgver}.tar.bz2")
-md5sums=('7f168578b024689be707d6dde5cfa0e9')
+md5sums=('39c2b238de3eff6aa90a96120d63ebfc')
 
 prepare() {
 	cd "$srcdir/"
@@ -42,11 +42,13 @@ build(){
 	cd "${srcdir}/${_pkgname}-${pkgver}-py2"
 	python2 setup.py build --no DLIB_USE_CUDA
 
+	#cuda_flags='--set CUDA_HOST_COMPILER=/opt/cuda/bin/gcc --set CUDA_NVCC_EXECUTABLE=/usr/lib/ccache/bin/nvcc-ccache --set CUDA_HOST_COMPILER=/usr/lib/ccache/bin/gcc-7'
+
 	#cd "${srcdir}/${_pkgname}-${pkgver}-cuda"
-	#CC=gcc-7 CXX=g++-7 python setup.py build --yes DLIB_USE_CUDA
+	#python setup.py build $cuda_flags --yes DLIB_USE_CUDA
 
 	#cd "${srcdir}/${_pkgname}-${pkgver}-py2-cuda"
-	#CC=gcc-7 CXX=g++-7 python2 setup.py build --yes DLIB_USE_CUDA
+	#python2 setup.py build $cuda_flags --yes DLIB_USE_CUDA
 }
 
 
