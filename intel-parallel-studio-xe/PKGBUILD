@@ -1,7 +1,7 @@
-# Maintainer: Ignat Harczuk: ignathe -at- gmail com
-# Previous Maintainer: Mark Wells: mwellsa -at- gmail com
+# Maintainer: Stephen Cox: stephencoxmail -at- gmail com
+# Previous Maintainers: Ignat Harczuk: ignathe -at- gmail com and Mark Wells: mwellsa -at- gmail com
 # Contributor: simone riva: siomone.rva -a- gmail com
-# Intel Parallel Studio XE 2018 for Linux - ( Intel compiler icc suite )
+# Intel Parallel Studio XE 2019 for Linux - ( Intel compiler icc suite )
 ##########################################################################
 # this PKGBUILD splits the main Parallel Studio XE package in 9 sub-packages:
 #
@@ -49,34 +49,34 @@ _remove_static_objects_mkl=false
 _remove_static_objects_ipp=false
 ########################################
 
-_year='2018'
-_v_a='3'
-_v_b='222'
+_year='2019'
+_v_a='1'
+_v_b='144'
 # year, version a and version b found in /opt/intel/compilers_and_libraries_YEAR_A_B
 
-_update='3'
+_update='1'
 
 pkgrel=1
 
 
-_sp='professional_edition'
-_icc_ver='18.0.3'
-_mpi_ver='2018.3.222'
-_mkl_ver='2018.3.222'
-_tbb_ver='2018.3.222'
-_vtune_ver='2018.3.0.558279'
-_inspector_ver='2018.3.0.558189'
-_advisor_ver='2018.3.0.558307'
+_sp='cluster_edition'
+_icc_ver='19.0.1'
+_mpi_ver='2019.1.144'
+_mkl_ver='2019.1.144'
+_tbb_ver='2019.1.144'
+_vtune_ver='2019.1.0.579888'
+_inspector_ver='2019.1.0.579146'
+_advisor_ver='2019.1.0.579143'
 
-_vtune_man_ver='2018.3.0.558279'
-_inspector_man_ver='2018.3.0.558189'
-_advisor_man_ver='2018.3.0.558307'
+_vtune_man_ver='2019.1.0.579888'
+_inspector_man_ver='2019.1.0.5579146'
+_advisor_man_ver='2019.1.0.579143'
 
 
 pkgver=${_year}.${_v_a}.${_v_b}
 
-_dir_nr='12999'
-_mpi_dir_nr='13063'
+_dir_nr='14850'
+_mpi_dir_nr='14879'
 
 options=(strip libtool staticlibs)
 
@@ -110,8 +110,8 @@ source=(
 )
 
 
-sha256sums=('3d8e72ccad31f243e43b72a925ad4a6908e2955682433898640ab783decf9960'
-            '5021d14b344fc794e89f146e4d53d70184d7048610895d7a6a1e8ac0cf258999'
+sha256sums=('3a1eb39f15615f7a2688426b9835e5e841e0c030f21dcfc899fe23e09bd2c645'
+            'dac86a5db6b86503313742b17535856a432955604f7103cb4549a9bfc256c3cd'
             '75fcdfc246949341afddcf51b2037f606f25612a04c199ac1a743247aa7c4ea5'
             '278f9545d14c1fbec737bbfbcafb1b9090d35aab0dfeddc99d4c6e296b56057b'
             'e3103fb1c5e2ec9f0cc4090abb7e273563e735d88e185f527c66b2aebd52e733'
