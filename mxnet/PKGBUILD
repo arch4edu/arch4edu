@@ -2,8 +2,8 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgname=mxnet
 _gitname=incubator-mxnet
-pkgver=1.3.0
-pkgrel=3
+pkgver=1.3.1
+pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
@@ -12,8 +12,9 @@ depends=('hdf5' 'cblas' 'lapack' 'python-numpy' 'python-requests' 'intel-tbb')
 optdepends=('cairo' 'cuda' 'cudnn' 'gtk3' 'gtkglext' 'python-graphviz' 'opencv' 'vtk' 'glew')
 makedepends=(${optdepends[@]} 'git' 'cython')
 source=("git+https://github.com/apache/$_gitname#tag=$pkgver"
+	'13559.patch'
 	"cuda_call.patch")
-md5sums=('SKIP' '77a777e6971e568177e0ea3aeecb401c')
+md5sums=('SKIP' '74b7b068f126e34633f82319cc801b4c' '77a777e6971e568177e0ea3aeecb401c')
 
 prepare() {
 	cd "$srcdir/$_gitname"
@@ -57,6 +58,10 @@ prepare() {
 	
 	# https://github.com/apache/incubator-mxnet/pull/12374
 	patch -p1 < ${srcdir}/cuda_call.patch
+
+	# Modified from https://github.com/apache/incubator-mxnet/pull/13559
+	patch -p1 < ${srcdir}/13559.patch
+	sed 's/opencv)/opencv4)/g' -i Makefile
 }
 
 build() {

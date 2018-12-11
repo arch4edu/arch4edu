@@ -1,0 +1,105 @@
+diff --git a/src/io/image_aug_default.cc b/src/io/image_aug_default.cc
+index f31664709bd..a6d7cc1204f 100644
+--- a/src/io/image_aug_default.cc
++++ b/src/io/image_aug_default.cc
+@@ -479,14 +479,14 @@ class DefaultImageAugmenter : public ImageAugmenter {
+         }
+         if (rand_order[i] == 1) {
+           // contrast
+-          cvtColor(res, temp_, CV_RGB2GRAY);
++          cvtColor(res, temp_, cv::COLOR_RGB2GRAY);
+           float gray_mean = cv::mean(temp_)[0];
+           res.convertTo(res, -1, alpha_c, (1 - alpha_c) * gray_mean);
+         }
+         if (rand_order[i] == 2) {
+           // saturation
+-          cvtColor(res, temp_, CV_RGB2GRAY);
+-          cvtColor(temp_, temp_, CV_GRAY2BGR);
++          cvtColor(res, temp_, cv::COLOR_RGB2GRAY);
++          cvtColor(temp_, temp_, cv::COLOR_GRAY2BGR);
+           cv::addWeighted(res, alpha_s, temp_, 1 - alpha_s, 0.0, res);
+         }
+       }
+@@ -495,7 +495,7 @@ class DefaultImageAugmenter : public ImageAugmenter {
+     // color space augmentation
+     if (param_.random_h != 0 || param_.random_s != 0 || param_.random_l != 0) {
+       std::uniform_real_distribution<float> rand_uniform(0, 1);
+-      cvtColor(res, res, CV_BGR2HLS);
++      cvtColor(res, res, cv::COLOR_BGR2HLS);
+       // use an approximation of gaussian distribution to reduce extreme value
+       float rh = rand_uniform(*prnd); rh += 4 * rand_uniform(*prnd); rh = rh / 5;
+       float rs = rand_uniform(*prnd); rs += 4 * rand_uniform(*prnd); rs = rs / 5;
+@@ -515,7 +515,7 @@ class DefaultImageAugmenter : public ImageAugmenter {
+           }
+         }
+       }
+-      cvtColor(res, res, CV_HLS2BGR);
++      cvtColor(res, res, cv::COLOR_HLS2BGR);
+     }
+ 
+     // pca noise
+diff --git a/src/io/image_det_aug_default.cc b/src/io/image_det_aug_default.cc
+index afe5174b75d..5476ea37218 100644
+--- a/src/io/image_det_aug_default.cc
++++ b/src/io/image_det_aug_default.cc
+@@ -547,7 +547,7 @@ class DefaultImageDetAugmenter : public ImageAugmenter {
+       if (h != 0 || s != 0 || l != 0) {
+         int temp[3] = {h, l, s};
+         int limit[3] = {180, 255, 255};
+-        cv::cvtColor(res, res, CV_BGR2HLS);
++        cv::cvtColor(res, res, cv::COLOR_BGR2HLS);
+         for (int i = 0; i < res.rows; ++i) {
+           for (int j = 0; j < res.cols; ++j) {
+             for (int k = 0; k < 3; ++k) {
+@@ -558,7 +558,7 @@ class DefaultImageDetAugmenter : public ImageAugmenter {
+             }
+           }
+         }
+-        cv::cvtColor(res, res, CV_HLS2BGR);
++        cv::cvtColor(res, res, cv::COLOR_HLS2BGR);
+       }
+       if (std::fabs(c) > 1e-3) {
+         cv::Mat tmp = res;
+diff --git a/src/io/image_io.cc b/src/io/image_io.cc
+index b3f7c40b2b1..438c6157865 100644
+--- a/src/io/image_io.cc
++++ b/src/io/image_io.cc
+@@ -169,7 +169,7 @@ void ImdecodeImpl(int flag, bool to_rgb, void* data, size_t size,
+   }
+   CHECK_EQ(static_cast<void*>(dst.ptr()), out->data().dptr_);
+   if (to_rgb && flag != 0) {
+-    cv::cvtColor(dst, dst, CV_BGR2RGB);
++    cv::cvtColor(dst, dst, cv::COLOR_BGR2RGB);
+   }
+ }
+ #endif  // MXNET_USE_OPENCV
+diff --git a/tools/im2rec.cc b/tools/im2rec.cc
+index 915b78029c8..beae75361c4 100644
+--- a/tools/im2rec.cc
++++ b/tools/im2rec.cc
+@@ -85,9 +85,9 @@ int main(int argc, char *argv[]) {
+   int partid = 0;
+   int center_crop = 0;
+   int quality = 95;
+-  int color_mode = CV_LOAD_IMAGE_COLOR;
++  int color_mode = cv::IMREAD_COLOR;
+   int unchanged = 0;
+-  int inter_method = CV_INTER_LINEAR;
++  int inter_method = cv::INTER_LINEAR;
+   std::string encoding(".jpg");
+   for (int i = 4; i < argc; ++i) {
+     char key[128], val[128];
+@@ -192,11 +192,11 @@ int main(int argc, char *argv[]) {
+   std::vector<unsigned char> encode_buf;
+   std::vector<int> encode_params;
+   if (encoding == std::string(".png")) {
+-      encode_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
++      encode_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
+       encode_params.push_back(quality);
+       LOG(INFO) << "PNG encoding compression: " << quality;
+   } else {
+-      encode_params.push_back(CV_IMWRITE_JPEG_QUALITY);
++      encode_params.push_back(cv::IMWRITE_JPEG_QUALITY);
+       encode_params.push_back(quality);
+       LOG(INFO) << "JPEG encoding quality: " << quality;
+   }
