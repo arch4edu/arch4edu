@@ -2,8 +2,8 @@
 
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
-pkgver=2.12
-pkgrel=2
+pkgver=3.1
+pkgrel=1
 
 pkgname=$_pkgname-bin
 arch=('x86_64' 'i686' 'aarch64')
@@ -15,16 +15,16 @@ provides=("$_pkgname" "qemu-user")
 conflicts=("$_pkgname" "qemu-user")
 
 if [ "$CARCH" = 'x86_64' ] ; then
-  _debsrc="${_pkgname}_${pkgver}+dfsg-3+b1_amd64.deb"
-  _csum=09c28d8f84763c61f8c94c513ef83667f241db1a0d69bf7f673ca5470fc0a719
+  _debsrc="${_pkgname}_${pkgver}+dfsg-1_amd64.deb"
+  _csum=27aff9179038f561cfdbf0726b5dfda5afb6ff938afa586d255160afce265375
 elif [ "$CARCH" = 'i686' ] ; then
-  _debsrc="${_pkgname}_${pkgver}+dfsg-3+b1_i386.deb"
-  _csum=32f349a0049b08b4afe68c3a3481650cc55a2a2f0ab51a10a727a62141a23ee9
+  _debsrc="${_pkgname}_${pkgver}+dfsg-1_i386.deb"
+  _csum=c01ccf333c6e91a4570ea2c99732d6690a8bcf18504c5320d2949539b384cb39
 elif [ "$CARCH" = 'aarch64' ] ; then
-  _debsrc="${_pkgname}_${pkgver}+dfsg-3_arm64.deb"
-  _csum=578626a9288de229172adf4121a73335db4bec29a2eb74ff41b27b8e1405fac4
+  _debsrc="${_pkgname}_${pkgver}+dfsg-1_arm64.deb"
+  _csum=9cc89a4c912fbd6986ea8e5600a75b3b3d2248593205029756a3814e34c560fc
 else
-  _debsrc="${_pkgname}_${pkgver}+dfsg-3_${CARCH}.deb"
+  _debsrc="${_pkgname}_${pkgver}+dfsg-1_${CARCH}.deb"
   _csum=SKIP
 fi
 
