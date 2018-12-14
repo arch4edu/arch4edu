@@ -1,5 +1,6 @@
 # $Id: PKGBUILD 164237 2012-07-28 03:14:33Z stephane $
-# Maintainer: Jan de Groot <jgc@archlinux.org>
+# Maintainer: Ilya Elenskiy <elenskiy.ilya@gmail.com>
+# Contributor: Jan de Groot <jgc@archlinux.org>
 # Contributor: Douglas Soares de Andrade <dsa@aur.archlinux.org>
 # Contributor: Angel 'angvp' Velasquez <angvp[at]archlinux.com.ve>
 # Adapted to mkl by Simone Riva
@@ -7,7 +8,7 @@ pkgbase="python-numpy-mkl"
 pkgname="python-numpy-mkl"
 true && pkgname=('python-numpy-mkl' 'python2-numpy-mkl')
 #pkgname=('python-numpy')
-pkgver=1.15.0
+pkgver=1.15.4
 pkgrel=1
 pkgdesc="Scientific tools for Python compiled with intel mkl"
 arch=('i686' 'x86_64')
@@ -20,10 +21,9 @@ makedepends=('python-setuptools' 'python2-setuptools' 'intel-compiler-base' 'int
 source=(https://github.com/numpy/numpy/archive/v${pkgver}.tar.gz
 	'site64.cfg' 'site32.cfg')
 
-sha256sums=('fec926cc3f157f4023e4126597dd5b9056778094393db01a3751b5e816a4a9ec' # main pkg§
-	'86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1' # site64
-	'882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df' # site32
-)
+sha256sums=('3b1744b96ce41fff1c7e19144ca85cbbfb11e4b4e0e13080ca374df212801dbb'
+            '86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1'
+            '882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df')
 
 build() {
 	export __INTEL_PRE_CFLAGS="$__INTEL_PRE_CFLAGS -D__PURE_INTEL_C99_HEADERS__ -D_Float32=float -D_Float64=double -D_Float128=\"long double\" -D_Float32x=_Float64 -D_Float64x=_Float128"
@@ -102,7 +102,6 @@ package_python2-numpy-mkl() {
 
 	depends=('intel-mkl' 'python2')
 	provides=("python2-numpy=${pkgver}")
-	replaces=("python2-numpy")
 	conflicts=("python2-numpy")
 	optdepends=('python-nose: testsuite')
 
@@ -117,21 +116,20 @@ package_python2-numpy-mkl() {
 		-e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
 		$(find ${pkgdir} -name '*.py')
 
-	for _exe in conv-template f2py from-template; do
-		mv "$pkgdir"/usr/bin/"$_exe"{,2}
-	done
+	#for _exe in conv-template f2py from-template; do
+	#	mv "$pkgdir"/usr/bin/"$_exe"{,2}
+	#done
 }
 
 package_python-numpy-mkl() {
 
 	depends=('intel-mkl' 'python')
-	provides=("python3-numpy=${pkgver}" "python-numpy=${pkgver}")
-	replaces=('python3-numpy')
-	conflicts=('python3-numpy' 'python-numpy')
+	provides=("python-numpy=${pkgver}")
+	conflicts=('python-numpy')
 
 	cd "${srcdir}/numpy-${pkgver}"
 	python setup.py config_fc install --prefix=/usr --root="${pkgdir}" --optimize=1
 
-	install -m755 -d "${pkgdir}/usr/share/licenses/python3-numpy"
-	install -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/python3-numpy/"
+	install -m755 -d "${pkgdir}/usr/share/licenses/python-numpy"
+	install -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-numpy/"
 }
