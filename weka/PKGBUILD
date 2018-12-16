@@ -6,7 +6,7 @@
 pkgname=weka
 pkgver=3.8.3
 _dlver=${pkgver//./-}
-pkgrel=1
+pkgrel=2
 pkgdesc="A collection of machine learning algorithms for data mining tasks"
 url="http://www.cs.waikato.ac.nz/ml/weka/"
 license=("GPL")
@@ -25,11 +25,22 @@ md5sums=('1d2f24f40bc67ed2b7e530d54f8c7e6f'
 package() {
   cd $srcdir/$pkgname-$_dlver
 
-  # install jar file
+  # Install jar file
   mkdir -p $pkgdir/usr/share/java/$pkgname
   install -m644 weka.jar $pkgdir/usr/share/java/$pkgname/weka.jar
 
-  # setup for freedesktop icons and shell script
+  # Documentation
+  DOC_DIR="${pkgdir}/usr/share/doc/${pkgbase}"
+  install -d -m755 "$DOC_DIR"
+  install -m644 {documentation.*,README,*.pdf} "$DOC_DIR"
+  cp -dr --no-preserve=ownership doc "$DOC_DIR"
+   
+  # Example data files
+  DATA_DIR="${pkgdir}/usr/share/data/${pkgbase}"
+  install -d -m755 data "$DATA_DIR"
+  install -m644 data/* "$DATA_DIR"
+
+  # Setup for freedesktop icons and shell script
   mkdir -p $pkgdir/usr/share/{applications,pixmaps}
   mkdir -p $pkgdir/usr/bin
   install -m644 $srcdir/weka.png $pkgdir/usr/share/pixmaps/weka.png
