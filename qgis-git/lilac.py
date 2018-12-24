@@ -3,7 +3,11 @@ from lilaclib import *
 
 build_prefix = 'arch4edu-x86_64'
 depends = ['grass']
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build()
+    add_depends(['qt5-xmlpatterns'])
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
