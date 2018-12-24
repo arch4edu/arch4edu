@@ -18,6 +18,8 @@
 # Contributor: Andy Weidenbaum <archbaum@gmail.com>
 # Contributor: edacval
 # Contributor: MarcelPa
+# Contributor: Trent
+# Contributor: urxvtcd-256
 
 
 
@@ -28,6 +30,7 @@ _omnisharp="y"
 _gocode="y"
 _rust="y"
 _tern="y"
+_typescript="y"
 _java="y"
 _use_system_clang="ON"
 _use_python2="OFF"
@@ -42,7 +45,7 @@ _neovim="$NEOVIM_YOUCOMPLETEME"
 #                                    Default PKGBUILD Configuration                                       #
 #=========================================================================================================#
 pkgname=vim-youcompleteme-git
-pkgver=r2449.0790dc99
+pkgver=r2455.7997fc55
 pkgver() {
 	cd "YouCompleteMe" || exit
 	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
@@ -61,15 +64,19 @@ source=(
 'git+https://github.com/ross/requests-futures.git'  #ycm
 'git+https://github.com/Valloric/ycmd.git'          #ycm
 'git+https://github.com/kennethreitz/requests.git'  #ycmd
-'git+https://github.com/bottlepy/bottle.git'        #ycmd
+'git+https://github.com/kjd/idna.git'  #ycmd
+'git+https://github.com/certifi/python-certifi.git'  #ycmd
+'git+https://github.com/chardet/chardet.git'  #ycmd
+'git+https://github.com/urllib3/urllib3.git'  #ycmd
+'git+https://github.com/defnull/bottle.git'  #ycmd
 'git+https://github.com/slezica/python-frozendict.git'    #ycmd
 'git+https://github.com/PythonCharmers/python-future.git' #ycmd
 'git+https://github.com/davidhalter/jedi.git'             #jedi
 'git+https://github.com/davidhalter/parso.git'            #jedi
 'git+https://github.com/Pylons/waitress.git'              #ycmd,jediHTTP
-'git+https://github.com/Manishearth/godef.git'            #ycmd
+'git+https://github.com/micbou/regex.git'  #ycmd
 )
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 #=========================================================================================================#
 #=========================================================================================================#
 
@@ -81,8 +88,9 @@ sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP
 
 if [[ "$_gocode" == "y" ]]; then
 	# ycmd
-	source+=('git+https://github.com/nsf/gocode.git')
-	sha256sums+=('SKIP')
+	source+=('git+https://github.com/mdempsky/gocode.git'
+			 'git+https://github.com/rogpeppe/godef.git')
+	sha256sums+=('SKIP' 'SKIP')
 	makedepends+=('go')
 fi
 
@@ -172,14 +180,12 @@ prepare() {
 
 	msg2 'Setting up Git submodules...'
 
-	local YouCompleteMe=("requests-futures" "ycmd")
+	local YouCompleteMe=("requests-futures" "ycmd" "python-futures")
+	local YouCompleteMeRequestsDeps=("idna" "certifi" "chardet" "urllib3" "requests")
 	gitprepare "YouCompleteMe" "third_party/" "${YouCompleteMe[@]}"
+	gitprepare "YouCompleteMe" "third_party/requests_deps/" "${YouCompleteMeRequestsDeps[@]}"
 
-	local ycmd=("bottle" "python-frozendict" "python-future" "waitress" "requests")
-
-	if [[ "$_gocode" == "y" ]]; then
-		ycmd+=("gocode" "godef")
-	fi
+	local ycmd=("bottle" "regex" "python-frozendict" "jedi" "parso" "python-future" "waitress" "requests")
 
 	if [[ "$_omnisharp" == "y" ]]; then
 		ycmd+=("OmniSharpServer")
@@ -191,8 +197,10 @@ prepare() {
 
 	gitprepare "YouCompleteMe/third_party/ycmd" "third_party/" "${ycmd[@]}"
 
-	local Jedi=("waitress" "jedi" "bottle" "parso")
-	gitprepare "YouCompleteMe/third_party/ycmd/third_party/jedi" "vendor/" "${Jedi[@]}"
+	if [[ "$_gocode" == "y" ]]; then
+			gitprepare "YouCompleteMe/third_party/ycmd/third_party/go/src/github.com/mdempsky" "" "gocode"
+			gitprepare "YouCompleteMe/third_party/ycmd/third_party/go/src/github.com/rogpeppe" "" "godef"
+	fi
 
 	if [[ "$_omnisharp" == "y" ]]; then
 		local OmniSharpServer=("NRefactory" "cecil")
@@ -238,6 +246,14 @@ build() {
 		msg2 'Skipping Rust completer...'
 	fi
 
+	if [[ "$_typescript" == "y" ]]; then
+		msg2 'Building Typescipt completer...'
+		cd "$srcdir/YouCompleteMe/third_party/ycmd/"
+		npm install -g --prefix third_party/tsserver typescript
+	else
+		msg2 'Skipping Typescipt completer...'
+	fi
+
 	if [[ "$_tern" == "y" ]]; then
 		msg2 'Building Tern completer...' # SetUpTern()
 		cd "$srcdir/YouCompleteMe/third_party/ycmd/third_party/tern_runtime" || exit
@@ -251,10 +267,16 @@ build() {
 	fi
 
 	if [[ "$_java" == "y" ]]; then
+		msg2 'Injecting Java completer...'
+
 		# Remove stale java completer data if any
 		rm -rf "$srcdir/YouCompleteMe/third_party/ycmd/third_party/eclipse.jdt.ls/target/repository"
+
+		# Continue populating directory
 		mkdir -p "$srcdir/YouCompleteMe/third_party/ycmd/third_party/eclipse.jdt.ls/target/repository"
 		mv "$srcdir"/{config_linux,features,plugins} "$srcdir/YouCompleteMe/third_party/ycmd/third_party/eclipse.jdt.ls/target/repository"
+	else
+		msg2 'Skipping Java completer...'
 	fi
 }
 
@@ -267,14 +289,17 @@ package() {
 	fi
 
 	mkdir -p "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party"
+	mkdir -p "$pkgdir/$vimfiles_dir/third_party/requests_deps"
 
 	cp -r "$srcdir/YouCompleteMe/"{autoload,doc,plugin,python} \
 		"$pkgdir/$vimfiles_dir"
-	cp -r "$srcdir/YouCompleteMe/third_party/"{pythonfutures,requests-futures} \
+	cp -r "$srcdir/YouCompleteMe/third_party/"{pythonfutures,requests-futures,python-future} \
 		"$pkgdir/$vimfiles_dir/third_party"
+	cp -r "$srcdir/YouCompleteMe/third_party/requests_deps/"{certifi,chardet,idna,requests,urllib3} \
+		"$pkgdir/$vimfiles_dir/third_party/requests_deps"
 	cp -r "$srcdir/YouCompleteMe/third_party/ycmd/"{ycmd,ycm_core.so,CORE_VERSION,clang_includes} \
 		"$pkgdir/$vimfiles_dir/third_party/ycmd"
-	cp -r "$srcdir/YouCompleteMe/third_party/ycmd/third_party/"{bottle,parso,frozendict,jedi,python-future,requests,waitress} \
+	cp -r "$srcdir/YouCompleteMe/third_party/ycmd/third_party/"{bottle,cregex,frozendict,jedi,parso,python-future,requests,waitress} \
 		"$pkgdir/$vimfiles_dir/third_party/ycmd/third_party"
 
 	if [[ "$_omnisharp" == "y" ]]; then
@@ -303,6 +328,11 @@ package() {
 			"$pkgdir/$vimfiles_dir/third_party/ycmd/third_party"
 	fi
 
+	if [[ "$_typescript" == "y" ]]; then
+	  cp -r "$srcdir/YouCompleteMe/third_party/ycmd/third_party/tsserver" \
+		  "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party"
+	fi
+
 	if [[ "$_java" == "y" ]]; then
 		mv "$srcdir/YouCompleteMe/third_party/ycmd/third_party/eclipse.jdt.ls" "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party"
 		# Force the java completion engine to create its workspace at /tmp instead which is writeable by every user
@@ -320,22 +350,14 @@ package() {
 	rm -r "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party/waitress/waitress/tests"
 	rm -r "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party/bottle/test"
 
-	# Remove any file we cannot compile using a specfic python version
-	if [[ "$_use_python2" == "ON" ]]; then
-		:
-	else
-		rm -r "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party/bottle/plugins/werkzeug/bottle_werkzeug.py"
-		rm -r "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party/bottle/plugins/sqlite/bottle_sqlite.py"
-	fi
-
 	# Remove unneeded docs
 	rm -r "$pkgdir/$vimfiles_dir/third_party/ycmd/third_party/python-future/docs"
 
 	# Finally compile all the python files to bytecode.
 	if [[ "$_use_python2" == "ON" ]]; then
-		python2 -m compileall "$pkgdir"
+		python2 -m compileall "$pkgdir" || :
 	else
-		python3 -m compileall "$pkgdir"
+		python3 -m compileall "$pkgdir" || :
 	fi
 
 }

@@ -15,7 +15,7 @@ post_install() {
 }
 
 post_upgrade() {
-  update_vim_help "$1"
+  update_vim_help
 }
 
 post_remove() {
