@@ -5,7 +5,7 @@
 pkgname=openblas-lapack
 _PkgName=OpenBLAS
 _pkgname=openblas
-pkgver=0.3.4
+pkgver=0.3.5
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.8.0
 pkgrel=1
@@ -19,7 +19,7 @@ provides=('openblas' "blas=${_lapackver}" "lapack=${_lapackver}" "cblas=${_lapac
 conflicts=('openblas' 'blas' 'lapack' 'cblas' 'lapacke')
 options=(!emptydirs)
 source=(${_PkgName}-${pkgver}.tar.gz::https://github.com/xianyi/${_PkgName}/archive/v${pkgver}.tar.gz)
-sha256sums=('4b4b4453251e9edb5f57465bf2b3cf67b19d811d50c8588cdf2ea1f201bb834f')
+sha256sums=('0950c14bd77c90a6427e26210d6dab422271bc86f9fc69126725833ecdaa0e85')
 
 # Add the following line to the _config variable if you want to set the number of make jobs
 #  MAKE_NB_JOBS=2 \
