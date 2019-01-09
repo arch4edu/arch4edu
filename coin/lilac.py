@@ -2,9 +2,12 @@
 from lilaclib import *
 
 update_on = [{'aur': None}]
-depends = ['soqt']
-build_prefix = 'arch4edu-x86_64'
-pre_build = aur_pre_build
+build_prefix = 'extra-x86_64'
+
+def pre_build():
+    aur_pre_build()
+    add_makedepends(['openal', 'fontconfig', 'zlib', 'freetype2', 'js'])
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
