@@ -6,7 +6,7 @@ build_prefix = 'arch4edu-x86_64'
 depends = ['cub', 'kaldi-openfst', 'openblas-lapack']
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build(do_vcs_update=True)
 
     for line in edit_file('PKGBUILD'):
         if 'makedepends=(' in line:
