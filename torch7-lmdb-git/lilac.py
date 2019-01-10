@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-update_on = [{'aur': None}, {'github': 'eladhoffer/lmdb.torch'}]
+update_on = [{'github': 'eladhoffer/lmdb.torch'}]
 build_prefix = 'arch4edu-x86_64'
 depends = ['torch7-git']
 pre_build = aur_pre_build
