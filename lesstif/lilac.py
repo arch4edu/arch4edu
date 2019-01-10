@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
     aur_pre_build()
+
     for line in edit_file('PKGBUILD'):
         if './configure' in line:
             print('  CFLAGS="$CFLAGS -L${srcdir}/${pkgname}-${pkgver}/lib/Xm-2.1/.libs"')
@@ -13,4 +15,4 @@ def pre_build():
 post_build = aur_post_build
 
 if __name__ == '__main__':
-  single_main(build_prefix)
+    single_main(build_prefix)

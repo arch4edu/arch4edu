@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'kaldi-asr/kaldi'}]
 build_prefix = 'arch4edu-x86_64'
-depends=['cub', 'kaldi-openfst', 'openblas-lapack']
+depends = ['cub', 'kaldi-openfst', 'openblas-lapack']
 
 def pre_build():
     aur_pre_build()

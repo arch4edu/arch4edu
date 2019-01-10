@@ -3,18 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-
-def pre_build():
-    aur_pre_build()
-
-    for line in edit_file('PKGBUILD'):
-        if line.startswith('depends=('):
-            print(line.replace("'llvm>=6.0.0' 'llvm<6.1.0'", '"llvm6"').replace('llvm-libs', 'llvm6-libs'))
-        elif line.startswith('makedepends=('):
-            print(line.replace(" 'llvm'", ''))
-        else:
-            print(line)
-
+pre_build = aur_pre_build
 post_build = aur_post_build
 
 if __name__ == '__main__':
