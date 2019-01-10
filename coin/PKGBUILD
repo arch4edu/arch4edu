@@ -14,7 +14,7 @@ url='https://bitbucket.org/Coin3D/coin'
 license=('GPL')
 arch=('i686' 'x86_64')
 depends=('libgl' 'libsm')
-makedepends=('doxygen')
+makedepends=('zlib' 'doxygen' 'openal' 'js60' 'fontconfig' 'freetype2' )
 optdepends=('openal: sound/dynamic linking support'
             'fontconfig: dynamic linking support'
             'zlib: dynamic linking support'
