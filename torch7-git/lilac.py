@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+update_on = [{'aur': None}, {'github': 'torch/torch7'}]
 build_prefix = 'arch4edu-x86_64'
 depends = ['torch7-cwrap-git', 'torch7-paths-git']
 pre_build = aur_pre_build
