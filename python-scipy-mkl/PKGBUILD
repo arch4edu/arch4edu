@@ -8,7 +8,7 @@
 pkgbase='python-scipy-mkl'
 pkgname=('python-scipy-mkl' 'python2-scipy-mkl')
 pkgver=1.1.0
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
 arch=('i686' 'x86_64')
 url="http://www.scipy.org/"
