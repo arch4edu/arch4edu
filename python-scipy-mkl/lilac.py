@@ -12,7 +12,7 @@ def pre_build():
     for line in edit_file('PKGBUILD'):
         if 'replaces' in line:
             continue
-        elif 'sh build_python.sh python2'
+        elif 'sh build_python.sh python2' in line:
             print('\t\t;')
         elif line.startswith('pkgname='):
             print("pkgname='python-scipy-mkl'")
