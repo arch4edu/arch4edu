@@ -13,7 +13,7 @@ def pre_build():
         if 'replaces' in line:
             continue
         elif 'sh build_python.sh python2' in line:
-            print('\t\t;')
+            print('\t\techo skipped')
         elif line.startswith('pkgname='):
             print("pkgname='python-scipy-mkl'")
         else:
