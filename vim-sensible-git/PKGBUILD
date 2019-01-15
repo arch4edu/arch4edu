@@ -9,7 +9,6 @@ pkgdesc="vim defaults everyone can agree on"
 arch=('any')
 url="https://github.com/tpope/${pkgname%-git}"
 license=('custom:vim')
-groups=('vim-plugins')
 depends=('vim')
 makedepends=('git')
 provides=("${pkgname%-git}")
