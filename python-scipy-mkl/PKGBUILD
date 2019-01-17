@@ -6,7 +6,7 @@
 # Contributor: Andrzej Giniewicz <gginiu@gmail.com>
 
 pkgbase='python-scipy-mkl'
-pkgname=('python-scipy-mkl' 'python2-scipy-mkl')
+pkgname='python-scipy-mkl'
 pkgver=1.1.0
 pkgrel=1.1
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
@@ -82,7 +82,7 @@ build() {
 
 	if [ "$use_intel_cc" = true ]; then
 		#python2 setup.py config --compiler=intelem --fcompiler=intelem build_clib --compiler=intelem --fcompiler=intelem build_ext --compiler=intelem --fcompiler=intelem
-		sh build_python.sh python2
+		echo skipped
 	fi
 
 }
@@ -111,7 +111,6 @@ package_python-scipy-mkl() {
 
 	depends+=('python-numpy' 'qhull' 'python-nose')
 	provides=('python3-scipy=${pkgver}' 'python-scipy=${pkgver}' 'scipy=${pkgver}')
-	replaces=('python-scipy')
 	conflicts=('python-scipy')
 	optdepends=('python-pillow: for image saving module')
 
@@ -134,7 +133,6 @@ package_python2-scipy-mkl() {
 
 	depends+=('python2-numpy' 'qhull' 'python2-nose')
 	provides=('python2-scipy=${pkgver}' 'python2-scipy=${pkgver}' 'scipy=${pkgver}')
-	replaces=('python2-scipy')
 	conflicts=('python2-scipy')
 	optdepends=('python2-pillow: for image saving module')
 
