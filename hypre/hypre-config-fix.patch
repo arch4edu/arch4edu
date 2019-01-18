@@ -1,0 +1,36 @@
+diff -Naur hypre-2.15.1/src/FEI_mv/femli/Makefile hypre-2.15.1-fix/src/FEI_mv/femli/Makefile
+--- hypre-2.15.1/src/FEI_mv/femli/Makefile	2018-10-19 17:21:31.000000000 +0200
++++ hypre-2.15.1-fix/src/FEI_mv/femli/Makefile	2018-12-16 19:15:59.962580300 +0100
+@@ -13,6 +13,8 @@
+ 
+ include ../../config/Makefile.config
+ 
++SYSTEM_LIBS = $(MPILIBDIRS) $(MPILIBS) $(MPIFLAGS) -lm ${SUPERLU_LIBS} ${LAPACKLIBDIRS} ${LAPACKLIBS}
++
+ CINCLUDES = ${INCLUDES} ${MPIINCLUDE}
+ 
+ MLI_INCLUDES = \
+diff -Naur hypre-2.15.1/src/lib/Makefile hypre-2.15.1-fix/src/lib/Makefile
+--- hypre-2.15.1/src/lib/Makefile	2018-10-19 17:21:31.000000000 +0200
++++ hypre-2.15.1-fix/src/lib/Makefile	2018-12-16 19:15:54.485320700 +0100
+@@ -59,7 +59,7 @@
+ 
+ SONAME = libHYPRE-${HYPRE_RELEASE_VERSION}${HYPRE_LIB_SUFFIX}
+ SOLIBS = ${MPILIBDIRS} ${MPILIBS} ${LAPACKLIBDIRS} ${LAPACKLIBS}\
+- ${BLASLIBDIRS} ${BLASLIBS} ${LIBS} ${FLIBS}
++ ${BLASLIBDIRS} ${BLASLIBS} ${LIBS} ${FLIBS} ${SUPERLU_LIBS} ${DSUPERLU_LIBS}
+ 
+ 
+ ##################################################################
+diff -Naur hypre-2.15.1/src/parcsr_ls/Makefile hypre-2.15.1-fix/src/parcsr_ls/Makefile
+--- hypre-2.15.1/src/parcsr_ls/Makefile	2018-10-19 17:21:31.000000000 +0200
++++ hypre-2.15.1-fix/src/parcsr_ls/Makefile	2018-12-16 19:15:59.961578800 +0100
+@@ -12,6 +12,8 @@
+ 
+ include ../config/Makefile.config
+ 
++SYSTEM_LIBS = $(MPILIBDIRS) $(MPILIBS) $(MPIFLAGS) -lm $(DSUPERLU_LIBS) $(LAPACKLIBDIRS) $(LAPACKLIBS)
++
+ ## Euclid specific macros taken from distributed_ls/Euclid
+ 
+ CINCLUDES = ${INCLUDES} ${MPIINCLUDE}
