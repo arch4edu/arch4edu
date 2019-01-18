@@ -7,7 +7,7 @@ depends = ['combblas', 'parmetis']
 
 def pre_build():
     aur_pre_build()
-    add_depends('gcc-fortran')
+    add_depends(['gcc-fortran'])
 
 post_build = aur_post_build
 
