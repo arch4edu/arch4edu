@@ -6,7 +6,7 @@ pkgdesc="Set of subroutines to solve a sparse linear system (MPI parallel versio
 arch=('x86_64')
 url="http://crd-legacy.lbl.gov/~xiaoye/SuperLU/"
 license=('custom')
-depends=('lapack' 'parmetis' 'combblas')
+depends=('lapack' 'gcc-fortran' 'parmetis' 'combblas' )
 makedepends=('cmake')
 source=(${url}${pkgname}_$pkgver.tar.gz ${url}License.txt
         ${url}ug.pdf)
