@@ -4,12 +4,12 @@
 pkgname=libgpuarray-git
 _gitname=libgpuarray
 pkgver=0.7.6.8.g23f30c2
-pkgrel=1
+pkgrel=2
 pkgdesc="Library to manipulate tensors on the GPU"
 arch=('i686' 'x86_64')
 url="https://github.com/Theano/libgpuarray"
 license=('MIT')
-depends=('glibc')
+depends=('glibc' 'python')
 makedepends=('git' 'cmake' 'python')
 provides=("${_gitname}")
 source=("git+https://github.com/Theano/${_gitname}.git")
@@ -36,4 +36,5 @@ build() {
 package() {
   cd ${_gitname}/_build
   make install
+  install -D -m644 "../LICENSE" "${pkgdir}/usr/share/licenses/libgpuarray-git/LICENSE"
 }
