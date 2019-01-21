@@ -3,7 +3,8 @@
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
 pkgver=3.1
-pkgrel=1
+pkgrel=3
+_debrel='+dfsg-2+b1'
 
 pkgname=$_pkgname-bin
 arch=('x86_64' 'i686' 'aarch64')
@@ -15,21 +16,21 @@ provides=("$_pkgname" "qemu-user")
 conflicts=("$_pkgname" "qemu-user")
 
 if [ "$CARCH" = 'x86_64' ] ; then
-  _debsrc="${_pkgname}_${pkgver}+dfsg-1_amd64.deb"
-  _csum=27aff9179038f561cfdbf0726b5dfda5afb6ff938afa586d255160afce265375
+  _debsrc="${_pkgname}_${pkgver}${_debrel}_amd64.deb"
+  _csum=0ab98611e680994e549815b7ef8d72dedc34f63b1d13c69643894fcfcaf2b662
 elif [ "$CARCH" = 'i686' ] ; then
-  _debsrc="${_pkgname}_${pkgver}+dfsg-1_i386.deb"
-  _csum=c01ccf333c6e91a4570ea2c99732d6690a8bcf18504c5320d2949539b384cb39
+  _debsrc="${_pkgname}_${pkgver}${_debrel}_i386.deb"
+  _csum=SKIP
 elif [ "$CARCH" = 'aarch64' ] ; then
-  _debsrc="${_pkgname}_${pkgver}+dfsg-1_arm64.deb"
-  _csum=9cc89a4c912fbd6986ea8e5600a75b3b3d2248593205029756a3814e34c560fc
+  _debsrc="${_pkgname}_${pkgver}${_debrel}_arm64.deb"
+  _csum=SKIP
 else
-  _debsrc="${_pkgname}_${pkgver}+dfsg-1_${CARCH}.deb"
+  _debsrc="${_pkgname}_${pkgver}${_debrel}_${CARCH}.deb"
   _csum=SKIP
 fi
 
 source=(
-  "qemu-user-static.deb::http://ftp.debian.org/debian/pool/main/q/qemu/${_debsrc}"
+  "qemu-user-static-${pkgver}${_debrel}_${CARCH}.deb::http://ftp.debian.org/debian/pool/main/q/qemu/${_debsrc}"
   "qemu.binfmt" # http://src.fedoraproject.org/rpms/qemu/raw/master/f/qemu.binfmt
 )
 sha256sums=(
