@@ -13,7 +13,7 @@ pkgdesc="MED stands for Modelisation et Echanges de Donnees, i.e. Data Modelizat
 url="http://www.code-aster.org/outils/med/"
 license=('LGPL')
 depends=('hdf5_18' 'python2')
-makedepends=('gcc-fortran' 'coreutils' 'swig')
+makedepends=('cmake' 'coreutils' 'gcc-fortran' 'swig' )
 optdepends=('tk')
 provides=("med=$pkgver")
 conflicts=("med_fichier" "med")
