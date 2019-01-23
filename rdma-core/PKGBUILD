@@ -3,7 +3,7 @@
 pkgname=('rdma-core')
 _srcname='rdma-core'
 pkgdesc='RDMA core userspace libraries and daemons'
-pkgver='21'
+pkgver='22'
 _tag="v${pkgver}"
 pkgrel='1'
 arch=('x86_64')
