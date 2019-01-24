@@ -7,7 +7,7 @@
 
 set -u
 pkgname='hadoop'
-pkgver='3.1.1'
+pkgver='3.2.0'
 pkgrel='1'
 pkgdesc='Hadoop - MapReduce implementation and distributed filesystem'
 arch=('i686' 'x86_64')
@@ -49,7 +49,7 @@ source=(
   'hadoop-tasktracker.service'
 )
 _verwatch=("${source[0]%|*}hadoop/common/" '.*href="hadoop-\([0-9\.]\+\)/.*' 'f')
-sha256sums=('f837fe260587f71629aad1f4fb6719274e948111dc96ffc5a8e26f27deac5602'
+sha256sums=('226b6cbdf769467250054b3abdf26df9f05fde44bbb82fe5d12d6993ea848f64'
             'b6607cb8531244d9be9241d8d4980d5695869f89fa598c8d24b35ec503df413b'
             'e584c32246fd23fe5f35b13399372419584c27a234364b12d1479f3c87e70748'
             '93cb40f76f6bb0c1924b7ef083b82d39bf32190f86c28fc6304839703cdda7b1'
