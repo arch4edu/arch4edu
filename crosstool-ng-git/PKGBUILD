@@ -4,7 +4,7 @@
 
 pkgname=crosstool-ng-git
 epoch=1
-pkgver=1.23.0.r593.gdaa07529
+pkgver=1.23.0.r595.ge550d2c2
 pkgrel=1
 pkgdesc="crosstool-NG aims at building toolchains."
 arch=('i686' 'x86_64')
