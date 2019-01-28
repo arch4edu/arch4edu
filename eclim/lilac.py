@@ -8,13 +8,8 @@ def pre_build():
     aur_pre_build()
 
     for line in edit_file('PKGBUILD'):
-        if line.startswith('depends=('):
-            print(line.replace("'eclipse'", ''))
-        elif line.startswith('makedepends=('):
-            print(line.replace(')', ' "eclipse-jee")'))
-        elif line.startswith('package()'):
-            print(line)
-            print('  depends+=("eclipse")')
+        if line.startswith('makedepends=('):
+            print(line.replace('eclipse', 'eclipse-jee'))
         else:
             print(line)
 
