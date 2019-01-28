@@ -1,7 +1,7 @@
 #!/bin/python3
 from lilaclib import *
 
-update_on = [{'archkpkg': 'devtools'}, {'github': 'archlinuxarm/PKGBUILDs', 'path': 'alarm/devtools-alarm'}]
+update_on = [{'github': 'archlinuxarm/PKGBUILDs', 'path': 'alarm/devtools-alarm'}]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
