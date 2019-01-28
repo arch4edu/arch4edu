@@ -1,0 +1,39 @@
+From 3c6ea948758d5ffd92e2412c8a9aa398607c140f Mon Sep 17 00:00:00 2001
+From: Kevin Mihelich <kevin@archlinuxarm.org>
+Date: Sun, 28 Dec 2014 22:33:00 -0700
+Subject: [PATCH 4/7] arch-nspawn: arm fix
+
+---
+ arch-nspawn.in   | 2 +-
+ makechrootpkg.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch-nspawn.in b/arch-nspawn.in
+index 1821836..fded89f 100644
+--- a/arch-nspawn.in
++++ b/arch-nspawn.in
+@@ -112,7 +112,7 @@ eval "$(grep -a '^CARCH=' "$working_dir/etc/makepkg.conf")"
+ 
+ [[ -z $nosetarch ]] || unset CARCH
+ 
+-exec ${CARCH:+setarch "$CARCH"} systemd-nspawn -q \
++exec systemd-nspawn -q \
+ 	-D "$working_dir" \
+ 	-E "PATH=/usr/local/sbin:/usr/local/bin:/usr/bin" \
+ 	--register=no --keep-unit --as-pid2 \
+diff --git a/makechrootpkg.in b/makechrootpkg.in
+index a920c19..bb561ea 100644
+--- a/makechrootpkg.in
++++ b/makechrootpkg.in
+@@ -260,7 +260,7 @@ download_sources() {
+ 	# Ensure sources are downloaded
+ 	sudo -u "$makepkg_user" --preserve-env=GNUPGHOME \
+ 		env SRCDEST="$SRCDEST" BUILDDIR="$builddir" \
+-		makepkg --config="$copydir/etc/makepkg.conf" --verifysource -o ||
++		makepkg -A --config="$copydir/etc/makepkg.conf" --verifysource -o ||
+ 		die "Could not download sources."
+ 
+ 	# Clean up garbage from verifysource
+-- 
+2.16.2
+
