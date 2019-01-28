@@ -5,13 +5,13 @@
 
 pkgname=hdf4
 pkgver=4.2.14
-pkgrel=4
-pkgdesc="General purpose library and file format for storing scientific data (full version including the FORTRAN and the Java Native Interfaces - JNI)"
+pkgrel=5
+pkgdesc="General purpose library and file format for storing scientific data (version including the Java Native Interfaces - JNI)"
 arch=('x86_64')
 url="https://portal.hdfgroup.org/display/support/HDF+4.2.14"
 license=('custom')
 depends=('libaec' 'zlib' 'libjpeg-turbo' 'libtirpc')
-makedepends=('java-environment' 'gcc-fortran')
+makedepends=('java-environment')
 conflicts=('hdf4-java')
 provides=('hdf4-java')
 replaces=('hdf4-java')
@@ -34,7 +34,6 @@ build() {
         CFLAGS="${CFLAGS} -fPIC" \
         FFLAGS="${FFLAGS} -fPIC -ffixed-line-length-none" \
         LIBS="-ljpeg -laec -lsz" \
-        F77=gfortran \
         JAVADOC='javadoc -Xdoclint:none' \
         --enable-shared \
         --disable-static \
