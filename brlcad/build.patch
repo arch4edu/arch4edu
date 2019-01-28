@@ -1,11 +1,11 @@
 --- db/nist/CMakeLists.txt
 +++ db/nist/CMakeLists.txt
-@@ -89,7 +89,7 @@
+@@ -10,7 +10,7 @@ set(NIST_SAMPLE_MODELS
+ )
  
+ foreach(im ${NIST_SAMPLE_MODELS})
+-  ADD_G_TARGET(${im} "BRL-CAD Geometry Models/Sample")
++  #ADD_G_TARGET(${im} "BRL-CAD Geometry Models/Sample")
+ endforeach(im ${NIST_SAMPLE_MODELS})
  
- foreach(step_input ${NIST_SAMPLE_STEP_MODELS})
--  ADD_NIST_STEP_TARGET(${step_input} "BRL-CAD Geometry Models/Sample")
-+  #ADD_NIST_STEP_TARGET(${step_input} "BRL-CAD Geometry Models/Sample")
- endforeach(step_input ${NIST_SAMPLE_STEP_MODELS})
- CMAKEFILES(${NIST_SAMPLE_STEP_MODELS})
- 
+ CMAKEFILES(

@@ -1,5 +1,5 @@
 pkgname=brlcad
-pkgver=7.26.4
+pkgver=7.28.0
 pkgrel=0
 pkgdesc='An extensive 3D solid modeling system.'
 url='https://brlcad.org'
@@ -9,7 +9,7 @@ depends=('libgl' 'libxft' 'libxi')
 makedepends=('cmake')
 install="${pkgname}.install"
 source=('build.patch' "http://downloads.sourceforge.net/sourceforge/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
-sha256sums=('SKIP' '1fbf2551b9dd8b1b97beca9eb26bb2db9aa270017cc17329ba3a7518bab30440')
+sha256sums=('SKIP' 'c6df320117fd50ecada5745a6f4c079b361df240915ed9c536aa1b697548a466')
 
 
 prepare() {
@@ -36,5 +36,5 @@ package() {
     cd "${srcdir}/build"
     make "DESTDIR=${pkgdir}" install
     install -D --mode=u=rw,go=r "--target-directory=${pkgdir}/usr/share/licenses/${pkgname}" share/doc/legal/{bdl,bsd}.txt
-    install -D --mode=u=rwx,go=rx "--target-directory=${pkgdir}/etc/profile.d" "${pkgname}.sh"
+    install -D --mode=u=rw,go=r "--target-directory=${pkgdir}/etc/profile.d" "${pkgname}.sh"
 }
