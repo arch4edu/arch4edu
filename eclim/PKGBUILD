@@ -1,14 +1,14 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributor: Andrea Fagiani <andfagiani_at_gmail_dot_com>
+# Contributor: solarus <in01-archlinux at tunna.org>
 pkgname=eclim
 pkgver=2.8.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Brings Eclipse functionality to Vim"
 url="http://eclim.org/"
 license=('GPL3')
 arch=(i686 x86_64)
-depends=( 'java-environment=8' 'libnsl' 'vim')
-makedepends=('apache-ant' 'python2-sphinx' 'python2-docutils' 'groovy' "eclipse-jee")
+makedepends=('apache-ant' 'eclipse-jee' 'groovy' 'java-environment=10' 'libnsl' 'python2-sphinx' 'python2-docutils' 'vim')
 optdepends=('eclipse-dltk-core')
 conflicts=('eclim-git')
 install=$pkgname.install
@@ -27,6 +27,8 @@ prepare() {
 
   export ANT_HOME=/usr/share/ant
   export PATH=$PATH:$ANT_HOME/bin
+  export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
+  export ANT_OPTS="--add-modules java.xml.bind"
 
   chmod +x org.eclim/nailgun/configure bin/sphinx
 
@@ -35,6 +37,10 @@ prepare() {
 
   # ant/build.gant syntax error
   sed '68,71d' -i ant/build.gant
+
+  # https://github.com/ervandew/eclim/issues/601
+  find -name "*.java" -exec sed -i -e 's/StubUtility2/StubUtility2Core/' \
+    -e 's/corext.codemanipulation.StubUtility;/core.manipulation.StubUtility;/' {} +
 }
 
 build() {
@@ -47,17 +53,16 @@ build() {
 
   cd ../..
 
-  JAVA_HOME=/usr/lib/jvm/java-8-openjdk \
   ant -lib /usr/share/groovy/lib \
       -Declipse.home=/usr/lib/eclipse \
       -Dvim.files=/usr/share/vim/vimfiles \
       -Dfile.encoding=utf-8 \
       build
-
 }
 
 package() {
-  depends+=("eclipse")
+  depends=('eclipse' 'java-environment' 'libnsl' 'vim')
+
   cd $srcdir/${pkgname}_$pkgver
 
   mkdir -p $pkgdir/usr/lib/eclipse
