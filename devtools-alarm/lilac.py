@@ -6,7 +6,6 @@ build_prefix = 'extra-x86_64'
 
 def pre_build():
     run_cmd(['sh', 'download-files-from-github.sh', 'archlinuxarm/PKGBUILDs', 'alarm/devtools-alarm'])
-    vcs_update()
 
 def post_build():
     git_add_files('PKGBUILD')
