@@ -3,23 +3,26 @@
 
 pkgname=scalapack
 pkgver=2.0.2
-pkgrel=5
+pkgrel=6
+arch=('i686' 'x86_64')
 pkgdesc="subset of scalable LAPACK routines redesigned for distributed memory MIMD parallel computers."
 url="http://www.netlib.org/scalapack/"
 license=('custom')
 depends=('glibc' 'openmpi' 'blas' 'lapack') # 'atlas-lapack' 'blacs-openmpi' )
 makedepends=('cmake' 'gcc-fortran')
 provides=('blacs')
-conflicts=()
-replaces=()
-backup=()
-arch=('i686' 'x86_64')
 install=${pkgname}.install
-source=(http://www.netlib.org/scalapack/$pkgname-$pkgver.tgz http://www.netlib.org/scalapack/manpages.tgz Makefile example1.f)
-md5sums=('2f75e600a2ba155ed9ce974a1c4b536f'
-         'a536ab4837ec68addff0a3ec99427a10'
-         '0bef36150ffaf341a6228b474ed800c9'
-         '4723ad431356431bb193db254b6ee0fb')
+source=(http://www.netlib.org/scalapack/$pkgname-$pkgver.tgz http://www.netlib.org/scalapack/manpages.tgz Makefile example1.f cmake3.13.3.patch)
+sha256sums=('0c74aeae690fe5ee4db7926f49c5d0bb69ce09eea75beb915e00bba07530395c'
+            'a745c9f367d65e3c7611c126597a4681094b002552e47b621964d30a966aac7b'
+            '5f7e81c1c76fc010677fd446bfc689c7f6af1a22a51093e8790e8a615159c541'
+            'd9904ecb69f318c4782c0bd39ff2bff511af31960a2383a9d42d6620a266ea70'
+            '3c3b2e60473394e8594854251eab1035fc31643fe17b26f49aa7b31d5b6903c3')
+
+prepare() {
+  cd ${pkgname}-${pkgver}/CMAKE
+  patch -Np0 < "$srcdir"/cmake3.13.3.patch
+}
 
 build() {
     msg "Starting make..."
