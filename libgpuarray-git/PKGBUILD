@@ -3,8 +3,8 @@
 # Contributor: Jon Gjengset <jon@thesquareplanet.com>
 pkgname=libgpuarray-git
 _gitname=libgpuarray
-pkgver=0.7.6.8.g23f30c2
-pkgrel=2
+pkgver=0.7.6.20.g9cec614
+pkgrel=1
 pkgdesc="Library to manipulate tensors on the GPU"
 arch=('i686' 'x86_64')
 url="https://github.com/Theano/libgpuarray"
