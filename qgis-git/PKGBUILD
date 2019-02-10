@@ -2,7 +2,7 @@
 
 pkgname=qgis-git
 _pkgname=qgis
-pkgver=3.5.0_master.r53613.3ae5038d7f
+pkgver=3.5.0_master.r53619.29d4496452
 _pkgver=3.5.0_master
 pkgrel=1
 pkgdesc='Geographic Information System (GIS) that supports vector, raster & database formats - Development master'
