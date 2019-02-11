@@ -1,0 +1,20 @@
+--- intelccompiler.py	2019-01-31 20:54:00.000000000 +0000
++++ _intelccompiler.py	2019-02-04 22:33:34.047063292 +0000
+@@ -20,7 +20,7 @@
+ 
+         v = self.get_version()
+         mpopt = 'openmp' if v and v < '15' else 'qopenmp'
+-        self.cc_exe = ('icc -fPIC -fp-model strict -O3 '
++        self.cc_exe = ('icc -xHost -fPIC -fp-model strict -O3 '
+                        '-fomit-frame-pointer -{}').format(mpopt)
+         compiler = self.cc_exe
+ 
+@@ -60,7 +60,7 @@
+ 
+         v = self.get_version()
+         mpopt = 'openmp' if v and v < '15' else 'qopenmp'
+-        self.cc_exe = ('icc -m64 -fPIC -fp-model strict -O3 '
++        self.cc_exe = ('icc -xHost -m64 -fPIC -fp-model strict -O3 '
+                        '-fomit-frame-pointer -{}').format(mpopt)
+         compiler = self.cc_exe
+ 
