@@ -9,7 +9,7 @@
 pkgbase='python-scipy-mkl'
 pkgname=('python-scipy-mkl' 'python2-scipy-mkl')
 pkgver=1.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
 arch=('i686' 'x86_64')
 url="http://www.scipy.org/"
@@ -74,7 +74,7 @@ build() {
 
 package_python-scipy-mkl() {
 	depends+=('python-numpy')
-	provides=('python3-scipy' 'scipy')
+	provides=('python-scipy' 'python3-scipy' 'scipy')
 	conflicts=('python-scipy')
 	optdepends=('python-pillow: for image saving module')
 
