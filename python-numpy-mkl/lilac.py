@@ -10,9 +10,11 @@ def pre_build():
     aur_pre_build()
 
     for line in edit_file('PKGBUILD'):
-        if 'build() {' in line:
+        if line.endswith('${srcdir}/fix_compiler.patch'):
+            continue
+        elif line.startswith('\tpatch'):
             print(line)
-            print('\texport __INTEL_PRE_CFLAGS="$__INTEL_PRE_CFLAGS -D__PURE_INTEL_C99_HEADERS__ -D_Float32=float -D_Float64=double -D_Float128=\\"long double\\" -D_Float32x=_Float64 -D_Float64x=_Float128"')
+            print('\tpatch ${srcdir}/numpy-${pkgver}/numpy/distutils/ccompiler.py < ${srcdir}/fix_compiler.patch')
         else:
             print(line)
 
