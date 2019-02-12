@@ -1,7 +1,7 @@
 # Maintainer: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=superlu_dist
-pkgver=6.1.0
-pkgrel=3
+pkgver=6.1.1
+pkgrel=1
 pkgdesc="Set of subroutines to solve a sparse linear system (MPI parallel version)"
 arch=('x86_64')
 url="http://crd-legacy.lbl.gov/~xiaoye/SuperLU/"
@@ -11,7 +11,7 @@ makedepends=('cmake' 'gcc-fortran')
 source=(${url}${pkgname}_$pkgver.tar.gz ${url}License.txt
         ${url}ug.pdf)
 
-sha512sums=('dde1f8f47d2f2ff58f2421b563770ccd08b8ff1b5a2386d212554e6a283fd6a717dc2a20a31315727a2063e0c382a7fd94105ec608a6c99e54a68aace1bd7f3b'
+sha512sums=('a91ec7557d213541b964ab7ee52ceb7c8908487d4266c6bb920fbba822ae7060dbc40dee86dfb5bafb46f4a8be7fa21ff5b5a06ac1db7e4ce981f873dfa0ee56'
             '10d4e497b4cc3aa2aaa2807e75641f9c0046f38876587adda33202546b7218a5d77843742e43ceca917726be0b985e7364b924e40d7377efafeba27bbbb5b7de'
             '19f8c8609f6c6d77c657756695c40da0dd0554a511b7090d8d17566e0d770c32e7f2d087530cc51aae80042e6068b0182a01ddaed6a7a086a77e087459b271e2')
 options=('staticlibs')
