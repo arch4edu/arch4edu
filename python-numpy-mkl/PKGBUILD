@@ -30,10 +30,10 @@ sha256sums=('59485e2d172c4c3e27307969ef2c1220b98efcf59cbf373bec41da19f7b69b92'
 	    '7389feba5dc3db997be652fc8d98d573a936c62c4ef5272c142598636fcea2df')
 
 build() {
-	export __INTEL_PRE_CFLAGS="$__INTEL_PRE_CFLAGS -D__PURE_INTEL_C99_HEADERS__ -D_Float32=float -D_Float64=double -D_Float128=\"long double\" -D_Float32x=_Float64 -D_Float64x=_Float128"
 	#cd "${srcdir}"
 
 	patch ${srcdir}/numpy-${pkgver}/numpy/distutils/intelccompiler.py < ${srcdir}/intelccompiler.py.patch
+	patch ${srcdir}/numpy-${pkgver}/numpy/distutils/ccompiler.py < ${srcdir}/fix_compiler.patch
 	# set by hand this flag if you want to compile with gcc
 	#force_gcc=false
 
@@ -121,7 +121,6 @@ package_python2-numpy-mkl() {
 		$(find ${pkgdir} -name '*.py')
 
 	mv "$pkgdir"/usr/bin/f2py{,2}
-	patch ${pkgdir}/usr/lib/python2.7/site-packages/numpy/distutils/ccompiler.py < ${srcdir}/fix_compiler.patch
 }
 
 package_python-numpy-mkl() {
@@ -136,5 +135,4 @@ package_python-numpy-mkl() {
 
 	install -m755 -d "${pkgdir}/usr/share/licenses/python-numpy"
 	install -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-numpy/"
-	patch ${pkgdir}/usr/lib/python3.7/site-packages/numpy/distutils/ccompiler.py < ${srcdir}/fix_compiler.patch
 }
