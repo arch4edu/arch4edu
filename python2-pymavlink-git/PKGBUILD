@@ -1,6 +1,6 @@
 _pkgname="python2-pymavlink"
 pkgname="$_pkgname-git"
-pkgver=r2407.998faf8
+pkgver=r2409.905e49b
 pkgrel=1
 pkgdesc="Python bindings for MAVLink micro air vehicle marshalling / communication library."
 arch=('any')
