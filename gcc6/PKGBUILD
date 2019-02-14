@@ -12,7 +12,7 @@ pkgver=6.5.0
 _ver=6
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=1
+pkgrel=2
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -107,6 +107,7 @@ package_gcc6-libs() {
   cd gcc-build
   make -C $CHOST/libgcc DESTDIR=${pkgdir} install-shared
   rm ${pkgdir}/${_libdir}/libgcc_eh.a
+  mv ${pkgdir}/usr/lib/gcc/$CHOST/lib/libgcc_s.so* $pkgdir/$_libdir
 
   for lib in libatomic \
              libcilkrts \
@@ -157,8 +158,7 @@ package_gcc6() {
   done
 
   make -C $CHOST/libgcc DESTDIR=${pkgdir} install
-  rm -f ${pkgdir}/usr/lib/gcc/${CHOST}/lib/libgcc_s.so*
-  rm -f ${pkgdir}/${_libdir}/libgcc_s.so*
+  rm -rf ${pkgdir}/usr/lib/gcc/${CHOST}/lib*
 
   make -C $CHOST/libstdc++-v3/src DESTDIR=${pkgdir} install
   make -C $CHOST/libstdc++-v3/include DESTDIR=${pkgdir} install
@@ -280,8 +280,6 @@ package_gcc6-gcj() {
   install -m755 jvgenmain ${pkgdir}/${_libdir}/
 
   # Remove conflicting files.
-  rm -f ${pkgdir}/usr/lib/gcc/${CHOST}/lib/libgcc_s.so*
-  rm -f ${pkgdir}/${_libdir}/libgcc_s.so*
   rm ${pkgdir}/${_libdir}/libg{cj,ij}*.so*
 
   # Rename two files to not conflict to classpath
