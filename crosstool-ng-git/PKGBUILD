@@ -4,14 +4,14 @@
 
 pkgname=crosstool-ng-git
 epoch=1
-pkgver=1.23.0.r614.g2da27758
+pkgver=1.24.0rc1.r0.gfb744d81
 pkgrel=1
 pkgdesc="crosstool-NG aims at building toolchains."
 arch=('i686' 'x86_64')
 url="http://crosstool-ng.org/"
 license=('GPL')
 depends=('ncurses' 'make')
-makedepends=('git' 'flex' 'bison' 'gperf' 'help2man' "unzip")
+makedepends=('git' 'flex' 'bison' 'gperf' 'help2man' 'unzip' 'lzip' "unzip")
 provides=('crosstool-ng')
 conflicts=('crosstool-ng')
 source=('git://github.com/crosstool-ng/crosstool-ng')
