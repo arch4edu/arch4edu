@@ -3,7 +3,7 @@
 # All my PKGBUILDs are managed at https://github.com/eli-schwartz/pkgbuilds
 
 pkgname=vim-sensible-git
-pkgver=1.2.r4.g7f46e82
+pkgver=1.2.r5.g8db5a73
 pkgrel=1
 pkgdesc="vim defaults everyone can agree on"
 arch=('any')
