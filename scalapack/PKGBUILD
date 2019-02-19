@@ -3,7 +3,7 @@
 
 pkgname=scalapack
 pkgver=2.0.2
-pkgrel=6
+pkgrel=7
 arch=('i686' 'x86_64')
 pkgdesc="subset of scalable LAPACK routines redesigned for distributed memory MIMD parallel computers."
 url="http://www.netlib.org/scalapack/"
@@ -20,7 +20,10 @@ sha256sums=('0c74aeae690fe5ee4db7926f49c5d0bb69ce09eea75beb915e00bba07530395c'
             '3c3b2e60473394e8594854251eab1035fc31643fe17b26f49aa7b31d5b6903c3')
 
 prepare() {
-  cd ${pkgname}-${pkgver}/CMAKE
+  cd ${pkgname}-${pkgver}
+  sed -i 's/MPI_Type_struct/MPI_Type_create_struct/g' BLACS/SRC/*.c
+  sed -i 's/MPI_Attr_get/MPI_Comm_get_attr/g' BLACS/SRC/blacs_get_.c
+  cd CMAKE
   patch -Np0 < "$srcdir"/cmake3.13.3.patch
 }
 
@@ -37,16 +40,7 @@ build() {
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DCMAKE_CXX_COMPILER=/usr/bin/mpic++ \
 	-DCMAKE_C_COMPILER=/usr/bin/mpicc
-       # doesn't work (?): -DCMAKE_INSTALL_LOCAL_ONLY=0 \
-       #-DCMAKE_CXX_FLAGS='fPIC' CMAKE_Fortran_FLAGS
-
     make
-
-  # Builds library, test and example
-  # make lib
-  #   ld -Bshareable -o  "${srcdir}"/${pkgname}-${pkgver}/lib${pkgname}.so -x -soname lib${pkgname}.so --whole-archive $startdir/src/${pkgname}-${pkgver}/lib${pkgname}.a
-  #   make exe
-  #   make example
 }
 
 package(){
