@@ -1,4 +1,5 @@
 # Maintainer : George Eleftheriou <eleftg>
+# Contributor: Martin Diehl <MartinDiehl>
 # Contributor: Jingbei Li <petronny>
 # Contributor: Ronald van Haren <ronald.archlinux.org>
 # Contributor: Bruno Pagani (a.k.a. ArchangeGabriel) <archange@archlinux.org>
@@ -13,7 +14,7 @@ _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
 _prefix=/usr
 pkgver=1.10.4
-pkgrel=2
+pkgrel=3
 pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version) (full version including its Java Native Interfaces)"
 arch=('x86_64')
 url="https://portal.hdfgroup.org/display/support"
@@ -25,9 +26,11 @@ provides=('hdf5-java' 'hdf5-openmpi' 'hdf5' 'hdf5-cpp-fortran' "hdf5-fortran-${_
 conflicts=('hdf5-java' 'hdf5' 'hdf5-openmpi')
 replaces=("hdf5-fortran-${_mpi}")
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver}/src/${_pkgname}-${pkgver}.tar.bz2"
-        'mpi.patch')
+        'mpi.patch'
+        'mpi4.patch')
 md5sums=('886148d0cc9ffd3c8e1fce0bd75ed07b'
-         '63b43e3d4a5bbea4bcecc84874e08913')
+         '63b43e3d4a5bbea4bcecc84874e08913'
+         '5b981fb1c802d5cacd46af23162ff410')
 
 prepare() {
     mkdir -p build
@@ -35,6 +38,9 @@ prepare() {
 
     # FS#33343
     patch -p1 -i ../mpi.patch
+
+    # patch for MPI4 compatibility
+    patch -p1 -i ../mpi4.patch
 }
 
 build() {
