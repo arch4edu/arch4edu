@@ -9,7 +9,7 @@
 pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
 pkgver=4.0.6
-pkgrel=2
+pkgrel=3
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.${pkgname}.com/"
@@ -39,7 +39,7 @@ _scons_args=(
   --use-sasl-client
   --ssl
   --disable-warnings-as-errors
-  # --use-system-asio     # https://jira.mongodb.org/browse/SERVER-21839 marked as fixed, but still doesn't compile.  Mongodb uses custom patches.
+  # --use-system-asio     # https://jira.mongodb.org/browse/SERVER-21839 marked as fixed, but still doesn't compile.  MongoDB uses custom patches.
   # --use-system-icu      # Doesn't compile
   --use-system-tcmalloc   # in gperftools
   # --use-system-boost    # Doesn't compile
@@ -64,6 +64,11 @@ prepare() {
 
   # Remove sysconfig file, used by upstream's init.d script not used on Arch
   sed -i '/EnvironmentFile=-\/etc\/sysconfig\/mongod/d' rpm/mongod.service
+
+  # Make systemd wait as long as it takes for MongoDB to start
+  # If MongoDB needs a long time to start, prevent systemd from restarting it every 90 seconds
+  # See: https://jira.mongodb.org/browse/SERVER-38086
+  sed -i 's/\[Service]/[Service]\nTimeoutStartSec=infinity/' rpm/mongod.service
 }
 
 build() {
