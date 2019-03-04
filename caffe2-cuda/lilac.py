@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+from lilaclib import *
+
+update_on = [{'aur': None}]
+build_prefix = 'arch4edu-x86_64'
+depends = ['confu-git', 'python-peachpy-git', 'python-scikit-image', 'python-lmdb', 'python-leveldb', 'python-glog', 'python-nvd3', 'python-slugify', 'rdma-core']
+pre_build = aur_pre_build
+post_build = aur_post_build
+
+if __name__ == '__main__':
+    single_main(build_prefix)
