@@ -1,0 +1,19 @@
+post_install() {
+  cat << EOF
+=> Prior to running 'CUDA'-containers, ensure that the nvidia-docker-plugin
+   is loaded. -> https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0)
+
+sudo pkill -SIGHUP dockerd
+
+EOF
+}
+
+post_upgrade() {
+  post_install
+}
+
+post_remove() {
+  cat << EOF
+=> Don't forget to disable/stop a potentially running nvidia-docker.service
+EOF
+}
