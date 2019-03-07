@@ -1,10 +1,12 @@
-# Maintainer: Jaroslav Lichtblau <dragonlord@aur.archlinux.org>
-# Contributor: Andrzej Giniewicz <gginiu@gmail.com>
+# Maintainer: Astro Benzene <universebenzene at sina dot com>
+# Contributor: Jaroslav Lichtblau <dragonlord at aur dot archlinux dot org>
+# Contributor: Andrzej Giniewicz <gginiu at gmail dot com>
 
 pkgbase=python-scikit-image
-pkgname=('python2-scikit-image' 'python-scikit-image')
-pkgver=0.14.1
-pkgrel=2
+_pyname=${pkgbase#python-}
+pkgname=("python-${_pyname}" "python2-${_pyname}")
+pkgver=0.14.2
+pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
 url="http://scikit-image.org/"
@@ -13,50 +15,39 @@ makedepends=('cython2' 'cython' 'python2-six' 'python-six' 'python2-scipy' 'pyth
             'python2-matplotlib' 'python-matplotlib' 'python2-networkx' 'python-networkx'
             'python2-pillow' 'python-pillow' 'python2-pywavelets' 'python-pywavelets')
 options=('!emptydirs')
-source=(scikit-image-$pkgver.tar.gz::https://github.com/scikit-image/scikit-image/archive/v$pkgver.tar.gz)
-sha256sums=('8da6fb09aeefb757735c510650ac0072be3831fa76d9747285f3c6ea1e0c5a08')
+source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
+sha256sums=('1afd0b84eefd77afd1071c5c1c402553d67be2d7db8950b32d6f773f25850c1f')
 
 prepare() {
-  cd "${srcdir}"
-  cp -a scikit-image-$pkgver scikit-image-py2-$pkgver
-  cd scikit-image-py2-$pkgver
+    cp -a ${srcdir}/${_pyname}-${pkgver}{,-py2}
+    cd ${srcdir}/${_pyname}-${pkgver}-py2
 
-  sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
-      -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
-      -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
-      -i $(find . -name '*.py')
-}
-
-build() {
-  msg "Building Python2"
-  cd "${srcdir}"/scikit-image-py2-$pkgver
-  python2 setup.py build
-
-  msg "Building Python3"
-  cd "${srcdir}"/scikit-image-$pkgver
-  python setup.py build
+    sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
+        -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
+        -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
+        -i $(find . -name '*.py')
 }
 
 package_python2-scikit-image() {
-  depends=('python2-scipy' 'python2-matplotlib' 'python2-networkx'
-           'python2-pillow' 'python2-pywavelets')
-  optdepends=('python2-pyqt4: for imshow(x, fancy=True) and skivi'
-              'freeimage: for reading various types of image file formats')
-  cd "${srcdir}"/scikit-image-py2-$pkgver
+    depends=('python2-scipy' 'python2-matplotlib' 'python2-networkx'
+             'python2-pillow' 'python2-pywavelets')
+    optdepends=('python2-pyqt4: for imshow(x, fancy=True) and skivi'
+                'freeimage: for reading various types of image file formats')
+    cd ${srcdir}/${_pyname}-${pkgver}-py2
 
-  python2 setup.py install --root="${pkgdir}"/ --optimize=1
-  mv "${pkgdir}"/usr/bin/skivi "${pkgdir}"/usr/bin/skivi2
-  install -D LICENSE.txt "${pkgdir}"/usr/share/licenses/$pkgname/LICENSE
+    install -D -m644 LICENSE.txt -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    python2 setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+    mv ${pkgdir}/usr/bin/skivi{,2}
 }
 
 package_python-scikit-image() {
-  depends=('python-scipy' 'python-matplotlib' 'python-networkx'
-           'python-pillow' 'python-pywavelets')
-  optdepends=('python-pyqt4: for imshow(x, fancy=True) and skivi'
-              'freeimage: for reading various types of image file formats'
-              'python-pyamg: fast cg_mg mode of random walker segmentation')
-  cd "${srcdir}"/scikit-image-$pkgver
+    depends=('python-scipy' 'python-matplotlib' 'python-networkx'
+             'python-pillow' 'python-pywavelets')
+    optdepends=('python-pyqt4: for imshow(x, fancy=True) and skivi'
+                'freeimage: for reading various types of image file formats'
+                'python-pyamg: fast cg_mg mode of random walker segmentation')
+    cd ${srcdir}/${_pyname}-${pkgver}
 
-  python setup.py install --root="${pkgdir}"/ --optimize=1
-  install -D LICENSE.txt "${pkgdir}"/usr/share/licenses/$pkgname/LICENSE
+    install -D -m644 LICENSE.txt -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
 }
