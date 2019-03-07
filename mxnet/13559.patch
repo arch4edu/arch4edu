@@ -4,14 +4,14 @@ index f31664709bd..a6d7cc1204f 100644
 +++ b/src/io/image_aug_default.cc
 @@ -479,14 +479,14 @@ class DefaultImageAugmenter : public ImageAugmenter {
          }
-         if (rand_order[i] == 1) {
+         if (i == 1) {
            // contrast
 -          cvtColor(res, temp_, CV_RGB2GRAY);
 +          cvtColor(res, temp_, cv::COLOR_RGB2GRAY);
            float gray_mean = cv::mean(temp_)[0];
            res.convertTo(res, -1, alpha_c, (1 - alpha_c) * gray_mean);
          }
-         if (rand_order[i] == 2) {
+         if (i == 2) {
            // saturation
 -          cvtColor(res, temp_, CV_RGB2GRAY);
 -          cvtColor(temp_, temp_, CV_GRAY2BGR);
