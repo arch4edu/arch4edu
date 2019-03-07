@@ -22,7 +22,7 @@ depends=(
     # python-pydotplus (or python-pydot) is required by python executable 'draw_net.py'
     # https://github.com/BVLC/caffe/blob/1.0/python/caffe/draw.py#L7-L22
 )
-makedepends=('gcc7' 'boost' 'doxygen' 'texlive-core')
+makedepends=('boost' 'doxygen' 'gcc7' 'texlive-core' 'texlive-latexextra')
 provides=('caffe')
 conflicts=('caffe')
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/BVLC/caffe/archive/${pkgver}.tar.gz"
