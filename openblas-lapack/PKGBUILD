@@ -8,7 +8,7 @@ _pkgname=openblas
 pkgver=0.3.5
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Optimized BLAS library based on GotoBLAS2 1.13 BSD (providing blas, lapack, and cblas)"
 arch=('any')
 url="http://www.openblas.net/"
@@ -25,12 +25,13 @@ sha256sums=('0950c14bd77c90a6427e26210d6dab422271bc86f9fc69126725833ecdaa0e85')
 #  MAKE_NB_JOBS=2 \
 _config="FC=gfortran USE_OPENMP=0 USE_THREAD=1 \
   USE_COMPILER_TLS=0 \
-  NO_LAPACK=0 BUILD_LAPACK_DEPRECATED=1"
+  NO_LAPACK=0 BUILD_LAPACK_DEPRECATED=1 \
+  MAJOR_VERSION=${_lapackver:0:1} NO_STATIC=1"
 
 build(){
   cd "${srcdir}/${_PkgName}-${pkgver}"
 
-  make ${_config} libs netlib shared
+  make ${_config} CFLAGS="${CFLAGS}" libs netlib shared
 }
 
 check(){
