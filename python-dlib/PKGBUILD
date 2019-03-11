@@ -9,7 +9,7 @@ pkgname=python-dlib
 pkgname=('python-dlib' 'python2-dlib')
 #pkgname+=('python-dlib-cuda' 'python2-dlib-cuda')
 _pkgname=dlib
-pkgver=19.16
+pkgver=19.17
 pkgrel=1
 pkgdesc="Dlib is a general purpose cross-platform C++ library designed using contract programming and modern C++ techniques."
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=('sqlite')
 #optdepends+=('cuda' 'cudnn' 'ccache-ext')
 makedepends=(${optdepends[@]} 'cmake' 'boost' 'python-setuptools' 'python2-setuptools')
 source=("$url/files/${_pkgname}-${pkgver}.tar.bz2")
-md5sums=('39c2b238de3eff6aa90a96120d63ebfc')
+md5sums=('ee24e7f527b281acdbd78752a331f758')
 
 prepare() {
 	cd "$srcdir/"
