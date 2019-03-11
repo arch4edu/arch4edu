@@ -1,5 +1,5 @@
---- pyglossary-3.1.0/pyglossary/core.py.orig	2018-07-27 00:50:05.986891631 +0300
-+++ pyglossary-3.1.0/pyglossary/core.py	2018-07-27 00:54:20.446369541 +0300
+--- pyglossary-3.2.0/pyglossary/core.py.orig	2019-03-11 10:51:01.664932702 +0300
++++ pyglossary-3.2.0/pyglossary/core.py	2019-03-11 10:53:45.366566894 +0300
 @@ -158,10 +158,10 @@
  
  if hasattr(sys, "frozen"):

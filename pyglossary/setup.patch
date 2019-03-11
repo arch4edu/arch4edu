@@ -1,5 +1,5 @@
---- pyglossary-3.1.0/setup.py.orig	2018-07-27 01:18:25.762327253 +0300
-+++ pyglossary-3.1.0/setup.py	2018-07-27 01:18:59.632701040 +0300
+--- pyglossary-3.2.0/setup.py.orig	2019-03-11 10:51:19.731779626 +0300
++++ pyglossary-3.2.0/setup.py	2019-03-11 10:52:51.762698231 +0300
 @@ -54,7 +54,6 @@
  		"config.json",
  	]),
@@ -8,20 +8,17 @@
  	(relRootDir+"/ui/gtk3_utils", glob.glob("ui/gtk3_utils/*.py")),
  	(relRootDir+"/res", glob.glob("res/*")),
  	("share/doc/pyglossary", []),
-@@ -131,9 +130,9 @@
+@@ -131,9 +130,6 @@
  setup(
  	name="pyglossary",
  	version=VERSION,
 -	cmdclass={
 -		"install": my_install,
 -	},
-+	#cmdclass={
-+	#	"install": my_install,
-+	#},
  	description="A tool for workig with dictionary databases",
  	author="Saeed Rasooli",
  	author_email="saeed.gnu@gmail.com",
-@@ -149,7 +148,7 @@
+@@ -149,7 +145,7 @@
  		"pyglossary": [
  			"plugins/*.py",
  			"plugin_lib/*.py",
