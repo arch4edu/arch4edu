@@ -3,7 +3,11 @@ from lilaclib import *
 
 update_on = [{'aur': None}]
 build_prefix = ['extra-armv6h', 'extra-armv7h', 'extra-aarch64']
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build()
+    add_makedepends(['git'])
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
