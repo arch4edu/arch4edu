@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-update_on = [{'aur': None}]
+update_on = [{'aur': None}, {'github': 'WiringPi/WiringPi-Python'}]
 build_prefix = ['extra-armv6h', 'extra-armv7h', 'extra-aarch64']
 
 def pre_build():
