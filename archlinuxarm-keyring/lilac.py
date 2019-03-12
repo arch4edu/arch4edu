@@ -3,6 +3,7 @@ from lilaclib import *
 
 update_on = [{'github': 'archlinuxarm/PKGBUILDs', 'path': 'core/archlinuxarm-keyring'}]
 build_prefix = 'extra-x86_64'
+makepkg_args = ['--skippgpcheck']
 
 def pre_build():
     run_cmd(['sh', 'download-files-from-github.sh', 'archlinuxarm/PKGBUILDs', 'core/archlinuxarm-keyring'])
