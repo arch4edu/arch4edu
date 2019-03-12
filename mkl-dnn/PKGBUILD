@@ -3,9 +3,9 @@
 # Contributor: Jonathon Fernyhough <jonathon_at manjaro_dotorg>
 
 pkgname=mkl-dnn
-pkgver=0.17.4
+pkgver=0.18
 pkgrel=1
-_mklmlver=2019.0.1.20180928
+_mklmlver=2019.0.3.20190220
 pkgdesc="Intel® Math Kernel Library for Deep Neural Networks"
 arch=(x86_64)
 url=https://github.com/intel/mkl-dnn
@@ -15,8 +15,8 @@ optdepends=('intel-mkl: Intel MKL small library for Intel OpenMP linking'
             'intel-compiler-base: Intel OpenMP runtime linking')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/intel/$pkgname/archive/v$pkgver.tar.gz"
         "https://github.com/intel/$pkgname/releases/download/v$pkgver/mklml_lnx_$_mklmlver.tgz")
-sha256sums=('a3a8165782763dc5f5c08db0de52c9dfe34d5d27eb3fb28a445b8d9791c46277'
-            'f00dc3b142a5be399bdeebd7e7ea369545a35d4fb84c86f98b6b048d72685295')
+sha256sums=('38a1c02104ee9f630c1ad68164119cd58ad0aaf59e04ccbe7bd5781add7bfbea'
+            'f4129843d5c2996419f96f10928edd02b2150998861a088dc7cfa1b6a058102a')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -24,7 +24,8 @@ prepare() {
 
   # "Take advantage of optimized matrix-matrix multiplication (GEMM) function
   #  from Intel MKL"
-  ln -s "$srcdir"/mklml_lnx_$_mklmlver external/
+
+  ln -sf "$srcdir"/mklml_lnx_$_mklmlver external/
 
   # Allow compilation to succeed despite warnings
   # sed -i '58s| -Werror||' cmake/platform.cmake
@@ -32,7 +33,7 @@ prepare() {
 
 build() {
   cd "$srcdir/$pkgname-$pkgver/build"
-  cmake -DCMAKE_INSTALL_PREFIX="$pkgdir"/usr ..
+  cmake -DCMAKE_INSTALL_PREFIX="$pkgdir/usr" ..
   make
   make doc
 }
@@ -45,4 +46,5 @@ check() {
 package() {
   cd "$srcdir/$pkgname-$pkgver/build"
   make install
+  mv "$pkgdir/usr/lib64" "$pkgdir/usr/lib" 
 }
