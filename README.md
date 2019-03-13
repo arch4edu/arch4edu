@@ -1,6 +1,6 @@
 Archlinux Repository for Education
 ========
-Making your Archlinux better for researching and developing. (x86_64 only)
+Making your Archlinux and ArchlinuxARM better for researching and developing.
 
 ### Introduction
 
