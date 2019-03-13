@@ -4,7 +4,11 @@ from lilaclib import *
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 depends = ['coin']
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build()
+    add_makedepends(['cmake', 'swig', 'qt5-base'])
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
