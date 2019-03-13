@@ -17,3 +17,4 @@ package() {
 	cd "${srcdir}/${pkgname}-${pkgver}"
 	make PREFIX=/usr DESTDIR=${pkgdir} install
 }
+validpgpkeys=('68B3537F39A313B3E574D06777193F152BDBE6A6' '77193F152BDBE6A6')
