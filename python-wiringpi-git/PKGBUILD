@@ -3,11 +3,11 @@
 
 
 pkgname=python-wiringpi-git
-pkgver=126.4ca39a6
+pkgver=153.08cf3e4
 pkgrel=1
 pkgdesc="Python-wrapped version of Gordon Henderson's WiringPI."
 url="https://github.com/WiringPi/WiringPi-Python"
-arch=('x86_64' 'i686' 'armv6h' 'armv7h' 'armv8h')
+arch=('aarch64' 'armv6h' 'armv7h' 'armv8h' 'i686' 'x86_64')
 license=('GPLv3')
 depends=('python')
 makedepends=('git' 'python-setuptools' 'swig')
