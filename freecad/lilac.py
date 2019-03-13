@@ -7,7 +7,12 @@ build_prefix = 'extra-x86_64'
 
 def pre_build():
     aur_pre_build()
-    add_depends(['qt5-x11extras'])
+
+    for line in edit_file('PKGBUILD'):
+        if line.startswith('depends=('):
+            print(line.replace('(', '("qt5-x11extras" '))
+        else:
+            print(line)
 
 post_build = aur_post_build
 
