@@ -4,10 +4,10 @@
 
 pkgname=rpiusbboot-git
 _pkgname=usbboot
-pkgver=r67.fcadec3
+pkgver=r68.56a8bd4
 pkgrel=1
 pkgdesc="Raspberry Pi USB boot"
-arch=("i686" "x86_64")
+arch=('aarch64' 'armv6h' 'armv7h' 'i686' 'x86_64')
 url="https://github.com/raspberrypi/usbboot"
 license=("Apache")
 depends=("libusb")
@@ -35,3 +35,4 @@ package() {
 #
 # EOF
 #
+makedepends=('git')
