@@ -10,7 +10,7 @@ def pre_build():
 
     for line in edit_file('PKGBUILD'):
         if line.startswith('depends=('):
-            print(line.replace('(', '("qt5-x11extras" "glew"'))
+            print(line.replace('(', '("qt5-x11extras" "glew" '))
         else:
             print(line)
 
