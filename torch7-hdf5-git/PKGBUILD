@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgname='torch7-hdf5-git'
 pkgdesc='Torch interface to HDF5 library'
-pkgver=v0.0.r128.g54e32ab
+pkgver=v0.0.r131.gb7bc57d
 pkgrel=1
 makedepends=('cmake' 'git' 'hdf5-cpp-fortran')
 depends=('torch7-git>=r819' 'hdf5_18-cpp-fortran')
