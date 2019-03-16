@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'archpkg': 'pypy3'}]
 build_prefix = ['extra-armv6h', 'extra-armv7h', 'extra-aarch64']
-time_limit_hours = 24
+time_limit_hours = 72
 
 def pre_build():
     download_official_pkgbuild('pypy3')
