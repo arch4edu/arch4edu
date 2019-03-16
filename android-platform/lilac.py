@@ -3,7 +3,7 @@ from lilaclib import *
 import os
 
 update_on = [{'aur': None}]
-build_prefix = 'multilib-arch4edu'
+build_prefix = 'multilib'
 depends = ['android-sdk', 'android-sdk-platform-tools']
 
 def pre_build():

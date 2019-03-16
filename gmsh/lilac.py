@@ -3,7 +3,7 @@ from lilaclib import *
 import os
 
 update_on = [{'aur': None}]
-build_prefix = 'arch4edu-x86_64'
+build_prefix = 'extra-x86_64'
 depends = ['med-salome']
 
 def pre_build():

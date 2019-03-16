@@ -2,7 +2,7 @@
 from lilaclib import *
 
 update_on = [{'aur': None}]
-build_prefix = 'arch4edu-x86_64'
+build_prefix = 'extra-x86_64'
 depends = ['libnvidia-container-tools']
 pre_build = aur_pre_build
 post_build = aur_post_build
