@@ -3,7 +3,7 @@ from lilaclib import *
 import os
 
 update_on = [{'aur': None}]
-build_prefix = 'multilib-arch4edu'
+build_prefix = 'multilib'
 
 def pre_build():
     aur_pre_build()

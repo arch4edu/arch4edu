@@ -2,7 +2,7 @@
 from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'qgis/QGIS'}]
-build_prefix = 'arch4edu-x86_64'
+build_prefix = 'extra-x86_64'
 depends = ['grass']
 
 def pre_build():
