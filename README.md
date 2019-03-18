@@ -4,9 +4,11 @@ Making your Archlinux and ArchlinuxARM better for researching and developing.
 
 ### Introduction
 
-Arch4edu is a community repository for Archlinux that strives to provide the latest versions of most software used by college students.
+Arch4edu is a community repository for Archlinux and ArchlinuxARM that strives to provide the latest versions of most software used by college students.
 
-### Usage and more information
+Please visit the [wiki](../../wiki) site for more information.
+
+### Usage
 
 Please add
 ```
@@ -16,4 +18,7 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
 ```
 to your `/etc/pacman.conf`.
 
-Please visit the [wiki](../../wiki) site for more information.
+**Recommended**: Install `pkgstats` to help us learn the trends of packages we maintaining.
+```
+$ pacman -S pkgstats
+```
