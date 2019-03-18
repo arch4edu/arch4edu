@@ -18,7 +18,7 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
 ```
 to your `/etc/pacman.conf`.
 
-**Recommended**: Install `pkgstats` to help us learn the trends of packages we maintaining.
+**Recommended**: Please also install `pkgstats` to help us learn the trends of the packages we maintaining.
 ```
 $ pacman -S pkgstats
 ```
