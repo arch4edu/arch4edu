@@ -4,13 +4,13 @@ pkgbase="python-theano"
 pkgname=("python-theano" "python2-theano")
 _pkgname="Theano"
 pkgver="1.0.4"
-pkgrel=2
+pkgrel=3
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
 url='http://www.deeplearning.net/software/theano/'
 license=('BSD')
 makedepends=('python-distribute' 'python2-distribute')
-checkdepends=('python-nose' 'python-parameterized' 'python2-nose' 'python2-parameterized')
+#checkdepends=('python-nose' 'python-parameterized' 'python2-nose' 'python2-parameterized')
 source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
 sha256sums=('35c9bbef56b61ffa299265a42a4e8f8cb5a07b2997dabaef0f8830b397086913')
 
