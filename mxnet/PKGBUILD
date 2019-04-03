@@ -3,7 +3,7 @@
 pkgname=mxnet
 _gitname=incubator-mxnet
 pkgver=1.4.0
-pkgrel=1.1
+pkgrel=2
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
@@ -20,7 +20,7 @@ prepare() {
 	cd "$srcdir/$_gitname"
 	git submodule update --init --recursive
 	(
-		echo "CXX=g++-7"
+		#echo "CXX=g++"
 		echo "USE_BLAS=blas"
 		echo "USE_LAPACK=1"
 		echo "ADD_LDFLAGS+=-lcblas"
