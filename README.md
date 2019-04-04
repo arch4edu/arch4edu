@@ -10,15 +10,4 @@ Please visit the [wiki](../../wiki) site for more information.
 
 ### Usage
 
-Please add
-```
-[arch4edu]
-SigLevel = Never
-Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
-```
-to your `/etc/pacman.conf`.
-
-**Recommended**: Please also install `pkgstats` to help us learn the trends of the packages we maintaining.
-```
-$ pacman -S pkgstats
-```
+* [Add arch4edu to your Archlinux](https://github.com/arch4edu/arch4edu/wiki/Add-arch4edu-to-your-Archlinux)
