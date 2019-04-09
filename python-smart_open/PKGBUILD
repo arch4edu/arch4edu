@@ -4,7 +4,7 @@
 pkgbase=python-smart_open
 pkgname=('python-smart_open' 'python2-smart_open')
 _pkgname=smart_open
-pkgver=1.8.0
+pkgver=1.8.1
 pkgrel=1
 pkgdesc="Library for efficient streaming of very large files from/to S3, HDFS, WebHDFS, HTTP, or local (compressed) files"
 arch=('any')
@@ -15,7 +15,7 @@ provides=("")
 conflicts=("")
 replaces=("")
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/RaRe-Technologies/${_pkgname}/archive/${pkgver}.tar.gz")
-sha512sums=('f98d99462647b23af8d70a934c097e8dd3b85c5b7933ee43c6e8130d2481ffbd6d1a91404747d9f9aa27f3fa6dda412469344c9f34c4dd80eecfb2dd05f3f3bf')
+sha512sums=('ad6de5fd65218f4651423da39970d7e6529e23265b21803ff15041d435201ecf760a2fdab08cc80dc0b3c46a2520b0e48ca66cffd5ab1fd3863aee9d2d1a8f52')
 
 prepare() {
 	cp -a "${srcdir}/${_pkgname}-${pkgver}"{,-py2}
@@ -47,7 +47,7 @@ package_python-smart_open() {
 }
 
 package_python2-smart_open() {
-	depends=('python2-requests' 'python2-boto' 'python2-boto3')
+	depends=('python2-requests' 'python2-boto' 'python2-boto3' 'python2-backports.lzma')  # Backported LZMA from python>3.3
 	optdepends=("python2-bz2file: Handling bz2 files")
 	provides=("python2-smart-open")
 	conflicts=("python2-smart-open")
