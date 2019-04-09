@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'Element-Research/rnn'}]
 build_prefix = 'extra-x86_64'
-depends = ['lua-moses-git', 'torch7-cunnx-git', 'torch7-dpnn-git', 'torch7-git', 'torch7-nn-git', 'torch7-nnx-git', 'torch7-torchx-git']
+repo_depends = ['lua-moses-git', 'torch7-cunnx-git', 'torch7-dpnn-git', 'torch7-git', 'torch7-nn-git', 'torch7-nnx-git', 'torch7-torchx-git']
 pre_build = aur_pre_build
 post_build = aur_post_build
 

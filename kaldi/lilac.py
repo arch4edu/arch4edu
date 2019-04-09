@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'kaldi-asr/kaldi'}]
 build_prefix = 'extra-x86_64'
-depends = ['cub', 'kaldi-openfst', 'openblas-lapack']
+repo_depends = ['cub', 'kaldi-openfst', 'openblas-lapack']
 
 def pre_build():
     aur_pre_build(do_vcs_update=True)

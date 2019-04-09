@@ -4,7 +4,7 @@ import os
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-depends = ['ncurses5-compat-libs']
+repo_depends = ['ncurses5-compat-libs']
 
 def pre_build():
     aur_pre_build()

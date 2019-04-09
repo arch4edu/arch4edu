@@ -4,7 +4,7 @@ import os
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-depends = ['gcc5']
+repo_depends = ['gcc5']
 
 def pre_build():
     aur_pre_build()

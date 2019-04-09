@@ -2,7 +2,7 @@
 from lilaclib import *
 
 update_on = [{'aur': None}]
-depends = ['python2-shiboken2']
+repo_depends = ['python2-shiboken2']
 build_prefix = 'extra-x86_64'
 
 def pre_build():

@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-depends = ['openblas-lapack', 'python-scikit-image','python-pydotplus', 'python-leveldb']
+repo_depends = ['openblas-lapack', 'python-scikit-image','python-pydotplus', 'python-leveldb']
 makepkg_args = ['--nocheck']
 
 def pre_build():

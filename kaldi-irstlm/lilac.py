@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-depends = ['kaldi']
+repo_depends = ['kaldi']
 
 def pre_build():
     aur_pre_build()

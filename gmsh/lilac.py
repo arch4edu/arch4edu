@@ -4,7 +4,7 @@ import os
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-depends = ['med-salome']
+repo_depends = ['med-salome']
 
 def pre_build():
     aur_pre_build()

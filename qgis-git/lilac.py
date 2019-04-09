@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'qgis/QGIS'}]
 build_prefix = 'extra-x86_64'
-depends = ['grass']
+repo_depends = ['grass']
 
 def pre_build():
     aur_pre_build()

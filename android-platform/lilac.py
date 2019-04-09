@@ -4,7 +4,7 @@ import os
 
 update_on = [{'aur': None}]
 build_prefix = 'multilib'
-depends = ['android-sdk', 'android-sdk-platform-tools']
+repo_depends = ['android-sdk', 'android-sdk-platform-tools']
 
 def pre_build():
     aur_pre_build()

@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'deepmind/torch-hdf5'}]
 build_prefix = 'extra-x86_64'
-depends = ['torch7-git', 'hdf5_18-cpp-fortran']
+repo_depends = ['torch7-git', 'hdf5_18-cpp-fortran']
 pre_build = aur_pre_build
 post_build = aur_post_build
 

@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'Dronecode/MAVProxy'}]
 build_prefix = 'extra-x86_64'
-depends = ["python2-pymavlink-git"]
+repo_depends = ["python2-pymavlink-git"]
 
 def pre_build():
   aur_pre_build()

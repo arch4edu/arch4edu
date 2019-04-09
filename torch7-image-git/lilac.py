@@ -3,7 +3,7 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'torch/image'}]
 build_prefix = 'extra-x86_64'
-depends = ['torch7-cwrap-git', 'torch7-git', 'torch7-paths-git']
+repo_depends = ['torch7-cwrap-git', 'torch7-git', 'torch7-paths-git']
 pre_build = aur_pre_build
 post_build = aur_post_build
 

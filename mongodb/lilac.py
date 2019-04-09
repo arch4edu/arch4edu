@@ -4,7 +4,7 @@ import os
 
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-depends = ['wiredtiger']
+repo_depends = ['wiredtiger']
 build_args = ['-r', os.path.expanduser('~/.lilac/archbuild')]
 time_limit_hours = 4
 pre_build = aur_pre_build

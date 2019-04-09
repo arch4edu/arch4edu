@@ -2,7 +2,7 @@
 from lilaclib import *
 
 update_on = [{'aur': None}, {'github': 'Valloric/YouCompleteMe'}]
-depends = ['ncurses5-compat-libs']
+repo_depends = ['ncurses5-compat-libs']
 build_prefix = 'extra-x86_64'
 
 def pre_build():

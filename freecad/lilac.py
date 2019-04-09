@@ -2,7 +2,7 @@
 from lilaclib import *
 
 update_on = [{'aur': None}]
-depends = ['med', 'python-pivy']
+repo_depends = ['med', 'python-pivy']
 build_prefix = 'extra-x86_64'
 
 def pre_build():
