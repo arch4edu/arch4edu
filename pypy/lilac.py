@@ -6,7 +6,7 @@ build_prefix = ['extra-armv6h', 'extra-armv7h']
 time_limit_hours = 72
 
 def pre_build():
-    download_official_pkgbuild('pypy3')
+    download_official_pkgbuild('pypy')
     add_arch(['armv6h', 'armv7h'])
 
     for line in edit_file('PKGBUILD'):
