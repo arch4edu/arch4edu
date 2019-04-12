@@ -1,19 +1,29 @@
 # Maintainer: Sven-Hendrik Haase <sh@lutzhaase.com>
 
 pkgname=pypy3
-pkgver=7.0.0
-pkgrel=1
+pkgver=7.1.0
+pkgrel=2
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
-arch=('x86_64')
+arch=('armv6h' 'armv7h' 'x86_64')
 depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib' 'ncurses')
 makedepends=('python2' 'sqlite' 'tk' 'python2-pycparser')
 optdepends=('sqlite: sqlite module'
             'tk: tk module')
 options=(!buildflags)
 license=('MIT')
-source=("https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v${pkgver}-src.tar.bz2")
-sha512sums=('623d27a2f56a31c75e59c49a7ddb3f5ec71e7b0267d726ebe24db4cc8c9a882795c4ddb0ca92187a2c96702a73a6e8b279184440d21215b11234983ba5331b38')
+source=(a243e4e0b21c.patch::"https://bitbucket.org/pypy/pypy/commits/a243e4e0b21c968ba3fb42e3a575be24a2d6461b/raw"
+"https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v${pkgver}-src.tar.bz2"
+        a93dfb333afe.patch)
+sha512sums=("480e1e9fc11d703ad167ca0fe9473e5216b02f2b39a1251ac9f673252d65a7837cbbcfbebba8a941542ef5c044cb6021b83cec218cdede12b3cfd2fa28e5dff2"
+'1a0a9e9de31c63114c0537747c4a718504a28b780a2ef1f76bff6051a1ec68b496b574989f0b729c07611cd81e199135dd268834dfa6f9664e1e119db8ae20e4'
+            'ed69a8ca9e407f5985c5ffad9649656c69a62a51c610df2718723d6460775e16d37cb888e8cb8ff2ec57ea6a8b2bd518a9368eb8421b435594efc6b32d1f5e19')
+
+prepare() {
+  cd pypy3.6-v${pkgver}-src
+  patch -Np1 -i ${srcdir}/a93dfb333afe.patch
+  patch -Np1 -i ${srcdir}/a243e4e0b21c.patch
+}
 
 build() {
   cd pypy3.6-v${pkgver}-src/pypy/goal
