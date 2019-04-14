@@ -1,21 +1,22 @@
-# Maintainer: Fredy García <frealgagu at gmail dot com>
 # Maintainer: James P. Harvey <jamespharvey20 at gmail dot com>
+# Maintainer: Christoph Bayer <chrbayer@criby.de>
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
 # Contributor: Thomas Dziedzic < gostrc at gmail >
 # Contributor: Mathias Stearn <mathias@10gen.com>
 # Contributor: Alec Thomas
+# Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=4.0.8
+pkgver=4.0.9
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.${pkgname}.com/"
 license=("custom:SSPL")
 # lsb-release::/etc/lsb-release required by src/mongo/util/processinfo_linux.cpp::getLinuxDistro()
-depends=("curl" "libstemmer" "lsb-release" "pcre" "wiredtiger>=3.1.0.20190313" "yaml-cpp")
+depends=("curl" "libstemmer" "lsb-release" "pcre" "wiredtiger>=3.1.0.20190401" "yaml-cpp")
 optdepends=("${pkgname}-tools: mongoimport, mongodump, mongotop, etc")
 makedepends=("libpcap" "ncurses" "python2-cheetah" "python2-regex" "python2-requests" "python2-setuptools" "python2-typing" "python2-yaml" "readline" "scons")
 checkdepends=("python2-pymongo")
@@ -25,7 +26,7 @@ source=(
   "${pkgname}.sysusers"
   "${pkgname}.tmpfiles"
 )
-sha256sums=('83e694405b72002588a64275be00bf1e36e12f5955451171645f45cb3f16f251'
+sha256sums=('f0327dac12b85bd59a9358e2a55490f707fdf9b0528a0a1fc13ce51b6833954e'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39')
 
