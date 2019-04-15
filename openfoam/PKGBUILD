@@ -4,7 +4,7 @@
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 
 pkgname=openfoam
-_subver=20190108
+_subver=20190304
 _pkgver=6
 pkgver=${_pkgver}.${_subver}
 pkgrel=1
@@ -18,7 +18,7 @@ depends=('bzip2' 'paraview' 'parmetis' 'scotch' 'boost' 'flex' 'cgal')
 makedepends=('bash')
 source=("https://github.com/OpenFOAM/$_gitname/archive/$_subver.tar.gz" "${pkgname}.install")
 install="${pkgname}.install"
-md5sums=('f99a51f0e07af178b7e2e8d31cc7fdf1'
+md5sums=('e7f07a02d01cce5e9481926019dd9d1b'
          '906a97732076501f3899d72d3a7393b3')
 
 prepare() {
