@@ -14,5 +14,6 @@ Please visit the [wiki](../../wiki) site for more information.
 
 ### Links
 
+* Sina Weibo: [@arch4edu](https://weibo.com/arch4edu)
 * Telegram channel: [@arch4edu](https://t.me/arch4edu)
 * Twitter: [@arch4edu](https://twitter.com/arch4edu)
