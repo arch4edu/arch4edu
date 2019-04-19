@@ -1,0 +1,14 @@
+pkgbase = downgrade
+	pkgdesc = Bash script for downgrading one or more packages to a version in your cache or the A.L.A.
+	pkgver = 6.2.1
+	pkgrel = 0
+	url = https://github.com/pbrisbin/downgrade
+	arch = any
+	license = GPL
+	depends = pacman-contrib
+	optdepends = sudo: for installation via sudo
+	source = https://github.com/pbrisbin/downgrade/archive/v6.2.1.tar.gz
+	md5sums = 5fd0d700057191947fb745ead45ec24c
+
+pkgname = downgrade
+
