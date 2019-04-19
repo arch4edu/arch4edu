@@ -1,7 +1,7 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 pkgname=('python-arch')
 _module='arch'
-pkgver='4.7.0'
+pkgver='4.8.1'
 pkgrel=1
 pkgdesc="ARCH models in Python."
 url="https://pypi.python.org/pypi/arch/4.1"
@@ -10,16 +10,16 @@ depends=('python'
     'python-pandas'
     'python-scipy'
     'python-statsmodels')
-checkdepends=('python-pytest')
+checkdepends=('python-pytest' 'python-seaborn')
 makedepends=('cython' 'python-setuptools')
 license=('custom:University of Illinois/NCSA Open Source License')
 arch=('x86_64')
 source=("https://github.com/bashtage/arch/archive/${pkgver}.tar.gz")
-sha256sums=('ec692a1c629f6df9c18da5967edc2e1cd84661c2b3a0809b7fa6d2757baec79b')
+sha256sums=('0f86ee3da9c023155816680027238a82fedf25c79a1eb12be19f1f025eaaa3e3')
 
 build() {
     cd "${srcdir}/${_module}-${pkgver}"
-    python setup.py build
+    python setup.py build_ext --inplace
 }
 
 package() {
@@ -30,5 +30,5 @@ package() {
 
 check() {
     cd "${srcdir}/${_module}-${pkgver}"
-    py.test
+    PYTHONPATH=.. py.test arch
 }
