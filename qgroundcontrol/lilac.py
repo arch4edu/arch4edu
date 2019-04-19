@@ -2,11 +2,12 @@
 from lilaclib import *
 
 update_on = [{'aur': None}]
-build_prefix = 'extra-x86_64'
+build_prefix = ['extra-x86_64', 'extra-armv6h', 'extra-armv7h', 'extra-aarch64']
+time_limit_hours = 6
 
 def pre_build():
-    run_cmd(['rm', '-f', 'qgroundcontrol.tar.bz2'])
     aur_pre_build()
+    add_arch(['armv6h', 'armv7h', 'aarch64'])
 
 post_build = aur_post_build
 
