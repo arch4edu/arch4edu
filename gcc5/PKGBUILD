@@ -3,7 +3,7 @@
 # Contributor: Ruben Van Boxem <vanboxem.ruben@gmail.com>
 # Contributor: Allan McRae <allan@archlinux.org>
 
-pkgname=gcc5
+pkgname=('gcc5')
 pkgver=5.5.0
 _ver=5
 _islver=0.18
