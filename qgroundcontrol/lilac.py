@@ -3,11 +3,17 @@ from lilaclib import *
 
 update_on = [{'aur': None}]
 build_prefix = ['extra-x86_64', 'extra-armv6h', 'extra-armv7h', 'extra-aarch64']
-time_limit_hours = 6
+time_limit_hours = 8
 
 def pre_build():
     aur_pre_build()
     add_arch(['armv6h', 'armv7h', 'aarch64'])
+
+    for line in edit_file('PKGBUILD'):
+        if line.startswith('depends=('):
+            print(line.replace('\'', '"qt5-location" "qt5-svg"'))
+        else:
+            print(line)
 
 post_build = aur_post_build
 
