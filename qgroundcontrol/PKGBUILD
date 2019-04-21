@@ -1,12 +1,13 @@
-# Maintainer: Kye Morton <pryre.dev@outlook.com>
+# Maintainer: K. Morton <pryre.dev@outlook.com>
+# Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
 pkgver=3.5.0
-pkgrel=1
-pkgdesc="Ground control for unmanned vehicles."
-arch=('any')
+pkgrel=2
+pkgdesc="Micro air vehicle ground control station."
+arch=('aarch64' 'armv6h' 'armv7h' 'x86_64')
 url="http://qgroundcontrol.org/"
 license=('GPL3')
-depends=( 'bzip2' \
+depends=( 'bzip2'  "qt5-location" "qt5-svg"
 		  'dbus' \
 		  'flac' \
 		  'gst-plugins-base-libs' \
@@ -28,28 +29,75 @@ depends=( 'bzip2' \
 		  'pcre' \
 		  'sdl2' \
 		  'xz' \
-		  'zlib')
+		  'zlib' \
+		  'qt5-speech' \
+		  'qt5-multimedia' \
+		  'qt5-serialport' \
+		  'qt5-charts' \
+		  'qt5-quickcontrols' \
+		  'qt5-quickcontrols2' \
+)
+  
+makedepends=('git' 'qt5-base')
 
-source=('qgroundcontrol-'${pkgver}'-'${pkgrel}'::https://github.com/mavlink/qgroundcontrol/releases/download/v'${pkgver}'/qgroundcontrol.tar.bz2')
-sha256sums=('fc2bed2d25a44b2848e7c836779d9cc7746d4c8eb884971b1c5e92699858e1ca')
+#TODO: Download source release instead
+#TODO: Figure out which releases should be used for Mavlink and GPS
+source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcontrol/archive/v${pkgver}.tar.gz" \
+		"mavlink-v2.0-qgc${pkgver}.zip::https://github.com/mavlink/c_library_v2/archive/e302e1b735e47e9d33c3bad579dd7c6c089c1bb3.zip" \
+		"gps-drivers-qgc${pkgver}.zip::https://github.com/PX4/GpsDrivers/archive/2a4865adc3808687d6c6f550f497a02eb920c382.zip" \
+		"${pkgname}-${pkgver}.patch")
+sha256sums=('e3657f8ba6f88019a42a2fdbd735931c7463143e068352868ae60146c5434ae2' \
+			'f7afee4aa96b8eac0a039fe62c2bff19a9a962e94a32a43b7c2211e589b85a10' \
+			'1ab58c633edcfff9288bd868bf33e2c9990afa27fa5df8f1731675d98a4ce6e4' \
+			'188b71bf75c61f0463da180b45663d5057118008d97b05a53fe620a6a3a207ae')
+
+prepare() {
+	mavlinkdir='c_library_v2-e302e1b735e47e9d33c3bad579dd7c6c089c1bb3'
+	gpsdir='GpsDrivers-2a4865adc3808687d6c6f550f497a02eb920c382'
+
+	mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
+	
+	# Copy in the mavlink source
+	rm -r "${srcdir}/${pkgname}-${pkgver}/libs/mavlink/include/mavlink/v2.0"
+	cp -R "${srcdir}/${mavlinkdir}" "${srcdir}/${pkgname}-${pkgver}/libs/mavlink/include/mavlink/"
+	mv "${srcdir}/${pkgname}-${pkgver}/libs/mavlink/include/mavlink/${mavlinkdir}" "${srcdir}/${pkgname}-${pkgver}/libs/mavlink/include/mavlink/v2.0"
+	# Copy in the GPS source
+	rm -r "${srcdir}/${pkgname}-${pkgver}/src/GPS/Drivers"
+	cp -R "${srcdir}/${gpsdir}" "${srcdir}/${pkgname}-${pkgver}/src/GPS/"
+	mv "${srcdir}/${pkgname}-${pkgver}/src/GPS/${gpsdir}" "${srcdir}/${pkgname}-${pkgver}/src/GPS/Drivers"
+
+	cd "${srcdir}/${pkgname}-${pkgver}/"
+	patch --strip=1 < "${srcdir}/${pkgname}-${pkgver}.patch"
+}
 
 build() {
-  echo "[Desktop Entry]
+	cd "$srcdir/${pkgname}-${pkgver}/build"
+	qmake ../qgroundcontrol.pro
+	make
+	
+	echo "[Desktop Entry]
 Type=Application
-Name=QGroundControl
+Name=QGroundControl Release
 Comment=Ground control for unmanned vehicles
-Path=/opt/qgroundcontrol/
-Exec=/usr/bin/qgroundcontrol
-Icon=/opt/qgroundcontrol/qgroundcontrol.png
+Path=/opt/${pkgname}/
+Exec=/usr/bin/${pkgname}
+Icon=/opt/${pkgname}/qgroundcontrol.png
 Terminal=false
-Categories=Qt;Utility;" > "$srcdir/${pkgname}/qgroundcontrol.desktop"
+Categories=Qt;Utility;" > "$srcdir/${pkgname}.desktop"
 }
 
 package() {
-  mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/applications"
-  cp -R "$srcdir/${pkgname}" "${pkgdir}/opt/qgroundcontrol"
-  ln -s "/opt/qgroundcontrol/qgroundcontrol-start.sh" "${pkgdir}/usr/bin/qgroundcontrol"
-  ln -s "/opt/qgroundcontrol/qgroundcontrol.desktop" "${pkgdir}/usr/share/applications/qgroundcontrol.desktop"
+	mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/applications"
+	cp -R "${srcdir}/${pkgname}-${pkgver}/build/release" "${pkgdir}/opt/${pkgname}"
+	cp "${srcdir}/${pkgname}-${pkgver}/resources/icons/qgroundcontrol.png" "${pkgdir}/opt/${pkgname}"
+	cp "${srcdir}/${pkgname}-${pkgver}/deploy/qgroundcontrol-start.sh" "${pkgdir}/opt/${pkgname}"
+
+	# Remove the default one as we want to use our own desktop file
+	rm "${pkgdir}/opt/${pkgname}/${pkgname}.desktop"
+	cp "${srcdir}/${pkgname}.desktop" "${pkgdir}/opt/${pkgname}"
+
+	ln -s "/opt/${pkgname}/qgroundcontrol-start.sh" "${pkgdir}/usr/bin/${pkgname}"
+	ln -s "/opt/${pkgname}/${pkgname}.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
 }
 
 # vim:set ts=2 sw=2 et:
