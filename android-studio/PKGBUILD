@@ -9,7 +9,7 @@
 
 pkgname=android-studio
 pkgver=3.4.0.18
-pkgrel=1
+pkgrel=2
 _build=183.5452501
 pkgdesc="The official Android IDE (Stable branch)"
 arch=('i686' 'x86_64')
@@ -34,7 +34,7 @@ package() {
 
   # Install the application
   install -d $pkgdir/{opt/$pkgname,usr/bin}
-  cp -a bin gradle lib jre plugins $pkgdir/opt/$pkgname
+  cp -a bin gradle lib jre plugins build.txt product-info.json $pkgdir/opt/$pkgname
   ln -s /opt/android-studio/bin/studio.sh $pkgdir/usr/bin/$pkgname
 
   # Add the icon and desktop file
