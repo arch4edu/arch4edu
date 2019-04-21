@@ -11,7 +11,7 @@ def pre_build():
 
     for line in edit_file('PKGBUILD'):
         if line.startswith('depends=('):
-            print(line.replace('\'', '"qt5-location" "qt5-svg"'))
+            print(line.replace('\\', ' "qt5-location" "qt5-svg"'))
         else:
             print(line)
 
