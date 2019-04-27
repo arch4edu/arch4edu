@@ -1,2 +1,2 @@
-PATH=$PATH:/opt/intel/advisor_2017.1.1.486553/<arch>
+PATH=$PATH:/opt/intel/advisor_<ver>/<arch>
 export PATH

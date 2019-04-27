@@ -1,4 +1,4 @@
-#/bin/bash
+#! /bin/bash
 
 TMP_LLP=$LD_LIBRARY_PATH
 if [ -z $TMP_LLP ] ; then
@@ -7,7 +7,9 @@ else
   LLP_NULL=false ;
 fi
 
+if [ -f /opt/intel/composerxe/linux/bin/compilervars.sh ] ; then
 . /opt/intel/composerxe/linux/bin/compilervars.sh <arch>
+fi
 #. /opt/intel/composerxe/bin/iccvars.sh <arch>
 
 PATH=$PATH:/opt/intel/bin

@@ -1,2 +1,2 @@
-PATH=$PATH:/opt/intel/inspector_2017.1.1.484836/<arch>
+PATH=$PATH:/opt/intel/inspector_<ver>/<arch>
 export PATH
