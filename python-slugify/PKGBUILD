@@ -2,7 +2,7 @@
 # Contributor: Andrey Mikhaylenko <neithere at gmail dot com>
 pkgname=(python-slugify python2-slugify)
 pkgbase=python-slugify
-pkgver=3.0.1
+pkgver=3.0.2
 pkgrel=1
 pkgdesc="A Python slugify application that handles unicode"
 arch=(any)
@@ -10,8 +10,8 @@ url="https://github.com/un33k/python-slugify"
 license=('BSD')
 makedepends=("python-setuptools" "python2-setuptools")
 source=(https://github.com/un33k/python-slugify/archive/${pkgver}.tar.gz)
-md5sums=('7f873c723703729426e5f303d9eaa9b2')
-sha256sums=('32b9c416ee5be1f8131352575df51e86862845799404fcce8dee269498402635')
+md5sums=('fae7ec7d9e12eedd55937081bfdd9d8e')
+sha256sums=('d05716700636f46b5f571875bdf76d0898232098022ef037bafcb0f682c25b9b')
 
 package_python-slugify() {
   depends=("python" "python-text-unidecode")
