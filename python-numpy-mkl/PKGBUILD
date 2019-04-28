@@ -9,7 +9,7 @@ pkgbase="python-numpy-mkl"
 pkgname="python-numpy-mkl"
 true && pkgname=('python-numpy-mkl' 'python2-numpy-mkl')
 #pkgname=('python-numpy')
-pkgver=1.16.2
+pkgver=1.16.3
 pkgrel=1
 pkgdesc="Scientific tools for Python compiled with intel mkl"
 arch=('i686' 'x86_64')
@@ -20,14 +20,16 @@ depends=('intel-mkl' 'python' 'python2')
 makedepends=('python-setuptools' 'python2-setuptools' 'intel-compiler-base' 'intel-fortran-compiler' 'cython')
 
 source=(https://github.com/numpy/numpy/archive/v${pkgver}.tar.gz
-	'site64.cfg' 'site32.cfg' 'intelccompiler.py.patch'
+	'site64.cfg'
+	'site32.cfg'
+	'intelccompiler.py.patch'
 	'fix_compiler.patch')
 
-sha256sums=('88835849921a970dae7705b0ea4a144d6b22f5e28148e17f25723c492a74a3c0'
+sha256sums=('a4c331d8d5208f69ac909ea47b193608b3092c6ba39c00c2561e8d2e4e01c0a4'
             '86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1'
             '882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df'
             '0d185daf0f2fcab08778173f54cee86cd88dc3c6703413686ab3742c0097db4e'
-	    '7389feba5dc3db997be652fc8d98d573a936c62c4ef5272c142598636fcea2df')
+	    '597b8f90f308d752862be08db9cf3cc90a1f2b8c9488ffe52d677648e1afc722')
 
 build() {
 	#cd "${srcdir}"
