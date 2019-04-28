@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['python-imageio', 'python-pywavelets']

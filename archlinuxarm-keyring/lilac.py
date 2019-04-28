@@ -1,6 +1,7 @@
 #!/bin/python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'github': 'archlinuxarm/PKGBUILDs', 'path': 'core/archlinuxarm-keyring'}]
 build_prefix = 'extra-x86_64'
 

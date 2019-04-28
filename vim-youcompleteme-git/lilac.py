@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}, {'github': 'Valloric/YouCompleteMe'}]
 repo_depends = ['ncurses5-compat-libs']
 build_prefix = 'extra-x86_64'

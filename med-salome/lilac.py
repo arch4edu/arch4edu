@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 repo_depends = ['hdf5_18-cpp-fortran']
 build_prefix = 'extra-x86_64'

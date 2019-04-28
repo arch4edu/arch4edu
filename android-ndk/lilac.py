@@ -2,6 +2,7 @@
 from lilaclib import *
 import os
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = 'multilib'
 

@@ -2,6 +2,7 @@
 from lilaclib import *
 import os
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}, {'github': 'jacobdufault/cquery'}]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build

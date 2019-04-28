@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 repo_depends = [('intel-parallel-studio-xe', 'intel-common-libs'), ('intel-parallel-studio-xe', 'intel-compiler-base'), ('intel-parallel-studio-xe', 'intel-fortran-compiler'), ('intel-parallel-studio-xe', 'intel-mkl'), ('intel-parallel-studio-xe', 'intel-openmp')]

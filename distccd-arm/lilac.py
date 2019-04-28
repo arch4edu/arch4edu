@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': 'distccd-armv6h'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['x-tools-armv6-bin', 'x-tools-armv7-bin', 'x-tools-armv8-bin']

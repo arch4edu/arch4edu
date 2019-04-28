@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}, {'github': 'deepmind/torch-hdf5'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['torch7-git', 'hdf5_18-cpp-fortran']

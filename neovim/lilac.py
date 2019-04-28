@@ -3,6 +3,7 @@ from lilaclib import *
 
 luapkg = 'luajit-git-v2.1.0.beta3.r68.g9b410621-1-aarch64.pkg.tar.xz'
 
+maintainers = [{'github': 'petronny'}]
 update_on = [{'archpkg': 'neovim'}]
 build_prefix = 'extra-aarch64'
 makechrootpkg_args = ['-I', luapkg]
