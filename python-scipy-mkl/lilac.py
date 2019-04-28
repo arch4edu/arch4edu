@@ -3,7 +3,8 @@ from lilaclib import *
 
 update_on = [{'aur': None}, {'archpkg': 'python'}]
 build_prefix = 'extra-x86_64'
-repo_depends = [('intel-parallel-studio-xe', 'intel-compiler-base'), ('intel-parallel-studio-xe', 'intel-fortran-compiler'), ('intel-parallel-studio-xe', 'intel-mkl'), 'python-numpy-mkl', ('python-numpy-mkl', 'python2-numpy-mkl')]
+repo_depends = [('intel-parallel-studio-xe', 'intel-common-libs'), ('intel-parallel-studio-xe', 'intel-compiler-base'), ('intel-parallel-studio-xe', 'intel-fortran-compiler'), ('intel-parallel-studio-xe', 'intel-mkl'), ('intel-parallel-studio-xe', 'intel-openmp')]
+repo_depends += ['python-numpy-mkl', ('python-numpy-mkl', 'python2-numpy-mkl')]
 makechrootpkg_args = ['-D', '/opt/intel/licenses']
 
 def pre_build():
