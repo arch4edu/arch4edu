@@ -1,6 +1,8 @@
+intel-common-libs
 intel-compiler-base
 intel-fortran-compiler
 intel-ipp
+intel-openmp
 intel-mkl
 intel-mpi
 intel-tbb_psxe
