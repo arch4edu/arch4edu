@@ -1,62 +1,68 @@
 # Maintainer: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=3.5.0
-pkgrel=2
+pkgver=3.5.1
+pkgrel=0
 pkgdesc="Micro air vehicle ground control station."
 arch=('aarch64' 'armv6h' 'armv7h' 'x86_64')
 url="http://qgroundcontrol.org/"
 license=('GPL3')
-depends=( 'bzip2'  "qt5-location" "qt5-svg"
-		  'dbus' \
-		  'flac' \
-		  'gst-plugins-base-libs' \
-		  'libasyncns' \
-		  'libffi' \
-		  'libgcrypt' \
-		  'libgpg-error' \
-		  'libogg' \
-		  'libsndfile' \
-		  'libsystemd' \
-		  'libunwind' \
-		  'libx11' \
-		  'libxau' \
-		  'libxcb' \
-		  'libxdmcp' \
-		  'libxext' \
-		  'lz4' \
-		  'orc' \
-		  'pcre' \
-		  'sdl2' \
-		  'xz' \
-		  'zlib' \
-		  'qt5-speech' \
-		  'qt5-multimedia' \
-		  'qt5-serialport' \
-		  'qt5-charts' \
-		  'qt5-quickcontrols' \
-		  'qt5-quickcontrols2' \
+
+#Git commit hash for version-specific submodules
+pkgver_mavlink='d240d0986710045663894aebcea89e71ce981ee4'
+pkgver_gps='2a4865adc3808687d6c6f550f497a02eb920c382'
+
+depends=('bzip2'
+		 'dbus'
+		 'flac'
+		 'gst-plugins-base-libs'
+		 'libasyncns'
+		 'libffi'
+		 'libgcrypt'
+		 'libgpg-error'
+		 'libogg'
+		 'libsndfile'
+		 'libsystemd'
+		 'libunwind'
+		 'libx11'
+		 'libxau'
+		 'libxcb'
+		 'libxdmcp'
+		 'libxext'
+		 'lz4'
+		 'orc'
+		 'pcre'
+		 'sdl2'
+		 'xz'
+		 'zlib'
+		 'qt5-speech'
+		 'qt5-multimedia'
+		 'qt5-serialport'
+		 'qt5-charts'
+		 'qt5-quickcontrols'
+		 'qt5-quickcontrols2'
+		 'qt5-location'
+		 'qt5-svg'
 )
-  
+
 makedepends=('git' 'qt5-base')
 
-#TODO: Download source release instead
-#TODO: Figure out which releases should be used for Mavlink and GPS
-source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcontrol/archive/v${pkgver}.tar.gz" \
-		"mavlink-v2.0-qgc${pkgver}.zip::https://github.com/mavlink/c_library_v2/archive/e302e1b735e47e9d33c3bad579dd7c6c089c1bb3.zip" \
-		"gps-drivers-qgc${pkgver}.zip::https://github.com/PX4/GpsDrivers/archive/2a4865adc3808687d6c6f550f497a02eb920c382.zip" \
-		"${pkgname}-${pkgver}.patch")
-sha256sums=('e3657f8ba6f88019a42a2fdbd735931c7463143e068352868ae60146c5434ae2' \
-			'f7afee4aa96b8eac0a039fe62c2bff19a9a962e94a32a43b7c2211e589b85a10' \
-			'1ab58c633edcfff9288bd868bf33e2c9990afa27fa5df8f1731675d98a4ce6e4' \
-			'188b71bf75c61f0463da180b45663d5057118008d97b05a53fe620a6a3a207ae')
+source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcontrol/archive/v${pkgver}.tar.gz"
+		"mavlink-v2.0-qgc${pkgver}.zip::https://github.com/mavlink/c_library_v2/archive/${pkgver_mavlink}.zip"
+		"gps-drivers-qgc${pkgver}.zip::https://github.com/PX4/GpsDrivers/archive/${pkgver_gps}.zip"
+)
+
+sha256sums=('00937e67d3b2fe22beef270c0a4fc24a3247be831380f6b367c2b9b12b45b590'
+			'65c0fc60be9435375f74990a5c83fb0cdef6d15c100245759d2465d480a5b9b5'
+			'1ab58c633edcfff9288bd868bf33e2c9990afa27fa5df8f1731675d98a4ce6e4'
+)
 
 prepare() {
-	mavlinkdir='c_library_v2-e302e1b735e47e9d33c3bad579dd7c6c089c1bb3'
-	gpsdir='GpsDrivers-2a4865adc3808687d6c6f550f497a02eb920c382'
+	mavlinkdir="c_library_v2-${pkgver_mavlink}"
+	gpsdir="GpsDrivers-${pkgver_gps}"
 
 	mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
-	
+
 	# Copy in the mavlink source
 	rm -r "${srcdir}/${pkgname}-${pkgver}/libs/mavlink/include/mavlink/v2.0"
 	cp -R "${srcdir}/${mavlinkdir}" "${srcdir}/${pkgname}-${pkgver}/libs/mavlink/include/mavlink/"
@@ -66,15 +72,15 @@ prepare() {
 	cp -R "${srcdir}/${gpsdir}" "${srcdir}/${pkgname}-${pkgver}/src/GPS/"
 	mv "${srcdir}/${pkgname}-${pkgver}/src/GPS/${gpsdir}" "${srcdir}/${pkgname}-${pkgver}/src/GPS/Drivers"
 
-	cd "${srcdir}/${pkgname}-${pkgver}/"
-	patch --strip=1 < "${srcdir}/${pkgname}-${pkgver}.patch"
+	#cd "${srcdir}/${pkgname}-${pkgver}/"
+	#patch --strip=1 < "${srcdir}/${pkgname}-${pkgver}.patch"
 }
 
 build() {
 	cd "$srcdir/${pkgname}-${pkgver}/build"
 	qmake ../qgroundcontrol.pro
 	make
-	
+
 	echo "[Desktop Entry]
 Type=Application
 Name=QGroundControl Release
