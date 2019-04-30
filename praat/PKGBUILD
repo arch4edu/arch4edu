@@ -3,7 +3,7 @@
 # Contributor: jpate <jkpate@jkpate.net>
 
 pkgname=praat
-pkgver=6.0.50
+pkgver=6.0.51
 pkgrel=1
 pkgdesc="Doing Phonetics by computer (speech analysis)"
 arch=('x86_64')
@@ -14,7 +14,7 @@ makedepends=('pkg-config' 'gtk2' 'alsa-lib')
 optdepends=( 'ttf-sil-fonts' )
 conflicts=('praat-bin' 'praat-git')
 source=("https://github.com/$pkgname/$pkgname/archive/v$pkgver.tar.gz" "$pkgname.desktop" "$pkgname.xpm" "$pkgname.svg" "$pkgname.1")
-sha256sums=('7e56888a1403794c3c3b0843ff8c5e56bf495a3ff0ada2398f01da77c5967695'
+sha256sums=('aa7291956132b45cd76eefa8a3204aa0778f4cee347774cbdb682060bbaca300'
             '94720aedc8e9c9e9d53b3230d79ccaae551b5bc5e6986528664311d55f3cce5a'
             '07abf61475f22f83f0514a8fba1ec7bd3821d2b7f35b1215c1f3e1feb947d74b'
             'db6c7568f6e13b4ce7c37bd9fcf289832867f79ba7d7fc48c4f13f0045ad98f1'
