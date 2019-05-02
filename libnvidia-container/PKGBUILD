@@ -4,8 +4,8 @@
 pkgbase=libnvidia-container
 pkgname=(libnvidia-container libnvidia-container-tools)
 
-pkgver=1.0.1
-pkgrel=3
+pkgver=1.0.2
+pkgrel=1
 _elfver=0.7.1
 _nvmpver=396.51
 
@@ -27,10 +27,10 @@ options=(!makeflags)
 # https://github.com/NVIDIA/libnvidia-container/blob/56704b8dd297bf4daf82a2da4b270dc7f14e0008/mk/nvidia-modprobe.mk
 source=("https://github.com/NVIDIA/${pkgbase}/archive/v${pkgver}.tar.gz"
         "https://sourceforge.net/projects/elftoolchain/files/Sources/elftoolchain-${_elfver}/elftoolchain-${_elfver}.tar.bz2"
-        "https://github.com/NVIDIA/nvidia-modprobe/archive/396.51.tar.gz"
+        "https://github.com/NVIDIA/nvidia-modprobe/archive/${_nvmpver}.tar.gz"
         fix_rpc_flags.patch
         fix_git_rev_unavail.patch)
-sha256sums=('f745cdbb630c39f10d0043fa1c1c869a64bbd01e39010ffb8823d632ab94b1d6'
+sha256sums=('333efd96e29719c0136fa6af1b14abc0ef9346532dd439462eeeeefb7f90cfc6'
             '44f14591fcf21294387215dd7562f3fb4bec2f42f476cf32420a6bbabb2bd2b5'
             '25bc6437a384be670e9fd76ac2e5b9753517e23eb16e7fa891b18537b70c4b20'
             'ed949dd162cd104071a58b09f1effefe91150a32893ed28d143ee62bc217e566'
