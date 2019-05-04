@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'archpkg': 'cuda'}]
+update_on = [{'aur': None}, {'archpkg': 'cuda'}, {'archpkg': 'opencv'}]
 repo_depends = ['python-graphviz']
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
