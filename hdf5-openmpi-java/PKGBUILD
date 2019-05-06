@@ -13,8 +13,8 @@ _pkgname=hdf5
 _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
 _prefix=/usr
-pkgver=1.10.4
-pkgrel=3
+pkgver=1.10.5
+pkgrel=1
 pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version) (full version including its Java Native Interfaces)"
 arch=('x86_64')
 url="https://portal.hdfgroup.org/display/support"
@@ -26,11 +26,9 @@ provides=('hdf5-java' 'hdf5-openmpi' 'hdf5' 'hdf5-cpp-fortran' "hdf5-fortran-${_
 conflicts=('hdf5-java' 'hdf5' 'hdf5-openmpi')
 replaces=("hdf5-fortran-${_mpi}")
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver}/src/${_pkgname}-${pkgver}.tar.bz2"
-        'mpi.patch'
-        'mpi4.patch')
-md5sums=('886148d0cc9ffd3c8e1fce0bd75ed07b'
-         '63b43e3d4a5bbea4bcecc84874e08913'
-         '5b981fb1c802d5cacd46af23162ff410')
+        'mpi.patch')
+md5sums=('7c19d6b81ee2a3ba7d36f6922b2f90d3'
+         '63b43e3d4a5bbea4bcecc84874e08913')
 
 prepare() {
     mkdir -p build
@@ -38,9 +36,6 @@ prepare() {
 
     # FS#33343
     patch -p1 -i ../mpi.patch
-
-    # patch for MPI4 compatibility
-    patch -p1 -i ../mpi4.patch
 }
 
 build() {
@@ -105,9 +100,6 @@ package() {
     cd build
 
     make DESTDIR="${pkgdir}" install
-
-    # Remove leftover test files
-    rm "${pkgdir}${_prefix}"/include/tst{ds,image,lite,table}{,_tests}.mod
 
     # Move examples to a proper place
     install -dm755 "${pkgdir}${_prefix}/share/doc/${_pkgname}"
