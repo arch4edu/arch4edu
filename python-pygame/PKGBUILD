@@ -4,7 +4,7 @@
 
 pkgname=python-pygame
 _name=pygame
-pkgver=1.9.4
+pkgver=1.9.6
 pkgrel=1
 pkgdesc="Python game library"
 arch=('i686' 'x86_64')
@@ -16,11 +16,10 @@ provides=('python-pygame')
 
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
 
-md5sums=('35123425da093da331a89ec0dcbd1ac4')
+md5sums=('36f8817874f9e63acdf12914340b60e9')
 
 package() 
 {
   cd ${_name}-${pkgver}
-  python config.py -auto
   python setup.py install --root="${pkgdir}" --prefix=/usr
 }
