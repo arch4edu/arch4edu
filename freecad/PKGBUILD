@@ -9,8 +9,8 @@
 
 pkgname=freecad
 _pkgver=0.18
-_count=16111
-_commit=0dc75267fee2af948c3085002a2cc61758cc5b30
+_count=16117
+_commit=dbb4cc6415bac848a294f03b80f65e888d531742
 pkgver=$_pkgver.$_count
 pkgrel=9
 pkgdesc='A general purpose 3D CAD modeler'
