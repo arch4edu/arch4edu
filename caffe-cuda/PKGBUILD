@@ -3,39 +3,39 @@
 pkgname=caffe-cuda
 _srcname=caffe
 pkgver=1.0
-pkgrel=6
-pkgdesc='A deep learning framework made with expression, speed, and modularity in mind (with cuda)'
+pkgrel=7
+pkgdesc='A deep learning framework made with expression, speed, and modularity in mind (with cuda support)'
 arch=('x86_64')
 url='https://caffe.berkeleyvision.org/'
 license=('BSD')
-depends=(
+depends=('openblas' 'lapack' 'boost-libs' 'protobuf' 'google-glog' 'gflags'
+         'hdf5' 'opencv' 'leveldb' 'lmdb' 'python' 'python-numpy' 'python-pandas'
+         'cuda' 'cudnn' 'nccl')
+optdepends=(
     # official repositories:
-        'openblas' 'lapack' 'boost-libs' 'protobuf' 'google-glog' 'gflags'
-        'hdf5' 'opencv' 'leveldb' 'lmdb' 'cuda' 'cudnn' 'nccl' 'python'
-        'cython' 'python-numpy' 'python-scipy' 'python-matplotlib' 'ipython'
-        'python-h5py' 'python-networkx' 'python-nose' 'python-pandas'
-        'python-dateutil' 'python-protobuf' 'python-gflags' 'python-yaml'
-        'python-pillow' 'python-six'
+        'cython' 'python-scipy' 'python-matplotlib' 'ipython' 'python-h5py'
+        'python-networkx' 'python-nose' 'python-dateutil' 'python-protobuf'
+        'python-gflags' 'python-yaml' 'python-pillow' 'python-six'
     # AUR:
         'python-leveldb' 'python-scikit-image' 'python-pydotplus'
     # NOTE:
     # python-pydotplus (or python-pydot) is required by python executable 'draw_net.py'
     # https://github.com/BVLC/caffe/blob/1.0/python/caffe/draw.py#L7-L22
 )
-makedepends=('boost' 'doxygen' 'gcc7' 'texlive-core' 'texlive-latexextra')
+makedepends=('boost' 'doxygen' 'ghostscript' 'texlive-core' 'texlive-latexextra')
 provides=('caffe')
 conflicts=('caffe')
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/BVLC/caffe/archive/${pkgver}.tar.gz"
+source=("${_srcname}-${pkgver}.tar.gz"::"https://github.com/BVLC/caffe/archive/${pkgver}.tar.gz"
         'Makefile.config'
         'caffe-1.0-opencv4-fix.patch')
 sha256sums=('71d3c9eb8a183150f965a465824d01fe82826c22505f7aa314f700ace03fa77f'
-            'e3e294f15f46ff46b7243297cb562cd5a5b11d540231eb2874d2c21588ceaf54'
+            'd022edfc85f43f0f094240ef4852fbd62eb60aab9792a674b259860253207314'
             '2072c8ca1393b53ef280a15c43af940cc9bf1419ae32b3d8a6541b10b8cb50e9')
 
 prepare() {
     cp -af "${srcdir}/Makefile.config" "${srcdir}/${_srcname}-${pkgver}"
     
-    # fix build with opencv 4.0
+    # fix build with opencv 4
     cd "${_srcname}-${pkgver}"
     patch -Np1 -i "${srcdir}/caffe-1.0-opencv4-fix.patch"
 }
@@ -43,14 +43,14 @@ prepare() {
 build() {
     cd "${_srcname}-${pkgver}"
     
-    make all pycaffe
+    make all pycaffe test
     rm -rf doxygen
     make docs distribute
 }
 
 check() {
     cd "${_srcname}-${pkgver}"
-    make test runtest
+    make runtest
 }
 
 package() {
