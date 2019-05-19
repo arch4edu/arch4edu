@@ -7,7 +7,7 @@
 pkgname=libsvm
 pkgver=3.23
 _srcver="${pkgver/./}"
-pkgrel=6
+pkgrel=7
 pkgdesc='A library for Support Vector Machines classification (includes binaries and bindings for python and java)'
 arch=('i686' 'x86_64')
 url='https://www.csie.ntu.edu.tw/~cjlin/libsvm/'
@@ -74,17 +74,18 @@ package() {
     ## NOTE: 'grid.py' can be used either as a python module or a CLI/tool
     ## https://github.com/cjlin1/libsvm/blob/v323/tools/README#L163-L164
     cd "${srcdir}/${pkgname}-${_srcver}/python"
-    install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python${_pyver}/libsvm"
-    install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python2.7/libsvm"
-    install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python${_pyver}/libsvm"
-    install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python2.7/libsvm"
-    install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python${_pyver}/libsvm"
-    install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python2.7/libsvm"
+    install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python${_pyver}/site-packages/libsvm"
+    install -D -m644 commonutil.py -t "${pkgdir}/usr/lib/python2.7/site-packages/libsvm"
+    install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python${_pyver}/site-packages/libsvm"
+    install -D -m644 svm.py        -t "${pkgdir}/usr/lib/python2.7/site-packages/libsvm"
+    install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python${_pyver}/site-packages/libsvm"
+    install -D -m644 svmutil.py    -t "${pkgdir}/usr/lib/python2.7/site-packages/libsvm"
     cd "${srcdir}/${pkgname}-${_srcver}/tools"
-    install -D -m644 grid.py  -t "${pkgdir}/usr/lib/python${_pyver}/libsvm"
-    install -D -m644 grid.py  -t "${pkgdir}/usr/lib/python2.7/libsvm"
-    sed -i '1s/python$/python2/' "${pkgdir}/usr/lib/python2.7/libsvm/"{commonutil,grid,svm,svmutil}.py
-    printf '' | install -D -m644 /dev/stdin "${pkgdir}/usr/lib/python2.7/libsvm/__init__.py"
+    install -D -m644 grid.py  -t "${pkgdir}/usr/lib/python${_pyver}/site-packages/libsvm"
+    install -D -m644 grid.py  -t "${pkgdir}/usr/lib/python2.7/site-packages/libsvm"
+    sed -i '1s/python$/python2/' "${pkgdir}/usr/lib/python2.7/site-packages/libsvm/"{commonutil,grid,svm,svmutil}.py
+    printf '' | install -D -m644 /dev/stdin "${pkgdir}/usr/lib/python${_pyver}/site-packages/libsvm/__init__.py"
+    printf '' | install -D -m644 /dev/stdin "${pkgdir}/usr/lib/python2.7/site-packages/libsvm/__init__.py"
     
     # python CLI/tools
     install -D -m755 checkdata.py "${pkgdir}/usr/bin/svm-checkdata.py"
