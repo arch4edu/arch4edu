@@ -1,29 +1,39 @@
 # Maintainer : Daniel Bermond < gmail-com: danielbermond >
 
+_commit='f9f811ebc5abd625d63da79e936d9015497b5f58'
+
 pkgbase=python-nvd3
 pkgname=('python-nvd3' 'python2-nvd3')
 pkgver=0.15.0
-pkgrel=3
-pkgdesc='Python3 wrapper for the NVD3 chart generator'
+pkgrel=4
+pkgdesc='Python wrapper for the NVD3 chart generator'
 arch=('any')
 url='https://github.com/areski/python-nvd3/'
 license=('MIT')
-makedepends=('python' 'python2' 'python-setuptools' 'python2-setuptools')
-source=("https://files.pythonhosted.org/packages/0b/aa/97165daa6e319409c5c2582e62736a7353bda3c90d90fdcb0b11e116dd2d/python-nvd3-${pkgver}.tar.gz")
-sha256sums=('fbd75ff47e0ef255b4aa4f3a8b10dc8b4024aa5a9a7abed5b2406bd3cb817715')
+makedepends=('git' 'python' 'python-setuptools' 'python2' 'python2-setuptools')
+source=("git+https://github.com/areski/python-nvd3.git#commit=${_commit}")
+sha256sums=('SKIP')
 
 prepare() {
-    cp -a "${pkgbase}-${pkgver}" "${pkgbase}-${pkgver}-py2"
+    cp -a "$pkgbase" "${pkgbase}-py2"
 }
 
 build() {
-    printf '%s\n' '  -> Building for Python3...'
-    cd "${pkgbase}-${pkgver}"
+    printf '%s\n' '  -> Building for Python...'
+    cd "$pkgbase"
     python setup.py build
     
     printf '%s\n' '  -> Building for Python2...'
-    cd "${srcdir}/${pkgbase}-${pkgver}-py2"
+    cd "${srcdir}/${pkgbase}-py2"
     python2 setup.py build
+}
+
+check() {
+    cd "$pkgbase"
+    python setup.py test
+    
+    cd "${srcdir}/${pkgbase}-py2"
+    python2 setup.py test
 }
 
 package_python-nvd3() {
@@ -34,11 +44,10 @@ package_python-nvd3() {
             'python-slugify'
     )
     
-    cd "${pkgbase}-${pkgver}"
-    python setup.py install --root="$pkgdir" --optimize='1'
+    cd "$pkgbase"
+    python setup.py install --root="$pkgdir" --skip-build --optimize='1'
     
-    # license
-    install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -D -m644 MIT-LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 
 package_python2-nvd3() {
@@ -50,10 +59,20 @@ package_python2-nvd3() {
             'python2-slugify'
     )
     
-    cd "${pkgbase}-${pkgver}-py2"
-    python2 setup.py install --root="$pkgdir" --optimize='1'
-    mv "${pkgdir}/usr/bin/nvd3" "${pkgdir}/usr/bin/nvd3-2"
+    cd "${pkgbase}-py2"
+    python2 setup.py install --root="$pkgdir" --skip-build --optimize='1'
     
-    # license
-    install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    mv "${pkgdir}/usr/bin/nvd3" "${pkgdir}/usr/bin/nvd3-2"
+    local _script _script_list
+    _script_list=('__init__.py' 'cumulativeLineChart.py' 'discreteBarChart.py'
+                  'lineChart.py' 'linePlusBarChart.py' 'lineWithFocusChart.py'
+                  'multiBarChart.py' 'multiBarHorizontalChart.py' 'pieChart.py'
+                  'scatterChart.py' 'stackedAreaChart.py' 'translator.py'
+                  'NVD3Chart.py')
+    for _script in "${_script_list[@]}"
+    do
+        sed -i '1s/$/2/' "${pkgdir}/usr/lib/python2.7/site-packages/nvd3/${_script}"
+    done
+    
+    install -D -m644 MIT-LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
