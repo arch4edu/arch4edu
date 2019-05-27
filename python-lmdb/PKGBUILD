@@ -1,11 +1,11 @@
-# Maintainer : Daniel Bermond < yahoo-com: danielbermond >
+# Maintainer : Daniel Bermond < gmail-com: danielbermond >
 
 pkgbase=python-lmdb
 pkgname=('python-lmdb' 'python2-lmdb')
 pkgver=0.94
-pkgrel=2
-pkgdesc='Universal Python3 binding for the LMDB Lightning Database'
-arch=('i686' 'x86_64')
+pkgrel=3
+pkgdesc='Universal Python binding for the LMDB Lightning Database'
+arch=('x86_64')
 url='https://github.com/dw/py-lmdb/'
 license=('custom')
 depends=('python2' 'lmdb')
@@ -18,7 +18,7 @@ prepare() {
 }
 
 build() {
-    printf '%s\n' '  -> Building for Python3...'
+    printf '%s\n' '  -> Building for Python...'
     cd "py-lmdb-py-lmdb_${pkgver}"
     LMDB_FORCE_SYSTEM='1' python setup.py build
     
@@ -28,13 +28,11 @@ build() {
 }
 
 package_python-lmdb() {
-    pkgdesc='Universal Python3 binding for the LMDB Lightning Database'
     depends=('python' 'python-cffi' 'lmdb')
     
     cd "py-lmdb-py-lmdb_${pkgver}"
-    LMDB_FORCE_SYSTEM='1' python setup.py install --root="$pkgdir" --optimize='1'
+    LMDB_FORCE_SYSTEM='1' python setup.py install --root="$pkgdir" --skip-build --optimize='1'
     
-    # license
     install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
 
@@ -43,8 +41,7 @@ package_python2-lmdb() {
     depends=('python2' 'python2-cffi' 'lmdb')
     
     cd "py-lmdb-py-lmdb_${pkgver}-py2"
-    LMDB_FORCE_SYSTEM='1' python2 setup.py install --root="$pkgdir" --optimize='1'
+    LMDB_FORCE_SYSTEM='1' python2 setup.py install --root="$pkgdir" --skip-build --optimize='1'
     
-    # license
-    install -D -m644 'LICENSE' -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
