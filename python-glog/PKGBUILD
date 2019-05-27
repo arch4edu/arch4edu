@@ -1,10 +1,10 @@
-# Maintainer : Daniel Bermond < yahoo-com: danielbermond >
+# Maintainer : Daniel Bermond < gmail-com: danielbermond >
 
 pkgbase=python-glog
 pkgname=('python-glog' 'python2-glog')
 pkgver=0.3.1
-pkgrel=2
-pkgdesc='A simple Google-style logging wrapper for Python3'
+pkgrel=3
+pkgdesc='A simple Google-style logging wrapper for Python'
 arch=('any')
 url='https://github.com/benley/python-glog/'
 license=('BSD')
@@ -17,7 +17,7 @@ prepare() {
 }
 
 build() {
-    printf '%s\n' '  -> Building for Python3...'
+    printf '%s\n' '  -> Building for Python...'
     cd "${pkgbase}-${pkgver}"
     python setup.py build
     
@@ -30,9 +30,8 @@ package_python-glog() {
     depends=('python' 'python-gflags' 'python-six')
     
     cd "${pkgbase}-${pkgver}"
-    python setup.py install --root="$pkgdir" --optimize='1'
+    python setup.py install --root="$pkgdir" --skip-build --optimize='1'
     
-    # license
     install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
 
@@ -41,8 +40,7 @@ package_python2-glog() {
     depends=('python2' 'python2-gflags' 'python2-six')
     
     cd "${pkgbase}-${pkgver}-py2"
-    python2 setup.py install --root="$pkgdir" --optimize='1'
+    python2 setup.py install --root="$pkgdir" --skip-build --optimize='1'
     
-    # license
     install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
