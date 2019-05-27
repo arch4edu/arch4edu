@@ -2,14 +2,15 @@
 
 pkgbase=python-ninja-syntax
 pkgname=('python-ninja-syntax' 'python2-ninja-syntax')
+_name=ninja_syntax
 pkgver=1.7.2
-pkgrel=3
-pkgdesc='Python3 module for generating .ninja files'
+pkgrel=4
+pkgdesc='Python module for generating .ninja files'
 arch=('any')
 url='https://pypi.python.org/pypi/ninja_syntax/'
 license=('APACHE')
 makedepends=('python-setuptools' 'python2-setuptools')
-source=("https://pypi.python.org/packages/4b/c3/303da27e7d72aeae5d1879d592048fcd5e8c0c333505b76dda136ab342c0/ninja_syntax-${pkgver}.tar.gz")
+source=("${pkgname}-${pkgver}.tar.gz"::"https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
 sha256sums=('342dc97b9e88a6495bae22953ee6063f91d2f03db6f727b62ba5c3092a18ef1f')
 
 prepare() {
@@ -17,7 +18,7 @@ prepare() {
 }
 
 build() {
-    printf '%s\n' '  -> Building for Python3...'
+    printf '%s\n' '  -> Building for Python...'
     cd "ninja_syntax-${pkgver}"
     python setup.py build
     
@@ -30,7 +31,7 @@ package_python-ninja-syntax() {
     depends=('python')
     
     cd "ninja_syntax-${pkgver}"
-    python setup.py install --root="$pkgdir" --optimize=1
+    python setup.py install --root="$pkgdir" --skip-build --optimize='1'
 }
 
 package_python2-ninja-syntax() {
@@ -38,5 +39,7 @@ package_python2-ninja-syntax() {
     depends=('python2')
     
     cd "ninja_syntax-${pkgver}-py2"
-    python2 setup.py install --root="$pkgdir" --optimize=1
+    python2 setup.py install --root="$pkgdir" --skip-build --optimize='1'
+    
+    sed -i '1s/$/2/' "${pkgdir}/usr/lib/python2.7/site-packages/ninja_syntax.py"
 }
