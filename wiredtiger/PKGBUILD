@@ -4,7 +4,11 @@
 # Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=wiredtiger
-pkgver=3.1.1.20190401
+# Upstream's versioning of wiredtiger is a mess.
+# Current commit's README says 3.1.1, and is what's used here
+# git describe --long shows: r3.7.3.r423.g4051e4941
+# git describe --long --tags shows: mongodb.4.0.6.r23.g4051e4941
+pkgver=3.1.1.20190516
 _commit=4f2ed4c4cb122342711ce82d553482124501fcd4
 pkgrel=1
 pkgdesc="High performance, scalable, production quality, NoSQL, Open Source extensible platform for data management"
