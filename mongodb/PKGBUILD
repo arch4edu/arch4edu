@@ -9,14 +9,14 @@
 
 pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=4.0.9
+pkgver=4.0.10
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.${pkgname}.com/"
 license=("custom:SSPL")
 # lsb-release::/etc/lsb-release required by src/mongo/util/processinfo_linux.cpp::getLinuxDistro()
-depends=("curl" "libstemmer" "lsb-release" "pcre" "wiredtiger>=3.1.0.20190401" "yaml-cpp")
+depends=("curl" "libstemmer" "lsb-release" "pcre" "wiredtiger>=3.1.0.20190516" "yaml-cpp")
 optdepends=("${pkgname}-tools: mongoimport, mongodump, mongotop, etc")
 makedepends=("libpcap" "ncurses" "python2-cheetah" "python2-regex" "python2-requests" "python2-setuptools" "python2-typing" "python2-yaml" "readline" "scons")
 checkdepends=("python2-pymongo")
@@ -26,7 +26,7 @@ source=(
   "${pkgname}.sysusers"
   "${pkgname}.tmpfiles"
 )
-sha256sums=('f0327dac12b85bd59a9358e2a55490f707fdf9b0528a0a1fc13ce51b6833954e'
+sha256sums=('11c9c55f1145ac1b6f757ff74f969d41cf47044191b3b0f3fee77f333b8f4f8d'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39')
 
