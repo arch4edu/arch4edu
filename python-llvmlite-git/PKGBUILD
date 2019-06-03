@@ -29,7 +29,7 @@ pkgver() {
 }
 
 package_python-llvmlite-git() {
-  provides=("python-llvmlite=$pkgver")
+  provides=('python-llvmlite=$pkgver') 
   depends=('python' 'llvm' )
   conflicts=('python-llvmlite')
   cd ${srcdir}/${_gitname}
@@ -41,8 +41,8 @@ package_python-llvmlite-git() {
 
 
 package_python2-llvmlite-git() {
-  provides=("python2-llvmlite=$pkgver")
-  depends=('python2' 'llvm')
+  provides=('python2-llvmlite=$pkgver')
+  depends=('python2' 'llvm' )
   conflicts=('python2-llvmlite')
 
   cd ${srcdir}/${_gitname}-py2
