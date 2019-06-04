@@ -9,7 +9,7 @@ pkgbase="python-numpy-mkl"
 pkgname="python-numpy-mkl"
 true && pkgname=('python-numpy-mkl' 'python2-numpy-mkl')
 #pkgname=('python-numpy')
-pkgver=1.16.3
+pkgver=1.16.4
 pkgrel=1
 pkgdesc="Scientific tools for Python compiled with intel mkl"
 arch=('i686' 'x86_64')
@@ -22,20 +22,17 @@ makedepends=('python-setuptools' 'python2-setuptools' 'intel-compiler-base' 'int
 source=(https://github.com/numpy/numpy/archive/v${pkgver}.tar.gz
 	'site64.cfg'
 	'site32.cfg'
-	'intelccompiler.py.patch'
-	'fix_compiler.patch')
+	'intelccompiler.py.patch')
 
-sha256sums=('a4c331d8d5208f69ac909ea47b193608b3092c6ba39c00c2561e8d2e4e01c0a4'
+sha256sums=('3bdabda4a2ac4f1986b4bc55f865cd0b68b71edc9420b03e911e0ee52743e9c4'
             '86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1'
             '882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df'
-            '0d185daf0f2fcab08778173f54cee86cd88dc3c6703413686ab3742c0097db4e'
-	    '597b8f90f308d752862be08db9cf3cc90a1f2b8c9488ffe52d677648e1afc722')
+	    '0d185daf0f2fcab08778173f54cee86cd88dc3c6703413686ab3742c0097db4e')
 
 build() {
 	#cd "${srcdir}"
 
 	patch ${srcdir}/numpy-${pkgver}/numpy/distutils/intelccompiler.py < ${srcdir}/intelccompiler.py.patch
-	patch ${srcdir}/numpy-${pkgver}/numpy/distutils/ccompiler.py < ${srcdir}/fix_compiler.patch
 	# set by hand this flag if you want to compile with gcc
 	#force_gcc=false
 
