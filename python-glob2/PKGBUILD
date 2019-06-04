@@ -1,7 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgbase=python-glob2
-pkgname=python-glob2
-#pkgname=(python-glob2 python2-glob2)
+pkgname=(python-glob2 python2-glob2)
 pkgver=0.6
 pkgrel=1
 pkgdesc="An extended version of Python's builtin glob module that can capture patterns and supports recursive wildcards."
