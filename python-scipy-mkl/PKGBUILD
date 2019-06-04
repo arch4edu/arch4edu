@@ -6,37 +6,21 @@
 # Contributor: Bodor Dávid Gábor <david.gabor.bodor@gmail.com>
 # Contributor: Andrzej Giniewicz <gginiu@gmail.com>
 
-pkgbase='python-scipy-mkl'
-pkgname=('python-scipy-mkl' 'python2-scipy-mkl')
-pkgver=1.2.1
-pkgrel=3
+pkgname='python-scipy-mkl'
+pkgver=1.3.0
+pkgrel=1
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.scipy.org/"
 license=('BSD')
-depends=('intel-compiler-base' 'intel-fortran-compiler' 'intel-mkl')
-makedepends=('python-numpy-mkl' 'python2-numpy-mkl' 'python-setuptools' 'python2-setuptools')
-checkdepends=('python-pytest' 'python2-pytest')
-source=(
-	"https://github.com/scipy/scipy/releases/download/v${pkgver}/scipy-${pkgver}.tar.gz"
-	"build_python.sh"
-)
-sha256sums=('e085d1babcb419bbe58e2e805ac61924dac4ca45a07c9fa081144739e500aa3c'
-            '4970774d5c0b43c48634b01c1eabf7604dc3c98177fb5fed5585dc5be71183b4')
-
-prepare() {
-	cd scipy-${pkgver}
-
-	cd ${srcdir}
-	cp -r scipy-${pkgver} scipy-${pkgver}-py2
-	for file in $(find scipy-${pkgver}-py2 -name '*.py' -print); do
-		sed -i 's_^#!.*/usr/bin/python_#!/usr/bin/python2_' $file
-		sed -i 's_^#!.*/usr/bin/env.*python_#!/usr/bin/env python2_' $file
-	done
-
-	cp build_python.sh scipy-${pkgver}
-	cp build_python.sh scipy-${pkgver}-py2
-}
+depends=('intel-compiler-base' 'intel-fortran-compiler' 'intel-mkl' 'python-numpy')
+provides=("python-scipy=$pkgver")
+conflicts=('python-scipy')
+makedepends=('python-setuptools')
+checkdepends=('python-pytest')
+optdepends=('python-pillow: for image saving module')
+source=("https://github.com/scipy/scipy/releases/download/v${pkgver}/scipy-${pkgver}.tar.gz")
+sha512sums=('11dfe6027061efb176811d1d2c8b60ee53157f6fff59baa312b3b6a84461123e12f044d5d138d04b1162612d35c6cc34837208d56cdf79c294862ef90c62ea1d')
 
 build() {
 	export LDFLAGS="-Wall -shared"
@@ -44,12 +28,6 @@ build() {
 	# build for python3
 	cd scipy-${pkgver}
 	python3 setup.py config --compiler=intelem --fcompiler=intelem build_clib --compiler=intelem --fcompiler=intelem build_ext --compiler=intelem --fcompiler=intelem
-	#sh build_python.sh python
-
-	# build for python2
-	cd ../scipy-${pkgver}-py2
-	python2 setup.py config --compiler=intelem --fcompiler=intelem build_clib --compiler=intelem --fcompiler=intelem build_ext --compiler=intelem --fcompiler=intelem
-	#sh build_python.sh python2
 }
 
 #check() {
@@ -58,44 +36,18 @@ build() {
 #	export LDFLAGS="-Wall -shared"
 #
 #	cd ${srcdir}/scipy-${pkgver}
-#	python3 setup.py config_fc --compiler=intelem --fcompiler=intelem install \
+#	python3 setup.py config_fc --fcompiler=intelem install \
 #	  --prefix=/usr --root=${srcdir}/test --optimize=1
 #	export PYTHONPATH=${srcdir}/test/usr/lib/python3.7/site-packages
 #	cd ${srcdir}
 #	python -c "from scipy import test; test('full')"
-#
-#	cd ${srcdir}/scipy-${pkgver}-py2
-#	python2 setup.py config_fc --compiler=intelem --fcompiler=intelem install \
-#	  --prefix=/usr --root=${srcdir}/test --optimize=1
-#	export PYTHONPATH=${srcdir}/test/usr/lib/python2.7/site-packages
-#	cd ${srcdir}
-#	python2 -c "from scipy import test; test('full')"
 #}
 
-package_python-scipy-mkl() {
-	depends+=('python-numpy')
-	provides=("python-scipy=$pkgver" "python3-scipy=$pkgver" "scipy=$pkgver")
-	conflicts=('python-scipy')
-	optdepends=('python-pillow: for image saving module')
+package() {
+	export LDFLAGS="-Wall -shared"
 
 	cd scipy-${pkgver}
-	export LDFLAGS="-Wall -shared"
-
 	python3 setup.py config --compiler=intelem --fcompiler=intelem install --prefix=/usr --root="${pkgdir}/" --optimize=1
 
-	install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-scipy/LICENSE"
-}
-
-package_python2-scipy-mkl() {
-	depends+=('python2-numpy')
-	provides=("python2-scipy=$pkgver" "scipy=$pkgver")
-	conflicts=('python2-scipy')
-	optdepends=('python2-pillow: for image saving module')
-
-	cd scipy-${pkgver}-py2
-	export LDFLAGS="-Wall -shared"
-
-	python2 setup.py config --compiler=intelem --fcompiler=intelem install --prefix=/usr --root="${pkgdir}/" --optimize=1
-
-	install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python2-scipy/LICENSE"
+	install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
