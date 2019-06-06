@@ -4,7 +4,7 @@
 
 pkgname=qgis-git
 _pkgname=qgis
-pkgver=3.7.0_master.r55606.9c91505501
+pkgver=3.7.0_master.r55638.26e8e22603
 
 _pkgver=3.7.0_master
 pkgrel=1
