@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributor: Jack Allnutt <jack@allnutt.eu>
 pkgname=kiwiirc
-pkgver=1.1.0.r2537.g5477049f
+pkgver=1.1.0.r2544.g08965b8b
 pkgrel=1
 pkgdesc="A hand-crafted web-based IRC client that you can enjoy"
 arch=('any')
