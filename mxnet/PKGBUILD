@@ -2,25 +2,51 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgname=mxnet
 _gitname=incubator-mxnet
-pkgver=1.4.0
-pkgrel=2.1
+pkgver=1.4.1
+pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
 license=('Apache')
 depends=('hdf5' 'cblas' 'lapack' 'python-numpy' 'python-requests' 'intel-tbb' 'double-conversion')
-optdepends=('cairo' 'cuda' 'cudnn' 'gtk3' 'gtkglext' 'python-graphviz' 'opencv' 'vtk' 'glew')
+optdepends=('cairo' 'cuda' 'cudnn' 'gtk3' 'gtkglext' 'nccl' 'python-graphviz' 'opencv' 'vtk' 'glew')
 makedepends=(${optdepends[@]} 'git' 'cython')
 source=("git+https://github.com/apache/$_gitname#tag=$pkgver"
+	'git+https://github.com/dmlc/cub'
+	'git+https://github.com/dmlc/dlpack'
+	'git+https://github.com/dmlc/dmlc-core'
+	'git+https://github.com/google/googletest'
+	'git+https://github.com/intel/mkl-dnn'
+	'git+https://github.com/dmlc/mshadow'
+	'git+https://github.com/onnx/onnx-tensorrt'
+	'git+https://github.com/llvm-mirror/openmp'
+	'git+https://github.com/dmlc/ps-lite'
+	'git+https://github.com/dmlc/tvm'
 	'13559.patch')
 md5sums=('SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
          'fd1c56e58357cd8ba82fcaf8ebfcc1fa')
 
 prepare() {
 	cd "$srcdir/$_gitname"
+
+	for i in cub dlpack dmlc-core googletest mshadow onnx-tensorrt openmp ps-lite tvm
+	do
+		git config submodule.3rdpary/$i.url "$srcdir/$i"
+	done
+	git config submodule.3rdpary/mkldnn.url "$srcdir/mkl-dnn"
+
 	git submodule update --init --recursive
 	(
-		#echo "CXX=g++"
 		echo "USE_BLAS=blas"
 		echo "USE_LAPACK=1"
 		echo "ADD_LDFLAGS+=-lcblas"
@@ -29,22 +55,13 @@ prepare() {
 		echo "USE_GPERFTOOLS=0"
 		echo "USE_JEMALLOC=0"
 
-		if (pacman -Q cuda &>/dev/null && pacman -Q cudnn &>/dev/null); then
-			msg2 "CUDA support enabled"
-			echo "USE_CUDA=1"
-			echo "USE_CUDA_PATH=/opt/cuda"
-			echo "USE_CUDNN=1"
-			echo "ADD_LDFLAGS+=-L/opt/cuda/lib64/stubs"
-		else
-			msg2 "CUDA support disabled"
-		fi
-		if (pacman -Q opencv &>/dev/null); then
-			msg2 "OpenCV support enabled"
-			echo "USE_OPENCV=1"
-		else
-			msg2 "OpenCV support disabled"
-			echo "USE_OPENCV=0"
-		fi
+		echo "USE_CUDA=1"
+		echo "USE_CUDA_PATH=/opt/cuda"
+		echo "USE_CUDNN=1"
+		echo "ADD_LDFLAGS+=-L/opt/cuda/lib64/stubs"
+		echo "USE_NCCL=1"
+		echo "USE_NCCL_PATH=/usr"
+		echo "USE_OPENCV=1"
 	) >> make/config.mk
 
 	# https://github.com/archlinuxcn/repo/issues/684
@@ -74,6 +91,8 @@ package() {
 	python setup.py install --root="$pkgdir"/ --optimize=1 --with-cython
 	mv $pkgdir/usr/$pkgname/* $pkgdir/usr/lib/python3.7/site-packages/$pkgname/
 	rmdir $pkgdir/usr/$pkgname
+
+	cp -r $srcdir/$_gitname/include $pkgdir/usr/lib/python3.7/site-packages/$pkgname/
 
 	install -Dm644 "$srcdir/$_gitname/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
