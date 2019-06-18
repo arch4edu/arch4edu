@@ -36,8 +36,6 @@ build() {
 
 package_python2-cytoolz() {
   depends=('python2')
-  provides=('python2-toolz')
-  conflicts=('python2-toolz')
   cd "$srcdir/${_pkgname}-${pkgver}-py2"
   python2 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
@@ -45,8 +43,6 @@ package_python2-cytoolz() {
 
 package_python-cytoolz() {
   depends=('python')
-  provides=('python-toolz')
-  conflicts=('python-toolz')
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
