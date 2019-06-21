@@ -2,16 +2,16 @@
 
 pkgbase=python-lmdb
 pkgname=('python-lmdb' 'python2-lmdb')
-pkgver=0.94
-pkgrel=3
+pkgver=0.95
+pkgrel=1
 pkgdesc='Universal Python binding for the LMDB Lightning Database'
 arch=('x86_64')
 url='https://github.com/dw/py-lmdb/'
-license=('custom')
+license=('custom:OpenLDAP')
 depends=('python2' 'lmdb')
 makedepends=('python' 'python2' 'python-setuptools' 'python2-setuptools')
 source=("https://github.com/dw/py-lmdb/archive/py-lmdb_${pkgver}.tar.gz")
-sha256sums=('68685bbbd3ffe93c71f55b57c00d3704a370c70e04b943e47cbe107ad14a049c')
+sha256sums=('59dc0e8f504fdd864a3ab64a22e8bc267ba2dd936991962ac273b10a6c40e407')
 
 prepare() {
     cp -a "py-lmdb-py-lmdb_${pkgver}" "py-lmdb-py-lmdb_${pkgver}-py2"
