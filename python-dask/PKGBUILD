@@ -4,7 +4,7 @@
 pkgbase=python-dask
 pkgname=('python-dask' 'python2-dask')
 _pkgname=dask
-pkgver=1.2.1
+pkgver=1.2.2
 pkgrel=1
 pkgdesc="Minimal task scheduling abstraction"
 arch=('any')
@@ -26,7 +26,7 @@ optdepends=('python-bcolz'
   'python-zarr')
 makedepends=('python-setuptools' 'python2-setuptools')
 source=("https://github.com/dask/dask/archive/$pkgver.tar.gz")
-sha256sums=('fbea1e5f0a21a99471255d57cad4fc856818a53ed5b9405fb9940a37e46c498c')
+sha256sums=('cfc7ed33dbb1ea4fea57f2ac0c9152dbb776348a7adb957ab5afc4ee4aff1907')
 
 prepare() {
   cp -a $_pkgname-$pkgver{,-py2}
@@ -49,6 +49,6 @@ package_python2-dask(){
 
 check(){
   cd "$srcdir/$_pkgname-$pkgver"
-  python setup.py test 
+  pytest dask/tests 
 }
 # vim:ts=2:sw=2:et:
