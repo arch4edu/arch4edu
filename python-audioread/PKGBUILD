@@ -3,7 +3,7 @@
 pkgbase=python-audioread
 pkgname=(python-audioread python2-audioread)
 _pkgname=audioread
-pkgver=2.1.7
+pkgver=2.1.8
 pkgrel=1
 pkgdesc="cross-library (GStreamer + Core Audio + MAD + FFmpeg) audio decoding for Python"
 arch=('any')
@@ -11,7 +11,7 @@ url="https://github.com/beetbox/audioread"
 license=('MIT')
 makedepends=('python-setuptools' 'python2-setuptools')
 source=("$url/archive/v${pkgver}.tar.gz")
-md5sums=('7ed2e52d2b8cd2b80dea2688c1e3c9e4')
+md5sums=('71f9a2575efa006b24a2cb8122dc9f8e')
 
 prepare() {
   cd "$srcdir/"
