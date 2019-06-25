@@ -4,7 +4,7 @@
 # The set environment variable, however, precludes compiling C++ code
 # So, if the build process fails, it is re-run without the environment variable und continues until failing again etc.
 set +e
-build="$1 setup.py config --compiler=intelem --fcompiler=intelem build_clib --compiler=intelem --fcompiler=intelem build_ext --compiler=intelem --fcompiler=intelem"
+build="python setup.py config --compiler=intelem --fcompiler=intelem build_clib --compiler=intelem --fcompiler=intelem build_ext --compiler=intelem --fcompiler=intelem -j$(nproc)"
 
 method1() {
 	echo Retry: $retry Method: 1
@@ -19,5 +19,5 @@ method2() {
 # It will end at 'Retry: 5 Method: 2' for scipy 1.1.0 and intel-parallel-studio-xe 2018.3.222
 for retry in $(seq 10); do
 	method1 && break
-	method2 && break
+	#method2 && break
 done

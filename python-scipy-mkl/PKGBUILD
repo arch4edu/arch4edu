@@ -8,7 +8,7 @@
 
 pkgname='python-scipy-mkl'
 pkgver=1.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
 arch=('x86_64')
 url="http://www.scipy.org/"
@@ -16,18 +16,19 @@ license=('BSD')
 depends=('intel-compiler-base' 'intel-fortran-compiler' 'intel-mkl' 'python-numpy')
 provides=("python-scipy=$pkgver")
 conflicts=('python-scipy')
-makedepends=('python-setuptools')
-checkdepends=('python-pytest')
+makedepends=('gcc8' 'python-setuptools')
+#checkdepends=('python-pytest')
 optdepends=('python-pillow: for image saving module')
-source=("https://github.com/scipy/scipy/releases/download/v${pkgver}/scipy-${pkgver}.tar.gz")
-sha512sums=('11dfe6027061efb176811d1d2c8b60ee53157f6fff59baa312b3b6a84461123e12f044d5d138d04b1162612d35c6cc34837208d56cdf79c294862ef90c62ea1d')
+source=("https://github.com/scipy/scipy/releases/download/v${pkgver}/scipy-${pkgver}.tar.gz" 'build.sh')
+sha512sums=('11dfe6027061efb176811d1d2c8b60ee53157f6fff59baa312b3b6a84461123e12f044d5d138d04b1162612d35c6cc34837208d56cdf79c294862ef90c62ea1d'
+            '1ad168482bd4774e47af009f888a549233defe5593b7464f3f5577a25ebec180905c948ebf3936c33ac49f2ea8cba5dcd060f8b86adb99ed2f1fc41fd2bf82bf')
 
 build() {
 	export LDFLAGS="-Wall -shared"
+	export __INTEL_PRE_CFLAGS="-I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include/c++ -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include/c++/x86_64-pc-linux-gnu/"
 
-	# build for python3
 	cd scipy-${pkgver}
-	python3 setup.py config --compiler=intelem --fcompiler=intelem build_clib --compiler=intelem --fcompiler=intelem build_ext --compiler=intelem --fcompiler=intelem
+	sh ${srcdir}/build.sh
 }
 
 #check() {
