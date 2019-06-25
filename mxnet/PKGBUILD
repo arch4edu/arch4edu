@@ -3,13 +3,13 @@
 pkgbase=mxnet
 pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl')
 pkgver=1.4.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
 license=('Apache')
 depends=('double-conversion' 'hdf5' 'intel-tbb' 'opencv' 'python-numpy' 'python-requests')
-makedepends=('cairo' 'cblas' 'cmake' 'cuda' 'cudnn' 'cython' 'gcc7' 'git' 'gtk3' 'gtkglext' 'intel-compiler-base' 'intel-mkl' 'lapack' 'nccl' 'python-graphviz' 'vtk' 'glew' 'mkl-dnn')
+makedepends=('cairo' 'cblas' 'cmake' 'cuda' 'cudnn' 'cython' 'git' 'gtk3' 'gtkglext' 'intel-compiler-base' 'intel-mkl' 'lapack' 'nccl' 'python-graphviz' 'vtk' 'glew' 'mkl-dnn')
 source=("${pkgbase}::git+https://github.com/apache/incubator-mxnet#tag=$pkgver"
 	'git+https://github.com/dmlc/cub'
 	'git+https://github.com/dmlc/dlpack'
@@ -103,8 +103,8 @@ prepare() {
 
 	cp -r "$srcdir/$pkgbase" "$srcdir/$pkgbase-cuda"
 	(
-		echo "export CC=gcc-7"
-		echo "export CXX=g++-7"
+		echo "export CC=gcc-8"
+		echo "export CXX=g++-8"
 
 		echo "USE_BLAS=blas"
 		echo "ADD_LDFLAGS+=-lcblas"
@@ -139,8 +139,8 @@ prepare() {
 	) >> "$srcdir/$pkgbase-mkl/make/config.mk"
 
 	(
-		echo "export CC=gcc-7"
-		echo "export CXX=g++-7"
+		echo "export CC=gcc-8"
+		echo "export CXX=g++-8"
 
 		echo "USE_BLAS=blas"
 		echo "ADD_LDFLAGS+=-lcblas"
