@@ -1,7 +1,7 @@
 # Maintainer: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=3.5.2
+pkgver=3.5.3
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('aarch64' 'armv6h' 'armv7h' 'x86_64')
@@ -53,7 +53,7 @@ source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcont
 		"gps-drivers-qgc${pkgver}.zip::https://github.com/PX4/GpsDrivers/archive/${pkgver_gps}.zip"
 )
 
-sha256sums=('195e1749cabbc69589df401a6af03f86796c3953ef78055418d8c734448d7685'
+sha256sums=('730204053818280792efd658e2b03aa95ddf24c97b502dcb3068516339785ed2'
 			'65c0fc60be9435375f74990a5c83fb0cdef6d15c100245759d2465d480a5b9b5'
 			'1ab58c633edcfff9288bd868bf33e2c9990afa27fa5df8f1731675d98a4ce6e4'
 )
@@ -73,8 +73,8 @@ prepare() {
 	cp -R "${srcdir}/${gpsdir}" "${srcdir}/${pkgname}-${pkgver}/src/GPS/"
 	mv "${srcdir}/${pkgname}-${pkgver}/src/GPS/${gpsdir}" "${srcdir}/${pkgname}-${pkgver}/src/GPS/Drivers"
 
-	#cd "${srcdir}/${pkgname}-${pkgver}/"
-	sed "s|so.56|so.*|g" -i ${srcdir}/${pkgname}-${pkgver}/QGCSetup.pri
+	cd "${srcdir}/${pkgname}-${pkgver}/"
+	patch --strip=1 < "${startdir}/${pkgname}-${pkgver}.patch"
 }
 
 build() {
