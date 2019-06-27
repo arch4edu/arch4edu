@@ -4,7 +4,7 @@ from lilaclib import *
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = ['extra-x86_64', 'extra-armv6h', 'extra-armv7h', 'extra-aarch64']
-time_limit_hours = 3
+time_limit_hours = 9
 pre_build = aur_pre_build
 post_build = aur_post_build
 
