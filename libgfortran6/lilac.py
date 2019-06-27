@@ -4,7 +4,12 @@ from lilaclib import *
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = ['extra-x86_64', 'extra-armv6h', 'extra-armv7h', 'extra-aarch64']
-pre_build = aur_pre_build
+time_limit_hours = 8
+
+def pre_build():
+    aur_pre_build()
+    add_arch(['armv6h', 'armv7h', 'aarch64'])
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
