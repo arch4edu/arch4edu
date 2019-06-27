@@ -10,7 +10,7 @@
 pkgname='protobuf-static'
 _pkgname='protobuf'
 pkgver=3.7.1
-pkgrel=1
+pkgrel=1.1
 pkgdesc="Protocol Buffers - Google's data interchange format"
 arch=('x86_64')
 url='https://developers.google.com/protocol-buffers/'
