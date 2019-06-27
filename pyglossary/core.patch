@@ -1,6 +1,6 @@
---- pyglossary-3.2.0/pyglossary/core.py.orig	2019-03-11 10:51:01.664932702 +0300
-+++ pyglossary-3.2.0/pyglossary/core.py	2019-03-11 10:53:45.366566894 +0300
-@@ -158,10 +158,10 @@
+--- pyglossary-3.2.1/pyglossary/core.py.orig	2019-06-27 00:09:04.322675748 +0300
++++ pyglossary-3.2.1/pyglossary/core.py	2019-06-27 00:10:06.833397976 +0300
+@@ -164,10 +164,10 @@
  
  if hasattr(sys, "frozen"):
  	rootDir = dirname(sys.executable)
@@ -13,4 +13,4 @@
 +uiDir = join(rootDir, 'ui')
  
  dataDir = rootDir
- if dataDir.endswith("dist-packages"):
+ if dataDir.endswith("dist-packages") or dataDir.endswith("site-packages"):

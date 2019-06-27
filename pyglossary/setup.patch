@@ -1,5 +1,5 @@
---- pyglossary-3.2.0/setup.py.orig	2019-03-11 10:51:19.731779626 +0300
-+++ pyglossary-3.2.0/setup.py	2019-03-11 10:52:51.762698231 +0300
+--- pyglossary-3.2.1/setup.py.orig	2019-06-27 00:09:10.492747034 +0300
++++ pyglossary-3.2.1/setup.py	2019-06-27 00:11:09.587456348 +0300
 @@ -54,7 +54,6 @@
  		"config.json",
  	]),
@@ -23,7 +23,7 @@
  			"plugins/*.py",
  			"plugin_lib/*.py",
 -			"plugin_lib/py*/*.py",
-+			"plugin_lib/py36/*.py",
++			"plugin_lib/py37/*.py",
  		] + [
  			# safest way found so far to include every resource of plugins
  			# producing plugins/pkg/*, plugins/pkg/sub1/*, ... except .pyc/.pyo
