@@ -3,16 +3,12 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
-build_prefix = 'extra-x86_64'
+build_prefix = ['extra-x86_64', 'extra-armv6h', 'extra-armv7h', 'extra-aarch64']
+time_limit_hours = 8
 
 def pre_build():
     aur_pre_build()
-
-    for line in edit_file('PKGBUILD'):
-        if 'makedepends=(' in line:
-            print(line.replace('svn', 'subversion'))
-        else:
-            print(line)
+    add_arch(['armv6h', 'armv7h', 'aarch64'])
 
 post_build = aur_post_build
 
