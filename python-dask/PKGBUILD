@@ -1,16 +1,16 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 # Contributor: Francois Boulogne <fboulogne at april dot org>
 
-pkgbase=python-dask
-pkgname=('python-dask' 'python2-dask')
+pkgname='python-dask'
 _pkgname=dask
-pkgver=1.2.2
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="Minimal task scheduling abstraction"
 arch=('any')
 url="https://github.com/dask/dask"
 license=('BSD')
 checkdepends=('ipython' 'python-bcolz' 'python-cachey' 'python-graphviz' 'python-sparse' 'python-pytest')
+depends=('python' 'python-numpy' 'python-scipy' 'python-pandas' 'python-toolz' 'python-cloudpickle' 'python-partd>=0.3.8' 'python-yaml')
 optdepends=('python-bcolz'
   'python-bokeh'
   'python-cachey'
@@ -24,28 +24,15 @@ optdepends=('python-bcolz'
   'python-s3fs: S3 support'
   'python-gcsfs: Google Cloud Storage fs support'
   'python-zarr')
-makedepends=('python-setuptools' 'python2-setuptools')
+makedepends=('python-setuptools')
 source=("https://github.com/dask/dask/archive/$pkgver.tar.gz")
-sha256sums=('cfc7ed33dbb1ea4fea57f2ac0c9152dbb776348a7adb957ab5afc4ee4aff1907')
+sha256sums=('2cbbbf2b3c8dbd922b30df9eb19f8e420f839b3829ffa8978484160591b6c83c')
 
-prepare() {
-  cp -a $_pkgname-$pkgver{,-py2}
-}
-
-package_python-dask(){
-  depends=('python' 'python-numpy' 'python-scipy' 'python-pandas' 'python-toolz' 'python-cloudpickle' 'python-partd>=0.3.8' 'python-yaml')
+package(){
   cd "$srcdir/$_pkgname-$pkgver"
   install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
   python setup.py install --root="$pkgdir/" --optimize=1
 }
-
-package_python2-dask(){
-  depends=('python2-numpy' 'python2-scipy' 'python2-pandas' 'python2-toolz' 'python2-cloudpickle' 'python2-partd>=0.3.8' 'python2-yaml')
-  cd "$srcdir/$_pkgname-$pkgver-py2"
-  install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  python2 setup.py install --root="$pkgdir/" --optimize=1
-}
-
 
 check(){
   cd "$srcdir/$_pkgname-$pkgver"
