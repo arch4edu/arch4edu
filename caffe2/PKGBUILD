@@ -4,7 +4,7 @@ pkgbase=caffe2
 pkgname=('caffe2' 'caffe2-cuda')
 _pytorchver=1.1.0 # pytorch stable release version
 pkgver="0.8.2_${_pytorchver}"
-pkgrel=1
+pkgrel=3
 pkgdesc='A new lightweight, modular, and scalable deep learning framework'
 arch=('x86_64')
 url='https://caffe2.ai/'
@@ -16,6 +16,7 @@ optdepends=('python-flask' 'graphviz' 'python-hypothesis' 'python-matplotlib'
             'python-scikit-image' 'python-scipy' 'python-setuptools'
             'python-future' 'python-tornado' 'python-six' 'python-lmdb')
 makedepends=('git' 'cmake' 'gtest' 'snappy' 'cuda' 'cudnn' 'nccl')
+conflicts=('python-pytorch')
 options=('!emptydirs')
 source=("git+https://github.com/pytorch/pytorch.git#tag=v${_pytorchver}"
         'git+https://github.com/pybind/pybind11'
@@ -118,7 +119,7 @@ prepare() {
     git config --local "submodule.third_party/nccl/nccl.url" "${srcdir}/nccl"
     git config --local "submodule.third_party/gemmlowp/gemmlowp.url" "${srcdir}/gemmlowp"
     
-    # special case (upstream uses third.party instead of third_party)
+    # special case (upstream uses third-party instead of third_party)
     git config --local 'submodule.third-party/cpuinfo.url' "${srcdir}/cpuinfo"
     
     git submodule update
@@ -149,9 +150,9 @@ build() {
     cd pytorch/build-cuda
     cmake \
         "${_common_opts[@]}" \
-        -DCMAKE_CXX_COMPILER:FILEPATH='/usr/bin/g++' \
-        -DCMAKE_C_COMPILER:FILEPATH='/usr/bin/gcc' \
-        -DCUDA_HOST_COMPILER:FILEPATH='/usr/bin/gcc' \
+        -DCMAKE_CXX_COMPILER:FILEPATH='/opt/cuda/bin/g++' \
+        -DCMAKE_C_COMPILER:FILEPATH='/opt/cuda/bin/gcc' \
+        -DCUDA_HOST_COMPILER:FILEPATH='/opt/cuda/bin/gcc' \
         -DCUDA_NVCC_FLAGS:STRING='-Xfatbin -compress-all' \
         -DTORCH_CUDA_ARCH_LIST='3.0;3.2;3.5;3.7;5.0;5.2;5.3;6.0;6.1;6.2;7.0;7.2;7.5' \
         -DUSE_CUDA:BOOL='ON' \
@@ -173,17 +174,15 @@ _package_common() {
     make DESTDIR="$pkgdir" install
     
     # remove unneeded files
-    local _entry
-    local _exclude_dirs
     rm    "$pkgdir"/usr/include/*.h
     rm    "$pkgdir"/usr/lib/{*.a,lib{foxi*,onnxifi*}.so*}
     rm -r "$pkgdir"/usr/share/{ATen,cmake/{ATen,Gloo,ONNX}}
     rm -r "$pkgdir"/torch
-    mapfile -t -d '' _exclude_dirs < <(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*' ! -name 'c10' -print0)
-    for _entry in "${_exclude_dirs[@]}"
+    local _dir
+    while read -r -d '' _dir
     do
-        rm -rf "$_entry"
-    done
+        rm -rf "$_dir"
+    done < <(find "${pkgdir}/usr/include" -mindepth 1 -maxdepth 1 -type d ! -name 'caffe*' ! -name 'c10' -print0)
     
     # license
     cd "${srcdir}/pytorch"
@@ -195,7 +194,7 @@ package_caffe2-cuda() {
     pkgdesc+=' (with cuda support)'
     depends+=('cuda' 'cudnn' 'nccl')
     provides=('caffe2')
-    conflicts=('caffe2')
+    conflicts+=('caffe2')
     
     cd pytorch/build-cuda
     
@@ -205,7 +204,7 @@ package_caffe2-cuda() {
 package_caffe2() {
     pkgdesc+=' (cpu only)'
     provides=('caffe2-cpu')
-    conflicts=('caffe2-cpu')
+    conflicts+=('caffe2-cpu')
     replaces=('caffe2-cpu')
     
     cd pytorch/build-cpu-only
