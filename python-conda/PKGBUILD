@@ -2,13 +2,19 @@
 
 _pyname=conda
 pkgname=python-conda
-pkgver=4.5.11
+pkgver=4.7.2
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
 arch=('any')
 url="http://conda.pydata.org/docs/"
 license=('BSD')
-depends=('python' 'python-pycosat>=0.6.1' 'python-requests' 'python-ruamel-yaml')
+depends=(
+  'python'
+  'python-conda-package-handling'
+  'python-pycosat>=0.6.3'
+  'python-requests>=2.12.4'
+  'python-ruamel-yaml'
+)
 optdepends=(
   'python-conda-build: to use the conda build command'
 )
@@ -17,7 +23,7 @@ options=(!emptydirs)
 source=(
   https://github.com/$_pyname/$_pyname/archive/$pkgver.tar.gz
 )
-sha512sums=('b981cac44ff23744ab777bc2d546c33f35358ada45e3835da3832dcade361fe9ae00301c366d22e4d2016b231feab0ddd3da9b1f7929a156049871cf8622acd0')
+sha512sums=('e5216d6be93a7e87dde36d30d159a44af8b735b834de808d01e8c8a99c54d6a3a732c60b74aa6c73f95ffaddde6b13bf535c4c67f9074b21c7f0e2c6f73dcd64')
 
 prepare() {
   cd "$srcdir/${_pyname}-$pkgver"
