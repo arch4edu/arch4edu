@@ -86,26 +86,25 @@ _remove_static_objects_ipp=false
 ########################################
 
 _year='2019'
-_v_a='3'
-_v_b='199'
+_v_a='4'
+_v_b='243'
 # year, version a and version b found in /opt/intel/compilers_and_libraries_YEAR_A_B
 
-_update='3'
+_update='4'
 
 pkgrel=3.1
 
 
 _sp='cluster_edition'
-_icc_ver='19.0.3'
-_vtune_ver='2019.3.0.591499'
-_inspector_ver='2019.3.0.591484'
-_advisor_ver='2019.3.0.591490'
+_icc_ver='19.0.4'
+_vtune_ver='2019.4.0.597835'
+_inspector_ver='2019.4.0.597413'
+_advisor_ver='2019.4.0.597843'
 
 pkgver=${_year}.${_v_a}.${_v_b}
 
 # package download folders
-_dir_nr='15268'
-_mpi_dir_nr='15260'
+_dir_nr='15533'
 
 options=(strip libtool staticlibs)
 
@@ -118,7 +117,6 @@ _parallel_studio_xe_dir="parallel_studio_xe${_year:+_${_year}}${_update:+_update
 
 source=(
   "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/${_dir_nr}/${_parallel_studio_xe_dir}.tgz"
-  "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/${_mpi_dir_nr}/l_mpi_${_year}.${_v_a}.${_v_b}.tgz"
   'intel_compilers.sh'
   'intel_vtune-amplifier.sh'
   'intel_advisor.sh'
@@ -139,10 +137,9 @@ source=(
 )
 
 
-sha256sums=('b5b022366d6d1a98dbb63b60221c62bc951c9819653ad6f5142192e89f78cf63'
-            '5304346c863f64de797250eeb14f51c5cfc8212ff20813b124f20e7666286990'
+sha256sums=('32aee12de3b5ca14caf7578313c06b205795c67620f4a9606ea45696ee3b3d9e'
             '0704025fdfe40e4fce08e88b641128310c3a3b51332668aab60fb815b424f52b'
-            '58bced75693b2f73480b89242b33c9a0ce565d6a12a17f84067bab351bde9be7'
+            '1a71b08245c42008b2edb32a4f0e7b7d1794573580f9608ac86d86cfb25799a4'
             '63b12c66d9c8c2310a7bbd5206c82ba9667fb6ffb3dc7e3f9304a17ed8c8fbcd'
             'fd24842f29d50bc53779dd918fbc548ebf165ff664114e59195773ad04076b5d'
             '3f96dec03111e69d16bb363acf4d0570e8a9526c09e5e542a7558f1b26d043ef'
@@ -162,33 +159,54 @@ sha256sums=('b5b022366d6d1a98dbb63b60221c62bc951c9819653ad6f5142192e89f78cf63'
 #_archive=l_ccompxe${_comp}_p_${pkgver}
 if [ "$CARCH" = "i686" ]; then
   _i_arch='ia32'
-  _i_arch2='i486'
   _bin_dir='bin32'
 
   _not_arch='intel64'
-  _not_arch2='x86_64'
 else
   _i_arch='intel64'
-  _i_arch2='x86_64'
   _bin_dir='bin64'
 
   _not_arch='ia32'
-  _not_arch2='i486'
 fi
 
 extract_rpm() {
-  msg2 "  ${1##*/}"
-  bsdtar -xf $1 -C $2
+  # filter out rpms for incompatible arch 
+  local extract=true
+  if [[ "$1" =~ .noarch.rpm$ ]]; then
+    if [[ "$1" =~ -doc ]]; then
+      if $_remove_docs ; then
+        # don't skip doc rpms because they contain man pages
+        #extract=false
+        extract=true
+      fi
+    fi
+  else
+    if [[ "$1" =~ (-32bit.+\.x86_64|\.i486)\.rpm$ ]]; then
+      if [[ "$CARCH" != 'i686' ]]; then
+        extract=false
+      fi
+    else
+      if [[ "$CARCH" == 'i686' ]]; then
+        extract=false
+      fi
+    fi
+  fi
+  if $extract ; then
+    msg2 "  ${1##*/}"
+    bsdtar -xf $1 -C $2
+  else
+    plain "skipped ${1##*/}"
+  fi
 }
 
 extract_rpms() {
-  for rpm_file in ${rpm_dir}/$1 ; do
-    extract_rpm ${rpm_file} $2
-  done
-}
-
-extract_mpi_rpms() {
-  for rpm_file in ${mpi_rpm_dir}/$1 ; do
+  # select binary files of specific arch
+  if [ -z "$3" ]; then
+    _rpm_dir="${rpm_dir}"
+  else
+    _rpm_dir="$3"
+  fi
+  for rpm_file in ${_rpm_dir}/$1 ; do
     extract_rpm ${rpm_file} $2
   done
 }
@@ -197,9 +215,8 @@ set_build_vars() {
   _pkg_ver=${pkgver}
   _composer_xe_dir="compilers_and_libraries_${_year}.${_v_a}.${_v_b}"
   rpm_dir=${srcdir}/${_parallel_studio_xe_dir}/rpm
-  mpi_rpm_dir=${srcdir}/l_mpi_${_year}.${_v_a}.${_v_b}/rpm
   xe_build_dir=${srcdir}/cxe_build
-  base_dir=`realpath ${srcdir}/..`
+  base_dir=$(realpath ${srcdir}/..)
   _man_dir=${xe_build_dir}/usr/share/man/man1
 }
 
@@ -311,9 +328,6 @@ build() {
   if [ -d ${pkgdir}/opt ] ; then
     rm -rf ${pkgdir}/opt
   fi ;
-
-  cd  ${srcdir}/${_parallel_studio_xe_dir}/rpm
-  rm -v -f *.${_not_arch2}.rpm
 }
 
 package_intel-common-libs() {
@@ -338,9 +352,7 @@ package_intel-common-libs() {
   # move ld.so configs, but keep profile.d (should be in intel-compiler-base)
   mv ./etc/ld.so.conf.d ${pkgdir}/etc/
 
-  cd ${pkgdir}/opt/intel
-
-  ln -s ./${_composer_xe_dir}/linux/compiler/lib/${_i_arch}_lin lib
+  ln -s ./${_composer_xe_dir}/linux/compiler/lib/${_i_arch}_lin ${pkgdir}/opt/intel/lib
 }
 
 package_intel-openmp() {
@@ -379,7 +391,7 @@ package_intel-compiler-base() {
 
   msg2 "Extracting RPMS"
   extract_rpms 'intel-icc*.rpm' $xe_build_dir
-  for rpm_file in `find ${rpm_dir} -iname 'intel-comp-*.rpm' ! -iname 'intel-comp-ps-ss-bec-*.rpm' -print` ; do
+  for rpm_file in `find ${rpm_dir} -name 'intel-comp-*.rpm' ! -name 'intel-comp-ps-ss-bec-*.rpm' -print` ; do
     extract_rpm $rpm_file $xe_build_dir
   done
 
@@ -399,18 +411,17 @@ package_intel-compiler-base() {
   chmod a+x loopprofileviewer.sh
   rm loopprofileviewer.csh
 
+  msg2 "Copying man pages"
+  mv ${xe_build_dir}/opt/intel/documentation_${_year}/en/man/common/man1/*.1 ${_man_dir}
+
   cd ${xe_build_dir}/opt/intel/${_composer_xe_dir}/linux
   if $_remove_docs ; then
     msg2 "Removing documentation"
     rm -rf ./documentation
     rm -rf ./Documentation
     rm -rf ./Samples
+    rm -rf ${xe_build_dir}/opt/intel/documentation_${_year}
   fi
-
-  msg2 "Copying man pages"
-  mv ${xe_build_dir}/opt/intel/documentation_${_year}/en/man/common/man1/*.1 ${_man_dir}
-
-  gzip ${_man_dir}/*.1
 
   msg2 "Moving package files"
   mv ${xe_build_dir}/opt ${pkgdir}/
@@ -453,6 +464,9 @@ package_intel-fortran-compiler() {
   #Remove duplicate logo and .css found in intel base
   rm ${xe_build_dir}/opt/intel/documentation_${_year}/en/compiler_f/ps${_year}/resources/{intel_gsp_styles.css,intel_logo.png}
 
+  msg2 "Copying man pages"
+  mv ${xe_build_dir}/opt/intel/documentation_${_year}/en/man/common/man1/*.1 ${_man_dir}
+
   cd ${xe_build_dir}/opt/intel/${_composer_xe_dir}/linux
   if $_remove_docs ; then
     msg2 "Removing documentation"
@@ -461,15 +475,10 @@ package_intel-fortran-compiler() {
     rm -rf ./Samples
   fi
 
-  msg2 "Copying man pages"
-  mv ${xe_build_dir}/opt/intel/documentation_${_year}/en/man/common/man1/*.1 ${_man_dir}
-
-  gzip ${_man_dir}/*.1
-
-  # Remove duplicate headers found in intel base
+  msg2 "Removing duplicate headers found in intel-compiler-base"
   rm ./compiler/include/omp_lib.f90
-  rm ./compiler/include/intel64/omp_lib.mod
-  rm ./compiler/include/intel64/omp_lib_kinds.mod
+  rm ./compiler/include/${_i_arch}/omp_lib.mod
+  rm ./compiler/include/${_i_arch}/omp_lib_kinds.mod
 
   msg2 "Moving package files"
   mv ${xe_build_dir}/opt ${pkgdir}/
@@ -553,12 +562,11 @@ package_intel-mkl() {
   rm ./bin/mklvars.csh
   sed -i "s/<INSTALLDIR>/\/opt\/intel\/${_composer_xe_dir}\/linux/g" ./bin/mklvars.sh
 
-  rm -rf ./${_not_arch}
-
   if ${_remove_docs} ; then
     msg2 "Removing documentation"
     rm -rf ./examples
     rm -rf ./benchmarks
+    rm -rf $xe_build_dir/opt/intel/documentation_${_year}
   fi
 
   if ${_remove_static_objects_mkl} ; then
@@ -591,7 +599,6 @@ package_intel-mpi() {
 
   msg2 "Extracting RPMS"
   extract_rpms 'intel-mpi-*.rpm'  $xe_build_dir
-  extract_mpi_rpms 'intel-mpi-sdk-*.rpm'  $xe_build_dir
 
   msg2 "Updating scripts"
   cd ./opt/intel/${_composer_xe_dir}/linux/mpi/${_i_arch}/bin
@@ -606,6 +613,11 @@ package_intel-mpi() {
 
   rm -rf ${xe_build_dir}/opt/intel/${_composer_xe_dir}/linux/mpi_2019
   rm -rf ${xe_build_dir}/opt/intel/${_composer_xe_dir}/licensing/mpi_2019
+
+  if $_remove_docs ; then
+    msg2 "Removing documentation"
+    rm -rf ${xe_build_dir}/opt/intel/documentation_${_year}
+  fi
 
   msg2 "Moving package files"
   mv ${xe_build_dir}/opt ${pkgdir}
@@ -639,10 +651,6 @@ package_intel-tbb_psxe() {
   sed -i "s/SUBSTITUTE_INSTALL_DIR_HERE/\/opt\/intel\/${_composer_xe_dir}\/linux\/tbb/g" ./tbb/bin/tbbvars.sh
 
   chmod a+x ./tbb/bin/tbbvars.sh
-
-  msg2 "Removing unneeded libs and bin"
-  rm -rf ./tbb/bin/${_not_arch}
-  rm -rf ./tbb/lib/${_not_arch}
 
   if $_remove_docs ; then
     msg2 "Removing documentation"
@@ -685,7 +693,6 @@ package_intel-vtune-amplifier() {
   msg2 "Copying man pages"
   if [[ -d ./man/man1 ]]; then
     mv ./man/man1/*.1 ${_man_dir}/
-    gzip ${_man_dir}/*.1
   fi
 
 
@@ -729,7 +736,6 @@ package_intel-advisor() {
   msg2 "Copying man pages"
   if [[ -d ./man/man1 ]]; then
     mv ./man/man1/*.1 ${_man_dir}/
-    gzip ${_man_dir}/*.1
   fi
 
 
@@ -771,7 +777,6 @@ package_intel-inspector() {
   msg2 "Copying man pages"
   if [[ -d ./man/man1 ]]; then
     mv ./man/man1/*.1 ${_man_dir}/
-    gzip ${_man_dir}/*.1
   fi
 
 
