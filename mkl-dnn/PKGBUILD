@@ -3,30 +3,20 @@
 # Contributor: Jonathon Fernyhough <jonathon_at manjaro_dotorg>
 
 pkgname=mkl-dnn
-pkgver=0.20.1
+pkgver=1.0
 pkgrel=1
-_mklmlpkgver=0.20
-_mklmlver=2019.0.5.20190502
 pkgdesc="Intel® Math Kernel Library for Deep Neural Networks"
 arch=(x86_64)
 url=https://github.com/intel/mkl-dnn
 license=('APACHE')
-makedepends=('cmake>=2.8' 'doxygen>=1.8.5' 'graphviz' 'patchelf')
-optdepends=('intel-mkl: Intel MKL small library for Intel OpenMP linking'
-            'intel-compiler-base: Intel OpenMP runtime linking')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/intel/$pkgname/archive/v$pkgver.tar.gz"
-        "https://github.com/intel/$pkgname/releases/download/v$_mklmlpkgver/mklml_lnx_$_mklmlver.tgz")
-sha256sums=('26f720ed912843ba293e8a1e0822fe5318e93c529d80c87af1cf555d68e642d0'
-            'a936d6b277a33d2a027a024ea8e65df62bd2e162c7ca52c48486ed9d5dc27160')
+makedepends=('cmake>=2.8' 'doxygen>=1.8.5' 'graphviz')
+optdepends=()
+source=("$pkgname-$pkgver.tar.gz::https://github.com/intel/$pkgname/archive/v$pkgver.tar.gz")
+sha256sums=('27fd9da9720c452852f1226581e7914efcf74e1ff898468fdcbe1813528831ba')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
-  mkdir -p build external
-
-  # "Take advantage of optimized matrix-matrix multiplication (GEMM) function
-  #  from Intel MKL"
-
-  ln -sf "$srcdir"/mklml_lnx_$_mklmlver external/
+  mkdir -p build 
 
   # Allow compilation to succeed despite warnings
   # sed -i '66s|-Werror||' cmake/platform.cmake
@@ -34,7 +24,7 @@ prepare() {
 
 build() {
   cd "$srcdir/$pkgname-$pkgver/build"
-  cmake -DCMAKE_INSTALL_PREFIX="$pkgdir/usr" -DCMAKE_INSTALL_LIBDIR="lib" -DCMAKE_INSTALL_RPATH="/usr/lib/mklml" -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE ..
+  cmake -DCMAKE_INSTALL_PREFIX="$pkgdir/usr" -DCMAKE_INSTALL_LIBDIR="lib" ..
   make
   make doc
 }
@@ -47,9 +37,4 @@ check() {
 package() {
   cd "$srcdir/$pkgname-$pkgver/build"
   make install
-  mkdir -p $pkgdir/usr/lib/mklml
-  
-  # Move libiomp5 so that it doesnt conflict with openmp package
-  mv "$pkgdir/usr/lib/libiomp5.so" "$pkgdir/usr/lib/mklml"  
-  patchelf --set-rpath /usr/lib/mklml "$pkgdir/usr/lib/libmklml_intel.so"
 }
