@@ -1,7 +1,7 @@
 pkgbase='python-pydotplus'
 pkgname=('python-pydotplus' 'python2-pydotplus')
 pkgver=2.0.2
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc='Interface to Graphviz’s Dot language'
 arch=('any')
 url='https://github.com/carlos-jenkins/pydotplus'
