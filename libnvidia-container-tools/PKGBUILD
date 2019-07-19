@@ -1,6 +1,6 @@
 pkgname=libnvidia-container-tools
 pkgver=1.0.0_0.1.beta.1
-pkgrel=1
+pkgrel=1.1
 pkgdesc='NVIDIA container runtime library (command-line tools)'
 arch=('x86_64')
 url='https://github.com/NVIDIA/libnvidia-container'
