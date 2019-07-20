@@ -9,8 +9,8 @@
 
 pkgname=freecad
 _pkgver=0.18
-_count=16117
-_commit=dbb4cc6415bac848a294f03b80f65e888d531742
+_count=16131
+_commit=3129ae4296e40ed20e7b3d460b86e6969acbe1c3
 pkgver=$_pkgver.$_count
 pkgrel=9
 pkgdesc='A general purpose 3D CAD modeler'
@@ -31,6 +31,7 @@ sha256sums=('SKIP'
 
 build() {
     cd "${srcdir}/FreeCAD"
+    PATH=/usr/bin:$PATH # OpenCascade has problems if /bin comes before /usr/bin in the $PATH
     cmake . \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="/usr/lib/freecad" \
