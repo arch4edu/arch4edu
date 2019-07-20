@@ -1,7 +1,7 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 pkgname=python-pytest-openfiles
 _pyname=${pkgname#python-}
-pkgver=0.3.2
+pkgver=0.4.0
 pkgrel=1
 pkgdesc="Pytest plugin for detecting file handles that were inadvertently left open at the end of unit tests"
 arch=('i686' 'x86_64')
@@ -10,7 +10,7 @@ license=('BSD')
 depends=('python-pytest>=2.8.0' 'python-psutil' 'python-six')
 makedepends=('python-setuptools')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('b219c5487f7630c3944973cf24709340')
+md5sums=('23fcf695c3d0245cb3f9d69952f189e6')
 
 package() {
     cd ${srcdir}/${_pyname}-${pkgver}
