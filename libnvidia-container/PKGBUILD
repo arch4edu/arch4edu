@@ -5,7 +5,7 @@ pkgbase=libnvidia-container
 pkgname=(libnvidia-container libnvidia-container-tools)
 
 pkgver=1.0.2
-pkgrel=1
+pkgrel=1.1
 _elfver=0.7.1
 _nvmpver=396.51
 
