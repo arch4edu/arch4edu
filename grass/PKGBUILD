@@ -2,21 +2,21 @@
 # Contributor: Maciej Sieczka <msieczka at sieczka dot org>
 
 pkgname=grass
-pkgver=7.6.0
+pkgver=7.6.1
 pkgrel=1
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
 arch=('i686' 'x86_64')
 url='http://grass.osgeo.org/'
 license=('GPL')
-depends=('cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu' 'libpng'
-         'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python2-gdal' 'python2-numpy'
-         'python2-pillow' 'readline' 'subversion' 'wxpython' 'zlib')
+depends=('bzip2' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu'
+         'libpng' 'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python2-gdal' 'python2-numpy'
+         'python2-pillow' 'readline' 'subversion' 'wxpython' 'zlib' 'zstd')
 makedepends=('libxt')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
 source=("http://grass.osgeo.org/grass$_shortver/source/$pkgname-$pkgver.tar.gz")
-md5sums=('40f0b49529598cefd3e7b4f807d6133b')
+md5sums=('9ca74f9010d013f735737a90c65d8a7f')
 
 prepare() {
   cd $pkgname-$pkgver
@@ -42,7 +42,9 @@ build() {
     --with-nls \
     --with-geos \
     --with-postgres \
-    --with-pdal
+    --with-pdal \
+    --with-bzlib \
+    --with-zstd
 
   make
 }
