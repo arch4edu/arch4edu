@@ -62,7 +62,7 @@ sha512sums=('fae7d114437c4b5d10fcb2a4265acd707ad2a4810eeb7c11e25caca1d85093a1495
 
 # Build with the Intel Compiler Suite or GCC/GFortran.
 # Comment the following line to build the package with GCC
-_CC="icc"
+# _CC="icc"
 
 # update dependencies w.r.t the compiler used
 if [[ $_CC = "icc" ]]; then
