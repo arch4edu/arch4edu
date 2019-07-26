@@ -8,8 +8,8 @@ pkgname=wiredtiger
 # Current commit's README says 3.1.1, and is what's used here
 # git describe --long shows: r3.7.3.r423.g4051e4941
 # git describe --long --tags shows: mongodb.4.0.6.r23.g4051e4941
-pkgver=3.1.1.20190516
-_commit=4f2ed4c4cb122342711ce82d553482124501fcd4
+pkgver=3.1.1.20190701
+_commit=4a3194b043b8cffb5339c12e1554d0bd42ed1b1f
 pkgrel=1
 pkgdesc="High performance, scalable, production quality, NoSQL, Open Source extensible platform for data management"
 arch=('x86_64')
@@ -18,7 +18,7 @@ license=('GPL')
 depends=('snappy' 'lz4' 'zlib' 'gperftools')
 makedepends=('aspell-en')
 source=("$pkgname-$_commit.tar.gz::https://github.com/wiredtiger/wiredtiger/archive/$_commit.tar.gz")
-sha512sums=('3917dd47231c9e6f5220bc472249ea1e9b5ba081e14d8052ebd64e9c7d21090b0754be4f5793513063122dd1ff0e51366761d749bb25e04372fce25178de4509')
+sha512sums=('09617821b1b5717eb6d5a17f2f714c42b9e8eaae77167d0b455d45caf269451da3ce6c787ec9d7329c4b0eceb4f1c4e7c592d5f53d28e0585efa5d576f3ac0af')
 
 prepare() {
   mv wiredtiger-{$_commit,$pkgver}
