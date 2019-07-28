@@ -9,7 +9,6 @@ license=("custom:NWS")
 arch=('i686' 'x86_64')
 provides=(g2clib)
 depends=(jasper libpng)
-makedepends=(jasper)
 options=('staticlibs')
 source=(http://www.nco.ncep.noaa.gov/pmb/codes/GRIB2/${pkgname}-${pkgver}.tar
         NWS_license.txt)
