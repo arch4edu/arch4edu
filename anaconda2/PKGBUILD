@@ -1,28 +1,19 @@
-# Maintainer : Immae <ismael.bouya@normalesup.org>
+# Maintainer : Jingbei Li <i@jingbei.li>
+# Contributor : Immae <ismael.bouya@normalesup.org>
 # Contributor : Martin Wimpress <code@flexion.org>
-# Contributor : Jingbei Li <i@jingbei.li>
 pkgname=anaconda2
-pkgver=2019.03
+pkgver=2019.07
 pkgrel=1
 pkgdesc="Completely free enterprise-ready Python distribution for large-scale data processing, predictive analytics, and scientific computing."
 arch=('x86_64')
 url="https://store.continuum.io/cshop/anaconda/"
-license=("custom")
+license=("BSD")
 source=("https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda2-${pkgver}-Linux-x86_64.sh"
 "$pkgname.install")
 options=(!strip libtool staticlibs)
-sha256sums=('cedfee5b5a3f62fcdac0a1d2d12396d0f232d2213d24d6dc893df5d8e64b8773'
+sha256sums=('189e16e7adf9ba4b7b7d06ecdc10ce4ad4153e5e3505b9331f3d142243e18e97'
             'c491735df1753335c6aa5b3b71bd936ccb4ff5622fedbf22d1d6d9da5bd45fbc')
 install="$pkgname.install"
-
-prepare() {
-	cd ${srcdir}
-	msg2 "Patching Anaconda2-${pkgver}-Linux-x86_64.sh"
-	sed \
-		-e '/wc -c "\$THIS_PATH" | grep/s/!//' \
-		-e "/export FORCE/s|$|;sed \"/^def update_prefix/a\\\    new_prefix='/opt/$pkgname'\" -i pkgs/.install.py|" \
-		-i Anaconda2-${pkgver}-Linux-x86_64.sh
-}
 
 package() {
 	prefix=${pkgdir}/opt/${pkgname}
@@ -36,8 +27,8 @@ package() {
 	msg2 "Correcting permissions"
 	chmod a+r -R pkgs
 
-	msg2 "Stripping \$pkgdir from default meta"
-	find conda-meta -name '*.json' -exec sed -e "s/${pkgdir//\//\\\/}//g" -i {} \;
+	msg2 "Stripping \$pkgdir"
+	sed -e "s|${pkgdir}||g" -i $(grep "${pkgdir}" . -rIl 2>/dev/null)
 
 	msg2 "Installing license"
 	install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
