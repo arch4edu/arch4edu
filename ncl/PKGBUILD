@@ -1,0 +1,108 @@
+# Maintainer: XavierCLL <xavier.corredor.llano (a) gmail.com>
+
+pkgname=ncl
+pkgver=6.6.2
+pkgrel=1
+pkgdesc='Ncar Command Language, is an interpreted language designed specifically for scientific data analysis and visualization'
+url='http://www.ncl.ucar.edu'
+license=('APACHE')
+arch=('i686' 'x86_64')
+depends=('libxext' 'cairo' 'pixman' 'fontconfig' 'expat' 'bzip2' 'zlib' 'netcdf' 'hdf5' 
+         'triangle' 'hdf4' 'netcdf-fortran' 'libxt' 'libxaw' 'libxext' 'libxpm' 'udunits'
+         'libx11' 'imake' 'g2clib' 'gdal' 'openmotif' 'glibc' 'libjpeg' 'libpng' 'jasper' 'libaec'
+         'libxaw' 'tcsh' 'flex' 'gsl')
+makedepends=('gcc' 'gcc-fortran' 'tcsh' 'byacc')
+provides=('ncl')
+install=${pkgname}.install
+backup=(etc/profile.d/ncarg.sh)
+source=(ncl-$pkgver.tar.gz::https://github.com/NCAR/ncl/archive/$pkgver.tar.gz
+        http://www.netlib.org/voronoi/triangle.zip Site.local ncarg.sh hluresfile ncl.install
+        no_install_dep.patch::https://src.fedoraproject.org/rpms/ncl/raw/master/f/ncl-5.0.0-no_install_dep.patch
+        includes.patch::https://src.fedoraproject.org/rpms/ncl/raw/master/f/ncl-5.1.0-includes.patch
+        netcdff.patch::https://src.fedoraproject.org/rpms/ncl/raw/master/f/ncl-5.1.0-netcdff.patch
+        paths.patch::https://src.fedoraproject.org/rpms/ncl/raw/master/f/ncl-5.1.0-paths.patch
+        ncl-libs.patch::https://src.fedoraproject.org/rpms/ncl/raw/master/f/ncl-libs.patch)
+optdepends=('ncl-highres: High-resolution coastlines (RANGS and GSHHS)')
+md5sums=('38e3d2b55490f6eac93035d31579a45e'
+         '10aff8d7950f5e0e2fb6dd2e340be2c9'
+         'bdbef74e361df88fbceff912bff6dd8a'
+         '33fd270a3ea1b4beb770b3e89ada4f59'
+         'c18b84591221cf956f3c626cf8766f41'
+         '913322ce7d4ca5efed7674693e8a3124'
+         'fdafb5d316ee2a86c81030a47cc9aaad'
+         'a996694fec633798787cb3f288022125'
+         'c40d02a87b447f79d83c3f0d56923db8'
+         '9634e0287a4f972e79ceeca44387c13a'
+         '2dc539dc3133339aed425aa03f87f103')
+         
+build() {
+    # copy triangle library
+    cp triangle.c triangle.h ${pkgname}-$pkgver/ni/src/lib/hlu/
+
+    cd ${pkgname}-$pkgver
+
+    # patchs http://pkgs.fedoraproject.org/cgit/rpms/ncl.git
+    patch -Np1 --ignore-whitespace -i ../no_install_dep.patch
+    patch -Np1 --ignore-whitespace -i ../includes.patch
+    patch -Np1 --ignore-whitespace -i ../netcdff.patch
+    patch -Np1 --ignore-whitespace -i ../paths.patch
+    patch -Np1 --ignore-whitespace -i ../ncl-libs.patch
+    
+    # Spurrious exec permissions
+    find -name '*.[fh]' -exec chmod -x {} +
+
+    # configure
+    #./Configure -ncar || return 1
+    cp ../Site.local config/
+    sed -i "s|YmakeRoot /usr|YmakeRoot ${pkgdir}/usr|g" config/Site.local
+    # Fixup LINUX config (to expose vsnprintf prototype)
+    sed -i -e '/StdDefines/s/-DSYSV/-D_ISOC99_SOURCE/' config/LINUX
+    # fix include c.h
+    sed -i 's|#include <ncarg/c.h>|#include "c.h"|g' common/src/libncarg_c/env.c \
+    common/src/libncarg_c/gsbytes.c common/src/libncarg_c/logic32.c common/src/libncarg_c/logic64.c \
+    common/src/libncarg_c/mangle.c common/src/libncarg_c/rwchinfl.c common/src/libncarg_c/trnspprt.c
+    # fix netcdf.h
+    sed -i 's|#include <netcdf.h>|#include "/usr/include/netcdf.h"|g' `find . -name \*.c`
+    sed -i 's|#include <netcdf.h>|#include "/usr/include/netcdf.h"|g' `find . -name \*.h`
+    
+    ./config/ymkmf
+
+    # build
+    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -lnetcdf -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" F77="gfortran" F77_LD="gfortran"\
+        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" # >> log 2>&1 
+}
+
+package() {
+    # install
+    cd ${pkgname}-$pkgver
+    make install # >> log 2>&1
+
+    # move libs
+    mv ${pkgdir}/usr/share/ncarg/* ${pkgdir}/usr/lib/ncarg/
+    rm -rf ${pkgdir}/usr/share/ncarg
+
+    # Use system udunits
+    rm -rf ${pkgdir}/usr/lib/ncarg/udunits
+    ln -s /usr/share/udunits ${pkgdir}/usr/lib/ncarg/
+
+    # set variable ncarg in system
+    install -dv ${pkgdir}/etc/profile.d
+    install --mode=755 ../ncarg.sh --target-directory=${pkgdir}/etc/profile.d/  
+
+    # copy hluresfile
+    install --mode=644 ../hluresfile --target-directory=${pkgdir}/usr/lib/ncarg/
+
+    # compress and put in order man files
+    cd $pkgdir/usr/man
+    for listman in `ls` 
+    do
+        mkdir -p $pkgdir/usr/share/man/$listman
+        cd $pkgdir/usr/man/$listman
+        for manfiles in `ls`
+        do
+            gzip $manfiles
+            mv ${manfiles}.gz $pkgdir/usr/share/man/$listman/
+        done
+    done
+    rm -Rf $pkgdir/usr/man/
+}
