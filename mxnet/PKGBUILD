@@ -2,13 +2,13 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgbase=mxnet
 pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl')
-pkgver=1.4.1
-pkgrel=3
+pkgver=1.5.0
+pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
 license=('Apache')
-depends=('double-conversion' 'hdf5' 'intel-tbb' 'opencv' 'python-numpy' 'python-requests')
+depends=('double-conversion' 'hdf5' 'intel-tbb' 'python-numpy' 'python-requests')
 makedepends=('cairo' 'cblas' 'cmake' 'cuda' 'cudnn' 'cython' 'git' 'gtk3' 'gtkglext' 'intel-compiler-base' 'intel-mkl' 'lapack' 'nccl' 'python-graphviz' 'vtk' 'glew' 'mkl-dnn')
 source=("${pkgbase}::git+https://github.com/apache/incubator-mxnet#tag=$pkgver"
 	'git+https://github.com/dmlc/cub'
@@ -81,7 +81,7 @@ prepare() {
 	git submodule update --init --recursive
 
 	(
-		echo "USE_OPENCV=1"
+		echo "USE_OPENCV=0"
 
 		# https://github.com/apache/incubator-mxnet/issues/8569
 		echo "USE_GPERFTOOLS=0"
@@ -89,7 +89,7 @@ prepare() {
 	) >> make/config.mk
 
 	# https://github.com/archlinuxcn/repo/issues/684
-	sed 's|liblapack.a|liblapack.so|g' -i Makefile
+	#sed 's|liblapack.a|liblapack.so|g' -i Makefile
 
 	# Fix cython module names
 	sed \
@@ -97,10 +97,6 @@ prepare() {
 		-e 's|../3rdparty/nnvm/include|../3rdparty/tvm/nnvm/include|' \
 		-i python/setup.py
 	
-	# https://github.com/apache/incubator-mxnet/pull/13559
-	patch -p1 < ${srcdir}/13559.patch
-	sed 's/opencv)/opencv4)/g' -i Makefile
-
 	cp -r "$srcdir/$pkgbase" "$srcdir/$pkgbase-cuda"
 	(
 		echo "export CC=gcc-8"
