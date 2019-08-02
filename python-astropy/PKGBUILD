@@ -2,7 +2,7 @@
 # Maintainer: Médéric Boquien <mboquien@free.fr>
 pkgname=python-astropy
 pkgver=3.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A community python library for astronomy"
 arch=('i686' 'x86_64')
 url="http://www.astropy.org/"
@@ -16,7 +16,7 @@ md5sums=('ee0a185e8b9065ea9ebd860a651af2ee')
 build() {
   cd ${srcdir}/astropy-${pkgver}
 
-  python setup.py build --use-system-libraries --offline
+  python setup.py build --use-system-erfa --use-system-cfitsio --use-system-expat --offline
 }
 
 package() {
