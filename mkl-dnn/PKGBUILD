@@ -3,7 +3,7 @@
 # Contributor: Jonathon Fernyhough <jonathon_at manjaro_dotorg>
 
 pkgname=mkl-dnn
-pkgver=1.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Intel® Math Kernel Library for Deep Neural Networks"
 arch=(x86_64)
@@ -12,7 +12,7 @@ license=('APACHE')
 makedepends=('cmake>=2.8' 'doxygen>=1.8.5' 'graphviz')
 optdepends=()
 source=("$pkgname-$pkgver.tar.gz::https://github.com/intel/$pkgname/archive/v$pkgver.tar.gz")
-sha256sums=('27fd9da9720c452852f1226581e7914efcf74e1ff898468fdcbe1813528831ba')
+sha256sums=('91fb84601c18f8a5a87eccd7b63d61f03495f36c5c533bd7f59443e4f8bb2595')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
