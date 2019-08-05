@@ -3,7 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}]
 update_on = [{'aur': None}]
-repo_depends = ['(archimedes-tools, triangle)', 'udunits','g2clib']
+repo_depends = [('archimedes-tools', 'triangle'), 'udunits','g2clib']
 build_prefix = 'extra-x86_64'
 def pre_build():
     aur_pre_build()
