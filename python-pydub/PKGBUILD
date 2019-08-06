@@ -2,13 +2,14 @@
 pkgbase=python-pydub
 pkgname=('python-pydub' 'python2-pydub')
 pkgver=0.23.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Manipulate audio with an simple and easy high level interface"
 url="http://pydub.com"
 makedepends=("python-setuptools" "python2-setuptools")
 license=('MIT')
 arch=('any')
-source=("https://github.com/jiaaro/pydub/archive/v$pkgver.tar.gz")
+source=("$pkgbase-$pkgver.tar.gz::https://github.com/jiaaro/pydub/archive/v$pkgver.tar.gz")
+makedepends=('python-setuptools' 'python2-setuptools')
 
 build() {
   cd $srcdir
