@@ -68,8 +68,8 @@ build() {
     ./config/ymkmf
 
     # build
-    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -lnetcdf -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" F77="gfortran" F77_LD="gfortran"\
-        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" # >> log 2>&1 
+    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H  -lnetcdf" F77="gfortran" F77_LD="gfortran"\
+        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H " # >> log 2>&1 
 }
 
 package() {
