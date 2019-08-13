@@ -11,7 +11,7 @@ def pre_build():
     add_arch(['armv6h', 'armv7h', 'aarch64'])
 
     for line in edit_file('PKGBUILD'):
-        if line.startswith('\t#patch'):
+        if line.startswith('\tpatch'):
             print('\tsed "s|so.56|so.*|g" -i ${srcdir}/${pkgname}-${pkgver}/QGCSetup.pri')
         else:
             print(line)
