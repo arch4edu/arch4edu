@@ -9,7 +9,7 @@
 
 pkgname='protobuf-static'
 _pkgname='protobuf'
-pkgver=3.8.0
+pkgver=3.7.0
 pkgrel=1
 pkgdesc="Protocol Buffers - Google's data interchange format"
 arch=('x86_64')
@@ -22,7 +22,7 @@ provides=("protobuf=$pkgver")
 conflicts=('protobuf')
 source=("$_pkgname-$pkgver.tgz::https://github.com/google/${_pkgname}/archive/v${pkgver}.tar.gz"
     "no-thirdparty.patch")
-sha256sums=('03d2e5ef101aee4c2f6ddcf145d2a04926b9c19e7086944df3842b1b8502b783'
+sha256sums=('a19dcfe9d156ae45d209b15e0faed5c7b5f109b6117bfc1974b6a7b98a850320'
             '6fc836196e69b872794e821111df64effe69f984d46d83c902a9df8953a868b3')
 
 prepare() {
