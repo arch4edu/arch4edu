@@ -2,7 +2,7 @@
 pkgdesc='A CUDA backend for Torch7'
 pkgname='torch7-cutorch-git'
 pkgver=r1026.5e9d86c
-pkgrel=4
+pkgrel=5
 makedepends=('cmake' 'git')
 depends=('torch7-git>=r819' 'cuda')
 conflicts=('torch7-cutorch')
@@ -35,7 +35,7 @@ build(){
 
 	cd "${pkgname}"
 	CPATH=/usr/include/lua5.1 \
-	cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+	cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=gcc-8 -DCMAKE_BUILD_TYPE=Release
 	make
 }
 
