@@ -2,9 +2,13 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
-build_prefix = 'extra-x86_64'
-pre_build = aur_pre_build
+update_on = [{'aur': 'yay'}]
+build_prefix = 'extra-aarch64'
+time_limit_hours = 3
+
+def pre_build():
+    aur_pre_build('yay')
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
