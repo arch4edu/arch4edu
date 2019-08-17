@@ -2,7 +2,7 @@
 # Contributor: Fat Cat <carlos dot manuel250 at gmail dot com>
 
 pkgname=vundle-git
-pkgver=0.10.2.627.9a38216
+pkgver=0.10.2.629.b255382
 pkgrel=1
 pkgdesc='Plug-in manager for Vim'
 url='https://github.com/VundleVim/Vundle.vim'
