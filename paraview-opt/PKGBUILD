@@ -14,7 +14,7 @@ _pkg=paraview
 _mpi=openmpi
 pkgname=${_pkg}-opt
 #-${_mpi}
-pkgver=5.6.0
+pkgver=5.6.1
 pkgrel=5
 provides=(${_pkg})
 conflicts=(${_pkg})
@@ -34,7 +34,7 @@ depends=('boost-libs' 'qt5-tools' 'qt5-x11extras' 'intel-tbb' 'openmpi'
 makedepends=('cmake' 'boost' 'mesa' 'gcc-fortran' 'ninja' 'qt5-tools' 'qt5-xmlpatterns' 'eigen' 'pegtl')
 source=("${url}/files/v${pkgver:0:3}/ParaView-v${pkgver}.tar.xz"
 	"paraview.sh")
-sha256sums=('5b49cb96ab78eee0427e25200530ac892f9a3da7725109ce1790f8010cb5b377'
+sha256sums=('50ef01f54db6358b402e50d1460ef47c04d675bf26f250c6937737169f1e6612'
             'ed1d597139473f24441e5c10038e988d64ab1d904e0c5ecaf24069734989bff4')
 
 prepare() {
