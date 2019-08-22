@@ -17,8 +17,9 @@ def pre_build():
         if not line.startswith('groups=('):
             print(line)
 
-def post_build():
-    aur_post_build()
+post_build = aur_post_build
+
+def post_build_always(success):
     del os.environ['http_proxy']
     del os.environ['https_proxy']
 
