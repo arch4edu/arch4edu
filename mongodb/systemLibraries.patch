@@ -1,0 +1,15 @@
+diff --git a/src/third_party/SConscript b/src/third_party/SConscript
+index 5c0c129b30..6531300fee 100644
+--- a/src/third_party/SConscript
++++ b/src/third_party/SConscript
+@@ -206,7 +206,9 @@ def injectThirdParty(thisEnv, libraries=[], parts=[]):
+     libraries = thisEnv.Flatten([libraries])
+     parts = thisEnv.Flatten([parts])
+     for lib in libraries:
+-        mods = thirdPartyEnvironmentModifications[lib]
++        mods = thirdPartyEnvironmentModifications.get(lib, None)
++        if not mods:
++            continue
+         if not parts:
+             thisEnv.PrependUnique(**mods)
+         else:
