@@ -2,7 +2,7 @@
 
 pkgname='python-sparse'
 _pkgname=sparse
-pkgver=0.7.0
+pkgver=0.8.0
 pkgrel=1
 pkgdesc="Sparse multidimensional arrays on top of numpy and scipy"
 arch=('any')
@@ -13,7 +13,7 @@ depends=('python' 'python-numpy' 'python-scipy' 'python-numba')
 optdepends=()
 makedepends=('python-setuptools')
 source=("https://github.com/pydata/sparse/archive/$pkgver.tar.gz")
-sha256sums=('7f458a24957d53b25d5d61ba7dcb2c0dd6a31fdb41a5319e872923a2449eaaa0')
+sha256sums=('c51a5069da86310532a190008ba248783d91f2d6fb2e39c14e8573289b294861')
 
 
 package(){
@@ -24,6 +24,6 @@ package(){
 
 check(){
   cd "$srcdir/$_pkgname-$pkgver"
-  py.test
+  PYTHONPATH=. py.test sparse/tests
 }
 # vim:ts=2:sw=2:et:
