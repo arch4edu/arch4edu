@@ -9,10 +9,10 @@ def pre_build():
   aur_pre_build()
 
   for line in edit_file('PKGBUILD'):
-    if 'make' in line and not 'install' in line:
-        print(line+' -j1')
-    else:
-        print(line)
+      if line.strip() == 'make':
+          print(line + ' -j1')
+      else:
+          print(line)
 
 post_build = aur_post_build
 
