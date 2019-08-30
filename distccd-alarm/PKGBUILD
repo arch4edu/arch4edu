@@ -55,7 +55,7 @@ build() {
     # make readme.install
     sed -e "s/@VERS@/${_subarchs[$i]}/g" \
       -e "s/@PORT@/${_port[$i]}/g" \
-      <readme.in >../"${_subarchs[$i]}".install
+      <readme.in >${startdir}/"${_subarchs[$i]}".install
   done
 }
 
