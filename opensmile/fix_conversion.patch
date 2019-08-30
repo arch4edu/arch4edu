@@ -1,0 +1,27 @@
+From 5079ef352e167970b30026b6af931bf6dc4b51a6 Mon Sep 17 00:00:00 2001
+From: Cinna <sinakarimi76@gmail.com>
+Date: Tue, 25 Dec 2018 12:06:32 +0330
+Subject: [PATCH] change char to unsigned char
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Error: narrowing conversion of ‘'\37777777756'’ from ‘char’ to ‘unsigned char’ inside { } [-Wnarrowing]
+  unsigned char smileMagic[] = {(char)0xEE, (char)0x11, (char)0x11, (char)0x00};
+---
+ src/include/core/vectorTransform.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/include/core/vectorTransform.hpp b/src/include/core/vectorTransform.hpp
+index 5a44bcc..b32947e 100644
+--- a/src/include/core/vectorTransform.hpp
++++ b/src/include/core/vectorTransform.hpp
+@@ -114,7 +114,7 @@ struct sTfData {
+   void * user;  /* optional workspace data, if required by child classes */
+ };
+ 
+-const unsigned char smileMagic[] = {(char)0xEE, (char)0x11, (char)0x11, (char)0x00};
++const unsigned char smileMagic[] = {(unsigned char)0xEE, (unsigned char)0x11, (unsigned char)0x11, (unsigned char)0x00};
+ 
+ /* we define some transform type IDs here, other will be defined in child classes */
+ #define TRFTYPE_MNN     10    /* mean normalisation, mean vector only */
