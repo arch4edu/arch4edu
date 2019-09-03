@@ -13,7 +13,7 @@ pkgver=7.4.1+20181207
 _pkgver=7
 _majorver=${pkgver:0:1}
 _islver=0.18
-pkgrel=4
+pkgrel=5
 pkgdesc='The GNU Compiler Collection (7.x.x)'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -72,6 +72,8 @@ prepare() {
 }
 
 build() {
+  export LD_PRELOAD=/usr/lib/libstdc++.so
+
   cd gcc-build
 
   # using -pipe causes spurious test-suite failures
@@ -122,6 +124,8 @@ package_gcc7-libs() {
   depends=('glibc>=2.27')
   options+=(!strip)
 
+  export LD_PRELOAD=/usr/lib/libstdc++.so
+
   cd gcc-build
   make -C $CHOST/libgcc DESTDIR="$pkgdir" install-shared
   rm -f "$pkgdir/$_libdir/libgcc_eh.a"
@@ -151,6 +155,8 @@ package_gcc7() {
   pkgdesc="The GNU Compiler Collection - C and C++ frontends (7.x.x)"
   depends=("gcc7-libs=$pkgver-$pkgrel" 'binutils>=2.28' libmpc)
   options+=(staticlibs)
+
+  export LD_PRELOAD=/usr/lib/libstdc++.so
 
   cd gcc-build
 
@@ -207,6 +213,8 @@ package_gcc7-fortran() {
   pkgdesc="Fortran front-end for GCC (7.x.x)"
   depends=("gcc7=$pkgver-$pkgrel")
   options=('!emptydirs')
+
+  export LD_PRELOAD=/usr/lib/libstdc++.so
 
   cd gcc-build
   make -C $CHOST/libgfortran DESTDIR=$pkgdir install-cafexeclibLTLIBRARIES \
