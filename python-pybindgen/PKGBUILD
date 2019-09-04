@@ -1,35 +1,49 @@
-# Maintainer: Benjamin Chretien <chretien at lirmm dot fr>
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Contributor: Benjamin Chretien <chretien at lirmm dot fr>
 # Contributor: Sebastien Binet <binet@lblbox>
-pkgname=python-pybindgen
-pkgver=0.17.0
-pkgrel=3
+pkgbase=python-pybindgen
+pkgname=('python-pybindgen' 'python2-pybindgen')
+_pkgname='PyBindGen'
+pkgver=0.20.0
+pkgrel=1
 pkgdesc="A tool to generate Python bindings for C/C++ code"
-url="http://pypi.python.org/pypi/PyBindGen"
+url='https://github.com/gjcarneiro/pybindgen'
 arch=('i686' 'x86_64')
 license=('LGPL')
-depends=('python')
+makedepends=('python-setuptools' 'python2-setuptools')
 # Note: pygccxml does not support Python 3 yet
 #optdepends=('gccxml' 'pygccxml')
-makedepends=('waf')
-provides=('python-pybindgen')
-conflicts=('python-pybindgen-bzr')
 source=("https://pypi.python.org/packages/source/P/PyBindGen/PyBindGen-${pkgver}.tar.gz")
-md5sums=('7d8fe2b3b4646c3c1d9e5342b1645f6a')
+md5sums=('776a22dc2dd7edb66a0887c98d2fdc24')
 
-_pkgname=PyBindGen
+prepare() {
+  cd "$srcdir/"
+  cp -a "${_pkgname}-${pkgver}" "${_pkgname}-${pkgver}-py2"
+  cd "${_pkgname}-${pkgver}-py2"
+  sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
+    -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
+    -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
+    -i $(find . -name '*.py')
+}
 
 build() {
+  msg "Building Python 2"
+  cd "$srcdir/${_pkgname}-${pkgver}-py2"
+  python2 setup.py build
+
+  msg "Building Python 3"
   cd ${srcdir}/${_pkgname}-$pkgver
-  PYTHON=python3 ./waf configure --prefix=/usr --disable-pygccxml
-  PYTHON=python3 ./waf
+  python setup.py build
 }
 
-check() {
-  cd ${srcdir}/${_pkgname}-$pkgver
-  PYTHON=python3 ./waf check
+package_python2-pybindgen() {
+  depends=('python2')
+  cd ${srcdir}/${_pkgname}-$pkgver-py2
+  python2 setup.py install --root="$pkgdir"/ --optimize=1
 }
 
-package() {
+package_python-pybindgen() {
+  depends=('python')
   cd ${srcdir}/${_pkgname}-$pkgver
-  PYTHON=python3 ./waf install --prefix=/usr --destdir=${pkgdir}
+  python setup.py install --root="$pkgdir"/ --optimize=1
 }
