@@ -2,14 +2,14 @@
 pkgname=python-cupy
 _pkgname=cupy
 pkgver=6.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="NumPy-like API accelerated with CUDA"
 _github="cupy/cupy"
 url="https://cupy.chainer.org"
 arch=('x86_64')
 license=('MIT')
 depends=('cuda' 'cudnn' 'nccl' 'python-numpy' 'python-six' 'python-fastrlock')
-makedepends=('python' 'python-setuptools')
+makedepends=('python' 'python-setuptools' 'cython')
 source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz")
 md5sums=('8977b840bc8885ef1d6c574a939646eb')
 
