@@ -1,4 +1,5 @@
-# Maintainer: Sebastiaan Lokhorst <sebastiaanlokhorst@gmail.com>
+# Maintainer: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Sebastiaan Lokhorst <sebastiaanlokhorst@gmail.com>
 # Contributor: frankspace
 # Contributor: Renan Manola <rmanola@gmail.com>
 # Contributor: Stefan Husmann <stefan-husmann@t-online.de>
@@ -12,7 +13,7 @@ pkgver=6.5.0
 _ver=6
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=2.1
+pkgrel=3
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -51,6 +52,8 @@ prepare() {
 }
 
 build() {
+  export LD_PRELOAD=/usr/lib/libstdc++.so
+
   cd gcc-build
 
   # using -pipe causes spurious test-suite failures
@@ -104,6 +107,8 @@ package_gcc6-libs() {
   depends=('glibc>=2.25')
   options=('!emptydirs' '!strip')
 
+  export LD_PRELOAD=/usr/lib/libstdc++.so
+
   cd gcc-build
   make -C $CHOST/libgcc DESTDIR=${pkgdir} install-shared
   rm ${pkgdir}/${_libdir}/libgcc_eh.a
@@ -146,6 +151,8 @@ package_gcc6() {
   pkgdesc="The GNU Compiler Collection - C and C++ frontends"
   depends=("gcc6-libs=${pkgver}-${pkgrel}" 'binutils>=2.28' 'libmpc')
   options=('staticlibs')
+
+  export LD_PRELOAD=/usr/lib/libstdc++.so
 
   cd gcc-build
 
@@ -248,6 +255,8 @@ package_gcc6-fortran() {
   depends=("gcc6=$pkgver-$pkgrel")
   options=('!emptydirs')
 
+  export LD_PRELOAD=/usr/lib/libstdc++.so
+
   cd gcc-build
   make -C $CHOST/libgfortran DESTDIR=$pkgdir install-cafexeclibLTLIBRARIES \
     install-{toolexeclibDATA,nodist_fincludeHEADERS}
@@ -267,6 +276,8 @@ package_gcc6-gcj() {
   depends=("gcc6=$pkgver-$pkgrel")
   replaces=('gcc-gcj')
   options=('!emptydirs')
+
+  export LD_PRELOAD=/usr/lib/libstdc++.so
 
   # Install libjava.
   cd gcc-build
