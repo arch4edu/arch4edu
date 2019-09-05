@@ -11,11 +11,14 @@ def pre_build():
     os.environ['http_proxy'] = '127.0.0.1:8123'
     os.environ['https_proxy'] = '127.0.0.1:8123'
 
-    aur_pre_build()
+    aur_pre_build(do_vcs_update=False)
+    run_cmd('makepkg -od --noprepare'.split(' '))
 
     for line in edit_file('PKGBUILD'):
         if not line.startswith('groups=('):
             print(line)
+        else:
+            print(line.replace('http://download.eclipse.org', 'https://mirrors.tuna.tsinghua.edu.cn/eclipse'))
 
 post_build = aur_post_build
 
