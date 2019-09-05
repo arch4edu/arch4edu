@@ -28,6 +28,7 @@ Target = usr/bin/*-clang-[0-9]*
 Target = usr/bin/*-clang++-[0-9]*
 Target = usr/bin/*-g++-[0-9]*
 Target = usr/bin/*-gcc-[0-9]*
+Target = opt/cuda/bin/nvcc
 
 [Action]
 Description = Updating ccache links...
