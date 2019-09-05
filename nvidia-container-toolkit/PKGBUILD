@@ -3,10 +3,10 @@
 
 pkgname=nvidia-container-toolkit
 
-pkgver=1.0.1
-_runtime_pkgver=3.1.0
+pkgver=1.0.3
+_runtime_pkgver=3.1.2
 
-pkgrel=5
+pkgrel=1
 pkgdesc='NVIDIA container runtime toolkit'
 arch=('x86_64')
 url='https://github.com/NVIDIA/nvidia-container-runtime'
@@ -17,8 +17,8 @@ depends=('libnvidia-container-tools' 'docker>=1:19.03')
 conflicts=('nvidia-container-runtime-hook' 'nvidia-container-runtime<2.0.0')
 replaces=('nvidia-container-runtime-hook')
 
-source=("https://github.com/NVIDIA/nvidia-container-runtime/archive/${_runtime_pkgver}.tar.gz")
-sha256sums=('9fd1fd6d39e02b1e1cd41219cf8b2e657a4f3c4fad36ee94b397fff0cb9a0865')
+source=("https://github.com/NVIDIA/nvidia-container-runtime/archive/v${_runtime_pkgver}.tar.gz")
+sha256sums=('ccc2f60ae46765c9529b1c419365445d56e939d6bbbabd755d3c6175d7d22dc5')
 
 _srcdir="nvidia-container-runtime-${_runtime_pkgver}"
 
