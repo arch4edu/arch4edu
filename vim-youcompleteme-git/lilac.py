@@ -16,8 +16,6 @@ def pre_build():
 
     for line in edit_file('PKGBUILD'):
         if not line.startswith('groups=('):
-            print(line)
-        else:
             print(line.replace('http://download.eclipse.org', 'https://mirrors.tuna.tsinghua.edu.cn/eclipse'))
 
 post_build = aur_post_build
