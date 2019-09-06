@@ -42,8 +42,7 @@ arch:
      [ "$TRAVIS" == "true" ] && TRAVIS=1 || TRAVIS=0
 # Build
   - ccache -s
-  - timeout 30m makepkg -s --noconfirm | ts -s '[%.T]'
-  - _makepkg_return=${PIPESTATUS[0]}
+  - timeout 30m makepkg -s --noconfirm | ts -s '[%.T]'; _makepkg_return=${PIPESTATUS[0]}
   - sudo pacman -Sc --noconfirm
   - ccache -s
   - exit $_makepkg_return

@@ -8,17 +8,18 @@
 _pkgbase=scons
 pkgname=python2-${_pkgbase}
 pkgver=3.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Extensible Python-based build utility. Python2 version"
 arch=('any')
 url="https://scons.org"
 license=('MIT')
 depends=('python')
 makedepends=('python-setuptools' 'python2-setuptools')
+makedepends+=('docbook2x' 'epydoc' 'fop' 'texlive-bin' 'graphviz' 'ghostscript'
+'lynx' 'python-lxml' 'texlive-latexextra')
 # potential additions include ipkg, rpm
-checkdepends=('clang' 'dmd' 'gdc' 'ldc' 'nasm' 'python-lxml' 'python-pytest'
-'python-virtualenv' 'python2-lxml' 'python2-pytest' 'python2-virtualenv' 'swig'
-'zip')
+checkdepends=('clang' 'gdc' 'dmd' 'ldc' 'lib32-glibc' 'nasm' 'swig' 'zip'
+'python-pytest' 'python-virtualenv' 'python2-pytest' 'python2-virtualenv')
 source=("$_pkgbase-$pkgver.tar.gz::https://github.com/${_pkgbase}/${_pkgbase}/archive/${pkgver}.tar.gz")
 sha512sums=('3347a7ec5c6c7b596c0d51bb4a9654b971734736febe3834df0f40e7839e1f0578dafeae838d5ddd9f3319ac3d17b6790666fa1602c30480eba25122355179a5')
 
@@ -47,6 +48,16 @@ prepare() {
        -e 's/__DEVELOPER__/none/g' \
        -e "s/__VERSION__/${pkgver}/g" \
        -i "src/setup.py"
+   # disabling postscript creation, because it's broken
+   sed -e '614,619d' \
+       -e '/api_ps =/d' \
+       -e 's/api_ps,//' \
+       -i doc/SConscript
+   # fixing refentrytitle, so man pages are rendered with correct file names
+   sed -e 's/refentrytitle>SCONS-TIME/refentrytitle>scons-time/' \
+       -e 's/refentrytitle>SCONSIGN/refentrytitle>sconsign/' \
+       -e 's/refentrytitle>SCONS/refentrytitle>scons/' \
+       -i doc/man/*.xml
     # fix shebang for python2 version
     sed -e 's/env python/env python2/' \
         -i src/script/*
@@ -56,11 +67,18 @@ prepare() {
 
 build() {
     cd "${_pkgbase}-${pkgver}"
-    # build man page and move to src directory
-    python2 bootstrap.py doc/SConscript
-    mv -v build/doc/man/* src/
-    cd src
-    python2 setup.py build
+    # build documentation
+    (
+      python bootstrap.py SConstruct doc
+      cd src
+      for _xml in {scons,sconsign,scons-time}; do
+        docbook2man "../build/doc/man/${_xml}_db.xml"
+      done
+    )
+    (
+      cd src
+      python setup.py build
+    )
 }
 
 check() {
