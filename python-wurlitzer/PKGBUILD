@@ -1,7 +1,7 @@
 # Maintainer of this PKGBUILD file: Martino Pilia <martino.pilia@gmail.com>
 _name=wurlitzer
 pkgname=python-$_name
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=1
 pkgdesc="Capture C-level stdout/stderr in Python"
 arch=('any')
@@ -10,7 +10,7 @@ license=('MIT')
 depends=('python')
 makedepends=('python-setuptools')
 source+=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha256sums=('23e85af0850b98add77bef0a1eb47b243baab29160131d349234c9dfc9e57add')
+sha256sums=('f972c329da26e397b06a3f85be06145a47fb5d3fe138a83d84bde1e76e214b59')
 
 package() {
 	cd "$srcdir/$_name-$pkgver"
