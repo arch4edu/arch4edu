@@ -4,7 +4,7 @@ validpgpkeys=('748231EBCBD808A14F5E85D28C004C2F93481F6B')
 # News updates for packages can be followed at https://devblog.square-r00t.net
 pkgname=('python-pyqrcode' 'python2-pyqrcode')
 pkgver=1.2.1
-pkgrel=4.1
+pkgrel=4.2
 pkgdesc="A QR code generator written purely in Python with SVG, EPS, PNG and terminal output (fixed for python3)"
 arch=('any')
 url="https://pythonhosted.org/PyQRCode/"

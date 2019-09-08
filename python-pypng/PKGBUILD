@@ -2,7 +2,7 @@
 
 pkgname=python-pypng
 pkgver=0.0.18
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc="Pure Python library for PNG image encoding/decoding"
 arch=(any)
 url="https://github.com/drj11/pypng"
