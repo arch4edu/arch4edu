@@ -4,15 +4,15 @@
 pkgbase=libnvidia-container
 pkgname=(libnvidia-container libnvidia-container-tools)
 
-pkgver=1.0.2
-pkgrel=1.1
+pkgver=1.0.5
+pkgrel=1
 _elfver=0.7.1
 _nvmpver=396.51
 
 pkgdesc='NVIDIA container runtime library'
 arch=('x86_64')
 url='https://github.com/NVIDIA/libnvidia-container'
-license=('BSD')
+license=('Apache')
 
 makedepends=(bmake lsb-release rpcsvc-proto)
 depends=(libcap libseccomp libtirpc)
@@ -30,7 +30,7 @@ source=("https://github.com/NVIDIA/${pkgbase}/archive/v${pkgver}.tar.gz"
         "https://github.com/NVIDIA/nvidia-modprobe/archive/${_nvmpver}.tar.gz"
         fix_rpc_flags.patch
         fix_git_rev_unavail.patch)
-sha256sums=('333efd96e29719c0136fa6af1b14abc0ef9346532dd439462eeeeefb7f90cfc6'
+sha256sums=('b0b1a03f33ce7afdc06c432c7e100b17dc1723420293c27201c50bcb9b851e5a'
             '44f14591fcf21294387215dd7562f3fb4bec2f42f476cf32420a6bbabb2bd2b5'
             '25bc6437a384be670e9fd76ac2e5b9753517e23eb16e7fa891b18537b70c4b20'
             'ed949dd162cd104071a58b09f1effefe91150a32893ed28d143ee62bc217e566'
@@ -88,9 +88,10 @@ package_libnvidia-container() {
   # save bin/ for -tools
   rm -rf "${pkgdir}/usr/bin"
 
-  mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
-  install -D -m644 "${pkgdir}/usr/share/doc/${pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/"
-  rm -rf "${pkgdir}/usr/share/doc"
+  #mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
+  #install -D -m644 "${pkgdir}/usr/share/doc/${pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/"
+  #rm -rf "${pkgdir}/usr/share/doc"
+  rm -rf "${pkgdir}/usr/share"
 }
 
 package_libnvidia-container-tools() {
@@ -106,9 +107,10 @@ package_libnvidia-container-tools() {
   rm -rf "${pkgdir}/usr/lib"
   rm -rf "${pkgdir}/usr/include"
 
-  mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
-  install -D -m644 "${pkgdir}/usr/share/doc/${pkgbase}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/"
-  rm -rf "${pkgdir}/usr/share/doc"
+  #mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
+  #install -D -m644 "${pkgdir}/usr/share/doc/${pkgbase}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/"
+  #rm -rf "${pkgdir}/usr/share/doc"
+  rm -rf "${pkgdir}/usr/share"
 }
 
 # vim:set ts=2 sw=2 et:
