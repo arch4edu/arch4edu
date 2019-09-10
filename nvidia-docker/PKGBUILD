@@ -3,7 +3,7 @@
 
 pkgname=nvidia-docker
 
-pkgver=2.2.1
+pkgver=2.2.2
 pkgrel=1
 
 pkgdesc='Build and run Docker containers leveraging NVIDIA GPUs'
@@ -14,7 +14,7 @@ license=(BSD)
 depends=(docker nvidia-container-runtime)
 
 source=("https://github.com/NVIDIA/nvidia-docker/archive/v${pkgver}.tar.gz")
-sha256sums=('a63c55429fe4a42258aef4948222b8d7ae7d4003173988bf082de74fe5c54572')
+sha256sums=('93b94208cd814b078313a458f6086acb6876b9a5b076a596fe8753d2d7b78622')
 
 package() {
   cd "${pkgname}-${pkgver}"
