@@ -2,7 +2,7 @@
 # Contributor: Maciej Sieczka <msieczka at sieczka dot org>
 
 pkgname=grass
-pkgver=7.6.1
+pkgver=7.8.0
 pkgrel=1
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
@@ -10,22 +10,13 @@ arch=('i686' 'x86_64')
 url='http://grass.osgeo.org/'
 license=('GPL')
 depends=('bzip2' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu'
-         'libpng' 'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python2-gdal' 'python2-numpy'
-         'python2-pillow' 'readline' 'subversion' 'wxpython' 'zlib' 'zstd')
+         'libpng' 'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python-gdal' 'python-numpy'
+         'python-pillow' 'python-wxpython' 'readline' 'zlib' 'zstd')
 makedepends=('libxt')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
 source=("http://grass.osgeo.org/grass$_shortver/source/$pkgname-$pkgver.tar.gz")
-md5sums=('9ca74f9010d013f735737a90c65d8a7f')
-
-prepare() {
-  cd $pkgname-$pkgver
-
-  # Change everything to use python2
-  sed -i 's/\(env \|\/usr\/bin\/\)python$/&2/' $(find . -iname "*.py")
-  sed -i '/os\.environ.*GRASS_PYTHON/ s/"python"/"python2"/' lib/init/grass.py
-  sed -i '/^PYTHON/ s/python$/&2/' include/Make/Platform.make.in
-}
+md5sums=('e9b9d3bbbfe3ef9055ea1398b2222de4')
 
 build() {
   cd $pkgname-$pkgver
