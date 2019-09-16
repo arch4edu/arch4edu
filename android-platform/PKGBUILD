@@ -2,8 +2,8 @@
 # Contributors: lestb, Philipp Wolfer, Joel Pedraza, Jakub Schmidtke
 
 pkgname=android-platform
-_apilevel=28
-_rev=r06
+_apilevel=29
+_rev=r03
 pkgver=${_apilevel}_${_rev}
 pkgrel=2
 pkgdesc="Android SDK Platform, latest API"
@@ -15,7 +15,8 @@ provides=("${pkgname}-${_apilevel}")
 conflicts=("${pkgname}-${_apilevel}")
 options=('!strip')
 source=("https://dl-ssl.google.com/android/repository/platform-${_apilevel}_${_rev}.zip")
-sha384sums=('e272d51f868bf2168cf7c69255ff9ea22a9fda7a665dd2d0bee3606760b412b33ff4d845b72f3e6d98b9e835e89b55d3')
+sha1sums=('670e2e104333dae90e16ea3b615f0b63da5883ae')
+sha384sums=('903c9787eca23d71277244eb39ccdccedbd8bf7570d6e6f3d8494f06389687067d9f1ee13d29ec2644b3c74229bded7e')
 
 package() {
   mkdir -p "${pkgdir}/opt/android-sdk/platforms/"
