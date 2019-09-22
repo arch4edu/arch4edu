@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Engauge
+Comment=A Digitizer for curves and scanned plots.
+Exec=engauge
+Icon=engauge-digitizer
+Terminal=0
+Type=Application
+Categories=Education;Science;Math;
