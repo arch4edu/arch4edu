@@ -1,6 +1,6 @@
 _pkgname="mavproxy"
 pkgname="$_pkgname-git"
-pkgver=r2118.215555f0
+pkgver=r2119.84b90b56
 pkgrel=1
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
