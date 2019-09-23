@@ -1,6 +1,6 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
 pkgname=targetcli-fb
-pkgver=2.1.fb49
+pkgver=2.1.50
 pkgrel=1
 pkgdesc="free branch of the targetcli LIO administration shell (iSCSI + Co)"
 arch=('any')
@@ -16,7 +16,7 @@ backup=()
 options=()
 install=
 source=(https://github.com/open-iscsi/targetcli-fb/archive/v${pkgver}.tar.gz)
-sha512sums=('05fb6f638f808bf09089bdd110592b3ed3be49fc70cc1a71680de7bff40dc88425e69e9a99fdfcab712646cf131f78071edae46f214fdfee4b7090f47933c93a')
+sha512sums=('efceb023127d0bec2a491374a73bc0d9a5ca47fb3fb311a6c73c66c2117a57a64630292d84bd403f0c729e7ddb325193ead553bd87ce6537e482da4b9dd86609')
 
 
 build() {
