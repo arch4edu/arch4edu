@@ -2,7 +2,7 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
 pkgver=4.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
@@ -48,7 +48,6 @@ package_gmsh() {
 
    cd "${srcdir}/${pkgname}-${pkgver}-source/build"
    make DESTDIR=${pkgdir} install
-   mv "${pkgdir}/usr/lib64" "${pkgdir}/usr/lib"
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.7/site-packages/gmsh.py"
    rm "${pkgdir}/usr/lib/gmsh.py"
