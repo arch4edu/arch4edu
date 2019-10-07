@@ -1,3 +1,13 @@
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -2708,6 +2708,7 @@ if (HAVE_DAEMON)
+ endif (HAVE_DAEMON)
+ 
+ # ntohll and htonll may be harder to spot - do some extra tests
++include(CheckSymbolExists)
+ if("${HAVE_NTOHLL}" STREQUAL "")
+   CHECK_SYMBOL_EXISTS(ntohll "sys/_endian.h" HAVE_NTOHLL_SYS__ENDIAN)
+   if(HAVE_NTOHLL_SYS__ENDIAN)
 --- db/nist/CMakeLists.txt
 +++ db/nist/CMakeLists.txt
 @@ -10,7 +10,7 @@ set(NIST_SAMPLE_MODELS
