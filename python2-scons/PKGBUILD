@@ -8,7 +8,7 @@
 _pkgbase=scons
 pkgname=python2-${_pkgbase}
 pkgver=3.1.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Extensible Python-based build utility. Python2 version"
 arch=('any')
 url="https://scons.org"
@@ -47,7 +47,7 @@ prepare() {
        -e 's/__BUILDSYS__/none/g' \
        -e 's/__DEVELOPER__/none/g' \
        -e "s/__VERSION__/${pkgver}/g" \
-       -i "src/setup.py"
+       -i "src/setup.py" "src/engine/SCons/__init__.py"
    # disabling postscript creation, because it's broken
    sed -e '614,619d' \
        -e '/api_ps =/d' \
