@@ -68,7 +68,7 @@ build() {
 #    -DWITH_SERVER=TRUE \
 #    -DWITH_GLOBE=TRUE
 
-  make
+  make -j1
 }
 
 package() {
