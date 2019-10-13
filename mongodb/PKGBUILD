@@ -10,13 +10,13 @@
 pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
 pkgver=4.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.${pkgname}.com/"
 license=("custom:SSPL")
 # lsb-release::/etc/lsb-release required by src/mongo/util/processinfo_linux.cpp::getLinuxDistro()
-depends=("curl" "libstemmer" "lsb-release" "yaml-cpp" "snappy" "gperftools")
+depends=("curl" "libstemmer" "lsb-release" "snappy" "gperftools")
 optdepends=("${pkgname}-tools: mongoimport, mongodump, mongotop, etc")
 makedepends=("scons" "python-psutil" "python-setuptools" "python-regex" "python-cheetah3" "python-yaml" "python-requests")
 checkdepends=("python-pymongo")
@@ -35,7 +35,7 @@ sha256sums=('c7214ee7bda3cf9566e8776a8978706d9827c1b09017e17b66a5a4e0c0731e1f'
 _scons_args=(
   #--use-system-pcre # wait for pcre 8.44+ https://jira.mongodb.org/browse/SERVER-40836 and https://jira.mongodb.org/browse/SERVER-42990
   --use-system-snappy
-  --use-system-yaml
+  # --use-system-yaml # https://jira.mongodb.org/browse/SERVER-43980
   --use-system-zlib
   #--use-system-wiredtiger # https://jira.mongodb.org/browse/SERVER-42813 upstream broke this in 4.2.0, says in meantime not to use it
   --use-system-stemmer
