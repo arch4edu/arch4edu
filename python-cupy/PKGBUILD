@@ -1,8 +1,8 @@
 # Maintainer: Leo Mao <leomaoyw at gmail dot com>
 pkgname=python-cupy
 _pkgname=cupy
-pkgver=6.3.0
-pkgrel=2
+pkgver=6.4.0
+pkgrel=1
 pkgdesc="NumPy-like API accelerated with CUDA"
 _github="cupy/cupy"
 url="https://cupy.chainer.org"
@@ -11,7 +11,7 @@ license=('MIT')
 depends=('cuda' 'cudnn' 'nccl' 'python-numpy' 'python-six' 'python-fastrlock')
 makedepends=('python' 'python-setuptools' 'cython')
 source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz")
-md5sums=('8977b840bc8885ef1d6c574a939646eb')
+md5sums=('028db295e57bbaf815058b334ff0942c')
 
 prepare() {
   cd "$srcdir/$_pkgname-$pkgver"
