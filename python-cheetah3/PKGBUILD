@@ -3,11 +3,11 @@
 pkgname=python-cheetah3
 _name=Cheetah3
 pkgver=3.2.4
-pkgrel=1
+pkgrel=2
 pkgdesc="A Python 3-powered template engine and code generator"
-arch=(x86_64)
+arch=(any)
 url="http://www.cheetahtemplate.org"
-license=(custom)
+license=(MIT)
 depends=('python-setuptools')
 optdepends=('python-markdown')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
