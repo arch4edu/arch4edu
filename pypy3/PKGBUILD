@@ -1,7 +1,7 @@
-# Maintainer: Sven-Hendrik Haase <sh@lutzhaase.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
 
 pkgname=pypy3
-pkgver=7.1.1
+pkgver=7.2.0
 pkgrel=1
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
@@ -13,7 +13,7 @@ optdepends=('sqlite: sqlite module'
 options=(!buildflags)
 license=('MIT')
 source=("https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v${pkgver}-src.tar.bz2")
-sha512sums=('17e78f9c7080d597a6283d8e8247d1ca78f09a14ff221db8c3d90d255b5befc73102b317ca34a80979e544d5ee72f3e5e649f89d185a085f4cc15012da4d0473')
+sha512sums=('bcbb53062a473d504bcc082cf6286f6169c83d1f38d22c4d7c4e46ddc32bca9d91e71194637e6650db5bec02b29fe262b22fe236d627b6bc3e6e0c59c66c07cc')
 
 build() {
   cd pypy3.6-v${pkgver}-src/pypy/goal
