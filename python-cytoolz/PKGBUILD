@@ -4,16 +4,16 @@
 pkgbase='python-cytoolz'
 pkgname=('python-cytoolz' 'python2-cytoolz')
 _pkgname=cytoolz
-pkgver=0.9.0.1
-pkgrel=5
+pkgver=0.10.0
+pkgrel=1
 pkgdesc="Cython implementation of the toolz package, which provides high performance utility functions for iterables, functions, and dictionaries."
 arch=('x86_64')
 url="https://github.com/pytoolz/cytoolz"
 license=('BSD')
 makedepends=('cython' 'cython2' 'python-setuptools' 'python2-setuptools')
-#source=("$url/archive/${pkgver}.tar.gz")
-source=("https://files.pythonhosted.org/packages/36/f4/9728ba01ccb2f55df9a5af029b48ba0aaca1081bbd7823ea2ee223ba7a42/cytoolz-0.9.0.1.tar.gz")
-sha256sums=('84cc06fa40aa310f2df79dd440fc5f84c3e20f01f9f7783fc9c38d0a11ba00e5')
+source=("$url/archive/${pkgver}.tar.gz")
+#source=("https://files.pythonhosted.org/packages/36/f4/9728ba01ccb2f55df9a5af029b48ba0aaca1081bbd7823ea2ee223ba7a42/cytoolz-0.9.0.1.tar.gz")
+sha256sums=('2a6883f43b330b9e68ce044e03657601d9a72cc9b66c0e6be4aa7b3a95e9c5a7')
 
 prepare() {
   cd "$srcdir/"
