@@ -3,8 +3,8 @@
 pkgbase=confu-git
 pkgname=('confu-git' 'confu2-git')
 _srcname=confu
-pkgver=r41.5030e44
-pkgrel=2
+pkgver=r42.55da0b0
+pkgrel=1
 pkgdesc='Cross-platform C/C++ configuration system (git version, uses python3)'
 arch=('any')
 url='https://github.com/Maratyszcza/confu/'
