@@ -136,7 +136,6 @@ source=(
   'EULA.txt'
 )
 
-
 sha256sums=('c03421de616bd4e640ed25ce4103ec9c5c85768a940a5cb5bd1e97b45be33904'
             '0704025fdfe40e4fce08e88b641128310c3a3b51332668aab60fb815b424f52b'
             '1a71b08245c42008b2edb32a4f0e7b7d1794573580f9608ac86d86cfb25799a4'
@@ -147,7 +146,7 @@ sha256sums=('c03421de616bd4e640ed25ce4103ec9c5c85768a940a5cb5bd1e97b45be33904'
             '6151bc273b6f741a4ce93d8160b6f167c8ad499dbc6e8e3f6e08d48571d6a52a'
             '99cc9683cc75934cc21bb5a09f6ad83365ee48712719bfd914de9444695eed13'
             'a856326362e9b80c19dc237cbf66bf3d96a69bd7ad1baff99ec9849f8208348c'
-            'ed02ea4a0ebc9c32b53155bc5e442c46257f8185ae17833be0b975558bbc951a'
+            '2345695151930806cc73c14a35b8cde94281def144d0c2c180357862fd08fcaa'
             'da6f41c2e002c9a793c75a18c8d1c85ef7ef5bf83a7a0a158ff144481491aac8'
             '5d3ac1ba31d7fc5795821d95b17956b0c977c8f3576b02f664f8ebf476213a43'
             '5e68c529c65cac54218026c869e54b2ddb268179725fc1e6b56d920470dad999'
@@ -212,7 +211,6 @@ extract_rpms() {
 }
 
 set_build_vars() {
-  _pkg_ver=${pkgver}
   _composer_xe_dir="compilers_and_libraries_${_year}.${_v_a}.${_v_b}"
   rpm_dir=${srcdir}/${_parallel_studio_xe_dir}/rpm
   xe_build_dir=${srcdir}/cxe_build
@@ -334,7 +332,6 @@ package_intel-common-libs() {
   set_build_vars
 
   pkgdesc="Intel Common Libraries $_icc_ver"
-  pkgver=${_pkg_ver}
 
   mkdir -p ${xe_build_dir}
   cd ${xe_build_dir}
@@ -359,7 +356,6 @@ package_intel-openmp() {
   set_build_vars
 
   pkgdesc="Intel OpenMP Implementation ${_icc_ver}"
-  pkgver=${_pkg_ver}
   depends=("intel-common-libs=$pkgver")
 
   mkdir -p ${xe_build_dir}
@@ -378,7 +374,6 @@ package_intel-compiler-base() {
   set_build_vars
 
   pkgdesc="Intel C/C++ $_icc_ver"
-  pkgver=${_pkg_ver}
   depends=("intel-common-libs=$pkgver"
            "intel-openmp=$pkgver")
   install=intel-composer.install
@@ -442,7 +437,6 @@ package_intel-fortran-compiler() {
   set_build_vars
 
   pkgdesc="Intel Fortran compiler $_icc_ver"
-  pkgver=${_pkg_ver}
   depends=("intel-compiler-base=$pkgver")
   install=intel-composer.install
 
@@ -491,7 +485,6 @@ package_intel-ipp() {
   set_build_vars
 
   pkgdesc="Intel Integrated Performance Primitives"
-  pkgver=${_pkg_ver}
   install=intel-composer.install
 
   mkdir -p ${xe_build_dir}
@@ -534,7 +527,6 @@ package_intel-mkl() {
   set_build_vars
 
   pkgdesc="Intel Math Kernel Library (Intel® MKL)"
-  pkgver=${_pkg_ver}
   depends=("intel-common-libs=$pkgver")
   optdepends=("intel-openmp: Intel OpenMP Implementation")
   install=intel-mkl.install
@@ -587,7 +579,6 @@ package_intel-mpi() {
   set_build_vars
 
   pkgdesc="Intel MPI library"
-  pkgver=${_pkg_ver}
 
   mkdir -p ${xe_build_dir}
   cd ${xe_build_dir}
@@ -631,7 +622,6 @@ package_intel-tbb_psxe() {
   set_build_vars
 
   pkgdesc="Intel Threading Building Blocks (TBB)"
-  pkgver=${_pkg_ver}
   install=intel-tbb.install
 
   mkdir -p ${xe_build_dir}
@@ -670,7 +660,6 @@ package_intel-vtune-amplifier() {
   set_build_vars
 
   pkgdesc="Performance profiler for serial and parallel performance analysis $_vtune_ver"
-  pkgver=${_pkg_ver}
   depends=('pangox-compat')
 
   mkdir -p ${xe_build_dir}
@@ -713,7 +702,6 @@ package_intel-advisor() {
   set_build_vars
 
   pkgdesc="Threading design and prototyping tool for software architects $_advisor_ver"
-  pkgver=${_pkg_ver}
   conflicts=( 'intel-advisor-xe' )
 
   mkdir -p ${xe_build_dir}
@@ -754,7 +742,6 @@ package_intel-advisor() {
 package_intel-inspector() {
   set_build_vars
   pkgdesc="Memory and thread debugger $_inspector_ver"
-  pkgver=${_pkg_ver}
   conflicts=('intel-inspector-xe')
 
   mkdir -p ${xe_build_dir}
