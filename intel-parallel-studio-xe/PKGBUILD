@@ -53,9 +53,9 @@ pkgname=('intel-common-libs'
 
 if [ -z "$FORCE_PKGEXT" ]; then
   PKGEXT='.pkg.tar.xz'
-  msg "Overriding the default PKGEXT with '${PKGEXT}' to save compression time"
-  msg "(change PKGEXT in the PKGBUILD or use FORCE_PKGEXT on the command line"
-  msg " to override PKGEXT set by the package)."
+  #msg "Overriding the default PKGEXT with '${PKGEXT}' to save compression time"
+  #msg "(change PKGEXT in the PKGBUILD or use FORCE_PKGEXT on the command line"
+  #msg " to override PKGEXT set by the package)."
 else
   msg "Overriding PKGEXT with FORCE_PKGEXT='${FORCE_PKGEXT}'"
   PKGEXT=$FORCE_PKGEXT
