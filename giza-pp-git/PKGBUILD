@@ -1,7 +1,7 @@
 # Maintainer: Panos Kanavos <panoskanavos@gmail.coml>
 _pkgname=giza-pp
 pkgname=giza-pp-git
-pkgver=r23.66deb65
+pkgver=r26.cd8646d
 pkgrel=1
 pkgdesc='A statistical machine translation toolkit used to train word alignment models'
 arch=('i686' 'x86_64')
