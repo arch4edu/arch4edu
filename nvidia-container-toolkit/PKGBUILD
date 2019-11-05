@@ -4,7 +4,7 @@
 pkgname=nvidia-container-toolkit
 
 pkgver=1.0.5
-pkgrel=1
+pkgrel=2
 _runtime_pkgver=3.1.4
 
 pkgdesc='NVIDIA container runtime toolkit'
@@ -28,8 +28,9 @@ prepare() {
 }
 
 build() {
-  GOPATH="${srcdir}/gopath" go install \
+  GOPATH="${srcdir}/gopath" go build -v \
                             -buildmode=pie \
+                            -trimpath \
                             -gcflags "all=-trimpath=${PWD}" \
                             -asmflags "all=-trimpath=${PWD}" \
                             -ldflags "-extldflags ${LDFLAGS}" \
@@ -38,7 +39,7 @@ build() {
 }
 
 package() {
-  install -D -m755 "${srcdir}/gopath/bin/${pkgname}" "$pkgdir/usr/bin/${pkgname}"
+  install -D -m755 "${srcdir}/${pkgname}" "$pkgdir/usr/bin/${pkgname}"
   pushd "$pkgdir/usr/bin/"
   ln -sf "${pkgname}" "nvidia-container-runtime-hook"
   popd
