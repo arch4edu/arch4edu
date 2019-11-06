@@ -4,18 +4,15 @@
 pkgbase=python-smart_open
 pkgname=('python-smart_open' 'python2-smart_open')
 _pkgname=smart_open
-pkgver=1.8.4
+pkgver=1.9.0
 pkgrel=1
 pkgdesc="Library for efficient streaming of very large files from/to S3, HDFS, WebHDFS, HTTP, or local (compressed) files"
 arch=('any')
 license=('MIT')
 url="https://github.com/RaRe-Technologies/smart_open"
 makedepends=('python-setuptools' 'python2-setuptools')
-provides=("")
-conflicts=("")
-replaces=("")
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/RaRe-Technologies/${_pkgname}/archive/${pkgver}.tar.gz")
-sha512sums=('b122b607e49074f18716f2baa79f174b61248ab85790cb475394818d3f6879cf5dbc3ceffe12ef972d488267483a4e6b290abf5c21f605c9b5a04e6676e378d4')
+sha512sums=('a2f8a86fa646550bc6814249c911f7725a54e5189701a7ca1ad88cb615748606f90e0f56406a0a6a4e1f406c49594f7d7a856660dc6cff7fa12376129afda71a')
 
 prepare() {
 	cp -a "${srcdir}/${_pkgname}-${pkgver}"{,-py2}
@@ -41,7 +38,7 @@ package_python-smart_open() {
 	replaces=("python-smart-open")
 
 	cd "${srcdir}/${_pkgname}-${pkgver}"
-	python setup.py install --root="${pkgdir}" --optimize=1
+	python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
 
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
@@ -54,7 +51,7 @@ package_python2-smart_open() {
 	replaces=("python2-smart-open")
 
 	cd "${srcdir}/${_pkgname}-${pkgver}-py2"
-	python2 setup.py install --root="${pkgdir}" --optimize=1
+	python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
 
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
