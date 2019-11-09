@@ -1,4 +1,5 @@
-# Maintainer: James Brink <brink.james@gmail.com>
+# Maintainer: Leonidas Spyropoulos <artafinde at gmail dot com>
+# Contributor: James Brink <brink.james@gmail.com>
 # Contributor: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
 # Contributor: p <parimal@beyond8labs.com>
 # Contributor: Victor <victor@xirion.net>
@@ -38,7 +39,7 @@ _neovim="$NEOVIM_YOUCOMPLETEME"
 #                                    Default PKGBUILD Configuration                                       #
 #=========================================================================================================#
 pkgname=vim-youcompleteme-git
-pkgver=r2544.a5d21e2a
+pkgver=r2565.036ad6e9
 pkgver() {
 	cd "YouCompleteMe" || exit
 	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
@@ -128,8 +129,9 @@ prepare() {
 		local jdtls_buildstamp=$(egrep '^JDTLS_BUILD_STAMP' "$srcdir/ycmd/build.py" | sed -e "s/.* = //g" -e "s/'//g")
 
 		if [[ "$jdtls_milestone" != "" ]] && [[ "$jdtls_buildstamp" != "" ]]; then
-			echo 'JDTLS package version matched. Downloading...'
-			curl -LO https://mirrors.tuna.tsinghua.edu.cn/eclipse/jdtls/milestones/${jdtls_milestone}/${jdtls_package_name}-${jdtls_milestone}-${jdtls_buildstamp}.tar.gz
+			local jdtls_full_url="https://mirrors.tuna.tsinghua.edu.cn/eclipse/jdtls/snapshots/${jdtls_package_name}-${jdtls_milestone}-${jdtls_buildstamp}.tar.gz"
+      echo "JDTLS package version matched. Downloading... ${jdtls_full_url}"
+			curl -LO "${jdtls_full_url}"
 			tar xf ${jdtls_package_name}-${jdtls_milestone}-${jdtls_buildstamp}.tar.gz
 		else
 			echo 'Mismatched JDTLS version'
