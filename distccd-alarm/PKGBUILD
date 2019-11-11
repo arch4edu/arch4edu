@@ -2,28 +2,34 @@
 # Contributor: Jason Plum <jplum@archlinuxarm.org>
 # Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
 
-_subarchs=(armv5 armv6h armv7h armv8)
-_pkgrel_upstream=1
 pkgbase='distccd-alarm'
+_subarchs=(armv5 armv6h armv7h armv8)
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
 _date=20190909
 # inspect source tarball under $name/share/gcc-x.y.z
 pkgver=8.3.0
-pkgrel=3
+pkgrel=4
+_pkgrel_upstream=1
+#_URL="https://archlinuxarm.org/builder/xtools/$pkgver-$pkgrel"
+_URL="https://archlinuxarm.org/builder/xtools"
 arch=('x86_64')
 license=('GPL' )
 pkgdesc="Toolchain for Arch ARM builds via distcc on x86_64 volunteers"
 url="https://archlinuxarm.org/wiki/Distcc_Cross-Compiling"
 depends=('distcc')
 options=('libtool' 'emptydirs' '!strip')
-#_URL="https://archlinuxarm.org/builder/xtools/$pkgver-$pkgrel"
-_URL="https://archlinuxarm.org/builder/xtools"
 source=(
 "x-tools-$_date.tar.xz::$_URL/x-tools.tar.xz"
 "x-tools6h-$_date.tar.xz::$_URL/x-tools6h.tar.xz"
 "x-tools7h-$_date.tar.xz::$_URL/x-tools7h.tar.xz"
 "x-tools8-$_date.tar.xz::$_URL/x-tools8.tar.xz"
 'config.in' 'service.in' 'readme.in'
+)
+noextract=(
+"x-tools-$_date.tar.xz"
+"x-tools6h-$_date.tar.xz"
+"x-tools7h-$_date.tar.xz"
+"x-tools8-$_date.tar.xz"
 )
 #PKGEXT='.pkg.tar'
 md5sums=('8b93708e0f7ef971b01b71dfedaffe40'
@@ -68,17 +74,21 @@ _package_subarch() {
   # install symlink to distccd
   install -d "${pkgdir}/usr/bin"
   ln -sf /usr/bin/distccd "${pkgdir}/usr/bin/distccd-$1"
+  
   # install whitelist for toolchain new for v3.3
   install -d "${pkgdir}/usr/lib/distcc"
-  for bin in c++ cc cpp g++ gcc; do
+  for bin in c++ cc clang clang++ cpp g++ gcc; do
     ln -sf /usr/bin/distcc "${pkgdir}/usr/lib/distcc/$3-$bin"
   done
-  # copy in toolchain
+  
+  # install toolchain
   install -d "${pkgdir}/opt"
-  cp -a "${srcdir}/$2" "${pkgdir}/opt"
+  bsdtar -x --uid 0 --gid 0 -f "${srcdir}/$2-$_date.tar.xz" -C "${pkgdir}/opt"
+
   # install services
   install -Dm644 "${srcdir}/distccd-$1.service" \
     "${pkgdir}/usr/lib/systemd/system/distccd-$1.service"
+  
   # install config
   install -Dm644 "${srcdir}/distccd-$1.conf" \
     "${pkgdir}/etc/conf.d/distccd-$1"
