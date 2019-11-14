@@ -3,7 +3,7 @@
 
 pkgname='python-dask'
 _pkgname=dask
-pkgver=2.5.2
+pkgver=2.7.0
 pkgrel=1
 pkgdesc="Minimal task scheduling abstraction"
 arch=('any')
@@ -26,8 +26,8 @@ optdepends=('python-bcolz'
   'python-gcsfs: Google Cloud Storage fs support'
   'python-zarr')
 makedepends=('python-setuptools')
-source=("https://github.com/dask/dask/archive/$pkgver.tar.gz")
-sha256sums=('34d13c2d3333b2685ccf723182722da482c87fe585fb52dc43e9bbc7893e484a')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/dask/dask/archive/$pkgver.tar.gz")
+sha256sums=('33778929ed878f1aaebfc937c3721d3d21eddbce660479aef3a3608035d4012e')
 
 package(){
   cd "$srcdir/$_pkgname-$pkgver"
