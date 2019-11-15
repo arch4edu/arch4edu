@@ -2,7 +2,7 @@
 # Maintainer: Médéric Boquien <mboquien@free.fr>
 pkgname=python-astropy
 pkgver=3.2.3
-pkgrel=2
+pkgrel=3
 pkgdesc="A community python library for astronomy"
 arch=('i686' 'x86_64')
 url="http://www.astropy.org/"
