@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'github': 'Maratyszcza/confu'}]
+update_on = [{'aur': None}, {'github': 'Maratyszcza/confu'}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['python-ninja-syntax', ('python-ninja-syntax', 'python2-ninja-syntax')]
 pre_build = aur_pre_build

@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'github': 'Maratyszcza/PeachPy'}]
+update_on = [{'aur': None}, {'github': 'Maratyszcza/PeachPy'}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['python-sphinx-bootstrap-theme', ('python-sphinx-bootstrap-theme', 'python2-sphinx-bootstrap-theme')]
 pre_build = aur_pre_build

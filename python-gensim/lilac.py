@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
+update_on = [{'aur': None}, {'alias': 'python'}]
 repo_depends = ['python-smart_open', ('python-smart_open', 'python2-smart_open')]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build

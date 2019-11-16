@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
+update_on = [{'aur': None}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['openblas-lapack', 'python-scikit-image','python-pydotplus', 'python-leveldb']
 makepkg_args = ['--nocheck']

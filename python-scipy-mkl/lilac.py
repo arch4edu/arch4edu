@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'archpkg': 'python'}]
+update_on = [{'aur': None}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = [('intel-parallel-studio-xe', 'intel-common-libs'), ('intel-parallel-studio-xe', 'intel-compiler-base'), ('intel-parallel-studio-xe', 'intel-fortran-compiler'), ('intel-parallel-studio-xe', 'intel-mkl'), ('intel-parallel-studio-xe', 'intel-openmp')]
 repo_depends += ['python-numpy-mkl', ('python-numpy-mkl', 'python2-numpy-mkl')]

@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'github': 'lilydjwg/nvchecker'}]
+update_on = [{'github': 'lilydjwg/nvchecker'}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build

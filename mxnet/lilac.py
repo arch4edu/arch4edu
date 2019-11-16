@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'archpkg': 'cuda'}, {'archpkg': 'opencv'}]
+update_on = [{'aur': None}, {'archpkg': 'cuda'}, {'archpkg': 'opencv'}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['gcc7', ('gcc7', 'gcc7-libs'), 'python-graphviz', ('intel-parallel-studio-xe', 'intel-common-libs'), ('intel-parallel-studio-xe', 'intel-compiler-base'), ('intel-parallel-studio-xe', 'intel-mkl'), ('intel-parallel-studio-xe', 'intel-openmp'), 'mkl-dnn']
 makechrootpkg_args = ['-D', '/opt/intel/licenses']
