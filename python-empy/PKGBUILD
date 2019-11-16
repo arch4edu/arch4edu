@@ -3,7 +3,7 @@
 # Contributor: Andrew Conkling <andrewski@fr.st>
 pkgname=python-empy
 pkgver=3.3.4
-pkgrel=1
+pkgrel=2
 pkgdesc="A powerful and robust templating system for Python."
 arch=('any')
 url="http://www.alcyone.com/software/empy"
