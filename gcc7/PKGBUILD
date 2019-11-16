@@ -9,21 +9,21 @@
 
 pkgbase=gcc7
 pkgname=(gcc7 gcc7-libs gcc7-fortran)
-pkgver=7.4.1+20181207
+pkgver=7.5.0
 _pkgver=7
 _majorver=${pkgver:0:1}
 _islver=0.18
-pkgrel=5
+pkgrel=1
 pkgdesc='The GNU Compiler Collection (7.x.x)'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
 url='http://gcc.gnu.org'
-makedepends=(binutils libmpc doxygen python subversion)
+makedepends=(binutils libmpc doxygen python subversion flex)
 options=(!emptydirs)
-source=(https://sources.archlinux.org/other/gcc/gcc-${pkgver/+/-}.tar.xz
+source=(ftp://ftp.gnu.org/gnu/gcc/gcc-${pkgver}/gcc-${pkgver}.tar.xz
         http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2
         bz84080.patch)
-sha256sums=('7686fdae9dd09ad38a2c93374396eec4eaadb7df4960f9401d1f544162fd094f'
+sha256sums=('b81946e7f01f90528a1f7352ab08cc602b9ccc05d4e44da4bd501c5a189ee661'
             '6b8b0fd7f81d0a957beb3679c81bbb34ccc7568d5682844d8924424a0dadcb1b'
             'bce05807443558db55f0d6b4dae37a678ea1bb3388b541c876fe3d110e3717e7')
 
