@@ -14,54 +14,58 @@ _pkg=paraview
 _mpi=openmpi
 pkgname=${_pkg}-opt
 #-${_mpi}
-pkgver=5.6.1
-pkgrel=5
+pkgver=5.7.0
+pkgrel=1
+pkgdesc="Parallel Visualization application using VTK (${_mpi} version): installed to /opt/"
+arch=(x86_64)
 provides=(${_pkg})
 conflicts=(${_pkg})
-pkgdesc="Parallel Visualization application using VTK (${_mpi} version): installed to /opt/"
-arch=('x86_64')
 url="https://www.paraview.org"
-license=('BSD' 'custom')
-depends=('boost-libs' 'qt5-tools' 'qt5-x11extras' 'intel-tbb' 'openmpi'
-         'ffmpeg' 'ospray' 'python-matplotlib' 'python-numpy'
-         'cgns' 'protobuf' 'python-pygments'
-         'double-conversion' 'expat' 'freetype2' 'glew' 'hdf5' 
-         'libjpeg' 'jsoncpp' 'libxml2' 'lz4' 'xz' 'python-mpi4py' 'netcdf'
-         'libogg' 'libpng' 'pugixml' 'libtheora' 'libtiff' 'zlib')
+license=(BSD custom)
+depends=(boost-libs qt5-tools qt5-x11extras intel-tbb openmpi ffmpeg ospray
+         python-numpy cgns protobuf
+         double-conversion expat freetype2 gdal glew hdf5 libjpeg jsoncpp
+         libjsoncpp.so libxml2 lz4 xz python-mpi4py netcdf libogg libpng pdal
+         proj pugixml libtheora libtiff zlib)
 #        gl2ps
-#        netcdf-cxx libharu
-#        proj, sqlite apparently not used in this VTK configuration
-makedepends=('cmake' 'boost' 'mesa' 'gcc-fortran' 'ninja' 'qt5-tools' 'qt5-xmlpatterns' 'eigen' 'pegtl')
+#        libharu
+#        sqlite apparently not used in this VTK configuration
+optdepends=(python-matplotlib)
+makedepends=(cmake boost mesa gcc-fortran ninja qt5-tools qt5-xmlpatterns eigen pegtl utf8cpp)
 source=("${url}/files/v${pkgver:0:3}/ParaView-v${pkgver}.tar.xz"
-	"paraview.sh")
-sha256sums=('50ef01f54db6358b402e50d1460ef47c04d675bf26f250c6937737169f1e6612'
-            'ed1d597139473f24441e5c10038e988d64ab1d904e0c5ecaf24069734989bff4')
+        paraview-system-pugixml.patch
+        vtk-python-3.8.patch::"https://gitlab.kitware.com/vtk/vtk/merge_requests/5883.patch")
+source+=(paraview.sh)
+sha256sums=('e41e597e1be462974a03031380d9e5ba9a7efcdb22e4ca2f3fec50361f310874'
+            'dd2e23298ab5a07da0e799c3db313ed3f9d2a403d7228d50748206b535b6f65f'
+            '3beff972e7e9236f2e8ab596be8f893ae7e9346a140c4538d9e8d88c3378b916')
+sha256sums+=('ed1d597139473f24441e5c10038e988d64ab1d904e0c5ecaf24069734989bff4')
 
 prepare() {
     mkdir -p build
+    patch -Np0 -i ${srcdir}/paraview-system-pugixml.patch
+    patch -d ParaView-v${pkgver}/VTK -p1 -i "$srcdir"/vtk-python-3.8.patch # Fix build with python 3.8 
 }
 
 build() {
     cd build
 
     # Flags to enable system libs in VTK building, as in VTK package
-    # GL2PS has non-upstreamed patches?
+    # GL2PS has non-upstreamed patches
     # KISSFFT is not packaged
-    # UTF8 (utfcpp) is not packaged (but present in AUR)
     # VERDICT is not packaged
     # ZFP is not packaged
-    # NETCDFCPP blocked by https://github.com/Unidata/netcdf-cxx4/issues/43
     # LIBHARU blocked by https://github.com/libharu/libharu/pull/157
-    # LIBPROJ4, SQLITE apparently not used in this VTK configuration
+    # SQLITE apparently not used in this VTK configuration
     local VTK_USE_SYSTEM_LIB=""
-    for lib in DOUBLECONVERSION EIGEN EXPAT FREETYPE GLEW HDF5 JPEG JSONCPP LIBXML2 LZ4 LZMA MPI4PY NETCDF OGG PEGTL PNG PUGIXML THEORA TIFF ZLIB
+    for lib in doubleconversion eigen expat freetype glew hdf5 jpeg jsoncpp libproj libxml2 lz4 lzma mpi4py netcdf ogg pegtl png pugixml theora tiff utf8 zlib
     do
-        VTK_USE_SYSTEM_LIB+="-DVTK_USE_SYSTEM_${lib}:BOOL=ON "
+        VTK_USE_SYSTEM_LIB+="-DVTK_MODULE_USE_EXTERNAL_vtk${lib}:BOOL=ON -DVTK_MODULE_USE_EXTERNAL_VTK_${lib}:BOOL=ON "
     done
     # Specific system libs for ParaView version
-    for lib in CGNS PROTOBUF PYGMENTS
+    for lib in cgns protobuf
     do
-        VTK_USE_SYSTEM_LIB+="-DVTK_USE_SYSTEM_${lib}:BOOL=ON "
+        VTK_USE_SYSTEM_LIB+="-DVTK_MODULE_USE_EXTERNAL_ParaView_${lib}:BOOL=ON "
     done
 
     cmake ../ParaView-v${pkgver} \
@@ -69,16 +73,24 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/opt/paraview \
         -DOSPRAY_INSTALL_DIR=/opt/paraview \
         -DPARAVIEW_ENABLE_FFMPEG=ON \
-        -DPARAVIEW_ENABLE_MATPLOTLIB=ON \
+        -DPARAVIEW_ENABLE_GDAL=ON \
+        -DPARAVIEW_ENABLE_PDAL=ON \
         -DPARAVIEW_ENABLE_PYTHON=ON \
+        -DPARAVIEW_ENABLE_VISITBRIDGE=ON \
         -DPARAVIEW_INSTALL_DEVELOPMENT_FILES=ON \
         -DPARAVIEW_USE_MPI=ON \
-        -DPARAVIEW_USE_VISITBRIDGE=ON \
-        -DPARAVIEW_USE_OSPRAY=ON \
-        -DVISIT_BUILD_READER_CGNS=ON \
+        -DPARAVIEW_USE_RAYTRACING=ON \
+        -DVTK_ENABLE_OSPRAY=ON \
         -DVTK_PYTHON_FULL_THREADSAFE=ON \
         -DVTK_PYTHON_VERSION=3 \
         -DVTK_SMP_IMPLEMENTATION_TYPE=TBB \
+        -DVTKm_ENABLE_MPI=ON \
+        -DVTKm_ENABLE_RENDERING=ON \
+        -DVTKm_USE_DOUBLE_PRECISION=ON \
+        -DVTK_MODULE_ENABLE_VTK_GeovisCore=YES \
+        -DVTK_MODULE_ENABLE_VTK_GeovisGDAL=YES \
+        -DVTK_MODULE_ENABLE_VTK_IOGDAL=YES \
+        -DVTK_MODULE_ENABLE_VTK_IOPDAL=YES \
         ${VTK_USE_SYSTEM_LIB} \
         -GNinja
 
@@ -92,10 +104,6 @@ package() {
 
     # Install license
     install -Dm644 "${srcdir}"/ParaView-v${pkgver}/License_v1.2.txt "${pkgdir}"/usr/share/licenses/paraview/LICENSE
-
-    # Remove IceT man pages to avoid conflicts
-    #rm -- "${pkgdir}"/usr/share/man/man3/icet*.3
-    #rmdir "${pkgdir}"/usr/share/man/{man3/,}
 
     # add paraview to PATH
     install -Dm 755 ../paraview.sh -t "${pkgdir}/etc/profile.d"
