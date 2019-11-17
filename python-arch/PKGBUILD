@@ -24,7 +24,7 @@ build() {
 
 package() {
     cd "${srcdir}/${_module}-${pkgver}"
-    python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+    python setup.py install --root="${pkgdir}" --optimize=1
     install -D -m644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.md"
 }
 
