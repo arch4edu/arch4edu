@@ -1,7 +1,7 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 pkgname=('python-arch')
 _module='arch'
-pkgver='4.8.1'
+pkgver='4.10.0'
 pkgrel=1
 pkgdesc="ARCH models in Python."
 url="https://pypi.python.org/pypi/arch/4.1"
@@ -14,8 +14,8 @@ checkdepends=('python-pytest' 'python-seaborn')
 makedepends=('cython' 'python-setuptools')
 license=('custom:University of Illinois/NCSA Open Source License')
 arch=('x86_64')
-source=("https://github.com/bashtage/arch/archive/${pkgver}.tar.gz")
-sha256sums=('0f86ee3da9c023155816680027238a82fedf25c79a1eb12be19f1f025eaaa3e3')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/bashtage/arch/archive/${pkgver}.tar.gz")
+sha256sums=('0a24b8aca262494453557aae0c3e46e78c2c7b85db632a9e4673500a7982b7f0')
 
 build() {
     cd "${srcdir}/${_module}-${pkgver}"
