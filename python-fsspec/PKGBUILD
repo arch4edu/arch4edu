@@ -13,7 +13,7 @@ checkdepends=('docker' 'python-dask' 'python-pyftpdlib' 'python-pytest')
 optdepends=()
 makedepends=('python-setuptools')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/intake/filesystem_spec/archive/$pkgver.tar.gz")
-sha256sums=('8948c712a33e0c34b5df3c8f7bbb8d4948078b9bc96f815121bec57e03830fbf')
+sha256sums=('9053a8bfd5d49ca3d1a2104c20553ac5c406a1942d6b352f5588372adb2c7568')
 
 package(){
   cd "$srcdir/$_pkgname-$pkgver"
