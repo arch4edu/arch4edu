@@ -9,7 +9,7 @@
 pkgname=julia-mkl
 _pkgname=julia
 epoch=2
-pkgver=1.1.1
+pkgver=1.2.0
 pkgrel=1
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
@@ -23,12 +23,10 @@ conflicts=('julia' 'julia-git')
 backup=(etc/julia/startup.jl)
 source=("https://github.com/JuliaLang/julia/releases/download/v$pkgver/$_pkgname-$pkgver-full.tar.gz"
         libunwind-version.patch
-        makefile.patch
         Make.user)
-sha256sums=('3c5395dd3419ebb82d57bcc49dc729df3b225b9094e74376f8c649ee35ed79c2'
+sha256sums=('2419b268fc5c3666dd9aeb554815fe7cf9e0e7265bc9b94a43957c31a68d9184'
             'a5eec1e43e1161c313b1d32a5f35a67d6b4a2bbc2d6d324c010f6f2b35be4a72'
-            'b7374fcd5a579fc59d6988795fc0c3cf411a89205942c691a5b3003793ae6c52'
-            'SKIP')
+            '1c7a83bd66504514dbb9a0bf0177d0994bd21cddb877799bd20bcb5113894e8b')
 
 prepare() {
   cd $_pkgname-$pkgver
@@ -39,9 +37,6 @@ prepare() {
   # Fixing libunwind version check
   # https://github.com/JuliaLang/julia/pull/29082
   #patch -p1 -i ../libunwind-version.patch
-
-  # Patching make install
-  patch -p0 -i ../makefile.patch
 
   # Configuring the build
   cp -f ../Make.user Make.user
@@ -68,7 +63,7 @@ build() {
 #
 # # this is the make testall target, plus the --skip option from
 # # travis/appveyor/circleci (one test fails with DNS resolution errors)
-# ../julia --check-bounds=yes --startup-file=no ./runtests.jl all --skip Sockets --skip Distributed
+# ../julia --check-bounds=yes --startup-file=no ./runtests.jl all --skip Sockets --skip Distributed --skip LibGit2/libgit2
 # find ../stdlib \( -name \*.cov -o -name \*.mem \) -delete
 # rm -r depot/compiled
 #}
