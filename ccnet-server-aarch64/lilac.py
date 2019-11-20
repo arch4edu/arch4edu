@@ -4,7 +4,7 @@ from lilaclib import *
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': 'ccnet-server'}]
 build_prefix = 'extra-aarch64'
-repo_depends = ['libsearpc-aarch64']
+repo_depends = [('libsearpc-aarch64', 'libsearpc')]
 
 def pre_build():
     aur_pre_build('ccnet-server')
