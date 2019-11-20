@@ -3,7 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}, {'github': 'WiringPi/WiringPi-Python'}]
-build_prefix = ['extra-armv6h', 'extra-armv7h', 'extra-aarch64']
+build_prefix = 'extra-aarch64'
 makechrootpkg_args = ['-D', '/etc/ca-certificates/extracted']
 
 def pre_build():
