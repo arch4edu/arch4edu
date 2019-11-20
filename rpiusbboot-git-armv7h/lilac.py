@@ -2,11 +2,11 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'github': 'raspberrypi/usbboot'}]
+update_on = [{'aur': 'rpiusbboot-git'}, {'github': 'raspberrypi/usbboot'}]
 build_prefix = 'extra-armv7h'
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build('rpiusbboot-git')
     add_arch(['armv7h'])
     add_makedepends(['git'])
 

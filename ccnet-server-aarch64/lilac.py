@@ -2,10 +2,13 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
+update_on = [{'aur': 'ccnet-server'}]
 build_prefix = 'extra-aarch64'
 repo_depends = ['libsearpc-aarch64']
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build('ccnet-server')
+
 post_build = aur_post_build
 
 if __name__ == '__main__':

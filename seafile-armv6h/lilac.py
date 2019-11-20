@@ -2,10 +2,13 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
+update_on = [{'aur': 'seafile'}]
 build_prefix = 'extra-armv6h'
 repo_depends = ['libsearpc-armv6h', 'ccnet-server-armv6h']
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build('seafile')
+
 post_build = aur_post_build
 
 if __name__ == '__main__':

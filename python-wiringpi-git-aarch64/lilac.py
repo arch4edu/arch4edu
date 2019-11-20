@@ -2,12 +2,12 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'github': 'WiringPi/WiringPi-Python'}]
+update_on = [{'aur': 'python-wiringpi-git'}, {'github': 'WiringPi/WiringPi-Python'}]
 build_prefix = 'extra-aarch64'
 makechrootpkg_args = ['-D', '/etc/ca-certificates/extracted']
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build('python-wiringpi-git')
     add_arch(['aarch64'])
 
 post_build = aur_post_build

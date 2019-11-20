@@ -2,11 +2,11 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'github': 'raspberrypi/usbboot'}]
+update_on = [{'aur': 'rpiusbboot-git'}, {'github': 'raspberrypi/usbboot'}]
 build_prefix = 'extra-aarch64'
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build('rpiusbboot-git')
     add_arch(['aarch64'])
     add_makedepends(['git'])
 

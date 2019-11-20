@@ -2,12 +2,12 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
+update_on = [{'aur': 'qgroundcontrol'}]
 build_prefix = 'extra-aarch64'
 time_limit_hours = 4
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build('qgroundcontrol')
     add_arch(['aarch64'])
 
     for line in edit_file('PKGBUILD'):
