@@ -3,8 +3,8 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
-build_prefix = 'extra-x86_64'
-repo_depends = ['libsearpc', 'ccnet-server']
+build_prefix = 'extra-armv7h'
+repo_depends = ['libsearpc-armv7h', 'ccnet-server-armv7h']
 pre_build = aur_pre_build
 post_build = aur_post_build
 
