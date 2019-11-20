@@ -2,11 +2,11 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}]
-build_prefix = ['extra-armv6h', 'extra-armv7h', 'extra-aarch64']
+update_on = [{'aur': 'raspi-config'}]
+build_prefix = 'extra-armv7h'
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build('raspi-config')
     add_makedepends(['git'])
 
 post_build = aur_post_build
