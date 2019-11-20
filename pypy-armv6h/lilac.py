@@ -3,12 +3,12 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'archpkg': 'pypy'}]
-build_prefix = ['extra-armv6h', 'extra-armv7h']
-time_limit_hours = 48
+build_prefix = 'extra-armv6h'
+time_limit_hours = 24
 
 def pre_build():
     download_official_pkgbuild('pypy')
-    add_arch(['armv6h', 'armv7h'])
+    add_arch(['armv6h'])
 
 def post_build():
     git_add_files('PKGBUILD')
