@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': None}, {'aur': 'intel-mkl'}]
+update_on = [{'aur': None}, {'aur': 'intel-mkl'}, {'alias': 'icu'}]
 repo_depends = [('intel-parallel-studio-xe', 'intel-common-libs'), ('intel-parallel-studio-xe', 'intel-mkl'), ('intel-parallel-studio-xe', 'intel-openmp')]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
