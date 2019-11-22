@@ -3,7 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'archpkg': 'pypy'}]
-build_prefix = ['extra-aarch64']
+build_prefix = 'extra-aarch64'
 time_limit_hours = 24
 
 def pre_build():
