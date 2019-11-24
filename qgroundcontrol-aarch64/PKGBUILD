@@ -2,9 +2,9 @@
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
 pkgver=3.5.5
-pkgrel=3
+pkgrel=4
 pkgdesc="Micro air vehicle ground control station."
-arch=('aarch64' 'armv6h' 'armv7h' 'x86_64')
+arch=('aarch64' 'x86_64')
 url="http://qgroundcontrol.org/"
 license=('GPL3')
 
