@@ -4,7 +4,7 @@
 
 pkgname=python-wiringpi-git
 pkgver=153.08cf3e4
-pkgrel=1
+pkgrel=2
 pkgdesc="Python-wrapped version of Gordon Henderson's WiringPI."
 url="https://github.com/WiringPi/WiringPi-Python"
 arch=('aarch64' 'armv6h' 'armv7h' 'armv8h' 'i686' 'x86_64')
