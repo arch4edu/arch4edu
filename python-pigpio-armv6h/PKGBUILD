@@ -3,7 +3,7 @@
 _projname='pigpio'
 pkgname="python-${_projname}"
 pkgver=71
-pkgrel=2
+pkgrel=3
 pkgdesc="A C and Python library for controlling GPIOs on a Raspberry Pi"
 url="http://abyz.me.uk/rpi/pigpio/"
 license=('custom:UNLICENSE')
