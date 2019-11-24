@@ -3,11 +3,11 @@
 _projname='pigpio'
 pkgname="python-${_projname}"
 pkgver=71
-pkgrel=2
+pkgrel=3
 pkgdesc="A C and Python library for controlling GPIOs on a Raspberry Pi"
 url="http://abyz.me.uk/rpi/pigpio/"
 license=('custom:UNLICENSE')
-arch=('aarch64' 'armv6h' 'armv7h' 'i686' 'x86_64')
+arch=('i686' 'x86_64' 'aarch64' 'armv7h')
 depends=('python')
 source=("${_projname}-${pkgver}.tar.gz::https://github.com/joan2937/pigpio/archive/V${pkgver}.tar.gz")
 sha256sums=('41698abdbc95b60a4f4dbcc2fe2a6e88f2bca4dc78d0c0b55a3a932fa95a9249')
