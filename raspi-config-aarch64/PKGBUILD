@@ -2,7 +2,7 @@
 
 pkgname=raspi-config
 pkgver=r2.aa2dfd1
-pkgrel=1
+pkgrel=2
 pkgdesc="Raspberry pi raspi-config utility adapted for ArchLinux ARM."
 arch=('armv6h' 'armv7h' 'aarch64')
 url="https://github.com/jgmdev/alarm-raspi-config"
