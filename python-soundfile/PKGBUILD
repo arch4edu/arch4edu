@@ -3,7 +3,7 @@
 _name=SoundFile
 pkgname=python-soundfile
 pkgver=0.10.2
-pkgrel=1
+pkgrel=2
 pkgdesc="An audio library based on libsndfile, CFFI and NumPy"
 url="https://github.com/bastibe/PySoundFile"
 arch=('any')
