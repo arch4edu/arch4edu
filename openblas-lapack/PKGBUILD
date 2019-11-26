@@ -1,16 +1,17 @@
-# Maintainer: eolianoe <eolianoe [at] gmail [DoT] com>
+# Maintainer: thrasibule <guillaume.horel@gmail.com>
+# Contributor: eolianoe <eolianoe [at] gmail [DoT] com>
 # Contributor: Jiaxi Hu <sftrytry _AT_ gmail _DOT_ com>
 # Contributor: Giuseppe Borzi <gborzi _AT_ ieee _DOT_ org>
 
 pkgname=openblas-lapack
 _PkgName=OpenBLAS
 _pkgname=openblas
-pkgver=0.3.6
+pkgver=0.3.7
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.8.0
 pkgrel=2
 pkgdesc="Optimized BLAS library based on GotoBLAS2 1.13 BSD (providing blas, lapack, and cblas)"
-arch=('any')
+arch=('x86_64')
 url="http://www.openblas.net/"
 license=('BSD')
 depends=('gcc-libs')
@@ -19,14 +20,13 @@ provides=('openblas' "blas=${_lapackver}" "lapack=${_lapackver}" "cblas=${_lapac
 conflicts=('openblas' 'blas' 'lapack' 'cblas' 'lapacke')
 options=(!emptydirs)
 source=(${_PkgName}-${pkgver}.tar.gz::https://github.com/xianyi/${_PkgName}/archive/v${pkgver}.tar.gz)
-sha256sums=('e64c8fe083832ffbc1459ab6c72f71d53afd3b36e8497c922a15a06b72e9002f')
+sha256sums=('bde136122cef3dd6efe2de1c6f65c10955bbb0cc01a520c2342f5287c28f9379')
 
 # Add the following line to the _config variable if you want to set the number of make jobs
 #  MAKE_NB_JOBS=2 \
-_config="FC=gfortran USE_OPENMP=0 USE_THREAD=1 \
-  USE_COMPILER_TLS=0 \
-  NO_LAPACK=0 BUILD_LAPACK_DEPRECATED=1 \
-  MAJOR_VERSION=${_lapackver:0:1} NO_STATIC=1"
+_config="FC=gfortran USE_OPENMP=1 USE_THREAD=1 \
+  USE_TLS=1 \
+  NO_LAPACK=0 BUILD_LAPACK_DEPRECATED=1"
 
 build(){
   cd "${srcdir}/${_PkgName}-${pkgver}"
