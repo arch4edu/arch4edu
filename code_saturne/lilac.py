@@ -19,13 +19,15 @@ for repo in handle.get_syncdbs():
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}, {'github': 'petronny'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
 repo_depends = ['med', 'parmetis', 'scotch']
-makechrootpkg_args = ['-I', result.filename]
+makechrootpkg_args = ['-I', 'tmp/'+result.filename]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
     aur_pre_build()
     run_cmd(['wget', '-nc', url, url+'.sig'])
     run_cmd(['gpg', '--homedir', gpgpath, '--verify', result.filename+'.sig', result.filename])
+    run_cmd(['mkdir', '-p', 'tmp'])
+    run_cmd(['mv', result.filename, result.filename+'.sig', 'tmp'])
 
 post_build = aur_post_build
 
