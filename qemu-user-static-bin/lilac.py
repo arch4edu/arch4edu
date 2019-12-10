@@ -4,6 +4,7 @@ from lilaclib import *
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
+repo_depends = ['binfmt-qemu-static']
 
 def pre_build():
     aur_pre_build()
