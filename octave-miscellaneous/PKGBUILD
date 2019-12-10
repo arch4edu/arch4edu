@@ -10,15 +10,15 @@
 
 _pack=miscellaneous
 pkgname=octave-$_pack
-pkgver=1.2.1
-pkgrel=5
+pkgver=1.3.0
+pkgrel=1
 pkgdesc="Miscellaneous tools that don't fit somewhere else."
 arch=(any)
 url="http://octave.sourceforge.net/$_pack/"
 license=('GPL3')
 groups=('octave-forge')
-depends=('octave>=3.6.0' 'octave-general>=1.3.1')
-makedepends=('ncurses' 'units')
+depends=('octave>=3.8.0')
+makedepends=('ncurses' 'units' 'termcap')
 optdepends=()
 backup=()
 options=()
@@ -26,7 +26,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("http://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-md5sums=('d205946284d56a03b06fea1cdf302efb')
+md5sums=('4157d39097931e4d5098b27819b75c69')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
