@@ -5,36 +5,27 @@
 # Contributor: Wink Saville <wink at saville dot com>
 
 pkgname=hypre
-pkgver=2.16.0
-pkgrel=2
+pkgver=2.18.2
+pkgrel=1
 pkgdesc="A library for solving large, sparse linear systems on massively parallel computers"
 arch=('x86_64')
-url="https://www.llnl.gov/casc/hypre/"
+url="https://github.com/hypre-space/hypre"
 license=('lgpl')
 depends=('superlu' 'superlu_dist' 'openmpi')
 makedepends=('gcc-fortran')
-source=(https://github.com/hypre-space/hypre/archive/v${pkgver}.tar.gz
-        hypre-config-fix.patch)
-sha512sums=('3c08658aa9c55724c658584d829a3243445f853f416d3140840c97daa882ecd3712535213b8d9cdf2eb81e67e66e53e809a1275781446133c985b5a1a2b9fd4f'
-            '280f1577b20ae13f94b5c98fc05836a6784285bdb34a2622230861b02b464793ce915a81378838c0a222fd8d4341c40ae658ca5ff2099ec10d08a67f8cfa150d')
-
-prepare() {
-  _build_dir="${srcdir}/${pkgname}-${pkgver}${_suffix}"
-  cd "${_build_dir}"
-
-  patch -p1 -i ../hypre-config-fix.patch
-}
+source=(https://github.com/hypre-space/hypre/archive/v${pkgver}.tar.gz)
+sha512sums=('7b343a5c8530d7f5e31cad6c940c2f154b2b954566d4fe8525d690fec41db23936a46fb642a994791de32984e696c624804fb1fde1f0c9ce026f1a6e46b9c0f4')
 
 build() {
   _build_dir="${srcdir}/${pkgname}-${pkgver}${_suffix}"
   cd "${_build_dir}/src"
-    
+
   # disable internal superlu and fei for now, not sure yet how to get it to use external superlu
   CFLAGS="${CFLAGS} -fopenmp" CXXFLAGS="${CXXFLAGS} -fopenmp" LDFLAGS="${LDFLAGS} -lgomp" \
   ./configure --prefix="${pkgdir}/usr" --includedir="${pkgdir}/usr/include/hypre" --enable-shared \
       --with-superlu --with-superlu-include=/usr/include/superlu --with-superlu-lib="-lsuperlu" \
       --with-dsuperlu --with-dsuperlu-include=/usr/include/superlu_dist --with-dsuperlu-lib="-lsuperlu_dist" \
-      --with-fei --with-blas --with-lapack --with-openmp --enable-fortran --with-mli --with-MPI
+      --with-blas --with-lapack --with-openmp --enable-fortran --with-mli --with-MPI
 
   make
 }
@@ -52,4 +43,3 @@ package() {
 
   make install
 }
-
