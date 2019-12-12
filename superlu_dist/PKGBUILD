@@ -1,7 +1,7 @@
 # Maintainer: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=superlu_dist
-pkgver=6.1.1
-pkgrel=2
+pkgver=6.2.0
+pkgrel=1
 pkgdesc="Set of subroutines to solve a sparse linear system (MPI parallel version)"
 arch=('x86_64')
 url="https://github.com/xiaoyeli/superlu_dist"
@@ -10,7 +10,7 @@ depends=('combblas' 'gcc-fortran' 'lapack' 'parmetis')
 makedepends=('cmake' 'gcc-fortran')
 source=(${url}/archive/v$pkgver.tar.gz)
 
-sha512sums=('1071f76f799a856113401020e1dc14d370326554803d93bac3a0ee1ee6be5704f5a0e5a974f43a9c4cc1bbe950b492611ac8854f22730ed699f75d8f2ac3a1a8')
+sha512sums=('ed60abc68bec718e20c53f902708bd38462db6e816cf50d87d89b45f48210c21c94dedf174af42f51c7aa8060203454d2a5f0788efed7e30d4d7c91254dbec8f')
 options=('staticlibs')
 
 prepare() {
