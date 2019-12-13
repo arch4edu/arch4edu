@@ -3,7 +3,7 @@
 pkgbase=mxnet
 pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl')
 pkgver=1.5.1
-pkgrel=3
+pkgrel=3.1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
