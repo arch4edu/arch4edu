@@ -39,12 +39,12 @@ _neovim="$NEOVIM_YOUCOMPLETEME"
 #                                    Default PKGBUILD Configuration                                       #
 #=========================================================================================================#
 pkgname=vim-youcompleteme-git
-pkgver=r2585.1386c6b3
+pkgver=r2590.213c0772
 pkgver() {
 	cd "YouCompleteMe" || exit
 	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
-pkgrel=2
+pkgrel=1
 pkgdesc="A code-completion engine for Vim"
 arch=('x86_64')
 url='https://ycm-core.github.io/YouCompleteMe/'
