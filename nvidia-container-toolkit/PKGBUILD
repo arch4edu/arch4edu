@@ -4,7 +4,7 @@
 pkgname=nvidia-container-toolkit
 
 pkgver=1.0.5
-pkgrel=2
+pkgrel=3
 _runtime_pkgver=3.1.4
 
 pkgdesc='NVIDIA container runtime toolkit'
@@ -30,11 +30,11 @@ prepare() {
 build() {
   GOPATH="${srcdir}/gopath" go build -v \
                             -buildmode=pie \
-                            -trimpath \
                             -gcflags "all=-trimpath=${PWD}" \
                             -asmflags "all=-trimpath=${PWD}" \
                             -ldflags "-extldflags ${LDFLAGS}" \
                             "$pkgname"
+                            # -trimpath \  # only go > 1.13
                             #-ldflags " -s -w -extldflags=-Wl,-z,now,-z,relro" \
 }
 
