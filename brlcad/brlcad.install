@@ -1,4 +1,5 @@
 post_install() {
     echo
     echo 'you need to re-login or source /etc/profile.d/brlcad.sh'
+    echo
 }
