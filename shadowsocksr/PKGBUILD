@@ -3,7 +3,7 @@
 
 pkgname=shadowsocksr
 pkgver=3.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Python port of ShadowsocksR"
 license=('Apache')
 url="https://github.com/shadowsocksrr/shadowsocksr"
