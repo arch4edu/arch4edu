@@ -7,7 +7,7 @@
 # Contributor: Andrzej Giniewicz <gginiu@gmail.com>
 
 pkgname='python-scipy-mkl'
-pkgver=1.3.3
+pkgver=1.4.0
 pkgrel=1
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
 arch=('x86_64')
@@ -16,11 +16,11 @@ license=('BSD')
 depends=('intel-compiler-base' 'intel-fortran-compiler' 'intel-mkl' 'python-numpy')
 provides=("python-scipy=$pkgver")
 conflicts=('python-scipy')
-makedepends=('gcc8' 'python-setuptools')
+makedepends=('gcc8' 'pybind11' 'python-setuptools')
 #checkdepends=('python-pytest')
 optdepends=('python-pillow: for image saving module')
 source=("https://github.com/scipy/scipy/releases/download/v${pkgver}/scipy-${pkgver}.tar.gz" 'build.sh')
-sha512sums=('28a16f75a61a57c3655312345c4014454065180a8a1dbc7d8f3a3f81742b345bb64bf1dabb4c05914d8e684547f3b12d7a50a6f80b68d9dae66849a67075bc50'
+sha512sums=('6e21ae4c952f65c165ef1563fea896dbcbd65d52ad7c65c9a47bac7b12541c916ef74aba64322a869a6a3ef0c7c3e944616456ec3b065687af45a113843d2dd4'
             '1ad168482bd4774e47af009f888a549233defe5593b7464f3f5577a25ebec180905c948ebf3936c33ac49f2ea8cba5dcd060f8b86adb99ed2f1fc41fd2bf82bf')
 
 build() {
