@@ -9,7 +9,7 @@ _pkgname=openblas
 pkgver=0.3.7
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.8.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Optimized BLAS library based on GotoBLAS2 1.13 BSD (providing blas, lapack, and cblas)"
 arch=('x86_64')
 url="http://www.openblas.net/"
