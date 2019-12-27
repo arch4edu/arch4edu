@@ -2,7 +2,7 @@
 # Contributor: Benjamin Chretien <chretien at lirmm dot fr>
 pkgname=cub
 pkgver=1.8.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A flexible library of cooperative threadblock primitives and other utilities for CUDA kernel programming."
 arch=('any')
 url='http://nvlabs.github.com/cub/'
