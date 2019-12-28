@@ -1,0 +1,52 @@
+# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+
+pkgname=pypy3
+pkgver=7.2.0
+pkgrel=1
+pkgdesc="A Python3 implementation written in Python, JIT enabled"
+url="https://pypy.org"
+arch=('armv6h' 'x86_64')
+depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib' 'ncurses')
+makedepends=('python2' 'sqlite' 'tk' 'python2-pycparser')
+optdepends=('sqlite: sqlite module'
+            'tk: tk module')
+options=(!buildflags)
+license=('MIT')
+source=("https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v${pkgver}-src.tar.bz2")
+sha512sums=('bcbb53062a473d504bcc082cf6286f6169c83d1f38d22c4d7c4e46ddc32bca9d91e71194637e6650db5bec02b29fe262b22fe236d627b6bc3e6e0c59c66c07cc')
+
+build() {
+  cd pypy3.6-v${pkgver}-src/pypy/goal
+
+  python2 ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
+
+  # Compile binary modules
+  PYTHONPATH=../.. ./pypy3-c ../tool/build_cffi_imports.py
+}
+
+package() {
+  cd pypy3.6-v${pkgver}-src
+
+  # Prepare installation
+  python2 pypy/tool/release/package.py --archive-name pypy --targetdir .
+  mkdir unpacked
+  tar xf pypy.tar.bz2 -C unpacked
+
+  # Install pypy
+  cd unpacked
+  install -Dm755 pypy/bin/pypy3 "${pkgdir}"/opt/pypy3/bin/pypy3
+  install -Dm755 pypy/bin/libpypy3-c.so "${pkgdir}"/opt/pypy3/bin/libpypy3-c.so
+  cp -r pypy/include pypy/lib_pypy pypy/lib-python pypy/site-packages "${pkgdir}"/opt/pypy3
+  cd ..
+
+  # Install symlinks
+  mkdir -p "${pkgdir}"/usr/bin "${pkgdir}"/usr/lib
+  ln -s /opt/pypy3/bin/pypy3 "${pkgdir}"/usr/bin/pypy3
+  ln -s /opt/pypy3/bin/libpypy3-c.so "${pkgdir}"/usr/lib/libpypy3-c.so
+
+  # Install misc stuff
+  install -Dm644 README.rst "${pkgdir}"/opt/pypy3/README.rst
+  install -Dm644 LICENSE "${pkgdir}"/opt/pypy3/LICENSE
+  install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/pypy3/LICENSE
+}
+# vim: ts=2 sw=2 et:
