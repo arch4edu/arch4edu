@@ -2,7 +2,7 @@
 # Contributor: Matthew Longley <randomticktock@gmail.com>
 
 pkgname=javacc
-pkgver=7.0.4
+pkgver=7.0.5
 pkgrel=1
 pkgdesc="Parser/scanner generator for Java"
 arch=('any')
@@ -10,7 +10,7 @@ url="http://javacc.org/"
 license=('BSD')
 depends=('java-environment' 'apache-ant')
 makedepends=('git')
-source=("git+https://github.com/javacc/javacc.git#tag=7.0.4")
+source=("git+https://github.com/javacc/javacc.git#tag=$pkgver")
 sha256sums=('SKIP')
 
 build() {
@@ -28,7 +28,7 @@ package() {
     cp -R "examples/" "$pkgdir/usr/share/java/$pkgname/examples"
 
     # install documentation
-    cp -R "www/doc/" "$pkgdir/usr/share/java/$pkgname/doc"
+    cp -R "docs/" "$pkgdir/usr/share/java/$pkgname/docs"
 
     # install jar
     install -m755 -D "target/$pkgname-$pkgver.jar" "$pkgdir/usr/share/java/$pkgname/bin/lib/$pkgname.jar"
