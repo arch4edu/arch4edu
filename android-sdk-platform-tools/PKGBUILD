@@ -5,7 +5,7 @@
 
 pkgname=android-sdk-platform-tools
 pkgver=29.0.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Platform-Tools for Google Android SDK (adb and fastboot)'
 arch=('x86_64')
 url='http://developer.android.com/sdk/index.html'
@@ -35,3 +35,5 @@ package() {
   cp -a "${srcdir}/platform-tools" "${pkgdir}/opt/android-sdk/platform-tools"
   chmod -R +rX "${pkgdir}/opt/android-sdk/platform-tools"
 }
+export http_proxy=127.0.0.1:8123
+export https_proxy=127.0.0.1:8123
