@@ -1,8 +1,8 @@
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
-pkgver=4.1
-pkgadditver=3
-pkgrel=3
+pkgver=4.2
+pkgadditver=1
+pkgrel=1
 
 pkgname=$_pkgname-bin
 arch=('x86_64' 'i686' 'aarch64')
