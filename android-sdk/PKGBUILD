@@ -18,7 +18,7 @@
 
 pkgname=android-sdk
 pkgver=26.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Google Android SDK'
 arch=('x86_64' 'i686')
 url='https://developer.android.com/studio/releases/sdk-tools.html'
@@ -66,3 +66,5 @@ package() {
 # getver: https://developer.android.com/studio/releases/sdk-tools.html
 # see https://dl.google.com/android/repository/repository2-1.xml for new versions
 # vim:set ts=2 sw=2 et:
+export http_proxy=127.0.0.1:8123
+export https_proxy=127.0.0.1:8123
