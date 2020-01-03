@@ -1,7 +1,7 @@
 # Maintainer: Miguel de Val-Borro <miguel at archlinux dot net>
 pkgname=('python-sphinx-bootstrap-theme' 'python2-sphinx-bootstrap-theme')
 pkgver=0.7.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Sphinx documentation theme that integrates the Bootstrap framework"
 arch=('any')
 url="http://ryan-roemer.github.io/sphinx-bootstrap-theme/"
