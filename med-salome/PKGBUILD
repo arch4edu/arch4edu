@@ -8,12 +8,12 @@
 pkgname=med-salome
 _pkgname=med
 pkgver=3.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="MED stands for Modelisation et Echanges de Donnees, i.e. Data Modelization and Exchanges - This version is built to be linked against salome-med on x86_64"
 url="http://www.code-aster.org/outils/med/"
 license=('LGPL')
 depends=('hdf5_18' 'python2')
-makedepends=('cmake' 'coreutils' 'gcc-fortran' 'swig' )
+makedepends=('cmake' 'coreutils' 'gcc-fortran' 'swig')
 optdepends=('tk')
 provides=("med=$pkgver")
 conflicts=("med_fichier" "med")
