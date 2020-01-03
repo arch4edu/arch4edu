@@ -3,7 +3,7 @@
 pkgname=python-cheetah3
 _name=Cheetah3
 pkgver=3.2.4
-pkgrel=2
+pkgrel=3
 pkgdesc="A Python 3-powered template engine and code generator"
 arch=(any)
 url="http://www.cheetahtemplate.org"
