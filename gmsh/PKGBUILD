@@ -1,8 +1,8 @@
 # Maintainer: gborzi <gborzi@ieee.org>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
-pkgver=4.4.1
-pkgrel=2
+pkgver=4.5.1
+pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
@@ -11,7 +11,7 @@ makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'fltk' 'lapack'
              'med' 'opencascade' 'cairo' 'texlive-core')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
-sha256sums=('853c6438fc4e4b765206e66a514b09182c56377bb4b73f1d0d26eda7eb8af0dc'
+sha256sums=('58c7c9fe44704c0b16ad4a437865d12b5dfb68877514358f6c06735cfeed5c66'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
@@ -21,7 +21,7 @@ prepare() {
    # Help links to local doc (package gmsh-docs)
    sed -e "s|http://gmsh.info/doc/texinfo/|file:///usr/share/doc/gmsh/gmsh.html|" \
        -i Fltk/graphicWindow.cpp
-   sed -e "s|http://gmsh.info/doc/|file:///usr/share/licenses/gmsh/|" \
+   sed -e "s|http://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
        -i Fltk/helpWindow.cpp
 
 }
@@ -49,7 +49,7 @@ package_gmsh() {
    cd "${srcdir}/${pkgname}-${pkgver}-source/build"
    make DESTDIR=${pkgdir} install
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
-   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.7/site-packages/gmsh.py"
+   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.8/site-packages/gmsh.py"
    rm "${pkgdir}/usr/lib/gmsh.py"
    rm -rf "${pkgdir}/home"
 
