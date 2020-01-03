@@ -3,9 +3,9 @@ pkgname='kaldi-openfst'
 _pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
 pkgver=1.6.7
-pkgrel=1
+pkgrel=2
 depends=('gcc-libs')
-makedepends=('git' 'wget' 'python' 'python2' 'subversion')
+makedepends=('git' 'wget' 'python' 'python2' 'subversion' 'unzip' 'sox' 'gcc-fortran')
 arch=('x86_64' 'i686')
 url='https://github.com/kaldi-asr/kaldi'
 license=('APACHE')
@@ -14,6 +14,8 @@ sha256sums=('SKIP')
 
 build () {
 	cd $srcdir/$_pkgname-master/tools
+	mkdir -p python
+	touch python/.use_default_python
 	make openfst
 }
 
