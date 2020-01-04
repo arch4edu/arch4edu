@@ -2,7 +2,7 @@
 pkgdesc='Tool to aid wrapping C functions to be used from Lua'
 pkgname='torch7-cwrap-git'
 pkgver=r35.dbd0a62
-pkgrel=1
+pkgrel=2
 conflicts=('torch7-cwrap')
 provides=('torch7-cwrap')
 arch=('any')
