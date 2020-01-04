@@ -6,7 +6,7 @@
 # Contributor: Angel 'angvp' Velasquez <angvp[at]archlinux.com.ve>
 # Adapted to mkl by Simone Riva
 pkgname=python-numpy-mkl
-pkgver=1.17.4
+pkgver=1.18.0
 pkgrel=1
 pkgdesc="Scientific tools for Python compiled with intel mkl"
 arch=('i686' 'x86_64')
@@ -21,7 +21,7 @@ source=(https://github.com/numpy/numpy/archive/v${pkgver}.tar.gz
 	'site32.cfg'
 	'intelccompiler.py.patch')
 
-sha256sums=('e78ef65c08fc25c6172586e3b7ac366fbd49d9227d435d2f05184e9f3dd6317f'
+sha256sums=('2e20cf94d675bebe9234945d71eadcf5bcf6e806234dc2fcedd8522588030128'
 	    '86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1'
             '882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df'
 	    '0d185daf0f2fcab08778173f54cee86cd88dc3c6703413686ab3742c0097db4e')
