@@ -3,6 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}, {'github': 'baidu-research/warp-ctc'}]
+repo_depends = ['torch7-cutorch-git']
 build_prefix = 'extra-x86_64'
 
 def pre_build():
