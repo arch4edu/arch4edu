@@ -10,13 +10,13 @@ pkgname=(coin coin-docs)
 _count=11927
 _rev=e74da184f75b
 pkgver=4.0.0a+$_count+m$_rev
-pkgrel=1
+pkgrel=2
 pkgdesc='A high-level 3D graphics toolkit on top of OpenGL'
 url='https://bitbucket.org/Coin3D/coin'
 license=('GPL')
 arch=('i686' 'x86_64')
 depends=('libgl')
-makedepends=('cmake' 'doxygen' 'fontconfig' 'freetype2' 'js60' 'mercurial' 'openal' 'opencv' 'zlib')
+makedepends=('cmake' 'doxygen' 'fontconfig' 'freetype2' 'glu' 'js60' 'mercurial' 'openal' 'opencv' 'zlib')
 optdepends=('openal: sound/dynamic linking support'
             'fontconfig: dynamic linking support'
             'zlib: dynamic linking support'
