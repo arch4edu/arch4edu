@@ -1,27 +1,25 @@
-# Maintainer: Samuel Williams <ioquatix>
- 
 pkgname=scotch
-pkgver=6.0.6
+pkgver=6.0.9
 pkgrel=1
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering. This is the all-inclusive version (MPI/serial/esmumps)."
-url="http://www.labri.fr/perso/pelegrin/scotch/"
+url="https://gitlab.inria.fr/scotch/scotch"
 license=("custom:CeCILL-C")
 depends=('zlib' 'openmpi' 'bzip2')
 provides=('ptscotch' 'ptscotch-openmpi' 'scotch_esmumps' 'scotch_ptesmumps')
 conflicts=('ptscotch-openmpi' 'scotch_esmumps' 'scotch_esmumps5')
 arch=('i686' 'x86_64')
 source=("https://gitlab.inria.fr/scotch/scotch/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz")
-sha256sums=('e932b4c04636fcf5d21b9a76376868de052c9b000bdaf96f8967dcec61bdaa10')
+sha256sums=('b9bc86c50b65781eb416663e938d57555373c2517ea8b9acf680fd3acde0cb0c')
 
 prepare() {
   cd "${srcdir}/${pkgname}-v${pkgver}/src"
 
-  # Apply patch to fix shared library ldflags
-  sed -i 's/$(AR) $(ARFLAGS) $(@) $(?)/$(AR) $(ARFLAGS) $(@) $(?) $(LDFLAGS)/g' libscotch/Makefile
- 
   [ -e Makefile.inc ] && rm Makefile.inc
   cp "Make.inc/Makefile.inc.${CARCH/_/-}_pc_linux2.shlib" Makefile.inc
- 
+
+  # Apply patch to fix shared library ldflags
+  sed -i 's/$(AR) $(ARFLAGS) $(@) $(?)/$(AR) $(ARFLAGS) $(@) $(?) $(LDFLAGS)/g' libscotch/Makefile
+
   # Use the CFLAGS defined /etc/makepkg.conf
   sed -i "s/-O3/${CFLAGS} -fPIC/g" Makefile.inc
  
@@ -31,10 +29,10 @@ prepare() {
   # Also enable bzip2 compression
   sed -i "s/-DCOMMON_FILE_COMPRESS_GZ/-DCOMMON_FILE_COMPRESS_GZ -DCOMMON_FILE_COMPRESS_BZ2/" Makefile.inc
   sed -i "s/-lz/-lz -lbz2/" Makefile.inc
- 
+
   # Fix the creation of directories
   sed -i "s/mkdir/mkdir\ -p/" Makefile.inc
- 
+
   # To install headers and libs also for esmumps
   sed -i 's/scotch\*/{scotch,esmumps}\*/g' Makefile
 }
