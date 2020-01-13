@@ -5,7 +5,7 @@
 
 pkgname=openfst
 pkgver=1.6.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Library for constructing, combining, optimizing, and searching weighted finite-state transducers (FSTs)'
 arch=(i686 x86_64)
 url='http://www.openfst.org'
