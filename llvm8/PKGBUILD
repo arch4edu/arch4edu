@@ -4,7 +4,7 @@
 
 pkgname=('llvm8' 'llvm8-libs')
 pkgver=8.0.1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:University of Illinois/NCSA Open Source License')
@@ -50,6 +50,7 @@ package_llvm8() {
   pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
   depends=('llvm8-libs' 'perl')
   optdepends=('python-setuptools: for using lit (LLVM Integrated Tester)')
+  provides=("llvm=$pkgver")
   conflicts=('llvm')
 
   cd "$srcdir/llvm-$pkgver.src/build"
