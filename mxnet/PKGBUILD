@@ -9,7 +9,7 @@ arch=('x86_64')
 url="http://mxnet.io/"
 license=('Apache')
 depends=('double-conversion' 'hdf5' 'intel-tbb' 'python-numpy' 'python-requests')
-makedepends=('cairo' 'cblas' 'cmake' 'cuda' 'cudnn' 'cython' 'git' 'gtk3' 'gtkglext' 'intel-compiler-base' 'intel-mkl' 'lapack' 'nccl' 'python-graphviz' 'vtk' 'glew' 'mkl-dnn')
+makedepends=('cairo' 'cblas' 'cmake' 'cuda' 'cudnn' 'cython' 'git' 'gtk3' 'gtkglext' 'intel-compiler-base' 'intel-mkl' 'lapack' 'nccl' 'python-graphviz' 'vtk' 'glew' 'intel-dnnl')
 source=("${pkgbase}::git+https://github.com/apache/incubator-mxnet#tag=$pkgver"
 	'git+https://github.com/dmlc/cub'
 	'git+https://github.com/dmlc/dlpack'
@@ -186,7 +186,7 @@ package_mxnet-cuda() {
 
 package_mxnet-mkl() {
 	pkgdesc="$pkgdesc (with MKL)"
-	depends+=(intel-mkl mkl-dnn)
+	depends+=(intel-mkl intel-dnnl)
 	conflicts=(mxnet)
 	provides=(mxnet)
 	_package
