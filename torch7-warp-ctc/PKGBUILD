@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
 pkgdesc='A fast parallel implementation of CTC, on both CPU and GPU.'
 pkgname='torch7-warp-ctc'
-pkgver=v1.0.r30.g6d5b8fa
+pkgver=v1.0.r32.gbc29dcf
 pkgrel=1
 makedepends=('cmake' 'git' 'torch7-cutorch-git' "torch7-cutorch-git")
 depends=('torch7-git>=r819')
@@ -31,7 +31,7 @@ build () {
 	# sed -e 's/compute_[0-9]\{2\}/compute_61/g' -e 's/sm_[0-9]\{2\}/sm_61/g' -i CMakeLists.txt
 	cmake . \
 		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_C_COMPILER=gcc-7 \
+		-DCMAKE_C_COMPILER=gcc-8 \
 		-DCMAKE_BUILD_TYPE=Release
 	make
 }
