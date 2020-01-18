@@ -7,7 +7,7 @@
 pkgname=flite1
 _pkgname=flite
 pkgver=1.4
-pkgrel=2
+pkgrel=3
 pkgdesc="A lighweight version of festival speech synthesis (version 1)"
 arch=('i686' 'x86_64')
 url="http://www.speech.cs.cmu.edu/flite/"
