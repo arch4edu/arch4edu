@@ -2,15 +2,15 @@
 # contact me via AUR or archlinux forums
 project='pymavlink'
 pkgname=python-${project}-git # '-bzr', '-git', '-hg' or '-svn'
-pkgver=r2452.a1c7106
+pkgver=r2531.f9ab4d7
 pkgrel=1
 pkgdesc="python MAVLink interface and utilities"
 arch=('x86_64')
 url="https://github.com/ArduPilot/pymavlink/"
 license=('LGPL v3')
 groups=()
-depends=('python-future' 'python-lxml')
-makedepends=('git') # 'bzr', 'git', 'mercurial' or 'subversion'
+depends=('python-future' 'python-lxml' "python-future")
+makedepends=('git' "python-setuptools") # 'bzr', 'git', 'mercurial' or 'subversion'
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}" "python2-pymavlink" "python2-pymavlink-git")
 replaces=()
