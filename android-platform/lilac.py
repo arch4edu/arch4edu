@@ -3,11 +3,20 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
-build_prefix = 'multilib'
-repo_depends = ['android-sdk', 'android-sdk-platform-tools']
+build_prefix = 'extra-x86_64'
 
 def pre_build():
     aur_pre_build()
+
+    depends_line = ''
+    for line in edit_file('PKGBUILD'):
+        if line.startswith('depends=('):
+            depends_line = line
+        elif line.startswith('package()'):
+            print(line)
+            print('  %s' % depends_line)
+        else:
+            print(line)
 
     with open('PKGBUILD', 'a') as f:
         f.write('export http_proxy=127.0.0.1:8123\n')
