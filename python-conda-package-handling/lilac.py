@@ -4,17 +4,7 @@ from lilaclib import *
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
-
-def pre_build():
-    aur_pre_build()
-
-    for line in edit_file('PKGBUILD'):
-        if line.startswith('options='):
-            print("makedepends=('python-setuptools')")
-            print(line)
-        else:
-            print(line)
-
+pre_build = aur_pre_build
 post_build = aur_post_build
 
 if __name__ == '__main__':
