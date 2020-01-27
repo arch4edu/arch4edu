@@ -5,27 +5,26 @@
 
 pkgname=qgis-git
 _pkgname=qgis
-pkgver=3.10.0_master.r59259.c2cde01cc8
+pkgver=3.10.0_master.r60227.ee28568509
 
-_pkgver=3.10.0_master
+_pkgver=3.11.0_master
 pkgrel=1
 pkgdesc='Geographic Information System (GIS) that supports vector, raster & database formats - Development master'
 url='http://qgis.org/'
 license=('GPL')
 arch=('i686' 'x86_64')
-depends=('qt5-tools' 'qt5-script' 'qtkeychain' 'qca-qt5' 'qt5-webkit' 'qt5-3d' 'qt5-serialport' 'proj' 'geos' 'sqlite' 'python-pyqt5' 'python-gdal' 'python-owslib' 'python-future' 'python-sip' 'python-sip-pyqt5' 'python-psycopg2' 'python-yaml' 'python-numpy' 'python-jinja' 'python-pygments' 'qwtpolar' 'expat' 'python-qscintilla-qt5' 'spatialindex' 'gsl' 'libzip' 'sip' 'exiv2' 'qt5-xmlpatterns' 'ocl-icd')
+depends=('qt5-tools' 'qt5-script' 'qtkeychain' 'qca-qt5' 'qt5-webkit' 'qt5-3d' 'qt5-serialport' 'proj' 'geos' 'sqlite' 'python-pyqt5' 'python-gdal' 'python-owslib' 'python-future' 'python-sip' 'python-psycopg2' 'python-six' 'python-yaml' 'python-numpy' 'python-jinja' 'python-pygments' 'qwtpolar' 'expat' 'python-qscintilla-qt5' 'spatialindex' 'gsl' 'libzip' 'sip' 'exiv2' 'qt5-xmlpatterns' 'ocl-icd')
 
-makedepends=('git' 'cmake' 'txt2tags')
+makedepends=('git' 'fcgi' 'cmake' 'txt2tags')
 optdepends=('grass: for GRASS providers and plugin (6 or 7)'
-#            'gsl: for georeferencer'
             'postgresql: for postgis and SPIT support'
             'gpsbabel: for gps plugin'
             'fcgi: for qgis mapserver'
             'ocilib: oracle provider')
 
 #install="$_pkgname.install"
-source=("${_pkgname}::git://github.com/qgis/QGIS.git")
-md5sums=('SKIP')
+source=("${_pkgname}::git://github.com/qgis/QGIS.git" 'qgis-pyqt5-sip5.patch')
+sha256sums=('SKIP' '47fdab75c94ecf5b61a41b334e23714226e895cef507c35a3bc4b46c7d307981')
 #conflicts=('qgis')
 
 pkgver(){
@@ -53,6 +52,7 @@ prepare() {
       -i debian/qgis.xml
 
   [[ -d build ]] || mkdir build
+  patch -p1 -i ../qgis-pyqt5-sip5.patch
 }
 
 build() {
