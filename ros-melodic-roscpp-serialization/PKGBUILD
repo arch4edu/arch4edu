@@ -1,10 +1,8 @@
-# Script generated with import_catkin_packages.py.
-# For more information: https://github.com/bchretien/arch-ros-stacks.
 pkgdesc="ROS - roscpp_serialization contains the code for serialization as described in MessagesSerializationAndAdaptingTypes."
 url='https://wiki.ros.org/roscpp_serialization'
 
 pkgname='ros-melodic-roscpp-serialization'
-pkgver='0.6.12'
+pkgver='0.6.13'
 arch=('any')
 pkgrel=1
 license=('BSD')
@@ -34,7 +32,7 @@ depends=(
 
 _dir="roscpp_core-${pkgver}/roscpp_serialization"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/roscpp_core/archive/${pkgver}.tar.gz")
-sha256sums=('6fb2cfb7ec7db0512cd0e43634328aa6474fc15005e51279d2926d9246f02afc')
+sha256sums=('6740da6424373c8ffb075b30272f7a46804a76015649bc4f54fd1963d50a1e49')
 
 build() {
 	# Use ROS environment variables.
