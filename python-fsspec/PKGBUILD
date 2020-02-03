@@ -3,7 +3,7 @@
 pkgname=python-fsspec
 _pkgname=filesystem_spec
 pkgver=0.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A specification that python filesystems should adhere to."
 arch=('any')
 url="https://github.com/intake/filesystem_spec"
