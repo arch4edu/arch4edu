@@ -4,7 +4,7 @@
 _fwname=aic94xx
 pkgname=${_fwname}-firmware
 pkgver=30
-pkgrel=9
+pkgrel=10
 pkgdesc="Adaptec SAS 44300, 48300, 58300 Sequencer Firmware for AIC94xx driver"
 url="https://storage.microsemi.com/en-us/speed/scsi/linux/${_fwname}-seq-${pkgver}-1_tar_gz.php"
 license=('custom')
