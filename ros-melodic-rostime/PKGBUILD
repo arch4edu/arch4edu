@@ -4,7 +4,7 @@ pkgdesc="ROS - Time and Duration implementations for C++ libraries, including ro
 url='https://wiki.ros.org/rostime'
 
 pkgname='ros-melodic-rostime'
-pkgver='0.6.12'
+pkgver='0.6.13'
 arch=('any')
 pkgrel=1
 license=('BSD')
@@ -32,7 +32,7 @@ depends=(
 
 _dir="roscpp_core-${pkgver}/rostime"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/roscpp_core/archive/${pkgver}.tar.gz")
-sha256sums=('6fb2cfb7ec7db0512cd0e43634328aa6474fc15005e51279d2926d9246f02afc')
+sha256sums=('6740da6424373c8ffb075b30272f7a46804a76015649bc4f54fd1963d50a1e49')
 
 build() {
 	# Use ROS environment variables.
