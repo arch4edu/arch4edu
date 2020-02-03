@@ -4,7 +4,7 @@
 pkgname=python-locket
 _pkgname=locket
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="File-based locks for Python for Linux and Windows"
 arch=('any')
 url="http://github.com/mwilliamson/locket.py"
