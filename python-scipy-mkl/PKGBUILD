@@ -8,7 +8,7 @@
 
 pkgname='python-scipy-mkl'
 pkgver=1.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
 arch=('x86_64')
 url="http://www.scipy.org/"
@@ -16,7 +16,7 @@ license=('BSD')
 depends=('intel-compiler-base' 'intel-fortran-compiler' 'intel-mkl' 'python-numpy')
 provides=("python-scipy=$pkgver")
 conflicts=('python-scipy')
-makedepends=('gcc8' 'pybind11' 'python-setuptools')
+makedepends=('pybind11' 'python-setuptools')
 #checkdepends=('python-pytest')
 optdepends=('python-pillow: for image saving module')
 source=("https://github.com/scipy/scipy/releases/download/v${pkgver}/scipy-${pkgver}.tar.gz" 'build.sh')
@@ -25,7 +25,7 @@ sha512sums=('79407a2cbb4ba29c0941570181df4d7835e5791e50a3abef9b63c2fc5b15308a2e4
 
 build() {
 	export LDFLAGS="-Wall -shared"
-	export __INTEL_PRE_CFLAGS="-I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include/c++ -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include/c++/x86_64-pc-linux-gnu/"
+	#export __INTEL_PRE_CFLAGS="-I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include/c++ -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/include/c++/x86_64-pc-linux-gnu/"
 
 	cd scipy-${pkgver}
 	sh ${srcdir}/build.sh
