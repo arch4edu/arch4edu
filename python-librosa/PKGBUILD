@@ -1,47 +1,25 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributer: Jose Riha <jose1711 gmail com>
-pkgbase=python-librosa
-pkgname=(python-librosa python2-librosa)
+
+pkgname=python-librosa
 _pkgname=librosa
-pkgver=0.7.0
-pkgrel=2
+pkgver=0.7.1
+pkgrel=1
 pkgdesc="Python library for music and audio analysis"
 arch=('any')
 url="http://librosa.github.io/librosa"
 license=('ISC')
-makedepends=('python-setuptools' 'python2-setuptools')
+depends=('python-numpy' 'python-scipy' 'python-six' 'python-numba' 'python-soundfile' 'python-joblib' 'python-matplotlib' 'python-audioread' 'python-decorator' 'python-scikit-learn' 'python-resampy')
+makedepends=('python-setuptools')
 source=("https://github.com/librosa/librosa/archive/${pkgver}.tar.gz")
-md5sums=('3bb8ef0233fba3b663acab71a3627010')
-
-prepare() {
-  cd "$srcdir/"
-  cp -a "${_pkgname}-${pkgver}" "${_pkgname}-${pkgver}-py2"
-  cd "${_pkgname}-${pkgver}-py2"
-  sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
-    -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
-    -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
-    -i $(find . -name '*.py')
-}
+md5sums=('99924d95ca5a41afc08ed883a347b606')
 
 build() {
-  msg "Building Python 2"
-  cd "$srcdir/${_pkgname}-${pkgver}-py2"
-  python2 setup.py build
-
-  msg "Building Python 3"
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py build
 }
 
-package_python2-librosa() {
-  depends=('python2-numpy' 'python2-scipy' 'python2-six' 'python2-numba' 'python2-soundfile' 'python2-joblib' 'python2-matplotlib' 'python2-audioread' 'python2-decorator' 'python2-scikit-learn' 'python2-resampy')
-  cd "$srcdir/${_pkgname}-${pkgver}-py2"
-  python2 setup.py install --root="$pkgdir"/ --optimize=1
-  install -Dm644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-}
-
-package_python-librosa() {
-  depends=('python-numpy' 'python-scipy' 'python-six' 'python-numba' 'python-soundfile' 'python-joblib' 'python-matplotlib' 'python-audioread' 'python-decorator' 'python-scikit-learn' 'python-resampy')
+package() {
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py install --root="$pkgdir"/ --optimize=1
   install -Dm644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
