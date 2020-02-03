@@ -3,7 +3,7 @@
 
 pkgname=python-partd
 _pkgname=partd
-pkgver=0.3.10
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="Appendable key-value storage"
 arch=('any')
@@ -12,9 +12,9 @@ license=('BSD')
 depends=('python' 'python-locket' 'python-toolz')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest')
-optdepends=('python-pyzmq' 'python-numpy' 'python-pandas' 'python-blosc')
+optdepends=('python-blosc' 'python-numpy' 'python-pandas' 'python-pyzmq' 'python-snappy')
 source=("https://pypi.python.org/packages/source/${_pkgname:0:1}/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
-sha256sums=('33722a228ebcd1fa6f44b1631bdd4cff056376f89eb826d7d880b35b637bcfba')
+sha256sums=('6e258bf0810701407ad1410d63d1a15cfd7b773fd9efe555dac6bb82cc8832b0')
 
 check() {
   cd "$srcdir/$_pkgname-$pkgver"
