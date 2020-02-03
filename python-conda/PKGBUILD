@@ -1,21 +1,20 @@
 # Maintainer: Daniel Maslowski <info@orangecms.org>
+# Co-Maintainer: Ke Liu <specter119@gmail.com>
 
 pkgname=python-conda
 _name=${pkgname#python-}
-pkgver=4.8.0
+pkgver=4.8.1
 pkgrel=1
-pkgdesc="OS-agnostic, system-level binary package manager and ecosystem"
+pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
-url="http://conda.pydata.org/docs/"
+url="https://github.com/conda/conda"
 license=('BSD')
 depends=(
   'python'
   'python-conda-package-handling'
   'python-pycosat>=0.6.3'
   'python-requests>=2.12.4'
-  'python-ruamel-yaml'
-  'python-libarchive-c'
-  'python-tqdm'
+  'python-ruamel-yaml>=0.11.14'
 )
 makedepends=('python-setuptools')
 optdepends=(
@@ -24,9 +23,9 @@ optdepends=(
 provides=('python-conda' 'python-conda-env')
 options=(!emptydirs)
 source=(
-  $_name-$pkgver.tar.gz::https://github.com/$_name/$_name/archive/$pkgver.tar.gz
+  $_name-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz
 )
-sha512sums=('c85ea7b051171479ee387fb6d54204ab59489521ac822797c4dc7b5be120c4b8a6844eb7c36ec85d3238dbb5a1525e8c5371df0d2b478d26e25d2bac5e26a07e')
+sha512sums=('489b81538edd74e18863c0357b7d7a3a7d8bc093c9260cca5bc522d468f1820f107773eb1979c8b62596605a9ab5120b6b96dc3c47819bbbdcf54672d2643b03')
 
 prepare() {
   cd "$srcdir/${_name}-$pkgver"
