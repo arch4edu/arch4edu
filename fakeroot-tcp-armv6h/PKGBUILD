@@ -6,9 +6,9 @@
 pkgname=fakeroot-tcp
 _pkgname=fakeroot
 pkgver=1.24
-pkgrel=2
+pkgrel=3
 pkgdesc='Tool for simulating superuser privileges,with tcp ipc'
-arch=('i686' 'x86_64' 'armv7h' 'aarch64')
+arch=('aarch64' 'armv6h' 'armv7h' 'i686' 'x86_64')
 license=('GPL')
 url="http://packages.debian.org/fakeroot"
 install=fakeroot.install
