@@ -1,14 +1,14 @@
 # Maintainer: dustball
 
 pkgname=pypy3-pip
-pkgver=19.2.1
+pkgver=20.0.2
 pkgrel=1
 pkgdesc="An easy_install replacement for installing pypi python packages"
-url="http://www.pip-installer.org/"
+url="https://pip.pypa.io/"
 arch=('any')
 license=('MIT')
 depends=('pypy3' 'pypy3-setuptools')
-source=(https://files.pythonhosted.org/packages/8b/8a/1b2aadd922db1afe6bc107b03de41d6d37a28a5923383e60695fba24ae81/pip-19.2.1.tar.gz)
+source=(https://files.pythonhosted.org/packages/8e/76/66066b7bc71817238924c7e4b448abdb17eb0c92d645769c223f9ace478f/pip-20.0.2.tar.gz)
 
 package_pypy3-pip() {
 
@@ -25,5 +25,5 @@ package_pypy3-pip() {
 	  "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
-md5sums=('e9ac3e030e88b6c076a20ab371a30742')
-sha256sums=('258d702483dd749400aec59c23d638a5b2249ae28a0f478b6cab12ad45681a80')
+md5sums=('7d42ba49b809604f0df3d55df1c3fd86')
+sha256sums=('7db0c8ea4c7ea51c8049640e8e6e7fde949de672bfa4949920675563a5a6967f')
