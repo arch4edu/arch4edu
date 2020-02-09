@@ -3,6 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
+repo_depends = ['gconf']
 build_prefix = 'extra-x86_64'
 
 def pre_build():
