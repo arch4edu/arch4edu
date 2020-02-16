@@ -7,7 +7,7 @@ pkgname='ros-melodic-gennodejs'
 pkgver='2.0.1'
 _pkgver_patch=0
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('Apache 2.0')
 
 ros_makedepends=(
