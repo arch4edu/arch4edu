@@ -6,7 +6,7 @@ url='https://wiki.ros.org/genpy'
 pkgname='ros-melodic-genpy'
 pkgver='0.6.8'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
