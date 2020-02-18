@@ -1,11 +1,11 @@
 # Maintainer: alexanderp <alexisph -at- gmail -dot- com>
-# Contributor: halfhorn <mwellsa -at- gmail -dot- com>
-# Contributor: jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
-# Based on the PKGBUILD for R
+# Previous maintainers:
+# - halfhorn <mwellsa -at- gmail -dot- com>
+# - jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
 
 pkgname=r-mkl
 pkgver=3.6.2
-pkgrel=1
+pkgrel=3
 pkgdesc="Language and environment for statistical computing and graphics, linked to the Intel(R) MKL."
 arch=('x86_64')
 license=('GPL')
@@ -13,11 +13,8 @@ url='http://www.r-project.org/'
 provides=("r=${pkgver}")
 conflicts=('r' 'microsoft-r-open')
 depends=('intel-mkl'
-         'intel-common-libs'
          'bzip2'
          'curl'
-         'gcc-libs'
-         'gcc-fortran'
          'icu'
          'libjpeg'
          'libpng'
@@ -35,8 +32,10 @@ depends=('intel-mkl'
          'zip'
          'zlib')
 makedepends=('java-environment'
+             'gcc-fortran'
              'tk')
 optdepends=('texlive-bin: LaTeX sty files'
+            'gcc-fortran: needed to compile some CRAN packages'
             'tk: tcl-tk interface')
 backup=('etc/R/Makeconf'
         'etc/R/Renviron'
@@ -51,14 +50,10 @@ source=("http://cran.r-project.org/src/base/R-${pkgver%%.*}/R-${pkgver}.tar.gz"
         'r.png'
         'R.conf')
 
-md5sums=('90d23d138cee26d275da14b58296e521'
-         '2dd24e473eb837016b63a45b638af167'
-         '8e0c51650b8a63f110fa7b09e699e9c4'
-         '1dfa62c812aed9642f6e4ac34999b9fe')
-sha512sums=('17513e9f4dd27c61c11f7aa45227aeeeefb375bf5d4e193b471724f379a1b2da33e127cbe91aa175cbbbb048b892047e2f610280585c8159242a6c94790b07f9'
-            '658793de80f905f790ef3f8205ce4d78c69eb27eafaf6579056743df7af921824ce2e07561a5c14706a9d6520bbbde0c0ee70c10eccf2d11f7626b00c567562d'
-            '1491b01d3d14b86d26c383e00e2305858a52ddd498158c9f7f6b33026ee01f246408b1676cffea73f7783c8c4cf546285705c43c0286adbd75ad77706918b5fe'
-            'aae388c5b6c02d9fb857914032b0cd7d68a9f21e30c39ba11f5a29aaf1d742545482054b57ce18872eabb6605bbb359b2fc1e9be5ce6881443fdbdf6b67fab3b')
+sha1sums=('8eda2af51d63877fcc6674274b6801af605173c5'
+          'dd214eee232b7aced7366722ad416b6b39be8e1b'
+          'af80774f5a8d0e669e8ff90662638a0f4e1105d7'
+          '43668da6cfd1b4455a99f23e79e2059294dddac9')
 
 # Build with the Intel Compiler Suite or GCC/GFortran.
 # Comment the following line to build the package with GCC
@@ -76,8 +71,6 @@ prepare() {
   cd R-${pkgver}
   # set texmf dir correctly in makefile
   sed -i 's|$(rsharedir)/texmf|${datarootdir}/texmf|' share/Makefile.in
-  # DEPRECATED: Fix the config script to look in Makeconf for LDFLAGS
-  # sed -i '/LIBS=`eval $query VAR=LIBS`/a\LDFLAGS=`eval $query VAR=LDFLAGS`' src/scripts/config
 }
 
 
@@ -161,7 +154,7 @@ build() {
     LIBnn=lib
 
   # Place Intel's basic math library prior to GLIBC libm
-  sed -i "s/\(^\| \)-lm\( \|$\)/\1-limf -lm\2/g" {./,etc/}Makeconf
+  # sed -i "s/\(^\| \)-lm\( \|$\)/\1-limf -lm\2/g" {./,etc/}Makeconf
 
   # Build the package
   make
