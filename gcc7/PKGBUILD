@@ -13,7 +13,7 @@ pkgver=7.5.0
 _pkgver=7
 _majorver=${pkgver:0:1}
 _islver=0.18
-pkgrel=2
+pkgrel=3
 pkgdesc='The GNU Compiler Collection (7.x.x)'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -22,10 +22,12 @@ makedepends=(binutils libmpc doxygen python subversion flex)
 options=(!emptydirs)
 source=(https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz
         https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2
-        bz84080.patch)
+        bz84080.patch
+        libsanitizer.patch)
 sha256sums=('b81946e7f01f90528a1f7352ab08cc602b9ccc05d4e44da4bd501c5a189ee661'
             '6b8b0fd7f81d0a957beb3679c81bbb34ccc7568d5682844d8924424a0dadcb1b'
-            'bce05807443558db55f0d6b4dae37a678ea1bb3388b541c876fe3d110e3717e7')
+            'bce05807443558db55f0d6b4dae37a678ea1bb3388b541c876fe3d110e3717e7'
+            'ee25895428a9dbd3217de109a043c54cb9f51e6a04a260be088a619c0f677e68')
 
 _svnrev=266882
 _svnurl=svn://gcc.gnu.org/svn/gcc/branches/gcc-${_majorver}-branch
@@ -55,6 +57,9 @@ prepare() {
 
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84080
   patch -p0 -i "$srcdir/bz84080.patch"
+
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92154
+  patch -Np0 -i "${srcdir}/libsanitizer.patch"
 
   # link isl for in-tree build
   ln -s ../isl-${_islver} isl
