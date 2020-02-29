@@ -2,7 +2,7 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
 pkgver=4.5.3
-pkgrel=1
+pkgrel=2
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
@@ -23,6 +23,7 @@ prepare() {
        -i Fltk/graphicWindow.cpp
    sed -e "s|http://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
        -i Fltk/helpWindow.cpp
+   sed -i '/install(TARGETS shared DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}\/api OPTIONAL)/d' CMakeLists.txt
 
 }
 
@@ -51,7 +52,6 @@ package_gmsh() {
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.8/site-packages/gmsh.py"
    rm "${pkgdir}/usr/lib/gmsh.py"
-   rm -rf "${pkgdir}/home"
 
    install -d "${pkgdir}/usr/share/pixmaps/${pkgname}"
    install -m644 ../utils/icons/*.png "${pkgdir}/usr/share/pixmaps/${pkgname}"
