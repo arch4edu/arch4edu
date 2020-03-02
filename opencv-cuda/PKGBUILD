@@ -4,7 +4,7 @@
 
 pkgname=opencv-cuda
 pkgver=4.2.0
-pkgrel=2
+pkgrel=3
 provides=(opencv opencv-samples)
 conflicts=(opencv opencv-samples)
 pkgdesc="Open Source Computer Vision Library with CUDA support"
