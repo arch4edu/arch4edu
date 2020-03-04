@@ -3,7 +3,7 @@
 pkgbase=python-peachpy-git
 pkgname=('python-peachpy-git' 'python2-peachpy-git')
 _srcname=PeachPy
-pkgver=r369.1772031
+pkgver=r370.f189ad2
 pkgrel=1
 pkgdesc='Python framework for writing high-performance assembly kernels (git version)'
 arch=('any')
