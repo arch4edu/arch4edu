@@ -1,7 +1,7 @@
 # Maintainer: Markus Weimar <mail@markusweimar.de>
 pkgname=ttf-charis-sil
 pkgver=5.000
-pkgrel=4
+pkgrel=5
 pkgdesc='A transitional serif typeface based on Bitstream Charter.'
 arch=('any')
 url='https://software.sil.org/charis/'
