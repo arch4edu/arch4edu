@@ -3,7 +3,6 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
-repo_depends = ['ttf-charis-sil', 'ttf-sil-doulos']
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build
