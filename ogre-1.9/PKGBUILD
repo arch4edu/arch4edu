@@ -4,10 +4,10 @@
 pkgbase=ogre-1.9
 pkgname=('ogre-1.9' 'ogre-docs-1.9')
 pkgver=1.9.1
-pkgrel=3
+pkgrel=4
 pkgdesc='Scene-oriented, flexible 3D engine written in C++'
 arch=('x86_64')
-url='http://www.ogre3d.org'
+url='https://www.ogre3d.org'
 license=('custom:MIT')
 depends=('freeimage' 'freetype2' 'libxaw' 'libxrandr' 'openexr'
          'nvidia-cg-toolkit' 'zziplib' 'sdl2' 'glu' 'tinyxml')
