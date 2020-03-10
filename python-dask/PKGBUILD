@@ -3,7 +3,7 @@
 
 pkgname='python-dask'
 _pkgname=dask
-pkgver=2.10.1
+pkgver=2.12.0
 pkgrel=1
 pkgdesc="Minimal task scheduling abstraction"
 arch=('any')
@@ -28,7 +28,7 @@ optdepends=('ipython: ipython integration'
   'python-zarr')
 makedepends=('python-setuptools')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/dask/dask/archive/$pkgver.tar.gz")
-sha256sums=('d6854934ea53beb86e790f7bd73953d1fa7b739e17687167952ed562273c8314')
+sha256sums=('6d5e41a6b23c12f7e5f9efb062d127eff174f90441f38213100419d442f6bf27')
 
 package(){
   cd "$srcdir/$_pkgname-$pkgver"
