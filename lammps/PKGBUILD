@@ -20,8 +20,8 @@ _ENABLE_OMP=0
 _ENABLE_KIM=0
 
 pkgname=lammps
-pkgver=20190807
-_pkgver="7Aug2019"
+pkgver=20200303
+_pkgver="3Mar2020"
 #_pkgver=$(date -d ${pkgver} +%-d%b%Y)
 pkgrel=1
 pkgdesc="Large-scale Atomic/Molecular Massively Parallel Simulator"
@@ -31,15 +31,19 @@ license=('GPL')
 depends=('fftw' 'openmpi')
 makedepends=('cmake')
 source=("${pkgname}-${_pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/stable_${_pkgver}.tar.gz")
-sha512sums=('b7ec1dfb57cfdbbcc49e4ef9cae472aeda60e8850501cab211444bb16ee20b7b8906ffaafb4c8ca710d761f0386e9e590a19401cff9f566b496b9f3cb2f71194')
+sha512sums=('6608cd9f6ea18d8acb55d611a560cb4b329043b41aca23fafd91fac0dfbde5a5286e1a6563bd16b2414bb3bf95929e3a2f270a0b023ce5ede515eb3353d56f04')
 
 # process the build settings from above
 if (( $_ENABLE_INTEL_COMPILER )); then
-    _feature_args+=('-DCMAKE_C_COMPILER=mpiicc')
+    depends+=('intel-mkl')
+    optdepends=('intel-parallel-studio-xe')
+    _feature_args+=('-DCMAKE_C_COMPILER=icc')
     _feature_args+=('-DCMAKE_C_FLAGS=-xHost -O2 -fp-model fast=2 -no-prec-div -qoverride-limits -qopt-zmm-usage=high')
-    _feature_args+=('-DCMAKE_CXX_COMPILER=mpiicpc')
-    _feature_args+=('-DCMAKE_CXX_FLAGS=-fp-model fast=2 -no-prec-div -qoverride-limits -qopt-zmm-usage=high -qno-offload -fno-alias -ansi-alias -O2 -std=c++11 -DLMP_INTEL_USELRT -DLMP_USE_MKL_RNG')
-    _feature_args+=('-DCMAKE_Fortran_COMPILER=mpiifort')
+    _feature_args+=('-DCMAKE_CXX_COMPILER=icpc')
+    _feature_args+=('-DCMAKE_CXX_FLAGS=-fp-model fast=2 -no-prec-div -qoverride-limits -qopt-zmm-usage=high -qno-offload -fno-alias -ansi-alias -O2 -std=c++11 -DLMP_INTEL_USELRT -DLMP_USE_MKL_RNG -I${MKLROOT}/include')
+    _feature_args+=('-DCMAKE_Fortran_COMPILER=ifort')
+    _feature_args+=('-DMPI_C_COMPILER=mpiicc')
+    _feature_args+=('-DMPI_CXX_COMPILER=mpiicpc')
 fi
 if (( $_BUILD_DOC )); then
     makedepends+=('python-sphinx')
@@ -75,22 +79,10 @@ build() {
   make
 
   if (( $_BUILD_DOC )) ; then
-    # Generate ReStructuredText from Text files
     export PYTHONPATH=$PWD/../doc/utils/converters/
-    mkdir -p rst
-
-    for file in ../doc/src/*.txt
-    do
-      tmp=${file%.*} # Strips the '.txt' extension
-      fname=${tmp##*/} # Strips the path prefixing the file-name
-      ../doc/utils/converters/lammpsdoc/txt2rst.py ${file} > "rst/${fname}.rst"
-    done
-
     # Generate HTML from ReStructuredText files
     mkdir -p html
-    cp -r ../doc/src/* rst/
-
-    sphinx-build -b html -c "../doc/utils/sphinx-config" -d "doctrees" "rst" html
+    sphinx-build -b html -c "../doc/utils/sphinx-config" -d "doctrees" "../doc/src" html
   fi
 }
 
