@@ -4,7 +4,7 @@ from lilaclib import *
 maintainers = [{'github': 'petronny'}]
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
-repo_depends = ['python-catkin_pkg', 'python-empy', 'ros-build-tools-py3']
+repo_depends = ['python-catkin_pkg', 'ros-build-tools-py3']
 pre_build = aur_pre_build
 post_build = aur_post_build
 
