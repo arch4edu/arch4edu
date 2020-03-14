@@ -3,7 +3,7 @@
 
 pkgbase='python-bokeh'
 pkgname=('python-bokeh')
-pkgver=1.4.0
+pkgver=2.0.0
 pkgrel=1
 pkgdesc='Interactive Web Plotting for Python'
 arch=('any')
@@ -11,7 +11,7 @@ url='http://bokeh.pydata.org/'
 license=('BSD')
 source=("https://pypi.io/packages/source/b/bokeh/bokeh-${pkgver}.tar.gz")
 makedepends=('python-setuptools' 'python2-setuptools')
-sha256sums=('c60d38a41a777b8147ee4134e6142cea8026b5eebf48149e370c44689869dce7')
+sha256sums=('552aae6844b2b82dc6da77b17f3f0c22f600c181b4e334f4883624665245ac59')
 makedepends=('python-setuptools')
 
 build() {
@@ -32,9 +32,15 @@ package_python-bokeh() {
          'python-requests'
 	 'python-pillow'
          'python-yaml'
-         'python-tornado')
+         'python-tornado'
+         'python-packaging'
+         'python-dateutil'
+         'python-typing_extensions')
   optdepends=('python-bkcharts: server'
-	 'phantomjs: svg export'
+#	 'phantomjs: svg export'
+         'python-selenium: svg export'
+         'geckodriver: svg export'
+         'firefox: svg export'
          'nodejs: extending Bokeh'
          'python-pandas: Pandas support'
          'python-psutil: detailed memory logging'
