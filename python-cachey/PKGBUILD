@@ -1,41 +1,27 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com> 
 
-pkgbase=python-cachey
-pkgname=('python-cachey' 'python2-cachey')
+pkgname='python-cachey'
 _pkgname=cachey
-pkgver=0.1.1
+pkgver=0.2.1
 pkgrel=1
 pkgdesc="Caching based on computation time and storage space"
 arch=('any')
 url="https://github.com/dask/cachey"
 license=('BSD')
-checkdepends=('python-nose' 'python2-nose')
-makedepends=('python-setuptools' 'python2-setuptools' 'git')
-source=("git+https://github.com/dask/cachey.git#commit=6d4aca7")
-sha256sums=('SKIP')
+checkdepends=('python-nose')
+depends=('python-heapdict')
+makedepends=('python-setuptools')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/dask/cachey/archive/$pkgver.tar.gz")
+sha256sums=('27242020785aec748c24428cb2f6ee30bbe116fb1a5ac18b3e64784f683dd1d4')
 
-prepare() {
-  cp -a $_pkgname{,-py2}
-}
-
-package_python-cachey(){
-  depends=('python-heapdict')
-  cd "$srcdir/$_pkgname"
+package(){
+  cd "$srcdir/$_pkgname-$pkgver"
   install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
   python setup.py install --root="$pkgdir/" --optimize=1
 }
 
-package_python2-cachey(){
-  depends=('python2-heapdict')
-  cd "$srcdir/$_pkgname-py2"
-  install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  python2 setup.py install --root="$pkgdir/" --optimize=1
-}
-
 check(){
-  cd "$srcdir/$_pkgname"
+  cd "$srcdir/$_pkgname-$pkgver"
   nosetests
-  cd "$srcdir/$_pkgname-py2"
-  nosetests2
 }
 # vim:ts=2:sw=2:et:
