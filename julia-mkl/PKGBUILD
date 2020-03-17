@@ -9,53 +9,65 @@
 pkgname=julia-mkl
 _pkgname=julia
 epoch=2
-pkgver=1.2.0
+pkgver=1.3.1
 pkgrel=1
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
 url='https://julialang.org/'
 license=(MIT)
-depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse)
-makedepends=(cmake gcc-fortran gmp python2)
+depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm)
+makedepends=(cmake gcc-fortran gmp python)
 optdepends=('gnuplot: If using the Gaston Package from julia')
 provides=('julia')
 conflicts=('julia' 'julia-git')
 backup=(etc/julia/startup.jl)
 source=("https://github.com/JuliaLang/julia/releases/download/v$pkgver/$_pkgname-$pkgver-full.tar.gz"
         libunwind-version.patch
-        Make.user)
-sha256sums=('2419b268fc5c3666dd9aeb554815fe7cf9e0e7265bc9b94a43957c31a68d9184'
+        make-install-no-build.patch)
+sha256sums=('053908ec2706eb76cfdc998c077de123ecb1c60c945b4b5057aa3be19147b723'
             'a5eec1e43e1161c313b1d32a5f35a67d6b4a2bbc2d6d324c010f6f2b35be4a72'
-            '1c7a83bd66504514dbb9a0bf0177d0994bd21cddb877799bd20bcb5113894e8b')
+            '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7')
 
 prepare() {
   cd $_pkgname-$pkgver
-
-  # Add and use option to build with system cblas
-  #patch -p1 --no-backup-if-mismatch -i ../cblas.patch
 
   # Fixing libunwind version check
   # https://github.com/JuliaLang/julia/pull/29082
   #patch -p1 -i ../libunwind-version.patch
 
-  # Configuring the build
-  cp -f ../Make.user Make.user
+  # Don't build again in install
+  patch -p1 -i ../make-install-no-build.patch
 
-  # Prepare a symlink from "python" to "python2"
-  mkdir -p "$srcdir/bin"
-  ln -s /usr/bin/python2 "$srcdir/bin/python"
-
-  #cd deps/srccache
-  #xzcat llvm-6.0.1.src.tar.xz | tar xf -
-  #sed 's/ detail::join_impl/ llvm::detail::join_impl/g' -i $(grep ' detail::join_impl' llvm-6.0.1.src -rl)
-  #tar cf - llvm-6.0.1.src | xz -T0 -c > llvm-6.0.1.src.tar.xz
-  #md5sum llvm-6.0.1.src.tar.xz | cut -d' ' -f1 > ../checksums/llvm-6.0.1.src.tar.xz/md5
-  #sha512sum llvm-6.0.1.src.tar.xz | cut -d' ' -f1 > ../checksums/llvm-6.0.1.src.tar.xz/sha512
 }
 
 build() {
   export PATH="$srcdir/bin:$PATH"
-  env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make -C $_pkgname-$pkgver
+  env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make VERBOSE=1 -C $_pkgname-$pkgver \
+    USE_SYSTEM_LLVM=0 \
+    USE_SYSTEM_LIBUNWIND=1 \
+    USE_SYSTEM_PCRE=1 \
+    USE_INTEL_MKL=1 \
+    USE_INTEL_LIBM=1 \
+    USE_INTEL_JITEVENTS=1 \
+    USE_SYSTEM_GMP=1 \
+    USE_SYSTEM_MPFR=1 \
+    USE_SYSTEM_SUITESPARSE=1 \
+    USE_SYSTEM_DSFMT=0 \
+    USE_SYSTEM_LIBUV=0 \
+    USE_SYSTEM_UTF8PROC=1 \
+    USE_SYSTEM_LIBGIT2=1 \
+    USE_SYSTEM_LIBSSH2=1 \
+    USE_SYSTEM_MBEDTLS=1 \
+    USE_SYSTEM_CURL=1 \
+    USE_SYSTEM_PATCHELF=1 \
+    USE_SYSTEM_ZLIB=1 \
+    USE_SYSTEM_P7ZIP=1 \
+    USE_SYSTEM_OPENLIBM=1 \
+    MARCH=x86-64
+    #USE_SYSTEM_BLAS=1 \
+    #USE_SYSTEM_LAPACK=1 \
+    #USEICC=1 \
+    #USEIFC=1
 }
 
 #check() {
@@ -70,7 +82,10 @@ build() {
 
 package() {
 
-  make -C $_pkgname-$pkgver DESTDIR="$pkgdir" install
+  make -C $_pkgname-$pkgver DESTDIR="$pkgdir" install \
+    prefix=/usr \
+    libexecdir=/usr/lib \
+    sysconfdir=/etc
 
   # Documentation is in the julia-docs package.
   # Man pages in /usr/share/julia/doc/man are duplicate.
