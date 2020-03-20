@@ -9,12 +9,7 @@ time_limit_hours = 4
 def pre_build():
     aur_pre_build('qgroundcontrol')
     add_arch(['aarch64'])
-
-    for line in edit_file('PKGBUILD'):
-        if line.startswith('\tpatch'):
-            print('\tsed "s|so.56|so.*|g" -i ${srcdir}/${pkgname}-${pkgver}/QGCSetup.pri')
-        else:
-            print(line)
+    add_makedepends(['qt5-x11extras', 'qt5-wayland'])
 
 post_build = aur_post_build
 
