@@ -1,7 +1,7 @@
 # Maintainer: gborzi <gborzi@ieee.org>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
-pkgver=4.5.4
+pkgver=4.5.5
 pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
@@ -11,7 +11,7 @@ makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'fltk' 'lapack'
              'med' 'opencascade' 'cairo' 'texlive-core')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
-sha256sums=('ccf8c74f43cbe3c371abe79862025d41642b3538a0148f018949494e3b3e2ecd'
+sha256sums=('899d3cded664124fa387da57b6f170f47a7e712c7744aa3562779897e2b9e251'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
