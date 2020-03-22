@@ -7,7 +7,7 @@ build_prefix = 'extra-aarch64'
 time_limit_hours = 4
 
 def pre_build():
-    run_cmd(['rm', '*.part'])
+    run_cmd(['sh', '-c', 'rm -f *.part'])
     aur_pre_build('qgroundcontrol')
     add_arch(['aarch64'])
     add_makedepends(['qt5-tools', 'qt5-x11extras', 'qt5-wayland'])
