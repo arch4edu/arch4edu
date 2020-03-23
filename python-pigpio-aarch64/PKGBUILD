@@ -2,7 +2,7 @@
 
 _projname='pigpio'
 pkgname="python-${_projname}"
-pkgver=74
+pkgver=75
 pkgrel=1
 pkgdesc="A C and Python library for controlling GPIOs on a Raspberry Pi"
 url="http://abyz.me.uk/rpi/pigpio/"
@@ -10,7 +10,7 @@ license=('custom:UNLICENSE')
 arch=('i686' 'x86_64' 'aarch64' 'armv7h')
 depends=('python')
 source=("${_projname}-${pkgver}.tar.gz::https://github.com/joan2937/pigpio/archive/v${pkgver}.tar.gz")
-sha256sums=('dd377d0109e20437b323d94523eda1dced6c63f6f347fa564182bc18a3e126aa')
+sha256sums=('dfec8d06075a9336433d96a8e2f86810f3332d616cf0d6253d98ad78094aa15a')
 
 
 prepare() {
