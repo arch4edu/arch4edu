@@ -3,11 +3,11 @@
 pkgname=llvm-roc
 pkgdesc='Radeon Open Compute - LLVM toolchain (clang, lld)'
 pkgver=3.1.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url='https://github.com/ROCm-Developer-Tools/llvm-project'
 license=('custom:Apache 2.0 with LLVM Exception')
-makedepends=(cmake)
+makedepends=(cmake python)
 source=("https://github.com/RadeonOpenCompute/llvm-project/archive/roc-ocl-$pkgver.tar.gz"
         "llvm-roc-3.0.0-add_libraries.patch")
 
