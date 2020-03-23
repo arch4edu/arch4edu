@@ -9,7 +9,7 @@
 pkgname=julia-mkl
 _pkgname=julia
 epoch=2
-pkgver=1.3.1
+pkgver=1.4.0
 pkgrel=1
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
@@ -24,7 +24,7 @@ backup=(etc/julia/startup.jl)
 source=("https://github.com/JuliaLang/julia/releases/download/v$pkgver/$_pkgname-$pkgver-full.tar.gz"
         libunwind-version.patch
         make-install-no-build.patch)
-sha256sums=('053908ec2706eb76cfdc998c077de123ecb1c60c945b4b5057aa3be19147b723'
+sha256sums=('880c73a08296ce8d94ad9605149f2a2b2b028e7202a700ef725da899300b8be9'
             'a5eec1e43e1161c313b1d32a5f35a67d6b4a2bbc2d6d324c010f6f2b35be4a72'
             '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7')
 
