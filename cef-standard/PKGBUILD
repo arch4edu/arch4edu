@@ -1,8 +1,10 @@
 # Maintainer: NexAdn <nexadn@yandex.com>
 pkgname=cef-standard
-pkgver=75.0.11
-_pkgver="75.0.11+gf50b3c2+chromium-75.0.3770.100"
-_url_pkgver="75.0.11%2Bgf50b3c2%2Bchromium-75.0.3770.100"
+pkgver=80.0.8
+_pkgcommit="gf96cd1d"
+_chromiumver="80.0.3987.132"
+_pkgver="${pkgver}+${_pkgcommit}+chromium-${_chromiumver}"
+_url_pkgver="${pkgver}%2B${_pkgcommit}%2Bchromium-${_chromiumver}"
 pkgrel=1
 pkgdesc="Chromium Embedded Framework standard release"
 arch=("i686" "x86_64")
@@ -18,8 +20,8 @@ source_i686=(
 source_x86_64=(
     "http://opensource.spotify.com/cefbuilds/cef_binary_${_url_pkgver}_linux64.tar.bz2"
 )
-sha1sums_i686=('ccf11a328697b28ae676c6f41124c00cfea989b9')
-sha1sums_x86_64=('d8682cc6509104983a4bae7fb89bcbc638d399a8')
+sha1sums_i686=('9e30fa535f9200d1da34f2a742e3973db9f8c5e4')
+sha1sums_x86_64=('176d0c6d017c4532dc1d79fd50a5619644b314d5')
 [[ "$CARCH" = "i686" ]] && _arch="32"
 [[ "$CARCH" = "x86_64" ]] && _arch="64"
 build() {
