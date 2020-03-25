@@ -3,7 +3,7 @@
 
 pkgname=rocm-smi
 pkgver=3.1.0
-pkgrel=2
+pkgrel=3
 _filename=roc-${pkgver}.tar.gz
 pkgdesc="Utility to manage and monitor AMDGPU / ROCm systems."
 arch=('any')
