@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
+maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['python-pytest-astropy-header', 'python-pytest-doctestplus', 'python-pytest-remotedata', 'python-pytest-openfiles', 'python-pytest-arraydiff', 'python-pytest-filter-subpackage']

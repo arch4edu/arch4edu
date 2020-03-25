@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
+maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'python-wiringpi-git'}, {'github': 'WiringPi/WiringPi-Python'}]
 build_prefix = 'extra-aarch64'
 makechrootpkg_args = ['-D', '/etc/ca-certificates/extracted']

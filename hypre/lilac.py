@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}, {'github': 'petronny'}]
+maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}, {'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['superlu', 'superlu_dist']

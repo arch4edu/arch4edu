@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
+maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'distccd-alarm-armv6h'}]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build

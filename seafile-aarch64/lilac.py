@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
+maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'seafile'}]
 build_prefix = 'extra-aarch64'
 repo_depends = [('libsearpc-aarch64', 'libsearpc'), ('ccnet-server-aarch64', 'ccnet-server')]

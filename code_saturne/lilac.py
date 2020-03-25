@@ -16,7 +16,7 @@ for repo in handle.get_syncdbs():
         url = f'{mirror}/{repo.name}/os/{arch}/{result.filename}'
         break
 
-maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}, {'github': 'petronny'}]
+maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}, {'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
 repo_depends = ['med', 'parmetis', 'scotch']
 makechrootpkg_args = ['-I', 'tmp/'+result.filename]

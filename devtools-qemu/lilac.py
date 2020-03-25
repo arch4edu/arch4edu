@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
+maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'github': 'petronny/devtools-qemu'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['archlinuxarm-keyring', 'binfmt-qemu-static', 'devtools-alarm', 'qemu-user-static-bin']
