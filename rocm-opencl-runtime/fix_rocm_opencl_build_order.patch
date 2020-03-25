@@ -1,0 +1,10 @@
+diff --git a/runtime/CMakeLists.txt b/runtime/CMakeLists.txt
+index 62e2bf7..83e706d 100644
+--- a/runtime/CMakeLists.txt
++++ b/runtime/CMakeLists.txt
+@@ -72,3 +72,5 @@ endif()
+ foreach(AMDGCN_DEP_TARGET ${AMDGCN_DEP_TARGETS})
+   add_dependencies(oclruntime ${AMDGCN_DEP_TARGET})
+ endforeach()
++
++add_dependencies(oclruntime oclrocm)

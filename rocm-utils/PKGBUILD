@@ -1,0 +1,15 @@
+# Maintainer: Lucas Magalhães <whoisroot@national.shitposting.agency>
+pkgname=rocm-utils
+pkgver=2.2.31
+pkgrel=1
+pkgdesc="ROCm Platform Runtime: Closed source utils"
+arch=('any')
+url="https://github.com/RadeonOpenCompute/ROCm"
+license=('BEER')
+depends=('rocminfo' 'rocm-clang-ocl')
+makedepends=() 
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+replaces=()
+backup=()
+options=()
