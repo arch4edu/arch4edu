@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocprofiler
 pkgver=3.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="ROC profiler library. Profiling with perf-counters and derived metrics."
 arch=('x86_64')
 url="https://github.com/ROCm-Developer-Tools/rocprofiler"
