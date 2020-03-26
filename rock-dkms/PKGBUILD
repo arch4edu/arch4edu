@@ -2,7 +2,7 @@
 pkgname=rock-dkms
 pkgver=3.1.44
 _pkgver=3.1-44
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux AMD GPU kernel driver from ROC in DKMS format."
 arch=('any')
 url="https://github.com/RadeonOpenCompute/ROCK-Kernel-Driver"
