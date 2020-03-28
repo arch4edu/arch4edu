@@ -5,7 +5,7 @@ _opencl_icd_loader_commit='978b4b3a29a3aebc86ce9315d5c5963e88722d03'
 pkgbase=rocm-opencl-runtime
 pkgname=(rocm-device-libs rocm-opencl-runtime)
 pkgver=3.1.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute'
 makedepends=(mesa cmake git llvm-roc rocm-comgr)
@@ -93,7 +93,7 @@ package_rocm-device-libs() {
 
 package_rocm-opencl-runtime() {
     pkgdesc='Radeon Open Compute - OpenCL runtime'
-    depends=("roct-thunk-interface>=${pkgver}" "rocr-runtime>=${pkgver}" 'opencl-icd-loader')
+    depends=("hsakmt-roct>=${pkgver}" "rocr-runtime>=${pkgver}" 'opencl-icd-loader')
     license=('MIT')
 
     DESTDIR="$pkgdir/" make -C "$srcdir/rocm-opencl-runtime/build" install
