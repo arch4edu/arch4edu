@@ -3,7 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}]
-repo_depends = ['llvm-roc', 'rocm-comgr']
+repo_depends = ['hsakmt-roct', 'llvm-roc', 'rocm-comgr', 'rocr-runtime']
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build
