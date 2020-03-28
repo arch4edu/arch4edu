@@ -2,12 +2,12 @@
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocminfo
 pkgver=3.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="ROCm info tools - rocm_agent_enumerator"
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/rocminfo"
 license=('custom:NCSAOSL')
-depends=('pciutils' 'rocm-cmake' 'rocr-runtime' 'roct-thunk-interface')
+depends=('pciutils' 'rocm-cmake' 'rocr-runtime' 'hsakmt-roct')
 makedepends=('cmake')
 source=("https://github.com/RadeonOpenCompute/rocminfo/archive/roc-$pkgver.tar.gz")
 sha256sums=('f024fef05e5ea5bc7316d4bddb5562cbac7048183c351cdb8afd4156ff4c049c')
