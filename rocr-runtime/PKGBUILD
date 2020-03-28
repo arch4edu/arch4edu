@@ -2,12 +2,12 @@
 # Contributor: Jakub Okoński <jakub@okonski.org>
 pkgname=rocr-runtime
 pkgver=3.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime"
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/ROCR-Runtime"
 license=('custom:NCSAOSL')
-makedepends=('cmake' 'libelf' 'roct-thunk-interface')
+makedepends=('cmake' 'libelf' 'hsakmt-roct')
 source=("https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-$pkgver.tar.gz")
 sha256sums=('b162464ef87ce39518e59ef8406d6b897aa7a930795c586829614ed87aa1c2ce')
 
