@@ -1,7 +1,7 @@
 #!/bin/python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
+maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'github': 'archlinuxcn/repo', 'path': 'archlinuxcn/archrepo2-git/PKGBUILD'}, {'github': 'lilydjwg/archrepo2'}]
 build_prefix = 'extra-x86_64'
 
