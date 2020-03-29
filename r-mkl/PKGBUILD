@@ -4,8 +4,8 @@
 # - jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
 
 pkgname=r-mkl
-pkgver=3.6.2
-pkgrel=3
+pkgver=3.6.3
+pkgrel=1
 pkgdesc="Language and environment for statistical computing and graphics, linked to the Intel(R) MKL."
 arch=('x86_64')
 license=('GPL')
@@ -50,7 +50,7 @@ source=("http://cran.r-project.org/src/base/R-${pkgver%%.*}/R-${pkgver}.tar.gz"
         'r.png'
         'R.conf')
 
-sha1sums=('8eda2af51d63877fcc6674274b6801af605173c5'
+sha1sums=('d2383dabc0d6c70f8a0171a0fb1bfdc31ddb5b52'
           'dd214eee232b7aced7366722ad416b6b39be8e1b'
           'af80774f5a8d0e669e8ff90662638a0f4e1105d7'
           '43668da6cfd1b4455a99f23e79e2059294dddac9')
