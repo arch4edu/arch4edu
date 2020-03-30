@@ -4,10 +4,9 @@
 # https://devdocs.jabref.org/getting-into-the-code/guidelines-for-setting-up-a-local-workspace
 # and the output of `./gradlew -d run`.
 
-JRE=java-13-openjdk
 ROOT=/usr/share/java/jabref
 
-/usr/lib/jvm/${JRE}/bin/java \
+/usr/bin/archlinux-java-run --min 13 -- \
 --patch-module org.jabref=${ROOT}/resources/main \
 --add-exports javafx.controls/com.sun.javafx.scene.control=org.jabref \
 --add-exports org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref \
