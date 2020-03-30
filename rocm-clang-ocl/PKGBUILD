@@ -2,12 +2,12 @@
 # Contributor: Lucas Magalhães <whoisroot@national.shitposting.agency>
 pkgname=rocm-clang-ocl
 pkgver=3.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="OpenCL compilation with clang compiler."
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/clang-ocl"
 license=('unknown')
-makedepends=('cmake' 'hcc')
+makedepends=('cmake' 'hcc' 'rocm-cmake')
 source=("${pkgname}-${pkgver}::http://github.com/RadeonOpenCompute/clang-ocl/archive/roc-${pkgver}.tar.gz")
 sha256sums=('af93e626564cee2b3f6f5c2da0b5b95a9894f7357d895b259a706d38a57f1ef6')
 _pkgname=clang-ocl
