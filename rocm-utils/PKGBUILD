@@ -1,7 +1,7 @@
 # Maintainer: Lucas Magalhães <whoisroot@national.shitposting.agency>
 pkgname=rocm-utils
 pkgver=2.2.31
-pkgrel=1
+pkgrel=2
 pkgdesc="ROCm Platform Runtime: Closed source utils"
 arch=('any')
 url="https://github.com/RadeonOpenCompute/ROCm"
