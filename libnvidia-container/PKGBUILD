@@ -4,7 +4,7 @@
 pkgbase=libnvidia-container
 pkgname=(libnvidia-container libnvidia-container-tools)
 
-pkgver=1.0.5
+pkgver=1.0.6
 pkgrel=1
 _elfver=0.7.1
 _nvmpver=396.51
@@ -29,12 +29,14 @@ source=("https://github.com/NVIDIA/${pkgbase}/archive/v${pkgver}.tar.gz"
         "https://sourceforge.net/projects/elftoolchain/files/Sources/elftoolchain-${_elfver}/elftoolchain-${_elfver}.tar.bz2"
         "https://github.com/NVIDIA/nvidia-modprobe/archive/${_nvmpver}.tar.gz"
         fix_rpc_flags.patch
-        fix_git_rev_unavail.patch)
-sha256sums=('b0b1a03f33ce7afdc06c432c7e100b17dc1723420293c27201c50bcb9b851e5a'
+        fix_git_rev_unavail.patch
+        fix_libelf_so_name.patch)
+sha256sums=('4faa77ead5f90ff2e485527df0781c1c0e606e121c4a381627e603230652f5b5'
             '44f14591fcf21294387215dd7562f3fb4bec2f42f476cf32420a6bbabb2bd2b5'
             '25bc6437a384be670e9fd76ac2e5b9753517e23eb16e7fa891b18537b70c4b20'
             'ed949dd162cd104071a58b09f1effefe91150a32893ed28d143ee62bc217e566'
-            '48edab623a44e42d3310c87bf38df56878e68146ae4ac446c28d460fa0a4385b')
+            '48edab623a44e42d3310c87bf38df56878e68146ae4ac446c28d460fa0a4385b'
+            'e959eee82d35ce432f4a95e56ce2ca7d8db4c39ac3b4f9d9d11531fc6c697eb3')
 
 _srcdir="${pkgname}-${pkgver}"
 
@@ -43,6 +45,7 @@ prepare(){
 
   patch -Np1 -i "${srcdir}/fix_rpc_flags.patch"
   patch -Np1 -i "${srcdir}/fix_git_rev_unavail.patch"
+  patch -Np1 -i "${srcdir}/fix_libelf_so_name.patch"
 
   deps_dir="deps/src/"
   # mimic behavior from:
