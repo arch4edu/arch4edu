@@ -1,0 +1,9 @@
+post_install(){
+
+    _glibcver=$(pacman -Q glibc | cut -c7-10)
+    echo -e "Add the following lines to your ~/.bashrc to initialize heasoft:\n"
+    echo -e "\texport HEADAS=/opt/heasoft/x86_64-unknown-linux-gnu-libc${_glibcver}"
+    echo -e "\talias heainit='source \$HEADAS/headas-init.sh'\n"
+    echo -e "Then activate with 'heainit'"
+
+}
