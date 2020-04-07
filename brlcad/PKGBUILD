@@ -1,17 +1,18 @@
 pkgname=brlcad
-pkgver=7.30.4
+pkgver=7.30.6
 pkgrel=0
 pkgdesc='An extensive 3D solid modeling system.'
 url='https://brlcad.org'
 license=('LGPL' 'BSD' 'custom:BDL')
 arch=('i686' 'x86_64')
 depends=('libgl' 'libxft' 'libxi')
-makedepends=('cmake' 'subversion')
+makedepends=('cmake' 'ninja' 'subversion')
 install="${pkgname}.install"
-source=('build.patch' "${pkgname}-${pkgver}::svn+svn://svn.code.sf.net/p/${pkgname}/code/${pkgname}/tags/rel-${pkgver//./-}#revision=r74438")
+source=('build.patch' "${pkgname}-${pkgver}::svn+svn://svn.code.sf.net/p/${pkgname}/code/${pkgname}/tags/rel-${pkgver//./-}#revision=r75052")
 sha256sums=('SKIP' 'SKIP')
 
 
+_build_config='Release'
 _pkgprefix="/opt/${pkgname}"
 
 
@@ -23,24 +24,25 @@ prepare() {
 
 build() {
     cmake \
+        -G Ninja \
         -S "${srcdir}/${pkgname}-${pkgver}" \
         -B "${srcdir}/build" \
         -Wno-dev \
         "-DCMAKE_INSTALL_PREFIX=${_pkgprefix}" \
+        "-DCMAKE_BUILD_TYPE=${_build_config}" \
         -DBRLCAD_ENABLE_COMPILER_WARNINGS=OFF \
         -DBRLCAD_ENABLE_STRICT=OFF \
-        -DCMAKE_BUILD_TYPE=Release \
         -DBRLCAD_FLAGS_DEBUG=OFF \
         -DBRLCAD_BUILD_STATIC_LIBS=OFF \
-        -DBRLCAD_ENABLE_OPENGL=ON \
         -DBRLCAD_BUNDLED_LIBS=BUNDLED \
         -DBRLCAD_FREETYPE=OFF \
         -DBRLCAD_PNG=OFF \
         -DBRLCAD_REGEX=OFF \
         -DBRLCAD_ZLIB=OFF \
+        -DBRLCAD_ENABLE_OPENGL=ON \
         -DBRLCAD_ENABLE_QT=OFF
 
-    cmake --build "${srcdir}/build"
+    cmake --build "${srcdir}/build" --config "${_build_config}"
 
     echo "export PATH=\"\$PATH:${_pkgprefix}/bin\"" \
         >"${srcdir}/build/${pkgname}.sh"
@@ -48,7 +50,8 @@ build() {
 
 
 package() {
-    cmake --install "${srcdir}/build" --prefix "${pkgdir}${_pkgprefix}"
+    cmake --install "${srcdir}/build" --config "${_build_config}" \
+        --prefix "${pkgdir}${_pkgprefix}"
 
     install -D --mode=u=rw,go=r \
         "--target-directory=${pkgdir}/usr/share/licenses/${pkgname}" \
