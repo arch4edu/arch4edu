@@ -5,7 +5,7 @@
 
 pkgname=r-mkl
 pkgver=3.6.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Language and environment for statistical computing and graphics, linked to the Intel(R) MKL."
 arch=('x86_64')
 license=('GPL')
@@ -48,12 +48,14 @@ install=r-mkl.install
 source=("http://cran.r-project.org/src/base/R-${pkgver%%.*}/R-${pkgver}.tar.gz"
         'r.desktop'
         'r.png'
-        'R.conf')
+        'R.conf'
+        'mklvars.sh')
 
 sha1sums=('d2383dabc0d6c70f8a0171a0fb1bfdc31ddb5b52'
           'dd214eee232b7aced7366722ad416b6b39be8e1b'
           'af80774f5a8d0e669e8ff90662638a0f4e1105d7'
-          '43668da6cfd1b4455a99f23e79e2059294dddac9')
+          '43668da6cfd1b4455a99f23e79e2059294dddac9'
+          '2cc0e30ca5de872ea7f5af417b8cac988f3e9f8e')
 
 # Build with the Intel Compiler Suite or GCC/GFortran.
 # Comment the following line to build the package with GCC
@@ -71,6 +73,9 @@ prepare() {
   cd R-${pkgver}
   # set texmf dir correctly in makefile
   sed -i 's|$(rsharedir)/texmf|${datarootdir}/texmf|' share/Makefile.in
+  # align mklvars.sh with Arch Linux intel-mkl
+  cd ..
+  sed -i 's|CPRO_PATH=/opt/intel/compilers.*$|CPRO_PATH=/opt/intel|g' mklvars.sh
 }
 
 
@@ -85,7 +90,11 @@ build() {
   _gfortran_lib=mkl_gf_lp64
 
   # Set up the environment for MKL
-  source /opt/intel/mkl/bin/mklvars.sh ${_intel_arch}
+  if [ -f /opt/intel/mkl/bin/mklvars.sh ]; then
+    source /opt/intel/mkl/bin/mklvars.sh ${_intel_arch}
+  else
+    source ../mklvars.sh ${_intel_arch}
+  fi
 
   if [[ $_CC = "icc" ]]; then
     source ${MKLROOT}/../bin/compilervars.sh ${_intel_arch}
