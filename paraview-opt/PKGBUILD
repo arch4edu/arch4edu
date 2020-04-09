@@ -10,7 +10,7 @@ _mpi=openmpi
 pkgname=${_pkg}-opt
 #-${_mpi}
 pkgver=5.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Parallel Visualization application using VTK (${_mpi} version): installed to /opt/"
 arch=(x86_64)
 provides=("${_pkg}")
@@ -27,9 +27,16 @@ depends=(boost-libs qt5-tools qt5-x11extras qt5-svg intel-tbb openmpi ffmpeg
 optdepends=(python-matplotlib)
 makedepends=(cmake boost mesa gcc-fortran ninja qt5-tools qt5-xmlpatterns eigen pegtl utf8cpp)
 source=("${url}/files/v${pkgver:0:3}/ParaView-v${pkgver/R/-R}.tar.xz"
+        paraview-cgns-4.1.patch::https://gitlab.kitware.com/paraview/paraview/-/commit/3d48a287141eb911b4888440e09c262743b4db3c.patch
         paraview.sh)
 sha256sums=('219e4107abf40317ce054408e9c3b22fb935d464238c1c00c0161f1c8697a3f9'
+            '3b6e68334849818a1f4eb35ef66a618240a2bb139555e22f13f0d561d5cc02eb'
             '862e79bdf72f5c3ec55d3373fc34d0e5da33b1597c54c4586bdf84641d0cc291')
+
+prepare() {
+    cd ParaView-v${pkgver/R/-R}
+    patch -p1 -i ../paraview-cgns-4.1.patch
+}
 
 build() {
     # Note regarding use of system dependencies:
@@ -58,7 +65,8 @@ build() {
         -GNinja
 
     export NINJA_STATUS="[%p | %f<%r<%u | %cbps ] "
-    ninja -C build $([ -v MAKEFLAGS ] || echo -j1)
+  # shellcheck disable=SC2086 # to allowing MAKEFLAGS to expand into multiple flags.
+    ninja -C build ${MAKEFLAGS:--j1}
 }
 
 package() {
@@ -66,5 +74,8 @@ package() {
 
     # Install license
     install -Dm644 ParaView-v${pkgver/R/-R}/License_v1.2.txt "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+
+    # add paraview to PATH
+    install -Dm 755 paraview.sh -t "${pkgdir}/etc/profile.d"
 }
 # vim:set sw=2 ts=2 et:
