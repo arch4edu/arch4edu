@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocprofiler
-pkgver=3.1.0
-pkgrel=4
+pkgver=3.3.0
+pkgrel=1
 pkgdesc="ROC profiler library. Profiling with perf-counters and derived metrics."
 arch=('x86_64')
 url="https://github.com/ROCm-Developer-Tools/rocprofiler"
@@ -10,7 +10,7 @@ depends=('hsa-rocr' 'python' 'python-argparse' 'python-cppheaderparser')
 makedepends=('cmake')
 options=(!staticlibs strip)
 source=("rocprofiler-roc-$pkgver.tar.gz::https://github.com/ROCm-Developer-Tools/rocprofiler/archive/roc-$pkgver.tar.gz")
-sha256sums=('5157d975563e04a207615811c611ee67253a1e02f2be2ecc369dc7dcfff60750')
+sha256sums=('dccdcf95f5d237866cb9bd57492457ebed246d5fa75cb8e976631a1c9c5449aa')
 
 build() {
   mkdir -p "$srcdir/build"
