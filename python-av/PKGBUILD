@@ -1,4 +1,4 @@
-# Maintainer: peippo <christoph.fink@gmail.com>
+# Maintainer: peippo <christoph+aur@christophfink.com>
 
 pkgname="python-av"
 _name=${pkgname#python-}
@@ -6,14 +6,15 @@ pkgdesc="Pythonic bindings for FFmpeg"
 url="https://docs.mikeboers.com/pyav/"
 
 pkgver=7.0.1
-pkgrel=0
+pkgrel=1
 
 arch=("x86_64" "i686")
 license=("BSD")
 
 makedepends=(
-    "python-setuptools"
     "cython"
+    "python-setuptools"
+    "pkgconf"
 )
 depends=(
     "python"
