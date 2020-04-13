@@ -1,16 +1,16 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocminfo
-pkgver=3.1.0
-pkgrel=3
+pkgver=3.3.0
+pkgrel=2
 pkgdesc="ROCm info tools - rocm_agent_enumerator"
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/rocminfo"
 license=('custom:NCSAOSL')
-depends=('pciutils' 'rocm-cmake' 'rocr-runtime' 'hsakmt-roct')
+depends=('pciutils' 'rocm-cmake' 'hsa-rocr' 'hsa-ext-rocr')
 makedepends=('cmake')
-source=("https://github.com/RadeonOpenCompute/rocminfo/archive/roc-$pkgver.tar.gz")
-sha256sums=('f024fef05e5ea5bc7316d4bddb5562cbac7048183c351cdb8afd4156ff4c049c')
+source=("https://github.com/RadeonOpenCompute/rocminfo/archive/rocm-$pkgver.tar.gz")
+sha256sums=('e666f662c9e465aaabbbd0b109d87e017243cdf1a0898fabf5a90947bb3dbcd7')
 
 build() {
   mkdir -p "$srcdir/build"
@@ -19,7 +19,7 @@ build() {
   cmake -DCMAKE_PREFIX_PATH=/opt/rocm \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -DROCM_DIR=/opt/rocm \
-        "$srcdir/$pkgname-roc-$pkgver"
+        "$srcdir/$pkgname-rocm-$pkgver"
   make
 }
 
@@ -27,4 +27,7 @@ package() {
   cd "$srcdir/build"
 
   make DESTDIR="$pkgdir" install
+  
+  mkdir -p ${pkgdir}/usr/bin
+  ln -s ${pkgdir}/opt/rocm/bin/rocminfo ${pkgdir}/usr/bin/rocminfo
 }
