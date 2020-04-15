@@ -1,7 +1,7 @@
 _pkgname="mavproxy"
 pkgname="$_pkgname-git"
-pkgver=r2202.041dda21
-pkgrel=1
+pkgver=r2206.6667a583
+pkgrel=2
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
 url='https://dronecode.github.io/MAVProxy/html/index.html'
