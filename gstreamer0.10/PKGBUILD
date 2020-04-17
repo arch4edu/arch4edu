@@ -5,7 +5,7 @@
 pkgname=gstreamer0.10
 _pkgname=gstreamer
 pkgver=0.10.36
-pkgrel=17
+pkgrel=18
 pkgdesc="GStreamer Multimedia Framework"
 arch=('i686' 'x86_64' 'armv7h')
 license=('LGPL')
