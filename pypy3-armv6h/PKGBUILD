@@ -1,8 +1,8 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
 
 pkgname=pypy3
-pkgver=7.3.0
-pkgrel=2
+pkgver=7.3.1
+pkgrel=1
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('armv6h' 'x86_64')
@@ -13,7 +13,7 @@ optdepends=('sqlite: sqlite module'
 options=(!buildflags)
 license=('MIT')
 source=("https://bitbucket.org/pypy/pypy/downloads/pypy3.6-v${pkgver}-src.tar.bz2")
-sha512sums=('313a4254262dd8d8b995a50bddbc360cfb67add0818e51a3e9ce25bda6a9b639e9fea8efe7da6adda76dff0a86a364544a13faa516e51b9ea6c25ec99223b435')
+sha512sums=('f8e32aae7f01225e0e4d6763eaac40fc02dffc3d0b6a30f22d422147f9be4f3290ea78160a912ffae311dea3d503eb31a7a4f3999d3b541fbccd93d1cef4ca56')
 
 build() {
   cd pypy3.6-v${pkgver}-src/pypy/goal
@@ -21,7 +21,7 @@ build() {
   python2 ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
 
   # Compile binary modules
-  PYTHONPATH=../.. ./pypy3-c ../tool/build_cffi_imports.py
+  PYTHONPATH=../.. ./pypy3-c ../../lib_pypy/tools/build_cffi_imports.py
 }
 
 package() {
