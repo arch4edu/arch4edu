@@ -4,7 +4,7 @@
 # All my PKGBUILDs are managed at https://github.com/eli-schwartz/pkgbuilds
 
 pkgname=vim-gitgutter-git
-pkgver=677.g5f6048d
+pkgver=678.g2b62481
 pkgrel=2
 pkgdesc="A Vim plugin which shows a git diff in the 'gutter'"
 arch=('any')
