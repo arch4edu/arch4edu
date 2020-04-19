@@ -4,7 +4,7 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seafile
-pkgver=7.0.6
+pkgver=7.0.7
 pkgrel=1
 pkgdesc='An online file storage and collaboration tool'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -27,7 +27,7 @@ source=(
     "seaf-cli@.service"
 )
 sha256sums=(
-    '8a7f37b555b5e8750194db9ae8041d2b0ed0035b3fc832112d4a891e02b00488'
+    'db50f0b7bc5a231dfc1bedc958e0e191b74cb4a74d6f701d0c6bfc59c4ca18dd'
     'c37510109c1de64c774896df39aece240c056b54414d2119fca01860211156ba'
 )
 provides=('seafile-client-cli')
@@ -42,7 +42,7 @@ build() {
     ./autogen.sh
     ./configure \
         --enable-console \
-        --prefix=/usr \
+        --prefix='/usr' \
         PYTHON='/usr/bin/python'
     make
 }
