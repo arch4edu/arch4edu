@@ -6,7 +6,7 @@
 
 pkgname=hsa-rocr
 pkgver=3.3.0
-pkgrel=2
+pkgrel=3
 pkgdesc='ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCR-Runtime'
@@ -23,6 +23,7 @@ build() {
   cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -DHSAKMT_INC_PATH=/opt/rocm/include \
         -DHSAKMT_LIB_PATH=/opt/rocm/lib \
+        -DCMAKE_BUILD_TYPE=Release \
         "$_dirname/src"
   make
 }
