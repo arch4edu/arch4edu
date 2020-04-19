@@ -6,7 +6,7 @@ pkgbase=gstreamer0.10-base
 _pkgname=gst-plugins-base
 pkgname=('gstreamer0.10-base' 'gstreamer0.10-base-plugins')
 pkgver=0.10.36
-pkgrel=13
+pkgrel=14
 arch=('i686' 'x86_64' 'armv7h')
 license=('LGPL')
 makedepends=('gstreamer0.10>=0.10.36' 'orc' 'libxv' 'alsa-lib' 'cdparanoia' 
