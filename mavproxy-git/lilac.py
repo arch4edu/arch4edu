@@ -4,7 +4,7 @@ from lilaclib import *
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'github': 'Dronecode/MAVProxy'}]
 build_prefix = 'extra-x86_64'
-repo_depends = ["python2-pymavlink-git"]
+repo_depends = ["python-pymavlink-git"]
 
 def pre_build():
   aur_pre_build()
@@ -12,7 +12,7 @@ def pre_build():
   for line in edit_file('PKGBUILD'):
     if 'depends=(' in line:
         print(line)
-        print('makedepends=("python2-setuptools" "git")')
+        print('makedepends=("python-setuptools" "git")')
     else:
         print(line)
 
