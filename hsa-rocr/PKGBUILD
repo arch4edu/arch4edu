@@ -6,7 +6,7 @@
 
 pkgname=hsa-rocr
 pkgver=3.3.0
-pkgrel=3
+pkgrel=4
 pkgdesc='ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCR-Runtime'
@@ -15,15 +15,21 @@ makedepends=('cmake' 'libelf' "hsakmt-roct")
 provides=("rocr-runtime=$pkgver")
 replaces=('rocr-runtime')
 conflicts=('rocr-runtime')
-source=("$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('fa2d2d1f8a61d8a6952d377cf288d78c61776c3c2a666f163cafc3aa19ab0b61')
+source=("$url/archive/rocm-$pkgver.tar.gz"
+        'remove-warnings.patch')
+sha256sums=('fa2d2d1f8a61d8a6952d377cf288d78c61776c3c2a666f163cafc3aa19ab0b61'
+            '9aecc193aafe58c235b82b7d7c4444fd4175224233fde6a23c54014b3dcc0f6a')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
+
+prepare() {
+  cd "$srcdir/$_dirname"
+  patch -Np1 -i "$srcdir/remove-warnings.patch"
+}
 
 build() {
   cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -DHSAKMT_INC_PATH=/opt/rocm/include \
         -DHSAKMT_LIB_PATH=/opt/rocm/lib \
-        -DCMAKE_BUILD_TYPE=Release \
         "$_dirname/src"
   make
 }
