@@ -1,43 +1,42 @@
 # Maintainer:  Yigit Dallilar <yigit.dallilar@gmail.com>
-# 
-# for _mod use either (src_no_xspec_modeldata or src) and dont forget to change sha256sums
 
 pkgname=heasoft
-pkgver=6.26.1
+pkgver=6.27.1
 pkgrel=1
-_mod="src_no_xspec_modeldata" 
+# _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
+_mod='_no_xspec_modeldata'
 pkgdesc="NASA high energy astrophysics library"
-makedepends=("gcc" "glibc" "gcc-fortran" "perl")
-depends=("ncurses" "readline" "libxpm" )
+makedepends=("glibc" "gcc-fortran" "perl" "python-numpy")
+depends=("ncurses" "readline" "libxpm" "libidn")
 url="https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/"
 arch=('x86_64')
 license=('NASA' 'GPL')
-source=(https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/${pkgname}-${pkgver}${_mod}.tar.gz)
-sha256sums=('2bffdbc2a02f3bc69ab59a8ff881c75abe83d3064dc59bf8be261d638cd1afe0')
+source=("https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/${pkgname}-${pkgver}src${_mod}.tar.gz")
+sha256sums=('6186f518a68397a10d3bbd0ecb624e583c213a372b2d9db01f41d8e0ca874c9a')
 install="${pkgname}.install"
 
 build() {
+  cd "$srcdir/${pkgname}-${pkgver}/BUILD_DIR" || return
 
-  export CC=/usr/bin/gcc
-  export CXX=/usr/bin/g++
-  export FC=/usr/bin/gfortran
-  export PERL=/usr/bin/perl
+  ./configure --prefix="/opt/${pkgname}" --build="${CHOST}"
 
-  cd $srcdir/${pkgname}-${pkgver}/BUILD_DIR
-  ./configure --prefix=${pkgdir}/opt/${pkgname}
-  
-  make 
-
+  # parallel builds may fail
+  make -j1
 }
 
 package(){
+  local glibcver HEADAS
 
-  cd $srcdir/${pkgname}-${pkgver}/BUILD_DIR
-  make install
+  cd "$srcdir/${pkgname}-${pkgver}/BUILD_DIR" || return
 
+  make -j1 DESTDIR="$pkgdir" install
 
-  #mkdir -p $pkgdir/opt/${pkgname}-${pkgver}/x86_64-unknown-linux-gnu-libc${_glibcver}/bin/
+  glibcver=$(ldd --version | sed -n 's/ldd (GNU libc) //p')
+  HEADAS="/opt/${pkgname}/${CHOST}-libc${glibcver}"
 
- 
+  install -d "$pkgdir/etc/profile.d"
+  cat > "$pkgdir/etc/profile.d/heasoft.sh" <<EOF
+export HEADAS="${HEADAS}"
+alias heainit='. "${HEADAS}/headas-init.sh"'
+EOF
 }
-
