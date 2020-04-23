@@ -2,7 +2,7 @@
 
 pkgname=rocm-device-libs
 pkgver=3.3.0
-pkgrel=3
+pkgrel=4
 pkgdesc='Radeon Open Compute - device libs'
 arch=('any')
 url='https://github.com/RadeonOpenCompute/ROCm-Device-Libs'
