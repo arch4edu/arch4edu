@@ -1,0 +1,11 @@
+--- a/gtsam/3rdparty/metis/libmetis/CMakeLists.txt	2019-05-19 18:35:20.000000000 -0700
++++ b/gtsam/3rdparty/metis/libmetis/CMakeLists.txt	2019-07-06 13:51:47.634206733 -0700
+@@ -9,6 +9,8 @@
+   target_link_libraries(metis m)
+ endif()
+ 
++set_target_properties(metis PROPERTIES OUTPUT_NAME "gtsam_metis")
++
+ if(WIN32)
+ 		set_target_properties(metis PROPERTIES
+ 			PREFIX ""
