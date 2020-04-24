@@ -6,12 +6,13 @@
 
 pkgname=hsa-rocr
 pkgver=3.3.0
-pkgrel=4
+pkgrel=5
 pkgdesc='ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCR-Runtime'
 license=('custom:NCSAOSL')
-makedepends=('cmake' 'libelf' "hsakmt-roct")
+depends=('libelf' 'hsakmt-roct')
+makedepends=('cmake')
 provides=("rocr-runtime=$pkgver")
 replaces=('rocr-runtime')
 conflicts=('rocr-runtime')
@@ -38,7 +39,7 @@ package() {
   make DESTDIR="$pkgdir" install
 
   install -Dm644 "$_dirname/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocm-runtime.conf" <<-EOF
+  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/$pkgname.conf" <<-EOF
     /opt/rocm/lib
     /opt/rocm/hsa/lib
 EOF
