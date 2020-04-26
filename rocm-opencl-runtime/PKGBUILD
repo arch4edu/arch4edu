@@ -1,70 +1,49 @@
 # Maintainer: Ranieri Althoff <ranisalt+aur at gmail dot com>
 
+_opencl_icd_loader_repo='https://github.com/KhronosGroup/OpenCL-ICD-Loader'
 _opencl_icd_loader_commit='978b4b3a29a3aebc86ce9315d5c5963e88722d03'
 
 pkgname=rocm-opencl-runtime
 pkgver=3.3.0
-pkgrel=2
+pkgrel=5
 pkgdesc='Radeon Open Compute - OpenCL runtime'
 arch=('x86_64')
-url='https://github.com/RadeonOpenCompute'
+url='https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime'
 license=('MIT')
-depends=('hsakmt-roct' 'hsa-rocr' 'opencl-icd-loader')
-makedepends=(mesa cmake git llvm-roc rocm-comgr)
+depends=('hsakmt-roct' 'hsa-rocr' 'opencl-icd-loader' 'comgr')
+makedepends=('mesa' 'cmake' 'git' 'llvm-roc' 'rocm-cmake')
 provides=("$pkgname" 'opencl-driver')
-source=(
-    "rocm-opencl-runtime::git+https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime#tag=roc-$pkgver"
-    "rocm-cmake::git+https://github.com/RadeonOpenCompute/rocm-cmake#tag=rocm-3.3.0"
-    "opencl-icd-loader::git+https://github.com/KhronosGroup/OpenCL-ICD-Loader#commit=$_opencl_icd_loader_commit"
-    # "rocm-opencl-runtime-2.8.0-change-AMDCompilerh.patch"
-    # "rocm-opencl-runtime-2.8.0-change-opencl.patch"
-    # "rocm-opencl-runtime-2.8.0-amdocl64icd.patch"
-    # "rocm-opencl-runtime-3.0.0-change-install-location.patch"
-)
-
-sha256sums=('SKIP'
-            'SKIP'
-            'SKIP')
-            # '3af5c9c3b8b88b78a2fd574f339e88a5cd62c365d94e9289c2a2cb4afef3d435'
-            # '2cfd11bda9a485d6de2231c56742ad553329cab9b6dcc009dbddbcde1436f485'
-            # '941a29f8704a2839c32bcf3cf374dde30bc8a839c1136d4faa65c60a7500cf98')
+source=("$url/archive/roc-$pkgver.tar.gz"
+        "$_opencl_icd_loader_repo/archive/$_opencl_icd_loader_commit.tar.gz"
+        'install_vendor_file.patch')
+sha256sums=('ac6999f1a491ab066286c2bd6adf50f08f831286f56e267879f9f7eced22f98e'
+            '0c14bf890bd198ef5a814b5b7ed57b69e890b0c0a1bcfba8fdad996fa1a97fc7'
+            'b83de5ea8ae889664ce2725f90c5db8c1c9e98839d75c7743b355d16435dccee')
+_dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
+_opencl_dirname="$(basename "$_opencl_icd_loader_repo")-$(basename "${source[1]}" .tar.gz)"
 
 prepare() {
-    cd "$srcdir/rocm-opencl-runtime"
-
-    # [ -d tools/clinfo ] && rm -rf tools/clinfo
+    cd "$_dirname"
+    patch -Np1 -i "$srcdir/install_vendor_file.patch"
 
     mkdir -p api/opencl/khronos
-    mv "$srcdir/opencl-icd-loader" api/opencl/khronos/icd
-
-    # local src
-    # for src in "${source[@]}"; do
-    #     src="${src%%::*}"
-    #     src="${src##*/}"
-    #     [[ $src = *.patch ]] || continue
-    #     msg2 "Applying patch $src..."
-    #     patch -Np1 -i "$srcdir/$src"
-    # done
+    mv "$srcdir/$_opencl_dirname" api/opencl/khronos/icd
 }
 
 build() {
-    cd "$srcdir/rocm-opencl-runtime"
-    mkdir -p build && cd build
     cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
           -DCMAKE_INSTALL_SYSCONFDIR=/etc \
-          -DCMAKE_MODULE_PATH="$srcdir/rocm-cmake/share/rocm/cmake" \
+          -DCMAKE_MODULE_PATH=/opt/rocm/share/rocm/cmake \
           -DCMAKE_PREFIX_PATH=/opt/rocm/lib/cmake \
-          -DLLVM_DIR=/opt/rocm/lib/cmake/llvm \
           -DUSE_COMGR_LIBRARY=yes \
-          ..
+          "$_dirname"
     make
 }
 
 package() {
-    DESTDIR="$pkgdir/" make -C "$srcdir/rocm-opencl-runtime/build" install
-
-    mkdir -p "$pkgdir/etc/ld.so.conf.d"
-    echo '/opt/rocm/lib' > "$pkgdir/etc/ld.so.conf.d/rocm-opencl.conf"
-
-    install -Dm644 "$srcdir/rocm-opencl-runtime/License" "$pkgdir/usr/share/licenses/rocm-opencl-runtime/LICENSE"
+    DESTDIR="$pkgdir" make install
+    install -Dm644 "$_dirname/License" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/$pkgname.conf" <<-EOF
+      /opt/rocm/lib/x86_64
+EOF
 }
