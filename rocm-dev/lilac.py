@@ -3,7 +3,21 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}]
-repo_depends = ['hcc', 'hip-hcc', 'rocm-cmake', 'rocm-comgr', ('rocm-opencl-runtime', 'rocm-device-libs'), 'rocm-smi', 'rocm-utils', 'rocprofiler', 'rocr-debug-agent', 'hsa-rocr', 'hsakmt-roct']
+repo_depends = [
+        'comgr',
+        'hcc',
+        'hip-hcc',
+        'hsa-amd-aqlprofile',
+        'hsa-ext-rocr',
+        'hsa-rocr',
+        'hsakmt-roct'
+        'rocm-cmake',
+        ('rocm-opencl-runtime', 'rocm-device-libs'),
+        'rocm-smi',
+        'rocm-utils',
+        'rocprofiler',
+        'rocr-debug-agent',
+        ]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build
