@@ -7,7 +7,14 @@ build_prefix = 'extra-x86_64'
 
 def pre_build():
     aur_pre_build()
-    add_depends(['eigen'])
+
+    for line in edit_file('PKGBUILD'):
+        if line == 'pkgname=gtsam':
+            print(line + '-mkl')
+        else:
+            print(line)
+
+    add_depends(['eigen', 'intel-tbb', 'intel-mkl'])
 
 post_build = aur_post_build
 
