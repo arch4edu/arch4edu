@@ -1,7 +1,7 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
 pkgname=('python-configshell-fb' 'python2-configshell-fb')
 _pkgname=configshell-fb
-pkgver=1.1.26
+pkgver=1.1.28
 pkgrel=1
 pkgdesc="python framework for building simple CLI applications (free branch)"
 arch=('any')
@@ -10,7 +10,7 @@ license=('Apache')
 options=()
 makedepends=('python-setuptools' 'python2-setuptools')
 source=(https://github.com/open-iscsi/configshell-fb/archive/v${pkgver}.tar.gz)
-sha512sums=('25e5b4ee812a51c99eed4d039ac8bab883218a674ff27f9eee4604d133b592574f4829ead9cb1aba4d2aca873f5414ad4ca55979c6d4eadaa9a802b1d563494d')
+sha512sums=('4cdc3ee72fc7c4bffcf2f508eef16cc8578d1358ceeb70050a619f5e93e0e189de7216ac0baa77af98fb1b7569940a22a0e3cd977cd460bb91252b4ab176d0f4')
 
 package_python-configshell-fb() {
   depends=('python-pyparsing' 'python-urwid')
