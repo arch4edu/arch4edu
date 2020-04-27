@@ -1,8 +1,7 @@
-# Maintainer : George Eleftheriou <eleftg>
-# Contributor: Martin Diehl <MartinDiehl>
-# Contributor: Jingbei Li <petronny>
+# Maintainer: Martin Diehl <https://martin-diehl.net>
 # Contributor: Ronald van Haren <ronald.archlinux.org>
-# Contributor: Bruno Pagani (a.k.a. ArchangeGabriel) <archange@archlinux.org>
+# Contributor: Bruno Pagani <archange@archlinux.org>
+# Contributor: George Eleftheriou <eleftg>
 # Contributor: Stefan Husmann <stefan-husmann@t-online.de>
 # Contributor: damir <damir@archlinux.org>
 # Contributor: Tom K <tomk@runbox.com>
@@ -12,74 +11,57 @@
 _pkgname=hdf5
 _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
-_prefix=/usr
-pkgver=1.10.5
+pkgver=1.12.0
 pkgrel=1
-pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version) (full version including its Java Native Interfaces)"
-arch=('x86_64')
-url="https://portal.hdfgroup.org/display/support"
-license=('custom')
-depends=('bash' 'libaec' "${_mpi}")
-makedepends=('cmake' 'time' 'java-environment' 'gcc-fortran')
-options=('staticlibs')
-provides=('hdf5-java' 'hdf5-openmpi' 'hdf5' 'hdf5-cpp-fortran' "hdf5-fortran-${_mpi}")
-conflicts=('hdf5-java' 'hdf5' 'hdf5-openmpi')
-replaces=("hdf5-fortran-${_mpi}")
-source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver}/src/${_pkgname}-${pkgver}.tar.bz2"
-        'mpi.patch')
-md5sums=('7c19d6b81ee2a3ba7d36f6922b2f90d3'
-         '63b43e3d4a5bbea4bcecc84874e08913')
-
-prepare() {
-    mkdir -p build
-    cd "${_pkgname}-${pkgver}"
-
-    # FS#33343
-    patch -p1 -i ../mpi.patch
-}
+pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version including Java Native Interfaces)"
+arch=(x86_64)
+url="https://www.hdfgroup.org/hdf5"
+license=(custom)
+depends=(zlib libaec bash ${_mpi})
+makedepends=(cmake time gcc-fortran java-environment)
+provides=(hdf5 hdf5-cpp-fortran hdf5-fortran-${_mpi} hdf5-${_mpi} hdf5-java)
+conflicts=(hdf5 hdf5-openmpi hdf5-java)
+replaces=(hdf5-fortran-${_mpi})
+options=(staticlibs)
+source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver/_/-}/src/${_pkgname}-${pkgver/_/-}.tar.bz2"
+        hdf5-1.12.0-compat-1.6.patch)
+sha256sums=('97906268640a6e9ce0cde703d5a71c9ac3092eded729591279bf2e3ca9765f61'
+            '72ad497c56760bb3af8193c88d3fa264125829850b843697de55d934c56f7f44')
 
 build() {
-    cd build
-
     # Crazy workaround: run CMake to generate pkg-config file
+    mkdir -p build && cd build
+    CXX="mpicxx" \
+    CC="mpicc" \
+    FC="mpif90" \
+    F9X="mpif90" \
     RUNPARALLEL="mpirun" \
     OMPI_MCA_disable_memory_allocator=1 \
-    JAVADOC='javadoc -Xdoclint:none' \
-    cmake ../${_pkgname}-${pkgver}  \
-        -DCMAKE_CXX_COMPILER=mpicxx \
-        -DCMAKE_C_COMPILER=mpicc \
-        -DCMAKE_Fortran_COMPILER=mpif90 \
-        -DCMAKE_C_FLAGS="${CPPFLAGS} ${CFLAGS}" \
-        -DCMAKE_CXX_FLAGS="${CPPFLAGS} ${CXXFLAGS}" \
-        -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}" \
-        -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS}" \
-        -DCMAKE_MODULE_LINKER_FLAGS="${LDFLAGS}" \
-        -DCMAKE_INSTALL_RPATH="" \
+    cmake ../${_pkgname}-${pkgver/_/-} \
+        -DCMAKE_INSTALL_PREFIX=/usr \
         -DBUILD_SHARED_LIBS=ON \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="${_prefix}" \
         -DALLOW_UNSUPPORTED=ON \
         -DHDF5_BUILD_HL_LIB=ON \
         -DHDF5_BUILD_CPP_LIB=ON \
         -DHDF5_BUILD_FORTRAN=ON \
         -DHDF5_BUILD_JAVA=ON \
+        -DHDF5_ENABLE_PARALLEL=ON \
         -DHDF5_ENABLE_Z_LIB_SUPPORT=ON \
         -DHDF5_ENABLE_SZIP_SUPPORT=ON \
-        -DHDF5_ENABLE_SZIP_ENCODING=ON \
-        -DHDF5_ENABLE_PARALLEL=ON \
-        -DBUILD_TESTING=OFF
-
+        -DHDF5_ENABLE_SZIP_ENCODING=ON
     # But don’t build with it, it’s quite broken
-    "${srcdir}/${_pkgname}-${pkgver}"/configure \
+    cd ../${_pkgname}-${pkgver/_/-}
+    ./configure \
         CXX="mpicxx" \
         CC="mpicc" \
         FC="mpif90" \
         F9X="mpif90" \
         RUNPARALLEL="mpirun" \
         OMPI_MCA_disable_memory_allocator=1 \
-        JAVADOC='javadoc -Xdoclint:none' \
-        --prefix="${_prefix}" \
-        --docdir="${_prefix}/share/doc/${_pkgname}" \
+        --prefix=/usr \
+        --docdir=/usr/share/doc/hdf5/ \
+        --with-examplesdir='${DESTDIR}/${prefix}/share/doc/hdf5/examples' \
         --enable-static \
         --disable-sharedlib-rpath \
         --enable-build-mode=production \
@@ -92,22 +74,29 @@ build() {
         --with-pic \
         --with-zlib \
         --with-szlib
-
     make
 }
 
+check() {
+    cd ${_pkgname}-${pkgver/_/-}
+    # Without this, checks are failing with messages like “error while loading shared libraries: libhdf5.so.101: cannot open shared object file: No such file or directory”
+    export LD_LIBRARY_PATH="${srcdir}"/${pkgname}-${pkgver/_/-}/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/c++/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/fortran/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/c++/src/.libs/
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/fortran/src/.libs/
+    # This is a parallel build, they are always OpenMPI bugs
+    make check || warning "Tests failed"
+}
+
 package() {
-    cd build
-
+    cd ${_pkgname}-${pkgver/_/-}
     make DESTDIR="${pkgdir}" install
-
-    # Move examples to a proper place
-    install -dm755 "${pkgdir}${_prefix}/share/doc/${_pkgname}"
-    mv "${pkgdir}${_prefix}"/share/{hdf5_examples,doc/${_pkgname}/examples}
-
-    install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/COPYING" \
-        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-
-    install -Dm644 CMakeFiles/hdf5{,_hl}{,_cpp}-${pkgver}.pc \
-        -t "${pkgdir}${_prefix}"/lib/pkgconfig
+    install -Dm644 COPYING -t "${pkgdir}"/usr/share/licenses/${_pkgname}
+    # Install pkg-config files from CMake tree
+    install -Dm644 ../build/CMakeFiles/hdf5{,_hl}{,_cpp}-${pkgver}.pc -t "${pkgdir}"/usr/lib/pkgconfig/
+    # Fix 1.6 compatibility for h5py
+    cd "${pkgdir}"/usr/include/
+    patch -p1 -i "${srcdir}"/hdf5-1.12.0-compat-1.6.patch
 }

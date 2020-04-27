@@ -1,0 +1,89 @@
+--- a/H5version.h
++++ b/H5version.h
+@@ -97,6 +97,10 @@
+   #define H5Ewalk_vers 1
+ #endif /* !defined(H5Ewalk_vers) */
+ 
++#if !defined(H5Fget_info_vers)
++  #define H5Fget_info_vers 1
++#endif /* !defined(H5Fget_info_vers) */
++
+ #if !defined(H5Gcreate_vers)
+   #define H5Gcreate_vers 1
+ #endif /* !defined(H5Gcreate_vers) */
+@@ -105,6 +109,38 @@
+   #define H5Gopen_vers 1
+ #endif /* !defined(H5Gopen_vers) */
+ 
++#if !defined(H5Lget_info_vers)
++  #define H5Lget_info_vers 1
++#endif /* !defined(H5Lget_info_vers) */
++
++#if !defined(H5Lget_info_by_idx_vers)
++  #define H5Lget_info_by_idx_vers 1
++#endif /* !defined(H5Lget_info_by_idx_vers) */
++
++#if !defined(H5Oget_info_vers)
++  #define H5Oget_info_vers 1
++#endif /* !defined(H5Oget_info_vers) */
++
++#if !defined(H5Oget_info_by_idx_vers)
++  #define H5Oget_info_by_idx_vers 1
++#endif /* !defined(H5Oget_info_by_idx_vers) */
++
++#if !defined(H5Oget_info_by_name_vers)
++  #define H5Oget_info_by_name_vers 1
++#endif /* !defined(H5Oget_info_by_name_vers) */
++
++#if !defined(H5Ovisit_vers)
++  #define H5Ovisit_vers 1
++#endif /* !defined(H5Ovisit_vers) */
++
++#if !defined(H5Ovisit_by_name_vers)
++  #define H5Ovisit_by_name_vers 1
++#endif /* !defined(H5Ovisit_by_name_vers) */
++
++#if !defined(H5Pencode_vers)
++  #define H5Pencode_vers 1
++#endif /* !defined(H5Pencode_vers) */
++
+ #if !defined(H5Pget_filter_vers)
+   #define H5Pget_filter_vers 1
+ #endif /* !defined(H5Pget_filter_vers) */
+@@ -133,6 +169,10 @@
+   #define H5Tarray_create_vers 1
+ #endif /* !defined(H5Tarray_create_vers) */
+ 
++#if !defined(H5Sencode_vers)
++  #define H5Sencode_vers 1
++#endif /* !defined(H5Sencode_vers) */
++
+ #if !defined(H5Tcommit_vers)
+   #define H5Tcommit_vers 1
+ #endif /* !defined(H5Tcommit_vers) */
+@@ -153,6 +193,14 @@
+   #define H5E_auto_t_vers 1
+ #endif /* !defined(H5E_auto_t_vers) */
+ 
++#if !defined(H5O_info_t_vers)
++  #define H5O_info_t_vers 1
++#endif /* !defined(H5O_info_t_vers) */
++
++#if !defined(H5O_iterate_t_vers)
++  #define H5O_iterate_t_vers 1
++#endif /* !defined(H5O_iterate_t_vers) */
++
+ #if !defined(H5Z_class_t_vers)
+   #define H5Z_class_t_vers 1
+ #endif /* !defined(H5Z_class_t_vers) */
+@@ -261,6 +309,10 @@
+   #define H5Ovisit_by_name_vers 1
+ #endif /* !defined(H5Ovisit_by_name_vers) */
+ 
++#if !defined(H5Pencode_vers)
++  #define H5Pencode_vers 1
++#endif /* !defined(H5Pencode_vers) */
++
+ #if !defined(H5Pget_filter_vers)
+   #define H5Pget_filter_vers 2
+ #endif /* !defined(H5Pget_filter_vers) */
