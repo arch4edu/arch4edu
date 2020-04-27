@@ -2,11 +2,11 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}]
+update_on = [{'aur': 'gtsam'}]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
-    aur_pre_build()
+    aur_pre_build('gtsam')
 
     for line in edit_file('PKGBUILD'):
         if line == 'pkgname=gtsam':
