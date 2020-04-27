@@ -4,10 +4,10 @@
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 
 pkgname=openfoam
-_subver=version-7
+_subver=20200120
 _pkgver=7
-#pkgver=${_pkgver}.${_subver}
-pkgver=${_pkgver}
+pkgver=${_pkgver}.${_subver}
+#pkgver=${_pkgver}
 pkgrel=1
 pkgdesc="The open source CFD toolbox"
 _distpkgname=OpenFOAM
@@ -19,7 +19,7 @@ depends=('bzip2' 'paraview' 'parmetis' 'scotch' 'boost' 'flex' 'cgal')
 makedepends=('bash')
 source=("https://github.com/OpenFOAM/$_gitname/archive/$_subver.tar.gz" "${pkgname}.install")
 install="${pkgname}.install"
-md5sums=('638b38ae0e80cbb1201abec3f5c88641'
+md5sums=('903d4f1189df2b3509e3905c485ca400'
          '906a97732076501f3899d72d3a7393b3')
 
 prepare() {
