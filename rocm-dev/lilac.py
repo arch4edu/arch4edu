@@ -10,7 +10,7 @@ repo_depends = [
         'hsa-amd-aqlprofile',
         'hsa-ext-rocr',
         'hsa-rocr',
-        'hsakmt-roct'
+        'hsakmt-roct',
         'rocm-cmake',
         ('rocm-opencl-runtime', 'rocm-device-libs'),
         'rocm-smi',
