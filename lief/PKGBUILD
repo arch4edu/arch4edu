@@ -2,22 +2,28 @@
 
 pkgname=lief
 pkgver=0.10.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Library to instrument executable formats'
-arch=(i686  x86_64)
+arch=(x86_64)
 url='https://lief.quarkslab.com/'
 license=(APACHE)
 depends=(python)
 makedepends=(git cmake python-setuptools)
-source=("git+git://github.com/lief-project/LIEF#tag=${pkgver}")
+source=("git+https://github.com/lief-project/LIEF#tag=${pkgver}")
 md5sums=(SKIP)
 
 build() {
   cd "${srcdir}/LIEF"
-  python setup.py build
+  mkdir build
+
+  cmake . -B build -DCMAKE_BUILD_TYPE=Release
+  make -C build
+  python setup.py build --build-temp=build
 }
 
 package() {
   cd "${srcdir}/LIEF"
-  python setup.py install --root="${pkgdir}" --optimize=1
+
+  make -C build DESTDIR="${pkgdir}" install
+  python setup.py install --optimize=1 --root="${pkgdir}" --skip-build
 }
