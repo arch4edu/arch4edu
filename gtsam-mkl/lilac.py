@@ -12,7 +12,7 @@ def pre_build():
         if line == 'pkgname=gtsam':
             print(line + '-mkl')
         else:
-            print(line)
+            print(line.replace('$pkgname', 'gtsam').replace('${pkgname}', 'gtsam'))
 
     add_depends(['eigen', 'intel-tbb', 'intel-mkl'])
 
