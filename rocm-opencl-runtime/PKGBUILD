@@ -5,13 +5,13 @@ _opencl_icd_loader_commit='978b4b3a29a3aebc86ce9315d5c5963e88722d03'
 
 pkgname=rocm-opencl-runtime
 pkgver=3.3.0
-pkgrel=5
+pkgrel=6
 pkgdesc='Radeon Open Compute - OpenCL runtime'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime'
 license=('MIT')
 depends=('hsakmt-roct' 'hsa-rocr' 'opencl-icd-loader' 'comgr')
-makedepends=('mesa' 'cmake' 'git' 'llvm-roc' 'rocm-cmake')
+makedepends=('mesa' 'cmake' 'git' 'rocm-cmake')
 provides=("$pkgname" 'opencl-driver')
 source=("$url/archive/roc-$pkgver.tar.gz"
         "$_opencl_icd_loader_repo/archive/$_opencl_icd_loader_commit.tar.gz"
