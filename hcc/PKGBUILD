@@ -4,7 +4,7 @@
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=hcc
 pkgver=3.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="HCC is an Open Source, Optimizing C++ Compiler for Heterogeneous Compute"
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/hcc"
@@ -36,6 +36,7 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/opt/rocm/hcc \
         -DLLVM_INSTALL_UTILS=TRUE \
         "$srcdir/hcc-roc-hcc-$pkgver"
+
   make
 }
 
@@ -44,10 +45,10 @@ package() {
 
   make DESTDIR="$pkgdir" install
 
-  # add links
+  # add links (extractkernel is for rocblas with tensile)
   install -d "$pkgdir/usr/bin"
   local _fn
-  for _fn in hcc hcc-config; do
+  for _fn in hcc hcc-config extractkernel; do
     ln -s "/opt/rocm/hcc/bin/$_fn" "$pkgdir/usr/bin/$_fn"
   done
 
