@@ -2,7 +2,7 @@
 
 pkgname=python-fsspec
 _pkgname=filesystem_spec
-pkgver=0.6.2
+pkgver=0.7.3
 pkgrel=1
 pkgdesc="A specification that python filesystems should adhere to."
 arch=('any')
@@ -13,7 +13,7 @@ checkdepends=('docker' 'python-paramiko' 'python-pyftpdlib' 'python-pytest')
 optdepends=()
 makedepends=('python-setuptools')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/intake/filesystem_spec/archive/$pkgver.tar.gz")
-sha256sums=('874c635ded9ca22d2284fc6970531d05d17ece796e3f81b5740b6704bd09578b')
+sha256sums=('3f4d60a4ff89134908016809de75ff0b82096df5f41af5f97b1508fd6d9d7d49')
 
 package(){
   cd "$srcdir/$_pkgname-$pkgver"
