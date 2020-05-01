@@ -3,12 +3,12 @@
 pkgname=comgr
 pkgdesc='Radeon Open Compute - compiler support'
 pkgver=3.3.0
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCm-CompilerSupport'
 license=('custom:NCSAOSL')
-depends=(llvm-amdgpu)
-makedepends=(cmake rocm-cmake rocm-device-libs)
+depends=()
+makedepends=(cmake rocm-cmake rocm-device-libs llvm-amdgpu)
 source=("$url/archive/rocm-$pkgver.tar.gz"
         "comgr-find-lld-includes.patch")
 sha256sums=('01e2524e0f28ecd6f46c9720f279207de935d826b0172158792aa3ec86af9ca7'
@@ -23,6 +23,7 @@ build() {
   cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -DCMAKE_PREFIX_PATH="/opt/rocm/llvm;/opt/rocm" \
         "$_dirname/lib/comgr"
+
   make
 }
 
