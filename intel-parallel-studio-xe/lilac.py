@@ -2,7 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'intel-mkl'}]
+update_on = [{'aur': 'intel-compiler-base'}]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
