@@ -4,8 +4,8 @@
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=hcc
 pkgver=3.3.0
-pkgrel=2
-pkgdesc="HCC is an Open Source, Optimizing C++ Compiler for Heterogeneous Compute"
+pkgrel=3
+pkgdesc='C++ Compiler for Heterogeneous Compute'
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/hcc"
 license=('custom:NCSAOSL')
@@ -32,8 +32,7 @@ build() {
   mkdir -p "$srcdir/build"
   cd "$srcdir/build"
 
-  cmake -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/opt/rocm/hcc \
+  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm/hcc \
         -DLLVM_INSTALL_UTILS=TRUE \
         "$srcdir/hcc-roc-hcc-$pkgver"
 
