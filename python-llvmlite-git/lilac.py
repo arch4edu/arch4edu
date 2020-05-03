@@ -10,9 +10,9 @@ def pre_build():
 
     for line in edit_file('PKGBUILD'):
         if line.startswith('depends=('):
-            print(line.replace('llvm', 'llvm7'))
+            print(line.replace('llvm', 'llvm8'))
         elif line.startswith('makedepends=('):
-            print(line.replace('llvm', 'llvm7'))
+            print(line.replace('llvm', 'llvm8'))
         else:
             print(line)
 
