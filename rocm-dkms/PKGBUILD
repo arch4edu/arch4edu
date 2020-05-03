@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocm-dkms
 pkgver=3.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="ROCm - Open Soruce Platform for HPC and Ultrascale GPU Computing"
 arch=('x86_64')
 url="https://rocm-documentation.readthedocs.io/en/latest/"
