@@ -3,6 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'github': 'numba/llvmlite'}, {'alias': 'python'}]
+repo_depends = ['llvm8', ('llvm8', 'llvm8-libs')]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
