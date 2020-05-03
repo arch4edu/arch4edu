@@ -3,6 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'rpiusbboot-git'}, {'github': 'raspberrypi/usbboot'}]
+repo_depends = ['fakeroot-tcp']
 build_prefix = 'extra-armv6h'
 
 def pre_build():
