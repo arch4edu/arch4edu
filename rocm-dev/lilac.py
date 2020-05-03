@@ -12,7 +12,7 @@ repo_depends = [
         'hsa-rocr',
         'hsakmt-roct',
         'rocm-cmake',
-        ('rocm-opencl-runtime', 'rocm-device-libs'),
+        'rocm-device-libs',
         'rocm-smi',
         'rocm-utils',
         'rocprofiler',
