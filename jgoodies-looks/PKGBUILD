@@ -7,7 +7,7 @@
 
 pkgname=jgoodies-looks
 pkgver=2.8.0
-pkgrel=3
+pkgrel=4
 pkgdesc="A Java Swing look and feel library"
 arch=('any')
 url="http://www.jgoodies.com/"
@@ -27,3 +27,5 @@ package() {
 }
 
 # vim:set ts=2 sw=2 et:
+export http_proxy=127.0.0.1:8123
+export https_proxy=127.0.0.1:8123
