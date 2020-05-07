@@ -7,7 +7,7 @@
 
 pkgname=javahelp2
 pkgver=2.0.05.r90
-pkgrel=5
+pkgrel=6
 # manual versioning
 source=("${pkgname}::git+https://github.com/javaee/javahelp.git#commit=3ca862d8626096770598a3a256886d205246f4a4")
 sha256sums=('SKIP')
@@ -40,3 +40,5 @@ package() {
     install -dm755 "${pkgdir}/usr/share/licenses"
     install -D -m644 -- "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
+export http_proxy=127.0.0.1:8123
+export https_proxy=127.0.0.1:8123
