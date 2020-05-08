@@ -1,0 +1,20 @@
+--- gtsam-4.0.2/cmake/FindMKL.cmake	2020-05-07 11:28:45.694001386 -0700
++++ gtsam-4.0.2/cmake/FindMKL.cmake	2020-05-07 11:29:16.708231150 -0700
+@@ -221,7 +221,7 @@
+                         FIND_LIBRARY(MKL_IOMP5_LIBRARY
+                           iomp5
+                           PATHS
+-                                ${MKL_ROOT_DIR}/../lib/ia32
++                                ${MKL_ROOT_DIR}/lib/ia32
+                         )
+                 ELSE()
+                         SET(MKL_IOMP5_LIBRARY "") # no need for mac
+@@ -231,7 +231,7 @@
+                         FIND_LIBRARY(MKL_IOMP5_LIBRARY
+                           iomp5
+                           PATHS
+-                                ${MKL_ROOT_DIR}/../lib/intel64
++                                ${MKL_ROOT_DIR}/lib/intel64
+                         )
+                 ELSE()
+                         SET(MKL_IOMP5_LIBRARY "") # no need for mac
