@@ -4,7 +4,7 @@
 
 pkgname=nvchecker-git
 epoch=1
-pkgver=1.6.post1.r2
+pkgver=1.7dev.r8
 pkgrel=2
 pkgdesc="a tool for checking if a new version of some software has been released."
 arch=('any')
