@@ -10,7 +10,7 @@ _mpi=openmpi
 pkgname=${_pkg}-opt
 #-${_mpi}
 pkgver=5.8.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Parallel Visualization application using VTK (${_mpi} version): installed to /opt/"
 arch=(x86_64)
 provides=("${_pkg}")
@@ -39,6 +39,10 @@ prepare() {
 }
 
 build() {
+    FLAGS="-DH5_USE_110_API"
+    CFLAGS+=" ${FLAGS}"
+    CXXFLAGS+=" ${FLAGS}"
+    export CFLAGS CXXFLAGS
     # Note regarding use of system dependencies:
     # GL2PS has non-upstreamed patches
     # LIBHARU blocked by https://github.com/libharu/libharu/pull/157
@@ -62,8 +66,6 @@ build() {
         -DVTKm_ENABLE_MPI=ON \
         -DVTK_MODULE_ENABLE_VTK_IOGDAL=YES \
         -DVTK_MODULE_ENABLE_VTK_IOPDAL=YES \
-        -DCMAKE_C_FLAGS="-DH5_USE_110_API" \
-        -DCMAKE_CXX_FLAGS="-DH5_USE_110_API" \
 
     export NINJA_STATUS="[%p | %f<%r<%u | %cbps ] "
   # shellcheck disable=SC2086 # to allowing MAKEFLAGS to expand into multiple flags.
