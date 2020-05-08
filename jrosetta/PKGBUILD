@@ -5,7 +5,7 @@
 
 pkgname=jrosetta
 pkgver=1.0.4
-pkgrel=4
+pkgrel=5
 pkgdesc="Graphical console engine for Swing"
 arch=('any')
 url="http://dev.artenum.com/projects/JRosetta/"
@@ -34,3 +34,5 @@ package() {
       install -Dm644 "$srcdir/$pkgname-api-$pkgver.jar" "$pkgdir/usr/share/java/$pkgname/$pkgname-API.jar"
       install -Dm644 "$srcdir/$pkgname-engine-$pkgver.jar" "$pkgdir/usr/share/java/$pkgname/$pkgname-engine.jar"
 }
+export http_proxy=127.0.0.1:8123
+export https_proxy=127.0.0.1:8123
