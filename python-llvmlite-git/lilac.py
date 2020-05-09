@@ -14,6 +14,8 @@ def pre_build():
             print(line.replace('llvm', 'llvm8'))
         elif line.startswith('makedepends=('):
             print(line.replace('llvm', 'llvm8'))
+        elif line.startswith('pkgname=(python-llvmlite-git python2-llvmlite-git)'):
+            print('pkgname=python-llvmlite-git')
         else:
             print(line)
 
