@@ -1,16 +1,16 @@
 # Maintainer: Quan Guo <guotsuan at gmail dot com>
 
-pkgname=(python-llvmlite-git python2-llvmlite-git)
+pkgname=python-llvmlite-git
 
 pkgbase=python-llvmlite-git
 _gitname=llvmlite
-pkgver=0.33.0dev0.r6.gbeb3086
+pkgver=0.33.0dev0.r17.gc4f5a08
 pkgrel=2
 pkgdesc="A lightweight LLVM python binding for writing JIT compilers"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
 license=('BSD')
-depends=('python' 'python2' 'llvm7' )
+depends=('python' 'python2' 'llvm8' )
 makedepends=('git' 'cython' 'cython2' 'python2-enum34')
 conflicts=()
 replaces=()
