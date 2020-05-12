@@ -4,7 +4,10 @@ from lilaclib import *
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'teamviewer'}]
 build_prefix = 'extra-armv7h'
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build('teamviewer')
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
