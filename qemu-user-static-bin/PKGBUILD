@@ -1,8 +1,8 @@
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
-pkgver=4.2
-pkgadditver=7
-pkgrel=7
+pkgver=5.0
+pkgadditver=5
+pkgrel=1
 
 pkgname=$_pkgname-bin
 arch=('x86_64' 'i686' 'aarch64')
@@ -29,7 +29,7 @@ else
 fi
 
 source=(
-  "$_debsrc::http://ftp.debian.org/debian/pool/main/q/qemu/$_debsrc"
+  "$_debsrc::https://deb.debian.org/debian/pool/main/q/qemu/$_debsrc"
 )
 sha256sums=(
   "$_csum"
