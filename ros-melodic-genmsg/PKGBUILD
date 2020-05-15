@@ -4,9 +4,9 @@ pkgdesc="ROS - Standalone Python library for generating ROS message and service 
 url='https://www.wiki.ros.org/genmsg'
 
 pkgname='ros-melodic-genmsg'
-pkgver='0.5.12'
+pkgver='0.5.15'
 arch=('any')
-pkgrel=2
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(
@@ -29,7 +29,7 @@ depends=(
 
 _dir="genmsg-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/genmsg/archive/${pkgver}.tar.gz")
-sha256sums=('0e29bde730b4e114d1050998e833681fa3917f530cfab674e71fa21677d2a7ae')
+sha256sums=('eae7042040f0ba144a2488e8950f01ce99d962ac473d7d310f466902ef1925d0')
 
 build() {
 	# Use ROS environment variables.
@@ -49,9 +49,6 @@ build() {
 		-DCATKIN_BUILD_BINARY_PACKAGE=ON \
 		-DCMAKE_INSTALL_PREFIX=/opt/ros/melodic \
 		-DPYTHON_EXECUTABLE=/usr/bin/python3 \
-		-DPYTHON_INCLUDE_DIR=/usr/include/python3.7m \
-		-DPYTHON_LIBRARY=/usr/lib/libpython3.7m.so \
-		-DPYTHON_BASENAME=.cpython-37m \
 		-DSETUPTOOLS_DEB_LAYOUT=OFF
 	make
 }
