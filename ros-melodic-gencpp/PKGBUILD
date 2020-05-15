@@ -4,7 +4,7 @@ pkgdesc="ROS - C++ ROS message and service generators."
 url='https://wiki.ros.org/gencpp'
 
 pkgname='ros-melodic-gencpp'
-pkgver='0.6.2'
+pkgver='0.6.5'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 pkgrel=2
 license=('BSD')
@@ -30,7 +30,7 @@ depends=(
 
 _dir="gencpp-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/gencpp/archive/${pkgver}.tar.gz")
-sha256sums=('d4ccfd626ca5a3c9854843c970f8e0b6f8f3deb94b52f75f0d199e7719121aa0')
+sha256sums=('05acfeeb1bbc374356bf7674fee2a7aab3bf6a48ebad4a06fd0f0d4455a60720')
 
 build() {
 	# Use ROS environment variables.
