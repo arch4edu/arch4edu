@@ -1,0 +1,17 @@
+*.tar
+*.tar.*
+*.zip
+*.tgz
+*.xz
+
+*.log
+*.log.*
+*.sig
+
+*.pkg
+
+# AUR metadata
+.AURINFO
+
+pkg/
+src/
