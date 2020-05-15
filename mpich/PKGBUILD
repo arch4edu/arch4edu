@@ -1,0 +1,79 @@
+# Maintainer: Jed Brown <jed@59A2.org>
+# Contributor: Jed Brown <jed@59A2.org>
+# Contributor: George Eleftheriou <eleftg>
+
+pkgname=mpich
+pkgver=3.3.2
+pkgrel=1
+pkgdesc="An improved implementation of the Message Passing Interface."
+url="https://mpich.org"
+arch=("any")
+license=("custom")
+replaces=(mpich2)
+depends=('python2' 'gcc-fortran' 'libxml2' 'openssh' 'numactl' 'pciutils')
+makedepends=('texlive-core' 'sowing')
+optdepends=("java-environment")
+install="${pkgname}.install"
+source=("http://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+	    "mpich.profile"
+      "0001-Drop-real128.patch"
+      "4320.patch")
+sha256sums=('4bfaf8837a54771d3e4922c84071ef80ffebddbb6971a006038d91ee7ef959b9'
+            'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284'
+            '6c4cf4afbc762f06d344df52d54555f7fdf72a45c652bebd0963eaa864424223'
+            '9205be5ebce22fd1719af7d3c94b09c8b0f838c196fe24d5395d45f8d511b9ff')
+
+options=('!libtool')
+
+build() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  patch -Np0 < ../0001-Drop-real128.patch
+  patch -Np0 < ../4320.patch
+  export MPICHLIB_CFLAGS="${CFLAGS}";      unset CFLAGS
+  export MPICHLIB_CXXFLAGS="${CXXFLAGS}";  unset CXXFLAGS
+  export MPICHLIB_CPPFLAGS="${CPPFLAGS}";  unset CPPFLAGS
+  export MPICHLIB_FFLAGS="${FFLAGS}";      unset FFLAGS
+  export MPICHLIB_F90FLAGS="${F90FLAGS}";  unset F90FLAGS
+  export MPICHLIB_LDFLAGS="${LDFLAGS}";    unset LDFLAGS
+
+  mkdir -p build
+  cd build
+
+  FFLAGS="$FFLAGS -fallow-argument-mismatch" ../configure --prefix=/opt/mpich \
+               --enable-error-checking=runtime --enable-error-messages=all \
+               CC=gcc CXX=g++ FC=gfortran
+
+  make
+  make mandoc
+}
+
+check() {
+  cd ${srcdir}/${pkgname}-${pkgver}/build
+
+  # CFLAGS etc are normally written into the wrapper compilers.  This
+  # gives surprising results, e.g. when the user wants to compile their
+  # program without optimization.
+  export MPICHLIB_CFLAGS=${CFLAGS};      unset CFLAGS
+  export MPICHLIB_CXXFLAGS=${CXXFLAGS};  unset CXXFLAGS
+  export MPICHLIB_CPPFLAGS=${CPPFLAGS};  unset CPPFLAGS
+  export MPICHLIB_FFLAGS=${FFLAGS};      unset FFLAGS
+  export MPICHLIB_F90FLAGS=${F90FLAGS};  unset F90FLAGS
+  export MPICHLIB_LDFLAGS=${LDFLAGS};    unset LDFLAGS
+
+  make check
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}/build"
+  make DESTDIR="${pkgdir}" install
+
+  ln -sf mpiexec.hydra "${pkgdir}/opt/mpich/bin/mpiexec"
+  ln -sf mpiexec "${pkgdir}/opt/mpich/bin/mpirun"
+  ln -sf mpiexec.hydra "${pkgdir}/opt/mpich/bin/mpirun.hydra"
+
+  install -D -m644 "${srcdir}/${pkgname}-${pkgver}/COPYRIGHT" "${pkgdir}/usr/share/licenses/mpich/license.txt"
+  install -D -m755 "${srcdir}/${pkgname}.profile" "${pkgdir}/etc/profile.d/mpich.sh"
+
+  mkdir -p "${pkgdir}/etc/ld.so.conf.d"
+  echo /opt/mpich/lib > "${pkgdir}/etc/ld.so.conf.d/mpich.conf"
+}
