@@ -31,6 +31,7 @@ build() {
     mkdir build 
     cd build
 
+    export FFLAGS+=" -fallow-argument-mismatch"
     cmake ../${pkgname}-${pkgver} \
 	-DCMAKE_INSTALL_PREFIX="${pkgdir}"/usr \
 	-DBUILD_SHARED_LIBS=ON \
