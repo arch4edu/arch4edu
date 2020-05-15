@@ -3,7 +3,7 @@ from lilaclib import *
 
 from pyalpm import Handle
 arch = 'x86_64'
-package = 'jre8-openjdk'
+package = 'jre-openjdk'
 dbpath = '/var/lib/archbuild/extra-x86_64/root/var/lib/pacman/'
 gpgpath = '/var/lib/archbuild/extra-x86_64/root/etc/pacman.d/gnupg'
 mirror = 'https://mirrors.tuna.tsinghua.edu.cn/archlinux'
@@ -31,9 +31,7 @@ def pre_build():
     run_cmd(['mv', result.filename, result.filename+'.sig', 'tmp'])
 
     for line in edit_file('PKGBUILD'):
-        if 'java-environment' in line:
-            print(line.replace('>=8', '=8'))
-        elif './configure' in line:
+        if './configure' in line:
             print('  ./configure --with-jdk=/usr/lib/jvm/java-8-openjdk \\')
         else:
             print(line)
