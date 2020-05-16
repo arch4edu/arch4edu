@@ -1,18 +1,21 @@
 # Maintainer: Jed Brown <jed@59A2.org>
 # Contributor: Jed Brown <jed@59A2.org>
 # Contributor: George Eleftheriou <eleftg>
+# Contributor: Heavysink <winstonwu91 at gmail>
 
-pkgname=mpich
+pkgname=mpich-arch4edu
 pkgver=3.3.2
 pkgrel=1
-pkgdesc="An improved implementation of the Message Passing Interface."
+pkgdesc="An improved implementation of the Message Passing Interface (arch4edu version, added upstream fixes)"
 url="https://mpich.org"
-arch=("any")
+arch=("x86_64")
 license=("custom")
 replaces=(mpich2)
 depends=('python2' 'gcc-fortran' 'libxml2' 'openssh' 'numactl' 'pciutils')
 makedepends=('texlive-core' 'sowing')
 optdepends=("java-environment")
+provides=("mpich")
+conflicts=("mpich")
 install="${pkgname}.install"
 source=("http://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
 	    "mpich.profile"
