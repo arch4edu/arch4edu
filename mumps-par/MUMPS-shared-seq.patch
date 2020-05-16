@@ -1,0 +1,42 @@
+Create a shared version of the sequential library, MUST BE LAST IN SERIES
+
+--- libseq/Makefile
++++ libseq/Makefile
+@@ -8,7 +8,7 @@
+ include ../Makefile.inc
+
+-libmpiseq: libmpiseq$(PLAT)$(LIBEXT)
++libmpiseq: libmpiseq$(PLAT)$(LIBEXT) libmpiseq$(PLAT).so
+
+ libmpiseq$(PLAT)$(LIBEXT): mpi.o mpic.o elapse.o
+ 	$(AR)$@ mpi.o mpic.o elapse.o
+
+--- libseq/Makefile
++++ libseq/Makefile
+@@ -13,10 +13,13 @@
+ libmpiseq$(PLAT)$(LIBEXT): mpi.o mpic.o elapse.o
+ 	$(AR)$@ mpi.o mpic.o elapse.o
+ 	$(RANLIB) $@
++libmpiseq$(PLAT).so: mpi.o mpic.o elapse.o
++	$(FC) -shared $^ -Wl,--as-needed -Wl,-soname,libmpiseq$(PLAT).so.$(SONAME_VERSION) -o libmpiseq$(PLAT).so.$(SONAME_VERSION)
++	ln -fs libmpiseq$(PLAT).so.$(SONAME_VERSION) $@
+ .f.o:
+-	$(FC) $(OPTF)              -c $*.f $(OUTF)$*.o
++	$(FC) $(OPTF)              -fPIC -c $*.f $(OUTF)$*.o
+ .c.o:
+-	$(CC) $(OPTC) $(CDEFS) -I. -c $*.c $(OUTC)$*.o
++	$(CC) $(OPTC) $(CDEFS) -I. -fPIC -c $*.c $(OUTC)$*.o
+ 
+ clean:
+ 	$(RM) *.o *$(LIBEXT)
+
+--- Makefile	2015-02-20 19:51:32.021098000 +0100
++++ Makefile	2015-02-20 19:52:13.535854348 +0100
+@@ -57,6 +57,7 @@
+ 
+ libseqneeded:
+ 	(cd libseq; $(MAKE))
++	cp libseq/lib* $(libdir)
+ 
+ # Build the libpord.a library and copy it into $(topdir)/lib
+ $(libdir)/libpord$(PLAT).a:

@@ -16,6 +16,7 @@
 #          Metis/ParMetis and SCOTCH/PT-SCOTCH (ver 6.0 and later) orderings are now available for MUMPS.
 #
 
+SONAME_VERSION=5.3
 SCOTCHDIR  = /usr
 ISCOTCH    = -I$(SCOTCHDIR)/include/scotch
 # You have to choose one among the following two lines depending on
@@ -67,7 +68,7 @@ IORDERINGSC = $(IMETIS) $(IPORD) $(ISCOTCH)
 PLAT    = 
 # Library extension, + C and Fortran "-o" option
 # may be different under Windows
-LIBEXT  = .a
+LIBEXT  = .so
 OUTC    = -o 
 OUTF    = -o 
 # RM : remove files
@@ -87,13 +88,15 @@ RANLIB  = ranlib
 #RANLIB  = echo
 
 # SCALAP should define the SCALAPACK and  BLACS libraries.
-SCALAP  = -lscalapack -llapack
+SCALAP  = -lscalapack -llapack -lblas
 
 # INCLUDE DIRECTORY FOR MPI
 INCPAR = -I/usr/include/openmpi
 
 # LIBRARIES USED BY THE PARALLEL VERSION OF MUMPS: $(SCALAP) and MPI
-LIBPAR = $(SCALAP) -L/usr/lib/openmpi -lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi
+MPIFLIB = -L/usr/lib/openmpi -Wl,-rpath -Wl,/usr/lib/openmpi -Wl,--enable-new-dtags -lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi 
+MPICLIB = -L/usr/lib/openmpi -Wl,-rpath -Wl,/usr/lib/openmpi -Wl,--enable-new-dtags -lmpi
+LIBPAR = $(SCALAP) $(MPIFLIB)
 
 # The parallel version is not concerned by the next two lines.
 # They are related to the sequential library provided by MUMPS,

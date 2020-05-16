@@ -1,0 +1,61 @@
+--- PORD/lib/Makefile
++++ PORD/lib/Makefile
+@@ -24,10 +24,14 @@ OBJS = graph.o gbipart.o gbisect.o ddcre
+ .c.o:
+ 	$(CC) $(COPTIONS) -c $*.c $(OUTC)$*.o
+ 
+-libpord$(LIBEXT):$(OBJS)
++libpord$(PLAT).a:$(OBJS)
+ 	$(AR)$@ $(OBJS)
+ 	$(RANLIB) $@
+ 
++libpord$(PLAT).so: $(OBJS)
++	$(CC) -shared $(OBJS) -Wl,-soname,libpord$(PLAT).so.$(SONAME_VERSION) -o libpord$(PLAT).so.$(SONAME_VERSION) $(OPTL) -Wl,-z,defs
++	ln -fs libpord$(PLAT).so.$(SONAME_VERSION) $@
++
+ clean:
+ 	rm -f *.o
+
+Index: mumps/Makefile
+===================================================================
+--- Makefile
++++ Makefile
+@@ -54,7 +54,7 @@
+ multi_example:	s d c z
+ 	(cd examples ; $(MAKE) multi)
+ 
+-requiredobj: Makefile.inc $(LIBSEQNEEDED) $(libdir)/libpord$(PLAT)$(LIBEXT)
++requiredobj: Makefile.inc $(LIBSEQNEEDED) $(libdir)/libpord$(PLAT).a $(libdir)/libpord$(PLAT).so
+ 
+ # dummy MPI library (sequential version)
+ 
+@@ -62,19 +62,26 @@
+ 	(cd libseq; $(MAKE))
+ 
+ # Build the libpord.a library and copy it into $(topdir)/lib
+-$(libdir)/libpord$(PLAT)$(LIBEXT):
++$(libdir)/libpord$(PLAT).a:
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+ 	  cd $(LPORDDIR); \
+ 	  $(MAKE) CC="$(CC)" CFLAGS="$(OPTC)" AR="$(AR)" RANLIB="$(RANLIB)" OUTC="$(OUTC)" LIBEXT=$(LIBEXT); \
+ 	fi;
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+-	  cp $(LPORDDIR)/libpord$(LIBEXT) $@; \
++	  cp $(LPORDDIR)/libpord$(PLAT).a $@; \
+ 	fi;
+ 
++$(libdir)/libpord$(PLAT).so:
++	if [ "$(LPORDDIR)" != "" ] ; then \
++	cd $(LPORDDIR); make CC="$(CC)" CFLAGS="$(OPTC)" AR="$(AR)" ARFUNCT= RANLIB="$(RANLIB)" libpord$(PLAT).so; fi;
++	if [ "$(LPORDDIR)" != "" ] ; then \
++	cp -a $(LPORDDIR)/libpord*.so* lib/; fi;
++
++
+ clean:
+ 	(cd src; $(MAKE) clean)
+ 	(cd examples; $(MAKE) clean)
+-	(cd $(libdir); $(RM) *$(PLAT)$(LIBEXT))
++	(cd $(libdir); $(RM) *$(PLAT).a *$(PLAT).so*)
+ 	(cd libseq; $(MAKE) clean)
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+ 	  cd $(LPORDDIR); $(MAKE) realclean; \
