@@ -3,7 +3,7 @@
 # Contributor: Lucas H. Gabrielli
 pkgname=mumps-par
 pkgver=5.3.1
-pkgrel=1
+pkgrel=3
 pkgdesc="Sparse solver library using Gaussian elimination, with parmetis implementation"
 url="http://mumps.enseeiht.fr"
 license=("custom")
