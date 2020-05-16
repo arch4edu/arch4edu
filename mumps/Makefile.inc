@@ -150,7 +150,7 @@ LIBOTHERS = -lpthread
 CDEFS = -DAdd_
 
 #COMPILER OPTIONS
-OPTF    = -DALLOW_NON_INIT ${CFLAGS} -fPIC
+OPTF    = -DALLOW_NON_INIT ${CFLAGS} -fPIC -fallow-argument-mismatch
 OPTC    = ${CFLAGS} -fPIC
 OPTL    = ${CFLAGS} -fPIC
 
