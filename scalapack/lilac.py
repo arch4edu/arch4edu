@@ -7,7 +7,7 @@ build_prefix = 'extra-x86_64'
 def pre_build():
     aur_pre_build()
     for line in edit_file('PKGBUILD'):
-        if 'cmake' in line:
+        if 'cmake ..' in line:
             print('export FFLAGS+=" -fallow-argument-mismatch"')
             print(line)
         else:
