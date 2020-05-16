@@ -2,7 +2,7 @@
 
 pkgname=mmg3d
 pkgver=5.4.3
-pkgrel=2
+pkgrel=3
 pkgdesc='Anisotropic tetrahedral remesher and moving mesh generator'
 url="http://www.mmgtools.org/"
 license=('GPL')
@@ -14,8 +14,8 @@ sha256sums=('73fb63616d87094a1fbd0a721ded7e062c7768844e450df4fa34e50dd9924c41')
 
 build () {
   cd "mmg-$pkgver"
-  export CFLAGS+=" -fcommon"
-  export CXXFLAGS+=" -fcommon"
+export CFLAGS+=" -fcommon"
+export CXXFLAGS+=" -fcommon"
 
   cmake \
     -DCMAKE_INSTALL_PREFIX="$pkgdir"/usr \
@@ -29,6 +29,8 @@ build () {
 
 package() {
   cd "mmg-$pkgver"
+export CFLAGS+=" -fcommon"
+export CXXFLAGS+=" -fcommon"
 
   make install
 }
