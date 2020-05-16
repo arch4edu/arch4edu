@@ -16,7 +16,7 @@ makedepends=('texlive-core' 'sowing')
 optdepends=("java-environment")
 provides=("mpich")
 conflicts=("mpich")
-install="${pkgname}.install"
+install="mpich.install"
 source=("http://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
 	    "mpich.profile"
       "0001-Drop-real128.patch"

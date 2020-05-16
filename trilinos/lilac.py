@@ -15,8 +15,6 @@ def pre_build():
             print('export FFLAGS+=" -fallow-argument-mismatch -fallow-invalid-boz"')
             print('export CFLAGS+=" -fcommon"')
             print(line)
-        elif 'make VERBOSE' in line:
-            print('make -j4')
         elif 'make DESTDIR' in line:
             print(line)
             print('rm $pkgdir/usr/lib/libgtest.so')
