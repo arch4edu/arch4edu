@@ -1,11 +1,11 @@
 # Maintainer: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=4.0.4
+pkgver=4.0.6
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
-url="http://qgroundcontrol.org/"
+url="https://github.com/mavlink/qgroundcontrol"
 license=('GPL3')
 
 # Git commit hash for version-specific submodules
@@ -47,6 +47,9 @@ depends=('bzip2'
 		 'qt5-location'
 		 'qt5-svg'
 		 'qt5-graphicaleffects'
+		 'qt5-tools'
+		 'qt5-wayland'
+		 'qt5-x11extras'
 )
 
 makedepends=('git' 'qt5-base' 'qt5-tools' 'qt5-wayland' 'qt5-x11extras')
@@ -60,7 +63,7 @@ source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcont
 		'mavlink-warn-qgc.patch'
 )
 
-sha256sums=('320e1e33a1a8f53564ac9acfba6fd0525cf512a0caf945e788dc633bbe6ba277'
+sha256sums=('7e5d9215c76939a57bda6660191a9494c4e67ad01a2bdad938ff3519c635999d'
             'f3aa1ae178cfa22c4d0bf8c46edc28902ed626a970f0164bd2eba031c9d76432'
             '51b2d5af91e16d6009e73690c62a289dff9004c170e626dc8c322dd49a745c8b'
             'ad96ca7c11864d26047637dc02a0278bbf33997a6f6be37ef1b7ca44669f1149'
