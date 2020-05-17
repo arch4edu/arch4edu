@@ -5,16 +5,16 @@
 pkgbase='distccd-alarm'
 _subarchs=(armv5 armv6h armv7h armv8)
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
-_date=20200228
+_date=20200428
 # inspect source tarball under $name/share/gcc-x.y.z
-pkgver=9.3.0
+pkgver=9.3.0.$_date
 pkgrel=1
 _pkgrel_upstream=1
 #_URL="https://archlinuxarm.org/builder/xtools/$pkgver-$pkgrel"
 _URL="https://archlinuxarm.org/builder/xtools"
 arch=('x86_64')
 license=('GPL' )
-pkgdesc="Toolchain for Arch ARM builds via distcc on x86_64 volunteers"
+pkgdesc="Official toolchain for Arch ARM builds via distcc on x86_64 volunteers"
 url="https://archlinuxarm.org/wiki/Distcc_Cross-Compiling"
 depends=('distcc')
 options=('libtool' 'emptydirs' '!strip')
