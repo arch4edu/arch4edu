@@ -1,6 +1,6 @@
 pkgname=cminpack
 pkgver=1.3.6
-pkgrel=2
+pkgrel=3
 pkgdesc="A C/C++ rewrite of the MINPACK software"
 arch=('i686' 'x86_64')
 url='http://devernay.free.fr/hacks/cminpack/cminpack.html'
@@ -29,3 +29,5 @@ package() {
   cd $srcdir/cminpack-${pkgver}/build
   make install DESTDIR="${pkgdir}"
 }
+export http_proxy=127.0.0.1:8123
+export https_proxy=127.0.0.1:8123
