@@ -1,6 +1,6 @@
 pkgname=voro++
 pkgver=0.4.6
-pkgrel=1
+pkgrel=2
 pkgdesc="A free software library for the computation of three dimensional Voronoi cells."
 arch=('i686' 'x86_64')
 url="http://math.lbl.gov/voro++/"
