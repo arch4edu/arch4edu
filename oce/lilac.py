@@ -7,7 +7,7 @@ build_prefix = 'extra-x86_64'
 time_limit_hours = 8
 def pre_build():
     aur_pre_build()
-    add_depends(['vtk'])
+    add_depends(['vtk','glew'])
     for line in edit_file('PKGBUILD'):
         if 'DOCE_WITH_GL2PS' in line:
             print(line.replace('OFF','ON'))
