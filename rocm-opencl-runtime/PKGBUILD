@@ -5,7 +5,7 @@ _opencl_icd_loader_commit='978b4b3a29a3aebc86ce9315d5c5963e88722d03'
 
 pkgname=rocm-opencl-runtime
 pkgver=3.3.0
-pkgrel=6
+pkgrel=7
 pkgdesc='Radeon Open Compute - OpenCL runtime'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime'
@@ -15,9 +15,11 @@ makedepends=('mesa' 'cmake' 'git' 'rocm-cmake')
 provides=("$pkgname" 'opencl-driver')
 source=("$url/archive/roc-$pkgver.tar.gz"
         "$_opencl_icd_loader_repo/archive/$_opencl_icd_loader_commit.tar.gz"
+        "ret_val-fix.patch::$_opencl_icd_loader_repo/commit/9acc3fcbeadeef27c57d9fb195c4a94fbcf52f66.patch"
         'install_vendor_file.patch')
 sha256sums=('ac6999f1a491ab066286c2bd6adf50f08f831286f56e267879f9f7eced22f98e'
             '0c14bf890bd198ef5a814b5b7ed57b69e890b0c0a1bcfba8fdad996fa1a97fc7'
+            '59bbb5e566c32a55deedb849eb6224c3b196df6fb3a3b1aa7f5b7adb86cd6614'
             'b83de5ea8ae889664ce2725f90c5db8c1c9e98839d75c7743b355d16435dccee')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 _opencl_dirname="$(basename "$_opencl_icd_loader_repo")-$(basename "${source[1]}" .tar.gz)"
@@ -28,6 +30,9 @@ prepare() {
 
     mkdir -p api/opencl/khronos
     mv "$srcdir/$_opencl_dirname" api/opencl/khronos/icd
+
+    cd api/opencl/khronos/icd
+    patch -Np1 -i "$srcdir/ret_val-fix.patch"
 }
 
 build() {
