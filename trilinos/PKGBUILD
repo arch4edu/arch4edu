@@ -6,14 +6,15 @@
 pkgname=trilinos
 pkgver=12.18.1
 _pkgver=${pkgver//./-}
-pkgrel=2
+pkgrel=3
 pkgdesc="algorithms for the solution of large-scale scientific problems"
 arch=('x86_64')
 url="http://trilinos.org"
 license=('LGPL3')
-depends=('python' 'lapack' 'boost' 'netcdf' 'libmatio' 'libx11' 'hdf5-openmpi' 'gtest')
+depends=('boost' 'gtest' 'hdf5-openmpi' 'lapack' 'libmatio' 'libx11' 'netcdf' 'python')
 makedepends=('gcc-fortran' 'perl' 'blas' 'cmake' 'doxygen' 'bc')
-conflicts=()
+provides=(zoltan)
+conflicts=('zoltan')
 checkdepends=('cmake')
 source=("https://github.com/trilinos/Trilinos/archive/trilinos-release-$_pkgver.tar.gz"
         "Makefile.kokkos.patch")
@@ -28,16 +29,11 @@ prepare() {
 
 build() {
     cd Trilinos-trilinos-release-"$_pkgver"
-    if [[ -d build ]]
-    then
-      rm -rf build
-    fi
-
     mkdir -p build
     cd build
 
-    export FFLAGS+=" -fallow-argument-mismatch -fallow-invalid-boz"
-    export CFLAGS+=" -fcommon"
+export FFLAGS+=" -fallow-argument-mismatch -fallow-invalid-boz"
+export CFLAGS+=" -fcommon"
     cmake .. -DTrilinos_ENABLE_ALL_OPTIONAL_PACKAGES:BOOL=ON \
              -DTrilinos_ENABLE_ALL_PACKAGES:BOOL=ON \
              -DTrilinos_ENABLE_PyTrilinos:BOOL=OFF \
@@ -48,7 +44,7 @@ build() {
              -DTPL_ENABLE_HDF5:BOOL=ON \
              -DCMAKE_INSTALL_PREFIX:PATH=/usr \
              -DBUILD_SHARED_LIBS:BOOL=ON
-    make -j4
+    make VERBOSE=1
 }
 
 check() {
@@ -59,6 +55,6 @@ check() {
 package() {
     cd Trilinos-trilinos-release-"$_pkgver"/build
     make DESTDIR="$pkgdir" install
-    rm $pkgdir/usr/lib/libgtest.so
-    rm -rf $pkgdir/usr/include/gtest
+rm $pkgdir/usr/lib/libgtest.so
+rm -rf $pkgdir/usr/include/gtest
 }
