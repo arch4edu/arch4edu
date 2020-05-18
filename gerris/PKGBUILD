@@ -8,7 +8,7 @@ arch=('x86_64')
 url="http://gfs.sourceforge.net"
 license=('GPL3')
 groups=()
-depends=('ffmpeg' 'fftw>=3' 'gsl' 'gts>=0.7.6.121130' 'hypre' 'netcdf-openmpi' 'ode' 'proj' 'python')
+depends=('ffmpeg' 'fftw>=3' 'gsl' 'gts>=0.7.6.121130' 'hypre' 'lis' 'netcdf-openmpi' 'ode' 'proj' 'python')
 
 
 
