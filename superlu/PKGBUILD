@@ -3,7 +3,7 @@
 # Contributor: Stefan Paquay <stefanpaquay@gmail.com>
 pkgname=superlu
 pkgver=5.2.1
-pkgrel=9
+pkgrel=10
 pkgdesc="Set of subroutines to solve a sparse linear system"
 arch=('i686' 'x86_64')
 url="https://github.com/xiaoyeli/superlu/"
