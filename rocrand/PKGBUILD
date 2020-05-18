@@ -1,29 +1,31 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
 pkgver=3.3.0
-pkgrel=1
-pkgdesc="RAND library for HIP programming language"
+pkgrel=2
+pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
-url="https://github.com/ROCmSoftwarePlatform/rocRAND"
+url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocrand'
 license=('MIT')
-makedepends=("hcc>=$pkgver" 'cmake')
-source=("https://github.com/ROCmSoftwarePlatform/rocRAND/archive/rocm-$pkgver.tar.gz")
+depends=('hip-hcc')
+makedepends=('hcc' 'cmake' 'git')
+_git='https://github.com/ROCmSoftwarePlatform/rocRAND'
+source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
 sha256sums=('ba56556671313b784a1301634df6537f3148426b81bec93b3566e71d22b6f4cc')
 
 build() {
-  mkdir -p "$srcdir/build"
-  cd "$srcdir/build"
+  mkdir -p build
+  cd build
 
   # build broken with stack protection
   export CFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CFLAGS")"
   export CXXFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CXXFLAGS")"
   export CPPFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CPPFLAGS")"
 
-  cmake -DCMAKE_BUILD_TYPE=Release \
+  CXX=/opt/rocm/hcc/bin/hcc \
+  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm/rocrand \
+        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
         -DBUILD_TEST=OFF \
-        -DCMAKE_CXX_COMPILER=/opt/rocm/hcc/bin/hcc \
         "$srcdir/rocRAND-rocm-$pkgver"
-
   make
 }
 
@@ -32,9 +34,9 @@ package() {
 
   make DESTDIR="$pkgdir" install
 
-  install -d "$pkgdir/etc/ld.so.conf.d"
-  cat << EOF > "$pkgdir/etc/ld.so.conf.d/rocrand.conf"
+  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocrand.conf" << EOF
 /opt/rocm/hiprand/lib
 /opt/rocm/rocrand/lib
 EOF
+  install -Dm644 "$srcdir/rocRAND-rocm-$pkgver/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
