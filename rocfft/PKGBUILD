@@ -1,32 +1,33 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocfft
-_pkgver=3.3.0
-pkgver="$_pkgver"
+pkgver=3.3.0
 pkgrel=1
-pkgdesc="Next generation FFT implementation for ROCm"
+pkgdesc='Next generation FFT implementation for ROCm'
 arch=('x86_64')
-url="https://github.com/ROCmSoftwarePlatform/rocfft"
+url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocfft'
 license=('MIT')
-depends=('boost' 'fftw')
-makedepends=("hcc>=$pkgver" 'cmake')
-source=("https://github.com/ROCmSoftwarePlatform/rocFFT/archive/rocm-$_pkgver.tar.gz")
+depends=('hip-hcc')
+makedepends=('hcc' 'cmake')
+_git='https://github.com/ROCmSoftwarePlatform/rocFFT'
+source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
 sha256sums=('bbbafcac891ff237c67a3a8fe6e842880ad3c8753b200ecb11f23173ac737e1c')
 
 build() {
-  mkdir -p "$srcdir/build"
-  cd "$srcdir/build"
+  mkdir -p build
+  cd build
 
   # build broken with stack protection
   export CFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CFLAGS")"
   export CXXFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CXXFLAGS")"
   export CPPFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CPPFLAGS")"
 
-  # compile with HCC
-  export CXX="/opt/rocm/hcc/bin/hcc"
-
-  cmake -DCMAKE_BUILD_TYPE=Release \
-        "$srcdir/rocFFT-rocm-$_pkgver"
+  CXX=/opt/rocm/hcc/bin/hcc \
+  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm/rocfft \
+        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
+        -DBUILD_CLIENTS_RIDER=OFF \
+        -DBUILD_CLIENTS_TESTS=OFF \
+        "$srcdir/rocFFT-rocm-$pkgver"
   make
 }
 
@@ -35,8 +36,8 @@ package() {
 
   make DESTDIR="$pkgdir" install
 
-  install -d "$pkgdir/etc/ld.so.conf.d"
-  cat << EOF > "$pkgdir/etc/ld.so.conf.d/rocfft.conf"
+  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocfft.conf" << EOF
 /opt/rocm/rocfft/lib
 EOF
+  install -Dm644 "$srcdir/rocFFT-rocm-$pkgver/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
