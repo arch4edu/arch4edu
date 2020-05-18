@@ -2,13 +2,13 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
 pkgver=4.5.6
-pkgrel=1
+pkgrel=3
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
 license=('custom')
-makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'fltk' 'lapack'
-             'med' 'opencascade' 'cairo' 'texlive-core')
+makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'texlive-core' 'voro++'
+             'fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
 sha256sums=('46eaeb0cdee5822fdaa4b15f92d8d160a8cc90c4565593cfa705de90df2a463f'
@@ -24,26 +24,33 @@ prepare() {
    sed -e "s|http://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
        -i Fltk/helpWindow.cpp
    # remove root of build directory from installation
-   sed -i '/install(TARGETS shared DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}\/api OPTIONAL)/d' CMakeLists.txt
+   sed -e '/install(TARGETS shared DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}\/api OPTIONAL)/d' -i CMakeLists.txt
+   # fix alglib include
+   sed -e '770s_include_include/libalglib_' -i CMakeLists.txt
+   sed -e '919s_include_include/voro++_' -i CMakeLists.txt
+   #sed -e '955s_include_include/mmg/mmg3d_' -i CMakeLists.txt
 
 }
 
 build() {
    cd "${srcdir}/${pkgname}-${pkgver}-source"
+# fix by @xantares for gcc 10
+   export CFLAGS="$CFLAGS -fcommon"
 
    mkdir -p build
 
    cd build
 
    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_SHARED=ON \
-      -DENABLE_PETSC=FALSE .. 
+      -DENABLE_SYSTEM_CONTRIB=ON  -DGMM_INC=0 -DMMG3D_INC=0 \
+      -DENABLE_PETSC=FALSE ..
 
    make
    LC_ALL=C make doc
 }
 
 package_gmsh() {
-   depends=('fltk' 'lapack' 'med' 'opencascade' 'cairo')
+   depends=('fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann')
    optdepends=('gmsh-docs: docs for gmsh'
             'python2: for onelab.py'
             'python: for onelab.py')
