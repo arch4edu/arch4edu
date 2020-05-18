@@ -4,7 +4,7 @@
 
 pkgname=combblas
 pkgver=1.6.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Combinatorial BLAS Library"
 arch=('x86_64')
 url="http://gauss.cs.ucsb.edu/~aydin/CombBLAS/html/"
