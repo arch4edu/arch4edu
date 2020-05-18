@@ -1,0 +1,38 @@
+# Maintainer: Vlad V. Voronenkov <vladvoronenkov at yandex dot ru>
+pkgname=gerris
+pkgver=2013.12.06
+pkgrel=2
+epoch=
+pkgdesc="A system for the solution of the partial differential equations describing fluid flow (CFD)"
+arch=('x86_64')
+url="http://gfs.sourceforge.net"
+license=('GPL3')
+groups=()
+depends=('ffmpeg' 'fftw>=3' 'gsl' 'gts>=0.7.6.121130' 'hypre' 'netcdf-openmpi' 'ode' 'proj' 'python')
+
+
+
+
+source=("http://gerris.dalembert.upmc.fr/gerris/gerris-snapshot.tar.gz")
+noextract=()
+md5sums=('7814c664fcc7a4d3b457405384c22c5b')
+
+build() {
+	cd "gerris-snapshot-131206"
+export CFLAGS+=" -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H"
+export CPPFLAGS+=" -I/usr/include/hypre"
+export FFLAGS+=" -fallow-argument-mismatch"
+	./configure --prefix=/usr --enable-mpi
+sed -i "s/-Werror-implicit-function-declaration//g" Makefile
+sed -i "s/-Werror-implicit-function-declaration//g" src/Makefile
+sed -i "s/-Werror-implicit-function-declaration//g" modules/Makefile
+sed -i "s/LIS_MATRIX_CRS/LIS_MATRIX_CSR/g" modules/lis.c
+	make
+}
+
+
+
+package() {
+	cd "gerris-snapshot-131206"
+	make DESTDIR="$pkgdir/" install
+}
