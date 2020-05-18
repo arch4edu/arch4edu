@@ -17,7 +17,7 @@ optdepends=("java-environment")
 provides=("mpich")
 conflicts=("mpich")
 install="mpich.install"
-source=("http://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+source=("http://www.mpich.org/static/downloads/${pkgver}/mpich-${pkgver}.tar.gz"
 	    "mpich.profile"
       "0001-Drop-real128.patch"
       "4320.patch")
@@ -29,7 +29,7 @@ sha256sums=('4bfaf8837a54771d3e4922c84071ef80ffebddbb6971a006038d91ee7ef959b9'
 options=('!libtool')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${srcdir}/mpich-${pkgver}
   patch -Np0 < ../0001-Drop-real128.patch
   patch -Np0 < ../4320.patch
   export MPICHLIB_CFLAGS="${CFLAGS}";      unset CFLAGS
@@ -51,7 +51,7 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/${pkgname}-${pkgver}/build
+  cd ${srcdir}/mpich-${pkgver}/build
 
   # CFLAGS etc are normally written into the wrapper compilers.  This
   # gives surprising results, e.g. when the user wants to compile their
@@ -67,15 +67,15 @@ check() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}/build"
+  cd "${srcdir}/mpich-${pkgver}/build"
   make DESTDIR="${pkgdir}" install
 
   ln -sf mpiexec.hydra "${pkgdir}/opt/mpich/bin/mpiexec"
   ln -sf mpiexec "${pkgdir}/opt/mpich/bin/mpirun"
   ln -sf mpiexec.hydra "${pkgdir}/opt/mpich/bin/mpirun.hydra"
 
-  install -D -m644 "${srcdir}/${pkgname}-${pkgver}/COPYRIGHT" "${pkgdir}/usr/share/licenses/mpich/license.txt"
-  install -D -m755 "${srcdir}/${pkgname}.profile" "${pkgdir}/etc/profile.d/mpich.sh"
+  install -D -m644 "${srcdir}/mpich-${pkgver}/COPYRIGHT" "${pkgdir}/usr/share/licenses/mpich/license.txt"
+  install -D -m755 "${srcdir}/mpich.profile" "${pkgdir}/etc/profile.d/mpich.sh"
 
   mkdir -p "${pkgdir}/etc/ld.so.conf.d"
   echo /opt/mpich/lib > "${pkgdir}/etc/ld.so.conf.d/mpich.conf"
