@@ -1,7 +1,7 @@
 # Maintainer: Heavysink <winstonwu91 at gmail>
 pkgname=lis
 pkgver=2.0.21
-pkgrel=1
+pkgrel=2
 pkgdesc="Library of Iterative Solvers for linear systems"
 arch=(i686 x86_64)
 url="http://www.ssisc.org/lis"
