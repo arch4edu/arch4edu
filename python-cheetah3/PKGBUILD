@@ -3,7 +3,7 @@
 pkgbase=python-cheetah3
 pkgname=('python-cheetah3' 'python2-cheetah3')
 _name=Cheetah3
-pkgver=3.2.4
+pkgver=3.2.5
 pkgrel=4
 pkgdesc="A Python powered template engine and code generator"
 arch=(any)
@@ -12,7 +12,7 @@ license=(MIT)
 makedepends=('python-setuptools'
              'python2-setuptools')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha512sums=('f991865d384cbc7fe287c5d89d9990bfdde205df64f2c9cf8df17427ce865701e4fb2c35e7d52753b40ac170a56b8d071e7ae8bff83cbefe8ec662099fbe1340')
+sha512sums=('1431095b0027ec5789bf6ce9488587b599c42f394e3f1f8c53a3c37efc3f0052580e3b1e00cf5f5f682ed5b37ec3eac35f5b578c05d64e2b9592385fd089aabe')
 
 prepare() {
   cp -a Cheetah3-${pkgver}{,-py2}
