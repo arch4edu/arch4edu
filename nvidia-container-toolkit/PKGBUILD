@@ -3,13 +3,12 @@
 
 pkgname=nvidia-container-toolkit
 
-pkgver=1.0.5
-pkgrel=3
-_runtime_pkgver=3.1.4
+pkgver=1.1.1
+pkgrel=1
 
 pkgdesc='NVIDIA container runtime toolkit'
 arch=('x86_64')
-url='https://github.com/NVIDIA/nvidia-container-runtime'
+url='https://github.com/NVIDIA/container-toolkit'
 license=('BSD')
 
 makedepends=('go')
@@ -17,33 +16,32 @@ depends=('libnvidia-container-tools' 'docker>=1:19.03')
 conflicts=('nvidia-container-runtime-hook' 'nvidia-container-runtime<2.0.0')
 replaces=('nvidia-container-runtime-hook')
 
-source=("https://github.com/NVIDIA/nvidia-container-runtime/archive/v${_runtime_pkgver}.tar.gz")
-sha256sums=('32bd9f49a1392253dccbfebc850b980b6d7cbd1b2621b06ced4fbe952c918038')
+source=("https://github.com/NVIDIA/container-toolkit/archive/v${pkgver}.tar.gz")
+sha256sums=('486bb5560e4eb15b45dacbd77f2da0148eb51cfcb0157ff1e0151feeecb439d8')
 
-_srcdir="nvidia-container-runtime-${_runtime_pkgver}"
-
-prepare() {
-  mkdir -p gopath/src
-  ln -rTsf "${_srcdir}/toolkit/${pkgname}" "gopath/src/$pkgname"
-}
+_srcdir="container-toolkit-${pkgver}"
+_golang_pkg_path="github.com/NVIDIA/container-toolkit/pkg"
 
 build() {
-  GOPATH="${srcdir}/gopath" go build -v \
-                            -buildmode=pie \
-                            -gcflags "all=-trimpath=${PWD}" \
-                            -asmflags "all=-trimpath=${PWD}" \
-                            -ldflags "-extldflags ${LDFLAGS}" \
-                            "$pkgname"
-                            # -trimpath \  # only go > 1.13
-                            #-ldflags " -s -w -extldflags=-Wl,-z,now,-z,relro" \
+  cd "${_srcdir}"
+  GOPATH="${srcdir}/gopath" \
+  go build -v \
+    -buildmode=pie \
+    -gcflags "all=-trimpath=${PWD}" \
+    -asmflags "all=-trimpath=${PWD}" \
+    -ldflags "-s -w -extldflags ${LDFLAGS}" \
+    -o "${pkgname}" \
+    "${_golang_pkg_path}"
+    # -trimpath \  # only go > 1.13
+    #-ldflags " -s -w -extldflags=-Wl,-z,now,-z,relro" \
 }
 
 package() {
-  install -D -m755 "${srcdir}/${pkgname}" "$pkgdir/usr/bin/${pkgname}"
+  install -D -m755 "${_srcdir}/${pkgname}" "$pkgdir/usr/bin/${pkgname}"
   pushd "$pkgdir/usr/bin/"
   ln -sf "${pkgname}" "nvidia-container-runtime-hook"
   popd
-  install -D -m644 "${_srcdir}/toolkit/config.toml.centos" "$pkgdir/etc/nvidia-container-runtime/config.toml"
+  install -D -m644 "${_srcdir}/config/config.toml.centos" "$pkgdir/etc/nvidia-container-runtime/config.toml"
 
   install -D -m644 "${_srcdir}/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
