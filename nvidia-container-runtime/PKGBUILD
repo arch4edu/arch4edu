@@ -3,7 +3,7 @@
 
 pkgname=nvidia-container-runtime
 
-pkgver=3.1.4
+pkgver=3.2.0
 pkgrel=1
 
 pkgdesc='NVIDIA opencontainer runtime fork to expose GPU devices to containers.'
@@ -15,13 +15,13 @@ makedepends=('go')
 depends=('libseccomp' 'nvidia-container-toolkit<2.0.0')
 
 source=("https://github.com/NVIDIA/${pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('32bd9f49a1392253dccbfebc850b980b6d7cbd1b2621b06ced4fbe952c918038')
+sha256sums=('f1eab16b3eb0c5e0bf6b51811485da081635ca39c81305cf149c53c0e7951100')
 
 _srcdir="${pkgname}-${pkgver}"
 
 prepare() {
   mkdir -p gopath/src
-  ln -rTsf "${_srcdir}/runtime/src" "gopath/src/${pkgname}"
+  ln -rTsf "${_srcdir}/src" "gopath/src/${pkgname}"
 }
 
 build() {
