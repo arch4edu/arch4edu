@@ -4,7 +4,7 @@ pkgdesc="ROS - Package modeling the build-time dependencies for generating langu
 url='https://github.com/ros/message_generation'
 
 pkgname='ros-melodic-message-generation'
-pkgver='0.4.0'
+pkgver='0.4.1'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 pkgrel=2
 license=('BSD')
@@ -34,7 +34,7 @@ depends=(
 
 _dir="message_generation-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/message_generation/archive/${pkgver}.tar.gz")
-sha256sums=('e47304c394acd6594403f10cfd52930cab6fb436213839e91bedad5b90a4c186')
+sha256sums=('90ab9649f594d5d007d735bd056f777e5f72bfb4f11f2b891fa5c5139f0a5e2f')
 
 build() {
 	# Use ROS environment variables.
