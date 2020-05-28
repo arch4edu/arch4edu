@@ -3,16 +3,16 @@
 pkgdesc="ROS - actionlib_msgs defines the common messages to interact with an action server and an action client."
 url='https://wiki.ros.org/actionlib_msgs'
 
-pkgname='ros-melodic-actionlib-msgs'
+pkgname='ros-noetic-actionlib-msgs'
 pkgver='1.12.7'
-arch=('any')
+arch=("x86_64")
 pkgrel=4
 license=('BSD')
 
 ros_makedepends=(
-	ros-melodic-message-generation
-	ros-melodic-std-msgs
-	ros-melodic-catkin
+	ros-noetic-message-generation
+	ros-noetic-std-msgs
+	ros-noetic-catkin
 )
 
 makedepends=(
@@ -22,9 +22,9 @@ makedepends=(
 )
 
 ros_depends=(
-	ros-melodic-message-runtime
-	ros-melodic-message-generation
-	ros-melodic-std-msgs
+	ros-noetic-message-runtime
+	ros-noetic-message-generation
+	ros-noetic-std-msgs
 )
 
 depends=(
@@ -38,21 +38,17 @@ sha256sums=('a9d8c7655d426afe8bc2b021e0bc8ce25dae70ca35b985a0ec0b8b5768722bd4')
 build() {
 	# Use ROS environment variables.
 	source /usr/share/ros-build-tools/clear-ros-env.sh
-	[ -f /opt/ros/melodic/setup.bash ] && source /opt/ros/melodic/setup.bash
+	[ -f /opt/ros/noetic/setup.bash ] && source /opt/ros/noetic/setup.bash
 
 	# Create the build directory.
 	[ -d ${srcdir}/build ] || mkdir ${srcdir}/build
 	cd ${srcdir}/build
 
-	# Fix Python2/Python3 conflicts.
-	/usr/share/ros-build-tools/fix-python-scripts.sh -v 3 ${srcdir}/${_dir}
-
 	# Build the project.
 	cmake ${srcdir}/${_dir} \
-		-DCMAKE_BUILD_TYPE=Release \
 		-DCATKIN_BUILD_BINARY_PACKAGE=ON \
-		-DCMAKE_INSTALL_PREFIX=/opt/ros/melodic \
-		-DPYTHON_EXECUTABLE=/usr/bin/python3 \
+		-DCMAKE_INSTALL_PREFIX=/opt/ros/noetic \
+		-DPYTHON_EXECUTABLE=/usr/bin/python \
 		-DSETUPTOOLS_DEB_LAYOUT=OFF
 	make
 }
