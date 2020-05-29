@@ -4,8 +4,8 @@
 
 pkgname=crosstool-ng-git
 epoch=1
-pkgver=1.24.0.r105.g5659366b
-pkgrel=2
+pkgver=1.24.0.r107.gac16f40b
+pkgrel=1
 pkgdesc="crosstool-NG aims at building toolchains."
 arch=('i686' 'x86_64')
 url="http://crosstool-ng.org/"
@@ -14,7 +14,7 @@ depends=('ncurses' 'make')
 makedepends=('git' 'flex' 'bison' 'gperf' 'help2man' 'unzip' 'lzip' "unzip")
 provides=('crosstool-ng')
 conflicts=('crosstool-ng')
-source=('git://github.com/crosstool-ng/crosstool-ng')
+source=('git+https://github.com/crosstool-ng/crosstool-ng')
 md5sums=('SKIP')
 
 pkgver() {
@@ -26,8 +26,8 @@ pkgver() {
 prepare () {
 	cd crosstool-ng
 
-	# binutils 2.33.1 -- https://aur.archlinux.org/packages/crosstool-ng-git/#comment-714971
-	git pull origin pull/1268/head
+	# gcc 10.x -- https://aur.archlinux.org/packages/crosstool-ng-git/#comment-745190
+	git pull origin pull/1338/head
 }
 
 build () {
