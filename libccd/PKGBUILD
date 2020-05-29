@@ -2,7 +2,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=libccd
 pkgver=2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for collision detection between two convex shapes."
 arch=('i686' 'x86_64')
 url='https://github.com/danfis/libccd'
