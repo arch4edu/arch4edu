@@ -4,7 +4,7 @@
 
 pkgname=octomap
 pkgver=1.9.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Efficient probabilistic 3D mapping framework based on octrees"
 arch=('i686' 'x86_64')
 url="http://octomap.github.com/"
