@@ -1,18 +1,23 @@
 # Maintainer:  Yigit Dallilar <yigit.dallilar@gmail.com>
 
 pkgname=heasoft
-pkgver=6.27.1
+pkgver=6.27.2
 pkgrel=1
 # _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
-_mod='_no_xspec_modeldata'
+#_mod='_no_xspec_modeldata'
 pkgdesc="NASA high energy astrophysics library"
 makedepends=("glibc" "gcc-fortran" "perl" "python-numpy")
 depends=("ncurses" "readline" "libxpm" "libidn")
+optdepends=("python-numpy: python binding")
 url="https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/"
 arch=('x86_64')
 license=('NASA' 'GPL')
 source=("https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/${pkgname}-${pkgver}src${_mod}.tar.gz")
-sha256sums=('6186f518a68397a10d3bbd0ecb624e583c213a372b2d9db01f41d8e0ca874c9a')
+
+# You could use below to get offical md5
+# curl -s ${source}.md5  | awk '{print "md5sums=(", $1, ")"}'
+md5sums=( 67ca90f14d5ac1f99b4c1f510839d7ac )
+
 install="${pkgname}.install"
 
 build() {
