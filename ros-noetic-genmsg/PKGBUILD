@@ -1,12 +1,12 @@
 # Script generated with import_catkin_packages.py.
 # For more information: https://github.com/bchretien/arch-ros-stacks.
 pkgdesc="ROS - Standalone Python library for generating ROS message and service data structures for various languages."
-url='https://www.wiki.ros.org/genmsg'
+url='https://wiki.ros.org/genmsg'
 
 pkgname='ros-noetic-genmsg'
 pkgver='0.5.16'
 arch=("x86_64")
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
