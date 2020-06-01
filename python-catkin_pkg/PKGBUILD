@@ -1,20 +1,20 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 
-pkgbase='python-catkin_pkg'
 pkgname=('python-catkin_pkg')
-_module='catkin_pkg'
 pkgver='0.4.20'
-pkgrel=1
-pkgdesc="catkin package library"
-url="http://wiki.ros.org/catkin_pkg"
+pkgrel=2
+pkgdesc='Standalone Python library for the catkin package system'
+arch=('any')
+url='https://github.com/ros-infrastructure/catkin_pkg'
+license=('BSD')
 depends=('python' 'python-argparse' 'python-dateutil' 'python-docutils' 'python-pyparsing')
+makedepends=('python-setuptools')
 provides=('python-catkin-pkg')
 conflicts=('python2-catkin_pkg' 'python-catkin-pkg')
-makedepends=('python-setuptools')
-license=('BSD')
-arch=('any')
-source=("https://files.pythonhosted.org/packages/source/${_module::1}/$_module/$_module-$pkgver.tar.gz")
-sha256sums=('c8ea11c2785d8b9fe4553ef3df2da5a5e1d2721c50a735d4379b837d0679b01a')
+source=("https://github.com/ros-infrastructure/catkin_pkg/archive/${pkgver}.tar.gz")
+sha256sums=('4f3dd4dd08360205da899610a4296d017bdef48a4c3e6e15923e6c04a2d35bee')
+
+_module='catkin_pkg'
 
 build() {
     cd "${srcdir}/${_module}-${pkgver}"
