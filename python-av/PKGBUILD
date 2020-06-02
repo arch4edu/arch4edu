@@ -5,7 +5,7 @@ _name=${pkgname#python-}
 pkgdesc="Pythonic bindings for FFmpeg"
 url="https://docs.mikeboers.com/pyav/"
 
-pkgver=8.0.1
+pkgver=8.0.2
 pkgrel=0
 
 arch=("x86_64" "i686")
@@ -22,7 +22,7 @@ depends=(
 )
 
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha256sums=("27939405a78dbbb6b06e452fe505e12f30c32c6967ef164abbefa9525384dad3")
+sha256sums=("a3bba6bf68766b8a1a057f28869c7078cf0a1ec3207c7788c2ce8fe6f6bd8267")
 
 build() {
     cd "${srcdir}"/${_name}-${pkgver}
