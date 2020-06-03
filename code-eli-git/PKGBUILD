@@ -1,8 +1,9 @@
-# Contributor: Max Devaine <max@devaine.cz>
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Contributor: Max Devaine <max@devaine.cz>
+
 pkgname=code-eli-git
-pkgver=r821.f9ff74f
-pkgrel=3
+pkgver=r826.b6e1bd3
+pkgrel=2
 pkgdesc='Collection of C++ libraries that provide a variety of functionalities.'
 arch=('i686' 'x86_64')
 url='https://github.com/ramcdona/Code-Eli'
@@ -10,18 +11,23 @@ license=('EPL 1.0')
 depends=('eigen')
 optdepends=('cpptest: unit tests'
             'doxygen: documentation')
-makedepends=('cmake' 'git')
+makedepends=('cmake' 'doxygen' 'git')
 _name=Code-Eli
 provides=('code-eli')
-source=("git+https://github.com/ramcdona/Code-Eli.git")
-md5sums=('SKIP')
+source=("git+https://github.com/ramcdona/Code-Eli.git"
+        "exponent.patch::https://patch-diff.githubusercontent.com/raw/ramcdona/Code-Eli/pull/8.patch")
+md5sums=('SKIP'
+         'SKIP')
 
 pkgver() {
   cd "$_name"
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-_buildtype="Release"
+prepare() {
+  cd "${srcdir}/${_name}"
+  patch --forward --strip=1 --input="${srcdir}/exponent.patch"
+}
 
 build() {
 
@@ -29,22 +35,15 @@ build() {
   mkdir -p "${srcdir}/${_name}/build"
   cd "${srcdir}/${_name}/build"
 
-  msg "Starting CMake (build type: ${_buildtype})"
-
   cmake .. \
-    -DCMAKE_BUILD_TYPE=${_buildtype} \
     -DCMAKE_INSTALL_PREFIX='/usr'
 
-  msg "Building the project"
   make
-
 }
 
 package() {
 
   cd "${srcdir}/${_name}"
-
-  msg "Installing files"
 
   mkdir -p "${pkgdir}/usr/include/eli"
   # include
@@ -52,5 +51,4 @@ package() {
 
   cd "${srcdir}/${_name}/build"
   cp -r include/eli/* ${pkgdir}/usr/include/eli
-
 }
