@@ -3,15 +3,15 @@
 # Contributor: Ranieri Althoff <ranisalt+aur at gmail.com>
 
 pkgname=rocm-cmake
-pkgver=3.3.0
-pkgrel=2
+pkgver=3.5.0
+pkgrel=1
 pkgdesc='CMake modules for common build tasks needed for the ROCm software stack'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/rocm-cmake'
 license=('MIT')
 makedepends=('cmake')
-source=("$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('76ed3ee8e56cf3246011cf7723c2abda539e1136e7e7f6909bfa45d268b8644f')
+source=("${pkgname}-${pkgver}.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
+sha256sums=('5fc09e168879823160f5fdf4fd1ace2702d36545bf733e8005ed4ca18c3e910f')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
 build() {
@@ -20,4 +20,6 @@ build() {
 
 package() {
   make DESTDIR="$pkgdir" install
+
+  install -Dm644 "$_dirname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
