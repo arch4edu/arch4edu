@@ -6,7 +6,7 @@
 pkgname=trilinos
 pkgver=12.18.1
 _pkgver=${pkgver//./-}
-pkgrel=3
+pkgrel=4
 pkgdesc="algorithms for the solution of large-scale scientific problems"
 arch=('x86_64')
 url="http://trilinos.org"
@@ -17,13 +17,16 @@ provides=(zoltan)
 conflicts=('zoltan')
 checkdepends=('cmake')
 source=("https://github.com/trilinos/Trilinos/archive/trilinos-release-$_pkgver.tar.gz"
-        "Makefile.kokkos.patch")
+        "Makefile.kokkos.patch"
+        "Seacas.patch")
 sha256sums=('7d2e1a1a3e2d2ce78bb248c63411fed5007c827b87cadee3d13c1a45c09a89cf'
-            '64130011dd70f3be1133c0943be458a7d4f6fa799e6bd47a6294300ced6d827a')
+            '64130011dd70f3be1133c0943be458a7d4f6fa799e6bd47a6294300ced6d827a'
+            '0e2f10b7ba4f7349eaef6bff111cda6de6d216ab417e24bf0b342711117a7374')
 
 prepare() {
     cd Trilinos-trilinos-release-12-18-1
     patch --forward --strip=1 --input="${srcdir}/Makefile.kokkos.patch"
+    patch --forward --strip=1 --input="${srcdir}/Seacas.patch"
 }
 
 

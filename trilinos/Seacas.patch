@@ -1,0 +1,14 @@
+diff --unified --recursive --text Trilinos-trilinos-release-12-18-1.orig/packages/seacas/CMakeLists.txt Trilinos-trilinos-release-12-18-1.new/packages/seacas/CMakeLists.txt
+--- Trilinos-trilinos-release-12-18-1.orig/packages/seacas/CMakeLists.txt	2020-06-05 00:42:08.312487932 +0200
++++ Trilinos-trilinos-release-12-18-1.new/packages/seacas/CMakeLists.txt	2020-06-05 00:43:42.822501254 +0200
+@@ -85,7 +85,10 @@
+       )
+     SET(CMAKE_Fortran_LINK_EXECUTABLE empty)
+   ENDIF()
++ELSE()
++  set (CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fallow-argument-mismatch -fallow-invalid-boz")
+ ENDIF()
++set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcommon")
+ 
+ ASSERT_DEFINED(TPL_ENABLE_Pthread)
+ IF (SEACASExodus_ENABLE_THREADSAFE AND NOT TPL_ENABLE_Pthread)
