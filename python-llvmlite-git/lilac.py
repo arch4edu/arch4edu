@@ -3,18 +3,13 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'github': 'numba/llvmlite'}, {'alias': 'python'}]
-repo_depends = ['llvm8', ('llvm8', 'llvm8-libs')]
 build_prefix = 'extra-x86_64'
 
 def pre_build():
     aur_pre_build()
 
     for line in edit_file('PKGBUILD'):
-        if line.startswith('depends=('):
-            print(line.replace('llvm', 'llvm8'))
-        elif line.startswith('makedepends=('):
-            print(line.replace('llvm', 'llvm8'))
-        elif line.startswith('pkgname=(python-llvmlite-git python2-llvmlite-git)'):
+        if line.startswith('pkgname=(python-llvmlite-git python2-llvmlite-git)'):
             print('pkgname=python-llvmlite-git')
         else:
             print(line)
