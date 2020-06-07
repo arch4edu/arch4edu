@@ -6,7 +6,7 @@ update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build
-makepkg_args = ['--nocheck']
+time_limit_hours = 4
 
 if __name__ == '__main__':
     single_main(build_prefix)
