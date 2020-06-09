@@ -3,7 +3,7 @@
 
 pkgname=ompl
 pkgver=1.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="The Open Motion Planning Library (OMPL) consists of many state-of-the-art sampling-based motion planning algorithms"
 arch=('i686' 'x86_64')
 url="http://ompl.kavrakilab.org/"
