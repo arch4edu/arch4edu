@@ -1,0 +1,12 @@
+*** roctracer-rocm-3.5.0/test/hsa/test/ctrl/test_kernel.h.bak	2020-06-06 17:08:16.671921895 +0200
+--- roctracer-rocm-3.5.0/test/hsa/test/ctrl/test_kernel.h	2020-06-06 17:08:30.281954825 +0200
+***************
+*** 23,28 ****
+--- 23,29 ----
+  #ifndef TEST_CTRL_TEST_KERNEL_H_
+  #define TEST_CTRL_TEST_KERNEL_H_
+  
++ #include <string>
+  #include <string.h>
+  #include <stdint.h>
+  #include <map>
