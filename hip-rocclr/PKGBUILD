@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-rocclr
 pkgver=3.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
