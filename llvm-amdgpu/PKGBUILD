@@ -3,7 +3,7 @@
 pkgname=llvm-amdgpu
 pkgdesc='Radeon Open Compute - LLVM toolchain (llvm, clang, lld)'
 pkgver=3.5.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/llvm-project'
 license=('custom:Apache 2.0 with LLVM Exception')
@@ -25,6 +25,7 @@ build() {
     fi
 
     cmake -DCMAKE_INSTALL_PREFIX='/opt/rocm/llvm' \
+          -DCMAKE_BUILD_TYPE=Release \
           -DLLVM_HOST_TRIPLE=$CHOST \
           -DLLVM_BUILD_UTILS=ON \
           -DLLVM_ENABLE_BINDINGS=OFF \
