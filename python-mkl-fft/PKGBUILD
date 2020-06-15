@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=python-mkl-fft
 _pkgname=mkl_fft
-pkgver=1.0.14
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="NumPy-based Python interface to Intel (R) MKL FFT functionality"
 arch=('x86_64')

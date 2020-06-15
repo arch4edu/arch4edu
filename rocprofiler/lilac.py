@@ -3,7 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
-repo_depends = ['python-cppheaderparser', 'hsa-rocr']
+repo_depends = ['python-cppheaderparser', 'hsa-rocr', 'roctracer']
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
 post_build = aur_post_build

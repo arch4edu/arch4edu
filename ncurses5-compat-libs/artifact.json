@@ -1,0 +1,49 @@
+{
+  "total_count": 4,
+  "artifacts": [
+    {
+      "id": 8487147,
+      "node_id": "MDg6QXJ0aWZhY3Q4NDg3MTQ3",
+      "name": "ncurses5-compat-libs",
+      "size_in_bytes": 230138,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487147",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487147/zip",
+      "expired": false,
+      "created_at": "2020-06-13T17:34:03Z",
+      "updated_at": "2020-06-13T17:34:04Z"
+    },
+    {
+      "id": 8487148,
+      "node_id": "MDg6QXJ0aWZhY3Q4NDg3MTQ4",
+      "name": "ncurses5-compat-libs.22bf9b80-be1e-4ab8-ba2c-70f1d88a6b02",
+      "size_in_bytes": 10,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487148",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487148/zip",
+      "expired": false,
+      "created_at": "2020-06-13T17:34:03Z",
+      "updated_at": "2020-06-13T17:34:04Z"
+    },
+    {
+      "id": 8487149,
+      "node_id": "MDg6QXJ0aWZhY3Q4NDg3MTQ5",
+      "name": "ncurses5-compat-libs.log",
+      "size_in_bytes": 290593,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487149",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487149/zip",
+      "expired": false,
+      "created_at": "2020-06-13T17:34:03Z",
+      "updated_at": "2020-06-13T17:34:04Z"
+    },
+    {
+      "id": 8487150,
+      "node_id": "MDg6QXJ0aWZhY3Q4NDg3MTUw",
+      "name": "ncurses5-compat-libs.patch",
+      "size_in_bytes": 584,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487150",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8487150/zip",
+      "expired": false,
+      "created_at": "2020-06-13T17:34:03Z",
+      "updated_at": "2020-06-13T17:34:04Z"
+    }
+  ]
+}

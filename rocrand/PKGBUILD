@@ -1,28 +1,23 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
-pkgver=3.3.0
-pkgrel=2
+pkgver=3.5.0
+pkgrel=1
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocrand'
 license=('MIT')
-depends=('hip-hcc')
-makedepends=('hcc' 'cmake' 'git')
+depends=('hip-rocclr')
+makedepends=('cmake' 'git')
 _git='https://github.com/ROCmSoftwarePlatform/rocRAND'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('ba56556671313b784a1301634df6537f3148426b81bec93b3566e71d22b6f4cc')
+sha256sums=('592865a45e7ef55ad9d7eddc8082df69eacfd2c1f3e9c57810eb336b15cd5732')
 
 build() {
   mkdir -p build
   cd build
 
-  # build broken with stack protection
-  export CFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CFLAGS")"
-  export CXXFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CXXFLAGS")"
-  export CPPFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CPPFLAGS")"
-
-  CXX=/opt/rocm/hcc/bin/hcc \
-  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm/rocrand \
+  CXX=/opt/rocm/hip/bin/hipcc \
+  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
         -DBUILD_TEST=OFF \
         "$srcdir/rocRAND-rocm-$pkgver"

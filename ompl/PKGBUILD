@@ -2,52 +2,56 @@
 # Former maintainer: Sven Schneider <archlinux.sandmann@googlemail.com>
 
 pkgname=ompl
-pkgver=1.4.2
-pkgrel=4
+pkgver=1.5.0
+pkgrel=2
 pkgdesc="The Open Motion Planning Library (OMPL) consists of many state-of-the-art sampling-based motion planning algorithms"
 arch=('i686' 'x86_64')
 url="http://ompl.kavrakilab.org/"
 license=('BSD')
 conflicts=('ros-melodic-ompl' 'ompl-git')
 replaces=('ros-melodic-ompl' 'ompl-git')
-depends=('boost-libs' 'python' 'python-matplotlib' 'eigen')
-makedepends=('boost' 'cmake')
-optdepends=('py++: Python binding'
-            'ode: Plan using the Open Dynamics Engine')
-source=(https://github.com/ompl/ompl/archive/${pkgver}.tar.gz "boost-fix.patch")
-sha512sums=(67cd99ee80b2c74a35eb54ce1ed4faf19fafc58843d9a9eaf29d28ef0707623517ccf9571af4af094455309950ea8f38d56f5c04d963f5e7a2410a7638e6e5fa
-5f61e2a4410b8bfd77eb90c85a600c46c201a770957c4cd815e37c8ccd5ae033e9d453d3e1a38d4f0c227e93024ba5c1c1ea86e5d50c6614a83f66705f90b64a)
-
-prepare() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -uN demos/PlannerData.cpp ../boost-fix.patch || return 1
-
-  rm -rf build
-  mkdir build
-}
+depends=('boost-libs')
+makedepends=('boost' 'cmake' 'ninja' 'pkgconf' 'eigen')
+optdepends=('python: Python bindings'
+            'py++: Python bindings'
+            'ode: Plan using the Open Dynamics Engine'
+            'pypy: Speed up generating Python bindings'
+            'spot: Used for constructing finite automata from LTL formulae'
+            'morse-simulator-git: MORSE simulation engine OMPL plugin'
+            'triangle: Used to create triangular decompositions of polygonal 2D environments'
+            'flann: Additional nearest-neighbor query backend'
+            'python-numpy: Python bindings'
+            'r: Running Planner Arena locally'
+            'castxml: Python bindings'
+            'pygccxml: Python bindings')
+source=(https://github.com/ompl/ompl/archive/${pkgver}.tar.gz)
+sha512sums=(a300682fa0af40768c93e44b819c677b6121812e4f968ad89b5ae4044f3171a7febca63fa5645f2ad0f99ec3dfb3b02fe8c7443c4e389bf19a4a4bc9c7a5d013)
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}/build"
+  # NOTE: To get Python bindings, you currently need to install pyplusplus through pip3. The AUR
+  # py++ package will *not* work. Hopefully that will get fixed soon...
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  mkdir -p build
+  cd build
 
-  cmake -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=lib \
-    -DPYTHON_EXEC=/usr/bin/python \
-    -DCMAKE_CXX_FLAGS=-D_POSIX_VERSION \
-    -DOMPL_REGISTRATION=Off ..
-  make
+  # NOTE: -march=native causes test failures by slowing down PRM and PRMstar for unknown reasons. As
+  # such, we currently remove it from CXXFLAGS if it's present
+  CXXFLAGS=$(echo $CXXFLAGS | sed 's/-march=native//g')
+  cmake -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DOMPL_REGISTRATION=Off ..
+  cmake --build .
 }
 
 check() {
   cd "${srcdir}/${pkgname}-${pkgver}/build"
-  make test
+  ctest
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-
   cd build
-  make DESTDIR=${pkgdir} install
+  DESTDIR=${pkgdir} ninja install
 }

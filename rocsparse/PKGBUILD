@@ -1,39 +1,26 @@
 # Maintainer: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocsparse
-_pkgver=3.3.0
-pkgver="$_pkgver"
+pkgver=3.5.0
 pkgrel=1
-pkgdesc="Next generation SPARSE implementation for ROCm platform."
+pkgdesc='BLAS for sparse computation on top of ROCm'
 arch=('x86_64')
-url="https://github.com/ROCmSoftwarePlatform/rocSPARSE"
-license=('custom:NCSAOSL')
-depends=('hcc' 'hip')
-makedepends=('cmake' 'hcc' 'python2' 'rocminfo')
-source=("https://github.com/ROCmSoftwarePlatform/rocSPARSE/archive/rocm-$_pkgver.tar.gz")
-sha256sums=('04122317b21df69709a11b164b42e0f21f7fc745c2e28daeecb99ab01e7a8de3')
+url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocsparse'
+license=('MIT')
+depends=('hip-rocclr' 'rocprim')
+makedepends=('cmake' 'git')
+_git='https://github.com/ROCmSoftwarePlatform/rocSPARSE'
+source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
+sha256sums=('9ca6bae7da78abbb47143c3d77ff4a8cd7d63979875fc7ebc46b400769fd9cb5')
 
 build() {
-  mkdir -p "$srcdir/build"
-  cd "$srcdir/build"
+  mkdir -p build
+  cd build
 
-  # Tensile library needs python to be python2
-  export PATH="$srcdir:$PATH"
-  [[ -e "$srcdir/python" ]] || ln -s /usr/bin/python2 "$srcdir/python"
-
-  # fix broken build with stack protection
-  export CFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CFLAGS")"
-  export CXXFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CXXFLAGS")"
-  export CPPFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CPPFLAGS")"
-
-  # compile with HCC
-  export CXX="/opt/rocm/hcc/bin/hcc"
-
-  # TODO: fix librocsparse.so, it contains references to $srcdir
-  cmake -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/opt/rocm/rocsparse \
+  CXX=/opt/rocm/hip/bin/hipcc \
+  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -Drocprim_DIR=/opt/rocm/rocprim/rocprim/lib/cmake/rocprim \
         -DBUILD_CLIENTS_SAMPLES=OFF \
-        "$srcdir/rocSPARSE-rocm-$_pkgver"
+        "$srcdir/rocSPARSE-rocm-$pkgver"
   make
 }
 
@@ -42,8 +29,8 @@ package() {
 
   make DESTDIR="$pkgdir" install
 
-  install -d "$pkgdir/etc/ld.so.conf.d"
-  cat << EOF > "$pkgdir/etc/ld.so.conf.d/rocsparse.conf"
+  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocsparse.conf" <<EOF
 /opt/rocm/rocsparse/lib
 EOF
+  install -Dm644 "$srcdir/rocSPARSE-rocm-$pkgver/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

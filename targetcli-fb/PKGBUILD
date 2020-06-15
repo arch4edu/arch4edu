@@ -1,7 +1,7 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
 pkgname=targetcli-fb
 pkgver=2.1.52
-pkgrel=1
+pkgrel=3
 pkgdesc="free branch of the targetcli LIO administration shell (iSCSI + Co)"
 arch=('any')
 url="https://github.com/open-iscsi/targetcli-fb"
@@ -21,6 +21,7 @@ sha512sums=('dd16cceffc4bec103db52fc97c3484a079a4b355cfc6523aff0a12c7b6dc1ee41b0
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
+  sed -i "s|/lib/systemd/system|lib/systemd/system|" setup.py
   python setup.py build
   gzip --stdout targetcli.8 > "targetcli.8.gz"
 }
