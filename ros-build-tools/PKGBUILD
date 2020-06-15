@@ -1,29 +1,29 @@
-# Maintainer: Benjamin Chretien <chretien+aur at lirmm dot fr>
+# Maintainer: acxz <akashpatel2008 at yahoo dot com>
 # Contributor: Sean Greenslade <zootboysean@gmail.com>
+# Contributor: Benjamin Chretien <chretien+aur at lirmm dot fr>
+# Contributor: Oskar Roesler <oskar@oskar-roesler.de>
 
-pkgdesc='Utilities for building arch packages for ROS stacks.'
-url="https://github.com/bchretien/arch-ros-stacks"
+pkgdesc='Utilities for building Arch packages for ROS stacks.'
+url="https://github.com/acxz/pkgbuilds/tree/master/ros-build-tools"
 
 pkgname='ros-build-tools'
-pkgver='0.2.0'
+pkgver='0.3.1'
 arch=('any')
-pkgrel=1
+pkgrel=3
 license=('BSD')
 makedepends=()
-depends=()
-optdepends=('python2')
+optdepends=('python' 'python-argparse' 'python-yaml' 'python-termcolor' 'python-certifi')
+depends=('bash')
 
 pkg_destination_dir="/usr/share/ros-build-tools"
 
 source=('fix-python-scripts.sh'
-        'stack-install-tools.sh'
-        'create-arch-ros-package-legacy.sh'
-        'PKGBUILD.rostemplate'
-        'get_stack_dependencies.py'
-        'generate_packages_makefile.py'
-        'generate-python-patch.sh'
-        'clear-ros-env.sh')
+        'clear-ros-env.sh'
+        'create_pkgbuild.py')
 
+sha256sums=('5528486d640d91136276edda2075aefc06f360e6297e556051bae57b9479aeda'
+            '9626b8e5f3865f5640660f4a7f6a00afc4db8448b95329b4d5a64bd691677a88'
+            '6171500f4e807e170f3705277032107b3902502a7fcccf8ab5b300a35580ebf7')
 build() {
   return 0
 }
@@ -34,12 +34,3 @@ package() {
     cp $file ${pkgdir}${pkg_destination_dir}/$file
   done
 }
-
-md5sums=('ed01573e0ecc0f7ca451d7e2849cc5ee'
-         '79ae7fb600e116623a42631d15d66a87'
-         'ac82eca7efc9f0ff7e8b976a83692868'
-         'f3378832c3ba121f7c9e17dc43c8b1d4'
-         'd257f7f20384e894b0431ee61068aa96'
-         '563c9d1320a3a997db25d3087303dcfb'
-         '8d6d7eb89a12c449497b209f1a06655b'
-         '07f5253eb3f8cb5295c32026a20ab6c0')

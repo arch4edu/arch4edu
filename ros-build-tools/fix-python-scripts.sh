@@ -13,8 +13,8 @@ For more information: http://legacy.python.org/dev/peps/pep-0394/"
     exit 1
 fi
 
-# Default Python version: 2
-PYTHON_VERSION=2
+# Default Python version: 3
+PYTHON_VERSION=3
 
 while [[ $# > 1 ]]
 do
