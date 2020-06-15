@@ -11,11 +11,6 @@ makedepends=('git' 'gcc-fortran')
 source=("git://github.com/anishida/lis.git#branch=master")
 md5sums=('SKIP')
 
-pkgver() {
-    cd "$srcdir/$pkgname"
-    git describe --tags $(git rev-list --tags --max-count=1)
-}
-
 build() {
   cd "$srcdir/$pkgname"
     export FFLAGS+=" -fallow-argument-mismatch"
