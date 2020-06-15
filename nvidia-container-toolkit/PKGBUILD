@@ -3,13 +3,13 @@
 
 pkgname=nvidia-container-toolkit
 
-pkgver=1.1.1
-pkgrel=2
+pkgver=1.1.2
+pkgrel=1
 
 pkgdesc='NVIDIA container runtime toolkit'
 arch=('x86_64')
 url='https://github.com/NVIDIA/container-toolkit'
-license=('BSD')
+license=('Apache')
 
 makedepends=('go')
 depends=('libnvidia-container-tools')
@@ -17,7 +17,7 @@ conflicts=('nvidia-container-runtime-hook' 'nvidia-container-runtime<2.0.0')
 replaces=('nvidia-container-runtime-hook')
 
 source=("https://github.com/NVIDIA/container-toolkit/archive/v${pkgver}.tar.gz")
-sha256sums=('486bb5560e4eb15b45dacbd77f2da0148eb51cfcb0157ff1e0151feeecb439d8')
+sha256sums=('eac2379a24f4cffb96b2662095927e8b195bc556b52046d0227a8343ef553b1c')
 
 _srcdir="container-toolkit-${pkgver}"
 _golang_pkg_path="github.com/NVIDIA/container-toolkit/pkg"
@@ -34,6 +34,10 @@ build() {
     "${_golang_pkg_path}"
     # -trimpath \  # only go > 1.13
     #-ldflags " -s -w -extldflags=-Wl,-z,now,-z,relro" \
+
+  # go leaves a bunch of local stuff with 0400, making it break future `makepkg -C` _grumble grumble_
+  GOPATH="${srcdir}/gopath" \
+  go clean -modcache
 }
 
 package() {

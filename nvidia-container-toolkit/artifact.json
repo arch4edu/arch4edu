@@ -1,0 +1,49 @@
+{
+  "total_count": 4,
+  "artifacts": [
+    {
+      "id": 8606384,
+      "node_id": "MDg6QXJ0aWZhY3Q4NjA2Mzg0",
+      "name": "nvidia-container-toolkit",
+      "size_in_bytes": 928104,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606384",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606384/zip",
+      "expired": false,
+      "created_at": "2020-06-15T16:33:53Z",
+      "updated_at": "2020-06-15T16:33:54Z"
+    },
+    {
+      "id": 8606385,
+      "node_id": "MDg6QXJ0aWZhY3Q4NjA2Mzg1",
+      "name": "nvidia-container-toolkit.f079b821-bafa-4619-a251-8e0c2b44cf35",
+      "size_in_bytes": 10,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606385",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606385/zip",
+      "expired": false,
+      "created_at": "2020-06-15T16:33:53Z",
+      "updated_at": "2020-06-15T16:33:54Z"
+    },
+    {
+      "id": 8606386,
+      "node_id": "MDg6QXJ0aWZhY3Q4NjA2Mzg2",
+      "name": "nvidia-container-toolkit.log",
+      "size_in_bytes": 26558,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606386",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606386/zip",
+      "expired": false,
+      "created_at": "2020-06-15T16:33:53Z",
+      "updated_at": "2020-06-15T16:33:54Z"
+    },
+    {
+      "id": 8606387,
+      "node_id": "MDg6QXJ0aWZhY3Q4NjA2Mzg3",
+      "name": "nvidia-container-toolkit.patch",
+      "size_in_bytes": 1497,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606387",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8606387/zip",
+      "expired": false,
+      "created_at": "2020-06-15T16:33:53Z",
+      "updated_at": "2020-06-15T16:33:54Z"
+    }
+  ]
+}
