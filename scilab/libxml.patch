@@ -1,0 +1,66 @@
+--- orig/scilab-6.1.0/modules/functions_manager/src/cpp/dynamic_modules.cpp	2020-02-25 10:59:51.000000000 +0100
++++ scilab-6.1.0/modules/functions_manager/src/cpp/dynamic_modules.cpp	2020-06-13 17:52:19.258491176 +0200
+@@ -22,13 +22,13 @@
+ {
+ #include "loadOnUseClassPath.h"
+ #include "Scierror.h"
++}
+ 
+     //XML API
+ #include <libxml/xpath.h>
+ #include <libxml/xmlreader.h>
+ #include "sci_malloc.h"
+ #include "configvariable_interface.h"
+-}
+ 
+ vectGateway loadGatewaysName(const std::wstring& _wstModuleName)
+ {
+--- orig/scilab-6.1.0/modules/io/src/cpp/loadlib.cpp	2020-02-25 10:59:59.000000000 +0100
++++ scilab-6.1.0/modules/io/src/cpp/loadlib.cpp	2020-06-13 17:38:17.474133786 +0200
+@@ -17,6 +17,8 @@
+ #include "context.hxx"
+ #include "loadlib.hxx"
+ #include "macrofile.hxx"
++#include <libxml/xpath.h>
++#include <libxml/xmlreader.h>
+ extern "C"
+ {
+ #include "FileExist.h"
+@@ -26,8 +28,6 @@
+ #include "fullpath.h"
+ #include "PATH_MAX.h"
+ #include "pathconvert.h"
+-#include <libxml/xpath.h>
+-#include <libxml/xmlreader.h>
+ }
+ 
+ #define DEFAULT_ENCODING "UTF-8"
+--- orig/scilab-6.1.0/modules/xml/src/cpp/XMLDocument.hxx	2020-02-25 11:00:18.000000000 +0100
++++ scilab-6.1.0/modules/xml/src/cpp/XMLDocument.hxx	2020-06-13 17:45:02.443795087 +0200
+@@ -23,13 +23,10 @@
+ 
+ #include "dynlib_xml_scilab.h"
+ 
+-extern "C"
+-{
+ #include "xml.h"
+ #ifndef XML_XPATH_CHECKNS
+ #define XML_XPATH_CHECKNS
+ #endif
+-}
+ 
+ #include "XMLObject.hxx"
+ 
+--- orig/scilab-6.1.0/modules/scicos/includes/XMIResource.hxx	2020-02-25 11:00:08.000000000 +0100
++++ scilab-6.1.0/modules/scicos/includes/XMIResource.hxx	2020-06-13 18:13:54.985717732 +0200
+@@ -22,10 +22,8 @@
+ #include <string>
+ #include <vector>
+ 
+-extern "C" {
+ #include <libxml/xmlwriter.h>
+ #include <libxml/xmlreader.h>
+-}
+ 
+ namespace org_scilab_modules_scicos
+ {

@@ -1,0 +1,81 @@
+diff -Naur orig/scilab-6.1.0/modules/hdf5/Makefile.am scilab-6.1.0/modules/hdf5/Makefile.am
+--- orig/scilab-6.1.0/modules/hdf5/Makefile.am	2020-02-25 10:59:56.000000000 +0100
++++ scilab-6.1.0/modules/hdf5/Makefile.am	2020-06-16 17:11:11.934227935 +0200
+@@ -103,8 +103,7 @@
+     -DH5Gopen_vers=2 \
+     -DH5Tget_array_dims_vers=2 \
+     -DH5Acreate_vers=2 \
+-    -DH5Rdereference_vers=2 \
+-    -DNO_DEPRECATED_SYMBOLS
++    -DH5Rdereference_vers=2
+ 
+ 
+ libscihdf5_la_CPPFLAGS = \
+diff -Naur orig/scilab-6.1.0/modules/hdf5/Makefile.in scilab-6.1.0/modules/hdf5/Makefile.in
+--- orig/scilab-6.1.0/modules/hdf5/Makefile.in	2020-02-25 10:59:56.000000000 +0100
++++ scilab-6.1.0/modules/hdf5/Makefile.in	2020-06-16 17:11:23.374128670 +0200
+@@ -788,8 +788,7 @@
+     -DH5Gopen_vers=2 \
+     -DH5Tget_array_dims_vers=2 \
+     -DH5Acreate_vers=2 \
+-    -DH5Rdereference_vers=2 \
+-    -DNO_DEPRECATED_SYMBOLS
++    -DH5Rdereference_vers=2
+ 
+ libscihdf5_la_CPPFLAGS = \
+     -I$(srcdir)/includes/ \
+diff -Naur orig/scilab-6.1.0/modules/hdf5/includes/HDF5Objects.h scilab-6.1.0/modules/hdf5/includes/HDF5Objects.h
+--- orig/scilab-6.1.0/modules/hdf5/includes/HDF5Objects.h	2020-02-25 10:59:56.000000000 +0100
++++ scilab-6.1.0/modules/hdf5/includes/HDF5Objects.h	2020-06-16 17:07:00.129746134 +0200
+@@ -16,14 +16,12 @@
+ #ifndef __HDF5OBJECTS_H__
+ #define __HDF5OBJECTS_H__
+ 
+-#define H5_NO_DEPRECATED_SYMBOLS
+ #undef H5_USE_16_API
++#define H5_USE_18_API
+ 
+-#define H5Eset_auto_vers 2
+ #include <hdf5.h>
+ #include <hdf5_hl.h>
+ 
+-#undef H5_NO_DEPRECATED_SYMBOLS
+ 
+ //#define __HDF5OBJECTS_DEBUG__
+ //#define __HDF5ERROR_PRINT__
+diff -Naur orig/scilab-6.1.0/modules/hdf5/sci_gateway/cpp/sci_hdf5_listvar_v3.cpp scilab-6.1.0/modules/hdf5/sci_gateway/cpp/sci_hdf5_listvar_v3.cpp
+--- orig/scilab-6.1.0/modules/hdf5/sci_gateway/cpp/sci_hdf5_listvar_v3.cpp	2020-02-25 10:59:56.000000000 +0100
++++ scilab-6.1.0/modules/hdf5/sci_gateway/cpp/sci_hdf5_listvar_v3.cpp	2020-06-16 17:15:08.605507554 +0200
+@@ -13,6 +13,8 @@
+ *
+ */
+ 
++#define H5_USE_18_API
++
+ #include <vector>
+ #include "function.hxx"
+ #include "string.hxx"
+diff -Naur orig/scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile.c scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile.c
+--- orig/scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile.c	2020-02-25 10:59:56.000000000 +0100
++++ scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile.c	2020-06-16 17:13:05.759906899 +0200
+@@ -13,7 +13,7 @@
+ *
+ */
+ 
+-#define H5_NO_DEPRECATED_SYMBOLS
++#define H5_USE_18_API
+ 
+ #ifndef _MSC_VER
+ #include <sys/time.h>
+diff -Naur orig/scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile_v1.c scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile_v1.c
+--- orig/scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile_v1.c	2020-02-25 10:59:56.000000000 +0100
++++ scilab-6.1.0/modules/hdf5/src/c/h5_readDataFromFile_v1.c	2020-06-16 17:13:20.183115080 +0200
+@@ -13,7 +13,7 @@
+ *
+ */
+ 
+-#define H5_NO_DEPRECATED_SYMBOLS
++#define H5_USE_18_API
+ 
+ #ifndef _MSC_VER
+ #include <sys/time.h>

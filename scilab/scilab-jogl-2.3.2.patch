@@ -1,25 +1,57 @@
-commit db79126ed25fc254e83f8a96b164cb2dbf0d6204
-Author: Clément DAVID <clement.david@scilab-enterprises.com>
-Date:   Wed Dec 2 15:09:07 2015 +0100
+From 1364c083acb58a55fcf2c5ca8d244313dfe9bbcb Mon Sep 17 00:00:00 2001
+From: =?utf8?q?Cl=C3=A9ment=20DAVID?= <clement.david@scilab-enterprises.com>
+Date: Wed, 2 Dec 2015 15:09:07 +0100
+Subject: [PATCH] Update to JoGL 2.3.2
 
-    Update to JoGL 2.3.2
-    
-    Change-Id: Ic188bb392d1dd8441d1a4132004f77b63a3353df
+Change-Id: Ic188bb392d1dd8441d1a4132004f77b63a3353df
+---
+ scilab/configure                                   |   16 +++++++-------
+ scilab/configure.ac                                |    4 ++--
+ .../src/java/org/scilab/modules/gui/SwingView.java |    8 +++----
+ .../scilab/modules/gui/bridge/ScilabBridge.java    |    2 +-
+ .../gui/bridge/canvas/SwingScilabCanvas.java       |    4 ++--
+ .../gui/bridge/canvas/SwingScilabCanvasImpl.java   |   12 +++++------
+ .../java/org/scilab/modules/gui/canvas/Canvas.java |    2 +-
+ .../scilab/modules/gui/canvas/ScilabCanvas.java    |    2 +-
+ .../modules/gui/canvas/ScilabCanvasBridge.java     |    2 +-
+ .../scilab/modules/gui/canvas/SimpleCanvas.java    |    2 +-
+ .../scirenderer/scirenderer-libs.properties        |    4 ++--
+ .../implementation/jogl/JoGLCanvas.java            |   22 ++++++++++----------
+ .../implementation/jogl/JoGLCanvasFactory.java     |    2 +-
+ .../implementation/jogl/JoGLCapacity.java          |    2 +-
+ .../implementation/jogl/JoGLDrawingTools.java      |    2 +-
+ .../implementation/jogl/JoGLParameters.java        |    4 ++--
+ .../jogl/buffers/JoGLBuffersManager.java           |    2 +-
+ .../jogl/buffers/JoGLDataBuffer.java               |    2 +-
+ .../jogl/buffers/JoGLElementsBuffer.java           |    2 +-
+ .../jogl/buffers/JoGLIndicesBuffer.java            |    2 +-
+ .../jogl/clipping/JoGLClippingManager.java         |    2 +-
+ .../jogl/clipping/JoGLClippingPlane.java           |    2 +-
+ .../jogl/drawer/JoGLShapeDrawer.java               |    2 +-
+ .../implementation/jogl/lightning/JoGLLight.java   |    2 +-
+ .../jogl/lightning/JoGLLightManager.java           |    2 +-
+ .../jogl/picking/GLPickingManager.java             |    2 +-
+ .../jogl/picking/JoGLPickingTools.java             |    2 +-
+ .../implementation/jogl/renderer/JoGLRenderer.java |    2 +-
+ .../jogl/renderer/JoGLRendererManager.java         |    2 +-
+ .../jogl/texture/JoGLTextureManager.java           |   10 ++++-----
+ .../implementation/jogl/utils/GLShortCuts.java     |    2 +-
+ 31 files changed, 64 insertions(+), 64 deletions(-)
 
 diff --git a/scilab/configure b/scilab/configure
-index fd385a8..51e5ff2 100755
+index 192bb93..ef8699d 100755
 --- a/scilab/configure
 +++ b/scilab/configure
-@@ -15265,7 +15265,7 @@ EOF
- 
+@@ -16245,7 +16245,7 @@ EOF
      CLASSPATH=$ac_java_classpath
      export CLASSPATH
--    cmd="$JAVA conftestSharedChecker jogl2 javax.media.opengl.glu.GLUnurbs $jar_resolved   "
-+    cmd="$JAVA conftestSharedChecker jogl2 jogamp.opengl.x11.glx.GLX $jar_resolved   "
+     echo "CLASSPATH="$CLASSPATH >&5
+-    cmd="$JAVA conftestSharedChecker \"jogl2\" \"javax.media.opengl.glu.GLUnurbs\" \"$jar_resolved\" \"\" \"2.2\" \"\""
++    cmd="$JAVA conftestSharedChecker \"jogl2\" \"jogamp.opengl.x11.glx.GLX\" \"$jar_resolved\" \"\" \"2.3\" \"\""
      if (echo $cmd >&5 ; eval $cmd >conftestSharedChecker.java.output 2>&5); then
-         PACKAGE_JAR_FILE=$(tail -n 1 conftestSharedChecker.java.output);
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PACKAGE_JAR_FILE" >&5
-@@ -15277,10 +15277,10 @@ $as_echo "$PACKAGE_JAR_FILE" >&6; }
+         read PACKAGE_JAR_FILE PACKAGE_JAR_VERSION << EOF
+ $(tail -n 1 conftestSharedChecker.java.output)
+@@ -16259,10 +16259,10 @@ $as_echo " $PACKAGE_JAR_FILE $PACKAGE_JAR_VERSION " >&6; }
        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
  $as_echo "no" >&6; }
        if test "" = "yes"; then
@@ -33,63 +65,16 @@ index fd385a8..51e5ff2 100755
        fi
      fi
      if test -f conftestSharedChecker.java.output; then
-@@ -15291,8 +15291,8 @@ $as_echo "$as_me: WARNING: Could not find or use the Java package/jar jogl2 used
- 
- 
- 
--    { $as_echo "$as_me:${as_lineno-$LINENO}: checking minimal version (Specification-Version 2.2) of jogl2" >&5
--$as_echo_n "checking minimal version (Specification-Version 2.2) of jogl2... " >&6; }
-+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking minimal version (Specification-Version 2.3) of jogl2" >&5
-+$as_echo_n "checking minimal version (Specification-Version 2.3) of jogl2... " >&6; }
-     export JARFILE=$JOGL2;
-     if test "x" == "x"; then
- 
-@@ -15305,7 +15305,7 @@ import java.util.jar.JarFile;
- 
- public class conftest {
-     public static void main(String[] argv) {
--        String minVersion="2.2";
-+        String minVersion="2.3";
-         try {
-             String version = new JarFile(System.getenv("JARFILE")).getManifest().getMainAttributes().getValue("Specification-Version");
-             System.out.println(version);
-@@ -15358,7 +15358,7 @@ EOF
-                    STDOUT=`cat conftest.java.output`
-                 fi
-                 echo "configure: CLASSPATH was $CLASSPATH" >&5
--                  as_fn_error $? "Wrong version of jogl2. Expected at least 2.2. Found $STDOUT" "$LINENO" 5
-+                  as_fn_error $? "Wrong version of jogl2. Expected at least 2.3. Found $STDOUT" "$LINENO" 5
-                             fi
-         fi
-         if test -f conftest.java.output; then
-@@ -15368,7 +15368,7 @@ EOF
-         echo "configure: failed program was:" >&5
-         cat conftest.java >&5
-         echo "configure: CLASSPATH was $CLASSPATH" >&5
--          as_fn_error $? "Wrong version of jogl2. Expected at least 2.2. Found $STDOUT" "$LINENO" 5
-+          as_fn_error $? "Wrong version of jogl2. Expected at least 2.3. Found $STDOUT" "$LINENO" 5
-             fi
- 
-     else
-@@ -15382,7 +15382,7 @@ import java.util.jar.JarFile;
- 
- public class conftest {
-     public static void main(String[] argv) {
--        String minVersion="2.2";
-+        String minVersion="2.3";
-         try {
-             String version = new JarFile(System.getenv("JARFILE")).getManifest().getMainAttributes().getValue("Specification-Version");
-             System.out.println("Specification-Version" + ": " + version);
-@@ -15752,7 +15752,7 @@ EOF
- 
+@@ -16585,7 +16585,7 @@ EOF
      CLASSPATH=$ac_java_classpath
      export CLASSPATH
--    cmd="$JAVA conftestSharedChecker gluegen2-rt jogamp.common.os.MachineDescriptionRuntime $jar_resolved   "
-+    cmd="$JAVA conftestSharedChecker gluegen2-rt com.jogamp.common.os.Platform $jar_resolved   "
+     echo "CLASSPATH="$CLASSPATH >&5
+-    cmd="$JAVA conftestSharedChecker \"gluegen2-rt\" \"jogamp.common.os.MachineDescriptionRuntime\" \"$jar_resolved\" \"\" \"\" \"\""
++    cmd="$JAVA conftestSharedChecker \"gluegen2-rt\" \"com.jogamp.common.os.Platform\" \"$jar_resolved\" \"\" \"\" \"\""
      if (echo $cmd >&5 ; eval $cmd >conftestSharedChecker.java.output 2>&5); then
-         PACKAGE_JAR_FILE=$(tail -n 1 conftestSharedChecker.java.output);
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PACKAGE_JAR_FILE" >&5
-@@ -15764,10 +15764,10 @@ $as_echo "$PACKAGE_JAR_FILE" >&6; }
+         read PACKAGE_JAR_FILE PACKAGE_JAR_VERSION << EOF
+ $(tail -n 1 conftestSharedChecker.java.output)
+@@ -16599,10 +16599,10 @@ $as_echo " $PACKAGE_JAR_FILE $PACKAGE_JAR_VERSION " >&6; }
        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
  $as_echo "no" >&6; }
        if test "" = "yes"; then
@@ -104,24 +89,19 @@ index fd385a8..51e5ff2 100755
      fi
      if test -f conftestSharedChecker.java.output; then
 diff --git a/scilab/configure.ac b/scilab/configure.ac
-index 6404101..0a80deb 100644
+index 49d9281..eba2c3d 100644
 --- a/scilab/configure.ac
 +++ b/scilab/configure.ac
-@@ -940,11 +940,11 @@ if test "$with_javasci" != no -o "$with_gui" != no -o "$enable_build_help" != no
+@@ -951,7 +951,7 @@ if test "$with_javasci" != no -o "$with_gui" != no -o "$enable_build_help" != no
                  AC_SUBST(SKINLF)
  
                  # JOGL 2
--                AC_JAVA_CHECK_JAR([jogl2],[javax.media.opengl.glu.GLUnurbs],[Scilab 3D rendering - Version 2.0])
-+                AC_JAVA_CHECK_JAR([jogl2],[jogamp.opengl.x11.glx.GLX],[Scilab 3D rendering - Version 2.3])
+-                AC_JAVA_CHECK_JAR([jogl2],[javax.media.opengl.glu.GLUnurbs],[Scilab 3D rendering - Version 2.0], [], [], [2.2])
++                AC_JAVA_CHECK_JAR([jogl2],[jogamp.opengl.x11.glx.GLX],[Scilab 3D rendering - Version 2.3], [], [], 2.3)
                  JOGL2=$PACKAGE_JAR_FILE
                  AC_SUBST(JOGL2)
  
--                AC_JAVA_CHECK_VERSION_MANIFEST([jogl2],$JOGL2,[2.2],[Specification-Version])
-+                AC_JAVA_CHECK_VERSION_MANIFEST([jogl2],$JOGL2,[2.3],[Specification-Version])
- 
-                 if test "$MACOSX" = 1; then
-                    echo "Check of the presence of libjogl.jnilib and libjogl_awt.jnilib disabled under Mac OS X"
-@@ -971,7 +971,7 @@ interface for JOGL2 - or libGL (OpenGL library) are installed and if the version
+@@ -980,7 +980,7 @@ interface for JOGL2 - or libGL (OpenGL library) are installed and if the version
                  fi
  
                  # JoGL Native <=> Java connector
@@ -131,10 +111,10 @@ index 6404101..0a80deb 100644
                  AC_SUBST(GLUEGEN2_RT)
  
 diff --git a/scilab/modules/gui/src/java/org/scilab/modules/gui/SwingView.java b/scilab/modules/gui/src/java/org/scilab/modules/gui/SwingView.java
-index 18593ca..892843a 100644
+index ea28e4c..50704af 100644
 --- a/scilab/modules/gui/src/java/org/scilab/modules/gui/SwingView.java
 +++ b/scilab/modules/gui/src/java/org/scilab/modules/gui/SwingView.java
-@@ -87,10 +87,10 @@ import java.util.Map;
+@@ -88,10 +88,10 @@ import java.util.Map;
  import java.util.Set;
  import java.util.UUID;
  
@@ -178,7 +158,7 @@ index 477fa3f..9e969b4 100644
  
  import org.scilab.forge.scirenderer.Canvas;
 diff --git a/scilab/modules/gui/src/java/org/scilab/modules/gui/bridge/canvas/SwingScilabCanvasImpl.java b/scilab/modules/gui/src/java/org/scilab/modules/gui/bridge/canvas/SwingScilabCanvasImpl.java
-index 76e976a..31bc493 100644
+index f27ea69..68b7613 100644
 --- a/scilab/modules/gui/src/java/org/scilab/modules/gui/bridge/canvas/SwingScilabCanvasImpl.java
 +++ b/scilab/modules/gui/src/java/org/scilab/modules/gui/bridge/canvas/SwingScilabCanvasImpl.java
 @@ -22,12 +22,12 @@ import java.awt.HeadlessException;
@@ -267,16 +247,26 @@ index 4d1636d..0ea2197 100644
  jlatexmath.jar = /usr/share/java/jlatexmath.jar
  jni.path = /usr/lib/jni
 diff --git a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLCanvas.java b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLCanvas.java
-index 011f09a..590ebf6 100644
+index a823629..8a776a0 100644
 --- a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLCanvas.java
 +++ b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLCanvas.java
-@@ -19,16 +19,16 @@ import java.awt.image.BufferedImage;
+@@ -1,7 +1,7 @@
+ /*
+  * Scilab ( http://www.scilab.org/ ) - This file is part of Scilab
+  * Copyright (C) 2009-2011 - DIGITEO - Pierre Lando
+- * Copyright (C) 2019 - Stéphane MOTTELET
++ * Copyright (C) 2019 - Stephane MOTTELET
+  *
+  * Copyright (C) 2012 - 2016 - Scilab Enterprises
+  *
+@@ -20,17 +20,17 @@ import java.awt.image.BufferedImage;
  import java.lang.reflect.InvocationTargetException;
  import java.util.concurrent.Semaphore;
  
 -import javax.media.opengl.DebugGL2;
 -import javax.media.opengl.GL2;
 -import javax.media.opengl.GLAutoDrawable;
+-import javax.media.opengl.awt.GLJPanel;
 -import javax.media.opengl.GLCapabilities;
 -import javax.media.opengl.GLContext;
 -import javax.media.opengl.GLDrawableFactory;
@@ -287,6 +277,7 @@ index 011f09a..590ebf6 100644
 +import com.jogamp.opengl.DebugGL2;
 +import com.jogamp.opengl.GL2;
 +import com.jogamp.opengl.GLAutoDrawable;
++import com.jogamp.opengl.awt.GLJPanel;
 +import com.jogamp.opengl.GLCapabilities;
 +import com.jogamp.opengl.GLContext;
 +import com.jogamp.opengl.GLDrawableFactory;
@@ -324,10 +315,10 @@ index 4597be3..4ed3220 100644
  /**
   * This class store current OpenGl context capacity.
 diff --git a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLDrawingTools.java b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLDrawingTools.java
-index 6a78491..ced3389 100644
+index 623cc1e..161f9ca 100644
 --- a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLDrawingTools.java
 +++ b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/JoGLDrawingTools.java
-@@ -33,7 +33,7 @@ import org.scilab.forge.scirenderer.tranformations.TransformationManagerImpl;
+@@ -34,7 +34,7 @@ import org.scilab.forge.scirenderer.tranformations.TransformationManagerImpl;
  import org.scilab.forge.scirenderer.tranformations.TransformationManagerListener;
  import org.scilab.forge.scirenderer.tranformations.Vector3d;
  
@@ -378,7 +369,7 @@ index 25d3a3e..b56c9d7 100644
  
  /**
 diff --git a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/buffers/JoGLElementsBuffer.java b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/buffers/JoGLElementsBuffer.java
-index d5d53e3..2d96bec 100644
+index 5206566..5d01b87 100644
 --- a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/buffers/JoGLElementsBuffer.java
 +++ b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/buffers/JoGLElementsBuffer.java
 @@ -16,7 +16,7 @@ package org.scilab.forge.scirenderer.implementation.jogl.buffers;
@@ -430,7 +421,7 @@ index cf3ed8b..a5a5770 100644
  /**
   * @author Pierre Lando
 diff --git a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/drawer/JoGLShapeDrawer.java b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/drawer/JoGLShapeDrawer.java
-index 5008513..786fe41 100644
+index 2b1066c..c1549b4 100644
 --- a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/drawer/JoGLShapeDrawer.java
 +++ b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/drawer/JoGLShapeDrawer.java
 @@ -26,7 +26,7 @@ import org.scilab.forge.scirenderer.texture.Texture;
@@ -469,7 +460,7 @@ index 0c8ae45..42d1e32 100644
  /**
   * JoGL implementation of {@link LightManager}
 diff --git a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/picking/GLPickingManager.java b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/picking/GLPickingManager.java
-index 898d1ec..f74bcda 100644
+index 11c4b3f..6895a53 100644
 --- a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/picking/GLPickingManager.java
 +++ b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/picking/GLPickingManager.java
 @@ -14,7 +14,7 @@
@@ -521,7 +512,7 @@ index 4b4dd17..440750f 100644
  import java.util.Set;
  import java.util.Stack;
 diff --git a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/texture/JoGLTextureManager.java b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/texture/JoGLTextureManager.java
-index ba3eb4f..14649cc 100644
+index 659f37f..25d3bc3 100644
 --- a/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/texture/JoGLTextureManager.java
 +++ b/scilab/modules/scirenderer/src/org/scilab/forge/scirenderer/implementation/jogl/texture/JoGLTextureManager.java
 @@ -32,11 +32,11 @@ import org.scilab.forge.scirenderer.tranformations.TransformationManager;
@@ -554,3 +545,6 @@ index 1d799e9..8a493fb 100644
  
  /**
   *
+-- 
+1.7.9.5
+
