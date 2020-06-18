@@ -5,14 +5,20 @@
 pkgbase=archimedes-tools
 pkgname=('triangle' 'showme')
 pkgver=1.6
-pkgrel=6
+pkgrel=7
 arch=('i686' 'x86_64')
 url='http://www.cs.cmu.edu/~quake/archimedes.html'
 pkgdesc='Archimedes is a set of tools, including mesh generators, for performing unstructured finite element simulations'
 license=('custom')
-source=('http://www.netlib.org/voronoi/triangle.zip')
-md5sums=('10aff8d7950f5e0e2fb6dd2e340be2c9')
+source=('http://www.netlib.org/voronoi/triangle.zip'
+        'triangle_definitions.patch')
+md5sums=('10aff8d7950f5e0e2fb6dd2e340be2c9'
+         '98844d1b1d9de73101b660412132cd07')
 makedepends=('libx11')
+
+prepare() {
+  patch < ../triangle_definitions.patch triangle.h
+}
 
 build(){
   gcc ${CFLAGS} -o triangle triangle.c -lm
