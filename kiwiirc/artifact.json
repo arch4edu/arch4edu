@@ -1,0 +1,49 @@
+{
+  "total_count": 4,
+  "artifacts": [
+    {
+      "id": 8997898,
+      "node_id": "MDg6QXJ0aWZhY3Q4OTk3ODk4",
+      "name": "kiwiirc",
+      "size_in_bytes": 1809481,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997898",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997898/zip",
+      "expired": false,
+      "created_at": "2020-06-19T16:22:20Z",
+      "updated_at": "2020-06-19T16:22:21Z"
+    },
+    {
+      "id": 8997899,
+      "node_id": "MDg6QXJ0aWZhY3Q4OTk3ODk5",
+      "name": "kiwiirc.109aa341-05b9-4f20-acca-9eac8660b599",
+      "size_in_bytes": 10,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997899",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997899/zip",
+      "expired": false,
+      "created_at": "2020-06-19T16:22:20Z",
+      "updated_at": "2020-06-19T16:22:21Z"
+    },
+    {
+      "id": 8997900,
+      "node_id": "MDg6QXJ0aWZhY3Q4OTk3OTAw",
+      "name": "kiwiirc.log",
+      "size_in_bytes": 27167,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997900",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997900/zip",
+      "expired": false,
+      "created_at": "2020-06-19T16:22:20Z",
+      "updated_at": "2020-06-19T16:22:21Z"
+    },
+    {
+      "id": 8997901,
+      "node_id": "MDg6QXJ0aWZhY3Q4OTk3OTAx",
+      "name": "kiwiirc.patch",
+      "size_in_bytes": 550,
+      "url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997901",
+      "archive_download_url": "https://api.github.com/repos/petronny/arch4edu/actions/artifacts/8997901/zip",
+      "expired": false,
+      "created_at": "2020-06-19T16:22:20Z",
+      "updated_at": "2020-06-19T16:22:21Z"
+    }
+  ]
+}
