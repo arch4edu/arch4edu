@@ -5,18 +5,22 @@ maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}]
 repo_depends = [
         'comgr',
-        'hcc',
-        'hip-hcc',
+        'hip-rocclr',
         'hsa-amd-aqlprofile',
         'hsa-ext-rocr',
         'hsa-rocr',
         'hsakmt-roct',
+        'llvm-amdgpu',
         'rocm-cmake',
+        'rocm-dbgapi',
+        'rocm-debug-agent',
         'rocm-device-libs',
+        'rocm-gdb',
         'rocm-smi',
+        'rocm-smi-lib64',
         'rocm-utils',
         'rocprofiler',
-        'rocr-debug-agent',
+        'roctracer',
         ]
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build
