@@ -1,0 +1,38 @@
+{
+  "total_count": 3,
+  "artifacts": [
+    {
+      "id": 9104749,
+      "node_id": "MDg6QXJ0aWZhY3Q5MTA0NzQ5",
+      "name": "jgraphx-jre8",
+      "size_in_bytes": 543011,
+      "url": "https://api.github.com/repos/petronny/action-runner-x86_64/actions/artifacts/9104749",
+      "archive_download_url": "https://api.github.com/repos/petronny/action-runner-x86_64/actions/artifacts/9104749/zip",
+      "expired": false,
+      "created_at": "2020-06-21T16:17:35Z",
+      "updated_at": "2020-06-21T16:17:36Z"
+    },
+    {
+      "id": 9104750,
+      "node_id": "MDg6QXJ0aWZhY3Q5MTA0NzUw",
+      "name": "jgraphx-jre8.d786ef20-b952-45b0-9acd-d16827d30a1d",
+      "size_in_bytes": 10,
+      "url": "https://api.github.com/repos/petronny/action-runner-x86_64/actions/artifacts/9104750",
+      "archive_download_url": "https://api.github.com/repos/petronny/action-runner-x86_64/actions/artifacts/9104750/zip",
+      "expired": false,
+      "created_at": "2020-06-21T16:17:35Z",
+      "updated_at": "2020-06-21T16:17:36Z"
+    },
+    {
+      "id": 9104751,
+      "node_id": "MDg6QXJ0aWZhY3Q5MTA0NzUx",
+      "name": "jgraphx-jre8.log",
+      "size_in_bytes": 26589,
+      "url": "https://api.github.com/repos/petronny/action-runner-x86_64/actions/artifacts/9104751",
+      "archive_download_url": "https://api.github.com/repos/petronny/action-runner-x86_64/actions/artifacts/9104751/zip",
+      "expired": false,
+      "created_at": "2020-06-21T16:17:35Z",
+      "updated_at": "2020-06-21T16:17:36Z"
+    }
+  ]
+}
