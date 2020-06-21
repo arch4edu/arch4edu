@@ -3,16 +3,16 @@
 # Contributor: Ranieri Althoff <ranisalt+aur at gmail.com>
 
 pkgname=hsa-ext-rocr
-pkgver=3.5.0
+pkgver=3.5.1
 pkgrel=1
-_debfile=hsa-ext-rocr-dev_1.1.30500.0-rocm-rel-3.5-30-def83d8_amd64.deb
+_debfile=hsa-ext-rocr-dev_1.1.30501.0-rocm-rel-3.5-34-def83d8_amd64.deb
 pkgdesc='ROCm Platform Runtime: Closed source components'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/ROCR-Runtime'
 license=('EULA')
 depends=("hsa-rocr" "hsakmt-roct")
-source=("http://repo.radeon.com/rocm/apt/debian/pool/main/h/hsa-ext-rocr-dev/$_debfile")
-sha256sums=('e8f5ac2bd13658ab0f471d6088088ec14c791f5f39d163dd4bdbda75021f22a1')
+source=("https://repo.radeon.com/rocm/apt/debian/pool/main/h/hsa-ext-rocr-dev/$_debfile")
+sha256sums=('0ef5132d086f36ce73161ff21bc4108e33f27cdff838b3f347729497050fa0ac')
 
 package() {
   tar -C "$pkgdir" -xf data.tar.gz
