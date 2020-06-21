@@ -2,7 +2,7 @@
 
 pkgname=rocsolver
 pkgver=3.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Subset of LAPACK functionality on the ROCm platform'
 arch=('x86_64')
 url='https://rocsolver.readthedocs.io/en/latest/userguidedocu.html'
