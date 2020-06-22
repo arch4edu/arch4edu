@@ -1,0 +1,19 @@
+*** clang-ocl-rocm-3.5.0/CMakeLists.txt.bak	2020-06-20 18:53:09.243264978 +0200
+--- clang-ocl-rocm-3.5.0/CMakeLists.txt	2020-06-20 18:54:01.412910087 +0200
+***************
+*** 15,21 ****
+  if(CMAKE_CXX_COMPILER MATCHES ".*hcc")
+      set(HCC_EXE ${CMAKE_CXX_COMPILER})
+  else()
+!     find_program(HCC_EXE NAMES hcc clang PATHS /opt/rocm/hcc/bin)
+  endif()
+  
+  get_filename_component(HCC_BIN ${HCC_EXE} DIRECTORY)
+--- 15,21 ----
+  if(CMAKE_CXX_COMPILER MATCHES ".*hcc")
+      set(HCC_EXE ${CMAKE_CXX_COMPILER})
+  else()
+!     find_program(HCC_EXE NAMES hcc clang PATHS /opt/rocm/llvm/bin)
+  endif()
+  
+  get_filename_component(HCC_BIN ${HCC_EXE} DIRECTORY)
