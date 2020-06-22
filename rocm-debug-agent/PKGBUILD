@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocm-debug-agent
 pkgver=3.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="ROCr Debug Agent Library"
 arch=('x86_64')
 url="https://github.com/ROCm-Developer-Tools/rocr_debug_agent"
