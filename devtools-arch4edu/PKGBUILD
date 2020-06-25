@@ -1,6 +1,6 @@
 pkgname=devtools-arch4edu
-pkgver=7.c1609f2
-pkgrel=1
+pkgver=20200407.4.gf290f6d
+pkgrel=2
 pkgdesc='Tools for arch4edu package maintainers'
 arch=('any')
 url='http://github.com/arch4edu/devtools'
