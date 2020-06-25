@@ -3,6 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'github': 'arch4edu/devtools-arch4edu-extra'}]
+repo_depends = [('fakeroot-tcp-armv6h', 'fakeroot-tcp')]
 build_prefix = 'extra-armv6h'
 pre_build = vcs_update
 
