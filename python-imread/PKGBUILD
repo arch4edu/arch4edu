@@ -4,7 +4,7 @@
 
 pkgname=python-imread
 pkgver=0.7.1
-pkgrel=1
+pkgrel=2
 pkgdesc='mahotas-imread: A library to read & write to numpy arrays'
 arch=(any)
 url='http://luispedro.org/software/imread/'
