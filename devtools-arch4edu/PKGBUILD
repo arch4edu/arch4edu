@@ -3,28 +3,30 @@ pkgver=7.c1609f2
 pkgrel=1
 pkgdesc='Tools for arch4edu package maintainers'
 arch=('any')
-url='http://github.com/arch4edu/devtools-arch4edu'
+url='http://github.com/arch4edu/devtools'
 license=('GPL')
-depends=('devtools')
-makedepends=('cmake' 'git')
-source=('git://github.com/arch4edu/devtools-arch4edu.git')
+depends=('bash' 'openssh' 'subversion' 'rsync' 'arch-install-scripts'
+         'git' 'bzr' 'mercurial' 'diffutils' 'util-linux' 'awk')
+makedepends=('asciidoc')
+optdepends=('btrfs-progs: btrfs support')
+conflicts=('devtools')
+provides=('devtools')
+source=("${pkgname}::git+${url}.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "$srcdir/$pkgname"
-  echo "$(git rev-list --count master).$(git rev-parse --short master)"
+  cd "${srcdir}/${pkgname}"
+  git describe --always --tags | sed -e 's/-/./g' -e 's/v//g'
 }
 
 build() {
-  cd $pkgname
-  mkdir -p build
-  cd build
-
-  cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-  make
+  cd "${srcdir}/${pkgname}"
+  make PREFIX=/usr
 }
 
 package() {
-  cd $pkgname/build
-  make DESTDIR="${pkgdir}" install
+  cd "${srcdir}/${pkgname}"
+  make PREFIX=/usr DESTDIR="${pkgdir}" install
 }
+
+# vim: ts=2 sw=2 et:
