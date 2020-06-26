@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=devtools-qemu
-pkgver=13.f3a80ec
+pkgver=14.9bf7729
 pkgrel=1
 pkgdesc='QEMU based cross-build tools for Arch Linux ARM package maintainers'
 arch=('x86_64')
