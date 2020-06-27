@@ -1,13 +1,19 @@
 #!/bin/sh
+set -e
 repo=$1
 path=$2
 
 git rm --cached -f $(git ls-files --exclude `basename $0`)
-git add $0 lilac.py
+for i in $0 lilac.py lilac.yaml package.list
+do
+	git $i || :
+done
 
-sources=$(wget -q -O - https://github.com/$1/tree/master/$2 | sed -n '/<td class="content">/{n;s/.*<a [^>]*>\([^<]*\)<.*/\1/;p}')
+sources=$(wget -q -O - https://api.github.com/repos/$repo/contents/$path | jq -r '.[] | select(.type=="file") | .name')
+
 for i in $sources
 do
+	echo Downloading $i
 	wget -q -O $i https://raw.githubusercontent.com/$1/master/$2/$i
 	git add $i
 done
