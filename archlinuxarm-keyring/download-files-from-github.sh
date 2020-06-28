@@ -6,7 +6,7 @@ path=$2
 git rm --cached -f $(git ls-files --exclude `basename $0`)
 for i in $0 lilac.py lilac.yaml package.list
 do
-	git $i || :
+	git add $i || :
 done
 
 sources=$(wget -q -O - https://api.github.com/repos/$repo/contents/$path | jq -r '.[] | select(.type=="file") | .name')
