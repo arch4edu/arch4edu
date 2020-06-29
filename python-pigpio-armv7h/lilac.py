@@ -13,4 +13,4 @@ post_build = aur_post_build
 
 if __name__ == '__main__':
     from action_tools import action_main
-    single_main(build_prefix)
+    action_main(build_prefix)
