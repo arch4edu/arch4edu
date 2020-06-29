@@ -3,7 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'python-pigpio'}]
-build_prefix = 'extra-armv6h'
+build_prefix = 'action-extra-armv6h'
 
 def pre_build():
     aur_pre_build('python-pigpio')
@@ -12,4 +12,5 @@ def pre_build():
 post_build = aur_post_build
 
 if __name__ == '__main__':
-    single_main(build_prefix)
+    from action_tools import action_main
+    action_main(build_prefix)
