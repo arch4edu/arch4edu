@@ -2,7 +2,7 @@
 # Contributor: Matthew Longley <randomticktock@gmail.com>
 
 pkgname=javacc
-pkgver=7.0.8
+pkgver=7.0.9
 pkgrel=1
 pkgdesc="Parser/scanner generator for Java"
 arch=('any')
