@@ -4,8 +4,8 @@
 # - jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
 
 pkgname=r-mkl
-pkgver=4.0.0
-pkgrel=2
+pkgver=4.0.2
+pkgrel=1
 pkgdesc="Language and environment for statistical computing and graphics, linked to the Intel(R) MKL."
 arch=('x86_64')
 license=('GPL')
@@ -51,7 +51,7 @@ source=("http://cran.r-project.org/src/base/R-${pkgver%%.*}/R-${pkgver}.tar.gz"
         'R.conf'
         'mklvars.sh')
 
-sha1sums=('91750d179ae23877e1fe92262f5206352d8683ba'
+sha1sums=('ee79a57730ed4786c0d6a05bd050d52a5d0290c1'
           'dd214eee232b7aced7366722ad416b6b39be8e1b'
           'af80774f5a8d0e669e8ff90662638a0f4e1105d7'
           '43668da6cfd1b4455a99f23e79e2059294dddac9'
@@ -91,8 +91,13 @@ build() {
 
   # Set up the environment for MKL
   if [ -f /opt/intel/mkl/bin/mklvars.sh ]; then
+    echo "Sourcing /opt/intel/mkl/bin/mklvars.sh"
     source /opt/intel/mkl/bin/mklvars.sh ${_intel_arch}
+  elif [ -f /usr/bin/mklvars.sh ]; then
+    echo "Sourcing /usr/bin/mklvars.sh"
+    source /usr/bin/mklvars.sh ${_intel_arch}
   else
+    echo "Sourcing mklvars.sh"
     source ../mklvars.sh ${_intel_arch}
   fi
 
