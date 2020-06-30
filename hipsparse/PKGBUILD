@@ -3,7 +3,7 @@
 
 pkgname=hipsparse
 pkgver=3.5.0
-pkgrel=2
+pkgrel=3
 pkgdesc='rocSPARSE marshalling library.'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipsparse'
@@ -28,7 +28,7 @@ build() {
   CXX=/opt/rocm/hip/bin/hipcc \
   cmake -B build -Wno-dev \
         -DCMAKE_CXX_STANDARD=20 \
-        -DCMAKE_INSTALL_PREFIX=opt/rocm \
+        -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
         -DAMDDeviceLibs_DIR=/opt/rocm/lib/cmake/AMDDeviceLibs \
         -Dhip_DIR=/opt/rocm/hip/lib/cmake/hip \
