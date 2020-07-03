@@ -1,17 +1,18 @@
 # Maintainer: gborzi <gborzi@ieee.org>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
-pkgver=4.5.6
-pkgrel=3
+pkgver=4.6.0
+pkgrel=2
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
 license=('custom')
 makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'texlive-core' 'voro++'
-             'fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann')
+             'fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
+             'glu')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
-sha256sums=('46eaeb0cdee5822fdaa4b15f92d8d160a8cc90c4565593cfa705de90df2a463f'
+sha256sums=('0f2c55e50fb6c478ebc8977f6341c223754cbf3493b7b0d683b4395ae9f2ad1c'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
@@ -19,23 +20,15 @@ prepare() {
    cd "${srcdir}/${pkgname}-${pkgver}-source"
 
    # Help links to local doc (package gmsh-docs)
-   sed -e "s|http://gmsh.info/doc/texinfo/|file:///usr/share/doc/gmsh/gmsh.html|" \
+   sed -e "s|https://gmsh.info/doc/texinfo/|file:///usr/share/doc/gmsh/gmsh.html|" \
        -i Fltk/graphicWindow.cpp
-   sed -e "s|http://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
+   sed -e "s|https://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
        -i Fltk/helpWindow.cpp
-   # remove root of build directory from installation
-   sed -e '/install(TARGETS shared DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}\/api OPTIONAL)/d' -i CMakeLists.txt
-   # fix alglib include
-   sed -e '770s_include_include/libalglib_' -i CMakeLists.txt
-   sed -e '919s_include_include/voro++_' -i CMakeLists.txt
-   #sed -e '955s_include_include/mmg/mmg3d_' -i CMakeLists.txt
 
 }
 
 build() {
    cd "${srcdir}/${pkgname}-${pkgver}-source"
-# fix by @xantares for gcc 10
-   export CFLAGS="$CFLAGS -fcommon"
 
    mkdir -p build
 
@@ -50,7 +43,8 @@ build() {
 }
 
 package_gmsh() {
-   depends=('fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann')
+   depends=('fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
+            'glu')
    optdepends=('gmsh-docs: docs for gmsh'
             'python2: for onelab.py'
             'python: for onelab.py')
@@ -63,7 +57,7 @@ package_gmsh() {
 
    install -d "${pkgdir}/usr/share/pixmaps/${pkgname}"
    install -m644 ../utils/icons/*.png "${pkgdir}/usr/share/pixmaps/${pkgname}"
-   install -D -m644 ../utils/icons/solid_32x32.png "${pkgdir}/usr/share/icons/${pkgname}.png"
+   install -D -m644 ../utils/icons/gmsh-no-text.png "${pkgdir}/usr/share/icons/${pkgname}.png"
 
    desktop-file-install --dir="${pkgdir}/usr/share/applications" \
     	"${srcdir}/${pkgname}.desktop"
