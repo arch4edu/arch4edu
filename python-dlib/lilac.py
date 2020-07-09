@@ -4,7 +4,16 @@ from lilaclib import *
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
-pre_build = aur_pre_build
+
+def pre_build():
+    aur_pre_build()
+
+    for line in edit_file('PKGBUILD'):
+        if line.startswith('#') and not line.startswith('# '):
+            print(line[1:])
+        else:
+            print(line)
+
 post_build = aur_post_build
 
 if __name__ == '__main__':
