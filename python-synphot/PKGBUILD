@@ -1,7 +1,7 @@
 # Maintainer: Miguel de Val-Borro <miguel dot deval at gmail dot com>
 pkgname=python-synphot
 pkgver=0.3
-pkgrel=3
+pkgrel=4
 pkgdesc="Synthetic Photometry using Astropy"
 arch=('x86_64')
 url="https://synphot.readthedocs.io/"
