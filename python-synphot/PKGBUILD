@@ -1,0 +1,27 @@
+# Maintainer: Miguel de Val-Borro <miguel dot deval at gmail dot com>
+pkgname=python-synphot
+pkgver=0.3
+pkgrel=3
+pkgdesc="Synthetic Photometry using Astropy"
+arch=('x86_64')
+url="https://synphot.readthedocs.io/"
+license=('BSD')
+makedepends=('python-setuptools' 'python-setuptools-scm' 'python-extension-helpers' 'python-numpy')
+depends=('python-numpy' 'python-scipy' 'python-astropy')
+source=("https://files.pythonhosted.org/packages/source/s/synphot/synphot-${pkgver}.tar.gz")
+md5sums=('8b9520396defd1828f4b22eaadaaf8bf')
+
+build() {
+    cd ${srcdir}/synphot-${pkgver}
+    python setup.py build
+}
+
+package() {
+    optdepends=('python-matplotlib: Plotting support'
+                'python-specutils: Manipulating spectroscopic data')
+    cd ${srcdir}/synphot-${pkgver}
+
+    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE.rst
+    install -D -m644 -t "${pkgdir}/usr/share/doc/${pkgname}" README.rst
+    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+}
