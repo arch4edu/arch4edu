@@ -9,40 +9,38 @@
 pkgname=julia-mkl
 _pkgname=julia
 epoch=2
-pkgver=1.4.0
+pkgver=1.4.2
 pkgrel=1
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
 url='https://julialang.org/'
 license=(MIT)
-depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm)
-makedepends=(cmake gcc-fortran gmp python)
+depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm pcre2)
+makedepends=(cmake gcc-fortran gmp python intel-common-libs)
 optdepends=('gnuplot: If using the Gaston Package from julia')
 provides=('julia')
 conflicts=('julia' 'julia-git')
 backup=(etc/julia/startup.jl)
 source=("https://github.com/JuliaLang/julia/releases/download/v$pkgver/$_pkgname-$pkgver-full.tar.gz"
-        libunwind-version.patch
-        make-install-no-build.patch)
-sha256sums=('880c73a08296ce8d94ad9605149f2a2b2b028e7202a700ef725da899300b8be9'
-            'a5eec1e43e1161c313b1d32a5f35a67d6b4a2bbc2d6d324c010f6f2b35be4a72'
-            '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7')
+        make-install-no-build.patch
+        julia-libgit2-1.0.patch::"https://patch-diff.githubusercontent.com/raw/JuliaLang/julia/pull/35233.patch")
+sha256sums=('948c70801d5cce81eeb7f764b51b4bfbb2dc0b1b9effc2cb9fc8f8cf6c90a334'
+            '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7'
+            'c8be2be8d62ea653439a5c18e56f8026c83f0f1127934b12d7faf60630befd45')
 
 prepare() {
   cd $_pkgname-$pkgver
 
-  # Fixing libunwind version check
-  # https://github.com/JuliaLang/julia/pull/29082
-  #patch -p1 -i ../libunwind-version.patch
-
   # Don't build again in install
   patch -p1 -i ../make-install-no-build.patch
 
+  # Compatibility with libgit2 1.0
+  patch -p1 -i ../julia-libgit2-1.0.patch
 }
 
 build() {
   export PATH="$srcdir/bin:$PATH"
-  env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make VERBOSE=1 -C $_pkgname-$pkgver \
+  env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make VERBOSE=1 -C $_pkgname-$pkgver -j1\
     USE_SYSTEM_LLVM=0 \
     USE_SYSTEM_LIBUNWIND=1 \
     USE_SYSTEM_PCRE=1 \
@@ -63,7 +61,8 @@ build() {
     USE_SYSTEM_ZLIB=1 \
     USE_SYSTEM_P7ZIP=1 \
     USE_SYSTEM_OPENLIBM=1 \
-    MARCH=x86-64
+    MARCH=x86-64 \
+    -j 1
     #USE_SYSTEM_BLAS=1 \
     #USE_SYSTEM_LAPACK=1 \
     #USEICC=1 \
