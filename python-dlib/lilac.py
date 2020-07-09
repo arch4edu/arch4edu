@@ -3,6 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': None}, {'alias': 'python'}]
+repo_depends = ['ccache-ext']
 build_prefix = 'extra-x86_64'
 
 def pre_build():
