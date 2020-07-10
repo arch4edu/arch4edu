@@ -10,7 +10,7 @@ pkgname=julia-mkl
 _pkgname=julia
 epoch=2
 pkgver=1.4.2
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
 url='https://julialang.org/'
@@ -40,7 +40,7 @@ prepare() {
 
 build() {
   export PATH="$srcdir/bin:$PATH"
-  env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make VERBOSE=1 -C $_pkgname-$pkgver -j1\
+  env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make VERBOSE=1 -C $_pkgname-$pkgver\
     USE_SYSTEM_LLVM=0 \
     USE_SYSTEM_LIBUNWIND=1 \
     USE_SYSTEM_PCRE=1 \
@@ -61,8 +61,7 @@ build() {
     USE_SYSTEM_ZLIB=1 \
     USE_SYSTEM_P7ZIP=1 \
     USE_SYSTEM_OPENLIBM=1 \
-    MARCH=x86-64 \
-    -j 1
+    MARCH=x86-64
     #USE_SYSTEM_BLAS=1 \
     #USE_SYSTEM_LAPACK=1 \
     #USEICC=1 \
