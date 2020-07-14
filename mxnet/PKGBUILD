@@ -1,22 +1,50 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgbase=mxnet
-pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl')
-pkgver=1.5.1
-pkgrel=3.1
+pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl' 'mxnet-mkl-cuda')
+pkgver=1.7.0.rc0
+pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
 license=('Apache')
-depends=('double-conversion' 'hdf5' 'intel-tbb' 'python-numpy' 'python-requests')
-makedepends=('cairo' 'cblas' 'cmake' 'cuda' 'cudnn' 'cython' 'git' 'gtk3' 'gtkglext' 'intel-compiler-base' 'intel-mkl' 'lapack' 'nccl' 'python-graphviz' 'vtk' 'glew' 'intel-dnnl')
+depends=(
+	'double-conversion'
+	'hdf5'
+	'libjpeg-turbo'
+	'python-numpy'
+	'python-requests'
+)
+makedepends=(
+	'cblas'
+	'ccache'
+	'cmake'
+	'cython'
+	'doxygen'
+	'git'
+	'gtk3'
+	'lapack'
+	'ninja'
+	'qt5-base'
+	'opencv'
+
+	'cuda'
+	'cudnn'
+	'nccl'
+
+	#'intel-compiler-base'
+	'intel-mkl'
+	#'intel-tbb'
+	'onednn'
+)
+optdepends=('python-graphviz')
 source=("${pkgbase}::git+https://github.com/apache/incubator-mxnet#tag=$pkgver"
-	'git+https://github.com/dmlc/cub'
 	'git+https://github.com/dmlc/dlpack'
 	'git+https://github.com/dmlc/dmlc-core'
 	'git+https://github.com/google/googletest'
-	'git+https://github.com/intel/mkl-dnn'
-	'git+https://github.com/dmlc/mshadow'
+	'mkldnn::git+https://github.com/intel/mkl-dnn'
+	#'git+https://github.com/dmlc/mshadow'
+	'nvidia_cub::git+https://github.com/NVlabs/cub'
 	'git+https://github.com/onnx/onnx-tensorrt'
 	'git+https://github.com/llvm-mirror/openmp'
 	'git+https://github.com/dmlc/ps-lite'
@@ -25,8 +53,9 @@ source=("${pkgbase}::git+https://github.com/apache/incubator-mxnet#tag=$pkgver"
 	'git+https://github.com/google/benchmark.git'
 	'git+https://github.com/pybind/pybind11.git'
 	'git+https://github.com/wjakob/clang-cindex-python3'
-	'git+https://github.com/dmlc/HalideIR'
-	'13559.patch')
+	'git+https://github.com/agauniyal/rang'
+)
+
 md5sums=('SKIP'
          'SKIP'
          'SKIP'
@@ -41,17 +70,14 @@ md5sums=('SKIP'
          'SKIP'
          'SKIP'
          'SKIP'
-         'SKIP'
-         'SKIP'
-         'fd1c56e58357cd8ba82fcaf8ebfcc1fa')
+         'SKIP')
 
 prepare() {
 	cd "$srcdir/$pkgbase"
-	for i in cub dlpack dmlc-core googletest mshadow onnx-tensorrt openmp ps-lite tvm
+	for i in dlpack dmlc-core googletest mkldnn nvidia_cub onnx-tensorrt openmp ps-lite tvm
 	do
 		git config submodule.3rdparty/${i}.url "$srcdir/$i"
 	done
-	git config submodule.3rdparty/mkldnn.url "$srcdir/mkl-dnn"
 	git submodule update --init
 
 	cd "$srcdir/$pkgbase/3rdparty/onnx-tensorrt"
@@ -70,109 +96,123 @@ prepare() {
 	git submodule update --init
 
 	cd "$srcdir/$pkgbase/3rdparty/tvm"
-	for i in HalideIR dlpack dmlc-core
+	for i in dlpack dmlc-core 3rdparty/rang
 	do
-		#git config submodule.3rdparty/${i}.url "$srcdir/$i"
-		git config submodule.${i}.url "$srcdir/$i"
+		git config submodule.${i}.url "$srcdir/$(basename $i)"
 	done
 	git submodule update --init
 
 	cd "$srcdir/$pkgbase"
 	git submodule update --init --recursive
+	# https://github.com/apache/incubator-mxnet/pull/18357
+	git checkout 78e31d6 src/operator/tensor/elemwise_binary_broadcast_op_basic.cc
 
-	(
-		echo "USE_OPENCV=0"
-
-		# https://github.com/apache/incubator-mxnet/issues/8569
-		echo "USE_GPERFTOOLS=0"
-		echo "USE_JEMALLOC=0"
-	) >> make/config.mk
-
-	# https://github.com/archlinuxcn/repo/issues/684
-	#sed 's|liblapack.a|liblapack.so|g' -i Makefile
-
-	# Fix cython module names
-	sed \
-		-e 's|mxnet/%s/.%s|mxnet_%s_%s|' \
-		-e 's|../3rdparty/nnvm/include|../3rdparty/tvm/nnvm/include|' \
-		-i python/setup.py
-	
+	mkdir -p "$srcdir/$pkgbase/build"
 	cp -r "$srcdir/$pkgbase" "$srcdir/$pkgbase-cuda"
-	(
-		echo "export CC=gcc-8"
-		echo "export CXX=g++-8"
+	cp config/distribution/linux_cpu.cmake config.cmake
 
-		echo "USE_BLAS=blas"
-		echo "ADD_LDFLAGS+=-lcblas"
-
-		echo "USE_CUDA=1"
-		echo "USE_CUDA_PATH=/opt/cuda"
-		echo "USE_CUDNN=1"
-		echo "USE_NCCL=1"
-		echo "USE_NCCL_PATH=/usr"
-
-		echo -n "CUDA_ARCH="
-		for i in 35 37 50 52 53 60 61 62 70 72 75
-		do
-			echo -n "-gencode arch=compute_$i,code=sm_$i "
-		done
-		echo
-	) >> "$srcdir/$pkgbase-cuda/make/config.mk"
+	cd "$srcdir/$pkgbase-cuda"
+	cp config/distribution/linux_cu102.cmake config.cmake
 
 	cp -r "$srcdir/$pkgbase" "$srcdir/$pkgbase-mkl"
-	(
-		echo "export CC=icc"
-		echo "export CXX=icpc"
-
-		echo "USE_BLAS=mkl"
-		echo "USE_INTEL_PATH=/opt/intel"
-		echo "ADD_LDFLAGS+=-lmkl_rt"
-		echo "USE_MKLDNN=1"
-
-		# https://github.com/apache/incubator-mxnet/issues/14086
-		# https://github.com/apache/incubator-mxnet/compare/master...TaoLv:enable-icc?expand=1
-		echo "ADD_CFLAGS=-Qoption\,cpp\,--new_cilkfor"
-	) >> "$srcdir/$pkgbase-mkl/make/config.mk"
+	cp -r "$srcdir/$pkgbase-cuda" "$srcdir/$pkgbase-mkl-cuda"
 
 	(
-		echo "export CC=gcc-8"
-		echo "export CXX=g++-8"
+		echo "list(APPEND mshadow_LINKER_LIBS -lcblas -fopenmp)"
+		echo 'add_definitions("-DMSHADOW_USE_MKL=0")'
+		echo 'add_definitions("-DMSHADOW_USE_CBLAS=1")'
+	) | tee -a \
+		"$srcdir/$pkgbase"/config.cmake \
+		"$srcdir/$pkgbase-cuda"/config.cmake
 
-		echo "USE_BLAS=blas"
-		echo "ADD_LDFLAGS+=-lcblas"
-	) >> "$srcdir/$pkgbase/make/config.mk"
+	#(
+	#	echo "list(APPEND mshadow_LINKER_LIBS -lmkl_rt)"
+
+	#	# https://github.com/apache/incubator-mxnet/issues/14086
+	#	# https://github.com/apache/incubator-mxnet/compare/master...TaoLv:enable-icc?expand=1
+	#	#echo 'add_definitions("-Qoption\,cpp\,--new_cilkfor")'
+	#) | tee -a \
+	#	"$srcdir/$pkgbase-mkl"/config.cmake \
+	#	"$srcdir/$pkgbase-mkl-cuda"/config.cmake
 }
 
 build() {
-	cd "$srcdir/$pkgbase"
-	make
-	cd python
+	common_args=(
+		-DCMAKE_INSTALL_PREFIX=/usr
+		-G Ninja
+	)
+
+	cblas_args=(
+		-DUSE_BLAS=blas
+		-DUSE_MKLDNN:BOOL=OFF
+	)
+
+	cuda_args=(
+		-DUSE_OPENCV:BOOL=OFF
+		-DUSE_NCCL:BOOL=ON
+		-DCMAKE_C_COMPILER=/opt/cuda/bin/gcc
+		-DCMAKE_CXX_COMPILER=/opt/cuda/bin/g++
+	)
+
+	mkl_args=(
+		-DUSE_BLAS=mkl
+		-DUSE_MKL_IF_AVAILABLE:BOOL=ON
+		#-DDNNL_CPU_RUNTIME=TBB
+		#-DCMAKE_C_COMPILER=icc
+		#-DCMAKE_CXX_COMPILER=icpc
+	)
+
+	msg2 "Building $pkgbase"
+	cd "$srcdir/$pkgbase/build"
+	cmake ${common_args[@]} ${cblas_args[@]} ..
+	cmake --build .
+	cd ../python
 	python setup.py build --with-cython
 
-	cd "$srcdir/$pkgbase-cuda"
-	make
-	cd python
+	msg2 "Building $pkgbase-cuda"
+	cd "$srcdir/$pkgbase-cuda/build"
+	cmake ${common_args[@]} ${cblas_args[@]} ${cuda_args[@]} ..
+	cmake --build .
+	cd ../python
 	python setup.py build --with-cython
 
-	cd "$srcdir/$pkgbase-mkl"
-	make
-	cd python
+	msg2 "Building $pkgbase-mkl"
+	cd "$srcdir/$pkgbase-mkl/build"
+	cmake ${common_args[@]} ${mkl_args[@]} ..
+	cmake --build .
+	cd ../python
+	python setup.py build --with-cython
+
+	msg2 "Building $pkgbase-mkl-cuda"
+	cd "$srcdir/$pkgbase-mkl-cuda/build"
+	cmake ${common_args[@]} ${mkl_args[@]} ${cuda_args[@]} ..
+	cmake --build .
+	cd ../python
 	python setup.py build --with-cython
 }
 
 _package() {
+	cd "${srcdir}/${pkgname}/build"
+	#make DESTDIR="${pkgdir}" install
+	DESTDIR="${pkgdir}" ninja install
+	install -Dm755 im2rec "${pkgdir}/usr/bin/im2rec" || :
+
 	cd "$srcdir/$pkgname/python"
 	python setup.py install --root="$pkgdir"/ --optimize=1 --with-cython --skip-build
-	mv $pkgdir/usr/$pkgbase/* $pkgdir/usr/lib/python3.8/site-packages/$pkgbase/
-	rmdir $pkgdir/usr/$pkgbase
+	ln -sf '/usr/lib/libmxnet.so' "${pkgdir}/usr/lib/python3.8/site-packages/mxnet/libmxnet.so"
 
-	cp -r $srcdir/$pkgname/include $pkgdir/usr/lib/python3.8/site-packages/$pkgbase/
+	rm -f ${pkgdir}/usr/lib/lib{gomp,iomp5,omp}.so
+	rm -f ${pkgdir}/usr/include/{omp*,dnnl*,mkldnn*}
+	rm -rf $pkgdir/usr/$pkgbase
+	rm -rf $pkgdir/usr/lib/cmake
+	rm -rf $pkgdir/usr/share/doc/dnnl
+	find "${pkgdir}" -name '*.a' -delete
 
 	install -Dm644 "$srcdir/$pkgname/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 
 package_mxnet() {
-	depends+=(cblas lapack)
+	depends+=(cblas lapack opencv)
 	_package
 }
 
@@ -186,7 +226,15 @@ package_mxnet-cuda() {
 
 package_mxnet-mkl() {
 	pkgdesc="$pkgdesc (with MKL)"
-	depends+=(intel-mkl intel-dnnl)
+	depends+=(intel-mkl onednn opencv)
+	conflicts=(mxnet)
+	provides=(mxnet)
+	_package
+}
+
+package_mxnet-mkl-cuda() {
+	pkgdesc="$pkgdesc (with MKL and CUDA)"
+	depends+=(intel-mkl onednn cuda cudnn nccl)
 	conflicts=(mxnet)
 	provides=(mxnet)
 	_package
