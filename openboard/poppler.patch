@@ -1,0 +1,124 @@
+diff --git a/OpenBoard.pro b/OpenBoard.pro
+index b8a7ae5..0dcf3b8 100644
+--- a/OpenBoard.pro
++++ b/OpenBoard.pro
+@@ -3,6 +3,7 @@ TEMPLATE = app
+ 
+ THIRD_PARTY_PATH=../OpenBoard-ThirdParty
+ 
++CONFIG += c++14
+ CONFIG -= flat
+ CONFIG += debug_and_release \
+           no_include_pwd
+diff --git a/src/pdf/XPDFRenderer.cpp b/src/pdf/XPDFRenderer.cpp
+index a3e828e..a77ee49 100644
+--- a/src/pdf/XPDFRenderer.cpp
++++ b/src/pdf/XPDFRenderer.cpp
+@@ -32,6 +32,7 @@
+ #include <QtGui>
+ 
+ #include <frameworks/UBPlatformUtils.h>
++#include <poppler/cpp/poppler-version.h>
+ 
+ #include "core/memcheck.h"
+ 
+@@ -47,11 +48,15 @@ XPDFRenderer::XPDFRenderer(const QString &filename, bool importingFile)
+     {
+         // globalParams must be allocated once and never be deleted
+         // note that this is *not* an instance variable of this XPDFRenderer class
++#if POPPLER_VERSION_MAJOR > 0 || POPPLER_VERSION_MINOR >= 83
++        globalParams = std::make_unique<GlobalParams>();
++#else
+         globalParams = new GlobalParams(0);
++#endif
+         globalParams->setupBaseFonts(QFile::encodeName(UBPlatformUtils::applicationResourcesDirectory() + "/" + "fonts").data());
+     }
+ 
+-    mDocument = new PDFDoc(new GString(filename.toLocal8Bit()), 0, 0, 0); // the filename GString is deleted on PDFDoc desctruction
++    mDocument = new PDFDoc(new GooString(filename.toLocal8Bit()), 0, 0, 0); // the filename GString is deleted on PDFDoc desctruction
+     sInstancesCount.ref();
+ }
+ 
+@@ -70,8 +75,12 @@ XPDFRenderer::~XPDFRenderer()
+ 
+     if (sInstancesCount.loadAcquire() == 0 && globalParams)
+     {
++#if POPPLER_VERSION_MAJOR > 0 || POPPLER_VERSION_MINOR >= 83
++        globalParams.reset();
++#else
+         delete globalParams;
+         globalParams = 0;
++#endif
+     }
+ }
+ 
+@@ -99,16 +108,28 @@ QString XPDFRenderer::title() const
+ {
+     if (isValid())
+     {
++#if POPPLER_VERSION_MAJOR > 0 || POPPLER_VERSION_MINOR >= 55
++        Object pdfInfo = mDocument->getDocInfo();
++#else
+         Object pdfInfo;
+         mDocument->getDocInfo(&pdfInfo);
++#endif
+         if (pdfInfo.isDict())
+         {
+-            Object title;
+             Dict *infoDict = pdfInfo.getDict();
+-            if (infoDict->lookup((char*)"Title", &title)->isString())
++#if POPPLER_VERSION_MAJOR > 0 || POPPLER_VERSION_MINOR >= 55
++            Object title = infoDict->lookup((char*)"Title");
++#else
++            Object title;
++            infoDict->lookup((char*)"Title", &title);
++#endif
++            if (title.isString())
+             {
+-                GString *gstring = title.getString();
+-                return QString(gstring->getCString());
++#if POPPLER_VERSION_MAJOR > 0 || POPPLER_VERSION_MINOR >= 72
++                return QString(title.getString()->c_str());
++#else
++                return QString(title.getString()->getCString());
++#endif
+             }
+         }
+     }
+@@ -172,12 +193,12 @@ QImage* XPDFRenderer::createPDFImage(int pageNumber, qreal xscale, qreal yscale,
+         SplashColor paperColor = {0xFF, 0xFF, 0xFF}; // white
+         if(mSplash)
+             delete mSplash;
+-        mSplash = new SplashOutputDev(splashModeRGB8, 1, gFalse, paperColor);
+-        mSplash->startDoc(mDocument->getXRef());
++        mSplash = new SplashOutputDev(splashModeRGB8, 1, false, paperColor);
++        mSplash->startDoc(mDocument);
+         int rotation = 0; // in degrees (get it from the worldTransform if we want to support rotation)
+-        GBool useMediaBox = gFalse;
+-        GBool crop = gTrue;
+-        GBool printing = gFalse;
++        bool useMediaBox = false;
++        bool crop = true;
++        bool printing = false;
+         mSliceX = 0.;
+         mSliceY = 0.;
+ 
+diff --git a/src/pdf/XPDFRenderer.h b/src/pdf/XPDFRenderer.h
+index 8ab200b..003a205 100644
+--- a/src/pdf/XPDFRenderer.h
++++ b/src/pdf/XPDFRenderer.h
+@@ -36,10 +36,10 @@
+ #include "globals/UBGlobals.h"
+ 
+ THIRD_PARTY_WARNINGS_DISABLE
+-#include <xpdf/Object.h>
+-#include <xpdf/GlobalParams.h>
+-#include <xpdf/SplashOutputDev.h>
+-#include <xpdf/PDFDoc.h>
++#include <poppler/Object.h>
++#include <poppler/GlobalParams.h>
++#include <poppler/SplashOutputDev.h>
++#include <poppler/PDFDoc.h>
+ THIRD_PARTY_WARNINGS_ENABLE
+ 
+ class PDFDoc;

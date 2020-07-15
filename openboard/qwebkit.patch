@@ -1,0 +1,12 @@
+diff -u -ubr a/resources/forms/trapFlash.ui b/resources/forms/trapFlash.ui
+--- a/resources/forms/trapFlash.ui     2017-05-09 15:59:42.177965830 +0200
++++ b/resources/forms/trapFlash.ui     2017-05-09 16:00:08.547747097 +0200
+@@ -113,7 +113,7 @@
+   <customwidget>
+    <class>QWebView</class>
+    <extends>QWidget</extends>
+-   <header>QtWebKit/QWebView</header>
++   <header>QtWebKitWidgets/QWebView</header>
+   </customwidget>
+  </customwidgets>
+  <resources/>

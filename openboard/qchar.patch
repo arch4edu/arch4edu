@@ -1,0 +1,12 @@
+diff -u -ubr a/src/core/UBTextTools.cpp b/src/core/UBTextTools.cpp
+--- a/src/core/UBTextTools.cpp	2017-05-09 15:59:42.177965830 +0200
++++ b/src/core/UBTextTools.cpp	2017-05-09 16:00:08.547747097 +0200
+@@ -34,7 +34,7 @@
+ 
+ 
+     for(int i = 0; i < _html.length(); i+=1){
+-        if(_html.at(i) != '\0')
++        if(_html.at(i) != QChar('\0'))
+             clean.append(_html.at(i));
+     }
+     return clean;
