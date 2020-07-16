@@ -2,7 +2,7 @@
 # Contributor: bartus <arch-user-repoᘓbartus.33mail.com>
 pkgname=openboard
 pkgver=1.5.4
-pkgrel=2
+pkgrel=3
 pkgdesc="Interactive whiteboard software for schools and universities"
 arch=('x86_64' 'i686')
 url="http://openboard.ch/index.en.html"
