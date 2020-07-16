@@ -1,0 +1,17 @@
+post_install() {
+    source /etc/profile.d/aomp-amdgpu.sh
+    export AOMP=/opt/rocm/aomp
+
+    cat << EOF
+
+To compile C/C++ code with OpenMP offloading use
+
+$AOMP/bin/hipcc -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=$($AOMP/bin/mygpu)
+
+followed by additional flags and the source file.
+EOF
+}
+
+post_updgrade() {
+    post_install
+}

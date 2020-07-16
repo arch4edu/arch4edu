@@ -1,0 +1,19 @@
+*** aomp/bin/aomp_common_vars.bak	2020-07-04 10:03:07.970529403 +0200
+--- aomp/bin/aomp_common_vars	2020-07-04 10:03:39.017229414 +0200
+***************
+*** 43,49 ****
+  AOMP_APPLY_ROCM_PATCHES=${AOMP_APPLY_ROCM_PATCHES:-1}
+  
+  #Set common rpath for build scripts
+! AOMP_ORIGIN_RPATH_NO_DTAGS="-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_INSTALL_RPATH=\$ORIGIN:\$ORIGIN/../lib:\$ORIGIN/../hsa/lib:\$ORIGIN/../../lib64:\$ORIGIN/../../hsa/lib:$AOMP_INSTALL_DIR/lib:$AOMP_INSTALL_DIR/hsa/lib"
+  AOMP_ORIGIN_RPATH="-DCMAKE_SHARED_LINKER_FLAGS='-Wl,--disable-new-dtags' $AOMP_ORIGIN_RPATH_NO_DTAGS"
+  
+  CUDA=${CUDA:-/usr/local/cuda}
+--- 43,49 ----
+  AOMP_APPLY_ROCM_PATCHES=${AOMP_APPLY_ROCM_PATCHES:-1}
+  
+  #Set common rpath for build scripts
+! AOMP_ORIGIN_RPATH_NO_DTAGS="-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_INSTALL_RPATH=\$ORIGIN:\$ORIGIN/../lib:\$ORIGIN/../hsa/lib:\$ORIGIN/../../lib64:\$ORIGIN/../../hsa/lib:/opt/rocm/aomp/lib:/opt/rocm/aomp/hsa/lib"
+  AOMP_ORIGIN_RPATH="-DCMAKE_SHARED_LINKER_FLAGS='-Wl,--disable-new-dtags' $AOMP_ORIGIN_RPATH_NO_DTAGS"
+  
+  CUDA=${CUDA:-/usr/local/cuda}
