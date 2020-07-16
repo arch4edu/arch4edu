@@ -1,0 +1,45 @@
+# Maintainer: Oleg Rakhmanov <oleg [at] archlinuxarm [dot] org>
+
+pkgname=raspberrypi-firmware
+pkgver=20200712
+pkgrel=1
+_commit=188d3bfe4a0ac36b119a2cee35a6be8d0c68e09e
+pkgdesc="Firmware tools, libraries, and headers for Raspberry Pi"
+arch=('armv6h' 'armv7h' 'aarch64')
+url="https://github.com/raspberrypi/userland"
+license=('custom')
+makedepends=('cmake')
+replaces=('raspberrypi-firmware-tools')
+provides=('raspberrypi-firmware-tools')
+options=(!strip)
+source=("https://github.com/raspberrypi/userland/archive/${_commit}.tar.gz"
+        "https://raw.githubusercontent.com/raspberrypi/firmware/master/opt/vc/LICENCE"
+        '00-raspberrypi-firmware.conf')
+md5sums=('a12f42ce241ed4ec81c626729c725384'
+         '86e53f5f5909ee66900418028de11780'
+         '72e0d5818fc513ece1b964f25f7e7882')
+
+build() {
+  cd ${srcdir}/userland-${_commit}
+
+  if [ "${CARCH}" == 'aarch64' ]; then
+    cmake -DCMAKE_BUILD_TYPE=Release -DARM64=ON
+  else
+    cmake -DCMAKE_BUILD_TYPE=Release
+  fi
+  
+  make
+}
+
+package() {
+  mkdir -p "${pkgdir}"/opt/vc
+
+  cd ${srcdir}/userland-${_commit}
+  make install DESTDIR="${pkgdir}"
+  cp ../LICENCE "${pkgdir}"/opt/vc
+  rm -rf "${pkgdir}"/opt/vc/src
+
+  # Create lib links
+  mkdir -p "${pkgdir}"/etc/ld.so.conf.d/
+  cp "${srcdir}/00-raspberrypi-firmware.conf" "${pkgdir}"/etc/ld.so.conf.d/
+}
