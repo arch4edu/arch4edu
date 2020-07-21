@@ -1,7 +1,7 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
 pkgver=3.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocrand'
@@ -34,4 +34,9 @@ package() {
 /opt/rocm/rocrand/lib
 EOF
   install -Dm644 "$srcdir/rocRAND-rocm-$pkgver/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+  # Some packages search for {roc,hip}rand includes in /opt/rocm/include/{roc,hip}rand
+  install -d "$pkgdir/opt/rocm/include"
+  ln -s "/opt/rocm/hiprand/include/" "$pkgdir/opt/rocm/include/hiprand"
+  ln -s "/opt/rocm/rocrand/include/" "$pkgdir/opt/rocm/include/rocrand"
 }
