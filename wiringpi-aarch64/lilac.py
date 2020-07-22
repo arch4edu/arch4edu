@@ -14,4 +14,5 @@ def post_build():
     git_commit()
 
 if __name__ == '__main__':
-    single_main(build_prefix)
+    from action_tools import action_main
+    action_main(build_prefix)
