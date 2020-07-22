@@ -11,6 +11,7 @@ def pre_build():
     run_cmd(['sh', 'download-files-from-github.sh', 'moonman/MyPKGBUILDs', 'raspberrypi-firmware'])
 
 def post_build():
+    git_add_files('PKGBUILD')
     git_commit()
 
 if __name__ == '__main__':
