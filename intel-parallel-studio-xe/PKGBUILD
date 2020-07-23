@@ -82,24 +82,24 @@ _remove_static_objects_ipp=false
 ########################################
 
 _year='2020'
-_v_a='1'
-_v_b='217'
+_v_a='2'
+_v_b='254'
 # year, version a and version b found in /opt/intel/compilers_and_libraries_YEAR_A_B
 
-_update='1'
+_update='2'
 
-pkgrel=3.1
+pkgrel=4
 
 _sp='cluster_edition'
-_icc_ver='19.1.1'
-_vtune_ver='2020.1.0.607630'
-_inspector_ver='2020.1.0.604266'
-_advisor_ver='2020.1.0.605410'
+_icc_ver='19.1.2'
+_vtune_ver='2020.2.0.610396'
+_inspector_ver='2020.2.0.604588'
+_advisor_ver='2020.2.0.606470'
 
 pkgver=${_year}.${_v_a}.${_v_b}
 
 # package download folders
-_dir_nr='16526'
+_dir_nr='16744'
 
 options=(strip libtool staticlibs)
 
@@ -118,6 +118,7 @@ source=(
   'intel_inspector.sh'
   'intel-composer.install'
   'intel-common-libs.conf'
+
   'intel-fortran.conf'
   'intel-openmp.conf'
   'intel-mpi.conf'
@@ -126,8 +127,7 @@ source=(
   'intel-tbb.install'
   'EULA.txt'
 )
-
-sha256sums=('fd11d8de72b2bd60474f8bce7b463e4cbb2255969b9eaf24f689575aa2a2abab'
+sha256sums=('4795c44374e8988b91da20ac8f13022d7d773461def4a26ca210a8694f69f133'
             '0704025fdfe40e4fce08e88b641128310c3a3b51332668aab60fb815b424f52b'
             '12f932f99e6d3ee9dd828b95e630f096a9e58707db39bea15fba22a1ad80f211'
             '63b12c66d9c8c2310a7bbd5206c82ba9667fb6ffb3dc7e3f9304a17ed8c8fbcd'
@@ -141,6 +141,7 @@ sha256sums=('fd11d8de72b2bd60474f8bce7b463e4cbb2255969b9eaf24f689575aa2a2abab'
             '5d3ac1ba31d7fc5795821d95b17956b0c977c8f3576b02f664f8ebf476213a43'
             'fde83eb0071a5bd2887de127b56cc573a254e30131ec7b2d956987512c3e90c2'
             '228ac25e147adb9b872e1a562e522d2fd48809ccae89b765112009896a6d55a5')
+
 
 #_archive=l_ccompxe${_comp}_p_${pkgver}
 if [ "$CARCH" = "i686" ]; then
