@@ -3,8 +3,8 @@
 
 pkgname=console-bridge
 _pkgname=console_bridge
-pkgver=1.0.0
-pkgrel=2
+pkgver=1.0.1
+pkgrel=1
 pkgdesc="A ROS-independent package for logging that seamlessly pipes into rosconsole/rosout for ROS-dependent packages."
 arch=('i686' 'x86_64')
 url="http://www.ros.org/"
@@ -12,7 +12,7 @@ license=('BSD')
 depends=('gcc-libs')
 makedepends=('cmake')
 source=("https://github.com/ros/$_pkgname/archive/$pkgver.tar.gz")
-sha256sums=('880bbded7fcdc71479e9b1efc3ba5353f08eed23f0009c93d6bea8ba3974d078')
+sha256sums=('2ff175a9bb2b1849f12a6bf972ce7e4313d543a2bbc83b60fdae7db6e0ba353f')
 
 build() {
     cd "$_pkgname-$pkgver"
