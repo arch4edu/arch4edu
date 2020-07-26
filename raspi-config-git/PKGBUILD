@@ -1,31 +1,50 @@
-# Maintainer: Jefferson Gonzalez <jgmdev@gmail.com>
+# Maintainer: Jingbei Li <i@jingbei.li>
 
-pkgname=raspi-config
-pkgver=r2.aa2dfd1
-pkgrel=2
-pkgdesc="Raspberry pi raspi-config utility adapted for ArchLinux ARM."
-arch=('armv6h' 'armv7h' 'aarch64')
-url="https://github.com/jgmdev/alarm-raspi-config"
+pkgname=raspi-config-git
+_gitname=raspi-config-alarm
+pkgver=20200726.r333.33a1489
+pkgrel=1
+pkgdesc="A simple configuration tool for common Raspberry Pi administrative tasks (ArchlinuxARM fork)"
+arch=('any')
+url="https://github.com/petronny/raspi-config-alarm"
 license=('MIT')
-depends=('xorg-xrandr' 'libnewt')
+depends=(
+	alsa-utils
+	libnewt # Debian: whiptail
+	lua51
+	#systemd # Debian: initramfs-tools
+	parted
+	psmisc
+)
+makedepends=('git')
+optdepends=(
+	iw
+	triggerhappy
+
+	raspi-firmware
+	xorg-xrandr
+)
 provides=('raspi-config')
-source=("git://github.com/jgmdev/alarm-raspi-config.git")
+conflicts=('raspi-config')
+source=("git+${url}")
 md5sums=('SKIP')
-_gitname=alarm-raspi-config
 
 pkgver() {
-  cd "${srcdir}/${_gitname}"
-  ( set -o pipefail
-    git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
-    printf "r%s.%s" \
-      "$(git rev-list --count HEAD)" \
-      "$(git log | head -n 1 | cut -d" " -f2 | awk '{print substr($0,0,7)}')"
-  )
+	cd "${srcdir}/${_gitname}"
+	(
+		set -o pipefail
+		git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+		printf "%s.r%s.%s" \
+		"$(git log -1 --date=format:%Y%m%d --format=%ad)" \
+		"$(git rev-list --count HEAD)" \
+		"$(git log | head -n 1 | cut -d" " -f2 | awk '{print substr($0,0,7)}')"
+	)
 }
 
 package() {
-  cd "${srcdir}/$_gitname"
-
-  make DESTDIR="${pkgdir}" install
+	cd "${srcdir}/${_gitname}"
+	install -dm750 ${pkgdir}/etc/sudoers.d/
+	cp -r usr etc ${pkgdir}
+	install -Dm755 raspi-config ${pkgdir}/usr/bin/raspi-config
+	#install -Dm644 autologin@.service ${pkgdir}/etc/systemd/system/autologin@.service
 }
-makedepends=('git')
