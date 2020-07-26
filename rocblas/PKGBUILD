@@ -1,7 +1,7 @@
 # Maintainer: Markus Näther <naether.markus@gmail.com>
 pkgname=rocblas
 pkgver=3.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Next generation BLAS implementation for ROCm platform'
 arch=('x86_64')
 url='https://rocblas.readthedocs.io/en/latest'
@@ -12,8 +12,8 @@ _rocblas='https://github.com/ROCmSoftwarePlatform/rocBLAS'
 _tensile='https://github.com/ROCmSoftwarePlatform/Tensile'
 source=("$pkgname-$pkgver.tar.gz::$_rocblas/archive/rocm-$pkgver.tar.gz"
         "rocm-tensile-$pkgver.tar.gz::$_tensile/archive/rocm-$pkgver.tar.gz")
-sha256sums=('3e372c7c0504c0f18b5e69989083e68a45131e675912082961a736cb3b1222fb'
-            '1afd2e28065849dc418efdc79fc3216208963cabc0c4efb870440b1c051a0f20')
+sha256sums=('8560fabef7f13e8d67da997de2295399f6ec595edfd77e452978c140d5f936f0'
+            '71eb3eed6625b08a4cedb539dd9b596e3d4cc82a1a8063d37d94c0765b6f8257')
 options=(!strip)
 
 prepare() {
