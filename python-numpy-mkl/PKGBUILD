@@ -5,94 +5,45 @@
 # Contributor: Douglas Soares de Andrade <dsa@aur.archlinux.org>
 # Contributor: Angel 'angvp' Velasquez <angvp[at]archlinux.com.ve>
 # Adapted to mkl by Simone Riva
+
 pkgname=python-numpy-mkl
-pkgver=1.18.1
+pkgver=1.19.1
 pkgrel=1
-pkgdesc="Scientific tools for Python compiled with intel mkl"
-arch=('i686' 'x86_64')
+pkgdesc="Scientific tools for Python, compiled with intel mkl"
+arch=('x86_64' 'i686')
 license=('custom')
-options=('staticlibs')
 url="http://numpy.scipy.org/"
-depends=('intel-mkl' 'python')
-makedepends=('python-setuptools' 'intel-compiler-base' 'intel-fortran-compiler' 'cython')
+provides=("python-numpy=$pkgver")
+conflicts=('python-numpy')
+depends=('python>=3.6' 'intel-mkl')
+makedepends=('python-setuptools' 'gcc-fortran' 'cython>=0.29.21')
+checkdepends=('python-pytest' 'python-hypothesis')
+options=('staticlibs')
+source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
+sha256sums=('1396e6c3d20cbfc119195303b0272e749610b7042cc498be4134f013e9a3215c')
 
-source=(https://github.com/numpy/numpy/archive/v${pkgver}.tar.gz
-	'site64.cfg'
-	'site32.cfg'
-	'intelccompiler.py.patch')
-
-sha256sums=('96af6ec6c24e2df0d1591076a102b36bcc0c622411cbb191bca9a1ae724c4606'
-	    '86cd68a695a5e1d76f8e53cda70c888c4ed04349f15c8096d4492e346e7187e1'
-            '882f2717deca0fd6a2e2384aac2dc7973c566f9cd2ba46777c3b5ffdffa814df'
-	    '0d185daf0f2fcab08778173f54cee86cd88dc3c6703413686ab3742c0097db4e')
-
-build() {
-	#cd "${srcdir}"
-
-	patch ${srcdir}/numpy-${pkgver}/numpy/distutils/intelccompiler.py < ${srcdir}/intelccompiler.py.patch
-	# set by hand this flag if you want to compile with gcc
-	#force_gcc=false
-
-	#if hash icc; then
-	#	use_intel_cc=true
-	#	use_gcc=false
-	#else
-	#	use_intel_cc=false
-	#	use_gcc=true
-	#fi
-
-	#if [ "$force_gcc" = true ]; then
-	#	use_intel_cc=false
-	#	use_gcc=true
-	#fi
-
-	if [ "$CARCH" = "i686" ]; then
-		cp ${srcdir}/site32.cfg ${srcdir}/site.cfg
-		_compiler=intel
-	else
-		cp ${srcdir}/site64.cfg ${srcdir}/site.cfg
-		_compiler=intelem
-	fi
-
-	export Atlas=None
-	#export LDFLAGS="$LDFLAGS -shared" # makes no difference
-
-	#if [ "$use_gcc" = true ]; then
-	#	export CFLAGS="-fopenmp -m64 -mtune=native -O3 -Wl,--no-as-needed"
-	#	export CXXFLAGS="-fopenmp -m64 -mtune=native -O3 -Wl,--no-as-needed"
-	#	export LDFLAGS="-ldl -lm"
-	#	export FFLAGS="-fopenmp -m64 -mtune=native -O3"
-	#fi
-
-	#if [ "$use_intel_cc" = true ]; then
-	#	export __INTEL_PRE_CFLAGS="$__INTEL_PRE_CFLAGS -D__PURE_INTEL_C99_HEADERS__ -D_Float32=float -D_Float64=double -D_Float128=\"long double\" -D_Float32x=_Float64 -D_Float64x=_Float128"
-	#fi
-
-	echo "Building Python3"
-	cd "${srcdir}"	
-	cp ${srcdir}/site.cfg "${srcdir}/numpy-${pkgver}"
-	cd "${srcdir}/numpy-${pkgver}"
-
-	#if [ "$use_intel_cc" = true ]; then
-	python setup.py config --compiler=${_compiler} build_clib --compiler=${_compiler} build_ext --compiler=${_compiler}
-	#fi
-
-	#if [ "$use_gcc" = true ]; then
-	#	python setup.py config build_clib build_ext
-	#fi
-
+prepare() {
+  export MKLROOT=/opt/intel/mkl
 }
 
-package_python-numpy-mkl() {
+build() {
+  cd numpy-$pkgver
+  python setup.py build
+}
 
-	depends=('intel-mkl' 'python')
-	provides=("python-numpy=${pkgver}")
-	conflicts=('python-numpy')
-	optdepends=('python-pytest: testsuite')
+check() {
+  # TODO: Fix fortran tests here (it works fine after installation)
 
-	cd "${srcdir}/numpy-${pkgver}"
-	python setup.py config_fc install --prefix=/usr --root="${pkgdir}" --optimize=2
+  cd numpy-$pkgver
+  python setup.py install --root="$PWD/tmp_install" --optimize=1
+  cd "$PWD/tmp_install"
+  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/usr/lib/python3.8/site-packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
+}
 
-	install -m755 -d "${pkgdir}/usr/share/licenses/python-numpy"
-	install -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-numpy/"
+package() {
+  cd numpy-$pkgver
+  python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1
+
+  install -m755 -d "${pkgdir}/usr/share/licenses/python-numpy"
+  install -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-numpy/"
 }
