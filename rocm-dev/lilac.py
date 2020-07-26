@@ -7,7 +7,7 @@ repo_depends = [
         'comgr',
         'hip-rocclr',
         'hsa-amd-aqlprofile',
-        'hsa-ext-rocr',
+        'hsa-ext-rocr-bin',
         'hsa-rocr',
         'hsakmt-roct',
         'llvm-amdgpu',
