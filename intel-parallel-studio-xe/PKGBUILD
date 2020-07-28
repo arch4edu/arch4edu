@@ -88,7 +88,7 @@ _v_b='254'
 
 _update='2'
 
-pkgrel=4
+pkgrel=5
 
 _sp='cluster_edition'
 _icc_ver='19.1.2'
@@ -111,7 +111,7 @@ makedepends=('libarchive' 'sed' 'gzip' 'lzop')
 _parallel_studio_xe_dir="parallel_studio_xe${_year:+_${_year}}${_update:+_update${_update}}${_sp:+_${_sp}}"
 
 source=(
-  "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/${_dir_nr}/${_parallel_studio_xe_dir}.tgz"
+  "http://registrationcenter-download.intel.com/akdlm/IRC_NAS/tec/${_dir_nr}/${_parallel_studio_xe_dir}.tgz"
   'intel_compilers.sh'
   'intel_vtune-profiler.sh'
   'intel_advisor.sh'
