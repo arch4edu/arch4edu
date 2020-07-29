@@ -3,7 +3,7 @@
 pkgbase=python-glog
 pkgname=('python-glog' 'python2-glog')
 pkgver=0.3.1
-pkgrel=3
+pkgrel=4
 pkgdesc='A simple Google-style logging wrapper for Python'
 arch=('any')
 url='https://github.com/benley/python-glog/'
