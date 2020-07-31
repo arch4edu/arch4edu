@@ -2,7 +2,7 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgbase=mxnet
 pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl' 'mxnet-mkl-cuda')
-pkgver=1.7.0.rc0
+pkgver=1.7.0.rc1
 pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
@@ -104,6 +104,8 @@ prepare() {
 
 	cd "$srcdir/$pkgbase"
 	git submodule update --init --recursive
+	rm -rf 3rdparty/nvidia_cub
+
 	# https://github.com/apache/incubator-mxnet/pull/18357
 	git checkout 78e31d6 src/operator/tensor/elemwise_binary_broadcast_op_basic.cc
 
@@ -150,6 +152,7 @@ build() {
 	cuda_args=(
 		-DUSE_OPENCV:BOOL=OFF
 		-DUSE_NCCL:BOOL=ON
+		-DMXNET_CUDA_ARCH='5.0;6.0;7.0;7.5;8.0'
 		-DCMAKE_C_COMPILER=/opt/cuda/bin/gcc
 		-DCMAKE_CXX_COMPILER=/opt/cuda/bin/g++
 	)
