@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 
 pkgname=vim-disable-mouse
-pkgver=r1.12557b4
+pkgver=r2.e2aebbc
 pkgrel=1
 pkgdesc='Disable mouse in Vim'
 url="https://github.com/petronny/${pkgname}"
