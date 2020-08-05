@@ -10,7 +10,7 @@ pkgname=('python-dlib')
 pkgname+=('python-dlib-cuda')
 _pkgname=dlib
 pkgver=19.20
-pkgrel=1
+pkgrel=2
 pkgdesc="Dlib is a general purpose cross-platform C++ library designed using contract programming and modern C++ techniques."
 arch=('x86_64')
 url="http://www.dlib.net/"
@@ -46,9 +46,8 @@ package_python-dlib(){
 
 package_python-dlib-cuda(){
 	depends+=('cuda' 'cudnn' 'python')
-	conflicts=('python-dlib')
 	provides=('python-dlib')
-	replaces=('python-dlib')
+	conflicts=('python-dlib')
 	cd "${srcdir}/${_pkgname}-${pkgver}-cuda"
 	python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
 }
