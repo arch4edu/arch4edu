@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=half
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Half-precision floating-point library"
 url="http://half.sourceforge.net/"
 arch=(x86_64)
