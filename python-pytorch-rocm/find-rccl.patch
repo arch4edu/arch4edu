@@ -1,0 +1,46 @@
+From e7950f6c1838bddf5347d279d35450f43cec1db3 Mon Sep 17 00:00:00 2001
+From: acxz <17132214+acxz@users.noreply.github.com>
+Date: Sat, 25 Jul 2020 18:32:18 -0400
+Subject: [PATCH 1/2] find rccl properly
+
+---
+ cmake/External/rccl.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/External/rccl.cmake b/cmake/External/rccl.cmake
+index e425c2d68a429..d4b6ae9d8c61e 100644
+--- a/cmake/External/rccl.cmake
++++ b/cmake/External/rccl.cmake
+@@ -3,7 +3,7 @@ if(NOT __NCCL_INCLUDED)
+ 
+   if(USE_SYSTEM_NCCL)
+     # NCCL_ROOT, NCCL_LIB_DIR, NCCL_INCLUDE_DIR will be accounted in the following line.
+-    find_package(RCCL REQUIRED)
++    find_package(rccl REQUIRED)
+     if(RCCL_FOUND)
+       message(STATUS "RCCL Found!")
+       add_library(__caffe2_nccl INTERFACE)
+
+From af25f9df92d90e1a3a9ad1339d056cc40b493841 Mon Sep 17 00:00:00 2001
+From: Akash Patel <17132214+acxz@users.noreply.github.com>
+Date: Mon, 3 Aug 2020 19:47:44 -0400
+Subject: [PATCH 2/2] change rccl_found variable case
+
+Co-authored-by: Jeff Daily <jeff.daily@amd.com>
+---
+ cmake/External/rccl.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/External/rccl.cmake b/cmake/External/rccl.cmake
+index d4b6ae9d8c61e..911c80f3b9b3d 100644
+--- a/cmake/External/rccl.cmake
++++ b/cmake/External/rccl.cmake
+@@ -4,7 +4,7 @@ if(NOT __NCCL_INCLUDED)
+   if(USE_SYSTEM_NCCL)
+     # NCCL_ROOT, NCCL_LIB_DIR, NCCL_INCLUDE_DIR will be accounted in the following line.
+     find_package(rccl REQUIRED)
+-    if(RCCL_FOUND)
++    if(rccl_FOUND)
+       message(STATUS "RCCL Found!")
+       add_library(__caffe2_nccl INTERFACE)
+       target_link_libraries(__caffe2_nccl INTERFACE ${PYTORCH_RCCL_LIBRARIES})

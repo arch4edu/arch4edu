@@ -1,0 +1,13 @@
+diff --git a/cmake/Dependencies.cmake b/cmake/Dependencies.cmake
+index b498be17e1..69e5c9f187 100644
+--- a/cmake/Dependencies.cmake
++++ b/cmake/Dependencies.cmake
+@@ -1312,7 +1312,7 @@ if(USE_DISTRIBUTED AND USE_TENSORPIPE)
+     set(__BUILD_TESTING ${BUILD_TESTING})
+     set(BUILD_TESTING OFF)
+     set(TP_BUILD_PYTHON OFF)
+-    set(TP_BUILD_LIBUV ON)
++    set(TP_BUILD_LIBUV OFF)
+ 
+     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/tensorpipe)
+ 
