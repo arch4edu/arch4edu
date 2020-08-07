@@ -3,11 +3,11 @@
 # Contributor: Stephen Zhang <zsrkmyn at gmail dot com>
 
 pkgbase=python-pytorch-rocm
-pkgname=("python-pytorch-rocm" "python-pytorch-opt-rocm")
+pkgname=python-pytorch-rocm
 _pkgname="pytorch"
 pkgver=1.6.0
 _pkgver=1.6.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Tensors and Dynamic neural networks in Python with strong GPU acceleration"
 arch=('x86_64')
 url="https://pytorch.org"
@@ -42,14 +42,14 @@ prepare() {
   git submodule update --init --recursive
 
   # https://bugs.archlinux.org/task/64981
-  #patch -N torch/utils/cpp_extension.py "${srcdir}"/fix_include_system.patch
+  patch -N torch/utils/cpp_extension.py "${srcdir}"/fix_include_system.patch
 
   # Use system libuv
-  #patch -Np1 -i "${srcdir}"/use-system-libuv.patch
-  #patch -Np1 -i "${srcdir}"/use-system-libuv2.patch -d third_party/tensorpipe
+  patch -Np1 -i "${srcdir}"/use-system-libuv.patch
+  patch -Np1 -i "${srcdir}"/use-system-libuv2.patch -d third_party/tensorpipe
 
   # FindNCCL patch to export correct nccl version
-  #patch -Np1 -i "${srcdir}"/nccl_version.patch
+  patch -Np1 -i "${srcdir}"/nccl_version.patch
 
   # https://github.com/pytorch/pytorch/issues/41886
   patch -Np1 -i "${srcdir}"/find-hip.patch
@@ -58,7 +58,7 @@ prepare() {
   patch -Np1 -i "${srcdir}"/find-rccl.patch
 
   # remove local nccl
-  #rm -rf third_party/nccl/nccl
+  rm -rf third_party/nccl/nccl
 
   # Apply changes needed for ROCm
   python tools/amd_build/build_amd.py
@@ -105,7 +105,7 @@ build() {
   #export USE_ROCM=ON
   cd "${srcdir}/${_pkgname}-${pkgver}-opt-rocm"
   echo "add_definitions(-march=haswell)" >> cmake/MiscCheck.cmake
-  python setup.py build
+#  python setup.py build
 }
 
 _package() {
