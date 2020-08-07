@@ -2,7 +2,7 @@
 
 pkgname=miopen-hip
 pkgver=3.5.0
-pkgrel=5
+pkgrel=6
 pkgdesc="AMD's Machine Intelligence Library (HIP backend)"
 arch=('x86_64')
 url="https://github.com/ROCmSoftwarePlatform/MIOpen"
@@ -20,7 +20,7 @@ build() {
   CXX=/opt/rocm/hip/bin/hipcc \
   cmake -B build -Wno-dev \
         -S "MIOpen-rocm-$pkgver" \
-        -DCMAKE_INSTALL_PREFIX=/opt/rocm/miopen \
+        -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -DMIOPEN_BACKEND=HIP \
         -DHALF_INCLUDE_DIR=/usr/include/half \
         -DBoost_NO_BOOST_CMAKE=ON
