@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=mavproxy-git
-pkgver=r2256.a993dc09
+pkgver=r2258.d62b386b
 pkgrel=1
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
