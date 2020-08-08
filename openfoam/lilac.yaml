@@ -4,7 +4,7 @@ maintainers:
 update_on:
   - aur
 repo_depends:
-  - paraview
+  - parmetis
   - scotch
 build_prefix: extra-x86_64
 time_limit_hours: 2
