@@ -88,7 +88,7 @@ _v_b='254'
 
 _update='2'
 
-pkgrel=5
+pkgrel=6
 
 _sp='cluster_edition'
 _icc_ver='19.1.2'
@@ -125,6 +125,7 @@ source=(
   'intel-ipp.conf'
   'intel-tbb.conf'
   'intel-tbb.install'
+  'zsh-fix.patch'
   'EULA.txt'
 )
 sha256sums=('4795c44374e8988b91da20ac8f13022d7d773461def4a26ca210a8694f69f133'
@@ -140,6 +141,7 @@ sha256sums=('4795c44374e8988b91da20ac8f13022d7d773461def4a26ca210a8694f69f133'
             'da6f41c2e002c9a793c75a18c8d1c85ef7ef5bf83a7a0a158ff144481491aac8'
             '5d3ac1ba31d7fc5795821d95b17956b0c977c8f3576b02f664f8ebf476213a43'
             'fde83eb0071a5bd2887de127b56cc573a254e30131ec7b2d956987512c3e90c2'
+            'aa45c10e3a8b16509714a55927c91912451057abf2249432ef06c314bb03818a'
             '228ac25e147adb9b872e1a562e522d2fd48809ccae89b765112009896a6d55a5')
 
 
@@ -403,6 +405,8 @@ package_intel-compiler-base() {
   ln -s ./${_composer_xe_dir} composerxe
   ln -s ./${_composer_xe_dir}/linux/bin/${_i_arch} bin
   ln -s ./${_composer_xe_dir}/linux/pkg_bin pkg_bin
+
+  patch -p0 < ${srcdir}/zsh-fix.patch
 
   #ln -s ./${_composer_xe_dir}/linux/debugger/lib/${_i_arch} debugger_lib
   #ln -s ./${_composer_xe_dir}/linux/man/ man
