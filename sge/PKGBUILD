@@ -1,7 +1,7 @@
 # Maintainer: Manhong Dai <daimh@umich.edu>
 pkgname=sge
 pkgver=20200527
-pkgrel=1
+pkgrel=2
 pkgdesc="Son of Grid Engine/Sun Grid Engine"
 arch=('x86_64')
 url="https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/"
