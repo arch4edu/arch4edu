@@ -1,33 +1,19 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 pkgbase=python-pysynphot
 _pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}" "python2-${_pyname}" "python-${_pyname}-doc")
-pkgver=0.9.14
-pkgrel=2
+pkgname=("python-${_pyname}" "python-${_pyname}-doc")
+pkgver=1.0.0
+pkgrel=1
 pkgdesc="Python Synthetic Photometry Utilities"
 arch=('i686' 'x86_64')
-url="http://pysynphot.readthedocs.io/"
+url="http://pysynphot.readthedocs.io"
 license=('BSD')
-makedepends=('python-setuptools' 'python2-setuptools' 'python-astropy' 'python2-numpy' 'python-sphinx' 'python-sphinx_rtd_theme' 'python-beautifulsoup4')
-#checkdepends=('python-pytest-remotedata')
-source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
-        'fix_doc_warning.patch')
-md5sums=('fe4d19b92cb22673b872015377758d30'
-         'b97a899082172969f014b1f7ffe45bd0')
-
-prepare() {
-    cd ${srcdir}/${_pyname}-${pkgver}
-
-    patch -Np1 -i "${srcdir}/fix_doc_warning.patch"
-    cp -a ${srcdir}/${_pyname}-${pkgver}{,-py2}
-}
+makedepends=('python-setuptools-scm' 'python-astropy' 'python-sphinx' 'python-sphinx_rtd_theme' 'graphviz' 'python-beautifulsoup4')
+#checkdepends=('python-pytest-astropy-header')
+source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
+md5sums=('a6d28b9f448fa8ceca2603f11000c029')
 
 build() {
-    msg "Building Python2"
-    cd ${srcdir}/${_pyname}-${pkgver}-py2
-    python2 setup.py build
-
-    msg "Building Python3"
     cd ${srcdir}/${_pyname}-${pkgver}
     python setup.py build
 
@@ -35,25 +21,10 @@ build() {
     python setup.py build_sphinx
 }
 
-#check() {
-#   msg "Checking Python3"
-#   cd ${srcdir}/${_pyname}-${pkgver}
-#   python setup.py test
-
-#   msg "Checking Python2"
-#   cd ${srcdir}/${_pyname}-${pkgver}-py2
-#   python2 setup.py test
-#}
-
-package_python2-pysynphot() {
-    depends=('python2-numpy>=1.9' 'python2-astropy>=1.1')
-    optdepends=('python2-matplotlib: Plotting support'
-                'python-pysynphot-doc: Documentation for PySynphot')
+check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE.md
-    install -D -m644 -t "${pkgdir}/usr/share/doc/${pkgname}" README.rst
-    python2 setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+    pytest || warning "Tests failed"
 }
 
 package_python-pysynphot() {
@@ -71,6 +42,7 @@ package_python-pysynphot-doc() {
     pkgdesc="Documentation for pysynphot"
     cd ${srcdir}/${_pyname}-${pkgver}/build/sphinx
 
+    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../../LICENSE.md
     install -d -m755 "${pkgdir}/usr/share/doc/${pkgbase}"
     cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
 }
