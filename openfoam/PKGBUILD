@@ -7,6 +7,12 @@
 #   pkgname=openfoam-org ?
 #   conflicts=("openfoam")
 
+# Installs as (for example)
+#     /opt/OpenFOAM/OpenFOAM-8
+#
+# with additional stub directory
+#     /opt/OpenFOAM/ThirdParty-8
+
 pkgname=openfoam
 _subver=version-8
 _pkgver=8
@@ -66,24 +72,27 @@ build() {
 package() {
   cd ${srcdir}
 
+  # Installation directories
+  parentDir="${pkgdir}/opt/${_distpkgname}"
+  projectDir="${parentDir}/${_distpkgname}-${_pkgver}"
+
   # Create destination directories
-  install -d ${pkgdir}/opt/${_distpkgname} ${pkgdir}/etc/profile.d || return 1
+  install -d "${parentDir}" "${pkgdir}"/etc/profile.d || return 1
 
-  # copy package to pkgdir
-  cp -r ${srcdir}/${_distpkgname}-${_pkgver} ${pkgdir}/opt/${_distpkgname} || return 1
-
-  # Add source file
-  echo "export FOAM_INST_DIR=/opt/${_distpkgname}" > ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
-  echo "alias ofoam=\"source \${FOAM_INST_DIR}/${_distpkgname}-${_pkgver}/etc/bashrc\"" >> ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
-  chmod 755 ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
-
-  # Add stub thirdparty directory to keep openfoam happy
-  install -d ${pkgdir}/opt/${_distpkgname}/ThirdParty-${_pkgver} || return 1
+  # Copy package to pkgdir
+  cp -r "${srcdir}/${_distpkgname}-${_pkgver}" "${parentDir}" || return 1
 
   # Permission fixes - for system-wide install and use
-  chmod -R go+r ${pkgdir}/opt
-  chmod -R 755 ${pkgdir}/opt/${_distpkgname}/${_distpkgname}-${_pkgver}/bin
-  chmod -R 755 ${pkgdir}/opt/${_distpkgname}/${_distpkgname}-${_pkgver}/etc
+  chmod -R go+r "${pkgdir}"/opt
+  chmod -R 755 "${projectDir}"/bin
+  chmod -R 755 "${projectDir}"/etc
+
+  # Add stub thirdparty directory to keep openfoam happy
+  install -d "${parentDir}/ThirdParty-${_pkgver}" || return 1
+
+  # Add source file
+  echo "alias ofoam='source ${projectDir}/etc/bashrc'" >> ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
+  chmod 755 ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
 }
 
 # vim:set ts=2 sw=2 et:
