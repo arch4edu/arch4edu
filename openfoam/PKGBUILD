@@ -3,13 +3,17 @@
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 
+# consider this?
+#   pkgname=openfoam-org ?
+#   conflicts=("openfoam")
+
 pkgname=openfoam
 _subver=version-8
 _pkgver=8
 #pkgver=${_pkgver}.${_subver}
 pkgver=${_pkgver}
 pkgrel=1
-pkgdesc="The open source CFD toolbox"
+pkgdesc="The open source CFD toolbox (www.openfoam.org)"
 _distpkgname=OpenFOAM
 _gitname=$_distpkgname-$_pkgver
 arch=('x86_64')
