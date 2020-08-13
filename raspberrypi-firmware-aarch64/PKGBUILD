@@ -1,9 +1,9 @@
 # Maintainer: Oleg Rakhmanov <oleg [at] archlinuxarm [dot] org>
 
 pkgname=raspberrypi-firmware
-pkgver=20200712
+pkgver=20200809
 pkgrel=1
-_commit=188d3bfe4a0ac36b119a2cee35a6be8d0c68e09e
+_commit=3e59217bd93b8024fb8fc1c6530b00cbae64bc73
 pkgdesc="Firmware tools, libraries, and headers for Raspberry Pi"
 arch=('armv6h' 'armv7h' 'aarch64')
 url="https://github.com/raspberrypi/userland"
@@ -15,7 +15,7 @@ options=(!strip)
 source=("https://github.com/raspberrypi/userland/archive/${_commit}.tar.gz"
         "https://raw.githubusercontent.com/raspberrypi/firmware/master/opt/vc/LICENCE"
         '00-raspberrypi-firmware.conf')
-md5sums=('a12f42ce241ed4ec81c626729c725384'
+md5sums=('26e2ef23881daad0968df9cf0e7c793d'
          '86e53f5f5909ee66900418028de11780'
          '72e0d5818fc513ece1b964f25f7e7882')
 
