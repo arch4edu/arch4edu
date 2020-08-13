@@ -8,6 +8,9 @@
 #   pkgname=openfoam-com ?
 #   conflicts=("openfoam")
 
+# Installs as (for example)
+#     /opt/OpenFOAM/OpenFOAM-v2006
+
 pkgname=openfoam-esi
 pkgver=v2006
 _distname=OpenFOAM
@@ -37,7 +40,7 @@ prepare() {
   _pversion=$(pacman -Q $(pacman -Qqo $(which paraview)) | sed -e 's/.* //; s/-.*//g')
   _pmajor="${_pversion%%.*}"
 
-  projectDir="${srcdir}/${_distname}-${pkgver}"
+  projectDir="${srcdir}/${_dist}"
 
   # Generate and install the system preferences file
   echo "# Preferences for arch-linux
@@ -126,20 +129,40 @@ build() {
 package() {
   cd ${srcdir}
 
-  # Create destination directories
-  install -d ${pkgdir}/opt/${_distname} ${pkgdir}/etc/profile.d || return 1
+  # Installation directories
+  parentDir="${pkgdir}/opt/${_distname}"
+  projectDir="${parentDir}/${_dist}"
 
-  # copy package to pkgdir
-  cp -r "${srcdir}/${_dist}" "${pkgdir}/opt/${_distname}" || return 1
+  # Create destination directories
+  install -d "${parentDir}" "${pkgdir}"/etc/profile.d || return 1
+
+  # Copy package to pkgdir
+  cp -r "${srcdir}/${_dist}" "${parentDir}" || return 1
 
   # Permission fixes - for system-wide install and use
-  chmod -R go+r ${pkgdir}/opt
-  chmod -R 755 ${pkgdir}/opt/${_distname}/${_dist}/bin
-  chmod -R 755 ${pkgdir}/opt/${_distname}/${_dist}/etc
+  chmod -R go+r "${pkgdir}"/opt
+  chmod -R 755 "${projectDir}"/bin
+  chmod -R 755 "${projectDir}"/etc
+
+  [ -e "${projectDir}"/ThirdParty ] || \
+      echo "system dependencies" >| "${projectDir}"/ThirdParty
+
+#  # Install shell-session script. Could be via post-install
+#  session="/usr/bin/openfoam${pkgver#v}"
+#  wrapper="$projectDir/bin/tools/openfoam.in"
+#
+#  if [ -f "$wrapper" ]
+#  then
+#      echo "Create $session"
+#      sed -e "s#@PROJECT_DIR@#${projectDir}#" "$wrapper" >| "$session"
+#      chmod 0755 "$session"
+#  else
+#      echo "No method to create $session for openfoam${pkgver#v}"
+#  fi
 
   # create alias in .bashrc
-  echo "alias of=\"source /opt/${_distname}/${_dist}/etc/bashrc\"" >> ~/.bashrc
-  echo "alias paraFoam=\"paraFoam -builtin\"" >> ~/.bashrc
+  echo "alias of='source ${projectDir}/etc/bashrc'" >> ~/.bashrc
+  echo "alias paraFoam='paraFoam -builtin'" >> ~/.bashrc
 }
 
 # ---------------------------------------------------------------------------
