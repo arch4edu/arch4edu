@@ -1,9 +1,6 @@
 maintainers:
   - github: petronny
     email: Jingbei Li <i@jingbei.li>
-repo_depends:
-  - llvm9
-  - llvm9: llvm9-libs
 update_on:
   - aur
   - alias: python
