@@ -1,0 +1,37 @@
+diff --git a/third_party/mkl/build_defs.bzl b/third_party/mkl/build_defs.bzl
+index 4b8fb83eb0..f4e1adfb22 100644
+--- a/third_party/mkl/build_defs.bzl
++++ b/third_party/mkl/build_defs.bzl
+@@ -124,7 +124,7 @@ def _mkl_autoconf_impl(repository_ctx):
+     if _enable_local_mkl(repository_ctx):
+         # Symlink lib and include local folders.
+         mkl_root = repository_ctx.os.environ[_TF_MKL_ROOT]
+-        mkl_lib_path = "%s/lib" % mkl_root
++        mkl_lib_path = "%s/lib/intel64" % mkl_root
+         repository_ctx.symlink(mkl_lib_path, "lib")
+         mkl_include_path = "%s/include" % mkl_root
+         repository_ctx.symlink(mkl_include_path, "include")
+diff --git a/third_party/mkl/mkl.BUILD b/third_party/mkl/mkl.BUILD
+index 72370182c4..4972bb005e 100644
+--- a/third_party/mkl/mkl.BUILD
++++ b/third_party/mkl/mkl.BUILD
+@@ -5,7 +5,6 @@ exports_files(["license.txt"])
+ filegroup(
+     name = "LICENSE",
+     srcs = [
+-        "license.txt",
+     ],
+     visibility = ["//visibility:public"],
+ )
+@@ -21,7 +20,10 @@ cc_library(
+     name = "mkl_libs_linux",
+     srcs = [
+         "lib/libiomp5.so",
+-        "lib/libmklml_intel.so",
++        "lib/libmkl_core.so",
++        "lib/libmkl_rt.so",
++        "lib/libmkl_intel_thread.so",
++        "lib/libmkl_intel_lp64.so",
+     ],
+     visibility = ["//visibility:public"],
+ )
