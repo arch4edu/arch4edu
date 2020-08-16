@@ -7,7 +7,7 @@ def pre_build():
     for line in edit_file('PKGBUILD'):
         if line.startswith('_build_opt=1'):
             pass
-        elif line.startswith('build() {')
+        elif line.startswith('build() {'):
             print(line)
             print('  export https_proxy=http://127.0.0.1:8123')
         else:
