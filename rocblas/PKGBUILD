@@ -1,7 +1,7 @@
 # Maintainer: Markus Näther <naether.markus@gmail.com>
 pkgname=rocblas
 pkgver=3.5.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Next generation BLAS implementation for ROCm platform'
 arch=('x86_64')
 url='https://rocblas.readthedocs.io/en/latest'
@@ -35,10 +35,12 @@ build() {
         -DCMAKE_PREFIX_PATH=/opt/rocm/llvm/lib/cmake/llvm \
         -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
         -DBUILD_WITH_TENSILE=ON \
+        -DBUILD_WITH_TENSILE_HOST=OFF \
         -DTensile_TEST_LOCAL_PATH="$srcdir/Tensile-rocm-$pkgver" \
         -DTensile_COMPILER=hipcc \
         -DTensile_ARCHITECTURE=all \
         -DTensile_LOGIC=asm_full \
+        -DTensile_CODE_OBJECT_VERSION=V3 \
         -DBUILD_CLIENTS_TESTS=OFF \
         -DBUILD_CLIENTS_BENCHMARKS=OFF \
         -DBUILD_CLIENTS_SAMPLES=OFF \
