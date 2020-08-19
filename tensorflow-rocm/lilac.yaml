@@ -4,6 +4,7 @@ maintainers:
 update_on:
   - aur
 repo_depends:
+  - miopen-hip
   - rccl
   - rocm-dkms
   - rocm-libs
