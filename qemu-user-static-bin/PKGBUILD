@@ -1,8 +1,8 @@
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
-pkgver=5.0
-pkgadditver=14
-pkgrel=4
+pkgver=5.1
+pkgadditver="+dfsg-3"
+pkgrel=1
 
 pkgname=$_pkgname-bin
 arch=('x86_64' 'i686' 'aarch64')
@@ -13,7 +13,7 @@ makedepends=()
 provides=("$_pkgname" "qemu-user")
 conflicts=("$_pkgname" "qemu-user")
 
-_debsrc="${_pkgname}_${pkgver}-${pkgadditver}"
+_debsrc="${_pkgname}_${pkgver}${pkgadditver}"
 if [ "$CARCH" = 'x86_64' ]; then
   _debsrc=$_debsrc"_amd64.deb"
   _csum=SKIP
