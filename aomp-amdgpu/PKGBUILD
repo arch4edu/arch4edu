@@ -3,8 +3,8 @@
 
 pkgname=aomp-amdgpu
 pkgdesc='Clang/LLVM based compiler with added support for the OpenMP API on Radeon GPUs'
-_pkgver=11.7-1
-pkgver=11.7.1
+_pkgver=11.8-0
+pkgver=11.8.0
 pkgrel=1
 arch=('x86_64')
 url='https://github.com/ROCm-Developer-Tools/aomp'
@@ -16,13 +16,11 @@ makedepends=(git cmake
 source=("${pkgname}-${pkgver}.tar.gz::$url/archive/rel_$_pkgver.tar.gz"
         'disable_ocl_tests.patch'
         'adjust_rpath.patch'
-        'remove_gcc_logic.patch'
-        'opencl_includes.patch::https://patch-diff.githubusercontent.com/raw/ROCm-Developer-Tools/ROCclr/pull/16.patch')
-sha256sums=('74089dc689408ace339998cfd2fb8c04dded3776e63a30cc78f4c43fe3d5016f'
+        'remove_gcc_logic.patch')
+sha256sums=('a708c02ab6acd0cd7a56cb7cf684a53ebe5f63a7e17fe2a1cf878343259a59b3'
             'bf3aab8fc2c828554ba76ab1876179130704f1c35906228fcf7e94239f5e4170'
             '94c670cd991c95a7b6312feb77d32a11c1ac1b839218bcd251042563b7af1a44'
-            'd1040410c7cebc109d2905722e959d4e9d3e4f122fe0a4ae72e3f3d8e5b9a722'
-            '3edeb8aeaf335297ec0f61a15b99c259d607d8f534173fbc3d17832ad03cd63f')
+            'd1040410c7cebc109d2905722e959d4e9d3e4f122fe0a4ae72e3f3d8e5b9a722')
 _dirname="$(basename "$url")-$(basename ${source[0]} .tar.gz)"
 
 prepare() {
@@ -34,9 +32,6 @@ prepare() {
 
     cd "$srcdir/opencl-on-vdi"
     patch -Np1 -i "$srcdir/disable_ocl_tests.patch"
-
-    cd "$srcdir/vdi"
-    patch -Np1 -i "$srcdir/opencl_includes.patch"
 
     cd "$srcdir/aomp"
     patch -Np1 -i "$srcdir/adjust_rpath.patch"
