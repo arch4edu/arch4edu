@@ -1,0 +1,6 @@
+post_upgrade() {
+  if [[ "$2" < "1.4.1" ]]; then
+    printf "Please note: when upgrading to 1.4.1 (or later) you will need to perform a full reindex\n"
+  fi
+}
+
