@@ -2,7 +2,7 @@
 
 pkgname=llvm-amdgpu
 pkgdesc='Radeon Open Compute - LLVM toolchain (llvm, clang, lld)'
-pkgver=3.5.1
+pkgver=3.7.0
 pkgrel=1
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/llvm-project'
@@ -10,31 +10,21 @@ license=('custom:Apache 2.0 with LLVM Exception')
 depends=(z3)
 makedepends=(cmake python)
 source=("${pkgname}-${pkgver}.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('9ccfdd2b97a2848856cda1f67212145a5b8e2c6b802530c84341ea6e33658658')
+sha256sums=('3e2542ce54b91b5c841f33d542143e0e43eae95e8785731405af29f08ace725b')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
 build() {
-    # building LLVM/Clang requires ~1.5G per unit
-    THREADS=$(( ($(getconf _PHYS_PAGES) * $(getconf PAGESIZE)) / 1610612736 ))
-    if [ "$THREADS" -lt 1 ]; then
-        THREADS=1
-    fi
-    NPROC=$(nproc)
-    if [ "$THREADS" -gt $(nproc) ]; then
-        THREADS="$NPROC"
-    fi
-
-    cmake -DCMAKE_INSTALL_PREFIX='/opt/rocm/llvm' \
+    cmake -Wno-dev -S "$_dirname/llvm" \
+          -DCMAKE_INSTALL_PREFIX='/opt/rocm/llvm' \
           -DCMAKE_BUILD_TYPE=Release \
           -DLLVM_HOST_TRIPLE=$CHOST \
           -DLLVM_BUILD_UTILS=ON \
           -DLLVM_ENABLE_BINDINGS=OFF \
           -DLLVM_ENABLE_OCAMLDOC=OFF \
-          -DLLVM_ENABLE_PROJECTS='llvm;clang;lld' \
+          -DLLVM_ENABLE_PROJECTS='llvm;clang;compiler-rt;lld' \
           -DLLVM_TARGETS_TO_BUILD='AMDGPU;X86' \
-          -DOCAMLFIND=NO \
-          "$_dirname/llvm"
-    MAKEFLAGS="$MAKEFLAGS -j$THREADS" make
+          -DOCAMLFIND=NO
+    make
 }
 
 check() {
