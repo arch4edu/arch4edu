@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocm-smi-lib64
-pkgver=3.5.0
-pkgrel=2
+pkgver=3.7.0
+pkgrel=1
 pkgdesc="ROCm SMI LIB"
 arch=('x86_64')
 url="https://github.com/RadeonOpenCompute/rocm_smi_lib"
@@ -10,7 +10,7 @@ depends=()
 makedepends=('cmake')
 options=(!staticlibs strip)
 source=("$pkgname-$pkgver.tar.gz::https://github.com/RadeonOpenCompute/rocm_smi_lib/archive/rocm-$pkgver.tar.gz")
-sha256sums=('a5d2ec3570d018b60524f0e589c4917f03d26578443f94bde27a170c7bb21e6e')
+sha256sums=('72d2a3deda0b55a2d92833cd648f50c7cb64f8341b254a0badac0152b26f1391')
 
 build() {
   mkdir -p "$srcdir/build"
