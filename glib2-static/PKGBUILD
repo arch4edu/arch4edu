@@ -1,7 +1,7 @@
 # Maintainer: nightuser <nightuser.android@gmail.com>
 
 pkgname=glib2-static
-pkgver=2.64.4
+pkgver=2.64.5
 pkgrel=1
 pkgdesc="Low level core library: Static library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -14,7 +14,7 @@ options=('!docs' '!libtool' '!emptydirs' '!strip' 'staticlibs')
 source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz"
         'MR1405.patch'
         'MR1414.patch')
-sha256sums=('f7e0b325b272281f0462e0f7fff25a833820cac19911ff677251daf6d87bce50'
+sha256sums=('9cbd5bd2715ead1c28d53c46f7b7b6ff6166f5887b772c1a9e3bf2910cfecc11'
             '934d87deaf597d7122f89d03c22b122a89eacbe46e887ce8e920a344926da2fb'
             '19cd43aa20962e2e27c55553b871ab1bb970289219545447887cc5e654245fed')
 
