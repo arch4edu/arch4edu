@@ -5,10 +5,10 @@
 pkgbase='distccd-alarm'
 _subarchs=(armv5 armv6h armv7h armv8)
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
-_date=20200428
+_date=20200823
 # inspect source tarball under $name/share/gcc-x.y.z
-pkgver=9.3.0.$_date
-pkgrel=3
+pkgver=10.2.0.$_date
+pkgrel=1
 _pkgrel_upstream=1
 #_URL="https://archlinuxarm.org/builder/xtools/$pkgver-$pkgrel"
 _URL="https://archlinuxarm.org/builder/xtools"
@@ -32,10 +32,10 @@ noextract=(
 "x-tools8-$_date.tar.xz"
 )
 #PKGEXT='.pkg.tar'
-md5sums=('2e17110e55bd82abbbcb58afc5f0a165'
-         '834338535921e0208f03bd23b49097b6'
-         '67002d06aab2258f5043497087b33555'
-         'a197dedc3134a2e7c7221494ba4ebeff'
+md5sums=('87150475eb6e533f1a84ba3fc9a73e37'
+         '9e1c82ac8badc286f40d7d22e475e1b2'
+         '7015421efcdac437de27769a421a10a2'
+         '6e5060bc78f9c62746e9d2b23668583b'
          '89694ceb3a0fb07413ffef810173ee55'
          '26741c886597e3fd8d8fc0a61aa8a49a'
          'da6ee5bb971d28b85e49d456a3889349'
