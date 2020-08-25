@@ -1,41 +1,32 @@
 # Maintainer: Simon Legner <Simon.Legner@gmail.com>
-pkgbase=python-pydub
-pkgname=('python-pydub' 'python2-pydub')
+pkgname=python-pydub
 pkgver=0.24.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Manipulate audio with an simple and easy high level interface"
-url="http://pydub.com"
+url="https://pydub.com"
 makedepends=("python-setuptools" "python2-setuptools")
 license=('MIT')
 arch=('any')
-source=("$pkgbase-$pkgver.tar.gz::https://github.com/jiaaro/pydub/archive/v$pkgver.tar.gz")
-makedepends=('python-setuptools' 'python2-setuptools')
+optdepends=('python-pyaudio: for playback' 'python-simpleaudio: for playback' 'ffmpeg: for playback' 'libav: for playback')
+makedepends=('python-setuptools')
+source=("https://pypi.org/packages/source/p/pydub/pydub-$pkgver.tar.gz"
+        "https://github.com/jiaaro/pydub/raw/v$pkgver/LICENSE")
+sha256sums=('630c68bfff9bb27cbc5e1f02923f717c3bc5f4d73fd685fda08b6ce90f76dc69'
+            'ae856536224cc7a389e968771fc5f259814bdd0da63539cf72282adbaef6897a')
 
 build() {
-  cd "$srcdir"
-  cp -r pydub-$pkgver pydub2-$pkgver
+  cd "$srcdir/pydub-$pkgver"
+  python setup.py build
 }
 
 check() {
   cd "$srcdir/pydub-$pkgver"
-  which python3 && python3 setup.py check
-
-  cd "$srcdir/pydub2-$pkgver"
-  which python2 && python2 setup.py check
+  python setup.py check
 }
 
-package_python-pydub() {
-  depends=('python')
+package() {
   cd "$srcdir/pydub-$pkgver"
-  python3 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-}
+  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
 
-package_python2-pydub() {
-  depends=('python2')
-  cd "$srcdir/pydub2-$pkgver"
-  python2 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
-
-sha256sums=('92b13680b1cd5152c3b437063a7290f17e5c4ea0bcd8c64ae239950313d2d650')
