@@ -1,10 +1,11 @@
-# Maintainer: Jean Lucas <jean@4ray.co>
+# Maintainer: Alberto Sánchez Molero <com dot gmail at alsamolero>
+# Contributor: Jean Lucas <jean@4ray.co>
 # Contributor: Kilian Gebhardt <gebhardtkilian at gmail dot com>
 # Contributor: Andreas Hauser <andy-aur@splashground.de>
 # Contributor: Christoph Drexler <chrdr at gmx dot at>
 
 pkgname=openfst
-pkgver=1.7.6
+pkgver=1.7.9
 pkgrel=1
 pkgdesc='Library for constructing, combining, optimizing, and searching weighted finite-state transducers (FSTs)'
 arch=(i686 x86_64)
@@ -13,7 +14,7 @@ license=(Apache)
 depends=(gcc-libs glibc python)
 options=(!libtool)
 source=(http://www.openfst.org/twiki/pub/FST/FstDownload/$pkgname-$pkgver.tar.gz)
-sha1sums=(3fb669b7c064c83f7768d9089b2914a782890474)
+sha256sums=(9319aeb31d1e2950ae25449884e255cc2bc9dfaf987f601590763e61a10fbdde)
 
 build() {
   cd $srcdir/$pkgname-$pkgver
