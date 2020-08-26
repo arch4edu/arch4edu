@@ -1,7 +1,7 @@
 # Maintainer: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=hipcub
-pkgver=3.5.0
-pkgrel=2
+pkgver=3.7.0
+pkgrel=1
 pkgdesc='Header-only library on top of rocPRIM or CUB'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipcub'
@@ -10,21 +10,17 @@ depends=('rocprim')
 makedepends=('cmake' 'git' 'hip-rocclr')
 _git='https://github.com/ROCmSoftwarePlatform/hipCUB'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('1eb2cb5f6e90ed1b7a9ac6dd86f09ec2ea27bceb5a92eeffa9c2123950c53b9d')
+sha256sums=('a2438632ea1606e83a8c0e1a8777aa5fdca66d77d90862642eb0ec2314b4978d')
+_dirname="$(basename $_git)-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
-  mkdir -p build
-  cd build
-
   CXX=/opt/rocm/hip/bin/hipcc \
-  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
-        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
-        "$srcdir/hipCUB-rocm-$pkgver"
+  cmake -Wno-dev -S "$_dirname" \
+        -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr
 }
 
 package() {
-  cd "$srcdir/build"
-
-  make DESTDIR="$pkgdir" install
-  install -Dm644 "$srcdir/hipCUB-rocm-$pkgver/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  DESTDIR="$pkgdir" make install
+  install -Dm644 "$_dirname/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
