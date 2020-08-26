@@ -1,7 +1,7 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocfft
-pkgver=3.5.0
+pkgver=3.7.0
 pkgrel=1
 pkgdesc='Next generation FFT implementation for ROCm'
 arch=('x86_64')
@@ -11,28 +11,24 @@ depends=('hip-rocclr')
 makedepends=('cmake')
 _git='https://github.com/ROCmSoftwarePlatform/rocFFT'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('629f02cfecb7de5ad2517b6a8aac6ed4de60d3a9c620413c4d9db46081ac2c88')
+sha256sums=('94462e4bd19c2c749fcf6903adbee66d4d3bd345c0246861ff8f40b9d08a6ead')
+_dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
-  mkdir -p build
-  cd build
-
   CXX=/opt/rocm/hip/bin/hipcc \
-  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+  cmake -Wno-dev -S "$_dirname" \
+        -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
         -DBUILD_CLIENTS_RIDER=OFF \
-        -DBUILD_CLIENTS_TESTS=OFF \
-        "$srcdir/rocFFT-rocm-$pkgver"
+        -DBUILD_CLIENTS_TESTS=OFF
   make
 }
 
 package() {
-  cd "$srcdir/build"
-
-  make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" make install
 
   install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocfft.conf" << EOF
 /opt/rocm/rocfft/lib
 EOF
-  install -Dm644 "$srcdir/rocFFT-rocm-$pkgver/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/$_dirname/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
