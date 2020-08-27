@@ -2,7 +2,7 @@
 # contact me via AUR or archlinux forums
 project='pymavlink'
 pkgname=python-${project}-git # '-bzr', '-git', '-hg' or '-svn'
-pkgver=r2589.ad237d1
+pkgver=r2596.b1efa7e
 pkgrel=1
 pkgdesc="python MAVLink interface and utilities"
 arch=('x86_64')
