@@ -1,7 +1,7 @@
 # Maintainer: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocprim
 pkgver=3.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Header-only library providing HIP parallel primitives'
 arch=('x86_64')
 url="https://github.com/ROCmSoftwarePlatform/rocPRIM"
