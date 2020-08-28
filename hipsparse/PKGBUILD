@@ -3,7 +3,7 @@
 
 pkgname=hipsparse
 pkgver=3.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc='rocSPARSE marshalling library.'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipsparse'
