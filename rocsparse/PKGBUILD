@@ -1,7 +1,7 @@
 # Maintainer: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocsparse
 pkgver=3.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc='BLAS for sparse computation on top of ROCm'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocsparse'
