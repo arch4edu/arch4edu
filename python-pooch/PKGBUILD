@@ -4,7 +4,7 @@
 pkgname=python-pooch
 _pkgname=pooch
 pkgver=1.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Python library for fetching and caching data files"
 arch=('any')
 url="https://www.fatiando.org/pooch/latest/"
