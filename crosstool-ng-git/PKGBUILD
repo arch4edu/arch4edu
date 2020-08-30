@@ -4,7 +4,7 @@
 
 pkgname=crosstool-ng-git
 epoch=1
-pkgver=1.24.0.r139.g793d6589
+pkgver=1.24.0.r150.g4e5bc436
 pkgrel=1
 pkgdesc="crosstool-NG aims at building toolchains."
 arch=('i686' 'x86_64')
@@ -27,7 +27,7 @@ prepare () {
 	cd crosstool-ng
 
 	# gcc 10.2.0 -- https://aur.archlinux.org/packages/crosstool-ng-git/#comment-760589
-	git pull --no-edit origin pull/1368/head
+	#git pull --no-edit origin pull/1368/head
 }
 
 build () {
