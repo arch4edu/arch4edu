@@ -4,12 +4,12 @@
 pkgname=python-librosa
 _pkgname=librosa
 pkgver=0.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Python library for music and audio analysis"
 arch=('any')
 url="https://librosa.org"
 license=('ISC')
-depends=('python-numpy' 'python-scipy' 'python-six' 'python-numba' 'python-soundfile' 'python-joblib' 'python-matplotlib' 'python-audioread' 'python-decorator' 'python-scikit-learn' 'python-resampy')
+depends=('python-numpy' 'python-scipy' 'python-six' 'python-numba' 'python-soundfile' 'python-joblib' 'python-matplotlib' 'python-audioread' 'python-decorator' 'python-pooch' 'python-scikit-learn' 'python-resampy')
 makedepends=('python-setuptools')
 source=("https://github.com/librosa/librosa/archive/${pkgver}.tar.gz")
 md5sums=('7fff13fa3cd8caf36f3ea722b5ee7e6f')
