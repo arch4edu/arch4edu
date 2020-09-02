@@ -3,8 +3,7 @@ from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
 update_on = [{'aur': 'rpiusbboot-git'}, {'github': 'raspberrypi/usbboot'}]
-repo_depends = [('fakeroot-tcp-armv7h', 'fakeroot-tcp')]
-build_prefix = 'extra-armv7h'
+build_prefix = 'action-extra-armv7h'
 
 def pre_build():
     aur_pre_build('rpiusbboot-git')
@@ -14,4 +13,5 @@ def pre_build():
 post_build = aur_post_build
 
 if __name__ == '__main__':
-    single_main(build_prefix)
+    from action_tools import action_main
+    action_main(build_prefix)
