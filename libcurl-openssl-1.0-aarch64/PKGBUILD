@@ -6,7 +6,7 @@
 
 pkgname=libcurl-openssl-1.0
 pkgver=7.71.1
-pkgrel=2
+pkgrel=3
 pkgdesc="An URL retrieval library (without versioned symbols, built against openssl-1.0)"
 arch=('aarch64' 'x86_64')
 url="https://curl.haxx.se"
