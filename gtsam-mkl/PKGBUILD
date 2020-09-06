@@ -1,7 +1,7 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 pkgname=gtsam-mkl
-pkgver=4.0.2
-pkgrel=5
+pkgver=4.0.3
+pkgrel=1
 pkgdesc="A library of C++ classes that implement smoothing and mapping (SAM) in\
   robotics and vision, using factor graphs and Bayes networks as the underlying\
   computing paradigm rather than sparse matrices."
@@ -12,22 +12,8 @@ conflicts=('gtsam' 'gtsam-git')
 license=('BSD')
 depends=('boost-libs' 'eigen' 'intel-tbb' 'intel-mkl')
 makedepends=('boost' 'cmake')
-source=("https://github.com/borglab/${pkgname}/archive/${pkgver}.tar.gz"
-        "rename-included-libmetis.patch"
-        "skip-boost-debug-libs.patch"
-        "fix-findmkl.patch")
-md5sums=('fc24394cf59ccf034ae4150d8613384b'
-         '63093f474f5574e8dd3e300289dab47f'
-         '3df2bbd13382765fbe40f503f3a99219'
-         '3ba08e16a06755c8cdf637b896d186a3')
-
-
-prepare() {
-  cd "${srcdir}/gtsam-${pkgver}"
-  patch -p1 -i ../rename-included-libmetis.patch
-  patch -p1 -i ../skip-boost-debug-libs.patch
-  patch -p1 -i ../fix-findmkl.patch
-}
+source=("https://github.com/borglab/gtsam/archive/${pkgver}.tar.gz")
+md5sums=('1e5c09da035c6b3d8cce3e23aeab6865')
 
 build() {
   cd "${srcdir}/gtsam-${pkgver}"
