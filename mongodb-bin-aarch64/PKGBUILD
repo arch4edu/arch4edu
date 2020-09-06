@@ -3,7 +3,7 @@
 pkgname="mongodb-bin"
 pkgver="4.4.0"
 basever="4.4"
-pkgrel="1"
+pkgrel=2
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
