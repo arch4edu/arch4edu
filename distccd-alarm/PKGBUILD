@@ -8,7 +8,7 @@ pkgname=("${_subarchs[@]/#/$pkgbase-}")
 _date=20200823
 # inspect source tarball under $name/share/gcc-x.y.z
 pkgver=10.2.0.$_date
-pkgrel=1
+pkgrel=2
 _pkgrel_upstream=1
 #_URL="https://archlinuxarm.org/builder/xtools/$pkgver-$pkgrel"
 _URL="https://archlinuxarm.org/builder/xtools"
@@ -23,7 +23,7 @@ source=(
 "x-tools6h-$_date.tar.xz::$_URL/x-tools6h.tar.xz"
 "x-tools7h-$_date.tar.xz::$_URL/x-tools7h.tar.xz"
 "x-tools8-$_date.tar.xz::$_URL/x-tools8.tar.xz"
-'config.in' 'service.in' 'readme.in' 'sysusers.conf'
+'config.in' 'service.in' 'readme.in'
 )
 noextract=(
 "x-tools-$_date.tar.xz"
@@ -38,8 +38,7 @@ md5sums=('87150475eb6e533f1a84ba3fc9a73e37'
          '6e5060bc78f9c62746e9d2b23668583b'
          '89694ceb3a0fb07413ffef810173ee55'
          '26741c886597e3fd8d8fc0a61aa8a49a'
-         'da6ee5bb971d28b85e49d456a3889349'
-         'cc2464a203444bb9287849d6773e544c')
+         'da6ee5bb971d28b85e49d456a3889349')
 
 build() {
   # setup config and services
@@ -86,8 +85,7 @@ _package_subarch() {
   install -d "${pkgdir}/opt"
   bsdtar -x --uid 0 --gid 0 -f "${srcdir}/$2-$_date.tar.xz" -C "${pkgdir}/opt"
 
-  # FS#67629
-  install -Dm644 sysusers.conf "$pkgdir/usr/lib/sysusers.d/distccd-$1.conf"
+  # FS#67629 - since distcc is a dependency there is no need to provide a sysuser.d config
 
   # install services
   install -Dm644 "${srcdir}/distccd-$1.service" \
