@@ -3,7 +3,7 @@ pkgbase=python-sphinx-gallery
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.8.0
+pkgver=0.8.1
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('i686' 'x86_64')
@@ -13,7 +13,7 @@ makedepends=('python-setuptools')
 #'python-sphinx' 'python-pillow' 'python-scipy' 'python-seaborn')
 checkdepends=('python-pytest-cov' 'python-matplotlib' 'python-pillow' 'python-sphinx' 'python-joblib')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('de352239d65051e3c7d125d99f04eb3b')
+md5sums=('4f14e3130eb6862d2d5948ca57e69f86')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
