@@ -1,7 +1,7 @@
 # Maintainer: nightuser <nightuser.android@gmail.com>
 
 pkgname=glib2-static
-pkgver=2.64.5
+pkgver=2.66.0
 pkgrel=1
 pkgdesc="Low level core library: Static library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -11,19 +11,8 @@ depends=()
 makedepends=(gettext zlib libffi shared-mime-info python libelf git util-linux meson dbus)
 checkdepends=(desktop-file-utils)
 options=('!docs' '!libtool' '!emptydirs' '!strip' 'staticlibs')
-source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz"
-        'MR1405.patch'
-        'MR1414.patch')
-sha256sums=('9cbd5bd2715ead1c28d53c46f7b7b6ff6166f5887b772c1a9e3bf2910cfecc11'
-            '934d87deaf597d7122f89d03c22b122a89eacbe46e887ce8e920a344926da2fb'
-            '19cd43aa20962e2e27c55553b871ab1bb970289219545447887cc5e654245fed')
-
-prepare() {
-  cd "glib-$pkgver"
-
-  patch -Np1 -i "$srcdir/MR1405.patch"
-  patch -Np1 -i "$srcdir/MR1414.patch"
-}
+source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz")
+sha256sums=('c5a66bf143065648c135da4c943d2ac23cce15690fc91c358013b2889111156c')
 
 build() {
   CFLAGS+=' -Wno-unused-result'
@@ -47,3 +36,5 @@ package() {
   # Only install static library
   rm -rf "$pkgdir"/usr/{bin,include,share,lib/glib-2.0,lib/pkgconfig}
 }
+
+# vim: et:sw=2:ts=8
