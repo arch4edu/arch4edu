@@ -1,5 +1,5 @@
 pkgname=brlcad
-pkgver=7.30.8
+pkgver=7.30.10
 pkgrel=0
 pkgdesc='An extensive 3D solid modeling system.'
 url='https://brlcad.org'
@@ -8,7 +8,7 @@ arch=('i686' 'x86_64')
 depends=('libgl' 'libxft' 'libxi')
 makedepends=('cmake' 'ninja' 'subversion')
 install="${pkgname}.install"
-source=('build.patch' "${pkgname}-${pkgver}::svn+svn://svn.code.sf.net/p/${pkgname}/code/${pkgname}/tags/rel-${pkgver//./-}#revision=r75759")
+source=('build.patch' "${pkgname}-${pkgver}::svn+svn://svn.code.sf.net/p/${pkgname}/code/${pkgname}/tags/rel-${pkgver//./-}#revision=r76475")
 sha256sums=('SKIP' 'SKIP')
 
 
@@ -30,10 +30,10 @@ build() {
         -Wno-dev \
         "-DCMAKE_INSTALL_PREFIX=${_pkgprefix}" \
         "-DCMAKE_BUILD_TYPE=${_build_config}" \
+        -DBUILD_STATIC_LIBS=OFF \
         -DBRLCAD_ENABLE_COMPILER_WARNINGS=OFF \
         -DBRLCAD_ENABLE_STRICT=OFF \
         -DBRLCAD_FLAGS_DEBUG=OFF \
-        -DBRLCAD_BUILD_STATIC_LIBS=OFF \
         -DBRLCAD_BUNDLED_LIBS=BUNDLED \
         -DBRLCAD_FREETYPE=OFF \
         -DBRLCAD_PNG=OFF \
