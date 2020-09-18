@@ -1,5 +1,5 @@
-*** opencl-on-vdi/khronos/icd/CMakeLists.txt.bak	2020-07-04 09:58:27.756892980 +0200
---- opencl-on-vdi/khronos/icd/CMakeLists.txt	2020-07-04 09:58:43.310243549 +0200
+*** opencl-on-vdi/khronos/icd/CMakeLists.txt.bak	2020-09-18 13:38:14.648707090 +0200
+--- opencl-on-vdi/khronos/icd/CMakeLists.txt	2020-09-18 13:38:24.378418746 +0200
 ***************
 *** 127,137 ****
   target_include_directories (OpenCL PRIVATE ${CMAKE_CURRENT_BINARY_DIR} loader)
