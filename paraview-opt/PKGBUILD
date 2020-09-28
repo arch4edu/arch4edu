@@ -10,7 +10,7 @@ _mpi=openmpi
 pkgname=${_pkg}-opt
 #-${_mpi}
 pkgver=5.8.0
-pkgrel=7
+pkgrel=6
 pkgdesc="Parallel Visualization application using VTK (${_mpi} version): installed to /opt/"
 arch=(x86_64)
 provides=("${_pkg}")
