@@ -2,7 +2,8 @@ maintainers:
   - github: petronny
     email: Jingbei Li <i@jingbei.li>
 update_on:
-  - aur
+  - source: aur
+    aur:
 repo_depends:
   - hip-rocclr
   - llvm-amdgpu

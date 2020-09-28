@@ -3,7 +3,6 @@ from lilaclib import *
 
 def pre_build():
     aur_pre_build()
-    add_makedepends(['cuda', 'cudnn'])
 
     for line in edit_file('PKGBUILD'):
         if line.startswith('_build_opt=1'):
