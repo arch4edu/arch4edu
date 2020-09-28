@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rock-dkms-firmware-bin
-pkgver=3.7
-_pkgver=3.7-20
+pkgver=3.8
+_pkgver=3.8-30
 pkgrel=1
 pkgdesc="Linux AMD GPU firmware from ROC in DKMS format."
 arch=('any')
@@ -12,7 +12,7 @@ provides=('rock-dkms-firmware')
 conflicts=('rock-dkms-firmware')
 options=('!strip' '!emptydirs')
 source=("${pkgname}-${pkgver}.tar.gz"::"http://repo.radeon.com/rocm/apt/${pkgver}/pool/main/r/rock-dkms/rock-dkms-firmware_${_pkgver}_all.deb")
-sha256sums=('d3c51c0f1ab6e0448f23210ce29badbaae77ab4c784e21fefe55ea093438c48e')
+sha256sums=('a72efeef541fa015d41c6cd40d7c9985b437c30d10d88bf460bb62c6200a23d7')
 
 package() {
   cd "$srcdir"
