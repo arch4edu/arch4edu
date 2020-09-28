@@ -4,9 +4,9 @@
 pkgname=console-bridge
 _pkgname=console_bridge
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A ROS-independent package for logging that seamlessly pipes into rosconsole/rosout for ROS-dependent packages."
-arch=('i686' 'x86_64')
+arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7hv' 'aarch64')
 url="http://www.ros.org/"
 license=('BSD')
 depends=('gcc-libs')
