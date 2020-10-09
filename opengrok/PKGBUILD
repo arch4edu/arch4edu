@@ -2,7 +2,7 @@
 # Contributor: kalenz <https://aur.archlinux.org/account/kalenz>
 # Contributor: Vojtech Horky <vojta . horky at-symbol seznam . cz>
 pkgname=opengrok
-pkgver=1.4.5
+pkgver=1.4.7
 pkgrel=1
 pkgdesc="A fast and usable source code search and cross reference engine, written in Java"
 url="https://oracle.github.io/opengrok/"
@@ -29,9 +29,6 @@ package() {
 
   # extract distribution archive into destination (use --no-same-owner to change owner to root instead of builduser)
   bsdtar xf "${pkgname}/distribution/target/${pkgname}-${pkgver}.tar.gz" -C "${pkgdir}/usr/share/java/${pkgname}" -s "/${pkgname}-${pkgver}//" --no-same-owner
-
-  # move man dir down to /usr/share
-  mv "${pkgdir}/usr/share/java/${pkgname}/man" "${pkgdir}/usr/share/"
 
   # link licenses to /usr/share/licenses
   install -dm755 "${pkgdir}/usr/share/licenses"
