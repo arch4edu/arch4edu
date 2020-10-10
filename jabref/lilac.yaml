@@ -1,2 +1,5 @@
 repo_depends:
   - archlinux-java-run
+update_on:
+  - source: aur
+    aur:

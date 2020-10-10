@@ -1,3 +1,6 @@
 repo_depends:
   - libnvidia-container
   - libnvidia-container: libnvidia-container-tools
+update_on:
+  - source: aur
+    aur:
