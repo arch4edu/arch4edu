@@ -1,0 +1,4 @@
+update_on:
+- source: github
+  github: moonman/MyPKGBUILDs
+  path: linux-raspberrypi4-latest

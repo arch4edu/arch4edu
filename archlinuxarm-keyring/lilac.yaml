@@ -1,0 +1,4 @@
+update_on:
+- source: github
+  github: archlinuxarm/PKGBUILDs
+  path: core/archlinuxarm-keyring

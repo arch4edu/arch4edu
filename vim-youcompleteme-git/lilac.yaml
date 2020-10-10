@@ -1,2 +1,7 @@
 repo_depends:
   - ncurses5-compat-libs
+update_on:
+  - source: aur
+    aur:
+  - source: github
+    github: Valloric/YouCompleteMe

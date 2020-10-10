@@ -1,0 +1,5 @@
+update_on:
+- source: aur
+  aur:
+- source: github
+  github: moses-smt/giza-pp
