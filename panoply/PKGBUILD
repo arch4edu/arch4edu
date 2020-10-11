@@ -1,7 +1,7 @@
 # Maintainer: MadPhysicist <jfoxrabinovitz at gmail dot com>
 pkgname=panoply
-pkgver=4.11.5
-pkgrel=1
+pkgver=4.11.6
+pkgrel=2
 pkgdesc='NetCDF, HDF and GRIB Data Viewer by NASA GISS'
 arch=('any')
 url='http://www.giss.nasa.gov/tools/panoply/'
@@ -43,7 +43,7 @@ sha1sums=("${_sha1}"
 prepare() {
     cd ${srcdir}/PanoplyJ
     patch -uN -i ../panoply-script.patch || return 1
-    unzip -px jars/Panoply.jar gov/nasa/giss/panoply/about/panoply4.png > ../panoply192.png
+    unzip -px jars/Panoply.jar gov/nasa/giss/panoply/about/panoply.png > ../panoply192.png
 }
 
 package() {
