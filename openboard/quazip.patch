@@ -7,7 +7,7 @@
 -DEPENDPATH += $$THIRD_PARTY_PATH/quazip/
 -INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
 -include($$THIRD_PARTY_PATH/quazip/quazip.pri)
-+INCLUDEPATH += /usr/include/quazip5/
++INCLUDEPATH += /usr/include/QuaZip-Qt5-1.0/quazip
  
  FORMS += resources/forms/mainWindow.ui \
     resources/forms/preferences.ui \
@@ -18,7 +18,7 @@
  }
  
 -LIBS     += "-L$$THIRD_PARTY_PATH/quazip/lib/$$SUB_DIR" "-lquazip"
-+LIBS     += "-lquazip5"
++LIBS     += "-lquazip1-qt5"
  
  QT       += xml xmlpatterns core
  QT       += gui
@@ -29,7 +29,18 @@
 -DEPENDPATH  += $$THIRD_PARTY_PATH/quazip/
 -INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
 -include($$THIRD_PARTY_PATH/quazip/quazip.pri)
-+INCLUDEPATH += /usr/include/quazip5/
++INCLUDEPATH += /usr/include/QuaZip-Qt5-1.0/quazip
  
  
  SOURCES += \
+--- OpenBoard-1.5.4.orig/libs.pri	2020-10-11 14:17:54.587596163 +0200
++++ OpenBoard-1.5.4/libs.pri	2020-10-11 14:13:49.516394503 +0200
+@@ -23,7 +23,7 @@
+ }
+ 
+ QUAZIP_DIR   = "/usr"
+-LIBS        += "-lquazip5"
++LIBS        += "-lquazip1-qt5"
+ 
+ LIBS        += "-lpoppler"
+ INCLUDEPATH += "/usr/include/poppler"
