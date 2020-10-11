@@ -3,7 +3,6 @@ from lilaclib import *
 import os
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['python-cheetah3', 'python2-scons', 'wiredtiger']
 build_args = ['-r', os.path.expanduser('~/.lilac/archbuild')]

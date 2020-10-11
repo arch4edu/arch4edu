@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}, {'github': 'szagoruyko/loadcaffe'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['torch7-cwrap-git', 'torch7-git', 'torch7-nn-git', 'torch7-paths-git']
 pre_build = aur_pre_build

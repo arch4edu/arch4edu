@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['ros-build-tools-py3', 'ros-noetic-catkin', 'ros-noetic-gencpp', 'ros-noetic-geneus', 'ros-noetic-genlisp', 'ros-noetic-genmsg', 'ros-noetic-gennodejs', 'ros-noetic-genpy']
 

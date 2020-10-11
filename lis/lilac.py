@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'heavysink', 'email': 'Winston Wu <winstonwu91@gmail.com>'}]
-update_on = [{'aur': None},{'github': 'anishida/lis', 'branch': 'master'}]
 build_prefix = 'extra-x86_64'
 
 pre_build = aur_pre_build

@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'yay'}]
 build_prefix = 'action-extra-armv6h'
 time_limit_hours = 3
 

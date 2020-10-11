@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'qgroundcontrol'}]
 build_prefix = 'extra-aarch64'
 repo_depends = [('fakeroot-tcp-aarch64', 'fakeroot-tcp')]
 time_limit_hours = 4

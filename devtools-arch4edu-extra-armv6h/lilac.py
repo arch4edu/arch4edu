@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'github': 'arch4edu/devtools-arch4edu-extra'}]
 build_prefix = 'action-extra-armv6h'
 pre_build = vcs_update
 

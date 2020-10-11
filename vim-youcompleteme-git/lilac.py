@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}, {'github': 'Valloric/YouCompleteMe'}]
 repo_depends = ['ncurses5-compat-libs']
 build_prefix = 'action-extra-x86_64'
 

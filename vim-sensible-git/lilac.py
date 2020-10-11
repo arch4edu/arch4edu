@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}, {'github': 'tpope/vim-sensible'}]
 build_prefix = 'extra-x86_64'
 
 def pre_build():

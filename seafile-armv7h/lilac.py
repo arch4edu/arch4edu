@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'seafile'}]
 build_prefix = 'extra-armv7h'
 repo_depends = [('libsearpc-armv7h', 'libsearpc'), ('ccnet-server-armv7h', 'ccnet-server')]
 

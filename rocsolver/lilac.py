@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}]
 repo_depends = ['hip-rocclr', 'rocblas', 'rocminfo', 'rocm-cmake']
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build

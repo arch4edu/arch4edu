@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'teamviewer'}]
 repo_depends = [('fakeroot-tcp-armv7h', 'fakeroot-tcp')]
 build_prefix = 'extra-armv7h'
 

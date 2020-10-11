@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}]
-update_on = [{'github': 'heavysink/aur', 'path': 'mpich-arch4edu'}]
 build_prefix = 'extra-x86_64'
 def pre_build():
     run_cmd(['sh', 'download-files-from-github.sh', 'heavysink/aur', 'mpich-arch4edu'])

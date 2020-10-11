@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'github': 'archlinuxarm/PKGBUILDs', 'path': 'alarm/wiringpi'}]
 build_prefix = 'action-extra-aarch64'
 
 def pre_build():

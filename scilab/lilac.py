@@ -3,7 +3,6 @@ from lilaclib import *
 from pyalpm import Handle
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}]
 repo_depends = ['apache-lucene', 'bwidget', 'fop-hyph', 'java-flexdock', 'java-qdox', 'java-skinlf', 'java-testng', 'javahelp2', 'jeuclid-core', 'jgoodies-looks', 'jgraphx-jre8', 'jlatexmath-fop', 'jogl', 'jrosetta', 'saxon-he']
 build_prefix = 'extra-x86_64'
 makechrootpkg_args = []

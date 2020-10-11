@@ -4,7 +4,6 @@ from lilaclib import *
 maintainers = [
         {'github': 'migueldvb', 'email': 'Miguel de Val-Borro <miguel.deval@gmail.com>'},
         {'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}, {'alias': 'python'}]
 repo_depends = ['python-astropy']
 build_prefix = 'extra-x86_64'
 pre_build = aur_pre_build

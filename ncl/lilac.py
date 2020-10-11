@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}]
-update_on = [{'aur': None}]
 repo_depends = [('archimedes-tools', 'triangle'), 'udunits','g2clib','hdf4']
 build_prefix = 'extra-x86_64'
 def pre_build():

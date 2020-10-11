@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'csxr', 'email': 'Jesús Castro <x51v4n@gmail.com>'}, {'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}, {'alias': 'python'}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['openblas-lapack', 'python-scikit-image','python-pydotplus', 'python-leveldb']
 

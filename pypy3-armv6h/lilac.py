@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'archpkg': 'pypy3'}]
 build_prefix = 'extra-armv6h'
 time_limit_hours = 24
 

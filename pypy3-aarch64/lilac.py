@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'archpkg': 'pypy3'}]
 build_prefix = 'action-extra-aarch64'
 time_limit_hours = 8
 

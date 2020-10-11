@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny'}]
-update_on = [{'aur': 'annie'}]
 build_prefix = 'action-extra-aarch64'
 
 def pre_build():

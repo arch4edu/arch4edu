@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}]
-update_on = [{'aur': None}]
 repo_depends = ['scotch','scalapack','parmetis']
 build_prefix = 'extra-x86_64'
 def pre_build():

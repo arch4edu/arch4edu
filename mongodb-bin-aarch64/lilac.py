@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'mongodb-bin'}]
 build_prefix = 'action-extra-aarch64'
 
 def pre_build():

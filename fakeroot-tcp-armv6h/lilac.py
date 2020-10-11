@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': 'fakeroot-tcp'}]
 build_prefix = 'extra-armv6h'
 
 def pre_build():

@@ -3,7 +3,6 @@ from lilaclib import *
 from lilac2.pkgbuild import _get_package_version, get_srcinfo
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'github': 'moonman/MyPKGBUILDs', 'path': 'linux-raspberrypi4-latest'}]
 build_prefix = 'action-extra-aarch64'
 time_limit_hours = 3
 

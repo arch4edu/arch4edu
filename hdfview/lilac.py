@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-update_on = [{'aur': None}]
 build_prefix = 'extra-x86_64'
 repo_depends = ['hdf4', 'hdf5-java']
 pre_build = aur_pre_build
