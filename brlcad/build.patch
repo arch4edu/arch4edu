@@ -11,20 +11,12 @@
  CMAKEFILES(
 --- regress/nurbs/CMakeLists.txt
 +++ regress/nurbs/CMakeLists.txt
-@@ -35,11 +35,11 @@ add_custom_target(regress-nurbs)
- #set_target_properties(regress-nurbs PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
- set_target_properties(regress-nurbs PROPERTIES FOLDER "BRL-CAD Regression Tests")
- 
--ADD_NURBS_NIRT_Test(NIST03_MISS_01
--  "-M -b"
--  "${DATA_DIR}/db/nist/NIST_MBE_PMI_3.g"
--  "Document -114.61944548140064626 -127.49462006675899772 -134.83948901109894791 35 25"
--  "analyze_nhit;NIST_MBE_PMI_3.g")
-+#ADD_NURBS_NIRT_Test(NIST03_MISS_01
-+#  "-M -b"
-+#  "${DATA_DIR}/db/nist/NIST_MBE_PMI_3.g"
-+#  "Document -114.61944548140064626 -127.49462006675899772 -134.83948901109894791 35 25"
-+#  "analyze_nhit;NIST_MBE_PMI_3.g")
- 
- #ADD_NURBS_NIRT_Test(PLATE_MODE_CYL_HIT_01
- #  "-b"
+@@ -5,8 +5,8 @@ set(NHIT_NAME "NIST03_MISS_01")
+ set(NHIT_OPTS "-M -b")
+ set(NHIT_GFILE "${DATA_DIR}/db/nist/NIST_MBE_PMI_3.g")
+ set(NHIT_ARGS "Document -114.61944548140064626 -127.49462006675899772 -134.83948901109894791 35 25")
+-BRLCAD_REGRESSION_TEST(regress-nurbs_${NHIT_NAME} "analyze_nhit;NIST_MBE_PMI_3.g" TEST_SCRIPT "${TSCRIPT}" EXEC analyze_nhit)
+-set_target_properties(regress-nurbs_${NHIT_NAME} PROPERTIES FOLDER "BRL-CAD Regression Tests/NURBS")
++#BRLCAD_REGRESSION_TEST(regress-nurbs_${NHIT_NAME} "analyze_nhit;NIST_MBE_PMI_3.g" TEST_SCRIPT "${TSCRIPT}" EXEC analyze_nhit)
++#set_target_properties(regress-nurbs_${NHIT_NAME} PROPERTIES FOLDER "BRL-CAD Regression Tests/NURBS")
+ DISTCLEAN(${CMAKE_CURRENT_BINARY_DIR}/regress-nurbs_${NHIT_NAME}.log)
