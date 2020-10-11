@@ -4,10 +4,10 @@
 pkgbase=libnvidia-container
 pkgname=(libnvidia-container libnvidia-container-tools)
 
-pkgver=1.2.0
+pkgver=1.3.0
 pkgrel=1
 _elfver=0.7.1
-_nvmpver=396.51
+_nvmpver=450.57
 
 pkgdesc='NVIDIA container runtime library'
 arch=('x86_64')
@@ -31,9 +31,9 @@ source=("https://github.com/NVIDIA/${pkgbase}/archive/v${pkgver}.tar.gz"
         fix_rpc_flags.patch
         fix_git_rev_unavail.patch
         fix_libelf_so_name.patch)
-sha256sums=('fd447629fd65d171b68edb62fa2e581c67fdb450ff540f486987ab826150d06e'
+sha256sums=('a3509b7f94be331ee1326db694607e20c531a22a2c8eebb555875e721019f9f8'
             '44f14591fcf21294387215dd7562f3fb4bec2f42f476cf32420a6bbabb2bd2b5'
-            '25bc6437a384be670e9fd76ac2e5b9753517e23eb16e7fa891b18537b70c4b20'
+            '396b4102d3075a2dee3024652fae206a1b38ace54b8efb1e2c20757a11ec19f1'
             'ed949dd162cd104071a58b09f1effefe91150a32893ed28d143ee62bc217e566'
             '48edab623a44e42d3310c87bf38df56878e68146ae4ac446c28d460fa0a4385b'
             'bb0e37eb6b87a24148c0cd688a29f70d3007b066a155a6cdb7d2dc144f149088')
@@ -62,6 +62,7 @@ prepare(){
   # the tar isn't named correctly, so the dir needs moving
   if [ ! -d "${deps_dir}/nvidia-modprobe-${_nvmpver}" ]; then
     mv "${deps_dir}/${_nvmpver}" "${deps_dir}/nvidia-modprobe-${_nvmpver}"
+    patch -d "${deps_dir}/nvidia-modprobe-${_nvmpver}" -p1 < "mk/nvidia-modprobe.patch"
   fi
 }
 
