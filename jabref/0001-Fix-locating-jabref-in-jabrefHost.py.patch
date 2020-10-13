@@ -1,0 +1,35 @@
+From b672b6c3d959e24364b67d7fca6ae42e2f9a8dbc Mon Sep 17 00:00:00 2001
+From: Michael Lass <bevan@bi-co.net>
+Date: Wed, 30 Sep 2020 20:23:56 +0200
+Subject: [PATCH] Fix locating jabref in jabrefHost.py
+
+shutil.which() returns an str and not a pathlib.Path. Therefore, we need
+to check if which() actually returns something and if so, we should
+convert it to a pathlib.Path such that JABREF_PATH is always of the same
+type.
+---
+ buildres/linux/jabrefHost.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/buildres/linux/jabrefHost.py b/buildres/linux/jabrefHost.py
+index e1343e232..14c341a30 100755
+--- a/buildres/linux/jabrefHost.py
++++ b/buildres/linux/jabrefHost.py
+@@ -19,10 +19,10 @@ script_dir = Path(__file__).resolve().parent.parent
+ JABREF_PATH = script_dir / "bin/JabRef"
+ if not JABREF_PATH.exists():
+     JABREF_PATH = shutil.which("jabref")
+-
+-if not JABREF_PATH.exists():
+-    logging.error("Could not determine JABREF_PATH")
+-    sys.exit(-1)
++    if not JABREF_PATH:
++        logging.error("Could not determine JABREF_PATH")
++        sys.exit(-1)
++    JABREF_PATH = Path(JABREF_PATH)
+ 
+ logging_dir = Path.home() / ".mozilla/native-messaging-hosts/"
+ if not logging_dir.exists():
+-- 
+2.28.0
+
