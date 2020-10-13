@@ -7,7 +7,7 @@
 -DEPENDPATH += $$THIRD_PARTY_PATH/quazip/
 -INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
 -include($$THIRD_PARTY_PATH/quazip/quazip.pri)
-+INCLUDEPATH += /usr/include/QuaZip-Qt5-1.0/quazip
++INCLUDEPATH += /usr/include/QuaZip-Qt5-1.1/quazip
  
  FORMS += resources/forms/mainWindow.ui \
     resources/forms/preferences.ui \
@@ -29,7 +29,7 @@
 -DEPENDPATH  += $$THIRD_PARTY_PATH/quazip/
 -INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
 -include($$THIRD_PARTY_PATH/quazip/quazip.pri)
-+INCLUDEPATH += /usr/include/QuaZip-Qt5-1.0/quazip
++INCLUDEPATH += /usr/include/QuaZip-Qt5-1.1/quazip
  
  
  SOURCES += \
