@@ -7,7 +7,7 @@
 pkgname=('python-torchvision' 'python-torchvision-cuda')
 _pkgname=vision
 pkgver=0.7.0
-pkgrel=2
+pkgrel=4
 pkgdesc='Datasets, transforms, and models specific to computer vision'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -22,6 +22,7 @@ depends=(
 optdepends=(
   'ffmpeg: video reader backend (the recommended one with better performance)'
   'python-av: video reader backend (the default one)'
+  'python-pycocotools: support for MS-COCO dataset'
 )
 makedepends=(
   'cuda'
@@ -53,7 +54,7 @@ build() {
   
   cd "${srcdir}/${_pkgname}-cuda-${pkgver}"
   FORCE_CUDA=1 \
-  TORCH_CUDA_ARCH_LIST="5.2;5.3;6.0;6.0+PTX;6.1;6.1+PTX;6.2;6.2+PTX;7.0;7.0+PTX;7.2;7.2+PTX;7.5;7.5+PTX;8.0;8.0+PTX" \
+  TORCH_CUDA_ARCH_LIST="5.2;5.3;6.0;6.0+PTX;6.1;6.1+PTX;6.2;6.2+PTX;7.0;7.0+PTX;7.2;7.2+PTX;7.5;7.5+PTX;8.0" \
   python setup.py build
 }
 
@@ -81,7 +82,7 @@ package_python-torchvision-cuda() {
   
   cd "${srcdir}/${_pkgname}-cuda-${pkgver}"
   FORCE_CUDA=1 \
-  TORCH_CUDA_ARCH_LIST="5.2;5.3;6.0;6.0+PTX;6.1;6.1+PTX;6.2;6.2+PTX;7.0;7.0+PTX;7.2;7.2+PTX;7.5;7.5+PTX;8.0;8.0+PTX" \
+  TORCH_CUDA_ARCH_LIST="5.2;5.3;6.0;6.0+PTX;6.1;6.1+PTX;6.2;6.2+PTX;7.0;7.0+PTX;7.2;7.2+PTX;7.5;7.5+PTX;8.0" \
   python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
