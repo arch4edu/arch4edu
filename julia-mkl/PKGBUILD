@@ -9,39 +9,34 @@
 pkgname=julia-mkl
 _pkgname=julia
 epoch=2
-pkgver=1.4.2
+pkgver=1.5.1
 pkgrel=2
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
 url='https://julialang.org/'
 license=(MIT)
-depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm pcre2)
-makedepends=(cmake gcc-fortran gmp python intel-common-libs)
+depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm pcre2 llvm-libs)
+makedepends=(cmake gcc-fortran gmp python intel-common-libs llvm)
 optdepends=('gnuplot: If using the Gaston Package from julia')
 provides=('julia')
 conflicts=('julia' 'julia-git')
 backup=(etc/julia/startup.jl)
 source=("https://github.com/JuliaLang/julia/releases/download/v$pkgver/$_pkgname-$pkgver-full.tar.gz"
-        make-install-no-build.patch
-        julia-libgit2-1.0.patch::"https://patch-diff.githubusercontent.com/raw/JuliaLang/julia/pull/35233.patch")
-sha256sums=('948c70801d5cce81eeb7f764b51b4bfbb2dc0b1b9effc2cb9fc8f8cf6c90a334'
-            '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7'
-            'c8be2be8d62ea653439a5c18e56f8026c83f0f1127934b12d7faf60630befd45')
+        make-install-no-build.patch)
+sha256sums=('1d0debfccfc7cd07047aa862dd2b1a96f7438932da1f5feff6c1033a63f9b1d4'
+            '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7')
 
 prepare() {
   cd $_pkgname-$pkgver
 
   # Don't build again in install
   patch -p1 -i ../make-install-no-build.patch
-
-  # Compatibility with libgit2 1.0
-  patch -p1 -i ../julia-libgit2-1.0.patch
 }
 
 build() {
   export PATH="$srcdir/bin:$PATH"
   env CFLAGS="$CFLAGS -w" CXXFLAGS="$CXXFLAGS -w" make VERBOSE=1 -C $_pkgname-$pkgver\
-    USE_SYSTEM_LLVM=0 \
+    USE_SYSTEM_LLVM=1 \
     USE_SYSTEM_LIBUNWIND=1 \
     USE_SYSTEM_PCRE=1 \
     USE_INTEL_MKL=1 \
