@@ -5,7 +5,7 @@
 # Contributor: Adrian Hühn <adrian.huehn@web.de>
 
 pkgname=ccnet-server
-pkgver=7.1.4
+pkgver=7.1.5
 pkgrel=1
 pkgdesc="Internal communication framework and user/group management for seafile server"
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -21,7 +21,7 @@ makedepends=('vala')
 conflicts=('ccnet')
 provides=('ccnet')
 source=("$pkgname-v$pkgver-server.tar.gz::$url/archive/v$pkgver-server.tar.gz")
-sha256sums=('b46508a686e7fe8eb9e1515e5384c7d9aca25cf596ef4b8383646e587f1032eb')
+sha256sums=('11e5281c239474756ed606bffe8f24c1089a3a9eb2502cfac7815d25ebc4585a')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver-server"
