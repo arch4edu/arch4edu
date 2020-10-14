@@ -1,6 +1,6 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
-pkgver=3.7.0
+pkgver=3.8.0
 pkgrel=1
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('hip-rocclr')
 makedepends=('cmake' 'git')
 _git='https://github.com/ROCmSoftwarePlatform/rocRAND'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('5e43fe07afe2c7327a692b3b580875bae6e6ee790e044c053fffafbfcbc14860')
+sha256sums=('79eb84d41363a46ed9bb18d9757cf6a419d2f48bb6a71b8e4db616a5007a6560')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
