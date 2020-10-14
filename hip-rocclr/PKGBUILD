@@ -1,19 +1,19 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-rocclr
-pkgver=3.7.0
-pkgrel=4
+pkgver=3.8.0
+pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
 license=('MIT')
-depends=('rocclr' 'libelf')
+depends=('rocclr' 'rocminfo' 'libelf')
 makedepends=('cmake' 'python' 'git')
 provides=('hip')
 conflicts=('hip')
 _git='https://github.com/ROCm-Developer-Tools/HIP'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         'amdgpu-targets.patch')
-sha256sums=('757b392c3beb29beea27640832fbad86681dbd585284c19a4c2053891673babd'
+sha256sums=('6450baffe9606b358a4473d5f3e57477ca67cff5843a84ee644bcf685e75d839'
             'c6358b4dfac658c0a27a3425ace455d951cd26be827dd7751c28cb83dc84b67d')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
