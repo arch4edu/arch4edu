@@ -4,7 +4,7 @@
 
 pkgname=tix
 pkgver=8.4.3
-pkgrel=5
+pkgrel=6
 pkgdesc="Tk Interface eXtension, a powerful set of user interface components"
 arch=('x86_64' 'i686')
 url="http://tix.sourceforge.net/"
