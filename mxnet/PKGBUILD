@@ -2,8 +2,8 @@
 # Contributor: Carl Åkerlindh <carl.akerlindh at gmail dot com>
 pkgbase=mxnet
 pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl' 'mxnet-mkl-cuda')
-pkgver=1.7.0.rc1
-pkgrel=2
+pkgver=1.7.0
+pkgrel=1
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
 url="http://mxnet.io/"
@@ -14,6 +14,7 @@ depends=(
 	'libjpeg-turbo'
 	'python-numpy'
 	'python-requests'
+	'opencv'
 )
 makedepends=(
 	'cblas'
@@ -26,7 +27,6 @@ makedepends=(
 	'lapack'
 	'ninja'
 	'qt5-base'
-	'opencv'
 
 	'cuda'
 	'cudnn'
@@ -150,7 +150,6 @@ build() {
 	)
 
 	cuda_args=(
-		-DUSE_OPENCV:BOOL=OFF
 		-DUSE_NCCL:BOOL=ON
 		-DMXNET_CUDA_ARCH='5.0;6.0;7.0;7.5;8.0'
 		-DCMAKE_C_COMPILER=/opt/cuda/bin/gcc
@@ -215,7 +214,7 @@ _package() {
 }
 
 package_mxnet() {
-	depends+=(cblas lapack opencv)
+	depends+=(cblas lapack)
 	_package
 }
 
@@ -229,7 +228,7 @@ package_mxnet-cuda() {
 
 package_mxnet-mkl() {
 	pkgdesc="$pkgdesc (with MKL)"
-	depends+=(intel-mkl onednn opencv)
+	depends+=(intel-mkl onednn)
 	conflicts=(mxnet)
 	provides=(mxnet)
 	_package
