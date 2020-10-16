@@ -8,15 +8,14 @@ pkgbase=tensorflow-rocm
 
 # Flags for building without/with cpu optimizations
 _build_no_opt=1
-_build_opt=1
 
 pkgname=()
-[ -n "$_build_no_opt" ] && pkgname+=(tensorflow-rocm python-tensorflow-rocm)
-[ -n "$_build_opt" ] && pkgname+=(tensorflow-opt-rocm python-tensorflow-opt-rocm)
+[ "$_build_no_opt" -eq 1 ] && pkgname+=(tensorflow-rocm python-tensorflow-rocm)
+[ "$_build_opt" -eq 1 ] && pkgname+=(tensorflow-opt-rocm python-tensorflow-opt-rocm)
 
-pkgver=2.3.0
-_pkgver=2.3.0
-pkgrel=8
+pkgver=2.3.1
+_pkgver=2.3.1
+pkgrel=3
 pkgdesc="Library for computation using data flow graphs for scalable machine learning"
 url="https://www.tensorflow.org/"
 license=('APACHE')
@@ -33,16 +32,18 @@ source=("$pkgname-$pkgver.tar.gz::https://github.com/tensorflow/tensorflow/archi
         fix_hipcc_path.patch::https://github.com/tensorflow/tensorflow/commit/9d2b338025dc61828ccf8196bb042ab9c586c7b3.patch
         fix_gpu_atomic_redef.patch::https://github.com/tensorflow/tensorflow/commit/c054f40f66fa625f51085a20c48554c61d05c5fd.patch
         fix_ldexp_float.patch::https://github.com/tensorflow/tensorflow/commit/655ce09f679a90ecd561538227c703b42d0fc5fa.patch
-        fix_occupancy_block.patch)
+        fix_occupancy_block.patch
+        new-rocm.patch)
 
-sha512sums=('86aa087ea84dac1ecc1023b23a378100d41cc6778ccd20404a4b955fc67cef11b3dc08abcc5b88020124d221e6fb172b33bd5206e9c9db6bc8fbeed399917eac'
+sha512sums=('e497ef4564f50abf9f918be4522cf702f4cf945cb1ebf83af1386ac4ddc7373b3ba70c7f803f8ca06faf2c6b5396e60b1e0e9b97bfbd667e733b08b6e6d70ef0'
             'df2e0373e2f63b8766f31933f7db57f6a7559b8f03af1db51644fba87731451a7cd3895529a3192e5394612fcb42f245b794b1c9ca3c05881ca03a547c8c9acc'
             'e51e3f3dced121db3a09fbdaefd33555536095584b72a5eb6f302fa6fa68ab56ea45e8a847ec90ff4ba076db312c06f91ff672e08e95263c658526582494ce08'
             '7acc2f2579158be1d8c824da0f6d44d084a56182f1aab3cd7a78d513931b3a16ce72f2e05b44b1de76f5519af39e80431660de294ff337842e4ee8949cb85b28'
             '136d91db88658dd0eab1543f8dec1cd20dca86afc6970606a722e7d01a645d64c42564d590fc1ecb04c204ae0b0fa8f78cf9998e9bcf367f4cc795fa59677591'
             '75972acf0ec53b28aa6c93de77a385acaf675c0d0ae93b6545f67414e9895cbd1074a5d65b211390846b736df271a567b49ec4c992883ad83c060f708bbe0d20'
             '42fc09bc15412f3b9a82f36485735faed0dcc2f47d72c5bfc451bc09a2aad472db59edb387455fb6594b1606de3a7789917e1fb31280c7044898097ec37db3d5'
-            '88c04ed7a766193687d7079102332e3c63d6f0accbda777836abe5e03e9ebb83fd1aeaa9e4adca70310ce18bf3c6c3907f1f8a11c13e67e3ef79497b91bbf126')
+            '88c04ed7a766193687d7079102332e3c63d6f0accbda777836abe5e03e9ebb83fd1aeaa9e4adca70310ce18bf3c6c3907f1f8a11c13e67e3ef79497b91bbf126'
+            '080fd9d4e1228ceb04901a0caceb18b965ef199704196a9b7711fcada3a8cfc2f65c529c4c0e05960ab1e469d203727bf0bbded82d895c13e0e2ab29ae524317')
 
 get_pyver () {
   python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'
@@ -87,12 +88,17 @@ prepare() {
   # https://github.com/tensorflow/tensorflow/commit/22def20bae7be6d5b790b360abed5919385b16c2
   patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix_occupancy_block.patch
 
+  # Patch for ROCm 3.7 and later
+  # https://github.com/tensorflow/tensorflow/pull/42689
+  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/new-rocm.patch
+
   cp -r tensorflow-${_pkgver} tensorflow-${_pkgver}-rocm
   cp -r tensorflow-${_pkgver} tensorflow-${_pkgver}-opt-rocm
 
 }
 
 build() {
+  export https_proxy=http://127.0.0.1:8123
 
   # These environment variables influence the behavior of the configure call below.
   export PYTHON_BIN_PATH=/usr/bin/python
@@ -133,34 +139,38 @@ build() {
   export CC=gcc-9
   export CXX=g++-9
 
-  echo "Building with rocm and without non-x86-64 optimizations"
-  cd "${srcdir}"/tensorflow-${_pkgver}-rocm
-  export CC_OPT_FLAGS="-march=x86-64"
-  export TF_NEED_CUDA=0
-  export TF_NEED_ROCM=1
-  ./configure
-  [ -n "$_build_no_opt" ] && bazel \
-    build --config=mkl -c opt \
-      //tensorflow:libtensorflow.so \
-      //tensorflow:libtensorflow_cc.so \
-      //tensorflow:install_headers \
-      //tensorflow/tools/pip_package:build_pip_package
-  bazel-bin/tensorflow/tools/pip_package/build_pip_package --gpu "${srcdir}"/tmprocm
+  if [ "$_build_no_opt" -eq 1 ]; then
+    echo "Building with rocm and without non-x86-64 optimizations"
+    cd "${srcdir}"/tensorflow-${_pkgver}-rocm
+    export CC_OPT_FLAGS="-march=x86-64"
+    export TF_NEED_CUDA=0
+    export TF_NEED_ROCM=1
+    ./configure
+    bazel \
+      build --config=mkl -c opt \
+        //tensorflow:libtensorflow.so \
+        //tensorflow:libtensorflow_cc.so \
+        //tensorflow:install_headers \
+        //tensorflow/tools/pip_package:build_pip_package
+    bazel-bin/tensorflow/tools/pip_package/build_pip_package --gpu "${srcdir}"/tmprocm
+  fi
 
 
-  echo "Building with rocm and with non-x86-64 optimizations"
-  cd "${srcdir}"/tensorflow-${_pkgver}-opt-rocm
-  export CC_OPT_FLAGS="-march=haswell -O3"
-  export TF_NEED_CUDA=0
-  export TF_NEED_ROCM=1
-  ./configure
-  [ -n "$_build_opt" ] && bazel \
-    build --config=mkl --config=avx2_linux -c opt \
-      //tensorflow:libtensorflow.so \
-      //tensorflow:libtensorflow_cc.so \
-      //tensorflow:install_headers \
-      //tensorflow/tools/pip_package:build_pip_package
-  bazel-bin/tensorflow/tools/pip_package/build_pip_package --gpu "${srcdir}"/tmpoptrocm
+  if [ "$_build_opt" -eq 1 ]; then
+    echo "Building with rocm and with non-x86-64 optimizations"
+    cd "${srcdir}"/tensorflow-${_pkgver}-opt-rocm
+    export CC_OPT_FLAGS="-march=haswell -O3"
+    export TF_NEED_CUDA=0
+    export TF_NEED_ROCM=1
+    ./configure
+    bazel \
+      build --config=mkl --config=avx2_linux -c opt \
+        //tensorflow:libtensorflow.so \
+        //tensorflow:libtensorflow_cc.so \
+        //tensorflow:install_headers \
+        //tensorflow/tools/pip_package:build_pip_package
+    bazel-bin/tensorflow/tools/pip_package/build_pip_package --gpu "${srcdir}"/tmpoptrocm
+  fi
 }
 
 _package() {
