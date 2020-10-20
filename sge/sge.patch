@@ -1,0 +1,39 @@
+diff -ruN sge-8.1.9/source/3rdparty/qtcsh/config/linux sge-8.1.9-patched/source/3rdparty/qtcsh/config/linux
+--- sge-8.1.9/source/3rdparty/qtcsh/config/linux	2016-02-28 13:23:20.000000000 -0500
++++ sge-8.1.9-patched/source/3rdparty/qtcsh/config/linux	2020-06-08 13:01:24.999788451 -0400
+@@ -86,8 +86,7 @@
+  */
+ 
+ #define __STRICT_ANSI__
+-#define _BSD_SOURCE
+-#define _SVID_SOURCE
++#define _DEFAULT_SOURCE
+ #define _POSIX_SOURCE
+ #define _XOPEN_SOURCE 500
+ #define _GNU_SOURCE
+diff -ruN sge-8.1.9/source/aimk sge-8.1.9-patched/source/aimk
+--- sge-8.1.9/source/aimk	2016-02-28 13:23:20.000000000 -0500
++++ sge-8.1.9-patched/source/aimk	2020-06-08 13:01:24.999788451 -0400
+@@ -876,6 +876,11 @@
+       set MUNGE = 1
+       set LIBS = "$LIBS -lmunge"
+       breaksw
++   case "-with-arch-linux" # to support Docker image archlinux/base
++      set LIBS = "$LIBS -ltirpc"
++      set DLLIB = "$DLLIB -ltirpc"
++      set CORE_INCLUDE = "$CORE_INCLUDE -I/usr/include/tirpc"
++      breaksw
+    case "-*"
+       echo $argv[1] ": Unknown option, aborting"
+       exit 1
+diff -ruN sge-8.1.9/source/scripts/distinst sge-8.1.9-patched/source/scripts/distinst
+--- sge-8.1.9/source/scripts/distinst	2016-02-28 13:23:26.000000000 -0500
++++ sge-8.1.9-patched/source/scripts/distinst	2020-06-08 13:01:25.003121843 -0400
+@@ -943,7 +943,6 @@
+                         $DEST_SGE_ROOT/util/sgeCA/*.cnf \
+                         $DEST_SGE_ROOT/util/sgeSMF/*.xml \
+                         $DEST_SGE_ROOT/util/sgeSMF/sge_smf_support.sh \
+-                        $DEST_SGE_ROOT/util/DetectJvmLibrary.jar \
+                         $DEST_SGE_ROOT/util/resources/calendars/* \
+                         $DEST_SGE_ROOT/util/resources/centry/* \
+                         $DEST_SGE_ROOT/util/resources/pe/* \

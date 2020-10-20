@@ -1,0 +1,102 @@
+diff -ruN sge-8.1.9/source/utilbin/sge_passwd.c sge-8.1.9-patched/source/utilbin/sge_passwd.c
+--- sge-8.1.9/source/utilbin/sge_passwd.c	2016-02-28 13:23:27.000000000 -0500
++++ sge-8.1.9-patched/source/utilbin/sge_passwd.c	2020-06-08 13:01:25.003121843 -0400
+@@ -280,7 +280,7 @@
+                size_t *buffer_out_length)
+ {
+    unsigned int ebuflen;
+-   EVP_CIPHER_CTX ectx;
++   EVP_CIPHER_CTX *ectx = NULL;
+    unsigned char iv[EVP_MAX_IV_LENGTH];
+    unsigned char *ekey[1]; 
+    int ekeylen=0, net_ekeylen=0;
+@@ -326,10 +326,15 @@
+    }
+ 
+    memset(iv, '\0', sizeof(iv));
++   ectx = EVP_CIPHER_CTX_new();
++   if (ectx == NULL) {
++      printf("---> Manhong-002\n");
++      ERR_print_errors_fp(stdout);
++   }
+ #if 0
+-   ret = EVP_SealInit(&ectx, EVP_des_ede3_cbc(), ekey, &ekeylen, iv, pubKey, 1); 
++   ret = EVP_SealInit(ectx, EVP_des_ede3_cbc(), ekey, &ekeylen, iv, pubKey, 1); 
+ #else
+-   ret = EVP_SealInit(&ectx, EVP_rc4(), ekey, &ekeylen, iv, pubKey, 1); 
++   ret = EVP_SealInit(ectx, EVP_rc4(), ekey, &ekeylen, iv, pubKey, 1); 
+ #endif
+    if(ret == 0) {
+       printf("---> EVP_SealInit\n");
+@@ -352,7 +357,7 @@
+    buffer_append(buffer_out, buffer_out_size, buffer_out_length,
+                  (char*)iv, sizeof(iv));
+ 
+-   EVP_SealUpdate(&ectx, (unsigned char*)ebuf, 
++   EVP_SealUpdate(ectx, (unsigned char*)ebuf, 
+                                    (int*)&ebuflen, 
+                                    (const unsigned char *) buffer_in, 
+                                    buffer_in_length);
+@@ -360,7 +365,8 @@
+    buffer_append(buffer_out, buffer_out_size, buffer_out_length,
+                  ebuf, ebuflen);
+ 
+-   EVP_SealFinal(&ectx, (unsigned char *)ebuf, (int*)&ebuflen);
++   EVP_SealFinal(ectx, (unsigned char *)ebuf, (int*)&ebuflen);
++   EVP_CIPHER_CTX_free(ectx);
+ 
+    buffer_append(buffer_out, buffer_out_size, buffer_out_length,
+                  ebuf, ebuflen);
+@@ -379,7 +385,7 @@
+    char buf[520];
+    char ebuf[512];
+    unsigned int buflen;
+-   EVP_CIPHER_CTX ectx;
++   EVP_CIPHER_CTX *ectx;
+    unsigned char iv[EVP_MAX_IV_LENGTH];
+    unsigned char *encryptKey; 
+    unsigned int ekeylen; 
+@@ -461,10 +467,15 @@
+    memcpy(&iv, curr_ptr, sizeof(iv));
+    curr_ptr += sizeof(iv);
+    buffer_in_length -= sizeof(iv);
++   ectx = EVP_CIPHER_CTX_new();
++   if (ectx == NULL) {
++      printf("---> Manhong-003\n");
++      ERR_print_errors_fp(stdout);
++   }
+ #if 0
+-   ret = EVP_OpenInit(&ectx, EVP_des_ede3_cbc(), encryptKey, ekeylen, iv, privateKey); 	
++   ret = EVP_OpenInit(ectx, EVP_des_ede3_cbc(), encryptKey, ekeylen, iv, privateKey); 	
+ #else
+-   ret = EVP_OpenInit(&ectx, EVP_rc4(), encryptKey, ekeylen, iv, privateKey); 	
++   ret = EVP_OpenInit(ectx, EVP_rc4(), encryptKey, ekeylen, iv, privateKey); 	
+ #endif
+    if(ret == 0) {
+       printf("----> EVP_OpenInit\n");
+@@ -484,7 +495,7 @@
+          readlen = sizeof(ebuf);
+       }
+ 
+-      ret = EVP_OpenUpdate(&ectx, (unsigned char *)buf, 
++      ret = EVP_OpenUpdate(ectx, (unsigned char *)buf, 
+                (int*)&buflen, 
+                (const unsigned char *)ebuf, readlen);
+       if (ret == 0) {
+@@ -502,7 +513,7 @@
+          buf, buflen);
+    }
+ 
+-   ret = EVP_OpenFinal(&ectx, (unsigned char *)buf, (int*)&buflen);
++   ret = EVP_OpenFinal(ectx, (unsigned char *)buf, (int*)&buflen);
+    if (ret == 0) {
+       error_code = ERR_get_error();
+       ERR_error_string(error_code, err_msg);
+@@ -513,6 +524,7 @@
+       DEXIT;
+       return 1;
+    }
++   EVP_CIPHER_CTX_free(ectx);
+    buffer_append(buffer_out, buffer_out_size, buffer_out_length,
+                  buf, buflen);
+ 

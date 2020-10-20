@@ -1,0 +1,44 @@
+diff -ruN sge-8.1.9/source/libs/comm/cl_ssl_framework.c sge-8.1.9-patched/source/libs/comm/cl_ssl_framework.c
+--- sge-8.1.9/source/libs/comm/cl_ssl_framework.c	2016-02-28 13:23:24.000000000 -0500
++++ sge-8.1.9-patched/source/libs/comm/cl_ssl_framework.c	2020-06-08 13:01:25.003121843 -0400
+@@ -484,7 +484,7 @@
+ static int ssl_callback_SSLVerify_CRL(int ok, X509_STORE_CTX *ctx, cl_com_ssl_private_t* private) {
+    X509 *cert = NULL;
+    X509_LOOKUP *lookup = NULL;
+-   X509_STORE_CTX verify_ctx;
++   X509_STORE_CTX *verify_ctx = NULL;
+    int err;
+    int is_ok = true; 
+    SGE_STRUCT_STAT stat_buffer;
+@@ -544,21 +544,27 @@
+ 
+    cert = X509_STORE_CTX_get_current_cert(ctx);
+    if (is_ok == true && cert != NULL) {
++       verify_ctx = X509_STORE_CTX_new();
++       if (verify_ctx == NULL) {
++          CL_LOG(CL_LOG_INFO,"Manhong-001");
++          return true;
++       }
+        /* X509_STORE_CTX_init did not return an error condition in prior versions */
+-       if (X509_STORE_CTX_init(&verify_ctx, private->ssl_crl_data->store, cert, NULL) != 1) {
++       if (X509_STORE_CTX_init(verify_ctx, private->ssl_crl_data->store, cert, NULL) != 1) {
+           CL_LOG(CL_LOG_ERROR, "Error initializing verification context");
+           is_ok = false;
+        } else {
+           /* verify the certificate */
+-          if (X509_verify_cert(&verify_ctx) != 1) {
++          if (X509_verify_cert(verify_ctx) != 1) {
+              is_ok = false;
+           }
+        }
+        if (is_ok == false) {
+-           err = X509_STORE_CTX_get_error(&verify_ctx);
++           err = X509_STORE_CTX_get_error(verify_ctx);
+            X509_STORE_CTX_set_error(ctx, err);
+        }
+-       X509_STORE_CTX_cleanup(&verify_ctx);
++       X509_STORE_CTX_cleanup(verify_ctx);
++       X509_STORE_CTX_free(verify_ctx);
+    } else {
+       if (is_ok == false) {
+          CL_LOG(CL_LOG_ERROR,"X509 store is not valid");

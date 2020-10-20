@@ -2,32 +2,17 @@
 pre_install() {
 	if [ -e /opt/sge ]
 	then
-		echo "##################################################"
-		echo "##################################################"
-		echo "##################################################"
 		echo "/opt/sge already exists, you might want to remove the folder for a fresh install"
-		echo "##################################################"
-		echo "##################################################"
-		echo "##################################################"
 	fi
 }
 
 ## arg 1:  the new package version
 post_install() {
-	cd /opt/sge/build/source/
-	env SGE_ROOT=/opt/sge scripts/distinst -all -local -noexit
-	echo "##################################################"
-	echo "##################################################"
-	echo "##################################################"
-	echo "export SGE_ROOT=/opt/sge"
 	echo "cd /opt/sge"
 	echo "#to install master"
 	echo "./install_qmaster"
 	echo "#to install execd"
 	echo "./install_execd"
-	echo "##################################################"
-	echo "##################################################"
-	echo "##################################################"
 }
 
 ## arg 1:  the new package version

@@ -1,0 +1,20 @@
+diff -ruN sge-8.1.9/source/libs/japi/drmaa2_list_dict.h sge-8.1.9-patched/source/libs/japi/drmaa2_list_dict.h
+--- sge-8.1.9/source/libs/japi/drmaa2_list_dict.h	2016-02-28 13:23:24.000000000 -0500
++++ sge-8.1.9-patched/source/libs/japi/drmaa2_list_dict.h	2020-06-08 13:01:25.003121843 -0400
+@@ -18,7 +18,7 @@
+    size_t         valuesize;
+    unsigned long  listsize;
+    unsigned long  current_pos;
+-} drmaa2_list_s;
++};
+ 
+ typedef struct _gw_dict_elem
+ {
+@@ -41,6 +41,6 @@
+   size_t         valuesize;
+   unsigned long  dictsize;
+   unsigned long  current_pos;
+-} drmaa2_dict_s;
++};
+ 
+ #endif

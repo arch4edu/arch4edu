@@ -1,0 +1,12 @@
+diff -ruN sge-8.1.9/source/3rdparty/qtcsh/sh.proc.c sge-8.1.9-patched/source/3rdparty/qtcsh/sh.proc.c
+--- sge-8.1.9/source/3rdparty/qtcsh/sh.proc.c	2016-02-28 13:23:20.000000000 -0500
++++ sge-8.1.9-patched/source/3rdparty/qtcsh/sh.proc.c	2020-06-08 13:01:24.999788451 -0400
+@@ -150,7 +150,7 @@
+     struct process *fp;
+     pid_t pid;
+ #ifdef BSDWAIT
+-    union wait w;
++    int w;
+ #else /* !BSDWAIT */
+     int     w;
+ #endif /* !BSDWAIT */

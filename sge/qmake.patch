@@ -1,0 +1,26 @@
+diff -ruN sge-8.1.9/source/3rdparty/qmake/glob/glob.c sge-8.1.9-patched/source/3rdparty/qmake/glob/glob.c
+--- sge-8.1.9/source/3rdparty/qmake/glob/glob.c	2016-02-28 13:23:20.000000000 -0500
++++ sge-8.1.9-patched/source/3rdparty/qmake/glob/glob.c	2020-06-08 13:01:24.999788451 -0400
+@@ -231,6 +231,10 @@
+ 
+ #endif
+ 
++#undef alloca
++#define alloca(n)	__builtin_alloca (n)
++#define __alloca	alloca
++
+ #ifndef __GNU_LIBRARY__
+ # define __stat stat
+ # ifdef STAT_MACROS_BROKEN
+diff -ruN sge-8.1.9/source/3rdparty/qmake/make.h sge-8.1.9-patched/source/3rdparty/qmake/make.h
+--- sge-8.1.9/source/3rdparty/qmake/make.h	2016-02-28 13:23:20.000000000 -0500
++++ sge-8.1.9-patched/source/3rdparty/qmake/make.h	2020-06-08 13:03:55.884381512 -0400
+@@ -348,7 +348,7 @@
+ #endif
+ #ifdef SET_STACK_SIZE
+ # include <sys/resource.h>
+-struct rlimit stack_limit;
++extern struct rlimit stack_limit;
+ #endif
+ 
+ struct floc
