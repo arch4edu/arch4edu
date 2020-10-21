@@ -3,7 +3,7 @@ pkgname=python-cupy
 _pkgname=cupy
 pkgver=8.0.0
 _cubver=1.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="NumPy-like API accelerated with CUDA"
 _github="cupy/cupy"
 url="https://cupy.chainer.org"
@@ -11,6 +11,7 @@ arch=('x86_64')
 license=('MIT')
 depends=('cuda' 'cudnn' 'nccl' 'python-numpy' 'python-six' 'python-fastrlock')
 makedepends=('python' 'python-setuptools' 'cython')
+optdepends=('libcutensor')
 source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
         "https://github.com/NVlabs/cub/archive/$_cubver.tar.gz")
 md5sums=('e5375c9c8e01c1c5d15dcbc91d36c9d1'
@@ -18,9 +19,15 @@ md5sums=('e5375c9c8e01c1c5d15dcbc91d36c9d1'
 
 prepare() {
   cd "$srcdir/$_pkgname-$pkgver"
-  ln -sr "$srcdir/cub-$_cubver" cupy/core/include/cupy/cub
+  ln -srf "$srcdir/cub-$_cubver" cupy/core/include/cupy/cub
   export CC=/opt/cuda/bin/gcc
   export CXX=/opt/cuda/bin/g++
+  # We can use c++14 if the cuda version is greater than 11.
+  # See https://github.com/cupy/cupy/issues/3346 for more details.
+  cuda_ver=$(pacman -Q cuda | awk '{print $2}')
+  if [[ $(vercmp $cuda_ver 11) -ge 0 ]]; then
+    sed 's|c++11|c++14|g' -i cupy_setup_build.py
+  fi
 }
 
 build() {
