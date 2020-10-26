@@ -3,7 +3,7 @@
 
 pkgname=sge
 pkgver=8.1.9
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="The Son of Grid Engine is a community project to continue Sun's old gridengine."
 arch=('x86_64')
@@ -21,6 +21,7 @@ depends=(
 	'libxt'
 	'make'
 	'openmotif'
+	'openssl-1.0'
 	'patch'
 	'tcsh'
 )
@@ -30,35 +31,27 @@ source=(
 	"sgemaster@.service"
 	"sgeexecd@.service"
 	#"${pkgname}.sh"
-	"cl_ssl_framework.c.patch"
-	"sge_passwd.c.patch"
-	"drmaa2_list_dict.h.patch"
-	"sh.proc.c.patch"
-	"qmake.patch"
 )
 md5sums=('a2f03ca8b803ca4da7d2dedadeca74bb'
          '0f4d29ce1dd17af61f48e61431020ea7'
-         'b3e8d5b14639e1f16773f468dabec7de'
-         '209d58787a6980f1680dbf00f251403f'
-         '573880df6c2915002af3422376933588'
-         '4d77510a2601cc79f1260257f2989f08'
-         '9ca5f0631567400952ac8099e0869393'
-         '5f52ba50a206ebae0f25ec1852d86c5a')
+         'b3e8d5b14639e1f16773f468dabec7de')
 
 prepare() {
 	cd "${pkgname}-${pkgver}"
-	patch -p1 < "${srcdir}/cl_ssl_framework.c.patch"
-	patch -p1 < "${srcdir}/sge_passwd.c.patch"
-	patch -p1 < "${srcdir}/drmaa2_list_dict.h.patch"
-	patch -p1 < "${srcdir}/sh.proc.c.patch"
-	patch -p1 < "${srcdir}/qmake.patch"
+
+	sed \
+		-e 's/} drmaa2_\(dict\|list\)_s;/};/g' \
+		-i source/libs/japi/drmaa2_list_dict.h
+
+	# https://www.linuxquestions.org/questions/programming-9/union-wait-problem-269024
+	sed 's|union wait w;|int w;|g' -i source/3rdparty/qtcsh/sh.proc.c
 }
 
 build() {
 	cd "${pkgname}-${pkgver}/source"
 
-	export SGE_INPUT_CFLAGS='-I/usr/include/tirpc'
-	export SGE_INPUT_LDFLAGS='-ltirpc'
+	export SGE_INPUT_CFLAGS='-I/usr/include/tirpc -I/usr/include/openssl-1.0'
+	export SGE_INPUT_LDFLAGS='-ltirpc -L/usr/lib/openssl-1.0 -lssl -lcrypto'
 	flags='-no-java -no-jni'
 
 	scripts/bootstrap.sh $flags
