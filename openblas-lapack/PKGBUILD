@@ -6,11 +6,11 @@
 pkgname=openblas-lapack
 _PkgName=OpenBLAS
 _pkgname=openblas
-pkgver=0.3.11
+pkgver=0.3.12
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.9.0
 _blasver=3.8.0
-pkgrel=2
+pkgrel=1
 pkgdesc="Optimized BLAS library based on GotoBLAS2 1.13 BSD (providing blas, lapack, and cblas)"
 arch=('x86_64')
 url="http://www.openblas.net/"
@@ -21,7 +21,7 @@ provides=('openblas' "blas=${_blasver}" "lapack=${_lapackver}" "cblas=${_blasver
 conflicts=('openblas' 'blas' 'lapack' 'cblas' 'lapacke')
 options=(!emptydirs)
 source=(${_PkgName}-${pkgver}.tar.gz::https://github.com/xianyi/${_PkgName}/archive/v${pkgver}.tar.gz)
-sha256sums=('bc4617971179e037ae4e8ebcd837e46db88422f7b365325bd7aba31d1921a673')
+sha256sums=('65a7d3a4010a4e3bd5c0baa41a234797cd3a1735449a4a5902129152601dc57b')
 
 # Add the following line to the _config variable if you want to set the number of make jobs
 #  MAKE_NB_JOBS=2 \
@@ -33,7 +33,7 @@ _config="FC=gfortran USE_OPENMP=1 USE_THREAD=1 \
 build(){
   cd "${srcdir}/${_PkgName}-${pkgver}"
 
-  make ${_config} CFLAGS="${CFLAGS} -march=native" libs netlib shared
+  make ${_config} CFLAGS="${CFLAGS}" libs netlib shared
 }
 
 check(){
