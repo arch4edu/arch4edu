@@ -2,7 +2,7 @@
 
 pkgname=mavproxy-git
 pkgver=r2326.14f4c126
-pkgrel=1
+pkgrel=2
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
 url='http://ardupilot.github.io/MAVProxy/html/index.html'
