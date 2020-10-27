@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from lilaclib import *
 
-maintainers = [{'github': 'petronny'}]
 build_prefix = 'action-extra-armv6h'
 
 def pre_build():
