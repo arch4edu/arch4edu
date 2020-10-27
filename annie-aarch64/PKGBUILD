@@ -1,48 +1,39 @@
-# Maintainer: Felix Golatofski <contact@xdfr.de>
+# Maintainer: Filipe Nascimento <flipee at tuta dot io>
+# Contributor: Felix Golatofski <contact@xdfr.de>
 # Contributor: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 # Contributor: Aniket Pradhan <aniket17133@iiitd.ac.in>
 # Contributer: Xinzhao Xu <z2d@jifangcheng.com>
 
 pkgname=annie
 pkgver=0.10.3
-pkgrel=1
-arch=('aarch64' 'i686' 'x86_64')
+pkgrel=2
 pkgdesc="A fast, simple and clean video downloader written in Go"
+arch=('aarch64' 'i686' 'x86_64')
 url="https://github.com/iawia002/annie"
-license=("MIT")
-makedepends=('git' 'dep')
-depends=('go-pie' 'ffmpeg')
-conflicts=("annie")
-options=('!strip' '!emptydirs')
-source=("annie::git+https://github.com/iawia002/annie#tag=${pkgver}")
-
-prepare(){
-	mkdir -p gopath/src/github.com
-	ln -rTsf $pkgname $srcdir/gopath/src/github.com/$pkgname
-	export GOPATH="$srcdir"/gopath
-	cd $GOPATH/src/github.com/$pkgname
-	dep init
-	#dep ensure
-}
+license=('MIT')
+depends=('ffmpeg')
+makedepends=('go')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
+sha256sums=('a5252317113cf90e687a532b2e961126206b29829c61d6507fc69881e85d1d34')
 
 build(){
-	export GOPATH=$srcdir/gopath
-	cd gopath/src/github.com/$pkgname
-	go install \
-		-gcflags "all=-trimpath=$GOPATH" \
-		-asmflags "all=-trimpath=$GOPATH" \
-		-ldflags "-extldflags $LDFLAGS" \
-		-v ./...
+    cd $pkgname-$pkgver
+
+    export CGO_CPPFLAGS="${CPPFLAGS}"
+    export CGO_CFLAGS="${CFLAGS}"
+    export CGO_CXXFLAGS="${CXXFLAGS}"
+    export CGO_LDFLAGS="${LDFLAGS}"
+
+    go build \
+        -trimpath \
+        -buildmode=pie \
+        -mod=readonly \
+        -modcacherw \
+        -ldflags "-linkmode=external"
 }
 
 package() {
-	install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
-
-	for f in LICENSE COPYING LICENSE.* COPYING.*; do
-		if [ -e "$srcdir/src/$_gourl/$f" ]; then
-		install -Dm644 "$srcdir/src/$_gourl/$f" \
-		"$pkgdir/usr/share/licenses/$pkgname/$f"
-	fi
-	done
+    cd $pkgname-$pkgver
+    install -Dm755 $pkgname -t "$pkgdir/usr/bin"
+    install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }
-md5sums=('SKIP')
