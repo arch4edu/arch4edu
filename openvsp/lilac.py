@@ -2,7 +2,6 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-repo_depends = ['cminpack', 'code-eli-git', 'cpptest']
 build_prefix = 'extra-x86_64'
 
 def pre_build():
