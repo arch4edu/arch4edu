@@ -2,7 +2,7 @@
 
 pkgname=rebuild-detector
 pkgver=4.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Detects which packages need to be rebuilt'
 arch=('any')
 url="https://github.com/maximbaz/${pkgname}"
