@@ -2,13 +2,13 @@
 # Contributor: kalenz <https://aur.archlinux.org/account/kalenz>
 # Contributor: Vojtech Horky <vojta . horky at-symbol seznam . cz>
 pkgname=opengrok
-pkgver=1.4.9
+pkgver=1.5.4
 pkgrel=1
 pkgdesc="A fast and usable source code search and cross reference engine, written in Java"
 url="https://oracle.github.io/opengrok/"
 arch=('any')
 license=('CDDL')
-depends=('tomcat8' 'sh' 'java-runtime>=8' 'ctags' 'unzip')
+depends=('tomcat8' 'sh' 'java-runtime>=11' 'ctags' 'unzip')
 makedepends=('apache-ant' 'java-runtime-openjdk' 'git' 'maven' 'subversion' 'python')
 source=(git+"https://github.com/oracle/${pkgname}.git#tag=${pkgver}")
 install=opengrok.install
