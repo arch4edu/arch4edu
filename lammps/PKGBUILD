@@ -20,8 +20,8 @@ _ENABLE_OMP=0
 _ENABLE_KIM=0
 
 pkgname=lammps
-pkgver=20200303
-_pkgver="3Mar2020"
+pkgver=20201029
+_pkgver="29Oct2020"
 #_pkgver=$(date -d ${pkgver} +%-d%b%Y)
 pkgrel=1
 pkgdesc="Large-scale Atomic/Molecular Massively Parallel Simulator"
@@ -31,22 +31,22 @@ license=('GPL')
 depends=('fftw' 'openmpi')
 makedepends=('cmake')
 source=("${pkgname}-${_pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/stable_${_pkgver}.tar.gz")
-sha512sums=('6608cd9f6ea18d8acb55d611a560cb4b329043b41aca23fafd91fac0dfbde5a5286e1a6563bd16b2414bb3bf95929e3a2f270a0b023ce5ede515eb3353d56f04')
+sha512sums=('b83792e723de607f113a576a05a3fb5afbfea513c1f013b8c46e4a60b76845f1a054df3182330bca05fe1bb4b256997721c1ff6ee1a317df0da15331451f85d3')
 
 # process the build settings from above
 if (( $_ENABLE_INTEL_COMPILER )); then
     depends+=('intel-mkl')
     optdepends=('intel-parallel-studio-xe')
     _feature_args+=('-DCMAKE_C_COMPILER=icc')
-    _feature_args+=('-DCMAKE_C_FLAGS=-xHost -O2 -fp-model fast=2 -no-prec-div -qoverride-limits -qopt-zmm-usage=high')
+    _feature_args+=('-DCMAKE_C_FLAGS=-xHost -O3 -no-prec-div -qoverride-limits -qopt-zmm-usage=high')
     _feature_args+=('-DCMAKE_CXX_COMPILER=icpc')
-    _feature_args+=('-DCMAKE_CXX_FLAGS=-fp-model fast=2 -no-prec-div -qoverride-limits -qopt-zmm-usage=high -qno-offload -fno-alias -ansi-alias -O2 -std=c++11 -DLMP_INTEL_USELRT -DLMP_USE_MKL_RNG -I${MKLROOT}/include')
+    _feature_args+=('-DCMAKE_CXX_FLAGS=-no-prec-div -qoverride-limits -qopt-zmm-usage=high -qno-offload -fno-alias -ansi-alias -O3 -std=c++11 -DLMP_INTEL_USELRT -DLMP_USE_MKL_RNG')
     _feature_args+=('-DCMAKE_Fortran_COMPILER=ifort')
     _feature_args+=('-DMPI_C_COMPILER=mpiicc')
     _feature_args+=('-DMPI_CXX_COMPILER=mpiicpc')
 fi
 if (( $_BUILD_DOC )); then
-    makedepends+=('python-sphinx')
+    makedepends+=('python-virtualenv' 'doxygen')
 fi
 if (( $_ENABLE_KIM )); then
     depends+=('kim-api>=2.0.2')
@@ -73,33 +73,15 @@ build() {
         -DCMAKE_INSTALL_LIBDIR="lib" \
         -DCMAKE_INSTALL_LIBEXECDIR="/usr/lib" \
         "${_feature_args[@]}" #\
-        # Add options for additional packages
+        # Add options for additional packages (above this line)
         #-DPKG_<NAME>=yes
 
   make
-
-  if (( $_BUILD_DOC )) ; then
-    export PYTHONPATH=$PWD/../doc/utils/converters/
-    # Generate HTML from ReStructuredText files
-    mkdir -p html
-    sphinx-build -b html -c "../doc/utils/sphinx-config" -d "doctrees" "../doc/src" html
-  fi
 }
 
 package() {
   cd "${pkgname}-stable_${_pkgver}/build"
   make DESTDIR="${pkgdir}" install
-  if (( $_BUILD_DOC )) ; then
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html" "html/"*.html
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html" "html/"*.js
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_images" "html/_images/"*
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_static" "html/_static/"*.png
-    #install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_static" "html/_static/"*.gif
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_static" "html/_static/"*.js
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_static/css" "html/_static/css/"*.css
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_static/fonts" "html/_static/fonts/"*
-    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}/html/_static/js" "html/_static/js/"*.js
-  fi
   if (( $_INSTALL_EXAMPLES )) ; then
     mkdir -p "${pkgdir}/usr/share/examples/lammps"
     cp -r "../examples/." "${pkgdir}/usr/share/examples/lammps/"
