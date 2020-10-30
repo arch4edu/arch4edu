@@ -4,12 +4,12 @@
 # Contributor: Oskar Roesler <oskar@oskar-roesler.de>
 
 pkgdesc='Utilities for building Arch packages for ROS stacks.'
-url="https://github.com/acxz/pkgbuilds/tree/master/ros-build-tools"
+url="https://github.com/ros-arch/ros-build-tools"
 
 pkgname='ros-build-tools'
 pkgver='0.3.2'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 makedepends=()
 depends=('bash')
