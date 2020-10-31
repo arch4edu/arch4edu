@@ -1,6 +1,6 @@
 # Maintainer: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocsparse
-pkgver=3.8.0
+pkgver=3.9.0
 pkgrel=1
 pkgdesc='BLAS for sparse computation on top of ROCm'
 arch=('x86_64')
@@ -9,16 +9,9 @@ license=('MIT')
 depends=('hip-rocclr' 'rocprim')
 makedepends=('cmake' 'git' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/rocSPARSE'
-source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
-        'remove-boz-literals.patch::https://patch-diff.githubusercontent.com/raw/ROCmSoftwarePlatform/rocSPARSE/pull/210.patch')
-sha256sums=('a5d085fffe05a7ac7f5658075d9782b9b02d0c5c3e2c1807dad266c3a61141fd'
-            'bb34dd66788f1456cf2a711ec537441933b89ffde080de6f941bdfe71585c445')
+source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
+sha256sums=('7b8f952d0c7f8ac2f3bb60879ab420fabbfafb0885a3d8464d5b4c191e97dec6')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
-
-prepare() {
-    cd "$_dirname"
-    patch -Np1 -i "$srcdir/remove-boz-literals.patch"
-}
 
 build() {
   CXX=/opt/rocm/hip/bin/hipcc \
