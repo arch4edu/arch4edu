@@ -1,8 +1,8 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=mavproxy-git
-pkgver=r2326.14f4c126
-pkgrel=2
+pkgver=r2327.45ed97f0
+pkgrel=1
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
 url='http://ardupilot.github.io/MAVProxy/html/index.html'
