@@ -1,6 +1,6 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocprofiler
-pkgver=3.8.0
+pkgver=3.9.0
 pkgrel=1
 pkgdesc="ROC profiler library. Profiling with perf-counters and derived metrics."
 arch=('x86_64')
@@ -12,7 +12,7 @@ options=(!staticlibs strip)
 _git='https://github.com/ROCm-Developer-Tools/rocprofiler'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         'add_string_header.patch::https://patch-diff.githubusercontent.com/raw/ROCmSoftwarePlatform/hsa-class/pull/2.patch')
-sha256sums=('38ad3ac20f60f3290ce750c34f0aad442354b1d0a56b81167a018e44ecdf7fff'
+sha256sums=('f07ddd9bf2f86550c8d243f887e9bde9d4f2ceec81ecc6393012aaf2a45999e8'
             '35c45b367d917b8ecf5d4d738e7761699b115b25530ab5528c8a6a4a49424199')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
