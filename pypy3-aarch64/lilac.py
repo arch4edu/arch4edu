@@ -2,8 +2,8 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-build_prefix = 'action-extra-aarch64'
-time_limit_hours = 8
+build_prefix = 'extra-aarch64'
+time_limit_hours = 24
 
 def pre_build():
     download_official_pkgbuild('pypy3')
@@ -14,5 +14,4 @@ def post_build():
     git_commit()
 
 if __name__ == '__main__':
-    from action_tools import action_main
-    action_main(build_prefix)
+    single_main('extra-x86_64')
