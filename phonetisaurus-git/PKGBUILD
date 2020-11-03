@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=phonetisaurus-git
-pkgver=r156.1a7306a
+pkgver=r163.2831870
 pkgrel=1
 pkgdesc="WFST-driven grapheme-to-phoneme (g2p) framework suitable for rapid development of high quality g2p or p2g systems."
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
@@ -16,6 +16,12 @@ conflicts=('phonetisaurus')
 pkgver() {
 	cd "$srcdir/Phonetisaurus"
 	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+	cd "$srcdir/Phonetisaurus"
+	sed '41ausing namespace std;' -i src/include/util.h
+	#sed '/MapToken/s/string&/std::string&/g' -i src/include/util.h
 }
 
 build() {
