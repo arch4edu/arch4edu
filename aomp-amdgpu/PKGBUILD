@@ -3,8 +3,8 @@
 
 pkgname=aomp-amdgpu
 pkgdesc='Clang/LLVM based compiler with added support for the OpenMP API on Radeon GPUs'
-_pkgver=11.9-0
-pkgver=11.9.0
+_pkgver=11.11-0
+pkgver=11.11.0
 pkgrel=1
 arch=('x86_64')
 url='https://github.com/ROCm-Developer-Tools/aomp'
@@ -16,9 +16,9 @@ makedepends=(git cmake
 source=("${pkgname}-${pkgver}.tar.gz::$url/archive/rel_$_pkgver.tar.gz"
         'disable_ocl_tests.patch'
         'remove_gcc_logic.patch')
-sha256sums=('ee404f80120a1339bd7fde0557e510f6e9b1f5633d8bfeb895085ce2fa75bf53'
+sha256sums=('7d9cea6b8944f110dfdb307fdd7e11809168a5a8f6502ffbd8dbf1e711e20707'
             '10450211c4ee15a39d3ce9d85403b11174430b17bafd229019cf5ed5840a8b7a'
-            '3498568b9f34aebe9e0d32acf07d8d0d14124500a5a4347ed70c41f9848eaaf3')
+            '5cf8144d9f3e42feecdb12aaef013921fed5e4e61b4bf8e3c1960dced26d13ae')
 _dirname="$(basename "$url")-$(basename ${source[0]} .tar.gz)"
 
 prepare() {

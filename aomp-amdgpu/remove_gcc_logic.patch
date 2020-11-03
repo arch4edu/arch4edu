@@ -1,11 +1,11 @@
-*** aomp/bin/build_openmp.sh.bak	2020-09-17 17:07:31.393892767 +0200
---- aomp/bin/build_openmp.sh	2020-09-17 17:08:19.766760059 +0200
+*** aomp/bin/build_openmp.sh.bak	2020-11-01 12:16:24.042929154 +0100
+--- aomp/bin/build_openmp.sh	2020-11-01 12:16:54.366096090 +0100
 ***************
-*** 73,117 ****
+*** 73,106 ****
      $SUDO rm $INSTALL_OPENMP/testfile
   fi
   
-! GCCMIN=8
+! GCCMIN=9
 ! if [ "$AOMP_BUILD_CUDA" == 1 ] ; then
 !    if [ -f $CUDABIN/nvcc ] ; then
 !       CUDAVER=`$CUDABIN/nvcc --version | grep compilation | cut -d" " -f5 | cut -d"." -f1 `
@@ -16,14 +16,14 @@
 !    fi
 ! fi
 ! 
-! function getgcc8orless(){
+! function getgcc9orless(){
 !    _loc=`which gcc`
 !    [ "$_loc" == "" ] && return
 !    gccver=`$_loc --version | grep gcc | cut -d")" -f2 | cut -d"." -f1`
 !    [ $gccver -gt $GCCMIN ] && _loc=`which gcc-$GCCMIN`
 !    echo $_loc
 ! }
-! function getgxx8orless(){
+! function getgxx9orless(){
 !    _loc=`which g++`
 !    [ "$_loc" == "" ] && return
 !    gxxver=`$_loc --version | grep g++ | cut -d")" -f2 | cut -d"." -f1`
@@ -31,28 +31,17 @@
 !    echo $_loc
 ! }
 ! 
-! GCCLOC=$(getgcc8orless)
-! GXXLOC=$(getgxx8orless)
-! if [ "$GCCLOC" == "" ] ; then
-!    echo "ERROR: NO ADEQUATE gcc"
-!    echo "       Please install gcc-5, gcc-7, or gcc-8"
-!    exit 1
-! fi
-! if [ "$GXXLOC" == "" ] ; then
-!    echo "ERROR: NO ADEQUATE g++"
-!    echo "       Please install g++-5, g++-7, or g++-8"
-!    exit 1
-! fi
-! 
-  export LLVM_DIR=$AOMP_INSTALL_DIR
-  GFXSEMICOLONS=`echo $GFXLIST | tr ' ' ';' `
-  COMMON_CMAKE_OPTS="-DOPENMP_ENABLE_LIBOMPTARGET=1
+! GCCLOC=$(getgcc9orless)
+! GXXLOC=$(getgxx9orless)
+  if [ "$GCCLOC" == "" ] ; then
+     echo "ERROR: NO ADEQUATE gcc"
+     echo "       Please install gcc-5, gcc-7, gcc-8 or gcc-9"
 --- 73,80 ----
      $SUDO rm $INSTALL_OPENMP/testfile
   fi
   
 ! GCCLOC=/usr/bin/gcc
 ! GXXLOC=/usr/bin/g++
-  export LLVM_DIR=$AOMP_INSTALL_DIR
-  GFXSEMICOLONS=`echo $GFXLIST | tr ' ' ';' `
-  COMMON_CMAKE_OPTS="-DOPENMP_ENABLE_LIBOMPTARGET=1
+  if [ "$GCCLOC" == "" ] ; then
+     echo "ERROR: NO ADEQUATE gcc"
+     echo "       Please install gcc-5, gcc-7, gcc-8 or gcc-9"
