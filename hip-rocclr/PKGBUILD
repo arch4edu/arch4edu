@@ -1,35 +1,39 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-rocclr
-pkgver=3.8.0
+pkgver=3.9.0
 pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
 license=('MIT')
 depends=('rocclr' 'rocminfo' 'libelf')
-makedepends=('cmake' 'python' 'git')
+makedepends=('cmake' 'python')
 provides=('hip')
 conflicts=('hip')
 _git='https://github.com/ROCm-Developer-Tools/HIP'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
-        'amdgpu-targets.patch')
-sha256sums=('6450baffe9606b358a4473d5f3e57477ca67cff5843a84ee644bcf685e75d839'
-            'c6358b4dfac658c0a27a3425ace455d951cd26be827dd7751c28cb83dc84b67d')
+        'amdgpu-targets.patch'
+        'disable-git-versioning.patch')
+sha256sums=('25ad58691456de7fd9e985629d0ed775ba36a2a0e0b21c086bd96ba2fb0f7ed1'
+            'c6358b4dfac658c0a27a3425ace455d951cd26be827dd7751c28cb83dc84b67d'
+	      '1945ff2456e1a0a9c27a79655dcf49af877aac42570c0ab70c7fd8e651335bde')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 prepare() {
     cd "$_dirname"
     patch -Np1 -i "$srcdir/amdgpu-targets.patch"
+    patch -Np1 -i "$srcdir/disable-git-versioning.patch"
 }
 
 build() {
-  CXXFLAGS="$CXXFLAGS -isystem /opt/rocm/rocclr/include/compiler/lib/include" \
+  CXXFLAGS="$CXXFLAGS -isystem /opt/rocm/rocclr/include/compiler/lib/include -isystem /opt/rocm/rocclr/include/elf" \
   cmake -B build -Wno-dev \
         -S "$_dirname" \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm/hip \
         -DCMAKE_PREFIX_PATH='/opt/rocm/lib/cmake/hsa-runtime64;/opt/rocm/lib/cmake/amd_comgr' \
         -DHIP_COMPILER=clang \
-        -DHIP_PLATFORM=rocclr
+        -DHIP_PLATFORM=rocclr \
+        -D__HIP_ENABLE_PCH=OFF
   make -C build
 }
 

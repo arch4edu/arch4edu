@@ -1,0 +1,69 @@
+*** HIP-rocm-3.9.0/CMakeLists.txt.bak	2020-11-01 11:24:23.406720145 +0100
+--- HIP-rocm-3.9.0/CMakeLists.txt	2020-11-01 11:24:45.703264460 +0100
+***************
+*** 44,99 ****
+  list(GET VERSION_LIST 0 HIP_VERSION_MAJOR)
+  list(GET VERSION_LIST 1 HIP_VERSION_MINOR)
+  
+! find_package(Git)
+! 
+! # FIXME: Two different version strings used.
+! if(GIT_FOUND)
+!   # get date information based on UTC
+!   # use the last two digits of year + week number + day in the week as HIP_VERSION_GITDATE
+!   # use the commit date, instead of build date
+!   # add xargs to remove strange trailing newline character
+!   execute_process(COMMAND ${GIT_EXECUTABLE} show -s --format=@%ct
+!     COMMAND xargs
+!     COMMAND date -f - --utc +%y%U%w
+!     RESULT_VARIABLE git_result
+!     OUTPUT_VARIABLE git_output
+!     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+!     OUTPUT_STRIP_TRAILING_WHITESPACE)
+!   if(git_result EQUAL 0)
+!     set(HIP_VERSION_GITDATE ${git_output})
+!   endif()
+! 
+!   # get commit short hash
+!   execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+!     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+!     RESULT_VARIABLE git_result
+!     OUTPUT_VARIABLE git_output
+!     OUTPUT_STRIP_TRAILING_WHITESPACE)
+!   if(git_result EQUAL 0)
+!     set(HIP_VERSION_GITHASH ${git_output})
+!   endif()
+! 
+!   # get commit count
+!   execute_process(COMMAND ${GIT_EXECUTABLE} rev-list --count HEAD
+!     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+!     RESULT_VARIABLE git_result
+!     OUTPUT_VARIABLE git_output
+!     OUTPUT_STRIP_TRAILING_WHITESPACE)
+!   if(git_result EQUAL 0)
+!     set(HIP_VERSION_GITCOUNT ${git_output})
+!   endif()
+! 
+!   set(HIP_VERSION_PATCH ${HIP_VERSION_GITDATE}-${HIP_VERSION_GITHASH})
+! 
+!   if(DEFINED ENV{ROCM_BUILD_ID})
+!     set(HIP_PACKAGING_VERSION_PATCH ${HIP_VERSION_GITDATE}.${HIP_VERSION_GITCOUNT}-$ENV{ROCM_BUILD_ID}-${HIP_VERSION_GITHASH})
+!   else()
+!     set(HIP_PACKAGING_VERSION_PATCH ${HIP_VERSION_GITDATE}.${HIP_VERSION_GITCOUNT}-${HIP_VERSION_GITHASH})
+!   endif()
+! else()
+!   # FIXME: Some parts depend on this being set.
+!   set(HIP_PACKAGING_VERSION_PATCH "0")
+! endif()
+  
+  add_to_config(_versionInfo HIP_VERSION_MAJOR)
+  add_to_config(_versionInfo HIP_VERSION_MINOR)
+--- 44,51 ----
+  list(GET VERSION_LIST 0 HIP_VERSION_MAJOR)
+  list(GET VERSION_LIST 1 HIP_VERSION_MINOR)
+  
+! # FIXME: Some parts depend on this being set.
+! set(HIP_PACKAGING_VERSION_PATCH "0")
+  
+  add_to_config(_versionInfo HIP_VERSION_MAJOR)
+  add_to_config(_versionInfo HIP_VERSION_MINOR)
