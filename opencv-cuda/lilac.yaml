@@ -1,3 +1,9 @@
+maintainers:
+  - github: petronny
+    email: Jingbei Li <i@jingbei.li>
 update_on:
   - source: aur
     aur:
+build_prefix: arch4edu-x86_64
+post_build: aur_post_build
+time_limit_hours: 4
