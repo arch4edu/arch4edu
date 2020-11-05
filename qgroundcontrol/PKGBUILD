@@ -2,7 +2,7 @@
 # Contributor: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=4.0.10
+pkgver=4.0.11
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
@@ -63,8 +63,8 @@ source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcont
         'libcudata-qgc.patch'
 )
 
-sha256sums=('4eebd9daf89c56f440ecabb3a08da91762180612d29a410506f80ad1e8798bff'
-            '6cea541ddeb8c54fb20d4340784bcab6da9aad5d65b12928a57549b440e9d886'
+sha256sums=('cf36a001fc04aeb7689f6ab7e9ca957c787fad304375d2903ea4653407b54396'
+            '11fea11460eaaedf6007c56d2263b3fb9925a523cdf6f11ee79d2bbe12f9c7bb'
             '46aefd64c24a48158e953467c432ac25c067ec93bff8704cd8af925a90aab5c8'
             '93598e63fbbd86fec5e15f2596bba8b1f1654c854a99222099516933fd22a118'
             'd5aad13c8eff7f3cce75c8cf3bbf6ac592ac82455e666dccd17cf006deec3e55'
@@ -72,7 +72,7 @@ sha256sums=('4eebd9daf89c56f440ecabb3a08da91762180612d29a410506f80ad1e8798bff'
 )
 
 prepare() {
-  gpsdir="GpsDrivers-${pkgver_gps}"
+  gpsdir="PX4-GPSDrivers-${pkgver_gps}"
   mavlinkdir="c_library_v2-${pkgver_mavlink}"
   aossldir="android_openssl-${pkgver_aossl}"
   gstdir="gst-plugins-good-${pkgver_gst}"
