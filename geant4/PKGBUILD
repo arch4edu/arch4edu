@@ -2,7 +2,7 @@
 pkgname='geant4'
 pkgver=10.6.2
 _pkgver=10.06.p02
-pkgrel=1
+pkgrel=2
 pkgdesc="A simulation toolkit for particle physics interactions."
 depends=('cmake>=3.8'
          'xerces-c'
@@ -42,7 +42,6 @@ sha256sums=('ecdadbf846807af8baa071f38104fb0dcc24847c8475cd8397302e2aefa8f66f'
 
 ## Remove this if you want to keep an even smaller package
 ## No need to wait for compression when just installing it.
-PKGEXT='.pkg.tar'
 
 build() {
 
