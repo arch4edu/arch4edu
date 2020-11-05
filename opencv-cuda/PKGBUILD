@@ -3,7 +3,7 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 pkgname=opencv-cuda
-pkgver=4.3.0
+pkgver=4.5.0
 pkgrel=1
 provides=(opencv opencv-samples)
 conflicts=(opencv opencv-samples)
@@ -22,8 +22,8 @@ optdepends=('opencv-samples: samples'
             'python2-numpy: Python 2 interface')
 source=("opencv-$pkgver.tar.gz::https://github.com/opencv/opencv/archive/$pkgver.zip"
         "opencv_contrib-$pkgver.tar.gz::https://github.com/opencv/opencv_contrib/archive/$pkgver.tar.gz")
-sha256sums=('36799186756c1e12adde97f0a8d1afc395d5b0f86d8ad9ef951bc33aa732f9b9'
-            'acb8e89c9e7d1174e63e40532125b60d248b00e517255a98a419d415228c6a55')
+sha256sums=('168f6e61d8462fb3d5a29ba0d19c0375c111125cac753ad01035a359584ccde9'
+            'a65f1f0b98b2c720abbf122c502044d11f427a43212d85d8d2402d7a6339edda')
 
 prepare() {
   msg2 "Patching sources for CUDA v10"
@@ -33,6 +33,7 @@ prepare() {
 }
 
 build() {
+  export https_proxy=127.0.0.1:8123
   cd build
   # cmake's FindLAPACK doesn't add cblas to LAPACK_LIBRARIES, so we need to specify them manually
   _pythonpath=`python -c "from sysconfig import get_path; print(get_path('platlib'))"`
@@ -55,7 +56,7 @@ build() {
     -DWITH_CUDA=ON \
     -DCUDA_FAST_MATH=ON \
     -DWITH_CUBLAS=ON \
-    -DCUDA_HOST_COMPILER=/usr/bin/gcc-8 \
+    -DCUDA_HOST_COMPILER=/opt/cuda/bin/gcc \
     -DOPENCV_EXTRA_MODULES_PATH="$srcdir/opencv_contrib-$pkgver/modules" \
     -DOPENCV_SKIP_PYTHON_LOADER=ON \
     -DEIGEN_INCLUDE_PATH=/usr/include/eigen3 \
