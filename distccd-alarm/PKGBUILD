@@ -8,7 +8,7 @@ pkgname=("${_subarchs[@]/#/$pkgbase-}")
 _date=20200823
 # inspect source tarball under $name/share/gcc-x.y.z
 pkgver=10.2.0.$_date
-pkgrel=2
+pkgrel=3
 _pkgrel_upstream=1
 #_URL="https://archlinuxarm.org/builder/xtools/$pkgver-$pkgrel"
 _URL="https://archlinuxarm.org/builder/xtools"
@@ -36,7 +36,7 @@ md5sums=('87150475eb6e533f1a84ba3fc9a73e37'
          '9e1c82ac8badc286f40d7d22e475e1b2'
          '7015421efcdac437de27769a421a10a2'
          '6e5060bc78f9c62746e9d2b23668583b'
-         '89694ceb3a0fb07413ffef810173ee55'
+         '6bd0313f391b8c21d9ba1eae88026bf7'
          '26741c886597e3fd8d8fc0a61aa8a49a'
          'da6ee5bb971d28b85e49d456a3889349')
 

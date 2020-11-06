@@ -6,4 +6,4 @@
 #
 
 PATH=/opt/x-tools@VERS@/@PATH@/bin:$PATH
-DISTCC_ARGS="--allow 127.0.0.1 --port @PORT@ --nice 19 --log-file /tmp/distccd-@LOG@.log"
+DISTCC_ARGS="--allow-private --log-level info --log-file /tmp/distccd-@LOG@.log --port @PORT@"
