@@ -1,9 +1,9 @@
 # Maintainer: Leo Mao <leomaoyw at gmail dot com>
 pkgname=python-cupy
 _pkgname=cupy
-pkgver=8.0.0
+pkgver=8.1.0
 _cubver=1.8.0
-pkgrel=2
+pkgrel=1
 pkgdesc="NumPy-like API accelerated with CUDA"
 _github="cupy/cupy"
 url="https://cupy.chainer.org"
@@ -14,7 +14,7 @@ makedepends=('python' 'python-setuptools' 'cython')
 optdepends=('libcutensor')
 source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
         "https://github.com/NVlabs/cub/archive/$_cubver.tar.gz")
-md5sums=('e5375c9c8e01c1c5d15dcbc91d36c9d1'
+md5sums=('65b320b751447a563d498374d8d18f2f'
          '9203ea2499b56782601fddf8a12e9b08')
 
 prepare() {
