@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008@yahoo.com>
 pkgname=rock-dkms-bin
-pkgver=3.8
-_pkgver=3.8-30
+pkgver=3.9
+_pkgver=3.9-17
 pkgrel=1
 pkgdesc="Linux AMD GPU kernel driver from ROC in DKMS format."
 arch=('any')
@@ -14,7 +14,7 @@ backup=('etc/modprobe.d/blacklist-radeon.conf')
 options=('!strip' '!emptydirs')
 source=("${pkgname}-${pkgver}.tar.gz"::"http://repo.radeon.com/rocm/apt/${pkgver}/pool/main/r/rock-dkms/rock-dkms_${_pkgver}_all.deb"
         "rock_compatibility.patch"::"https://patch-diff.githubusercontent.com/raw/RadeonOpenCompute/ROCK-Kernel-Driver/pull/95.patch")
-sha256sums=('a468b61b1529c458a7ab0c58515377c99af1c5b2c42c8ab3fef4e74386a2b2f7'
+sha256sums=('1ab7c5f38c91f20a33e63154a803c6360ad05f6e01c95ef34c659b0ba769ad3b'
             'SKIP')
 
 package() {
