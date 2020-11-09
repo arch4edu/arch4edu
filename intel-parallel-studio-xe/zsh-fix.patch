@@ -1,12 +1,12 @@
---- composerxe/linux/bin/compilervars.sh	2020-07-23 05:25:54.000000000 +0900
-+++ composerxe/linux/bin/compilervars_fix.sh	2020-08-09 02:47:46.130971704 +0900
-@@ -112,7 +112,8 @@
- # ------------------function remove_duplicate_paths----------------------------
- remove_duplicate_paths() {
-   local arg=$1
--  local arr=(`echo ${!arg} | sed 's/:/\n/g'`)
-+  eval "value=\"\${$arg}\""
-+  local arr=(`echo ${value} | sed 's/:/\n/g'`)
+--- composerxe/linux/bin/compilervars.sh	2020-11-09 06:28:27.000000000 +0900
++++ composerxe/linux/bin/compilervars_fix.sh	2020-11-09 06:40:21.707348052 +0900
+@@ -120,7 +120,8 @@
+   if [ "${INTEL_HOST_PLATFORM}" = "Darwin" ]; then
+     local arr=(`echo ${!arg} | sed 's/:/\'$'\n/g'`)
+   else
+-    local arr=(`echo ${!arg} | sed 's/:/\n/g'`)
++    eval "value=\"\${$arg}\""
++    local arr=(`echo ${!value} | sed 's/:/\n/g'`)
+   fi
    local fixarr=()
    local found=
-   local i=0
