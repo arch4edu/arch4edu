@@ -6,7 +6,7 @@
    else
 -    local arr=(`echo ${!arg} | sed 's/:/\n/g'`)
 +    eval "value=\"\${$arg}\""
-+    local arr=(`echo ${!value} | sed 's/:/\n/g'`)
++    local arr=(`echo ${value} | sed 's/:/\n/g'`)
    fi
    local fixarr=()
    local found=
