@@ -7,7 +7,7 @@
 
 set -u
 pkgname='hadoop'
-pkgver='3.2.1'
+pkgver='3.3.0'
 pkgrel='1'
 pkgdesc='Hadoop - MapReduce implementation and distributed filesystem'
 arch=('i686' 'x86_64')
@@ -38,7 +38,7 @@ backup=(
 options=('!strip')
 install="${pkgname}.install"
 source=(
-  "https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-${pkgver}/hadoop-${pkgver}.tar.gz"
+  "http://mirror.reverse.net/pub/apache/hadoop/common/hadoop-${pkgver}/hadoop-${pkgver}.tar.gz"
   'hadoop.profile'
   'hadoop-conf'
   'hadoop.sh'
@@ -49,7 +49,16 @@ source=(
   'hadoop-tasktracker.service'
 )
 _verwatch=("${source[0]%|*}hadoop/common/" '.*href="hadoop-\([0-9\.]\+\)/.*' 'f')
-sha256sums=('f66a3a4115b8f16c1077d1a198a06854dbef0e4233291712ed08d0a10629ed37'
+md5sums=('98b5fcfa592c9efd78d819acd67226c2'
+         '77fad322bff1877b0c5b4e6d693c979a'
+         '2b662c5d0548cae29538060bbea9e96b'
+         '56a70b8c94de7c1fb236ec24d7c11e05'
+         '4e96bfa974fb7701b5636379c02f8470'
+         '287feaae2d479042d7210ea5ef079a5e'
+         '4dc609ae8d536dbb278a7e89c523384f'
+         'dba52a72c925365bc50a2e443a38f7f4'
+         '8da68ae4b6f20a969df19945d359fc32')
+sha256sums=('ea1a0f0afcdfb9b6b9d261cdce5a99023d7e8f72d26409e87f69bda65c663688'
             'b6607cb8531244d9be9241d8d4980d5695869f89fa598c8d24b35ec503df413b'
             'e584c32246fd23fe5f35b13399372419584c27a234364b12d1479f3c87e70748'
             '93cb40f76f6bb0c1924b7ef083b82d39bf32190f86c28fc6304839703cdda7b1'
@@ -58,328 +67,6 @@ sha256sums=('f66a3a4115b8f16c1077d1a198a06854dbef0e4233291712ed08d0a10629ed37'
             '047d3d6aea9eada82780eaa93a55c6259fb1b63c68bc50cc26323e066c1b7f75'
             '5e9bc41b0086dfa7b237d1a7248a7f113299687f79ba0c58ba01eaeea0e35e79'
             '37d7a252292b365782d9e7a64d6019a78d9c561acf9b5af3c246b602d3e0a8ec')
-
-# http://www.apache.org/mirrors/
-_setmirror() {
-  local _cmd="${BASH_SOURCE[*]}" # want [*] not [@]
-  local _lang="${LANG:-}" # mksrcinfo removes LANG
-  if [ "${_cmd/makepkg/}" != "${_cmd}" ] && [ ! -z "${_lang}" ]; then
-    local _mirrors=()
-    _lang="${_lang%%\.*}"
-    _lang="${_lang##*_}"
-    case "${_lang}" in
-    'AR') _mirrors+=(
-      'http://mirrors.dcarsat.com.ar/apache/'
-      'http://apache.dattatec.com/'
-      );;
-    'AU') _mirrors+=(
-      'http://apache.mirror.amaze.com.au/'
-      'http://apache.mirror.digitalpacific.com.au/'
-      'http://mirror.intergrid.com.au/apache/'
-      'http://apache.mirror.serversaustralia.com.au/'
-      'http://mirror.ventraip.net.au/apache/'
-      'http://apache.melbourneitmirror.net/'
-      );;
-    'AT') _mirrors+=(
-      'ftp://mirror.klaus-uwe.me/apache/'
-      'http://mirror.klaus-uwe.me/apache/'
-      );;
-    'BY') _mirrors+=('http://ftp.byfly.by/pub/apache.org/');;
-    'BE') _mirrors+=(
-      'ftp://apache.belnet.be/mirrors/ftp.apache.org/'
-      'http://apache.belnet.be/'
-      'http://apache.cu.be/'
-      );;
-    'BA') _mirrors+=('http://apache.mirror.ba/');;
-    'BR') _mirrors+=(
-      'http://mirror.nbtelecom.com.br/apache/'
-      'http://ftp.unicamp.br/pub/apache/'
-      );;
-    'BG') _mirrors+=('http://apache.cbox.biz/');;
-    'CA') _mirrors+=(
-      'http://mirror.its.dal.ca/apache/'
-      'ftp://apache.mirror.iweb.ca/'
-      'http://apache.mirror.iweb.ca/'
-      'http://muug.ca/mirror/apache-dist/'
-      'ftp://apache.mirror.rafal.ca/pub/apache/'
-      'http://apache.mirror.rafal.ca/'
-      'http://mirror.dsrg.utoronto.ca/apache/'
-      'ftp://mirror.csclub.uwaterloo.ca/apache/'
-      'http://mirror.csclub.uwaterloo.ca/apache/'
-      'http://apache.parentingamerica.com/'
-      'http://apache.mirror.vexxhost.com/'
-      'http://apache.mirror.colo-serv.net/'
-      'http://apache.mirror.gtcomm.net/'
-      'http://apache.forsale.plus/'
-      'http://httpd-mirror.frgl.pw/apache/'
-      'http://apache.mirror.globo.tech/'
-      );;
-    'CN') _mirrors+=(
-      'http://mirror.bit.edu.cn/apache/'
-      'http://mirrors.hust.edu.cn/apache/'
-      'http://mirrors.tuna.tsinghua.edu.cn/apache/'
-      'http://apache.fayea.com/'
-      );;
-    'CO') _mirrors+=('http://apache.uniminuto.edu/');;
-    'CR') _mirrors+=(
-      'ftp://mirrors.ucr.ac.cr/apache/'
-      'http://mirrors.ucr.ac.cr/apache/'
-      );;
-    'HR') _mirrors+=('http://ftp.carnet.hr/misc/apache/');;
-    'CZ') _mirrors+=(
-      'http://mirror.dkm.cz/apache/'
-      'ftp://mirror.hosting90.cz/apache/'
-      'http://mirror.hosting90.cz/apache/'
-      'http://apache.miloslavbrada.cz/'
-      );;
-    'DK') _mirrors+=(
-      'http://mirrors.rackhosting.com/apache/'
-      'http://ftp.download-by.net/apache/'
-      'http://mirrors.dotsrc.org/apache/'
-      );;
-    'FI') _mirrors+=(
-      'http://mirror.netinch.com/pub/apache/'
-      'ftp://ftp.funet.fi/pub/mirrors/apache.org/'
-      'http://www.nic.funet.fi/pub/mirrors/apache.org/'
-      );;
-    'FR') _mirrors+=(
-      'http://apache.mindstudios.com/'
-      'http://mirrors.standaloneinstaller.com/apache/'
-      'http://wwwftp.ciril.fr/pub/apache/'
-      'http://apache.crihan.fr/dist/'
-      'http://mirror.ibcp.fr/pub/apache/'
-      'ftp://mirrors.ircam.fr/pub/apache/'
-      'http://mirrors.ircam.fr/pub/apache/'
-      'http://apache.mirrors.ovh.net/ftp.apache.org/dist/'
-      'http://apache.mediamirrors.org/'
-      );;
-    'DE') _mirrors+=(
-      'http://apache.lauf-forum.at/'
-      'http://mirror.softaculous.com/apache/'
-      'ftp://mirror.yannic-bonenberger.com/apache/'
-      'http://mirror.yannic-bonenberger.com/apache/'
-      'http://mirror.23media.de/apache/'
-      'http://mirrors.ae-online.de/apache/'
-      'http://apache.mirror.digionline.de/'
-      'http://mirror.dkd.de/apache/'
-      'ftp://ftp.fau.de/apache/'
-      'http://ftp.fau.de/apache/'
-      'ftp://ftp.fu-berlin.de/unix/www/apache/'
-      'http://mirror.funkfreundelandshut.de/apache/'
-      'ftp://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/'
-      'http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/'
-      'ftp://mirror.netcologne.de/apache.org/'
-      'http://mirror.netcologne.de/apache.org/'
-      'ftp://ftp.halifax.rwth-aachen.de/apache/'
-      'http://ftp.halifax.rwth-aachen.de/apache/'
-      'http://mirror.serversupportforum.de/apache/'
-      'http://mirror.synyx.de/apache/'
-      'http://apache.mirror.iphh.net/'
-      'http://artfiles.org/apache.org/'
-      'http://www.gutscheine.org/mirror/apache/'
-      'http://babyname.tips/mirrors/apache/'
-      );;
-    'GR') _mirrors+=(
-      'http://apache.forthnet.gr/'
-      'ftp://ftp.forthnet.gr/pub/www/apache/'
-      'http://mirrors.myaegean.gr/apache/'
-      'http://apache.otenet.gr/dist/'
-      'ftp://ftp.cc.uoc.gr/mirrors/apache/'
-      'http://ftp.cc.uoc.gr/mirrors/apache/'
-      );;
-    'HK') _mirrors+=(
-      'http://apache.01link.hk/'
-      'http://ftp.cuhk.edu.hk/pub/packages/apache.org/'
-      'http://apache.communilink.net/'
-      'http://apache.website-solution.net/'
-      );;
-    'HU') _mirrors+=(
-      'ftp://crysys.hit.bme.hu/pub/apache/'
-      'ftp://xenia.sote.hu/pub/mirrors/www.apache.org/'
-      'http://xenia.sote.hu/ftp/mirrors/www.apache.org/'
-      );;
-    'IN') _mirrors+=('http://redrockdigimark.com/apachemirror/');;
-    'ID') _mirrors+=('http://apache.repo.unpas.ac.id/');;
-    'IE') _mirrors+=(
-      'http://mirrors.whoishostingthis.com/apache/'
-      'http://ftp.heanet.ie/mirrors/www.apache.org/dist/'
-      );;
-    'IL') _mirrors+=(
-      'http://apache.spd.co.il/'
-      'http://apache.mivzakim.net/'
-      );;
-    'IT') _mirrors+=(
-      'http://it.apache.contactlab.it/'
-      'ftp://mirror.nohup.it/apache/'
-      'http://mirror.nohup.it/apache/'
-      'http://apache.panu.it/'
-      'ftp://ftp.panu.it/pub/mirrors/apache/'
-      );;
-    'JP') _mirrors+=(
-      'http://ftp.jaist.ac.jp/pub/apache/'
-      'ftp://ftp.meisei-u.ac.jp/mirror/apache/dist/'
-      'http://ftp.meisei-u.ac.jp/mirror/apache/dist/'
-      'http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/'
-      'http://ftp.tsukuba.wide.ad.jp/software/apache/'
-      'ftp://ftp.kddilabs.jp/infosystems/apache/'
-      'http://ftp.kddilabs.jp/infosystems/apache/'
-      'ftp://ftp.riken.jp/net/apache/'
-      'http://ftp.riken.jp/net/apache/'
-      );;
-    'KR') _mirrors+=(
-      'http://apache.mirror.cdnetworks.com/'
-      'http://mirror.navercorp.com/apache/'
-      'http://apache.tt.co.kr/'
-      'http://mirror.apache-kr.org/'
-      );;
-    'LT') _mirrors+=(
-      'http://apache.mirror.serveriai.lt/'
-      'ftp://apache.mirror.vu.lt/apache/'
-      'http://apache.mirror.vu.lt/apache/'
-      );;
-    'NL') _mirrors+=(
-      'ftp://mirror1.spango.com/apache/'
-      'http://apache.mirror1.spango.com/'
-      'http://mirrors.supportex.net/apache/'
-      'http://apache.40b.nl/'
-      'http://apache.hippo.nl/'
-      'http://ftp.nluug.nl/internet/apache/'
-      'ftp://apache.proserve.nl/apache/'
-      'http://apache.proserve.nl/'
-      'http://apache.mirror.triple-it.nl/'
-      'http://ftp.tudelft.nl/apache/'
-      'http://apache.cs.uu.nl/'
-      'http://apache.xl-mirror.nl/'
-      );;
-    'NC') _mirrors+=('http://mirror.lagoon.nc/pub/apache/');;
-    'NO') _mirrors+=(
-      'ftp://apache.uib.no/pub/apache/'
-      'http://apache.uib.no/'
-      );;
-    'PH') _mirrors+=(
-      'ftp://mirror.rise.ph/apache/'
-      'http://mirror.rise.ph/apache/'
-      );;
-    'PL') _mirrors+=(
-      'ftp://ftp.task.gda.pl/pub/www/apache/dist/'
-      'http://ftp.ps.pl/pub/apache/'
-      );;
-    'PT') _mirrors+=(
-      'ftp://mirrors.up.pt/pub/apache/'
-      'http://mirrors.up.pt/pub/apache/'
-      );;
-    'RO') _mirrors+=(
-      'http://mirror.evowise.com/apache/'
-      'http://apache.javapipe.com/'
-      'http://mirrors.hostingromania.ro/apache.org/'
-      'http://mirrors.m247.ro/apache/'
-      );;
-    'RU') _mirrors+=('http://apache-mirror.rbc.ru/pub/apache/');;
-    'SK') _mirrors+=('http://tux.rainside.sk/apache/');;
-    'SI') _mirrors+=('http://www.apache.si/');;
-    'ZA') _mirrors+=(
-      'http://apache.saix.net/'
-      'http://mirror.za.web4africa.net/apache/'
-      'http://apache.is.co.za/'
-      );;
-    'ES') _mirrors+=(
-      'http://ftp.cixug.es/apache/'
-      'http://apache.rediris.es/'
-      'http://apache.uvigo.es/'
-      );;
-    'SE') _mirrors+=('http://apache.mirrors.spacedump.net/');;
-    'CH') _mirrors+=(
-      'http://mirror.easyname.ch/apache/'
-      'ftp://mirror.switch.ch/mirror/apache/dist/'
-      'http://mirror.switch.ch/mirror/apache/dist/'
-      'http://www.pirbot.com/mirrors/apache/'
-      );;
-    'TW') _mirrors+=(
-      'ftp://ftp.twaren.net/Unix/Web/apache/'
-      'http://ftp.twaren.net/Unix/Web/apache/'
-      'http://apache.stu.edu.tw/'
-      'http://ftp.tc.edu.tw/pub/Apache/'
-      'http://ftp.mirror.tw/pub/apache/'
-      );;
-    'TR') _mirrors+=(
-      'ftp://ftp.itu.edu.tr/Mirror/Apache/'
-      'http://ftp.itu.edu.tr/Mirror/Apache/'
-      'http://mirror.idealhosting.net.tr/Apache/'
-      );;
-    'UA') _mirrors+=(
-      'http://apache.volia.net/'
-      'http://apache.cp.if.ua/'
-      'http://apache.ip-connect.vn.ua/'
-      );;
-    'UK') _mirrors+=(
-      'http://mirror.catn.com/pub/apache/'
-      'http://apache.mirror.anlx.net/'
-      'http://mirror.vorboss.net/apache/'
-      'ftp://ftp.mirrorservice.org/sites/ftp.apache.org/'
-      'http://www.mirrorservice.org/sites/ftp.apache.org/'
-      'http://mirror.ox.ac.uk/sites/rsync.apache.org/'
-      'http://apache.mirrors.nublue.co.uk/'
-      'http://mirrors.ukfast.co.uk/sites/ftp.apache.org/'
-      );;
-    'US') _mirrors+=(
-      'http://apache.mesi.com.ar/'
-      'http://mirrors.advancedhosters.com/apache/'
-      'http://mirror.cogentco.com/pub/apache/'
-      'http://mirrors.gigenet.com/apache/'
-      'http://apache.mirrors.hoobly.com/'
-      'http://mirror.jax.hugeserver.com/apache/'
-      'http://apache.ip-guide.com/'
-      'http://mirrors.koehn.com/apache/'
-      'http://www.namesdir.com/mirrors/apache/'
-      'http://download.nextag.com/apache/'
-      'http://apache.mirrors.pair.com/'
-      'http://apache.spinellicreations.com/'
-      'http://supergsego.com/apache/'
-      'http://www.trieuvan.com/apache/'
-      'http://mirrors.ocf.berkeley.edu/apache/'
-      'http://mirror.cc.columbia.edu/pub/software/apache/'
-      'http://www.gtlib.gatech.edu/pub/apache/'
-      'ftp://apache.cs.utah.edu/apache.org/'
-      'http://apache.cs.utah.edu/'
-      'http://ftp.wayne.edu/apache/'
-      'http://apache.mirrors.lucidnetworks.net/'
-      'http://mirror.metrocast.net/apache/'
-      'http://mirror.nexcess.net/apache/'
-      'http://mirror.olnevhost.net/pub/apache/'
-      'ftp://mirror.reverse.net/pub/apache/'
-      'http://mirror.reverse.net/pub/apache/'
-      'http://mirrors.sonic.net/apache/'
-      'ftp://apache.mirrors.tds.net/pub/apache.org/'
-      'http://apache.mirrors.tds.net/'
-      'http://apache.claz.org/'
-      'http://mirrors.ibiblio.org/apache/'
-      'http://apache.mirrors.ionfish.org/'
-      'http://apache.osuosl.org/'
-      'ftp://ftp.osuosl.org/pub/apache/'
-      'http://mirror.stjschools.org/public/apache/'
-      );;
-    'VN') _mirrors+=(
-      'http://mirror.downloadvn.com/apache/'
-      'http://mirrors.viethosting.com/apache/'
-      );;
-    esac
-    local _mc="${#_mirrors[@]}"
-    if [ "${_mc}" -ne 0 ]; then
-      _mc=$((${RANDOM} % ${_mc}))
-      _mc="${_mirrors[${_mc}]%/}"
-      source[0]="${_mc}/${source[0]##*|}"
-      set +u
-      msg "Alternate mirror: ${_mc}"
-      set -u
-    fi
-  fi
-}
-if [ "${source[0]//|/}" != "${source[0]}" ]; then
-  _setmirror
-  source[0]="${source[0]//|/\/}"
-fi
-unset -f _setmirror
-
 
 compile() {
   set -u
