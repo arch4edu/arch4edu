@@ -2,7 +2,7 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
 pkgver=4.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
@@ -47,13 +47,19 @@ package_gmsh() {
             'glu')
    optdepends=('gmsh-docs: docs for gmsh'
             'python2: for onelab.py'
-            'python: for onelab.py')
+            'python: for onelab.py'
+            'julia: for gmsh.jl')
 
    cd "${srcdir}/${pkgname}-${pkgver}-source/build"
    make DESTDIR=${pkgdir} install
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.8/site-packages/gmsh.py"
-   rm "${pkgdir}/usr/lib/gmsh.py"
+   install -D -m644 "${pkgdir}/usr/lib/gmsh.jl" "${pkgdir}/usr/share/gmsh/api/julia/gmsh.jl"
+   rm -f "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/gmsh.jl"
+   install -d "$pkgdir/etc/profile.d"
+   echo 'export JULIA_LOAD_PATH="/usr/share/gmsh/api/julia/:$JULIA_LOAD_PATH"' > "$pkgdir/etc/profile.d/gmsh.sh"
+   echo 'setenv JULIA_LOAD_PATH "/usr/share/gmsh/api/julia/:$JULIA_LOAD_PATH"' > "$pkgdir/etc/profile.d/gmsh.csh"
+
 
    install -d "${pkgdir}/usr/share/pixmaps/${pkgname}"
    install -m644 ../utils/icons/*.png "${pkgdir}/usr/share/pixmaps/${pkgname}"
