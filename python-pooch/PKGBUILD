@@ -3,8 +3,8 @@
 
 pkgname=python-pooch
 _pkgname=pooch
-pkgver=1.1.1
-pkgrel=2
+pkgver=1.2.0
+pkgrel=1
 pkgdesc="Python library for fetching and caching data files"
 arch=('any')
 url="https://www.fatiando.org/pooch/latest/"
@@ -12,7 +12,7 @@ license=('BSD 3-Clause')
 depends=('python-requests' 'python-packaging' 'python-appdirs')
 makedepends=('python-setuptools')
 source=("https://github.com/fatiando/pooch/archive/v${pkgver}.tar.gz")
-sha512sums=('8593c0b7cd6fdb2d63ec281de6b1e08b03d4dc4959f908b378b10872b68dc7b229ba54f06c514e8b2b195c28c5140fe67c7a5ff9b4620cf82f719baf0b0e83ac')
+sha512sums=('dfb7d890d3211f8f737dc79fa81cc895c166dc96b05d86ad2df9b33f1da950a05bce8e6a80abdb467edef2157bd13a8209771ced91a17023903c5541a1b998d3')
 
 build() {
   cd "$srcdir/${_pkgname}-${pkgver}"
