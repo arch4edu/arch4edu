@@ -1,18 +1,11 @@
 ## arg 1:  the new package version
 pre_install() {
-	if [ -e /opt/sge ]
-	then
-		echo "/opt/sge already exists, you might want to remove the folder for a fresh install"
-	fi
+	[ -d /opt/sge ] && echo "/opt/sge already exists, you might want to remove the folder for a fresh install."
 }
 
 ## arg 1:  the new package version
 post_install() {
-	echo "cd /opt/sge"
-	echo "#to install master"
-	echo "./install_qmaster"
-	echo "#to install execd"
-	echo "./install_execd"
+	echo "Please visit https://wiki.archlinux.org/index.php/Son_of_Grid_Engine to set up the Son of Grid Engine."
 }
 
 ## arg 1:  the new package version
