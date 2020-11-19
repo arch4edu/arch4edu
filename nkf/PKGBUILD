@@ -2,7 +2,7 @@
 
 pkgname=nkf
 pkgver=2.1.5
-pkgrel=1
+pkgrel=2
 pkgdesc="A yet another kanji code converter among networks, hosts and terminals"
 arch=('i686' 'x86_64')
 url="http://sourceforge.jp/projects/nkf/"
