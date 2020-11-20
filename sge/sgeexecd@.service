@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 Type=forking
+ExecStartPre=/opt/sge/%i/common/sgeexecd stop
 ExecStart=/opt/sge/%i/common/sgeexecd start
 ExecStop=/opt/sge/%i/common/sgeexecd stop
 
