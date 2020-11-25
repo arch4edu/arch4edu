@@ -1,7 +1,7 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
 
 pkgname=pypy3
-pkgver=7.3.2
+pkgver=7.3.3
 pkgrel=1
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
@@ -13,7 +13,7 @@ optdepends=('sqlite: sqlite module'
 options=(!buildflags)
 license=('MIT')
 source=("https://downloads.python.org/pypy/pypy3.7-v${pkgver}-src.zip")
-sha512sums=('cd1f315417a682e6f641a0047451b72874d56f3793f3d85cd479a453cc6d8533ba82a1caf4dabfda7ca198fe90fd9b891e3a9ca491ba7590bb9610c50e3aff11')
+sha512sums=('93e057ef88c2bb05df698b38a1c644cb823b4525f1ea42e27cb114f176887e46d758239529fc891fc4154b4f6eb01c6e93f7071d5e6de7cc27a601fc57f47fbe')
 
 build() {
   cd pypy3.7-v${pkgver}-src/pypy/goal
