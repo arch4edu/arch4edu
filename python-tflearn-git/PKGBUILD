@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname='python-tflearn-git'
 pkgdesc="TFlearn is a modular and transparent deep learning library built on top of Tensorflow."
-pkgver=0.5.0.r4.ga497518
+pkgver=0.5.0.r5.g0f44f97
 pkgrel=1
 depends=('python-numpy' 'python-six' 'python-pillow' 'python-tensorflow')
 makedepends=('python-setuptools' 'git')
