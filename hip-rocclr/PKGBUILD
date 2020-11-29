@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-rocclr
 pkgver=3.9.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
@@ -39,6 +39,10 @@ build() {
 
 package() {
   DESTDIR="$pkgdir" make -C build install
+
+  # clang from llvm-amdgpu may look for hipVersion in a different directory
+  install -d "$pkgdir/opt/rocm/bin"
+  ln -s '/opt/rocm/hip/bin/.hipVersion' "$pkgdir/opt/rocm/bin/.hipVersion"
 
   # add links (hipconfig is for rocblas with tensile)
   install -d "$pkgdir/usr/bin"
