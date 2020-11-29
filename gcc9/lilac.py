@@ -1,0 +1,1 @@
+makepkg_args = ['--nocheck']
