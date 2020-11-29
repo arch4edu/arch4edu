@@ -8,7 +8,7 @@ pkgname=(${pkgbase} ${pkgbase}-libs ${pkgbase}-fortran)
 pkgver=9.3.0
 _majorver=${pkgver:0:1}
 _islver=0.21
-pkgrel=5
+pkgrel=6
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -19,7 +19,7 @@ options=(!emptydirs)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
 # _commit=6957d3e4eef1f4243eb23ff62aea06139ef4415a
 # source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
-source=(https://ftp.gnu.org/gnu/gcc/gcc-$pkgver/gcc-$pkgver.tar.xz
+source=(https://ftp.gnu.org/gnu/gcc/gcc-$pkgver/gcc-$pkgver.tar.xz{,.sig}
         http://isl.gforge.inria.fr/isl-${_islver}.tar.xz
         c89 c99
         fs64270.patch)
@@ -28,6 +28,7 @@ validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.
               13975A70E63C361C73AE69EF6EEB81F8981C74C7  # richard.guenther@gmail.com
               33C235A34C46AA3FFB293709A328C3A2C3C45C06) # Jakub Jelinek <jakub@redhat.com>
 sha256sums=('71e197867611f6054aa1119b13a0c0abac12834765fe2d81f35ac57f84f742d1'
+            'SKIP'
             '777058852a3db9500954361e294881214f6ecd4b594c00da5eee974cd6a54960'
             'de48736f6e4153f03d0a5d38ceb6c6fdb7f054e8f47ddd6af0a3dbf14f27b931'
             '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a'
@@ -102,16 +103,16 @@ build() {
   make -C $CHOST/libstdc++-v3/doc doc-man-doxygen
 }
 
-#check() {
-#  cd gcc-build
-#
-#  # disable libphobos test to avoid segfaults and other unfunny ways to waste my time  
-#  sed -i '/maybe-check-target-libphobos \\/d' Makefile 
-#
-#  # do not abort on error as some are "expected"
-#  make -k check || true
-#  "$srcdir/gcc/contrib/test_summary"
-#}
+check() {
+  cd gcc-build
+
+  # disable libphobos test to avoid segfaults and other unfunny ways to waste my time  
+  sed -i '/maybe-check-target-libphobos \\/d' Makefile 
+
+  # do not abort on error as some are "expected"
+  make -k check || true
+  "$srcdir/gcc/contrib/test_summary"
+}
 
 package_gcc9-libs() {
   pkgdesc='Runtime libraries shipped by GCC (9.x.x)'
