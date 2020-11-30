@@ -2,7 +2,7 @@
 # Maintainer: Médéric Boquien <mboquien@free.fr>
 pkgname=python-pyerfa
 pkgver=1.7.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Python wrapper for the ERFA library "
 arch=('i686' 'x86_64')
 url="https://github.com/liberfa/pyerfa"
