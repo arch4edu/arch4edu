@@ -1,7 +1,7 @@
 pkgbase=pywbem
 pkgname=('python-pywbem')
 pkgver=0.17.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Python WBEM Client and Provider Interface"
 arch=('any')
 url='https://github.com/pywbem/pywbem'
