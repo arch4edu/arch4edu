@@ -7,9 +7,9 @@
 # Adapted to mkl by Simone Riva
 
 pkgname=python-numpy-mkl
-pkgver=1.19.1
+pkgver=1.19.4
 pkgrel=1
-pkgdesc="Scientific tools for Python, compiled with intel mkl"
+pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=('x86_64' 'i686')
 license=('custom')
 url="http://numpy.scipy.org/"
@@ -20,10 +20,12 @@ makedepends=('python-setuptools' 'gcc-fortran' 'cython>=0.29.21')
 checkdepends=('python-pytest' 'python-hypothesis')
 options=('staticlibs')
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-sha256sums=('1396e6c3d20cbfc119195303b0272e749610b7042cc498be4134f013e9a3215c')
+sha256sums=('fe836a685d6838dbb3f603caef01183ea98e88febf4ce956a2ea484a75378413')
 
 prepare() {
   export MKLROOT=/opt/intel/mkl
+  # https://github.com/numpy/numpy/issues/17390
+  sed -i '/error/a \    ignore:Module already imported so cannot be rewritten' numpy-$pkgver/pytest.ini
 }
 
 build() {
