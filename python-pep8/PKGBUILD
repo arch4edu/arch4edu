@@ -1,7 +1,7 @@
 # Maintainer: Tim Rakowski <tim.rakowski@gmail.com>
 pkgname=python-pep8
 pkgver=1.7.1
-pkgrel=1
+pkgrel=2
 pkgdesc="The final release of the pep8 package"
 arch=('any')
 url="https://github.com/PyCQA/pycodestyle"
