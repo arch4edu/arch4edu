@@ -1,7 +1,7 @@
 pkgname=python-bcolz
 _pkgname=bcolz
 pkgver=1.2.1
-pkgrel=2
+pkgrel=3
 pkgdesc="columnar and compressed data containers."
 arch=('any')
 url="https://bcolz.readthedocs.org/"
