@@ -5,7 +5,7 @@
 _pkgname="requests-cache"
 pkgname="python-requests-cache"
 pkgver=0.5.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Transparent persistent cache for http://python-requests.org/ library."
 arch=("x86_64")
 url="https://github.com/reclosedev/requests-cache"
