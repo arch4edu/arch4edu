@@ -1,7 +1,7 @@
 # Maintainer: Simon Legner <Simon.Legner@gmail.com>
 pkgname=python-pydub
 pkgver=0.24.1
-pkgrel=4
+pkgrel=3
 pkgdesc="Manipulate audio with an simple and easy high level interface"
 url="https://pydub.com"
 makedepends=("python-setuptools" "python2-setuptools")
