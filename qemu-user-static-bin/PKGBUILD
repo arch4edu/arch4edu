@@ -1,8 +1,13 @@
+# Maintainer: Jerry <isjerryxiao at outlook dot com>
+# Maintainer: Leonidas P. <jpegxguy at outlook dot com>
+# Contributor: Anes Belfodil <ans.belfodil at gmail dot com>
+# Contributor: David Rheinsberg <david.rheinsberg at gmail dot com>
+# Contributor: David Herrmann <dh.herrmann at gmail dot com>
+
 _pkgname=qemu-user-static
 pkgdesc='A generic and open source machine emulator, statically linked'
 pkgver=5.1
-pkgadditver="+dfsg-4+b1"
-pkgrel=3
+pkgrel=4
 
 pkgname=$_pkgname-bin
 arch=('x86_64' 'i686' 'aarch64')
@@ -13,18 +18,22 @@ makedepends=()
 provides=("$_pkgname" "qemu-user")
 conflicts=("$_pkgname" "qemu-user")
 
-_debsrc="${_pkgname}_${pkgver}${pkgadditver}"
+_debsrc="${_pkgname}_${pkgver}"
 if [ "$CARCH" = 'x86_64' ]; then
-  _debsrc=$_debsrc"_amd64.deb"
+  pkgadditver="+dfsg-4+b2"
+  _debsrc=${_debsrc}${pkgadditver}"_amd64.deb"
   _csum=SKIP
 elif [ "$CARCH" = 'i686' ]; then
-  _debsrc=$_debsrc"_i386.deb"
+  pkgadditver="+dfsg-4+b2"
+  _debsrc=${_debsrc}${pkgadditver}"_i386.deb"
   _csum=SKIP
 elif [ "$CARCH" = 'aarch64' ]; then
-  _debsrc=$_debsrc"_arm64.deb"
+  pkgadditver="+dfsg-4+b1"
+  _debsrc=${_debsrc}${pkgadditver}"_arm64.deb"
   _csum=SKIP
 else
-  _debsrc=$_debsrc"_$CARCH.deb"
+  pkgadditver="+dfsg-4+b1"
+  _debsrc=${_debsrc}${pkgadditver}"_$CARCH.deb"
   _csum=SKIP
 fi
 
