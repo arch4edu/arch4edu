@@ -2,7 +2,7 @@
 pkgname=('python-fastcache')
 _pkgname='fastcache'
 pkgver='1.1.0'
-pkgrel=1
+pkgrel=2
 pkgdesc="C implementation of Python 3 functools.lru_cache."
 url="https://github.com/pbrady/fastcache"
 checkdepends=('python-pytest')
