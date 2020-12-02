@@ -2,7 +2,7 @@
 
 pkgname=caffe-cuda
 pkgver=1.0
-pkgrel=10
+pkgrel=11
 pkgdesc='A deep learning framework made with expression, speed, and modularity in mind (with cuda support)'
 arch=('x86_64')
 url='https://caffe.berkeleyvision.org/'
