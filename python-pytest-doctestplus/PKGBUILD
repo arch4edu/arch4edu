@@ -2,7 +2,7 @@
 pkgname=python-pytest-doctestplus
 _pyname=${pkgname#python-}
 pkgver=0.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('i686' 'x86_64')
 url="https://github.com/astropy/pytest-doctestplus"
