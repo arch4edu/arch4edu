@@ -2,7 +2,7 @@
 pkgname=python-mkl-random
 _pkgname=mkl_random
 pkgver=1.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="NumPy-based Python interface to Intel (R) MKL Random Number Generation functionality"
 arch=('x86_64')
 url="https://github.com/IntelPython/mkl_random"
