@@ -4,8 +4,8 @@ pkgname=python-llvmlite-git
 
 pkgbase=python-llvmlite-git
 _gitname=llvmlite
-pkgver=0.34.0dev0.r0.g118e993
-pkgrel=3
+pkgver=0.36.0dev0.r8.ge0e03f3
+pkgrel=1
 pkgdesc="A lightweight LLVM python binding for writing JIT compilers"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
