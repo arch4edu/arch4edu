@@ -1,6 +1,0 @@
-update_on:
-- source: github
-  github: archlinuxcn/repo
-  path: archlinuxcn/archrepo2-git/PKGBUILD
-- source: github
-  github: lilydjwg/archrepo2
