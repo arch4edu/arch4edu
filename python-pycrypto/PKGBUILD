@@ -5,7 +5,7 @@
 pkgname='python-pycrypto'
 _pkgname='pycrypto'
 pkgver=2.6.1
-pkgrel=4
+pkgrel=5
 pkgdesc='Cryptographic primitives and algorithms for Python'
 arch=('any')
 url='https://pypi.python.org/pypi/pycrypto'
