@@ -5,7 +5,7 @@
 pkgname=python-sortedcollections
 _name=${pkgname#python-}
 pkgver=1.1.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A python library for sorted collections."
 arch=('any')
 url="http://www.grantjenks.com/docs/sortedcollections/"
