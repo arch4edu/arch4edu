@@ -2,7 +2,7 @@
 pkgname='python-tflearn-git'
 pkgdesc="TFlearn is a modular and transparent deep learning library built on top of Tensorflow."
 pkgver=0.5.0.r6.gdb51767
-pkgrel=1
+pkgrel=2
 depends=('python-numpy' 'python-six' 'python-pillow' 'python-tensorflow')
 makedepends=('python-setuptools' 'git')
 arch=('any')
