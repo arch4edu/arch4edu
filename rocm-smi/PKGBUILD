@@ -4,7 +4,7 @@
 
 pkgname=rocm-smi
 pkgver=3.9.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Utility to manage and monitor AMDGPU / ROCm systems'
 arch=('any')
 url='https://github.com/RadeonOpenCompute/ROC-smi'
