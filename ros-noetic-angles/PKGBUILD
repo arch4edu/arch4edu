@@ -6,7 +6,7 @@ url='https://wiki.ros.org/angles'
 pkgname='ros-noetic-angles'
 pkgver='1.9.13'
 arch=("x86_64")
-pkgrel=3
+pkgrel=4
 license=('BSD')
 
 ros_makedepends=(
