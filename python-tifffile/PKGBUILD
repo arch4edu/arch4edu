@@ -4,7 +4,7 @@
 pkgname=python-tifffile
 pkgver=2020.11.26
 _pyname=${pkgname#python-}
-pkgrel=1
+pkgrel=2
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
 url="https://github.com/cgohlke/tifffile"
