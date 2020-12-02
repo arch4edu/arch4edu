@@ -4,7 +4,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=0.8.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('i686' 'x86_64')
 url="http://sphinx-gallery.github.io"
