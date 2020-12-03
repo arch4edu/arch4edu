@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 pkgname=phonetisaurus-git
-pkgver=r163.2831870
-pkgrel=2
+pkgver=r169.0ae78ab
+pkgrel=1
 pkgdesc="WFST-driven grapheme-to-phoneme (g2p) framework suitable for rapid development of high quality g2p or p2g systems."
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 url="https://github.com/AdolfVonKleist/Phonetisaurus"
