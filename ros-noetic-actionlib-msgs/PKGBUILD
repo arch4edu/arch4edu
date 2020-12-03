@@ -6,7 +6,7 @@ url='https://wiki.ros.org/actionlib_msgs'
 pkgname='ros-noetic-actionlib-msgs'
 pkgver='1.12.7'
 arch=("x86_64")
-pkgrel=4
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
