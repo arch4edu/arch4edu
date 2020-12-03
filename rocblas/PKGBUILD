@@ -1,16 +1,18 @@
 # Maintainer: Markus Näther <naether.markus@gmail.com>
 pkgname=rocblas
-pkgver=3.8.0
+pkgver=3.9.0
 pkgrel=1
 pkgdesc='Next generation BLAS implementation for ROCm platform'
 arch=('x86_64')
 url='https://rocblas.readthedocs.io/en/latest'
 license=('MIT')
 depends=('hip-rocclr' 'openmp')
-makedepends=('cmake' 'git' 'python' 'python-virtualenv' 'python-pyaml' 'perl-file-which' 'msgpack-c' 'rocm-cmake' 'llvm-amdgpu' 'gcc-fortran')
+makedepends=('cmake' 'git' 'python' 'python-virtualenv' 'python-pyaml'
+             'perl-file-which' 'msgpack-c' 'rocm-cmake' 'llvm-amdgpu'
+             'gcc-fortran')
 _rocblas='https://github.com/ROCmSoftwarePlatform/rocBLAS'
 source=("$pkgname-$pkgver.tar.gz::$_rocblas/archive/rocm-$pkgver.tar.gz")
-sha256sums=('568a9da0360349b1b134d74cc67cbb69b43c06eeca7c33b50072cd26cd3d8900')
+sha256sums=('3ecd2d9fd2be0e1697a191d143a2d447b53a91ae01afb50231d591136ad5e2fe')
 options=(!strip)
 _dirname="$(basename "$_rocblas")-$(basename "${source[0]}" ".tar.gz")"
 
@@ -19,7 +21,7 @@ build() {
   export CFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CFLAGS")"
   export CXXFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CXXFLAGS")"
   export CPPFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CPPFLAGS")"
-  
+
   PATH="/opt/rocm/llvm/bin:${PATH}" \
   CXX=/opt/rocm/hip/bin/hipcc \
   cmake -B build -Wno-dev \
