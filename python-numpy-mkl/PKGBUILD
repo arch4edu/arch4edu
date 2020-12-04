@@ -8,7 +8,7 @@
 
 pkgname=python-numpy-mkl
 pkgver=1.19.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=('x86_64' 'i686')
 license=('custom')
@@ -16,6 +16,7 @@ url="http://numpy.scipy.org/"
 provides=("python-numpy=$pkgver")
 conflicts=('python-numpy')
 depends=('python>=3.6' 'intel-mkl')
+optdepends=('python-nose: testsuite')
 makedepends=('python-setuptools' 'gcc-fortran' 'cython>=0.29.21')
 checkdepends=('python-pytest' 'python-hypothesis')
 options=('staticlibs')
@@ -35,11 +36,10 @@ build() {
 
 check() {
   # TODO: Fix fortran tests here (it works fine after installation)
-
   cd numpy-$pkgver
   python setup.py install --root="$PWD/tmp_install" --optimize=1
   cd "$PWD/tmp_install"
-  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/usr/lib/python3.8/site-packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
+  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/usr/lib/python3.9/site-packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
 }
 
 package() {
