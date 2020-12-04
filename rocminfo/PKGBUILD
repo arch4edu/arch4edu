@@ -4,7 +4,7 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=rocminfo
-pkgver=3.9.0
+pkgver=3.10.0
 pkgrel=1
 pkgdesc='ROCm info tools - rocm_agent_enumerator'
 arch=('x86_64')
@@ -12,8 +12,8 @@ url='https://github.com/RadeonOpenCompute/rocminfo'
 license=('custom:NCSAOSL')
 depends=('pciutils' 'python' 'hsa-rocr')
 makedepends=('cmake' 'rocm-cmake')
-source=("$pkgname-$pkgver::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('9592781e0c62b910c4adc5c7f4c27c7a0cddbed13111a19dd91a2ff43720e43d')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
+sha256sums=('ed02375be3be518b83aea7309ef5ca62dc9b6dbad0aae33e92995102d6d660be')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
 build() {
