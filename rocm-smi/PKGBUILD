@@ -3,15 +3,15 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=rocm-smi
-pkgver=3.9.0
-pkgrel=2
+pkgver=3.10.0
+pkgrel=1
 pkgdesc='Utility to manage and monitor AMDGPU / ROCm systems'
 arch=('any')
 url='https://github.com/RadeonOpenCompute/ROC-smi'
 license=('MIT')
 depends=('python')
-source=("$pkgname-$pkgver::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('af3cc6d5e2296f47b1873339faad2d27cf2f24725771bf34c7f644d20cc6ef3b')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
+sha256sums=('b1c7e529e8fcc53fb6b40a4126651da0ab07bcb91faac99519ba9660412ea4ed')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
 package() {
