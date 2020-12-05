@@ -1,6 +1,6 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=roctracer
-pkgver=3.9.0
+pkgver=3.10.0
 pkgrel=1
 pkgdesc="ROCm Tracer Callback/Activity Library for Performance tracing AMD GPU's"
 arch=('x86_64')
@@ -12,7 +12,7 @@ options=(!staticlibs strip)
 _git='https://github.com/ROCm-Developer-Tools/roctracer'
 source=("roctracer-rocm-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         'deprecated_string_split.patch')
-sha256sums=('0678f9faf45058b16923948c66d77ba2c072283c975d167899caef969169b292'
+sha256sums=('ac4a1d059fc34377e906071fd0e56f5434a7e0e4ded9db8faf9217a115239dec'
             '466d34242462c0b2016a82cc6bd90780b578e7a62d6f255b5ba8047fb6925bea')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
