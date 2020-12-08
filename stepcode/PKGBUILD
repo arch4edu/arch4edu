@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=stepcode
 pkgver=0.8
-pkgrel=5
+pkgrel=6
 pkgdesc="Data exchange with ISO 10303. Used with IFC, STEP, and other standards
 to exchange data wit C++ and Python."
 arch=('i686' 'x86_64')
