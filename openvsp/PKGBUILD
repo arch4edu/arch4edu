@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=openvsp
 pkgver=3.22.0
-pkgrel=2
+pkgrel=3
 pkgdesc='OpenVSP allows the user to create a 3D model of an aircraft defined by
          common engineering parameters.'
 arch=('i686' 'x86_64')
@@ -44,6 +44,7 @@ build() {
   cd "${srcdir}/buildlibs"
 
   cmake ../${_name}/Libraries \
+        -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_PREFIX_PATH='/usr' \
         -DVSP_USE_SYSTEM_CPPTEST=true \
         -DVSP_USE_SYSTEM_LIBXML2=true \
@@ -62,6 +63,7 @@ build() {
   cd "${srcdir}/build"
 
   cmake ../${_name}/src \
+      -DCMAKE_BUILD_TYPE=Release \
       -DVSP_LIBRARY_PATH="${srcdir}/buildlibs"
 
   make
