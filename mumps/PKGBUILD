@@ -1,10 +1,10 @@
-# Maintainer: Martin Diehl <https://martin-diehl.net>
+# Maintainer: Martin Diehl <aur@martin-diehl.net>
 # Contributor: Michele Mocciola <mickele>
 # Contributor: Guillaume Dollé < dolle dot guillaume at gmail dot com >
 # Contributor: Lucas H. Gabrielli
 pkgname=mumps
-pkgver=5.3.3
-pkgrel=2
+pkgver=5.3.5
+pkgrel=1
 pkgdesc='Sparse solver library using Gaussian elimination'
 url='http://mumps.enseeiht.fr'
 license=('custom')
@@ -17,7 +17,7 @@ backup=()
 arch=('i686' 'x86_64')
 source=(http://mumps.enseeiht.fr/MUMPS_${pkgver}.tar.gz
         Makefile.inc)
-sha256sums=('27e7749ac05006bf8e81a457c865402bb72a42bf3bc673da49de1020f0f32011'
+sha256sums=('e5d665fdb7043043f0799ae3dbe3b37e5b200d1ab7a6f7b2a4e463fd89507fa4'
             '507c99dacf4e25d72ed9f47aac95bfa28f0ad846bf4698cad005b1cb16e9444c')
 build() {
   cd "${srcdir}/MUMPS_${pkgver}"
