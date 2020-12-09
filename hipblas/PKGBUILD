@@ -1,16 +1,16 @@
 # Maintainer: Markus Näther <naether.markus@gmail.com>
 pkgname=hipblas
-pkgver=3.8.0
+pkgver=3.10.0
 pkgrel=1
 pkgdesc='ROCm BLAS marshalling library'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipblas'
 license=('MIT')
 depends=('hip-rocclr' 'rocblas' 'rocsolver')
-makedepends=('cmake' 'rocminfo' 'gcc-fortran')
+makedepends=('cmake' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/hipBLAS'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('33cb82e8b2658ae2096f39e41492ba8b6852ac37c26a730612b8642d9d29abe3')
+sha256sums=('45cb5e3b37f0845bd9e0d09912df4fa0ce88dd508ec9448241ae6600d3c4b1e8')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
