@@ -1,8 +1,9 @@
 #Maintainer: Ali Molaei <ali dot molaei at protonmail dot com>
 
 pkgname="mongodb-bin"
-pkgver="4.4.1"
+pkgver="4.4.2"
 basever="4.4"
+basedist="focal"
 pkgrel="1"
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
@@ -13,9 +14,9 @@ provides=("mongodb=$pkgver")
 conflicts=("mongodb")
 optdepends=("mongodb-tools: The MongoDB tools provide import, export, and diagnostic capabilities.")
 source_x86_64=(
-    mongodb-org-shell_${pkgver}_x86_64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${basever}/multiverse/binary-amd64/mongodb-org-shell_${pkgver}_amd64.deb"
-    mongodb-org-server_${pkgver}_x86_64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${basever}/multiverse/binary-amd64/mongodb-org-server_${pkgver}_amd64.deb"
-    mongodb-org-mongos_${pkgver}_x86_64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${basever}/multiverse/binary-amd64/mongodb-org-mongos_${pkgver}_amd64.deb"
+    mongodb-org-shell_${pkgver}_x86_64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/${basedist}/mongodb-org/${basever}/multiverse/binary-amd64/mongodb-org-shell_${pkgver}_amd64.deb"
+    mongodb-org-server_${pkgver}_x86_64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/${basedist}/mongodb-org/${basever}/multiverse/binary-amd64/mongodb-org-server_${pkgver}_amd64.deb"
+    mongodb-org-mongos_${pkgver}_x86_64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/${basedist}/mongodb-org/${basever}/multiverse/binary-amd64/mongodb-org-mongos_${pkgver}_amd64.deb"
     "mongodb_x86_64.service"
     "mongodb.conf"
     "mongodb.sysusers"
@@ -23,27 +24,27 @@ source_x86_64=(
     "LICENSE")
 
 source_aarch64=(
-    mongodb-org-shell_${pkgver}_aarch64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${basever}/multiverse/binary-arm64/mongodb-org-shell_${pkgver}_arm64.deb"
-    mongodb-org-server_${pkgver}_aarch64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${basever}/multiverse/binary-arm64/mongodb-org-server_${pkgver}_arm64.deb"
-    mongodb-org-mongos_${pkgver}_aarch64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/${basever}/multiverse/binary-arm64/mongodb-org-mongos_${pkgver}_arm64.deb"
+    mongodb-org-shell_${pkgver}_aarch64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/${basedist}/mongodb-org/${basever}/multiverse/binary-arm64/mongodb-org-shell_${pkgver}_arm64.deb"
+    mongodb-org-server_${pkgver}_aarch64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/${basedist}/mongodb-org/${basever}/multiverse/binary-arm64/mongodb-org-server_${pkgver}_arm64.deb"
+    mongodb-org-mongos_${pkgver}_aarch64.deb::"https://repo.mongodb.org/apt/ubuntu/dists/${basedist}/mongodb-org/${basever}/multiverse/binary-arm64/mongodb-org-mongos_${pkgver}_arm64.deb"
     "mongodb_aarch64.service"
     "mongodb.conf"
     "mongodb.sysusers"
     "mongodb.tmpfiles"
     "LICENSE")
 
-sha256sums_x86_64=("5cd039b7c1cbe1d90bdc252d8204b74a28e93d99bed9687e850ed834d0c776c2"
-                   "1b18f803f16c339141aefd9331e5f7e82a96ef5fbb2af072f16db34c429136fa"
-                   "b2548aafc0aa48938584686f09728f804acb8020b64bb2eacf3a89d0cb66eaa7"
+sha256sums_x86_64=("7290043815dfd89ee8e79dc75d0b02c3bdaee008ed059a72fc9f34ea24adb27f"
+                   "93810964f31203bda435ff565ec4f350987e80575bb8c99ac150d6ac35ff0c22"
+                   "c6dd632ae158b21d1287203a8bef313196b0693363b9d7998969f04bb8b4d556"
                    "19f55ab28652b3817e98fc3f15cc2f6f3255a5e1dfd7b0d5a27c9ba22fd2703e"
                    "f2a79c7fcd75253ab1cb888541a0c0678bf3bb78700c79996e24a678f1e42850"
                    "47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b"
                    "51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac"
                    "09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27")
 
-sha256sums_aarch64=("372e7ef49901b8651b6cb4fdba27b7b54ef5b5c458ae0d68d75dd439d2c159f6"
-                    "e6c68f0ca8f5cb604271a8bc51a54fb752c78a938c8dfe35ae775d72637cd3a4"
-                    "f0efbf61f7075b3c5fcdef8614998b24afdbab77cfdd02048242d6b186035bb2"
+sha256sums_aarch64=("49ccd3bddefdbb20e69e032ec3037ee92fd74eada3d8232b60aa74c989a4b430"
+                    "90c07cf4cc1ffa2626e41ba12673450a62ba04cccbc81294e6d8e7e702557429"
+                    "025738803d903ba0a6c5f3ee988d3c9963bbb3dbea3a8eab4d5718f7dddced51"
                     "965a166f1aabd5f6b06c0a6c0939920ec6aad87407b695c61ce0f2a8c450b680"
                     "f2a79c7fcd75253ab1cb888541a0c0678bf3bb78700c79996e24a678f1e42850"
                     "47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b"
