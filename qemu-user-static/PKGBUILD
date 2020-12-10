@@ -3,15 +3,15 @@
 
 pkgname=qemu-user-static
 pkgdesc="Statically linked binaries of Qemu with user emulation. Useful for containers/chroot environment with binfmt."
-pkgver=5.1.0
+pkgver=5.2.0
 pkgrel=1
 arch=(x86_64)
 license=(GPL2 LGPL2.1)
 url="http://wiki.qemu.org/"
 depends=()
-makedepends=(python glib2-static pcre-static)
+makedepends=(python meson glib2-static pcre-static)
 source=(https://download.qemu.org/qemu-$pkgver.tar.xz{,.sig})
-sha512sums=('e213edb71d93d5167ddce7546220ecb7b52a7778586a4f476f65bd1e510c9cfc6d1876238a7b501d9cc3fd31cc2ae4b7fb9e753bc3f12cc17cd16dfce2a96ba3'
+sha512sums=('bddd633ce111471ebc651e03080251515178808556b49a308a724909e55dac0be0cc0c79c536ac12d239678ae94c60100dc124be9b9d9538340c03a2f27177f3'
             'SKIP')
 validpgpkeys=('CEACC9E15534EBABB82D3FA03353C9CEF108B584')
 
