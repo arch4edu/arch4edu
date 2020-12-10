@@ -1,7 +1,10 @@
 repo_depends:
   - ncurses5-compat-libs
+  - python-requests-futures
 update_on:
   - source: aur
     aur:
   - source: github
     github: Valloric/YouCompleteMe
+  - source: alias
+    alias: python
