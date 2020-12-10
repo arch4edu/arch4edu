@@ -1,18 +1,18 @@
 pkgname=cminpack
-pkgver=1.3.6
-pkgrel=3
+pkgver=1.3.7
+pkgrel=1
 pkgdesc="A C/C++ rewrite of the MINPACK software"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url='http://devernay.free.fr/hacks/cminpack/cminpack.html'
 license=('BSD')
 depends=('cblas')
 makedepends=('cmake')
-source=("http://devernay.free.fr/hacks/cminpack/cminpack-${pkgver}.tar.gz")
-md5sums=('2c7f81105f94ea9268617a1748cc3506')
+source=("https://github.com/devernay/cminpack/archive/v${pkgver}.tar.gz")
+sha256sums=('b891f33ffcfb8b246bb6147a4da6308cdb2386ca42a99892ff9b2e884f8b0386')
 
 prepare() {
   cd $srcdir/cminpack-${pkgver}
-  curl -L https://github.com/devernay/cminpack/pull/21.patch | patch -p1
+  curl -L https://github.com/devernay/cminpack/pull/44.patch | patch -p1
 }
 
 build() {
