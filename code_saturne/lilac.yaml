@@ -1,4 +1,7 @@
+repo_depends:
+  - gcc8
+  - gcc8: gcc8-fortran
 update_on:
-- source: aur
-  aur:
-- alias: python
+  - source: aur
+    aur:
+  - alias: python
