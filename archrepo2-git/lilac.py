@@ -6,9 +6,8 @@ build_prefix = 'extra-x86_64'
 
 def pre_build():
     run_cmd(['sh', 'download-files-from-github.sh', 'archlinuxcn/repo', 'archlinuxcn/archrepo2-git'])
-    run_cmd(['git', 'rm', '-f', 'lilac.yaml'])
-    run_cmd(['git', 'restore', '--staged', 'lilac.py'])
-    run_cmd(['git', 'restore', 'lilac.py'])
+    run_cmd(['git', 'restore', '--staged', 'lilac.py', 'lilac.yaml'])
+    run_cmd(['git', 'restore', 'lilac.py', 'lilac.yaml'])
 
 def post_build():
     git_add_files('PKGBUILD')
