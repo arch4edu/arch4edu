@@ -1,11 +1,10 @@
 pkgname=coin-or-coinmumps
 pkgver=1.6.2
-pkgrel=1
+pkgrel=2
 pkgdesc="COIN-OR autotools harness to build MUMPS"
 arch=('x86_64')
 url="https://github.com/coin-or-tools/ThirdParty-MUMPS/"
 license=('custom')
-groups=('coin-or')
 depends=('metis' 'blas')
 makedepends=('gcc-fortran' 'wget')
 source=("https://github.com/coin-or-tools/ThirdParty-Mumps/archive/releases/$pkgver.tar.gz")
