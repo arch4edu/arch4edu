@@ -17,7 +17,6 @@ for repo in handle.get_syncdbs():
         break
 
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}, {'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-repo_depends = ['med', 'parmetis', 'scotch']
 makechrootpkg_args = ['-I', 'tmp/'+result.filename]
 build_prefix = 'extra-x86_64'
 

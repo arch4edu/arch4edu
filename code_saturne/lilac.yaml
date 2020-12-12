@@ -1,6 +1,9 @@
 repo_depends:
   - gcc8
   - gcc8: gcc8-fortran
+  - med
+  - parmetis
+  - scotch
 update_on:
   - source: aur
     aur:
