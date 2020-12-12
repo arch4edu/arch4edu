@@ -5,7 +5,7 @@
 _pkgname='requests-futures'
 pkgname="python-${_pkgname}"
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Asynchronous Python HTTP Requests for Humans'
 arch=('any')
 url='https://github.com/ross/requests-futures'
