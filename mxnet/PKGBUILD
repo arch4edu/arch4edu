@@ -3,10 +3,10 @@
 pkgbase=mxnet
 pkgname=('mxnet' 'mxnet-cuda' 'mxnet-mkl' 'mxnet-mkl-cuda')
 pkgver=1.7.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Flexible and Efficient Library for Deep Learning"
 arch=('x86_64')
-url="http://mxnet.io/"
+url="https://mxnet.apache.org/"
 license=('Apache')
 depends=(
 	'double-conversion'
@@ -201,7 +201,7 @@ _package() {
 
 	cd "$srcdir/$pkgname/python"
 	python setup.py install --root="$pkgdir"/ --optimize=1 --with-cython --skip-build
-	ln -sf '/usr/lib/libmxnet.so' "${pkgdir}/usr/lib/python3.8/site-packages/mxnet/libmxnet.so"
+	ln -sf '/usr/lib/libmxnet.so' "${pkgdir}/usr/lib/python3.9/site-packages/mxnet/libmxnet.so"
 
 	rm -f ${pkgdir}/usr/lib/lib{gomp,iomp5,omp}.so
 	rm -f ${pkgdir}/usr/include/{omp*,dnnl*,mkldnn*}
