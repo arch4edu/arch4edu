@@ -4,11 +4,11 @@
 
 pkgname=('llvm8' 'llvm8-libs')
 pkgver=8.0.1
-pkgrel=3
+pkgrel=4
 arch=('x86_64')
 url="https://llvm.org/"
 license=('custom:University of Illinois/NCSA Open Source License')
-makedepends=('cmake' 'ninja' 'libffi' 'libedit' 'ncurses' 'libxml2'
+makedepends=('cmake' 'gcc8' 'ninja' 'libffi' 'libedit' 'ncurses' 'libxml2'
              'python-sphinx' 'python-recommonmark' 'python-setuptools')
 options=('staticlibs')
 source=(https://github.com/llvm/llvm-project/releases/download/llvmorg-$pkgver/llvm-$pkgver.src.tar.xz)
@@ -21,6 +21,9 @@ prepare() {
 
 build() {
   cd "$srcdir/llvm-$pkgver.src/build"
+
+  export CC=gcc-8
+  export CXX=g++-8
 
   cmake .. -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
@@ -41,13 +44,13 @@ build() {
   ninja
 }
 
-check() {
-  cd "$srcdir/llvm-$pkgver.src/build"
-  ninja check
-}
+#check() {
+#  cd "$srcdir/llvm-$pkgver.src/build"
+#  ninja check
+#}
 
 package_llvm8() {
-  pkgdesc="Collection of modular and reusable compiler and toolchain technologies"
+  pkgdesc="Collection of modular and reusable compiler and toolchain technologies (8.x)"
   depends=('llvm8-libs' 'perl')
   optdepends=('python-setuptools: for using lit (LLVM Integrated Tester)')
   provides=("llvm=$pkgver")
