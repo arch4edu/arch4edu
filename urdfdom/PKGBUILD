@@ -3,7 +3,7 @@
 
 pkgname=urdfdom
 pkgver=1.0.4
-pkgrel=4
+pkgrel=5
 pkgdesc="The URDF (U-Robot Description Format) library provides core data structures and a simple XML parsers for populating the class data structures from an URDF file."
 arch=('i686' 'x86_64')
 url="https://github.com/ros/$pkgname"
