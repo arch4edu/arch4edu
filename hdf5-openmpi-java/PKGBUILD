@@ -1,4 +1,4 @@
-# Maintainer: Martin Diehl <https://martin-diehl.net>
+# Maintainer: Martin Diehl <aur@martin-diehl.net>
 # Contributor: Ronald van Haren <ronald.archlinux.org>
 # Contributor: Bruno Pagani <archange@archlinux.org>
 # Contributor: George Eleftheriou <eleftg>
@@ -12,15 +12,15 @@ _pkgname=hdf5
 _mpi=openmpi
 pkgname=${_pkgname}-${_mpi}-java
 pkgver=1.12.0
-pkgrel=1
+pkgrel=2
 pkgdesc="General purpose library and file format for storing scientific data (${_mpi} version including Java Native Interfaces)"
 arch=(x86_64)
 url="https://www.hdfgroup.org/hdf5"
 license=(custom)
 depends=(zlib libaec bash ${_mpi})
 makedepends=(cmake time gcc-fortran java-environment)
-provides=(hdf5 hdf5-cpp-fortran hdf5-fortran-${_mpi} hdf5-${_mpi} hdf5-java)
-conflicts=(hdf5 hdf5-openmpi hdf5-java)
+provides=(hdf5-${_mpi} hdf5-java)
+conflicts=(hdf5)
 replaces=(hdf5-fortran-${_mpi})
 options=(staticlibs)
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/${_pkgname}-${pkgver:0:4}/${_pkgname}-${pkgver/_/-}/src/${_pkgname}-${pkgver/_/-}.tar.bz2"
@@ -87,7 +87,7 @@ check() {
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/c++/src/.libs/
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"${srcdir}"/${pkgname}-${pkgver/_/-}/hl/fortran/src/.libs/
     # This is a parallel build, they are always OpenMPI bugs
-    make check || warning "Tests failed"
+    make check || echo "Tests failed"
 }
 
 package() {
