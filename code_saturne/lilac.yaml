@@ -1,6 +1,7 @@
 repo_depends:
   - gcc8
   - gcc8: gcc8-fortran
+  - gcc8: gcc8-libs
   - med
   - parmetis
   - scotch
