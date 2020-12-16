@@ -8,6 +8,7 @@ update_on:
     archpkg: libffi
 repo_depends:
   - gcc8
+  - gcc8: gcc8-libs
 build_prefix: extra-x86_64
 pre_build: aur_pre_build
 post_build: aur_post_build
