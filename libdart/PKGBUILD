@@ -5,25 +5,15 @@
 
 pkgname=libdart
 pkgver=6.9.5
-pkgrel=1
+pkgrel=5
 pkgdesc="Dynamic Animation and Robotics Toolkit"
 arch=('i686' 'x86_64')
 url="https://dartsim.github.io"
 license=('BSD')
-depends=('assimp' 'boost' 'eigen' 'fcl' 'libccd' 'octomap')
-optdepends=('bullet: Bullet collision detection support'
-            'coin-or-ipopt: Ipopt optimizer support'
-            'flann: planning module support'
-            'nlopt: NLopt optimizer support'
-            'octomap: voxel grid shape support'
-            'ode: ODE collision detection support'
-            'openscenegraph: required for dart-gui-osg'
-            'pagmo: pagmo optimizer support'
-            'tinyxml2: parser support'
-            'urdfdom: urdf parser support'
-            'freeglut: GLUT GUI support'
-            'libxi: GLUT GUI support'
-            'libxmu: GLUT GUI support')
+depends=('assimp' 'boost' 'eigen' 'fcl' 'libccd' 'bullet' 'coin-or-ipopt'
+         'flann' 'nlopt' 'octomap' 'ode' 'openscenegraph' 'tinyxml2' 'urdfdom'
+         'glu' 'freeglut' 'libxi' 'libxmu')
+optdepends=('pagmo: pagmo optimizer support')
 makedepends=('cmake')
 provides=('dartsim')
 _pkgname=dart
