@@ -1,0 +1,143 @@
+From cf48b7d29a7537a453afc4962ccc93c42e740aac Mon Sep 17 00:00:00 2001
+From: Alex Biddulph <abiddulph@4tel.com.au>
+Date: Wed, 16 Dec 2020 09:30:09 +1100
+Subject: [PATCH 1/2] Set C++ standard in a way that propagates through to
+ users
+
+See #456
+
+Setting the C++ standard in this way causes it to show up in `pagmo_export.cmake` as an `INTERFACE_COMPILE_FEATURE` which, in turn, will instruct anyone linking against the `pagmo` cmake target to compile using the C++17 standard (at minimum). See [cmake docs](https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html#high-level-meta-features-indicating-c-standard-support)
+---
+ CMakeLists.txt | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ab69042e..aed0e5e6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -314,12 +314,8 @@ target_compile_options(pagmo PRIVATE
+     "$<$<CONFIG:MinSizeRel>:${PAGMO_CXX_FLAGS_RELEASE}>"
+ )
+ 
+-# Let's setup the target C++ standard, but only if the user did not provide it manually.
+-if(NOT CMAKE_CXX_STANDARD)
+-    set_property(TARGET pagmo PROPERTY CXX_STANDARD 17)
+-endif()
+-set_property(TARGET pagmo PROPERTY CXX_STANDARD_REQUIRED YES)
+-set_property(TARGET pagmo PROPERTY CXX_EXTENSIONS NO)
++# Set the minimum C++ standard to C++17
++target_compile_features(pagmo PUBLIC cxx_std_17)
+ # NOTE: make sure the include directories from the current build
+ # are included first, so that if there is already a pagmo installation
+ # in the prefix path we don't risk including the headers from that
+
+From 645318ff91808c8be1e4fc25cfd9f13a50620b5a Mon Sep 17 00:00:00 2001
+From: Alex Biddulph <abiddulph@4tel.com.au>
+Date: Wed, 16 Dec 2020 21:20:57 +1100
+Subject: [PATCH 2/2] Apply suggestions from PR review
+
+---
+ CMakeLists.txt            | 2 +-
+ benchmarks/CMakeLists.txt | 8 ++------
+ doc/sphinx/install.rst    | 2 +-
+ doc/sphinx/quickstart.rst | 4 ----
+ tests/CMakeLists.txt      | 8 ++------
+ tutorials/CMakeLists.txt  | 8 ++------
+ 6 files changed, 8 insertions(+), 24 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aed0e5e6..4e7efdaf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ # CMake version check.
+-cmake_minimum_required(VERSION 3.3)
++cmake_minimum_required(VERSION 3.8)
+ # NOTE: policy for using the CheckIPOSupported module:
+ # https://cmake.org/cmake/help/latest/policy/CMP0069.html
+ cmake_policy(SET CMP0069 NEW)
+diff --git a/benchmarks/CMakeLists.txt b/benchmarks/CMakeLists.txt
+index bb8f7df2..248c2df3 100644
+--- a/benchmarks/CMakeLists.txt
++++ b/benchmarks/CMakeLists.txt
+@@ -7,12 +7,8 @@ function(ADD_PAGMO_BENCHMARK arg1)
+         "$<$<CONFIG:RelWithDebInfo>:${PAGMO_CXX_FLAGS_RELEASE}>"
+         "$<$<CONFIG:MinSizeRel>:${PAGMO_CXX_FLAGS_RELEASE}>"
+     )
+-    # Let's setup the target C++ standard, but only if the user did not provide it manually.
+-    if(NOT CMAKE_CXX_STANDARD)
+-        set_property(TARGET ${arg1} PROPERTY CXX_STANDARD 17)
+-    endif()
+-    set_property(TARGET ${arg1} PROPERTY CXX_STANDARD_REQUIRED YES)
+-    set_property(TARGET ${arg1} PROPERTY CXX_EXTENSIONS NO)
++    # Set the minimum C++ standard to C++17
++    target_compile_features(${arg1} PUBLIC cxx_std_17)
+ endfunction()
+ 
+ ADD_PAGMO_BENCHMARK(thread_island_pool)
+diff --git a/doc/sphinx/install.rst b/doc/sphinx/install.rst
+index a82ca2ba..5199076e 100644
+--- a/doc/sphinx/install.rst
++++ b/doc/sphinx/install.rst
+@@ -34,7 +34,7 @@ Additionally, pagmo has the following **optional** dependencies:
+ 
+ Additionally, `CMake <https://cmake.org/>`__ is the build system used by
+ pagmo and it must also be available when
+-installing from source (the minimum required version is 3.3).
++installing from source (the minimum required version is 3.8).
+ 
+ Packages
+ --------
+diff --git a/doc/sphinx/quickstart.rst b/doc/sphinx/quickstart.rst
+index ef44685b..a514d2e8 100644
+--- a/doc/sphinx/quickstart.rst
++++ b/doc/sphinx/quickstart.rst
+@@ -69,10 +69,6 @@ program presented earlier may look like this:
+    add_executable(getting_started getting_started.cpp)
+    target_link_libraries(getting_started Pagmo::pagmo)
+ 
+-   # This line indicates to your compiler
+-   # that C++17 is needed for the compilation.
+-   set_property(TARGET getting_started PROPERTY CXX_STANDARD 17)
+-
+ Place this ``CMakeLists.txt`` and the ``getting_started.cpp`` files
+ in the same directory, and create a ``build`` subdirectory. From
+ the ``build`` subdirectory, execute these commands to produce
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 5efc99c1..8badec05 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -17,12 +17,8 @@ function(ADD_PAGMO_TESTCASE arg1)
+         "$<$<CONFIG:RelWithDebInfo>:${PAGMO_CXX_FLAGS_RELEASE}>"
+         "$<$<CONFIG:MinSizeRel>:${PAGMO_CXX_FLAGS_RELEASE}>"
+     )
+-    # Let's setup the target C++ standard, but only if the user did not provide it manually.
+-    if(NOT CMAKE_CXX_STANDARD)
+-        set_property(TARGET ${arg1} PROPERTY CXX_STANDARD 17)
+-    endif()
+-    set_property(TARGET ${arg1} PROPERTY CXX_STANDARD_REQUIRED YES)
+-    set_property(TARGET ${arg1} PROPERTY CXX_EXTENSIONS NO)
++    # Set the minimum C++ standard to C++17
++    target_compile_features(${arg1} PUBLIC cxx_std_17)
+     add_test(${arg1} ${arg1})
+ endfunction()
+ 
+diff --git a/tutorials/CMakeLists.txt b/tutorials/CMakeLists.txt
+index a44abec0..6bd9f270 100644
+--- a/tutorials/CMakeLists.txt
++++ b/tutorials/CMakeLists.txt
+@@ -7,12 +7,8 @@ function(ADD_PAGMO_TUTORIAL arg1)
+         "$<$<CONFIG:RelWithDebInfo>:${PAGMO_CXX_FLAGS_RELEASE}>"
+         "$<$<CONFIG:MinSizeRel>:${PAGMO_CXX_FLAGS_RELEASE}>"
+     )
+-    # Let's setup the target C++ standard, but only if the user did not provide it manually.
+-    if(NOT CMAKE_CXX_STANDARD)
+-        set_property(TARGET ${arg1} PROPERTY CXX_STANDARD 17)
+-    endif()
+-    set_property(TARGET ${arg1} PROPERTY CXX_STANDARD_REQUIRED YES)
+-    set_property(TARGET ${arg1} PROPERTY CXX_EXTENSIONS NO)
++    # Set the minimum C++ standard to C++17
++    target_compile_features(${arg1} PUBLIC cxx_std_17)
+     add_test(${arg1} ${arg1})
+ endfunction()
+ 

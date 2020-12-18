@@ -1,0 +1,22 @@
+From 4ba6b6b68339c3905b8b58857e71822527e224fd Mon Sep 17 00:00:00 2001
+From: Alex Biddulph <abiddulph@4tel.com.au>
+Date: Sat, 12 Dec 2020 18:29:54 +1100
+Subject: [PATCH] Fix component finding
+
+---
+ cmake_modules/Findpagmo_IPOPT.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake_modules/Findpagmo_IPOPT.cmake b/cmake_modules/Findpagmo_IPOPT.cmake
+index 5f6bdae4..105d3f1b 100644
+--- a/cmake_modules/Findpagmo_IPOPT.cmake
++++ b/cmake_modules/Findpagmo_IPOPT.cmake
+@@ -5,7 +5,7 @@ message(STATUS "Requested IPOPT components: ${pagmo_IPOPT_FIND_COMPONENTS}")
+ # Check the components that were passed to find_package().
+ set(_pagmo_IPOPT_ALLOWED_COMPONENTS header libipopt)
+ foreach(_pagmo_IPOPT_CUR_COMPONENT ${pagmo_IPOPT_FIND_COMPONENTS})
+-    if(NOT ${_pagmo_IPOPT_CUR_COMPONENT} IN_LIST _pagmo_IPOPT_ALLOWED_COMPONENTS)
++    if(NOT "${_pagmo_IPOPT_CUR_COMPONENT}" IN_LIST _pagmo_IPOPT_ALLOWED_COMPONENTS)
+         message(FATAL_ERROR "'${_pagmo_IPOPT_CUR_COMPONENT}' is not a valid component for IPOPT.")
+     endif()
+ endforeach()
