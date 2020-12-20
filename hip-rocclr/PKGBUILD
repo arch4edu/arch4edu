@@ -1,6 +1,6 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-rocclr
-pkgver=3.10.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
@@ -14,9 +14,9 @@ _git='https://github.com/ROCm-Developer-Tools/HIP'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         'amdgpu-targets.patch'
         'disable-git-versioning.patch')
-sha256sums=('0082c402f890391023acdfd546760f41cb276dffc0ffeddc325999fd2331d4e8'
+sha256sums=('d7b78d96cec67c55b74ea3811ce861b16d300410bc687d0629e82392e8d7c857'
             'c6358b4dfac658c0a27a3425ace455d951cd26be827dd7751c28cb83dc84b67d'
-	      '7244c2917389788b5ef0265bbd41eef1f0db713debc28d02e3aad9d5a4c79821')
+            '7244c2917389788b5ef0265bbd41eef1f0db713debc28d02e3aad9d5a4c79821')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 prepare() {
