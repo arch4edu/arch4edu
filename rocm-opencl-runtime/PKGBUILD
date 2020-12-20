@@ -2,7 +2,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=rocm-opencl-runtime
-pkgver=3.10.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc='Radeon Open Compute - OpenCL runtime'
 arch=('x86_64')
@@ -13,7 +13,7 @@ makedepends=('cmake' 'rocm-cmake')
 provides=('opencl-driver')
 conflicts=('opencl-amdgpu-pro-pal')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('3aa9dc5a5f570320b04b35ee129ce9ff21062d2770df934c6c307913f975e93d')
+sha256sums=('d43ea5898c6b9e730b5efabe8367cc136a9260afeac5d0fe85b481d625dd7df1')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
 build() {
