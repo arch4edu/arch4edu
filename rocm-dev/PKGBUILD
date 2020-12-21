@@ -1,6 +1,6 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=rocm-dev
-pkgver=3.10.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc="ROCm Dev - Metapackage for the ROCm Development Stack"
 arch=('x86_64')
