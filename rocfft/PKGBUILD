@@ -1,7 +1,7 @@
 # Maintainer: Jakub Okoński <jakub@okonski.org>
 # Maintainer: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocfft
-pkgver=3.10.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc='Next generation FFT implementation for ROCm'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('hip-rocclr')
 makedepends=('cmake')
 _git='https://github.com/ROCmSoftwarePlatform/rocFFT'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('9f57226aac7d9a0515e14a5a5b08a85e727de72b3f9c2177daf56749ac2c76ae')
+sha256sums=('d1d10d270f822e0bab64307313ef163ba449b058bf3352962bbb26d4f4db89d0')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
