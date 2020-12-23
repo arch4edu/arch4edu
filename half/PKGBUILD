@@ -1,15 +1,28 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=half
 pkgver=2.1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Half-precision floating-point library"
 url="http://half.sourceforge.net/"
 arch=(x86_64)
 license=('MIT')
 makedepends=()
 depends=()
-source=("${pkgname}-${pkgver}.zip::https://sourceforge.net/projects/${pkgname}/files/${pkgname}/${pkgver}/${pkgname}-${pkgver}.zip/download")
-sha256sums=("ad1788afe0300fa2b02b0d1df128d857f021f92ccf7c8bddd07812685fa07a25")
+source=(
+    "${pkgname}-${pkgver}.zip::https://sourceforge.net/projects/${pkgname}/files/${pkgname}/${pkgver}/${pkgname}-${pkgver}.zip/download"
+    "f16c_fix.patch"
+)
+sha256sums=(
+    "ad1788afe0300fa2b02b0d1df128d857f021f92ccf7c8bddd07812685fa07a25"
+    "2f55340a7e2f654487a0ce6467068a142e00a1fa10a118c859a3cdba6070d8c6"
+)
+
+prepare() {
+    # Fix a bug in the half.hpp include file not enabling F16C intrinsics
+    # correctly when the architecture supports it
+    # https://github.com/acxz/pkgbuilds/issues/94
+    patch -p0 ${srcdir}/include/half.hpp < f16c_fix.patch
+}
 
 package() {
     mkdir -p ${pkgdir}/usr/include/half
