@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=openvsp
-pkgver=3.22.0
-pkgrel=3
+pkgver=3.23.0
+pkgrel=1
 pkgdesc='OpenVSP allows the user to create a 3D model of an aircraft defined by
          common engineering parameters.'
 arch=('i686' 'x86_64')
@@ -27,7 +27,7 @@ makedepends=('cmake' 'doxygen' 'graphviz' 'python' 'swig' 'unzip')
 _name=OpenVSP-OpenVSP_${pkgver}
 source=("${pkgname}-${pkgver}"::"https://github.com/OpenVSP/OpenVSP/archive/OpenVSP_${pkgver}.tar.gz"
         "stepcode-install-dir.patch"::"https://patch-diff.githubusercontent.com/raw/OpenVSP/OpenVSP/pull/158.patch")
-sha256sums=('dde0123cd394eb2817649660689daa5d7006e14f070096da31dd0ce63c5c0282'
+sha256sums=('467db48a928b09f7fe7d230348817694d0fd28a4db91b607462bbe34eba9471b'
             'SKIP')
 
 prepare() {
@@ -56,7 +56,8 @@ build() {
         -DVSP_USE_SYSTEM_CMINPACK=true \
         -DVSP_USE_SYSTEM_LIBIGES=false \
         -DVSP_USE_SYSTEM_STEPCODE=false \
-        -DVSP_USE_SYSTEM_EXPRPARSE=false
+        -DVSP_USE_SYSTEM_EXPRPARSE=false \
+        -DVSP_USE_SYSTEM_TRIANGLE=false
 
   make
 
