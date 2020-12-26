@@ -1,58 +1,43 @@
-# Maintainer: David McInnis <dave@dave3.xyz>
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Contributer: David McInnis <dave@dave3.xyz>
 # Contributer: Fabien Dubosson <fabien.dubosson@gmail.com>
 
-pkgbase="python-keras"
-pkgname=("python-keras" "python2-keras")
+pkgname=python-keras
 _pkgname="keras"
-pkgver="2.3.1"
-pkgrel="1"
+pkgver=2.4.0
+pkgrel=1
 pkgdesc="Deep Learning library (convnets, recurrent neural networks, and more)"
 arch=('any')
-url="https://github.com/fchollet/keras"
-license=('MIT')
-makedepends=('python-setuptools' 'python-numpy'  'python-scipy'  'python-h5py'  'python-yaml'
-             'python2-setuptools' 'python2-numpy' 'python2-scipy' 'python2-h5py' 'python2-yaml'
-            )
-source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/keras-team/${_pkgname}/archive/${pkgver}.tar.gz")
-sha256sums=('7e8df9c5291f21a01bccffd8cbdd44abd7d2679ab2f7a892a503e88291627183')
-
-prepare() {
-  cd "$srcdir/"
-  cp -a "${_pkgname}-${pkgver}" "${_pkgname}-${pkgver}-py2"
-  cd "${_pkgname}-${pkgver}-py2"
-  sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
-      -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
-      -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
-      -i $(find . -name '*.py')
-}
+url="https://github.com/keras-team/keras"
+license=('Apache')
+depends=(
+  absl-py
+  python-h5py
+  python-keras-preprocessing
+  python-numpy
+  python-pandas
+  python-pydot
+  python-scipy
+  python-six
+  python-yaml
+  python-pillow
+)
+makedepends=(python-setuptools)
+optdepends=(
+  'python-theano: For Theano backend'
+  'python-tensorflow: For TensorFlow backend'
+  'mxnet: For MXNet backend'
+)
+source=("https://github.com/keras-team/${_pkgname}/archive/${pkgver}.tar.gz")
+sha256sums=('ef97067e35719cf93b7b835d1300015bb1e1f1a7b3dd7be897c110419fa1a1d1')
 
 build() {
-  msg "Building Python 2"
-  cd "$srcdir/${_pkgname}-${pkgver}-py2"
-  python2 setup.py build
-
-  msg "Building Python 3"
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py build
 }
 
-package_python2-keras() {
-  depends=('python2' 'python2-numpy' 'python2-scipy' 'python2-h5py' 'python2-yaml')
-  optdepends=('python2-theano' 'cudnn'
-              'python2-keras-applications: Must Install for python2-keras to work!'
-              'python2-keras-preprocessing: Must Install for python2-keras to work!')
-  cd "$srcdir/${_pkgname}-${pkgver}-py2"
-  python2 setup.py install --root="$pkgdir"/ --optimize=1
-  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt"
-}
-
 package_python-keras() {
-  depends=('python' 'python-numpy' 'python-scipy' 'python-h5py' 'python-yaml')
-  optdepends=('python-theano' 'python-tensorflow' 'cudnn'
-              'python-keras-applications: Must Install for python-keras to work!'
-              'python-keras-preprocessing: Must Install for python-keras to work!')
   cd "$srcdir/${_pkgname}-${pkgver}"
   python setup.py install --root="$pkgdir"/ --optimize=1
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt"
 }
-
