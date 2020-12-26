@@ -7,30 +7,21 @@
 # https://github.com/michaellass/AUR
 
 pkgname=jabref
-pkgver=5.1
-pkgrel=2
+pkgver=5.2
+pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
 license=(MIT)
-depends=('archlinux-java-run>=7' 'java-runtime>=13')
-makedepends=('java-environment>=13')
+depends=('archlinux-java-run>=7' 'java-runtime>=14')
+makedepends=('java-environment>=14')
 options=(!strip !emptydirs)
 source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v${pkgver}.tar.gz
         jabref.sh
-        jabref.desktop
-        0001-Fix-locating-jabref-in-jabrefHost.py.patch)
-sha256sums=('c98ec9a7b4113945a27f9b49c9176bb6e5fa50c933562866dc0cc39dd18b7402'
-            '0d5ca38d2c4a5c60b0778f36317794d2fb13f20b13d8473f69b41a6caebcb839'
-            'e499b4af1fc45223fdafd801a4dd8a1c3c59384c71bc2e6985ab701da97df717'
-            '1f01194665bfd91faaaa5a177b408d5af5f9dc3357795af4388eb61d2cad9f7c')
-
-prepare() {
-  cd ${pkgname}-${pkgver}
-
-  # https://github.com/JabRef/jabref/pull/6963/
-  patch -p1 < "${srcdir}"/0001-Fix-locating-jabref-in-jabrefHost.py.patch
-}
+        jabref.desktop)
+sha256sums=('26aa9d02e628e8d38f9db6afbeb11cbf0ab228d8c11fb34a3d3953b1d8f8d484'
+            'c756b5dfcce10f1693bab6ca1a9d6d20be1cca43603a8a3ae37a07607ee99b1f'
+            'c6c95fc980630bc72bd4adcc93c710702fe4fced3fcb26c3067eea0f3aad5c68')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -38,7 +29,7 @@ build() {
   mkdir -p "${srcdir}"/gradle
   export GRADLE_USER_HOME=${srcdir}/gradle
 
-  export JAVA_HOME=$(archlinux-java-run -a 13 -f jdk -j)
+  export JAVA_HOME=$(archlinux-java-run -a 14 -f jdk -j)
   echo "Using JDK from $JAVA_HOME to build JabRef."
 
   ./gradlew \
