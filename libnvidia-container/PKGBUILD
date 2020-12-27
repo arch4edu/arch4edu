@@ -4,7 +4,7 @@
 pkgbase=libnvidia-container
 pkgname=(libnvidia-container libnvidia-container-tools)
 
-pkgver=1.3.0
+pkgver=1.3.1
 pkgrel=1
 _elfver=0.7.1
 _nvmpver=450.57
@@ -14,7 +14,7 @@ arch=('x86_64')
 url='https://github.com/NVIDIA/libnvidia-container'
 license=('Apache')
 
-makedepends=(bmake lsb-release rpcsvc-proto)
+makedepends=(bmake lsb-release rpcsvc-proto pkgconf)
 depends=(libcap libseccomp libtirpc)
 
 # yikes! somehow the default flags cause a linking error :(
@@ -31,12 +31,12 @@ source=("https://github.com/NVIDIA/${pkgbase}/archive/v${pkgver}.tar.gz"
         fix_rpc_flags.patch
         fix_git_rev_unavail.patch
         fix_libelf_so_name.patch)
-sha256sums=('a3509b7f94be331ee1326db694607e20c531a22a2c8eebb555875e721019f9f8'
+sha256sums=('5dd2326474cc9dbcefdb04b4e3df07d1d81722dd6946329ba327dc4cde231434'
             '44f14591fcf21294387215dd7562f3fb4bec2f42f476cf32420a6bbabb2bd2b5'
             '396b4102d3075a2dee3024652fae206a1b38ace54b8efb1e2c20757a11ec19f1'
             'ed949dd162cd104071a58b09f1effefe91150a32893ed28d143ee62bc217e566'
             '48edab623a44e42d3310c87bf38df56878e68146ae4ac446c28d460fa0a4385b'
-            'bb0e37eb6b87a24148c0cd688a29f70d3007b066a155a6cdb7d2dc144f149088')
+            '42412db6bbcf0c2f76c426b6f51cf12eda6a78b5c9c64d29e9a80739790ea6b9')
 
 _srcdir="${pkgname}-${pkgver}"
 

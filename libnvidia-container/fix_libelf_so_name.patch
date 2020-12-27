@@ -7,7 +7,7 @@ index 7484fde..10d3e14 100644
  	$(BMAKE) -j $(shell nproc) -C $(COMMON)
  	$(BMAKE) -j $(shell nproc) -C $(LIBELF)
 +	# somehow the elf is being named wrong? who knows at this point :(
-+	test -f $(LIBELF)/'name libelf.so.1' && mv $(LIBELF)/'name libelf.so.1' $(LIBELF)/'libelf.so.1'
++	test -f $(LIBELF)/'name libelf.so.1' && mv $(LIBELF)/'name libelf.so.1' $(LIBELF)/'libelf.so.1' || true
  	@touch $@
  
  ##### Public rules #####
