@@ -1,4 +1,16 @@
+maintainers:
+  - github: petronny
+    email: Jingbei Li <i@jingbei.li>
 update_on:
-- source: aur
-  aur:
-- alias: python
+  - source: aur
+    aur:
+  - alias: python
+repo_depends:
+  - brunsli
+  - charls
+  - libdeflate
+  - python-imread
+  - zfp
+build_prefix: extra-x86_64
+pre_build: aur_pre_build
+post_build: aur_post_build
