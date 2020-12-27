@@ -3,7 +3,7 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 pkgname=opencv-cuda
-pkgver=4.5.0
+pkgver=4.5.1
 pkgrel=1
 provides=(opencv opencv-samples)
 conflicts=(opencv opencv-samples)
@@ -22,8 +22,8 @@ optdepends=('opencv-samples: samples'
             'python2-numpy: Python 2 interface')
 source=("opencv-$pkgver.tar.gz::https://github.com/opencv/opencv/archive/$pkgver.zip"
         "opencv_contrib-$pkgver.tar.gz::https://github.com/opencv/opencv_contrib/archive/$pkgver.tar.gz")
-sha256sums=('168f6e61d8462fb3d5a29ba0d19c0375c111125cac753ad01035a359584ccde9'
-            'a65f1f0b98b2c720abbf122c502044d11f427a43212d85d8d2402d7a6339edda')
+sha256sums=('5fbc26ee09e148a4d494b225d04217f7c913ca1a4d46115b70cca3565d7bbe05'
+            '12c3b1ddd0b8c1a7da5b743590a288df0934e5cef243e036ca290c2e45e425f5')
 
 prepare() {
   msg2 "Patching sources for CUDA v10"
