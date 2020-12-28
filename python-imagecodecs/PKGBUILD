@@ -2,8 +2,8 @@
 
 _name=imagecodecs
 pkgname=python-imagecodecs
-pkgver=2020.5.30
-pkgrel=6
+pkgver=2020.12.24
+pkgrel=3
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
@@ -16,6 +16,8 @@ depends=(
   jxrlib
   lcms2
   libaec
+  libdeflate
+  libavif
   libjpeg
   libmng
   libpng
@@ -26,19 +28,10 @@ depends=(
   python-numpy
   snappy
   zfp
-  zopfli
 )
 makedepends=(python-setuptools cython)
-source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz"
-    '0001-fix-setup.patch::https://github.com/hubutui/imagecodecs/commit/eba1710c1ef1345db09a3e2e4146e7d31fb9fb10.patch'
-    )
-sha256sums=('4d750b4eb6b2bb33ae14897d6d5affe8ae22f5a6e8a04823f19bb1a05619a4b4'
-            '5789a344db6fe16d3e43695937bda3d42d254d9a255ff99c21f7f87b82f1344a')
-
-prepare() {
-  cd "${srcdir}/${_name}-${pkgver}"
-  patch -p1 -i "${srcdir}/0001-fix-setup.patch"
-}
+source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz")
+sha256sums=('73c36ccf7f7f68472d9273c72e4c63e616e27afea0f6f9ff871a8ad9a3c70bcc')
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
