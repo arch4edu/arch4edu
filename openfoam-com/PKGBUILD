@@ -1,92 +1,162 @@
 # Maintainer: Norbert Weber <norbert.weber_at_hzdr.de>
+# Contributor: Marc Olesen
 # Contributor: Xwang <xwaang1976@gmail.com>
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 # Contributor: <gucong43216@gmail.com>
 
-pkgname=openfoam-esi
-pkgver=v2006
+# Installs as (for example)
+# /opt/OpenFOAM/OpenFOAM-v2012
+
+pkgname=openfoam-com
+pkgver=v2012
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=3
-pkgdesc="The open source CFD toolbox (ESI-OpenCFD version)"
+pkgrel=1
+pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
 url="http://www.openfoam.com/"
 license=('GPL')
 install="${pkgname}.install"
 depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
 
-source=("https://sourceforge.net/projects/openfoam/files/v2006/OpenFOAM-v2006.tgz")
+source=("https://sourceforge.net/projects/openfoam/files/v2012/OpenFOAM-v2012.tgz")
 
-md5sums=('1226d48e74a4c78f12396cb586c331d8')
+md5sums=('4b83938a8c939a84b7e985e4f5ab7543')
 
 prepare() {
-  if [ $WM_PROJECT_DIR ]
+  if [ -n "$WM_PROJECT_DIR" ]
   then
-    echo " "
+    echo
     echo -e "\e[1m\e[5m\e[31mPlease make sure that no OpenFOAM version is sourced in bashrc.\e[0m"
-    echo " "
+    echo
     return 1
   fi
 
-  # Extract the current version and major of paraview and of scotch for use in the system preferences
-  _pversion=$(pacman -Q $(pacman -Qqo $(which paraview)) | sed -e 's/.* //; s/-.*//g')
-  _pmajor=`echo $_pversion | cut -d '.' -f1`
+  projectDir="${srcdir}/${_dist}"
 
   # Generate and install the system preferences file
-  echo "export compilerInstall=system" > ${srcdir}/prefs.sh
-  echo "export WM_MPLIB=SYSTEMOPENMPI" >> ${srcdir}/prefs.sh
-  echo "export ParaView_VERSION=${_pversion}" >> ${srcdir}/prefs.sh
-  echo "export ParaView_MAJOR=${_pmajor}" >> ${srcdir}/prefs.sh
-  cp ${srcdir}/prefs.sh ${srcdir}/${_distname}-${pkgver}/etc
+  echo "# Preferences for arch-linux
+export WM_COMPILER_TYPE=system
+export WM_MPLIB=SYSTEMOPENMPI
+# End" \
+  > "${projectDir}"/etc/prefs.sh
 
-  # Generate the scotch.sh file for arch
-  echo "export SCOTCH_VERSION=scotch-system" > ${srcdir}/scotch
-  cp ${srcdir}/scotch ${srcdir}/${_distname}-${pkgver}/etc/config.sh
+
+  # Configure components.
+  # Use system values for boost/cgal, fftw, scotch, paraview
+
+  "${projectDir}"/bin/tools/foamConfigurePaths \
+    -boost boost-system \
+    -cgal  cgal-system \
+    -fftw  fftw-system \
+    -kahip kahip-none \
+    -scotch scotch-system \
+    -paraview paraview-system \
+    ;
 }
 
 build() {
-
-  if [ $WM_PROJECT_DIR ]
-  then 
-    echo " "
+  if [ -n "$WM_PROJECT_DIR" ]
+  then
+    echo
     echo -e "\e[1m\e[5m\e[31mPlease make sure that no OpenFOAM version is sourced in bashrc.\e[0m"
-    echo " "
+    echo
     return 1
   fi
 
-  export FOAM_INST_DIR=${srcdir}
-  foamDotFile=${srcdir}/${_dist}/etc/bashrc
-  [ -f ${foamDotFile} ] || return 1
-  # without && echo " ", makepkg fails
-  source ${foamDotFile} && echo " "
+  projectDir="${srcdir}/${_dist}"
+  [ -f "$projectDir/etc/bashrc" ] || {
+      echo "No $projectDir/etc/bashrc found"
+      return 1
+  }
 
-  cd "$srcdir/$_dist"
-  ./Allwmake -j `nproc` 2>&1 | tee log.wmake
+  # Avoid external influence on the environment
+  export FOAM_CONFIG_MODE="o"
+  unset FOAM_SETTINGS
 
-  # check if an error occured during build
-  ret="${PIPESTATUS[0]}"
-  [[ "$ret" -ne "0" ]] && exit 1
+  set +e  # Turn errexit off
 
-  wclean all || exit 1
-  wmakeLnIncludeAll || exit 1
+  source "$projectDir"/etc/bashrc '' || \
+    echo "Ignore spurious sourcing error"
+
+  # it seems, the bashrc file destroys 'projectDir'
+  projectDir="${srcdir}/${_dist}"
+
+  set -e  # Turn errexit back on
+  cd "$projectDir" || exit
+
+  # Dummy application for testing
+  #./applications/test/00-dummy/Allwmake
+
+  ./Allwmake -j -log=log.build
+
+  # Check log for this type of content:
+  #
+  #   api   = 2006
+  #   patch = 1
+  #   bin   = 283 entries
+  #   lib   = 139 entries
+
+  [ -f log.build ] || {
+      echo "No log.build file - build failed entirely"
+      exit 1
+  }
+
+  bins="$( cat log.build | sed -ne 's/.*bin *= *\([0-9][0-9]*\).*/\1/p;' | sed -ne '$p' )"
+  libs="$( cat log.build | sed -ne 's/.*lib *= *\([0-9][0-9]*\).*/\1/p;' | sed -ne '$p' )"
+
+  if [ "${bins:=0}" = 0 ] || [ "${libs:=0}" = 0 ]
+  then
+      echo
+      echo "Build failed with $bins executables and $libs libraries"
+      echo "Check the log.build file"
+      echo
+      exit 1
+  fi
+
+  # Remove intermediate build artifacts
+  rm -rf "${projectDir}/build"
 }
+
 
 package() {
   cd ${srcdir}
 
-  # Create destination directories
-  install -d ${pkgdir}/opt/${_distname} ${pkgdir}/etc/profile.d || return 1
+  # Installation directories
+  parentDir="${pkgdir}/opt/${_distname}"
+  projectDir="${parentDir}/${_dist}"
 
-  # copy package to pkgdir
-  cp -r "${srcdir}/${_dist}" "${pkgdir}/opt/${_distname}" || return 1
+  # Create destination directories
+  install -d "${parentDir}" "${pkgdir}"/etc/profile.d || return 1
+
+  # Copy package to pkgdir
+  cp -r "${srcdir}/${_dist}" "${parentDir}" || return 1
 
   # Permission fixes - for system-wide install and use
-  chmod -R go+r ${pkgdir}/opt
-  chmod -R 755 ${pkgdir}/opt/${_distname}/${_dist}/bin
-  chmod -R 755 ${pkgdir}/opt/${_distname}/${_dist}/etc
+  chmod -R go+r "${pkgdir}"/opt
+  chmod -R 755 "${projectDir}"/bin
+  chmod -R 755 "${projectDir}"/etc
+
+  [ -e "${projectDir}"/ThirdParty ] || \
+      echo "system dependencies" >| "${projectDir}"/ThirdParty
+
+#  # Install shell-session script. Could be via post-install
+#  session="/usr/bin/openfoam${pkgver#v}"
+#  wrapper="$projectDir/bin/tools/openfoam.in"
+#
+#  if [ -f "$wrapper" ]
+#  then
+#      echo "Create $session"
+#      sed -e "s#@PROJECT_DIR@#${projectDir}#" "$wrapper" >| "$session"
+#      chmod 0755 "$session"
+#  else
+#      echo "No method to create $session for openfoam${pkgver#v}"
+#  fi
 
   # create alias in .bashrc
-  echo "alias of=\"source /opt/${_distname}/${_dist}/etc/bashrc\"" >> ~/.bashrc
-  echo "alias paraFoam=\"paraFoam -builtin\"" >> ~/.bashrc
+  echo "alias of='source /opt/${_distname}/${_dist}/etc/bashrc'" >> ~/.bashrc
+  echo "alias paraFoam='paraFoam -builtin'" >> ~/.bashrc
 }
+
+# ---------------------------------------------------------------------------

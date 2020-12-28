@@ -4,11 +4,12 @@ post_install() {
   echo -e "\e[1m\e[31mNOTE:"
   echo -e " "
   echo -e "This install of OpenFOAM does NOT include the ThirdParty libraries."
-  echo -e "Known issue: ptscotch does not compile."
+  echo -e "Known issue: paraview readers do not compile."
   echo -e ""
   echo -e "Please use \"of\" to load OpenFOAM."
   echo -e ""
-  echo -e "paraFoam will automatically be called using the option \"-builtin\"\e[0m".
+  echo -e "paraFoam will automatically be called using the option \"-builtin\""
+  echo -e "Attention: works only, if OpenFOAM has been loaded before!\e[0m"
   echo -e ""
 }
 
