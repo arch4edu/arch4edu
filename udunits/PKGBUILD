@@ -5,7 +5,7 @@
 
 pkgname=udunits
 pkgver=2.2.28
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for calculations of physical quantities"
 arch=('i686' 'x86_64')
 url="http://www.unidata.ucar.edu/software/udunits/"
@@ -13,17 +13,17 @@ license=('MIT')
 depends=('expat')
 options=('!libtool')
 install=udunits.install
-source=(https://artifacts.unidata.ucar.edu/repository/downloads-udunits/$pkgname-$pkgver-Source.tar.gz)
-sha256sums=('4cff332db4368c621998116603ad2d35cfd4a605e60a77e9a7270aed7d905711')
+source=(https://artifacts.unidata.ucar.edu/repository/downloads-udunits/$pkgname-$pkgver.tar.gz)
+sha256sums=('590baec83161a3fd62c00efa66f6113cec8a7c461e3f61a5182167e0cc5d579e')
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver-Source"
+  cd "$srcdir/$pkgname-$pkgver"
   ./configure --prefix=/usr --disable-static
   make
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver-Source"
+  cd "$srcdir/$pkgname-$pkgver"
   make DESTDIR="$pkgdir" install
   ln -s libudunits2.so "$pkgdir/usr/lib/libudunits.so"
   ln -s libudunits2.so.0 "$pkgdir/usr/lib/libudunits.so.0"
