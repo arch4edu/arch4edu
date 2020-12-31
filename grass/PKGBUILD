@@ -2,7 +2,7 @@
 # Contributor: Maciej Sieczka <msieczka at sieczka dot org>
 
 pkgname=grass
-pkgver=7.8.4
+pkgver=7.8.5
 pkgrel=1
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
@@ -16,7 +16,7 @@ makedepends=('libxt')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
 source=("http://grass.osgeo.org/grass$_shortver/source/$pkgname-$pkgver.tar.gz")
-md5sums=('2c90a74ebabb1d4410f70a9c551f53b7')
+md5sums=('91f4830a5164cea703384814cd89cdf9')
 
 build() {
   cd $pkgname-$pkgver
@@ -50,9 +50,6 @@ package() {
   echo "/opt/$pkgname/lib" > "$pkgdir/etc/ld.so.conf.d/$pkgname.conf"
 
   cd "$pkgdir/opt/$pkgname"
-
-  # Fix for 3rd party python scripts
-  ln -s ../../../usr/bin/python2 bin/python
 
   # Put freedesktop.org files in correct location
   mv share "$pkgdir/usr"
