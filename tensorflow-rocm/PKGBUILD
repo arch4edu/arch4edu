@@ -13,37 +13,26 @@ pkgname=()
 [ "$_build_no_opt" -eq 1 ] && pkgname+=(tensorflow-rocm python-tensorflow-rocm)
 [ "$_build_opt" -eq 1 ] && pkgname+=(tensorflow-opt-rocm python-tensorflow-opt-rocm)
 
-pkgver=2.3.1
-_pkgver=2.3.1
+pkgver=2.4.0
+_pkgver=2.4.0
 pkgrel=4
 pkgdesc="Library for computation using data flow graphs for scalable machine learning"
 url="https://www.tensorflow.org/"
 license=('APACHE')
 arch=('x86_64')
-depends=('c-ares' 'intel-mkl' 'onednn')
-makedepends=('bazel' 'python-numpy' 'rocm' 'rocm-libs' 'miopen' 'rccl' 'git' 'gcc9'
+depends=('c-ares' 'intel-mkl' 'onednn' 'pybind11' 'openssl-1.0' 'lmdb' 'libpng' 'curl' 'giflib' 'icu' 'libjpeg-turbo')
+makedepends=('bazel' 'python-numpy' 'rocm' 'rocm-libs' 'miopen' 'rccl' 'git'
              'python-pip' 'python-wheel' 'python-setuptools' 'python-h5py'
-             'python-keras-applications' 'python-keras-preprocessing')
+             'python-keras-applications' 'python-keras-preprocessing'
+             'cython')
 optdepends=('tensorboard: Tensorflow visualization toolkit')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/tensorflow/tensorflow/archive/v${_pkgver}.tar.gz"
-        numpy1.20.patch::https://github.com/tensorflow/tensorflow/commit/75ea0b31477d6ba9e990e296bbbd8ca4e7eebadf.patch
-        build-against-actual-mkl.patch
-        fix_hip_hcc_path.patch::https://github.com/tensorflow/tensorflow/commit/6175b78d8386bd6e5b2beebedb9f40e6b887d5a9.patch
-        fix_hipcc_path.patch::https://github.com/tensorflow/tensorflow/commit/9d2b338025dc61828ccf8196bb042ab9c586c7b3.patch
-        fix_gpu_atomic_redef.patch::https://github.com/tensorflow/tensorflow/commit/c054f40f66fa625f51085a20c48554c61d05c5fd.patch
-        fix_ldexp_float.patch::https://github.com/tensorflow/tensorflow/commit/655ce09f679a90ecd561538227c703b42d0fc5fa.patch
-        fix_occupancy_block.patch
-        new-rocm.patch)
+        fix-h5py3.0.patch
+        build-against-actual-mkl.patch)
 
-sha512sums=('e497ef4564f50abf9f918be4522cf702f4cf945cb1ebf83af1386ac4ddc7373b3ba70c7f803f8ca06faf2c6b5396e60b1e0e9b97bfbd667e733b08b6e6d70ef0'
-            'df2e0373e2f63b8766f31933f7db57f6a7559b8f03af1db51644fba87731451a7cd3895529a3192e5394612fcb42f245b794b1c9ca3c05881ca03a547c8c9acc'
-            'e51e3f3dced121db3a09fbdaefd33555536095584b72a5eb6f302fa6fa68ab56ea45e8a847ec90ff4ba076db312c06f91ff672e08e95263c658526582494ce08'
-            '7acc2f2579158be1d8c824da0f6d44d084a56182f1aab3cd7a78d513931b3a16ce72f2e05b44b1de76f5519af39e80431660de294ff337842e4ee8949cb85b28'
-            '136d91db88658dd0eab1543f8dec1cd20dca86afc6970606a722e7d01a645d64c42564d590fc1ecb04c204ae0b0fa8f78cf9998e9bcf367f4cc795fa59677591'
-            '75972acf0ec53b28aa6c93de77a385acaf675c0d0ae93b6545f67414e9895cbd1074a5d65b211390846b736df271a567b49ec4c992883ad83c060f708bbe0d20'
-            '42fc09bc15412f3b9a82f36485735faed0dcc2f47d72c5bfc451bc09a2aad472db59edb387455fb6594b1606de3a7789917e1fb31280c7044898097ec37db3d5'
-            '88c04ed7a766193687d7079102332e3c63d6f0accbda777836abe5e03e9ebb83fd1aeaa9e4adca70310ce18bf3c6c3907f1f8a11c13e67e3ef79497b91bbf126'
-            '080fd9d4e1228ceb04901a0caceb18b965ef199704196a9b7711fcada3a8cfc2f65c529c4c0e05960ab1e469d203727bf0bbded82d895c13e0e2ab29ae524317')
+sha512sums=('4860c148fd931c4dc7c558128e545e2b6384e590a3fbc266a5bfe842a8307f23f1f7e0103bda3a383e7c77edad2bb76dec02da8be400a40956072df19c5d4dbd'
+            '9d7b71fed280ffaf4dfcd4889aa9ab5471874c153259f3e77ed6e6efa745e5c5aa8507d3d1f71dead5b6f4bea5f8b1c10c543929f37a6580c3f4a7cbec338a6a'
+            'e51e3f3dced121db3a09fbdaefd33555536095584b72a5eb6f302fa6fa68ab56ea45e8a847ec90ff4ba076db312c06f91ff672e08e95263c658526582494ce08')
 
 get_pyver () {
   python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'
@@ -65,32 +54,17 @@ prepare() {
   # Tensorflow actually wants to build against a slimmed down version of Intel MKL called MKLML
   # See https://github.com/intel/mkl-dnn/issues/102
   # MKLML version that Tensorflow wants to use is https://github.com/intel/mkl-dnn/releases/tag/v0.21
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/build-against-actual-mkl.patch
+  # patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/build-against-actual-mkl.patch
 
   # Compile with C++17 by default (FS#65953)
   #sed -i "s/c++14/c++17/g" tensorflow-${_pkgver}/.bazelrc
 
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/numpy1.20.patch
+  # FS#68488
+  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix-h5py3.0.patch
 
-  # Fix hip_hcc path
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix_hip_hcc_path.patch
-
-  # Fix hip_hcc path
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix_hipcc_path.patch
-
-  # Fix GpuAtomic redefinition
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix_gpu_atomic_redef.patch
-
-  # Fix ldexp float method
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix_ldexp_float.patch
-
-  # Fix missing hipOccupancyMaxPotentialBlockSize method
-  # https://github.com/tensorflow/tensorflow/commit/22def20bae7be6d5b790b360abed5919385b16c2
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix_occupancy_block.patch
-
-  # Patch for ROCm 3.7 and later
-  # https://github.com/tensorflow/tensorflow/pull/42689
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/new-rocm.patch
+  # Get rid of hardcoded versions. Not like we ever cared about what upstream
+  # thinks about which versions should be used anyway. ;) (FS#68772)
+  sed -i -E "s/'([0-9a-z_-]+) .= [0-9].+[0-9]'/'\1'/" tensorflow-${_pkgver}/tensorflow/tools/pip_package/setup.py
 
   cp -r tensorflow-${_pkgver} tensorflow-${_pkgver}-rocm
   cp -r tensorflow-${_pkgver} tensorflow-${_pkgver}-opt-rocm
@@ -104,12 +78,12 @@ build() {
   export PYTHON_BIN_PATH=/usr/bin/python
   export USE_DEFAULT_PYTHON_LIB_PATH=1
   export TF_NEED_JEMALLOC=1
-  export TF_NEED_KAFKA=0
+  export TF_NEED_KAFKA=1
   export TF_NEED_OPENCL_SYCL=0
-  export TF_NEED_AWS=0
-  export TF_NEED_GCP=0
-  export TF_NEED_HDFS=0
-  export TF_NEED_S3=0
+  export TF_NEED_AWS=1
+  export TF_NEED_GCP=1
+  export TF_NEED_HDFS=1
+  export TF_NEED_S3=1
   export TF_ENABLE_XLA=1
   export TF_NEED_GDR=0
   export TF_NEED_VERBS=0
@@ -119,25 +93,34 @@ build() {
   export TF_NEED_NGRAPH=0
   export TF_NEED_IGNITE=0
   export TF_NEED_ROCM=1
+  export TF_ROCM_AMDGPU_TARGETS=gfx701,gfx702,gfx803,gfx900,gfx904,gfx906,gfx908
+  # See https://github.com/tensorflow/tensorflow/blob/master/third_party/systemlibs/syslibs_configure.bzl
+  export TF_SYSTEM_LIBS="boringssl,curl,cython,gif,icu,libjpeg_turbo,lmdb,nasm,pcre,png,pybind11,zlib"
   export TF_SET_ANDROID_WORKSPACE=0
   export TF_DOWNLOAD_CLANG=0
   export TF_NCCL_VERSION=2.7
   export TF_IGNORE_MAX_BAZEL_VERSION=1
   export TF_MKL_ROOT=/opt/intel/mkl
   export NCCL_INSTALL_PATH=/usr
-  export GCC_HOST_COMPILER_PATH=/usr/bin/gcc-9
-  export HOST_C_COMPILER=/usr/bin/gcc-9
-  export HOST_CXX_COMPILER=/usr/bin/g++-9
+  export GCC_HOST_COMPILER_PATH=/usr/bin/gcc
+  export HOST_C_COMPILER=/usr/bin/gcc
+  export HOST_CXX_COMPILER=/usr/bin/g++
   export TF_CUDA_CLANG=0  # Clang currently disabled because it's not compatible at the moment.
   export CLANG_CUDA_COMPILER_PATH=/usr/bin/clang
   export TF_CUDA_PATHS=/opt/cuda,/usr/lib,/usr
   export TF_CUDA_VERSION=$(/opt/cuda/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')
   export TF_CUDNN_VERSION=$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' /usr/include/cudnn_version.h)
-  export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5,8.0
+  export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5,8.0,8.6
 
   # Required until https://github.com/tensorflow/tensorflow/issues/39467 is fixed.
-  export CC=gcc-9
-  export CXX=g++-9
+  export CC=gcc
+  export CXX=g++
+
+  export BAZEL_ARGS="--config=mkl -c opt --copt=-I/usr/include/openssl-1.0 --host_copt=-I/usr/include/openssl-1.0 --linkopt=-l:libssl.so.1.0.0 --linkopt=-l:libcrypto.so.1.0.0 --host_linkopt=-l:libssl.so.1.0.0 --host_linkopt=-l:libcrypto.so.1.0.0"
+
+  # Workaround for gcc 10+ warnings related to upb.
+  # See https://github.com/tensorflow/tensorflow/issues/39467
+  export BAZEL_ARGS="$BAZEL_ARGS --host_copt=-Wno-stringop-truncation"
 
   if [ "$_build_no_opt" -eq 1 ]; then
     echo "Building with rocm and without non-x86-64 optimizations"
@@ -147,7 +130,8 @@ build() {
     export TF_NEED_ROCM=1
     ./configure
     bazel \
-      build --config=mkl -c opt \
+      build \
+        ${BAZEL_ARGS[@]} \
         //tensorflow:libtensorflow.so \
         //tensorflow:libtensorflow_cc.so \
         //tensorflow:install_headers \
@@ -162,9 +146,11 @@ build() {
     export CC_OPT_FLAGS="-march=haswell -O3"
     export TF_NEED_CUDA=0
     export TF_NEED_ROCM=1
+    export TF_CUDA_CLANG=0
     ./configure
     bazel \
-      build --config=mkl --config=avx2_linux -c opt \
+      build --config=avx2_linux \
+        ${BAZEL_ARGS[@]} \
         //tensorflow:libtensorflow.so \
         //tensorflow:libtensorflow_cc.so \
         //tensorflow:install_headers \
@@ -232,7 +218,7 @@ _python_package() {
 
 package_tensorflow-rocm() {
   pkgdesc="Library for computation using data flow graphs for scalable machine learning (with ROCM)"
-  depends+=(rocm rccl)
+  depends+=(rocm rocm-libs miopen rccl)
   conflicts=(tensorflow)
   provides=(tensorflow)
 
@@ -241,8 +227,8 @@ package_tensorflow-rocm() {
 }
 
 package_tensorflow-opt-rocm() {
-  pkgdesc="Library for computation using data flow graphs for scalable machine learning (with ROCM and CPU optimizations)"
-  depends+=(rocm rccl)
+  pkgdesc="Library for computation using data flow graphs for scalable machine learning (with ROCM and AVX2 CPU optimizations)"
+  depends+=(rocm rocm-libs miopen rccl)
   conflicts=(tensorflow)
   provides=(tensorflow tensorflow-rocm)
 
@@ -252,7 +238,7 @@ package_tensorflow-opt-rocm() {
 
 package_python-tensorflow-rocm() {
   pkgdesc="Library for computation using data flow graphs for scalable machine learning (with ROCM)"
-  depends+=(tensorflow-rocm python-termcolor python-astor python-gast python-numpy rocm python-protobuf absl-py rccl python-h5py python-keras-applications python-keras-preprocessing python-tensorflow-estimator python-opt_einsum python-astunparse)
+  depends+=(tensorflow-rocm python-termcolor python-astor python-gast03 python-numpy rocm rocm-libs miopen python-protobuf absl-py rccl python-h5py python-keras-applications python-keras-preprocessing python-tensorflow-estimator python-opt_einsum python-astunparse python-pasta python-flatbuffers)
   conflicts=(python-tensorflow)
   provides=(python-tensorflow)
 
@@ -261,8 +247,8 @@ package_python-tensorflow-rocm() {
 }
 
 package_python-tensorflow-opt-rocm() {
-  pkgdesc="Library for computation using data flow graphs for scalable machine learning (with ROCM and CPU optimizations)"
-  depends+=(tensorflow-opt-rocm python-termcolor python-astor python-gast python-numpy rocm python-protobuf absl-py rccl python-h5py python-keras-applications python-keras-preprocessing python-tensorflow-estimator python-opt_einsum python-astunparse)
+  pkgdesc="Library for computation using data flow graphs for scalable machine learning (with ROCM and AVX2 CPU optimizations)"
+  depends+=(tensorflow-opt-rocm python-termcolor python-astor python-gast03 python-numpy rocm rocm-libs miopen python-protobuf absl-py rccl python-h5py python-keras-applications python-keras-preprocessing python-tensorflow-estimator python-opt_einsum python-astunparse python-pasta python-flatbuffers)
   conflicts=(python-tensorflow)
   provides=(python-tensorflow python-tensorflow-rocm)
 
