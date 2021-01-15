@@ -2,7 +2,7 @@
 # Contributor: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=4.0.11
+pkgver=4.1.0
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
@@ -10,10 +10,10 @@ url="https://github.com/mavlink/qgroundcontrol"
 license=('GPL3')
 
 # Git commit hash for version-specific submodules
-pkgver_gps='2a4865adc3808687d6c6f550f497a02eb920c382' # src/GPS/Drivers
-pkgver_mavlink='cf28669660332f9348994ae0e323582d8d19d704' # libs/mavlink/include/mavlink/v2.0
+pkgver_gps='5afc11588b2b6ec0861ecf9ef673c7a9e2109129' # src/GPS/Drivers
+pkgver_mavlink='5637057af5ab8ec5667e3f8e5f8c73d3bc60eed8' # libs/mavlink/include/mavlink/v2.0
 pkgver_aossl='3aaff1bd9e35047abdb363239bb3e3c114d07ea1' # libs/OpenSSL/android_openssl
-pkgver_gst='9d782fad9dc0384ba86ecae64511c193f6149f93' # libs/gst-plugins-good
+pkgver_gst='9d782fad9dc0384ba86ecae64511c193f6149f93' # libs/qmlglsink/gst-plugins-good
 
 depends=('bzip2'
          'dbus'
@@ -60,15 +60,15 @@ source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcont
         "mavlink-v2.0-qgc${pkgver}.tar.gz::https://github.com/mavlink/c_library_v2/archive/${pkgver_mavlink}.tar.gz"
         "aossl-qgc${pkgver}.tar.gz::https://github.com/Auterion/android_openssl/archive/${pkgver_aossl}.tar.gz"
         "gst-plugins-good-qgc${pkgver}.tar.gz::https://github.com/mavlink/gst-plugins-good/archive/${pkgver_gst}.tar.gz"
-        'libcudata-qgc.patch'
+        "libicudata-qgc.patch::https://patch-diff.githubusercontent.com/raw/mavlink/qgroundcontrol/pull/9332.patch"
 )
 
-sha256sums=('cf36a001fc04aeb7689f6ab7e9ca957c787fad304375d2903ea4653407b54396'
-            '11fea11460eaaedf6007c56d2263b3fb9925a523cdf6f11ee79d2bbe12f9c7bb'
-            '46aefd64c24a48158e953467c432ac25c067ec93bff8704cd8af925a90aab5c8'
+sha256sums=('9a9c67e293290e296aa6716441f8ff5b7d9006286e2a6d8c145e283eab75e310'
+            '9d158a4f611d605714ec0b6f643ab9ee02be6f64d67d8ba823fbc4bb29d853f2'
+            '9f251211db18eb0e1b636033a0eae7344ff88718cc61ae46249ca628e906de2e'
             '93598e63fbbd86fec5e15f2596bba8b1f1654c854a99222099516933fd22a118'
             'd5aad13c8eff7f3cce75c8cf3bbf6ac592ac82455e666dccd17cf006deec3e55'
-            'd65862686e39f30245b8684b33db8f32074f683c934f5c964c3ffe8a288b7d61'
+            'SKIP'
 )
 
 prepare() {
@@ -76,8 +76,6 @@ prepare() {
   mavlinkdir="c_library_v2-${pkgver_mavlink}"
   aossldir="android_openssl-${pkgver_aossl}"
   gstdir="gst-plugins-good-${pkgver_gst}"
-
-  mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
 
   # Copy in the GPS source
   rm -r "${srcdir}/${pkgname}-${pkgver}/src/GPS/Drivers"
@@ -95,15 +93,17 @@ prepare() {
   cp -R "${srcdir}/${aossldir}" "${srcdir}/${pkgname}-${pkgver}/libs/OpenSSL/android_openssl"
 
   # Copy in the GST source
-  rm -r "${srcdir}/${pkgname}-${pkgver}/libs/gst-plugins-good"
+  rm -r "${srcdir}/${pkgname}-${pkgver}/libs/qmlglsink/gst-plugins-good"
   mkdir -p "${srcdir}/${pkgname}-${pkgver}/libs"
-  cp -R "${srcdir}/${gstdir}" "${srcdir}/${pkgname}-${pkgver}/libs/gst-plugins-good"
+  cp -R "${srcdir}/${gstdir}" "${srcdir}/${pkgname}-${pkgver}/libs/qmlglsink/gst-plugins-good"
 
   cd "${srcdir}/${pkgname}-${pkgver}"
-  patch --strip=1 < "${srcdir}/libcudata-qgc.patch"
+  patch --strip=1 < "${srcdir}/libicudata-qgc.patch"
 }
 
 build() {
+  mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
+
   cd "$srcdir/${pkgname}-${pkgver}/build"
   qmake ..
   make
@@ -112,7 +112,7 @@ build() {
 package() {
 
   mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/applications"
-  cp -r "${srcdir}/${pkgname}-${pkgver}/build/release" "${pkgdir}/opt/${pkgname}"
+  cp -r "${srcdir}/${pkgname}-${pkgver}/build/staging" "${pkgdir}/opt/${pkgname}"
   cp "${srcdir}/${pkgname}-${pkgver}/resources/icons/qgroundcontrol.png" "${pkgdir}/opt/${pkgname}"
   cp "${srcdir}/${pkgname}-${pkgver}/deploy/qgroundcontrol-start.sh" "${pkgdir}/opt/${pkgname}"
 
