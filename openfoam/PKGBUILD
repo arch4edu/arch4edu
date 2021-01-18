@@ -3,27 +3,29 @@
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 
-pkgname=openfoam
-_subver=version-8
+pkgbase=openfoam
+pkgname=openfoam-org
+_subver=20201114
 _pkgver=8
-#pkgver=${_pkgver}.${_subver}
-pkgver=${_pkgver}
+pkgver=${_pkgver}.${_subver}
+#pkgver=${_pkgver}
 pkgrel=1
-pkgdesc="The open source CFD toolbox"
-_distpkgname=OpenFOAM
-_gitname=$_distpkgname-$_pkgver
+pkgdesc="The open source CFD toolbox (www.openfoam.org)"
+_distpkgbase=OpenFOAM
+_gitname=$_distpkgbase-$_pkgver
 arch=('x86_64')
 url="http://www.openfoam.org"
 license=("GPL")
 depends=('bzip2' 'paraview' 'parmetis' 'scotch' 'boost' 'flex' 'cgal')
 makedepends=('bash')
-source=("https://github.com/OpenFOAM/$_gitname/archive/$_subver.tar.gz" "${pkgname}.install")
-install="${pkgname}.install"
-md5sums=('261dc0d01c4417b737487a60ab4784aa'
-         '906a97732076501f3899d72d3a7393b3')
+provides=('openfoam')
+conflicts=('openfoam-com')
+source=("https://github.com/OpenFOAM/$_gitname/archive/$_subver.tar.gz")
+install="${pkgbase}.install"
+md5sums=('a754470e3d988186976bf8a8a73a7a84')
 
 prepare() {
-  mv $srcdir/$_gitname-$_subver $srcdir/$_distpkgname-$_pkgver
+  mv $srcdir/$_gitname-$_subver $srcdir/$_distpkgbase-$_pkgver
   # Extract the current version and major of paraview and of scotch for use in the system preferences
   #_pversion=`pacman -Q paraview | sed -e 's/.* //; s/-.*//g'`
   _pversion=$(pacman -Q $(pacman -Qqo $(which paraview)) | sed -e 's/.* //; s/-.*//g')
@@ -35,22 +37,22 @@ prepare() {
   echo "export WM_MPLIB=SYSTEMOPENMPI" >> ${srcdir}/prefs.sh
   echo "export ParaView_VERSION=${_pversion}" >> ${srcdir}/prefs.sh
   echo "export ParaView_MAJOR=${_pmajor}" >> ${srcdir}/prefs.sh
-  cp ${srcdir}/prefs.sh ${srcdir}/${_distpkgname}-${_pkgver}/etc #|| return 1
+  cp ${srcdir}/prefs.sh ${srcdir}/${_distpkgbase}-${_pkgver}/etc
 
   # Generate the scotch.sh file for arch
   echo "export SCOTCH_VERSION=scotch_${_sversion}" > ${srcdir}/scotch.sh
   echo "export SCOTCH_ARCH_PATH=/usr" >> ${srcdir}/scotch.sh
-  cp ${srcdir}/scotch.sh ${srcdir}/${_distpkgname}-${_pkgver}/etc/config #|| return 1
+  cp ${srcdir}/scotch.sh ${srcdir}/${_distpkgbase}-${_pkgver}/etc/config
 }
 
 build() {
   # Setup the build environment
   export FOAM_INST_DIR=${srcdir}
-  foamDotFile=${srcdir}/${_distpkgname}-${_pkgver}/etc/bashrc
+  foamDotFile=${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc
   [ -f ${foamDotFile} ] || return 1
 
   # Enter build directory
-  cd ${srcdir}/${_distpkgname}-${_pkgver}
+  cd ${srcdir}/${_distpkgbase}-${_pkgver}
 
   # Build and clean up OpenFOAM
   bash -c "source ${foamDotFile}
@@ -63,23 +65,23 @@ package() {
   cd ${srcdir}
 
   # Create destination directories
-  install -d ${pkgdir}/opt/${_distpkgname} ${pkgdir}/etc/profile.d || return 1
+  install -d "${pkgdir}/opt/${_distpkgbase}" "${pkgdir}/etc/profile.d"
 
-  # copy package to pkgdir
-  cp -r ${srcdir}/${_distpkgname}-${_pkgver} ${pkgdir}/opt/${_distpkgname} || return 1
+  # Copy package to pkgdir
+  cp -r "${srcdir}/${_distpkgbase}-${_pkgver}" "${pkgdir}/opt/${_distpkgbase}"
 
   # Add source file
-  echo "export FOAM_INST_DIR=/opt/${_distpkgname}" > ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
-  echo "alias ofoam=\"source \${FOAM_INST_DIR}/${_distpkgname}-${_pkgver}/etc/bashrc\"" >> ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
-  chmod 755 ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh || return 1
+  echo "export FOAM_INST_DIR=/opt/${_distpkgbase}" > ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh
+  echo "alias ofoam=\"source \${FOAM_INST_DIR}/${_distpkgbase}-${_pkgver}/etc/bashrc\"" >> ${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh
+  chmod 755 "${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh"
 
   # Add stub thirdparty directory to keep openfoam happy
-  install -d ${pkgdir}/opt/${_distpkgname}/ThirdParty-${_pkgver} || return 1
+  install -d "${pkgdir}/opt/${_distpkgbase}/ThirdParty-${_pkgver}"
 
   # Permission fixes - for system-wide install and use
-  chmod -R go+r ${pkgdir}/opt
-  chmod -R 755 ${pkgdir}/opt/${_distpkgname}/${_distpkgname}-${_pkgver}/bin
-  chmod -R 755 ${pkgdir}/opt/${_distpkgname}/${_distpkgname}-${_pkgver}/etc
+  chmod -R go+r "${pkgdir}/opt"
+  chmod -R 755 "${pkgdir}/opt/${_distpkgbase}/${_distpkgbase}-${_pkgver}/bin"
+  chmod -R 755 "${pkgdir}/opt/${_distpkgbase}/${_distpkgbase}-${_pkgver}/etc"
 }
 
 # vim:set ts=2 sw=2 et:
