@@ -9,7 +9,7 @@
 
 pkgname=android-studio
 pkgver=4.1.2.0
-pkgrel=1
+pkgrel=2
 _build=201.7042882
 pkgdesc="The official Android IDE (Stable branch)"
 arch=('i686' 'x86_64')
