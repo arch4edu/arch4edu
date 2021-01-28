@@ -9,21 +9,21 @@
 pkgname=julia-mkl
 _pkgname=julia
 epoch=2
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=1
 arch=(x86_64)
 pkgdesc='High-level, high-performance, dynamic programming language (compiled with the Intel MKL library)'
 url='https://julialang.org/'
 license=(MIT)
-depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm pcre2 llvm-libs)
-makedepends=(cmake gcc-fortran gmp python intel-common-libs llvm)
+depends=(fftw hicolor-icon-theme intel-mkl libgit2 libunwind libutf8proc suitesparse mbedtls openlibm pcre2 llvm10-libs)
+makedepends=(cmake gcc-fortran gmp python intel-common-libs llvm10)
 optdepends=('gnuplot: If using the Gaston Package from julia')
 provides=('julia')
 conflicts=('julia' 'julia-git')
 backup=(etc/julia/startup.jl)
 source=("https://github.com/JuliaLang/julia/releases/download/v$pkgver/$_pkgname-$pkgver-full.tar.gz"
         make-install-no-build.patch)
-sha256sums=('850aed3fe39057488ec633f29af705f5ada87e3058fd65e48ad26f91b713a19a'
+sha256sums=('fb69337ca037576758547c7eed9ae8f153a9c052318327b6b7f1917408c14d91'
             '0b57e0bc6e25c92fde8a6474394f7a99bfb57f9b5d0f7b53f988622ae67de8b7')
 
 prepare() {
