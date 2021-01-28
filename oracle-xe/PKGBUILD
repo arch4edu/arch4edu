@@ -10,7 +10,7 @@
 
 pkgname=oracle-xe
 pkgver=18.4.0.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Oracle Database Express Edition'
 url='https://www.oracle.com/database/'
 license=('custom')
