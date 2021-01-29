@@ -2,8 +2,8 @@
 
 _name=imagecodecs
 pkgname=python-imagecodecs
-pkgver=2021.1.11
-pkgrel=1
+pkgver=2021.1.28
+pkgrel=2
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
@@ -28,13 +28,14 @@ depends=(
   python-numpy
   snappy
   zfp
+  zopfli
 )
 makedepends=(python-setuptools cython)
 source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz")
-sha256sums=('5a52cf0368055dc9b1f98948deb245e2bbf23b40b74c8a03226a2d9044470754')
+sha256sums=('57e9c32920959099495347528fe9b9a5752da6bc309bc1bf3764c6ff70057059')
 
 prepare() {
-  sed -i "s,/usr/include/openjpeg-2.3,/usr/include/openjpeg-2.4," "${srcdir}/${_name}-${pkgver}/setup.py"
+  sed -i "s/del EXTENSIONS\['zopfli'\]/pass/" ${srcdir}/${_name}-${pkgver}/setup.py
 }
 
 build() {
