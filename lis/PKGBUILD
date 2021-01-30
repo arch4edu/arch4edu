@@ -1,7 +1,7 @@
 # Maintainer: Heavysink <winstonwu91 at gmail>
 pkgname=lis
-pkgver=2.0.22
-pkgrel=4
+pkgver=2.0.30
+pkgrel=1
 pkgdesc="Library of Iterative Solvers for linear systems"
 arch=(i686 x86_64)
 url="http://www.ssisc.org/lis"
@@ -9,7 +9,7 @@ license=('GPL3')
 depends=('openmpi')
 makedepends=('gcc-fortran')
 source=("https://github.com/anishida/lis/archive/${pkgver}.tar.gz")
-md5sums=('2f65f2b37ae2bdb5caad643f210e8d38')
+md5sums=('f600359131fc669a49adfc6516fa1fc0')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
