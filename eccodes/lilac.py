@@ -3,6 +3,8 @@ from lilaclib import *
 
 maintainers = [{'github': 'heavysink', 'email': 'Heavysink <winstonwu91@gmail.com>'}]
 build_prefix = 'extra-x86_64'
+repo_depends = ['openjpeg']
+
 def pre_build():
     aur_pre_build()
     add_makedepends(['jasper'])
