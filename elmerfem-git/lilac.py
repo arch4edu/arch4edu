@@ -16,8 +16,7 @@ for repo in handle.get_syncdbs():
         url = f'{mirror}/{repo.name}/os/{arch}/{result.filename}'
         break
 
-maintainers = [{'github': 'heavysink', 'email': 'Winston Wu <winstonwu91@gmail.com>'}]
-repo_depends = ['paraview-opt', 'mumps-par' ,'oce' ,'hypre' ,'mmg' ,'libnn-git' ,'libcsa-git' ,'scalapack']
+repo_depends = ['mumps-par' ,'oce' ,'hypre' ,'mmg' ,'libnn-git' ,'libcsa-git' ,'scalapack']
 build_prefix = 'extra-x86_64'
 time_limit_hours = 8
 makechrootpkg_args = ['-I', 'tmp/'+result.filename]

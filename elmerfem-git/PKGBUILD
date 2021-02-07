@@ -8,7 +8,7 @@ pkgdesc="A finite element software for multiphysical problems"
 arch=('x86_64')
 url="http://www.elmerfem.org"
 license=('GPL')
-depends=('arpack' 'blas' 'qt5-script' 'python-pyqt5' 'qwt' 'netcdf-fortran-openmpi' 'paraview-opt' 'mumps-par' 'oce' 'vtk' 'hypre' 'mmg' 'libnn-git' 'libcsa-git' 'scalapack')
+depends=('arpack' 'blas' 'qt5-script' 'python-pyqt5' 'qwt' 'netcdf-fortran-openmpi'mumps-par' 'oce' 'vtk' 'hypre' 'mmg' 'libnn-git' 'libcsa-git' 'scalapack')
 makedepends=('git' 'gcc-fortran' 'cmake')
 provides=('elmerfem')
 conflicts=('elmerfem')
@@ -62,8 +62,7 @@ build() {
         -DWITH_VTK=ON \
         -DNN_INCLUDE_DIR=/usr/include \
         -DHYPRE_INCLUDE_DIR=/usr/include/hypre \
-        -DWITH_ScatteredDataInterpolator=ON \
-        -DWITH_PARAVIEW=ON
+        -DWITH_ScatteredDataInterpolator=ON
   make all
 }
 
