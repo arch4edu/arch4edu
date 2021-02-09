@@ -1,45 +1,43 @@
-# Maintainer: Boohbah <boohbah at gmail.com>
+# Maintainer: Aaron Keesing <agkphysics at gmail dot com>
+# Contributor: Boohbah <boohbah at gmail.com>
 # Contributor: Petron <i at jingbei.li>
 # Contributor: jzombi <jzombi at gmail.com>
 
 pkgname=opensmile
-pkgver=2.3.0
+pkgver=3.0.0
 pkgrel=1
 pkgdesc="A fast, real-time (audio) feature extraction utility for automatic speech, music and paralinguistic recognition research"
-arch=('i686' 'x86_64' 'armv7h')
-url="http://www.audeering.com/research/opensmile"
+arch=('x86_64')
+url="https://github.com/audeering/opensmile/"
 license=('custom')
-depends=('portaudio')
-source=("$pkgname.tar.gz::http://www.audeering.com/download/opensmile-2-3-0-tar-gz/?wpdmdl=4782"
-        "makefile.patch"
-        "fix_conversion.patch")
-sha256sums=('41adf2886089b76c000b74a479ac32ed983fc09bd81d1e9df4b0f4999ee71c7f'
-            '3f7f6b1f3dada7257c8d3c52f96851c44d05d38e9e2f85f3cfd114fba5d30fb5'
-            '773f3de249579084c1a6f241a687782ee36777bc909b0371624d6cb29b0a1516')
-
-prepare() {
-  cd "opensmile-$pkgver"
-  patch -p 1 < $srcdir/makefile.patch
-  patch -p 1 < $srcdir/fix_conversion.patch
-}
+depends=('portaudio' 'ffmpeg')
+makedepends=('cmake')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/audeering/opensmile/archive/v$pkgver.tar.gz")
+sha256sums=('0f7a91276a647c4558211b7a635b8aa41f2418f84b603e76c9b363f848cbbb73')
 
 build() {
-  cd "opensmile-$pkgver"
-  ./autogen.sh
-  ./autogen.sh
-  ./configure \
-    --prefix="/usr" --with-portaudio="yes"
-  make -j1
+  cmake -B build \
+    -S "$srcdir/$pkgname-$pkgver" \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DSTATIC_LINK=ON \
+    -DMARCH_NATIVE=ON \
+    -DWITH_PORTAUDIO=ON \
+    -DWITH_FFMPEG=ON \
+    -DBUILD_FLAGS="-DBUILD_LIBSVM -DBUILD_RNN -DBUILD_SVMSMO" \
+    -Wno-dev
+  make -C build
 }
 
 package() {
-  cd "opensmile-$pkgver"
-  make DESTDIR="$pkgdir" install
+  make -C build DESTDIR="$pkgdir" install
+
+  cd "$srcdir/$pkgname-$pkgver"
   mkdir -p "$pkgdir/usr/share/$pkgname"
   cp -a config "$pkgdir/usr/share/$pkgname"
-  find "$pkgdir/usr/share/$pkgname/config" -type d -exec chmod a+rx {} \;
-  find "$pkgdir/usr/share/$pkgname/config" -type f -exec chmod a+r {} \;
-  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/LICENSE.txt"
+  find "$pkgdir/usr/share/$pkgname/config" -type d -exec chmod 755 {} \;
+  find "$pkgdir/usr/share/$pkgname/config" -type f -exec chmod 644 {} \;
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
 # vim:set ts=2 sw=2 et:
