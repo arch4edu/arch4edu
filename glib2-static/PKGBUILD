@@ -1,7 +1,7 @@
 # Maintainer: nightuser <nightuser.android@gmail.com>
 
 pkgname=glib2-static
-pkgver=2.66.4
+pkgver=2.66.6
 pkgrel=1
 pkgdesc="Low level core library: Static library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -11,11 +11,15 @@ depends=()
 makedepends=(gettext zlib libffi shared-mime-info python libelf git util-linux meson dbus)
 checkdepends=(desktop-file-utils)
 options=('!docs' '!libtool' '!emptydirs' '!strip' 'staticlibs')
-source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz")
-sha256sums=('97df8670e32f9fd4f7392b0980e661dd625012015d58350da1e58e343f4af984')
+source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz"
+        '0001-giochannel-Fix-length_size-bounds-check.patch')
+sha256sums=('80fff9c63d2725834328071c42003c311f77f91caf2285195c587c62f5638329'
+            'd2dbc00679545cedb33d0179d69a9be5c12b3f00d426e227ca07687384f3407c')
 
 prepare() {
   cd "glib-$pkgver"
+
+  patch -Np1 -i "../0001-giochannel-Fix-length_size-bounds-check.patch"
 }
 
 build() {
