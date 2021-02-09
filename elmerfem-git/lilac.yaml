@@ -3,7 +3,5 @@ maintainers:
     email: Winston Wu <winstonwu91@gmail.com>
 
 update_on:
-- source: aur
-  aur:
 - source: github
   github: ElmerCSC/elmerfem

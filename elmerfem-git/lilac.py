@@ -22,14 +22,16 @@ time_limit_hours = 8
 makechrootpkg_args = ['-I', 'tmp/'+result.filename]
 
 def pre_build():
-    aur_pre_build()
+    vcs_update()
 
     run_cmd(['wget', '-nc', url, url+'.sig'])
     run_cmd(['gpg', '--homedir', gpgpath, '--verify', result.filename+'.sig', result.filename])
     run_cmd(['mkdir', '-p', 'tmp'])
     run_cmd(['mv', result.filename, result.filename+'.sig', 'tmp'])
 
-post_build = aur_post_build
+def post_build():
+    git_add_files('PKGBUILD')
+    git_commit()
 
 if __name__ == '__main__':
     single_main(build_prefix)
