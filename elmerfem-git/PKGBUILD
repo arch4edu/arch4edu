@@ -27,14 +27,10 @@ pkgver() {
     (git log -1 --format='%cd.%h' --date=short | tr -d -)
 }
 
+
 prepare() {
   cd "$srcdir/$_pkgname"
-  if [[ ! -d ../build ]]
-  then
-    mkdir ../build
-  fi
-  sed -i 's/1 depth/1 ${depth}/g' fem/tests/CMakeLists.txt
-  sed -i 's/FALSE/false/g' ElmerGUI/Application/vtkpost/matc.cpp
+  mkdir ../build
   patch -p0 < "$srcdir/ElmerIce.patch"
   sed -i '/#include <QPainter>/a #include <QPainterPath>' ElmerGUI/Application/twod/renderarea.cpp
 }
