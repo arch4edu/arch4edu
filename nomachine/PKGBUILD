@@ -1,0 +1,94 @@
+# Maintainer: Runnytu < runnytu at gmail dot com >
+# OldMaintainer: FreeK <stephan@confidr.me>
+# Contributor: olav-st <olav.s.th@gmail.com>
+# Contributor: David Manouchehri <manouchehri@riseup.net>
+
+### BUILD OPTIONS
+# Set to n to disable nomachine service autostart
+_autoservice=y
+# Set to n to disable firewall autorules
+_autofirewall=y
+### END BUILD OPTIONS
+
+pkgname=nomachine
+pkgver=7.1.3
+_pkgvermain=7.1
+_pkgrel_i686=1
+_pkgrel_x86_64=1
+_pkgrel_armv6h=1
+_pkgrel_armv7h=1
+_pkgrel_armv8h=1
+_pkgrel_aarch64=${_pkgrel_armv8h}
+_pkgrel_pentium4=${_pkgrel_i686}
+pkgrel=1
+pkgdesc="Remote desktop application"
+groups=('network')
+url="http://www.nomachine.com"
+license=('custom:"NoMachine EULA"')
+arch=('x86_64' 'i686' 'armv6h' 'armv7h' 'armv8h' 'aarch64' 'pentium4')
+options=('!strip')
+conflicts=('nxmanager' 'nxwebplayer' 'nxserver' 'nxnode' 'nxclient')
+depends=('bash' 'openssh' 'nawk')
+optdepends=('xorg-xauth: allows logging into a headless machine')
+sha512sums_x86_64=('cc53f9f12abc94e90f40b7aef274fd61562c3cce427db017fde224c90903326c8b5dd4b0ddd4ecc255425d6a62b8594489f8b49869825cd22ace18afe2eb898d')
+sha512sums_i686=('78267ea09ae7ec560eba427c0bfbc2256b0daa5a47de1276fdde28e8f3a8f6da0d6c5bea4be5865ff7aeada1229cddeca3d6a2960b7a2af48aac557fcd32c6ff')
+sha512sums_armv6h=('cc08829b91869af548c80c3823aa1c8f2158a65c8a5534e5c34cab2921f86401d040c21a5e0cbe6eb5e7695bbc43514d4c503a5efffe6f8f81129f4f4a4e81cc')
+sha512sums_armv7h=('ef9e5e10f57407383e61c41bfaa0ec28ed47a82d6788c461d6faa199ec4fe063caf9ee77e08ae247be2ed501a2523cd6dbeab2ca1871ecd2901e88917c14ab99')
+sha512sums_armv8h=('d8a62d84d924dd1f4b98a01209a596c022d5bbf86a4da7de2f2a7fc5e89af525bb8574a92aa838ca1d94299ba4c09ceebc6fbb79a41b6f21fda429588eb7e577')
+sha512sums_aarch64=('d8a62d84d924dd1f4b98a01209a596c022d5bbf86a4da7de2f2a7fc5e89af525bb8574a92aa838ca1d94299ba4c09ceebc6fbb79a41b6f21fda429588eb7e577')
+sha512sums_pentium4=('78267ea09ae7ec560eba427c0bfbc2256b0daa5a47de1276fdde28e8f3a8f6da0d6c5bea4be5865ff7aeada1229cddeca3d6a2960b7a2af48aac557fcd32c6ff')
+source_x86_64=("http://download.nomachine.com/download/${_pkgvermain}/Linux/${pkgname}_${pkgver}_${_pkgrel_x86_64}_x86_64.tar.gz")
+source_i686=("http://download.nomachine.com/download/${_pkgvermain}/Linux/${pkgname}_${pkgver}_${_pkgrel_i686}_i686.tar.gz")
+source_armv6h=("http://download.nomachine.com/download/${_pkgvermain}/Raspberry/${pkgname}_${pkgver}_${_pkgrel_armv6h}_armv6hl.tar.gz")
+source_armv7h=("http://download.nomachine.com/download/${_pkgvermain}/Raspberry/${pkgname}_${pkgver}_${_pkgrel_armv7h}_armv7hl.tar.gz")
+source_armv8h=("http://download.nomachine.com/download/${_pkgvermain}/Raspberry/${pkgname}_${pkgver}_${_pkgrel_armv8h}_aarch64.tar.gz")
+source_aarch64=("${source_armv8h[@]}")
+source_pentium4=("${source_i686[@]}")
+install=nomachine.install
+
+prepare()
+{
+#Fix Fedora Version Var And Libstdc++ Rename
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxclient.tar.gz" NX/scripts/setup/nxclient
+sed -i 's/    majorFedoraVersion.*/    majorFedoraVersion=23/' "$srcdir/NX/scripts/setup/nxclient"
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxclient.tar.gz" "NX/lib/"
+for _libstdc in "$srcdir/NX/lib/"libstdc++.*; do
+mv "${_libstdc}" ${_libstdc}.nomachine
+done
+gzip -d "$srcdir/NX/etc/NX/server/packages/nxclient.tar.gz"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxclient.tar" NX/scripts/setup/nxclient -C "$srcdir/NX/scripts/setup/nxclient"
+tar --delete -f "$srcdir/NX/etc/NX/server/packages/nxclient.tar" "NX/lib/"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxclient.tar" "NX/lib/" -C "$srcdir/NX/lib/"
+gzip "$srcdir/NX/etc/NX/server/packages/nxclient.tar"
+rm -fr "$srcdir/NX/scripts"*
+rm -fr "$srcdir/NX/lib"*
+#Change Automatic Service Start And/Or Firewall Automatic Rules If Apply
+if [ $_autoservice = y ] && [ $_autofirewall = y ]; then
+echo "####################################################################"
+echo "#No Changes To Automatic Service Start And Firewall Automatic Rules#"
+echo "####################################################################"
+else
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz" NX/etc/server-fedora.cfg.sample
+if [ $_autoservice = n ] && [ $_autofirewall = n ]; then
+sed -i 's/#EnableFirewallConfiguration 1/EnableFirewallConfiguration 0/' NX/etc/server-fedora.cfg.sample
+sed -i 's/#StartNXDaemon Automatic/StartNXDaemon Manual/' NX/etc/server-fedora.cfg.sample
+elif [ $_autoservice = y ] && [ $_autofirewall = n ]; then
+sed -i 's/#EnableFirewallConfiguration 1/EnableFirewallConfiguration 0/' NX/etc/server-fedora.cfg.sample
+elif [ $_autoservice = n ] && [ $_autofirewall = y ]; then
+sed -i 's/#StartNXDaemon Automatic/StartNXDaemon Manual/' NX/etc/server-fedora.cfg.sample
+fi
+gzip -d "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxserver.tar" NX/etc/server-fedora.cfg.sample -C "$srcdir/NX/etc/server-fedora.cfg.sample"
+gzip "$srcdir/NX/etc/NX/server/packages/nxserver.tar"
+rm -fr "$srcdir/NX/etc/server-fedora.cfg.sample"
+fi
+}
+
+package()
+{
+cd "$srcdir"
+mkdir "$srcdir/NX/etc" -p
+install -d "$pkgdir/usr/"
+cp -a NX "$pkgdir/usr/NX"
+}
+
