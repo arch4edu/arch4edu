@@ -1,0 +1,84 @@
+include:
+  - project: 'common/gitlab-helper'
+    ref: master
+    file: 'container-helper.yml'
+  - project: 'common/gitlab-helper'
+    ref: master
+    file: 'deploy-helper.yml'
+
+variables:
+  BUILD_AND_TEST_IMAGE: build_and_test
+
+workflow:
+  rules:
+    # don't create pipeline if the commit message starts with WIP
+    - if: $CI_COMMIT_MESSAGE =~ /^WIP/
+      when: never
+    # don't create pipeline if we're merging from master or version branches
+    - if: $CI_MERGE_REQUEST_IID && $CI_COMMIT_REF_NAME =~ /^(master|VER_\d+_\d+)$/
+      when: never
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_REF_NAME =~ /^(master|VER_\d+_\d+)$/
+    - if: $CI_COMMIT_TAG
+    - if: $CI_PIPELINE_SOURCE =~ /^(trigger|pipeline|web|api|merge_request_event)$/
+
+.rules_templates:
+  rules:
+    - if: &on_master $CI_COMMIT_REF_NAME =~ /^master$/
+
+stages:
+  - prepareBuild
+  - build
+  - test
+  - deploy
+
+docker-build-and-test:
+  stage: prepareBuild
+  extends: .container-build-and-push
+  variables:
+    WORKING_DIR: ${CI_PROJECT_DIR}
+    DOCKERFILE_NAME: "Dockerfile.build_and_test"
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}/${BUILD_AND_TEST_IMAGE}:${CI_COMMIT_REF_NAME}
+    BUILD_ARGS: REGISTRY=${CI_REGISTRY}
+  needs: []
+
+build-eccodes:
+  stage: build
+  image: ${CI_REGISTRY_IMAGE}/${BUILD_AND_TEST_IMAGE}:${CI_COMMIT_REF_NAME}
+  needs:
+    - job: "docker-build-and-test"
+      artifacts: no
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    expire_in: 1 day
+    paths:
+      - eccodes*.pkg.tar.zst
+  script:
+    # We istalled only depends in the build-and-test image, 
+    # build-depends need to installed here, so we're able to check 
+    # the installed package is not dependent on any of the build libs/packages
+    - makepkg -s --noconfirm
+
+test-eccodes:
+  stage: test
+  image: ${CI_REGISTRY_IMAGE}/${BUILD_AND_TEST_IMAGE}:${CI_COMMIT_REF_NAME}
+  needs: ["build-eccodes"]
+  script:
+    # Recommended checks
+    - namcap -m PKGBUILD
+    - namcap -m eccodes*.pkg.tar.zst
+    # Try to install package
+    - sudo pacman -U --noconfirm eccodes*.pkg.tar.zst
+
+deploy-eccodes:
+  stage: deploy
+  extends: .git-ssh-push-remote
+  variables:
+    REMOTE_HOST: "aur.archlinux.org"
+    REMOTE_USER: "aur"
+    REMOTE_REPOSITORY: "eccodes.git"
+  before_script:
+    - echo "Uploading to AUR..."
+  rules:
+    - if: *on_master
+      when: manual
