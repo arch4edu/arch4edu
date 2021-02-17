@@ -1,9 +1,9 @@
 # Maintainer: Anderson Rocha <anderson2320@gmail.com>
 
 pkgname=cef-minimal
-pkgver=87.1.6
-_pkgcommit="g315d248"
-_chromiumver="87.0.4280.66"
+pkgver=88.2.8
+_pkgcommit="ge484012"
+_chromiumver="88.0.4324.150"
 _pkgver="${pkgver}+${_pkgcommit}+chromium-${_chromiumver}"
 _url_pkgver="${pkgver}%2B${_pkgcommit}%2Bchromium-${_chromiumver}"
 pkgrel=1
@@ -24,8 +24,8 @@ source_x86_64=(
     "${cdn_build_package_url}/cef_binary_${_url_pkgver}_linux64_minimal.tar.bz2"
 )
 
-sha1sums_i686=('d7848dbbc8f0a3d40017ec62e6a046741f9ce467')
-sha1sums_x86_64=('90b16aab9647df340f8cfaa46c039dbd55d9e1e5')
+sha1sums_i686=('f3dec9b8c13590a4b88c782862a9c69c5bb9c986')
+sha1sums_x86_64=('0ff708f6104fab3e43fbcd41d0a9aea6f69bc3f5')
 
 [[ "$CARCH" = "i686" ]] && _arch="32"
 [[ "$CARCH" = "x86_64" ]] && _arch="64"
@@ -41,4 +41,7 @@ package() {
     mkdir -p "$pkgdir"/opt/cef/
     cp -R "$srcdir"/cef_binary_${_pkgver}_linux${_arch}_minimal/* "$pkgdir"/opt/cef
     install -Dm644 "$srcdir"/cef_binary_${_pkgver}_linux${_arch}_minimal/LICENSE.txt "$pkgdir"/usr/share/licenses/${pkgname}/LICENSE
+
+    # Fix read permissions
+    chmod 644 "$pkgdir"/opt/cef/libcef_dll_wrapper/libcef_dll_wrapper.a
 }
