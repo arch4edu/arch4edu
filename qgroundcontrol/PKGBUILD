@@ -3,7 +3,7 @@
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
 pkgver=4.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
 url="https://github.com/mavlink/qgroundcontrol"
@@ -60,7 +60,7 @@ source=("qgroundcontrol-${pkgver}.tar.gz::https://github.com/mavlink/qgroundcont
         "mavlink-v2.0-qgc${pkgver}.tar.gz::https://github.com/mavlink/c_library_v2/archive/${pkgver_mavlink}.tar.gz"
         "aossl-qgc${pkgver}.tar.gz::https://github.com/Auterion/android_openssl/archive/${pkgver_aossl}.tar.gz"
         "gst-plugins-good-qgc${pkgver}.tar.gz::https://github.com/mavlink/gst-plugins-good/archive/${pkgver_gst}.tar.gz"
-        "libicudata-qgc.patch::https://patch-diff.githubusercontent.com/raw/mavlink/qgroundcontrol/pull/9332.patch"
+        "libicudata-qgc.patch::https://github.com/mavlink/qgroundcontrol/commit/cc95825594fc99e7537198003cab4a0dd1172bcb.patch"
 )
 
 sha256sums=('08ae057e495e5e01384d6bb931721267e4df86f49a627bb90d1598f1650d7c26'
