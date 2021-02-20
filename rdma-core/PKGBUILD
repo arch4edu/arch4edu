@@ -5,7 +5,7 @@ _srcname='rdma-core'
 pkgdesc='RDMA core userspace libraries and daemons'
 pkgver='33.1'
 _tag="v${pkgver}"
-pkgrel='2'
+pkgrel='3'
 arch=('x86_64')
 url="https://github.com/linux-rdma/${_srcname}"
 license=('GPL2' 'custom:OpenIB.org BSD (MIT variant)')
@@ -19,7 +19,7 @@ _provides=('rdma' 'ibacm' 'libiwpm' 'libibcm' 'libibumad' 'libibverbs'
 provides=("${_provides[@]}")
 conflicts=("${_provides[@]}")
 replaces=("${_provides[@]}")
-backup=('etc/rdma/'{'rdma.conf','mlx4.conf','sriov-vfs'})
+backup=('etc/rdma/'{'rdma.conf','mlx4.conf'})
 
 source=("${_srcname}::git+${url}.git#tag=${_tag}?signed")
 sha512sums=('SKIP')
