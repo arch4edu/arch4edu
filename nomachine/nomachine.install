@@ -16,11 +16,9 @@ post_remove()
     rm -rf /usr/NX
 }
 
-pre_upgrade() {
-    pre_remove
-}
-
-post_upgrade() {
-    post_install
+post_upgrade()
+{
+    echo "Running NX update script..."
+    /usr/NX/nxserver --update fedora
 }
 

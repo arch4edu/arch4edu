@@ -4,10 +4,10 @@
 # Contributor: David Manouchehri <manouchehri@riseup.net>
 
 ### BUILD OPTIONS
-# Set to n to disable nomachine service autostart
-_autoservice=y
-# Set to n to disable firewall autorules
-_autofirewall=y
+# Set to y to enable nomachine service autostart
+_autoservice=n
+# Set to y to enable firewall autorules
+_autofirewall=n
 ### END BUILD OPTIONS
 
 pkgname=nomachine
@@ -20,7 +20,7 @@ _pkgrel_armv7h=1
 _pkgrel_armv8h=1
 _pkgrel_aarch64=${_pkgrel_armv8h}
 _pkgrel_pentium4=${_pkgrel_i686}
-pkgrel=3
+pkgrel=4
 pkgdesc="Remote desktop application"
 groups=('network')
 url="http://www.nomachine.com"
@@ -64,19 +64,36 @@ rm -fr "$srcdir/NX/scripts"*
 rm -fr "$srcdir/NX/lib"*
 #Change Automatic Service Start And/Or Firewall Automatic Rules If Apply
 if [ $_autoservice = y ] && [ $_autofirewall = y ]; then
-echo "####################################################################"
-echo "#No Changes To Automatic Service Start And Firewall Automatic Rules#"
-echo "####################################################################"
-else
-tar -zxf "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz" NX/etc/server-fedora.cfg.sample
-if [ $_autoservice = n ] && [ $_autofirewall = n ]; then
-sed -i 's/#EnableFirewallConfiguration 1/EnableFirewallConfiguration 0/' NX/etc/server-fedora.cfg.sample
-sed -i 's/#StartNXDaemon Automatic/StartNXDaemon Manual/' NX/etc/server-fedora.cfg.sample
+echo "##################################################################"
+echo "#Enabling Automatic Service Start And Firewall Automatic Rules#"
+echo "##################################################################"
 elif [ $_autoservice = y ] && [ $_autofirewall = n ]; then
+echo "#####################################"
+echo "#Enabling Automatic Service Start#"
+echo "#####################################"
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz" NX/etc/server-fedora.cfg.sample
 sed -i 's/#EnableFirewallConfiguration 1/EnableFirewallConfiguration 0/' NX/etc/server-fedora.cfg.sample
+gzip -d "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxserver.tar" NX/etc/server-fedora.cfg.sample -C "$srcdir/NX/etc/server-fedora.cfg.sample"
+gzip "$srcdir/NX/etc/NX/server/packages/nxserver.tar"
+rm -fr "$srcdir/NX/etc/server-fedora.cfg.sample"
 elif [ $_autoservice = n ] && [ $_autofirewall = y ]; then
+echo "######################################"
+echo "#Enabling Firewall Automatic Rules#"
+echo "######################################"
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz" NX/etc/server-fedora.cfg.sample
 sed -i 's/#StartNXDaemon Automatic/StartNXDaemon Manual/' NX/etc/server-fedora.cfg.sample
-fi
+gzip -d "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxserver.tar" NX/etc/server-fedora.cfg.sample -C "$srcdir/NX/etc/server-fedora.cfg.sample"
+gzip "$srcdir/NX/etc/NX/server/packages/nxserver.tar"
+rm -fr "$srcdir/NX/etc/server-fedora.cfg.sample"
+elif [ $_autoservice = n ] && [ $_autofirewall = n ]; then
+echo "###################################################################"
+echo "#Disabling Automatic Service Start And Firewall Automatic Rules#"
+echo "###################################################################"
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz" NX/etc/server-fedora.cfg.sample
+sed -i 's/#EnableFirewallConfiguration 1/EnableFirewallConfiguration 0/' NX/etc/server-fedora.cfg.sample
+sed -i 's/#StartNXDaemon Automatic/StartNXDaemon Manual/' NX/etc/server-fedora.cfg.sample
 gzip -d "$srcdir/NX/etc/NX/server/packages/nxserver.tar.gz"
 tar -rf "$srcdir/NX/etc/NX/server/packages/nxserver.tar" NX/etc/server-fedora.cfg.sample -C "$srcdir/NX/etc/server-fedora.cfg.sample"
 gzip "$srcdir/NX/etc/NX/server/packages/nxserver.tar"
