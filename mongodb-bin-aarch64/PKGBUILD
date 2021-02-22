@@ -1,7 +1,7 @@
 #Maintainer: Ali Molaei <ali dot molaei at protonmail dot com>
 
 pkgname="mongodb-bin"
-pkgver="4.4.3"
+pkgver="4.4.4"
 basever="4.4"
 basedist="focal"
 pkgrel="1"
@@ -33,18 +33,18 @@ source_aarch64=(
     "mongodb.tmpfiles"
     "LICENSE")
 
-sha256sums_x86_64=("093f51a9f0b047f4bf76bb93fc27ec313baee1d0187ad193fd501cff15bdbc3f"
-                   "216ff6da1d4abdbcbb97fdfbba227e8cae466f7ae11e416bfae90ef8ded1777f"
-                   "acee50324143ff5e0d096688fb321a13779a227fb469f46a362ede8f49bbc05f"
+sha256sums_x86_64=("8d494269b1830e2ad019d27f9326b84b0e8b2ba6bd11468c7d407f6c9196f710"
+                   "28ef226a188df39117389e8224de6a67f240ce5fdb94fc9c069d971bde0c1ff8"
+                   "51f3911ef06ae64f76fd5af26bfbc5a65720d9e011fddc964cd7091bfc952e5c"
                    "19f55ab28652b3817e98fc3f15cc2f6f3255a5e1dfd7b0d5a27c9ba22fd2703e"
                    "f2a79c7fcd75253ab1cb888541a0c0678bf3bb78700c79996e24a678f1e42850"
                    "47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b"
                    "51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac"
                    "09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27")
 
-sha256sums_aarch64=("1f957205210333af821232c5f1641119e1bcdfc53ed4482cdbe10ee94c093785"
-                    "bf31e698b80fa90cc32b07205f33051cf8bbbeb106616ec9f4c2aef95fc9f26a"
-                    "4397f6b95f6f2081ff5a514df3c86b46b85bfe5f2991ae32ea6bbad1e2676aa0"
+sha256sums_aarch64=("ad0b4062787d488425b2a2ed85ce645efedd379fe04aa9c04e3c442d0c1c22dc"
+                    "0f5688d4312ad50c65c26712effbd5b6d1e27beb70fc16ab1e97294e2de57dd4"
+                    "cdb5fd2b5b35730201bbf10b059c0783d8bfe5491320a462722777618206617f"
                     "965a166f1aabd5f6b06c0a6c0939920ec6aad87407b695c61ce0f2a8c450b680"
                     "f2a79c7fcd75253ab1cb888541a0c0678bf3bb78700c79996e24a678f1e42850"
                     "47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b"
