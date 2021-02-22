@@ -3,15 +3,15 @@
 _name=SoundFile
 pkgname=python-soundfile
 pkgver=0.10.3.post1
-pkgrel=3
+pkgrel=4
 pkgdesc="An audio library based on libsndfile, CFFI and NumPy"
-url="https://github.com/bastibe/PySoundFile"
+url="https://github.com/bastibe/python-soundfile"
 arch=('any')
 license=('BSD')
 makedepends=('python-setuptools')
 depends=('python-cffi' 'libsndfile' 'python-numpy')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha256sums=('490cff42650733d1832728b937fe99fa1802896f5ef4d61bcf78cf7ebecb107b')
+source=("https://github.com/bastibe/python-soundfile/releases/download/${pkgver/\.post1/post1}/${_name}-${pkgver}.tar.gz")
+sha256sums=('ffd018d59397a0a4c5327087324ff3620bfd770f7e3eb0cd59779af849e8d861')
 
 
 build() {
