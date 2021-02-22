@@ -4,24 +4,25 @@ pkgbase=python-cheetah3
 pkgname=('python-cheetah3' 'python2-cheetah3')
 _name=Cheetah3
 pkgver=3.2.6
-pkgrel=1
+_subver="post1"
+pkgrel=2
 pkgdesc="A Python powered template engine and code generator"
-arch=(any)
+arch=('any')
 url="http://www.cheetahtemplate.org"
 license=(MIT)
 makedepends=('python-setuptools'
              'python2-setuptools')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha512sums=('e3422147b3d476676ecfd4ed0bba77c80b008869055748ea50fe83a79b462bb15a20239e6803403e90ea6a0a090697a7fe6ecaae8bfd8e4832f3f0c8da69200d')
+source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.${_subver}.tar.gz")
+sha512sums=('69b82ccf31930c50ffdcbc7608683a8456d8025ca3633b0637d16de64aa9337f5f65da86d54bb2b3aa41722f25727a503307b5a7cc80a13d74f332117d6ca05e')
 
 prepare() {
-  cp -a Cheetah3-${pkgver}{,-py2}
+  cp -a Cheetah3-${pkgver}.${_subver}{,-py2}
 }
 
 package_python-cheetah3() {
   optdepends=('python-markdown')
 
-  cd "${srcdir}/${_name}-${pkgver}"
+  cd "${srcdir}/${_name}-${pkgver}.${_subver}"
   python setup.py install --root="${pkgdir}" --optimize=1
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
@@ -29,7 +30,7 @@ package_python-cheetah3() {
 package_python2-cheetah3() {
   optdepends=('python2-markdown')
 
-  cd "${srcdir}/${_name}-${pkgver}-py2"
+  cd "${srcdir}/${_name}-${pkgver}.${_subver}-py2"
   python2 setup.py install --root="${pkgdir}" --optimize=1
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
