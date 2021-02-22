@@ -5,7 +5,7 @@
 # Contributor: Piotr Balcerowski <piotr@balcerowski.org>
 
 pkgname=libcurl-openssl-1.0
-pkgver=7.72.0
+pkgver=7.75.0
 pkgrel=1
 pkgdesc="An URL retrieval library (without versioned symbols, built against openssl-1.0)"
 arch=('aarch64' 'x86_64')
@@ -16,7 +16,7 @@ depends=('curl' 'glibc' 'krb5' 'libssh2' 'openssl-1.0' 'libpsl' 'zlib'
 provides=('libcurl-openssl-1.0.so')
 options=('strip')
 source=("https://curl.haxx.se/download/curl-${pkgver}.tar.gz"{,.asc})
-sha512sums=('f1946394595baa2b2889c4fed5e8745036cecfe9c425010c41fbc4baa71ffd7ff3e78289dd7ee14f0c74c482056838e5408d63f9ee9ee06c31ed920282f08507'
+sha512sums=('ebef01be48e05f46f7d0605966d4c66391d5a51f6d102265647522f8f5df61b5440c930bd1b043d56968769869275123122826a9ec7fb3148c72a28ee32ce696'
             'SKIP')
 validpgpkeys=('27EDEAF22F3ABCEB50DB9A125CC908FDB71E12C2') # Daniel Stenberg
 
@@ -47,10 +47,10 @@ package() {
 
   make -C lib DESTDIR="${pkgdir}" install
 
-  mv "${pkgdir}"/usr/lib/libcurl{,-openssl-1.0}.so.4.6.0
+  mv "${pkgdir}"/usr/lib/libcurl{,-openssl-1.0}.so.4.7.0
   rm "${pkgdir}"/usr/lib/libcurl.{a,so}*
-  for version in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0; do
-    ln -s libcurl-openssl-1.0.so.4.6.0 "${pkgdir}"/usr/lib/libcurl-openssl-1.0.so.${version}
+  for version in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0; do
+    ln -s libcurl-openssl-1.0.so.4.7.0 "${pkgdir}"/usr/lib/libcurl-openssl-1.0.so.${version}
   done
 
   install -dm 755 "${pkgdir}"/usr/share/licenses
