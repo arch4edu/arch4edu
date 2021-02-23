@@ -1,5 +1,0 @@
-update_on:
-- source: aur
-  aur:
-- source: github
-  github: Dronecode/MAVProxy
