@@ -1,53 +1,38 @@
-# Maintainer: Quan Guo <guotsuan at gmail dot com>
+#  Maintainer: Blair Bonnett <blair dot bonnett at gmail dot com>
+# Contributor: Quan Guo <guotsuan at gmail dot com>
 
 pkgname=python-llvmlite-git
-
-pkgbase=python-llvmlite-git
 _gitname=llvmlite
-pkgver=0.36.0dev0.r8.ge0e03f3
+pkgver=0.36.0rc1.r0.gb8faaac
 pkgrel=1
-pkgdesc="A lightweight LLVM python binding for writing JIT compilers"
+pkgdesc="A lightweight LLVM python binding for writing JIT compilers (Git version)"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
 license=('BSD')
-depends=('python' 'python2' 'llvm9' )
-makedepends=('git' 'cython' 'cython2' 'python2-enum34')
-conflicts=()
-replaces=()
-backup=()
+depends=('python' 'llvm10-libs')
+makedepends=('git' 'llvm10')
+provides=("python-llvmlite=$pkgver")
+conflicts=('python-llvmlite')
 source=(${_gitname}::git+https://github.com/numba/llvmlite.git)
-md5sums=('SKIP')
-
-
-prepare() {
-  cp -a ${_gitname}{,-py2}
-}
+sha256sums=('SKIP')
 
 pkgver() {
   cd "$_gitname"
   git describe --long | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
 }
 
-package_python-llvmlite-git() {
-  provides=('python-llvmlite=$pkgver') 
-  depends=('python' 'llvm' )
-  conflicts=('python-llvmlite')
-  cd ${srcdir}/${_gitname}
-  sed -i 's/-lLLVMOProfileJIT/ /g' ffi/Makefile.linux
-  python setup.py install \
-    --prefix=/usr \
-    --root=$pkgdir
+build() {
+  cd "$srcdir/$_gitname"
+  python setup.py build
 }
 
+check() {
+  cd "$srcdir/$_gitname"
+  python runtests.py
+}
 
-package_python2-llvmlite-git() {
-  provides=('python2-llvmlite=$pkgver')
-  depends=('python2' 'llvm' )
-  conflicts=('python2-llvmlite')
-
-  cd ${srcdir}/${_gitname}-py2
-  sed -i 's/-lLLVMOProfileJIT/ /g' ffi/Makefile.linux
-  python2 setup.py install \
-    --prefix=/usr \
-    --root=$pkgdir
+package() {
+  cd ${srcdir}/${_gitname}
+  python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
