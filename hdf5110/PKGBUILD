@@ -4,7 +4,7 @@
 pkgname=hdf5110
 pkgver=1.10.7
 _pkgver=${pkgver%.*}
-pkgrel=1
+pkgrel=2
 pkgdesc="General purpose library and file format for storing scientific data, legacy 1.10 branch w/java bindings"
 arch=(x86_64)
 url="https://www.hdfgroup.org/hdf5"
