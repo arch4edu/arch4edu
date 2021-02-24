@@ -1,6 +1,7 @@
 # $Id$
-# Maintainer: Solomon Choina <shlomochoina@gmail.com>
-# Co-Maintainer: Konstantin Gizdov <arch@kge.pw>
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Contributor: Solomon Choina <shlomochoina@gmail.com>
+# Contributor: Konstantin Gizdov <arch@kge.pw>
 # Contributor: Jan "heftig" Steffens <jan.steffens@gmail.com>
 # Contributor: Sebastian Nowicki <sebnow@gmail.com>
 # Contributor: Devin Cofer <ranguvar@archlinux.us>
@@ -13,7 +14,7 @@
 
 pkgname=('llvm50' 'llvm50-libs' 'clang50')
 pkgver=5.0.2
-pkgrel=6
+pkgrel=7
 _prefix="/usr/lib/llvm-5.0"
 arch=('i686' 'x86_64')
 url="http://llvm.org/"
@@ -53,6 +54,9 @@ prepare() {
   patch -Np1 -d tools/clang <../0002-Enable-SSP-and-PIE-by-default.patch
   patch -Np1 -i ../gcc-build-fix.patch
   patch -Np1 -i ../glibc.diff
+
+  # https://stackoverflow.com/questions/63437209/error-narrowing-conversion-of-1-from-int-to-long-unsigned-int-wnarrowi
+  sed -e '1154s|^|//|' -i projects/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cc
 
   mkdir -p build
   cd build
