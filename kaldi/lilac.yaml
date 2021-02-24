@@ -4,6 +4,8 @@ maintainers:
 update_on:
   - source: aur
     aur:
+  - source: github
+    github: kaldi-asr/kaldi
 repo_depends:
   - kaldi-openfst
 build_prefix: extra-x86_64
