@@ -5,6 +5,7 @@ update_on:
   - source: aur
     aur:
 repo_depends:
+  - hdf4
   - hdf5110
 build_prefix: extra-x86_64
 pre_build: aur_pre_build
