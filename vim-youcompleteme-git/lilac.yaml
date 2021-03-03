@@ -8,3 +8,5 @@ update_on:
     github: Valloric/YouCompleteMe
   - source: alias
     alias: python
+  - source: alias
+    alias: clang
