@@ -4,7 +4,7 @@
 
 pkgname=libiconv
 pkgver=1.16
-pkgrel=2
+pkgrel=3
 pkgdesc='GNU charset conversion library'
 arch=('i686' 'x86_64')
 url='http://www.gnu.org/software/libiconv/'
