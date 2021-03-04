@@ -1,0 +1,9 @@
+# directories
+pkg
+src
+
+# files
+*.tar.gz
+*.pkg.tar.xz
+*.log
+*.sig
