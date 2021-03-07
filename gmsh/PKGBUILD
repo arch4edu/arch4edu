@@ -1,18 +1,18 @@
 # Maintainer: gborzi <gborzi@ieee.org>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
-pkgver=4.7.1
-pkgrel=2
+pkgver=4.8.0
+pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="http://gmsh.info/"
 license=('custom')
 makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'texlive-core' 'voro++'
-             'fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
+             'fltk' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
              'glu')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
-sha256sums=('c984c295116c757ed165d77149bd5fdd1068cbd7835e9bcd077358b503891c6a'
+sha256sums=('2587783c4b02963f9d8afb717c9954caefa463ea2e0a12e1659307e6a0d7ea6b'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
@@ -43,7 +43,7 @@ build() {
 }
 
 package_gmsh() {
-   depends=('fltk' 'lapack' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
+   depends=('fltk' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
             'glu')
    optdepends=('gmsh-docs: docs for gmsh'
             'python2: for onelab.py'
@@ -53,7 +53,7 @@ package_gmsh() {
    cd "${srcdir}/${pkgname}-${pkgver}-source/build"
    make DESTDIR=${pkgdir} install
    install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
-   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.8/site-packages/gmsh.py"
+   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.9/site-packages/gmsh.py"
    install -D -m644 "${pkgdir}/usr/lib/gmsh.jl" "${pkgdir}/usr/share/gmsh/api/julia/gmsh.jl"
    rm -f "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/gmsh.jl"
    install -d "$pkgdir/etc/profile.d"
