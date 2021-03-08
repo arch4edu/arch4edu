@@ -2,8 +2,8 @@
 # Contributor: Joey Dumont <joey.dumont@gmail.com>
 
 pkgname=pagmo
-pkgver=2.16.1
-pkgrel=3
+pkgver=2.17.0
+pkgrel=1
 pkgdesc="Perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
 arch=('i686' 'x86_64')
 url="https://github.com/esa/pagmo2"
@@ -12,7 +12,7 @@ depends=('boost' 'intel-tbb' 'coin-or-ipopt' 'eigen' 'nlopt')
 makedepends=('cmake')
 _name=pagmo2
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/esa/${_name}/archive/v${pkgver}.tar.gz")
-sha256sums=('45f2039f2198b6edadf81bdefb10a228f9dd087940c1f1ab1882098f16581df0')
+sha256sums=('1b95b036f75e6fa0b21082ab228dbd63cd18ca10d9622ac53629245e0f95c35c')
 
 build() {
     mkdir -p "${srcdir}/${_name}-${pkgver}-build"
