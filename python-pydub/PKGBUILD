@@ -1,7 +1,7 @@
 # Maintainer: Simon Legner <Simon.Legner@gmail.com>
 pkgname=python-pydub
-pkgver=0.24.1
-pkgrel=3
+pkgver=0.25.0
+pkgrel=1
 pkgdesc="Manipulate audio with an simple and easy high level interface"
 url="https://pydub.com"
 makedepends=("python-setuptools" "python2-setuptools")
@@ -11,7 +11,7 @@ optdepends=('python-pyaudio: for playback' 'python-simpleaudio: for playback' 'f
 makedepends=('python-setuptools')
 source=("https://pypi.org/packages/source/p/pydub/pydub-$pkgver.tar.gz"
         "https://github.com/jiaaro/pydub/raw/v$pkgver/LICENSE")
-sha256sums=('630c68bfff9bb27cbc5e1f02923f717c3bc5f4d73fd685fda08b6ce90f76dc69'
+sha256sums=('c3fb5f3c60c4eb4af84666342507e8983f3a96b87b6ef90e13b996d4402942e2'
             'ae856536224cc7a389e968771fc5f259814bdd0da63539cf72282adbaef6897a')
 
 build() {
