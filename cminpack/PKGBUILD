@@ -1,6 +1,6 @@
 pkgname=cminpack
 pkgver=1.3.8
-pkgrel=1
+pkgrel=2
 pkgdesc="A C/C++ rewrite of the MINPACK software"
 arch=('x86_64')
 url='http://devernay.free.fr/hacks/cminpack/cminpack.html'
@@ -20,7 +20,7 @@ build() {
   cmake -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMINPACK_LIB_INSTALL_DIR=lib \
-    -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF -DCMINPACK_PRECISION=d ..
+    -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF ..
   make
 }
 
