@@ -1,7 +1,7 @@
---- Makefile.orig	2017-12-14 04:48:59.000000000 +1100
-+++ Makefile	2017-12-15 09:23:07.776195283 +1100
+--- Makefile.orig	2021-03-18 09:17:13.556100711 +1100
++++ Makefile	2021-03-18 09:15:51.273178297 +1100
 @@ -2,7 +2,7 @@
- name = scim
+ name = sc-im
  
  # The base directory where everything should be installed.
 -prefix  = /usr/local
@@ -9,7 +9,7 @@
  
  EXDIR   = $(prefix)/bin
  HELPDIR = $(prefix)/share/$(name)
-@@ -47,16 +47,16 @@
+@@ -58,16 +58,16 @@
  # Choose one of the following commands for copying to different clipboards:
  # You can later change it at runtime.
  #to copy to tmux clipboard:
@@ -29,4 +29,4 @@
 +CFLAGS += -DDEFAULT_PASTE_FROM_CLIPBOARD_CMD=\""xclip -o -selection clipboard"\"
  #CFLAGS += -DDEFAULT_PASTE_FROM_CLIPBOARD_CMD=\""pbpaste"\"
  
- # Uncomment for basic XLS import. Requires libxlsreader
+ # NOTE: libxlsreader (libxls) is required for xls file reading support
