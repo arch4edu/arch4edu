@@ -1,65 +1,37 @@
-# Maintainer: Jerry <isjerryxiao at outlook dot com>
 # Maintainer: Leonidas P. <jpegxguy at outlook dot com>
+# Maintainer: Jerry <isjerryxiao at outlook dot com>
 # Contributor: Anes Belfodil <ans.belfodil at gmail dot com>
 # Contributor: David Rheinsberg <david.rheinsberg at gmail dot com>
 # Contributor: David Herrmann <dh.herrmann at gmail dot com>
 
 _pkgname=qemu-user-static
-pkgdesc='A generic and open source machine emulator, statically linked'
-pkgver=5.2
-pkgadditver="+dfsg-6"
-pkgrel=3
-
 pkgname=$_pkgname-bin
-arch=('x86_64' 'i686' 'aarch64')
+pkgver=5.2
+pkgrel=6
+pkgdesc='A generic and open source machine emulator, statically linked'
+arch=('x86_64' 'i686' 'aarch64' 'armv7h' 'armv6h')
 url="http://wiki.qemu.org"
 license=('GPL2' 'LGPL2.1')
 depends=('binfmt-qemu-static')
-makedepends=()
-provides=("$_pkgname" "qemu-user")
-conflicts=("$_pkgname" "qemu-user")
+provides=("qemu-user" "$_pkgname")
+conflicts=("qemu-user" "$_pkgname")
 
-_debsrc="${_pkgname}_${pkgver}"
-if [ "$CARCH" = 'x86_64' ]; then
-  # Add pkgadditver="something" to override for specific arch
-  _debsrc=${_debsrc}${pkgadditver}"_amd64.deb"
-  _csum=SKIP
-elif [ "$CARCH" = 'i686' ]; then
-  _debsrc=${_debsrc}${pkgadditver}"_i386.deb"
-  _csum=SKIP
-elif [ "$CARCH" = 'aarch64' ]; then
-  _debsrc=${_debsrc}${pkgadditver}"_arm64.deb"
-  _csum=SKIP
-else
-  _debsrc=${_debsrc}${pkgadditver}"_$CARCH.deb"
-  _csum=SKIP
-fi
+_pkgadditver="+dfsg-9"
+source_x86_64=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_amd64.deb")
+source_i686=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_i386.deb")
+source_aarch64=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_arm64.deb")
+source_armv7h=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_armhf.deb")
+source_armv6h=("https://deb.debian.org/debian/pool/main/q/qemu/${_pkgname}_${pkgver}${_pkgadditver}_armel.deb")
 
-source=(
-  "$_debsrc::https://deb.debian.org/debian/pool/main/q/qemu/$_debsrc"
-)
-sha256sums=(
-  "$_csum"
-)
-
-prepare() {
-  rm -Rf build
-  mkdir build
-}
-
-build() {
-  cd build
-  tar -xJf ../data.tar.xz -C .
-}
+sha256sums_x86_64=("a3b74bc11b3ae2d9be96e9a013cbd3546ca9aa9c4ed9e95ab2d9945d32e7c2c4")
+sha256sums_i686=("bd2960ecebe728a5e4b4417030a686fd5e6a8775f9d5c54470c2f2f41485a503")
+sha256sums_aarch64=("7dadc7a82aaee50bf2f9c9a90ede89ef9d13a6bddf00a4ca00128a29639e60f8")
+sha256sums_armv7h=("64c838f401913f56345dc084716ae78945721760dda124e4adca0fad0a892047")
+sha256sums_armv6h=("688136bde6d39ea344e2f26585a22268a33749eb44031703af1f8b5c2f9ac966")
 
 package() {
-  cd build
-
-  mkdir -p "$pkgdir"/usr/bin/
-  cp usr/bin/qemu-*-static "$pkgdir"/usr/bin/
-
-  mkdir -p "$pkgdir"/usr/share/man/man1
-  cp usr/share/man/man1/qemu-*-static.1.gz "$pkgdir"/usr/share/man/man1/
+	cd "${pkgdir}"
+	tar -xf "${srcdir}/data.tar.xz" --exclude=./usr/share/man/man1/qemu-debootstrap.1.gz ./usr/bin ./usr/share/man
 }
 export http_proxy=127.0.0.1:8123
 export https_proxy=127.0.0.1:8123
