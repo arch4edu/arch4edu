@@ -4,8 +4,8 @@
 
 pkgname=rpiusbboot-git
 _pkgname=usbboot
-pkgver=r84.49a2a4f
-pkgrel=3
+pkgver=r87.25977a3
+pkgrel=1
 pkgdesc="Raspberry Pi USB boot"
 arch=("i686" "x86_64")
 url="https://github.com/raspberrypi/usbboot"
