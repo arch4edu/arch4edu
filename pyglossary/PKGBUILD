@@ -1,32 +1,32 @@
-# Maintainer: Nikolay Korotkiy <sikmir@gmail.com>
+# Maintainer: Julian Maingot <sikmir@gmail.com>
+# Contributor: Nikolay Korotkiy <sikmir@gmail.com>
+
 pkgname=pyglossary
-pkgver=3.3.0
-pkgrel=2
+pkgver=4.0.11
+pkgrel=1
 pkgdesc="A tool for converting dictionary files aka glossaries with various formats for different dictionary applications"
 arch=(any)
 url="https://github.com/ilius/pyglossary"
 license=('GPL3')
-depends=('python-gobject' 'python-setuptools')
-optdepends=('tix: Tkinter-based interface')
+# TODO add python-libzim and python-lzo if/when they exist
+depends=('python')
+optdepends=(
+  'python-gobject: Gtk3-based interface'
+  'tix: Tkinter-based interface'
+  'python-lxml: Many optional flags and formats'
+  'python-beautifulsoup4: HTML parsing'
+  'python-yaml: Reading from cc-kedict'
+  'python-pyicu: Reading or writing Aard 2 (.slob) files'
+  'python-marisa: Writing to Kobo E-Reader Dictionary'
+)
+makedepends=('python-setuptools')
 provides=("${pkgname}=${pkgver}")
-source=("https://github.com/ilius/${pkgname}/archive/${pkgver}.tar.gz"
-        "core.patch"
-        "setup.patch")
-sha256sums=('3dfb14c03b936d891475b9da9814602e82ca9c9f1eee6105d772780ab5f5ca08'
-            '8d2e773ff783a7f94b67819298d3d26fde2feabc1ee425f6dc2c31d992fafec1'
-            '5336d65db39f181e91e8bea848014cf101379c315e1ddf4c2b3e4f8ff15ee1c2')
-
-prepare() {
-  cd "$srcdir/$pkgname-$pkgver"
-  patch -Np1 < ../core.patch
-  patch -Np1 < ../setup.patch
-}
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ilius/${pkgname}/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('d56d8f8f18a33c1bc8be45571379736ae732e8f4009a1f4ac0d21ea22eb9eb01')
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
   python setup.py install --root="$pkgdir/" --prefix=/usr --optimize=1
-  mkdir -p $pkgdir/usr/bin
-  ln -s /usr/share/pyglossary/pyglossary.pyw $pkgdir/usr/bin/pyglossary
   cp config.json $pkgdir/usr/share/pyglossary
 }
 
