@@ -4,19 +4,19 @@
 
 pkgname=python-sortedcollections
 _name=${pkgname#python-}
-pkgver=1.1.2
-pkgrel=3
+pkgver=2.1.0
+pkgrel=1
 pkgdesc="A python library for sorted collections."
 arch=('any')
 url="http://www.grantjenks.com/docs/sortedcollections/"
 license=(Apache)
 depends=('python-sortedcontainers>=2.0.0')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha256sums=('b93e0decbd7f8f19e40c320709e70e4845b6c8b3a0e96c3c4f707b4b93e1d38a')
+source=("https://codeload.github.com/grantjenks/$pkgname/tar.gz/refs/tags/v$pkgver")
+sha256sums=("4a70235d04737268feaed645e11c4aa25d165f0c69114f92d71e84ecb3e99ccf")
 
 package_python-sortedcollections() {
-  cd $_name-$pkgver
+  cd $pkgname-$pkgver
   python setup.py install --root="$pkgdir"
 }
 
