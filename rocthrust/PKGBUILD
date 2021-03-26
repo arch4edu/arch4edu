@@ -1,6 +1,7 @@
-# Maintainer: Markus Näther <naetherm@informatik.uni-freiburg.de>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocthrust
-pkgver=4.0.0
+pkgver=4.1.0
 pkgrel=1
 pkgdesc='Port of the Thrust parallel algorithm library atop HIP/ROCm'
 arch=('x86_64')
@@ -10,7 +11,7 @@ depends=('hip-rocclr' 'rocprim')
 makedepends=('cmake' 'git')
 _git='https://github.com/ROCmSoftwarePlatform/rocThrust'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('120c87316f44ce8e8975e57c9b9bf1246b1ffc00879d31d744289ba9438a976c')
+sha256sums=('e3d06c0387a2a6880776c7423b1acf0808fb8833bc822be75793da8c2f521efd')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
