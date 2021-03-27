@@ -7,7 +7,7 @@
 
 pkgname=hsa-rocr
 pkgver=4.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc='ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/ROCR-Runtime.html'
