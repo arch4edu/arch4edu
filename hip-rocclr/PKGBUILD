@@ -1,7 +1,8 @@
-# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-rocclr
-pkgver=4.0.0
-pkgrel=2
+pkgver=4.1.0
+pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
@@ -13,7 +14,7 @@ conflicts=('hip')
 _git='https://github.com/ROCm-Developer-Tools/HIP'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         'amdgpu-targets.patch')
-sha256sums=('d7b78d96cec67c55b74ea3811ce861b16d300410bc687d0629e82392e8d7c857'
+sha256sums=('e21c10b62868ece7aa3c8413ec0921245612d16d86d81fe61797bf9a64bc37eb'
             'c6358b4dfac658c0a27a3425ace455d951cd26be827dd7751c28cb83dc84b67d')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
@@ -27,7 +28,7 @@ build() {
   cmake -B build -Wno-dev \
         -S "$_dirname" \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm/hip \
-        -DCMAKE_PREFIX_PATH='/opt/rocm/lib/cmake/hsa-runtime64;/opt/rocm/lib/cmake/amd_comgr' \
+        -DCMAKE_PREFIX_PATH='/opt/rocm/lib/cmake/hsa-runtime64;/opt/rocm/lib/cmake/amd_comgr;/opt/rocm/rocclr/lib/cmake/rocclr/' \
         -DHIP_COMPILER=clang \
         -DHIP_PLATFORM=rocclr \
         -D__HIP_ENABLE_PCH=OFF
