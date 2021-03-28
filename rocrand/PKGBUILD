@@ -1,6 +1,7 @@
-# Maintainer: Jakub Okoński <jakub@okonski.org>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Contributor: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
-pkgver=4.0.0
+pkgver=4.1.0
 pkgrel=1
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
@@ -10,7 +11,7 @@ depends=('hip-rocclr')
 makedepends=('cmake' 'git')
 _git='https://github.com/ROCmSoftwarePlatform/rocRAND'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('1cafdbfa15cde635bd424d2a858dc5cc94d668f9a211ff39606ee01ed1715f41')
+sha256sums=('94327e38739030ab6719a257f5a928a35842694750c7f46d9e11ff2164c2baed')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
