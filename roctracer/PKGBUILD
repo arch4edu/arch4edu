@@ -1,6 +1,7 @@
-# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=roctracer
-pkgver=4.0.0
+pkgver=4.1.0
 pkgrel=1
 pkgdesc="ROCm Tracer Callback/Activity Library for Performance tracing AMD GPU's"
 arch=('x86_64')
@@ -10,16 +11,9 @@ depends=('hip-rocclr')
 makedepends=('cmake' 'git' 'python' 'python-argparse' 'python-cppheaderparser' 'python-ply')
 options=(!staticlibs strip)
 _git='https://github.com/ROCm-Developer-Tools/roctracer'
-source=("roctracer-rocm-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
-        'deprecated_string_split.patch')
-sha256sums=('f47859a46173228b597c463eda850b870e810534af5efd5f2a746067ef04edee'
-            '466d34242462c0b2016a82cc6bd90780b578e7a62d6f255b5ba8047fb6925bea')
+source=("roctracer-rocm-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
+sha256sums=('5d93de4e92895b6eb5f9d098f5dbd182d33923bd9b2ab69cf5a1abbf91d70695')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
-
-prepare() {
-  cd "$_dirname"
-  patch -Np1 -i "$srcdir/deprecated_string_split.patch"
-}
 
 build() {
   cmake -B build -Wno-dev \
