@@ -1,6 +1,7 @@
-# Maintainer: Markus Näther <naether.markus@gmail.com>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Contributor: Markus Näther <naether.markus@gmail.com>
 pkgname=rocblas
-pkgver=4.0.0
+pkgver=4.1.0
 pkgrel=1
 pkgdesc='Next generation BLAS implementation for ROCm platform'
 arch=('x86_64')
@@ -12,15 +13,11 @@ makedepends=('cmake' 'git' 'python' 'python-virtualenv' 'python-pyaml'
              'gcc-fortran')
 _rocblas='https://github.com/ROCmSoftwarePlatform/rocBLAS'
 source=("$pkgname-$pkgver.tar.gz::$_rocblas/archive/rocm-$pkgver.tar.gz")
-sha256sums=('78e37a7597b581d90a29e4b956fa65d0f8d1c8fb51667906b5fe2a223338d401')
+sha256sums=('8be20c722bab169bc4badd79a9eab9a1aa338e0e5ff58ad85ba6bf09e8ac60f4')
 options=(!strip)
 _dirname="$(basename "$_rocblas")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
-  # fix broken build with stack protection
-  export CFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CFLAGS")"
-  export CXXFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CXXFLAGS")"
-  export CPPFLAGS="$(sed -e 's/-fstack-protector-strong//' <<< "$CPPFLAGS")"
 
   PATH="/opt/rocm/llvm/bin:${PATH}" \
   CXX=/opt/rocm/hip/bin/hipcc \
@@ -40,10 +37,6 @@ build() {
         -DBUILD_CLIENTS_BENCHMARKS=OFF \
         -DBUILD_CLIENTS_SAMPLES=OFF \
         -DBUILD_TESTING=OFF
-
-  # Fix for latest llvm
-  sed -i 's/Impl::inputOne(io, key, \*value)/Impl::inputOne(io, key.str(), \*value)/g' \
-    $srcdir/build/virtualenv/lib/python*/site-packages/Tensile/Source/lib/include/Tensile/llvm/YAML.hpp
 
   make -C build
 }
