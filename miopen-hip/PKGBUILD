@@ -1,19 +1,20 @@
-# Maintainer: acxz <akashpatel at yahoo dot com>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Contributor: acxz <akashpatel at yahoo dot com>
 # Contributor: JP-Ellis <josh@jpellis.me>
 
 pkgname=miopen-hip
-pkgver=4.0.0
-pkgrel=3
+pkgver=4.1.0
+pkgrel=1
 pkgdesc="AMD's Machine Intelligence Library (HIP backend)"
 arch=('x86_64')
 url="https://github.com/ROCmSoftwarePlatform/MIOpen"
-license=('custom:NCSAOSL')
-depends=('rocblas' 'llvm-amdgpu' 'rocm-clang-ocl' 'hip')
-makedepends=('cmake' 'rocm-cmake' 'miopengemm' 'rocminfo')
+license=('MIT')
+depends=('rocblas' 'rocm-clang-ocl' 'hip-rocclr')
+makedepends=('cmake' 'rocm-cmake' 'miopengemm')
 provides=('miopen')
 conflicts=('miopen')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('84c6c17be9c1a9cd0d3a2af283433f64b07a4b9941349f498e40fed82fb205a6')
+sha256sums=('068b1bc33f90fe21d3aab5697d2b3b7b930e613c54d6c5ee820768579b2b41ee')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
 build() {
@@ -37,4 +38,6 @@ package() {
   cat << EOF > "$pkgdir/etc/ld.so.conf.d/miopen.conf"
 /opt/rocm/miopen/lib
 EOF
+
+  install -Dm644 "$srcdir/$_dirname/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
