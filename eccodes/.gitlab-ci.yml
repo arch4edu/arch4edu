@@ -64,11 +64,11 @@ test-eccodes:
   image: ${CI_REGISTRY_IMAGE}/${BUILD_AND_TEST_IMAGE}:${CI_COMMIT_REF_NAME}
   needs: ["build-eccodes"]
   script:
+    # Try to install package
+    - sudo pacman -U --noconfirm eccodes*.pkg.tar.zst
     # Recommended checks
     - namcap -m PKGBUILD
     - namcap -m eccodes*.pkg.tar.zst
-    # Try to install package
-    - sudo pacman -U --noconfirm eccodes*.pkg.tar.zst
 
 deploy-eccodes:
   stage: deploy
