@@ -5,7 +5,7 @@
 # Contributor: Piotr Balcerowski <piotr@balcerowski.org>
 
 pkgname=libcurl-openssl-1.0
-pkgver=7.75.0
+pkgver=7.76.0
 pkgrel=1
 pkgdesc="An URL retrieval library (without versioned symbols, built against openssl-1.0)"
 arch=('aarch64' 'x86_64')
@@ -16,7 +16,7 @@ depends=('curl' 'glibc' 'krb5' 'libssh2' 'openssl-1.0' 'libpsl' 'zlib'
 provides=('libcurl-openssl-1.0.so')
 options=('strip')
 source=("https://curl.haxx.se/download/curl-${pkgver}.tar.gz"{,.asc})
-sha512sums=('ebef01be48e05f46f7d0605966d4c66391d5a51f6d102265647522f8f5df61b5440c930bd1b043d56968769869275123122826a9ec7fb3148c72a28ee32ce696'
+sha512sums=('f074e9315739bb05fc194ef66b154912620df3ddec11c01ded8f2ecde08875006418a716919dafe5001256f912c07e5576072e1df9a683f91cd3bc8143c6f054'
             'SKIP')
 validpgpkeys=('27EDEAF22F3ABCEB50DB9A125CC908FDB71E12C2') # Daniel Stenberg
 
