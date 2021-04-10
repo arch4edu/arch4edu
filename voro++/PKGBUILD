@@ -1,13 +1,14 @@
+# Maintainer: xpt <user.xpt@gmail.com>
 pkgname=voro++
 pkgver=0.4.6
-pkgrel=2
+pkgrel=3
 pkgdesc="A free software library for the computation of three dimensional Voronoi cells."
 arch=('i686' 'x86_64')
 url="http://math.lbl.gov/voro++/"
 license=('BSD')
 depends=('perl' 'gcc-libs')
 options=(staticlibs)
-source=(http://math.lbl.gov/voro++/download/dir/${pkgname}-$pkgver.tar.gz)
+source=(https://download.lammps.org/thirdparty/${pkgname}-$pkgver.tar.gz)
 md5sums=('2338b824c3b7b25590e18e8df5d68af9')
  
 build() {
