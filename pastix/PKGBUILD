@@ -2,31 +2,29 @@
 # Contributor: Myles English <myles at tdma dot co>
 
 pkgname=pastix
-pkgver=6.1.0
-pkgrel=2
+pkgver=6.2.0
+pkgrel=1
 pkgdesc="High performance parallel solver for very large sparse linear systems based on direct methods"
 arch=('x86_64')
 url="https://gitlab.inria.fr/solverstack/pastix"
-license=('CeCILL-C')
+license=('LGPL3')
 depends=('cblas' 'lapacke' 'hwloc' 'scotch' 'metis' 'openmpi' 'python')
 makedepends=('gcc-fortran' 'cmake' 'git' 'doxygen')
 provides=('libpastix.so' 'libpastix_kernels.so'
           # also provide the SpM library (internal module)
           'libspm.so' 'libspmf.so')
 source=("${pkgname}::git+${url}.git#tag=v${pkgver}"
-        gitmodules.diff
-        coeftabMemory.patch)
+        gitmodules.diff)
 md5sums=('SKIP'
-         '59430d563cc9a665292c0d793520e148'
-         '75c21a70d036c8f50ac5a5ffb8f827bb')
+         '59430d563cc9a665292c0d793520e148')
 
 prepare() {
     cd "${pkgname}"
     patch -p2 < ../gitmodules.diff
     git submodule update --init --recursive
 
-    # fix compiler error due to coeftabMemory
-    patch -Np1 < ../coeftabMemory.patch
+    # fix for metis-5.1.0.p10-1 https://bugs.archlinux.org/task/70446
+    sed -i 's|LIBRARIES metis|LIBRARIES metis m|' cmake_modules/morse_cmake/modules/find/FindMETIS.cmake
 
     [ -d build ] && rm -rf build
     mkdir build
@@ -56,4 +54,10 @@ package() {
     # move examples into proper doc directory
     install -dm755 "${pkgdir}/usr/share/doc/pastix/"
     mv "${pkgdir}/usr/examples" "${pkgdir}/usr/share/doc/pastix/"
+
+    # fix fucked up Python install path
+    local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+    install -dm755 "${pkgdir}/${site_packages}"
+    mv "${pkgdir}"/usr/lib/python/* "${pkgdir}/${site_packages}"
+    rmdir "${pkgdir}/usr/lib/python"
 }
