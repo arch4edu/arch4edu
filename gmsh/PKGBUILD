@@ -1,7 +1,7 @@
 # Maintainer: gborzi <gborzi@ieee.org>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
-pkgver=4.8.1
+pkgver=4.8.3
 pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
@@ -12,7 +12,7 @@ makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'texlive-core' 'voro++'
              'glu')
 options=(!emptydirs)
 source=("${url}src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
-sha256sums=('d5038f5f25ae85973536fb05cc886feb1bd7d67e2605a9d8789bcc2528fa8b35'
+sha256sums=('26f248b129a00d1ea0658f024410c2490bcd9de724545a1144a092c604276775'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
@@ -46,14 +46,13 @@ package_gmsh() {
    depends=('fltk' 'med' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
             'glu')
    optdepends=('gmsh-docs: docs for gmsh'
-            'python2: for onelab.py'
-            'python: for onelab.py'
+            'python2: for gmsh.py'
+            'python: for gmsh.py'
             'julia: for gmsh.jl')
 
    cd "${srcdir}/${pkgname}-${pkgver}-source/build"
    make DESTDIR=${pkgdir} install
-   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python2.7/site-packages/gmsh.py"
-   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/python3.9/site-packages/gmsh.py"
+   install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/share/gmsh/api/python/gmsh.py"
    install -D -m644 "${pkgdir}/usr/lib/gmsh.jl" "${pkgdir}/usr/share/gmsh/api/julia/gmsh.jl"
    rm -f "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/gmsh.jl"
    install -d "$pkgdir/etc/profile.d"
