@@ -2,7 +2,7 @@
 pkgname='kaldi'
 pkgdesc='Speech recognition research toolkit'
 pkgver=5.5.r9133.cbed4ff68
-pkgrel=1
+pkgrel=2
 depends=('cblas' 'kaldi-openfst' 'lapack' 'python2')
 optdepends=('cuda' 'kaldi-irstlm' 'kaldi-kaldi_lm' 'kaldi-sctk' 'kaldi-sph2pipe' 'kaldi-srilm')
 makedepends=('git' 'wget' 'sed')
