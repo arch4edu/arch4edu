@@ -1,7 +1,7 @@
 # Maintainer: nightuser <nightuser.android@gmail.com>
 
 pkgname=glib2-static
-pkgver=2.68.0
+pkgver=2.68.1
 pkgrel=1
 pkgdesc="Low level core library: Static library"
 url="https://wiki.gnome.org/Projects/GLib"
@@ -11,19 +11,15 @@ depends=()
 makedepends=(gettext zlib libffi shared-mime-info python libelf git util-linux meson dbus)
 checkdepends=(desktop-file-utils)
 options=('!docs' '!libtool' '!emptydirs' '!strip' 'staticlibs')
-source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz"
-        'MR2010.patch')
-sha256sums=('67734f584f3a05a2872f57e9a8db38f3b06c7087fb531c5a839d9171968103ea'
-            '0f3b91a67cf7944df4de76d224fce6e4de70c04831233d5431f9ea2f30870ab9')
+source=("http://ftp.gnome.org/pub/gnome/sources/glib/${pkgver%.*}/glib-$pkgver.tar.xz")
+sha256sums=('241654b96bd36b88aaa12814efc4843b578e55d47440103727959ac346944333')
 
 prepare() {
   cd "glib-$pkgver"
-
-  patch -Np1 -i ../MR2010.patch
 }
 
 build() {
-  CFLAGS+=' -Wno-unused-result'
+  CFLAGS+=' -Wno-unused-result -Wno-stringop-overflow'
   arch-meson "glib-$pkgver" _build \
     --default-library static \
     --buildtype release \
