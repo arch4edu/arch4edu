@@ -2,5 +2,8 @@ post_upgrade() {
   if [[ "$2" < "1.4.1" ]]; then
     printf "Please note: when upgrading to 1.4.1 (or later) you will need to perform a full reindex\n"
   fi
+  if [[ "$2" < "1.7.0" ]]; then
+    printf "Please note: even though versions >=1.7.0 do not require reindexing from scratch in the classical sense (i.e. wipe out data root), they basically update every document in the index automatically. This means the initial reindex after upgrading from previous versions will take much longer. Subsequent reindex times will be normal.\n"
+  fi
 }
 
