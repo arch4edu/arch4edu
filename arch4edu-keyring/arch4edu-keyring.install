@@ -1,0 +1,9 @@
+post_upgrade() {
+	usr/bin/pacman-key -l 7931B6D628C8D3BA || usr/bin/pacman-key --populate arch4edu
+}
+
+post_install() {
+	if [ -x usr/bin/pacman-key ]; then
+		post_upgrade
+	fi
+}
