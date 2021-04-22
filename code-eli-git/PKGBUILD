@@ -2,7 +2,7 @@
 # Contributor: Max Devaine <max@devaine.cz>
 
 pkgname=code-eli-git
-pkgver=r836.7ea8de1
+pkgver=r839.b3a2853
 pkgrel=1
 pkgdesc='Collection of C++ libraries that provide a variety of functionalities.'
 arch=('i686' 'x86_64')
@@ -11,7 +11,7 @@ license=('EPL 1.0')
 depends=('eigen')
 optdepends=('cpptest: unit tests'
             'doxygen: documentation')
-makedepends=('cmake' 'doxygen' 'git')
+makedepends=("cmake" "doxygen" "git")
 _name=Code-Eli
 provides=('code-eli')
 source=("git+https://github.com/ramcdona/Code-Eli.git"
