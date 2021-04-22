@@ -91,7 +91,7 @@ IORDERINGSC = $(IMETIS) $(IPORD) $(ISCOTCH)
 PLAT    =
 # Library extension, + C and Fortran "-o" option
 # may be different under Windows
-LIBEXT  = .a
+LIBEXT  = .so
 OUTC    = -o
 OUTF    = -o
 # RM : remove files
@@ -104,11 +104,11 @@ FC      = mpif90
 FL      = mpif90
 # AR : Archive object in a library
 #      keep a space at the end if options have to be separated from lib name
-AR      = ar vr 
+AR      = $(CC) -shared $(OPTC) -o
 # RANLIB : generate index of an archive file
 #   (optionnal use "RANLIB = echo" in case of problem)
-RANLIB  = ranlib
-#RANLIB  = echo
+# RANLIB  = ranlib
+RANLIB  = echo
 
 # DEFINE HERE YOUR LAPACK LIBRARY
 
@@ -159,10 +159,10 @@ OPTL    = ${CFLAGS} -fPIC
 #Sequential:
 #INCS = $(INCSEQ)
 #LIBS = $(LIBSEQ)
-LIBSEQNEEDED = libseqneeded
+#LIBSEQNEEDED = libseqneeded
 
 #Parallel:
 INCS = $(INCPAR)
 LIBS = $(LIBPAR)
-#LIBSEQNEEDED =
+LIBSEQNEEDED =
 
