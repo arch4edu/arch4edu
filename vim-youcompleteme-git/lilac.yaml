@@ -6,7 +6,5 @@ update_on:
     aur:
   - source: github
     github: Valloric/YouCompleteMe
-  - source: alias
-    alias: python
-  - source: alias
-    alias: clang
+  - alias: python
+  - alias: clang
