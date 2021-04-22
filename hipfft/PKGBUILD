@@ -2,7 +2,7 @@
 
 pkgname=hipfft
 pkgver=4.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc='rocFFT marshalling library.'
 arch=('x86_64')
 url='https://github.com/ROCmSoftwarePlatform/hipFFT'
