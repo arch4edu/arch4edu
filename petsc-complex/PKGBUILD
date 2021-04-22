@@ -8,8 +8,8 @@
 
 pkgname=petsc-complex
 _pkgname=petsc
-pkgver=3.14.2
-pkgrel=2
+pkgver=3.15.0
+pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
 #"linux-c-debug" for some things, so the _config should be changed too
@@ -47,7 +47,7 @@ optdepends=(${_depends[@]} 'trilinos')
 install=petsc.install
 source=(http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/${_pkgname}-lite-${pkgver/_/-}.tar.gz
         test_optdepends.sh)
-sha256sums=('87a04fd05cac20a2ec47094b7d18b96e0651257d8c768ced2ef7db270ecfb9cb'
+sha256sums=('ac46db6bfcaaec8cd28335231076815bd5438f401a4a05e33736b4f9ff12e59a'
             '902f8d222706868184cfeff94b1c26a781fd9553a43a66deac7cc1317de82a86')
 
 _install_dir=/opt/petsc/${_config}
