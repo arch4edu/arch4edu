@@ -1,19 +1,31 @@
---- OpenBoard-1.5.3/OpenBoard.pro	2019-04-10 09:04:25.000000000 +0200
-+++ OpenBoard-1.5.3-quazip/OpenBoard.pro	2019-04-12 08:54:40.265598779 +0200
-@@ -71,9 +71,7 @@
- INCLUDEPATH += plugins/cffadaptor/src
+diff -Naur OpenBoard-1.6.0a3.orig/OpenBoard.pro OpenBoard-1.6.0a3/OpenBoard.pro
+--- OpenBoard-1.6.0a3.orig/OpenBoard.pro	2020-05-22 18:40:49.000000000 +0200
++++ OpenBoard-1.6.0a3/OpenBoard.pro	2020-10-12 07:26:16.628748656 +0200
+@@ -433,8 +431,8 @@
+     LIBS += -lcrypto
+     #LIBS += -lprofiler
+     LIBS += -lX11
+-    LIBS += -lquazip5
+-    INCLUDEPATH += "/usr/include/quazip"
++    LIBS += "-lquazip1-qt5"
++    INCLUDEPATH += /usr/include/QuaZip-Qt5-1.1/quazip
  
- #ThirdParty
--DEPENDPATH += $$THIRD_PARTY_PATH/quazip/
--INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
--include($$THIRD_PARTY_PATH/quazip/quazip.pri)
-+INCLUDEPATH += /usr/include/QuaZip-Qt5-1.1/quazip
+     LIBS += -lpoppler
+     INCLUDEPATH += "/usr/include/poppler"
+diff -Naur OpenBoard-1.6.0a3.orig/plugins/cffadaptor/UBCFFAdaptor.pro OpenBoard-1.6.0a3/plugins/cffadaptor/UBCFFAdaptor.pro
+--- OpenBoard-1.6.0a3.orig/plugins/cffadaptor/UBCFFAdaptor.pro	2020-05-22 18:40:49.000000000 +0200
++++ OpenBoard-1.6.0a3/plugins/cffadaptor/UBCFFAdaptor.pro	2020-10-12 07:20:08.496096917 +0200
+@@ -13,9 +13,6 @@
+ linux-g++-32: SUB_DIR = linux
+ linux-g++-64: SUB_DIR = linux
  
- FORMS += resources/forms/mainWindow.ui \
-    resources/forms/preferences.ui \
---- OpenBoard-1.5.3/plugins/cffadaptor/UBCFFAdaptor.pro	2019-04-10 09:04:25.000000000 +0200
-+++ OpenBoard-1.5.3-quazip/plugins/cffadaptor/UBCFFAdaptor.pro	2019-04-12 08:53:45.622844493 +0200
-@@ -39,7 +38,7 @@
+-THIRD_PARTY_PATH = ../../../Sankore-ThirdParty
+-QUAZIP_DIR   = "$$PWD/../../../Sankore-ThirdParty/quazip/quazip-0.3"
+-
+ BUILD_DIR = build/$$SUB_DIR
+ CONFIG(debug, debug|release):BUILD_DIR = $$BUILD_DIR/debug
+ CONFIG(release, debug|release) {
+@@ -39,7 +36,7 @@
      QMAKE_POST_LINK += bash postScript_mac.sh "$$DESTDIR" "$$SANKORE_DIR/$$BUILD_DIR/product/Open-Sankore.app/Contents/MacOS"
  }
  
@@ -22,7 +34,7 @@
  
  QT       += xml xmlpatterns core
  QT       += gui
-@@ -51,9 +50,7 @@
+@@ -51,9 +48,7 @@
  
  INCLUDEPATH += src
  
