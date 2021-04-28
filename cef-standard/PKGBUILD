@@ -1,9 +1,9 @@
 # Maintainer: etriguba <eugenetriguba@gmail.com>
 # Previous Maintainer: NexAdn <nexadn@yandex.com>
 pkgname=cef-standard
-pkgver=89.0.15
-_pkgcommit="gdef70e4"
-_chromiumver="89.0.4389.90"
+pkgver=90.5.10
+_pkgcommit="gf2f0bfb"
+_chromiumver="90.0.4430.85"
 _pkgver="${pkgver}+${_pkgcommit}+chromium-${_chromiumver}"
 _url_pkgver="${pkgver}%2B${_pkgcommit}%2Bchromium-${_chromiumver}"
 pkgrel=1
@@ -21,8 +21,8 @@ source_i686=(
 source_x86_64=(
     "https://cef-builds.spotifycdn.com/cef_binary_${_url_pkgver}_linux64.tar.bz2"
 )
-sha1sums_i686=('0256b832e9a22aae1dbe5bc41572c0cbc4115cd2')
-sha1sums_x86_64=('d501a910e0317b64981904aef16a39dc4e490770')
+sha1sums_i686=('78b0ba44eb6f6983ce3195c83903bc08e0cea6f0')
+sha1sums_x86_64=('788f8f0dd9a9cb7b2d98cc07e8da418ab4542942')
 [[ "$CARCH" = "i686" ]] && _arch="32"
 [[ "$CARCH" = "x86_64" ]] && _arch="64"
 build() {
