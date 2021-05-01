@@ -1,5 +1,5 @@
 pkgname=scotch
-pkgver=6.0.9
+pkgver=6.1.0
 pkgrel=1
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering. This is the all-inclusive version (MPI/serial/esmumps)."
 url="https://gitlab.inria.fr/scotch/scotch"
@@ -9,7 +9,9 @@ provides=('ptscotch' 'ptscotch-openmpi' 'scotch_esmumps' 'scotch_ptesmumps')
 conflicts=('ptscotch-openmpi' 'scotch_esmumps' 'scotch_esmumps5')
 arch=('i686' 'x86_64')
 source=("https://gitlab.inria.fr/scotch/scotch/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz")
-sha256sums=('b9bc86c50b65781eb416663e938d57555373c2517ea8b9acf680fd3acde0cb0c')
+sha256sums=('4fe537f608f0fe39ec78807f90203f9cca1181deb16bfa93b7d4cd440e01bbd1')
+
+options=(!emptydirs)
 
 prepare() {
   cd "${srcdir}/${pkgname}-v${pkgver}/src"
