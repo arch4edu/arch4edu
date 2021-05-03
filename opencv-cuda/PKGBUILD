@@ -3,7 +3,7 @@
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 
 pkgname=opencv-cuda
-pkgver=4.5.1
+pkgver=4.5.2
 pkgrel=1
 provides=(opencv opencv-samples)
 conflicts=(opencv opencv-samples)
@@ -13,7 +13,7 @@ license=(BSD)
 url="http://opencv.org/"
 options=(staticlibs)
 depends=(intel-tbb openexr gst-plugins-base libdc1394 cblas lapack libgphoto2 jasper cuda)
-makedepends=(cmake python-numpy python2-numpy mesa eigen hdf5 lapacke gtk3 nvidia-sdk)
+makedepends=(cmake python-numpy python2-numpy mesa ninja eigen hdf5 lapacke gtk3 nvidia-sdk)
 optdepends=('opencv-samples: samples'
             'gtk3: for the HighGUI module'
             'hdf5: support for HDF5 format'
@@ -22,12 +22,16 @@ optdepends=('opencv-samples: samples'
             'python2-numpy: Python 2 interface')
 source=("opencv-$pkgver.tar.gz::https://github.com/opencv/opencv/archive/$pkgver.zip"
         "opencv_contrib-$pkgver.tar.gz::https://github.com/opencv/opencv_contrib/archive/$pkgver.tar.gz")
-sha256sums=('5fbc26ee09e148a4d494b225d04217f7c913ca1a4d46115b70cca3565d7bbe05'
-            '12c3b1ddd0b8c1a7da5b743590a288df0934e5cef243e036ca290c2e45e425f5')
+sha256sums=('be976b9ef14f1deaa282fb6e30d75aa8016a2d5c1f08e85795c235148940d753'
+            '9f52fd3114ac464cb4c9a2a6a485c729a223afb57b9c24848484e55cef0b5c2a')
 
 prepare() {
   msg2 "Patching sources for CUDA v10"
   sed -i 's|nvcuvid.h|nvidia-sdk/nvcuvid.h|' opencv_contrib-$pkgver/modules/cud*/src/*.hpp
+
+  # See https://github.com/opencv/opencv/issues/19846
+  msg2 "Patching sources for lapack 3.9.1"
+  find "opencv-$pkgver" -name '*.cpp' -exec sed -i s/dgels_/LAPACK_dgels/g {} \;
 
   mkdir -p build
 }
@@ -35,9 +39,11 @@ prepare() {
 build() {
   export https_proxy=127.0.0.1:8123
   cd build
+
   # cmake's FindLAPACK doesn't add cblas to LAPACK_LIBRARIES, so we need to specify them manually
   _pythonpath=`python -c "from sysconfig import get_path; print(get_path('platlib'))"`
   cmake ../opencv-$pkgver \
+    -GNinja \
     -DWITH_OPENCL=ON \
     -DWITH_OPENGL=ON \
     -DWITH_TBB=ON \
@@ -65,12 +71,12 @@ build() {
     -DLAPACK_CBLAS_H="/usr/include/cblas.h" \
     -DLAPACK_LAPACKE_H="/usr/include/lapacke.h" \
     -DOPENCV_GENERATE_PKGCONFIG=ON
-  make
+  ninja
 }
 
 package() {
   cd build
-  make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" ninja install
 
   # install license file
   install -Dm644 "$srcdir"/opencv-$pkgver/LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
