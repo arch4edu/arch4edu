@@ -4,13 +4,11 @@ from lilaclib import *
 def pre_build():
     aur_pre_build()
 
-    flag = False
     for line in edit_file('PKGBUILD'):
-        if 'haswell' in line:
-            flag = True
-        if line.startswith('pkgname'):
-            print('pkgname=python-pytorch-rocm')
-        elif flag and 'python setup.py build' in line:
-            print('#' + line)
+        if line.startswith('_build_opt=1'):
+            pass
+        elif line.startswith('prepare() {'):
+            print(line)
+            print('  export https_proxy=http://127.0.0.1:8123')
         else:
             print(line)
