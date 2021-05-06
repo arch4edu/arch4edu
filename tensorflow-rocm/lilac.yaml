@@ -4,6 +4,7 @@ maintainers:
 update_on:
   - source: aur
     aur:
+  - alias: icu
 repo_depends:
   - miopen-hip
   - rccl
