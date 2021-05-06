@@ -4,7 +4,7 @@
 pkgname=intel-oneapi-dpcpp-debugger
 pkgver=10.1.1
 _debpkgrel=80
-pkgrel=1
+pkgrel=2
 pkgdesc="Intel® Distribution for GDB*"
 arch=('x86_64')
 url='https://software.intel.com/content/www/us/en/develop/tools/oneapi.html'
