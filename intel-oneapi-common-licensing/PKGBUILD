@@ -4,7 +4,7 @@
 pkgname=intel-oneapi-common-licensing
 pkgver=2021.2.0
 _debpkgrel=195
-pkgrel=1
+pkgrel=2
 pkgdesc="oneAPI Common License"
 arch=('any')
 url='https://software.intel.com/content/www/us/en/develop/tools/oneapi.html'
