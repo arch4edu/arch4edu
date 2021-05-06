@@ -2,8 +2,7 @@
 from lilaclib import *
 
 maintainers = [{'github': 'petronny', 'email': 'Jingbei Li <i@jingbei.li>'}]
-repo_depends = [('fakeroot-tcp-aarch64', 'fakeroot-tcp')]
-build_prefix = 'extra-aarch64'
+build_prefix = 'action-extra-aarch64'
 time_limit_hours = 3
 
 def pre_build():
@@ -12,4 +11,5 @@ def pre_build():
 post_build = aur_post_build
 
 if __name__ == '__main__':
-    single_main(build_prefix)
+    from action_tools import action_main
+    action_main(build_prefix)
