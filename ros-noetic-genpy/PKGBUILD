@@ -4,7 +4,7 @@ pkgdesc="ROS - Python ROS message and service generators."
 url='https://wiki.ros.org/genpy'
 
 pkgname='ros-noetic-genpy'
-pkgver='0.6.10'
+pkgver='0.6.14'
 arch=("x86_64")
 pkgrel=1
 license=('BSD')
@@ -29,9 +29,9 @@ depends=(
 	python-yaml
 )
 
-_dir="genpy-${pkgver}"
+_dir="genpy-${pkgver}/"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/genpy/archive/${pkgver}.tar.gz")
-sha256sums=('5a3fa5a5e2d1d2c9f7f63a905b73257666c52fa40364cebb7b018ca402f4e1b8')
+sha256sums=('523d20068171ce7e5b4c453eba7976aafa819e6b5af806ffdf6bc1d7a1dfc2a8')
 
 build() {
 	# Use ROS environment variables.
