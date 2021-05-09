@@ -3,8 +3,8 @@
 # Contributer: Fabien Dubosson <fabien.dubosson@gmail.com>
 
 pkgname=python-keras
-_pkgname="keras"
-pkgver=2.4.0
+_pkgname="Keras"
+pkgver=2.4.3
 pkgrel=1
 pkgdesc="Deep Learning library (convnets, recurrent neural networks, and more)"
 arch=('any')
@@ -28,8 +28,8 @@ optdepends=(
   'python-tensorflow: For TensorFlow backend'
   'mxnet: For MXNet backend'
 )
-source=("https://github.com/keras-team/${_pkgname}/archive/${pkgver}.tar.gz")
-sha256sums=('ef97067e35719cf93b7b835d1300015bb1e1f1a7b3dd7be897c110419fa1a1d1')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
+sha256sums=('fedd729b52572fb108a98e3d97e1bac10a81d3917d2103cc20ab2a5f03beb973')
 
 build() {
   cd "$srcdir/${_pkgname}-${pkgver}"
