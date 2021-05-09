@@ -2,7 +2,7 @@
 
 pkgname=hipfft
 pkgver=4.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc='rocFFT marshalling library.'
 arch=('x86_64')
 url='https://github.com/ROCmSoftwarePlatform/hipFFT'
@@ -14,7 +14,7 @@ sha256sums=('885ffd4813f2c271150f1b8b386f0af775b38fc82b96ce6fd94eb4ba0c0180be')
 _dirname="$(basename "$url")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
-  CXX=/opt/rocm/hip/bin/hipcc \
+  CXX=/opt/rocm/bin/hipcc \
   cmake -Wno-dev -S "$_dirname" \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm \
         -DBUILD_CLIENTS_SAMPLES=OFF \
