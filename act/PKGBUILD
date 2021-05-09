@@ -1,22 +1,36 @@
-# Maintainer: Sven Lechner <sven[dot]lechner[at]rwth-aachen[dot]de>
+# Maintainer: Filipe Nascimento <flipee at tuta dot io>
+# Contributor: Sven Lechner <sven[dot]lechner[at]rwth-aachen[dot]de>
 
 pkgname=act
-pkgver=0.2.19
+pkgver=0.2.21
 pkgrel=1
-pkgdesc='Run your GitHub Actions locally'
-arch=('x86_64')
-url='https://github.com/nektos/act'
+pkgdesc="Run your GitHub Actions locally"
+arch=('i686' 'x86_64')
+url="https://github.com/nektos/act"
 license=('MIT')
-provides=('act')
-conflicts=('act')
 depends=('docker')
-source=("$pkgname-$pkgver.src.tar.gz::https://github.com/nektos/act/releases/download/v$pkgver/act_Linux_x86_64.tar.gz")
-sha256sums=('be52d1cb8cc5d2f9313ed1001807911ba3fed7a8201b96cc930ddd0ebef21dff')
+makedepends=('go')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('889a4444501aedfbc035beae7f3e006310ec41e1743aacb89892ca199afb7c31')
+
+build() {
+    cd $pkgname-$pkgver
+
+    export CGO_CPPFLAGS="${CPPFLAGS}"
+    export CGO_CFLAGS="${CFLAGS}"
+    export CGO_CXXFLAGS="${CXXFLAGS}"
+    export CGO_LDFLAGS="${LDFLAGS}"
+
+    go build \
+        -trimpath \
+        -buildmode=pie \
+        -mod=readonly \
+        -modcacherw \
+        -ldflags "-linkmode=external -X main.version=$pkgver"
+}
 
 package() {
-    # Install binary.
-    install -Dm755 "$srcdir/act" "$pkgdir/usr/bin/act"
-
-    # Install license.
-    install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    cd $pkgname-$pkgver
+    install -Dm755 $pkgname -t "$pkgdir/usr/bin"
+    install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }
