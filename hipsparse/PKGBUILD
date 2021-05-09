@@ -4,7 +4,7 @@
 
 pkgname=hipsparse
 pkgver=4.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc='rocSPARSE marshalling library.'
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipsparse'
@@ -17,7 +17,7 @@ sha256sums=('66710c390489922f0bd1ac38fd8c32fcfb5b7760b92c2d282f7d1abf214742ee')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
-  CXX=/opt/rocm/hip/bin/hipcc \
+  CXX=/opt/rocm/bin/hipcc \
   cmake -Wno-dev -S "$_dirname" \
         -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm \
