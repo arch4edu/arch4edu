@@ -1,8 +1,8 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 pkgname='python-arch'
 _module='arch'
-pkgver='4.18'
-pkgrel=2
+pkgver='4.19'
+pkgrel=1
 pkgdesc="ARCH models in Python."
 url="https://pypi.python.org/pypi/arch"
 depends=('python-numpy'
@@ -14,7 +14,7 @@ makedepends=('cython' 'python-setuptools')
 license=('custom:University of Illinois/NCSA Open Source License')
 arch=('x86_64')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/bashtage/arch/archive/v${pkgver}.tar.gz")
-sha256sums=('f172c8eeb3371393a48c54f55dbd2e49eaf70e64e7e22f9556d82a3206efea3a')
+sha256sums=('bf3f456df4767cdff69a9c8e5c72ece9dd0fdd7f5728952192f6589fcaa8ee6f')
 
 build() {
     cd "${srcdir}/${_module}-${pkgver}"
