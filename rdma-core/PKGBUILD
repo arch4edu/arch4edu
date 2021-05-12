@@ -3,9 +3,9 @@
 pkgname=('rdma-core')
 _srcname='rdma-core'
 pkgdesc='RDMA core userspace libraries and daemons'
-pkgver='34.0'
+pkgver='35.0'
 _tag="v${pkgver}"
-pkgrel='2'
+pkgrel='1'
 arch=('x86_64')
 url="https://github.com/linux-rdma/${_srcname}"
 license=('GPL2' 'custom:OpenIB.org BSD (MIT variant)')
