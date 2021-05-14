@@ -1,6 +1,6 @@
 # Maintainer: Heavysink <winstonwu91 at gmail>
 pkgname=libnn-git
-pkgver=20210511.125d4b9
+pkgver=20210514.a132637
 pkgrel=1
 pkgdesc="a C code for Natural Neighbours interpolation of 2D scattered data"
 arch=(i686 x86_64)
