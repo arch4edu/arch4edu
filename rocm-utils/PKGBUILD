@@ -2,7 +2,7 @@
 # Contributor: acxz <akashpatel2008@yahoo.com>
 # Contributor: Lucas Magalhães <whoisroot@national.shitposting.agency>
 pkgname=rocm-utils
-pkgver=4.1.0
+pkgver=4.2.0
 pkgrel=1
 pkgdesc="ROCm Platform Runtime: Utils"
 arch=('x86_64')
