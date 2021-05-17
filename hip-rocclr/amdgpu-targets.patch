@@ -1,19 +1,19 @@
-*** HIP-rocm-3.7.0/hip-config.cmake.in.bak	2020-09-09 15:37:55.780535875 +0200
---- HIP-rocm-3.7.0/hip-config.cmake.in	2020-09-09 15:38:13.160302239 +0200
+*** HIP-rocm-4.2.0/hip-config.cmake.in.bak	2021-05-13 09:58:42.409738663 +0200
+--- HIP-rocm-4.2.0/hip-config.cmake.in	2021-05-13 09:59:03.402050161 +0200
 ***************
-*** 79,85 ****
-            ${HIP_CLANG_INCLUDE_SEARCH_PATHS}
-        NO_DEFAULT_PATH)
-    find_dependency(AMDDeviceLibs)
+*** 123,129 ****
+    if(NOT WIN32)
+      find_dependency(AMDDeviceLibs)
+    endif()
 !   set(AMDGPU_TARGETS "gfx900;gfx906;gfx908" CACHE STRING "AMD GPU targets to compile for")
     set(GPU_TARGETS "${AMDGPU_TARGETS}" CACHE STRING "GPU targets to compile for")
-  else()
-    find_dependency(hcc)
---- 79,85 ----
-            ${HIP_CLANG_INCLUDE_SEARCH_PATHS}
-        NO_DEFAULT_PATH)
-    find_dependency(AMDDeviceLibs)
+  endif()
+  
+--- 123,129 ----
+    if(NOT WIN32)
+      find_dependency(AMDDeviceLibs)
+    endif()
 !   set(AMDGPU_TARGETS "gfx803;gfx900;gfx906;gfx908" CACHE STRING "AMD GPU targets to compile for")
     set(GPU_TARGETS "${AMDGPU_TARGETS}" CACHE STRING "GPU targets to compile for")
-  else()
-    find_dependency(hcc)
+  endif()
+  
