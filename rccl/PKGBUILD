@@ -2,20 +2,23 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=rccl
-pkgver=4.1.0
+pkgver=4.2.0
 pkgrel=1
 pkgdesc="ROCm Communication Collectives Library"
 arch=('x86_64')
 url="https://github.com/ROCmSoftwarePlatform/rccl"
 license=('custom')
-depends=('hip' 'gtest')
-makedepends=('cmake' 'python' 'gmock')
+depends=('hip')
+makedepends=('cmake' 'python' 'gtest')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('88ec9b43c31cb054fe6aa28bcc0f4b510213635268f951939d6980eee5bb3680')
+sha256sums=('2829fae40ebc1d8be201856d2193a941c87e9cf38dca0a2f4414e675c1742f20')
 _dirname="$(basename $url)-$(basename ${source[0]} .tar.gz)"
 
 build() {
-  CXX=/opt/rocm/hip/bin/hipcc \
+  # -fcf-protection is not supported by HIP, see
+  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-4.2.x/docs/markdown/clang_options.md
+  CXX=/opt/rocm/bin/hipcc \
+  CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
   cmake -B build -Wno-dev \
         -S "$_dirname" \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm \
