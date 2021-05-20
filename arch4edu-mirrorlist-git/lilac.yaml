@@ -1,0 +1,7 @@
+maintainers:
+  - github: heavysink
+    email: heavysink <winstonwu91@gmail.com>
+
+update_on:
+  - source: github
+    github: arch4edu/mirrorlist
