@@ -1,7 +1,7 @@
 # Maintainer: "Jan Kohnert <bughunter@jan-kohnert.de"
 # Contributor: Graziano Giuliani <graziano.giuliani@poste.it>
 pkgname=eccodes
-pkgver=2.22.0
+pkgver=2.22.1
 _attnum=45757960
 pkgrel=1
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
@@ -12,7 +12,7 @@ depends=('openjpeg2' 'netcdf')
 makedepends=("cmake" "gcc-fortran" "jasper")
 conflicts=('grib_api' 'libbufr-ecmwf')
 source=(http://software.ecmwf.int/wiki/download/attachments/${_attnum}/${pkgname}-${pkgver}-Source.tar.gz)
-sha512sums=('488ff560cd9969c2d5c0dd0ce3e6b4433954893758ae1a2bd9177536d8b08a89f37aac4f6a175c271f528d5c838fd4ec7b090dfb1f691df5cfceb67508bdc470')
+sha512sums=('86818604eca75a34c8ce0cf0540d255c0db2d92bf03970a65c972fb2a16b6c472f6dcebfd04bdac4b76b8db2fcf2ed4dfa8a70875eaf1353a775fc185e5de9a0')
 
 build() {
     cd "$srcdir"/${pkgname}-${pkgver}-Source
