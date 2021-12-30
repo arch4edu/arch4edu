@@ -1,13 +1,10 @@
 # Maintainer: heavysink <winstonwu91 at gmail>
 
 _mirrorlist_name=arch4edu-mirrorlist
-pkgname=$_mirrorlist_name-git
+pkgname=$_mirrorlist_name
 pkgver=20210519
-pkgver() {
-  date +'%Y%m%d'
-}
 pkgrel=1
-pkgdesc="Arch Linux CN repo mirror list for use by pacman"
+pkgdesc="Arch4edu repo mirror list for use by pacman"
 arch=('any')
 url="https://github.com/arch4edu/arch4edu"
 license=('GPL')
@@ -18,8 +15,13 @@ md5sums=('SKIP')
 
 _gitname=mirrorlist
 
+pkgver() {
+  cd "$srcdir/$_gitname"
+  git log -1 --date=short --format="%cd.%h" | tr -d '-'
+}
+
 package() {
   cd "$srcdir/$_gitname"
   mkdir -p "$pkgdir/etc/pacman.d/"
-  cp "mirrorlist.arch4edu" "$pkgdir/etc/pacman.d/$_mirrorlist_name"
+  cp "mirrorlist.arch4edu" "$pkgdir/etc/pacman.d/mirrorlist.arch4edu"
 }
