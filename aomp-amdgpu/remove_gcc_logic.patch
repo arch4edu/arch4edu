@@ -1,0 +1,47 @@
+*** aomp/bin/build_openmp.sh.bak	2020-11-01 12:16:24.042929154 +0100
+--- aomp/bin/build_openmp.sh	2020-11-01 12:16:54.366096090 +0100
+***************
+*** 73,106 ****
+     $SUDO rm $INSTALL_OPENMP/testfile
+  fi
+  
+! GCCMIN=9
+! if [ "$AOMP_BUILD_CUDA" == 1 ] ; then
+!    if [ -f $CUDABIN/nvcc ] ; then
+!       CUDAVER=`$CUDABIN/nvcc --version | grep compilation | cut -d" " -f5 | cut -d"." -f1 `
+!       echo "CUDA VERSION IS $CUDAVER"
+!       if [ $CUDAVER -gt 8 ] ; then
+!         GCCMIN=7
+!       fi
+!    fi
+! fi
+! 
+! function getgcc9orless(){
+!    _loc=`which gcc`
+!    [ "$_loc" == "" ] && return
+!    gccver=`$_loc --version | grep gcc | cut -d")" -f2 | cut -d"." -f1`
+!    [ $gccver -gt $GCCMIN ] && _loc=`which gcc-$GCCMIN`
+!    echo $_loc
+! }
+! function getgxx9orless(){
+!    _loc=`which g++`
+!    [ "$_loc" == "" ] && return
+!    gxxver=`$_loc --version | grep g++ | cut -d")" -f2 | cut -d"." -f1`
+!    [ $gxxver -gt $GCCMIN ] && _loc=`which g++-$GCCMIN`
+!    echo $_loc
+! }
+! 
+! GCCLOC=$(getgcc9orless)
+! GXXLOC=$(getgxx9orless)
+  if [ "$GCCLOC" == "" ] ; then
+     echo "ERROR: NO ADEQUATE gcc"
+     echo "       Please install gcc-5, gcc-7, gcc-8 or gcc-9"
+--- 73,80 ----
+     $SUDO rm $INSTALL_OPENMP/testfile
+  fi
+  
+! GCCLOC=/usr/bin/gcc
+! GXXLOC=/usr/bin/g++
+  if [ "$GCCLOC" == "" ] ; then
+     echo "ERROR: NO ADEQUATE gcc"
+     echo "       Please install gcc-5, gcc-7, gcc-8 or gcc-9"

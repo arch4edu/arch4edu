@@ -1,0 +1,14 @@
+Description: do not let flite add a dummy rpath
+Author: Samuel Thibault <sthibault@debian.org>
+diff --git a/main/Makefile b/main/Makefile
+index 8163e40..5ad6a14 100644
+--- a/main/Makefile
++++ b/main/Makefile
+@@ -75,7 +75,6 @@ LOCAL_CLEAN = $(BINDIR)/flite$(EXEEXT) $(BINDIR)/flite_time$(EXEEXT) \
+               $(flite_LIBS_deps) $(VOICES:%=$(BINDIR)/flite_%)
+ 
+ ifdef SHFLAGS
+-flite_LIBS_flags += -Wl,-rpath $(LIBDIR) 
+ shared_libs: $(SHAREDLIBS)
+ else
+ shared_libs: nothing

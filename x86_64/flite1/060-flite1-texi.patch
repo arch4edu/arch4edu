@@ -1,0 +1,17 @@
+Description: add dircategory and direntry
+Author: Denis Briand <denis@narcan.fr>
+Index: flite-1.4-release/doc/flite.texi
+===================================================================
+--- flite-1.4-release.orig/doc/flite.texi	2010-04-03 09:50:04.000000000 +0200
++++ flite-1.4-release/doc/flite.texi	2010-04-03 09:52:12.000000000 +0200
+@@ -2,6 +2,10 @@
+ @c %**start of header
+ @setfilename flite.info
+ @settitle Flite: a small, fast speech synthesis engine
++@dircategory sound
++@direntry
++flite: (flite). a small, fast speech synthesis engine
++@end direntry
+ @finalout
+ @setchapternewpage odd
+ @c %**end of header

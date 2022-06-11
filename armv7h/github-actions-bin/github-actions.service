@@ -1,0 +1,14 @@
+[Unit]
+Description=GitHub Actions Listener Daemon
+
+[Service]
+User=github-actions
+WorkingDirectory=~
+Type=exec
+ExecStart=/var/lib/github-actions/externals/node12/bin/node bin/RunnerService.js
+KillMode=process
+KillSignal=SIGINT
+TimeoutStopSec=5min
+
+[Install]
+WantedBy=multi-user.target

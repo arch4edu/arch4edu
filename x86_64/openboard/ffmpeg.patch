@@ -1,0 +1,13 @@
+--- a/src/podcast/podcast.pri	2021-04-13 19:05:29.000000000 +0200
++++ b/src/podcast/podcast.pri	2022-03-22 08:34:21.095697431 +0100
+@@ -59,8 +59,9 @@
+ 
+ 
+     DEPENDPATH += /usr/lib/x86_64-linux-gnu
++    INCLUDEPATH += /usr/include/ffmpeg4.4
+ 
+-    LIBS += -lavformat -lavcodec -lswscale -lavutil \
++    LIBS += -L/usr/lib/ffmpeg4.4 -lavformat -lavcodec -lswscale -lavutil \
+             -lva-x11 \
+             -lva \
+             -lxcb-shm \

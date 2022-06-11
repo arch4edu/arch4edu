@@ -1,0 +1,5 @@
+src/
+pkg/
+*.tar.gz
+*.tar.xz
+*.tar.bz2

@@ -1,0 +1,12 @@
+maintainers:
+  - github: petronny
+    email: Jingbei Li <i@jingbei.li>
+update_on:
+  - source: aur
+    aur:
+repo_depends:
+  - erfa
+  - python-astropy-helpers
+  - python-pyerfa
+build_prefix: extra-x86_64
+post_build: aur_post_build

@@ -1,0 +1,10 @@
+post_install()
+{
+	echo "link /usr/share/YCM-Generator/config_gen.py to /usr/bin/ycm_generator."
+    echo "Now type ycm_generator to execute the program."
+}
+post_remove()
+{
+	rm /usr/bin/ycm_generator
+	echo "remove /usr/bin/ycm_generator"
+}

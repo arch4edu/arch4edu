@@ -1,0 +1,35 @@
+# Maintainer: Heavysink <winstonwu91 at gmail>
+pkgname=libnn-git
+pkgver=1.85.0.r34.g94ed280
+pkgrel=1
+epoch=1
+pkgdesc="a C code for Natural Neighbours interpolation of 2D scattered data"
+arch=(i686 x86_64)
+url="https://github.com/sakov/nn-c"
+license=('GPL3')
+depends=('glibc')
+makedepends=('git')
+source=($pkgname::"git://github.com/sakov/nn-c.git")
+md5sums=('SKIP')
+
+pkgver() {
+  git -C "${srcdir}/${pkgname}" describe --long --tags | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cat >> "${srcdir}/${pkgname}"/nn/CUSTOMISE <<<'CFLAGS_TRIANGLE+=" -fPIC"'
+}
+
+build() {
+  cd "$srcdir/$pkgname/nn"
+  export CFLAGS+=" -fPIC -Wall -pedantic -D_GNU_SOURCE -std=c99"
+  ./configure \
+    --prefix=$pkgdir/usr
+  make
+}
+
+package()
+{
+  cd "$srcdir/$pkgname/nn"
+  make install
+}

@@ -1,0 +1,4 @@
+alarm-raspi-config/
+pkg/
+src/
+*.tar.xz

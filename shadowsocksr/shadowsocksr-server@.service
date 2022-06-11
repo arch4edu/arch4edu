@@ -1,0 +1,11 @@
+[Unit]
+Description=ShadowsocksR Server Service
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocksr/%i.json
+
+[Install]
+WantedBy=multi-user.target

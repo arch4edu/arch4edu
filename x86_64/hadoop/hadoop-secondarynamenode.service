@@ -1,0 +1,13 @@
+[Unit]
+Description=Hadoop Secondary Namenode
+Requires=hadoop-datanode.service
+After=hadoop-datanode.service
+
+[Service]
+EnvironmentFile=/etc/conf.d/hadoop
+ExecStart=/usr/bin/hadoop secondarynamenode
+User=hadoop
+Group=hadoop
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+pkg
+src
+pigpio-*.tar.gz
+python-pigpio-*.tar.xz
+.AURINFO

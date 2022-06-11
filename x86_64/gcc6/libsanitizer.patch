@@ -1,0 +1,63 @@
+diff -aur src.pristine/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc src.new/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc
+--- src.pristine/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc	2020-02-26 21:58:22.465728543 -0500
++++ src.new/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc	2020-02-26 22:17:14.997803617 -0500
+@@ -1130,8 +1130,9 @@
+ #ifndef __GLIBC_PREREQ
+ #define __GLIBC_PREREQ(x, y) 0
+ #endif
+-#if !defined(__aarch64__) || !SANITIZER_LINUX || __GLIBC_PREREQ (2, 21)
+-/* On aarch64 glibc 2.20 and earlier provided incorrect mode field.  */
++//#if !defined(__aarch64__) || !SANITIZER_LINUX || __GLIBC_PREREQ (2, 21)
++///* On aarch64 glibc 2.20 and earlier provided incorrect mode field.  */
++#if !SANITIZER_LINUX || __GLIBC_PREREQ (2, 31)
+ CHECK_SIZE_AND_OFFSET(ipc_perm, mode);
+ #endif
+ 
+diff -aur src.pristine/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h src.new/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h
+--- src.pristine/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h	2020-02-26 21:58:22.459061884 -0500
++++ src.new/gcc-6.5.0/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h	2020-02-26 22:16:16.651201784 -0500
+@@ -200,27 +200,28 @@
+     unsigned __seq;
+     u64 __unused1;
+     u64 __unused2;
+-#elif defined(__mips__) || defined(__aarch64__)
+-    unsigned int mode;
+-    unsigned short __seq;
+-    unsigned short __pad1;
+-    unsigned long __unused1;
+-    unsigned long __unused2;
++    //#elif defined(__mips__) || defined(__aarch64__)
++    // unsigned int mode;
++    //unsigned short __seq;
++    //unsigned short __pad1;
++    //unsigned long __unused1;
++    //unsigned long __unused2;
+ #elif defined(__sparc__)
+-# if defined(__arch64__)
++    //# if defined(__arch64__)
+     unsigned mode;
+-    unsigned short __pad1;
+-# else
+-    unsigned short __pad1;
+-    unsigned short mode;
+-    unsigned short __pad2;
+-# endif
++    //unsigned short __pad1;
++    //# else
++    //unsigned short __pad1;
++    //unsigned short mode;
++        unsigned short __pad2;
++    //# endif
+     unsigned short __seq;
+     unsigned long long __unused1;
+     unsigned long long __unused2;
+ #else
+-    unsigned short mode;
+-    unsigned short __pad1;
++    //unsigned short mode;
++    //unsigned short __pad1;
++    unsigned int mode;
+     unsigned short __seq;
+     unsigned short __pad2;
+ #if defined(__x86_64__) && !defined(_LP64)
+Only in src.new/gcc-6.5.0/libsanitizer/sanitizer_common: sanitizer_platform_limits_posix.h~

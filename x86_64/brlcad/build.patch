@@ -1,0 +1,32 @@
+--- db/nist/CMakeLists.txt
++++ db/nist/CMakeLists.txt
+@@ -10,7 +10,8 @@ set(NIST_SAMPLE_MODELS
+ )
+ 
+ foreach(im ${NIST_SAMPLE_MODELS})
+-  ADD_G_TARGET(${im} "BRL-CAD Geometry Models/Sample")
++#  disabled because this often segfaults
++#  ADD_G_TARGET(${im} "BRL-CAD Geometry Models/Sample")
+ endforeach(im ${NIST_SAMPLE_MODELS})
+ 
+ CMAKEFILES(
+--- regress/coverage/covgcheck.cpp
++++ regress/coverage/covgcheck.cpp
+@@ -43,6 +43,7 @@
+ 
+ #include <cctype>
+ #include <cstdio>
++#include <cstring>
+ #include <algorithm>
+ #include <locale>
+ #include <fstream>
+--- regress/repository/repocheck.cpp
++++ regress/repository/repocheck.cpp
+@@ -43,6 +43,7 @@
+ 
+ #include <cctype>
+ #include <cstdio>
++#include <cstring>
+ #include <algorithm>
+ #include <locale>
+ #include <fstream>

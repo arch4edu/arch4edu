@@ -1,0 +1,8 @@
+post_install(){
+  echo ":: You need to initialize the MySQL data directory prior to starting"
+  echo "   the service. This can be done with mysqld --initialize command, e.g.:"
+  echo "   mysqld --initialize --user=mysql --basedir=/usr --datadir=/var/lib/mysql"
+  echo ":: Additionally you should secure your MySQL installation using"
+  echo "   mysql_secure_installation command after starting the mysqld service"
+}
+

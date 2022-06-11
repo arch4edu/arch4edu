@@ -1,0 +1,6 @@
+post_install() {
+    echo "If you want several sample image files that may be imported into Engauge Digitizer, "
+    echo "please install engauge-samples:"
+    echo "sudo pacman -S engauge-samples"
+    echo "The files are in directory /usr/share/doc/engauge-digitizer/samples/"
+}

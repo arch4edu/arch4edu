@@ -1,0 +1,41 @@
+--- src/Makefile
++++ src/Makefile
+@@ -23,9 +23,10 @@ z:
+ include $(topdir)/Makefile.inc
+ 
+ mumps_lib:    $(incdir)/mumps_int_def.h \
+-              $(libdir)/libmumps_common$(PLAT)$(LIBEXT) \
+-              $(libdir)/lib$(ARITH)mumps$(PLAT)$(LIBEXT)
+-
++              $(libdir)/libmumps_common$(PLAT).a \
++              $(libdir)/libmumps_common$(PLAT).so \
++              $(libdir)/lib$(ARITH)mumps$(PLAT).a \
++              $(libdir)/lib$(ARITH)mumps$(PLAT).so
+ # Build $(incdir)/mumps_int_def.h, needed by mumps_c_types.h
+ $(incdir)/mumps_int_def.h: build_mumps_int_def 
+ 	./build_mumps_int_def > $(incdir)/mumps_int_def.h
+@@ -188,14 +189,22 @@ OBJS_OTHER = \
+         $(ARITH)tools.o\
+         $(ARITH)type3_root.o
+ 
+-$(libdir)/libmumps_common$(PLAT)$(LIBEXT):      $(OBJS_COMMON_MOD) $(OBJS_COMMON_OTHER)
++$(libdir)/libmumps_common$(PLAT).a:      $(OBJS_COMMON_MOD) $(OBJS_COMMON_OTHER)
+ 	$(AR)$@ $?
+ 	$(RANLIB) $@
++	
++$(libdir)/libmumps_common$(PLAT).so:	$(OBJS_COMMON_MOD) $(OBJS_COMMON_OTHER)
++	$(FC) -shared $^ -Wl,-soname,libmumps_common$(PLAT).so.$(SONAME_VERSION) $(OPTL) -L$(libdir) $(LORDERINGS) -lpthread $(MPIFLIB) $(MPICLIB) -o $(libdir)/libmumps_common$(PLAT).so.$(SONAME_VERSION) $(OPTL) -Wl,-z,defs
++	ln -fs libmumps_common$(PLAT).so.$(SONAME_VERSION) $@
+ 
+-$(libdir)/lib$(ARITH)mumps$(PLAT)$(LIBEXT):    $(OBJS_MOD) $(OBJS_OTHER)
++$(libdir)/lib$(ARITH)mumps$(PLAT).a:    $(OBJS_MOD) $(OBJS_OTHER)
+ 	$(AR)$@ $?
+ 	$(RANLIB) $@
+ 
++$(libdir)/lib$(ARITH)mumps$(PLAT).so:    $(OBJS_MOD) $(OBJS_OTHER)
++	$(FC) -shared $^ -Wl,-soname,lib$(ARITH)mumps$(PLAT).so.$(SONAME_VERSION) $(OPTL) -L$(libdir) -lmumps_common$(PLAT) $(LORDERINGS) $(MPIFLIB) $(SCALAP) -o $(libdir)/lib$(ARITH)mumps$(PLAT).so.$(SONAME_VERSION) $(OPTL) -Wl,-z,defs
++	ln -fs lib$(ARITH)mumps$(PLAT).so.$(SONAME_VERSION) $@
++
+ # Dependencies between modules:
+ # i) arithmetic-dependent modules:
+ $(ARITH)ana_aux.o:              $(ARITH)mumps_struc_def.o \

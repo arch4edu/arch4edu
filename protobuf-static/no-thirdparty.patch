@@ -1,0 +1,23 @@
+diff -urN protobuf-3.6.1-orig/configure.ac protobuf-3.6.1/configure.ac
+--- protobuf-3.6.1-orig/configure.ac	2018-10-10 13:28:21.997297353 -0400
++++ protobuf-3.6.1/configure.ac	2018-10-10 13:37:29.392850421 -0400
+@@ -214,7 +214,6 @@
+ #   too.
+ export CFLAGS
+ export CXXFLAGS
+-AC_CONFIG_SUBDIRS([third_party/googletest])
+ 
+ AC_CONFIG_FILES([Makefile src/Makefile benchmarks/Makefile conformance/Makefile protobuf.pc protobuf-lite.pc])
+ AC_OUTPUT
+diff -urN protobuf-3.6.1-orig/Makefile.am protobuf-3.6.1/Makefile.am
+--- protobuf-3.6.1-orig/Makefile.am	2018-10-10 13:28:22.007292353 -0400
++++ protobuf-3.6.1/Makefile.am	2018-10-10 13:37:20.535090420 -0400
+@@ -9,7 +9,7 @@
+ SUBDIRS = . src
+ 
+ # Always include third_party directories in distributions.
+-DIST_SUBDIRS = src conformance benchmarks third_party/googletest
++DIST_SUBDIRS = src conformance benchmarks
+ 
+ # Build gmock before we build protobuf tests.  We don't add gmock to SUBDIRS
+ # because then "make check" would also build and run all of gmock's own tests,

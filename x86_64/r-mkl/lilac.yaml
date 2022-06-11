@@ -1,0 +1,6 @@
+update_on:
+- source: aur
+  aur:
+- source: archpkg
+  archpkg: intel-mkl
+- alias: icu

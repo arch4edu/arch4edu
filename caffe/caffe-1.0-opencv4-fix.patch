@@ -1,0 +1,116 @@
+From 7f503bd9a19758a173064e299ab9d4cac65ed60f Mon Sep 17 00:00:00 2001
+From: Daniel Bermond <danielbermond@gmail.com>
+Date: Mon, 26 Nov 2018 13:11:23 +0000
+Subject: [PATCH] Fix build with OpenCV 4.0
+
+---
+ Makefile                               | 16 ++++++++++++++--
+ Makefile.config.example                |  2 +-
+ src/caffe/layers/window_data_layer.cpp |  2 +-
+ src/caffe/test/test_io.cpp             |  4 ++--
+ src/caffe/util/io.cpp                  |  8 ++++----
+ 5 files changed, 22 insertions(+), 10 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b7660e852d6..95f3443adab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -200,9 +200,17 @@ endif
+ ifeq ($(USE_OPENCV), 1)
+ 	LIBRARIES += opencv_core opencv_highgui opencv_imgproc
+ 
+-	ifeq ($(OPENCV_VERSION), 3)
++	ifeq ($(OPENCV_VERSION), $(filter $(OPENCV_VERSION), 3 4))
+ 		LIBRARIES += opencv_imgcodecs
+ 	endif
++	ifeq ($(OPENCV_VERSION), 4)
++		ifeq ($(USE_PKG_CONFIG), 1)
++			INCLUDE_DIRS += $(shell pkg-config opencv4 --cflags-only-I | sed 's/-I//g')
++		else
++			INCLUDE_DIRS += /usr/include/opencv4 /usr/local/include/opencv4
++			INCLUDE_DIRS += /usr/include/opencv4/opencv /usr/local/include/opencv4/opencv
++		endif
++	endif
+ 
+ endif
+ PYTHON_LIBRARIES ?= boost_python python2.7
+@@ -429,7 +437,11 @@ LINKFLAGS += -pthread -fPIC $(COMMON_FLAGS) $(WARNINGS)
+ 
+ USE_PKG_CONFIG ?= 0
+ ifeq ($(USE_PKG_CONFIG), 1)
+-	PKG_CONFIG := $(shell pkg-config opencv --libs)
++	ifeq ($(OPENCV_VERSION), 4)
++		PKG_CONFIG := $(shell pkg-config opencv4 --libs)
++	else
++		PKG_CONFIG := $(shell pkg-config opencv --libs)
++	endif
+ else
+ 	PKG_CONFIG :=
+ endif
+diff --git a/Makefile.config.example b/Makefile.config.example
+index 24ca632783a..24802e91534 100644
+--- a/Makefile.config.example
++++ b/Makefile.config.example
+@@ -19,7 +19,7 @@
+ #	possibility of simultaneous read and write
+ # ALLOW_LMDB_NOLOCK := 1
+ 
+-# Uncomment if you're using OpenCV 3
++# Uncomment and set accordingly if you're using OpenCV 3/4
+ # OPENCV_VERSION := 3
+ 
+ # To customize your choice of compiler, uncomment and set the following.
+diff --git a/src/caffe/layers/window_data_layer.cpp b/src/caffe/layers/window_data_layer.cpp
+index 1bf3760e9fd..f41169debe4 100644
+--- a/src/caffe/layers/window_data_layer.cpp
++++ b/src/caffe/layers/window_data_layer.cpp
+@@ -290,7 +290,7 @@ void WindowDataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
+           image_database_cache_[window[WindowDataLayer<Dtype>::IMAGE_INDEX]];
+         cv_img = DecodeDatumToCVMat(image_cached.second, true);
+       } else {
+-        cv_img = cv::imread(image.first, CV_LOAD_IMAGE_COLOR);
++        cv_img = cv::imread(image.first, cv::IMREAD_COLOR);
+         if (!cv_img.data) {
+           LOG(ERROR) << "Could not open or find file " << image.first;
+           return;
+diff --git a/src/caffe/test/test_io.cpp b/src/caffe/test/test_io.cpp
+index c2c919e90dc..b80df287fba 100644
+--- a/src/caffe/test/test_io.cpp
++++ b/src/caffe/test/test_io.cpp
+@@ -20,8 +20,8 @@ class IOTest : public ::testing::Test {};
+ bool ReadImageToDatumReference(const string& filename, const int label,
+     const int height, const int width, const bool is_color, Datum* datum) {
+   cv::Mat cv_img;
+-  int cv_read_flag = (is_color ? CV_LOAD_IMAGE_COLOR :
+-    CV_LOAD_IMAGE_GRAYSCALE);
++  int cv_read_flag = (is_color ? cv::IMREAD_COLOR :
++    cv::IMREAD_GRAYSCALE);
+ 
+   cv::Mat cv_img_origin = cv::imread(filename, cv_read_flag);
+   if (!cv_img_origin.data) {
+diff --git a/src/caffe/util/io.cpp b/src/caffe/util/io.cpp
+index 5295d9dddb9..1f9167a114f 100644
+--- a/src/caffe/util/io.cpp
++++ b/src/caffe/util/io.cpp
+@@ -73,8 +73,8 @@ void WriteProtoToBinaryFile(const Message& proto, const char* filename) {
+ cv::Mat ReadImageToCVMat(const string& filename,
+     const int height, const int width, const bool is_color) {
+   cv::Mat cv_img;
+-  int cv_read_flag = (is_color ? CV_LOAD_IMAGE_COLOR :
+-    CV_LOAD_IMAGE_GRAYSCALE);
++  int cv_read_flag = (is_color ? cv::IMREAD_COLOR :
++    cv::IMREAD_GRAYSCALE);
+   cv::Mat cv_img_origin = cv::imread(filename, cv_read_flag);
+   if (!cv_img_origin.data) {
+     LOG(ERROR) << "Could not open or find file " << filename;
+@@ -179,8 +179,8 @@ cv::Mat DecodeDatumToCVMat(const Datum& datum, bool is_color) {
+   CHECK(datum.encoded()) << "Datum not encoded";
+   const string& data = datum.data();
+   std::vector<char> vec_data(data.c_str(), data.c_str() + data.size());
+-  int cv_read_flag = (is_color ? CV_LOAD_IMAGE_COLOR :
+-    CV_LOAD_IMAGE_GRAYSCALE);
++  int cv_read_flag = (is_color ? cv::IMREAD_COLOR :
++    cv::IMREAD_GRAYSCALE);
+   cv_img = cv::imdecode(vec_data, cv_read_flag);
+   if (!cv_img.data) {
+     LOG(ERROR) << "Could not decode datum ";

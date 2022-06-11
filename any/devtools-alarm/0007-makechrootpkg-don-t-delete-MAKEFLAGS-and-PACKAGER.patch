@@ -1,0 +1,27 @@
+From 31d29cb9b28750c240e9503203d04a779c124eda Mon Sep 17 00:00:00 2001
+From: Kevin Mihelich <kevin@archlinuxarm.org>
+Date: Sun, 3 Jul 2016 21:32:15 -0600
+Subject: [PATCH 7/8] makechrootpkg: don't delete MAKEFLAGS and PACKAGER
+
+---
+ makechrootpkg.in | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/makechrootpkg.in b/makechrootpkg.in
+index 6b774be..7c493b5 100644
+--- a/makechrootpkg.in
++++ b/makechrootpkg.in
+@@ -172,9 +172,7 @@ prepare_chroot() {
+ 
+ 	$install -d "$copydir"/{build,startdir,{pkg,srcpkg,src,log}dest}
+ 
+-	sed -e '/^MAKEFLAGS=/d' -e '/^PACKAGER=/d' -i "$copydir/etc/makepkg.conf"
+-	for x in BUILDDIR=/build PKGDEST=/pkgdest SRCPKGDEST=/srcpkgdest SRCDEST=/srcdest LOGDEST=/logdest \
+-		"MAKEFLAGS='${MAKEFLAGS:-}'" "PACKAGER='${PACKAGER:-}'"
++	for x in BUILDDIR=/build PKGDEST=/pkgdest SRCPKGDEST=/srcpkgdest SRCDEST=/srcdest LOGDEST=/logdest
+ 	do
+ 		grep -q "^$x" "$copydir/etc/makepkg.conf" && continue
+ 		echo "$x" >>"$copydir/etc/makepkg.conf"
+-- 
+2.30.0
+

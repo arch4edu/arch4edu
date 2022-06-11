@@ -1,0 +1,12 @@
+post_install() {
+    note() {
+        all_off="$(tput sgr0)"
+        bold="${all_off}$(tput bold)"
+        blue="${bold}$(tput setaf 4)"
+        yellow="${bold}$(tput setaf 3)"
+
+        echo "${blue}==>${yellow} NOTE:${bold} ${1}${all_off}"
+    }
+
+    note 're-login or source /etc/profile.d/brlcad.sh to add BRL-CAD to $PATH'
+}

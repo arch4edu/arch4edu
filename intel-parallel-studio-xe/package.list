@@ -1,0 +1,10 @@
+intel-common-libs
+intel-compiler-base
+intel-fortran-compiler
+intel-ipp
+intel-openmp
+intel-mpi
+intel-tbb_psxe
+intel-advisor
+intel-vtune-amplifier
+intel-inspector

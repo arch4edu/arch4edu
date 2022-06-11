@@ -1,0 +1,28 @@
+pkgname=coin-or-coinmumps
+pkgver=1.6.3
+pkgrel=1
+pkgdesc="COIN-OR autotools harness to build MUMPS"
+arch=('x86_64')
+url="https://github.com/coin-or-tools/ThirdParty-MUMPS/"
+license=('custom')
+depends=('metis' 'blas')
+makedepends=('gcc-fortran' 'wget')
+source=("https://github.com/coin-or-tools/ThirdParty-Mumps/archive/releases/$pkgver.tar.gz")
+sha256sums=('c66a2e77c601e8e094c6b71c1b13d015745481afb286e5776bb4379e241168c8')
+
+prepare () {
+  cd "ThirdParty-Mumps-releases-$pkgver"
+  ./get.Mumps
+}
+
+build() {
+  cd "ThirdParty-Mumps-releases-$pkgver"
+  FFLAGS="-fallow-argument-mismatch" ./configure --prefix=/usr
+  make
+}
+
+package() {
+    cd "ThirdParty-Mumps-releases-$pkgver"
+    PKG_CONFIG_LIBDIR="${pkgdir}/usr/lib/pkgconfig/" \
+    make DESTDIR="${pkgdir}" install
+}

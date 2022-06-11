@@ -1,0 +1,100 @@
+# Maintainer: Felix Golatofski <contact@xdfr.de>
+# Contributor: eolianoe <eolianoe [at] gmail [DoT] com>
+# Contributor: Kurnevsky Evgeny <kurnevsky@gmail.com>
+# Contributor: Victor Dmitriyev <mrvvitek@gmail.com>
+
+pkgname=scilab
+pkgver=6.1.0
+pkgrel=5
+pkgdesc='A scientific software package for numerical computations.'
+arch=('i686' 'x86_64')
+url='https://www.scilab.org'
+license=('BSD' 'custom:CeCILL' 'GPL2')
+depends=('suitesparse>=4.4.1' 'arpack' 'fftw' 'eigen'
+         'hdf5' 'libmatio'
+         'tk' 'bwidget'
+         'curl' 'inetutils'
+         'java-runtime>=8'
+         'beanshell' 'eclipse-ecj' 'java-flexdock>=1.2.4' 'fop-hyph'
+         'jeuclid-core' 'jgraphx-jre8' 'javahelp2'
+         'saxon-he' 'jlatexmath-fop>=1.0.3' 'jrosetta>=1.0.4' 'jgoodies-looks' 'java-qdox'
+         'java-skinlf' 'java-testng' 'xalan-java' 'docbook-xsl'
+         'jogl>=2.3.2' 'apache-lucene>=7'
+         'java-batik>=1.8' 'java-xmlgraphics-commons>=2.0.1')
+makedepends=('java-environment=8' 'ant>=1.9.0'
+             'ocaml-findlib' 'ocaml-num' 'gcc-fortran'
+             'time')
+source=("${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz"
+        "${pkgname}-jogl-2.3.2.patch"
+        "${pkgname}-strict-jar.patch"
+        "${pkgname}-LD_LIBRARY_PATH.patch"
+        "${pkgname}-0004-Fix-build-with-ocaml-4.0.4.patch"
+        "${pkgname}-num.patch"
+        "libxml.patch"
+	"hdf5_18_api.patch"
+         )
+sha256sums=('ae6befb0153fb823fd647f4eb36076f98fd20fed601f7dfa94d8c13e31044964'
+            '7b7b5609ee36b6f8d801eeb3899cd62cc889c2038e0e1616b7640f9b8a0424b0'
+            '38aa094951338fa1d267dc6f397552e175213b0f8ba7b35727c178607861f6dd'
+            'a39277cb8cfc3d7929c73ce6d707dc24e3df4b8d8f2d587f075efebda79ff4db'
+            '6712c6db2f3ba365d150e1feb1c71bf691f8aa3b45d5a872b05a42f0daf23392'
+            '31e757bdb2086e08e2477118fceddcdd50f3c2fcad5c86cf5de8ec06009f34ed'
+            'c04114c4ef63d76bf898808e90c892de093fcc400a2371c7aa287b76c0c5d041'
+            'f781c2919a0c14be5deed3a8b8866addd8de1171a06aacb96ef1e19535d0988e')
+
+prepare(){
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  # https://codereview.scilab.org/#/c/17530/
+  patch -p2 < "${srcdir}"/${pkgname}-jogl-2.3.2.patch
+  # Linked to: https://codereview.scilab.org/#/c/18089/
+  patch < "${srcdir}"/${pkgname}-strict-jar.patch
+  # Fix path, to avoid the following error:
+  # An error has been detected while loading /usr/share/scilab//modules/functions/.libs/libscifunctions.so: /usr/share/scilab//modules/functions/.libs/libscifunctions.so: cannot open shared object file: No such file or directory
+  patch -p0 < "${srcdir}"/${pkgname}-LD_LIBRARY_PATH.patch
+  # OCaml
+  patch -p0 < "${srcdir}"/${pkgname}-0004-Fix-build-with-ocaml-4.0.4.patch
+  patch -p0 < "${srcdir}"/${pkgname}-num.patch
+  # libxml
+  patch -p1 < "${srcdir}"/libxml.patch
+  # hdf5_18_api
+  patch -p1 < "${srcdir}"/hdf5_18_api.patch
+}
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  ./configure --with-jdk=/usr/lib/jvm/java-8-openjdk \
+    --prefix=/usr \
+    --with-gcc \
+    --with-gfortran \
+    --with-mpi \
+    --with-matio \
+    --with-umfpack \
+    --with-fftw \
+    --with-modelica \
+    --without-emf \
+    --with-install-help-xml \
+    --enable-build-help \
+    --enable-build-localization \
+    --disable-static-system-lib \
+    --with-jdk=/usr/lib/jvm/java-8-openjdk/ \
+    FFLAGS="-fallow-argument-mismatch" \
+    CFLAGS="$CFLAGS -fcommon" \
+    CXXFLAGS="$CXXFLAGS -fcommon" \
+
+  make
+  make doc
+}
+
+package(){
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  make DESTDIR="${pkgdir}" install
+  make DESTDIR="${pkgdir}" install-data install-html
+
+  install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+  install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING-BSD" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/COPYING-BSD"
+}

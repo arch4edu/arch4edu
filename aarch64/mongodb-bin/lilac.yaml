@@ -1,0 +1,5 @@
+repo_depends:
+  - libcurl-openssl-1.0-aarch64: libcurl-openssl-1.0
+update_on:
+  - source: aur
+    aur: mongodb-bin

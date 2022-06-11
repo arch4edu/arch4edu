@@ -1,0 +1,32 @@
+include:
+  - project: "common/gitlab-helper"
+    ref: master
+    file: "ci-helper.yml"
+
+workflow: !reference [ .common, workflow ]
+
+variables:
+  PKG_NAME: "eccodes"
+
+stages:
+  - containerize
+  - build
+  - test
+  - deploy
+
+container-build-and-test:
+  extends: .arch-containerize
+  needs: []
+
+build-eccodes:
+  extends: .arch-build
+  needs:
+    - job: "container-build-and-test"
+      artifacts: no
+  
+test-eccodes:
+  extends: .arch-test
+  needs: ["build-eccodes"]
+
+deploy-eccodes:
+  extends: .arch-deploy

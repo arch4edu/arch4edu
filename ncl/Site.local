@@ -1,0 +1,40 @@
+/*
+ * This file was created by the Configure script.
+ */
+
+#ifdef FirstSite
+
+#endif /* FirstSite */
+
+#ifdef SecondSite
+#define YmakeRoot /usr
+#define TmpRoot /tmp
+
+#define LibSearch -L/usr/lib -L/opt/hdf4/lib
+#define IncSearch -I/usr/include -I/usr/include/cairo -I/usr/include/curl -I/usr/include/X11 -I/usr/include/libpng14 -I/usr/include/freetype2/freetype -I/usr/include/freetype2 -I/usr/include/udunits2  -I/usr/include/gdal -I/usr/include/rx -I/usr/include/Xm -I/opt/hdf4/include 
+
+#define HDFlib -lmfhdf -ldf -ljpeg -lz
+#define HDF5lib -lhdf5_hl -lhdf5
+#define GRIB2lib -lg2c -ljasper -lpng -lz -ljpeg
+#define LexLibrary -lfl
+#define BuildCAIRO 1
+#define BuildGDAL 1
+#define GDALlib -lgdal -lproj
+#define BuildNCL 1
+#define BuildRasterHDF 1
+#define BuildPNG 1
+#define BuildCAIRO 1
+#define CAIROlib -lcairo -lfontconfig -lpixman-1 -lfreetype -lexpat -lpng -lz -lpthread -lbz2 -lXrender
+#define BuildNetCDF4 1
+#define NetCDF4lib -lnetcdf
+#define BuildGDAL 1
+#define BuildTRIANGLE 0
+#define BuildUdunits 1
+#define UdUnitslib -ludunits2 -lexpat
+#define BuildHDFEOS 0
+#define BuildHDFEOS5 0
+#define BuildGRIB2 1
+#define BuildV5D 0
+#define BuildDODS 1
+
+#endif /* SecondSite */

@@ -1,0 +1,17 @@
+language: python
+
+python:
+    - "3.6"
+
+# Use container-based infrastructure for quicker build start-up
+sudo: false
+
+install:
+    - pip install pyaml jsonschema
+
+script:
+    - python3 --version
+    - ./pre-commit --all # checking all PKGBUILD
+
+matrix:
+    fast_finish: true

@@ -1,0 +1,6 @@
+update_on:
+  - source: aur
+    aur:
+repo_depends:
+  - rocclr
+  - rocminfo

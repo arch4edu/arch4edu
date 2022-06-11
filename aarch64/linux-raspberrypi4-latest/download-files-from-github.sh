@@ -1,0 +1,1 @@
+../archlinuxarm-keyring/download-files-from-github.sh

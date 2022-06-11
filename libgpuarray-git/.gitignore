@@ -1,0 +1,4 @@
+*.xz
+libgpuarray/
+src/
+pkg/

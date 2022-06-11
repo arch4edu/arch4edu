@@ -1,0 +1,31 @@
+# Maintainer: Gordian Edenhofer <gordian.edenhofer@gmail.com>
+# Contributor: Maarten van Gompel <proycon at anaproy dot nl>
+# Contributor: Lex Black <autumn-wind at web dot de>
+# Contributor: Dieter_be
+
+pkgname=python-gensim
+_pkgname=gensim
+pkgver=4.1.2
+pkgrel=2
+pkgdesc="Library for topic modelling, document indexing and similarity retrieval with large corpora"
+arch=('i686' 'x86_64')
+license=('LGPL2.1')
+url="https://radimrehurek.com/gensim/"
+depends=('python-numpy' 'python-scipy' 'python-smart_open')
+optdepends=("python-pyro: Usage in a distributed environment"
+	"python-levenshtein: Similarity measure")
+makedepends=('python-setuptools' 'python-wheel' 'python-pip' 'cython')
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/RaRe-Technologies/${_pkgname}/archive/${pkgver}.tar.gz")
+sha512sums=('959db56a280af83db581ede012fcae91f428bdcbd92f9d82de6631a3ad52e04cb3d448b545f04b7d75695cb7de75dd9c6f7bbdda13ac6fc6745e37a1f25e3e5e')
+
+build() {
+	cd "${srcdir}/${_pkgname}-${pkgver}"
+	python setup.py clean
+	rm -rf build dist
+	python setup.py build
+}
+
+package() {
+	cd "${srcdir}/${_pkgname}-${pkgver}"
+	python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}

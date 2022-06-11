@@ -1,0 +1,61 @@
+#!/bin/sh
+
+_init() {
+    variables=(
+        "G4ABLADATA" \
+            "G4ENSDFSTATEDATA" \
+            "G4INCLDATA" \
+            "G4LEDATA" \
+            "G4LEVELGAMMADATA" \
+            "G4NEUTRONHPDATA" \
+            "G4PARTICLEXSDATA" \
+            "G4PIIDATA" \
+            "G4RADIOACTIVEDATA" \
+            "G4REALSURFACEDATA" \
+            "G4SAIDXSDATA" \
+            )
+
+shell=("sh" "csh")
+
+existing_out="existing_out" # out-of-source compilation
+existing_in="existing_in"   # in-source compilation
+path="/usr/bin"
+}
+_clean(){
+    for _ext in ${shell[*]}
+    do
+        rm -f $existing_out.${_ext}
+        rm -f $existing_in.${_ext}
+    done
+}
+_read() {
+    _init
+    for _varname in ${variables[*]}
+    do
+        for _ext in ${shell[*]}
+        do
+            if [ -f ${path}/geant4.${_ext} ]; then
+                sed -n /${_varname}/p ${path}/geant4.${_ext}     >> $existing_out.${_ext}
+            fi
+            if [ -f ${path}/geant4make.${_ext} ]; then
+                sed -n /${_varname}/p ${path}/geant4make.${_ext} >> $existing_in.${_ext}
+            fi
+	done
+    done
+}
+_keep() {
+    _init
+    for _ext in ${shell[*]}
+    do
+        cat $existing_out.${_ext} >> ${path}/geant4.${_ext}
+        cat $existing_in.${_ext}  >> ${path}/geant4make.${_ext}
+    done
+    _clean
+}
+
+pre_upgrade() {
+    _read
+}
+post_upgrade() {
+    _keep
+}

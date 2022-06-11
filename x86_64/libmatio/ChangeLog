@@ -1,0 +1,41 @@
+1.5.21-1
+upstream update. 1.5.20 ignored due to check errors.
+
+1.5.19-1
+move from [community] to AUR and upstream update
+
+1.5.14-1:
+upstream update
+
+1.5.13-1:
+upstream update
+
+1.5.12-3:
+hdf5 rebuild
+
+1.5.12-1:
+upstream update
+
+1.5.11-1:
+upstream update
+
+1.5.10-2:
+hdf5 rebuild
+
+1.5.10-1:
+upstream update
+
+1.5.9-1:
+upstream update
+
+1.5.8-1:
+upstream update
+
+1.5.6-2:
+rebuild against the newest hdf5
+
+1.5.6-1:
+upstream update
+
+1.5.2-3:
+move from AUR to [community]

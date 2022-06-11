@@ -1,0 +1,78 @@
+--- hdfview-3.1.0.orig/build.xml	2019-10-26 14:54:03.332040154 -0400
++++ hdfview-3.1.0.new/build.xml	2019-10-26 14:53:49.502003310 -0400
+ 
+@@ -1077,28 +1078,6 @@
+         <mkdir dir="${release.dir}/share/samples" />
+         <mkdir dir="${release.dir}/share/doc" />
+ 
+-        <symlink action="record" linkfilename="dir.hdf.links">
+-            <fileset dir="${hdf.lib.dir}">
+-                <!-- HDF4 bug in lib naming -->
+-                <include name="libdf.so*" />
+-
+-                <include name="libhdf.so*" />
+-                <include name="libhdf_java.so*" />
+-                <include name="libmfhdf.so*" />
+-                <include name="libjpeg.so*" />
+-                <include name="libszip.so*" />
+-                <include name="libz.so*" />
+-            </fileset>
+-        </symlink>
+-        <symlink action="record" linkfilename="dir.hdf5.links">
+-            <fileset dir="${hdf5.lib.dir}">
+-                <include name="libhdf5.so*" />
+-                <include name="libhdf5_java.so*" />
+-                <include name="libszip.so*" />
+-                <include name="libz.so*" />
+-            </fileset>
+-        </symlink>
+-
+         <!-- Copy the application and dependencies -->
+         <copy todir="${release.dir}/lib">
+             <fileset dir="${jar.dir}" includes="${ant.project.name}.jar" />
+@@ -1139,34 +1118,6 @@
+             <fileset dir="${lib.dir}/extra" includes="slf4j-nop${version.slf4j}.jar" excludes="*sources.jar" />
+         </copy>
+ 
+-        <copy file="${hdf.lib.dir}/dir.hdf.links" tofile="${release.dir}/lib/dir.hdf.links" failonerror="false">
+-          <filterchain>
+-            <tokenfilter>
+-              <replaceregex pattern="${hdf.lib.dir}" replace="${basedir}/${release.dir}/lib/" flags="gi"/>
+-            </tokenfilter>
+-          </filterchain>
+-        </copy>
+-        <copy file="${hdf5.lib.dir}/dir.hdf5.links" tofile="${release.dir}/lib/dir.hdf5.links">
+-          <filterchain>
+-            <tokenfilter>
+-              <replaceregex pattern="${hdf5.lib.dir}" replace="${basedir}/${release.dir}/lib/" flags="gi"/>
+-            </tokenfilter>
+-          </filterchain>
+-        </copy>
+-        <symlink action="recreate" failonerror="false">
+-            <fileset dir="${basedir}/${release.dir}/lib" includes="dir.hdf.links" />
+-        </symlink>
+-        <symlink action="recreate">
+-            <fileset dir="${basedir}/${release.dir}/lib" includes="dir.hdf5.links" />
+-        </symlink>
+-
+-        <delete file="${basedir}/${release.dir}/lib/dir.hdf.links" failonerror="false"/>
+-        <delete file="${basedir}/${release.dir}/lib/dir.hdf5.links"/>
+-
+-        <!-- Bundle jre -->
+-        <echo>Bundling JRE with jdeps and jlink...</echo>
+-        <jlink java.bindir="${java.home}/bin" />
+-
+         <!-- Create the .sh run script -->
+         <copy file="${packagefiles.dir}/hdfview.sh.in" tofile="${release.dir}/hdfview.sh" />
+ 
+@@ -1611,10 +1562,6 @@
+ 
+             <tarfileset dir="${release.dir}/share" prefix="${ant.project.name}/${app.version}/share" filemode="666" />
+ 
+-            <tarfileset dir="${release.dir}/jre" prefix="${ant.project.name}/${app.version}/jre" filemode="755">
+-                <include name="**" />
+-            </tarfileset>
+-
+             <tarfileset dir="${release.dir}" prefix="${ant.project.name}/${app.version}" filemode="755">
+                 <include name="*.sh" />
+             </tarfileset>

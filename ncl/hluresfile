@@ -1,0 +1,48 @@
+!=========================================
+! This is a sample .hluresfile. It should
+! go in your home directory.
+!
+! Comments for ".res" files are preceded by a "!".
+! Remember quotations are not used in .res files.
+
+! White background/black foreground, these are the default in V6.1.0
+*wkForegroundColor  : (/0.,0.,0./)
+*wkBackgroundColor  : (/1.,1.,1./)
+
+! Have a favorite colormap that you use for everything? You can
+! make it your default here (note the name is NOT in quotes).
+!
+! In Version 6.1.0, the default is "ncl_default":
+! http://www.ncl.ucar.edu/Document/Graphics/ColorTables/ncl_default.shtml
+!
+! For all available color maps, see 
+! http://www.ncl.ucar.edu/Document/Graphics/color_table_gallery.shtml
+*wkColorMap         : BlueWhiteOrangeRed
+
+! Font - this is the default in V6.1.0. 
+! Use times-roman to get the pre-V6.1.0 default.
+*Font           : helvetica 
+
+! Function code - this is the default in V6.1.0. 
+! Use ':' to get the pre-V6.1.0 default.
+*TextFuncCode               : ~     
+ 
+! Make default X11 window larger (the default is 512x512)
+!*windowWorkstationClass*wkWidth  : 1000
+!*windowWorkstationClass*wkHeight : 1000
+
+! Make default PNG window larger (the default is 1024x1024)
+!*imageWorkstationClass*wkWidth   : 2500
+!*imageWorkstationClass*wkHeight  : 2500
+
+! Note, if you just set wkWidth/wkHeight, this will affect both
+! X11 window AND PNG image size
+!*wkWidth   : 1500
+!*wkHeight  : 1500
+
+! Increase the default (16mb) contour memory.
+! The default is 100000000.
+! For example, if you have gridded data that
+! is larger than 500 x 500, you may need this.
+! *wsMaximumSize: 300000000
+!==========================================

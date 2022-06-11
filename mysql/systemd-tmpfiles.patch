@@ -1,0 +1,20 @@
+diff -Naur a/usr/lib/tmpfiles.d/mysql.conf b/usr/lib/tmpfiles.d/mysql.conf
+--- a/usr/lib/tmpfiles.d/mysql.conf	2022-01-29 17:27:06.996635977 +0100
++++ b/usr/lib/tmpfiles.d/mysql.conf	2022-01-29 17:28:52.839503490 +0100
+@@ -21,3 +21,4 @@
+ # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA
+ 
+ d /run/mysqld 0755 mysql mysql  -
++d /var/lib/mysql 0700 mysql mysql  -
+diff -Naur a/usr/lib/tmpfiles.d/mysqlrouter.conf b/usr/lib/tmpfiles.d/mysqlrouter.conf
+--- a/usr/lib/tmpfiles.d/mysqlrouter.conf	2022-01-29 17:47:51.586650998 +0100
++++ b/usr/lib/tmpfiles.d/mysqlrouter.conf	2022-01-29 17:48:27.181437880 +0100
+@@ -20,4 +20,7 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA
+ 
+-d run 0755 mysqlrouter mysqlrouter  -
++d /run/mysqlrouter 0755 mysqlrouter mysqlrouter  -
++d /var/lib/mysqlrouter 0700 mysqlrouter mysqlrouter  -
++d /var/log/mysqlrouter 0750 mysqlrouter mysqlrouter  -
++

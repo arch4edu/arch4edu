@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Gmsh
+Comment=Automatic 3D finite element mesh generator
+Icon=gmsh
+Exec=gmsh
+Encoding=UTF-8
+Terminal=false
+Type=Application
+Categories=Education;Science;Math;

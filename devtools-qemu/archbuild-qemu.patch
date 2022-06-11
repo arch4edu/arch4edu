@@ -1,0 +1,32 @@
+--- /usr/bin/archbuild	2020-06-24 22:55:10.000000000 +0800
++++ archbuild-qemu	2020-06-25 14:56:17.318483978 +0800
+@@ -263,6 +263,11 @@
+ 	tag="${cmd%-build}"
+ 	repo=${tag%-*}
+ 	arch=${tag##*-}
++	if [[ "x${arch}" = "xaarch64" ]]; then
++		qemu_static='/usr/bin/qemu-aarch64-static'
++	else
++		qemu_static='/usr/bin/qemu-arm-static'
++	fi
+ fi
+ chroots='/var/lib/archbuild'
+ clean_first=false
+@@ -321,6 +326,8 @@
+ 		-C "${pacman_config}" \
+ 		-M "${makepkg_config}" \
+ 		-c "${cachedir}" \
++		-f "$qemu_static" \
++		-f '/etc/pacman.d/mirrorlist.alarm' \
+ 		"${chroots}/${repo}-${arch}/root" \
+ 		"${base_packages[@]}" || abort
+ else
+@@ -328,6 +335,8 @@
+ 	arch-nspawn \
+ 		-C "${pacman_config}" \
+ 		-M "${makepkg_config}" \
++		-f "$qemu_static" \
++		-f '/etc/pacman.d/mirrorlist.alarm' \
+ 		"${chroots}/${repo}-${arch}/root" \
+ 		pacman -Syuu --noconfirm || abort
+ fi

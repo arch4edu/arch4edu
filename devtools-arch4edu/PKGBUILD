@@ -1,0 +1,32 @@
+pkgname=devtools-arch4edu
+pkgver=20200407.4.gf290f6d
+pkgrel=3
+pkgdesc='Tools for arch4edu package maintainers'
+arch=('any')
+url='http://github.com/arch4edu/devtools'
+license=('GPL')
+depends=('bash' 'openssh' 'subversion' 'rsync' 'arch-install-scripts'
+         'git' 'bzr' 'mercurial' 'diffutils' 'util-linux' 'awk')
+makedepends=('asciidoc')
+optdepends=('btrfs-progs: btrfs support')
+conflicts=('devtools')
+provides=('devtools')
+source=("${pkgname}::git+${url}.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${pkgname}"
+  git describe --always --tags | sed -e 's/-/./g' -e 's/v//g'
+}
+
+build() {
+  cd "${srcdir}/${pkgname}"
+  make PREFIX=/usr
+}
+
+package() {
+  cd "${srcdir}/${pkgname}"
+  make PREFIX=/usr DESTDIR="${pkgdir}" install
+}
+
+# vim: ts=2 sw=2 et:

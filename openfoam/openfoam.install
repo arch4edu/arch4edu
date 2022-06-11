@@ -1,0 +1,25 @@
+# arg 1:  the new package version
+post_install() {
+  echo "NOTE:"
+  echo ""
+  echo "This install of OpenFOAM does NOT include the"
+  echo "ThirdParty libraries from openfoam's website."
+  echo "It simply creates a stub OpenFOAM/ThirdParty"
+  echo "directory to keep the OpenFOAM bashrc happy."
+  echo ""
+  echo "If you need other components of the ThirdParty bundle"
+  echo "it will have to be installed manually."
+  echo "See http://www.openfoam.com/download/source.php for details."
+  echo ""
+  echo "Don't forget to run the \"ofoam\" alias in order to"
+  echo "source the OpenFOAM environment (PATH + LD_LIBRARY_PATH)."
+  echo "This alias has been introduced in order to avoid"
+  echo "PATH clashes (e.g. other executables such as R from GNU R)"
+  echo ""
+}
+
+# arg 1:  the new package version
+# arg 2:  the old package version
+post_upgrade() {
+  post_install $1
+}

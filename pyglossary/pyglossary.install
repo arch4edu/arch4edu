@@ -1,0 +1,4 @@
+## arg 1:  the new package version
+post_install() {
+    echo "Make sure to install at least one of the optional interface dependencies."
+}

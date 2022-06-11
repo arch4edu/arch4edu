@@ -1,0 +1,10 @@
+post_install() {
+	pkgver=$1
+	pkgver=${pkgver%-*}
+	cd /opt/intel/oneapi/compiler
+	ln -sfT "$pkgver" latest
+}
+
+post_upgrade() {
+	post_install $1
+}

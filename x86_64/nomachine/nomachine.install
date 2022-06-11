@@ -1,0 +1,24 @@
+post_install()
+{
+    echo "Running NX post_install script..."
+    /usr/NX/nxserver --install fedora
+}
+
+pre_remove()
+{
+    echo "Running NX pre_remove script..."
+    /usr/NX/scripts/setup/nxserver --uninstall fedora
+}
+
+post_remove()
+{
+    echo "Removing /usr/NX..."
+    rm -rf /usr/NX
+}
+
+post_upgrade()
+{
+    echo "Running NX update script..."
+    /usr/NX/nxserver --update fedora
+}
+

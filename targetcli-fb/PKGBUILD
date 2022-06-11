@@ -1,0 +1,36 @@
+# Contributor: Johannes Dewender  arch at JonnyJD dot net
+pkgname=targetcli-fb
+pkgver=2.1.54
+pkgrel=2
+pkgdesc="free branch of the targetcli LIO administration shell (iSCSI + Co)"
+arch=('any')
+url="https://github.com/open-iscsi/targetcli-fb"
+license=('Apache')
+groups=()
+depends=('python-rtslib-fb>=2.1.fb52' 'python-configshell-fb>=1.1.fb17'
+         'python-dbus' 'python-gobject')
+makedepends=('python-setuptools')
+optdepends=('python-ethtool')
+provides=('targetcli')
+backup=()
+options=()
+install=
+source=(https://github.com/open-iscsi/targetcli-fb/archive/v${pkgver}.tar.gz)
+sha512sums=('dd008b8c47acc095078454c94b0c6f19ba88f86ddf1b5335eb050abf61d89ce1ffb7411ff3a174de60ed9759e6337206253aa9b2def6497b85c884a0a111308d')
+
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  sed -i "s|/lib/systemd/system|lib/systemd/system|" setup.py
+  python setup.py build
+  gzip --stdout targetcli.8 > "targetcli.8.gz"
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  python setup.py install --skip-build --root="$pkgdir/" --optimize=1
+
+  install -D -m 644 targetcli.8.gz "$pkgdir/usr/share/man/man8/targetcli.8.gz"
+}
+
+# vim:set ts=2 sw=2 et:

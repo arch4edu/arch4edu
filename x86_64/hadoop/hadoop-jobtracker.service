@@ -1,0 +1,13 @@
+[Unit]
+Description=Hadoop Jobtracker
+Requires=hadoop-datanode.service
+After=hadoop-datanode.service
+
+[Service]
+EnvironmentFile=/etc/conf.d/hadoop
+ExecStart=/usr/bin/hadoop jobtracker
+User=hadoop
+Group=hadoop
+
+[Install]
+WantedBy=multi-user.target

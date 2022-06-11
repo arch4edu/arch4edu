@@ -1,0 +1,13 @@
+maintainers:
+  - github: petronny
+    email: Jingbei Li <i@jingbei.li>
+update_on:
+  - source: aur
+    aur: openfoam-org
+repo_depends:
+  - parmetis
+  - scotch
+build_prefix: extra-x86_64
+time_limit_hours: 2
+pre_build: aur_pre_build
+post_build: aur_post_build

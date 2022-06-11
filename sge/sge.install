@@ -1,0 +1,31 @@
+## arg 1:  the new package version
+pre_install() {
+	[ -d /opt/sge ] && echo "/opt/sge already exists, you might want to remove the folder for a fresh install."
+}
+
+## arg 1:  the new package version
+post_install() {
+	echo "Please visit https://wiki.archlinux.org/index.php/Son_of_Grid_Engine to set up the Son of Grid Engine."
+}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+#pre_upgrade() {
+	# do something here
+#}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+#post_upgrade() {
+	# do something here
+#}
+
+## arg 1:  the old package version
+#pre_remove() {
+	# do something here
+#}
+
+## arg 1:  the old package version
+#post_remove() {
+	# do something here
+#}

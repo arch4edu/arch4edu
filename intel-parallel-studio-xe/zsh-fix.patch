@@ -1,0 +1,12 @@
+--- composerxe/linux/bin/compilervars.sh	2020-11-09 06:28:27.000000000 +0900
++++ composerxe/linux/bin/compilervars_fix.sh	2020-11-09 06:40:21.707348052 +0900
+@@ -120,7 +120,8 @@
+   if [ "${INTEL_HOST_PLATFORM}" = "Darwin" ]; then
+     local arr=(`echo ${!arg} | sed 's/:/\'$'\n/g'`)
+   else
+-    local arr=(`echo ${!arg} | sed 's/:/\n/g'`)
++    eval "value=\"\${$arg}\""
++    local arr=(`echo ${value} | sed 's/:/\n/g'`)
+   fi
+   local fixarr=()
+   local found=

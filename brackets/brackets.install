@@ -1,0 +1,44 @@
+post_install() {
+	if [ ! -f /opt/brackets/libnss3.so.1d ]; then
+		ln -s /usr/lib/libnss3.so /opt/brackets/libnss3.so.1d
+	fi
+	if [ ! -f /opt/brackets/libnssutil3.so.1d ]; then
+		ln -s /usr/lib/libnssutil3.so /opt/brackets/libnssutil3.so.1d
+	fi
+	if [ ! -f /opt/brackets/libnspr4.so.0d ]; then
+		ln -s /usr/lib/libnspr4.so /opt/brackets/libnspr4.so.0d
+	fi
+	if [ ! -f /opt/brackets/libplc4.so.0d ]; then
+		ln -s /usr/lib/libplc4.so /opt/brackets/libplc4.so.0d
+	fi
+	if [ ! -f /opt/brackets/libsmime3.so.1d ]; then
+		ln -s /usr/lib/libsmime3.so /opt/brackets/libsmime3.so.1d
+	fi
+	if [ ! -f /opt/brackets/libssl3.so.1d ]; then
+		ln -s /usr/lib/libssl3.so /opt/brackets/libssl3.so.1d
+	fi
+	if [ ! -f /opt/brackets/libplds4.so.0d ]; then
+		ln -s /usr/lib/libplds4.so /opt/brackets/libplds4.so.0d
+	fi
+	#if [ ! -f /opt/brackets/libudev.so.0 ]; then
+	#	ln -s /usr/lib/libudev.so /opt/brackets/libudev.so.0
+	#fi
+	xdg-icon-resource forceupdate --theme hicolor &> /dev/null
+	update-desktop-database -q
+	update-mime-database usr/share/mime
+	echo "==> Linux version doesn't always run as expected. See: https://github.com/adobe/brackets/wiki/Linux-Version#known-issues"
+}
+
+post_upgrade() {
+	post_install
+}
+
+pre_remove(){
+	rm /opt/brackets/{libnss3.so.1d,libnssutil3.so.1d,libnspr4.so.0d,libplc4.so.0d,libsmime3.so.1d,libssl3.so.1d,libplds4.so.0d,libudev.so.0}
+}
+
+post_remove() {
+	xdg-icon-resource forceupdate --theme hicolor &> /dev/null
+	update-desktop-database -q
+	update-mime-database usr/share/mime
+}

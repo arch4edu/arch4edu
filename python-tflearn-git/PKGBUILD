@@ -1,0 +1,23 @@
+# Maintainer: Jingbei Li <i@jingbei.li>
+pkgname='python-tflearn-git'
+pkgdesc="TFlearn is a modular and transparent deep learning library built on top of Tensorflow."
+pkgver=0.5.0.r6.gdb51767
+pkgrel=3
+depends=('python-numpy' 'python-six' 'python-pillow' 'python-tensorflow')
+makedepends=('python-setuptools' 'git')
+arch=('any')
+url="http://tflearn.org/"
+license=('MIT')
+source=("$pkgname::git+https://github.com/tflearn/tflearn")
+md5sums=('SKIP')
+
+pkgver(){
+	cd "${pkgname}"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//'
+}
+
+package() {
+	cd "$srcdir/$pkgname"
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

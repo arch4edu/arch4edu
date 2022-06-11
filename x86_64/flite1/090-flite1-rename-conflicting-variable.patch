@@ -1,0 +1,46 @@
+--- a/config/common_make_rules
++++ b/config/common_make_rules
+@@ -54,20 +54,20 @@ CFLAGS += $(EXTRA_CC_FLAGS) $(OPT) $(DBG
+ ## These'll become (target)arch dependent at some point
+ TARGET_PLATFORM=$(TARGET_CPU)-$(TARGET_OS)
+ HOST_PLATFORM=$(HOST_CPU)-$(HOST_OS)
+-ifndef BUILDDIR
+-BUILDDIR=$(TOP)/build/$(TARGET_PLATFORM)
++ifndef __FLITE1_BUILDPATH__
++__FLITE1_BUILDPATH__=$(TOP)/build/$(TARGET_PLATFORM)
+ endif
+-OBJDIR=$(BUILDDIR)/obj/$(DIRNAME)
+-BINDIR=$(BUILDDIR)/bin
++OBJDIR=$(__FLITE1_BUILDPATH__)/obj/$(DIRNAME)
++BINDIR=$(__FLITE1_BUILDPATH__)/bin
+ ifeq ($(HOST_PLATFORM),$(TARGET_PLATFORM))
+ BINDIR=$(TOP)/bin
+ endif
+ 
+-LIBDIR=$(BUILDDIR)/lib
+-BUILDDIRS=$(OBJDIR) $(BINDIR) $(LIBDIR)
++LIBDIR=$(__FLITE1_BUILDPATH__)/lib
++__FLITE1_BUILDPATH__S=$(OBJDIR) $(BINDIR) $(LIBDIR)
+ 
+-FLITELIBS = $(BUILDDIR)/lib/libflite.a
+-FLITELIBFLAGS = -L$(BUILDDIR)/lib -lflite 
++FLITELIBS = $(__FLITE1_BUILDPATH__)/lib/libflite.a
++FLITELIBFLAGS = -L$(__FLITE1_BUILDPATH__)/lib -lflite 
+ LDLIBS += -lm $(AUDIOLIBS) $(OTHERLIBS)
+ 
+ FULLOBJS = $(OBJS:%=$(OBJDIR)/%)
+@@ -93,12 +93,12 @@ OTHER_BUILD_DIRS += palm
+ endif
+ endif
+ 
+-all: $(BUILDDIRS) $(OTHER_BUILD_DIRS) $(OBJDIR)/.make_build_dirs $(ALL) nothing
++all: $(__FLITE1_BUILDPATH__S) $(OTHER_BUILD_DIRS) $(OBJDIR)/.make_build_dirs $(ALL) nothing
+ 
+ nothing:
+ 	@ echo > /dev/null
+ 
+-$(BUILDDIRS):
++$(__FLITE1_BUILDPATH__S):
+ 	@ mkdir -p $@ 2>/dev/null || true
+ 
+ $(OBJDIR)/%.o : %.c

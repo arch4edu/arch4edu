@@ -1,0 +1,28 @@
+post_install() {
+  cat << _EOF
+
+  ==> sublime-text-dev install note:
+  ------------------------------------------------------------------------------
+    This package is used for the actual 'dev' branch of Sublime Text that
+    requires a license to be purchased from the Sublime Text website.
+    If you want to keep using the latest stable release you should instead
+    install 'sublime-text-4' or use the official repos provided by Sublime Text.
+    
+    To disable in-application reminders about new Sublime Text dev versions,
+    add the following setting to your User Preferences file:
+    "update_check": false
+
+_EOF
+}
+
+post_upgrade() {
+  cat << _EOF
+
+  ==> sublime-text-dev upgrade note:
+  ------------------------------------------------------------------------------
+    To disable in-application reminders about new Sublime Text dev versions,
+    add the following setting to your User Preferences file:
+    "update_check": false
+
+_EOF
+}

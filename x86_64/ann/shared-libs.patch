@@ -1,0 +1,39 @@
+diff -u -r ann_1.1.1/Make-config ann_1.1.1.new/Make-config
+--- ann_1.1.1/Make-config	2006-08-04 12:46:26.000000000 -0700
++++ ann_1.1.1.new/Make-config	2009-06-11 11:46:47.428863858 -0700
+@@ -76,6 +76,14 @@
+ 	"MAKELIB = ar ruv" \
+ 	"RANLIB = true"
+ 
++linux-g++-sl:
++	$(MAKE) targets \
++	"ANNLIB = libANN.so" \
++	"C++ = g++" \
++	"CFLAGS = -O3 -fPIC" \
++	"MAKELIB = g++ -shared -o" \
++	"RANLIB = true"
++
+ #					Mac OS X using g++
+ macosx-g++:
+ 	$(MAKE) targets \
+diff -u -r ann_1.1.1/Makefile ann_1.1.1.new/Makefile
+--- ann_1.1.1/Makefile	2006-08-04 12:46:26.000000000 -0700
++++ ann_1.1.1.new/Makefile	2009-06-11 11:47:14.175551635 -0700
+@@ -42,6 +42,7 @@
+ default:
+ 	@echo "Enter one of the following:"
+ 	@echo "  make linux-g++            for Linux and g++"
++	@echo "  make linux-g++-sl         for Linux and g++, make shared libs"
+ 	@echo "  make macosx-g++           for Mac OS X and g++"
+ 	@echo "  make sunos5               for Sun with SunOS 5.x"
+ 	@echo "  make sunos5-sl            for Sun with SunOS 5.x, make shared libs"
+@@ -56,7 +57,7 @@
+ #-----------------------------------------------------------------------------
+ # main make entry point
+ #-----------------------------------------------------------------------------
+-alpha-g++ macosx-g++ linux-g++ sgi sunos4 sunos4-g++ sunos5 sunos5-g++ sunos5-g++-sl authors-debug authors-perf:
++alpha-g++ macosx-g++ linux-g++ linux-g++-sl sgi sunos4 sunos4-g++ sunos5 sunos5-g++ sunos5-g++-sl authors-debug authors-perf:
+ 	cd src ; $(MAKE) $@
+ 	cd test ; $(MAKE) $@
+ 	cd sample ; $(MAKE) $@
+Only in ann_1.1.1.new/sample: ann_sample

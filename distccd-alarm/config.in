@@ -1,0 +1,9 @@
+#
+# Parameters to be passed to distccd
+#
+# You must explicitly add IPs (or subnets) that are allowed to connect,
+# using the --allow switch.  See the distccd manpage for more info.
+#
+
+PATH=/opt/x-tools@VERS@/@PATH@/bin:$PATH
+DISTCC_ARGS="--allow-private --log-level info --log-file /tmp/distccd-@LOG@.log --port @PORT@"

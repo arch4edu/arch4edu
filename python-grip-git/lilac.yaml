@@ -1,0 +1,6 @@
+update_on:
+- source: aur
+  aur:
+- source: github
+  github: joeyespo/grip
+- alias: python

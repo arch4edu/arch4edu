@@ -1,0 +1,6 @@
+update_on:
+- source: aur
+  aur:
+- source: github
+  github: sequitur-g2p/sequitur-g2p
+- alias: python

@@ -1,0 +1,6 @@
+maintainers:
+  - github: petronny
+    email: Jingbei Li <i@jingbei.li>
+update_on:
+  - source: aur
+    aur: annie

@@ -1,0 +1,18 @@
+diff --git a/tensorflow/python/keras/saving/hdf5_format.py b/tensorflow/python/keras/saving/hdf5_format.py
+index d3bb10c98d..e89f5356bb 100644
+--- a/tensorflow/python/keras/saving/hdf5_format.py
++++ b/tensorflow/python/keras/saving/hdf5_format.py
+@@ -659,11 +659,11 @@ def load_weights_from_hdf5_group(f, layers):
+           and weights file.
+   """
+   if 'keras_version' in f.attrs:
+-    original_keras_version = f.attrs['keras_version'].decode('utf8')
++    original_keras_version = f.attrs['keras_version']
+   else:
+     original_keras_version = '1'
+   if 'backend' in f.attrs:
+-    original_backend = f.attrs['backend'].decode('utf8')
++    original_backend = f.attrs['backend']
+   else:
+     original_backend = None
+ 

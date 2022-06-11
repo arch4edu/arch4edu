@@ -1,0 +1,4 @@
+post_install() {
+    echo "You can use profiled systemd units to start/stop shadowsocksr: (Profiles are placed under /etc/shadowsocksr/*.json)"
+    echo "# systemctl start/stop shadowsocksr[-server]@<conf-name>"
+}

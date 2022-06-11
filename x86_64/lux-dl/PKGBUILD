@@ -1,0 +1,41 @@
+# Maintainer: Filipe Nascimento <flipee at tuta dot io>
+# Contributor: Felix Golatofski <contact@xdfr.de>
+# Contributor: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
+# Contributor: Aniket Pradhan <aniket17133@iiitd.ac.in>
+# Contributer: Xinzhao Xu <z2d@jifangcheng.com>
+
+pkgname=lux-dl
+pkgver=0.15.0
+pkgrel=1
+pkgdesc="Fast and simple video download library and CLI tool written in Go"
+arch=('x86_64' 'i686')
+url="https://github.com/iawia002/lux"
+license=('MIT')
+depends=('ffmpeg')
+makedepends=('go')
+conflicts=('annie')
+replaces=('annie')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('41e45542587caa27bf8180e66c72c6c77e83d00f8dcba2e952c5a9b04d382c6c')
+
+build(){
+    cd lux-$pkgver
+
+    export CGO_CPPFLAGS="${CPPFLAGS}"
+    export CGO_CFLAGS="${CFLAGS}"
+    export CGO_CXXFLAGS="${CXXFLAGS}"
+    export CGO_LDFLAGS="${LDFLAGS}"
+
+    go build \
+        -trimpath \
+        -buildmode=pie \
+        -mod=readonly \
+        -modcacherw \
+        -ldflags "-linkmode=external"
+}
+
+package() {
+    cd lux-$pkgver
+    install -Dm755 lux -t "$pkgdir/usr/bin"
+    install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+}

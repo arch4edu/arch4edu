@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": ["config:base"],
+
+  "assignees": ["languitar"],
+  "reviewers": ["languitar"],
+
+  "postUpgradeTasks": {
+    "commands": ["./post-update.sh"],
+    "fileFilters": ["PKGBUILD", ".SRCINFO"],
+    "executionMode": "branch"
+  },
+
+  "regexManagers": [
+    {
+      "fileMatch": ["^PKGBUILD$"],
+      "matchStrings": [
+        "pkgver=(?<currentValue>.*?)\n"
+      ],
+      "depNameTemplate": "sphinxcontrib-plantuml",
+      "datasourceTemplate": "pypi"
+    }
+  ]
+}

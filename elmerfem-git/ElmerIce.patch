@@ -1,0 +1,58 @@
+diff --color -Naur elmerice/Solvers/CalvingRemeshMMG.F90 elmerice/Solvers/CalvingRemeshMMG.F90
+--- elmerice/Solvers/CalvingRemeshMMG.F90	2018-12-19 12:34:45.000000000 +0300
++++ elmerice/Solvers/CalvingRemeshMMG.F90	2020-12-12 22:39:24.040363020 +0300
+@@ -71,6 +71,7 @@
+   TYPE(ValueList_t), POINTER :: SolverParams
+   TYPE(Mesh_t),POINTER :: Mesh,GatheredMesh,NewMeshR,FinalMesh
+   TYPE(Element_t),POINTER :: Element, ParentElem
++  TYPE(MMG5_DATA_PTR_T),POINTER :: mmgMet
+   INTEGER :: i,j,k,NNodes,GNBulk, GNBdry, GNNode, NBulk, Nbdry, ierr, &
+        my_cboss,MyPE, PEs,CCount, counter, GlNode_min, GlNode_max,adjList(4),front_BC_ID, &
+        my_calv_front,calv_front, ncalv_parts, group_calve, comm_calve, group_world,ecode, NElNodes
+@@ -426,7 +427,7 @@
+ 
+       !> ------------------------------ STEP  II --------------------------
+       !! remesh function
+-      CALL MMG3D_mmg3dls(mmgMesh,mmgSol,ierr)
++      CALL MMG3D_mmg3dls(mmgMesh,mmgSol,mmgMet,ierr)
+ 
+       CALL MMG3D_SaveMesh(mmgMesh,"test_out.mesh",LEN(TRIM("test_out.mesh")),ierr)
+ 
+diff --color -Naur elmerice/Solvers/MeshAdaptation_2D/MMG2DSolver.F90 elmerice/Solvers/MeshAdaptation_2D/MMG2DSolver.F90
+--- elmerice/Solvers/MeshAdaptation_2D/MMG2DSolver.F90	2018-12-19 12:34:45.000000000 +0300
++++ elmerice/Solvers/MeshAdaptation_2D/MMG2DSolver.F90	2020-12-12 22:42:32.639562150 +0300
+@@ -310,14 +310,14 @@
+ !------------------------------------------------------------------------------
+       TYPE(Element_t),POINTER ::  Element
+       INTEGER, POINTER :: NodeIndexes(:)
+-      INTEGER :: np,nt,na,ier
++      INTEGER :: np,nt,na,ier,nquad
+       INTEGER :: ref,corner,required,ridge
+       INTEGER :: parent,ied
+       INTEGER :: tt, jj, kk, ll
+ 
+ 
+      !> a) get the size of the mesh: vertices,  triangles, edges
+-      CALL MMG2D_Get_meshSize(mmgMesh,np,nt,na,ier)
++      CALL MMG2D_Get_meshSize(mmgMesh,np,nt,nquad,na,ier)
+       IF ( ier == 0 ) CALL FATAL('MMGSolver',&
+                            'CALL TO MMGS_Get_meshSize FAILED')
+       IF (DEBUG) PRINT *,'--**-- MMG2D_Get_meshSize DONE'    
+@@ -467,7 +467,7 @@
+       TYPE(Element_t),POINTER :: Element
+       INTEGER, POINTER :: NodeIndexes(:)
+ 
+-      INTEGER :: NVert,NEle,NEdge
++      INTEGER :: NVert,NEle,NEdge,NQuad
+       INTEGER :: n
+       INTEGER :: ier
+       INTEGER :: ii,tt
+@@ -476,7 +476,7 @@
+       NEle=Mesh%NumberOfBulkElements
+       NEdge=Mesh%NumberOfBoundaryElements
+ 
+-      CALL MMG2D_Set_meshSize(mmgMesh,NVert,NEle,NEdge,ier)
++      CALL MMG2D_Set_meshSize(mmgMesh,NVert,NEle,NQuad,NEdge,ier)
+       IF ( ier == 0 ) CALL FATAL('MMGSolver',&
+                         'CALL TO MMG2D_Set_meshSize FAILED')
+       IF (DEBUG) PRINT *,'--**-- MMG2D_Set_meshSize DONE'
