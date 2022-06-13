@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/coin-or-ipopt
+  - x86_64/coin-or-coinmumps
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
