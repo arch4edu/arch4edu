@@ -1,0 +1,3122 @@
+From 173d0796810bb65de9bdfdc6941d24a04628f6c2 Mon Sep 17 00:00:00 2001
+From: Scott Talbert <swt@techie.net>
+Date: Wed, 1 Dec 2021 14:19:00 -0500
+Subject: [PATCH] Fix a bunch of Python 3.10 issues with pure-Python classes
+ and demos
+
+In Python 3.10, a change[1] was implemented where extension functions
+that take integer arguments will no longer silently accept non-integer
+arguments (e.g., floats) that can only be converted to integers with a
+loss of precision.  This PR fixes most of these issues in the pure-Python
+classes and demos by explicitly converting the parameters to int before
+passing them to wxWidgets.  There is loss of precision, but this was
+happening before (automatically) anyway as most wxWidgets DeviceContext
+functions operate using integers.
+
+Additionally, the PR fixes a few sizing issues, mostly with SpinCtrls being
+too small on GTK3.
+
+This is an example of the relevant exception:
+Traceback (most recent call last):
+  File "/usr/lib64/python3.10/site-packages/wx/lib/agw/pygauge.py", line 355, in OnPaint
+    r.width = w
+TypeError: 'float' object cannot be interpreted as an integer
+
+Fixes #2038.
+
+[1] https://bugs.python.org/issue37999
+---
+ demo/GridLabelRenderer.py               |   4 +-
+ demo/Mask.py                            |   4 +-
+ demo/Overlay.py                         |   1 -
+ demo/PenAndBrushStyles.py               |   2 +-
+ demo/PopupWindow.py                     |   2 +-
+ demo/PrintFramework.py                  |   2 +-
+ demo/PropertyGrid.py                    |   2 +-
+ demo/Sizers.py                          |   2 +-
+ demo/UIActionSimulator.py               |   2 +-
+ demo/agw/AUI.py                         |  32 +++----
+ demo/agw/MacLargeDemo.py                |   4 +-
+ demo/agw/PeakMeter.py                   |   6 +-
+ demo/agw/PersistentControls.py          |   2 +-
+ demo/agw/RibbonBar.py                   |   2 +-
+ demo/agw/SpeedMeter.py                  |   2 +-
+ demo/agw/SuperToolTip.py                |   3 +-
+ demo/agw/ThumbDemoConfig.py             |   1 +
+ demo/agw/UltimateReportDemo.py          |   8 +-
+ demo/agw/Windows7Explorer_Contents.py   |  16 ++--
+ demo/agw/ZoomBar.py                     |   2 +-
+ wx/lib/agw/advancedsplash.py            |   2 +-
+ wx/lib/agw/aui/auibook.py               |   4 +-
+ wx/lib/agw/balloontip.py                |   4 +-
+ wx/lib/agw/flatmenu.py                  |  62 ++++++-------
+ wx/lib/agw/flatnotebook.py              |  10 +--
+ wx/lib/agw/floatspin.py                 |   2 +-
+ wx/lib/agw/gradientbutton.py            |   8 +-
+ wx/lib/agw/hypertreelist.py             |   2 +-
+ wx/lib/agw/knobctrl.py                  |  12 +--
+ wx/lib/agw/labelbook.py                 |  32 +++----
+ wx/lib/agw/peakmeter.py                 |   2 +-
+ wx/lib/agw/pygauge.py                   |   4 +-
+ wx/lib/agw/ribbon/art_aui.py            |  22 ++---
+ wx/lib/agw/ribbon/art_internal.py       |  12 +--
+ wx/lib/agw/ribbon/art_msw.py            |  88 +++++++++----------
+ wx/lib/agw/ribbon/bar.py                |   4 +-
+ wx/lib/agw/ribbon/buttonbar.py          |   6 +-
+ wx/lib/agw/ribbon/gallery.py            |   8 +-
+ wx/lib/agw/ribbon/panel.py              |  16 ++--
+ wx/lib/agw/ribbon/toolbar.py            |   2 +-
+ wx/lib/agw/scrolledthumbnail.py         |  24 +++---
+ wx/lib/agw/shapedbutton.py              |  10 +--
+ wx/lib/agw/speedmeter.py                |  72 +++++++++-------
+ wx/lib/agw/supertooltip.py              |  20 ++---
+ wx/lib/agw/toasterbox.py                |   4 +-
+ wx/lib/agw/ultimatelistctrl.py          |  20 ++---
+ wx/lib/agw/xlsgrid.py                   |   4 +-
+ wx/lib/agw/zoombar.py                   |  10 +--
+ wx/lib/analogclock/analogclock.py       |   2 +-
+ wx/lib/analogclock/helpers.py           |  22 ++---
+ wx/lib/analogclock/setup.py             |   6 +-
+ wx/lib/buttons.py                       |  10 +--
+ wx/lib/colourchooser/pycolourchooser.py |   4 +-
+ wx/lib/colourchooser/pypalette.py       |   2 +-
+ wx/lib/floatcanvas/FCObjects.py         |   8 +-
+ wx/lib/gizmos/ledctrl.py                |   8 +-
+ wx/lib/imagebrowser.py                  |   4 +-
+ wx/lib/ogl/basic.py                     |  10 +--
+ wx/lib/ogl/bmpshape.py                  |   2 +-
+ wx/lib/ogl/composit.py                  |   4 +-
+ wx/lib/ogl/divided.py                   |   2 +-
+ wx/lib/ogl/lines.py                     |   2 +-
+ wx/lib/ogl/oglmisc.py                   |   4 +-
+ wx/lib/plot/examples/demo.py            |   4 +-
+ wx/lib/plot/plotcanvas.py               | 110 ++++++++++++------------
+ wx/lib/plot/polyobjects.py              |  22 +++--
+ wx/lib/popupctl.py                      |   2 +-
+ wx/lib/scrolledpanel.py                 |   2 +-
+ wx/lib/throbber.py                      |   6 +-
+ wx/lib/ticker.py                        |   4 +-
+ 71 files changed, 411 insertions(+), 398 deletions(-)
+
+diff --git a/demo/GridLabelRenderer.py b/demo/GridLabelRenderer.py
+index 794dd64e8..1440ef41b 100644
+--- a/demo/GridLabelRenderer.py
++++ b/demo/GridLabelRenderer.py
+@@ -46,8 +46,8 @@ def __init__(self):
+         self._bmp = images.Smiles.GetBitmap()
+ 
+     def Draw(self, grid, dc, rect, rc):
+-        x = rect.left + (rect.width - self._bmp.GetWidth()) / 2
+-        y = rect.top + (rect.height - self._bmp.GetHeight()) / 2
++        x = rect.left + (rect.width - self._bmp.GetWidth()) // 2
++        y = rect.top + (rect.height - self._bmp.GetHeight()) // 2
+         dc.DrawBitmap(self._bmp, x, y, True)
+ 
+ 
+diff --git a/demo/Mask.py b/demo/Mask.py
+index 109b8f30b..e924f95b9 100644
+--- a/demo/Mask.py
++++ b/demo/Mask.py
+@@ -90,9 +90,9 @@ def OnPaint (self, e):
+ 
+         for text, code in logicList:
+             x,y = 120+150*(i%4), 20+100*(i/4)
+-            dc.DrawText(text, x, y-20)
++            dc.DrawText(text, x, int(y-20))
+             mdc.SelectObject(self.bmp_withcolourmask)
+-            dc.Blit(x,y, cx,cy, mdc, 0,0, code, True)
++            dc.Blit(x,int(y), cx,cy, mdc, 0,0, code, True)
+             i = i + 1
+ 
+ 
+diff --git a/demo/Overlay.py b/demo/Overlay.py
+index 65164cd84..fa65be003 100644
+--- a/demo/Overlay.py
++++ b/demo/Overlay.py
+@@ -56,7 +56,6 @@ def __init__(self, parent, log):
+         self.penstylesCombo.SetToolTip('Pen Style')
+ 
+         self.overlayPenWidth = wx.SpinCtrl(self, -1, value='',
+-                                           size=(75, -1),
+                                            style=wx.SP_ARROW_KEYS,
+                                            min=1, max=24, initial=1)
+         self.overlayPenWidth.SetToolTip('Pen Width')
+diff --git a/demo/PenAndBrushStyles.py b/demo/PenAndBrushStyles.py
+index 24040b1fc..1183f684a 100644
+--- a/demo/PenAndBrushStyles.py
++++ b/demo/PenAndBrushStyles.py
+@@ -100,7 +100,7 @@ def OnPaint(self, event):
+ 
+         dc.SetPen(pen)
+         y = labelHeight + (height - labelHeight)/2
+-        dc.DrawLine(5, y, width-5, y)
++        dc.DrawLine(5, int(y), width-5, int(y))
+ 
+ 
+ class BrushPanel(BasePanel):
+diff --git a/demo/PopupWindow.py b/demo/PopupWindow.py
+index d8e175576..b54b9870d 100644
+--- a/demo/PopupWindow.py
++++ b/demo/PopupWindow.py
+@@ -89,7 +89,7 @@ def __init__(self, parent, style, log):
+                           "(or its first child) loses focus in \n"
+                           "any other way.")
+         btn = wx.Button(panel, -1, "Press Me")
+-        spin = wx.SpinCtrl(panel, -1, "Hello", size=(100,-1))
++        spin = wx.SpinCtrl(panel, -1, "Hello")
+         btn.Bind(wx.EVT_BUTTON, self.OnButton)
+ 
+         sizer = wx.BoxSizer(wx.VERTICAL)
+diff --git a/demo/PrintFramework.py b/demo/PrintFramework.py
+index e7a29a077..f0873ae94 100644
+--- a/demo/PrintFramework.py
++++ b/demo/PrintFramework.py
+@@ -81,7 +81,7 @@ def OnPrintPage(self, page):
+ 
+         #-------------------------------------------
+         self.canvas.DoDrawing(dc, True)
+-        dc.DrawText("Page: %d" % page, marginX/2, maxY-marginY)
++        dc.DrawText("Page: %d" % page, marginX//2, maxY-marginY)
+ 
+         return True
+ 
+diff --git a/demo/PropertyGrid.py b/demo/PropertyGrid.py
+index c56e08b60..fbef29e31 100644
+--- a/demo/PropertyGrid.py
++++ b/demo/PropertyGrid.py
+@@ -150,7 +150,7 @@ def _ConvertValue(self, value):
+         """ Utility convert arbitrary value to a real wx.Size.
+         """
+         import collections
+-        if isinstance(value, collections.Sequence) or hasattr(value, '__getitem__'):
++        if isinstance(value, collections.abc.Sequence) or hasattr(value, '__getitem__'):
+             value = wx.Size(*value)
+         return value
+ 
+diff --git a/demo/Sizers.py b/demo/Sizers.py
+index 6ababede9..a025050f1 100644
+--- a/demo/Sizers.py
++++ b/demo/Sizers.py
+@@ -45,7 +45,7 @@ def OnPaint(self, evt):
+         dc = wx.PaintDC(self)
+         w,h = dc.GetTextExtent(self.text)
+         dc.Clear()
+-        dc.DrawText(self.text, (sz.width-w)/2, (sz.height-h)/2)
++        dc.DrawText(self.text, (sz.width-w)//2, (sz.height-h)//2)
+ 
+     def OnSize(self, evt):
+         self.Refresh()
+diff --git a/demo/UIActionSimulator.py b/demo/UIActionSimulator.py
+index cbba14f5c..0a6fd0234 100644
+--- a/demo/UIActionSimulator.py
++++ b/demo/UIActionSimulator.py
+@@ -88,7 +88,7 @@ def _playbackKey(self, evtType, key, modifiers):
+ 
+     def _setNextKeyEvent(self):
+         evtType, key, modifiers, milli = self._playbackEvents.pop(0)
+-        milli = max(milli/2, 1) # play back faster than it was recorded
++        milli = max(milli//2, 1) # play back faster than it was recorded
+         print(evtType, key, modifiers, milli)
+         wx.CallLater(milli, self._playbackKey, evtType, key, modifiers)
+ 
+diff --git a/demo/agw/AUI.py b/demo/agw/AUI.py
+index 7c2196865..b38313c86 100644
+--- a/demo/agw/AUI.py
++++ b/demo/agw/AUI.py
+@@ -393,7 +393,7 @@ def OnPaint(self, event):
+         dc.SetPen(wx.LIGHT_GREY_PEN)
+         dc.DrawLine(0, 0, size.x, size.y)
+         dc.DrawLine(0, size.y, size.x, 0)
+-        dc.DrawText(s, (size.x-w)/2, (size.y-height*5)/2)
++        dc.DrawText(s, (size.x-w)//2, (size.y-height*5)//2)
+ 
+         if self._mgr:
+ 
+@@ -401,19 +401,19 @@ def OnPaint(self, event):
+ 
+             s = "Layer: %d"%pi.dock_layer
+             w, h = dc.GetTextExtent(s)
+-            dc.DrawText(s, (size.x-w)/2, ((size.y-(height*5))/2)+(height*1))
++            dc.DrawText(s, (size.x-w)//2, ((size.y-(height*5))//2)+(height*1))
+ 
+             s = "Dock: %d Row: %d"%(pi.dock_direction, pi.dock_row)
+             w, h = dc.GetTextExtent(s)
+-            dc.DrawText(s, (size.x-w)/2, ((size.y-(height*5))/2)+(height*2))
++            dc.DrawText(s, (size.x-w)//2, ((size.y-(height*5))//2)+(height*2))
+ 
+             s = "Position: %d"%pi.dock_pos
+             w, h = dc.GetTextExtent(s)
+-            dc.DrawText(s, (size.x-w)/2, ((size.y-(height*5))/2)+(height*3))
++            dc.DrawText(s, (size.x-w)//2, ((size.y-(height*5))//2)+(height*3))
+ 
+             s = "Proportion: %d"%pi.dock_proportion
+             w, h = dc.GetTextExtent(s)
+-            dc.DrawText(s, (size.x-w)/2, ((size.y-(height*5))/2)+(height*4))
++            dc.DrawText(s, (size.x-w)//2, ((size.y-(height*5))//2)+(height*4))
+ 
+ 
+     def OnEraseBackground(self, event):
+@@ -435,7 +435,7 @@ def __init__(self, parent, frame):
+ 
+         s1 = wx.BoxSizer(wx.HORIZONTAL)
+         self._border_size = wx.SpinCtrl(self, ID_PaneBorderSize, "%d"%frame.GetDockArt().GetMetric(aui.AUI_DOCKART_PANE_BORDER_SIZE),
+-                                        wx.DefaultPosition, wx.Size(50, 20), wx.SP_ARROW_KEYS, 0, 100,
++                                        wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100,
+                                         frame.GetDockArt().GetMetric(aui.AUI_DOCKART_PANE_BORDER_SIZE))
+         s1.Add((1, 1), 1, wx.EXPAND)
+         s1.Add(wx.StaticText(self, -1, "Pane Border Size:"))
+@@ -445,7 +445,7 @@ def __init__(self, parent, frame):
+ 
+         s2 = wx.BoxSizer(wx.HORIZONTAL)
+         self._sash_size = wx.SpinCtrl(self, ID_SashSize, "%d"%frame.GetDockArt().GetMetric(aui.AUI_DOCKART_SASH_SIZE), wx.DefaultPosition,
+-                                      wx.Size(50, 20), wx.SP_ARROW_KEYS, 0, 100, frame.GetDockArt().GetMetric(aui.AUI_DOCKART_SASH_SIZE))
++                                      wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, frame.GetDockArt().GetMetric(aui.AUI_DOCKART_SASH_SIZE))
+         s2.Add((1, 1), 1, wx.EXPAND)
+         s2.Add(wx.StaticText(self, -1, "Sash Size:"))
+         s2.Add(self._sash_size)
+@@ -454,7 +454,7 @@ def __init__(self, parent, frame):
+ 
+         s3 = wx.BoxSizer(wx.HORIZONTAL)
+         self._caption_size = wx.SpinCtrl(self, ID_CaptionSize, "%d"%frame.GetDockArt().GetMetric(aui.AUI_DOCKART_CAPTION_SIZE),
+-                                         wx.DefaultPosition, wx.Size(50, 20), wx.SP_ARROW_KEYS, 0, 100, frame.GetDockArt().GetMetric(aui.AUI_DOCKART_CAPTION_SIZE))
++                                         wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, frame.GetDockArt().GetMetric(aui.AUI_DOCKART_CAPTION_SIZE))
+         s3.Add((1, 1), 1, wx.EXPAND)
+         s3.Add(wx.StaticText(self, -1, "Caption Size:"))
+         s3.Add(self._caption_size)
+@@ -807,9 +807,9 @@ def LightColour(self, colour, percent):
+ 
+         # We take the percent way of the colour from colour -> white
+         i = percent
+-        r = colour.Red() + ((i*rd*100)/high)/100
+-        g = colour.Green() + ((i*gd*100)/high)/100
+-        b = colour.Blue() + ((i*bd*100)/high)/100
++        r = colour.Red() + ((i*rd*100)//high)//100
++        g = colour.Green() + ((i*gd*100)//high)//100
++        b = colour.Blue() + ((i*bd*100)//high)//100
+ 
+         return wx.Colour(r, g, b)
+ 
+@@ -826,10 +826,10 @@ def DrawProgress(self, dc, xsize, ysize, increment):
+         x, y, width, height = clientRect
+         x, width = self._pos, interval
+ 
+-        gradientRect.SetHeight(gradientRect.GetHeight()/2)
++        gradientRect.SetHeight(gradientRect.GetHeight()//2)
+         topStart, topEnd = self._topStartColour, self._topEndColour
+ 
+-        rc1 = wx.Rect(x, y, width, height/2)
++        rc1 = wx.Rect(int(x), y, int(width), height//2)
+         path1 = self.GetPath(gc, rc1, 8)
+         br1 = gc.CreateLinearGradientBrush(x, y, x, y+height/2, topStart, topEnd)
+         gc.SetBrush(br1)
+@@ -845,14 +845,14 @@ def DrawProgress(self, dc, xsize, ysize, increment):
+ 
+         bottomStart, bottomEnd = self._bottomStartColour, self._bottomEndColour
+ 
+-        rc3 = wx.Rect(x, y+height/2, width, height/2)
++        rc3 = wx.Rect(int(x), y+height//2, int(width), height//2)
+         path3 = self.GetPath(gc, rc3, 8)
+         br3 = gc.CreateLinearGradientBrush(x, y+height/2, x, y+height, bottomStart, bottomEnd)
+         gc.SetBrush(br3)
+         gc.FillPath(path3) #draw main
+ 
+         path4 = gc.CreatePath()
+-        path4.AddRectangle(x, y+height/2, width, 8)
++        path4.AddRectangle(x, y+height//2, width, 8)
+         path4.CloseSubpath()
+         gc.SetBrush(br3)
+         gc.FillPath(path4)
+@@ -2613,7 +2613,7 @@ def CreateNotebook(self):
+         flex.Add(wx.TextCtrl(panel, -1, "", wx.DefaultPosition, wx.Size(100, -1)),
+                  1, wx.ALL|wx.ALIGN_CENTRE, 5)
+         flex.Add(wx.StaticText(panel, -1, "wxSpinCtrl:"), 0, wx.ALL|wx.ALIGN_CENTRE, 5)
+-        flex.Add(wx.SpinCtrl(panel, -1, "5", wx.DefaultPosition, wx.Size(100, -1),
++        flex.Add(wx.SpinCtrl(panel, -1, "5", wx.DefaultPosition, wx.DefaultSize,
+                              wx.SP_ARROW_KEYS, 5, 50, 5), 0, wx.ALL|wx.ALIGN_CENTRE, 5)
+         flex.Add((5, 5))
+         flex.Add((5, 5))
+diff --git a/demo/agw/MacLargeDemo.py b/demo/agw/MacLargeDemo.py
+index 4d967a546..a5b8a0e25 100644
+--- a/demo/agw/MacLargeDemo.py
++++ b/demo/agw/MacLargeDemo.py
+@@ -223,12 +223,12 @@ def DrawProgressBar(self, dc, x, y, w, h, percent):
+             mdc.SelectObject(wx.NullBitmap)
+ 
+         # Center the progress bar vertically in the box supplied
+-        y = y + (h - PIPE_HEIGHT)/2
++        y = y + (h - PIPE_HEIGHT)//2
+ 
+         if percent == 0:
+             middle = 0
+         else:
+-            middle = (w * percent)/100
++            middle = int((w * percent)/100)
+ 
+         if w < 1:
+             return
+diff --git a/demo/agw/PeakMeter.py b/demo/agw/PeakMeter.py
+index a7c9a6f51..e9dab7116 100644
+--- a/demo/agw/PeakMeter.py
++++ b/demo/agw/PeakMeter.py
+@@ -149,10 +149,10 @@ def OnFalloff(self, event):
+ 
+     def OnStart(self, event):
+ 
+-        self.timer.Start(1000/2)        # 2 fps
++        self.timer.Start(1000//2)        # 2 fps
+ 
+-        self.vertPeak.Start(1000/18)        # 18 fps
+-        self.horzPeak.Start(1000/20)        # 20 fps
++        self.vertPeak.Start(1000//18)        # 18 fps
++        self.horzPeak.Start(1000//20)        # 20 fps
+ 
+ 
+     def OnStop(self, event):
+diff --git a/demo/agw/PersistentControls.py b/demo/agw/PersistentControls.py
+index f19cc4a91..cf97dd9f0 100644
+--- a/demo/agw/PersistentControls.py
++++ b/demo/agw/PersistentControls.py
+@@ -234,7 +234,7 @@ def BuildPanes(self):
+         sizer_1.Add(label_1, 0, wx.ALL, 5)
+         sizer_1.Add(combo, 0, wx.LEFT|wx.RIGHT, 5)
+         sizer_1.Add((20, 20), 1)
+-        box2.Add(sizer_1, 1, wx.EXPAND|wx.ALIGN_CENTER, 0)
++        box2.Add(sizer_1, 1, wx.EXPAND, 0)
+         box2.Add((0, 0), 1, 1)
+ 
+         otherPanel.SetSizer(box2)
+diff --git a/demo/agw/RibbonBar.py b/demo/agw/RibbonBar.py
+index 7103e9d81..d28a2c66a 100644
+--- a/demo/agw/RibbonBar.py
++++ b/demo/agw/RibbonBar.py
+@@ -799,7 +799,7 @@ def AddColourToGallery(self, gallery, colour, dc, value=None):
+                                        (c.Blue() + 192) % 256)
+ 
+             dc.SetTextForeground(foreground)
+-            dc.DrawText(colour, (iWidth - size.GetWidth() + 1) / 2, (iHeight - size.GetHeight()) / 2)
++            dc.DrawText(colour, (iWidth - size.GetWidth() + 1) // 2, (iHeight - size.GetHeight()) // 2)
+             dc.SelectObjectAsSource(wx.NullBitmap)
+ 
+             item = gallery.Append(bitmap, wx.ID_ANY)
+diff --git a/demo/agw/SpeedMeter.py b/demo/agw/SpeedMeter.py
+index 9f0fdebb2..575e84a80 100644
+--- a/demo/agw/SpeedMeter.py
++++ b/demo/agw/SpeedMeter.py
+@@ -418,7 +418,7 @@ def __init__(self, parent, log):
+         bsizer3 = wx.BoxSizer(wx.VERTICAL)
+ 
+         hsizer3 = wx.BoxSizer(wx.HORIZONTAL)
+-        sc = wx.SpinCtrl(panel3, -1, size=(60,20))
++        sc = wx.SpinCtrl(panel3, -1)
+         sc.SetRange(1, 250)
+         sc.SetValue(50)
+ 
+diff --git a/demo/agw/SuperToolTip.py b/demo/agw/SuperToolTip.py
+index 5e65f06b1..88728e54e 100644
+--- a/demo/agw/SuperToolTip.py
++++ b/demo/agw/SuperToolTip.py
+@@ -43,7 +43,7 @@ def __init__(self, parent):
+         self.topColourPicker = wx.ColourPickerCtrl(self.mainPanel, colour=wx.WHITE)
+         system = wx.SystemSettings.GetColour(wx.SYS_COLOUR_ACTIVECAPTION)
+         r, g, b, a = system
+-        self.middleColourPicker = wx.ColourPickerCtrl(self.mainPanel, colour=wx.Colour((255-r)/2, (255-g)/2, (255-b)/2))
++        self.middleColourPicker = wx.ColourPickerCtrl(self.mainPanel, colour=wx.Colour((255-r)//2, (255-g)//2, (255-b)//2))
+         self.bottomColourPicker = wx.ColourPickerCtrl(self.mainPanel, colour=system)
+         self.headerCheck = wx.CheckBox(self.mainPanel, -1, "Show Header")
+         self.headerText = wx.TextCtrl(self.mainPanel, -1, "Merge And Center")
+@@ -233,7 +233,6 @@ def DoLayout(self):
+         frameSizer.Add(self.mainPanel, 1, wx.EXPAND, 0)
+         self.SetSizer(frameSizer)
+         frameSizer.Layout()
+-        frameSizer.Fit(self)
+         self.Layout()
+ 
+         wx.CallAfter(mainSizer.Layout)
+diff --git a/demo/agw/ThumbDemoConfig.py b/demo/agw/ThumbDemoConfig.py
+index 392192d53..d4751e500 100644
+--- a/demo/agw/ThumbDemoConfig.py
++++ b/demo/agw/ThumbDemoConfig.py
+@@ -4,6 +4,7 @@
+ import os
+ import images
+ 
++import wx.lib.agw.scrolledthumbnail as TC
+ from wx.lib.agw.scrolledthumbnail import (ScrolledThumbnail,
+                                           Thumb,
+                                           NativeImageHandler,
+diff --git a/demo/agw/UltimateReportDemo.py b/demo/agw/UltimateReportDemo.py
+index 40f49cb8f..ad455847b 100644
+--- a/demo/agw/UltimateReportDemo.py
++++ b/demo/agw/UltimateReportDemo.py
+@@ -216,7 +216,7 @@ def DrawSubItem(self, dc, rect, line, highlighted, enabled):
+         mdc.SetFont(wx.Font(8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
+         text = "%d Mb"%self.progressValue
+         textWidth, dummy = mdc.GetTextExtent(text)
+-        mdc.DrawText(text, rect.width/2 - textWidth/2, rect.height/2 - dummy/2)
++        mdc.DrawText(text, rect.width//2 - textWidth//2, rect.height//2 - dummy//2)
+         dc.SetClippingRegion(rect.x, rect.y, rect.width, rect.height)
+         dc.Blit(rect.x+3, rect.y, rect.width-6, rect.height, mdc, 0, 0)
+         dc.DestroyClippingRegion()
+@@ -279,12 +279,12 @@ def DrawProgressBar(self, dc, x, y, w, h, percent):
+             mdc.SelectObject(wx.NullBitmap)
+ 
+         # Center the progress bar vertically in the box supplied
+-        y = y + (h - PIPE_HEIGHT)/2
++        y = y + (h - PIPE_HEIGHT)//2
+ 
+         if percent == 0:
+             middle = 0
+         else:
+-            middle = (w * percent)/100
++            middle = (w * percent)//100
+ 
+         if middle == 0: # not started
+             bitmap = self.REMAINING_BITMAP.GetSubBitmap((1, 0, w, PIPE_HEIGHT))
+@@ -335,7 +335,7 @@ def DrawSubItem(self, dc, rect, line, highlighted, enabled):
+         colours = [wx.RED, wx.WHITE, wx.GREEN, wx.Colour("SKY BLUE")]
+         w, h = dc.GetTextExtent("Hg")
+         x = rect.x + 1
+-        y = rect.y + rect.height/2 - h/2
++        y = rect.y + rect.height//2 - h//2
+ 
+         for ch in self.text:
+             dc.SetTextForeground(random.choice(colours))
+diff --git a/demo/agw/Windows7Explorer_Contents.py b/demo/agw/Windows7Explorer_Contents.py
+index f754d7879..b23df0e1a 100644
+--- a/demo/agw/Windows7Explorer_Contents.py
++++ b/demo/agw/Windows7Explorer_Contents.py
+@@ -127,13 +127,13 @@ def DrawSubItem(self, dc, rect, line, highlighted, enabled):
+         """Draw a custom progress bar using double buffering to prevent flicker"""
+ 
+         bmpWidth, bmpHeight = self.icon.GetWidth(), self.icon.GetHeight()
+-        dc.DrawIcon(self.icon, rect.x+5, rect.y+(rect.height-bmpHeight)/2)
++        dc.DrawIcon(self.icon, rect.x+5, rect.y+(rect.height-bmpHeight)//2)
+ 
+         dc.SetFont(self.normalFont)
+ 
+         textWidth, textHeight = dc.GetTextExtent(self.text)
+         dc.SetTextForeground(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
+-        dc.DrawText(self.text, rect.x+bmpWidth+10, rect.y+(rect.height - textHeight)/4)
++        dc.DrawText(self.text, rect.x+bmpWidth+10, rect.y+(rect.height - textHeight)//4)
+ 
+         if not self.description:
+             return
+@@ -144,10 +144,10 @@ def DrawSubItem(self, dc, rect, line, highlighted, enabled):
+         textWidth, textHeight = dc.GetTextExtent("Type: " + self.description)
+ 
+         dc.SetTextForeground(self.greyColour)
+-        dc.DrawText("Type: ", rect.x+bmpWidth+10, rect.y+3*(rect.height - textHeight)/4)
++        dc.DrawText("Type: ", rect.x+bmpWidth+10, rect.y+3*(rect.height - textHeight)//4)
+ 
+         dc.SetTextForeground(wx.BLACK)
+-        dc.DrawText(self.description, rect.x+bmpWidth+dummy1+10, rect.y+3*(rect.height - textHeight)/4)
++        dc.DrawText(self.description, rect.x+bmpWidth+dummy1+10, rect.y+3*(rect.height - textHeight)//4)
+ 
+ 
+     def GetLineHeight(self):
+@@ -207,10 +207,10 @@ def DrawSubItem(self, dc, rect, line, highlighted, enabled):
+         textWidth, textHeight = dc.GetTextExtent("Date modified: " + date)
+ 
+         dc.SetTextForeground(self.greyColour)
+-        dc.DrawText("Date modified: ", rect.x+5, rect.y+(rect.height - textHeight)/4)
++        dc.DrawText("Date modified: ", rect.x+5, rect.y+(rect.height - textHeight)//4)
+ 
+         dc.SetTextForeground(wx.BLACK)
+-        dc.DrawText(date, rect.x+dummy1+5, rect.y+(rect.height - textHeight)/4)
++        dc.DrawText(date, rect.x+dummy1+5, rect.y+(rect.height - textHeight)//4)
+ 
+         if not self.size:
+             return
+@@ -218,10 +218,10 @@ def DrawSubItem(self, dc, rect, line, highlighted, enabled):
+         dummy1, dummy2= dc.GetTextExtent("Size: ")
+ 
+         dc.SetTextForeground(self.greyColour)
+-        dc.DrawText("Size: ", rect.x+5, rect.y+3*(rect.height - textHeight)/4)
++        dc.DrawText("Size: ", rect.x+5, rect.y+3*(rect.height - textHeight)//4)
+ 
+         dc.SetTextForeground(wx.BLACK)
+-        dc.DrawText(self.size, rect.x+dummy1+5, rect.y+3*(rect.height - textHeight)/4)
++        dc.DrawText(self.size, rect.x+dummy1+5, rect.y+3*(rect.height - textHeight)//4)
+ 
+ 
+     def GetLineHeight(self):
+diff --git a/demo/agw/ZoomBar.py b/demo/agw/ZoomBar.py
+index 376ce349b..14b0278e7 100644
+--- a/demo/agw/ZoomBar.py
++++ b/demo/agw/ZoomBar.py
+@@ -55,7 +55,7 @@ def __init__(self, parent, log):
+         reflections = glob.glob(bitmapDir + "/*96Flip40.png")
+ 
+         separatorImage = bitmapDir + "/separator.gif"
+-        separatorReflection = bitmapDir + "/separatorFlip.png"
++        separatorReflection = bitmapDir + "/separatorflip.png"
+         count = 0
+ 
+         for std, ref in zip(standard, reflections):
+diff --git a/wx/lib/agw/advancedsplash.py b/wx/lib/agw/advancedsplash.py
+index 1f8c32df5..d351ea06e 100644
+--- a/wx/lib/agw/advancedsplash.py
++++ b/wx/lib/agw/advancedsplash.py
+@@ -438,7 +438,7 @@ def SetTextFont(self, font=None):
+ 
+         if font is None:
+             self._textfont = wx.Font(1, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False)
+-            self._textsize = 10.0
++            self._textsize = 10
+             self._textfont.SetPointSize(self._textsize)
+         else:
+             self._textfont = font
+diff --git a/wx/lib/agw/aui/auibook.py b/wx/lib/agw/aui/auibook.py
+index ba7cf4721..f5ad2a568 100644
+--- a/wx/lib/agw/aui/auibook.py
++++ b/wx/lib/agw/aui/auibook.py
+@@ -3452,8 +3452,8 @@ def CalculateNewSplitSize(self):
+         # should happen around the middle
+         if tab_ctrl_count < 2:
+             new_split_size = self.GetClientSize()
+-            new_split_size.x /= 2
+-            new_split_size.y /= 2
++            new_split_size.x //= 2
++            new_split_size.y //= 2
+ 
+         else:
+ 
+diff --git a/wx/lib/agw/balloontip.py b/wx/lib/agw/balloontip.py
+index b4155d74a..57baca729 100644
+--- a/wx/lib/agw/balloontip.py
++++ b/wx/lib/agw/balloontip.py
+@@ -615,7 +615,7 @@ def SetStartDelay(self, delay=1):
+         if delay < 1:
+             raise Exception("\nERROR: Delay Time For BalloonTip Creation Should Be Greater Than 1 ms")
+ 
+-        self._startdelaytime = float(delay)
++        self._startdelaytime = int(delay)
+ 
+ 
+     def GetStartDelay(self):
+@@ -640,7 +640,7 @@ def SetEndDelay(self, delay=1e6):
+         if delay < 1:
+             raise Exception("\nERROR: Delay Time For BalloonTip Destruction Should Be Greater Than 1 ms")
+ 
+-        self._enddelaytime = float(delay)
++        self._enddelaytime = int(delay)
+ 
+ 
+     def GetEndDelay(self):
+diff --git a/wx/lib/agw/flatmenu.py b/wx/lib/agw/flatmenu.py
+index 5ba28e584..85f295b86 100644
+--- a/wx/lib/agw/flatmenu.py
++++ b/wx/lib/agw/flatmenu.py
+@@ -736,8 +736,8 @@ def DrawSeparator(self, dc, xCoord, yCoord, textX, sepWidth):
+         """
+ 
+         dcsaver = DCSaver(dc)
+-        sepRect1 = wx.Rect(xCoord + textX, yCoord + 1, sepWidth/2, 1)
+-        sepRect2 = wx.Rect(xCoord + textX + sepWidth/2, yCoord + 1, sepWidth/2-1, 1)
++        sepRect1 = wx.Rect(xCoord + textX, yCoord + 1, sepWidth//2, 1)
++        sepRect2 = wx.Rect(xCoord + textX + sepWidth//2, yCoord + 1, sepWidth//2-1, 1)
+ 
+         artMgr = ArtManager.Get()
+         backColour = artMgr.GetMenuFaceColour()
+@@ -817,11 +817,11 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+             imgWidth  = bmp.GetWidth()
+ 
+             if imageMarginX == 0:
+-                xx = rect.x + (leftMarginWidth - imgWidth)/2
++                xx = rect.x + (leftMarginWidth - imgWidth)//2
+             else:
+-                xx = rect.x + ((leftMarginWidth - rect.height) - imgWidth)/2 + rect.height
++                xx = rect.x + ((leftMarginWidth - rect.height) - imgWidth)//2 + rect.height
+ 
+-            yy = rect.y + (rect.height - imgHeight)/2
++            yy = rect.y + (rect.height - imgHeight)//2
+             dc.DrawBitmap(bmp, xx, yy, True)
+ 
+         if item.GetKind() == wx.ITEM_CHECK:
+@@ -837,7 +837,7 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+                 if not selected and self.highlightCheckAndRadio:
+                     self.DrawButton(dc, rr, ControlFocus)
+ 
+-                dc.DrawBitmap(item._checkMarkBmp, rr.x + (rr.width - 16)/2, rr.y + (rr.height - 16)/2, True)
++                dc.DrawBitmap(item._checkMarkBmp, rr.x + (rr.width - 16)//2, rr.y + (rr.height - 16)//2, True)
+ 
+         if item.GetKind() == wx.ITEM_RADIO:
+ 
+@@ -852,7 +852,7 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+                 if not selected and self.highlightCheckAndRadio:
+                     self.DrawButton(dc, rr, ControlFocus)
+ 
+-                dc.DrawBitmap(item._radioMarkBmp, rr.x + (rr.width - 16)/2, rr.y + (rr.height - 16)/2, True)
++                dc.DrawBitmap(item._radioMarkBmp, rr.x + (rr.width - 16)//2, rr.y + (rr.height - 16)//2, True)
+ 
+         # Draw text - without accelerators
+         text = item.GetLabel()
+@@ -890,7 +890,7 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+                 w3, dummy = dc.GetTextExtent(text3)
+ 
+                 posx = xCoord + textX + borderXSize
+-                posy = (itemHeight - h)/2 + yCoord
++                posy = (itemHeight - h)//2 + yCoord
+ 
+                 # Draw first part
+                 dc.DrawText(text1, posx, posy)
+@@ -912,7 +912,7 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+             else:
+ 
+                 w, h = dc.GetTextExtent(text)
+-                dc.DrawText(text, xCoord + textX + borderXSize, (itemHeight - h)/2 + yCoord)
++                dc.DrawText(text, xCoord + textX + borderXSize, (itemHeight - h)//2 + yCoord)
+ 
+ 
+         # Now draw accelerator
+@@ -920,7 +920,7 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+         if item.GetAccelString():
+ 
+             accelWidth, accelHeight = dc.GetTextExtent(item.GetAccelString())
+-            dc.DrawText(item.GetAccelString(), xCoord + rightMarginX - accelWidth, (itemHeight - accelHeight)/2 + yCoord)
++            dc.DrawText(item.GetAccelString(), xCoord + rightMarginX - accelWidth, (itemHeight - accelHeight)//2 + yCoord)
+ 
+         # Check if this item has sub-menu - if it does, draw
+         # right arrow on the right margin
+@@ -932,7 +932,7 @@ def DrawMenuItem(self, item, dc, xCoord, yCoord, imageMarginX, markerMarginX, te
+ 
+             xx = xCoord + rightMarginX + borderXSize
+             rr = wx.Rect(xx, rect.y + 1, rect.height-2, rect.height-2)
+-            dc.DrawBitmap(rightArrowBmp, rr.x + 4, rr.y +(rr.height-16)/2, True)
++            dc.DrawBitmap(rightArrowBmp, rr.x + 4, rr.y +(rr.height-16)//2, True)
+ 
+ 
+     def DrawMenuBarButton(self, dc, rect, state):
+@@ -1142,7 +1142,7 @@ def DrawMenuBar(self, menubar, dc):
+             # Get the menu item rect
+             textWidth, textHeight = dc.GetTextExtent(fixedText)
+             #rect = wx.Rect(posx+menubar._spacer/2, posy, textWidth, textHeight)
+-            rect = wx.Rect(posx+padding/2, posy, textWidth, textHeight)
++            rect = wx.Rect(posx+padding//2, posy, textWidth, textHeight)
+ 
+             # Can we draw more??
+             # the +DROP_DOWN_ARROW_WIDTH  is the width of the drop down arrow
+@@ -1172,7 +1172,7 @@ def DrawMenuBar(self, menubar, dc):
+                 dc.SetTextForeground(textColour)
+ 
+             ww, hh = dc.GetTextExtent(labelOnly)
+-            textOffset = (rect.width - ww) / 2
++            textOffset = (rect.width - ww) // 2
+ 
+             if not menubar._isLCD and item.GetTextBitmap().IsOk() and not selected:
+                 dc.DrawBitmap(item.GetTextBitmap(), rect.x, rect.y, True)
+@@ -1505,8 +1505,8 @@ def DrawButtonColour(self, dc, rect, state, colour):
+         baseColour = colour
+ 
+         # Define the middle points
+-        leftPt = wx.Point(rect.x, rect.y + (rect.height / 2))
+-        rightPt = wx.Point(rect.x + rect.width-1, rect.y + (rect.height / 2))
++        leftPt = wx.Point(rect.x, rect.y + (rect.height // 2))
++        rightPt = wx.Point(rect.x + rect.width-1, rect.y + (rect.height // 2))
+ 
+         # Define the top region
+         top = wx.Rect((rect.GetLeft(), rect.GetTop()), rightPt)
+@@ -1572,11 +1572,11 @@ def DrawMenuBarBackground(self, dc, rect):
+ 
+         factor = artMgr.GetMenuBgFactor()
+ 
+-        leftPt1 = wx.Point(rect.x, rect.y + (rect.height / factor))
+-        leftPt2 = wx.Point(rect.x, rect.y + (rect.height / factor)*(factor-1))
++        leftPt1 = wx.Point(rect.x, rect.y + (rect.height // factor))
++        leftPt2 = wx.Point(rect.x, rect.y + (rect.height // factor)*(factor-1))
+ 
+-        rightPt1 = wx.Point(rect.x + rect.width, rect.y + (rect.height / factor))
+-        rightPt2 = wx.Point(rect.x + rect.width, rect.y + (rect.height / factor)*(factor-1))
++        rightPt1 = wx.Point(rect.x + rect.width, rect.y + (rect.height // factor))
++        rightPt2 = wx.Point(rect.x + rect.width, rect.y + (rect.height // factor)*(factor-1))
+ 
+         # Define the top region
+         topReg = [wx.Point() for ii in range(7)]
+@@ -2707,7 +2707,7 @@ def DrawToolbar(self, dc, rect):
+             elif tbItem.IsCustomControl():
+                 control = tbItem.GetCustomControl()
+                 ctrlSize = control.GetSize()
+-                ctrlPos = wx.Point(xx, rect.y + (rect.height - ctrlSize.y)/2)
++                ctrlPos = wx.Point(xx, rect.y + (rect.height - ctrlSize.y)//2)
+                 if control.GetPosition() != ctrlPos:
+                     control.SetPosition(ctrlPos)
+ 
+@@ -2727,9 +2727,9 @@ def DrawToolbar(self, dc, rect):
+             # Draw the toolbar image
+             if bmp.IsOk():
+ 
+-                x = xx - self._toolbarSpacer/2
++                x = xx - self._toolbarSpacer//2
+                 #y = rect.y + (rect.height - bmp.GetHeight())/2 - 1
+-                y = rect.y + self._toolbarMargin/2
++                y = rect.y + self._toolbarMargin//2
+ 
+                 buttonRect = wx.Rect(x, y, highlight_width, highlight_height)
+ 
+@@ -2745,8 +2745,8 @@ def DrawToolbar(self, dc, rect):
+                     else:
+                         self._tbButtons[i]._state = ControlNormal
+ 
+-                imgx = buttonRect.x + (buttonRect.width - bmp.GetWidth())/2
+-                imgy = buttonRect.y + (buttonRect.height - bmp.GetHeight())/2
++                imgx = buttonRect.x + (buttonRect.width - bmp.GetWidth())//2
++                imgy = buttonRect.y + (buttonRect.height - bmp.GetHeight())//2
+ 
+                 if self._tbButtons[i]._state == ControlFocus and not self._tbButtons[i]._tbItem.IsSelected():
+ 
+@@ -2827,8 +2827,8 @@ def DrawMoreButton(self, dc, state):
+         dropArrowBmp = self.GetRenderer()._bitmaps["arrow_down"]
+ 
+         # Calc the image coordinates
+-        xx = rect.x + (DROP_DOWN_ARROW_WIDTH - dropArrowBmp.GetWidth())/2
+-        yy = rect.y + (rect.height - dropArrowBmp.GetHeight())/2
++        xx = rect.x + (DROP_DOWN_ARROW_WIDTH - dropArrowBmp.GetWidth())//2
++        yy = rect.y + (rect.height - dropArrowBmp.GetHeight())//2
+ 
+         dc.DrawBitmap(dropArrowBmp, xx, yy + self._spacer, True)
+         self._dropDownButtonState = state
+@@ -3269,8 +3269,8 @@ def DrawToolbarItem(self, dc, idx, state):
+ 
+         # draw the bitmap over the highlight
+         buttonRect = wx.Rect(*rect)
+-        x = rect.x + (buttonRect.width - self._tbButtons[idx]._tbItem.GetBitmap().GetWidth())/2
+-        y = rect.y + (buttonRect.height - self._tbButtons[idx]._tbItem.GetBitmap().GetHeight())/2
++        x = rect.x + (buttonRect.width - self._tbButtons[idx]._tbItem.GetBitmap().GetWidth())//2
++        y = rect.y + (buttonRect.height - self._tbButtons[idx]._tbItem.GetBitmap().GetHeight())//2
+ 
+         if state == ControlFocus:
+ 
+@@ -3784,7 +3784,7 @@ def PositionAUI(self, mgr, fixToolbar=True):
+         pn.Name("flat_menu_bar")
+         pn.Caption("Menu Bar")
+         pn.Top()
+-        pn.MinSize(wx.Size(xx/2, self._barHeight))
++        pn.MinSize(wx.Size(xx//2, self._barHeight))
+         pn.LeftDockable(False)
+         pn.RightDockable(False)
+         pn.ToolbarPane()
+@@ -3997,8 +3997,8 @@ def Draw(self, dc):
+         """
+ 
+         rect = wx.Rect(self._pos, self._size)
+-        xx = rect.x + (rect.width - self._normalBmp.GetWidth())/2
+-        yy = rect.y + (rect.height - self._normalBmp.GetHeight())/2
++        xx = rect.x + (rect.width - self._normalBmp.GetWidth())//2
++        yy = rect.y + (rect.height - self._normalBmp.GetHeight())//2
+ 
+         self._parent.GetRenderer().DrawScrollButton(dc, rect, self._state)
+         dc.DrawBitmap(self._normalBmp, xx, yy, True)
+diff --git a/wx/lib/agw/flatnotebook.py b/wx/lib/agw/flatnotebook.py
+index f5e5200b2..561749b89 100644
+--- a/wx/lib/agw/flatnotebook.py
++++ b/wx/lib/agw/flatnotebook.py
+@@ -858,9 +858,9 @@ def PaintStraightGradientBox(dc, rect, startColour, endColour, vertical=True):
+ 
+     for i in range(high+1):
+ 
+-        r = startColour.Red() + ((i*rd*100)/high)/100
+-        g = startColour.Green() + ((i*gd*100)/high)/100
+-        b = startColour.Blue() + ((i*bd*100)/high)/100
++        r = startColour.Red() + ((i*rd*100)//high)//100
++        g = startColour.Green() + ((i*gd*100)//high)//100
++        b = startColour.Blue() + ((i*bd*100)//high)//100
+ 
+         p = wx.Pen(wx.Colour(r, g, b))
+         dc.SetPen(p)
+@@ -2631,9 +2631,9 @@ def DrawTab(self, pageContainer, dc, posx, tabIdx, tabWidth, tabHeight, btnStatu
+         imageYCoord = (pc.HasAGWFlag(FNB_BOTTOM) and [6] or [8])[0]
+ 
+         if hasImage:
+-            textOffset = 2*pc._pParent._nPadding + 16 + shapePoints/2
++            textOffset = 2*pc._pParent._nPadding + 16 + shapePoints//2
+         else:
+-            textOffset = pc._pParent._nPadding + shapePoints/2
++            textOffset = pc._pParent._nPadding + shapePoints//2
+ 
+         textOffset += 2
+ 
+diff --git a/wx/lib/agw/floatspin.py b/wx/lib/agw/floatspin.py
+index bdbaf85ec..4559eb5de 100644
+--- a/wx/lib/agw/floatspin.py
++++ b/wx/lib/agw/floatspin.py
+@@ -336,7 +336,7 @@ class FloatSpin(wx.Control):
+     """
+ 
+     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
+-                 size=(95,-1), style=0, value=0.0, min_val=None, max_val=None,
++                 size=wx.DefaultSize, style=0, value=0.0, min_val=None, max_val=None,
+                  increment=1.0, digits=-1, agwStyle=FS_LEFT,
+                  name="FloatSpin"):
+         """
+diff --git a/wx/lib/agw/gradientbutton.py b/wx/lib/agw/gradientbutton.py
+index c4633b296..58625c508 100644
+--- a/wx/lib/agw/gradientbutton.py
++++ b/wx/lib/agw/gradientbutton.py
+@@ -412,14 +412,14 @@ def OnPaint(self, event):
+ 
+         x, y, width, height = clientRect
+ 
+-        gradientRect.SetHeight(gradientRect.GetHeight()/2 + ((capture==self and [1] or [0])[0]))
++        gradientRect.SetHeight(gradientRect.GetHeight()//2 + ((capture==self and [1] or [0])[0]))
+         if capture != self:
+             if self._mouseAction == HOVER:
+                 topStart, topEnd = self.LightColour(self._topStartColour, 10), self.LightColour(self._topEndColour, 10)
+             else:
+                 topStart, topEnd = self._topStartColour, self._topEndColour
+ 
+-            rc1 = wx.Rect(x, y, width, height/2)
++            rc1 = wx.Rect(x, y, width, height//2)
+             path1 = self.GetPath(gc, rc1, 8)
+             br1 = gc.CreateLinearGradientBrush(x, y, x, y+height/2, topStart, topEnd)
+             gc.SetBrush(br1)
+@@ -448,7 +448,7 @@ def OnPaint(self, event):
+             else:
+                 bottomStart, bottomEnd = self._bottomStartColour, self._bottomEndColour
+ 
+-            rc3 = wx.Rect(x, y+height/2, width, height/2)
++            rc3 = wx.Rect(x, y+height//2, width, height//2)
+             path3 = self.GetPath(gc, rc3, 8)
+             br3 = gc.CreateLinearGradientBrush(x, y+height/2, x, y+height, bottomStart, bottomEnd)
+             gc.SetBrush(br3)
+@@ -463,7 +463,7 @@ def OnPaint(self, event):
+             shadowOffset = 0
+         else:
+ 
+-            rc2 = wx.Rect(x+1, gradientRect.height/2, gradientRect.width, gradientRect.height)
++            rc2 = wx.Rect(x+1, gradientRect.height//2, gradientRect.width, gradientRect.height)
+             path2 = self.GetPath(gc, rc2, 8)
+             gc.SetPen(wx.Pen(self._pressedBottomColour))
+             gc.SetBrush(wx.Brush(self._pressedBottomColour))
+diff --git a/wx/lib/agw/hypertreelist.py b/wx/lib/agw/hypertreelist.py
+index 12302f3b0..377ac0121 100644
+--- a/wx/lib/agw/hypertreelist.py
++++ b/wx/lib/agw/hypertreelist.py
+@@ -3437,7 +3437,7 @@ def PaintLevel(self, item, dc, level, y, x_maincol):
+ 
+             if not self.HasAGWFlag(wx.TR_NO_LINES) and children:
+                 last_child = children[-1]
+-                Y1 = last_child.GetY() + last_child.GetHeight() / 2
++                Y1 = last_child.GetY() + last_child.GetHeight() // 2
+                 dc.DrawLine(x, oldY, x, Y1)
+ 
+         return y, x_maincol
+diff --git a/wx/lib/agw/knobctrl.py b/wx/lib/agw/knobctrl.py
+index 742097b09..1e5045ff6 100644
+--- a/wx/lib/agw/knobctrl.py
++++ b/wx/lib/agw/knobctrl.py
+@@ -325,7 +325,7 @@ def OnSize(self,event):
+         memory.Clear()
+ 
+         minradius = min(0.9*self.Width/2.0, 0.9*self.Height/2.0)
+-        memory.DrawCircle(self.Width//2, self.Height//2, minradius)
++        memory.DrawCircle(self.Width//2, self.Height//2, int(minradius))
+         memory.SelectObject(wx.NullBitmap)
+         self._region = wx.Region(self._Buffer, self.GetBackgroundColour())
+         self._minradius = minradius
+@@ -645,8 +645,8 @@ def DrawTags(self, dc, size):
+             dxi = math.cos(angle)*((width - xshift + tagLen - 6)/2.0 - tagLen)
+             dyi = math.sin(angle)*((height - yshift + tagLen - 6)/2.0 - tagLen)
+ 
+-            dc.DrawLine(width//2 - sxi, height//2 - syi,
+-                        width//2 - dxi, height//2 - dyi)
++            dc.DrawLine(int(width//2 - sxi), int(height//2 - syi),
++                        int(width//2 - dxi), int(height//2 - dyi))
+ 
+ 
+     def DrawDiagonalGradient(self, dc, size):
+@@ -759,8 +759,8 @@ def DrawInsetCircle(self, dc, pencolour):
+         p1 = wx.Pen(self.OffsetColour(pencolour, -70), 2)
+         p2 = wx.Pen(self.OffsetColour(pencolour, 10), 1)
+ 
+-        pt1 = wx.Point(cx-r*math.sqrt(2)/2.0, cy+r*math.sqrt(2)/2.0)
+-        pt2 = wx.Point(cx+r*math.sqrt(2)/2.0, cy-r*math.sqrt(2)/2.0)
++        pt1 = wx.Point(int(cx-r*math.sqrt(2)/2.0), int(cy+r*math.sqrt(2)/2.0))
++        pt2 = wx.Point(int(cx+r*math.sqrt(2)/2.0), int(cy-r*math.sqrt(2)/2.0))
+ 
+         dc.SetPen(p2)
+         dc.DrawArc(pt1, pt2, (cx, cy))
+@@ -779,7 +779,7 @@ def DrawBoundingCircle(self, dc, size):
+         radius = 0.9*min(size.x, size.y)/2.0
+         dc.SetBrush(wx.TRANSPARENT_BRUSH)
+         dc.SetPen(wx.Pen(self._boundingcolour))
+-        dc.DrawCircle(self.Width//2, self.Height//2, radius)
++        dc.DrawCircle(self.Width//2, self.Height//2, int(radius))
+ 
+ 
+     def CircleCoords(self, radius, angle, centerX, centerY):
+diff --git a/wx/lib/agw/labelbook.py b/wx/lib/agw/labelbook.py
+index b716df3a2..f8c9cd54d 100644
+--- a/wx/lib/agw/labelbook.py
++++ b/wx/lib/agw/labelbook.py
+@@ -1376,13 +1376,13 @@ def OnPaint(self, event):
+ 
+                 if bUseYcoord:
+ 
+-                    imgXcoord = self._nImgSize / 2
+-                    imgYcoord = (style & INB_SHOW_ONLY_IMAGES and [pos + self._nImgSize / 2] or [pos + imgTopPadding])[0]
++                    imgXcoord = self._nImgSize // 2
++                    imgYcoord = (style & INB_SHOW_ONLY_IMAGES and [pos + self._nImgSize // 2] or [pos + imgTopPadding])[0]
+ 
+                 else:
+ 
+-                    imgXcoord = pos + (rectWidth / 2) - (self._nImgSize / 2)
+-                    imgYcoord = (style & INB_SHOW_ONLY_IMAGES and [self._nImgSize / 2] or [imgTopPadding])[0]
++                    imgXcoord = pos + (rectWidth // 2) - (self._nImgSize // 2)
++                    imgYcoord = (style & INB_SHOW_ONLY_IMAGES and [self._nImgSize // 2] or [imgTopPadding])[0]
+ 
+                 self._ImageList.Draw(self._pagesInfoVec[i].GetImageIndex(), dc,
+                                      imgXcoord, imgYcoord,
+@@ -1408,15 +1408,15 @@ def OnPaint(self, event):
+ 
+                 if bUseYcoord:
+ 
+-                    textOffsetX = ((rectWidth - textWidth) / 2 )
++                    textOffsetX = ((rectWidth - textWidth) // 2 )
+                     textOffsetY = (not style & INB_SHOW_ONLY_TEXT  and [pos + self._nImgSize  + imgTopPadding + 3] or \
+-                                       [pos + ((self._nImgSize * 2 - textHeight) / 2 )])[0]
++                                       [pos + ((self._nImgSize * 2 - textHeight) // 2 )])[0]
+ 
+                 else:
+ 
+-                    textOffsetX = (rectWidth - textWidth) / 2  + pos + nTextPaddingLeft
++                    textOffsetX = (rectWidth - textWidth) // 2  + pos + nTextPaddingLeft
+                     textOffsetY = (not style & INB_SHOW_ONLY_TEXT and [self._nImgSize + imgTopPadding + 3] or \
+-                                       [((self._nImgSize * 2 - textHeight) / 2 )])[0]
++                                       [((self._nImgSize * 2 - textHeight) // 2 )])[0]
+ 
+                 dc.SetTextForeground(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
+                 dc.DrawText(fixedText, textOffsetX, textOffsetY)
+@@ -1591,8 +1591,8 @@ def OnPaint(self, event):
+             # Draw gradient in the background area
+             startColour = self._coloursMap[INB_TAB_AREA_BACKGROUND_COLOUR]
+             endColour   = ArtManager.Get().LightColour(self._coloursMap[INB_TAB_AREA_BACKGROUND_COLOUR], 50)
+-            ArtManager.Get().PaintStraightGradientBox(dc, wx.Rect(0, 0, size.x / 2, size.y), startColour, endColour, False)
+-            ArtManager.Get().PaintStraightGradientBox(dc, wx.Rect(size.x / 2, 0, size.x / 2, size.y), endColour, startColour, False)
++            ArtManager.Get().PaintStraightGradientBox(dc, wx.Rect(0, 0, size.x // 2, size.y), startColour, endColour, False)
++            ArtManager.Get().PaintStraightGradientBox(dc, wx.Rect(size.x // 2, 0, size.x // 2, size.y), endColour, startColour, False)
+ 
+         else:
+ 
+@@ -1638,7 +1638,7 @@ def OnPaint(self, event):
+ 
+             if self.HasAGWFlag(INB_SHOW_ONLY_TEXT):
+                 font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+-                font.SetPointSize(font.GetPointSize() * self.GetParent().GetFontSizeMultiple())
++                font.SetPointSize(int(font.GetPointSize() * self.GetParent().GetFontSizeMultiple()))
+ 
+                 if self.GetParent().GetFontBold():
+                     font.SetWeight(wx.FONTWEIGHT_BOLD)
+@@ -1954,7 +1954,7 @@ def DrawWebHover(self, dc, caption, xCoord, yCoord, selected):
+ 
+         # Redraw the text with underlined font
+         underLinedFont = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+-        underLinedFont.SetPointSize(underLinedFont.GetPointSize() * self.GetParent().GetFontSizeMultiple())
++        underLinedFont.SetPointSize(int(underLinedFont.GetPointSize() * self.GetParent().GetFontSizeMultiple()))
+         if self.GetParent().GetFontBold():
+             underLinedFont.SetWeight(wx.FONTWEIGHT_BOLD)
+         elif self.HasAGWFlag(INB_BOLD_TAB_SELECTION) and selected:
+@@ -2050,7 +2050,7 @@ def DrawLabel(self, dc, rect, text, bmp, imgInfo, orientationLeft, imgIdx, selec
+         imgRect = wx.Rect(*rect)
+ 
+         font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+-        font.SetPointSize(font.GetPointSize() * self.GetParent().GetFontSizeMultiple())
++        font.SetPointSize(int(font.GetPointSize() * self.GetParent().GetFontSizeMultiple()))
+ 
+         if self.GetParent().GetFontBold():
+             font.SetWeight(wx.FONTWEIGHT_BOLD)
+@@ -2069,7 +2069,7 @@ def DrawLabel(self, dc, rect, text, bmp, imgInfo, orientationLeft, imgIdx, selec
+ 
+         # Text bounding rectangle
+         textRect.x += nPadding
+-        textRect.y = rect.y + (rect.height - h)/2
++        textRect.y = rect.y + (rect.height - h)//2
+         textRect.width = rect.width - 2 * nPadding
+ 
+         if bmp.IsOk() and not self.HasAGWFlag(INB_SHOW_ONLY_TEXT):
+@@ -2086,7 +2086,7 @@ def DrawLabel(self, dc, rect, text, bmp, imgInfo, orientationLeft, imgIdx, selec
+ 
+             imgRect.x += nPadding
+             imgRect.width = bmp.GetWidth()
+-            imgRect.y = rect.y + (rect.height - bmp.GetHeight())/2
++            imgRect.y = rect.y + (rect.height - bmp.GetHeight())//2
+             imgRect.height = bmp.GetHeight()
+ 
+         # Draw bounding rectangle
+@@ -2496,7 +2496,7 @@ def ResizeTabArea(self):
+             dc = wx.MemoryDC()
+             dc.SelectObject(wx.Bitmap(1, 1))
+             font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+-            font.SetPointSize(font.GetPointSize()*self._fontSizeMultiple)
++            font.SetPointSize(int(font.GetPointSize()*self._fontSizeMultiple))
+             if self.GetFontBold() or agwStyle & INB_BOLD_TAB_SELECTION:
+                 font.SetWeight(wx.FONTWEIGHT_BOLD)
+             dc.SetFont(font)
+diff --git a/wx/lib/agw/peakmeter.py b/wx/lib/agw/peakmeter.py
+index 055dbef81..a5f88a9d5 100644
+--- a/wx/lib/agw/peakmeter.py
++++ b/wx/lib/agw/peakmeter.py
+@@ -784,7 +784,7 @@ def DrawHorzBand(self, dc, rect):
+                 maxWidth = size.x*horzBands
+                 points = [wx.Point() for i in range(2)]
+                 points[0].y = rectPrev.GetTopRight().y - yDecal
+-                points[0].x = rectPrev.GetBottomLeft().x + self._meterData[vert]._falloff*maxWidth/self._maxValue
++                points[0].x = rectPrev.GetBottomLeft().x + self._meterData[vert]._falloff*maxWidth//self._maxValue
+                 points[1].y = rectPrev.GetBottomLeft().y + yDecal
+                 points[1].x = points[0].x
+                 dc.SetPen(pen)
+diff --git a/wx/lib/agw/pygauge.py b/wx/lib/agw/pygauge.py
+index bab459a3a..b8654436a 100644
+--- a/wx/lib/agw/pygauge.py
++++ b/wx/lib/agw/pygauge.py
+@@ -344,7 +344,7 @@ def OnPaint(self, event):
+                 c1,c2 = gradient
+                 w = rect.width * (float(self._valueSorted[i]) / self._range)
+                 r = copy.copy(rect)
+-                r.width = w
++                r.width = int(w)
+                 dc.GradientFillLinear(r, c1, c2, wx.EAST)
+         else:
+             for i, colour in enumerate(self._barColourSorted):
+@@ -352,7 +352,7 @@ def OnPaint(self, event):
+                 dc.SetPen(wx.Pen(colour))
+                 w = rect.width * (float(self._valueSorted[i]) / self._range)
+                 r = copy.copy(rect)
+-                r.width = w
++                r.width = int(w)
+                 dc.DrawRectangle(r)
+ 
+ 
+diff --git a/wx/lib/agw/ribbon/art_aui.py b/wx/lib/agw/ribbon/art_aui.py
+index a1d255843..31fedf487 100644
+--- a/wx/lib/agw/ribbon/art_aui.py
++++ b/wx/lib/agw/ribbon/art_aui.py
+@@ -390,7 +390,7 @@ def DrawTab(self, dc, wnd, tab):
+             grad_rect = wx.Rect(*tab.rect)
+             grad_rect.height -= 4
+             grad_rect.width -= 1
+-            grad_rect.height /= 2
++            grad_rect.height //= 2
+             grad_rect.y = grad_rect.y + tab.rect.height - grad_rect.height - 1
+             dc.SetBrush(self._tab_active_top_background_brush)
+             dc.DrawRectangle(tab.rect.x, tab.rect.y + 3, tab.rect.width - 1, grad_rect.y - tab.rect.y - 3)
+@@ -401,7 +401,7 @@ def DrawTab(self, dc, wnd, tab):
+             btm_rect = wx.Rect(*tab.rect)
+             btm_rect.height -= 4
+             btm_rect.width -= 1
+-            btm_rect.height /= 2
++            btm_rect.height //= 2
+             btm_rect.y = btm_rect.y + tab.rect.height - btm_rect.height - 1
+             dc.SetBrush(self._tab_hover_background_brush)
+             dc.DrawRectangle(btm_rect.x, btm_rect.y, btm_rect.width, btm_rect.height)
+@@ -434,8 +434,8 @@ def DrawTab(self, dc, wnd, tab):
+             icon = tab.page.GetIcon()
+             if self._flags & RIBBON_BAR_SHOW_PAGE_LABELS == 0:
+                 if icon.IsOk():
+-                    x = tab.rect.x + (tab.rect.width - icon.GetWidth()) / 2
+-                    dc.DrawBitmap(icon, x, tab.rect.y + 1 + (tab.rect.height - 1 - icon.GetHeight()) / 2, True)
++                    x = tab.rect.x + (tab.rect.width - icon.GetWidth()) // 2
++                    dc.DrawBitmap(icon, x, tab.rect.y + 1 + (tab.rect.height - 1 - icon.GetHeight()) // 2, True)
+ 
+         if self._flags & RIBBON_BAR_SHOW_PAGE_LABELS:
+             label = tab.page.GetLabel()
+@@ -450,7 +450,7 @@ def DrawTab(self, dc, wnd, tab):
+                     offset += icon.GetWidth() + 2
+ 
+                 text_width, text_height = dc.GetTextExtent(label)
+-                x = (tab.rect.width - 2 - text_width - offset) / 2
++                x = (tab.rect.width - 2 - text_width - offset) // 2
+                 if x > 8:
+                     x = 8
+                 elif x < 1:
+@@ -458,7 +458,7 @@ def DrawTab(self, dc, wnd, tab):
+ 
+                 width = tab.rect.width - x - 2
+                 x += tab.rect.x + offset
+-                y = tab.rect.y + (tab.rect.height - text_height) / 2
++                y = tab.rect.y + (tab.rect.height - text_height) // 2
+ 
+                 if icon.IsOk():
+                     dc.DrawBitmap(icon, x - offset, tab.rect.y + (tab.rect.height - icon.GetHeight()) / 2, True)
+@@ -892,8 +892,8 @@ def DrawMinimisedPanel(self, dc, wnd, rect, bitmap):
+                                   self._page_hover_background_gradient_colour, wx.SOUTH)
+ 
+         if bitmap.IsOk():
+-            dc.DrawBitmap(bitmap, preview.x + (preview.width - bitmap.GetWidth()) / 2,
+-                          preview.y + (preview.height - bitmap.GetHeight()) / 2, True)
++            dc.DrawBitmap(bitmap, preview.x + (preview.width - bitmap.GetWidth()) // 2,
++                          preview.y + (preview.height - bitmap.GetHeight()) // 2, True)
+ 
+ 
+     def DrawPartialPanelBackground(self, dc, wnd, rect):
+@@ -1024,7 +1024,7 @@ def DrawGalleryButton(self, dc, rect, state, bitmaps):
+             dc.DrawRectangle(reduced_rect.x, reduced_rect.y, reduced_rect.width, reduced_rect.height)
+             btn_bitmap = bitmaps[3]
+ 
+-        dc.DrawBitmap(btn_bitmap, reduced_rect.x + reduced_rect.width / 2 - 2, (rect.y + rect.height / 2) - 2, True)
++        dc.DrawBitmap(btn_bitmap, reduced_rect.x + reduced_rect.width // 2 - 2, (rect.y + rect.height // 2) - 2, True)
+ 
+ 
+     def DrawGalleryItemBackground(self, dc, wnd, rect, item):
+@@ -1277,7 +1277,7 @@ def DrawTool(self, dc, wnd, rect, bitmap, kind, state):
+             if is_split_hybrid:
+                 dc.DrawLine(rect.x + avail_width + 1, rect.y, rect.x + avail_width + 1, rect.y + rect.height)
+ 
+-            dc.DrawBitmap(self._toolbar_drop_bitmap, bg_rect.x + avail_width + 2, bg_rect.y + (bg_rect.height / 2) - 2, True)
++            dc.DrawBitmap(self._toolbar_drop_bitmap, bg_rect.x + avail_width + 2, bg_rect.y + (bg_rect.height // 2) - 2, True)
+ 
+-        dc.DrawBitmap(bitmap, bg_rect.x + (avail_width - bitmap.GetWidth()) / 2, bg_rect.y + (bg_rect.height - bitmap.GetHeight()) / 2, True)
++        dc.DrawBitmap(bitmap, bg_rect.x + (avail_width - bitmap.GetWidth()) // 2, bg_rect.y + (bg_rect.height - bitmap.GetHeight()) // 2, True)
+ 
+diff --git a/wx/lib/agw/ribbon/art_internal.py b/wx/lib/agw/ribbon/art_internal.py
+index 4a8dc7ce0..78e8f3fe4 100644
+--- a/wx/lib/agw/ribbon/art_internal.py
++++ b/wx/lib/agw/ribbon/art_internal.py
+@@ -32,9 +32,9 @@ def RibbonInterpolateColour(start_colour, end_colour, position, start_position,
+     r = end_colour.Red() - start_colour.Red()
+     g = end_colour.Green() - start_colour.Green()
+     b = end_colour.Blue() - start_colour.Blue()
+-    r = start_colour.Red()   + (((r * position * 100) / end_position) / 100)
+-    g = start_colour.Green() + (((g * position * 100) / end_position) / 100)
+-    b = start_colour.Blue()  + (((b * position * 100) / end_position) / 100)
++    r = start_colour.Red()   + (((r * position * 100) // end_position) // 100)
++    g = start_colour.Green() + (((g * position * 100) // end_position) // 100)
++    b = start_colour.Blue()  + (((b * position * 100) // end_position) // 100)
+ 
+     return wx.Colour(r, g, b)
+ 
+@@ -61,9 +61,9 @@ def RibbonDrawParallelGradientLines(dc, nlines, line_origins, stepx, stepy, nums
+     bd = end_colour.Blue() - start_colour.Blue()
+ 
+     for step in range(numsteps):
+-        r = start_colour.Red() + (((step*rd*100)/numsteps)/100)
+-        g = start_colour.Green() + (((step*gd*100)/numsteps)/100)
+-        b = start_colour.Blue() + (((step*bd*100)/numsteps)/100)
++        r = start_colour.Red() + (((step*rd*100)//numsteps)//100)
++        g = start_colour.Green() + (((step*gd*100)//numsteps)//100)
++        b = start_colour.Blue() + (((step*bd*100)//numsteps)//100)
+ 
+         p = wx.Pen(wx.Colour(r, g, b))
+         dc.SetPen(p)
+diff --git a/wx/lib/agw/ribbon/art_msw.py b/wx/lib/agw/ribbon/art_msw.py
+index e7317d59b..00c3dfe2b 100644
+--- a/wx/lib/agw/ribbon/art_msw.py
++++ b/wx/lib/agw/ribbon/art_msw.py
+@@ -982,7 +982,7 @@ def DrawTab(self, dc, wnd, tab):
+                 background.width -= 4
+                 background.height -= 3
+                 h = background.height
+-                background.height /= 2
++                background.height //= 2
+                 dc.GradientFillLinear(background, self._tab_hover_background_top_colour,
+                                       self._tab_hover_background_top_gradient_colour, wx.SOUTH)
+ 
+@@ -1024,9 +1024,9 @@ def DrawTab(self, dc, wnd, tab):
+             if icon.IsOk():
+                 x = tab.rect.x + 4
+                 if self._flags & RIBBON_BAR_SHOW_PAGE_LABELS == 0:
+-                    x = tab.rect.x + (tab.rect.width - icon.GetWidth()) / 2
++                    x = tab.rect.x + (tab.rect.width - icon.GetWidth()) // 2
+ 
+-                dc.DrawBitmap(icon, x, tab.rect.y + 1 + (tab.rect.height - 1 - icon.GetHeight()) / 2, True)
++                dc.DrawBitmap(icon, x, tab.rect.y + 1 + (tab.rect.height - 1 - icon.GetHeight()) // 2, True)
+ 
+         if self._flags & RIBBON_BAR_SHOW_PAGE_LABELS:
+             label = tab.page.GetLabel()
+@@ -1043,13 +1043,13 @@ def DrawTab(self, dc, wnd, tab):
+                     x += 3 + tab.page.GetIcon().GetWidth()
+                     width -= 3 + tab.page.GetIcon().GetWidth()
+ 
+-                y = tab.rect.y + (tab.rect.height - text_height) / 2
++                y = tab.rect.y + (tab.rect.height - text_height) // 2
+ 
+                 if width <= text_width:
+                     dc.SetClippingRegion(x, tab.rect.y, width, tab.rect.height)
+                     dc.DrawText(label, x, y)
+                 else:
+-                    dc.DrawText(label, x + (width - text_width) / 2 + 1, y)
++                    dc.DrawText(label, x + (width - text_width) // 2 + 1, y)
+ 
+ 
+     def DrawTabSeparator(self, dc, wnd, rect, visibility):
+@@ -1093,7 +1093,7 @@ def ReallyDrawTabSeparator(self, wnd, rect, visibility):
+         dc = wx.MemoryDC(self._cached_tab_separator)
+         self.DrawTabCtrlBackground(dc, wnd, rect)
+ 
+-        x = rect.x + rect.width / 2
++        x = rect.x + rect.width // 2
+         h = float(rect.height - 1)
+ 
+         r1 = self._tab_ctrl_background_brush.GetColour().Red() * (1.0 - visibility) + 0.5
+@@ -1146,7 +1146,7 @@ def DrawPartialPageBackground1(self, dc, wnd, rect, page, offset, hovered=False)
+ 
+         # upper_rect, lower_rect, paint_rect are all in page co-ordinates
+         upper_rect = wx.Rect(*background)
+-        upper_rect.height /= 5
++        upper_rect.height //= 5
+ 
+         lower_rect = wx.Rect(*background)
+         lower_rect.y += upper_rect.height
+@@ -1229,7 +1229,7 @@ def DrawPageBackground(self, dc, wnd, rect):
+         background.width -= 4
+         background.height -= 2
+ 
+-        background.height /= 5
++        background.height //= 5
+         dc.GradientFillLinear(background, self._page_background_top_colour,
+                               self._page_background_top_gradient_colour, wx.SOUTH)
+ 
+@@ -1493,10 +1493,10 @@ def DrawPanelBackground(self, dc, wnd, rect):
+ 
+         if clip_label:
+             clip = wx.DCClipper(dc, label_rect)
+-            dc.DrawText(label, label_rect.x, label_rect.y + (label_rect.GetHeight() - label_size.GetHeight()) / 2)
++            dc.DrawText(label, label_rect.x, label_rect.y + (label_rect.GetHeight() - label_size.GetHeight()) // 2)
+         else:
+-            dc.DrawText(label, label_rect.x + (label_rect.GetWidth() - label_size.GetWidth()) / 2,
+-                        label_rect.y + (label_rect.GetHeight() - label_size.GetHeight()) / 2)
++            dc.DrawText(label, label_rect.x + (label_rect.GetWidth() - label_size.GetWidth()) // 2,
++                        label_rect.y + (label_rect.GetHeight() - label_size.GetHeight()) // 2)
+ 
+         if has_ext_button:
+             if wnd.IsExtButtonHovered():
+@@ -1577,7 +1577,7 @@ def DrawGalleryBackgroundCommon(self, dc, wnd, rect):
+             # Divider between items and buttons
+             dc.DrawLine(rect.x, rect.y + rect.height - 15, rect.x + rect.width, rect.y + rect.height - 15)
+ 
+-            up_btn = wx.Rect(rect.x, rect.y + rect.height - 15, rect.width / 3, 15)
++            up_btn = wx.Rect(rect.x, rect.y + rect.height - 15, rect.width // 3, 15)
+             down_btn = wx.Rect(up_btn.GetRight() + 1, up_btn.GetTop(), up_btn.GetWidth(), up_btn.GetHeight())
+             dc.DrawLine(down_btn.GetLeft(), down_btn.GetTop(), down_btn.GetLeft(), down_btn.GetBottom())
+             ext_btn = wx.Rect(down_btn.GetRight() + 1, up_btn.GetTop(), rect.width - up_btn.GetWidth() - down_btn.GetWidth() - 1, up_btn.GetHeight())
+@@ -1587,7 +1587,7 @@ def DrawGalleryBackgroundCommon(self, dc, wnd, rect):
+             # Divider between items and buttons
+             dc.DrawLine(rect.x + rect.width - 15, rect.y, rect.x + rect.width - 15, rect.y + rect.height)
+ 
+-            up_btn = wx.Rect(rect.x + rect.width - 15, rect.y, 15, rect.height / 3)
++            up_btn = wx.Rect(rect.x + rect.width - 15, rect.y, 15, rect.height // 3)
+             down_btn = wx.Rect(up_btn.GetLeft(), up_btn.GetBottom() + 1, up_btn.GetWidth(), up_btn.GetHeight())
+             dc.DrawLine(down_btn.GetLeft(), down_btn.GetTop(), down_btn.GetRight(), down_btn.GetTop())
+             ext_btn = wx.Rect(up_btn.GetLeft(), down_btn.GetBottom() + 1, up_btn.GetWidth(), rect.height - up_btn.GetHeight() - down_btn.GetHeight() - 1)
+@@ -1633,14 +1633,14 @@ def DrawGalleryButton(self, dc, rect, state, bitmaps):
+ 
+         dc.SetPen(wx.TRANSPARENT_PEN)
+         dc.SetBrush(btn_top_brush)
+-        dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height / 2)
++        dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height // 2)
+ 
+         lower = wx.Rect(*rect)
+-        lower.height = (lower.height + 1) / 2
++        lower.height = (lower.height + 1) // 2
+         lower.y += rect.height - lower.height
+         dc.GradientFillLinear(lower, btn_colour, btn_grad_colour, wx.SOUTH)
+ 
+-        dc.DrawBitmap(btn_bitmap, rect.x + rect.width / 2 - 2, lower.y - 2, True)
++        dc.DrawBitmap(btn_bitmap, rect.x + rect.width // 2 - 2, lower.y - 2, True)
+ 
+ 
+     def DrawGalleryItemBackground(self, dc, wnd, rect, item):
+@@ -1691,7 +1691,7 @@ def DrawGalleryItemBackground(self, dc, wnd, rect, item):
+         upper.x += 1
+         upper.width -= 2
+         upper.y += 1
+-        upper.height /= 3
++        upper.height //= 3
+         dc.SetPen(wx.TRANSPARENT_PEN)
+         dc.SetBrush(top_brush)
+         dc.DrawRectangle(upper.x, upper.y, upper.width, upper.height)
+@@ -1760,7 +1760,7 @@ def DrawMinimisedPanel(self, dc, wnd, rect, bitmap):
+             client_rect.x += 1
+             client_rect.width -= 2
+             client_rect.y += 1
+-            client_rect.height = (rect.y + rect.height / 5) - client_rect.x
++            client_rect.height = (rect.y + rect.height // 5) - client_rect.x
+             dc.GradientFillLinear(client_rect,
+                                   self._panel_active_background_top_colour,
+                                   self._panel_active_background_top_gradient_colour, wx.SOUTH)
+@@ -1785,7 +1785,7 @@ def DrawMinimisedPanel(self, dc, wnd, rect, bitmap):
+         dc.SetPen(wx.TRANSPARENT_PEN)
+         dc.DrawRectangle(preview.x + 1, preview.y + preview.height - 8, preview.width - 2, 7)
+ 
+-        mid_pos = rect.y + rect.height / 5 - preview.y
++        mid_pos = rect.y + rect.height // 5 - preview.y
+ 
+         if mid_pos < 0 or mid_pos >= preview.height:
+             full_rect = wx.Rect(*preview)
+@@ -1816,8 +1816,8 @@ def DrawMinimisedPanel(self, dc, wnd, rect, bitmap):
+                                   self._page_hover_background_gradient_colour, wx.SOUTH)
+ 
+         if bitmap.IsOk():
+-            dc.DrawBitmap(bitmap, preview.x + (preview.width - bitmap.GetWidth()) / 2,
+-                          preview.y + (preview.height - 7 - bitmap.GetHeight()) / 2, True)
++            dc.DrawBitmap(bitmap, preview.x + (preview.width - bitmap.GetWidth()) // 2,
++                          preview.y + (preview.height - 7 - bitmap.GetHeight()) // 2, True)
+ 
+         self.DrawPanelBorder(dc, preview, self._panel_border_pen, self._panel_border_gradient_pen)
+         self.DrawPanelBorder(dc, true_rect, self._panel_minimised_border_pen, self._panel_minimised_border_gradient_pen)
+@@ -1829,20 +1829,20 @@ def DrawMinimisedPanelCommon(self, dc, wnd, true_rect):
+ 
+         if self._flags & RIBBON_BAR_FLOW_VERTICAL:
+             preview.x = true_rect.x + 4
+-            preview.y = true_rect.y + (true_rect.height - preview.height) / 2
++            preview.y = true_rect.y + (true_rect.height - preview.height) // 2
+         else:
+-            preview.x = true_rect.x + (true_rect.width - preview.width) / 2
++            preview.x = true_rect.x + (true_rect.width - preview.width) // 2
+             preview.y = true_rect.y + 4
+ 
+         dc.SetFont(self._panel_label_font)
+         label_width, label_height = dc.GetTextExtent(wnd.GetLabel())
+ 
+-        xpos = true_rect.x + (true_rect.width - label_width + 1) / 2
++        xpos = true_rect.x + (true_rect.width - label_width + 1) // 2
+         ypos = preview.y + preview.height + 5
+ 
+         if self._flags & RIBBON_BAR_FLOW_VERTICAL:
+             xpos = preview.x + preview.width + 5
+-            ypos = true_rect.y + (true_rect.height - label_height) / 2
++            ypos = true_rect.y + (true_rect.height - label_height) // 2
+ 
+         dc.SetTextForeground(self._panel_minimised_label_colour)
+         dc.DrawText(wnd.GetLabel(), xpos, ypos)
+@@ -1851,12 +1851,12 @@ def DrawMinimisedPanelCommon(self, dc, wnd, true_rect):
+ 
+         if self._flags & RIBBON_BAR_FLOW_VERTICAL:
+             xpos += label_width
+-            arrow_points[0] = wx.Point(xpos + 5, ypos + label_height / 2)
++            arrow_points[0] = wx.Point(xpos + 5, ypos + label_height // 2)
+             arrow_points[1] = arrow_points[0] + wx.Point(-3,  3)
+             arrow_points[2] = arrow_points[0] + wx.Point(-3, -3)
+         else:
+             ypos += label_height
+-            arrow_points[0] = wx.Point(true_rect.width / 2, ypos + 5)
++            arrow_points[0] = wx.Point(true_rect.width // 2, ypos + 5)
+             arrow_points[1] = arrow_points[0] + wx.Point(-3, -3)
+             arrow_points[2] = arrow_points[0] + wx.Point( 3, -3)
+ 
+@@ -1967,7 +1967,7 @@ def DrawButtonBarButton(self, dc, wnd, rect, kind, state, label, bitmap_large, b
+             bg_rect.height -= 2
+ 
+             bg_rect_top = wx.Rect(*bg_rect)
+-            bg_rect_top.height /= 3
++            bg_rect_top.height //= 3
+             bg_rect.y += bg_rect_top.height
+             bg_rect.height -= bg_rect_top.height
+ 
+@@ -2043,7 +2043,7 @@ def DrawButtonBarButtonForeground(self, dc, rect, kind, state, label, bitmap_lar
+         if result == RIBBON_BUTTONBAR_BUTTON_LARGE:
+ 
+             padding = 2
+-            dc.DrawBitmap(bitmap_large, rect.x + (rect.width - bitmap_large.GetWidth()) / 2,
++            dc.DrawBitmap(bitmap_large, rect.x + (rect.width - bitmap_large.GetWidth()) // 2,
+                           rect.y + padding, True)
+             ypos = rect.y + padding + bitmap_large.GetHeight() + padding
+             arrow_width = (kind == RIBBON_BUTTON_NORMAL and [0] or [8])[0]
+@@ -2052,10 +2052,10 @@ def DrawButtonBarButtonForeground(self, dc, rect, kind, state, label, bitmap_lar
+ 
+             if label_w + 2 * padding <= rect.width:
+ 
+-                dc.DrawText(label, rect.x + (rect.width - label_w) / 2, ypos)
++                dc.DrawText(label, rect.x + (rect.width - label_w) // 2, ypos)
+                 if arrow_width != 0:
+-                    self.DrawDropdownArrow(dc, rect.x + rect.width / 2,
+-                                           ypos + (label_h * 3) / 2,
++                    self.DrawDropdownArrow(dc, rect.x + rect.width // 2,
++                                           ypos + (label_h * 3) // 2,
+                                            self._button_bar_label_colour)
+             else:
+                 breaki = len(label)
+@@ -2067,17 +2067,17 @@ def DrawButtonBarButtonForeground(self, dc, rect, kind, state, label, bitmap_lar
+                         label_w, label_h = dc.GetTextExtent(label_top)
+ 
+                         if label_w + 2 * padding <= rect.width:
+-                            dc.DrawText(label_top, rect.x + (rect.width - label_w) / 2, ypos)
++                            dc.DrawText(label_top, rect.x + (rect.width - label_w) // 2, ypos)
+                             ypos += label_h
+                             label_bottom = label[breaki:]
+                             label_w, label_h = dc.GetTextExtent(label_bottom)
+                             label_w += arrow_width
+-                            iX = rect.x + (rect.width - label_w) / 2
++                            iX = rect.x + (rect.width - label_w) // 2
+                             dc.DrawText(label_bottom, iX, ypos)
+ 
+                             if arrow_width != 0:
+                                 self.DrawDropdownArrow(dc, iX + 2 +label_w - arrow_width,
+-                                                       ypos + label_h / 2 + 1,
++                                                       ypos + label_h // 2 + 1,
+                                                        self._button_bar_label_colour)
+ 
+                             break
+@@ -2085,14 +2085,14 @@ def DrawButtonBarButtonForeground(self, dc, rect, kind, state, label, bitmap_lar
+         elif result == RIBBON_BUTTONBAR_BUTTON_MEDIUM:
+ 
+             x_cursor = rect.x + 2
+-            dc.DrawBitmap(bitmap_small, x_cursor, rect.y + (rect.height - bitmap_small.GetHeight())/2, True)
++            dc.DrawBitmap(bitmap_small, x_cursor, rect.y + (rect.height - bitmap_small.GetHeight())//2, True)
+             x_cursor += bitmap_small.GetWidth() + 2
+             label_w, label_h = dc.GetTextExtent(label)
+-            dc.DrawText(label, x_cursor, rect.y + (rect.height - label_h) / 2)
++            dc.DrawText(label, x_cursor, rect.y + (rect.height - label_h) // 2)
+             x_cursor += label_w + 3
+ 
+             if kind != RIBBON_BUTTON_NORMAL:
+-                self.DrawDropdownArrow(dc, x_cursor, rect.y + rect.height / 2,
++                self.DrawDropdownArrow(dc, x_cursor, rect.y + rect.height // 2,
+                                        self._button_bar_label_colour)
+ 
+         else:
+@@ -2184,7 +2184,7 @@ def DrawTool(self, dc, wnd, rect, bitmap, kind, state):
+ 
+         # Background
+         bg_rect_top = wx.Rect(*bg_rect)
+-        bg_rect_top.height = (bg_rect_top.height * 2) / 5
++        bg_rect_top.height = (bg_rect_top.height * 2) // 5
+         bg_rect_btm = wx.Rect(*bg_rect)
+         bg_rect_btm.y += bg_rect_top.height
+         bg_rect_btm.height -= bg_rect_top.height
+@@ -2244,10 +2244,10 @@ def DrawTool(self, dc, wnd, rect, bitmap, kind, state):
+                 dc.DrawLine(rect.x + avail_width + 1, rect.y, rect.x + avail_width + 1, rect.y + rect.height)
+ 
+             dc.DrawBitmap(self._toolbar_drop_bitmap, bg_rect.x + avail_width + 2,
+-                          bg_rect.y + (bg_rect.height / 2) - 2, True)
++                          bg_rect.y + (bg_rect.height // 2) - 2, True)
+ 
+-        dc.DrawBitmap(bitmap, bg_rect.x + (avail_width - bitmap.GetWidth()) / 2,
+-                      bg_rect.y + (bg_rect.height - bitmap.GetHeight()) / 2, True)
++        dc.DrawBitmap(bitmap, bg_rect.x + (avail_width - bitmap.GetWidth()) // 2,
++                      bg_rect.y + (bg_rect.height - bitmap.GetHeight()) // 2, True)
+ 
+ 
+     def GetBarTabWidth(self, dc, wnd, label, bitmap, ideal=None, small_begin_need_separator=None,
+@@ -2474,7 +2474,7 @@ def GetGalleryClientSize(self, dc, wnd, size, client_offset=None, scroll_up_butt
+             scroll_up.y = size.GetHeight() - 15
+             scroll_up.height = 15
+             scroll_up.x = 0
+-            scroll_up.width = (size.GetWidth() + 2) / 3
++            scroll_up.width = (size.GetWidth() + 2) // 3
+             scroll_down.y = scroll_up.y
+             scroll_down.height = scroll_up.height
+             scroll_down.x = scroll_up.x + scroll_up.width
+@@ -2491,7 +2491,7 @@ def GetGalleryClientSize(self, dc, wnd, size, client_offset=None, scroll_up_butt
+             scroll_up.x = size.GetWidth() - 15
+             scroll_up.width = 15
+             scroll_up.y = 0
+-            scroll_up.height = (size.GetHeight() + 2) / 3
++            scroll_up.height = (size.GetHeight() + 2) // 3
+             scroll_down.x = scroll_up.x
+             scroll_down.width = scroll_up.width
+             scroll_down.y = scroll_up.y + scroll_up.height
+diff --git a/wx/lib/agw/ribbon/bar.py b/wx/lib/agw/ribbon/bar.py
+index ae8b6a19c..b0d28776d 100644
+--- a/wx/lib/agw/ribbon/bar.py
++++ b/wx/lib/agw/ribbon/bar.py
+@@ -743,7 +743,7 @@ def RecalculateTabSizes(self):
+                     delta = info.ideal_width - info.small_must_have_separator_width
+                     info.rect.x = x
+                     info.rect.y = y
+-                    info.rect.width = info.small_must_have_separator_width + delta*(width - total_small_width)/total_delta
++                    info.rect.width = info.small_must_have_separator_width + delta*(width - total_small_width)//total_delta
+                     info.rect.height = self._tab_height
+ 
+                     x += info.rect.width + tabsep
+@@ -797,7 +797,7 @@ def RecalculateTabSizes(self):
+                         delta = smallest_tab_width - info.minimum_width
+                         info.rect.x = x
+                         info.rect.y = y
+-                        info.rect.width = info.minimum_width + delta*(width - total_small_width)/total_delta
++                        info.rect.width = info.minimum_width + delta*(width - total_small_width)//total_delta
+                         info.rect.height = self._tab_height
+ 
+                         x += info.rect.width + tabsep
+diff --git a/wx/lib/agw/ribbon/buttonbar.py b/wx/lib/agw/ribbon/buttonbar.py
+index 25ee49a82..4690f483d 100644
+--- a/wx/lib/agw/ribbon/buttonbar.py
++++ b/wx/lib/agw/ribbon/buttonbar.py
+@@ -354,7 +354,7 @@ def InsertButton(self, pos, button_id, label, bitmap, bitmap_small=wx.NullBitmap
+                 self._bitmap_size_large = bitmap.GetSize()
+                 if not bitmap_small.IsOk():
+                     w, h = self._bitmap_size_large
+-                    self._bitmap_size_small = wx.Size(0.5*w, 0.5*h)
++                    self._bitmap_size_small = wx.Size(w//2, h//2)
+ 
+             if bitmap_small.IsOk():
+ 
+@@ -867,8 +867,8 @@ def OnSize(self, event):
+ 
+             layout_size = self._layouts[layout_i].overall_size
+             if layout_size.x <= new_size.x and layout_size.y <= new_size.y:
+-                self._layout_offset.x = (new_size.x - layout_size.x)/2
+-                self._layout_offset.y = (new_size.y - layout_size.y)/2
++                self._layout_offset.x = (new_size.x - layout_size.x)//2
++                self._layout_offset.y = (new_size.y - layout_size.y)//2
+                 self._current_layout = layout_i
+                 break
+ 
+diff --git a/wx/lib/agw/ribbon/gallery.py b/wx/lib/agw/ribbon/gallery.py
+index b830fab7d..b86528865 100644
+--- a/wx/lib/agw/ribbon/gallery.py
++++ b/wx/lib/agw/ribbon/gallery.py
+@@ -805,8 +805,8 @@ def DoGetNextSmallerSize(self, direction, relative_to):
+         if client.GetWidth() < 0 or client.GetHeight() < 0:
+             return relative_to
+ 
+-        client.x = (client.x / self._bitmap_padded_size.x) * self._bitmap_padded_size.x
+-        client.y = (client.y / self._bitmap_padded_size.y) * self._bitmap_padded_size.y
++        client.x = (client.x // self._bitmap_padded_size.x) * self._bitmap_padded_size.x
++        client.y = (client.y // self._bitmap_padded_size.y) * self._bitmap_padded_size.y
+ 
+         size = self._art.GetGallerySize(dc, self, wx.Size(*client))
+         minimum = self.GetMinSize()
+@@ -849,8 +849,8 @@ def DoGetNextLargerSize(self, direction, relative_to):
+         elif direction == wx.BOTH:
+             client.IncBy(self._bitmap_padded_size)
+ 
+-        client.x = (client.x / self._bitmap_padded_size.x) * self._bitmap_padded_size.x
+-        client.y = (client.y / self._bitmap_padded_size.y) * self._bitmap_padded_size.y
++        client.x = (client.x // self._bitmap_padded_size.x) * self._bitmap_padded_size.x
++        client.y = (client.y // self._bitmap_padded_size.y) * self._bitmap_padded_size.y
+ 
+         size = self._art.GetGallerySize(dc, self, wx.Size(*client))
+         minimum = self.GetMinSize()
+diff --git a/wx/lib/agw/ribbon/panel.py b/wx/lib/agw/ribbon/panel.py
+index 79fd9bc58..901c765b6 100644
+--- a/wx/lib/agw/ribbon/panel.py
++++ b/wx/lib/agw/ribbon/panel.py
+@@ -584,12 +584,12 @@ def DoGetNextSmallerSize(self, direction, relative_to):
+         minimum = wx.Size(*self.GetMinSize())
+ 
+         if direction & wx.HORIZONTAL:
+-            current.x = (current.x * 4) / 5
++            current.x = (current.x * 4) // 5
+             if current.x < minimum.x:
+                 current.x = minimum.x
+ 
+         if direction & wx.VERTICAL:
+-            current.y = (current.y * 4) / 5
++            current.y = (current.y * 4) // 5
+             if current.y < minimum.y:
+                 current.y = minimum.y
+ 
+@@ -668,10 +668,10 @@ def DoGetNextLargerSize(self, direction, relative_to):
+         current = wx.Size(*relative_to)
+ 
+         if direction & wx.HORIZONTAL:
+-            current.x = (current.x * 5 + 3) / 4
++            current.x = (current.x * 5 + 3) // 4
+ 
+         if direction & wx.VERTICAL:
+-            current.y = (current.y * 5 + 3) / 4
++            current.y = (current.y * 5 + 3) // 4
+ 
+         return current
+ 
+@@ -1076,25 +1076,25 @@ def GetExpandedPosition(self, panel, expanded_size, direction):
+         pos = wx.Point()
+ 
+         if direction == wx.NORTH:
+-            pos.x = panel.GetX() + (panel.GetWidth() - expanded_size.GetWidth()) / 2
++            pos.x = panel.GetX() + (panel.GetWidth() - expanded_size.GetWidth()) // 2
+             pos.y = panel.GetY() - expanded_size.GetHeight()
+             primary_x = True
+             secondary_y = 1
+ 
+         elif direction == wx.EAST:
+             pos.x = panel.GetRight()
+-            pos.y = panel.GetY() + (panel.GetHeight() - expanded_size.GetHeight()) / 2
++            pos.y = panel.GetY() + (panel.GetHeight() - expanded_size.GetHeight()) // 2
+             secondary_x = -1
+ 
+         elif direction == wx.SOUTH:
+-            pos.x = panel.GetX() + (panel.GetWidth() - expanded_size.GetWidth()) / 2
++            pos.x = panel.GetX() + (panel.GetWidth() - expanded_size.GetWidth()) // 2
+             pos.y = panel.GetBottom()
+             primary_x = True
+             secondary_y = -1
+ 
+         else:
+             pos.x = panel.GetX() - expanded_size.GetWidth()
+-            pos.y = panel.GetY() + (panel.GetHeight() - expanded_size.GetHeight()) / 2
++            pos.y = panel.GetY() + (panel.GetHeight() - expanded_size.GetHeight()) // 2
+             secondary_x = 1
+ 
+         expanded = wx.Rect(pos, expanded_size)
+diff --git a/wx/lib/agw/ribbon/toolbar.py b/wx/lib/agw/ribbon/toolbar.py
+index 1771c6506..8c6f8b522 100644
+--- a/wx/lib/agw/ribbon/toolbar.py
++++ b/wx/lib/agw/ribbon/toolbar.py
+@@ -1159,7 +1159,7 @@ def OnSize(self, event):
+ 
+         # Set group y positions
+         for group in self._groups:
+-            group.position.y = rowypos[group.position.y]
++            group.position.y = int(rowypos[group.position.y])
+ 
+ 
+     def GetBestSizeForParentSize(self, parentSize):
+diff --git a/wx/lib/agw/scrolledthumbnail.py b/wx/lib/agw/scrolledthumbnail.py
+index d10b0ac01..06fa77849 100644
+--- a/wx/lib/agw/scrolledthumbnail.py
++++ b/wx/lib/agw/scrolledthumbnail.py
+@@ -1162,8 +1162,8 @@ def SetThumbSize(self, width, height, border=6):
+         self._tWidth = width
+         self._tHeight = height
+         self._tBorder = border
+-        self.SetScrollRate((self._tWidth + self._tBorder)/4,
+-                           (self._tHeight + self._tBorder)/4)
++        self.SetScrollRate((self._tWidth + self._tBorder)//4,
++                           (self._tHeight + self._tBorder)//4)
+         self.SetSizeHints(self._tWidth + self._tBorder*2 + 16,
+                           self._tHeight + self._tBorder*2 + 8)
+         if self._items:
+@@ -1588,8 +1588,8 @@ def DrawThumbnail(self, bmp, thumb, index):
+ 
+         ww = img.GetWidth()
+         hh = img.GetHeight()
+-        imgRect = wx.Rect(x + (self._tWidth - img.GetWidth())/2,
+-                          y + (self._tHeight - img.GetHeight())/2,
++        imgRect = wx.Rect(int(x + (self._tWidth - img.GetWidth())/2),
++                          int(y + (self._tHeight - img.GetHeight())/2),
+                           img.GetWidth(), img.GetHeight())
+ 
+         if not thumb._alpha and self._dropShadow:
+@@ -1626,14 +1626,14 @@ def DrawThumbnail(self, bmp, thumb, index):
+             else:
+                 ty = y + hh + (self._tHeight-hh)/2 + (self._tTextHeight - sh)/2 + 3
+ 
+-            dc.DrawText(mycaption, tx, ty)
++            dc.DrawText(mycaption, int(tx), int(ty))
+ 
+         # outline
+         if self._tOutline != THUMB_OUTLINE_NONE and (self._tOutlineNotSelected or self.IsSelected(index)):
+ 
+             dotrect = wx.Rect()
+-            dotrect.x = x - 2
+-            dotrect.y = y - 2
++            dotrect.x = int(x) - 2
++            dotrect.y = int(y) - 2
+             dotrect.width = bmp.GetWidth() - self._tBorder + 4
+             dotrect.height = bmp.GetHeight() - self._tBorder + 4
+ 
+@@ -1643,8 +1643,8 @@ def DrawThumbnail(self, bmp, thumb, index):
+ 
+             if self._tOutline == THUMB_OUTLINE_FULL or self._tOutline == THUMB_OUTLINE_RECT:
+ 
+-                imgRect.x = x
+-                imgRect.y = y
++                imgRect.x = int(x)
++                imgRect.y = int(y)
+                 imgRect.width = bmp.GetWidth() - self._tBorder
+                 imgRect.height = bmp.GetHeight() - self._tBorder
+ 
+@@ -1708,10 +1708,10 @@ def OnPaint(self, event):
+             if col == 0:
+                 row = row + 1
+ 
+-            xwhite = ((w - self._cols*(self._tWidth + self._tBorder)))/(self._cols+1)
++            xwhite = ((w - self._cols*(self._tWidth + self._tBorder)))//(self._cols+1)
+             tx = xwhite + col*(self._tWidth + self._tBorder)
+ 
+-            ty = self._tBorder/2 + row*(self._tHeight + self._tBorder) + \
++            ty = self._tBorder//2 + row*(self._tHeight + self._tBorder) + \
+                  self.GetCaptionHeight(0, row)
+             tw = self._tWidth + self._tBorder
+             th = self._tHeight + self.GetCaptionHeight(row) + self._tBorder
+@@ -1723,7 +1723,7 @@ def OnPaint(self, event):
+             self.DrawThumbnail(thmb, self._items[ii], ii)
+             dc.DrawBitmap(thmb, tx, ty)
+ 
+-        rect = wx.Rect(xwhite, self._tBorder/2,
++        rect = wx.Rect(xwhite, self._tBorder//2,
+                        self._cols*(self._tWidth + self._tBorder),
+                        self._rows*(self._tHeight + self._tBorder) + \
+                        self.GetCaptionHeight(0, self._rows))
+diff --git a/wx/lib/agw/shapedbutton.py b/wx/lib/agw/shapedbutton.py
+index f015d4e39..49523366a 100644
+--- a/wx/lib/agw/shapedbutton.py
++++ b/wx/lib/agw/shapedbutton.py
+@@ -569,9 +569,9 @@ def DrawMainButton(self, dc, width, height):
+                 rect2 = w*main//secondary
+ 
+             if self._isup:
+-                img = self._mainbuttonup.Scale(rect2, rect3)
++                img = self._mainbuttonup.Scale(int(rect2), int(rect3))
+             else:
+-                img = self._mainbuttondown.Scale(rect2, rect3)
++                img = self._mainbuttondown.Scale(int(rect2), int(rect3))
+ 
+         bmp = img.ConvertToBitmap()
+ 
+@@ -599,7 +599,7 @@ def DrawMainButton(self, dc, width, height):
+                     ypos = 0
+ 
+         # Draw Finally The Bitmap
+-        dc.DrawBitmap(bmp, xpos, ypos, True)
++        dc.DrawBitmap(bmp, int(xpos), int(ypos), True)
+ 
+         # Store Bitmap Position And Size To Draw An Elliptical Focus Indicator
+         self._xpos = xpos
+@@ -646,7 +646,7 @@ def DrawLabel(self, dc, width, height, dw=0, dh=0):
+             xp = xc - (tw//2)* cos(angle) - (th//2)*sin(angle)
+             yp = yc + (tw//2)*sin(angle) - (th//2)*cos(angle)
+ 
+-            dc.DrawRotatedText(label, xp + dw, yp + dh , angle*180/pi)
++            dc.DrawRotatedText(label, int(xp + dw), int(yp + dh), angle*180/pi)
+ 
+ 
+     def DrawFocusIndicator(self, dc, width, height):
+@@ -676,7 +676,7 @@ def DrawFocusIndicator(self, dc, width, height):
+         else:
+             # This Is An Ellipse
+             if hasattr(self, "_xpos"):
+-                dc.DrawEllipse(self._xpos + 2, self._ypos + 2, self._imgx - 4, self._imgy - 4)
++                dc.DrawEllipse(int(self._xpos + 2), int(self._ypos + 2), self._imgx - 4, self._imgy - 4)
+ 
+         dc.SetLogicalFunction(wx.COPY)
+ 
+diff --git a/wx/lib/agw/speedmeter.py b/wx/lib/agw/speedmeter.py
+index f196b51f2..606901d27 100644
+--- a/wx/lib/agw/speedmeter.py
++++ b/wx/lib/agw/speedmeter.py
+@@ -580,8 +580,8 @@ def Draw(self, dc):
+         dc.SetBackground(wx.Brush(speedbackground))
+         dc.Clear()
+ 
+-        centerX = self.faceBitmap.GetWidth()/2
+-        centerY = self.faceBitmap.GetHeight()/2
++        centerX = self.faceBitmap.GetWidth()//2
++        centerY = self.faceBitmap.GetHeight()//2
+ 
+         self.CenterX = centerX
+         self.CenterY = centerY
+@@ -681,7 +681,7 @@ def Draw(self, dc):
+             # Draw The Filler (Both In "Advance" And "Reverse" Directions)
+ 
+             dc.SetBrush(wx.Brush(fillercolour))
+-            dc.DrawArc(xs2, ys2, xe2, ye2, centerX, centerY)
++            dc.DrawArc(xs2, ys2, xe2, ye2, int(centerX), int(centerY))
+ 
+             if self._agwStyle & SM_DRAW_SECTORS == 0:
+                 dc.SetBrush(wx.Brush(speedbackground))
+@@ -952,7 +952,7 @@ def Draw(self, dc):
+                     y = y - height/2.0 - height*sin(angis)/2.0
+                     fancytext.RenderToDC(fancystr, dc, x, y)
+                 else:
+-                    dc.DrawText(strings, x, y)
++                    dc.DrawText(strings, int(x), int(y))
+ 
+             # This Is The Small Rectangle --> Tick Mark
+             rectangle = colourangles[ii] + pi/2.0
+@@ -969,6 +969,7 @@ def Draw(self, dc):
+             y4 = y3 + 3*self.scale*sinrect
+ 
+             points = [(x1, y1), (x2, y2), (x4, y4), (x3, y3)]
++            points = [(int(p[0]), int(p[1])) for p in points]
+ 
+             dc.DrawPolygon(points)
+ 
+@@ -1003,6 +1004,7 @@ def Draw(self, dc):
+                         y4 = y3 + self.scale*sinrect
+ 
+                         points = [(x1, y1), (x2, y2), (x4, y4), (x3, y3)]
++                        points = [(int(p[0]), int(p[1])) for p in points]
+ 
+                         dc.DrawPolygon(points)
+ 
+@@ -1017,7 +1019,7 @@ def Draw(self, dc):
+         dc.SetBrush(wx.TRANSPARENT_BRUSH)
+ 
+         if self._drawarc:
+-            dc.SetPen(wx.Pen(self.GetArcColour(), 2.0))
++            dc.SetPen(wx.Pen(self.GetArcColour(), 2))
+             # If It's Not A Complete Circle, Draw The Connecting Lines And The Arc
+             if abs(abs(startangle - endangle) - 2*pi) > 1.0/180.0:
+                 dc.DrawArc(xstart, ystart, xend, yend, centerX, centerY)
+@@ -1046,7 +1048,7 @@ def Draw(self, dc):
+             newx = centerX + 1.5*mw*cos(middleangle) - mw/2.0
+             newy = centerY - 1.5*mh*sin(middleangle) - mh/2.0
+             dc.SetTextForeground(middlecolour)
+-            dc.DrawText(middletext, newx, newy)
++            dc.DrawText(middletext, int(newx), int(newy))
+ 
+         # Here We Draw The Icon In The Middle, Near The Start Of The Arrow (If Present)
+         # This Is Like The "Fuel" Icon In The Cars
+@@ -1054,8 +1056,8 @@ def Draw(self, dc):
+ 
+             middleicon = self.GetMiddleIcon()
+             middlewidth, middleheight = self.GetMiddleIconDimens()
+-            middleicon.SetWidth(middlewidth*self.scale)
+-            middleicon.SetHeight(middleheight*self.scale)
++            middleicon.SetWidth(int(middlewidth*self.scale))
++            middleicon.SetHeight(int(middleheight*self.scale))
+             middleangle = (startangle + endangle)/2.0
+ 
+             mw = middleicon.GetWidth()
+@@ -1064,7 +1066,7 @@ def Draw(self, dc):
+             newx = centerX + 1.5*mw*cos(middleangle) - mw/2.0
+             newy = centerY - 1.5*mh*sin(middleangle) - mh/2.0
+ 
+-            dc.DrawIcon(middleicon, newx, newy)
++            dc.DrawIcon(middleicon, int(newx), int(newy))
+ 
+             # Restore Icon Dimension, If Not Something Strange Happens
+             middleicon.SetWidth(middlewidth)
+@@ -1109,53 +1111,61 @@ def Draw(self, dc):
+                 if handstyle == "Arrow":
+                     # Draw The Shadow
+                     shadowcolour = self.GetShadowColour()
+-                    dc.SetPen(wx.Pen(shadowcolour, 5*log(self.scale+1)))
++                    dc.SetPen(wx.Pen(shadowcolour, int(5*log(self.scale+1))))
+                     dc.SetBrush(wx.Brush(shadowcolour))
+                     shadowdistance = 2.0*self.scale
+-                    dc.DrawLine(newx + shadowdistance, newy + shadowdistance,
+-                                xarr + shadowdistance, yarr + shadowdistance)
+-
+-                    dc.DrawPolygon([(x1+shadowdistance, y1+shadowdistance),
+-                                    (x2+shadowdistance, y2+shadowdistance),
+-                                    (x3+shadowdistance, y3+shadowdistance)])
++                    dc.DrawLine(int(newx + shadowdistance), int(newy + shadowdistance),
++                                int(xarr + shadowdistance), int(yarr + shadowdistance))
++
++                    points = [(x1+shadowdistance, y1+shadowdistance),
++                              (x2+shadowdistance, y2+shadowdistance),
++                              (x3+shadowdistance, y3+shadowdistance)]
++                    points = [(int(p[0]), int(p[1])) for p in points]
++                    dc.DrawPolygon(points)
+                 else:
+                     # Draw The Shadow
+                     shadowcolour = self.GetShadowColour()
+                     dc.SetBrush(wx.Brush(shadowcolour))
+-                    dc.SetPen(wx.Pen(shadowcolour, 1.0))
++                    dc.SetPen(wx.Pen(shadowcolour, 1))
+                     shadowdistance = 1.5*self.scale
+ 
+-                    dc.DrawPolygon([(x1+shadowdistance, y1+shadowdistance),
+-                                    (x2+shadowdistance, y2+shadowdistance),
+-                                    (x3+shadowdistance, y3+shadowdistance),
+-                                    (x4+shadowdistance, y4+shadowdistance)])
++                    points = [(x1+shadowdistance, y1+shadowdistance),
++                              (x2+shadowdistance, y2+shadowdistance),
++                              (x3+shadowdistance, y3+shadowdistance),
++                              (x4+shadowdistance, y4+shadowdistance)]
++                    points = [(int(p[0]), int(p[1])) for p in points]
++                    dc.DrawPolygon(points)
+ 
+             if handstyle == "Arrow":
+ 
+-                dc.SetPen(wx.Pen(handcolour, 1.5))
++                dc.SetPen(wx.Pen(handcolour, 1))
+ 
+                 # Draw The Small Circle In The Center --> The Hand "Holder"
+                 dc.SetBrush(wx.Brush(speedbackground))
+-                dc.DrawCircle(centerX, centerY, 4*self.scale)
++                dc.DrawCircle(centerX, centerY, int(4*self.scale))
+ 
+-                dc.SetPen(wx.Pen(handcolour, 5*log(self.scale+1)))
++                dc.SetPen(wx.Pen(handcolour, int(5*log(self.scale+1))))
+                 # Draw The "Hand", An Arrow
+-                dc.DrawLine(newx, newy, xarr, yarr)
++                dc.DrawLine(int(newx), int(newy), int(xarr), int(yarr))
+ 
+                 # Draw The Arrow Pointer
+                 dc.SetBrush(wx.Brush(handcolour))
+-                dc.DrawPolygon([(x1, y1), (x2, y2), (x3, y3)])
++                points = [(x1, y1), (x2, y2), (x3, y3)]
++                points = [(int(p[0]), int(p[1])) for p in points]
++                dc.DrawPolygon(points)
+ 
+             else:
+ 
+                 # Draw The Hand Pointer
+-                dc.SetPen(wx.Pen(handcolour, 1.5))
++                dc.SetPen(wx.Pen(handcolour, 1))
+                 dc.SetBrush(wx.Brush(handcolour))
+-                dc.DrawPolygon([(x1, y1), (x2, y2), (x3, y3), (x4, y4)])
++                points = [(x1, y1), (x2, y2), (x3, y3), (x4, y4)]
++                points = [(int(p[0]), int(p[1])) for p in points]
++                dc.DrawPolygon(points)
+ 
+                 # Draw The Small Circle In The Center --> The Hand "Holder"
+                 dc.SetBrush(wx.Brush(speedbackground))
+-                dc.DrawCircle(centerX, centerY, 4*self.scale)
++                dc.DrawCircle(centerX, centerY, int(4*self.scale))
+ 
+ 
+     def SetIntervals(self, intervals=None):
+@@ -1527,7 +1537,7 @@ def SetMiddleTextFont(self, font=None):
+ 
+         if font is None:
+             self._middletextfont = wx.Font(1, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False)
+-            self._middletextsize = 10.0
++            self._middletextsize = 10
+             self._middletextfont.SetPointSize(self._middletextsize)
+         else:
+             self._middletextfont = font
+@@ -1599,7 +1609,7 @@ def CircleCoords(self, radius, angle, centerX, centerY):
+         x = radius*cos(angle) + centerX
+         y = radius*sin(angle) + centerY
+ 
+-        return x, y
++        return int(x), int(y)
+ 
+ 
+     def GetIntersection(self, current, intervals):
+diff --git a/wx/lib/agw/supertooltip.py b/wx/lib/agw/supertooltip.py
+index a92ce10d1..cd0f0c9f7 100644
+--- a/wx/lib/agw/supertooltip.py
++++ b/wx/lib/agw/supertooltip.py
+@@ -295,8 +295,8 @@ def OnPaint(self, event):
+ 
+         # Get the user options for header, bitmaps etc...
+         drawHeader, drawFooter = classParent.GetDrawHeaderLine(), classParent.GetDrawFooterLine()
+-        topRect = wx.Rect(frameRect.x, frameRect.y, frameRect.width, frameRect.height/2)
+-        bottomRect = wx.Rect(frameRect.x, frameRect.y+frameRect.height/2, frameRect.width, frameRect.height/2+1)
++        topRect = wx.Rect(frameRect.x, frameRect.y, frameRect.width, frameRect.height//2)
++        bottomRect = wx.Rect(frameRect.x, frameRect.y+frameRect.height//2, frameRect.width, frameRect.height//2+1)
+         # Fill the triple-gradient
+         dc.GradientFillLinear(topRect, topColour, middleColour, wx.SOUTH)
+         dc.GradientFillLinear(bottomRect, middleColour, bottomColour, wx.SOUTH)
+@@ -324,9 +324,9 @@ def OnPaint(self, event):
+         normalText = classParent.GetTextColour()
+         if header:
+             dc.SetTextForeground(normalText)
+-            dc.DrawText(header, bmpXPos+bmpWidth+self._spacing, (height-textHeight+self._spacing)/2)
++            dc.DrawText(header, bmpXPos+bmpWidth+self._spacing, (height-textHeight+self._spacing)//2)
+         if headerBmp and headerBmp.IsOk():
+-            dc.DrawBitmap(headerBmp, bmpXPos, (height-bmpHeight+self._spacing)/2, True)
++            dc.DrawBitmap(headerBmp, bmpXPos, (height-bmpHeight+self._spacing)//2, True)
+ 
+         if header or (headerBmp and headerBmp.IsOk()):
+             yPos += height
+@@ -376,7 +376,7 @@ def OnPaint(self, event):
+                 messageHeight += textHeight
+ 
+                 xText = (bmpWidth + 2 * self._spacing) if bmpWidth > 0 else self._spacing
+-                yText += textHeight/2+self._spacing
++                yText += textHeight//2+self._spacing
+                 maxWidth = max(xText + textWidth + self._spacing, maxWidth)
+                 dc.DrawText(line, xText, yText)
+                 if isLink:
+@@ -412,8 +412,8 @@ def OnPaint(self, event):
+             if drawFooter:
+                 # Draw the separator line before the footer
+                 dc.SetPen(wx.GREY_PEN)
+-                dc.DrawLine(self._spacing, yPos-self._spacing/2+toAdd,
+-                            width-self._spacing, yPos-self._spacing/2+toAdd)
++                dc.DrawLine(self._spacing, yPos-self._spacing//2+toAdd,
++                            width-self._spacing, yPos-self._spacing//2+toAdd)
+         # Draw the footer and footer bitmap (if any)
+         dc.SetTextForeground(normalText)
+         height = max(textHeight, bmpHeight)
+@@ -424,7 +424,7 @@ def OnPaint(self, event):
+             maxWidth = max(bmpXPos + bmpWidth + (self._spacing*2) + textWidth, maxWidth)
+         if footerBmp and footerBmp.IsOk():
+             toAdd = (height - bmpHeight + self._spacing) / 2
+-            dc.DrawBitmap(footerBmp, bmpXPos, yPos + toAdd, True)
++            dc.DrawBitmap(footerBmp, bmpXPos, int(yPos + toAdd), True)
+             maxWidth = max(footerBmp.GetSize().GetWidth() + bmpXPos, maxWidth)
+ 
+         maxHeight = yPos + height + toAdd
+@@ -815,7 +815,7 @@ def SetStartDelay(self, delay=1):
+         :param `delay`: the delay in seconds.
+         """
+ 
+-        self._startDelayTime = float(delay)
++        self._startDelayTime = int(delay)
+ 
+ 
+     def GetStartDelay(self):
+@@ -831,7 +831,7 @@ def SetEndDelay(self, delay=1e6):
+         :param `delay`: the delay in seconds.
+         """
+ 
+-        self._endDelayTime = float(delay)
++        self._endDelayTime = int(delay)
+ 
+ 
+     def GetEndDelay(self):
+diff --git a/wx/lib/agw/toasterbox.py b/wx/lib/agw/toasterbox.py
+index b73429dd2..8efb5869b 100644
+--- a/wx/lib/agw/toasterbox.py
++++ b/wx/lib/agw/toasterbox.py
+@@ -1316,11 +1316,11 @@ def _getTextCoords(self, dc):
+         for line in lines:
+             w, h = dc.GetTextExtent(line)
+             fh += h + textPadding
+-        y = (th - fh) / 2; coords = []
++        y = (th - fh) // 2; coords = []
+ 
+         for line in lines:
+             w, h = dc.GetTextExtent(line)
+-            x = (tw - w) / 2
++            x = (tw - w) // 2
+             coords.append((x, y))
+             y += h + textPadding
+ 
+diff --git a/wx/lib/agw/ultimatelistctrl.py b/wx/lib/agw/ultimatelistctrl.py
+index 14fc41f86..caa5e5cf4 100644
+--- a/wx/lib/agw/ultimatelistctrl.py
++++ b/wx/lib/agw/ultimatelistctrl.py
+@@ -914,7 +914,7 @@ def Draw(self, index, dc, x, y, flags, solidBackground=True):
+             raise Exception("Wrong index in image list")
+ 
+         bmp = self._images[index]
+-        dc.DrawBitmap(bmp, x, y, (flags & wx.IMAGELIST_DRAW_TRANSPARENT) > 0)
++        dc.DrawBitmap(bmp, x, int(y), (flags & wx.IMAGELIST_DRAW_TRANSPARENT) > 0)
+ 
+         return True
+ 
+@@ -4022,7 +4022,7 @@ def SetPosition(self, x, y, spacing):
+ 
+             if item.HasImage():
+ 
+-                self._gi._rectIcon.x = self._gi._rectAll.x + 4 + (self._gi._rectAll.width - self._gi._rectIcon.width)/2
++                self._gi._rectIcon.x = self._gi._rectAll.x + 4 + (self._gi._rectAll.width - self._gi._rectIcon.width)//2
+                 self._gi._rectIcon.y = self._gi._rectAll.y + 4
+ 
+             if item.HasText():
+@@ -4030,7 +4030,7 @@ def SetPosition(self, x, y, spacing):
+                 if self._gi._rectLabel.width > spacing:
+                     self._gi._rectLabel.x = self._gi._rectAll.x + 2
+                 else:
+-                    self._gi._rectLabel.x = self._gi._rectAll.x + 2 + (spacing/2) - (self._gi._rectLabel.width/2)
++                    self._gi._rectLabel.x = self._gi._rectAll.x + 2 + (spacing//2) - (self._gi._rectLabel.width//2)
+ 
+                 self._gi._rectLabel.y = self._gi._rectAll.y + self._gi._rectAll.height + 2 - self._gi._rectLabel.height
+                 self._gi._rectHighlight.x = self._gi._rectLabel.x - 2
+@@ -4546,7 +4546,7 @@ def DrawInReportMode(self, dc, line, rect, rectHL, highlighted, current, enabled
+                 # We got a checkbox-type item
+                 ix, iy = self._owner.GetCheckboxImageSize()
+                 checked = item.IsChecked()
+-                self._owner.DrawCheckbox(dc, xOld, y + (height-iy+1)/2, item.GetKind(), checked, enabled)
++                self._owner.DrawCheckbox(dc, xOld, y + (height-iy+1)//2, item.GetKind(), checked, enabled)
+                 xOld += ix
+                 width -= ix
+ 
+@@ -4557,7 +4557,7 @@ def DrawInReportMode(self, dc, line, rect, rectHL, highlighted, current, enabled
+                 for img in images:
+ 
+                     ix, iy = self._owner.GetImageSize([img])
+-                    self._owner.DrawImage(img, dc, xOld, y + (height-iy)/2, enabled)
++                    self._owner.DrawImage(img, dc, xOld, y + (height-iy)//2, enabled)
+ 
+                     xOld += ix
+                     width -= ix
+@@ -5230,7 +5230,7 @@ def OnPaint(self, event):
+                 # We got a checkbox-type item
+                 ix, iy = self._owner.GetCheckboxImageSize()
+                 # We draw it on the left, always
+-                self._owner.DrawCheckbox(dc, x + HEADER_OFFSET_X, HEADER_OFFSET_Y + (h - 4 - iy)/2, kind, checked, enabled)
++                self._owner.DrawCheckbox(dc, x + HEADER_OFFSET_X, HEADER_OFFSET_Y + (h - 4 - iy)//2, kind, checked, enabled)
+                 wcheck += ix + HEADER_IMAGE_MARGIN_IN_REPORT_MODE
+                 cw -= ix + HEADER_IMAGE_MARGIN_IN_REPORT_MODE
+ 
+@@ -6819,7 +6819,7 @@ def HitTestLine(self, line, x, y):
+                     # We got a checkbox-type item
+                     ix, iy = self.GetCheckboxImageSize()
+                     LH = self.GetLineHeight(line)
+-                    rect = wx.Rect(xOld, lineY + LH/2 - iy/2, ix, iy)
++                    rect = wx.Rect(xOld, lineY + LH//2 - iy//2, ix, iy)
+                     if rect.Contains((x, y)):
+                         newItem = self.GetParent().GetItem(line, col)
+                         return newItem, ULC_HITTEST_ONITEMCHECK
+@@ -7937,13 +7937,13 @@ def MoveToItem(self, item):
+                     while start_y > view_y:
+                         start_y -= SCROLL_UNIT_Y
+ 
+-                    self.Scroll(-1, start_y/SCROLL_UNIT_Y)
++                    self.Scroll(-1, start_y//SCROLL_UNIT_Y)
+ 
+                 if start_y + height > view_y + client_h:
+                     while start_y + height < view_y + client_h:
+                         start_y += SCROLL_UNIT_Y
+ 
+-                    self.Scroll(-1, (start_y+height-client_h+SCROLL_UNIT_Y)/SCROLL_UNIT_Y)
++                    self.Scroll(-1, (start_y+height-client_h+SCROLL_UNIT_Y)//SCROLL_UNIT_Y)
+ 
+         else: # !report
+ 
+@@ -7960,7 +7960,7 @@ def MoveToItem(self, item):
+             if rect.y + rect.height - 5 > view_y + client_h:
+                 sy = (rect.y + rect.height - client_h + hLine)/hLine
+ 
+-            self.Scroll(sx, sy)
++            self.Scroll(int(sx), int(sy))
+ 
+ 
+ # ----------------------------------------------------------------------------
+diff --git a/wx/lib/agw/xlsgrid.py b/wx/lib/agw/xlsgrid.py
+index b505aebb4..17267fabc 100644
+--- a/wx/lib/agw/xlsgrid.py
++++ b/wx/lib/agw/xlsgrid.py
+@@ -965,7 +965,7 @@ def Draw(self, dc, rect):
+             xp = xc - (text_width/2)*xshift - (text_height/2)*yshift
+             yp = yc + (text_width/2)*yshift - (text_height/2)*xshift
+ 
+-            dc.DrawRotatedText(value, xp, yp, self.rotation)
++            dc.DrawRotatedText(value, int(xp), int(yp), self.rotation)
+ 
+         else:
+ 
+@@ -1125,7 +1125,7 @@ def Draw(self, dc, rect):
+             if font.escapement == 1:
+                 ypos = ypos - maxH + height
+ 
+-            dc.DrawText(chunk, start, ypos)
++            dc.DrawText(chunk, start, int(ypos))
+             start += width
+ 
+ 
+diff --git a/wx/lib/agw/zoombar.py b/wx/lib/agw/zoombar.py
+index 1e6ec5da3..8c2afd058 100644
+--- a/wx/lib/agw/zoombar.py
++++ b/wx/lib/agw/zoombar.py
+@@ -463,7 +463,7 @@ def SetSize(self, width, height):
+     def GetPosition(self):
+         """ Returns the button position. """
+ 
+-        return wx.Point(self._left, self._top)
++        return wx.Point(int(self._left), int(self._top))
+ 
+ 
+     def GetSize(self):
+@@ -601,7 +601,7 @@ def __init__(self, bitmap=None):
+     def GetPosition(self):
+         """ Returns the position of :class:`wx.ImageBar`, as a :class:`wx.Point`. """
+ 
+-        return wx.Point(self._left, self._top)
++        return wx.Point(int(self._left), int(self._top))
+ 
+ 
+     def GetSize(self):
+@@ -660,7 +660,7 @@ def SetBarColour(self, colour, xSize=None, ySize=None):
+         if xSize is not None:
+             self._size = wx.Size(xSize, ySize)
+ 
+-        bitmap.Rescale(self._size.width, self._size.height/2)
++        bitmap.Rescale(self._size.width, self._size.height//2)
+ 
+         r1, g1, b1 = self._startColour.Red(), self._startColour.Green(), self._startColour.Blue()
+         r2, g2, b2 = colour.Red(), colour.Green(), colour.Blue()
+@@ -1065,7 +1065,7 @@ def ResetSize(self):
+             ySize += yextent
+ 
+         if self._showReflections:
+-            ySize += self._buttonSize/2
++            ySize += self._buttonSize//2
+         if self._centerZoom:
+             ySize += self._buttonSize
+ 
+@@ -1240,7 +1240,7 @@ def DrawLabels(self, dc):
+             textWidth, textHeight = dc.GetTextExtent(label)
+             buttonPos = button.GetPosition()
+             buttonSize = button.GetSize()
+-            xpos = buttonPos.x + (buttonSize.width - textWidth)/2
++            xpos = buttonPos.x + (buttonSize.width - textWidth)//2
+             ypos = buttonPos.y - textHeight - 2
+ 
+             dc.DrawRectangle(xpos-2, ypos-1, textWidth+4, textHeight+2)
+diff --git a/wx/lib/analogclock/analogclock.py b/wx/lib/analogclock/analogclock.py
+index 7c4b18979..1ee1d6742 100644
+--- a/wx/lib/analogclock/analogclock.py
++++ b/wx/lib/analogclock/analogclock.py
+@@ -173,7 +173,7 @@ def _recalcCoords(self, size):
+         scale = min([float(size.width) / self.basesize.width,
+                      float(size.height) / self.basesize.height])
+ 
+-        centre = wx.Point(size.width / 2., size.height / 2.)
++        centre = wx.Point(size.width // 2, size.height // 2)
+ 
+         self.Box.RecalcCoords(size, centre, scale)
+         self.Hands.RecalcCoords(size, centre, scale)
+diff --git a/wx/lib/analogclock/helpers.py b/wx/lib/analogclock/helpers.py
+index 88d198bee..9674de912 100644
+--- a/wx/lib/analogclock/helpers.py
++++ b/wx/lib/analogclock/helpers.py
+@@ -37,7 +37,7 @@ def __init__(self, idx=0, pos=None, size=None, offset=0, clocksize=None,
+ 
+ 
+     def _pol2rect(self, m, t):
+-        return m * math.cos(math.radians(t)), m * math.sin(math.radians(t))
++        return int(m * math.cos(math.radians(t))), int(m * math.sin(math.radians(t)))
+ 
+ 
+     def _rect2pol(self, x, y):
+@@ -174,7 +174,7 @@ def __init__(self, **kwargs):
+ 
+     def Draw(self, dc):
+         self.dyer.Select(dc)
+-        dc.DrawCircle(self.pos.x, self.pos.y, self.radius)
++        dc.DrawCircle(self.pos.x, self.pos.y, int(self.radius))
+ 
+ 
+     def RecalcCoords(self, clocksize, centre, scale):
+@@ -205,7 +205,7 @@ def Draw(self, dc, end, offset=0):
+             m, t = self._rect2pol(x, y)
+             polygon[i] = self._pol2rect(m, t - angle)
+ 
+-        dc.DrawPolygon(polygon, centre.x + offset, centre.y + offset)
++        dc.DrawPolygon(polygon, int(centre.x + offset), int(centre.y + offset))
+ 
+ 
+     def RecalcCoords(self, clocksize, centre, scale):
+@@ -226,7 +226,7 @@ def Draw(self, dc, offset=0):
+         x = self.pos.x - width / 2.
+         y = self.pos.y - height / 2.
+ 
+-        dc.DrawRectangle(x + offset, y + offset, width, height)
++        dc.DrawRectangle(int(x + offset), int(y + offset), int(width), int(height))
+ 
+ #----------------------------------------------------------------------
+ 
+@@ -242,7 +242,7 @@ def Draw(self, dc, offset=0):
+         x = self.pos.x
+         y = self.pos.y
+ 
+-        dc.DrawCircle(x + offset, y + offset, radius)
++        dc.DrawCircle(int(x + offset), int(y + offset), int(radius))
+ 
+ #----------------------------------------------------------------------
+ 
+@@ -273,7 +273,7 @@ def DrawStraight(self, dc, offset=0):
+         x = self.pos.x - width / 2.
+         y = self.pos.y - height / 2.
+ 
+-        dc.DrawPolygon(polygon, x + offset, y + offset)
++        dc.DrawPolygon(polygon, int(x + offset), int(y + offset))
+ 
+ 
+     def DrawRotated(self, dc, offset=0):
+@@ -290,7 +290,7 @@ def DrawRotated(self, dc, offset=0):
+         x = self.pos.x - math.cos(r) * width / 2. - math.sin(r) * height / 2.
+         y = self.pos.y - math.cos(r) * height / 2. + math.sin(r) * width / 2.
+ 
+-        dc.DrawPolygon(polygon, x + offset, y + offset)
++        dc.DrawPolygon(polygon, int(x + offset), int(y + offset))
+ 
+ #----------------------------------------------------------------------
+ 
+@@ -309,7 +309,7 @@ def DrawStraight(self, dc, offset=0):
+         x = self.pos.x - width / 2.
+         y = self.pos.y - height / 2.
+ 
+-        dc.DrawText(self.text, x + offset, y + offset)
++        dc.DrawText(self.text, int(x + offset), int(y + offset))
+ 
+ 
+     def DrawRotated(self, dc, offset=0):
+@@ -321,7 +321,7 @@ def DrawRotated(self, dc, offset=0):
+         x = self.pos.x - math.cos(r) * width / 2. - math.sin(r) * height / 2.
+         y = self.pos.y - math.cos(r) * height / 2. + math.sin(r) * width / 2.
+ 
+-        dc.DrawRotatedText(self.text, x + offset, y + offset, angle)
++        dc.DrawRotatedText(self.text, int(x + offset), int(y + offset), int(angle))
+ 
+ 
+ #----------------------------------------------------------------------
+@@ -656,7 +656,7 @@ def RecalcCoords(self, clocksize, centre, scale):
+ 
+         # Try to find a 'good' max size for text-based ticks.
+         if a_tick.text is not None:
+-            self.font.SetPointSize(size)
++            self.font.SetPointSize(int(size))
+             dc = wx.MemoryDC()
+             dc.SelectObject(wx.Bitmap(*clocksize.Get()))
+             dc.SetFont(self.font)
+@@ -686,7 +686,7 @@ def RecalcCoords(self, clocksize, centre, scale):
+             x = centre.x + radius * math.sin(angle)
+             y = centre.y + radius * math.cos(angle)
+ 
+-            tick.SetPosition(wx.Point(x, y))
++            tick.SetPosition(wx.Point(int(x), int(y)))
+ 
+ 
+     def GetSize(self):
+diff --git a/wx/lib/analogclock/setup.py b/wx/lib/analogclock/setup.py
+index a83c8639d..a7dffb901 100644
+--- a/wx/lib/analogclock/setup.py
++++ b/wx/lib/analogclock/setup.py
+@@ -179,7 +179,7 @@ def __init__(self, parent, title, group="Hands"):
+         p.SetCustomColours(self.customcolours)
+         sizer.Add(p, pos=(0, 1), flag=wx.ALIGN_CENTRE_VERTICAL)
+ 
+-        p = self.bw = wx.SpinCtrl(self, size=(75, 21),
++        p = self.bw = wx.SpinCtrl(self,
+                                   min=0, max=100, value="75")
+         sizer.Add(p, pos=(0, 2), span=(1, 2), flag=wx.ALIGN_CENTRE_VERTICAL)
+ 
+@@ -193,7 +193,7 @@ def __init__(self, parent, title, group="Hands"):
+         p = self.ls = wx.StaticText(self, label="Size:")
+         sizer.Add(p, pos=(2, 0), flag=wx.ALIGN_CENTRE_VERTICAL)
+ 
+-        p = self.sz = wx.SpinCtrl(self, size=(75, 21),
++        p = self.sz = wx.SpinCtrl(self,
+                                   min=0, max=100, value="75")
+         sizer.Add(p, pos=(2, 1), span=(1, 3), flag=wx.ALIGN_CENTRE_VERTICAL)
+ 
+@@ -212,7 +212,7 @@ def __init__(self, parent, title, group="Ticks"):
+         p = wx.StaticText(self, label="Offset:")
+         sizer.Add(p, pos=(3, 0), flag=wx.ALIGN_CENTRE_VERTICAL)
+ 
+-        p = self.of = wx.SpinCtrl(self, size=(75, 21),
++        p = self.of = wx.SpinCtrl(self,
+                                   min=0, max=100, value="75")
+         sizer.Add(p, pos=(3, 1), span=(1, 3), flag=wx.ALIGN_CENTRE_VERTICAL)
+ 
+diff --git a/wx/lib/buttons.py b/wx/lib/buttons.py
+index 46d1b8747..f01a54d41 100644
+--- a/wx/lib/buttons.py
++++ b/wx/lib/buttons.py
+@@ -453,7 +453,7 @@ def DrawLabel(self, dc, width, height, dx=0, dy=0):
+         tw, th = dc.GetTextExtent(label)
+         if not self.up:
+             dx = dy = self.labelDelta
+-        dc.DrawText(label, (width-tw)/2+dx, (height-th)/2+dy)
++        dc.DrawText(label, (width-tw)//2+dx, (height-th)//2+dy)
+ 
+ 
+     def DrawFocusIndicator(self, dc, w, h):
+@@ -844,7 +844,7 @@ def DrawLabel(self, dc, width, height, dx=0, dy=0):
+         if not self.up:
+             dx = dy = self.labelDelta
+         hasMask = bmp.GetMask() is not None
+-        dc.DrawBitmap(bmp, (width-bw)/2+dx, (height-bh)/2+dy, hasMask)
++        dc.DrawBitmap(bmp, (width-bw)//2+dx, (height-bh)//2+dy, hasMask)
+ 
+ 
+ #----------------------------------------------------------------------
+@@ -926,12 +926,12 @@ def DrawLabel(self, dc, width, height, dx=0, dy=0):
+         if not self.up:
+             dx = dy = self.labelDelta
+ 
+-        pos_x = (width-bw-tw)/2+dx      # adjust for bitmap and text to centre
++        pos_x = (width-bw-tw)//2+dx      # adjust for bitmap and text to centre
+         if bmp is not None:
+-            dc.DrawBitmap(bmp, pos_x, (height-bh)/2+dy, hasMask) # draw bitmap if available
++            dc.DrawBitmap(bmp, pos_x, (height-bh)//2+dy, hasMask) # draw bitmap if available
+             pos_x = pos_x + 2   # extra spacing from bitmap
+ 
+-        dc.DrawText(label, pos_x + dx+bw, (height-th)/2+dy)      # draw the text
++        dc.DrawText(label, pos_x + dx+bw, (height-th)//2+dy)      # draw the text
+ 
+ 
+ #----------------------------------------------------------------------
+diff --git a/wx/lib/colourchooser/pycolourchooser.py b/wx/lib/colourchooser/pycolourchooser.py
+index 61dbc02d2..124376483 100644
+--- a/wx/lib/colourchooser/pycolourchooser.py
++++ b/wx/lib/colourchooser/pycolourchooser.py
+@@ -188,7 +188,7 @@ def __init__(self, parent, id):
+         self.colour_slider.Bind(wx.EVT_MOTION, self.onSliderMotion)
+         self.slider = wx.Slider(
+                         self, self.idSCROLL, 86, 0, self.colour_slider.HEIGHT - 1,
+-                        style=wx.SL_VERTICAL, size=(15, self.colour_slider.HEIGHT)
++                        style=wx.SL_VERTICAL, size=(-1, self.colour_slider.HEIGHT)
+                         )
+ 
+         self.Bind(wx.EVT_COMMAND_SCROLL, self.onScroll, self.slider)
+@@ -338,7 +338,7 @@ def setSliderToV(self, v):
+         min = self.slider.GetMin()
+         max = self.slider.GetMax()
+         val = (1 - v) * max
+-        self.slider.SetValue(val)
++        self.slider.SetValue(int(val))
+ 
+     def getVFromSlider(self):
+         """Get the current value of "V" from the v slider."""
+diff --git a/wx/lib/colourchooser/pypalette.py b/wx/lib/colourchooser/pypalette.py
+index ff1fb840c..71b9fc2df 100644
+--- a/wx/lib/colourchooser/pypalette.py
++++ b/wx/lib/colourchooser/pypalette.py
+@@ -165,7 +165,7 @@ def DrawBuffer(self):
+         if self.point:
+             self.buffer.SetPen(wx.BLACK_PEN)
+             self.buffer.SetBrush(wx.TRANSPARENT_BRUSH)
+-            self.buffer.DrawCircle(self.point[0], self.point[1], 3)
++            self.buffer.DrawCircle(int(self.point[0]), int(self.point[1]), 3)
+ 
+     def HighlightPoint(self, x, y):
+         """Highlights an area of the palette with a little circle around
+diff --git a/wx/lib/floatcanvas/FCObjects.py b/wx/lib/floatcanvas/FCObjects.py
+index 58becd38c..cdf8cc53e 100644
+--- a/wx/lib/floatcanvas/FCObjects.py
++++ b/wx/lib/floatcanvas/FCObjects.py
+@@ -296,7 +296,7 @@ def SetPen(self, LineColor, LineStyle, LineWidth):
+         else:
+             self.Pen = self.PenList.setdefault(
+                 (LineColor, LineStyle, LineWidth),
+-                wx.Pen(LineColor, LineWidth, self.LineStyleList[LineStyle]))
++                wx.Pen(LineColor, int(LineWidth), self.LineStyleList[LineStyle]))
+ 
+     def SetHitBrush(self, HitColor):
+         """
+@@ -1202,14 +1202,14 @@ def _Draw(self, dc , WorldToPixel, ScaleWorldToPixel, HTdc=None):
+             x = xc - Size/2.0
+             y = yc - Size/2.0
+             dc.SetBrush(self.Brush)
+-            dc.DrawRectangle(x, y, Size, Size)
++            dc.DrawRectangle(int(x), int(y), Size, Size)
+         if HTdc and self.HitAble:
+             HTdc.SetPen(self.HitPen)
+             if self.Size <= 1:
+                 HTdc.DrawPoint(xc, xc)
+             else:
+                 HTdc.SetBrush(self.HitBrush)
+-                HTdc.DrawRectangle(x, y, Size, Size)
++                HTdc.DrawRectangle(int(x), int(y), Size, Size)
+ 
+ class RectEllipse(XYObjectMixin, LineAndFillMixin, DrawObject):
+     """A RectEllipse draw object."""
+@@ -2161,7 +2161,7 @@ def _Draw(self, dc , WorldToPixel, ScaleWorldToPixel, HTdc=None):
+         W = H * (self.bmpWidth / self.bmpHeight)
+         if (self.ScaledBitmap is None) or (H != self.ScaledHeight) :
+             self.ScaledHeight = H
+-            Img = self.Image.Scale(W, H)
++            Img = self.Image.Scale(int(W), int(H))
+             self.ScaledBitmap = wx.Bitmap(Img)
+ 
+         XY = self.ShiftFun(XY[0], XY[1], W, H)
+diff --git a/wx/lib/gizmos/ledctrl.py b/wx/lib/gizmos/ledctrl.py
+index f185d5105..7f4d3fcf9 100644
+--- a/wx/lib/gizmos/ledctrl.py
++++ b/wx/lib/gizmos/ledctrl.py
+@@ -293,7 +293,7 @@ def _drawDigit(self, dc, digit, column):
+ 
+         if digit & c.COLON:
+             dc.SetBrush(wx.Brush(lineColor))
+-            centerX = XPos + (self.m_lineLength + self.m_digitMargin) / 2
+-            radius = self.m_lineWidth / 2
+-            dc.DrawCircle(centerX, (self.m_lineLength + (self.m_lineMargin * 4)) / 2, radius)
+-            dc.DrawCircle(centerX, (self.m_lineLength * 2 + (self.m_lineMargin * 6)) * 3 / 4, radius)
++            centerX = XPos + (self.m_lineLength + self.m_digitMargin) // 2
++            radius = self.m_lineWidth // 2
++            dc.DrawCircle(centerX, (self.m_lineLength + (self.m_lineMargin * 4)) // 2, radius)
++            dc.DrawCircle(centerX, (self.m_lineLength * 2 + (self.m_lineMargin * 6)) * 3 // 4, radius)
+diff --git a/wx/lib/imagebrowser.py b/wx/lib/imagebrowser.py
+index 795e90dca..8e14727e7 100644
+--- a/wx/lib/imagebrowser.py
++++ b/wx/lib/imagebrowser.py
+@@ -347,8 +347,8 @@ def DrawImage(self, dc):
+         owidth = int(scale*iwidth)
+         oheight = int(scale*iheight)
+ 
+-        diffx = (wwidth - owidth)/2   # center calc
+-        diffy = (wheight - oheight)/2   # center calc
++        diffx = (wwidth - owidth)//2   # center calc
++        diffy = (wheight - oheight)//2   # center calc
+ 
+         if not bmp:
+             if owidth!=iwidth or oheight!=iheight:
+diff --git a/wx/lib/ogl/basic.py b/wx/lib/ogl/basic.py
+index b08859ab9..0107f21fc 100644
+--- a/wx/lib/ogl/basic.py
++++ b/wx/lib/ogl/basic.py
+@@ -1051,7 +1051,7 @@ def OnEraseContents(self, dc):
+         dc.SetPen(self.GetBackgroundPen())
+         dc.SetBrush(self.GetBackgroundBrush())
+ 
+-        dc.DrawRectangle(topLeftX - penWidth, topLeftY - penWidth, maxX + penWidth * 2 + 4, maxY + penWidth * 2 + 4)
++        dc.DrawRectangle(int(topLeftX - penWidth), int(topLeftY - penWidth), int(maxX + penWidth * 2 + 4), int(maxY + penWidth * 2 + 4))
+ 
+     def EraseLinks(self, dc, attachment = -1, recurse = False):
+         """
+@@ -2769,9 +2769,9 @@ def OnDraw(self, dc):
+             dc.SetBrush(self._brush)
+ 
+         if self._cornerRadius:
+-            dc.DrawRoundedRectangle(x1, y1, self._width, self._height, self._cornerRadius)
++            dc.DrawRoundedRectangle(int(x1), int(y1), self._width, self._height, self._cornerRadius)
+         else:
+-            dc.DrawRectangle(x1, y1, self._width, self._height)
++            dc.DrawRectangle(int(x1), int(y1), self._width, self._height)
+ 
+     def GetBoundingBoxMin(self):
+         """Get the bounding box minimum."""
+@@ -2882,7 +2882,7 @@ def Create(self, the_points = None):
+             # Duplicate the list of points
+             self._points = []
+             for point in the_points:
+-                new_point = wx.Point(point[0], point[1])
++                new_point = wx.Point(int(point[0]), int(point[1]))
+                 self._points.append(new_point)
+             self.CalculateBoundingBox()
+             self._originalWidth = self._boundWidth
+@@ -3444,7 +3444,7 @@ def OnDraw(self, dc):
+                 dc.SetPen(self._pen)
+         if self._brush:
+             dc.SetBrush(self._brush)
+-        dc.DrawEllipse(self._xpos - self.GetWidth() / 2.0, self._ypos - self.GetHeight() / 2.0, self.GetWidth(), self.GetHeight())
++        dc.DrawEllipse(int(self._xpos - self.GetWidth() / 2.0), int(self._ypos - self.GetHeight() / 2.0), self.GetWidth(), self.GetHeight())
+ 
+     def SetSize(self, x, y, recursive = True):
+         """
+diff --git a/wx/lib/ogl/bmpshape.py b/wx/lib/ogl/bmpshape.py
+index ee2859527..e53ddb136 100644
+--- a/wx/lib/ogl/bmpshape.py
++++ b/wx/lib/ogl/bmpshape.py
+@@ -32,7 +32,7 @@ def OnDraw(self, dc):
+ 
+         x = self._xpos - self._bitmap.GetWidth() / 2.0
+         y = self._ypos - self._bitmap.GetHeight() / 2.0
+-        dc.DrawBitmap(self._bitmap, x, y, True)
++        dc.DrawBitmap(self._bitmap, int(x), int(y), True)
+ 
+     def SetSize(self, w, h, recursive = True):
+         """
+diff --git a/wx/lib/ogl/composit.py b/wx/lib/ogl/composit.py
+index c3b623952..eecaafb3f 100644
+--- a/wx/lib/ogl/composit.py
++++ b/wx/lib/ogl/composit.py
+@@ -1131,11 +1131,11 @@ def OnDraw(self, dc):
+ 
+         if self._leftSide:
+             dc.SetPen(self._leftSidePen)
+-            dc.DrawLine(x1, y2, x1, y1)
++            dc.DrawLine(int(x1), int(y2), int(x1), int(y1))
+ 
+         if self._topSide:
+             dc.SetPen(self._topSidePen)
+-            dc.DrawLine(x1, y1, x2, y1)
++            dc.DrawLine(int(x1), int(y1), int(x2), int(y1))
+ 
+         # For testing purposes, draw a rectangle so we know
+         # how big the division is.
+diff --git a/wx/lib/ogl/divided.py b/wx/lib/ogl/divided.py
+index 0bfb1919f..0809be58c 100644
+--- a/wx/lib/ogl/divided.py
++++ b/wx/lib/ogl/divided.py
+@@ -231,7 +231,7 @@ def OnDrawContents(self, dc):
+                 regionPen = region.GetActualPen()
+                 if regionPen:
+                     dc.SetPen(regionPen)
+-                    dc.DrawLine(leftX, y, rightX, y)
++                    dc.DrawLine(int(leftX), int(y), int(rightX), int(y))
+ 
+             currentY = actualY
+ 
+diff --git a/wx/lib/ogl/lines.py b/wx/lib/ogl/lines.py
+index 948b85d82..50c07e046 100644
+--- a/wx/lib/ogl/lines.py
++++ b/wx/lib/ogl/lines.py
+@@ -1200,7 +1200,7 @@ def OnDraw(self, dc):
+ 
+         points = []
+         for point in self._lineControlPoints:
+-            points.append(wx.Point(point[0], point[1]))
++            points.append(wx.Point(int(point[0]), int(point[1])))
+ 
+         if self._isSpline:
+             dc.DrawSpline(points)
+diff --git a/wx/lib/ogl/oglmisc.py b/wx/lib/ogl/oglmisc.py
+index 8588a72b7..a8be3fc53 100644
+--- a/wx/lib/ogl/oglmisc.py
++++ b/wx/lib/ogl/oglmisc.py
+@@ -300,10 +300,10 @@ def DrawFormattedText(dc, text_list, xpos, ypos, width, height, formatMode):
+         yoffset = ypos - height / 2.0
+ 
+     # +1 to allow for rounding errors
+-    dc.SetClippingRegion(xpos - width / 2.0, ypos - height / 2.0, width + 1, height + 1)
++    dc.SetClippingRegion(int(xpos - width / 2.0), int(ypos - height / 2.0), int(width + 1), int(height + 1))
+ 
+     for line in text_list:
+-        dc.DrawText(line.GetText(), xoffset + line.GetX(), yoffset + line.GetY())
++        dc.DrawText(line.GetText(), int(xoffset + line.GetX()), int(yoffset + line.GetY()))
+ 
+     dc.DestroyClippingRegion()
+ 
+diff --git a/wx/lib/plot/examples/demo.py b/wx/lib/plot/examples/demo.py
+index 98fbaad3a..02bec1d9f 100644
+--- a/wx/lib/plot/examples/demo.py
++++ b/wx/lib/plot/examples/demo.py
+@@ -984,7 +984,7 @@ def DrawPointLabel(self, dc, mDataDict):
+ 
+         sx, sy = mDataDict["scaledXY"]  # scaled x,y of closest point
+         # 10by10 square centered on point
+-        dc.DrawRectangle(sx - 5, sy - 5, 10, 10)
++        dc.DrawRectangle(int(sx - 5), int(sy - 5), 10, 10)
+         px, py = mDataDict["pointXY"]
+         cNum = mDataDict["curveNum"]
+         pntIn = mDataDict["pIndex"]
+@@ -992,7 +992,7 @@ def DrawPointLabel(self, dc, mDataDict):
+         # make a string to display
+         s = "Crv# %i, '%s', Pt. (%.2f,%.2f), PtInd %i" % (
+             cNum, legend, px, py, pntIn)
+-        dc.DrawText(s, sx, sy + 1)
++        dc.DrawText(s, int(sx), int(sy + 1))
+ 
+ 
+ def run_demo():
+diff --git a/wx/lib/plot/plotcanvas.py b/wx/lib/plot/plotcanvas.py
+index dd3f77d52..abee47efb 100644
+--- a/wx/lib/plot/plotcanvas.py
++++ b/wx/lib/plot/plotcanvas.py
+@@ -174,24 +174,24 @@ def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
+ 
+         # Default Pens
+         self._gridPen = wx.Pen(wx.Colour(180, 180, 180, 255),
+-                               self._pointSize[0],
++                               int(self._pointSize[0]),
+                                wx.PENSTYLE_DOT)
+ 
+         self._centerLinePen = wx.Pen(wx.RED,
+-                                     self._pointSize[0],
++                                     int(self._pointSize[0]),
+                                      wx.PENSTYLE_SHORT_DASH)
+ 
+         self._axesPen = wx.Pen(wx.BLACK,
+-                               self._pointSize[0],
++                               int(self._pointSize[0]),
+                                wx.PENSTYLE_SOLID)
+ 
+         self._tickPen = wx.Pen(wx.BLACK,
+-                               self._pointSize[0],
++                               int(self._pointSize[0]),
+                                wx.PENSTYLE_SOLID)
+         self._tickLength = tuple(-x * 2 for x in self._pointSize)
+ 
+         self._diagonalPen = wx.Pen(wx.BLUE,
+-                                   self._pointSize[0],
++                                   int(self._pointSize[0]),
+                                    wx.PENSTYLE_DOT_DASH)
+ 
+     def SetCursor(self, cursor):
+@@ -1925,10 +1925,10 @@ def _Draw(self, graphics, xAxis=None, yAxis=None, dc=None):
+         # set clipping area so drawing does not occur outside axis box
+         ptx, pty, rectWidth, rectHeight = self._point2ClientCoord(p1, p2)
+         # allow graph to overlap axis lines by adding units to w and h
+-        dc.SetClippingRegion(ptx * self._pointSize[0],
+-                             pty * self._pointSize[1],
+-                             rectWidth * self._pointSize[0] + 2,
+-                             rectHeight * self._pointSize[1] + 1)
++        dc.SetClippingRegion(int(ptx * self._pointSize[0]),
++                             int(pty * self._pointSize[1]),
++                             int(rectWidth * self._pointSize[0] + 2),
++                             int(rectHeight * self._pointSize[1] + 1))
+         # Draw the lines and markers
+ #        start = _time.perf_counter()
+         graphics.draw(dc)
+@@ -2280,7 +2280,7 @@ def _drawLegend(self, dc, graphics, rhsW, topH, legendBoxWH,
+             pnt = ((trhc[0] + legendLHS + legendSymExt[0]
+                     + 5 * self._pointSize[0]),
+                    trhc[1] + s + lineHeight / 2. - legendTextExt[1] / 2)
+-            dc.DrawText(o.getLegend(), pnt[0], pnt[1])
++            dc.DrawText(o.getLegend(), int(pnt[0]), int(pnt[1]))
+         dc.SetFont(self._getFont(self._fontSizeAxis))  # reset
+ 
+     def _titleLablesWH(self, dc, graphics):
+@@ -2329,7 +2329,7 @@ def _drawRubberBand(self, corner1, corner2):
+         dc.SetPen(wx.Pen(wx.BLACK))
+         dc.SetBrush(wx.Brush(wx.WHITE, wx.BRUSHSTYLE_TRANSPARENT))
+         dc.SetLogicalFunction(wx.INVERT)
+-        dc.DrawRectangle(ptx, pty, rectWidth, rectHeight)
++        dc.DrawRectangle(int(ptx), int(pty), int(rectWidth), int(rectHeight))
+         dc.SetLogicalFunction(wx.COPY)
+ 
+     def _getFont(self, size):
+@@ -2423,7 +2423,7 @@ def _drawGrid(self, dc, p1, p2, scale, shift, xticks, yticks):
+         # increases thickness for printing only
+         pen = self.gridPen
+         penWidth = self.printerScale * pen.GetWidth()
+-        pen.SetWidth(penWidth)
++        pen.SetWidth(int(penWidth))
+         dc.SetPen(pen)
+ 
+         x, y, width, height = self._point2ClientCoord(p1, p2)
+@@ -2432,13 +2432,13 @@ def _drawGrid(self, dc, p1, p2, scale, shift, xticks, yticks):
+             if self.enableGrid[0]:
+                 for x, _ in xticks:
+                     pt = scale_and_shift_point(x, p1[1], scale, shift)
+-                    dc.DrawLine(pt[0], pt[1], pt[0], pt[1] - height)
++                    dc.DrawLine(int(pt[0]), int(pt[1]), int(pt[0]), int(pt[1] - height))
+ 
+         if self._ySpec != 'none':
+             if self.enableGrid[1]:
+                 for y, label in yticks:
+                     pt = scale_and_shift_point(p1[0], y, scale, shift)
+-                    dc.DrawLine(pt[0], pt[1], pt[0] + width, pt[1])
++                    dc.DrawLine(int(pt[0]), int(pt[1]), int(pt[0] + width), int(pt[1]))
+ 
+     @TempStyle('pen')
+     def _drawTicks(self, dc, p1, p2, scale, shift, xticks, yticks):
+@@ -2471,7 +2471,7 @@ def _drawTicks(self, dc, p1, p2, scale, shift, xticks, yticks):
+         # increases thickness for printing only
+         pen = self.tickPen
+         penWidth = self.printerScale * pen.GetWidth()
+-        pen.SetWidth(penWidth)
++        pen.SetWidth(int(penWidth))
+         dc.SetPen(pen)
+ 
+         # lengthen lines for printing
+@@ -2484,13 +2484,13 @@ def _drawTicks(self, dc, p1, p2, scale, shift, xticks, yticks):
+                 lines = []
+                 for x, label in xticks:
+                     pt = scale_and_shift_point(x, p1[1], scale, shift)
+-                    lines.append((pt[0], pt[1], pt[0], pt[1] - xTickLength))
++                    lines.append((int(pt[0]), int(pt[1]), int(pt[0]), int(pt[1] - xTickLength)))
+                 dc.DrawLineList(lines)
+             if ticks.top:
+                 lines = []
+                 for x, label in xticks:
+                     pt = scale_and_shift_point(x, p2[1], scale, shift)
+-                    lines.append((pt[0], pt[1], pt[0], pt[1] + xTickLength))
++                    lines.append((int(pt[0]), int(pt[1]), int(pt[0]), int(pt[1] + xTickLength)))
+                 dc.DrawLineList(lines)
+ 
+         if self.ySpec != 'none':
+@@ -2498,13 +2498,13 @@ def _drawTicks(self, dc, p1, p2, scale, shift, xticks, yticks):
+                 lines = []
+                 for y, label in yticks:
+                     pt = scale_and_shift_point(p1[0], y, scale, shift)
+-                    lines.append((pt[0], pt[1], pt[0] + yTickLength, pt[1]))
++                    lines.append((int(pt[0]), int(pt[1]), int(pt[0] + yTickLength), int(pt[1])))
+                 dc.DrawLineList(lines)
+             if ticks.right:
+                 lines = []
+                 for y, label in yticks:
+                     pt = scale_and_shift_point(p2[0], y, scale, shift)
+-                    lines.append((pt[0], pt[1], pt[0] - yTickLength, pt[1]))
++                    lines.append((int(pt[0]), int(pt[1]), int(pt[0] - yTickLength), int(pt[1])))
+                 dc.DrawLineList(lines)
+ 
+     @TempStyle('pen')
+@@ -2531,25 +2531,25 @@ def _drawCenterLines(self, dc, p1, p2, scale, shift):
+         # increases thickness for printing only
+         pen = self.centerLinePen
+         penWidth = self.printerScale * pen.GetWidth()
+-        pen.SetWidth(penWidth)
++        pen.SetWidth(int(penWidth))
+         dc.SetPen(pen)
+ 
+         if self._centerLinesEnabled in ('Horizontal', True):
+             y1 = scale[1] * p1[1] + shift[1]
+             y2 = scale[1] * p2[1] + shift[1]
+             y = (y1 - y2) / 2.0 + y2
+-            dc.DrawLine(scale[0] * p1[0] + shift[0],
+-                        y,
+-                        scale[0] * p2[0] + shift[0],
+-                        y)
++            dc.DrawLine(int(scale[0] * p1[0] + shift[0]),
++                        int(y),
++                        int(scale[0] * p2[0] + shift[0]),
++                        int(y))
+         if self._centerLinesEnabled in ('Vertical', True):
+             x1 = scale[0] * p1[0] + shift[0]
+             x2 = scale[0] * p2[0] + shift[0]
+             x = (x1 - x2) / 2.0 + x2
+-            dc.DrawLine(x,
+-                        scale[1] * p1[1] + shift[1],
+-                        x,
+-                        scale[1] * p2[1] + shift[1])
++            dc.DrawLine(int(x),
++                        int(scale[1] * p1[1] + shift[1]),
++                        int(x),
++                        int(scale[1] * p2[1] + shift[1]))
+ 
+     @TempStyle('pen')
+     def _drawDiagonals(self, dc, p1, p2, scale, shift):
+@@ -2575,19 +2575,19 @@ def _drawDiagonals(self, dc, p1, p2, scale, shift):
+         """
+         pen = self.diagonalPen
+         penWidth = self.printerScale * pen.GetWidth()
+-        pen.SetWidth(penWidth)
++        pen.SetWidth(int(penWidth))
+         dc.SetPen(pen)
+ 
+         if self._diagonalsEnabled in ('Bottomleft-Topright', True):
+-            dc.DrawLine(scale[0] * p1[0] + shift[0],
+-                        scale[1] * p1[1] + shift[1],
+-                        scale[0] * p2[0] + shift[0],
+-                        scale[1] * p2[1] + shift[1])
++            dc.DrawLine(int(scale[0] * p1[0] + shift[0]),
++                        int(scale[1] * p1[1] + shift[1]),
++                        int(scale[0] * p2[0] + shift[0]),
++                        int(scale[1] * p2[1] + shift[1]))
+         if self._diagonalsEnabled in ('Bottomright-Topleft', True):
+-            dc.DrawLine(scale[0] * p1[0] + shift[0],
+-                        scale[1] * p2[1] + shift[1],
+-                        scale[0] * p2[0] + shift[0],
+-                        scale[1] * p1[1] + shift[1])
++            dc.DrawLine(int(scale[0] * p1[0] + shift[0]),
++                        int(scale[1] * p2[1] + shift[1]),
++                        int(scale[0] * p2[0] + shift[0]),
++                        int(scale[1] * p1[1] + shift[1]))
+ 
+     @TempStyle('pen')
+     def _drawAxes(self, dc, p1, p2, scale, shift):
+@@ -2614,7 +2614,7 @@ def _drawAxes(self, dc, p1, p2, scale, shift):
+         # increases thickness for printing only
+         pen = self.axesPen
+         penWidth = self.printerScale * pen.GetWidth()
+-        pen.SetWidth(penWidth)
++        pen.SetWidth(int(penWidth))
+         dc.SetPen(pen)
+ 
+         axes = self.enableAxes
+@@ -2623,24 +2623,24 @@ def _drawAxes(self, dc, p1, p2, scale, shift):
+                 lower, upper = p1[0], p2[0]
+                 a1 = scale_and_shift_point(lower, p1[1], scale, shift)
+                 a2 = scale_and_shift_point(upper, p1[1], scale, shift)
+-                dc.DrawLine(a1[0], a1[1], a2[0], a2[1])
++                dc.DrawLine(int(a1[0]), int(a1[1]), int(a2[0]), int(a2[1]))
+             if axes.top:
+                 lower, upper = p1[0], p2[0]
+                 a1 = scale_and_shift_point(lower, p2[1], scale, shift)
+                 a2 = scale_and_shift_point(upper, p2[1], scale, shift)
+-                dc.DrawLine(a1[0], a1[1], a2[0], a2[1])
++                dc.DrawLine(int(a1[0]), int(a1[1]), int(a2[0]), int(a2[1]))
+ 
+         if self.ySpec != 'none':
+             if axes.left:
+                 lower, upper = p1[1], p2[1]
+                 a1 = scale_and_shift_point(p1[0], lower, scale, shift)
+                 a2 = scale_and_shift_point(p1[0], upper, scale, shift)
+-                dc.DrawLine(a1[0], a1[1], a2[0], a2[1])
++                dc.DrawLine(int(a1[0]), int(a1[1]), int(a2[0]), int(a2[1]))
+             if axes.right:
+                 lower, upper = p1[1], p2[1]
+                 a1 = scale_and_shift_point(p2[0], lower, scale, shift)
+                 a2 = scale_and_shift_point(p2[0], upper, scale, shift)
+-                dc.DrawLine(a1[0], a1[1], a2[0], a2[1])
++                dc.DrawLine(int(a1[0]), int(a1[1]), int(a2[0]), int(a2[1]))
+ 
+     @TempStyle('pen')
+     def _drawAxesValues(self, dc, p1, p2, scale, shift, xticks, yticks):
+@@ -2686,8 +2686,8 @@ def _drawAxesValues(self, dc, p1, p2, scale, shift, xticks, yticks):
+                     w = dc.GetTextExtent(label)[0]
+                     pt = scale_and_shift_point(x, p1[1], scale, shift)
+                     coords.append(
+-                        (pt[0] - w/2,
+-                         pt[1] + 2 * self._pointSize[1] - xTickLength)
++                        (int(pt[0] - w/2),
++                         int(pt[1] + 2 * self._pointSize[1] - xTickLength))
+                     )
+                 dc.DrawTextList(labels, coords)
+ 
+@@ -2698,8 +2698,8 @@ def _drawAxesValues(self, dc, p1, p2, scale, shift, xticks, yticks):
+                     w, h = dc.GetTextExtent(label)
+                     pt = scale_and_shift_point(x, p2[1], scale, shift)
+                     coords.append(
+-                        (pt[0] - w/2,
+-                         pt[1] - 2 * self._pointSize[1] - h - xTickLength)
++                        (int(pt[0] - w/2),
++                         int(pt[1] - 2 * self._pointSize[1] - h - xTickLength))
+                     )
+                 dc.DrawTextList(labels, coords)
+ 
+@@ -2712,8 +2712,8 @@ def _drawAxesValues(self, dc, p1, p2, scale, shift, xticks, yticks):
+                     w = dc.GetTextExtent(label)[0]
+                     pt = scale_and_shift_point(p1[0], y, scale, shift)
+                     coords.append(
+-                        (pt[0] - w - 3 * self._pointSize[0] + yTickLength,
+-                         pt[1] - 0.5 * h)
++                        (int(pt[0] - w - 3 * self._pointSize[0] + yTickLength),
++                         int(pt[1] - 0.5 * h))
+                     )
+                 dc.DrawTextList(labels, coords)
+ 
+@@ -2725,8 +2725,8 @@ def _drawAxesValues(self, dc, p1, p2, scale, shift, xticks, yticks):
+                     w = dc.GetTextExtent(label)[0]
+                     pt = scale_and_shift_point(p2[0], y, scale, shift)
+                     coords.append(
+-                        (pt[0] + 3 * self._pointSize[0] + yTickLength,
+-                         pt[1] - 0.5 * h)
++                        (int(pt[0] + 3 * self._pointSize[0] + yTickLength),
++                         int(pt[1] - 0.5 * h))
+                     )
+                 dc.DrawTextList(labels, coords)
+ 
+@@ -2785,7 +2785,7 @@ def _drawPlotTitle(self, dc, graphics, lhsW, rhsW, titleWH):
+             + (self.plotbox_size[0] - lhsW - rhsW) / 2. - titleWH[0] / 2.,
+             self.plotbox_origin[1] - self.plotbox_size[1]
+         )
+-        dc.DrawText(graphics.title, titlePos[0], titlePos[1])
++        dc.DrawText(graphics.title, int(titlePos[0]), int(titlePos[1]))
+ 
+     def _drawAxesLabels(self, dc, graphics, lhsW, rhsW, bottomH, topH,
+                         xLabelWH, yLabelWH):
+@@ -2806,7 +2806,7 @@ def _drawAxesLabels(self, dc, graphics, lhsW, rhsW, bottomH, topH,
+             + (self.plotbox_size[0] - lhsW - rhsW) / 2. - xLabelWH[0] / 2.,
+             self.plotbox_origin[1] - xLabelWH[1] - yTickLength
+         )
+-        dc.DrawText(graphics.xLabel, xLabelPos[0], xLabelPos[1])
++        dc.DrawText(graphics.xLabel, int(xLabelPos[0]), int(xLabelPos[1]))
+         yLabelPos = (
+             self.plotbox_origin[0] - 3 * self._pointSize[0] + xTickLength,
+             self.plotbox_origin[1] - bottomH
+@@ -2814,7 +2814,7 @@ def _drawAxesLabels(self, dc, graphics, lhsW, rhsW, bottomH, topH,
+         )
+         if graphics.yLabel:  # bug fix for Linux
+             dc.DrawRotatedText(
+-                graphics.yLabel, yLabelPos[0], yLabelPos[1], 90)
++                graphics.yLabel, int(yLabelPos[0]), int(yLabelPos[1]), 90)
+ 
+     @TempStyle('pen')
+     def _drawPlotAreaLabels(self, dc, graphics, lhsW, rhsW, titleWH,
+@@ -2942,7 +2942,7 @@ def _adjustScrollbars(self):
+         if pos >= 0:
+             pagesize = int((r_current[1] - r_current[0]) / unit)
+ 
+-            self.sb_hor.SetScrollbar(pos, pagesize, sbfullrange, pagesize)
++            self.sb_hor.SetScrollbar(pos, pagesize, int(sbfullrange), pagesize)
+             self._sb_xunit = unit
+             needScrollbars = needScrollbars or (pagesize != sbfullrange)
+         else:
+@@ -2964,7 +2964,7 @@ def _adjustScrollbars(self):
+         if pos >= 0:
+             pagesize = int((r_current[1] - r_current[0]) / unit)
+             pos = (sbfullrange - 1 - pos - pagesize)
+-            self.sb_vert.SetScrollbar(pos, pagesize, sbfullrange, pagesize)
++            self.sb_vert.SetScrollbar(int(pos), pagesize, int(sbfullrange), pagesize)
+             self._sb_yunit = unit
+             needScrollbars = needScrollbars or (pagesize != sbfullrange)
+         else:
+diff --git a/wx/lib/plot/polyobjects.py b/wx/lib/plot/polyobjects.py
+index 26a54f8f7..725b0164e 100644
+--- a/wx/lib/plot/polyobjects.py
++++ b/wx/lib/plot/polyobjects.py
+@@ -417,7 +417,7 @@ def draw(self, dc, printerScale, coord=None):
+ 
+         if not isinstance(colour, wx.Colour):
+             colour = wx.Colour(colour)
+-        pen = wx.Pen(colour, width, style)
++        pen = wx.Pen(colour, int(width), style)
+         pen.SetCap(wx.CAP_BUTT)
+         dc.SetPen(pen)
+         if coord is None:
+@@ -518,7 +518,7 @@ def draw(self, dc, printerScale, coord=None):
+         style = self.attributes['style']
+         if not isinstance(colour, wx.Colour):
+             colour = wx.Colour(colour)
+-        pen = wx.Pen(colour, width, style)
++        pen = wx.Pen(colour, int(width), style)
+         pen.SetCap(wx.CAP_ROUND)
+         dc.SetPen(pen)
+         if coord is None:
+@@ -590,7 +590,7 @@ def draw(self, dc, printerScale, coord=None):
+         if fillcolour and not isinstance(fillcolour, wx.Colour):
+             fillcolour = wx.Colour(fillcolour)
+ 
+-        dc.SetPen(wx.Pen(colour, width))
++        dc.SetPen(wx.Pen(colour, int(width)))
+         if fillcolour:
+             dc.SetBrush(wx.Brush(fillcolour, fillstyle))
+         else:
+@@ -618,6 +618,7 @@ def _circle(self, dc, coords, size=1):
+         dc.DrawEllipseList(rect.astype(np.int32))
+ 
+     def _dot(self, dc, coords, size=1):
++        coords = [(int(c[0]), int(c[1])) for c in coords]
+         dc.DrawPointList(coords)
+ 
+     def _square(self, dc, coords, size=1):
+@@ -699,7 +700,7 @@ def set_pen_and_brush(self, dc, printerScale):
+ 
+         if not isinstance(pencolour, wx.Colour):
+             pencolour = wx.Colour(pencolour)
+-        pen = wx.Pen(pencolour, penwidth, penstyle)
++        pen = wx.Pen(pencolour, int(penwidth), penstyle)
+         pen.SetCap(wx.CAP_BUTT)
+ 
+         if not isinstance(fillcolour, wx.Colour):
+@@ -790,6 +791,7 @@ def draw(self, dc, printerScale, coord=None):
+                 raise TypeError(err_str.format(type(barwidth)))
+ 
+             rects = [self.calc_rect(x, y, w) for x, y, w in pts]
++            rects = [(int(r[0]), int(r[1]), int(r[2]), int(r[3])) for r in rects]
+             dc.DrawRectangleList(rects)
+         else:
+             dc.DrawLines(coord)  # draw legend line
+@@ -858,6 +860,8 @@ def draw(self, dc, printerScale, coord=None):
+             rects = [self.calc_rect(y, low, high)
+                      for y, (low, high)
+                      in zip(self.hist, self.bins)]
++            rects = [(int(r[0]), int(r[1]), int(r[2]), int(r[3]))
++                     for r in rects]
+ 
+             dc.DrawRectangleList(rects)
+         else:
+@@ -1114,10 +1118,10 @@ def _draw_iqr_box(self, dc, printerScale):
+                                       self.currentShift)
+ 
+         # rectangles are drawn (left, top, width, height) so adjust
+-        iqr_box = [iqr_box[0][0],                   # X (left)
+-                   iqr_box[0][1],                   # Y (top)
+-                   iqr_box[1][0] - iqr_box[0][0],   # Width
+-                   iqr_box[1][1] - iqr_box[0][1]]   # Height
++        iqr_box = [int(iqr_box[0][0]),                   # X (left)
++                   int(iqr_box[0][1]),                   # Y (top)
++                   int(iqr_box[1][0] - iqr_box[0][0]),   # Width
++                   int(iqr_box[1][1] - iqr_box[0][1])]   # Height
+ 
+         box_pen = wx.Pen(wx.BLACK, 3, wx.PENSTYLE_SOLID)
+         box_brush = wx.Brush(wx.GREEN, wx.BRUSHSTYLE_SOLID)
+@@ -1503,7 +1507,7 @@ def OnPrintPage(self, page):
+         self.graph._setSize(plotAreaW, plotAreaH)
+ 
+         # Set offset and scale
+-        dc.SetDeviceOrigin(pixLeft, pixTop)
++        dc.SetDeviceOrigin(int(pixLeft), int(pixTop))
+ 
+         # Thicken up pens and increase marker size for printing
+         ratioW = float(plotAreaW) / clientDcSize[0]
+diff --git a/wx/lib/popupctl.py b/wx/lib/popupctl.py
+index 883be5ae5..236501f6d 100644
+--- a/wx/lib/popupctl.py
++++ b/wx/lib/popupctl.py
+@@ -124,7 +124,7 @@ def Display(self):
+         selfSize = self.GetSize()
+         tcSize = self.ctrl.GetSize()
+ 
+-        pos.x -= (selfSize.width - tcSize.width) / 2
++        pos.x -= (selfSize.width - tcSize.width) // 2
+         if pos.x + selfSize.width > dSize.width:
+             pos.x = dSize.width - selfSize.width
+         if pos.x < 0:
+diff --git a/wx/lib/scrolledpanel.py b/wx/lib/scrolledpanel.py
+index e4c482af9..1f783ea97 100644
+--- a/wx/lib/scrolledpanel.py
++++ b/wx/lib/scrolledpanel.py
+@@ -222,4 +222,4 @@ def ScrollChildIntoView(self, child):
+         # if we need to adjust
+         if new_vs_x != -1 or new_vs_y != -1:
+             #print("%s: (%s, %s)" % (self.GetName(), new_vs_x, new_vs_y))
+-            self.Scroll(new_vs_x, new_vs_y)
++            self.Scroll(int(new_vs_x), int(new_vs_y))
+diff --git a/wx/lib/throbber.py b/wx/lib/throbber.py
+index 9954d6b27..ee8c51209 100644
+--- a/wx/lib/throbber.py
++++ b/wx/lib/throbber.py
+@@ -200,11 +200,11 @@ def Draw(self, dc):
+         """
+         dc.DrawBitmap(self.submaps[self.sequence[self.current]], 0, 0, True)
+         if self.overlay and self.showOverlay:
+-            dc.DrawBitmap(self.overlay, self.overlayX, self.overlayY, True)
++            dc.DrawBitmap(self.overlay, int(self.overlayX), int(self.overlayY), True)
+         if self.label and self.showLabel:
+-            dc.DrawText(self.label, self.labelX, self.labelY)
++            dc.DrawText(self.label, int(self.labelX), int(self.labelY))
+             dc.SetTextForeground(wx.WHITE)
+-            dc.DrawText(self.label, self.labelX-1, self.labelY-1)
++            dc.DrawText(self.label, int(self.labelX-1), int(self.labelY-1))
+ 
+ 
+     def OnPaint(self, event):
+diff --git a/wx/lib/ticker.py b/wx/lib/ticker.py
+index 04abf0d44..4e684b4cd 100644
+--- a/wx/lib/ticker.py
++++ b/wx/lib/ticker.py
+@@ -86,7 +86,7 @@ def Stop(self):
+     def Start(self):
+         """Starts the text moving"""
+         if not self.timer.IsRunning():
+-            self.timer.Start(1000 / self._fps)
++            self.timer.Start(1000 // self._fps)
+ 
+ 
+     def IsTicking(self):
+@@ -208,7 +208,7 @@ def DrawText(self, dc):
+             offx = self._offset - self._extent[0]
+         else:
+             offx = self.GetSize()[0] - self._offset
+-        offy = (self.GetSize()[1] - self._extent[1]) / 2 #centered vertically
++        offy = (self.GetSize()[1] - self._extent[1]) // 2 #centered vertically
+         dc.DrawText(self._text, offx, offy)
+ 
+ 

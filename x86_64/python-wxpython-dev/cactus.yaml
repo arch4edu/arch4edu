@@ -1,8 +1,9 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
-  - x86_64/python-wxpython-dev
+  - x86_64/wxgtk3-dev
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

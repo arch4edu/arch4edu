@@ -1,0 +1,43 @@
+From aa3dca0e40bd0701e82ce40297a982b5b84844dc Mon Sep 17 00:00:00 2001
+From: Scott Talbert <swt@techie.net>
+Date: Mon, 27 Dec 2021 19:48:55 -0500
+Subject: [PATCH] Fix additional Python 3.10 issues with AGW FlatNotebook
+
+---
+ wx/lib/agw/flatnotebook.py | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/wx/lib/agw/flatnotebook.py b/wx/lib/agw/flatnotebook.py
+index d33f71d51..61bc4efb3 100644
+--- a/wx/lib/agw/flatnotebook.py
++++ b/wx/lib/agw/flatnotebook.py
+@@ -925,14 +925,14 @@ def DrawButton(dc, rect, focus, upperTabs):
+ 
+     if focus:
+         if upperTabs:
+-            leftPt = wx.Point(rect.x, rect.y + (rect.height / 10)*8)
+-            rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height / 10)*8)
++            leftPt = wx.Point(rect.x, int(rect.y + (rect.height / 10)*8))
++            rightPt = wx.Point(rect.x + rect.width - 2, int(rect.y + (rect.height / 10)*8))
+         else:
+-            leftPt = wx.Point(rect.x, rect.y + (rect.height / 10)*5)
+-            rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height / 10)*5)
++            leftPt = wx.Point(rect.x, int(rect.y + (rect.height / 10)*5))
++            rightPt = wx.Point(rect.x + rect.width - 2, int(rect.y + (rect.height / 10)*5))
+     else:
+-        leftPt = wx.Point(rect.x, rect.y + (rect.height / 2))
+-        rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height / 2))
++        leftPt = wx.Point(rect.x, int(rect.y + (rect.height / 2)))
++        rightPt = wx.Point(rect.x + rect.width - 2, int(rect.y + (rect.height / 2)))
+ 
+     # Define the top region
+     top = wx.Rect(rect.GetTopLeft(), rightPt)
+@@ -2766,7 +2766,7 @@ def DrawTab(self, pageContainer, dc, posx, tabIdx, tabWidth, tabHeight, btnStatu
+         if pageTextColour is not None:
+             dc.SetTextForeground(pageTextColour)
+ 
+-        dc.DrawText(pc.GetPageText(tabIdx), posx + textOffset, imageYCoord)
++        dc.DrawText(pc.GetPageText(tabIdx), int(posx + textOffset), imageYCoord)
+ 
+         # draw 'x' on tab (if enabled)
+         if pc.HasAGWFlag(FNB_X_ON_TAB) and tabIdx == pc.GetSelection():

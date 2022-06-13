@@ -1,0 +1,464 @@
+From 7afcc7fbc68506b55b5bb85970871a5f3df6eac4 Mon Sep 17 00:00:00 2001
+From: Kevin Schlosser <drschlosser@hotmail.com>
+Date: Mon, 11 Jan 2021 14:20:07 -0700
+Subject: [PATCH] Fixes floating point math in wx.lib.agw.aui
+
+wx.lib.agw.aui was never converted to run on Python 3 and as a result the division operator forces a conversion of the used values to a float. Floats cannot be used in functions like `range`. This caused quite number of things to not function properly and produce tracebacks.
+
+The other thing is when wx.lib.agw.aui was written pixels could not be rendered using coordinates that were floats so now passing floats could cause rendering alignment problems because the layout of the various bits were done so in a manner that would have the alignment correct using integers.
+---
+ wx/lib/agw/aui/aui_switcherdialog.py |    4 +-
+ wx/lib/agw/aui/aui_utilities.py      |   17 +-
+ wx/lib/agw/aui/auibook.py            |    6 +-
+ wx/lib/agw/aui/tabart.py             |  104 +--
+ 6 files changed, 417 insertions(+), 777 deletions(-)
+
+diff --git a/wx/lib/agw/aui/aui_switcherdialog.py b/wx/lib/agw/aui/aui_switcherdialog.py
+index 219db3249..72604273b 100644
+--- a/wx/lib/agw/aui/aui_switcherdialog.py
++++ b/wx/lib/agw/aui/aui_switcherdialog.py
+@@ -621,12 +621,12 @@ def PaintItems(self, dc, win):
+                    and item.GetBitmap().GetHeight() <= 16:
+                     x -= textMarginX
+                     dc.DrawBitmap(item.GetBitmap(), x, item.GetRect().y + \
+-                                  (item.GetRect().height - item.GetBitmap().GetHeight())/2,
++                                  (item.GetRect().height - item.GetBitmap().GetHeight())//2,
+                                   True)
+                     x += 16 + textMarginX
+                 #x += textMarginX
+ 
+-            y = item.GetRect().y + (item.GetRect().height - h)/2
++            y = item.GetRect().y + (item.GetRect().height - h)//2
+             dc.DrawText(item.GetTitle(), x, y)
+             dc.DestroyClippingRegion()
+ 
+diff --git a/wx/lib/agw/aui/aui_utilities.py b/wx/lib/agw/aui/aui_utilities.py
+index dfcf66e65..7bad7351e 100644
+--- a/wx/lib/agw/aui/aui_utilities.py
++++ b/wx/lib/agw/aui/aui_utilities.py
+@@ -322,9 +322,9 @@ def DarkenBitmap(bmp, caption_colour, new_colour):
+     """
+ 
+     image = bmp.ConvertToImage()
+-    red = caption_colour.Red()/float(new_colour.Red())
+-    green = caption_colour.Green()/float(new_colour.Green())
+-    blue = caption_colour.Blue()/float(new_colour.Blue())
++    red = caption_colour.Red()/new_colour.Red()
++    green = caption_colour.Green()/new_colour.Green()
++    blue = caption_colour.Blue()/new_colour.Blue()
+     image = image.AdjustChannels(red, green, blue)
+     return image.ConvertToBitmap()
+ 
+@@ -584,13 +584,13 @@ def RescaleScreenShot(bmp, thumbnail_size=200):
+ 
+     if bmpW > bmpH:
+         if bmpW > thumbnail_size:
+-            ratio = bmpW/float(thumbnail_size)
+-            newW, newH = int(bmpW/ratio), int(bmpH/ratio)
++            ratio = bmpW/thumbnail_size
++            newW, newH = bmpW//ratio, bmpH//ratio
+             img.Rescale(newW, newH, wx.IMAGE_QUALITY_HIGH)
+     else:
+         if bmpH > thumbnail_size:
+-            ratio = bmpH/float(thumbnail_size)
+-            newW, newH = int(bmpW/ratio), int(bmpH/ratio)
++            ratio = bmpH/thumbnail_size
++            newW, newH = bmpW//ratio, bmpH//ratio
+             img.Rescale(newW, newH, wx.IMAGE_QUALITY_HIGH)
+ 
+     newBmp = img.ConvertToBitmap()
+@@ -667,3 +667,6 @@ def CopyAttributes(newArt, oldArt):
+ 
+     return newArt
+ 
++
++
++
+diff --git a/wx/lib/agw/aui/auibook.py b/wx/lib/agw/aui/auibook.py
+index 2095ab6fe..ba7cf4721 100644
+--- a/wx/lib/agw/aui/auibook.py
++++ b/wx/lib/agw/aui/auibook.py
+@@ -175,7 +175,7 @@ def __init__(self, owner, tab, page_index):
+         x += image_w
+         w -= image_w + 4
+ 
+-        y = (self._tabEdited.rect.height - h)/2 + 1
++        y = (self._tabEdited.rect.height - h)//2 + 1
+ 
+         expandoStyle = wx.WANTS_CHARS
+         if wx.Platform in ["__WXGTK__", "__WXMAC__"]:
+@@ -864,7 +864,7 @@ def OnPanelPaint(self, event):
+         # Draw the caption title and place the bitmap
+         # get the bitmap optimal position, and draw it
+         bmpPt, txtPt = wx.Point(), wx.Point()
+-        bmpPt.y = (rect.height - self._props.Icon.GetHeight())/2
++        bmpPt.y = (rect.height - self._props.Icon.GetHeight())//2
+         bmpPt.x = 3
+         mem_dc.DrawBitmap(self._props.Icon, bmpPt.x, bmpPt.y, True)
+ 
+@@ -875,7 +875,7 @@ def OnPanelPaint(self, event):
+         fontHeight = mem_dc.GetCharHeight()
+ 
+         txtPt.x = bmpPt.x + self._props.Icon.GetWidth() + 4
+-        txtPt.y = (rect.height - fontHeight)/2
++        txtPt.y = (rect.height - fontHeight)//2
+         mem_dc.SetTextForeground(wx.WHITE)
+         mem_dc.DrawText("Opened tabs:", txtPt.x, txtPt.y)
+         mem_dc.SelectObject(wx.NullBitmap)
+diff --git a/wx/lib/agw/aui/tabart.py b/wx/lib/agw/aui/tabart.py
+index 3df563544..d1860e5ad 100644
+--- a/wx/lib/agw/aui/tabart.py
++++ b/wx/lib/agw/aui/tabart.py
+@@ -301,13 +301,13 @@ def SetSizingInfo(self, tab_ctrl_size, tab_count, minMaxTabWidth):
+             tot_width -= self._active_windowlist_bmp.GetWidth()
+ 
+         if tab_count > 0:
+-            self._fixed_tab_width = tot_width/tab_count
++            self._fixed_tab_width = tot_width//tab_count
+ 
+         if self._fixed_tab_width < 100:
+             self._fixed_tab_width = 100
+ 
+-        if self._fixed_tab_width > tot_width/2:
+-            self._fixed_tab_width = tot_width/2
++        if self._fixed_tab_width > tot_width//2:
++            self._fixed_tab_width = tot_width//2
+ 
+         if self._fixed_tab_width > 220:
+             self._fixed_tab_width = 220
+@@ -474,7 +474,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+             dc.DrawPoint(r.x+r.width-2, r.y+1)
+ 
+             # set rectangle down a bit for gradient drawing
+-            r.SetHeight(r.GetHeight()/2)
++            r.SetHeight(r.GetHeight()//2)
+             r.x += 2
+             r.width -= 2
+             r.y += r.height
+@@ -497,7 +497,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+             r.x += 3
+             r.y += 1
+             r.width -= 4
+-            r.height /= 2
++            r.height //= 2
+             r.height -= 1
+ 
+             # -- draw top gradient fill for glossy look
+@@ -555,7 +555,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+             # draw bitmap
+             dc.DrawBitmap(pagebitmap,
+                           bitmap_offset,
+-                          drawn_tab_yoff + (drawn_tab_height/2) - (pagebitmap.GetHeight()/2),
++                          drawn_tab_yoff + (drawn_tab_height//2) - (pagebitmap.GetHeight()//2),
+                           True)
+ 
+             text_offset = bitmap_offset + pagebitmap.GetWidth()
+@@ -568,7 +568,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+         draw_text = ChopText(dc, caption, tab_width - (text_offset-tab_x) - close_button_width)
+ 
+-        ypos = drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2) - 1
++        ypos = drawn_tab_yoff + (drawn_tab_height)//2 - (texty//2) - 1
+ 
+         offset_focus = text_offset
+         if control:
+@@ -609,11 +609,11 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+             shift = (agwFlags & AUI_NB_BOTTOM and [1] or [0])[0]
+ 
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+-                rect = wx.Rect(tab_x + 4, tab_y + (tab_height - bmp.GetHeight())/2 - shift,
++                rect = wx.Rect(tab_x + 4, tab_y + (tab_height - bmp.GetHeight())//2 - shift,
+                                close_button_width, tab_height)
+             else:
+                 rect = wx.Rect(tab_x + tab_width - close_button_width - 1,
+-                               tab_y + (tab_height - bmp.GetHeight())/2 - shift,
++                               tab_y + (tab_height - bmp.GetHeight())//2 - shift,
+                                close_button_width, tab_height)
+ 
+             rect = IndentPressedBitmap(rect, close_button_state)
+@@ -777,14 +777,14 @@ def DrawButton(self, dc, wnd, in_rect, button, orientation):
+         if orientation == wx.LEFT:
+ 
+             rect.SetX(in_rect.x)
+-            rect.SetY(((in_rect.y + in_rect.height)/2) - (bmp.GetHeight()/2))
++            rect.SetY(((in_rect.y + in_rect.height)//2) - (bmp.GetHeight()//2))
+             rect.SetWidth(bmp.GetWidth())
+             rect.SetHeight(bmp.GetHeight())
+ 
+         else:
+ 
+             rect = wx.Rect(in_rect.x + in_rect.width - bmp.GetWidth(),
+-                           ((in_rect.y + in_rect.height)/2) - (bmp.GetHeight()/2),
++                           ((in_rect.y + in_rect.height)//2) - (bmp.GetHeight()//2),
+                            bmp.GetWidth(), bmp.GetHeight())
+ 
+         rect = IndentPressedBitmap(rect, button_state)
+@@ -819,11 +819,11 @@ def DrawFocusRectangle(self, dc, page, wnd, draw_text, text_offset, bitmap_offse
+ 
+         if page.active and wx.Window.FindFocus() == wnd:
+ 
+-            focusRectText = wx.Rect(text_offset, (drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2)),
++            focusRectText = wx.Rect(text_offset, (drawn_tab_yoff + (drawn_tab_height)//2 - (texty//2)),
+                                     textx, texty)
+ 
+             if page.bitmap.IsOk():
+-                focusRectBitmap = wx.Rect(bitmap_offset, drawn_tab_yoff + (drawn_tab_height/2) - (page.bitmap.GetHeight()/2),
++                focusRectBitmap = wx.Rect(bitmap_offset, drawn_tab_yoff + (drawn_tab_height//2) - (page.bitmap.GetHeight()//2),
+                                           page.bitmap.GetWidth(), page.bitmap.GetHeight())
+ 
+             if page.bitmap.IsOk() and draw_text == "":
+@@ -1110,13 +1110,13 @@ def SetSizingInfo(self, tab_ctrl_size, tab_count, minMaxTabWidth):
+             tot_width -= self._active_windowlist_bmp.GetWidth()
+ 
+         if tab_count > 0:
+-            self._fixed_tab_width = tot_width/tab_count
++            self._fixed_tab_width = tot_width//tab_count
+ 
+         if self._fixed_tab_width < 100:
+             self._fixed_tab_width = 100
+ 
+-        if self._fixed_tab_width > tot_width/2:
+-            self._fixed_tab_width = tot_width/2
++        if self._fixed_tab_width > tot_width//2:
++            self._fixed_tab_width = tot_width//2
+ 
+         if self._fixed_tab_width > 220:
+             self._fixed_tab_width = 220
+@@ -1238,23 +1238,23 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+             close_button_width = self._active_close_bmp.GetWidth()
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+                 if control:
+-                    text_offset = tab_x + (tab_height/2) + close_button_width - (textx/2) - 2
++                    text_offset = tab_x + (tab_height//2) + close_button_width - (textx//2) - 2
+                 else:
+-                    text_offset = tab_x + (tab_height/2) + ((tab_width+close_button_width)/2) - (textx/2) - 2
++                    text_offset = tab_x + (tab_height//2) + ((tab_width+close_button_width)//2) - (textx//2) - 2
+             else:
+                 if control:
+-                    text_offset = tab_x + (tab_height/2) + close_button_width - (textx/2)
++                    text_offset = tab_x + (tab_height//2) + close_button_width - (textx//2)
+                 else:
+-                    text_offset = tab_x + (tab_height/2) + ((tab_width-close_button_width)/2) - (textx/2)
++                    text_offset = tab_x + (tab_height//2) + ((tab_width-close_button_width)//2) - (textx//2)
+ 
+         else:
+ 
+-            text_offset = tab_x + (tab_height/3) + (tab_width/2) - (textx/2)
++            text_offset = tab_x + (tab_height//3) + (tab_width//2) - (textx//2)
+             if control:
+                 if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+-                    text_offset = tab_x + (tab_height/3) - (textx/2) + close_button_width + 2
++                    text_offset = tab_x + (tab_height//3) - (textx//2) + close_button_width + 2
+                 else:
+-                    text_offset = tab_x + (tab_height/3) - (textx/2)
++                    text_offset = tab_x + (tab_height//3) - (textx//2)
+ 
+         # set minimum text offset
+         if text_offset < tab_x + tab_height:
+@@ -1267,7 +1267,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+             draw_text = ChopText(dc, caption,
+                                  tab_width - (text_offset-tab_x) - close_button_width)
+ 
+-        ypos = (tab_y + tab_height)/2 - (texty/2) + 1
++        ypos = (tab_y + tab_height)//2 - (texty//2) + 1
+ 
+         if control:
+             if control.GetPosition() != wx.Point(text_offset+1, ypos):
+@@ -1290,7 +1290,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+         # draw focus rectangle
+         if page.active and wx.Window.FindFocus() == wnd and (agwFlags & AUI_NB_NO_TAB_FOCUS) == 0:
+ 
+-            focusRect = wx.Rect(text_offset, ((tab_y + tab_height)/2 - (texty/2) + 1),
++            focusRect = wx.Rect(text_offset, ((tab_y + tab_height)//2 - (texty//2) + 1),
+                                 selected_textx, selected_texty)
+ 
+             focusRect.Inflate(2, 2)
+@@ -1310,11 +1310,11 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+                 rect = wx.Rect(tab_x + tab_height - 2,
+-                               tab_y + (tab_height/2) - (bmp.GetHeight()/2) + 1,
++                               tab_y + (tab_height//2) - (bmp.GetHeight()//2) + 1,
+                                close_button_width, tab_height - 1)
+             else:
+                 rect = wx.Rect(tab_x + tab_width - close_button_width - 1,
+-                               tab_y + (tab_height/2) - (bmp.GetHeight()/2) + 1,
++                               tab_y + (tab_height//2) - (bmp.GetHeight()//2) + 1,
+                                close_button_width, tab_height - 1)
+ 
+             self.DrawButtons(dc, rect, bmp, wx.WHITE, close_button_state)
+@@ -1389,7 +1389,7 @@ def GetTabSize(self, dc, wnd, caption, bitmap, active, close_button_state, contr
+             controlW, controlH = control.GetSize()
+             tab_width += controlW + 4
+ 
+-        x_extent = tab_width - (tab_height/2) - 1
++        x_extent = tab_width - (tab_height//2) - 1
+ 
+         return (tab_width, tab_height), x_extent
+ 
+@@ -1445,14 +1445,14 @@ def DrawButton(self, dc, wnd, in_rect, button, orientation):
+         if orientation == wx.LEFT:
+ 
+             rect.SetX(in_rect.x)
+-            rect.SetY(((in_rect.y + in_rect.height)/2) - (bmp.GetHeight()/2))
++            rect.SetY(((in_rect.y + in_rect.height)//2) - (bmp.GetHeight()//2))
+             rect.SetWidth(bmp.GetWidth())
+             rect.SetHeight(bmp.GetHeight())
+ 
+         else:
+ 
+             rect = wx.Rect(in_rect.x + in_rect.width - bmp.GetWidth(),
+-                           ((in_rect.y + in_rect.height)/2) - (bmp.GetHeight()/2),
++                           ((in_rect.y + in_rect.height)//2) - (bmp.GetHeight()//2),
+                            bmp.GetWidth(), bmp.GetHeight())
+ 
+         self.DrawButtons(dc, rect, bmp, wx.WHITE, button_state)
+@@ -1753,7 +1753,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             # draw bitmap
+             dc.DrawBitmap(pagebitmap, bitmap_offset,
+-                          drawn_tab_yoff + (drawn_tab_height/2) - (pagebitmap.GetHeight()/2) + shift,
++                          drawn_tab_yoff + (drawn_tab_height//2) - (pagebitmap.GetHeight()//2) + shift,
+                           True)
+ 
+             text_offset = bitmap_offset + pagebitmap.GetWidth()
+@@ -1778,7 +1778,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+         draw_text = ChopText(dc, caption, tab_width - (text_offset-tab_x) - close_button_width)
+ 
+-        ypos = drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2) - 1 + shift
++        ypos = drawn_tab_yoff + (drawn_tab_height)//2 - (texty//2) - 1 + shift
+ 
+         offset_focus = text_offset
+ 
+@@ -1821,11 +1821,11 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+                 rect = wx.Rect(tab_x + 4,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + shift,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + shift,
+                                close_button_width, tab_height)
+             else:
+                 rect = wx.Rect(tab_x + tab_width - close_button_width - 3,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + shift,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + shift,
+                                close_button_width, tab_height)
+ 
+             # Indent the button if it is pressed down:
+@@ -1988,7 +1988,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             # draw bitmap
+             dc.DrawBitmap(pagebitmap, bitmap_offset,
+-                          drawn_tab_yoff + (drawn_tab_height/2) - (pagebitmap.GetHeight()/2) + shift,
++                          drawn_tab_yoff + (drawn_tab_height//2) - (pagebitmap.GetHeight()//2) + shift,
+                           True)
+ 
+             text_offset = bitmap_offset + pagebitmap.GetWidth()
+@@ -2016,7 +2016,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+         else:
+             draw_text = ChopText(dc, caption, tab_width - (text_offset-tab_x) - close_button_width)
+ 
+-        ypos = drawn_tab_yoff + drawn_tab_height/2 - texty/2 - 1 + shift
++        ypos = drawn_tab_yoff + drawn_tab_height//2 - texty//2 - 1 + shift
+ 
+         offset_focus = text_offset
+ 
+@@ -2058,11 +2058,11 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+                 rect = wx.Rect(tab_x + 5,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + shift,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + shift,
+                                close_button_width, tab_height)
+             else:
+                 rect = wx.Rect(tab_x + tab_width - close_button_width - 3,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + shift,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + shift,
+                                close_button_width, tab_height)
+ 
+             # Indent the button if it is pressed down:
+@@ -2093,14 +2093,14 @@ def DrawTabBackground(self, dc, rect, focus, upperTabs):
+ 
+         if focus:
+             if upperTabs:
+-                leftPt = wx.Point(rect.x, rect.y + (rect.height / 10)*8)
+-                rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height / 10)*8)
++                leftPt = wx.Point(rect.x, rect.y + (rect.height // 10)*8)
++                rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height // 10)*8)
+             else:
+-                leftPt = wx.Point(rect.x, rect.y + (rect.height / 10)*5)
+-                rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height / 10)*5)
++                leftPt = wx.Point(rect.x, rect.y + (rect.height // 10)*5)
++                rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height // 10)*5)
+         else:
+-            leftPt = wx.Point(rect.x, rect.y + (rect.height / 2))
+-            rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height / 2))
++            leftPt = wx.Point(rect.x, rect.y + (rect.height // 2))
++            rightPt = wx.Point(rect.x + rect.width - 2, rect.y + (rect.height // 2))
+ 
+         # Define the top region
+         top = wx.Rect(rect.GetTopLeft(), rightPt)
+@@ -2324,7 +2324,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             # draw bitmap
+             dc.DrawBitmap(pagebitmap, bitmap_offset,
+-                          drawn_tab_yoff + (drawn_tab_height/2) - (pagebitmap.GetHeight()/2) + shift,
++                          drawn_tab_yoff + (drawn_tab_height//2) - (pagebitmap.GetHeight()//2) + shift,
+                           True)
+ 
+             text_offset = bitmap_offset + pagebitmap.GetWidth()
+@@ -2351,7 +2351,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+         else:
+             draw_text = ChopText(dc, caption, tab_width - (text_offset-tab_x) - close_button_width)
+ 
+-        ypos = drawn_tab_yoff + drawn_tab_height/2 - texty/2 - 1 + shift
++        ypos = drawn_tab_yoff + drawn_tab_height//2 - texty//2 - 1 + shift
+ 
+         offset_focus = text_offset
+ 
+@@ -2398,11 +2398,11 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+                 rect = wx.Rect(tab_x + 20,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + shift,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + shift,
+                                close_button_width, tab_height)
+             else:
+                 rect = wx.Rect(xpos,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + shift,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + shift,
+                                close_button_width, tab_height)
+ 
+             # Indent the button if it is pressed down:
+@@ -2686,7 +2686,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             # draw bitmap
+             dc.DrawBitmap(pagebitmap, bitmap_offset,
+-                          drawn_tab_yoff + (drawn_tab_height/2) - (pagebitmap.GetHeight()/2),
++                          drawn_tab_yoff + (drawn_tab_height//2) - (pagebitmap.GetHeight()//2),
+                           True)
+ 
+             text_offset = bitmap_offset + pagebitmap.GetWidth()
+@@ -2714,7 +2714,7 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+         else:
+             draw_text = ChopText(dc, caption, tab_width - (text_offset-tab_x) - close_button_width - leftw)
+ 
+-        ypos = drawn_tab_yoff + drawn_tab_height/2 - texty/2 - 1
++        ypos = drawn_tab_yoff + drawn_tab_height//2 - texty//2 - 1
+ 
+         if control:
+             if control.GetPosition() != wx.Point(text_offset+1, ypos):
+@@ -2748,11 +2748,11 @@ def DrawTab(self, dc, wnd, page, in_rect, close_button_state, paint_control=Fals
+ 
+             if agwFlags & AUI_NB_CLOSE_ON_TAB_LEFT:
+                 rect = wx.Rect(tab_x + leftw - 2,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + 1,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + 1,
+                                close_button_width, tab_height)
+             else:
+                 rect = wx.Rect(tab_x + tab_width - close_button_width - rightw + 2,
+-                               drawn_tab_yoff + (drawn_tab_height / 2) - (bmp.GetHeight() / 2) + 1,
++                               drawn_tab_yoff + (drawn_tab_height // 2) - (bmp.GetHeight() // 2) + 1,
+                                close_button_width, tab_height)
+ 
+             if agwFlags & AUI_NB_BOTTOM:
