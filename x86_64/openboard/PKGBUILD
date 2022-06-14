@@ -1,7 +1,7 @@
 # Maintainer: Frank Siegert <frank.siegert@googlemail.com>
 # Contributor: bartus <arch-user-repoᘓbartus.33mail.com>
 pkgname=openboard
-pkgver=1.6.2
+pkgver=1.6.3
 _src_folder="OpenBoard-${pkgver}"
 pkgrel=1
 pkgdesc="Interactive whiteboard software for schools and universities"
@@ -18,7 +18,7 @@ source+=(qchar.patch)
 source+=(quazip.patch)
 source+=(drop_ThirdParty_repo.patch)
 source+=(ffmpeg.patch)
-sha256sums=('300b440edad8aa0aeb726e4cca0565a5ea4fc9b5446ddc2bd4710be3fa9f1b7f'
+sha256sums=('b7e67dfe2ff4cb6e13116133246911f0ab4e4ff0067b38fa9558c96d8672b3db'
             '64289f9d91cb25fa79fb988f19d43a542d67380fcf27668d0da1ee4ba1e705eb'
             'b40fdab85f5921d0404c07db64628a2428a87d39193d2797bbef2e69b1d51549'
             '816fc5c6bf2032fd3c2270ee9dc19d9b5b7c3419fdad68d5b16f1fe353e5707a'
