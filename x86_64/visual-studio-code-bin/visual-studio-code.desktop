@@ -2,12 +2,12 @@
 Name=Visual Studio Code
 Comment=Code Editing. Refined.
 GenericName=Text Editor
-Exec=/usr/bin/code --no-sandbox --unity-launch %F
+Exec=/usr/bin/code --unity-launch %F
 Icon=visual-studio-code
 Type=Application
 StartupNotify=false
 StartupWMClass=Code
-Categories=Utility;TextEditor;Development;IDE;
+Categories=TextEditor;Development;IDE;
 MimeType=text/plain;inode/directory;application/x-visual-studio-code-workspace;
 Actions=new-empty-window;
 Keywords=vscode;
