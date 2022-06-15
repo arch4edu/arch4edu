@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - kahip
   - parmetis
   - scotch
 build_prefix: extra-x86_64
