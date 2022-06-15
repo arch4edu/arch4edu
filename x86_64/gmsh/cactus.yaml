@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-- depends:
+depends:
   - x86_64/ann
   - x86_64/voro++
 build_prefix: extra-x86_64

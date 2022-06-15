@@ -1,8 +1,8 @@
 nvchecker:
   - source: aur
     aur:
-- source: github
-  github: tflearn/tflearn
+  - source: github
+    github: tflearn/tflearn
   - alias: python
 build_prefix: extra-x86_64
 pre_build: aur-pre-build

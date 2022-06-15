@@ -1,6 +1,0 @@
-update_on:
-- source: aur
-  aur:
-- source: github
-  github: rdnetto/YCM-Generator
-  branch: stable
