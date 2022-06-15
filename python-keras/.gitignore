@@ -1,8 +1,0 @@
-# Downloaded and generated files
-*.log
-*.tar
-*.tar.xz
-*.tar.gz
-
-# All sub-folders
-*/

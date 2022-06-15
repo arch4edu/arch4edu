@@ -1,6 +1,0 @@
-update_on:
-- source: aur
-  aur:
-- source: github
-  github: tflearn/tflearn
-- alias: python
