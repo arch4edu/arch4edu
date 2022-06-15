@@ -4,5 +4,5 @@ nvchecker:
   - source: github
     github: petronny/vim-disable-mouse
 build_prefix: extra-x86_64
-pre_build: aur_pre_build
-post_build: aur_post_build
+pre_build: aur-pre-build
+post_build: aur-post-build
