@@ -1,7 +1,0 @@
-maintainers:
-  - github: heavysink
-    email: Winston Wu <winstonwu91@gmail.com>
-
-update_on:
-  - source: aur
-    aur:
