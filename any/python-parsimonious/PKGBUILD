@@ -1,45 +1,28 @@
-# Maintainer: Wojciech Szymecki <w.szymecki-at-g;mail-com>
-_name="parsimonious"
+# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Contributor: Wojciech Szymecki <w.szymecki-at-g;mail-com>
 
-pkgbase="python-${_name}"
-pkgname=("python-${_name}" "python2-${_name}")
-pkgver=0.8.1
-pkgrel=3
-arch=('any')
-url="https://pypi.python.org/pypi/${_name}/${pkgver}"
-license=('MIT')
-makedepends=('python-setuptools' 'python2-setuptools')
+pkgname=python-parsimonious
+pkgver=0.9.0
+pkgrel=1
 pkgdesc="Fast parser based on parsing expression grammars (PEGs)"
-source=("https://files.pythonhosted.org/packages/source/${_name:0:1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha256sums=('3add338892d580e0cb3b1a39e4a1b427ff9f687858fdd61097053742391a9f6b')
+arch=('any')
+url="https://github.com/erikrose/parsimonious"
+license=('MIT')
+depends=('python-regex')
+makedepends=('python' 'python-build' 'python-installer' 'python-wheel'
+             'python-setuptools')
+source=("$pkgname-$pkgver::https://github.com/erikrose/parsimonious/archive/$pkgver.tar.gz")
+sha256sums=('ed53ea31c9b2461c0ac607c03cdf216229ef33bab324e96ed140d450a3e0bdf9')
 
-prepare() {
-    cp -r "${srcdir}/${_name}-${pkgver}" "${srcdir}/${_name}-${pkgver}-python2"
-}
+_pkgname="parsimonious"
 
 build() {
-    cd "${srcdir}/${_name}-${pkgver}"
-    python3 setup.py build
-    cd "${srcdir}/${_name}-${pkgver}-python2"
-    python2 setup.py build
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    python -m build --wheel --no-isolation
 }
 
-package_python-parsimonious() {
-  pkgdesc="Fast parser based on parsing expression grammars (PEGs) - Python 3 version."
-  depends=('python>=3.3')
-
-  cd "${srcdir}/${_name}-${pkgver}"
-
-  python3 setup.py install --skip-build --root="${pkgdir}" --optimize=1
-  install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-}
-
-package_python2-parsimonious() {
-  pkgdesc="Fast parser based on parsing expression grammars (PEGs) - Python 2 version."
-  depends=('python>=2.7')
-
-  cd "${srcdir}/${_name}-${pkgver}-python2"
-
-  python2 setup.py install --skip-build --root="${pkgdir}" --optimize=1
+package() {
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  python -m installer --destdir="$pkgdir" dist/*.whl
   install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
