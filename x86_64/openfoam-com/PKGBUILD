@@ -6,23 +6,23 @@
 # Contributor: <gucong43216@gmail.com>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2012
+# /opt/OpenFOAM/OpenFOAM-v2112
 
 pkgname=openfoam-com
-pkgver=v2012
+pkgver=v2112
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=4
+pkgrel=2
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
-url="http://www.openfoam.com/"
-license=('GPL')
+url="http://www.openfoam.com"
+license=('GPL3')
 install="${pkgname}.install"
-depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
+depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis' 'kahip')
 
-source=("https://sourceforge.net/projects/openfoam/files/v2012/OpenFOAM-v2012.tgz")
+source=('https://sourceforge.net/projects/openfoam/files/v2112/OpenFOAM-v2112.tgz')
 
-md5sums=('4b83938a8c939a84b7e985e4f5ab7543')
+md5sums=('b6553cfbb6c398e8fe50c96e9e456968')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]
@@ -50,7 +50,7 @@ export WM_MPLIB=SYSTEMOPENMPI
     -boost boost-system \
     -cgal  cgal-system \
     -fftw  fftw-system \
-    -kahip kahip-none \
+    -kahip kahip-system \
     -scotch scotch-system \
     -paraview paraview-system \
     ;
@@ -70,6 +70,11 @@ build() {
       echo "No $projectDir/etc/bashrc found"
       return 1
   }
+
+  # changes to avoid linking problems related to gcc 11
+  # check this for the next upgrade!
+  pwd
+  sed -i 's/g++$(COMPILER_VERSION) -std=c++11/g++$(COMPILER_VERSION) -std=c++14 -D_GLIBCXX_USE_CXX14_ABI=0/g' $projectDir/wmake/rules/General/Gcc/c++
 
   # Avoid external influence on the environment
   export FOAM_CONFIG_MODE="o"
