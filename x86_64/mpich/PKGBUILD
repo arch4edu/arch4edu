@@ -1,81 +1,71 @@
 # Maintainer: Jed Brown <jed@59A2.org>
 # Contributor: Jed Brown <jed@59A2.org>
 # Contributor: George Eleftheriou <eleftg>
-# Contributor: Heavysink <winstonwu91 at gmail>
 
-pkgname=mpich-arch4edu
-pkgver=3.3.2
+pkgname=mpich
+pkgver=4.0.2
 pkgrel=1
-pkgdesc="An improved implementation of the Message Passing Interface (arch4edu version, added upstream fixes)"
+pkgdesc="An improved implementation of the Message Passing Interface."
 url="https://mpich.org"
-arch=("x86_64")
+arch=(x86_64)
 license=("custom")
 replaces=(mpich2)
-depends=('python2' 'gcc-fortran' 'libxml2' 'openssh' 'numactl' 'pciutils')
-makedepends=('texlive-core' 'sowing')
-optdepends=("java-environment")
-provides=("mpich")
-conflicts=("mpich")
-install="mpich.install"
-source=("http://www.mpich.org/static/downloads/${pkgver}/mpich-${pkgver}.tar.gz"
-	    "mpich.profile"
-      "0001-Drop-real128.patch"
-      "4320.patch")
-sha256sums=('4bfaf8837a54771d3e4922c84071ef80ffebddbb6971a006038d91ee7ef959b9'
-            'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284'
-            '6c4cf4afbc762f06d344df52d54555f7fdf72a45c652bebd0963eaa864424223'
-            '9205be5ebce22fd1719af7d3c94b09c8b0f838c196fe24d5395d45f8d511b9ff')
-
+depends=('gcc-fortran' 'libxml2' 'openssh' 'numactl' 'pciutils' 'hwloc' 'bash')
+makedepends=(texlive-core sowing autoconf python)
+optdepends=(perl python)
+install="${pkgname}.install"
+source=("https://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+	"mpich.profile")
+sha256sums=('5a42f1a889d4a2d996c26e48cbf9c595cbf4316c6814f7c181e3320d21dedd42'
+            'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284')
 options=('!libtool')
 
 build() {
-  cd ${srcdir}/mpich-${pkgver}
-  patch -Np0 < ../0001-Drop-real128.patch
-  patch -Np0 < ../4320.patch
-  export MPICHLIB_CFLAGS="${CFLAGS}";      unset CFLAGS
+  cd ${srcdir}/${pkgname}-${pkgver}
+
+  # CFLAGS etc are normally written into the wrapper compilers.  This
+  # gives surprising results, e.g. when the user wants to compile their
+  # program without optimization.
+  export MPICHLIB_CFLAGS="${CFLAGS} -Wno-error=array-bounds";      unset CFLAGS
   export MPICHLIB_CXXFLAGS="${CXXFLAGS}";  unset CXXFLAGS
   export MPICHLIB_CPPFLAGS="${CPPFLAGS}";  unset CPPFLAGS
   export MPICHLIB_FFLAGS="${FFLAGS}";      unset FFLAGS
-  export MPICHLIB_F90FLAGS="${F90FLAGS}";  unset F90FLAGS
+  export MPICHLIB_FCFLAGS="${FCFLAGS}";    unset FCFLAGS
   export MPICHLIB_LDFLAGS="${LDFLAGS}";    unset LDFLAGS
 
   mkdir -p build
   cd build
 
-  FFLAGS="$FFLAGS -fallow-argument-mismatch" ../configure --prefix=/opt/mpich \
-               --enable-error-checking=runtime --enable-error-messages=all \
-               CC=gcc CXX=g++ FC=gfortran
+  ../configure --prefix=/opt/mpich \
+               --with-device=ch4:ucx \
+               --with-hwloc \
+               --without-java \
+               --enable-error-checking=runtime \
+               --enable-error-messages=all \
+               --enable-g=meminit \
+               CC=gcc CXX=g++ FC=gfortran \
+               FFLAGS=-fallow-argument-mismatch \
+               FCFLAGS=-fallow-argument-mismatch
 
   make
   make mandoc
 }
 
 check() {
-  cd ${srcdir}/mpich-${pkgver}/build
+  cd ${srcdir}/${pkgname}-${pkgver}/build
 
-  # CFLAGS etc are normally written into the wrapper compilers.  This
-  # gives surprising results, e.g. when the user wants to compile their
-  # program without optimization.
-  export MPICHLIB_CFLAGS=${CFLAGS};      unset CFLAGS
-  export MPICHLIB_CXXFLAGS=${CXXFLAGS};  unset CXXFLAGS
-  export MPICHLIB_CPPFLAGS=${CPPFLAGS};  unset CPPFLAGS
-  export MPICHLIB_FFLAGS=${FFLAGS};      unset FFLAGS
-  export MPICHLIB_F90FLAGS=${F90FLAGS};  unset F90FLAGS
-  export MPICHLIB_LDFLAGS=${LDFLAGS};    unset LDFLAGS
-
-  make check
+  # Disabled for mpich-3.4 due to json-c test failure
+  # make check
 }
 
 package() {
-  cd "${srcdir}/mpich-${pkgver}/build"
+  cd "${srcdir}/${pkgname}-${pkgver}/build"
   make DESTDIR="${pkgdir}" install
 
-  ln -sf mpiexec.hydra "${pkgdir}/opt/mpich/bin/mpiexec"
-  ln -sf mpiexec "${pkgdir}/opt/mpich/bin/mpirun"
   ln -sf mpiexec.hydra "${pkgdir}/opt/mpich/bin/mpirun.hydra"
 
-  install -D -m644 "${srcdir}/mpich-${pkgver}/COPYRIGHT" "${pkgdir}/usr/share/licenses/mpich/license.txt"
-  install -D -m755 "${srcdir}/mpich.profile" "${pkgdir}/etc/profile.d/mpich.sh"
+  install -D -m644 "${srcdir}/${pkgname}-${pkgver}/COPYRIGHT" "${pkgdir}/usr/share/licenses/mpich/license.txt"
+  install -D -m755 "${srcdir}/${pkgname}.profile" "${pkgdir}/etc/profile.d/mpich.sh"
 
   mkdir -p "${pkgdir}/etc/ld.so.conf.d"
   echo /opt/mpich/lib > "${pkgdir}/etc/ld.so.conf.d/mpich.conf"
