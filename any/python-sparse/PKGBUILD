@@ -12,8 +12,8 @@ checkdepends=('python-dask' 'python-pytest' 'python-pytest-black' 'python-pytest
 depends=('python-numpy' 'python-scipy' 'python-numba')
 optdepends=()
 makedepends=('python-setuptools')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/pydata/sparse/archive/$pkgver.tar.gz")
-sha256sums=('c1f37c2097dfb017789ade963cebd199151b015aa6a30eece2359eb4e3c545e1')
+source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha256sums=('685dc994aa770ee1b23f2d5392819c8429f27958771f8dceb2c4fb80210d5915')
 
 build(){
   cd "$_pkgname-$pkgver"
