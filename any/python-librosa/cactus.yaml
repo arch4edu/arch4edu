@@ -2,7 +2,11 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+repo_depends:
+  - any/python-audioread
+  - any/python-pooch
+  - any/python-soundfile
+  - x86_64/python-resampy
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

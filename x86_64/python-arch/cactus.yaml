@@ -1,7 +1,8 @@
 nvchecker:
   - source: aur
     aur:
+depends:
+  - any/python-property-cached
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build
