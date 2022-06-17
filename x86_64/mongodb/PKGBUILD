@@ -10,15 +10,16 @@
 
 pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=5.0.7
+pkgver=5.0.9
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.mongodb.com/"
 license=("Apache" "custom:SSPL1")
-depends=('curl' 'libstemmer' 'snappy' 'gperftools' 'boost-libs' 'pcre' 'yaml-cpp')
+depends=('libstemmer' 'snappy' 'boost-libs' 'pcre' 'yaml-cpp' 'curl')
 makedepends=('scons' 'python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3' 'python-yaml' 'python-requests' 'boost')
-optdepends=('mongodb-tools: mongoimport, mongodump, mongotop, etc')
+optdepends=('mongodb-tools: mongoimport, mongodump, mongotop, etc'
+            'mongosh-bin: interactive shell to connect with MongoDB')
 checkdepends=("python-pymongo")
 backup=("etc/mongodb.conf")
 source=(https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz
@@ -26,32 +27,28 @@ source=(https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz
         mongodb.tmpfiles
         mongodb-5.0.2-skip-no-exceptions.patch
         mongodb-5.0.2-no-compass.patch
-        mongodb-4.4.1-boost.patch)
-sha256sums=('d4f78305924da895c71ff7128767be591d0f7d2fdbed7b891339246eb453fe07'
+        mongodb-4.4.1-boost.patch
+        mongodb-5.0.2-boost-1.79.patch)
+sha256sums=('7914dc129b45802f0b5820ecdd392f085069d9d082f7cd7fb907fae8ff21bdda'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             '5b81ebc3ed68b307df76277aca3226feee33a00d8bb396206bdc7a8a1f58f3e4'
             '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
-            'd3bc20d0cb4b8662b5326b8a3f2215281df5aed57550fa13de465e05e2044c25')
+            'd3bc20d0cb4b8662b5326b8a3f2215281df5aed57550fa13de465e05e2044c25'
+            'a04aec4f8bd99ad213e31eb45a9e1658695442082e7c4f8c4044f6326eaa1acd')
 
 _scons_args=(
   --use-system-pcre # wait for pcre 8.44+ https://jira.mongodb.org/browse/SERVER-40836 and https://jira.mongodb.org/browse/SERVER-42990
   --use-system-snappy
   --use-system-yaml # https://jira.mongodb.org/browse/SERVER-43980
   --use-system-zlib
-  #--use-system-wiredtiger # https://jira.mongodb.org/browse/SERVER-42813 upstream broke this in 4.2.0, says in meantime not to use it
   --use-system-stemmer
   --use-sasl-client
   --ssl
   --disable-warnings-as-errors
-  # --use-system-asio     # https://jira.mongodb.org/browse/SERVER-21839 marked as fixed, but still doesn't compile.  MongoDB uses custom patches.
-  # --use-system-icu      # Doesn't compile
-  --use-system-tcmalloc   # in gperftools
   --use-system-boost    # Doesn't compile
   --use-system-zstd
-  # --use-system-valgrind # Compiles, but namcap says not used
-  # --use-system-sqlite   #   "
-  # --use-system-mongo-c  # Doesn't compile
+  --runtime-hardening=off
 )
 
 prepare() {
@@ -82,9 +79,10 @@ prepare() {
   sed -i '/"-ggdb" if not env.TargetOSIs/d' SConstruct
 
   # gentoo patches
+  patch -Np1 -i ../mongodb-4.4.1-boost.patch
+  patch -Np1 -i ../mongodb-5.0.2-boost-1.79.patch
   patch -Np1 -i ../mongodb-5.0.2-skip-no-exceptions.patch
   patch -Np1 -i ../mongodb-5.0.2-no-compass.patch
-  patch -Np1 -i ../mongodb-4.4.1-boost.patch
 }
 
 build() {
