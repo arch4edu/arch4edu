@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-repo_depends:
+depends:
   - any/python-audioread
   - any/python-pooch
   - any/python-soundfile
