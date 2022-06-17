@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/rocm/hsa-amd-aqlprofile
+  - x86_64/rocm/hsa-amd-aqlprofile-bin
   - x86_64/rocm/hsakmt-roct
   - x86_64/rocm/rocm-device-libs
   - x86_64/rocm/rocm-llvm
