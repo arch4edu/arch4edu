@@ -1,0 +1,22 @@
+--- aomp-extras-rocm-4.5.0/aomp-device-libs/aompextras/CMakeLists.txt	2021-08-09 23:36:08.000000000 +0200
++++ aomp-extras-rocm-4.5.0-patched/aomp-device-libs/aompextras/CMakeLists.txt	2021-11-19 19:56:06.737469951 +0100
+@@ -13,7 +13,7 @@
+ #  Try to get LLVM_COMPILER from HIP, then AOMP , then default /usr/local/hip
+ set(AOMP $ENV{AOMP})
+ if(AOMP)
+-  set(LLVM_COMPILER ${AOMP})
++  set(LLVM_COMPILER ${ROCM_DIR}/llvm)
+ else()
+   set(LLVM_COMPILER "$ENV{HOME}/rocm/aomp")
+ endif()
+--- aomp-extras-rocm-4.5.0/utils/CMakeLists.txt	2021-08-09 23:36:08.000000000 +0200
++++ aomp-extras-rocm-4.5.0-patched/utils/CMakeLists.txt	2021-11-19 19:39:53.406512322 +0100
+@@ -19,7 +19,7 @@
+ 
+ find_package(LLVM QUIET CONFIG
+   PATHS
+-  $ENV{AOMP}
++  $ENV{ROCM_DIR}/llvm
+   ${LLVM_DIR}
+   NO_DEFAULT_PATH
+ )

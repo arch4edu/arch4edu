@@ -1,0 +1,11 @@
+diff --color -urN aomp-rocm-4.5.0-unpatched/bin/build_flang_runtime.sh aomp-rocm-4.5.0/bin/build_flang_runtime.sh
+--- aomp-rocm-4.5.0-unpatched/bin/build_flang_runtime.sh	2021-11-16 20:57:05.189706370 +0100
++++ aomp-rocm-4.5.0/bin/build_flang_runtime.sh	2021-11-16 20:58:20.012150723 +0100
+@@ -66,6 +66,7 @@
+ -DLLVM_TARGETS_TO_BUILD=$TARGETS_TO_BUILD \
+ -DLLVM_INSTALL_RUNTIME=ON \
+ -DFLANG_BUILD_RUNTIME=ON \
++-DFLANG_LIBOMP=$OMPEXTRA_DIR/llvm/lib/libomp.so \
+ -DCMAKE_C_FLAGS=-I$COMP_INC_DIR \
+ -DCMAKE_CXX_FLAGS=-I$COMP_INC_DIR \
+ -DOPENMP_BUILD_DIR=$OPENMP_BUILD_DIR \
