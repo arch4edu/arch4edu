@@ -30,3 +30,4 @@ linux.install.pkg
 *.iso
 *.fik
 *.lic
+.gitignore
