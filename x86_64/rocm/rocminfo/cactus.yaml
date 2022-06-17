@@ -5,6 +5,7 @@ depends:
   - x86_64/rocm/hsa-amd-aqlprofile-bin
   - x86_64/rocm/hsa-rocr
   - x86_64/rocm/hsakmt-roct
+  - x86_64/rocm/rocm-cmake
   - x86_64/rocm/rocm-device-libs
   - x86_64/rocm/rocm-llvm
 build_prefix: extra-x86_64
