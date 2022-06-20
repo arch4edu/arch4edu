@@ -3,9 +3,11 @@ nvchecker:
     aur:
 depends:
   - x86_64/rocm/comgr
+  - x86_64/rocm/hip-runtime-amd
   - x86_64/rocm/hsa-amd-aqlprofile-bin
   - x86_64/rocm/hsa-rocr
   - x86_64/rocm/hsakmt-roct
+  - x86_64/rocm/rocm-cmake
   - x86_64/rocm/rocm-device-libs
   - x86_64/rocm/rocm-llvm
   - x86_64/rocm/rocminfo
