@@ -1,7 +1,7 @@
 nvchecker:
   - source: aur
     aur:
-depends:
+makedepends:
   - x86_64/rocm/rocm-cmake
   - x86_64/rocm/rocm-llvm
 build_prefix: extra-x86_64
