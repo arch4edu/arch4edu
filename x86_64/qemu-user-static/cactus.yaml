@@ -5,5 +5,7 @@ depends:
   - x86_64/glib2-static
   - x86_64/pcre-static
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: 
+  - aur-pre-build
+  - add-swap 5G
 post_build: aur-post-build
