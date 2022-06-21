@@ -1,8 +1,0 @@
-pkg/
-src/
-*.pkg*
-*.log
-*.tar.gz
-*.tgz
-*.sh
-*.sw*
