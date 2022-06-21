@@ -1,15 +1,11 @@
-
 post_install() {
-  echo '--> This package expects your @VERS@ device to run distccd on port @PORT@'
-  echo '--> Adjust DISTCC_ARGS in /etc/conf.d/distccd on your @VERS@ device to match this'
-  echo '--> ie: DISTCC_ARGS=" ... --port @PORT@ ..."'
-  echo '--> Remember to define the new port in DISTCC_HOSTS in /etc/makepkg.conf as well'
-  echo '--> ie: DISTCC_HOSTS="localhost:@PORT@ foo:@PORT@ bar:@PORT@"'
-}
+  cat <<END
 
-post_upgrade() {
-  # change occurred on version 7.2.1-4 so warn users of older versions
-  if [ $(vercmp 7.2.1-5 $2) -eq 1 ]; then
-    post_install
-  fi
+>>> This package expects your @VERS@ device to run distccd on port @PORT@
+    Adjust DISTCC_ARGS in /etc/conf.d/distccd on your @VERS@ device to match this
+    ie: DISTCC_ARGS=" ... --port @PORT@ ..."
+    Remember to define the new port in DISTCC_HOSTS in /etc/makepkg.conf as well
+    ie: DISTCC_HOSTS="localhost:@PORT@ foo:@PORT@ bar:@PORT@"
+
+END
 }
