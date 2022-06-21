@@ -4,7 +4,7 @@ nvchecker:
 depends:
   - x86_64/rocm/comgr
   - x86_64/rocm/hsa-rocr
-  - x86_64/rocm/hsamkt-roct
+  - x86_64/rocm/hsakmt-roct
   - x86_64/rocm/rocm-core
   - x86_64/rocm/rocm-device-libs
 build_prefix: extra-x86_64
