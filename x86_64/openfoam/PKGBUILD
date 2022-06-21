@@ -5,11 +5,11 @@
 
 pkgbase=openfoam
 pkgname=openfoam-org
-_subver=20211007
+_subver=20220602
 _pkgver=9
 pkgver=${_pkgver}.${_subver}
 #pkgver=${_pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.org)"
 _distpkgbase=OpenFOAM
 _gitname=$_distpkgbase-$_pkgver
@@ -22,7 +22,7 @@ provides=('openfoam')
 conflicts=('openfoam-com')
 source=("https://github.com/OpenFOAM/$_gitname/archive/refs/tags/$_subver.tar.gz")
 install="${pkgbase}.install"
-md5sums=('3fd048d2e2e3b2393633e549dc317706')
+md5sums=('d3130138327b8cf74afab2729718f3f8')
 
 prepare() {
   mv $srcdir/$_gitname-$_subver $srcdir/$_distpkgbase-$_pkgver
