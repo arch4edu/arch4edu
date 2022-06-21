@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/rocm/hip-runtime-amd
+  - x86_64/rocm/rocprofiler
+makedepends:
+  - any/python-cppheaderparser
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
