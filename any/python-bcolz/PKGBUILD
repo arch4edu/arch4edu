@@ -1,7 +1,7 @@
 pkgname=python-bcolz
 _pkgname=bcolz
 pkgver=1.2.1
-pkgrel=3
+pkgrel=2
 pkgdesc="columnar and compressed data containers."
 arch=('any')
 url="https://bcolz.readthedocs.org/"
@@ -27,3 +27,4 @@ package() {
 
 
 # vim:ts=2:sw=2:et:
+makedepends+=("python-pip")
