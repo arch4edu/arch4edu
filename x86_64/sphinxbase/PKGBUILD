@@ -5,7 +5,7 @@
 
 pkgname=sphinxbase
 pkgver=5prealpha
-pkgrel=15
+pkgrel=13
 pkgdesc='Common library for sphinx speech recognition'
 url='https://cmusphinx.sourceforge.net/'
 arch=('i686' 'x86_64')
