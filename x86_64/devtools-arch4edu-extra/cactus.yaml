@@ -1,6 +1,4 @@
 nvchecker:
-  - source: aur
-    aur:
   - source: github
     github: arch4edu/devtools-arch4edu-extra
 build_prefix: extra-x86_64
