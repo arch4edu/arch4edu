@@ -6,7 +6,7 @@ pkgdesc='QEMU based cross-build tools for Arch Linux ARM package maintainers'
 arch=('x86_64')
 url='https://aur.archlinux.org/packages/devtools-qemu'
 license=('GPL')
-depends=('archlinuxarm-keyring' 'binfmt-qemu-static' 'devtools' 'qemu-user-static-bin')
+depends=('archlinuxarm-keyring' 'binfmt-qemu-static' 'devtools' 'qemu-user-static')
 makedepends=('git')
 source=("$pkgname::git+https://github.com/arch4edu/devtools-arch4edu-extra.git"
 	"archbuild-qemu.patch"
@@ -16,7 +16,7 @@ sha256sums=('SKIP'
 
 pkgver() {
 	cd "$srcdir/$pkgname"
-	echo "$(git rev-list --count master).$(git rev-parse --short master)"
+	echo "$(pacman -Q devtools | cut -d' ' -f2 | cut -d- -f1).$(git rev-list --count master).$(git rev-parse --short master)"
 }
 
 build() {
@@ -25,7 +25,7 @@ build() {
 	cp /usr/bin/archbuild archbuild-qemu
 	patch archbuild-qemu < $srcdir/archbuild-qemu.patch
 
-	for i in armv6h armv7h aarch64
+	for i in armv7h aarch64
 	do
 		sed -i '/^Include/s/$/.alarm/' pacman-extra-$i.conf
 	done
@@ -39,7 +39,7 @@ package() {
 	cp $srcdir/$pkgname/archbuild-qemu $pkgdir/usr/bin
 	cp $srcdir/$pkgname/mirrorlist $pkgdir/etc/pacman.d/mirrorlist.alarm
 
-	for i in armv6h armv7h aarch64
+	for i in armv7h aarch64
 	do
 		cp $srcdir/$pkgname/pacman-extra-$i.conf $pkgdir/usr/share/devtools/
 		cp $srcdir/$pkgname/makepkg-$i.conf $pkgdir/usr/share/devtools/
