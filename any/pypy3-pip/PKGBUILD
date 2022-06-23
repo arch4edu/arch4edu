@@ -19,7 +19,7 @@ package_pypy3-pip() {
   mkdir -p "$pkgdir/usr/bin/"
   mv "$pkgdir/opt/pypy3/bin/pip" "$pkgdir/usr/bin/pip-pypy3"
   sed -i "s|#!/usr/bin/env python$|#!/usr/bin/env pypy3|" \
-    ${pkgdir}/opt/pypy3/site-packages/pip/__init__.py
+    ${pkgdir}/opt/pypy3/lib/pypy3.8/site-packages/pip/__init__.py
 
   install -D -m644 LICENSE.txt \
 	  "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
