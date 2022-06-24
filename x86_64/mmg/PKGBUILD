@@ -7,7 +7,6 @@ pkgdesc='Anisotropic tetrahedral remesher and moving mesh generator'
 url="http://www.mmgtools.org/"
 license=('GPL')
 arch=('i686' 'x86_64')
-depends=(scotch)
 depends=('scotch' 'vtk' 'pugixml')
 makedepends=('cmake' 'netcdf' 'proj' 'qt5-base' 'glew' 'python' 'libogg' 'libtheora' 'fmt' 'tbb')
 provides=('mmg3d')
