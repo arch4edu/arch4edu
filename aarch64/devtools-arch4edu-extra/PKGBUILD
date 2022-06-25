@@ -1,8 +1,8 @@
 pkgname=devtools-arch4edu-extra
-pkgver=19.99c7111
+pkgver=21.27a741d
 pkgrel=1
 pkgdesc='Extra tools for arch4edu package maintainers'
-arch=('x86_64' 'armv6h' 'armv7h' 'aarch64')
+arch=('x86_64' 'armv7h' 'aarch64')
 url='http://github.com/arch4edu/devtools-arch4edu-extra'
 license=('GPL')
 depends=('devtools')
@@ -26,7 +26,7 @@ package() {
 		cat /usr/share/devtools/pacman-extra.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman-arch4edu.conf
 		cat /usr/share/devtools/pacman-extra.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman-multilib-arch4edu.conf
 	else
-		for i in armv6h armv7h aarch64
+		for i in armv7h aarch64
 		do
 			cp $srcdir/$pkgname/pacman-extra-$i.conf $pkgdir/usr/share/devtools/
 			cp $srcdir/$pkgname/makepkg-$i.conf $pkgdir/usr/share/devtools/
