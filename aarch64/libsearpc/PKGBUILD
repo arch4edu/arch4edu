@@ -17,27 +17,28 @@ depends=(
     'python-gobject'
     'python-simplejson'
 )
-source=("libsearpc-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('cd00197fcc40b45b1d5e892b2d08dfa5947f737e0d80f3ef26419334e75b0bff')
+_pkgver="${pkgver%.*}-latest"
+source=("libsearpc-$_pkgver.tar.gz::$url/archive/v$_pkgver.tar.gz")
+sha256sums=('683a78cc6dc66d4db5fd90e3260a23845c6a5ff2510b8f55d2f46b86f9c3f271')
 
 prepare () {
-    cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/$pkgname-$_pkgver"
     sed -i 's|(DESTDIR)@prefix@|@prefix@|' './libsearpc.pc.in'
 }
 
 build () {
-    cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/$pkgname-$_pkgver"
     ./autogen.sh
     ./configure --prefix=/usr PYTHON='/usr/bin/python'
     make
 }
 
 check () {
-    cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/$pkgname-$_pkgver"
     make check
 }
 
 package () {
-    cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/$pkgname-$_pkgver"
     make DESTDIR="$pkgdir" install
 }
