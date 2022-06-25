@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: Valloric/YouCompleteMe
+  - alias: python
+  - alias: clang
+build_prefix: extra-x86_64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
