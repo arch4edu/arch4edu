@@ -1,8 +1,8 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 
 pkgname=('python-catkin_pkg')
-pkgver='0.4.24'
-pkgrel=2
+pkgver='0.5.2'
+pkgrel=1
 pkgdesc='Standalone Python library for the catkin package system'
 arch=('any')
 url='https://github.com/ros-infrastructure/catkin_pkg'
@@ -11,17 +11,10 @@ depends=('python' 'python-argparse' 'python-dateutil' 'python-docutils' 'python-
 makedepends=('python-setuptools')
 provides=('python-catkin-pkg')
 conflicts=('python2-catkin_pkg' 'python-catkin-pkg')
-source=("https://github.com/ros-infrastructure/catkin_pkg/archive/${pkgver}.tar.gz"
-        "setuptools-replace-newlines-in-description.patch")
-sha256sums=('57ea09fd51d9a67ccf5a0660a8f84794304182c4f644f27ad835a979567893b1'
-            '0575506c2b25f44e6900f30c320b3dbdd6726174ab1ff45b22d8445b5a42f331')
+source=("https://github.com/ros-infrastructure/catkin_pkg/archive/${pkgver}.tar.gz")
+sha256sums=('2f16ff4747817d9dd74edbc7d307a3dc89043f70ee108214201820209153b5c1')
 
 _module='catkin_pkg'
-
-prepare() {
-    cd "${srcdir}/${_module}-${pkgver}"
-    patch --forward --strip=1 -i "${srcdir}/setuptools-replace-newlines-in-description.patch"
-}
 
 build() {
     cd "${srcdir}/${_module}-${pkgver}"
