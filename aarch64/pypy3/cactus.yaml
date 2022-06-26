@@ -3,7 +3,9 @@ nvchecker:
     archpkg: pypy3
 build_prefix: extra-x86_64
 makepkg_args: -A
-pre_build: download-abs-snapshot
+pre_build:
+  - download-abs-snapshot
+  - sed -e '/^makedepends=(/s/pypy/python2/' -e 's/  pypy /  python2 /g' -i PKGBUILD
 post_build:
   - git add PKGBUILD
   - git-commit
