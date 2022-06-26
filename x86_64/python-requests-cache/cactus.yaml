@@ -3,7 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/python-url-normalize
+  - any/python-url-normalize
 makedepends:
   - x86_64/python-timeout-decorator
 build_prefix: extra-x86_64
