@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: WiringPi/WiringPi-Python
+build_prefix: extra-x86_64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
