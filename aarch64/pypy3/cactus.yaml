@@ -1,6 +1,6 @@
 nvchecker:
-  - source: aur
-    aur:
+  - source: archpkg
+    archpkg: pypy3
 build_prefix: extra-x86_64
 makepkg_args: -A
 pre_build: download-abs-snapshot
