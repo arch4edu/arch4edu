@@ -1,11 +1,11 @@
 nvchecker:
   - source: archpkg
     archpkg: pypy3
+makedepends:
+  - aarch64/pypy-bin
 build_prefix: extra-x86_64
 makepkg_args: -A
-pre_build:
-  - download-abs-snapshot
-  - sed -e '/^makedepends=(/s/pypy/python2/' -e 's/  pypy /  python2 /g' -i PKGBUILD
+pre_build: download-abs-snapshot
 post_build:
   - git add PKGBUILD
   - git-commit
