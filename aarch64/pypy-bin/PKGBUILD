@@ -2,13 +2,11 @@
 
 pkgname=pypy-bin
 pkgver=7.3.9
-pkgrel=1
+pkgrel=2
 pkgdesc="A Python implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64' 'aarch64')
-depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib' 'ncurses')
-optdepends=('sqlite: sqlite module'
-            'tk: tk module')
+depends=('bzip2' 'openssl' 'zlib')
 provides=('pypy')
 conflicts=('pypy')
 options=(!buildflags)
@@ -21,6 +19,10 @@ sha512sums_aarch64=('23567afe48eeee01846cf24f3b45e579a39ea540144a0fa50e106bc0c9a
 package() {
   [ "$CARCH" = "x86_64" ] && cd pypy2.7-v${pkgver}-linux64
   [ "$CARCH" = "aarch64" ] && cd pypy2.7-v${pkgver}-aarch64
+
+  # Fix permissions
+  find . -type d -exec chmod +rx {} \;
+  find . -name '*.so*' -exec chmod +rx {} \;
 
   # Install pypy
   mkdir -p "${pkgdir}"/opt/pypy/
