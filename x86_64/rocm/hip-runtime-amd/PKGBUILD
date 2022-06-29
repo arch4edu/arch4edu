@@ -1,8 +1,8 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-runtime-amd
-pkgver=5.1.3
-pkgrel=2
+pkgver=5.2.0
+pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
@@ -19,13 +19,11 @@ source=("$pkgname-$pkgver.tar.gz::$_hip/archive/rocm-$pkgver.tar.gz"
         "$pkgname-opencl-$pkgver.tar.gz::$_opencl/archive/rocm-$pkgver.tar.gz"
         "$pkgname-rocclr-$pkgver.tar.gz::$_rocclr/archive/rocm-$pkgver.tar.gz"
         "$pkgname-hipamd-$pkgver.tar.gz::$_hipamd/archive/rocm-$pkgver.tar.gz"
-        "no-devices.patch::https://github.com/ROCm-Developer-Tools/HIP/commit/d221fb6ebbe24d66855af8160687aa01b0112dec.patch"
         "git-hash.patch")
-sha256sums=('ce755ee6e407904eba3f6b3c9efcdd48eb4f58a26b06e1892166d05f19a75973'
-            '44a7fac721abcd93470e1a7e466bdea0c668c253dee93e4f1ea9a72dbce4ba31'
-            'ddee63cdc6515c90bab89572b13e1627b145916cb8ede075ef8446cbb83f0a48'
-            '707f2217f0e7aeb62d7b76830a271056d665542bf5f7a54e40adf4d5f299ca93'
-            'SKIP'
+sha256sums=('a6e0515d4d25865c037b546035df9c51f0882cd2700e759c266ff7e199f37c3a'
+            '80f73387effdcd987a150978775a87049a976aa74f5770d4420847b004dd59f0'
+            '37f5fce04348183bce2ece8bac1117f6ef7e710ca68371ff82ab08e93368bafb'
+            '8774958bebc29a4b7eb9dc2d38808d79d9a24bf9c1f44e801ff99d2d5ba82240'
             '84cd40751e041edd48489eca59f1702bba08a402b25162e4cf061de45abc2bde')
 _dirhip="$(basename "$_hip")-$(basename "${source[0]}" ".tar.gz")"
 _diropencl="$(basename "$_opencl")-$(basename "${source[1]}" ".tar.gz")"
@@ -35,9 +33,6 @@ _dirhipamd="$(basename "$_hipamd")-$(basename "${source[3]}" ".tar.gz")"
 prepare() {
     cd "$_dirhipamd"
     patch -Np1 -i "$srcdir/git-hash.patch"
-
-    cd "$srcdir/$_dirhip"
-    patch -Np1 -i "$srcdir/no-devices.patch"
 }
 
 build() {
