@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/rocm/rocm-core
+  - x86_64/rocm/rocm-language-runtime
+  - x86_64/rocm/rocm-llvm
+  - x86_64/rocm/rocm-opencl-runtime
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
