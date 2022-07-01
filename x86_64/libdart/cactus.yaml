@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/coin-or-ipopt
+  - x86_64/fcl
+  - x86_64/libccd
+  - x86_64/octomap
+  - x86_64/pagmo
+  - x86_64/urdfdom
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
