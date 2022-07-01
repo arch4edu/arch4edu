@@ -88,3 +88,4 @@ package() {
   cp -r textures ${pkgdir}/usr/share/${pkgname}
   cp -r vspaero_ex ${pkgdir}/usr/share/${pkgname}
 }
+makedepends+=("${optdepends[@]}")

@@ -1,8 +1,0 @@
-repo_depends:
-  - cminpack
-  - code-eli-git
-  - cpptest
-  - stepcode
-update_on:
-  - source: aur
-    aur:
