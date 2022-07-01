@@ -1,6 +1,6 @@
 # Maintainer Torsten Keßler <t dot kessler at posteo dot de>
 pkgname=rocm-gdb
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc='ROCm source-level debugger for Linux, based on GDB'
 arch=('x86_64')
@@ -9,15 +9,8 @@ license=('GPL')
 depends=('rocm-dbgapi' 'python' 'guile2.0' 'ncurses' 'expat' 'xz' 'zlib' 'mpfr' 'source-highlight' 'babeltrace')
 makedepends=('texinfo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('81f5e368facdcc424a37cb5809f0b436bedb9a6d9af4d17785b3c446ab0a7821')
+sha256sums=('70c5b443292b9bb114844eb63b72cfab1b65f083511ee39d55db7a633c63bf5a')
 _dirname="$(basename "$url")-$(basename "${source[0]}" ".tar.gz")"
-
-prepare() {
-    cd "$_dirname"
-    # From https://github.com/archlinux/svntogit-packages/blob/packages/gdb/trunk/PKGBUILD
-    # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
-    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
-}
 
 build() {
     cd "$_dirname"
