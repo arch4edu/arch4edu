@@ -1,22 +1,22 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=hipcub
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc='Header-only library on top of rocPRIM or CUB'
 arch=('x86_64')
-url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipcub'
+url='https://docs.amd.com/bundle/hipCUB-release-rocm-rel-5.2/page/introduction.html'
 license=('custom')
 depends=('rocprim')
 makedepends=('cmake' 'rocm-cmake' 'git' 'hip')
 _git='https://github.com/ROCmSoftwarePlatform/hipCUB'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('dc75640689b6a5e15dd3acea643266bdf114ea63efc60be8272f484cf8f04494')
+sha256sums=('ac4dc2310f0eb657e1337c93d8cc4a5d8396f9544a7336eeceb455678a1f9139')
 _dirname="$(basename $_git)-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
   # -fcf-protection is not supported by HIP, see
-  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
 
   CXX=/opt/rocm/bin/hipcc \
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
