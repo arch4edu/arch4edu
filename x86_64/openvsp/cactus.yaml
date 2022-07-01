@@ -7,5 +7,5 @@ depends:
 build_prefix: extra-x86_64
 pre_build:
   - aur-pre-build
-  - add makedepends '${optdepends[@]}'
+  - add makedepends doxygen graphviz python swig
 post_build: aur-post-build
