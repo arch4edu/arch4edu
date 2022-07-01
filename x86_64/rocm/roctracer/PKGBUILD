@@ -1,7 +1,7 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=roctracer
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc="ROCm Tracer Callback/Activity Library for Performance tracing AMD GPU's"
 arch=('x86_64')
@@ -11,16 +11,9 @@ depends=('hip' 'rocprofiler')
 makedepends=('cmake' 'git' 'python-argparse' 'python-cppheaderparser' 'python-ply')
 options=(!staticlibs strip)
 _git='https://github.com/ROCm-Developer-Tools/roctracer'
-source=("roctracer-rocm-$pkgver.tar.gz::$_git/archive/refs/tags/rocm-$pkgver.tar.gz"
-        "glibc-2.34.patch::https://patch-diff.githubusercontent.com/raw/ROCm-Developer-Tools/roctracer/pull/63.patch")
-sha256sums=('45f19875c15eb609b993788b47fd9c773b4216074749d7744f3a671be17ef33c'
-            '937e040a045eceddb609f18df1106f17fbe69b0ca479dea43fb794d58cacf7c2')
+source=("roctracer-rocm-$pkgver.tar.gz::$_git/archive/refs/tags/rocm-$pkgver.tar.gz")
+sha256sums=('9747356ce61c57d22c2e0a6c90b66a055e435d235ba3459dc3e3f62aabae6a03')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
-
-prepare() {
-    cd "$_dirname"
-    patch -Np1 -i "$srcdir/glibc-2.34.patch"
-}
 
 build() {
   cmake -B build -Wno-dev \
