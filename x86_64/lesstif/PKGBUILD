@@ -28,7 +28,6 @@ prepare() {
 build() {
   cd ${pkgname}-${pkgver}
 
-  CFLAGS="$CFLAGS -L${srcdir}/${pkgname}-${pkgver}/lib/Xm-2.1/.libs"
   ./configure --prefix=/usr \
     --enable-production \
     --enable-nonstandard-conversions \
