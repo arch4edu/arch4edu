@@ -1,17 +1,17 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocsparse
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc='BLAS for sparse computation on top of ROCm'
 arch=('x86_64')
-url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocsparse'
+url='https://rocsparse.readthedocs.io/en/master/'
 license=('MIT')
 depends=('hip' 'rocprim')
 makedepends=('cmake' 'git' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/rocSPARSE'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('ef9641045b36c9aacc87e4fe7717b41b1e29d97e21432678dce7aca633a8edc2')
+sha256sums=('7ed929af16d2502135024a6463997d9a95f03899b8a33aa95db7029575c89572')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
@@ -24,7 +24,7 @@ build() {
   fi
 
   # -fcf-protection is not supported by HIP, see
-  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
   CXX=/opt/rocm/bin/hipcc \
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
   cmake -Wno-dev -S "$_dirname" \
