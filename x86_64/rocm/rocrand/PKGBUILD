@@ -1,11 +1,11 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
-url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#rocrand'
+url='https://rocsparse.readthedocs.io/en/master/'
 license=('MIT')
 depends=('hip')
 makedepends=('cmake' 'git' 'gcc-fortran' 'python')
@@ -16,7 +16,7 @@ _hiprand='https://github.com/ROCmSoftwarePlatform/hipRAND'
 _commit=20ac3db9d7462c15a3e96a6f0507cd5f2ee089c4
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "$pkgname-hiprand-$pkgver.tar.gz::$_hiprand/archive/$_commit.tar.gz")
-sha256sums=('4a19e1bcb60955a02a73ad64594c23886d6749afe06b0104e2b877dbe02c8d1c'
+sha256sums=('ab3057e7c17a9fbe584f89ef98ec92a74d638a98d333e7d0f64daf7bc9051e38'
             'ee38a68c9e88056b7ecd41553e496e455dbb3fe08871ff3545430d6733070e6b')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 _hipname="$(basename "$_hiprand")-$(basename "${source[1]}" ".tar.gz")"
@@ -34,7 +34,7 @@ build() {
   fi
 
   # -fcf-protection is not supported by HIP, see
-  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
   CXX=/opt/rocm/hip/bin/hipcc \
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
   cmake -Wno-dev -S "$_dirname" \
