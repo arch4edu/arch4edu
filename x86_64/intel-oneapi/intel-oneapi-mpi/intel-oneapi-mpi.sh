@@ -1,0 +1,1 @@
+export I_MPI_ROOT=/opt/intel/oneapi/mpi/latest
