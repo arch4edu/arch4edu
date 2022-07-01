@@ -6,19 +6,19 @@
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 # Contributor: Wink Saville <wink at saville dot com>
 pkgname=hypre
-pkgver=2.24.0
+pkgver=2.25.0
 pkgrel=1
 pkgdesc="Parallel solvers for sparse linear systems featuring multigrid methods"
 arch=('x86_64')
 url="https://github.com/${pkgname}-space/${pkgname}"
-license=('APACHE' 'MIT' 'LGPL2')
+license=('APACHE' 'MIT' 'LGPL')
 depends=('superlu' 'superlu_dist')
 makedepends=('gcc-fortran')
 source=(${pkgname}-${pkgver}::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('4f27e99ba2923c6394ccc3705930897430becef840415004d6fae2fa311fef5b2399265ec1211364f883b35d00933523e65888419890902bcd4e1e6942b66560')
+sha512sums=('fdc9d3da4edd6254fc28286c70f15153f0182768c829406cf4c93a48796bae97c3b1e6b713e5263bdb7d86fee632edbe48d5d9cfe8af4d1c57c42e350bfd9f90')
 
 build() {
-  cd "${pkgname}-${pkgver}/src"
+  cd ${pkgname}-${pkgver}/src
   # disable internal superlu and fei for now, not sure yet how to get it to use external superlu
   CFLAGS="${CFLAGS} -fopenmp" CXXFLAGS="${CXXFLAGS} -fopenmp" LDFLAGS="${LDFLAGS} -lgomp" \
     ./configure \
@@ -41,11 +41,13 @@ build() {
 }
 
 check() {
-  cd "${pkgname}-${pkgver}/src"
+  cd ${pkgname}-${pkgver}/src
   make test
 }
 
 package() {
-  cd "${pkgname}-${pkgver}/src"
+  cd ${pkgname}-${pkgver}/src
   make install
+  install -Dm 644 ${srcdir}/${pkgname}-${pkgver}/LICENSE-APACHE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm 644 ${srcdir}/${pkgname}-${pkgver}/LICENSE-MIT -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
