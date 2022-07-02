@@ -2,29 +2,32 @@
 # Contributor: Moritz Maxeiner <moritz@ucworks.org>
 # Contributor: Sebastien <sebcactus@gmail.com>
 pkgname=sptk
-pkgver=3.11
+pkgver=4.0
 pkgrel=1
 pkgdesc="A suite of speech signal processing tools."
 arch=('x86_64')
 url="http://sp-tk.sourceforge.net/"
-license=('BSD')
+license=('Apache')
 depends=('glibc')
-makedepends=('tcsh')
+makedepends=('cmake' 'tcsh')
 optdepends=('libx11: for XY-plotter' 'tcsh: for helper scripts')
-source=(http://downloads.sourceforge.net/sp-tk/SPTK-$pkgver.tar.gz ${pkgname}.sh)
-sha256sums=('ae26929a3c196ca8a1d1a638718fc4400adf8ce963b8328be72f8802f1589100'
+source=("https://github.com/sp-nitech/SPTK/archive/refs/tags/v${pkgver}.tar.gz" ${pkgname}.sh)
+sha256sums=('2defd24b1f0b7e857b046d1bba390bbafddcca517a816de633640cb4b5b9f871'
             'b5afaf60414297bd359f73dbe14ae2a3608f9c52301cc5801c9708ceb710d416')
 build()
 {
   cd "${srcdir}/SPTK-$pkgver"
-  ./configure --prefix=/opt/$pkgname
+  mkdir -p build
+  cd build
+  cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="/opt/$pkgname"
   make
 }
 
 package()
 {
-  cd "${srcdir}/SPTK-$pkgver"
-  make prefix="${pkgdir}/opt/$pkgname" install
-  install -D -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+  cd "${srcdir}/SPTK-$pkgver/build"
+  make DESTDIR="${pkgdir}" install
+  cd ..
+  install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
   install -D -m755 ../${pkgname}.sh "${pkgdir}/etc/profile.d/${pkgname}.sh"
 }
