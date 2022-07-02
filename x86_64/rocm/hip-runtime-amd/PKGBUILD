@@ -2,7 +2,7 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-runtime-amd
 pkgver=5.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
@@ -62,7 +62,7 @@ package() {
   DESTDIR="$pkgdir" make -C build install
 
   # https://github.com/ROCm-Developer-Tools/HIP/issues/2678
-  sed -i '/__noinline__/d' "$pkgdir/opt/rocm/hip/include/hip/amd_detail/host_defines.h"
+  sed -i '/__noinline__/d' "$pkgdir/opt/rocm/include/hip/amd_detail/host_defines.h"
 
   # add links (hipconfig is for rocblas with tensile)
   install -d "$pkgdir/usr/bin"
