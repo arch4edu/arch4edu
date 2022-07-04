@@ -9,7 +9,7 @@ license=('APACHE')
 arch=('i686' 'x86_64')
 depends=('libxext' 'cairo' 'pixman' 'fontconfig' 'expat' 'bzip2' 'zlib' 'netcdf' 'hdf5' 
          'triangle' 'hdf4' 'netcdf-fortran' 'libxt' 'libxaw' 'libxext' 'libxpm' 'udunits'
-         'libx11' 'imake' 'g2clib' 'gdal' 'openmotif' 'glibc' 'libjpeg' 'libpng' 'jasper' 'libaec'
+         'libx11' 'imake' 'g2clib' 'gdal' 'lesstif' 'glibc' 'libjpeg' 'libpng' 'jasper' 'libaec'
          'libxaw' 'tcsh' 'flex' 'gsl')
 makedepends=('gcc' 'gcc-fortran' 'tcsh' 'byacc')
 provides=('ncl')
@@ -87,8 +87,8 @@ build() {
     ./config/ymkmf
 
     # build
-    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H  -lnetcdf -fcommon -DH5_USE_110_API" F77="gfortran" F77_LD="gfortran"\
-        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H  -fallow-argument-mismatch -fcommon -DH5_USE_110_API" >> log 2>&1 
+    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -lnetcdf -fcommon -DH5_USE_110_API" F77="gfortran" F77_LD="gfortran"\
+        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -fallow-argument-mismatch -fcommon -DH5_USE_110_API" >> log 2>&1 
 }
 
 package() {
