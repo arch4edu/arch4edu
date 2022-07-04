@@ -8,7 +8,7 @@ pkgdesc="A simple command-line utility for querying and monitoring GPU status"
 arch=('any')
 url=https://github.com/wookayin/gpustat
 license=('MIT')
-depends=('python' 'python-six' 'nvidia' 'python-blessings' 'python-nvidia-ml-py3-git')
+depends=('python' 'python-six' 'nvidia' 'python-blessings' 'python-nvidia-ml-py3')
 makedepends=('python-setuptools')
 source=("https://github.com/wookayin/${_pkgname}/archive/v${pkgver}.tar.gz")
 sha256sums=('89c588c85de916f13945435c9da4afd76403dbafe301f73ae71de73182e48106')
@@ -25,3 +25,5 @@ package(){
 }
 
 # vim:ts=2:sw=2:et:
+depends+=("python-psutil")
+makedepends+=("python-pip")
