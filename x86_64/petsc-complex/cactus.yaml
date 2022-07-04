@@ -2,13 +2,13 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - hypre
-  - mumps
-  - parmetis
-  - pastix
-  - scotch
-  - superlu_dist
-  - archimedes-tools: triangle
+  - x86_64/hypre
+  - x86_64/mumps
+  - x86_64/parmetis
+  - x86_64/pastix
+  - x86_64/scotch
+  - x86_64/superlu_dist
+  - x86_64/archimedes-tools: triangle
 build_prefix: extra-x86_64
 pre_build:
   - aur-pre-build
