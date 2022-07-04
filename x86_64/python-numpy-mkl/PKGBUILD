@@ -7,7 +7,7 @@
 # Adapted to mkl by Simone Riva
 
 pkgname=python-numpy-mkl
-pkgver=1.21.1
+pkgver=1.23.0
 pkgrel=1
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=('x86_64' 'i686')
@@ -15,21 +15,16 @@ license=('custom')
 url="http://numpy.scipy.org/"
 provides=("python-numpy=$pkgver")
 conflicts=('python-numpy')
-depends=('python>=3.6' 'intel-mkl')
+depends=('python' 'intel-oneapi-mkl')
 optdepends=('python-nose: testsuite')
-makedepends=('python-setuptools' 'gcc-fortran' 'python-nose' 'cython>=0.29.21')
+makedepends=('cython' 'gcc-fortran' 'procps-ng' 'python-nose' 'python-setuptools')
 checkdepends=('python-pytest' 'python-hypothesis')
 options=('staticlibs')
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-sha256sums=('504ced5d900fd5724c74ebf5dbb03572c04074bec9baa24b5646c66a2450e654')
-
-prepare() {
-  export MKLROOT=/opt/intel/mkl
-  # https://github.com/numpy/numpy/issues/17390
-  sed -i '/error/a \    ignore:Module already imported so cannot be rewritten' numpy-$pkgver/pytest.ini
-}
+sha256sums=('bd3fa4fe2e38533d5336e1272fc4e765cabbbde144309ccee8675509d5cd7b05')
 
 build() {
+  source /opt/intel/oneapi/setvars.sh
   cd numpy-$pkgver
   python setup.py build
 }
@@ -39,7 +34,7 @@ check() {
   cd numpy-$pkgver
   python setup.py install --root="$PWD/tmp_install" --optimize=1
   cd "$PWD/tmp_install"
-  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/usr/lib/python3.9/site-packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
+  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/usr/lib/python3.10/site-packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
 }
 
 package() {
