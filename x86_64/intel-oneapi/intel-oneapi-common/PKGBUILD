@@ -13,6 +13,7 @@ source=("https://apt.repos.intel.com/oneapi/pool/main/${pkgname}-vars-${pkgver}-
 "https://apt.repos.intel.com/oneapi/pool/main/${pkgname}-licensing-${pkgver}-${pkgver}-${_debpkgrel}_all.deb")
 sha256sums=('52a2726739652b4d3021a9f21d8ca664cd5582853b561e421f003b94789a4469'
             '30f36ef653964ac629ce77c2c2d21a923c7ba4ff88936c39a8f39237b7446cca')
+optdepends=("procps-ng: For execute setvars.sh")
 noextract=(
 	"${pkgname}-vars-${pkgver}-${_debpkgrel}_all.deb"
 	"${pkgname}-licensing-${pkgver}-${pkgver}-${_debpkgrel}_all.deb"
