@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/ros2/python-catkin_pkg
+  - x86_64/ros2/python-colcon-cmake
+  - x86_64/ros2/python-colcon-core
+  - x86_64/ros2/python-colcon-library-path
+  - x86_64/ros2/python-colcon-pkg-config
+  - x86_64/ros2/python-colcon-python-setup-py
+  - x86_64/ros2/python-colcon-recursive-crawl
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
