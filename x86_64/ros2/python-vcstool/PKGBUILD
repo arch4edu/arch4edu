@@ -1,0 +1,27 @@
+# Maintainer: Kartik Mohta <kartikmohta@gmail.com>
+
+pkgname=('python-vcstool')
+pkgver='0.3.0'
+pkgrel=1
+pkgdesc='A version control system tool designed to make working with multiple repositories easier'
+arch=('any')
+url='https://github.com/dirk-thomas/vcstool'
+license=('Apache')
+depends=('python' 'python-yaml')
+makedepends=('python-setuptools')
+
+conflicts=('python2-vcstool')
+source=("https://github.com/dirk-thomas/vcstool/archive/${pkgver}.tar.gz")
+sha256sums=('2b6e4a97454983166e9a5fe08aca41cd8b28288ef693b954bc0e8b8518eafd3b')
+
+_module='vcstool'
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py build
+}
+
+package() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
