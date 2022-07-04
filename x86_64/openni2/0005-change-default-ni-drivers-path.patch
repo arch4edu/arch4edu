@@ -1,0 +1,11 @@
+--- a/Source/Core/OniContext.cpp
++++ b/Source/Core/OniContext.cpp
+@@ -24,7 +24,7 @@
+ #include <XnOSCpp.h>
+ 
+ static const char* ONI_CONFIGURATION_FILE = "/etc/openni2/OpenNI.ini";
+-static const char* ONI_DEFAULT_DRIVERS_REPOSITORY = "OpenNI2" XN_FILE_DIR_SEP "Drivers";
++static const char* ONI_DEFAULT_DRIVERS_REPOSITORY = "/usr/lib/" "OpenNI2" XN_FILE_DIR_SEP "Drivers";
+ 
+ #define XN_MASK_ONI_CONTEXT "OniContext"
+ 
