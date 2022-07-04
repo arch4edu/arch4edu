@@ -4,7 +4,7 @@
 
 pkgname=pocketsphinx
 pkgver=5prealpha
-pkgrel=14
+pkgrel=13
 pkgdesc='Lightweight speech recognition engine'
 arch=('i686' 'x86_64')
 url='http://cmusphinx.sourceforge.net'
