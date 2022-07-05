@@ -39,7 +39,7 @@ fi
 
 # Add hdf5 support
 if [[ "$(h5stat -V)" ]]; then
-	CONFOPTS="${CONFOPTS} --with-hdf5=1"
+	CONFOPTS="${CONFOPTS} --with-hdf5=1 --download-hdf5-fortran-bindings=1"
 fi
 
 # Add scalapack support
@@ -98,10 +98,10 @@ if [ -f "${PASTIX_CONF}" ]; then
 fi
 
 # Add trilinos support
-#if [ -f "/usr/lib/libml.so" ]; then
-#	CONFOPTS="${CONFOPTS} --with-ml=1"
-#	# Add boost support (may be useful for trilinos)
-#	CONFOPTS="${CONFOPTS} --with-boost=1"
-#fi
+if [ -f "/usr/lib/libml.so" ]; then
+	CONFOPTS="${CONFOPTS} --with-ml=1"
+	# Add boost support (may be useful for trilinos)
+	CONFOPTS="${CONFOPTS} --with-boost=1"
+fi
 
 echo "${CONFOPTS}"
