@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - any/python-pytest-arraydiff
+  - any/python-pytest-astropy-header
+  - any/python-pytest-doctestplus
+  - any/python-pytest-filter-subpackage
+  - any/python-pytest-remotedata
+  - x86_64/python-pytest-openfiles
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
