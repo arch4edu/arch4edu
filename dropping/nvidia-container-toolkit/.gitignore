@@ -1,8 +1,0 @@
-*.tar
-*.tar.*
-
-src/
-pkg/
-
-nvidia-container-runtime-hook/
-runc/

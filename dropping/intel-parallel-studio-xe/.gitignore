@@ -1,8 +1,0 @@
-*.pkg.tar.gz
-
-pkg/
-
-src/
-
-*.tgz
-*.tgz.part

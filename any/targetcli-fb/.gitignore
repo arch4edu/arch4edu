@@ -1,8 +1,0 @@
-*.tar.gz
-*.tar.xz
-*.tgz
-*.rpm
-*.zip
-*.bz2
-src/
-pkg/
