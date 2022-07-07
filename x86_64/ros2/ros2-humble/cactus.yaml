@@ -3,6 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
+  - x86_64/ros2/python-pyqt5-sip4
   - x86_64/ros2/ros2-arch-deps
   - x86_64/ros2/ros2-pyqt5-sip-compat
 build_prefix: extra-x86_64
