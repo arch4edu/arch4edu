@@ -1,0 +1,12 @@
+diff -ru PyQt5-5.15.6.orig/sip/QtCore/QtCoremod.sip PyQt5-5.15.6/sip/QtCore/QtCoremod.sip
+--- PyQt5-5.15.6.orig/sip/QtCore/QtCoremod.sip	2021-11-06 19:41:47.117226645 +0100
++++ PyQt5-5.15.6/sip/QtCore/QtCoremod.sip	2021-11-06 19:42:32.674011854 +0100
+@@ -20,7 +20,7 @@
+ // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ 
+ 
+-%Module(name=PyQt5.QtCore, call_super_init=True, default_VirtualErrorHandler=PyQt5, keyword_arguments="Optional", use_limited_api=True, py_ssize_t_clean=True)
++%Module(name=PyQt5.QtCore, call_super_init=True, default_VirtualErrorHandler=PyQt5, keyword_arguments="Optional", use_limited_api=True)
+ 
+ %Timeline {Qt_5_0_0 Qt_5_0_1 Qt_5_0_2 Qt_5_1_0 Qt_5_1_1 Qt_5_2_0 Qt_5_2_1 Qt_5_3_0 Qt_5_3_1 Qt_5_3_2 Qt_5_4_0 Qt_5_4_1 Qt_5_4_2 Qt_5_5_0 Qt_5_5_1 Qt_5_6_0 Qt_5_6_1 Qt_5_6_2 Qt_5_6_3 Qt_5_6_4 Qt_5_6_5 Qt_5_6_6 Qt_5_6_7 Qt_5_6_8 Qt_5_6_9 Qt_5_7_0 Qt_5_7_1 Qt_5_8_0 Qt_5_8_1 Qt_5_9_0 Qt_5_9_1 Qt_5_9_2 Qt_5_9_3 Qt_5_9_4 Qt_5_9_5 Qt_5_9_6 Qt_5_9_7 Qt_5_9_8 Qt_5_9_9 Qt_5_10_0 Qt_5_10_1 Qt_5_11_0 Qt_5_11_1 Qt_5_11_2 Qt_5_11_3 Qt_5_12_0 Qt_5_12_1 Qt_5_12_2 Qt_5_12_3 Qt_5_12_4 Qt_5_13_0 Qt_5_14_0 Qt_5_15_0}
+ 
