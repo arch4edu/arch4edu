@@ -7,4 +7,5 @@ depends:
 build_prefix: extra-x86_64
 pre_build:
   - aur-pre-build
+  - sudo sed 's/nproc/echo 2/' -i /etc/makepkg.conf
 post_build: aur-post-build
