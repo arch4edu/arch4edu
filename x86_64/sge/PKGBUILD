@@ -3,7 +3,7 @@
 
 pkgname=sge
 pkgver=8.1.9
-pkgrel=6
+pkgrel=7
 epoch=1
 pkgdesc="The Son of Grid Engine is a community project to continue Sun's old gridengine."
 arch=('x86_64')
@@ -22,12 +22,14 @@ depends=(
 makedepends=('make')
 install=${pkgname}.install
 source=(
-	"https://arc.liv.ac.uk/downloads/SGE/releases/${pkgver}/${pkgname}_${pkgver}.tar.xz"
+	#"https://arc.liv.ac.uk/downloads/SGE/releases/${pkgver}/${pkgname}_${pkgver}.tar.xz"
+	# Mirror link, please remind me if the original link is available again.
+	"https://github.com/petronny/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz"
 	"sgemaster@.service"
 	"sgeexecd@.service"
 	#"${pkgname}.sh"
 )
-md5sums=('a2f03ca8b803ca4da7d2dedadeca74bb'
+md5sums=('fc2993cf04d847c744eb23896547d2df'
          '9f9084c196f22394654263eb651a7a2c'
          '9fb0825053a203802836735741b15007')
 
@@ -48,6 +50,9 @@ prepare() {
 
 	# https://svnweb.freebsd.org/ports/head/devel/kBuild/files/patch-src_kmk_make.h?view=markup&pathrev=539776
 	sed '/^struct rlimit stack_limit;$/s/^/extern /' -i source/3rdparty/qmake/make.h
+
+	# For the mirror only
+	chmod +x source/scripts/bootstrap.sh
 }
 
 build() {
