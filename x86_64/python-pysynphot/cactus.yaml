@@ -3,7 +3,10 @@ nvchecker:
     aur:
 depends:
   - x86_64/python-astropy
+makedepends:
+  - any/python-pytest-astropy-header
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build:
+  - aur-pre-build
+  - add depends python-six
 post_build: aur-post-build
