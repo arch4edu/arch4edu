@@ -4,8 +4,9 @@ nvchecker:
 depends:
   - x86_64/glib2-static
   - x86_64/pcre-static
+group: x86_64
 build_prefix: extra-x86_64
 pre_build:
   - aur-pre-build
-  - sudo sed 's/nproc/echo 2/' -i /etc/makepkg.conf
+  - sudo sed "s/-j$(nproc)/-j2/" -i /etc/makepkg.conf
 post_build: aur-post-build
