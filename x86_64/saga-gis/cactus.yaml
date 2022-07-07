@@ -5,5 +5,7 @@ depends:
   - x86_64/wxgtk-dev: wxgtk-common-dev
   - x86_64/wxgtk-dev: wxgtk3-dev
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build:
+  - aur-pre-build
+  - add makedepends cmake
 post_build: aur-post-build
