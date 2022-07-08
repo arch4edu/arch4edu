@@ -1,0 +1,59 @@
+From: Johan Van de Wauw <johan.vandewauw@gmail.com>
+Date: Thu, 9 Jul 2015 17:56:07 +0200
+Subject: Fix opencv module
+
+--- src/modules/imagery/imagery_opencv/Makefile.am	2016-03-23 04:20:48.000000000 -0500
++++ src/modules/imagery/imagery_opencv/Makefile.am.new	2016-05-09 18:21:33.588087593 -0500
+@@ -9,7 +9,7 @@
+ DEF_SAGA           = -D_SAGA_LINUX -D_TYPEDEF_BYTE -D_TYPEDEF_WORD -D_SAGA_UNICODE
+ CXX_INCS           = -I$(top_srcdir)/src/saga_core -I/usr/include/opencv
+ AM_CXXFLAGS        = -fPIC $(CXX_INCS) $(DEF_SAGA) $(DBGFLAGS) $(GOMPFLAGS)
+-AM_LDFLAGS         = -fPIC -shared -avoid-version `pkg-config opencv --libs`
++AM_LDFLAGS         = -fPIC -shared -avoid-version -lopencv_legacy -lopencv_imgproc -lopencv_flann
+ pkglib_LTLIBRARIES = libimagery_opencv.la
+ libimagery_opencv_la_SOURCES =\
+ MLB_Interface.cpp\
+
+
+--- src/modules/imagery/imagery_opencv/opencv.h	2016-03-23 04:20:48.000000000 -0500
++++ src/modules/imagery/imagery_opencv/opencv.h.new	2016-05-09 18:22:31.168375139 -0500
+@@ -74,6 +74,8 @@
+ 
+ //---------------------------------------------------------
+ #include <opencv/cv.h>
++#include <opencv2/core/core_c.h>
++#include <opencv2/imgproc/imgproc_c.h>
+ 
+ 
+ ///////////////////////////////////////////////////////////
+
+
+--- src/modules/imagery/imagery_opencv/opencv_nnet.cpp	2016-04-11 07:29:54.000000000 -0500
++++ src/modules/imagery/imagery_opencv/opencv_nnet.cpp.new	2016-05-09 18:23:19.978619523 -0500
+@@ -60,8 +60,8 @@
+ 
+ //---------------------------------------------------------
+ #include "opencv_nnet.h"
+-#include <opencv/cxcore.h>
+-#include <opencv/ml.h>
++#include "opencv/cxcore.h"
++#include "opencv/ml.h"
+ 
+ ///////////////////////////////////////////////////////////
+ //														 //
+
+
+--- src/modules/imagery/imagery_opencv/opencv_nnet.h	2016-03-23 04:20:48.000000000 -0500
++++ src/modules/imagery/imagery_opencv/opencv_nnet.h.new	2016-05-09 18:24:09.478867946 -0500
+@@ -64,8 +64,8 @@
+ 
+ //---------------------------------------------------------
+ #include "MLB_Interface.h"
+-#include <opencv/cxcore.h>
+-#include <opencv/ml.h>
++#include "opencv/cxcore.h"
++#include "opencv/ml.h"
+ 
+ ///////////////////////////////////////////////////////////
+ //														 //
+
