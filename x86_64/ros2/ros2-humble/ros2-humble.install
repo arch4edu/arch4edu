@@ -1,0 +1,26 @@
+post_install() {
+    printf "
+    \e[33m\e[1mIMPORTANT NOTE:\e[0m
+    You should add something like this to your ~/.bashrc file:
+
+      export ROS_DOMAIN_ID=42
+      source /opt/ros2/humble/setup.bash
+
+    This quick command will do it for you:
+
+      printf \"\\\nexport ROS_DOMAIN_ID=42\\\nsource /opt/ros2/humble/setup.bash\\\n\" >> ~/.bashrc
+
+    Note 1: If you use zsh, replace '.bash' in the above lines with
+    '.zsh' and add the lines to ~/.zshrc .
+
+    Note 2: This will slow down terminal startup for a few seconds on
+    cold start, and a fraction of a second for terminals that open later.
+    If you know a better transparent solution, you are welcome to edit
+    this.
+    \e[33m\e[1mEND OF IMPORTANT NOTE.\e[0m
+    "
+}
+
+post_remove() {
+    printf "You may want to clean up .bashrc and/or .zshrc."
+}
