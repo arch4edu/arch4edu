@@ -6,7 +6,7 @@ pkgbase='python-pycrypto'
 pkgname=('python-pycrypto' 'python-crypto')
 _name="${pkgbase#python-}"
 pkgver=2.7a1
-pkgrel=1
+pkgrel=2
 pkgdesc='[DEPRECATED since 2013] Cryptographic primitives and algorithms for Python'
 arch=('x86_64')
 _repourl="https://github.com/${_name}/${_name}"
@@ -16,6 +16,7 @@ makedepends=(
   'gmp'
   'python-setuptools'
 )
+conflicts=('python-pycryptodome')
 _tarname="${_name}-${pkgver}"
 source=("${_tarname}.tar.gz::${_repourl}/archive/refs/tags/v${pkgver}.tar.gz"
         '0001-replaced-time.clock-with-time.process_time-time-cloc.patch')
@@ -43,7 +44,6 @@ package_python-crypto() {
     'gmp'
     'python'
   )
-  conflicts=('python-pycryptodome')
 
   cd "${_tarname}"
   python setup.py install --root="${pkgdir}" --prefix='/usr' --optimize=1 --skip-build
