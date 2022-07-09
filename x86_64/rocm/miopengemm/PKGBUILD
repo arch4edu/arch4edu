@@ -2,7 +2,7 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 # Contributor: Jakub Okoński <jakub@okonski.org>
 pkgname=miopengemm
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc="An OpenCL GEMM kernel generator"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('ocl-icd')
 makedepends=('opencl-headers' 'cmake' 'rocm-cmake' 'texlive-latexextra')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz"
         "fix-gcc11-build.patch::https://patch-diff.githubusercontent.com/raw/ROCmSoftwarePlatform/MIOpenGEMM/pull/46.patch")
-sha256sums=('c70fc9e2a6d47356a612e24f5757bf16fdf26e671bd53a0975c1a0978da740b6'
+sha256sums=('10458fb07b56a7fbe165595d588b7bf5f1300c57bda2f3133c3687c7bae39ea8'
             'SKIP')
 _dirname="$(basename "$url")-$(basename "${source[0]}" ".tar.gz")"
 
