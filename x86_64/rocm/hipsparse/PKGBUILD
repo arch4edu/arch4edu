@@ -3,31 +3,27 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=hipsparse
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc='rocSPARSE marshalling library.'
 arch=('x86_64')
-url='https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html#hipsparse'
+url='https://hipsparse.readthedocs.io/en/latest/'
 license=('MIT')
 depends=('hip' 'rocsparse')
 makedepends=('cmake' 'git' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/hipSPARSE'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('6e6a0752654f0d391533df8cedf4b630a78ad34c99087741520c582963ce1602')
+sha256sums=('4fdab6ec953c6d2d000687c5979077deafd37208cd722554b5a6ede1e5ba170c')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
   # -fcf-protection is not supported by HIP, see
-  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.0.x/docs/markdown/clang_options.md
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
   CXX=/opt/rocm/bin/hipcc \
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
+  HIP_PATH=/opt/rocm \
   cmake -Wno-dev -S "$_dirname" \
-        -DCMAKE_CXX_STANDARD=20 \
         -DCMAKE_INSTALL_PREFIX=/opt/rocm \
-        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
-        -DAMDDeviceLibs_DIR=/opt/rocm/lib/cmake/AMDDeviceLibs \
-        -Dhip_DIR=/opt/rocm/hip/lib/cmake/hip \
-        -Drocsparse_DIR=/opt/rocm/rocsparse/lib/cmake/rocsparse \
         -DBUILD_CLIENTS_SAMPLES=OFF \
         -DBUILD_CLIENTS_TESTS=OFF
   make
