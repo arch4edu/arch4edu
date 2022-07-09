@@ -1,0 +1,12 @@
+diff --git a/bin/build_extras.sh b/bin/build_extras.sh
+index c8f35e3e..e98422c6 100755
+--- a/bin/build_extras.sh
++++ b/bin/build_extras.sh
+@@ -121,6 +121,7 @@ if [ "$1" != "nocmake" ] && [ "$1" != "install" ] ; then
+   -DCMAKE_BUILD_TYPE=Release \
+   -DROCM_DIR=$ROCM_DIR \
+   -DAOMP_STANDALONE_BUILD=0 \
++  -DAOMP_VERSION_STRING=\"5.2.0\" \
+   -DDEVICELIBS_ROOT=$DEVICELIBS_ROOT \
+   -DNEW_BC_PATH=1 \
+   -DCMAKE_INSTALL_PREFIX=$INSTALL_EXTRAS \
