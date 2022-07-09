@@ -5,21 +5,22 @@
 pkgbase='python-pycrypto'
 pkgname=('python-pycrypto' 'python-crypto')
 _name="${pkgbase#python-}"
-pkgver=2.6.1
-pkgrel=7
+pkgver=2.7a1
+pkgrel=1
 pkgdesc='[DEPRECATED since 2013] Cryptographic primitives and algorithms for Python'
 arch=('x86_64')
-url="https://github.com/${_name}/${_name}/blob/master/README.md"
+_repourl="https://github.com/${_name}/${_name}"
+url="${_repourl}/blob/master/README.md"
 license=('custom:Unlicense' 'PSF')
 makedepends=(
   'gmp'
   'python-setuptools'
 )
 _tarname="${_name}-${pkgver}"
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_tarname}.tar.gz"
+source=("${_tarname}.tar.gz::${_repourl}/archive/refs/tags/v${pkgver}.tar.gz"
         '0001-replaced-time.clock-with-time.process_time-time-cloc.patch')
-sha512sums=('20a4aed4dac4e9e61d773ebc1d48ea577e9870c33f396be53d075a9bf8487d93e75e200179882d81e452efd0f6751789bac434f6f431b3e7c1c8ef9dba392847'
-            '9a8c9812b3a13701571cb9cebb2fd755be7206f4045cbec76375259b716c2769dd25996cd8af89248cf7d9de0b088193a245442169c0c645ccd6083b529e3e50')
+b2sums=('a64fa64402a603d58762e5ce752adad8d59fb13a20d54aa402d34c3f1c4c97d101f6f07c4bbb98262973532a1e7759af0f4a339ac2046e2b3ae1249761d28907'
+        '2095507a13248be6e995cd18350670580773b37a483121b9f416447ad2fcf82c8f2602d98e5ac277dca81255ac5472bfb8eb91d76860203a9e98043d0f192915')
 
 prepare() {
   cd "${_tarname}"
