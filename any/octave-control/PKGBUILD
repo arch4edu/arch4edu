@@ -14,7 +14,6 @@ pkgdesc="Computer-Aided Control System Design (CACSD) Tools for GNU Octave, base
 arch=(any)
 url="https://octave.sourceforge.io/$_pack/"
 license=('GPL3')
-groups=('octave-forge')
 depends=('octave>=4.0.0')
 makedepends=('gcc-fortran')
 optdepends=()
