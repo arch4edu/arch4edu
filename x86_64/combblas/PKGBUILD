@@ -5,7 +5,7 @@
 
 pkgname=combblas
 _PkgName=CombBLAS
-pkgver=1.6.2+r4719
+pkgver=1.6.2+r4722
 pkgrel=1
 pkgdesc="A library offering a set of linear algebra primitives for graph analytics"
 arch=('x86_64')
