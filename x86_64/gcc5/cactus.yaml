@@ -1,1 +1,8 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed 's|http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2|https://libisl.sourceforge.io/isl-${_islver}.tar.bz2|' -i PKGBUILD
+post_build: aur-post-build
