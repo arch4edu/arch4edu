@@ -1,8 +1,9 @@
-# Maintainer : Jingbei Li <i@jingbei.li>
+# Maintainer : kastik <kastik69420@gmail.com>
+# Contributor : Jingbei Li <i@jingbei.li>
 # Contributor : Immae <ismael.bouya@normalesup.org>
 # Contributor : Martin Wimpress <code@flexion.org>
 pkgname=anaconda
-pkgver=2021.05
+pkgver=2021.11
 pkgrel=1
 pkgdesc="Completely free enterprise-ready Python distribution for large-scale data processing, predictive analytics, and scientific computing."
 arch=('x86_64')
@@ -10,7 +11,7 @@ url='https://www.anaconda.com/'
 license=("BSD")
 source=("https://repo.anaconda.com/archive/Anaconda3-${pkgver}-Linux-x86_64.sh")
 options=(!strip libtool staticlibs)
-sha256sums=('2751ab3d678ff0277ae80f9e8a74f218cfc70fe9a9cdc7bb1c137d7e47e33d53')
+sha256sums=('fedf9e340039557f7b5e8a8a86affa9d299f5e9820144bd7b92ae9f7ee08ac60')
 install="$pkgname.install"
 
 package() {
@@ -27,9 +28,6 @@ package() {
 
 	msg2 "Stripping \$pkgdir"
 	sed -e "s|${pkgdir}||g" -i $(grep "${pkgdir}" . -rIl 2>/dev/null)
-
-	msg2 "Removing external apps"
-	echo 'apps = {}' >> "${prefix}/lib/python3.8/site-packages/anaconda_navigator/api/external_apps/__init__.py"
 
 	msg2 "Installing license"
 	install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
