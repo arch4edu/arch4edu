@@ -14,7 +14,6 @@ pkgdesc="General tools for Octave."
 arch=(any)
 url="https://octave.sourceforge.io/$_pack/"
 license=('custom')
-groups=('octave-forge')
 depends=('octave>=4.0.0')
 makedepends=()
 optdepends=()
