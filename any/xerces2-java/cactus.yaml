@@ -4,7 +4,7 @@ nvchecker:
 depends:
   - any/java-resolver
 build_prefix: extra-x86_64
-pre_build:
-  - aur-pre-build
-  - download-pacman-package jre-openjdk-headless
+pre_build: |
+  aur-pre-build
+  download-pacman-package jre-openjdk-headless
 post_build: aur-post-build

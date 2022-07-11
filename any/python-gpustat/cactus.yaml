@@ -4,9 +4,9 @@ nvchecker:
 depends:
   - any/python-nvidia-ml-py3
 build_prefix: extra-x86_64
-pre_build:
-  - aur-pre-build
-  - sed 's/python-nvidia-ml-py3-git/python-nvidia-ml-py3/g' -i PKGBUILD
-  - add depends python-psutil
-  - add makedepends python-pip
+pre_build: |
+  aur-pre-build
+  sed 's/python-nvidia-ml-py3-git/python-nvidia-ml-py3/g' -i PKGBUILD
+  add depends python-psutil
+  add makedepends python-pip
 post_build: aur-post-build

@@ -19,10 +19,10 @@ depends:
   - x86_64/saxon-he
   - any/xalan-java
 build_prefix: extra-x86_64
-pre_build:
-  - aur-pre-build
-  - download-pacman-package jre-openjdk
-  - sed -e 's|${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz|https://cgit.scilab.org/${pkgname}/snapshot/${pkgname}-${pkgver}.tar.gz|' -i PKGBUILD
-  - sudo pacman -S --noconfirm pacman-contrib
-  - updpkgsums
+pre_build: |
+  aur-pre-build
+  download-pacman-package jre-openjdk
+  sed -e 's|${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz|https://cgit.scilab.org/${pkgname}/snapshot/${pkgname}-${pkgver}.tar.gz|' -i PKGBUILD
+  sudo pacman -S --noconfirm pacman-contrib
+  updpkgsums
 post_build: aur-post-build

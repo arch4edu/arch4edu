@@ -6,6 +6,6 @@ makedepends:
 build_prefix: extra-x86_64
 makepkg_args: -A
 pre_build: download-abs-snapshot
-post_build:
-  - git add PKGBUILD
-  - git-commit
+post_build: |
+  git add PKGBUILD
+  git-commit

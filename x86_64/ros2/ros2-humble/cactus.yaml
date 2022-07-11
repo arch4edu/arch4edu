@@ -7,7 +7,7 @@ depends:
   - x86_64/ros2/ros2-arch-deps
   - x86_64/ros2/ros2-pyqt5-sip-compat
 build_prefix: extra-x86_64
-pre_build:
-  - aur-pre-build
-  - download-pacman-package jack2
+pre_build: |
+  aur-pre-build
+  download-pacman-package jack2
 post_build: aur-post-build

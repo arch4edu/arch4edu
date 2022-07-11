@@ -3,6 +3,6 @@ nvchecker:
     github: arch4edu/devtools-arch4edu-extra
 build_prefix: extra-x86_64
 pre_build: download-github-files arch4edu/devtools-arch4edu-extra PKGBUILD
-post_build:
-  - git add PKGBUILD
-  - git-commit
+post_build: |
+  git add PKGBUILD
+  git-commit

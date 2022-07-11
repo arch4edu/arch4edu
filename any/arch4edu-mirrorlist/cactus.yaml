@@ -3,6 +3,6 @@ nvchecker:
     github: arch4edu/mirrorlist
 build_prefix: extra-x86_64
 pre_build: echo
-post_build:
-  - git add PKGBUILD
-  - git-commit
+post_build: |
+  git add PKGBUILD
+  git-commit

@@ -2,8 +2,8 @@ nvchecker:
   - source: aur
     aur:
 build_prefix: extra-x86_64
-pre_build:
-  - aur-pre-build
-  - sed -e '/DOCE_WITH_GL2PS/s/OFF/ON/' -e '/DOCE_WITH_VTK/s/OFF/ON/' -i PKGBUILD
-  - add depends vtk glew openmpi
+pre_build: |
+  aur-pre-build
+  sed -e '/DOCE_WITH_GL2PS/s/OFF/ON/' -e '/DOCE_WITH_VTK/s/OFF/ON/' -i PKGBUILD
+  add depends vtk glew openmpi
 post_build: aur-post-build
