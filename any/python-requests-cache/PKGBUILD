@@ -9,11 +9,11 @@ _base=requests-cache
 pkgname=python-${_base}
 pkgdesc="Transparent persistent cache for http://python-requests.org library"
 pkgver=0.9.5
-pkgrel=1
+pkgrel=2
 arch=(any)
 url="https://github.com/reclosedev/${_base}"
 license=('custom:BSD-2-clause')
-depends=(python-requests python-platformdirs python-cattrs python-url-normalize)
+depends=(python-requests python-platformdirs python-cattrs python-url-normalize python-exceptiongroup)
 makedepends=(python-build python-installer python-poetry-core)
 optdepends=('python-boto3: Cache backend for Amazon DynamoDB database'
   'python-botocore: Interface for Amazon Web Services'
