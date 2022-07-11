@@ -14,7 +14,6 @@ pkgdesc="Input/Output in external formats."
 arch=(any)
 url="https://octave.sourceforge.io/$_pack/"
 license=('custom')
-groups=('octave-forge')
 depends=('octave>=4.2.0')
 makedepends=()
 optdepends=()
