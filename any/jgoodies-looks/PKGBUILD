@@ -12,7 +12,6 @@ pkgdesc="A Java Swing look and feel library"
 arch=('any')
 url="http://www.jgoodies.com/"
 license=('BSD')
-groups=('jgoodies')
 depends=('java-runtime')
 #source=("http://www.jgoodies.com/download/libraries/looks/jgoodies-looks-${pkgver//./_}-20150402.zip")
 source=("https://mrwitek.github.io/aur-repo/jgoodies-looks-2_8_0-20150402.zip")
