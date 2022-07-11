@@ -16,7 +16,6 @@ pkgdesc="The Octave-forge Image package provides functions for processing images
 arch=(any)
 url="https://octave.sourceforge.io/$_pack/"
 license=('custom')
-groups=('octave-forge')
 depends=('octave>=4.2.0')
 makedepends=()
 optdepends=()
