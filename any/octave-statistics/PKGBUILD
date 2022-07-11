@@ -15,7 +15,6 @@ pkgdesc="Additional statistics functions for Octave."
 arch=(any)
 url="https://octave.sourceforge.io/$_pack/"
 license=('custom')
-groups=('octave-forge')
 depends=('octave>=4.0.0' 'octave-io>=1.0.18')
 makedepends=()
 optdepends=()
