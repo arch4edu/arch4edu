@@ -6,16 +6,16 @@
 
 _pkgname=testng
 pkgname=java-${_pkgname}
-pkgver=7.5
+pkgver=7.6.1
 pkgrel=1
 pkgdesc='A testing framework inspired by JUnit and NUnit'
 arch=('any')
 url="http://testng.org"
 license=('Apache')
-depends=('jdk8-openjdk')
+depends=('jdk11-openjdk')
 makedepends=('gradle')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/cbeust/$_pkgname/archive/$pkgver.tar.gz")
-sha256sums=('fe99f601949f39cbc79f921a6291d59b0fa4e2f55a22c24e084325296fe486a4')
+sha256sums=('78ccf9122b62a2d4bdff90cab219254997f4120a94da49f72f2df2f2ea65c870')
 
 prepare() {
   echo "It's recommended to build in a clean chroot"
