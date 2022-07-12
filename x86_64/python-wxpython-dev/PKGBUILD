@@ -7,7 +7,7 @@
 pkgname=python-wxpython-dev
 _pkgname=wxPython
 pkgver=4.1.1
-pkgrel=4
+pkgrel=5
 pkgdesc='Cross-platform GUI toolkit. Developer version'
 arch=('x86_64')
 license=('custom:wxWindows')
@@ -32,11 +32,11 @@ sha512sums=('00924008b97bbecb824c3fffd46fc76a5a3115d9346eb95baccc6cca99c080aa80b
 )
 
 prepare() {
-  patch -d "$_pkgname-$pkgver" -p1 < ../aa3dca0e40bd0701e82ce40297a982b5b84844dc.patch
-  patch -d "$_pkgname-$pkgver" -p1 < ../f5a55e6bf38ab5a0e7b7161477d2d523d057ec29.patch
-  patch -d "$_pkgname-$pkgver" -p1 < ../d9725119d742ff25e815d0824c62abd8953a61df.patch
-  patch -d "$_pkgname-$pkgver" -p1 < ../7afcc7fbc68506b55b5bb85970871a5f3df6eac4.patch
   cd "$_pkgname-$pkgver"
+  patch -p1 < ../aa3dca0e40bd0701e82ce40297a982b5b84844dc.patch
+  patch -p1 < ../f5a55e6bf38ab5a0e7b7161477d2d523d057ec29.patch
+  patch -p1 < ../d9725119d742ff25e815d0824c62abd8953a61df.patch
+  patch -p1 < ../7afcc7fbc68506b55b5bb85970871a5f3df6eac4.patch
   sed -i "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-gtk3'|" build.py
 }
 
