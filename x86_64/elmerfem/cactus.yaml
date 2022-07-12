@@ -4,5 +4,7 @@ nvchecker:
 depends:
   - x86_64/mmg
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  add depends fmt
 post_build: aur-post-build
