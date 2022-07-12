@@ -9,7 +9,7 @@ url="https://github.com/sakov/nn-c"
 license=('GPL3')
 depends=('glibc')
 makedepends=('git')
-source=($pkgname::"git://github.com/sakov/nn-c.git")
+source=($pkgname::"git+${url}.git")
 md5sums=('SKIP')
 
 pkgver() {
