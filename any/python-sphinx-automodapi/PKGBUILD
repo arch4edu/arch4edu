@@ -53,3 +53,4 @@ package_python-sphinx-automodapi-doc() {
     install -d -m755 "${pkgdir}/usr/share/doc/${pkgbase}"
     cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
 }
+makedepends+=("python-pip")
