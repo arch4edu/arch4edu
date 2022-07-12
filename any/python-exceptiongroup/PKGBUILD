@@ -3,7 +3,7 @@
 _name=exceptiongroup
 pkgname=python-${_name}
 pkgver=1.0.0rc8
-pkgrel=1
+pkgrel=2
 pkgdesc="Backport of PEP 654 (exception groups)"
 arch=('any')
 url="https://github.com/agronholm/${_name}"
@@ -28,7 +28,7 @@ build() {
 
 check() {
     cd "$_name-$pkgver"
-    pytest
+    PYTHONPATH=src pytest
 }
 
 package() {
