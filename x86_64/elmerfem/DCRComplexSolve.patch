@@ -1,0 +1,115 @@
+--- fem/src/modules/DCRComplexSolve.F90	2020-11-10 22:52:44.000000000 +0300
++++ fem/src/modules/DCRComplexSolve.F90	2021-08-07 22:32:57.521006907 +0300
+@@ -426,7 +426,7 @@
+    SUBROUTINE InputTensor( Tensor, IsScalar, Name, Material, n, NodeIndexes )
+ !------------------------------------------------------------------------------
+       REAL(KIND=dp) :: Tensor(:,:,:)
+-      INTEGER :: n, NodeIndexes(:)
++      INTEGER :: i, n, NodeIndexes(:)
+       LOGICAL :: IsScalar
+       CHARACTER(LEN=*) :: Name
+       TYPE(ValueList_t), POINTER :: Material
+@@ -485,6 +485,8 @@
+ !------------------------------------------------------------------------------
+       LOGICAL :: FirstTime = .TRUE., stat
+       REAL(KIND=dp), POINTER :: Hwrk(:,:,:)
++      
++      INTEGER :: i
+ 
+       SAVE FirstTime, Hwrk
+ !------------------------------------------------------------------------------
+@@ -1061,13 +1063,13 @@
+ 
+ !------------------------------------------------------------------------------
+ 
+-contains
++   CONTAINS
+ 
+ !------------------------------------------------------------------------------
+    SUBROUTINE InputVector( Tensor, IsScalar, Name, Material, n, NodeIndexes )
+ !------------------------------------------------------------------------------
+       REAL(KIND=dp) :: Tensor(:,:)
+-      INTEGER :: n, NodeIndexes(:)
++      INTEGER :: i, n, NodeIndexes(:)
+       LOGICAL :: IsScalar
+       CHARACTER(LEN=*) :: Name
+       TYPE(ValueList_t), POINTER :: Material
+@@ -1127,7 +1129,6 @@
+ 
+      INTEGER :: i,j,k,l,n,t,DIM,En,Pn
+      LOGICAL :: stat, GotIt
+-!     REAL(KIND=dp), POINTER :: Hwrk(:,:,:)
+ 
+      REAL(KIND=dp) :: Grad(3,3), Normal(3), EdgeLength, Jump, JumpReal, JumpImag, &
+                       GradReal(3,3),GradImag(3,3)
+@@ -1148,17 +1149,6 @@
+ 
+      TYPE(GaussIntegrationPoints_t), TARGET :: IntegStuff
+ 
+-!     LOGICAL :: First = .TRUE.
+-!     SAVE Hwrk, First
+-!------------------------------------------------------------------------------
+-
+-!    Initialize:
+-!    -----------
+-
+-!     IF ( First ) THEN
+-!        First = .FALSE.
+-!        NULLIFY( Hwrk )
+-!     END IF
+ 
+      SELECT CASE( CurrentCoordinateSystem() )
+         CASE( AxisSymmetric, CylindricSymmetric )
+@@ -1361,13 +1351,13 @@
+        Temperature, Pressure )
+ !------------------------------------------------------------------------------
+ 
+-contains
++   CONTAINS
+ 
+ !------------------------------------------------------------------------------
+    SUBROUTINE InputTensor( Tensor, IsScalar, Name, Material, n, NodeIndexes )
+ !------------------------------------------------------------------------------
+       REAL(KIND=dp) :: Tensor(:,:,:)
+-      INTEGER :: n, NodeIndexes(:)
++      INTEGER :: i, n, NodeIndexes(:)
+       LOGICAL :: IsScalar
+       CHARACTER(LEN=*) :: Name
+       TYPE(ValueList_t), POINTER :: Material
+@@ -1419,7 +1409,7 @@
+    SUBROUTINE InputVector( Tensor, IsScalar, Name, Material, n, NodeIndexes )
+ !------------------------------------------------------------------------------
+       REAL(KIND=dp) :: Tensor(:,:)
+-      INTEGER :: n, NodeIndexes(:)
++      INTEGER :: i, n, NodeIndexes(:)
+       LOGICAL :: IsScalar
+       CHARACTER(LEN=*) :: Name
+       TYPE(ValueList_t), POINTER :: Material
+@@ -1497,9 +1487,6 @@
+      LOGICAL :: notScalar = .TRUE.
+      TYPE( ValueList_t ), POINTER :: Material
+      TYPE(GaussIntegrationPoints_t), TARGET :: IntegStuff
+-
+-!     LOGICAL :: First = .TRUE.
+-!     SAVE Hwrk, First
+ !------------------------------------------------------------------------------
+ 
+ !    Initialize:
+@@ -1720,7 +1707,7 @@
+    SUBROUTINE InputTensor( Tensor, IsScalar, Name, Material, n, NodeIndexes )
+ !------------------------------------------------------------------------------
+       REAL(KIND=dp) :: Tensor(:,:,:)
+-      INTEGER :: n, NodeIndexes(:)
++      INTEGER :: i, n, NodeIndexes(:)
+       LOGICAL :: IsScalar
+       CHARACTER(LEN=*) :: Name
+       TYPE(ValueList_t), POINTER :: Material
+@@ -1772,7 +1759,7 @@
+    SUBROUTINE InputVector( Tensor, IsScalar, Name, Material, n, NodeIndexes )
+ !------------------------------------------------------------------------------
+       REAL(KIND=dp) :: Tensor(:,:)
+-      INTEGER :: n, NodeIndexes(:)
++      INTEGER :: i, n, NodeIndexes(:)
+       LOGICAL :: IsScalar
+       CHARACTER(LEN=*) :: Name
+       TYPE(ValueList_t), POINTER :: Material
