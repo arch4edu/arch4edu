@@ -6,23 +6,23 @@
 # Contributor: <gucong43216@gmail.com>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2112
+# /opt/OpenFOAM/OpenFOAM-v2206
 
 pkgname=openfoam-com
-pkgver=v2112
+pkgver=v2206
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=2
+pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
 url="http://www.openfoam.com"
 license=('GPL3')
 install="${pkgname}.install"
-depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis' 'kahip')
+depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
 
-source=('https://sourceforge.net/projects/openfoam/files/v2112/OpenFOAM-v2112.tgz')
+source=('https://sourceforge.net/projects/openfoam/files/v2206/OpenFOAM-v2206.tgz')
 
-md5sums=('b6553cfbb6c398e8fe50c96e9e456968')
+md5sums=('6eaf1bb9accdb4bea5b84a72ab11734e')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]
