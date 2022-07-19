@@ -1,8 +1,0 @@
-update_on:
-- source: aur
-  aur:
-- source: archpkg
-  archpkg: cuda
-- source: archpkg
-  archpkg: opencv
-- alias: python
