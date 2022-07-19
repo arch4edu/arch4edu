@@ -3,7 +3,7 @@
 
 pkgname=wxwidgets-gtk2
 pkgver=3.2.0
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url='https://wxwidgets.org'
 license=(custom:wxWindows)
@@ -45,6 +45,7 @@ package_wxwidgets-gtk2() {
 
   DESTDIR="$pkgdir" cmake --install build-gtk2
   rm -r "$pkgdir"/usr/{include,lib/cmake,lib/libwx_base*,bin/wxrc*}
+  mv "$pkgdir"/usr/bin/wx-config{,-gtk2} # Conflicts with wx-gtk3
 
   install -Dm644 wxWidgets-$pkgver/docs/licence.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
