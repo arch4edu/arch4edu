@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-digest
+  - x86_64/r/r-ellipsis
+  - x86_64/r/r-farver
+  - x86_64/r/r-generics
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-rlang
+  - x86_64/r/r-scales
+  - x86_64/r/r-vctrs
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

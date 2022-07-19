@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-gdata
+  - x86_64/r/r-hmisc
+  - x86_64/r/r-lme4
+  - x86_64/r/r-mice
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

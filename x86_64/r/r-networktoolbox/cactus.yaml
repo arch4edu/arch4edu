@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-corrplot
+  - x86_64/r/r-doparallel
+  - x86_64/r/r-fdrtool
+  - x86_64/r/r-foreach
+  - x86_64/r/r-igraph
+  - x86_64/r/r-isingfit
+  - x86_64/r/r-pbapply
+  - x86_64/r/r-ppcor
+  - x86_64/r/r-psych
+  - x86_64/r/r-pwr
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-r.matlab
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

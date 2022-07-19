@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-diptest
+  - x86_64/r/r-flexmix
+  - x86_64/r/r-kernlab
+  - x86_64/r/r-mclust
+  - x86_64/r/r-prabclus
+  - x86_64/r/r-robustbase
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

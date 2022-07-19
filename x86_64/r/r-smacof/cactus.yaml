@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-candisc
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-doparallel
+  - x86_64/r/r-e1071
+  - x86_64/r/r-ellipse
+  - x86_64/r/r-foreach
+  - x86_64/r/r-hmisc
+  - x86_64/r/r-nnls
+  - x86_64/r/r-plotrix
+  - x86_64/r/r-polynom
+  - x86_64/r/r-weights
+  - x86_64/r/r-wordcloud
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

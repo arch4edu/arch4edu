@@ -1,0 +1,32 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-auc
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-dbscan
+  - x86_64/r/r-e1071
+  - x86_64/r/r-fpc
+  - x86_64/r/r-gbm
+  - x86_64/r/r-gmedian
+  - x86_64/r/r-ggparty
+  - x86_64/r/r-ggdendro
+  - x86_64/r/r-ggnetwork
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggrepel
+  - x86_64/r/r-ggridges
+  - x86_64/r/r-glmnet
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-neuralnet
+  - x86_64/r/r-network
+  - x86_64/r/r-partykit
+  - x86_64/r/r-plyr
+  - x86_64/r/r-randomforest
+  - x86_64/r/r-rocr
+  - x86_64/r/r-rtsne
+  - x86_64/r/r-signal
+  - x86_64/r/r-kknn
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gridextra
+  - x86_64/r/r-rlang
+  - x86_64/r/r-scales
+  - x86_64/r/r-viridislite
+  - x86_64/r/r-rcolorbrewer
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

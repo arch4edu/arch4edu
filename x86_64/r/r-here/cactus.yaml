@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-rprojroot
+makedepends:
+  - x86_64/r/r-testthat
+  - x86_64/r/r-rlang
+  - x86_64/r/r-uuid
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bayesfactor
+  - x86_64/r/r-bstats
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspfrequencies
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspregression
+  - x86_64/r/r-jaspttests
+  - x86_64/r/r-jaspanova
+  - x86_64/r/r-jaspdescriptives
+  - x86_64/r/r-suppdists
+  - x86_64/r/r-bayesplay
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

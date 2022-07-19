@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-corpcor
+  - x86_64/r/r-igraph
+  - x86_64/r/r-lavaan
+  - x86_64/r/r-lisreltor
+  - x86_64/r/r-openmx
+  - x86_64/r/r-plyr
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-rockchalk
+  - x86_64/r/r-sem
+  - x86_64/r/r-xml
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

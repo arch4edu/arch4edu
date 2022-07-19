@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-e1071
+  - x86_64/r/r-foreach
+  - x86_64/r/r-modelmetrics
+  - x86_64/r/r-plyr
+  - x86_64/r/r-proc
+  - x86_64/r/r-recipes
+  - x86_64/r/r-reshape2
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

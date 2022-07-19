@@ -1,0 +1,32 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-doe.base
+  - x86_64/r/r-fitdistrplus
+  - x86_64/r/r-frf2
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggrepel
+  - x86_64/r/r-goftest
+  - x86_64/r/r-irr
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspdescriptives
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-mle.tools
+  - x86_64/r/r-psych
+  - x86_64/r/r-qcc
+  - x86_64/r/r-rsm
+  - x86_64/r/r-rspc
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-cowplot
+  - x86_64/r/r-vipor
+  - x86_64/r/r-ggpp
+  - x86_64/r/r-tibble
+  - x86_64/r/r-envstats
+  - x86_64/r/r-fadist
+  - x86_64/r/r-daewr
+  - x86_64/r/r-desirability
+  - x86_64/r/r-weibullness
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-r6
+  - x86_64/r/r-uuid
+  - x86_64/r/r-xml2
+  - x86_64/r/r-zip
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

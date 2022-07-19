@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-libcoin
+  - x86_64/r/r-matrixstats
+  - x86_64/r/r-modeltools
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-multcomp
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

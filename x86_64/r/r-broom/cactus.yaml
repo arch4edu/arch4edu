@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-backports
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-ellipsis
+  - x86_64/r/r-generics
+  - x86_64/r/r-glue
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rlang
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-ggplot2
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

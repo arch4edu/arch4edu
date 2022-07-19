@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-gitcreds
+  - x86_64/r/r-httr
+  - x86_64/r/r-ini
+  - x86_64/r/r-jsonlite
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,33 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gridextra
+  - x86_64/r/r-gridgraphics
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-modules
+  - x86_64/r/r-officer
+  - x86_64/r/r-pkgbuild
+  - x86_64/r/r-plyr
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-ragg
+  - x86_64/r/r-r6
+  - x86_64/r/r-renv
+  - x86_64/r/r-rjson
+  - x86_64/r/r-rvg
+  - x86_64/r/r-svglite
+  - x86_64/r/r-systemfonts
+  - x86_64/r/r-withr
+  - x86_64/r/r-testthat
+  - x86_64/r/r-data.table
+  - x86_64/r/r-httr
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-pkgload
+  - x86_64/r/r-remotes
+  - x86_64/r/r-stringi
+  - x86_64/r/r-stringr
+  - x86_64/r/r-vdiffr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

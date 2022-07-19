@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-hms
+  - x86_64/r/r-prettyunits
+  - x86_64/r/r-r6
+  - x86_64/r/r-crayon
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

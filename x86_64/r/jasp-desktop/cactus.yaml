@@ -1,0 +1,39 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-rinside
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspresults
+  - x86_64/r/r-jasptools
+  - x86_64/r/r-jaspdescriptives
+  - x86_64/r/r-jaspttests
+  - x86_64/r/r-jaspanova
+  - x86_64/r/r-jaspmixedmodels
+  - x86_64/r/r-jaspregression
+  - x86_64/r/r-jaspfrequencies
+  - x86_64/r/r-jaspfactor
+  - x86_64/r/r-jaspaudit
+  - x86_64/r/r-jaspbain
+  - x86_64/r/r-jaspbsts
+  - x86_64/r/r-jaspcircular
+  - x86_64/r/r-jaspcochrane
+  - x86_64/r/r-jaspdistributions
+  - x86_64/r/r-jaspequivalencettests
+  - x86_64/r/r-jaspjags
+  - x86_64/r/r-jasplearnbayes
+  - x86_64/r/r-jaspmachinelearning
+  - x86_64/r/r-jaspmetaanalysis
+  - x86_64/r/r-jaspnetwork
+  - x86_64/r/r-jaspprocesscontrol
+  - x86_64/r/r-jaspreliability
+  - x86_64/r/r-jaspsem
+  - x86_64/r/r-jaspsummarystatistics
+  - x86_64/r/r-jaspvisualmodeling
+  - x86_64/r/r-jaspprophet
+makedepends:
+  - x86_64/r/jags
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

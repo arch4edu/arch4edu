@@ -1,0 +1,10 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-r.methodss3
+  - x86_64/r/r-r.oo
+  - x86_64/r/r-r.utils
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

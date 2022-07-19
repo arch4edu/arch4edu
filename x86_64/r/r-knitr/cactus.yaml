@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-evaluate
+  - x86_64/r/r-highr
+  - x86_64/r/r-stringr
+  - x86_64/r/r-yaml
+  - x86_64/r/r-xfun
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

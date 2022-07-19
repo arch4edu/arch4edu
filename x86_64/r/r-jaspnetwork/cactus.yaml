@@ -1,0 +1,22 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bootnet
+  - x86_64/r/r-corpcor
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-foreach
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gtools
+  - x86_64/r/r-huge
+  - x86_64/r/r-isingsampler
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-reshape2
+  - x86_64/r/r-snow
+  - x86_64/r/r-stringr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

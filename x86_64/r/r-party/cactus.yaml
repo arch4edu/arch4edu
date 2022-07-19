@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-coin
+  - x86_64/r/r-modeltools
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-sandwich
+  - x86_64/r/r-strucchange
+  - x86_64/r/r-zoo
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

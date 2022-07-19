@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-brew
+  - x86_64/r/r-commonmark
+  - x86_64/r/r-desc
+  - x86_64/r/r-digest
+  - x86_64/r/r-knitr
+  - x86_64/r/r-pkgload
+  - x86_64/r/r-purrr
+  - x86_64/r/r-r6
+  - x86_64/r/r-rlang
+  - x86_64/r/r-stringi
+  - x86_64/r/r-stringr
+  - x86_64/r/r-xml2
+  - x86_64/r/r-cpp11
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

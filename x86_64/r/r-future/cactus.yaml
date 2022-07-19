@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-digest
+  - x86_64/r/r-globals
+  - x86_64/r/r-listenv
+  - x86_64/r/r-parallelly
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

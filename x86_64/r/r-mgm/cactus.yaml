@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-glmnet
+  - x86_64/r/r-gtools
+  - x86_64/r/r-hmisc
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-stringr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

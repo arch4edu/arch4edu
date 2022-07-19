@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bslib
+  - x86_64/r/r-evaluate
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-jquerylib
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-knitr
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tinytex
+  - x86_64/r/r-xfun
+  - x86_64/r/r-yaml
+makedepends:
+  - x86_64/r/r-curl
+  - x86_64/r/r-shiny
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

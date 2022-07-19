@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-afex
+  - x86_64/r/r-emmeans
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggpol
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-lme4
+  - x86_64/r/r-loo
+  - x86_64/r/r-rstan
+  - x86_64/r/r-rstanarm
+  - x86_64/r/r-stanova
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

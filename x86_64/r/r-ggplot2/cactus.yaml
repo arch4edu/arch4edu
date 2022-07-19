@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-digest
+  - x86_64/r/r-glue
+  - x86_64/r/r-gtable
+  - x86_64/r/r-isoband
+  - x86_64/r/r-rlang
+  - x86_64/r/r-scales
+  - x86_64/r/r-tibble
+  - x86_64/r/r-withr
+makedepends:
+  - x86_64/r/r-hexbin
+  - x86_64/r/r-mapproj
+  - x86_64/r/r-quantreg
+  - x86_64/r/r-sf
+  - x86_64/r/r-sp
+  - x86_64/r/r-svglite
+  - x86_64/r/r-testthat
+  - x86_64/r/r-xml2
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

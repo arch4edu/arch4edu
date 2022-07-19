@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-diffobj
+  - x86_64/r/r-glue
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-rlang
+  - x86_64/r/r-testthat
+  - x86_64/r/r-xml2
+makedepends:
+  - x86_64/r/r-cpp11
+  - x86_64/r/r-ggplot2
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

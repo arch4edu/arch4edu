@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-combinat
+  - x86_64/r/r-conf.design
+  - x86_64/r/r-numbers
+  - x86_64/r/r-partitions
+  - x86_64/r/r-vcd
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

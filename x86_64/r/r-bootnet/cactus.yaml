@@ -1,0 +1,25 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-abind
+  - x86_64/r/r-corpcor
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gtools
+  - x86_64/r/r-igraph
+  - x86_64/r/r-isingfit
+  - x86_64/r/r-isingsampler
+  - x86_64/r/r-mgm
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-networktoolbox
+  - x86_64/r/r-networktools
+  - x86_64/r/r-pbapply
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-rlang
+  - x86_64/r/r-snow
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

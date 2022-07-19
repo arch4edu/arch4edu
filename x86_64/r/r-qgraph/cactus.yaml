@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-abind
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-corpcor
+  - x86_64/r/r-fdrtool
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-glasso
+  - x86_64/r/r-gtools
+  - x86_64/r/r-hmisc
+  - x86_64/r/r-igraph
+  - x86_64/r/r-jpeg
+  - x86_64/r/r-lavaan
+  - x86_64/r/r-pbapply
+  - x86_64/r/r-plyr
+  - x86_64/r/r-png
+  - x86_64/r/r-psych
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-reshape2
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

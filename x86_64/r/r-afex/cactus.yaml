@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-car
+  - x86_64/r/r-lme4
+  - x86_64/r/r-lmertest
+  - x86_64/r/r-pbkrtest
+  - x86_64/r/r-reshape2
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-metabma
+  - x86_64/r/r-metafor
+  - x86_64/r/r-psych
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rstan
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-weightr
+  - x86_64/r/r-bayestools
+  - x86_64/r/r-robma
+  - x86_64/r/r-metamisc
+  - x86_64/r/r-ggmcmc
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

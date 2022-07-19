@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-abind
+  - x86_64/r/r-checkmate
+  - x86_64/r/r-distributional
+  - x86_64/r/r-matrixstats
+  - x86_64/r/r-pillar
+  - x86_64/r/r-rlang
+  - x86_64/r/r-tensora
+  - x86_64/r/r-tibble
+  - x86_64/r/r-vctrs
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

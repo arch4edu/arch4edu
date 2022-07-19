@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bh
+  - x86_64/r/r-digest
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-rcppparallel
+  - x86_64/r/r-rpf
+  - x86_64/r/r-stanheaders
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

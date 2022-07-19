@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ic.infer
+  - x86_64/r/r-lavaan
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-quadprog
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cardata
+  - x86_64/r/r-abind
+  - x86_64/r/r-pbkrtest
+  - x86_64/r/r-quantreg
+  - x86_64/r/r-maptools
+  - x86_64/r/r-lme4
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

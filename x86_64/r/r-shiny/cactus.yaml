@@ -1,0 +1,27 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-httpuv
+  - x86_64/r/r-mime
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-xtable
+  - x86_64/r/r-fontawesome
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-r6
+  - x86_64/r/r-sourcetools
+  - x86_64/r/r-later
+  - x86_64/r/r-promises
+  - x86_64/r/r-crayon
+  - x86_64/r/r-rlang
+  - x86_64/r/r-fastmap
+  - x86_64/r/r-withr
+  - x86_64/r/r-commonmark
+  - x86_64/r/r-glue
+  - x86_64/r/r-bslib
+  - x86_64/r/r-cachem
+  - x86_64/r/r-ellipsis
+  - x86_64/r/r-lifecycle
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

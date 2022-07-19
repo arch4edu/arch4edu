@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspdescriptives
+  - x86_64/r/r-jaspmetaanalysis
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

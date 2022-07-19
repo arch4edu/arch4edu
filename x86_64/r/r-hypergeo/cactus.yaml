@@ -1,0 +1,10 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-contfrac
+  - x86_64/r/r-desolve
+  - x86_64/r/r-elliptic
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

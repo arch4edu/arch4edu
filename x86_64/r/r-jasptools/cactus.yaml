@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-pkgbuild
+  - x86_64/r/r-rjson
+  - x86_64/r/r-rvg
+  - x86_64/r/r-testthat
+  - x86_64/r/r-data.table
+  - x86_64/r/r-httr
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-pkgload
+  - x86_64/r/r-remotes
+  - x86_64/r/r-stringi
+  - x86_64/r/r-stringr
+  - x86_64/r/r-vdiffr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

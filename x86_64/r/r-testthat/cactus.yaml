@@ -1,0 +1,26 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-brio
+  - x86_64/r/r-callr
+  - x86_64/r/r-cli
+  - x86_64/r/r-crayon
+  - x86_64/r/r-desc
+  - x86_64/r/r-digest
+  - x86_64/r/r-ellipsis
+  - x86_64/r/r-evaluate
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-pkgload
+  - x86_64/r/r-praise
+  - x86_64/r/r-processx
+  - x86_64/r/r-ps
+  - x86_64/r/r-r6
+  - x86_64/r/r-rlang
+  - x86_64/r/r-waldo
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

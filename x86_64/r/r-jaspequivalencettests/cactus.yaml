@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bayesfactor
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-metabma
+  - x86_64/r/r-toster
+  - x86_64/r/r-jaspttests
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

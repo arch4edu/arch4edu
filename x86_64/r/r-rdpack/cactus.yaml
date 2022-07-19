@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+makedepends:
+  - x86_64/r/r-testthat
+  - x86_64/r/r-rstudioapi
+  - x86_64/r/r-rprojroot
+  - x86_64/r/r-gbrd
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

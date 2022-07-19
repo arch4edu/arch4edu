@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-htmlwidgets
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-crosstalk
+  - x86_64/r/r-jquerylib
+  - x86_64/r/r-promises
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

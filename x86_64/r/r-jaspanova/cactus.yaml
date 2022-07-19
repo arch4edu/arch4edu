@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-afex
+  - x86_64/r/r-bayesfactor
+  - x86_64/r/r-car
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-emmeans
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspdescriptives
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspttests
+  - x86_64/r/r-matrixstats
+  - x86_64/r/r-multcomp
+  - x86_64/r/r-onewaytests
+  - x86_64/r/r-plyr
+  - x86_64/r/r-stringi
+  - x86_64/r/r-stringr
+  - x86_64/r/r-restriktor
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,25 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bas
+  - x86_64/r/r-bstats
+  - x86_64/r/r-emmeans
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggrepel
+  - x86_64/r/r-hmeasure
+  - x86_64/r/r-jaspanova
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspdescriptives
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspttests
+  - x86_64/r/r-lmtest
+  - x86_64/r/r-matrixstats
+  - x86_64/r/r-mdscore
+  - x86_64/r/r-ppcor
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-statmod
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

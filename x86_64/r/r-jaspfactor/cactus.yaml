@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspsem
+  - x86_64/r/r-lavaan
+  - x86_64/r/r-psych
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-reshape2
+  - x86_64/r/r-semplot
+  - x86_64/r/r-gparotation
+  - x86_64/r/r-rcsdp
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

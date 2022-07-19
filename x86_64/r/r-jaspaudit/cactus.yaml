@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bstats
+  - x86_64/r/r-digittests
+  - x86_64/r/r-extradistr
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggrepel
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jfa
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-gtools
+  - x86_64/r/r-tseries
+  - x86_64/r/r-coda
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

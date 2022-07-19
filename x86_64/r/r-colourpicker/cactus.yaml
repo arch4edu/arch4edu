@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-htmlwidgets
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-miniui
+  - x86_64/r/r-shiny
+  - x86_64/r/r-shinyjs
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
