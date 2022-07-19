@@ -8,7 +8,7 @@ _pkgver_patch=0
 _pkgver_str="${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)"
 _pkgver_magic=65
 pkgver=$_pkgver_major.$_pkgver_minor.$_pkgver_patch
-pkgrel=1
+pkgrel=2
 pkgdesc='AMD ROCm core package'
 arch=('x86_64')
 url='https://docs.amd.com/'
@@ -41,6 +41,7 @@ package() {
   make DESTDIR="$pkgdir" -C build install
   install -Dm644 opt/rocm-${pkgver}/.info/version "$pkgdir/opt/rocm/.info/version"
   install -Dm644 opt/rocm-${pkgver}/include/rocm_version.h "$pkgdir/opt/rocm/include/rocm_version.h"
+  install -Dm644 opt/rocm-${pkgver}/include/rocm-core/rocm_version.h "$pkgdir/opt/rocm/include/rocm-core/rocm_version.h"
   install -Dm644 opt/rocm-${pkgver}/lib/rocmmod "$pkgdir/opt/rocm/lib/rocmmod"
   mkdir -p "$pkgdir/opt/rocm/lib/CMakeFiles/rocm-core.dir"
 }
