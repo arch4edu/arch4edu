@@ -1,0 +1,25 @@
+# Maintainer: Theo Ouzhinski <touzhinski at gmail dot com>
+
+pkgname=python-yamlloader
+pkgver=0.5.5
+pkgrel=1
+pkgdesc='An ordered YAML loader and dumper'
+arch=('any')
+url=https://github.com/Phynix/yamlloader
+license=('MIT')
+depends=('python' 'python-pyaml')
+source=("https://files.pythonhosted.org/packages/source/y/yamlloader/yamlloader-$pkgver.tar.gz")
+sha512sums=("5f2e3fc6b9e3c3219dfd4e91595b9c47328e4a12c1f1c8c8c5dd54c290d74dffb2e9b8ba1a55db2e408035effdcc50ec153ff91b891d66a51a0cefde0231d295")
+
+build() {
+  cd "yamlloader-$pkgver"
+  python setup.py build
+}
+
+package() {
+  cd "yamlloader-$pkgver"
+  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+}
+
+# vim:set ts=2 sw=2 et:
+makedepends+=("python-setuptools")
