@@ -1,10 +1,1 @@
-nvchecker:
-  - source: aur
-    aur:
-  - alias: python
-depends:
-  - x86_64/wxgtk-dev: wxgtk3-dev
-  - x86_64/wxgtk-dev: wxgtk-common-dev
-build_prefix: extra-x86_64
-pre_build: aur-pre-build
-post_build: aur-post-build
+../../template/x86_64-python.yaml
