@@ -1,0 +1,46 @@
+# Entries for nvchecker.
+nvchecker:
+  - source: aur
+    aur:
+  # Aliases
+  - alias: python
+
+# Dependencies of the package.
+depends:
+  # Full path to the pkgbase folder
+  - x86_64/yay
+  # Specific a particular package in the pkgbase
+  - x86_64/yay: yay
+
+# Make dependencies of the package.
+makedepends:
+  # Full path to the pkgbase folder
+  - x86_64/yay
+  # Specific a particular package in the pkgbase
+  - x86_64/yay: yay
+
+# The group name of the runners for the build, e.g. the 'aarch64' group for the aarch64 packages.
+# Current available groups:
+#   default: GitHubActions
+#   GitHubActions: for most packages with x86_64 or any architecture.
+#   x86_64: for complex x86_64 packages that require more resources than the default GitHub Actions runners.
+#   aarch64: for aarch64 packages.
+group: x86_64
+
+# Prefix of the build command in devtools
+# Current available prefix:
+# extra-x86_64: for most x86_64 and aarch64 packages.
+# multilib-x86_64: for x86_64 packages with 32-bit dependencies.
+build_prefix: extra-x86_64
+
+# Extra arguments passed to makepkg called by archbuild, e.g. '--nocheck' to disable check().
+makepkg_args:
+
+# Extra arguments passed to makechrootpkg called by archbuild.
+makechrootpkg_args:
+
+# Preprocess script before the build in shell. Multi-line scripts are also acceptable.
+pre_build: aur-pre-build
+
+# Postprocess script after the build in shell. Multi-line scripts are also acceptable.
+post_build: aur-post-build
