@@ -9,5 +9,6 @@ depends:
   - x86_64/r/r-strucchange
   - x86_64/r/r-zoo
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

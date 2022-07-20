@@ -14,8 +14,7 @@ depends:
   - x86_64/r/r-vctrs
 makedepends:
   - x86_64/r/r-cpp11
-  - x86_64/r/r-data.table
-  - x86_64/r/r-testthat
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

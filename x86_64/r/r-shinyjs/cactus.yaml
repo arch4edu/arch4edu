@@ -5,8 +5,7 @@ depends:
   - x86_64/r/r-digest
   - x86_64/r/r-jsonlite
   - x86_64/r/r-shiny
-makedepends:
-  - x86_64/r/r-testthat
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

@@ -3,10 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-rcpp
-makedepends:
-  - x86_64/r/r-abind
-  - x86_64/r/r-doparallel
-  - x86_64/r/r-testthat
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

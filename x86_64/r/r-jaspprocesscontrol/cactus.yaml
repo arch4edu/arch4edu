@@ -28,5 +28,6 @@ depends:
   - x86_64/r/r-desirability
   - x86_64/r/r-weibullness
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

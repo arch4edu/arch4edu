@@ -3,11 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-rcpp
-makedepends:
-  - x86_64/r/r-tinytest
-  - x86_64/r/r-pkgkitten
-  - x86_64/r/r-reticulate
-  - x86_64/r/r-slam
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

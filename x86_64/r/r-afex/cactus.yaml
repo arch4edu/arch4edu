@@ -8,5 +8,6 @@ depends:
   - x86_64/r/r-pbkrtest
   - x86_64/r/r-reshape2
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

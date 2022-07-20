@@ -4,10 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-foreach
   - x86_64/r/r-iterators
-makedepends:
-  - x86_64/r/r-caret
-  - x86_64/r/r-mlbench
-  - x86_64/r/r-runit
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

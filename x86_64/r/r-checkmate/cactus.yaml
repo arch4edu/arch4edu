@@ -3,15 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-backports
-makedepends:
-  - x86_64/r/r-r6
-  - x86_64/r/r-fastmatch
-  - x86_64/r/r-data.table
-  - x86_64/r/r-devtools
-  - x86_64/r/r-magrittr
-  - x86_64/r/r-testthat
-  - x86_64/r/r-tinytest
-  - x86_64/r/r-tibble
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

@@ -6,9 +6,7 @@ depends:
   - x86_64/r/r-base64enc
   - x86_64/r/r-rlang
   - x86_64/r/r-fastmap
-makedepends:
-  - x86_64/r/r-markdown
-  - x86_64/r/r-testthat
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

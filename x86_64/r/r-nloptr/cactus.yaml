@@ -3,11 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-testthat
-makedepends:
-  - x86_64/r/r-knitr
-  - x86_64/r/r-rmarkdown
-  - x86_64/r/r-xml2
-  - x86_64/r/r-covr
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build

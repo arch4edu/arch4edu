@@ -92,8 +92,8 @@ if __name__ == '__main__':
             _unresolved.update([i for i in aur_info[package]['Depends'] if not i in resolved])
 
             aur_info[package]['MakeDepends'] = [] if not 'MakeDepends' in aur_info[package] else aur_info[package]['MakeDepends']
-            if 'CheckDepends' in aur_info[package]:
-                    aur_info[package]['MakeDepends'] += aur_info[package]['CheckDepends']
+            #if 'CheckDepends' in aur_info[package]:
+            #        aur_info[package]['MakeDepends'] += aur_info[package]['CheckDepends']
             aur_info[package]['MakeDepends'] = [i.split('>')[0].split('=')[0] for i in aur_info[package]['MakeDepends']]
             aur_info[package]['MakeDepends'] = [provides[i] if i in provides else i for i in aur_info[package]['MakeDepends']]
             aur_info[package]['MakeDepends'] = [i for i in aur_info[package]['MakeDepends'] if not i in pacman_db and not i in aur_info[package]['Depends']]
@@ -112,7 +112,7 @@ if __name__ == '__main__':
         if (pkgbase / 'cactus.yaml').exists():
             continue
         pkgbase.mkdir(exist_ok=True)
-        template = 'template/x86_64-simple.yaml'
+        template = 'template/x86_64-nocheck.yaml'
         if len(info['Depends']) + len(info['MakeDepends']) == 0:
             symlink('../' * (sys.argv[2].count('/') + 2) + template, pkgbase / 'cactus.yaml')
             logger.info('Added %s with %s', package, template)
