@@ -1,0 +1,37 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=fpc
+_pkgver=2.2-9
+pkgname=r-${_pkgname,,}
+pkgver=2.2.9
+pkgrel=4
+pkgdesc='Flexible Procedures for Clustering'
+arch=('any')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+  r-diptest
+  r-flexmix
+  r-kernlab
+  r-mclust
+  r-prabclus
+  r-robustbase
+)
+optdepends=(
+  r-mvtnorm
+  r-pdfcluster
+  r-tclust
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('29b0006e96c8645645d215d3378551bd6525aaf45abde2d9f12933cf6e75fa38')
+
+build() {
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+}
+# vim:set ts=2 sw=2 et:
