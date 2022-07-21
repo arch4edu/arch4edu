@@ -1,54 +1,38 @@
-# Maintainer: Robert Greener <me@r0bert.dev>
-_cranname=gdtools
-_cranver=0.2.4
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
-pkgdesc="Utilities for Graphical Rendering"
-arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(GPL3)
+# system requirements: cairo, freetype2, fontconfig
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=gdtools
+_pkgver=0.2.4
+pkgname=r-${_pkgname,,}
+pkgver=0.2.4
+pkgrel=3
+pkgdesc='Utilities for Graphical Rendering'
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
 depends=(
-	cairo
-	fontconfig
-	freetype2
-	r
-	r-rcpp
-	r-systemfonts
-)
-checkdepends=(
-	r-htmltools
-	r-testthat
-	r-fontquiver
-	r-curl
+  r
+  r-rcpp
+  r-systemfonts
+  cairo
+  freetype2
+  fontconfig
 )
 optdepends=(
-	r-htmltools
-	r-testthat
-	r-fontquiver
-	r-curl
+  r-curl
+  r-fontquiver
+  r-htmltools
+  r-testthat
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('32884ce1aa49be1fd897b4f808cdbc8727cb0d881ff8961e899220b2cac33028')
 
 build() {
-	mkdir -p build
-	R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
-}
-
-check() {
-	if [ -d "${_cranname}/tests" ]
-	then
-  		cd "${_cranname}/tests"
-		for i in *.R; do
-			R_LIBS="${srcdir}/build" Rscript --vanilla $i
-		done
-	fi
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
-	install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-	cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
 }
-
-sha256sums=('32884ce1aa49be1fd897b4f808cdbc8727cb0d881ff8961e899220b2cac33028')
+# vim:set ts=2 sw=2 et:
