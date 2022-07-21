@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - any/python-cheetah3
+  - aarch64/mongodb-tools
+build_prefix: extra-x86_64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  add options "!lto"
+post_build: aur-post-build
