@@ -1,26 +1,33 @@
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=statmod
-_cranver=1.4.36
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
-pkgdesc="Statistical Modeling"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(GPL2 GPL3)
-depends=('r>=3.0.0' gcc-fortran)
-makedepends=(gcc-fortran)
-optdepends=(r-tweedie)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+_pkgname=statmod
+_pkgver=1.4.36
+pkgname=r-${_pkgname,,}
+pkgver=1.4.36
+pkgrel=4
+pkgdesc='Statistical Modeling'
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+)
+optdepends=(
+  r-mass
+  r-tweedie
+)
+makedepends=(
+  gcc-fortran
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('14e897c83d426caca4d920d3d5bead7ae9a679276b3cb2e227f299ad189d7bc2')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
 }
+# vim:set ts=2 sw=2 et:
