@@ -6,44 +6,37 @@
 
 pkgname=python-wxpython-dev
 _pkgname=wxPython
-pkgver=4.1.1
-pkgrel=5
+pkgver=4.2.0a1.dev5449+3ac1e526
+pkgrel=1
+_wxver=3.2.0
 pkgdesc='Cross-platform GUI toolkit. Developer version'
 arch=('x86_64')
 license=('custom:wxWindows')
 url='https://www.wxpython.org'
-depends=('wxgtk3-dev' 'python-six')
+depends=('wxwidgets-gtk3' 'python-six')
 optdepends=('python-pypubsub: Alternative to the deprecated wx.lib.pubsub API')
-makedepends=('mesa' 'glu' 'webkit2gtk' 'python-requests' 'python-setuptools' 'patch')
+makedepends=('mesa' 'glu' 'webkit2gtk' 'python-requests' 'python-setuptools' 'sip' 'doxygen' 'waf' 'python-attrdict')
 checkdepends=('xorg-server-xvfb' 'python-pytest-forked' 'python-numpy')
 provides=('python-wxpython')
 conflicts=('python-wxpython')
-source=("https://files.pythonhosted.org/packages/source/w/wxPython/wxPython-$pkgver.tar.gz"
-"aa3dca0e40bd0701e82ce40297a982b5b84844dc.patch"
-"f5a55e6bf38ab5a0e7b7161477d2d523d057ec29.patch"
-"d9725119d742ff25e815d0824c62abd8953a61df.patch"
-"7afcc7fbc68506b55b5bb85970871a5f3df6eac4.patch"
-)
-sha512sums=('00924008b97bbecb824c3fffd46fc76a5a3115d9346eb95baccc6cca99c080aa80b586af42fece8a3b4d234f2d07ffa8b66b50a164c41cbd95abc9b139c32809'
-'7e44c7ed5cf2688f1082dcb51e3cbaad22be67e18bb64536ec2820a3defcdc982ac0b8570b62d69157019163eaad673612708d882bb0c9105ee67ab1a4e41029'
-'923a0a10c90792f3f9383c69079ab07b3254bf8d7467c8340fc3fceb21860645da75e99794dc13b3abb92bc16dedba012c730fbc507aa5e378ab3dfe60334f54'
-'1627314f9ccfda1189f295a293a834559d009d5ed0ca2c5fb4d7843120341a65900dc788c747b1203279435614fa8d9341c0997553bbfffb7884d071fc5bcb49'
-'d70fda4dc90fcc6cdee465fa2e96702245045e71eb5710c690a95eb1b09f3009fb5beca6dfb3d975aa38aec1926e8b603f58293073abd523f1d39a8b1d0e2b3e'
-)
+source=("https://wxpython.org/Phoenix/snapshot-builds/wxPython-$pkgver.tar.gz"
+        "https://github.com/wxWidgets/wxWidgets/releases/download/v$_wxver/wxWidgets-$_wxver.tar.bz2")
+sha512sums=('f7fe342c70fd8fa66de67e1aeeb00290dbe2f995a4917a7bb7000d025cf5a084199bb1db6f23bc7b743448aa185f725af57aa9ed2b2ae8eead08ca69bb8e4137'
+            'e55e7c5ac7abcacf2ecff7c22e367db17ff5a077d3d5d2aa7589e8ba7cc6695cfa48c0f00bcfdffeda8dc4f974f97a857fb61b4b300a724f7687d710fbb23967')
 
 prepare() {
   cd "$_pkgname-$pkgver"
-  patch -p1 < ../aa3dca0e40bd0701e82ce40297a982b5b84844dc.patch
-  patch -p1 < ../f5a55e6bf38ab5a0e7b7161477d2d523d057ec29.patch
-  patch -p1 < ../d9725119d742ff25e815d0824c62abd8953a61df.patch
-  patch -p1 < ../7afcc7fbc68506b55b5bb85970871a5f3df6eac4.patch
-  sed -i "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-gtk3'|" build.py
+  rm -r ext/wxWidgets
+  mv "$srcdir"/wxWidgets-$_wxver ext/wxWidgets
 }
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python build.py build --release
+  # Recreate sip files with current wxWidgets
+  rm -r sip/{cpp,gen}/*
+  SIP=/usr/bin/sip DOXYGEN=/usr/bin/doxygen WAF=/usr/bin/waf \
+  python build.py dox etg --nodoc sip build --use_syswx --release
 }
 
 check() {
