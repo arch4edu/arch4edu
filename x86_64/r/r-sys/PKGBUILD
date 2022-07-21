@@ -1,26 +1,32 @@
-# Maintainer: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-# Contributor: Kibouo <csonka.mihaly@hotmail.com>
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=sys
-_cranver=3.4
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
-pkgdesc="Powerful and Reliable Tools for Running System Commands in R"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(MIT)
-depends=(r)
-optdepends=(r-unix r-spelling r-testthat)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+_pkgname=sys
+_pkgver=3.4
+pkgname=r-${_pkgname,,}
+pkgver=3.4
+pkgrel=5
+pkgdesc='Powerful and Reliable Tools for Running System Commands in R'
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('MIT')
+depends=(
+  r
+)
+optdepends=(
+  r-spelling
+  r-testthat
+  r-unix
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('17f88fbaf222f1f8fd07919461093dac0e7175ae3c3b3264b88470617afd0487')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
+# vim:set ts=2 sw=2 et:
