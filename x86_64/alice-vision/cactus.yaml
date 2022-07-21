@@ -6,9 +6,12 @@ depends:
   - x86_64/ceres-solver
   - x86_64/flann
   - x86_64/geogram
+  - x86_64/opengv-git
 makedepends:
   - x86_64/coin-or-lemon
   - x86_64/popsift
+  - x86_64/popsift: popsift-libs
+  - x86_64/uncertainty-framework
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
