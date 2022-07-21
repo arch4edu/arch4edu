@@ -1,0 +1,79 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 06636b3..d7bc1f3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,6 +17,31 @@ message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+ message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+ message(STATUS "---------------------------------------------------------")
+ 
++
++# -----------------------------------------------------------------------------
++# UNIT TEST macro
++# -----------------------------------------------------------------------------
++macro(UNIT_TEST NAMESPACE NAME EXTRA_LIBS)
++  if(UNC_BUILD_TESTS)
++    add_executable(${NAMESPACE}_test_${NAME} ${NAME}_test.cpp)
++
++    set_property(TARGET ${NAMESPACE}_test_${NAME} PROPERTY FOLDER uncertaintyTE/test)
++
++    target_link_libraries(${NAMESPACE}_test_${NAME}
++                          ${EXTRA_LIBS} # Extra libs MUST be first.
++                          ${BOOST_LIBRARIES} uncertaintyTE)
++
++  target_include_directories(${NAMESPACE}_test_${NAME}
++        PUBLIC
++        .
++        ${INCLUDE_DIRS})
++
++    add_test(NAME ${NAMESPACE}_test_${NAME}
++       WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
++       COMMAND $<TARGET_FILE:${NAMESPACE}_test_${NAME}> --log_level=all)
++  endif()
++endmacro()
++
+ # Guard against in-source builds
+ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+   message(FATAL_ERROR "In-source builds not allowed.")
+@@ -264,31 +289,6 @@ if(WIN32)
+   message("Please add the library path to your project (e.g. 'c:/Program Files (x86)/IntelSWTools/compilers_and_libraries_2017.4.210/windows/compiler/lib/intel64_win')")
+ endif()
+ 
+-
+-# -----------------------------------------------------------------------------
+-# UNIT TEST macro
+-# -----------------------------------------------------------------------------
+-macro(UNIT_TEST NAMESPACE NAME EXTRA_LIBS)
+-  if(UNC_BUILD_TESTS)
+-    add_executable(${NAMESPACE}_test_${NAME} ${NAME}_test.cpp)
+-
+-    set_property(TARGET ${NAMESPACE}_test_${NAME} PROPERTY FOLDER uncertaintyTE/test)
+-
+-    target_link_libraries(${NAMESPACE}_test_${NAME}
+-                          ${EXTRA_LIBS} # Extra libs MUST be first.
+-                          ${BOOST_LIBRARIES} uncertainty_shared)
+-
+-  target_include_directories(${NAMESPACE}_test_${NAME}
+-        PUBLIC
+-        .
+-        ${INCLUDE_DIRS})
+-
+-    add_test(NAME ${NAMESPACE}_test_${NAME}
+-       WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+-       COMMAND $<TARGET_file:${NAMESPACE}_test_${NAME}> --log_level=all)
+-  endif()
+-endmacro()
+-
+ # -----------------------------------------------------------------------------
+ # STATUS
+ # -----------------------------------------------------------------------------
+diff --git a/src/test_eigValues/CMakeLists.txt b/src/test_eigValues/CMakeLists.txt
+index 79f39c7..8a3c5b6 100644
+--- a/src/test_eigValues/CMakeLists.txt
++++ b/src/test_eigValues/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ # Add unit test
+ if(UNC_BUILD_TESTS)
+     # List of unit tests
+-    UNIT_TEST(cov covarianceEigenValues uncertainty)
++    UNIT_TEST(cov covarianceEigenValues uncertaintyTE)
+ ENDIF()
