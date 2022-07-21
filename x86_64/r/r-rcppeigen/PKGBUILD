@@ -1,47 +1,33 @@
-# Maintainer: Robert Greener <me@r0bert.dev>
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-# Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
-# Contributor: Alex Branham <branham@utexas.edu>
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=RcppEigen
-_cranver=0.3.3.9.2
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=RcppEigen
+_pkgver=0.3.3.9.2
+pkgname=r-${_pkgname,,}
+pkgver=0.3.3.9.2
+pkgrel=3
 pkgdesc="'Rcpp' Integration for the 'Eigen' Templated Linear Algebra Library"
-arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(GPL2)
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
 depends=(
-	r
-	"r-rcpp>=0.11.0"
-	"r-matrix>=1.1.0"
-)
-checkdepends=(
-	r-tinytest
+  r
+  r-rcpp
 )
 optdepends=(
-	r-inline
-	r-tinytest
-	r-pkgkitten
-	r-microbenchmark
+  r-inline
+  r-microbenchmark
+  r-pkgkitten
+  r-tinytest
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("c111b13bd34acf75e061302628e6821a506736717ae938a0105d45a5ee0f638439ebdb5e83e9319157deee81b96a928438c4d3d9d1be69ef64dcdab56425f44c")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('2547e794d5a6fb8d9fbadf19e64afa0bcf413cc69ecf3f428995fa5a0fced493')
 
 build() {
-	mkdir -p build
-	R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build"
-}
-
-check() {
-	cd "${_cranname}/tests"
-	R_LIBS="${srcdir}/build" Rscript --vanilla tinytest.R
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
-	install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-	cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-	install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
 }
+# vim:set ts=2 sw=2 et:
