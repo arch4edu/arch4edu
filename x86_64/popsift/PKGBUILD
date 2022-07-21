@@ -1,0 +1,75 @@
+#!/hint/bash
+# Maintainer : bartus <arch-user-repoᘓbartus.33mail.com>
+# -> disable check() until #63 is fixed
+
+#Configuration variables
+# CUDA_ARCH : 50, 52 ...
+_DISABLE_CHECK=${DISABLE_CHECK:-1}
+
+_name=popsift
+pkgname=( "${_name}" "${_name}-libs" )
+pkgver=1.0.0
+pkgrel=4
+pkgdesc="Realtime GPU implementation of SIFT, 25 fps on HD images on recent graphic cards. (DOI: 10.1145/3204949.3208136)"
+arch=('i686' 'x86_64')
+url="https://alicevision.github.io/"
+license=('MPL2')
+conflicts=()
+provides=()
+makedepends=('boost' 'cmake' 'git')
+makedepends+=('cuda>=7.0')
+checkdepends=('wget')
+source=("${_name}::git+https://github.com/alicevision/popsift.git")
+sha256sums=('SKIP')
+
+build() {
+  CMAKE_FLAGS=( -DCMAKE_INSTALL_PREFIX=/usr
+                 -DCMAKE_BUILD_TYPE=Release )
+  ((_DISABLE_CHECK)) && CMAKE_FLAGS+=( -DPopSift_BUILD_EXAMPLES=OFF ) \
+                    || CMAKE_FLAGS+=( -DPopSift_BUILD_EXAMPLES=ON
+                                       -DPopSift_USE_TEST_CMD=ON )
+  [[ -v CUDA_ARCH ]] && CMAKE_FLAGS+=( -DPopSift_CUDA_CC_LIST="$CUDA_ARCH" )
+
+  msg2 "Build static ${_name} library"
+  cmake "${CMAKE_FLAGS[@]}" \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DCUDA_USE_STATIC_CUDA_RUNTIME=ON \
+        -DPopSift_USE_POSITION_INDEPENDENT_CODE=ON \
+        -S "${srcdir}/${_name}" \
+        -B build_static
+  make -C build_static
+
+  msg2 "Build shared ${_name} library"
+  cmake "${CMAKE_FLAGS[@]}" \
+        -DBUILD_SHARED_LIBS=ON \
+        -S "${srcdir}/${_name}" \
+        -B build_shared
+  make -C build_shared
+}
+
+
+package_popsift() {
+  pkgdesc+=" [development headers and static libs]"
+  depends=('boost' "popsift-libs=${pkgver}")
+  optdepend=('cuda: for static cudart library')
+  options=('staticlibs')
+  make -C "$srcdir/build_static" DESTDIR="${pkgdir}" install
+}
+
+package_popsift-libs() {
+  depends=('boost-libs>=1.55' 'libcudart.so')
+  provides=("popsift-libs=${pkgver}")
+  cd 
+  make -C "${srcdir}/build_shared" DESTDIR="${pkgdir}" install
+  rm -rf "${pkgdir}"/usr/{include,shared,lib/cmake}
+}
+
+check() {
+  ((_DISABLE_CHECK)) || {
+    make -C "${srcdir}/build_static" prepare-test
+    make -C "${srcdir}/build_static" run-test-boat
+#   make run-test
+  }
+}
+# vim:set ts=2 sw=2 et:
+options+=("!lto")
