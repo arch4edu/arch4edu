@@ -1,26 +1,38 @@
-# Maintainer: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-# Contributor: frichtlm <frichtlm@gmail.com>
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=hms
-_cranver=1.1.1
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
-pkgdesc="Pretty Time of Day"
-arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(MIT)
-depends=(r 'r-ellipsis>=0.3.2' r-lifecycle r-pkgconfig r-rlang 'r-vctrs>=0.3.8')
-optdepends=(r-crayon r-lubridate r-pillar r-testthat)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+_pkgname=hms
+_pkgver=1.1.1
+pkgname=r-${_pkgname,,}
+pkgver=1.1.1
+pkgrel=5
+pkgdesc='Pretty Time of Day'
+arch=('any')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('MIT')
+depends=(
+  r
+  r-ellipsis
+  r-lifecycle
+  r-pkgconfig
+  r-rlang
+  r-vctrs
+)
+optdepends=(
+  r-crayon
+  r-lubridate
+  r-pillar
+  r-testthat
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('6b5f30db1845c70d27b5de33f31caa487cdd0787cd80a4073375e5f482269062')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
+# vim:set ts=2 sw=2 et:
