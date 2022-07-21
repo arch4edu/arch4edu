@@ -1,26 +1,42 @@
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-# Contributor: Alex Branham <alex.branham@gmail.com>
+# system requirements: pandoc
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=StanHeaders
-_cranver=2.21.0-7
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
-pkgdesc="C++ Header Files for Stan"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(BSD3)
-depends=('r>=3.4.0' 'r-rcppparallel>=5.0.1' r-rcppeigen pandoc)
-optdepends=(r-rcpp r-bh r-knitr r-rmarkdown r-rstan)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+_pkgname=StanHeaders
+_pkgver=2.21.0-7
+pkgname=r-${_pkgname,,}
+pkgver=2.21.0.7
+pkgrel=4
+pkgdesc='C++ Header Files for Stan'
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('BSD')
+depends=(
+  r
+  r-rcppeigen
+  r-rcppparallel
+)
+optdepends=(
+  r-bh
+  r-knitr
+  r-matrix
+  r-methods
+  r-rcpp
+  r-rmarkdown
+  r-rstan
+)
+makedepends=(
+  gcc-fortran
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('27546e064f0e907e031d9185ad55245d118d82fbe3074ecb1d76fae8b9f2336b')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
+# vim:set ts=2 sw=2 et:
