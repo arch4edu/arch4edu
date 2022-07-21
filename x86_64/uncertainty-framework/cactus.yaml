@@ -2,14 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/cctag
   - x86_64/ceres-solver
-  - x86_64/flann
-  - x86_64/geogram
-makedepends:
-  - x86_64/coin-or-lemon
-  - x86_64/popsift
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build
