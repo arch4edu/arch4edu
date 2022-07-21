@@ -103,7 +103,6 @@ if __name__ == '__main__':
             logger.info('Resolved %s', package)
         unresolved = list(_unresolved)
     logger.info('Resolved %d packages', len(resolved))
-    logger.debug(resolved['r-httpuv'])
 
     path = Path(sys.argv[2])
     path.mkdir(exist_ok=True)
