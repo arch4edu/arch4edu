@@ -4,6 +4,7 @@ nvchecker:
 build_prefix: extra-x86_64
 depends:
   - aarch64/mongodb-tools
+  - aarch64/mongosh-bin
 makepkg_args: -A
 pre_build: aur-pre-build
 post_build: aur-post-build
