@@ -2,7 +2,7 @@
 
 pkgname=openmp-extras
 pkgdesc='Radeon Open Compute - openmp-extras with flang (OpenMP AMD GPU Offloading)'
-pkgver=5.2.0
+pkgver=5.2.1
 pkgrel=1
 arch=('x86_64')
 url='https://github.com/ROCm-Developer-Tools/aomp'
@@ -27,11 +27,11 @@ source=("llvm-amdgpu-${pkgver}.tar.gz::$llvm_url/archive/rocm-$pkgver.tar.gz"
         "aomp-5.2.0-extras-version-string.patch"
         )
 sha256sums=(
-            '0f892174111b78a02d1a00f8f46d9f80b9abb95513a7af38ecf2a5a0882fe87f'
-            '20e21312816272222d1f427ea72a99a9a67077078552f5e2638a40860d161d25'
-            '817c2e8975e56a8875ff56f9d1ea34d5e7e50f1b541b7f1236e3e5c8d9eee47f'
-            '901674bc941115c72f82c5def61d42f2bebee687aefd30a460905996f838e16c'
-            '20f48cac9b58496230fa2428eba4e15ec0a6e92d429569b154a328b7a8c5da17'
+            '3644e927d943d61e22672422591c47a62ff83e3d87ced68439822156d8f79abf'
+            'c0aa6997e889d6ce0e37cfa6a2e91c5c0b54cda1673abdcabcf34da1ba78ba72'
+            '8b738225f0be39f27bba64c014816cfa1b79f2c7cf2d0e31fbc0fffb6c26e429'
+            'e5855387ce73ed483ed0d03dbfef31f297c6ca66cf816f6816fd5ee373fc8225'
+            '012a9c10a7d2a248dc40510e2f5c02a54b5f6bc39961500dc48b6780dac5ad67'
 
             'c846bac17580e939492b843bee092c2e1b2b414a683bdb6be2973ae044642424'
             'f7ed1704ffb095bbe8512b1c567a111936685d35f64123c786194e4239277251'
