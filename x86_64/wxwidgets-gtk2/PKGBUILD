@@ -3,7 +3,7 @@
 
 pkgname=wxwidgets-gtk2
 pkgver=3.2.0
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 url='https://wxwidgets.org'
 license=(custom:wxWindows)
@@ -40,8 +40,8 @@ package_wxwidgets-gtk2() {
   pkgdesc='GTK+2 implementation of wxWidgets API for GUI'
   depends=(gtk2 gst-plugins-base-libs libsm wxwidgets-common libnotify libmspack sdl2)
   optdepends=('webkit2gtk: for webview support')
-  conflicts=(wxgtk2)
-  provides=(wxgtk2 wxwidgets)
+  conflicts=(wxgtk wxgtk2)
+  provides=(wxgtk wxgtk2 wxwidgets)
 
   DESTDIR="$pkgdir" cmake --install build-gtk2
   rm -r "$pkgdir"/usr/{include,lib/cmake,lib/libwx_base*,bin/wxrc*}
