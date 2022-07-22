@@ -1,0 +1,41 @@
+#Maintainer: sukanka <su975853527 AT gmail.com>
+_pkgname=jaspTools
+_pkgver=1.5.1
+pkgname=r-${_pkgname,,}
+pkgver=1.5.1
+pkgrel=1
+pkgdesc="Helps preview and debug JASP analyses"
+arch=('x86_64')
+url="https://github.com/jasp-stats/${_pkgname}"
+license=('GPL')
+depends=(r
+'r-jsonlite'
+'r-pkgbuild'
+'r-rjson'
+'r-rvg'
+'r-testthat'
+'r-data.table'
+'r-httr'
+'r-lifecycle'
+'r-pkgload'
+'r-remotes'
+'r-stringi'
+'r-stringr'
+'r-vdiffr'
+)
+makedepends=('git')
+optdepends=()
+source=("git+https://github.com/jasp-stats/${_pkgname}.git")
+sha256sums=('SKIP')
+
+
+build() {
+  mkdir -p ${srcdir}/usr/lib/R/library
+  R -e "install.packages('${srcdir}/${_pkgname}',\
+     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+}
+
+package() {
+
+  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+}
