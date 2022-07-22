@@ -5,6 +5,7 @@ depends:
   - x86_64/r/r-gmp
   - x86_64/r/r-mathjaxr
   - x86_64/r/r-polynom
+  - x86_64/r/r-rdpack
   - x86_64/r/r-sets
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

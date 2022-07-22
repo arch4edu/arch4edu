@@ -2,6 +2,10 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-gridgraphics
+  - x86_64/r/r-qgraph
+  - x86_64/r/r-r6
+  - x86_64/r/r-ragg
   - x86_64/r/r-rcpp
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
