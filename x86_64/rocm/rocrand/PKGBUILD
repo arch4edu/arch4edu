@@ -1,7 +1,7 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
-pkgver=5.2.0
+pkgver=5.2.1
 pkgrel=1
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
@@ -16,7 +16,7 @@ _hiprand='https://github.com/ROCmSoftwarePlatform/hipRAND'
 _commit=20ac3db9d7462c15a3e96a6f0507cd5f2ee089c4
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "$pkgname-hiprand-$pkgver.tar.gz::$_hiprand/archive/$_commit.tar.gz")
-sha256sums=('ab3057e7c17a9fbe584f89ef98ec92a74d638a98d333e7d0f64daf7bc9051e38'
+sha256sums=('4b2a7780f0112c12b5f307e1130e6b2c02ab984a0c1b94e9190dae38f0067600'
             'ee38a68c9e88056b7ecd41553e496e455dbb3fe08871ff3545430d6733070e6b')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 _hipname="$(basename "$_hiprand")-$(basename "${source[1]}" ".tar.gz")"
