@@ -4,7 +4,7 @@
 
 pkgname=rocm-llvm-mlir
 pkgdesc="Radeon Open Compute - LLVM Multi-Level IR Compiler Framework"
-pkgver=5.2.0
+pkgver=5.3.0
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/ROCmSoftwarePlatform/llvm-project-mlir"
@@ -13,7 +13,7 @@ depends=("hip")
 makedepends=("cmake" "sqlite" "python")
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/rocm-$pkgver.tar.gz"
         "llvm-project-mlir-fix-rpath-flags.patch::https://patch-diff.githubusercontent.com/raw/ROCmSoftwarePlatform/llvm-project-mlir/pull/688.patch")
-sha256sums=('546121f203e7787d3501fbaf6673bdbeefbb39e0446b02c480454338362a1f01'
+sha256sums=('ee5093aad5459773c350205ef937a186a20994b42798106f8126b9914ad099a5'
             '7085543c8726b3b14cae675ecccef54847a2525af3a13d34d6e1d52d2a17907a')
 options=(!lto)
 _dirname="$(basename $url)-$(basename ${source[0]} .tar.gz)"
