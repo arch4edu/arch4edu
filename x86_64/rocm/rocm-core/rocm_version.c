@@ -1,4 +1,4 @@
-#include "rocm_version.h"
+#include "rocm-core/rocm_version.h"
 
 VerErrors getROCmVersion(unsigned int *Major, unsigned int *Minor,
                          unsigned int *Patch) {

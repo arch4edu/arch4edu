@@ -4,9 +4,9 @@
 pkgname=rocm-core
 _pkgver_major=5
 _pkgver_minor=2
-_pkgver_patch=0
+_pkgver_patch=1
 _pkgver_str="${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)"
-_pkgver_magic=65
+_pkgver_magic=79
 pkgver=$_pkgver_major.$_pkgver_minor.$_pkgver_patch
 pkgrel=2
 pkgdesc='AMD ROCm core package'
@@ -15,11 +15,11 @@ url='https://docs.amd.com/'
 license=()
 depends=()
 makedepends=('cmake')
-source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/${pkgver%.$_pkgver_patch}/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.$_pkgver_str-${_pkgver_magic}_amd64.deb"
+source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/$pkgver/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.$_pkgver_str-${_pkgver_magic}_amd64.deb"
         "rocm_version.c"
         "CMakeLists.txt")
-sha256sums=('85eaadb446fa7de3557d790cb86a32a8a77568d172fe55d6c43aa57e3958da08'
-            '976781c610ac766c91a1da3f3f1474595216f69a0fdcb8c966f1f94095ce947a'
+sha256sums=('d8b547127241d7a577c8d74dfd52d57fc42ee3aa5104dde86640118eefc4b09e'
+            '23ded36e5cf003be491e09e56b10982efb585b6bb93ae18884a8a160f0d9cae0'
             'ed98f0e1712e99b34d9da5ae7ade1e33847ef000760012bd5ed57170d9577560')
 
 prepare() {
