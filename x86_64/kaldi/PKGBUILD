@@ -1,16 +1,17 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
-pkgname='kaldi'
+pkgname=kaldi
 pkgdesc='Speech recognition research toolkit'
-pkgver=5.5.r9243.12a2092c8
+pkgver=5.5.r9264.9af2c5c16
 pkgrel=1
-depends=('cblas' 'kaldi-openfst' 'lapack' 'python2')
-optdepends=('cuda' 'kaldi-irstlm' 'kaldi-kaldi_lm' 'kaldi-sctk' 'kaldi-sph2pipe' 'kaldi-srilm')
-makedepends=('git' 'wget' 'sed')
-arch=('x86_64' 'i686')
+depends=(cblas kaldi-openfst lapack python)
+optdepends=(cuda kaldi-irstlm kaldi-kaldi_lm kaldi-sctk kaldi-sph2pipe kaldi-srilm)
+makedepends=(git wget)
+arch=(x86_64)
 url='https://github.com/kaldi-asr/kaldi'
 license=('APACHE')
 source=("git+${url}")
 sha256sums=('SKIP')
+options=(!lto)
 
 pkgver () {
 	cd "${pkgname}"
@@ -23,8 +24,6 @@ pkgver () {
 }
 
 prepare(){
-	cd $srcdir/$pkgname
-	find . -name '*.py' -exec sed '1s/python/python2/' -i {} \;
 
 	if (false && pacman -Q cuda &> /dev/null); then
 		msg2 "Compiling with CUDA support"
@@ -34,8 +33,10 @@ prepare(){
 		_cuda_config_opts="--use-cuda=no"
 	fi
 
-	# Removing static libs in https://github.com/kaldi-asr/kaldi/blob/8f94bd0698d503c5c18e02f8fd4209b6802ff17a/src/makefiles/linux_clapack.mk#L16
-	sed '/^LDLIBS = /s/\$(CLAPACKLIBS)//' -i src/makefiles/linux_clapack.mk
+	cd $srcdir/$pkgname
+
+	# Removing static libs in src/makefiles/linux_clapack.mk
+	echo 'CLAPACKLIBS=' >> src/makefiles/linux_clapack.mk
 }
 
 build () {
