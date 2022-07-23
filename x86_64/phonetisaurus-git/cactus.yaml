@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: AdolfVonKleist/Phonetisaurus
+  - alias: python
+depends:
+  - x86_64/openfst
+makedepends:
+  - any/python-pybindgen
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
