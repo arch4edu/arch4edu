@@ -1,0 +1,22 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/rocm/hipblas
+  - x86_64/rocm/hipcub
+  - x86_64/rocm/hipfft
+  - x86_64/rocm/hipfort
+  - x86_64/rocm/hipsparse
+  - x86_64/rocm/rccl
+  - x86_64/rocm/rocalution
+  - x86_64/rocm/rocfft
+  - x86_64/rocm/rocm-core
+  - x86_64/rocm/rocm-hip-libraries
+  - x86_64/rocm/rocm-hip-runtime
+  - x86_64/rocm/rocprim
+  - x86_64/rocm/rocrand
+  - x86_64/rocm/rocsparse
+  - x86_64/rocm/rocthrust
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
