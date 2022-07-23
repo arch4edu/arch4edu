@@ -1,16 +1,27 @@
 # Maintainer: Jingbei Li <i@jingbei.lli>
-pkgname='kaldi-openfst'
-_pkgname='kaldi'
+pkgname=kaldi-openfst
+_pkgname=kaldi
 pkgdesc='Speech recognition research toolkit'
-pkgver=1.6.7
-pkgrel=2
-depends=('gcc-libs')
-makedepends=('git' 'wget' 'python' 'python2' 'subversion' 'unzip' 'sox' 'gcc-fortran')
-arch=('x86_64' 'i686')
+pkgver=1.7.2
+pkgrel=1
+depends=(gcc-libs)
+makedepends=(gcc-fortran git python python2 sox subversion unzip wget)
+arch=('x86_64')
 url='https://github.com/kaldi-asr/kaldi'
 license=('APACHE')
-source=("https://github.com/kaldi-asr/kaldi/archive/master.zip")
-sha256sums=('SKIP')
+options=(!lto)
+
+prepare() {
+	cd $srcdir
+	msg2 "Downloading master.zip..."
+	curl -LO "${url}/archive/refs/heads/master.zip"
+	bsdtar -xf master.zip
+}
+
+pkgver() {
+	cd $srcdir/$_pkgname-master/tools
+	grep -P '^OPENFST_VERSION \?= ' Makefile | cut -d' ' -f3
+}
 
 build () {
 	cd $srcdir/$_pkgname-master/tools
