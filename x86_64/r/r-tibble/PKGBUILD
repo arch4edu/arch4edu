@@ -4,7 +4,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _cranname=tibble
-_cranver=3.1.7
+_cranver=3.1.8
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -13,7 +13,6 @@ arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
-    r-ellipsis
     r-fansi
     r-lifecycle
     r-magrittr
@@ -53,7 +52,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('e1a50891f476803526960b4c4d736a72e7d9c3d366946744a02d6347f591c872'
+sha256sums=('acf30e075d18d2f61de53ca20a13c502bb32abb8083089b0bb9172a0cb5cedea'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
