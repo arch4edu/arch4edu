@@ -5,16 +5,16 @@
 # Contributor: Christoph Drexler <chrdr at gmx dot at>
 
 pkgname=openfst
-pkgver=1.7.9
+pkgver=1.8.2
 pkgrel=1
 pkgdesc='Library for constructing, combining, optimizing, and searching weighted finite-state transducers (FSTs)'
-arch=(i686 x86_64)
-url='http://www.openfst.org'
+arch=(x86_64)
+url='https://www.openfst.org'
 license=(Apache)
-depends=(gcc-libs glibc python)
-options=(!libtool)
-source=(http://www.openfst.org/twiki/pub/FST/FstDownload/$pkgname-$pkgver.tar.gz)
-sha256sums=(9319aeb31d1e2950ae25449884e255cc2bc9dfaf987f601590763e61a10fbdde)
+depends=(gcc-libs glibc)
+options=(!libtool !lto)
+source=("${url}/twiki/pub/FST/FstDownload/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('de987bf3624721c5d5ba321af95751898e4f4bb41c8a36e2d64f0627656d8b42')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
@@ -31,7 +31,7 @@ build() {
   OPTIONS+=' --enable-mpdt'            # Enable MPDT extensions;                          Default: no
   OPTIONS+=' --enable-ngram-fsts'      # Enable NGramFst extensions;                      Default: no
   OPTIONS+=' --enable-pdt'             # Enable PDT extensions;                           Default: no
-  OPTIONS+=' --enable-python PYTHON=python'  # Enable Python extensions;                 Default: no
+  #OPTIONS+=' --enable-python PYTHON=python'  # Enable Python extensions;                 Default: no
   LIBS='-ldl' ./configure $OPTIONS
 
   make
