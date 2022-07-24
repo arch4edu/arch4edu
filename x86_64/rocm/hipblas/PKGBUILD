@@ -1,7 +1,7 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Markus Näther <naether.markus@gmail.com>
 pkgname=hipblas
-pkgver=5.2.0
+pkgver=5.2.1
 pkgrel=1
 pkgdesc='ROCm BLAS marshalling library'
 arch=('x86_64')
@@ -12,7 +12,7 @@ makedepends=('cmake' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/hipBLAS'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "include-path.patch::https://github.com/ROCmSoftwarePlatform/hipBLAS/commit/84b593c7c6acf176b21841a0441801d5a254c62b.patch")
-sha256sums=('5e9091dc4ef83896f5c3bc5ade1cb5db8e1a6afc451dbba4da19d8a7ec2b6f29'
+sha256sums=('ccae36b118b7a1eb4b2f7d65fb163f54ab9c5cf774dbe2ec60971d4f78ae8308'
             '34652acc94caad9cf9b22fcf7658b7c7a3fb4c1b517b3aa15e5cc35e973b4fc6')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
