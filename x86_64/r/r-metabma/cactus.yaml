@@ -14,6 +14,7 @@ depends:
   - x86_64/r/r-rstan
   - x86_64/r/r-rstantools
   - x86_64/r/r-stanheaders
+group: x86_64
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
