@@ -3,24 +3,35 @@ pkgbase=python-sphinx-gallery
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.10.1
+pkgver=0.11.0
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
 url="http://sphinx-gallery.github.io"
 license=('BSD')
 makedepends=('python-setuptools')
+#            'python-wheel'
+#            'python-build'
+#            'python-installer')
 #'python-sphinx' 'python-pillow' 'python-scipy' 'python-seaborn')
-checkdepends=('python-pytest-cov' 'python-matplotlib' 'python-pillow' 'python-sphinx' 'python-joblib')
+checkdepends=('python-pytest-cov'
+              'python-matplotlib'
+              'python-pillow'
+              'python-sphinx'
+              'python-absl'
+              'python-joblib'
+              'mayavi')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('49727ee066dbeced6bfca7e89f6dc01f')
+md5sums=('c3adbd7c2e2315a72f9c8056feec2d7c')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
     python setup.py build
+#   python -m build --wheel --no-isolation
 
 #   msg "Building Docs"
 #   python setup.py build_sphinx
+#   PYTHONPATH="../build/lib" make html
 }
 
 check() {
@@ -40,6 +51,7 @@ package_python-sphinx-gallery() {
     install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
     python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+#   python -m installer --destdir="${pkgdir}" dist/*.whl
 }
 
 #package_python-sphinx-gallery-doc() {
