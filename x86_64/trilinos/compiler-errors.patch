@@ -1,0 +1,28 @@
+diff --color -ruN Trilinos-trilinos-release-13-4-0.orig/packages/krino/cmake/Dependencies.cmake Trilinos-trilinos-release-13-4-0.patch/packages/krino/cmake/Dependencies.cmake
+--- Trilinos-trilinos-release-13-4-0.orig/packages/krino/cmake/Dependencies.cmake	2022-07-26 10:21:25.533252070 +0200
++++ Trilinos-trilinos-release-13-4-0.patch/packages/krino/cmake/Dependencies.cmake	2022-07-26 10:22:45.580487344 +0200
+@@ -1,6 +1,6 @@
+-SET(LIB_REQUIRED_DEP_PACKAGES SEACASIoss SEACASExodus SEACASAprepro STKBalance STKMath STKIO STKSearch STKTopology STKUtil STKTools STKEmend Percept Intrepid)
++SET(LIB_REQUIRED_DEP_PACKAGES SEACASIoss SEACASExodus SEACASAprepro STKBalance STKMath STKIO STKSearch STKTopology STKUtil STKTools STKEmend Percept Intrepid STKUnit_test_utils)
+ SET(LIB_OPTIONAL_DEP_PACKAGES)
+-SET(TEST_REQUIRED_DEP_PACKAGES Gtest STKUnit_test_utils)
++SET(TEST_REQUIRED_DEP_PACKAGES Gtest)
+ SET(TEST_OPTIONAL_DEP_PACKAGES)
+ SET(LIB_REQUIRED_DEP_TPLS Boost)
+ SET(LIB_OPTIONAL_DEP_TPLS MPI yaml-cpp)
+diff --color -ruN Trilinos-trilinos-release-13-4-0.orig/packages/seacas/libraries/exodus/src/ex_utils.c Trilinos-trilinos-release-13-4-0.patch/packages/seacas/libraries/exodus/src/ex_utils.c
+--- Trilinos-trilinos-release-13-4-0.orig/packages/seacas/libraries/exodus/src/ex_utils.c	2022-07-26 10:21:25.809920802 +0200
++++ Trilinos-trilinos-release-13-4-0.patch/packages/seacas/libraries/exodus/src/ex_utils.c	2022-07-26 11:54:27.865751226 +0200
+@@ -1742,11 +1742,10 @@
+         */
+ 
+         /* const int NC_SZIP_EC = 4; */ /* Selects entropy coding method for szip. */
+-        const int NC_SZIP_NN = 32;      /* Selects nearest neighbor coding method for szip. */
+         /* Even and between 4 and 32; typical values are 8, 10, 16, 32 */
+         const int SZIP_PIXELS_PER_BLOCK =
+             file->compression_level == 0 ? 32 : file->compression_level;
+-        nc_def_var_szip(exoid, varid, NC_SZIP_NN, SZIP_PIXELS_PER_BLOCK);
++        nc_def_var_szip(exoid, varid, 32, SZIP_PIXELS_PER_BLOCK);
+ #else
+         char errmsg[MAX_ERR_LENGTH];
+         snprintf(errmsg, MAX_ERR_LENGTH,
