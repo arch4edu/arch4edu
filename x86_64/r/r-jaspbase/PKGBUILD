@@ -1,0 +1,54 @@
+#Maintainer: sukanka <su975853527 AT gmail.com>
+_pkgname=jaspBase
+_pkgver=0.16.4
+pkgname=r-${_pkgname,,}
+pkgver=0.16.4
+pkgrel=3
+pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
+arch=('x86_64')
+url="https://github.com/jasp-stats/${_pkgname}"
+license=('GPL')
+depends=(r
+'r-ggplot2'
+'r-gridextra'
+'r-gridgraphics'
+'r-jsonlite'
+'r-modules'
+'r-officer'
+'r-pkgbuild'
+'r-plyr'
+'r-qgraph'
+'r-ragg'
+'r-r6'
+'r-renv'
+'r-rjson'
+'r-rvg'
+'r-svglite'
+'r-systemfonts'
+'r-withr'
+'r-testthat'
+'r-data.table'
+'r-httr'
+'r-lifecycle'
+'r-pkgload'
+'r-remotes'
+'r-stringi'
+'r-stringr'
+'r-vdiffr'
+)
+makedepends=('git')
+optdepends=()
+source=("git+https://github.com/jasp-stats/${_pkgname}.git#commit=5734a5974")
+sha256sums=('SKIP')
+
+
+build() {
+  mkdir -p ${srcdir}/usr/lib/R/library
+  R -e "install.packages('${srcdir}/${_pkgname}',\
+     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+}
+
+package() {
+
+  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+}
