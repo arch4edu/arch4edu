@@ -1,0 +1,36 @@
+#Maintainer: sukanka <su975853527 AT gmail.com>
+_pkgname=jaspJags
+_pkgver=0.15
+pkgname=r-${_pkgname,,}
+pkgver=0.15
+pkgrel=1
+pkgdesc="JAGS Module for JASP"
+arch=('x86_64')
+url="https://github.com/jasp-stats/${_pkgname}"
+license=('GPL')
+depends=(r
+  r-coda
+  r-ggplot2
+  r-hexbin
+  r-jaspbase
+  r-jaspgraphs
+  r-rjags
+  r-stringr
+)
+makedepends=('git')
+optdepends=()
+source=("git+https://github.com/jasp-stats/${_pkgname}.git")
+sha256sums=('SKIP')
+
+
+build() {
+  mkdir -p ${srcdir}/usr/lib/R/library
+  R -e "install.packages('${srcdir}/${_pkgname}',\
+     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+}
+
+package() {
+  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
+  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
+}
