@@ -1,0 +1,32 @@
+#Maintainer: sukanka <su975853527 AT gmail.com>
+_pkgname=jaspResults
+_pkgver=1.16
+pkgname=r-${_pkgname,,}
+pkgver=1.16
+pkgrel=3
+pkgdesc="Easy results for your JASP analysis"
+arch=('x86_64')
+url="https://github.com/jasp-stats/${_pkgname}"
+license=('GPL')
+depends=(r
+'r-rcpp'
+'r-gridgraphics'
+'r-ragg'
+'r-r6'
+'r-qgraph'
+)
+makedepends=('git')
+optdepends=('r-jaspgraphs')
+source=("git+https://github.com/jasp-stats/${_pkgname}.git"
+)
+sha256sums=('SKIP')
+
+build() {
+  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+}
