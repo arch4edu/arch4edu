@@ -2,8 +2,8 @@
 
 _name=imagecodecs
 pkgname=python-imagecodecs
-pkgver=2022.2.22
-pkgrel=2
+pkgver=2022.7.27
+pkgrel=1
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
@@ -17,8 +17,9 @@ depends=(
   jxrlib
   lcms2
   libaec
-  libdeflate
   libavif
+  libdeflate
+  libheif
   libjpeg
   libjxl
   libmng
@@ -37,12 +38,7 @@ makedepends=(
   python-setuptools
 )
 source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz")
-sha256sums=('7a2f3edc805fb8342c819a11ad0f40f7a14e641c8a8d74b7116cbbdc802572d0')
-
-prepare() {
-  # quick fix for building with openjpeg 2.5
-  sed -i "s,openjpeg-2.4,openjpeg-2.5,g" "${_name}-${pkgver}/setup.py"
-}
+sha256sums=('8541307f1e6b9db1944fd6c333b8e89fdc54b4f93b09cad900d65391fb92023a')
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
