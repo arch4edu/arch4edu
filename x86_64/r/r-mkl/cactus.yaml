@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - source: archpkg
-    archpkg: intel-mkl
+    archpkg: intel-oneapi-mkl
   - alias: icu
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
