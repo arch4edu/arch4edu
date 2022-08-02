@@ -4,8 +4,8 @@
 pkgname=rocm-hip-libraries
 _pkgver_major=5
 _pkgver_minor=2
-_pkgver_patch=0
-_pkgver_magic=65
+_pkgver_patch=1
+_pkgver_magic=79
 pkgver=$_pkgver_major.$_pkgver_minor.$_pkgver_patch
 pkgrel=1
 pkgdesc="Develop applications using HIP and libraries for AMD platforms"
@@ -16,8 +16,8 @@ depends=('rocm-core' 'rocm-hip-runtime'
         'rocsparse' 'rccl' 'rocsolver' 'rocrand' 'rocfft' 'rocblas'
         'rocalution' 'hipblas' 'hipfft' 'hipsparse' 'hipfort')
 makedepends=()
-source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/${pkgver%.$_pkgver_patch}/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)-${_pkgver_magic}_amd64.deb")
-sha256sums=('2aa40e1ead80b2b2d46910a0b36a915d632d2b36de04b6d4c0041efa0e007c95')
+source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/${pkgver}/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)-${_pkgver_magic}_amd64.deb")
+sha256sums=('6cccc0b579a6f215cba560209fd1d189b4853d2f50b53e5cd642c5ebc3d7c702')
 
 
 package() {
