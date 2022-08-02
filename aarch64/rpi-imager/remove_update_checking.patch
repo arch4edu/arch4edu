@@ -1,0 +1,17 @@
+diff --git a/src/main.qml b/src/main.qml
+index b9f605c..dbb017c 100644
+--- a/src/main.qml
++++ b/src/main.qml
+@@ -1143,12 +1143,6 @@ ApplicationWindow {
+
+             if ("imager" in o) {
+                 var imager = o["imager"]
+-                if (imageWriter.getBoolSetting("check_version") && "latest_version" in imager && "url" in imager) {
+-                    if (!imageWriter.isEmbeddedMode() && imageWriter.isVersionNewer(imager["latest_version"])) {
+-                        updatepopup.url = imager["url"]
+-                        updatepopup.openPopup()
+-                    }
+-                }
+                 if ("default_os" in imager) {
+                     selectNamedOS(imager["default_os"], osmodel)
+                 }
