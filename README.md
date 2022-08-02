@@ -11,6 +11,7 @@ Please visit the [wiki](../../wiki) site for more information.
 ### Usage
 
 * [Add arch4edu to your Archlinux](https://github.com/arch4edu/arch4edu/wiki/Add-arch4edu-to-your-Archlinux)
+* [Add a package into arch4edu](Add-a-package-to-arch4edu)
 
 ### Links
 
