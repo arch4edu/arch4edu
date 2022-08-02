@@ -1,34 +1,25 @@
-# Contributor: sen <sen@archlinux.us>
-# Contributor: TheNiceGuy <gabriel14_wii@hotmail.com>
-# Contributor: yechs <chshu@protonmail.ch>
-
-pkgname=spek-git
-pkgver=0.8.3.r105.gf071c29
-pkgrel=2
-pkgdesc='Acoustic spectrum analyser.'
-arch=('aarch64' 'arm' 'armv6h' 'armv7h' 'i686' 'x86_64')
-license=('GPL3')
-depends=('ffmpeg' 'desktop-file-utils' 'wxgtk2')
-makedepends=('git' 'pkgconfig' 'automake' 'intltool' 'gettext' 'intltool')
-url='http://spek.cc'
-conflicts=('spek')
-provides=('spek')
-source=('spek-git::git+https://github.com/alexkay/spek')
-md5sums=('SKIP')
-options=()
-
-pkgver() {
-    cd $pkgname
-    git describe --long 2>/dev/null  2>/dev/null | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
-}
+# Maintainer: Michał Przybyś <michal@przybys.eu>
+pkgname=spek
+pkgver=0.8.4
+pkgrel=1
+pkgdesc='An acoustic spectrum analyser'
+arch=(x86_64)
+url='http://spek.cc/'
+license=(GPL3)
+depends=(desktop-file-utils ffmpeg4.4 wxwidgets-gtk3)
+makedepends=(intltool)
+source=("https://github.com/alexkay/spek/archive/v${pkgver}.tar.gz")
+sha256sums=(1751246e958cff91fe30b01925a38bf8cbd9c6abbd0d24e5b21eaad3d054534b)
 
 build() {
-    cd "$srcdir/$pkgname"
-    ./autogen.sh --prefix=/usr
+    cd "spek-${pkgver}"
+    export PKG_CONFIG_PATH=/usr/lib/ffmpeg4.4/pkgconfig
+    export CXXFLAGS="$(pkg-config --cflags-only-I libavutil)"
+    ./autogen.sh --with-wx-config=/usr/bin/wx-config --prefix=/usr
     make
 }
 
 package() {
-    cd "$srcdir/$pkgname"
-    make DESTDIR=$pkgdir install
+    cd "spek-${pkgver}"
+    make DESTDIR="${pkgdir}" install
 }
