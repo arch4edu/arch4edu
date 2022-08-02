@@ -6,7 +6,7 @@ pkgname=(intel-oneapi-compiler intel-oneapi-compiler-static)
 _pkgver=2022.1.0
 _debpkgrel=3768
 pkgver=${_pkgver}_${_debpkgrel}
-pkgrel=1
+pkgrel=2
 pkgdesc="Intel® oneAPI Compiler"
 arch=('x86_64')
 url='https://software.intel.com/content/www/us/en/develop/tools/oneapi.html'
@@ -139,6 +139,8 @@ package_intel-oneapi-compiler() {
 
 		'intel-oneapi-common=2022.1.0'
 	)
+	provides=("intel-oneapi-openmp" "intel-oneapi-compiler-shared-runtime" "intel-oneapi-compiler-dpcpp-cpp-runtime")
+	conflicts=("intel-oneapi-openmp" "intel-oneapi-compiler-shared-runtime" "intel-oneapi-compiler-dpcpp-cpp-runtime")
 	cp -r ${srcdir}/opt ${pkgdir}
 	ln -sfT "${_pkgver}" ${pkgdir}/opt/intel/oneapi/compiler/latest
 
