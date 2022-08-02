@@ -37,8 +37,8 @@ if [ -f "/usr/lib/libtriangle.so" ]; then
 	CONFOPTS="${CONFOPTS} --with-triangle=1"
 fi
 
-# Add hdf5 support
-if [[ "$(h5stat -V)" ]]; then
+# Add hdf5-openmpi support
+if [[ "$(h5pcc --version)" ]]; then
 	CONFOPTS="${CONFOPTS} --with-hdf5=1 --download-hdf5-fortran-bindings=1"
 fi
 
@@ -97,11 +97,20 @@ if [ -f "${PASTIX_CONF}" ]; then
 	CONFOPTS="${CONFOPTS} --with-pastix=1 --with-pastix-lib=${PASTIX_LIBS} --with-pastix-include=${PASTIX_DIR}"
 fi
 
-# Add trilinos support
+# Add zoltan support
+if [ -f "/usr/include/zoltan.h" ]; then
+	CONFOPTS="${CONFOPTS} --with-zoltan=1"
+fi
+
+# Add ml support (complex-scalar is not supported)
 if [ -f "/usr/lib/libml.so" ]; then
-	CONFOPTS="${CONFOPTS} --with-ml=1"
+	CONFOPTS="${CONFOPTS} --with-ml=0"
 	# Add boost support (may be useful for trilinos)
 	CONFOPTS="${CONFOPTS} --with-boost=1"
+fi
+
+if [ -f "/usr/lib/pkgconfig/valgrind.pc" ]; then
+	CONFOPTS="${CONFOPTS} --with-valgrind=1"
 fi
 
 echo "${CONFOPTS}"
