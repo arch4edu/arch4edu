@@ -1,0 +1,57 @@
+# system requirements: GNU make, pandoc (>= 1.12.3), pandoc-citeproc
+# Maintainer: sukanka <su975853527@gmail.com>
+
+_pkgname=rstanarm
+_pkgver=2.21.3
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//[:-]/.}
+pkgrel=1
+pkgdesc='Bayesian Applied Regression Modeling via Stan'
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+  r-bayesplot
+  r-bh
+  r-ggplot2
+  r-lme4
+  r-loo
+  r-rcpp
+  r-rcppeigen
+  r-rcppparallel
+  r-rstan
+  r-rstantools
+  r-shinystan
+  r-stanheaders
+  pandoc
+)
+optdepends=(
+  r-betareg
+  r-biglm
+  r-data.table
+  r-digest
+  r-gridextra
+  r-hsaur3
+  r-knitr
+  r-mass
+  r-mgcv
+  r-rmarkdown
+  r-roxygen2
+  r-stanheaders
+  r-testthat
+)
+makedepends=('make')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('e9f2d3761b8e4f14a6690beb633b08633cba7269ac8b969aedaa12844d1a32a7')
+
+build() {
+  # restrict the usage of memory and cpu, 1 threads usually consumes 2 GiB memory.
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+}
+# vim:set ts=2 sw=2 et:
