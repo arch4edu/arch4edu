@@ -3,11 +3,11 @@
 
 pkgname=wxwidgets-gtk2
 pkgver=3.2.0
-pkgrel=3
+pkgrel=4
 arch=(x86_64)
 url='https://wxwidgets.org'
 license=(custom:wxWindows)
-makedepends=(cmake gst-plugins-base glu webkit2gtk libnotify qt5-base sdl2 libmspack gtk2)
+makedepends=(cmake gst-plugins-base glu libnotify qt5-base sdl2 libmspack gtk2)
 source=(https://github.com/wxWidgets/wxWidgets/releases/download/v$pkgver/wxWidgets-$pkgver.tar.bz2
         destdir.patch)
 sha256sums=('356e9b55f1ae3d58ae1fed61478e9b754d46b820913e3bfbc971c50377c1903a'
@@ -39,7 +39,6 @@ build() {
 package_wxwidgets-gtk2() {
   pkgdesc='GTK+2 implementation of wxWidgets API for GUI'
   depends=(gtk2 gst-plugins-base-libs libsm wxwidgets-common libnotify libmspack sdl2)
-  optdepends=('webkit2gtk: for webview support')
   conflicts=(wxgtk wxgtk2)
   provides=(wxgtk wxgtk2 wxwidgets)
 
