@@ -4,8 +4,8 @@
 # Contributor: midgard <arch dot midgard "at symbol" janmaes "youknowwhat" com>
 
 pkgname=libdart
-pkgver=6.12.1
-pkgrel=2
+pkgver=6.12.2
+pkgrel=1
 pkgdesc="Dynamic Animation and Robotics Toolkit"
 arch=('i686' 'x86_64')
 url="https://dartsim.github.io"
@@ -18,7 +18,7 @@ makedepends=('cmake')
 provides=('dartsim')
 _pkgname=dart
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/dartsim/${_pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('e0d47bbc191903b93474da00bbd1042cefdc85f5ead3e9a9282b5f4187d53304')
+sha256sums=('db1b3ef888d37f0dbc567bc291ab2cdb5699172523a58dd5a5fe513ee38f83b0')
 
 # Make libdart use pagmo 2.18.0 instead of 2.17.0
 prepare(){
