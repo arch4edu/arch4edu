@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=openvsp
-pkgver=3.28.0
-pkgrel=2
+pkgver=3.29.1
+pkgrel=1
 pkgdesc='OpenVSP allows the user to create a 3D model of an aircraft defined by
          common engineering parameters.'
 arch=('i686' 'x86_64')
@@ -25,7 +25,7 @@ makedepends=('cmake' 'unzip')
 _name=OpenVSP-OpenVSP_${pkgver}
 source=("${pkgname}-${pkgver}"::"https://github.com/OpenVSP/OpenVSP/archive/OpenVSP_${pkgver}.tar.gz"
         "format.patch"::"https://patch-diff.githubusercontent.com/raw/OpenVSP/OpenVSP/pull/221.patch")
-sha256sums=('e875f22460c03386685ff2ebf94e8fa72a9de30b784459e2a256a65d6a991dd7'
+sha256sums=('99351cbaeef0cc8a1f5706502a9986cb5b31a9f32176b76d417e98fc914cd275'
             'SKIP')
 
 prepare() {
@@ -75,7 +75,8 @@ package() {
 
   # binary
   mkdir -p ${pkgdir}/usr/bin
-  cp vsp vspaero vspscript vspslicer vspviewer ${pkgdir}/usr/bin/
+  cp vsp vspaero vspscript vspaero_adjoint vspaero_complex vspaero_opt \
+  vspviewer ${pkgdir}/usr/bin/
 
   # misc
   mkdir -p ${pkgdir}/usr/share/${pkgname}
