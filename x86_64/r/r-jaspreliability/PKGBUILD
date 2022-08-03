@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspReliability
-_pkgver=0.16.2
+_pkgver=0.16.4
 pkgname=r-${_pkgname,,}
-pkgver=0.16.2
+pkgver=0.16.4
 pkgrel=1
 pkgdesc="Reliability Module for JASP"
 arch=('x86_64')
