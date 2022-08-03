@@ -1,0 +1,55 @@
+#Maintainer: sukanka <su975853527 AT gmail.com>
+_pkgname=jaspMachineLearning
+_pkgver=0.16.3
+pkgname=r-${_pkgname,,}
+pkgver=0.16.3
+pkgrel=1
+pkgdesc=" Machine Learning Module for JASP"
+arch=('x86_64')
+url="https://github.com/jasp-stats/${_pkgname}"
+license=('GPL')
+depends=(r
+  r-auc
+  r-cluster
+  r-colorspace
+  r-dbscan
+  r-e1071
+  r-fpc
+  r-gbm
+  r-gmedian
+  r-ggparty
+  r-ggdendro
+  r-ggnetwork
+  r-ggplot2
+  r-ggrepel
+  r-ggridges
+  r-glmnet
+  r-jaspbase
+  r-jaspgraphs
+  r-neuralnet
+  r-network
+  r-partykit
+  r-plyr
+  r-randomforest
+  r-rocr
+  r-rtsne
+  r-signal
+  r-kknn
+)
+makedepends=('git')
+optdepends=()
+source=("git+https://github.com/jasp-stats/${_pkgname}.git")
+sha256sums=('SKIP')
+
+
+build() {
+  mkdir -p ${srcdir}/usr/lib/R/library
+  R -e "install.packages('${srcdir}/${_pkgname}',\
+     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+}
+
+package() {
+  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
+  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
+}
