@@ -9,15 +9,16 @@
 # Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=mongodb
+_pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
 pkgver=6.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.mongodb.com/"
 license=("Apache" "custom:SSPL1")
 depends=('libstemmer' 'snappy' 'boost-libs' 'pcre' 'yaml-cpp' 'curl')
-makedepends=('scons' 'python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3' 'python-yaml' 'python-requests' 'python-pymongo' 'boost')
+makedepends=('python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3' 'python-yaml' 'python-requests' 'python-pymongo' 'boost')
 optdepends=('mongodb-tools: mongoimport, mongodump, mongotop, etc'
             'mongosh-bin: interactive shell to connect with MongoDB')
 backup=("etc/mongodb.conf")
@@ -58,8 +59,34 @@ _scons_args=(
   --runtime-hardening=off
 )
 
+all-flag-vars() {
+  echo {C,CXX}FLAGS
+}
+
+_filter-var() {
+  local f x var=$1 new=()
+  shift
+
+  for f in ${!var} ; do
+    for x in "$@" ; do
+      # Note this should work with globs like -O*
+      [[ ${f} == ${x} ]] && continue 2
+    done
+    new+=( "${f}" )
+  done
+  export ${var}="${new[*]}"
+}
+
+filter-flags() {
+  local v
+  for v in $(all-flag-vars) ; do
+    _filter-var ${v} "$@"
+  done
+  return 0
+}
+
 prepare() {
-  cd "${srcdir}/${pkgname}-src-r${pkgver}"
+  cd "${srcdir}/${_pkgname}-src-r${pkgver}"
 
   # Keep historical Arch dbPath
   sed -i 's|dbPath: /var/lib/mongo|dbPath: /var/lib/mongodb|' rpm/mongod.conf
@@ -89,39 +116,46 @@ prepare() {
   fi
 
   # apply gentoo patches
-  for file in ../*.patch; do
+  for file in $srcdir/*.patch; do
     echo "Applying patch $file..."
     patch -Np1 -i $file
   done
 }
 
 build() {
-  cd "${srcdir}/${pkgname}-src-r${pkgver}"
+  cd "${srcdir}/${_pkgname}-src-r${pkgver}"
+
+  if check_option debug n; then
+    filter-flags '-m*'
+    filter-flags '-O?'
+  fi
 
   export SCONSFLAGS="$MAKEFLAGS"
-  scons install-servers "${_scons_args[@]}"
+  ./buildscripts/scons.py install-devcore "${_scons_args[@]}"
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-src-r${pkgver}"
+  cd "${srcdir}/${_pkgname}-src-r${pkgver}"
 
   # Install binaries
+  install -D build/install/bin/mongo "$pkgdir/usr/bin/mongo"
   install -D build/install/bin/mongod "$pkgdir/usr/bin/mongod"
   install -D build/install/bin/mongos "$pkgdir/usr/bin/mongos"
 
   # Keep historical Arch conf file name
-  install -Dm644 "rpm/mongod.conf" "${pkgdir}/etc/${pkgname}.conf"
+  install -Dm644 "rpm/mongod.conf" "${pkgdir}/etc/${_pkgname}.conf"
 
   # Keep historical Arch service name
-  install -Dm644 "rpm/mongod.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+  install -Dm644 "rpm/mongod.service" "${pkgdir}/usr/lib/systemd/system/${_pkgname}.service"
 
   # Install manpages
+  #install -Dm644 "debian/mongo.1" "${pkgdir}/usr/share/man/man1/mongo.1"
   install -Dm644 "debian/mongod.1" "${pkgdir}/usr/share/man/man1/mongod.1"
   install -Dm644 "debian/mongos.1" "${pkgdir}/usr/share/man/man1/mongos.1"
 
   # Install systemd files
-  install -Dm644 "${srcdir}/${pkgname}.sysusers" "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
-  install -Dm644 "${srcdir}/${pkgname}.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
+  install -Dm644 "${srcdir}/${_pkgname}.sysusers" "${pkgdir}/usr/lib/sysusers.d/${_pkgname}.conf"
+  install -Dm644 "${srcdir}/${_pkgname}.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/${_pkgname}.conf"
 
   # Install license
   install -D LICENSE-Community.txt "$pkgdir/usr/share/licenses/mongodb/LICENSE"
