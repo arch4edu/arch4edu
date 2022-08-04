@@ -1,0 +1,37 @@
+#Maintainer: sukanka <su975853527 AT gmail.com>
+_pkgname=jaspBain
+_pkgver=0.16.1
+pkgname=r-${_pkgname,,}
+pkgver=0.16.1
+pkgrel=1
+pkgdesc="Bain Module for JASP"
+arch=('x86_64')
+url="https://github.com/jasp-stats/${_pkgname}"
+license=('GPL3')
+depends=(r
+  r-bain
+  r-stats
+  r-lavaan
+  r-ggplot2
+  r-semplot
+  r-stringr
+  r-jaspbase
+  r-jaspgraphs
+)
+makedepends=('git')
+optdepends=()
+source=("git+https://github.com/jasp-stats/${_pkgname}.git")
+sha256sums=('SKIP')
+
+
+build() {
+  mkdir -p ${srcdir}/usr/lib/R/library
+  R -e "install.packages('${srcdir}/${_pkgname}',\
+     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+}
+
+package() {
+  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
+  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
+}
