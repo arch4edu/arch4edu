@@ -2,7 +2,7 @@
 
 pkgname=visual-studio-code-bin
 _pkgname=visual-studio-code
-pkgver=1.69.2
+pkgver=1.70.0
 pkgrel=1
 pkgdesc="Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)"
 arch=('x86_64' 'i686' 'aarch64' 'armv7h')
@@ -31,10 +31,10 @@ sha256sums=('dc7dedfb031863f2bdb8d3a12df6bf58b5627b767a56a82cc5d85421e04e94b8'
             '2264dd138b77358709aa49fb3a7fe7d1b05b7ab0715760d66958000107bdd3dc'
             '24ba09a6398c9781ed7cb6f1a9f6f38ec204899ba1f33db92638bf6d3cb0aed6'
             'd0df59f13bd721a5c896eeaa0ca407bd304f6bd6ec41f54c19221ccc31eeb06b')
-sha256sums_x86_64=('f87b9a8c27ca05196ec7cc65006c80b036b63703ae2c6133efc01560e20b5f36')
+sha256sums_x86_64=('20925cac4e2003693a0f6ea5ec263a21a38b4c64429d40369b4e8f584f15b6d1')
 sha256sums_i686=('64360439cc2fa596838062f7e6f9757b79d4b775a564f18bad6cbad154bf850c')
-sha256sums_aarch64=('9c53ff087ffcccda4ee0b210795bd95306a03824d668be6215c840341c0a4ffe')
-sha256sums_armv7h=('02672f6e8ae441dc9f6a09dbe97435732131c93d973447691b829ad2950397c7')
+sha256sums_aarch64=('ff3801faba32be896d262b9bce01c23af381ea4cff93658837db45e2f23e34e0')
+sha256sums_armv7h=('2733e5cd8e3ef5d4076bf155578f0c1820363525d528184c2db3b22041a4c24a')
 
 
 
