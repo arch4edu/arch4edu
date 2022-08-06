@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=estimability
-_pkgver=1.4
+_pkgver=1.4.1
 pkgname=r-${_pkgname,,}
-pkgver=1.4
+pkgver=1.4.1
 pkgrel=1
 pkgdesc='Tools for Assessing Estimability of Linear Predictions'
 arch=('any')
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4a9eac160958457eeaf442e0bcd698990851b30a8963a3519f2d7da28b4bfa41')
+sha256sums=('c65aaf1e452f3947013d3ce05ae674d48492081f615a942592dc91db780f1124')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
