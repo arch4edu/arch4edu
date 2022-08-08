@@ -1,6 +1,1 @@
-nvchecker:
-  - source: aur
-    aur:
-build_prefix: multilib
-pre_build: aur-pre-build
-post_build: aur-post-build
+../../template/x86_64-simple.yaml
