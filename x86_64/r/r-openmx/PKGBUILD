@@ -5,7 +5,7 @@ _pkgname=OpenMx
 _pkgver=2.20.6
 pkgname=r-${_pkgname,,}
 pkgver=2.20.6
-pkgrel=4
+pkgrel=6
 pkgdesc='Extended Structural Equation Modelling'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -46,8 +46,6 @@ source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('65c50ce09f9c006b41b7311ec05eba3ae77926d84fb44e3905905208404826ed')
 
 build() {
-  # restrict the usage of cpu. Usage of RAM is OK.
-  export MAKE="make -j5" 
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
