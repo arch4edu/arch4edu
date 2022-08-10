@@ -1,0 +1,25 @@
+From 011495d8045c44527fbd7796ce860618120ae127 Mon Sep 17 00:00:00 2001
+From: Butui Hu <hot123tea123@gmail.com>
+Date: Fri, 30 Apr 2021 11:36:30 +0800
+Subject: [PATCH] fix building torchvision
+
+---
+ aten/src/ATen/core/op_registration/op_allowlist.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/aten/src/ATen/core/op_registration/op_allowlist.h b/aten/src/ATen/core/op_registration/op_allowlist.h
+index f93462bb2cf..12903d1cc09 100644
+--- a/aten/src/ATen/core/op_registration/op_allowlist.h
++++ b/aten/src/ATen/core/op_registration/op_allowlist.h
+@@ -59,7 +59,7 @@ constexpr bool op_allowlist_contains(string_view allowlist, string_view item) {
+ // Returns true iff the given op name is on the allowlist
+ // and should be registered
+ constexpr bool op_allowlist_check(string_view op_name) {
+-  assert(op_name.find("::") != string_view::npos);
++//  assert(op_name.find("::") != string_view::npos);
+   // Use assert() instead of throw() due to a gcc bug. See:
+   // https://stackoverflow.com/questions/34280729/throw-in-constexpr-function
+   // https://github.com/fmtlib/fmt/issues/682
+-- 
+2.31.1
+

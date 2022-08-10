@@ -1,0 +1,51 @@
+diff --git a/cmake/Modules/FindFFmpeg.cmake b/cmake/Modules/FindFFmpeg.cmake
+index 04437562ee..dc8fe4aa5c 100644
+--- a/cmake/Modules/FindFFmpeg.cmake
++++ b/cmake/Modules/FindFFmpeg.cmake
+@@ -14,34 +14,40 @@ else (FFMPEG_LIBRARIES AND FFMPEG_INCLUDE_DIR)
+ 
+   find_path(FFMPEG_AVCODEC_INCLUDE_DIR
+     NAMES libavcodec/avcodec.h
+-    PATHS ${_FFMPEG_AVCODEC_INCLUDE_DIRS} /usr/include /usr/local/include /opt/local/include /sw/include
++    PATHS /usr/include/ffmpeg4.4 /usr/local/include /opt/local/include /sw/include
+     PATH_SUFFIXES ffmpeg libav
++    NO_DEFAULT_PATH
+   )
+ 
+   find_library(FFMPEG_LIBAVCODEC
+     NAMES avcodec
+-    PATHS ${_FFMPEG_AVCODEC_LIBRARY_DIRS} /usr/lib /usr/local/lib /opt/local/lib /sw/lib
++    PATHS /usr/lib/ffmpeg4.4 /usr/local/lib /opt/local/lib /sw/lib
++    NO_DEFAULT_PATH
+   )
+ 
+   find_library(FFMPEG_LIBAVFORMAT
+     NAMES avformat
+-    PATHS ${_FFMPEG_AVFORMAT_LIBRARY_DIRS} /usr/lib /usr/local/lib /opt/local/lib /sw/lib
++    PATHS /usr/lib/ffmpeg4.4 /usr/local/lib /opt/local/lib /sw/lib
++    NO_DEFAULT_PATH
+   )
+ 
+   find_library(FFMPEG_LIBAVUTIL
+     NAMES avutil
+-    PATHS ${_FFMPEG_AVUTIL_LIBRARY_DIRS} /usr/lib /usr/local/lib /opt/local/lib /sw/lib
++    PATHS /usr/lib/ffmpeg4.4 /usr/local/lib /opt/local/lib /sw/lib
++    NO_DEFAULT_PATH
+   )
+ 
+ 
+   find_library(FFMPEG_LIBSWSCALE
+     NAMES swscale
+-    PATHS ${_FFMPEG_SWSCALE_LIBRARY_DIRS} /usr/lib /usr/local/lib /opt/local/lib /sw/lib
++    PATHS /usr/lib/ffmpeg4.4 /usr/local/lib /opt/local/lib /sw/lib
++    NO_DEFAULT_PATH
+   )
+ 
+   find_library(FFMPEG_LIBSWRESAMPLE
+     NAMES swresample
+-    PATHS ${_FFMPEG_SWSCALE_LIBRARY_DIRS} /usr/lib /usr/local/lib /opt/local/lib /sw/lib
++    PATHS /usr/lib/ffmpeg4.4 /usr/local/lib /opt/local/lib /sw/lib
++    NO_DEFAULT_PATH
+   )
+ 
+   if (FFMPEG_LIBAVCODEC AND FFMPEG_LIBAVFORMAT)

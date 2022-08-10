@@ -1,11 +1,13 @@
---- a/utils/cpp_extension.py	2019-12-29 12:59:36.083692770 -0300
-+++ b/utils/cpp_extension.py	2020-01-08 09:52:16.435316701 -0300
-@@ -1098,7 +1098,7 @@
-     if BUILD_NAMEDTENSOR:
-         common_cflags.append('-DBUILD_NAMEDTENSOR')
-     common_cflags += ['-I{}'.format(include) for include in user_includes]
--    common_cflags += ['-isystem {}'.format(include) for include in system_includes]
-+    common_cflags += ['-I{}'.format(include) for include in system_includes]
+diff --git a/torch/utils/cpp_extension.py b/torch/utils/cpp_extension.py
+index ca673033e1..c79ce8d37b 100644
+--- a/torch/utils/cpp_extension.py
++++ b/torch/utils/cpp_extension.py
+@@ -1760,7 +1760,7 @@ def _write_ninja_file_to_build_library(path,
+             common_cflags.append(f'-DPYBIND11_{pname}=\\"{pval}\\"')
+ 
+     common_cflags += [f'-I{include}' for include in user_includes]
+-    common_cflags += [f'-isystem {include}' for include in system_includes]
++    common_cflags += [f'-I{include}' for include in system_includes]
  
      common_cflags += ['-D_GLIBCXX_USE_CXX11_ABI=' + str(int(torch._C._GLIBCXX_USE_CXX11_ABI))]
-
+ 
