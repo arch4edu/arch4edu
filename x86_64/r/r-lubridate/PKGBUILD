@@ -7,7 +7,7 @@ _cranname=lubridate
 _cranver=1.8.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Make Dealing with Dates a Little Easier"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -27,6 +27,10 @@ sha256sums=('87d66efdb1f3d680db381d7e40a202d35645865a0542e2f270ef008a19002ba5')
 
 prepare() {
   cd "${_cranname}"
+
+  # skip snapshot test that is incompatible with r-vctrs 0.4.1
+  sed -i '/"vctrs methods have informative errors"/a\ \ skip("Incompatible with vctrs>=0.4.1")' \
+      tests/testthat/test-vctrs.R
 
   # skip test that requires a French locale
   sed -i '/"parsing months with dots works in French linux locale"/a skip("Requires a French locale")' \
