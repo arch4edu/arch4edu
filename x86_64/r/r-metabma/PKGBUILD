@@ -5,7 +5,7 @@ _pkgname=metaBMA
 _pkgver=0.6.7
 pkgname=r-${_pkgname,,}
 pkgver=0.6.7
-pkgrel=1
+pkgrel=3
 pkgdesc='Bayesian Model Averaging for Random and Fixed Effects Meta-Analysis'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -36,8 +36,6 @@ source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('330bccb4b2297bc3a8b7291197c5e978b90b002907f762ede40f2d3e383367da')
 
 build() {
-  # restrict the usage of memory and cpu, 1 threads usually consumes 2 GiB memory.
-  export MAKE="make -j5" 
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
