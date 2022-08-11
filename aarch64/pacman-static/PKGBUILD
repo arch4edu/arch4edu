@@ -135,7 +135,6 @@ fi
 
 # keep using xz-compressed packages, because one use of the package is to
 # recover on systems with broken zstd support in libarchive
-[[ $PKGEXT = .pkg.tar.zst ]] && PKGEXT=.pkg.tar.xz
 
 build() {
     export PKG_CONFIG_PATH="${srcdir}"/temp/usr/lib/pkgconfig
