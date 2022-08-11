@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: numba/numba
+  - alias: python
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  add makedepends cython
+post_build: aur-post-build
