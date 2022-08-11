@@ -1,8 +1,9 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 
 pkgname=pypy3
+_pyversion=3.9
 pkgver=7.3.9
-pkgrel=1
+pkgrel=2
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64')
@@ -12,11 +13,11 @@ optdepends=('sqlite: sqlite module'
             'tk: tk module')
 options=(!buildflags)
 license=('MIT')
-source=("https://downloads.python.org/pypy/pypy3.8-v${pkgver}-src.zip")
-sha512sums=('f9e37f29a3292eb0803bf72e04937590b52bf08fbb03005cb72eb2fb6b18b6630e6067c795bb9f75db2287e74722ef0a8b747c853cba79e860f6bd4611c547af')
+source=("https://downloads.python.org/pypy/pypy${_pyversion}-v${pkgver}-src.zip")
+sha512sums=('b08e8a6436be18ec26f654029d03883d3a7f5e0ba4f8c091503c5a33ec146f02dda757ef27d6cb92264b2ac80625d8dbe7f20278225a468ecb5f3e97fae7dc82')
 
 build() {
-  cd pypy3.8-v${pkgver}-src/pypy/goal
+  cd pypy${_pyversion}-v${pkgver}-src/pypy/goal
 
   # For some reason, PyPy wants to use their vendored dependencies when detecting linux.
   # Weird, we'll patch it out.
@@ -24,11 +25,11 @@ build() {
   pypy ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
 
   # Compile binary modules
-  PYTHONPATH=../.. ./pypy3-c ../../lib_pypy/pypy_tools/build_cffi_imports.py
+  PYTHONPATH=../.. ./pypy3.9-c ../../lib_pypy/pypy_tools/build_cffi_imports.py
 }
 
 package() {
-  cd pypy3.8-v${pkgver}-src
+  cd pypy${_pyversion}-v${pkgver}-src
 
   # Prepare installation
   pypy pypy/tool/release/package.py --archive-name pypy --targetdir .
