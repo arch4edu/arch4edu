@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=semPlot
-_pkgver=1.1.5
+_pkgver=1.1.6
 pkgname=r-${_pkgname,,}
-pkgver=1.1.5
+pkgver=1.1.6
 pkgrel=1
 pkgdesc="Path Diagrams and Visual Analysis of Various SEM Packages' Output"
 arch=('any')
@@ -27,7 +27,7 @@ optdepends=(
   r-mplusautomation
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6cd39e6f80cf9e5c5045e7f8f2e888ea1b0355e084909b1b1c1ddac4b04ffb34')
+sha256sums=('11f52907168126de50dc7577f07d1383702710f76628d4c90c8f52ed2eb92b69')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
