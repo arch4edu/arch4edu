@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=statmod
-_pkgver=1.4.36
+_pkgver=1.4.37
 pkgname=r-${_pkgname,,}
-pkgver=1.4.36
-pkgrel=4
+pkgver=1.4.37
+pkgrel=1
 pkgdesc='Statistical Modeling'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('14e897c83d426caca4d920d3d5bead7ae9a679276b3cb2e227f299ad189d7bc2')
+sha256sums=('90d2c8a79e0cb291f2685686436bcf4c5b9abd2efb84759a8553d1b1adb76913')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
