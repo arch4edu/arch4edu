@@ -1,1 +1,10 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed '/^depends=/s/ffmpeg/ffmpeg4.4/' -i PKGBUILD
+  sed '/cmake -B build/i\  export PKG_CONFIG_PATH="/usr/lib/ffmpeg4.4/pkgconfig/"' -i PKGBUILD
+  sed '/cmake -B build/i\  sed "s/PC_LIB/PC_/g" -i "$srcdir/$pkgname-$pkgver/cmake/FindFFmpeg.cmake"' -i PKGBUILD
+post_build: aur-post-build
