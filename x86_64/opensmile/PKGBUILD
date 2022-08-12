@@ -10,12 +10,14 @@ pkgdesc="A fast, real-time (audio) feature extraction utility for automatic spee
 arch=('x86_64')
 url="https://github.com/audeering/opensmile/"
 license=('custom')
-depends=('portaudio' 'ffmpeg')
+depends=('portaudio' 'ffmpeg4.4')
 makedepends=('cmake')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/audeering/opensmile/archive/v$pkgver.tar.gz")
 sha256sums=('b8e5d69d6c3d729eb6e7825e2bd913c819e61315524a739b245069dcaed0d8c3')
 
 build() {
+  export PKG_CONFIG_PATH="/usr/lib/ffmpeg4.4/pkgconfig/"
+  sed "s/PC_LIB/PC_/g" -i "$srcdir/$pkgname-$pkgver/cmake/FindFFmpeg.cmake"
   cmake -B build \
     -S "$srcdir/$pkgname-$pkgver" \
     -DCMAKE_BUILD_TYPE=None \
