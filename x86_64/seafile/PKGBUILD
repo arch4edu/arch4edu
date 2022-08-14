@@ -4,7 +4,7 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seafile
-pkgver=8.0.7
+pkgver=8.0.8
 pkgrel=1
 pkgdesc='An online file storage and collaboration tool'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -27,7 +27,7 @@ source=(
     "seaf-cli@.service"
 )
 sha256sums=(
-    'c6c703476907b9c84ec25fd681d85bced876ee2528409060f7e24058c73cad0a'
+    '02f8cb53f061d9d85752d476e72fa64835d5bab66d1fbcb240d22bc41428847b'
     'c37510109c1de64c774896df39aece240c056b54414d2119fca01860211156ba'
 )
 provides=('seafile-client-cli')
