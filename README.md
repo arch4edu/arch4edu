@@ -16,3 +16,4 @@ Please visit the [wiki](../../wiki) site for more information.
 ### Links
 
 * Telegram channel: [@arch4edu](https://t.me/arch4edu)
+* Telegram group: [@arch4edu](https://t.me/arch4edu_general)
