@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rbibutils
-_pkgver=2.2.8
+_pkgver=2.2.9
 pkgname=r-${_pkgname,,}
-pkgver=2.2.8
-pkgrel=3
+pkgver=2.2.9
+pkgrel=1
 pkgdesc="Read 'Bibtex' Files and Convert Between Bibliography Formats"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f1aecdeeba99042d34de19234238c5bbdc18a26f271f6adf9c9b7e349d50d152')
+sha256sums=('b22c07ff916ec338e5a8c6e7e4302f06c9b88d64ee6a59ee4bf5d83a3d5eff86')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
