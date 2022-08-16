@@ -1,12 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
-# Contributor: Robert Greener <me@r0bert.dev>
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-# Contributor: Grey Christoforo <first name at last name dot net>
+
 _pkgname=deSolve
 _pkgver=1.33
 pkgname=r-${_pkgname,,}
 pkgver=1.33
-pkgrel=1
+pkgrel=2
 pkgdesc="Solvers for Initial Value Problems of Differential Equations ('ODE', 'DAE', 'DDE')"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
