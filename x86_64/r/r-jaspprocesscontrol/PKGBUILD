@@ -3,9 +3,9 @@ _pkgname=jaspProcessControl
 _pkgver=0.16
 pkgname=r-${_pkgname,,}
 pkgver=0.16
-pkgrel=1
+pkgrel=2
 pkgdesc="Quality Control Module for JASP"
-arch=('x86_64')
+arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
 license=('GPL')
 depends=(r
@@ -42,13 +42,13 @@ sha256sums=('SKIP')
 
 
 build() {
-  mkdir -p ${srcdir}/usr/lib/R/library
-  R -e "install.packages('${srcdir}/${_pkgname}',\
-     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
-  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
   mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
   ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
