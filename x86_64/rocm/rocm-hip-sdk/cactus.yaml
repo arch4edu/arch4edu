@@ -7,6 +7,7 @@ depends:
   - x86_64/rocm/hipfft
   - x86_64/rocm/hipfort
   - x86_64/rocm/hipsparse
+  - x86_64/rocm/miopen-hip
   - x86_64/rocm/rccl
   - x86_64/rocm/rocalution
   - x86_64/rocm/rocfft
