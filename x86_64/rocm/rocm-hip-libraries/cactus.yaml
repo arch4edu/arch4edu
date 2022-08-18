@@ -5,6 +5,7 @@ depends:
   - x86_64/rocm/hipblas
   - x86_64/rocm/hipfft
   - x86_64/rocm/hipfort
+  - x86_64/rocm/hipsolver
   - x86_64/rocm/hipsparse
   - x86_64/rocm/rccl
   - x86_64/rocm/rocalution
