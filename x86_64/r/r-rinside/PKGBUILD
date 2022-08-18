@@ -1,11 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=RInside
 _pkgver=0.2.17
 pkgname=r-${_pkgname,,}
 pkgver=0.2.17
-pkgrel=1
+pkgrel=2
 pkgdesc='C++ Classes to Embed R in C++ (and C) Applications'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
