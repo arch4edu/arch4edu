@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=hms
-_pkgver=1.1.1
+_pkgver=1.1.2
 pkgname=r-${_pkgname,,}
-pkgver=1.1.1
-pkgrel=5
+pkgver=1.1.2
+pkgrel=1
 pkgdesc='Pretty Time of Day'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6b5f30db1845c70d27b5de33f31caa487cdd0787cd80a4073375e5f482269062')
+sha256sums=('1ee6a9847336aaf58d3fcee5b56c290c2204e1213b6628862818419b2302bded')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
