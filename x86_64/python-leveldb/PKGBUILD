@@ -2,32 +2,43 @@
 
 pkgname=python-leveldb
 pkgver=0.201
-pkgrel=1
+pkgrel=2
 pkgdesc='Python bindings for leveldb database library'
 arch=('x86_64')
-url='https://pypi.python.org/pypi/leveldb/'
+url='https://github.com/rjpower/py-leveldb/'
 license=('BSD')
 depends=('python')
-makedepends=('python-setuptools')
+makedepends=('git' 'python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 checkdepends=('python-nose')
-_name="${pkgname#python-}"
-source=("${pkgname}-${pkgver}.tar.gz"::"https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha256sums=('1cffe776842917e09f073bd6ea5856c64136aebddbe51bd17ea29913472fecbf')
+source=("git+https://github.com/rjpower/py-leveldb.git#tag=${pkgver}"
+        'git+https://github.com/google/leveldb.git')
+sha256sums=('SKIP'
+            'SKIP')
+
+prepare() {
+    git -C py-leveldb submodule init
+    git -C py-leveldb config --local submodule.leveldb.url "${srcdir}/leveldb"
+    git -C py-leveldb submodule update
+}
 
 build() {
-    cd "leveldb-${pkgver}"
-    python setup.py build
+    cd py-leveldb
+    python -m build --wheel --no-isolation
 }
 
 check() {
-    cd "leveldb-${pkgver}"
     local _pyver
     _pyver="$(python -c 'import sys; print("%s.%s" %sys.version_info[0:2])')"
-    PYTHONPATH="$(pwd)/build/lib.linux-${CARCH}-${_pyver}" nosetests
+    cd py-leveldb
+    PYTHONPATH="$(pwd)/build/lib.linux-${CARCH}-cpython-${_pyver/./}" nosetests
 }
 
 package() {
-    cd "leveldb-${pkgver}"
-    python setup.py install --root="$pkgdir" --skip-build --optimize='1'
-    install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+    python -m installer --destdir="$pkgdir" py-leveldb/dist/*.whl
+    
+    local _sitepkgs
+    local _sitepkgs=$(python -c "import site; print(site.getsitepackages()[0])")
+    install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
+    ln -s "../../../${_sitepkgs/\/usr\//}/leveldb-${pkgver::-1}.dist-info/LICENSE" \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
