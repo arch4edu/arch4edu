@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=pillar
-_cranver=1.8.0
+_cranver=1.8.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -44,7 +44,7 @@ optdepends=(
     r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=("52c6433692edede2731a95f58ae2bb4017fa50b62d3554c19b7c161d0a79b36f")
+sha256sums=("2f06a7cc9e5638390c9b98a6ec9a9ec1beec0f2b9dbdfa42e39a5ab2456d87ec")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
