@@ -3,8 +3,8 @@
 
 pkgname=python-conda
 _name=${pkgname#python-}
-pkgver=4.12.0
-pkgrel=2
+pkgver=4.14.0
+pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
 url="https://github.com/conda/conda"
@@ -24,7 +24,7 @@ backup=(etc/conda/condarc)
 source=(
   $_name-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz
 )
-sha512sums=('b8b51758a3edb80d0db72d404226a959ca3e6224ce23d2f46e5246537c6461f9ef1801b92901995e52dadef5015c3aa42019433b6f61058e40777b29d203b7cc')
+sha512sums=('4070e7670b3adde45e30a5f1194f0e99a76be465bf6ee54f340c142f7dcb090b091a97aa58cd02210f3194137602d3b29670f69083dda6e276ea5d08bf5a22cf')
 
 prepare() {
   cd $srcdir/${_name}-$pkgver
