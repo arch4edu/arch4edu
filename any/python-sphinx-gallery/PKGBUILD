@@ -3,7 +3,7 @@ pkgbase=python-sphinx-gallery
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.11.0
+pkgver=0.11.1
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
@@ -16,13 +16,13 @@ makedepends=('python-setuptools')
 #'python-sphinx' 'python-pillow' 'python-scipy' 'python-seaborn')
 checkdepends=('python-pytest-cov'
               'python-matplotlib'
-              'python-pillow'
+#             'python-pillow'
               'python-sphinx'
               'python-absl'
               'python-joblib'
               'mayavi')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('c3adbd7c2e2315a72f9c8056feec2d7c')
+md5sums=('34038a82a8dafd1f43dabc0a0968e210')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -38,10 +38,11 @@ check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
     pytest || warning "Tests failed"
+#       --deselect=sphinx_gallery/tests/test_scrapers.py::test_save_mayavi_figures || warning "Tests failed"
 }
 
 package_python-sphinx-gallery() {
-    depends=('python-sphinx>=1.8.3' 'python-pillow' 'python-matplotlib')
+    depends=('python-sphinx>=3' 'python-pillow' 'python-matplotlib')
     optdepends=('python-seaborn'
                 'mayavi'
                 'python-pypandoc')
