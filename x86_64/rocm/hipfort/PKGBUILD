@@ -1,7 +1,7 @@
 # Maintainer Torsten Keßler <t dot kessler at posteo dot de>
 
 pkgname=hipfort
-pkgver=5.2.1
+pkgver=5.2.3
 pkgrel=1
 pkgdesc='Fortran interfaces for ROCm libraries'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('hip' 'gcc-fortran')
 makedepends=('cmake' 'rocm-cmake' 'git')
 _git='https://github.com/ROCmSoftwarePlatform/hipfort'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('ed53c9914d326124482751b81c4a353c6e64e87c1111124169a33513a3c49b42')
+sha256sums=('6648350ca4edc8757f0ae51d73a05a9a536808f19ad45f5b5ab84d420c72c9ec')
 options=(!strip)
 _dirname="$(basename "$_git")-$(basename "${source[0]}" .tar.gz)"
 
