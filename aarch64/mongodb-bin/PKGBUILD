@@ -2,7 +2,7 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="6.0.0"
+pkgver="6.0.1"
 _basever="6.0"
 _basedist="focal"
 pkgrel="1"
@@ -22,7 +22,8 @@ source=(
     "mongodb.service"
     "mongodb.sysusers"
     "mongodb.tmpfiles"
-    "LICENSE")
+    "LICENSE"
+)
 source_x86_64=(
     mongodb-org-server_${pkgver}_x86_64.deb::"${_repo_url}/binary-amd64/mongodb-org-server_${pkgver}_amd64.deb"
     mongodb-org-mongos_${pkgver}_x86_64.deb::"${_repo_url}/binary-amd64/mongodb-org-mongos_${pkgver}_amd64.deb"
@@ -40,10 +41,11 @@ sha256sums=('f2a79c7fcd75253ab1cb888541a0c0678bf3bb78700c79996e24a678f1e42850'
             '47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
             '51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
             '09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('009510f09a3f4f83c39d8b458379e3519ca81fd5d7ce5799fa78ff9270812b38'
-                   '6964004ad8d2c0dfb2b0f8679d96e0fceaf16e0ce8e11853625de77fe31009a8')
-sha256sums_aarch64=('9c49a94b61d479075e850022160c4a2e79d8555f5a3cab54b5bfc6452f5ffb83'
-                    '57f63d2be57e51ab67c9072678cb9bc4eaf8727feda9aa8b1716f4dd16a4941b')
+sha256sums_x86_64=('8f1d8abd3cacdee1f9cd3ad444cf060a3e804e2354eff7f943bc942089ed059b'
+                   '452d7edf18c9fef09da24c9387d8dd0d665dc091bf634ba2d5998be4eecca68b')
+sha256sums_aarch64=('a64a3a4dabf79e696800ab72b4c5c152220330607dd2b24e702c950a46ae4bd6'
+                    'c445c3047861e0cd93daebaf8212f8d92930690c74cd33468d61494685c674b2')
+
 prepare() {
   mkdir -p output
   bsdtar -O -xf mongodb-org-server_${pkgver}_${CARCH}.deb data.tar.xz | bsdtar -C output -xJf - #server extracted
