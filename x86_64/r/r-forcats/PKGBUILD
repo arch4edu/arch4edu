@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=forcats
-_pkgver=0.5.1
+_pkgver=0.5.2
 pkgname=r-${_pkgname,,}
-pkgver=0.5.1
-pkgrel=4
+pkgver=0.5.2
+pkgrel=1
 pkgdesc='Tools for Working with Categorical Variables (Factors)'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -15,6 +15,7 @@ depends=(
   r-magrittr
   r-rlang
   r-tibble
+  r-withr
 )
 optdepends=(
   r-covr
@@ -26,7 +27,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c4fb96e874e2bedaa8a1aa32ea22abdee7906d93b5c5c7b42c0894c0c5b6a289')
+sha256sums=('14a60a43183f82da0fbf42633cee446d21dcbb98a8c37361b5c8061a4da86141')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
