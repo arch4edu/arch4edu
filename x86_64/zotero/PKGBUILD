@@ -1,7 +1,7 @@
 # Maintainer: Aaron Keesing <agkphysics at gmail dot com>
 
 pkgname=zotero
-pkgver=6.0.12
+pkgver=6.0.13
 pkgrel=1
 pkgdesc="A free, easy-to-use tool to help you collect, organize, cite, and share your research sources."
 arch=('x86_64' 'i686')
@@ -9,7 +9,7 @@ url="https://github.com/zotero/zotero"
 license=('AGPL3')
 depends=('dbus-glib' 'gtk3' 'nss' 'libxt')
 makedepends=('npm' 'git' 'zip' 'unzip' 'perl' 'python>=3' 'curl' 'wget' 'rsync')
-_tag=e252f8acf645b8ae7da39e195b2a0191186fb899  # git rev-parse $pkgver
+_tag=99cf84e37779c33c19d937eb60f00a1139c3f485  # git rev-parse $pkgver
 source=("zotero.desktop"
         "zotero-client::git+https://github.com/zotero/zotero.git#tag=${_tag}"
         "zotero-build::git+https://github.com/zotero/zotero-build.git"
@@ -19,19 +19,15 @@ source=("zotero.desktop"
         "zotero-pdf-worker::git+https://github.com/zotero/pdf-worker.git"
         "zotero-note-editor::git+https://github.com/zotero/note-editor.git"
         "zotero-pdf-reader::git+https://github.com/zotero/pdf-reader.git"
-        "zotero-chai::git+https://github.com/chaijs/chai.git"
-        "zotero-mocha::git+https://github.com/mochajs/mocha.git"
-        "zotero-chai-as-promised::git+https://github.com/domenic/chai-as-promised.git"
         "zotero-schema::git+https://github.com/zotero/zotero-schema.git"
         "zotero-SingleFile::git+https://github.com/gildas-lormeau/SingleFile.git"
         "zotero-utilities::git+https://github.com/zotero/utilities.git"
         "zotero-translate::git+https://github.com/zotero/translate.git"
         "zotero-csl::git+https://github.com/citation-style-language/locales.git"
         "zotero-transfw::git+https://github.com/egh/zotero-transfw.git"
-        "zotero-libreoffice-integration::git+https://github.com/zotero/zotero-libreoffice-integration.git")
+        "zotero-libreoffice-integration::git+https://github.com/zotero/zotero-libreoffice-integration.git"
+        "zotero-pdf-js::git+https://github.com/zotero/pdf.js.git")
 sha256sums=('eab76db7a56a4d9aaa17baaf240b82fcf57944a4ddf8ef1b58cc64182426cedc'
-            'SKIP'
-            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -67,15 +63,24 @@ prepare() {
   git config submodule.pdf-worker.url "$srcdir/zotero-pdf-worker"
   git config submodule.note-editor.url "$srcdir/zotero-note-editor"
   git config submodule.pdf-reader.url "$srcdir/zotero-pdf-reader"
-  git config submodule.test/resource/chai.url "$srcdir/zotero-chai"
-  git config submodule.test/resource/mocha.url "$srcdir/zotero-mocha"
-  git config submodule.test/resource/chai-as-promised.url "$srcdir/zotero-chai-as-promised"
   git config submodule.resource/schema/global.url "$srcdir/zotero-schema"
   git config submodule.resource/SingleFile.url "$srcdir/zotero-SingleFile"
   git config submodule.chrome/content/zotero/xpcom/utilities.url "$srcdir/zotero-utilities"
   git config submodule.chrome/content/zotero/xpcom/translate.url "$srcdir/zotero-translate"
   git config submodule.chrome/content/zotero/locale/csl.url "$srcdir/zotero-csl"
   git submodule update
+
+  cd pdf-reader
+  git submodule init
+  git config submodule.pdf.js.url "$srcdir/zotero-pdf-js"
+  git submodule update
+  cd ..
+
+  cd pdf-worker
+  git submodule init
+  git config submodule.pdf.js.url "$srcdir/zotero-pdf-js"
+  git submodule update
+  cd ..
 
   npm i --legacy-peer-deps
 
