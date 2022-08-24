@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  sed '/qmake/i\  export DISABLE_AIRMAP=1' -i PKGBUILD
+post_build: aur-post-build
