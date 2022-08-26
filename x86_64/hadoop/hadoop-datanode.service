@@ -1,13 +1,17 @@
 [Unit]
-Description=Hadoop Datanode
-Requires=hadoop-namenode.service
-After=hadoop-namenode.service
+Description=Haoop data node and node manager server
 
 [Service]
-EnvironmentFile=/etc/conf.d/hadoop
-ExecStart=/usr/bin/hadoop datanode
+Type=forking
 User=hadoop
 Group=hadoop
+EnvironmentFile=/etc/conf.d/hadoop
+ExecStart=/usr/bin/hdfs --daemon start datanode
+ExecStartPost=/usr/bin/yarn --daemon start nodemanager
+ExecStop=/usr/bin/yarn --daemon stop nodemanager
+ExecStopPost=/usr/bin/hdfs --daemon stop datanode
+Restart=on-abnormal
+SuccessExitStatus=143
 
 [Install]
 WantedBy=multi-user.target

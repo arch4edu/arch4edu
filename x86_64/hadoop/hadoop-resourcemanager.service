@@ -1,13 +1,13 @@
 [Unit]
-Description=Haoop secondary name node server
+Description=Haoop resource manager server
 
 [Service]
 Type=forking
 User=hadoop
 Group=hadoop
 EnvironmentFile=/etc/conf.d/hadoop
-ExecStart=/usr/bin/hdfs --daemon start secondarynamenode
-ExecStop=/usr/bin/hdfs --daemon stop secondarynamenode
+ExecStart=/usr/bin/yarn --daemon start resourcemanager
+ExecStop=/usr/bin/yarn --daemon stop resourcemanager
 Restart=on-abnormal
 SuccessExitStatus=143
 

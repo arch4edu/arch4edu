@@ -1,13 +1,11 @@
 [Unit]
-Description=Haoop name node server
+Description=Haoop job history server
 
 [Service]
-Type=forking
 User=hadoop
 Group=hadoop
 EnvironmentFile=/etc/conf.d/hadoop
-ExecStart=/usr/bin/hdfs --daemon start namenode
-ExecStop=/usr/bin/hdfs --daemon stop namenode
+ExecStart=/usr/bin/mapred historyserver
 Restart=on-abnormal
 SuccessExitStatus=143
 

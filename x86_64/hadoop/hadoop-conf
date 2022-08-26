@@ -1,5 +1,0 @@
-# example configuration file
-
-HADOOP_USERNAME="hadoop"
-
-. /etc/profile.d/hadoop.sh

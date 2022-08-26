@@ -1,0 +1,6 @@
+HADOOP_COMMON_LIB_NATIVE_DIR=/usr/lib
+HADOOP_CONF_DIR=/etc/hadoop
+HADOOP_LOG_DIR=/var/log/hadoop
+HADOOP_USERNAME=hadoop
+
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk

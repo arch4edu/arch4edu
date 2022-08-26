@@ -1,32 +1,17 @@
 post_install() {
-  getent group 'hadoop' >/dev/null 2>&1 || groupadd -r 'hadoop' >/dev/null
-  getent passwd 'hadoop' /dev/null 2>&1 || useradd -r -g 'hadoop' -d '/etc/hadoop' 'hadoop' >/dev/null
-
-  if [ ! -d '/etc/hadoop/.ssh' ] ; then
-    mkdir -p '/etc/hadoop/.ssh'
-  fi
-
-  chown -R 'hadoop:hadoop' '/etc/hadoop'
-
-  if [ ! -e '/etc/hadoop/.ssh/id_rsa' ] ; then
-    su -s '/usr/bin/bash' -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" - 'hadoop'
-    su -s '/usr/bin/bash' -c "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys" - 'hadoop'
-  fi
-
-  echo 'An SSH key-pair has been created. Depending on your SSHD configuration you may'
-  echo 'need to connect to localhost as user "hadoop" to make sure Hadoop can connect.'
-  echo ''
-  echo '$ ssh localhost'
-
-  echo ''
-  echo '===> Read https://wiki.archlinux.org/index.php/Hadoop for more information'
+	getent group hadoop || groupadd hadoop
+	getent passwd hadoop || useradd -g hadoop -r -d /var/lib/hadoop hadoop
+	chown -R hadoop:hadoop /var/{lib,log}/hadoop
 }
 
-post_upgrade() {
-  :
+pre_remove() {
+	for s in datanode historyserver namenode resourcemanager secondarynamenode; do
+		systemctl stop hadoop-$s.service
+		systemctl --no-reload disable hadoop-$s.service
+	done
 }
 
 post_remove() {
-  getent passwd 'hadoop' >/dev/null 2>&1 && userdel 'hadoop' >/dev/null
-  getent group 'hadoop' >/dev/null 2>&1 && groupdel 'hadoop' >/dev/null
+	userdel hadoop
+	rm -rf /var/{lib,log}/hadoop
 }
