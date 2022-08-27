@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=metafor
-_pkgver=3.4-0
+_pkgver=3.8-1
 pkgname=r-${_pkgname,,}
-pkgver=3.4.0
+pkgver=3.8.1
 pkgrel=1
 pkgdesc='Meta-Analysis Package for R'
 arch=('any')
@@ -40,7 +40,7 @@ optdepends=(
   r-ucminf
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('92e1bc21c4d135b6e651fbefc4b40666fc02c66a6a4f6f28effee0e73a21c26e')
+sha256sums=('d694577f954144d8a5eeab6521fe1c87e68ddf9ecfd7ccc915d01533371b0514')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
