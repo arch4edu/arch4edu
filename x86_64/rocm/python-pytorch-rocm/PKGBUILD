@@ -8,7 +8,7 @@ pkgbase="python-${_pkgname}-rocm"
 pkgname=("${pkgbase}" "python-pytorch-opt-rocm")
 pkgver=1.12.1
 _pkgver=1.12.1
-pkgrel=2
+pkgrel=3
 _pkgdesc="Tensors and Dynamic neural networks in Python with strong GPU acceleration"
 pkgdesc="${_pkgdesc}"
 arch=('x86_64')
@@ -21,44 +21,45 @@ makedepends=('python' 'python-setuptools' 'python-yaml' 'python-numpy' 'cmake' '
              'miopen' 'git' 'hipmagma' 'ninja' 'pkgconfig' 'doxygen' 'gcc11')
 source=("${_pkgname}-${pkgver}::git+https://github.com/pytorch/pytorch.git#tag=v$_pkgver"
         # generated using parse-submodules
+        "${pkgname}-cub::git+https://github.com/NVlabs/cub.git"
+        "${pkgname}-NNPACK::git+https://github.com/Maratyszcza/NNPACK.git"
         "${pkgname}-ios-cmake::git+https://github.com/Yangqing/ios-cmake.git"
         "${pkgname}-pthreadpool::git+https://github.com/Maratyszcza/pthreadpool.git"
-        "${pkgname}-NNPACK::git+https://github.com/Maratyszcza/NNPACK.git"
-        "${pkgname}-psimd::git+https://github.com/Maratyszcza/psimd.git"
-        "${pkgname}-FP16::git+https://github.com/Maratyszcza/FP16.git"
         "${pkgname}-FXdiv::git+https://github.com/Maratyszcza/FXdiv.git"
-        "${pkgname}-cpuinfo::git+https://github.com/pytorch/cpuinfo.git"
-        "${pkgname}-enum34::git+https://github.com/PeachPy/enum34.git"
         "${pkgname}-gloo::git+https://github.com/facebookincubator/gloo"
-        "${pkgname}-PeachPy::git+https://github.com/malfet/PeachPy.git"
-        "${pkgname}-cub::git+https://github.com/NVlabs/cub.git"
-        "${pkgname}-six::git+https://github.com/benjaminp/six.git"
-        "${pkgname}-QNNPACK::git+https://github.com/pytorch/QNNPACK"
-        "${pkgname}-ARM_NEON_2_x86_SSE::git+https://github.com/intel/ARM_NEON_2_x86_SSE.git"
-        "${pkgname}-onnx-tensorrt::git+https://github.com/onnx/onnx-tensorrt"
-        "${pkgname}-ideep::git+https://github.com/intel/ideep"
-        "${pkgname}-sleef::git+https://github.com/shibatch/sleef"
-        "${pkgname}-foxi::git+https://github.com/houseroad/foxi.git"
         "${pkgname}-benchmark::git+https://github.com/google/benchmark.git"
-        "${pkgname}-nccl::git+https://github.com/NVIDIA/nccl"
-        "${pkgname}-gemmlowp::git+https://github.com/google/gemmlowp.git"
-        "${pkgname}-cudnn-frontend::git+https://github.com/NVIDIA/cudnn-frontend.git"
+        "${pkgname}-pybind11::git+https://github.com/pybind/pybind11.git"
         "${pkgname}-googletest::git+https://github.com/google/googletest.git"
-        "${pkgname}-fbjni::git+https://github.com/facebookincubator/fbjni.git"
-        "${pkgname}-pocketfft::git+https://github.com/mreineck/pocketfft"
-        "${pkgname}-fbgemm::git+https://github.com/pytorch/fbgemm"
-        "${pkgname}-tensorpipe::git+https://github.com/pytorch/tensorpipe.git"
+        "${pkgname}-enum34::git+https://github.com/PeachPy/enum34.git"
+        "${pkgname}-six::git+https://github.com/benjaminp/six.git"
+        "${pkgname}-cpuinfo::git+https://github.com/pytorch/cpuinfo.git"
+        "${pkgname}-protobuf::git+https://github.com/protocolbuffers/protobuf.git"
+        "${pkgname}-foxi::git+https://github.com/houseroad/foxi.git"
+        "${pkgname}-sleef::git+https://github.com/shibatch/sleef"
+        "${pkgname}-ideep::git+https://github.com/intel/ideep"
+        "${pkgname}-nccl::git+https://github.com/NVIDIA/nccl"
+        "${pkgname}-zstd::git+https://github.com/facebook/zstd.git"
+        "${pkgname}-gemmlowp::git+https://github.com/google/gemmlowp.git"
+        "${pkgname}-QNNPACK::git+https://github.com/pytorch/QNNPACK"
+        "${pkgname}-onnx-tensorrt::git+https://github.com/onnx/onnx-tensorrt"
         "${pkgname}-onnx::git+https://github.com/onnx/onnx.git"
-        "${pkgname}-tbb::git+https://github.com/01org/tbb"
+        "${pkgname}-cudnn-frontend::git+https://github.com/NVIDIA/cudnn-frontend.git"
+        "${pkgname}-ARM_NEON_2_x86_SSE::git+https://github.com/intel/ARM_NEON_2_x86_SSE.git"
+        "${pkgname}-ittapi::git+https://github.com/intel/ittapi.git"
+        "${pkgname}-fbjni::git+https://github.com/facebookincubator/fbjni.git"
+        "${pkgname}-json::git+https://github.com/nlohmann/json.git"
+        "${pkgname}-fbgemm::git+https://github.com/pytorch/fbgemm"
         "${pkgname}-fmt::git+https://github.com/fmtlib/fmt.git"
         "${pkgname}-kineto::git+https://github.com/pytorch/kineto"
-        "${pkgname}-protobuf::git+https://github.com/protocolbuffers/protobuf.git"
-        "${pkgname}-json::git+https://github.com/nlohmann/json.git"
-        "${pkgname}-eigen::git+https://gitlab.com/libeigen/eigen.git"
-        "${pkgname}-flatbuffers::git+https://github.com/google/flatbuffers.git"
+        "${pkgname}-tbb::git+https://github.com/01org/tbb"
+        "${pkgname}-tensorpipe::git+https://github.com/pytorch/tensorpipe.git"
+        "${pkgname}-psimd::git+https://github.com/Maratyszcza/psimd.git"
         "${pkgname}-XNNPACK::git+https://github.com/google/XNNPACK.git"
-        "${pkgname}-pybind11::git+https://github.com/pybind/pybind11.git"
-        "${pkgname}-zstd::git+https://github.com/facebook/zstd.git"
+        "${pkgname}-FP16::git+https://github.com/Maratyszcza/FP16.git"
+        "${pkgname}-flatbuffers::git+https://github.com/google/flatbuffers.git"
+        "${pkgname}-eigen::git+https://gitlab.com/libeigen/eigen.git"
+        "${pkgname}-PeachPy::git+https://github.com/malfet/PeachPy.git"
+        "${pkgname}-pocketfft::git+https://github.com/mreineck/pocketfft"
         fix_include_system.patch
         use-system-libuv.patch
         fix-building-for-torchvision.patch
@@ -66,6 +67,7 @@ source=("${_pkgname}-${pkgver}::git+https://github.com/pytorch/pytorch.git#tag=v
         ffmpeg4.4.patch
         "rocblas.patch::https://patch-diff.githubusercontent.com/raw/pytorch/pytorch/pull/80849.patch")
 sha256sums=('SKIP'
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -158,6 +160,7 @@ prepare() {
   git config submodule."third_party/cudnn_frontend".url "${srcdir}/${pkgname}"-cudnn-frontend
   git config submodule."third_party/kineto".url "${srcdir}/${pkgname}"-kineto
   git config submodule."third_party/pocketfft".url "${srcdir}/${pkgname}"-pocketfft
+  git config submodule."third_party/ittapi".url "${srcdir}/${pkgname}"-ittapi
   git config submodule."third_party/flatbuffers".url "${srcdir}/${pkgname}"-flatbuffers
   git config submodule."third_party/nlohmann".url "${srcdir}/${pkgname}"-json
 
@@ -220,7 +223,7 @@ prepare() {
   export CUDNN_LIB_DIR=/usr/lib
   export CUDNN_INCLUDE_DIR=/usr/include
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
-  export TORCH_CUDA_ARCH_LIST="5.2;6.0;6.2;7.0;7.2;7.5;8.0;8.6;8.6+PTX"  #include latest PTX for future compat
+  export TORCH_CUDA_ARCH_LIST="5.2;6.0;6.2;7.0;7.2;7.5;8.0;8.6;8.7;8.7+PTX"  #include latest PTX for future compat
   export OVERRIDE_TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST}"
 }
 
