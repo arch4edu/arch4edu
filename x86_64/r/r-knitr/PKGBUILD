@@ -1,8 +1,11 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Kibouo <csonka.mihaly@hotmail.com>
+# Contributor: Ward Segers <w@rdsegers.be>
+# Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=knitr
-_cranver=1.39
+_cranver=1.40
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -42,13 +45,14 @@ optdepends=(
     r-sass
     r-bslib
     r-ragg
+    r-gridsvg
     r-styler
     r-targets
     'pandoc: R Markdown v2 and reStructuredText support'
     'rst2pdf: rst2pdf() support'
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('c91a65edebdca779af7f7480fa6636667497c9291ad55d6efd982db0bb91ac72')
+sha256sums=('9b8f95ff367a0e52f024bda30315ec7cdd6a5b82371a1aaed95ab4eea78535bc')
 
 build() {
   mkdir -p build
