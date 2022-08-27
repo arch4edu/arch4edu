@@ -8,7 +8,7 @@ pkgbase="python-${_pkgname}-rocm"
 pkgname=("${pkgbase}" "python-pytorch-opt-rocm")
 pkgver=1.12.1
 _pkgver=1.12.1
-pkgrel=3
+pkgrel=4
 _pkgdesc="Tensors and Dynamic neural networks in Python with strong GPU acceleration"
 pkgdesc="${_pkgdesc}"
 arch=('x86_64')
@@ -128,7 +128,8 @@ prepare() {
   git config submodule."third_party/cub".url "${srcdir}/${pkgname}"-cub
   git config submodule."third_party/eigen".url "${srcdir}/${pkgname}"-eigen
   git config submodule."third_party/googletest".url "${srcdir}/${pkgname}"-googletest
-  git config submodule."third_party/benchmark".url "${srcdir}/${pkgname}"-benchmark
+  #https://github.com/rocm-arch/python-pytorch-rocm/issues/49
+  #git config submodule."third_party/benchmark".url "${srcdir}/${pkgname}"-benchmark
   git config submodule."third_party/protobuf".url "${srcdir}/${pkgname}"-protobuf
   git config submodule."third_party/ios-cmake".url "${srcdir}/${pkgname}"-ios-cmake
   git config submodule."third_party/NNPACK".url "${srcdir}/${pkgname}"-NNPACK
@@ -257,7 +258,7 @@ build() {
   export USE_CUDA=0
   export USE_CUDNN=0
   export USE_ROCM=1
-  cd "${srcdir}/${_pkgname}-${pkgver}-rocm"
+  cd "${srcdir}/${_pkgname}-${pkgver}-opt-rocm"
   echo "add_definitions(-march=haswell)" >> cmake/MiscCheck.cmake
 
   # Apply changes needed for ROCm
