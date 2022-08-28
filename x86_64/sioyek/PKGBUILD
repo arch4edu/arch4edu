@@ -1,7 +1,7 @@
 # Maintainer: Alexander Seiler <seileralex@gmail.com>
 pkgname=sioyek
-pkgver=1.4.0
-pkgrel=2
+pkgver=1.5.0
+pkgrel=1
 pkgdesc="PDF viewer for research papers and technical books."
 arch=('x86_64')
 license=('GPL3')
@@ -16,7 +16,7 @@ depends=(
 	'qt5-base'
 	'zlib')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz" "mupdf-1.20.patch")
-sha256sums=('44d49aec28e49bb79c2d0fb7cefd26aecc53b60136bf02dfec9863ac586aacd0' 'ab9fdffca70d43f1e6d2ba347c546430a79c51452178f05efb086589e247054b')
+sha256sums=('2d01c757953c3f2d98428376e642d13b8a9edeba8fee506477e8aa178756f16b' 'cd639043d9978a27f8957db59001c846bc6b5190fd08afd9cd8d2d8875b532fa')
 
 prepare() {
 	cd "$pkgname-$pkgver"
