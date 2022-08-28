@@ -2,7 +2,7 @@
 
 pkgname=zotero
 pkgver=6.0.13
-pkgrel=1
+pkgrel=2
 pkgdesc="A free, easy-to-use tool to help you collect, organize, cite, and share your research sources."
 arch=('x86_64' 'i686')
 url="https://github.com/zotero/zotero"
@@ -13,7 +13,7 @@ _tag=99cf84e37779c33c19d937eb60f00a1139c3f485  # git rev-parse $pkgver
 source=("zotero.desktop"
         "zotero-client::git+https://github.com/zotero/zotero.git#tag=${_tag}"
         "zotero-build::git+https://github.com/zotero/zotero-build.git"
-        "zotero-standalone-build::git+https://github.com/zotero/zotero-standalone-build.git"
+        "zotero-standalone-build::git+https://github.com/zotero/zotero-standalone-build.git#tag=6.0.11"
         "zotero-translators::git+https://github.com/zotero/translators.git"
         "zotero-styles::git+https://github.com/zotero/bundled-styles.git"
         "zotero-pdf-worker::git+https://github.com/zotero/pdf-worker.git"
