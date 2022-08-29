@@ -10,7 +10,7 @@
 
 pkgname=ros2-humble
 pkgver=2022.05.23
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
 arch=('any')
@@ -33,7 +33,7 @@ install=ros2-humble.install
 prepare() {
     # Check locale according to
     # https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#set-locale
-    if ! locale | grep LANG | grep UTF-8 > /dev/null; then
+        if ! locale | grep LANG | grep 'UTF-8\|utf8' > /dev/null; then
         echo 'Your locale must support UTF-8. See ' \
              'https://wiki.archlinux.org/index.php/locale and ' \
              'https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#set-locale'
@@ -57,11 +57,14 @@ prepare() {
     git -C $srcdir/ros2/src/ros2/performance_test_fixture cherry-pick d736c276d292a78f9750aba39108d5222bf9629e
     ## rmw_cyclonedds_cpp
     git -C $srcdir/ros2/src/ros2/rmw_cyclonedds cherry-pick f57732d15be53796d518e12352866124efcaa939
+    ## ament_cmake
+    git -C $srcdir/ros2/src/ament/ament_cmake cherry-pick ca8c26ea3c89e69c0c636b7cd0c088674c689f5f
 }
 
 build() {
     # Disable parallel build if RAM is low
-    if [[ $(free | grep -Po "Mem:\s+\K\d+") -lt 16000000 ]]; then
+    MIN_PARALLEL_BUILD_RAM_KB=16000000
+    if [[ $(free | grep -Po "Mem:\s+\K\d+") -lt $MIN_PARALLEL_BUILD_RAM_KB && $(grep MemTotal /proc/meminfo | grep -Po "MemTotal:\s+\K\d+") -lt $MIN_PARALLEL_BUILD_RAM_KB ]]; then
         printf "\nRAM is smaller than 16 GB. Parallel build will be disabled for stability.\n\n"
         export COLCON_EXTRA_ARGS="${COLCON_EXTRA_ARGS} --executor sequential"
     fi

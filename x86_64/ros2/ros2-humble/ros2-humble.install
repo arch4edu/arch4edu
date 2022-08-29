@@ -4,11 +4,11 @@ post_install() {
     You should add something like this to your ~/.bashrc file:
 
       export ROS_DOMAIN_ID=42
-      source /opt/ros2/humble/setup.bash
+      source /opt/ros/humble/setup.bash
 
     This quick command will do it for you:
 
-      printf \"\\\nexport ROS_DOMAIN_ID=42\\\nsource /opt/ros2/humble/setup.bash\\\n\" >> ~/.bashrc
+      printf \"\\\nsource /opt/ros/humble/setup.bash\\\n\" >> ~/.bashrc
 
     Note 1: If you use zsh, replace '.bash' in the above lines with
     '.zsh' and add the lines to ~/.zshrc .
