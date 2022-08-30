@@ -3,7 +3,7 @@
 # Contributor: JP-Ellis <josh@jpellis.me>
 
 pkgname=miopen-hip
-pkgver=5.2.1
+pkgver=5.2.3
 pkgrel=1
 pkgdesc="AMD's Machine Intelligence Library (HIP backend)"
 arch=('x86_64')
@@ -15,7 +15,7 @@ provides=('miopen')
 conflicts=('miopen')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz"
        "https://github.com/ROCmSoftwarePlatform/MIOpen/commit/9ae2418adf767794e9475274a4cf90e418f00a58.patch")
-sha256sums=('0977a8876d41bbd2fa268341c93892f35878d7efc1711194ad87582f877ff500'
+sha256sums=('28747847446955b3bab24f7fc65c1a6b863a12f12ad3a35e0312072482d38122'
             '329970d0f9b63b1d814a7256def2b2167ce5cb0e56a6ea037c9c40b225b8cd9f')
 _dirname="$(basename "$url")-$(basename "${source[0]}" .tar.gz)"
 
@@ -23,7 +23,7 @@ prepare() {
   cd "$_dirname"
 
   # -fcf-protection is not supported by HIP, see
-  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
   # -fPIC fixes linking errors.
   export CC=/opt/rocm/llvm/bin/clang
   export CXX=/opt/rocm/llvm/bin/clang++
@@ -46,7 +46,7 @@ build() {
   cd "$_dirname"
 
   # -fcf-protection is not supported by HIP, see
-  # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
   # -fPIC fixes linking errors with boost.
   export CC=/opt/rocm/llvm/bin/clang
   export CXX=/opt/rocm/llvm/bin/clang++
