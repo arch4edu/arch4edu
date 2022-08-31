@@ -1,0 +1,38 @@
+# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Contributor: Tim Rakowski <tim.rakowski@gmail.com>
+# Contributor: marauder <abhinav.kssk@gmail.com>
+pkgname=ignition-tools
+pkgver=1.4.1
+pkgrel=1
+pkgdesc="Ignition tools provide the ign command line tool that accepts multiple subcommands."
+arch=('any')
+url="https://github.com/gazebosim/gz-tools"
+license=('Apache')
+makedepends=('cmake' 'doxygen' 'pkg-config' 'ruby-ronn')
+depends=('ruby')
+optdepends=()
+conflicts=()
+source=("$url/archive/${pkgname}_${pkgver}.tar.gz")
+sha256sums=('950059424c2de42e825d31cab63015e18fe4c61a2b54911d375c138093139cac')
+
+_dir="gz-tools-${pkgname}_${pkgver}"
+
+build() {
+  cd "$srcdir/$_dir"
+
+  mkdir -p build
+  cd build
+
+  # Configure build
+  cmake .. -DCMAKE_BUILD_TYPE="Release" \
+           -DCMAKE_INSTALL_PREFIX="/usr" \
+           -DCMAKE_INSTALL_LIBDIR="lib"
+
+  # Compile
+  make
+}
+
+package() {
+  cd "$srcdir/$_dir/build"
+  make DESTDIR="$pkgdir/" install
+}
