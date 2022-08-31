@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-std-srvs
+  - x86_64/ros/ros-noetic-xmlrpcpp
+  - x86_64/ros/ros-noetic-rosbag-storage
+  - x86_64/ros/ros-noetic-genpy
+  - x86_64/ros/ros-noetic-rosconsole
+  - x86_64/ros/ros-noetic-roscpp
+  - x86_64/ros/ros-noetic-topic-tools
+  - x86_64/ros/ros-noetic-rospy
+  - x86_64/ros/ros-noetic-genmsg
+  - x86_64/ros/ros-noetic-roslib
+  - x86_64/ros2/python-rospkg
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+  - x86_64/ros/ros-noetic-cpp-common
+  - x86_64/ros/ros-noetic-roscpp-serialization
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

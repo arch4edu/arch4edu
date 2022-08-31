@@ -1,0 +1,23 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-controller-interface
+  - x86_64/ros/ros-noetic-control-msgs
+  - x86_64/ros/ros-noetic-dynamic-reconfigure
+  - x86_64/ros/ros-noetic-geometry-msgs
+  - x86_64/ros/ros-noetic-hardware-interface
+  - x86_64/ros/ros-noetic-nav-msgs
+  - x86_64/ros/ros-noetic-realtime-tools
+  - x86_64/ros/ros-noetic-tf
+  - x86_64/ros/ros-noetic-pluginlib
+  - x86_64/ros/ros-noetic-urdf
+  - x86_64/ros/ros-noetic-controller-manager
+  - x86_64/ros/ros-noetic-controller-manager-msgs
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

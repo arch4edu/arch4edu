@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-geneus
+  - x86_64/ros/ros-noetic-gencpp
+  - x86_64/ros/ros-noetic-genpy
+  - x86_64/ros/ros-noetic-gennodejs
+  - x86_64/ros/ros-noetic-genlisp
+  - x86_64/ros/ros-noetic-genmsg
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

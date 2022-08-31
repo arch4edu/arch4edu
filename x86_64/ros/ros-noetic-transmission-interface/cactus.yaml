@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-pluginlib
+  - x86_64/ros/ros-noetic-roscpp
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+  - x86_64/ros/ros-noetic-hardware-interface
+  - x86_64/ros/ros-noetic-cmake-modules
+  - x86_64/ros/ros-noetic-resource-retriever
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

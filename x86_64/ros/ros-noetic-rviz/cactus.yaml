@@ -1,0 +1,39 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-geometry-msgs
+  - x86_64/ros/ros-noetic-image-transport
+  - x86_64/ros/ros-noetic-interactive-markers
+  - x86_64/ros/ros-noetic-laser-geometry
+  - x86_64/ros/ros-noetic-map-msgs
+  - x86_64/ros/ros-noetic-message-filters
+  - x86_64/ros/ros-noetic-pluginlib
+  - x86_64/ros/ros-noetic-python-qt-binding
+  - x86_64/ros/ros-noetic-resource-retriever
+  - x86_64/ros/ros-noetic-rosbag
+  - x86_64/ros/ros-noetic-rosconsole
+  - x86_64/ros/ros-noetic-roscpp
+  - x86_64/ros/ros-noetic-roslib
+  - x86_64/ros/ros-noetic-rospy
+  - x86_64/ros/ros-noetic-sensor-msgs
+  - x86_64/ros/ros-noetic-std-msgs
+  - x86_64/ros/ros-noetic-std-srvs
+  - x86_64/ros/ros-noetic-tf2-ros
+  - x86_64/ros/ros-noetic-tf2-geometry-msgs
+  - x86_64/ros/ros-noetic-tf2-eigen
+  - x86_64/ros/ros-noetic-urdf
+  - x86_64/ros/ros-noetic-visualization-msgs
+  - x86_64/ros/ros-noetic-media-export
+  - x86_64/ros/ros-noetic-message-runtime
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+  - x86_64/ros/ros-noetic-cmake-modules
+  - x86_64/ros/ros-noetic-message-generation
+  - x86_64/urdfdom
+  - any/urdfdom-headers
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

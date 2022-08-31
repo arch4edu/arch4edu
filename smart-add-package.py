@@ -71,6 +71,10 @@ provides.update(read_provides('ruby-ronn-ng'))
 provides.update(read_provides('libtool'))
 provides.update(read_provides('util-linux-libs'))
 provides.update(read_provides('pkgconf'))
+provides.update(read_provides('gtest'))
+provides.update(read_provides('dbus-python'))
+provides.update(read_provides('jdk-openjdk'))
+provides.update(read_provides('python-sip4'))
 
 if __name__ == '__main__':
     from tornado.log import enable_pretty_logging

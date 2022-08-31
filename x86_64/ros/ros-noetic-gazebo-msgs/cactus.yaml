@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-std-msgs
+  - x86_64/ros/ros-noetic-trajectory-msgs
+  - x86_64/ros/ros-noetic-sensor-msgs
+  - x86_64/ros/ros-noetic-std-srvs
+  - x86_64/ros/ros-noetic-geometry-msgs
+  - x86_64/ros/ros-noetic-message-runtime
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+  - x86_64/ros/ros-noetic-message-generation
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

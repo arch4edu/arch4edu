@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-rosconsole-bridge
+  - x86_64/ros/ros-noetic-pluginlib
+  - x86_64/ros/ros-noetic-roscpp
+  - x86_64/urdfdom
+  - any/urdfdom-headers
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-urdf-parser-plugin
+  - x86_64/ros/ros-noetic-cmake-modules
+  - x86_64/ros/ros-noetic-catkin
+  - x86_64/ros/ros-noetic-rostest
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

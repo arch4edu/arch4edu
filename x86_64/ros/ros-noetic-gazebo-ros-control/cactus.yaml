@@ -1,0 +1,25 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros/ros-noetic-gazebo-ros
+  - x86_64/ros/ros-noetic-roscpp
+  - x86_64/ros/ros-noetic-std-msgs
+  - x86_64/ros/ros-noetic-control-toolbox
+  - x86_64/ros/ros-noetic-controller-manager
+  - x86_64/ros/ros-noetic-controller-manager-msgs
+  - x86_64/ros/ros-noetic-controller-interface
+  - x86_64/ros/ros-noetic-pluginlib
+  - x86_64/ros/ros-noetic-hardware-interface
+  - x86_64/ros/ros-noetic-transmission-interface
+  - x86_64/ros/ros-noetic-joint-limits-interface
+  - x86_64/ros/ros-noetic-urdf
+  - x86_64/ros/ros-noetic-angles
+makedepends:
+  - x86_64/ros/ros-build-tools
+  - x86_64/ros/ros-noetic-catkin
+  - x86_64/ros/ros-noetic-gazebo-dev
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
