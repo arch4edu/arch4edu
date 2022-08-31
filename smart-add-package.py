@@ -15,6 +15,8 @@ remove = os.remove
 move = shutil.move
 rmtree = shutil.rmtree
 
+path = Path('.')
+
 def symlink(source, target):
     try:
         os.symlink(source, target)
@@ -25,11 +27,18 @@ def symlink(source, target):
 def load_pacman_packages():
     run(['sudo', 'pacman', '-Sy'])
     results = set()
-    for repository in ['core', 'extra', 'community', 'arch4edu']:
-    #for repository in ['core', 'extra', 'community']:
+    #for repository in ['core', 'extra', 'community', 'arch4edu']:
+    for repository in ['core', 'extra', 'community']:
         packages = run(['sudo', 'pacman', '-Slq', repository], capture_output=True)
         results.update(packages.stdout.decode('utf-8').split('\n')[:-1])
     return results
+
+def load_pkgbases():
+    pkgbases = {}
+    for i in path.rglob('cactus.yaml'):
+        pkgbase = i.parent.name
+        pkgbases[pkgbase] = str(i.parent)
+    return pkgbases
 
 def read_aur_info(packages):
     logger.info('Reading AUR package information for %s', packages)
@@ -58,6 +67,10 @@ provides.update(read_provides('r'))
 provides.update(read_provides('fuse2'))
 provides.update(read_provides('libjpeg-turbo'))
 provides.update(read_provides('ttf-dejavu'))
+provides.update(read_provides('ruby-ronn-ng'))
+provides.update(read_provides('libtool'))
+provides.update(read_provides('util-linux-libs'))
+provides.update(read_provides('pkgconf'))
 
 if __name__ == '__main__':
     from tornado.log import enable_pretty_logging
@@ -68,6 +81,7 @@ if __name__ == '__main__':
     enable_pretty_logging(options=options, logger=logger)
 
     pacman_db = load_pacman_packages()
+    pkgbases = load_pkgbases()
 
     unresolved = [sys.argv[1]]
     resolved = {}
@@ -104,17 +118,23 @@ if __name__ == '__main__':
         unresolved = list(_unresolved)
     logger.info('Resolved %d packages', len(resolved))
 
-    path = Path(sys.argv[2])
-    path.mkdir(exist_ok=True)
-    for package, info in resolved.items():
-        pkgbase = path / info['PackageBase']
-        if (pkgbase / 'cactus.yaml').exists():
+    category = Path(sys.argv[2])
+    category.mkdir(exist_ok=True)
+    template = 'template/x86_64-nocheck.yaml'
+
+    for package, info in reversed(resolved.items()):
+
+        pkgbase = info['PackageBase']
+        if pkgbase in pkgbases:
             continue
+
+        pkgbase = category / pkgbase
         pkgbase.mkdir(exist_ok=True)
-        template = 'template/x86_64-nocheck.yaml'
+
         if len(info['Depends']) + len(info['MakeDepends']) == 0:
-            symlink('../' * (sys.argv[2].count('/') + 2) + template, pkgbase / 'cactus.yaml')
+            symlink('../' * (len(category.parents) + 1) + template, pkgbase / 'cactus.yaml')
             logger.info('Added %s with %s', package, template)
+            pkgbases[pkgbase.name] = str(pkgbase)
         else:
             with open(template) as f:
                 lines = f.readlines()
@@ -124,16 +144,21 @@ if __name__ == '__main__':
                         if len(info['Depends']) > 0:
                             f.write('depends:\n')
                         for i in info['Depends']:
+                            _pkgbase = resolved[i]['PackageBase']
+                            _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(category / _pkgbase)
                             if resolved[i]['PackageBase'] == i:
-                                f.write(f'  - {sys.argv[2]}/{i}\n')
+                                f.write(f'  - {_pkgbase}\n')
                             else:
-                                f.write(f'  - {sys.argv[2]}/{resolved[i]["PackageBase"]}: {i}\n')
+                                f.write(f'  - {_pkgbase}: {i}\n')
                         if len(info['MakeDepends']) > 0:
                             f.write('makedepends:\n')
                         for i in info['MakeDepends']:
+                            _pkgbase = resolved[i]['PackageBase']
+                            _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(category / _pkgbase)
                             if resolved[i]['PackageBase'] == i:
-                                f.write(f'  - {sys.argv[2]}/{i}\n')
+                                f.write(f'  - {_pkgbase}\n')
                             else:
-                                f.write(f'  - {sys.argv[2]}/{resolved[i]["PackageBase"]}: {i}\n')
+                                f.write(f'  - {_pkgbase}: {i}\n')
                     f.write(line)
+            pkgbases[pkgbase.name] = str(pkgbase)
             logger.info('Added %s', package)
