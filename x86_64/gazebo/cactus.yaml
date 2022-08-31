@@ -13,5 +13,7 @@ depends:
   - x86_64/ignition-msgs-5
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  download-pacman-package jack2
 post_build: aur-post-build
