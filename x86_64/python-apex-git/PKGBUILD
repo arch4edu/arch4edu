@@ -1,8 +1,8 @@
 # Maintainer: Leo Mao <leomaoyw at gmail dot com>
+
 pkgname=python-apex-git
 _pkgname=apex
-_pkgver=0.1
-pkgver=0.1.r1035
+pkgver=22.03.r102.g21e41547
 pkgrel=1
 pkgdesc="A PyTorch Extension: Tools for easy mixed precision and distributed training in Pytorch"
 arch=('x86_64')
@@ -10,7 +10,7 @@ url="https://github.com/NVIDIA/apex"
 _github='NVIDIA/apex'
 license=('BSD')
 depends=('python' 'cuda' 'python-pytorch-cuda')
-makedepends=('git' 'python-pip')
+makedepends=('git' 'python-setuptools' 'python-pip')
 provides=('python-apex')
 conflicts=('python-apex')
 source=("git+$url")
@@ -18,11 +18,7 @@ sha256sums=('SKIP')
 
 pkgver () {
   cd "${_pkgname}"
-  (
-    set -o pipefail
-    rev=$(git rev-list --count HEAD 2>/dev/null)
-    echo $_pkgver.r$rev
-  )
+  git describe --tags | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
 }
 
 build() {
