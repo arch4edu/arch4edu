@@ -1,0 +1,6 @@
+post_install() {
+  echo "==> Now you need to export some Gazebo variables:"
+  echo "==> If you're using bash:"
+  echo "==>   echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc"
+  echo "==>   source ~/.bashrc"
+}
