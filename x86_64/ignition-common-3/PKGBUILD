@@ -1,0 +1,44 @@
+# Maintainer: Homalozoa <nx.tardis@gmail.com>
+
+pkgname=ignition-common-3
+pkgver=3.14.1
+pkgrel=1
+pkgdesc="A collection of useful classes and functions for handling many command tasks. This includes parsing 3D mesh files, managing console output, and using PID controllers."
+arch=('any')
+url="https://gazebosim.org/libs/common"
+license=('Apache')
+depends=('ignition-math>=6' 'tinyxml2' 'freeimage' 'libutil-linux' 'gts' 'ffmpeg')
+makedepends=('ignition-cmake>=2' 'util-linux')
+optdepends=()
+provides=("ignition-common=3")
+_url=https://github.com/gazebosim/gz-common
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-common/archive/ignition-common3_${pkgver}.tar.gz"
+        "missing-include-cstring.patch::https://github.com/gazebosim/gz-common/commit/465bb7780e552b278de559fafaffe3d061a99782.patch")
+sha256sums=('ec4d97ea408da6084dfcea8c605d846bef03df3cc97e361f167343167cfb5f0c'
+            '9a6f2d45a1c2146150336e25162f6ba46f19db1deb46b2b644a8faa3afe3d7af')
+
+_dir="gz-common-ignition-common3_${pkgver}"
+
+prepare() {
+  cd "$srcdir/$_dir"
+  patch -p1 < ../missing-include-cstring.patch
+}
+
+build() {
+  cd "$srcdir/$_dir"
+
+  mkdir -p build
+  cd build
+
+  cmake .. -DCMAKE_BUILD_TYPE="Release" \
+           -DCMAKE_INSTALL_PREFIX="/usr" \
+           -DCMAKE_INSTALL_LIBDIR="lib" \
+           -DBUILD_TESTING:BOOL=False
+
+  make
+}
+
+package() {
+  cd "$srcdir/$_dir/build"
+  make DESTDIR="$pkgdir/" install
+}
