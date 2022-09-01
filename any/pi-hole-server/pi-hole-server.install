@@ -1,0 +1,52 @@
+warning() {
+  echo -e "\e[1;33m==>\e[0m Ver. 3.2: \e[1;31mWeb servers configurations are changed.\e[0m Please follow WIKI instructions.\e[0m"
+}
+
+cache_problem() {
+  echo -e "\e[1;33m==>\e[0m If you suffer strange rendering issues in the web GUI, please clear your browser cache.\e[0m"
+}
+
+post_install() {
+  echo -e "\e[1;33m==>\e[0m Read setup instructions at \e[1;36mhttps://wiki.archlinux.org/index.php/Pi-hole\e[0m"
+  echo -e "\e[1;33m==>\e[0m Generating initial block list, please wait...\e[0m"
+
+  # permissions
+  chown -R http:http /srv/http/pihole
+  chown pihole:pihole /etc/pihole
+
+  /opt/pihole/mimic_setupVars.conf.sh
+
+  # update lists on first run
+  pihole -g > /dev/null
+
+  # setup dns server which by definition modifies /etc/dnsmasq.d/01-pihole.conf
+  # and thus protects it from getting overwritten by package updates
+  /usr/bin/pihole -a setdns 8.8.8.8,8.8.4.4 > /dev/null
+}
+
+post_upgrade() {
+  # clean old/unused/deprecated files
+  [ -e /etc/pihole/hosts ] && rm /etc/pihole/hosts
+  [ -e /etc/pihole/.useIPv6 ] && rm /etc/pihole/.useIPv6
+
+  # update owner of existing dir and file
+  chown pihole:pihole /etc/pihole
+  
+  # pihole version output improvement
+  grep -qxF 'INSTALL_WEB_INTERFACE=true' /etc/pihole/setupVars.conf || echo 'INSTALL_WEB_INTERFACE=true' >> /etc/pihole/setupVars.conf
+
+  # query logging disabling needs this
+  grep -qF 'QUERY_LOGGING=' /etc/pihole/setupVars.conf || echo 'QUERY_LOGGING=true' >> /etc/pihole/setupVars.conf
+
+  # warning
+  cache_problem
+
+  # keep pacman from throwing errors should none them be on the filesystem
+  return 0
+}
+
+post_remove() {
+  # delete all temp files except those modified the user
+  # TODO - make this more intelligent to save *.pacsave.# where # is a number
+  find /etc/pihole -type f ! -name '*.pacsave' ! -name 'pihole-FTL.conf' ! -name 'pihole-FTL.db' ! -name 'gravity.db' -delete
+}
