@@ -11,9 +11,8 @@ depends:
   - x86_64/ignition-common-3
   - x86_64/ignition-fuel_tools-4
   - x86_64/ignition-msgs-5
+  - pacman: jack2
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: |
-  aur-pre-build
-  download-pacman-package jack2
+pre_build: aur-pre-build
 post_build: aur-post-build
