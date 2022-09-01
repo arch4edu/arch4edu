@@ -3,10 +3,9 @@ nvchecker:
     aur:
 depends:
   - x86_64/glib2-static
-  - x86_64/pcre-static
-group: x86_64
+  - x86_64/pcre2-static
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed '/make ARFLAGS="rc"/ised "s/-flto=auto//g" -i build.ninja' -i PKGBUILD
+  add options "!lto"
 post_build: aur-post-build
