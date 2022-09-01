@@ -5,7 +5,5 @@ depends:
   - x86_64/flann
   - x86_64/openni2
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  download-pacman-package jdk-openjdk
+pre_build: aur-pre-build
 post_build: aur-post-build
