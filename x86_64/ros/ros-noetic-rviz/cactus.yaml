@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/ogre-1.9
   - x86_64/ros/ros-noetic-geometry-msgs
   - x86_64/ros/ros-noetic-image-transport
   - x86_64/ros/ros-noetic-interactive-markers
