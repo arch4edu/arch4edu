@@ -1,7 +1,7 @@
 nvchecker:
   - source: github
     github: arch4edu/devtools-arch4edu-extra
-build_prefix: extra-x86_64
+build_prefix: extra-aarch64
 pre_build: download-github-files arch4edu/devtools-arch4edu-extra PKGBUILD
 post_build: |
   git add PKGBUILD

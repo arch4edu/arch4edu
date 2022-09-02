@@ -29,7 +29,8 @@ group: x86_64
 
 # Prefix of the build command in devtools
 # Current available prefix:
-# extra-x86_64: for most x86_64 and aarch64 packages.
+# extra-x86_64: for most x86_64 and any packages.
+# extra-aarch64: for aarch64 packages.
 # multilib-x86_64: for x86_64 packages with 32-bit dependencies.
 build_prefix: extra-x86_64
 

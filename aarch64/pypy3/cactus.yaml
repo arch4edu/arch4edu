@@ -3,7 +3,7 @@ nvchecker:
     archpkg: pypy3
 makedepends:
   - aarch64/pypy-bin
-build_prefix: extra-x86_64
+build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: download-abs-snapshot
 post_build: |
