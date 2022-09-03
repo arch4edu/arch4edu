@@ -3,7 +3,7 @@
 # Contributor: Mykola Dolhyi <0xb000@gmail.com>
 # Contributor: Ramdambo <https://github.com/Ramdambo>
 pkgname=ignition-math
-pkgver=6.12.0
+pkgver=6.13.0
 pkgrel=1
 pkgdesc="Math classes and functions for robot applications"
 arch=('i686' 'x86_64')
@@ -13,7 +13,7 @@ depends=('gcc-libs' 'swig')
 makedepends=('ignition-cmake>=2' 'eigen')
 conflicts=()
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-math/archive/${pkgname}6_${pkgver}.tar.gz")
-sha256sums=("4a5da88a45da7763d4551866d0007d270a8ab5ae5bf67ea3f891fc6799c6d84f")
+sha256sums=("6b4a826a4fd25c8816126dfe41f65d805917f3b6488008155db97f2530b70739")
 
 _dir="gz-math-${pkgname}6_${pkgver}"
 
