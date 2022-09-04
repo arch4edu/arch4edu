@@ -2,7 +2,7 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-common-extensions
 _name=${pkgname:7}
-pkgver=0.2.1
+pkgver=0.3.0
 pkgrel=1
 pkgdesc="A meta package aggregating colcon-core as well as a set of common extensions."
 arch=(any)
@@ -28,7 +28,7 @@ depends=('python-yaml'
          'python-colcon-zsh')
 makedepends=('python-setuptools')
 source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('73af96598efc24748234d68c0f3a7419cb1e47a4c3c90f6b0d70bcffef034826')
+sha256sums=('84408d13f8a46044851a7a4e686749940539d2b3d02e6752746cbbc9a89049ff')
 
 
 package() {
