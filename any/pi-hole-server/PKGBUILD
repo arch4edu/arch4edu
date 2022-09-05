@@ -3,10 +3,10 @@
 
 pkgname=pi-hole-server
 _pkgname=pi-hole
-pkgver=5.11.4
-pkgrel=3
+pkgver=5.12
+pkgrel=1
 _wwwpkgname=AdminLTE
-_wwwpkgver=5.13
+_wwwpkgver=5.14.2
 _now=`date +%N`
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
@@ -41,10 +41,10 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	    piholeDebug.sh
 )
 
-sha256sums=('e24db53c63a6ea240f0852bd082b224dda91ad4fd049ab700c218b9672fc59cf'
-            '67d01bd4245024c9c6f9bf474bb17e8bde269ccc42ba4bb5a99da25632162c21'
-            '9a107608d20c12e74e1cbf08535fa4276c8dca5f83819ab5007ad5a8524c0d9e'
-            'bec680f715e697caeacc6b735d992b572728ef5a0e8b007d49b9efef6cded077'
+sha256sums=('f7809178605b1479d7fe295fd75ca1ddde3822f14431fe25108fc1d0677998f0'
+            '80b7e26951aa9566e0b86bd16ff7895a608bb6512e8ad8e2980a2c083bc47abf'
+            'cd58f8cd90b03e281ec9ed6fffb3b8ce5817ea59f3b05508d964d99a37c64590'
+            '408ad728c6c51bc9fe77b270b3450ba77b0c763c5dea392e857d082023977769'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             'f70964f8b176d9ffcf4f44140036f0cfc030cbbe836634a885da082cfee4d1f7'
             '032770450ba4a1085bcb0bf3f944c436c5702f3a3faf984fbbba2d3dbc6accea'
@@ -96,6 +96,7 @@ package() {
   install -Dm440 $_pkgname-$pkgver/advanced/Templates/pihole.sudo "$pkgdir"/etc/sudoers.d/pihole
   install -Dm644 $_pkgname-$pkgver/advanced/dnsmasq.conf.original "$pkgdir"/etc/dnsmasq.conf
   install -Dm644 dnsmasq.include "$pkgdir"/etc/dnsmasq.d/01-pihole.conf
+  install -Dm644 $_pkgname-$pkgver/advanced/06-rfc6761.conf "$pkgdir"/etc/dnsmasq.d/06-rfc6761.conf
 
   install -Dm644 pi-hole.tmpfile "$pkgdir"/usr/lib/tmpfiles.d/pi-hole.conf
 
@@ -122,7 +123,7 @@ package() {
   install -dm755 "$pkgdir"/srv/http/pihole/admin
   install -Dm644 $_pkgname-$pkgver/advanced/index.php "$pkgdir"/srv/http/pihole/pihole/index.php
 #  install -Dm644 $_pkgname-$pkgver/advanced/index.js "$pkgdir"/srv/http/pihole/pihole/index.js
-  install -Dm644 $_pkgname-$pkgver/advanced/blockingpage.css "$pkgdir"/srv/http/pihole/pihole/blockingpage.css
+#  install -Dm644 $_pkgname-$pkgver/advanced/blockingpage.css "$pkgdir"/srv/http/pihole/pihole/blockingpage.css
 
   cp -dpr --no-preserve=ownership $_wwwpkgname-$_wwwpkgver/* "$pkgdir"/srv/http/pihole/admin/
 
