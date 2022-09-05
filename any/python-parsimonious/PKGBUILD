@@ -2,7 +2,7 @@
 # Contributor: Wojciech Szymecki <w.szymecki-at-g;mail-com>
 
 pkgname=python-parsimonious
-pkgver=0.9.0
+pkgver=0.10.0
 pkgrel=1
 pkgdesc="Fast parser based on parsing expression grammars (PEGs)"
 arch=('any')
@@ -12,7 +12,7 @@ depends=('python-regex')
 makedepends=('python' 'python-build' 'python-installer' 'python-wheel'
              'python-setuptools')
 source=("$pkgname-$pkgver::https://github.com/erikrose/parsimonious/archive/$pkgver.tar.gz")
-sha256sums=('ed53ea31c9b2461c0ac607c03cdf216229ef33bab324e96ed140d450a3e0bdf9')
+sha256sums=('5fb1a5084d603e890d4fad10fd78ae10962a7a60810d18b2d723570dfd827055')
 
 _pkgname="parsimonious"
 
