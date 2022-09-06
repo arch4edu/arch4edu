@@ -6,10 +6,10 @@
 
 _pkgname=instantclient-sdk
 pkgname=oracle-${_pkgname}
-pkgver=21.6.0.0.0
+pkgver=21.7.0.0.0
 _pkgver_vendor_suffix=dbru
-_urlver=216000
-_unzippath=instantclient_21_6
+_urlver=217000
+_unzippath=instantclient_21_7
 pkgrel=1
 pkgdesc="Additional header files for developing Oracle applications with Instant Client"
 arch=('x86_64')
@@ -20,8 +20,8 @@ replaces=('instantclient-sdk')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('b3ef883359372ad8f9984ac1f23f282c')
-sha256sums=('3c531389456d92f23fc41750a3b04ea2b5a2a4dfb06356237f085e035b72671b')
+md5sums=('39e8abfa4e86140dfd269bb57aa0faae')
+sha256sums=('af85a772d23078ae24ea9fb025fa56707daedce7b154ea02ae7ee665583aeee2')
 
 package() {
 	# Put all .h files into /usr/include
