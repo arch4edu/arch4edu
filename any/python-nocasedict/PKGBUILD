@@ -3,7 +3,7 @@
 
 _name='nocasedict'
 pkgname="python-${_name}"
-pkgver='1.0.3'
+pkgver='1.0.4'
 pkgrel='1'
 pkgdesc='A case-insensitive ordered dictionary for Python'
 arch=('any')
@@ -12,7 +12,7 @@ depends=('python-six')
 makedepends=('python' 'python-setuptools' 'python-wheel')
 license=('GPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('f3314c02f4b9a0c194991c585d7e793e367e041a78efe0cbfc1a3d4362a91d5b')
+sha256sums=('f86fa6978ec715c9bdb832feb8d613443125fe06c27ec87a932c1758efaa7325')
 
 package() {
   cd "${srcdir}/${_name}-${pkgver}"
