@@ -2,7 +2,7 @@
 # Contributor: Myles English <myles at tdma dot co>
 
 pkgname=pastix
-pkgver=6.2.1
+pkgver=6.2.2
 pkgrel=1
 pkgdesc="High performance parallel solver for very large sparse linear systems based on direct methods"
 arch=('x86_64')
