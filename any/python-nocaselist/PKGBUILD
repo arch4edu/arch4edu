@@ -3,7 +3,7 @@
 
 _name='nocaselist'
 pkgname="python-${_name}"
-pkgver='1.0.5'
+pkgver='1.0.6'
 pkgrel='1'
 pkgdesc='A case-insensitive list for Python'
 arch=('any')
@@ -11,7 +11,7 @@ url="https://github.com/pywbem/${_name}"
 makedepends=('python' 'python-setuptools' 'python-wheel')
 license=('GPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('284d457eee27fe5320ed4149d672d651b55fc0f8aac51c950d615744d161b2b7')
+sha256sums=('c462290af329193c7e43613f947563c8f7165676e69c2a3fc71bddfea15d7033')
 
 package() {
   cd "${srcdir}/${_name}-${pkgver}"
