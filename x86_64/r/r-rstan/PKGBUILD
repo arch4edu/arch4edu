@@ -2,10 +2,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rstan
-_pkgver=2.21.5
+_pkgver=2.21.7
 pkgname=r-${_pkgname,,}
-pkgver=2.21.5
-pkgrel=3
+pkgver=2.21.7
+pkgrel=1
 pkgdesc='R Interface to Stan'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -41,7 +41,7 @@ optdepends=(
   r-v8
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('86e4fe562d8ddcd0b02336f35a420fa8786dd21de7ca2bebb4ed6e9c252bb9ea')
+sha256sums=('4495221310d390925b665c32e05ffabd3ae8857225bda65131a7ed2be41d6d45')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
