@@ -1,23 +1,23 @@
 # Maintainer: "Jan Kohnert <bughunter@jan-kohnert.de"
 # Contributor: Graziano Giuliani <graziano.giuliani@poste.it>
 pkgname=eccodes
-pkgver=2.25.0
+pkgver=2.27.0
 _attnum=45757960
 pkgrel=1
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
 arch=("i686" "x86_64")
-url="https://software.ecmwf.int/wiki/display/ECC/ecCodes+Home"
+url="https://confluence.ecmwf.int/display/ECC/ecCodes+Home"
 license=("Apache")
 depends=("openjpeg2" "netcdf")
-makedepends=("cmake" "gcc-fortran" "jasper")
+makedepends=("gcc-fortran" "cmake")
 conflicts=("grib_api" "libbufr-ecmwf")
 source=(
     "${pkgname}-${pkgver}-Source.tar.gz::https://confluence.ecmwf.int/download/attachments/${_attnum}/${pkgname}-${pkgver}-Source.tar.gz?api=v2"
-    "http://download.ecmwf.org/test-data/eccodes/eccodes_test_data.tar.gz"
+    "${pkgname}-${pkgver}-test-data.tar.gz::http://download.ecmwf.org/test-data/eccodes/eccodes_test_data.tar.gz"
 )
 sha512sums=(
-    "b6c675e9bb7377120ae0eb5f1601c3980925b78f240aa26e46cf50ce0d64c5566a4191c83b2ca6ab11fcbcadb70bad1f2c4e188adc245dcf2237292bd359078d"
-    "553eb69f3664c2f847c5ee7a84066e814ef03b3148ae2c13d845891038336daca815673650f1d06efee4f4a1ddaa4326f2ddfbe81d29382e3f25608b249b8d9e"
+    "b33d9a4b4abeaa2fae632fe6a4e19071769282c80b7f91f1aaa57f9908386b7c6bd842de69c4bb1b7da2bc3298b5248c808f5c94909033ef5c4a764ae85db5fa"
+    "0457878caad6a3395daf60e27cfb72121526065b0cf4da144c7499b8d38bebae0952ddbd20ef0eb53fad77ada60160039340da01001f19fbb7fb1ccbb3d0547a"
 )
     
 prepare() {
