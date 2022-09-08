@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=zip
-_pkgver=2.2.0
+_pkgver=2.2.1
 pkgname=r-${_pkgname,,}
-pkgver=2.2.0
-pkgrel=4
+pkgver=2.2.1
+pkgrel=1
 pkgdesc="Cross-Platform 'zip' Compression"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9f95987c964039834f770ecda2d5f7e3d3a9de553c89db2a5926c4219bf4b9d8')
+sha256sums=('14873d0874813139411c120d8b209af71e4e087871eeb963f235411eb1061422')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
