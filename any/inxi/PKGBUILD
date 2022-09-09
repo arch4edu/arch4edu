@@ -3,7 +3,7 @@
 # Contributor: Florian Pritz <f-p@gmx.at>
 
 pkgname=inxi
-_pkgver=3.3.20-1
+_pkgver=3.3.21-1
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Full featured CLI system information tool"
@@ -48,4 +48,3 @@ package() {
   install -D -m755 $pkgname "${pkgdir}/usr/bin/$pkgname"
   install -D -m644 $pkgname.1 "${pkgdir}/usr/share/man/man1/$pkgname.1"
 }
-
