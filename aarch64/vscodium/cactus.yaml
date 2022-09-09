@@ -5,5 +5,7 @@ makedepends:
   - any/nvm
 build_prefix: extra-aarch64
 makepkg_args: -A
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  add makedepends systemd-sysvcompat
 post_build: aur-post-build
