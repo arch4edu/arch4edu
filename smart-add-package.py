@@ -73,7 +73,7 @@ def load_provides():
     provides.update(read_provides('gtest'))
     provides.update(read_provides('dbus-python'))
     provides.update(read_provides('jdk-openjdk'))
-    provides.update(read_provides('python-sip4'))
+    #provides.update(read_provides('python-sip4'))
     return provides
 
 if __name__ == '__main__':
@@ -82,7 +82,7 @@ if __name__ == '__main__':
     from tornado.options import options
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--template', default='template/x86_64-simple.yaml', help='the template used to create cactus.yaml (default: template/x86_64-simple.yaml)')
+    parser.add_argument('--template', '-t', default='template/x86_64-simple.yaml', help='the template used to create cactus.yaml (default: template/x86_64-simple.yaml)')
     #parser.add_argument('--repository', default='.', help='path to the repository (default: current directory)')
     parser.add_argument('--nocheck', action="store_true", help='disable check and ignore checkdepends')
     parser.add_argument('package', help='the package to add (eg: yay)')
