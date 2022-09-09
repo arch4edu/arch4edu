@@ -7,9 +7,9 @@ _cranver=1.4.1
 pkgname=r-${_cranname,,}
 pkgdesc="Simple, Consistent Wrappers for Common String Operations"
 url="https://cran.r-project.org/package=${_cranname}"
-license=("GPLv2")
+license=("GPL2")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
