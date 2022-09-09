@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=scatterplot3d
-_pkgver=0.3-41
+_pkgver=0.3-42
 pkgname=r-${_pkgname,,}
-pkgver=0.3.41
-pkgrel=4
+pkgver=0.3.42
+pkgrel=1
 pkgdesc='3D Scatter Plot'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4c8326b70a3b2d37126ca806771d71e5e9fe1201cfbe5b0d5a0a83c3d2c75d94')
+sha256sums=('a9fedde70e1a846c4dcafbff20f115425206d507896d12c2b21ff052556c5216')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
