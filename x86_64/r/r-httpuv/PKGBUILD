@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=httpuv
-_cranver=1.6.5
+_cranver=1.6.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="HTTP and WebSocket Server Library"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -26,7 +26,7 @@ optdepends=(
     r-websocket
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('f5f63629ca5e9d0e396a89982d95b5286726c0cb425166f35a3ad32a60a79156')
+sha256sums=('41395fd324c5cb884d4f2a8060744758904119db22eeb312f2ea1e7ad7711293')
 
 prepare() {
   # build against system libuv
@@ -50,4 +50,6 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
 
   cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+
+  install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
