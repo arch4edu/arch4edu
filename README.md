@@ -17,3 +17,4 @@ Please visit the [wiki](../../wiki) site for more information.
 * A project to automatically update the package on AUR when there is a new version: [arch4edu/aur-auto-update](https://github.com/arch4edu/aur-auto-update)
 * Telegram channel: [@arch4edu](https://t.me/arch4edu)
 * Telegram group: [@arch4edu-general](https://t.me/arch4edu_general)
+* Matrix room: [#arch4edu-general:libera.chat](https://matrix.to/#/#arch4edu-general:libera.chat)
