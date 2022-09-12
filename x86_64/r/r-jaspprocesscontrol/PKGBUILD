@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspProcessControl
-_pkgver=0.16
+_pkgver=0.16.4
 pkgname=r-${_pkgname,,}
-pkgver=0.16
-pkgrel=2
+pkgver=0.16.4
+pkgrel=1
 pkgdesc="Quality Control Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
