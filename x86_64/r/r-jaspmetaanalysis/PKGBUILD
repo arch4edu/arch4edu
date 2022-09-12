@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspMetaAnalysis
-_pkgver=0.15
+_pkgver=0.16.4
 pkgname=r-${_pkgname,,}
-pkgver=0.15
-pkgrel=2
+pkgver=0.16.4
+pkgrel=1
 pkgdesc="Meta-Analysis Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
