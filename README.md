@@ -18,3 +18,4 @@ Please visit the [wiki](../../wiki) site for more information.
 * Telegram channel: [@arch4edu](https://t.me/arch4edu)
 * Telegram group: [@arch4edu-general](https://t.me/arch4edu_general)
 * Matrix room: [#arch4edu-general:libera.chat](https://matrix.to/#/#arch4edu-general:libera.chat)
+* IRC channel: #arch4edu-general on irc.libera.chat
