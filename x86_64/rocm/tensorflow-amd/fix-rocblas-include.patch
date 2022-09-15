@@ -1,0 +1,36 @@
+diff -r -u a/tensorflow/core/util/gpu_solvers.h b/tensorflow/core/util/gpu_solvers.h
+--- a/tensorflow/core/util/gpu_solvers.h	2022-08-13 22:09:50.429250747 +0200
++++ b/tensorflow/core/util/gpu_solvers.h	2022-08-13 23:39:06.336527162 +0200
+@@ -33,7 +33,7 @@
+ #else
+ #include "rocm/rocm_config.h"
+ #include "rocm/include/hip/hip_complex.h"
+-#include "rocm/include/rocblas.h"
++#include "rocm/include/rocblas/rocblas.h"
+ #include "tensorflow/stream_executor/blas.h"
+ #if TF_ROCM_VERSION >= 40500
+ #include "tensorflow/stream_executor/rocm/hipsolver_wrapper.h"
+diff -r -u a/tensorflow/stream_executor/rocm/rocblas_wrapper.h b/tensorflow/stream_executor/rocm/rocblas_wrapper.h
+--- a/tensorflow/stream_executor/rocm/rocblas_wrapper.h	2022-08-13 22:09:50.769248881 +0200
++++ b/tensorflow/stream_executor/rocm/rocblas_wrapper.h	2022-08-13 23:39:06.339860477 +0200
+@@ -20,7 +20,7 @@
+ #ifndef TENSORFLOW_STREAM_EXECUTOR_ROCM_ROCBLAS_WRAPPER_H_
+ #define TENSORFLOW_STREAM_EXECUTOR_ROCM_ROCBLAS_WRAPPER_H_
+ 
+-#include "rocm/include/rocblas.h"
++#include "rocm/include/rocblas/rocblas.h"
+ #include "tensorflow/stream_executor/gpu/gpu_activation.h"
+ #include "tensorflow/stream_executor/lib/env.h"
+ #include "tensorflow/stream_executor/platform/dso_loader.h"
+diff -r -u a/tensorflow/stream_executor/rocm/rocm_blas.h b/tensorflow/stream_executor/rocm/rocm_blas.h
+--- a/tensorflow/stream_executor/rocm/rocm_blas.h	2022-08-13 22:09:50.769248881 +0200
++++ b/tensorflow/stream_executor/rocm/rocm_blas.h	2022-08-13 23:39:06.339860477 +0200
+@@ -21,7 +21,7 @@
+ #define TENSORFLOW_STREAM_EXECUTOR_ROCM_ROCM_BLAS_H_
+ 
+ #include "absl/synchronization/mutex.h"
+-#include "rocm/include/rocblas.h"
++#include "rocm/include/rocblas/rocblas.h"
+ #include "tensorflow/core/platform/thread_annotations.h"
+ #include "tensorflow/stream_executor/blas.h"
+ #include "tensorflow/stream_executor/platform/port.h"

@@ -1,0 +1,11 @@
+--- config-old.h	2021-06-13 04:22:15.841839739 +0200
++++ config.h	2021-06-13 04:22:32.308939638 +0200
+@@ -533,7 +533,7 @@
+ #ifdef __has_include
+ #if __has_include(<string_view>) && defined(__cplusplus) && \
+     __cplusplus >= 201703L
+-#define ABSL_HAVE_STD_STRING_VIEW 1
++// #define ABSL_HAVE_STD_STRING_VIEW 1
+ #endif
+ #endif
+ 
