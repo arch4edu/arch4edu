@@ -11,13 +11,13 @@ _autofirewall=n
 ### END BUILD OPTIONS
 
 pkgname=nomachine
-pkgver=7.10.1
-_pkgvermain=7.10
-_pkgrel_i686=1
-_pkgrel_x86_64=1
-_pkgrel_armv6h=1
-_pkgrel_armv7h=1
-_pkgrel_armv8h=1
+pkgver=8.0.168
+_pkgvermain=8.0
+_pkgrel_i686=2
+_pkgrel_x86_64=2
+_pkgrel_armv6h=3
+_pkgrel_armv7h=3
+_pkgrel_armv8h=3
 _pkgrel_aarch64=${_pkgrel_armv8h}
 _pkgrel_pentium4=${_pkgrel_i686}
 pkgrel=1
@@ -29,13 +29,13 @@ options=('!strip')
 conflicts=('nxmanager' 'nxwebplayer' 'nxserver' 'nxnode' 'nxclient')
 depends=('bash' 'openssh' 'nawk')
 optdepends=('xorg-xauth: allows logging into a headless machine')
-sha512sums_x86_64=('359808a6088ac2ef201a8fc6718cb2f1df1160a182af6c60847e9ad88848c9a92e05ee8d53c8ec3e25195e2ff9e0505b4bef1d4981fd0ab9c7683a6d6919b391')
-sha512sums_i686=('a8c7daca41829aa2d7cc0a564749ea1a29475726e9a4821f8d981adc9548d0fce31ee30b2a09d8a4a5a158ddd4719daacb8b30507fe4ee330283b4ab01f68bfe')
-sha512sums_armv6h=('398951b483dec701d3c7dc704f7e91ab37e9bc6a605e60db98e68ddda0215a162cc84925b0f3c75bf1443260d12ea31866a32fc3616b16630285d637488c3893')
-sha512sums_armv7h=('bdd1ef6415fce58330ea89000e4e78babe61b5dfb783b1fe7cb1bd33972566ca6830d6ae45a029e2ee5e22475f13874b3bfe53d973871709040f9e6eadea4f75')
-sha512sums_armv8h=('4450599a40e74d9060651a46ad066389dae0a693d8c229b3f0422fe143beafd086a9f8c908244c7519419d9d38fdfaafa9d9e2a89b0fb3cea782bbc18de0fed3')
-sha512sums_aarch64=('4450599a40e74d9060651a46ad066389dae0a693d8c229b3f0422fe143beafd086a9f8c908244c7519419d9d38fdfaafa9d9e2a89b0fb3cea782bbc18de0fed3')
-sha512sums_pentium4=('a8c7daca41829aa2d7cc0a564749ea1a29475726e9a4821f8d981adc9548d0fce31ee30b2a09d8a4a5a158ddd4719daacb8b30507fe4ee330283b4ab01f68bfe')
+sha512sums_x86_64=('2050466b4adda632e341468b7a51315e426c6d6bfc86bc40de17096e8704785f11a691c955e25c4119e72a6e786972091d54b137eda2475de31f714e87872538')
+sha512sums_i686=('21fd05dfcdb71c30eaddfd65dc921fd9e5f7de0d886a063de08b89bd06c574c420afbca35aa38033bb038a0b8ae20f60be82d03d83fd626e74a025fd480da83c')
+sha512sums_armv6h=('234f82c0b8205109bccefb8804afe662c402e5e2fe9a4827f573386c77520b32591c08b90303e2c0e16f1891c2fae7e6529880cc63efef1f39d5e9b00bce9e30')
+sha512sums_armv7h=('a762b1501256f51e5414fbae770ad1a0dca48192a409a2229a74f6657fc2845af09876c35ead003535e3f2f77951365af7a0b4852bc11771f15192dfd12d832d')
+sha512sums_armv8h=('723b9bda54540f77c172990f753cdfa798917cec1d09812b48e905558f77b9029e83b5e5f3cce92f28d96550274d4560f6ddfa89862216f19c12f3c0a62a8f1a')
+sha512sums_aarch64=('723b9bda54540f77c172990f753cdfa798917cec1d09812b48e905558f77b9029e83b5e5f3cce92f28d96550274d4560f6ddfa89862216f19c12f3c0a62a8f1a')
+sha512sums_pentium4=('21fd05dfcdb71c30eaddfd65dc921fd9e5f7de0d886a063de08b89bd06c574c420afbca35aa38033bb038a0b8ae20f60be82d03d83fd626e74a025fd480da83c')
 source_x86_64=("http://download.nomachine.com/download/${_pkgvermain}/Linux/${pkgname}_${pkgver}_${_pkgrel_x86_64}_x86_64.tar.gz")
 source_i686=("http://download.nomachine.com/download/${_pkgvermain}/Linux/${pkgname}_${pkgver}_${_pkgrel_i686}_i686.tar.gz")
 source_armv6h=("http://download.nomachine.com/download/${_pkgvermain}/Raspberry/${pkgname}_${pkgver}_${_pkgrel_armv6h}_armv6hl.tar.gz")
@@ -48,17 +48,17 @@ install=nomachine.install
 prepare()
 {
 #Fix Fedora Version Var And Libstdc++ Rename
-tar -zxf "$srcdir/NX/etc/NX/server/packages/nxclient.tar.gz" NX/scripts/setup/nxclient
-sed -i 's/    majorFedoraVersion.*/    majorFedoraVersion=23/' "$srcdir/NX/scripts/setup/nxclient"
-tar -zxf "$srcdir/NX/etc/NX/server/packages/nxclient.tar.gz" "NX/lib/"
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxrunner.tar.gz" NX/scripts/setup/nxrunner
+sed -i 's/    majorFedoraVersion.*/    majorFedoraVersion=23/' "$srcdir/NX/scripts/setup/nxrunner"
+tar -zxf "$srcdir/NX/etc/NX/server/packages/nxrunner.tar.gz" "NX/lib/"
 for _libstdc in "$srcdir/NX/lib/"libstdc++.*; do
 mv "${_libstdc}" ${_libstdc}.nomachine
 done
-gzip -d "$srcdir/NX/etc/NX/server/packages/nxclient.tar.gz"
-tar -rf "$srcdir/NX/etc/NX/server/packages/nxclient.tar" NX/scripts/setup/nxclient -C "$srcdir/NX/scripts/setup/nxclient"
-tar --delete -f "$srcdir/NX/etc/NX/server/packages/nxclient.tar" "NX/lib/"
-tar -rf "$srcdir/NX/etc/NX/server/packages/nxclient.tar" "NX/lib/" -C "$srcdir/NX/lib/"
-gzip "$srcdir/NX/etc/NX/server/packages/nxclient.tar"
+gzip -d "$srcdir/NX/etc/NX/server/packages/nxrunner.tar.gz"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxrunner.tar" NX/scripts/setup/nxrunner -C "$srcdir/NX/scripts/setup/nxrunner"
+tar --delete -f "$srcdir/NX/etc/NX/server/packages/nxrunner.tar" "NX/lib/"
+tar -rf "$srcdir/NX/etc/NX/server/packages/nxrunner.tar" "NX/lib/" -C "$srcdir/NX/lib/"
+gzip "$srcdir/NX/etc/NX/server/packages/nxrunner.tar"
 rm -fr "$srcdir/NX/scripts"*
 rm -fr "$srcdir/NX/lib"*
 #Change Automatic Service Start And/Or Firewall Automatic Rules If Apply
