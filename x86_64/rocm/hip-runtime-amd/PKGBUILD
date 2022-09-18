@@ -2,13 +2,13 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-runtime-amd
 pkgver=5.2.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
 license=('MIT')
 depends=('mesa' 'comgr' 'rocminfo' 'rocm-llvm' 'libelf')
-makedepends=('cmake' 'python' 'git')
+makedepends=('cmake' 'python')
 provides=('hip')
 conflicts=('hip')
 _hip='https://github.com/ROCm-Developer-Tools/HIP'
@@ -39,37 +39,25 @@ prepare() {
 }
 
 build() {
-  local cmake_args=(-DHIP_COMMON_DIR="$srcdir/$_dirhip"
-                    -DHIP_COMMON_DIR="$srcdir/$_dirhip"
-                    -DAMD_OPENCL_PATH="$srcdir/$_diropencl"
-                    -DROCCLR_PATH="$srcdir/$_dirrocclr"
-                    -DHIP_PLATFORM=amd
-                    -DCMAKE_INSTALL_PREFIX=/opt/rocm)
-  if [[ -n "$AMDGPU_TARGETS" ]]; then
-      cmake_args+=(-DAMDGPU_TARGETS="${AMDGPU_TARGETS}")
-  fi
-
   # build fails if cmake and make are called from outside the build directory
   mkdir build && cd build
-  cmake -Wno-dev \
-  -S "$srcdir/$_dirhipamd" \
-  "${cmake_args[@]}"
+  cmake \
+    -Wno-dev \
+    -S "$srcdir/$_dirhipamd" \
+    -DHIP_COMMON_DIR="$srcdir/$_dirhip" \
+    -DHIP_COMMON_DIR="$srcdir/$_dirhip" \
+    -DAMD_OPENCL_PATH="$srcdir/$_diropencl" \
+    -DROCCLR_PATH="$srcdir/$_dirrocclr" \
+    -DHIP_PLATFORM=amd \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm
 
-  make
+  cmake --build .
 }
 
 package() {
-  DESTDIR="$pkgdir" make -C build install
+  DESTDIR="$pkgdir" cmake --install build
 
-  # add links (hipconfig is for rocblas with tensile)
-  install -d "$pkgdir/usr/bin"
-  local _fn
-  for _fn in hipcc hipconfig hipcc.pl hipconfig.pl; do
-    ln -s "/opt/rocm/hip/bin/$_fn" "$pkgdir/usr/bin/$_fn"
-  done
-
-  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/hip.conf" <<EOF
-/opt/rocm/hip/lib
-EOF
   install -Dm644 "$srcdir/HIP-rocm-$pkgver/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  echo '/opt/rocm/hip/lib' > "$pkgname.conf"
+  install -Dm644 "$pkgname.conf" "$pkgdir/etc/ld.so.conf.d/$pkgname.conf"
 }
