@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=zoo
-_cranver=1.8-10
+_cranver=1.8-11
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -15,7 +15,6 @@ optdepends=(
     r-aer
     r-coda
     r-chron
-    r-fts
     r-ggplot2
     r-mondate
     r-scales
@@ -28,7 +27,7 @@ optdepends=(
     r-xts
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('c9a282d8004c22651c4fa1d657d3cad946c5ec55c4dc068569d860ee9b31ed47')
+sha256sums=('848e50f875afe06f13422e32160082b0725159a8be98234ef358480e57029ca5')
 
 build() {
   mkdir -p build
