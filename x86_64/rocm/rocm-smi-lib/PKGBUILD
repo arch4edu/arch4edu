@@ -3,15 +3,12 @@
 
 pkgname=rocm-smi-lib
 pkgver=5.2.3
-pkgrel=1
+pkgrel=2
 pkgdesc='ROCm System Management Interface Library'
 arch=('x86_64')
-url="https://github.com/RadeonOpenCompute/rocm_smi_lib"
+url='https://github.com/RadeonOpenCompute/rocm_smi_lib'
 license=('custom:NCSAOSL')
 depends=('hsa-rocr')
-provides=("rocm-smi-lib64=$pkgver")
-replaces=('rocm-smi-lib64')
-conflicts=('rocm-smi-lib64')
 makedepends=('cmake' 'doxygen' 'texlive-latexextra')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/RadeonOpenCompute/rocm_smi_lib/archive/rocm-$pkgver.tar.gz"
         'missing_string_header.patch::https://patch-diff.githubusercontent.com/raw/RadeonOpenCompute/rocm_smi_lib/pull/107.patch'
@@ -28,14 +25,16 @@ prepare() {
 
 build() {
   # build type Release fixes warnings regarding FORTIFY_SOURCE
-  cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm \
-        -DCMAKE_BUILD_TYPE=Release \
-        -S "$_dirname" \
-        -B build
-  make -C build
+  cmake \
+    -Wno-dev \
+    -B build \
+    -S "$_dirname" \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+    -DCMAKE_BUILD_TYPE=Release
+  cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" make -C build install
+  DESTDIR="$pkgdir" cmake --install build
   install -Dm644 "$srcdir/$_dirname/License.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
