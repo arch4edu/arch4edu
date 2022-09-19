@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: archpkg
+    archpkg: boost
+depends:
+  - x86_64/python-fenics-ffcx
+  - x86_64/parmetis
+  - x86_64/petsc-complex
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
