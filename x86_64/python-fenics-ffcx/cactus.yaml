@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - x86_64/python-fenics-ufl
   - x86_64/python-fenics-basix
