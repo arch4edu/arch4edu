@@ -73,6 +73,7 @@ def load_provides():
     provides.update(read_provides('gtest'))
     provides.update(read_provides('dbus-python'))
     provides.update(read_provides('jdk-openjdk'))
+    provides.update(read_provides('jre-openjdk'))
     #provides.update(read_provides('python-sip4'))
     return provides
 
