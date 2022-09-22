@@ -1,7 +1,7 @@
 Arch Linux Repository for Education
 ========
 <img src="https://user-images.githubusercontent.com/5357170/190665575-63de1ab1-6a26-4dc9-a4aa-07a9e11abff2.png" width="125"/>
-Making your Arch Linux better for researching and developing.
+Making your Arch Linux better for learning and researching.
 
 ### Introduction
 
