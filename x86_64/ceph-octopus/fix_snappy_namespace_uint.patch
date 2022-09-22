@@ -1,0 +1,12 @@
+diff -upr a/src/compressor/snappy/SnappyCompressor.h b/src/compressor/snappy/SnappyCompressor.h
+--- a/src/compressor/snappy/SnappyCompressor.h	2021-08-05 19:11:54.000000000 +0200
++++ b/src/compressor/snappy/SnappyCompressor.h	2021-09-01 17:38:35.488609568 +0200
+@@ -96,7 +96,7 @@ class SnappyCompressor : public Compress
+     if (qat_enabled)
+       return qat_accel.decompress(p, compressed_len, dst);
+ #endif
+-    snappy::uint32 res_len = 0;
++    std::uint32_t res_len = 0;
+     BufferlistSource source_1(p, compressed_len);
+     if (!snappy::GetUncompressedLength(&source_1, &res_len)) {
+       return -1;

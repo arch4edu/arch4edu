@@ -1,0 +1,11 @@
+--- a/src/pybind/mgr/dashboard/tox.ini	2019-12-06 17:42:34.000000000 +0100
++++ c/src/pybind/mgr/dashboard/tox.ini	2020-01-03 15:25:30.074706391 +0100
+@@ -20,7 +20,7 @@ commands=
+     py27: pip install -r {toxinidir}/requirements-py27.txt
+     py3: pip install -r {toxinidir}/requirements-py3.txt
+     cov: coverage erase
+-    cov: {envbindir}/py.test --cov=. --cov-report= --junitxml=junit.{envname}.xml --doctest-modules controllers services/ tests/ tools.py
++    cov: {envbindir}/py.test --cov=. --cov-report= --junitxml=junit.{envname}.xml --ignore=frontend/ --doctest-modules controllers services/ tests/ tools.py
+     cov: coverage combine {toxinidir}/{env:COVERAGE_FILE}
+     cov: coverage report
+     cov: coverage xml

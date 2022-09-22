@@ -1,0 +1,18 @@
+--- a/src/pybind/mgr/dashboard/controllers/health.py	2020-11-17 19:12:53.000000000 +0100
++++ b/src/pybind/mgr/dashboard/controllers/health.py	2020-11-22 22:13:44.115751086 +0100
+@@ -11,10 +11,14 @@
+ from ..services.ceph_service import CephService
+ from ..services.iscsi_cli import IscsiGatewaysConfig
+ from ..services.iscsi_client import IscsiClient
+-from ..tools import partial_dict
++#from ..tools import partial_dict
+ from .host import get_hosts
+ 
+ 
++def partial_dict(orig, keys):
++    return {k: orig[k] for k in keys}
++
++
+ class HealthData(object):
+     """
+     A class to be used in combination with BaseController to allow either

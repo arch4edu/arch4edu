@@ -1,0 +1,35 @@
+--- a/src/compressor/zstd/ZstdCompressor.h	2019-04-25 20:15:48.000000000 +0200
++++ b/src/compressor/zstd/ZstdCompressor.h	2019-07-17 19:11:33.177014923 +0200
+@@ -16,7 +16,7 @@
+ #define CEPH_ZSTDCOMPRESSOR_H
+ 
+ #define ZSTD_STATIC_LINKING_ONLY
+-#include "zstd/lib/zstd.h"
++#include <zstd.h>
+ 
+ #include "include/buffer.h"
+ #include "include/encoding.h"
+@@ -30,7 +30,13 @@ class ZstdCompressor : public Compressor
+ 
+   int compress(const bufferlist &src, bufferlist &dst) override {
+     ZSTD_CStream *s = ZSTD_createCStream();
+-    ZSTD_initCStream_srcSize(s, COMPRESSION_LEVEL, src.length());
++
++    // ZSTD_initCStream_srcSize(s, COMPRESSION_LEVEL, src.length());
++    ZSTD_CCtx_reset(s, ZSTD_reset_session_only);
++    ZSTD_CCtx_refCDict(s, NULL); // clear the dictionary (if any)
++    ZSTD_CCtx_setParameter(s, ZSTD_c_compressionLevel, COMPRESSION_LEVEL);
++    ZSTD_CCtx_setPledgedSrcSize(s, src.length());
++
+     auto p = src.begin();
+     size_t left = src.length();
+ 
+@@ -48,7 +54,7 @@ class ZstdCompressor : public Compressor
+       inbuf.size = p.get_ptr_and_advance(left, (const char**)&inbuf.src);
+       left -= inbuf.size;
+       ZSTD_EndDirective const zed = (left==0) ? ZSTD_e_end : ZSTD_e_continue;
+-      size_t r = ZSTD_compress_generic(s, &outbuf, &inbuf, zed);
++      size_t r = ZSTD_compressStream2(s, &outbuf, &inbuf, zed);
+       if (ZSTD_isError(r)) {
+ 	return -EINVAL;
+       }
