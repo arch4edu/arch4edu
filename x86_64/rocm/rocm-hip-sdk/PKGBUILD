@@ -5,10 +5,10 @@
 pkgname=rocm-hip-sdk
 _pkgver_major=5
 _pkgver_minor=2
-_pkgver_patch=1
-_pkgver_magic=79
+_pkgver_patch=3
+_pkgver_magic=109
 pkgver=$_pkgver_major.$_pkgver_minor.$_pkgver_patch
-pkgrel=2
+pkgrel=1
 pkgdesc="Develop applications using HIP and libraries for AMD platforms"
 arch=('x86_64')
 url="https://rocm-documentation.readthedocs.io/en/latest/"
@@ -36,7 +36,7 @@ depends=(
 )
 makedepends=()
 source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/${pkgver}/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)-${_pkgver_magic}_amd64.deb")
-sha256sums=('b39ad15eaf503d2385c47022aa531b0e3bdc015f73791228ada8e7ea8f37cb6c')
+sha256sums=('580d152a8bab21e8706a4bee0a8f356d08f97466f1dc89d6c8982b1b431904f1')
 
 
 package() {
