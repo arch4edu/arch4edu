@@ -4,8 +4,8 @@
 pkgname=rocm-language-runtime
 _pkgver_major=5
 _pkgver_minor=2
-_pkgver_patch=1
-_pkgver_magic=79
+_pkgver_patch=3
+_pkgver_magic=109
 pkgver=$_pkgver_major.$_pkgver_minor.$_pkgver_patch
 pkgrel=1
 pkgdesc="ROCr - ROCm runtime"
@@ -15,8 +15,7 @@ license=()
 depends=('rocm-core' 'hsakmt-roct' 'hsa-rocr' 'rocm-device-libs' 'comgr')
 makedepends=()
 source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/${pkgver}/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)-${_pkgver_magic}_amd64.deb")
-sha256sums=('002e13c67100e5e8027c327059e60f10b4f6f3d0ac824a210aedd1ffae7a775a')
-
+sha256sums=('61a68c15e6ee63e39eadcf3c00cbe4f6e6ba60af502269dc4e809353b20bba53')
 
 package() {
     tar -xf data.tar.gz
