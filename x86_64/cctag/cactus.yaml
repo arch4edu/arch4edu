@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 makedepends:
   - x86_64/gcc10: gcc10
   - x86_64/gcc10: gcc10-libs
