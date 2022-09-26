@@ -3,7 +3,7 @@
 
 pkgname=sge
 pkgver=8.1.9
-pkgrel=7
+pkgrel=8
 epoch=1
 pkgdesc="The Son of Grid Engine is a community project to continue Sun's old gridengine."
 arch=('x86_64')
@@ -16,10 +16,10 @@ depends=(
 	'libtirpc'
 	'openmotif'
 	'openssl-1.0'
-	'python2'
+	'python'
 	'tcsh'
 )
-makedepends=('make')
+makedepends=(inetutils make)
 install=${pkgname}.install
 source=(
 	#"https://arc.liv.ac.uk/downloads/SGE/releases/${pkgver}/${pkgname}_${pkgver}.tar.xz"
@@ -38,7 +38,7 @@ prepare() {
 
 	sed 's/} drmaa2_\(dict\|list\)_s;/};/g' -i source/libs/japi/drmaa2_list_dict.h
 
-	sed '1s/python$/python2/' -i source/dist/util/resources/{jsv/jsv,monitoring/check_sge}.py
+	2to3 -w .
 
 	sed '/AddSGEStartUpScript/s/^/#/' -i source/dist/inst_sge
 
@@ -60,7 +60,7 @@ build() {
 
 	export SGE_INPUT_CFLAGS='-I/usr/include/tirpc -I/usr/include/openssl-1.0'
 	export SGE_INPUT_LDFLAGS='-ltirpc -L/usr/lib/openssl-1.0 -lssl -lcrypto'
-	flags='-no-java -no-jni'
+	flags='-no-java -no-jni -parallel 1'
 
 	scripts/bootstrap.sh $flags
 	./aimk $flags
