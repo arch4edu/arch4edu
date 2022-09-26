@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=metamisc
-_pkgver=0.2.5
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
-pkgver=0.2.5
-pkgrel=6
+pkgver=0.4.0
+pkgrel=1
 pkgdesc='Meta-Analysis of Diagnosis and Prognosis Research Studies'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,7 +28,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('11684457c59a6ceb97159e591aa71b89b063ae7518f325bacc379293b598e6b9')
+sha256sums=('4a43832dcc232acd1da963d0113396af42c388d7763a8a3ad8479d68efdccd8b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
