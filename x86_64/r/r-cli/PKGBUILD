@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=cli
-_cranver=3.4.0
+_cranver=3.4.1
 pkgname=r-${_cranname,,}
 pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -25,10 +25,10 @@ optdepends=(
     "r-knitr"
     "r-mockery"
     "r-processx"
-    "r-projroot"
     "r-ps>=1.3.4.9000"
     "r-rlang>=1.0.2.9003"
     "r-rmarkdown"
+    "r-rprojroot"
     "r-rstudioapi"
     "r-testthat"
     "r-tibble"
@@ -38,7 +38,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("83ca81c0331c03bf203f101359e2020f1bc3e65ec9221582044012116731e943a6777d31a0db5b5b1513c56c1f1bb3d54486bd91804573d748d6fded131800a7")
+b2sums=("070fe513cb627291e076a5e620816f659a6b25ae64bd8777d31d57f1890ee65d794a5500b1e255461abaf8b5ee8b2ccdece40ccb64a389a972d96d257fb93a74")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
