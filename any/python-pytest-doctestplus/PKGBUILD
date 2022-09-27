@@ -3,7 +3,7 @@ pkgbase=python-pytest-doctestplus
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.12.0
+pkgver=0.12.1
 pkgrel=1
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('any')
@@ -11,12 +11,12 @@ url="https://github.com/astropy/pytest-doctestplus"
 license=('BSD')
 makedepends=('python-setuptools-scm' 'python-wheel' 'python-build' 'python-installer')
 #'python-sphinx')
-checkdepends=('python-pytest-remotedata')
+checkdepends=('python-pytest-remotedata' 'python-numpy')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('5b8de28bddb27303480a303b171e25a3')
+md5sums=('e85de9d8826d5e10712948994e1ab3c9')
 
-prepare() {
-    export _pyver=$(python -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+get_pyver() {
+    python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
 }
 
 build() {
@@ -30,10 +30,9 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    export _pyver=$(python -c 'import sys; print("%d.%d" % sys.version_info[:2])')
     ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
-        build/lib/${_pyname/-/_}-${pkgver}-py${_pyver}.egg-info
-    PYTHONPATH="build/lib" pytest || warning "Tests failed"
+        build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
+    PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv --color=yes
 }
 
 package_python-pytest-doctestplus() {
