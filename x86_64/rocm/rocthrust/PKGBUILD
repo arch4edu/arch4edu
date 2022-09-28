@@ -2,7 +2,7 @@
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocthrust
 pkgver=5.2.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Port of the Thrust parallel algorithm library atop HIP/ROCm'
 arch=('x86_64')
 url='https://docs.amd.com/bundle/rocTHRUST_API_Guide/page/index.html'
@@ -17,14 +17,18 @@ _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 build() {
   # -fcf-protection is not supported by HIP, see
   # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
-  CXX=/opt/rocm/bin/hipcc \
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
-  cmake -Wno-dev -S "$_dirname" \
-        -DCMAKE_INSTALL_PREFIX=/opt/rocm \
-        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
-        -DBUILD_TEST=OFF
+  cmake \
+    -Wno-dev \
+    -S "$_dirname" \
+    -B build \
+    -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+    -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr \
+    -DBUILD_TEST=OFF
+  cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" make install
+  DESTDIR="$pkgdir" cmake --install build
 }
