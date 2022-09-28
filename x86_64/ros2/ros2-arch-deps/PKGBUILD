@@ -3,8 +3,8 @@
 # Contributor: leuko
 # Contributor: calvertdw
 pkgname=ros2-arch-deps
-pkgver=0.10
-pkgrel=2
+pkgver=0.11
+pkgrel=1
 pkgdesc="Dependencies for building ROS2 on Arch"
 url="https://index.ros.org/doc/ros2/"
 arch=('any')
@@ -34,7 +34,7 @@ depends=('asio'
          'python-pyqt5'
          'python-pytest-repeat'
          'python-setuptools'
-         'python-sip'
+         'python-sip4'
          'python-yaml'
          'qt5-base' 
          'qt5-svg'
