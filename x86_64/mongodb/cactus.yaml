@@ -2,7 +2,6 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/python-cheetah3
   - x86_64/mongodb-tools
 build_prefix: extra-x86_64
 pre_build: |
