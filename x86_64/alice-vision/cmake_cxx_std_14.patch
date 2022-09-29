@@ -1,0 +1,12 @@
+diff --git a/src/cmake/Helpers.cmake b/src/cmake/Helpers.cmake
+index 9c6f192a9..6a2084460 100644
+--- a/src/cmake/Helpers.cmake
++++ b/src/cmake/Helpers.cmake
+@@ -85,6 +85,7 @@ function(alicevision_add_library library_name)
+     RUNTIME
+         DESTINATION ${CMAKE_INSTALL_BINDIR}
+   )
++    target_compile_features(${library_name} PUBLIC cxx_std_14)
+ endfunction()
+ 
+ # Add interface function

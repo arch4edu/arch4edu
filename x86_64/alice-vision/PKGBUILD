@@ -1,0 +1,147 @@
+#!/hint/bash
+# Maintainer : bartus <arch-user-repoᘓbartus.33mail.com>
+
+# Configuration:
+# Use: makepkg VAR1=0 VAR2=1 to enable(1) disable(0) a feature
+# Use: {yay,paru} --mflags=VAR1=0,VAR2=1
+# Use: aurutils --margs=VAR1=0,VAR2=1
+# Use: VAR1=0 VAR2=1 pamac
+
+# Use CUDA_ARCH to build for specific GPU architecture
+# Supports: single arch (52) and list of archs (52;60)
+
+[[ -v CUDA_ARCH ]] && _cuda_arch="-DALICEVISION_CUDA_CC_LIST=${CUDA_ARCH}"
+
+# Use CMAKE_FLAGS=xxx:yyy:zzz to define extra CMake flags
+[[ -v CMAKE_FLAGS ]] && mapfile -t -d: _CMAKE_FLAGS < <(echo -n "$CMAKE_FLAGS")
+
+
+((DISABLE_CUDA))    && eval DISABLE_{CCTAG,POPSIFT,UTE}=1   # Disable other components that requires cuda
+((DISABLE_OPENCV))  && DISABLE_CCTAG=1                      # CCTag requires OpenCV
+((DISABLE_CUDA))    &&    _use_cuda=OFF ||    _use_cuda=ON  # Alow user to build without cuda
+((DISABLE_CCTAG))   &&   _use_cctag=OFF ||   _use_cctag=ON  # Disable CCTag (require: cuda)
+((DISABLE_POPSIFT)) && _use_popsift=OFF || _use_popsift=ON  # Disable Popsift (requires: cuda)
+((DISABLE_UTE))     &&     _use_ute=OFF ||     _use_ute=ON  # Disable Uncertainty computation (require: cuda)
+((DISABLE_ALEMBIC)) && _use_alembic=OFF || _use_alembic=ON  # Disable Alembic (mesh export format)
+((DISABLE_OPENGV))  &&  _use_opengv=OFF ||  _use_opengv=ON  # Disable OpenGV (camera calibration)
+((DISABLE_OPENCV))  &&  _use_opencv=OFF ||  _use_opencv=ON  # Disable OpenCV (examples & CCTag dependency)
+((!BUILD_DOC))      &&   _build_doc=OFF ||   _build_doc=ON  # Build Doc (sphinx)
+((BUILD_DOXYGEN&=BUILD_DOC))                                # Build Doc (doxygen) requires BUILD_DOC
+
+# Other CMake Options:
+
+# ALICEVISION_BUILD_SFM "Build AliceVision SfM part" ON
+# ALICEVISION_BUILD_MVS "Build AliceVision MVS part" ON
+# ALICEVISION_BUILD_HDR "Build AliceVision HDR part" ON
+# ALICEVISION_BUILD_SOFTWARE "Build AliceVision command line tools." ON
+# ALICEVISION_BUILD_EXAMPLES "Build AliceVision samples applications." OFF
+# ALICEVISION_BUILD_COVERAGE "Enable code coverage generation (gcc only)" OFF
+# ALICEVISION_BUILD_TESTS "Build AliceVision tests" OFF
+# ALICEVISION_USE_OCVSIFT "Add or not OpenCV SIFT in available features" OFF
+# ALICEVISION_USE_MESHSDFILTER "Use MeshSDFilter library (enable MeshDenoising and MeshDecimate)" ON
+# ALICEVISION_USE_NVTX_PROFILING "Use CUDA NVTX for profiling." OFF
+# ALICEVISION_NVCC_WARNINGS      "Switch on several additional warnings for CUDA nvcc." OFF
+_CMAKE_FLAGS+=(
+              -DCMAKE_FIND_PACKAGE_PREFER_CONFIG=ON
+              -DCMAKE_INSTALL_PREFIX=/usr
+              -DCMAKE_INSTALL_LIBDIR=lib
+              -DEIGEN_INCLUDE_DIR_HINTS=/usr/include/eigen3
+              -DFLANN_INCLUDE_DIR_HINTS=/usr/include/flann
+              -D{COINUTILS,CLP,OSI}_INCLUDE_DIR_HINTS=/usr/include/coin
+              -DLEMON_INCLUDE_DIR_HINTS=/usr/include/lemon
+              -DCERES_DIR=/usr/include/ceres
+              -DPopSift_DIR=/usr
+              -DCCTag_DIR=/usr/lib/cmake/CCTag
+              -DUNCERTAINTYTE_DIR=/usr
+              -DMAGMA_ROOT=/usr
+              -DALICEVISION_USE_CUDA="$_use_cuda"
+              -DALICEVISION_USE_CCTAG="$_use_cctag"
+              -DALICEVISION_USE_POPSIFT="$_use_popsift"
+              -DALICEVISION_USE_UNCERTAINTYTE="$_use_ute"
+              -DALICEVISION_USE_ALEMBIC="$_use_alembic"
+              -DALICEVISION_USE_OPENGV="$_use_opengv"
+              -DALICEVISION_USE_OPENCV="$_use_opencv"
+              -DALICEVISION_BUILD_DOC="$_build_doc"
+              "$_cuda_arch"
+             )
+
+
+_name=alice-vision
+pkgname=${_name}
+pkgver=2.4.0
+pkgrel=4
+pkgdesc="Photogrammetric Computer Vision Framework which provides a 3D Reconstruction and Camera Tracking algorithms"
+arch=('i686' 'x86_64')
+url="https://alicevision.github.io/"
+license=('MPL2' 'MIT')
+depends+=('boost-libs' 'openimageio' 'flann' 'geogram' 'coin-or-clp' 'ceres-solver')
+makedepends+=('boost' 'ninja' 'eigen' 'freetype2' 'coin-or-coinutils' 'coin-or-lemon' 'git' 'cmake')
+((!DISABLE_CUDA))    && { depends+=('libcudart.so'); makedepends+=('cuda'); }
+((!DISABLE_CCTAG))   && depends+=('cctag')
+((!DISABLE_ALEMBIC)) && depends+=('alembic')
+((!DISABLE_OPENGV))  && depends+=('opengv')
+((!DISABLE_OPENCV))  && depends+=('opencv')
+((BUILD_DOC))        && makedepends+=('python-sphinx')
+((BUILD_DOXYGEN))    && makedepends+=('doxygen')
+((!DISABLE_POPSIFT)) && { makedepends+=('popsift'); optdepends+=('popsift-libs: for GPU accelerated feature matching'); }
+((!DISABLE_UTE))     && { makedepends+=('uncertainty-framework' 'magma'); optdepends+=('uncertainty-framework: for SFM uncertainty estimation'); }
+source=("${pkgname}_${pkgver}.tgz::https://github.com/alicevision/AliceVision/archive/v${pkgver}.tar.gz"
+        "MeshSDFilter::git+https://github.com/alicevision/MeshSDFilter.git#branch=av_develop"
+        "nanoflann::git+https://github.com/alicevision/nanoflann.git"
+        "cmake_cxx_std_14.patch"
+        "openexr3.patch"
+)
+sha256sums=('39dcf4bb0a7cb1d0ba234b4ec2de6d245a83ac21846585de3156b37b82d3066b'
+            'SKIP'
+            'SKIP'
+            'caf2bf06bd7c6a2387f01f312d94b649ef3e4363b18fcdf95986cd71a0d6c275'
+            'de9def936b143b6a95d8afc93e4673e8f8b0e434785b65c557353549efd95c1b')
+
+prepare() {
+  cd "${srcdir}"/AliceVision-${pkgver}
+  rm -rf src/dependencies/{MeshSDFilter,nanoflann}
+  cp -r "${srcdir}"/MeshSDFilter src/dependencies/MeshSDFilter
+  cp -r "${srcdir}"/nanoflann src/dependencies/nanoflann
+# fix missing submodule warning.
+  mkdir src/dependencies/osi_clp/CoinUtils
+  patch -Np1 -i"${srcdir}"/cmake_cxx_std_14.patch
+# fix FindOpenEXR.cmake against openexr:3
+  patch -Np1 -i"${srcdir}"/openexr3.patch
+# fix header relocation against openexr:3
+  grep -lR "#include.*OpenEXR/half.h"|xargs sed -i 's|OpenEXR/half|Imath/half|'
+# fix gcc:11 headers regression
+  grep -lR "std::numeric_limits"|xargs sed -i '1 i\#include <limits>'
+# fix doc build
+  ((BUILD_DOXYGEN)) && sed -i '/^ *install.*doc/s/doc/htmlDoc/' src/CMakeLists.txt || true
+# fix CMAKE_FIND_PACKAGE_PREFER_CONFIG=ON preserve target name capitalisation
+  sed 's/OPENEXR_FOUND/OpenEXR_FOUND/g' -i "${srcdir}"/AliceVision-${pkgver}/src/CMakeLists.txt
+# fix openimageio:2 target library
+  sed 's/${OPENIMAGEIO_LIBRARIES};dl/OpenImageIO::OpenImageIO/g' -i "${srcdir}"/AliceVision-${pkgver}/src/CMakeLists.txt
+# fix [io]fstream(path) initializer
+  sed '1 i#include <fstream>' -i $(grep -Rl std::[io]fstream "${srcdir}"/AliceVision-${pkgver}/src)
+}
+
+
+build() {
+  cmake "${_CMAKE_FLAGS[@]}" -G Ninja -S AliceVision-${pkgver} -B build
+# shellcheck disable=SC2086 #allow MAKEFLAGS to carry more then one flag.
+  ninja ${MAKEFLAGS:--j1} -C build
+}
+
+
+package() {
+  DESTDIR="${pkgdir}" ninja -C build install
+
+# install doxygen doc
+  ((BUILD_DOXYGEN)) && ninja -C build doc_doxygen && cp -rvt "${pkgdir}"/usr/share/doc/aliceVision build/src/doc/
+
+# install custom licenses.
+  cd "${pkgdir}"/usr/share
+  install -dm755 licenses/${pkgname}/
+  mv aliceVision/LICENSE-{MPL2,MIT-libmv}.md licenses/${pkgname}
+
+# prune empty dirs
+  find "${pkgdir}/usr" . -type d -print0 | xargs --null rmdir 2>/dev/null || true
+}
+# vim:set ts=2 sw=2 et:
+options+=("!lto")
