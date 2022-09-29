@@ -1,0 +1,160 @@
+--- a/src/pybind/mgr/ansible/run-tox.sh	2019-04-25 20:15:48.000000000 +0200
++++ b/src/pybind/mgr/ansible/run-tox.sh	2019-07-14 16:36:54.220654727 +0200
+@@ -8,22 +8,22 @@
+ test -d ansible && cd ansible
+ 
+ if [ -e tox.ini ]; then
+-    TOX_PATH=$(readlink -f tox.ini)
++    TOX_PATH="$(readlink -f tox.ini)"
+ else
+-    TOX_PATH=$(readlink -f $(dirname $0)/tox.ini)
++    TOX_PATH="$(readlink -f "$(dirname "$0")"/tox.ini)"
+ fi
+ 
+ # tox.ini will take care of this.
+ unset PYTHONPATH
+ export CEPH_BUILD_DIR=$CEPH_BUILD_DIR
+ 
+-source ${MGR_ANSIBLE_VIRTUALENV}/bin/activate
++source "${MGR_ANSIBLE_VIRTUALENV}"/bin/activate
+ 
+ if [ "$WITH_PYTHON2" = "ON" ]; then
+   ENV_LIST+="py27"
+ fi
+-if [ "$WITH_PYTHON3" = "ON" ]; then
++if [[ "$WITH_PYTHON3" == "ON" || "$WITH_PYTHON3" == "3" ]]; then
+   ENV_LIST+="py3"
+ fi
+ 
+-tox -c ${TOX_PATH} -e ${ENV_LIST}
++tox -c "${TOX_PATH}" -e "${ENV_LIST}"
+--- a/src/pybind/mgr/dashboard/run-tox.sh	2019-04-25 20:15:48.000000000 +0200
++++ b/src/pybind/mgr/dashboard/run-tox.sh	2019-07-14 16:36:48.907269344 +0200
+@@ -8,30 +8,30 @@
+ test -d dashboard && cd dashboard
+ 
+ if [ -e tox.ini ]; then
+-    TOX_PATH=`readlink -f tox.ini`
++  TOX_PATH="$(readlink -f tox.ini)"
+ else
+-    TOX_PATH=`readlink -f $(dirname $0)/tox.ini`
++  TOX_PATH="$(readlink -f "$(dirname "$0")"/tox.ini)"
+ fi
+ 
+ # tox.ini will take care of this.
+ unset PYTHONPATH
+ export CEPH_BUILD_DIR=$CEPH_BUILD_DIR
+ 
+-source ${MGR_DASHBOARD_VIRTUALENV}/bin/activate
++source "${MGR_DASHBOARD_VIRTUALENV}"/bin/activate
+ 
+-if [ "$WITH_PYTHON2" = "ON" ]; then
+-  if [[ -n "$@" ]]; then
++if [ "$WITH_PYTHON2" == "ON" ]; then
++  if [[ -n "$*" ]]; then
+     ENV_LIST+="py27-run,"
+   else
+     ENV_LIST+="py27-cov,py27-lint,"
+   fi
+ fi
+-if [ "$WITH_PYTHON3" = "ON" ]; then
+-  if [[ -n "$@" ]]; then
++if [[ "$WITH_PYTHON3" == "ON" || "$WITH_PYTHON3" == "3" ]]; then
++  if [[ -n "$*" ]]; then
+     ENV_LIST+="py3-run"
+   else
+     ENV_LIST+="py3-cov,py3-lint"
+   fi
+ fi
+ 
+-tox -c ${TOX_PATH} -e "$ENV_LIST" "$@"
++tox -c "${TOX_PATH}" -e "$ENV_LIST" "$@"
+--- a/src/pybind/mgr/insights/run-tox.sh	2019-04-25 20:15:48.000000000 +0200
++++ b/src/pybind/mgr/insights/run-tox.sh	2019-07-14 16:36:41.347195419 +0200
+@@ -8,22 +8,22 @@
+ test -d insights && cd insights
+ 
+ if [ -e tox.ini ]; then
+-    TOX_PATH=`readlink -f tox.ini`
++  TOX_PATH="$(readlink -f tox.ini)"
+ else
+-    TOX_PATH=`readlink -f $(dirname $0)/tox.ini`
++  TOX_PATH="$(readlink -f "$(dirname "$0")"/tox.ini)"
+ fi
+ 
+ # tox.ini will take care of this.
+ unset PYTHONPATH
+ export CEPH_BUILD_DIR=$CEPH_BUILD_DIR
+ 
+-source ${MGR_INSIGHTS_VIRTUALENV}/bin/activate
++source "${MGR_INSIGHTS_VIRTUALENV}"/bin/activate
+ 
+ if [ "$WITH_PYTHON2" = "ON" ]; then
+   ENV_LIST+="py27"
+ fi
+-if [ "$WITH_PYTHON3" = "ON" ]; then
++if [[ "$WITH_PYTHON3" == "ON" || "$WITH_PYTHON3" == "3" ]]; then
+   ENV_LIST+="py3"
+ fi
+ 
+-tox -c ${TOX_PATH} -e ${ENV_LIST}
++tox -c "${TOX_PATH}" -e "${ENV_LIST}"
+--- a/src/pybind/mgr/orchestrator_cli/run-tox.sh	2019-04-25 20:15:48.000000000 +0200
++++ b/src/pybind/mgr/orchestrator_cli/run-tox.sh	2019-07-14 16:37:01.734061798 +0200
+@@ -8,25 +8,24 @@
+ test -d orchestrator_cli && cd orchestrator_cli
+ 
+ if [ -e tox.ini ]; then
+-    TOX_PATH=$(readlink -f tox.ini)
++    TOX_PATH="$(readlink -f tox.ini)"
+ else
+-    TOX_PATH=$(readlink -f $(dirname $0)/tox.ini)
++    TOX_PATH="$(readlink -f "$(dirname "$0")"/tox.ini)"
+ fi
+ 
+ # tox.ini will take care of this.
+ unset PYTHONPATH
+ export CEPH_BUILD_DIR=$CEPH_BUILD_DIR
+ 
+-if [ -f ${MGR_ORCHESTRATOR_CLI_VIRTUALENV}/bin/activate ]
+-then
+-  source ${MGR_ORCHESTRATOR_CLI_VIRTUALENV}/bin/activate
++if [[ -r "${MGR_ORCHESTRATOR_CLI_VIRTUALENV}"/bin/activate ]]; then
++  source "${MGR_ORCHESTRATOR_CLI_VIRTUALENV}"/bin/activate
+ fi
+ 
+ if [ "$WITH_PYTHON2" = "ON" ]; then
+   ENV_LIST+="py27"
+ fi
+-if [ "$WITH_PYTHON3" = "ON" ]; then
+-  ENV_LIST+=",py3"
++if [[ "$WITH_PYTHON3" == "ON" || "$WITH_PYTHON3" == "3" ]]; then
++  ENV_LIST+="py3"
+ fi
+ 
+-tox -c ${TOX_PATH} -e ${ENV_LIST}
++tox -c "${TOX_PATH}" -e "${ENV_LIST}"
+--- a/src/pybind/mgr/dashboard/tox.ini	2019-04-25 20:15:48.000000000 +0200
++++ b/src/pybind/mgr/dashboard/tox.ini	2019-07-15 12:36:39.693948289 +0200
+@@ -1,5 +1,5 @@
+ [tox]
+-envlist = py27-{cov,lint,run},py3-{cov,lint,run}
++envlist = py3-{cov,lint,run}
+ skipsdist = true
+ toxworkdir = {env:CEPH_BUILD_DIR}/dashboard
+ minversion = 2.8.1
+@@ -11,13 +11,12 @@ setenv=
+     WEBTEST_INTERACTIVE = false
+     LD_LIBRARY_PATH = {toxinidir}/../../../../build/lib
+     PATH = {toxinidir}/../../../../build/bin:$PATH
+-    py27: PYTHONPATH = {toxinidir}/../../../../build/lib/cython_modules/lib.2
+     py3:  PYTHONPATH = {toxinidir}/../../../../build/lib/cython_modules/lib.3
+     cov:  UNITTEST = true
+     cov:  COVERAGE_FILE = .coverage.{envname}
+ commands=
+     pip install -r {toxinidir}/requirements.txt
+-    py27: pip install -r {toxinidir}/requirements-py27.txt
++;    py27: pip install -r {toxinidir}/requirements-py27.txt
+     py3: pip install -r {toxinidir}/requirements-py3.txt
+     cov: coverage erase
+     cov: {envbindir}/py.test --cov=. --cov-report= --junitxml=junit.{envname}.xml --doctest-modules controllers/rbd.py services/ tests/ tools.py

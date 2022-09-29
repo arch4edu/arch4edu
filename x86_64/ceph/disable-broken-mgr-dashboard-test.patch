@@ -1,0 +1,13 @@
+--- a/src/test/CMakeLists.txt	2019-12-06 17:42:34.000000000 +0100
++++ b/src/test/CMakeLists.txt	2020-01-04 09:55:50.703888545 +0100
+@@ -555,8 +555,8 @@ set(env_vars_for_tox_tests
+   WITH_PYTHON3=${WITH_PYTHON3})
+ 
+ if(WITH_MGR)
+-  add_test(NAME run-tox-mgr-dashboard COMMAND bash ${CMAKE_SOURCE_DIR}/src/pybind/mgr/dashboard/run-tox.sh)
+-  list(APPEND tox_tests run-tox-mgr-dashboard)
++  # add_test(NAME run-tox-mgr-dashboard COMMAND bash ${CMAKE_SOURCE_DIR}/src/pybind/mgr/dashboard/run-tox.sh)
++  # list(APPEND tox_tests run-tox-mgr-dashboard)
+   set(MGR_DASHBOARD_VIRTUALENV ${CEPH_BUILD_VIRTUALENV}/mgr-dashboard-virtualenv)
+   list(APPEND env_vars_for_tox_tests MGR_DASHBOARD_VIRTUALENV=${MGR_DASHBOARD_VIRTUALENV})
+ 

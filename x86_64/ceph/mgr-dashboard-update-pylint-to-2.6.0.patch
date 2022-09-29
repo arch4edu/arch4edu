@@ -1,0 +1,671 @@
+From e4f179fa960ed18e8f45bc87d26552d720bc819b Mon Sep 17 00:00:00 2001
+From: Volker Theile <vtheile@suse.com>
+Date: Fri, 25 Sep 2020 13:17:19 +0200
+Subject: [PATCH] mgr/dashboard: update pylint to 2.6.0
+
+* Update pylint to 2.6.0.
+* Fix pylint issues.
+
+Fixes: https://tracker.ceph.com/issues/47647
+
+(cherry picked from commit 298c91958a41674a928d53f010b20f174f16d68f)
+---
+ src/pybind/mgr/dashboard/.pylintrc            |  8 ++++++--
+ .../mgr/dashboard/controllers/nfsganesha.py   |  2 +-
+ src/pybind/mgr/dashboard/controllers/osd.py   |  2 +-
+ src/pybind/mgr/dashboard/plugins/__init__.py  |  2 +-
+ .../mgr/dashboard/requirements-lint.txt       |  2 +-
+ src/pybind/mgr/dashboard/services/auth.py     |  1 -
+ .../mgr/dashboard/services/ceph_service.py    |  2 +-
+ src/pybind/mgr/dashboard/services/cephx.py    |  2 +-
+ src/pybind/mgr/dashboard/services/ganesha.py  | 20 +++++++++----------
+ .../mgr/dashboard/services/iscsi_client.py    |  2 +-
+ .../mgr/dashboard/services/iscsi_config.py    |  2 +-
+ src/pybind/mgr/dashboard/services/progress.py |  2 +-
+ .../mgr/dashboard/services/rgw_client.py      |  3 ++-
+ src/pybind/mgr/dashboard/tests/__init__.py    |  2 +-
+ src/pybind/mgr/dashboard/tests/helper.py      |  2 +-
+ .../dashboard/tests/test_access_control.py    |  2 +-
+ .../mgr/dashboard/tests/test_api_auditing.py  |  2 +-
+ src/pybind/mgr/dashboard/tests/test_cephfs.py |  2 +-
+ .../mgr/dashboard/tests/test_controllers.py   |  2 +-
+ src/pybind/mgr/dashboard/tests/test_docs.py   |  2 +-
+ .../tests/test_erasure_code_profile.py        |  2 +-
+ .../mgr/dashboard/tests/test_exceptions.py    |  2 +-
+ .../dashboard/tests/test_feature_toggles.py   |  2 +-
+ .../mgr/dashboard/tests/test_ganesha.py       |  2 +-
+ .../mgr/dashboard/tests/test_grafana.py       |  2 +-
+ src/pybind/mgr/dashboard/tests/test_home.py   |  2 +-
+ src/pybind/mgr/dashboard/tests/test_host.py   |  2 +-
+ src/pybind/mgr/dashboard/tests/test_iscsi.py  |  3 ++-
+ .../mgr/dashboard/tests/test_orchestrator.py  |  2 +-
+ src/pybind/mgr/dashboard/tests/test_osd.py    |  4 ++--
+ .../mgr/dashboard/tests/test_plugin_debug.py  |  2 +-
+ src/pybind/mgr/dashboard/tests/test_pool.py   |  2 +-
+ .../mgr/dashboard/tests/test_prometheus.py    |  2 +-
+ .../mgr/dashboard/tests/test_rbd_mirroring.py |  2 +-
+ .../mgr/dashboard/tests/test_rest_tasks.py    |  2 +-
+ src/pybind/mgr/dashboard/tests/test_rgw.py    |  2 +-
+ .../mgr/dashboard/tests/test_rgw_client.py    |  2 +-
+ .../mgr/dashboard/tests/test_settings.py      |  2 +-
+ src/pybind/mgr/dashboard/tests/test_sso.py    |  3 ++-
+ src/pybind/mgr/dashboard/tests/test_tools.py  |  2 +-
+ src/pybind/mgr/dashboard/tools.py             |  2 +-
+ 41 files changed, 58 insertions(+), 52 deletions(-)
+
+diff --git a/src/pybind/mgr/dashboard/.pylintrc b/src/pybind/mgr/dashboard/.pylintrc
+index 404a16a2e6..c4bf033cda 100644
+--- a/src/pybind/mgr/dashboard/.pylintrc
++++ b/src/pybind/mgr/dashboard/.pylintrc
+@@ -15,7 +15,7 @@ ignore-patterns=
+ 
+ # Python code to execute, usually for sys.path manipulation such as
+ # pygtk.require().
+-#init-hook=
++init-hook='import sys; sys.path.append("./")'
+ 
+ # Use multiple processes to speed up Pylint.
+ jobs=1
+@@ -118,7 +118,11 @@ disable=import-star-module-level,
+         too-many-arguments,
+         too-many-locals,
+         too-many-statements,
+-        useless-object-inheritance
++        useless-object-inheritance,
++        relative-beyond-top-level,
++        raise-missing-from,
++        super-with-arguments,
++        import-outside-toplevel
+ 
+ 
+ # Enable the message, report, category or checker with the given id(s). You can
+diff --git a/src/pybind/mgr/dashboard/controllers/nfsganesha.py b/src/pybind/mgr/dashboard/controllers/nfsganesha.py
+index 1219f78b95..510b37a712 100644
+--- a/src/pybind/mgr/dashboard/controllers/nfsganesha.py
++++ b/src/pybind/mgr/dashboard/controllers/nfsganesha.py
+@@ -272,7 +272,7 @@ class NFSGaneshaService(RESTController):
+ class NFSGaneshaUi(BaseController):
+     @Endpoint('GET', '/cephx/clients')
+     def cephx_clients(self):
+-        return [client for client in CephX.list_clients()]
++        return list(CephX.list_clients())
+ 
+     @Endpoint('GET', '/fsals')
+     def fsals(self):
+diff --git a/src/pybind/mgr/dashboard/controllers/osd.py b/src/pybind/mgr/dashboard/controllers/osd.py
+index 2731ad0ffc..f95951cba2 100644
+--- a/src/pybind/mgr/dashboard/controllers/osd.py
++++ b/src/pybind/mgr/dashboard/controllers/osd.py
+@@ -272,7 +272,7 @@ class Osd(RESTController):
+ 
+     @CreatePermission
+     @osd_task('create', {'tracking_id': '{tracking_id}'})
+-    def create(self, method, data, tracking_id):  # pylint: disable=W0622
++    def create(self, method, data, tracking_id):  # pylint: disable=unused-argument
+         if method == 'bare':
+             return self._create_bare(data)
+         if method == 'drive_groups':
+diff --git a/src/pybind/mgr/dashboard/plugins/__init__.py b/src/pybind/mgr/dashboard/plugins/__init__.py
+index 8973654770..3e3aca4001 100644
+--- a/src/pybind/mgr/dashboard/plugins/__init__.py
++++ b/src/pybind/mgr/dashboard/plugins/__init__.py
+@@ -71,4 +71,4 @@ class DashboardPluginManager(object):
+ PLUGIN_MANAGER = DashboardPluginManager("ceph-mgr.dashboard")
+ 
+ # Load all interfaces and their hooks
+-from . import interfaces  # noqa: F401 pylint: disable=wrong-import-position,cyclic-import
++from . import interfaces  # noqa pylint: disable=C0413,W0406
+diff --git a/src/pybind/mgr/dashboard/requirements-lint.txt b/src/pybind/mgr/dashboard/requirements-lint.txt
+index 8f68ad3856..f01fa54e6e 100644
+--- a/src/pybind/mgr/dashboard/requirements-lint.txt
++++ b/src/pybind/mgr/dashboard/requirements-lint.txt
+@@ -1,4 +1,4 @@
+-pylint==2.3.1; python_version >= '3'
++pylint==2.6.0
+ flake8==3.7.8; python_version >= '3'
+ flake8-colors==0.1.6; python_version >= '3'
+ #TODO: Fix docstring issues: https://tracker.ceph.com/issues/41224
+diff --git a/src/pybind/mgr/dashboard/services/auth.py b/src/pybind/mgr/dashboard/services/auth.py
+index d829362e63..475d501263 100644
+--- a/src/pybind/mgr/dashboard/services/auth.py
++++ b/src/pybind/mgr/dashboard/services/auth.py
+@@ -177,7 +177,6 @@ class AuthManagerTool(cherrypy.Tool):
+ 
+     def _check_authorization(self, username):
+         self.logger.debug("checking authorization...")
+-        username = username
+         handler = cherrypy.request.handler.callable
+         controller = handler.__self__
+         sec_scope = getattr(controller, '_security_scope', None)
+diff --git a/src/pybind/mgr/dashboard/services/ceph_service.py b/src/pybind/mgr/dashboard/services/ceph_service.py
+index a6eee2957e..89582e3f73 100644
+--- a/src/pybind/mgr/dashboard/services/ceph_service.py
++++ b/src/pybind/mgr/dashboard/services/ceph_service.py
+@@ -12,7 +12,7 @@ from .. import mgr
+ from ..exceptions import DashboardException
+ 
+ try:
+-    from typing import Dict, Any, Union  # pylint: disable=unused-import
++    from typing import Dict, Any, Union
+ except ImportError:
+     pass  # For typing only
+ 
+diff --git a/src/pybind/mgr/dashboard/services/cephx.py b/src/pybind/mgr/dashboard/services/cephx.py
+index ccda387961..60303ad85f 100644
+--- a/src/pybind/mgr/dashboard/services/cephx.py
++++ b/src/pybind/mgr/dashboard/services/cephx.py
+@@ -22,7 +22,7 @@ class CephX(object):
+ 
+     @classmethod
+     def list_clients(cls):
+-        return [client for client in cls._clients_map()]
++        return list(cls._clients_map())
+ 
+     @classmethod
+     def get_client_key(cls, client_id):
+diff --git a/src/pybind/mgr/dashboard/services/ganesha.py b/src/pybind/mgr/dashboard/services/ganesha.py
+index e9144db406..764ebb3739 100644
+--- a/src/pybind/mgr/dashboard/services/ganesha.py
++++ b/src/pybind/mgr/dashboard/services/ganesha.py
+@@ -69,7 +69,7 @@ class Ganesha(object):
+ 
+     @classmethod
+     def get_ganesha_clusters(cls):
+-        return [cluster_id for cluster_id in cls._get_clusters_locations()]
++        return list(cls._get_clusters_locations())
+ 
+     @staticmethod
+     def _get_orch_nfs_instances():
+@@ -325,7 +325,7 @@ class GaneshaConfParser(object):
+         for key, val in block.items():
+             if key == 'block_name':
+                 continue
+-            elif key == '_blocks_':
++            if key == '_blocks_':
+                 for blo in val:
+                     conf_str += GaneshaConfParser.write_block(blo, depth)
+             elif val:
+@@ -693,21 +693,21 @@ class Export(object):
+             result['attr_expiration_time'] = self.attr_expiration_time
+             result['security_label'] = self.security_label
+         if 'protocols' not in defaults:
+-            result['protocols'] = [p for p in self.protocols]
++            result['protocols'] = list(self.protocols)
+         else:
+             def_proto = defaults['protocols']
+             if not isinstance(def_proto, list):
+                 def_proto = set([def_proto])
+             if self.protocols != def_proto:
+-                result['protocols'] = [p for p in self.protocols]
++                result['protocols'] = list(self.protocols)
+         if 'transports' not in defaults:
+-            result['transports'] = [t for t in self.transports]
++            result['transports'] = list(self.transports)
+         else:
+             def_transp = defaults['transports']
+             if not isinstance(def_transp, list):
+                 def_transp = set([def_transp])
+             if self.transports != def_transp:
+-                result['transports'] = [t for t in self.transports]
++                result['transports'] = list(self.transports)
+ 
+         result['_blocks_'] = [self.fsal.to_fsal_block()]
+         result['_blocks_'].extend([client.to_client_block()
+@@ -737,14 +737,14 @@ class Export(object):
+             'path': self.path,
+             'fsal': self.fsal.to_dict(),
+             'cluster_id': self.cluster_id,
+-            'daemons': sorted([d for d in self.daemons]),
++            'daemons': sorted(list(self.daemons)),
+             'pseudo': self.pseudo,
+             'tag': self.tag,
+             'access_type': self.access_type,
+             'squash': self.squash,
+             'security_label': self.security_label,
+-            'protocols': sorted([p for p in self.protocols]),
+-            'transports': sorted([t for t in self.transports]),
++            'protocols': sorted(list(self.protocols)),
++            'transports': sorted(list(self.transports)),
+             'clients': [client.to_dict() for client in self.clients]
+         }
+ 
+@@ -992,7 +992,7 @@ class GaneshaConf(object):
+         return None
+ 
+     def list_daemons(self):
+-        return [daemon_id for daemon_id in self.daemons_conf_blocks]
++        return list(self.daemons_conf_blocks)
+ 
+     def reload_daemons(self, daemons):
+         with mgr.rados.open_ioctx(self.rados_pool) as ioctx:
+diff --git a/src/pybind/mgr/dashboard/services/iscsi_client.py b/src/pybind/mgr/dashboard/services/iscsi_client.py
+index b82a51a3d4..c5a6dfa0e7 100644
+--- a/src/pybind/mgr/dashboard/services/iscsi_client.py
++++ b/src/pybind/mgr/dashboard/services/iscsi_client.py
+@@ -12,7 +12,7 @@ try:
+ except ImportError:
+     from urllib.parse import urlparse
+ 
+-from .iscsi_config import IscsiGatewaysConfig  # pylint: disable=cyclic-import
++from .iscsi_config import IscsiGatewaysConfig
+ from ..settings import Settings
+ from ..rest_client import RestClient
+ 
+diff --git a/src/pybind/mgr/dashboard/services/iscsi_config.py b/src/pybind/mgr/dashboard/services/iscsi_config.py
+index ab90048500..86bdfc770d 100644
+--- a/src/pybind/mgr/dashboard/services/iscsi_config.py
++++ b/src/pybind/mgr/dashboard/services/iscsi_config.py
+@@ -57,7 +57,7 @@ class IscsiGatewaysConfig(object):
+         """
+         for gateway_name, gateway_config in config['gateways'].items():
+             if '.' not in gateway_name:
+-                from .iscsi_client import IscsiClient
++                from .iscsi_client import IscsiClient  # pylint: disable=cyclic-import
+                 from ..rest_client import RequestException
+                 try:
+                     service_url = gateway_config['service_url']
+diff --git a/src/pybind/mgr/dashboard/services/progress.py b/src/pybind/mgr/dashboard/services/progress.py
+index d8cf7521fa..d7b9ed973b 100644
+--- a/src/pybind/mgr/dashboard/services/progress.py
++++ b/src/pybind/mgr/dashboard/services/progress.py
+@@ -12,7 +12,7 @@ from __future__ import absolute_import
+ from datetime import datetime
+ import logging
+ 
+-from . import rbd
++from . import rbd  # pylint: disable=no-name-in-module
+ from .. import mgr
+ 
+ 
+diff --git a/src/pybind/mgr/dashboard/services/rgw_client.py b/src/pybind/mgr/dashboard/services/rgw_client.py
+index 5507eb6800..aee18acc54 100644
+--- a/src/pybind/mgr/dashboard/services/rgw_client.py
++++ b/src/pybind/mgr/dashboard/services/rgw_client.py
+@@ -16,7 +16,7 @@ from ..tools import build_url, dict_contains_path, json_str_to_object,\
+ from .. import mgr
+ 
+ try:
+-    from typing import Dict, List, Optional  # pylint: disable=unused-import
++    from typing import Dict, List, Optional
+ except ImportError:
+     pass  # For typing only
+ 
+@@ -303,6 +303,7 @@ class RgwClient(RestClient):
+         if self.userid != RgwClient._SYSTEM_USERID:
+             logger.info("Fetching new keys for user: %s", self.userid)
+             keys = RgwClient.admin_instance().get_user_keys(self.userid)
++            # pylint: disable=attribute-defined-outside-init
+             self.auth = S3Auth(keys['access_key'], keys['secret_key'],
+                                service_url=self.service_url)
+         else:
+diff --git a/src/pybind/mgr/dashboard/tests/__init__.py b/src/pybind/mgr/dashboard/tests/__init__.py
+index 421378a155..8eb5bb8af1 100644
+--- a/src/pybind/mgr/dashboard/tests/__init__.py
++++ b/src/pybind/mgr/dashboard/tests/__init__.py
+@@ -21,7 +21,7 @@ from ..services.auth import AuthManagerTool
+ from ..services.exception import dashboard_exception_handler
+ 
+ from ..plugins import PLUGIN_MANAGER
+-from ..plugins import feature_toggles, debug  # noqa # pylint: disable=unused-import
++from ..plugins import feature_toggles, debug  # noqa
+ 
+ 
+ PLUGIN_MANAGER.hook.init()
+diff --git a/src/pybind/mgr/dashboard/tests/helper.py b/src/pybind/mgr/dashboard/tests/helper.py
+index 9ec043d6be..06b83d42a8 100644
+--- a/src/pybind/mgr/dashboard/tests/helper.py
++++ b/src/pybind/mgr/dashboard/tests/helper.py
+@@ -2,7 +2,7 @@
+ from __future__ import absolute_import
+ 
+ try:
+-    from typing import Dict, Any  # pylint: disable=unused-import
++    from typing import Dict, Any
+ except ImportError:
+     pass
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_access_control.py b/src/pybind/mgr/dashboard/tests/test_access_control.py
+index 0039efc167..81604a161e 100644
+--- a/src/pybind/mgr/dashboard/tests/test_access_control.py
++++ b/src/pybind/mgr/dashboard/tests/test_access_control.py
+@@ -9,7 +9,7 @@ import unittest
+ 
+ from datetime import datetime, timedelta
+ 
+-from . import CmdException, CLICommandTestMixin
++from . import CmdException, CLICommandTestMixin  # pylint: disable=no-name-in-module
+ from .. import mgr
+ from ..security import Scope, Permission
+ from ..services.access_control import load_access_control_db, \
+diff --git a/src/pybind/mgr/dashboard/tests/test_api_auditing.py b/src/pybind/mgr/dashboard/tests/test_api_auditing.py
+index 0416c03638..023ea7992a 100644
+--- a/src/pybind/mgr/dashboard/tests/test_api_auditing.py
++++ b/src/pybind/mgr/dashboard/tests/test_api_auditing.py
+@@ -9,7 +9,7 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import ControllerTestCase, KVStoreMockMixin
++from . import ControllerTestCase, KVStoreMockMixin  # pylint: disable=no-name-in-module
+ from ..controllers import RESTController, Controller
+ from ..tools import RequestLoggingTool
+ from .. import mgr
+diff --git a/src/pybind/mgr/dashboard/tests/test_cephfs.py b/src/pybind/mgr/dashboard/tests/test_cephfs.py
+index e9abda5380..778b0aa275 100644
+--- a/src/pybind/mgr/dashboard/tests/test_cephfs.py
++++ b/src/pybind/mgr/dashboard/tests/test_cephfs.py
+@@ -6,7 +6,7 @@ except ImportError:
+     from unittest.mock import Mock
+ 
+ from .. import mgr
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers.cephfs import CephFS
+ 
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_controllers.py b/src/pybind/mgr/dashboard/tests/test_controllers.py
+index 0e88047061..b14878ff2e 100644
+--- a/src/pybind/mgr/dashboard/tests/test_controllers.py
++++ b/src/pybind/mgr/dashboard/tests/test_controllers.py
+@@ -1,7 +1,7 @@
+ # -*- coding: utf-8 -*-
+ from __future__ import absolute_import
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers import BaseController, RESTController, Controller, \
+                           ApiController, Endpoint
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_docs.py b/src/pybind/mgr/dashboard/tests/test_docs.py
+index a6e03b5267..ccb777aca5 100644
+--- a/src/pybind/mgr/dashboard/tests/test_docs.py
++++ b/src/pybind/mgr/dashboard/tests/test_docs.py
+@@ -1,7 +1,7 @@
+ # # -*- coding: utf-8 -*-
+ from __future__ import absolute_import
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers import RESTController, ApiController, Endpoint, EndpointDoc, ControllerDoc
+ from ..controllers.docs import Docs
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_erasure_code_profile.py b/src/pybind/mgr/dashboard/tests/test_erasure_code_profile.py
+index 557b7c1061..d266735e8f 100644
+--- a/src/pybind/mgr/dashboard/tests/test_erasure_code_profile.py
++++ b/src/pybind/mgr/dashboard/tests/test_erasure_code_profile.py
+@@ -1,7 +1,7 @@
+ # -*- coding: utf-8 -*-
+ 
+ from .. import mgr
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers.erasure_code_profile import ErasureCodeProfile
+ 
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_exceptions.py b/src/pybind/mgr/dashboard/tests/test_exceptions.py
+index 2bb25da1bf..b42c356479 100644
+--- a/src/pybind/mgr/dashboard/tests/test_exceptions.py
++++ b/src/pybind/mgr/dashboard/tests/test_exceptions.py
+@@ -5,7 +5,7 @@ import time
+ 
+ import rados
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..services.ceph_service import SendCommandError
+ from ..controllers import RESTController, Controller, Task, Endpoint
+ from ..services.exception import handle_rados_error, handle_send_command_error, \
+diff --git a/src/pybind/mgr/dashboard/tests/test_feature_toggles.py b/src/pybind/mgr/dashboard/tests/test_feature_toggles.py
+index 031d0ef839..23068c5eda 100644
+--- a/src/pybind/mgr/dashboard/tests/test_feature_toggles.py
++++ b/src/pybind/mgr/dashboard/tests/test_feature_toggles.py
+@@ -7,7 +7,7 @@ try:
+ except ImportError:
+     from unittest.mock import Mock, patch
+ 
+-from . import KVStoreMockMixin
++from . import KVStoreMockMixin  # pylint: disable=no-name-in-module
+ from ..plugins.feature_toggles import FeatureToggles, Features
+ 
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_ganesha.py b/src/pybind/mgr/dashboard/tests/test_ganesha.py
+index 03f1f5b551..44498ac40c 100644
+--- a/src/pybind/mgr/dashboard/tests/test_ganesha.py
++++ b/src/pybind/mgr/dashboard/tests/test_ganesha.py
+@@ -9,7 +9,7 @@ except ImportError:
+     from unittest.mock import MagicMock, Mock
+ 
+ import orchestrator
+-from . import KVStoreMockMixin
++from . import KVStoreMockMixin  # pylint: disable=no-name-in-module
+ from .. import mgr
+ from ..settings import Settings
+ from ..services import ganesha
+diff --git a/src/pybind/mgr/dashboard/tests/test_grafana.py b/src/pybind/mgr/dashboard/tests/test_grafana.py
+index 0eb46bf0f0..a5456905f2 100644
+--- a/src/pybind/mgr/dashboard/tests/test_grafana.py
++++ b/src/pybind/mgr/dashboard/tests/test_grafana.py
+@@ -8,7 +8,7 @@ except ImportError:
+ 
+ from requests import RequestException
+ 
+-from . import ControllerTestCase, KVStoreMockMixin
++from . import ControllerTestCase, KVStoreMockMixin  # pylint: disable=no-name-in-module
+ from ..controllers.grafana import Grafana
+ from ..grafana import GrafanaRestClient
+ from ..settings import Settings
+diff --git a/src/pybind/mgr/dashboard/tests/test_home.py b/src/pybind/mgr/dashboard/tests/test_home.py
+index c3088b7a65..c942eed9be 100644
+--- a/src/pybind/mgr/dashboard/tests/test_home.py
++++ b/src/pybind/mgr/dashboard/tests/test_home.py
+@@ -8,7 +8,7 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import ControllerTestCase, FakeFsMixin
++from . import ControllerTestCase, FakeFsMixin  # pylint: disable=no-name-in-module
+ from .. import mgr
+ 
+ from ..controllers.home import HomeController, LanguageMixin
+diff --git a/src/pybind/mgr/dashboard/tests/test_host.py b/src/pybind/mgr/dashboard/tests/test_host.py
+index ab7286074b..191c3f1245 100644
+--- a/src/pybind/mgr/dashboard/tests/test_host.py
++++ b/src/pybind/mgr/dashboard/tests/test_host.py
+@@ -7,7 +7,7 @@ except ImportError:
+ 
+ from orchestrator import HostSpec
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers.host import get_hosts, Host, HostUi
+ from .. import mgr
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_iscsi.py b/src/pybind/mgr/dashboard/tests/test_iscsi.py
+index 962ffeb684..72d64453ac 100644
+--- a/src/pybind/mgr/dashboard/tests/test_iscsi.py
++++ b/src/pybind/mgr/dashboard/tests/test_iscsi.py
+@@ -10,7 +10,8 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import CmdException, ControllerTestCase, CLICommandTestMixin, KVStoreMockMixin
++from . import CmdException, ControllerTestCase, CLICommandTestMixin, \
++    KVStoreMockMixin  # pylint: disable=no-name-in-module
+ from .. import mgr
+ from ..controllers.iscsi import Iscsi, IscsiTarget
+ from ..services.iscsi_client import IscsiClient
+diff --git a/src/pybind/mgr/dashboard/tests/test_orchestrator.py b/src/pybind/mgr/dashboard/tests/test_orchestrator.py
+index 714d59c085..9a9d179bbc 100644
+--- a/src/pybind/mgr/dashboard/tests/test_orchestrator.py
++++ b/src/pybind/mgr/dashboard/tests/test_orchestrator.py
+@@ -6,7 +6,7 @@ except ImportError:
+ 
+ from orchestrator import InventoryHost
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from .. import mgr
+ from ..controllers.orchestrator import get_device_osd_map
+ from ..controllers.orchestrator import Orchestrator
+diff --git a/src/pybind/mgr/dashboard/tests/test_osd.py b/src/pybind/mgr/dashboard/tests/test_osd.py
+index aeb32ed576..063705ddbb 100644
+--- a/src/pybind/mgr/dashboard/tests/test_osd.py
++++ b/src/pybind/mgr/dashboard/tests/test_osd.py
+@@ -11,11 +11,11 @@ except ImportError:
+ from ceph.deployment.drive_group import DeviceSelection, DriveGroupSpec
+ from ceph.deployment.service_spec import PlacementSpec
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers.osd import Osd
+ from ..tools import NotificationQueue, TaskManager
+ from .. import mgr
+-from .helper import update_dict
++from .helper import update_dict  # pylint: disable=import-error
+ 
+ try:
+     from typing import List, Dict, Any  # pylint: disable=unused-import
+diff --git a/src/pybind/mgr/dashboard/tests/test_plugin_debug.py b/src/pybind/mgr/dashboard/tests/test_plugin_debug.py
+index 4985540046..cb4d1afc21 100644
+--- a/src/pybind/mgr/dashboard/tests/test_plugin_debug.py
++++ b/src/pybind/mgr/dashboard/tests/test_plugin_debug.py
+@@ -1,7 +1,7 @@
+ # -*- coding: utf-8 -*-
+ from __future__ import absolute_import
+ 
+-from . import CLICommandTestMixin, ControllerTestCase
++from . import CLICommandTestMixin, ControllerTestCase  # pylint: disable=no-name-in-module
+ 
+ 
+ class TestPluginDebug(ControllerTestCase, CLICommandTestMixin):
+diff --git a/src/pybind/mgr/dashboard/tests/test_pool.py b/src/pybind/mgr/dashboard/tests/test_pool.py
+index e33e436540..179a8feeed 100644
+--- a/src/pybind/mgr/dashboard/tests/test_pool.py
++++ b/src/pybind/mgr/dashboard/tests/test_pool.py
+@@ -6,7 +6,7 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers.pool import Pool
+ from ..controllers.task import Task
+ from ..tools import NotificationQueue, TaskManager
+diff --git a/src/pybind/mgr/dashboard/tests/test_prometheus.py b/src/pybind/mgr/dashboard/tests/test_prometheus.py
+index 3385d66a97..ef669a6203 100644
+--- a/src/pybind/mgr/dashboard/tests/test_prometheus.py
++++ b/src/pybind/mgr/dashboard/tests/test_prometheus.py
+@@ -5,7 +5,7 @@ try:
+ except ImportError:
+     from unittest.mock import patch
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from .. import mgr
+ from ..controllers.prometheus import Prometheus, PrometheusReceiver, PrometheusNotifications
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_rbd_mirroring.py b/src/pybind/mgr/dashboard/tests/test_rbd_mirroring.py
+index ecb4856dc1..d7e0c7dd1e 100644
+--- a/src/pybind/mgr/dashboard/tests/test_rbd_mirroring.py
++++ b/src/pybind/mgr/dashboard/tests/test_rbd_mirroring.py
+@@ -6,7 +6,7 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from .. import mgr
+ from ..controllers.summary import Summary
+ from ..controllers.rbd_mirroring import RbdMirroring, RbdMirroringSummary, \
+diff --git a/src/pybind/mgr/dashboard/tests/test_rest_tasks.py b/src/pybind/mgr/dashboard/tests/test_rest_tasks.py
+index e9d7907f05..aa158cd288 100644
+--- a/src/pybind/mgr/dashboard/tests/test_rest_tasks.py
++++ b/src/pybind/mgr/dashboard/tests/test_rest_tasks.py
+@@ -8,7 +8,7 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers import Controller, RESTController, Task
+ from ..controllers.task import Task as TaskController
+ from ..services import progress
+diff --git a/src/pybind/mgr/dashboard/tests/test_rgw.py b/src/pybind/mgr/dashboard/tests/test_rgw.py
+index 2c90e7d11b..11818ca2b7 100644
+--- a/src/pybind/mgr/dashboard/tests/test_rgw.py
++++ b/src/pybind/mgr/dashboard/tests/test_rgw.py
+@@ -3,7 +3,7 @@ try:
+ except ImportError:
+     import unittest.mock as mock
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..controllers.rgw import RgwUser
+ 
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_rgw_client.py b/src/pybind/mgr/dashboard/tests/test_rgw_client.py
+index d69ab2f48d..fa711b45ca 100644
+--- a/src/pybind/mgr/dashboard/tests/test_rgw_client.py
++++ b/src/pybind/mgr/dashboard/tests/test_rgw_client.py
+@@ -9,7 +9,7 @@ except ImportError:
+ 
+ from ..services.rgw_client import RgwClient, _parse_frontend_config
+ from ..settings import Settings
+-from . import KVStoreMockMixin
++from . import KVStoreMockMixin  # pylint: disable=no-name-in-module
+ 
+ 
+ class RgwClientTest(unittest.TestCase, KVStoreMockMixin):
+diff --git a/src/pybind/mgr/dashboard/tests/test_settings.py b/src/pybind/mgr/dashboard/tests/test_settings.py
+index da54a20655..abdb059c1d 100644
+--- a/src/pybind/mgr/dashboard/tests/test_settings.py
++++ b/src/pybind/mgr/dashboard/tests/test_settings.py
+@@ -3,7 +3,7 @@ from __future__ import absolute_import
+ 
+ import errno
+ import unittest
+-from . import KVStoreMockMixin, ControllerTestCase
++from . import KVStoreMockMixin, ControllerTestCase  # pylint: disable=no-name-in-module
+ from .. import settings
+ from ..controllers.settings import Settings as SettingsController
+ from ..settings import Settings, handle_option_command
+diff --git a/src/pybind/mgr/dashboard/tests/test_sso.py b/src/pybind/mgr/dashboard/tests/test_sso.py
+index f8681b89ed..e8141a09cc 100644
+--- a/src/pybind/mgr/dashboard/tests/test_sso.py
++++ b/src/pybind/mgr/dashboard/tests/test_sso.py
+@@ -5,7 +5,8 @@ from __future__ import absolute_import
+ import errno
+ import unittest
+ 
+-from . import CmdException, exec_dashboard_cmd, KVStoreMockMixin
++from . import CmdException, exec_dashboard_cmd, \
++    KVStoreMockMixin  # pylint: disable=no-name-in-module
+ from ..services.sso import handle_sso_command, load_sso_db
+ 
+ 
+diff --git a/src/pybind/mgr/dashboard/tests/test_tools.py b/src/pybind/mgr/dashboard/tests/test_tools.py
+index 0f27ec8e63..340ff8c41d 100644
+--- a/src/pybind/mgr/dashboard/tests/test_tools.py
++++ b/src/pybind/mgr/dashboard/tests/test_tools.py
+@@ -10,7 +10,7 @@ try:
+ except ImportError:
+     from unittest.mock import patch
+ 
+-from . import ControllerTestCase
++from . import ControllerTestCase  # pylint: disable=no-name-in-module
+ from ..services.exception import handle_rados_error
+ from ..controllers import RESTController, ApiController, Controller, \
+                           BaseController, Proxy
+diff --git a/src/pybind/mgr/dashboard/tools.py b/src/pybind/mgr/dashboard/tools.py
+index 2b6d92ca55..d9a2d813c0 100644
+--- a/src/pybind/mgr/dashboard/tools.py
++++ b/src/pybind/mgr/dashboard/tools.py
+@@ -30,7 +30,7 @@ from .services.auth import JwtManager
+ 
+ try:
+     from typing import Any, AnyStr, Callable, DefaultDict, Deque,\
+-        Dict, List, Set, Tuple, Union  # noqa pylint: disable=unused-import
++        Dict, List, Set, Tuple, Union  # noqa
+ except ImportError:
+     pass  # For typing only
+ 
