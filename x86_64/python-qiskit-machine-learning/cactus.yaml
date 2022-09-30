@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/python-fastdtw
+  - x86_64/python-qiskit-terra
+makedepends:
+  - x86_64/python-qiskit-aer
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
