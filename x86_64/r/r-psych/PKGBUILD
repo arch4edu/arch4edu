@@ -1,27 +1,37 @@
-# Maintainer: Robert Greener <me@r0bert.dev>
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-# Contributor: frichtlm <frichtlm@gmail.com>
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=psych
-_cranver=2.2.5
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
+_pkgname=psych
+_pkgver=2.2.9
+pkgname=r-${_pkgname,,}
+pkgver=2.2.9
 pkgrel=1
-pkgdesc="Procedures for Psychological, Psychometric, and Personality Research"
-arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(GPL2 GPL3)
-depends=(r r-mnormt)
-optdepends=(r-psychtools r-gparotation r-lavaan r-lme4 r-rcsdp r-graph r-knitr r-rgraphviz)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha512sums=('a804bad30bd08aa73ffc24c03d3c68fa8b60595a6ecc8b10e3652d0d7a71509943617b49ee038c7c618528f34333cb2bcbf6b88f6a783655c48aad87a0b05770')
+pkgdesc='Procedures for Psychological, Psychometric, and Personality Research'
+arch=('any')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+  r-mnormt
+)
+optdepends=(
+  r-gparotation
+  r-graph
+  r-knitr
+  r-lavaan
+  r-lme4
+  r-psychtools
+  r-rcsdp
+  r-rgraphviz
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('4cd518bff387fef95067696b0a0b323310e6f4a063c3d242f2a50bcb17675571')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
 }
+# vim:set ts=2 sw=2 et:
