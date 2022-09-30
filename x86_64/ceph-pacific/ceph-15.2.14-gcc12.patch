@@ -1,0 +1,36 @@
+From 7c381ba985bd1398ef7d145cc00fae9d0db510e3 Mon Sep 17 00:00:00 2001
+From: Kefu Chai <tchaikov@gmail.com>
+Date: Mon, 28 Feb 2022 21:46:39 +0800
+Subject: [PATCH] include/buffer: include <memory>
+
+to address following FTBFS:
+
+/usr/bin/ccache /usr/bin/clang++-13 -DBOOST_ALL_NO_LIB -DBOOST_ASIO_DISABLE_CONCEPTS -DBOOST_ASIO_DISABLE_THREAD_KEYWORD_EXTENSION -DBOOST_ASIO_USE_TS_EXECUTOR_AS_DEFAULT -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_T$
+In file included from /var/ssd/ceph/src/crimson/os/seastore/seastore_types.cc:4:
+In file included from /var/ssd/ceph/src/crimson/os/seastore/seastore_types.h:14:
+In file included from /var/ssd/ceph/src/include/denc.h:47:
+/var/ssd/ceph/src/include/buffer.h:98:37: error: no template named 'unique_ptr' in namespace 'std'; did you mean 'boost::movelib::unique_ptr'?
+struct unique_leakable_ptr : public std::unique_ptr<T, ceph::nop_delete<T>> {
+                                    ^~~~~~~~~~~~~~~
+                                    boost::movelib::unique_ptr
+/opt/ceph/include/boost/move/unique_ptr.hpp:354:7: note: 'boost::movelib::unique_ptr' declared here
+class unique_ptr
+      ^
+
+Signed-off-by: Kefu Chai <tchaikov@gmail.com>
+---
+ src/include/buffer.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/include/buffer.h b/src/include/buffer.h
+index 0c89367dd3b2c..8a28d846d9d46 100644
+--- a/src/include/buffer.h
++++ b/src/include/buffer.h
+@@ -41,6 +41,7 @@
+ #include <iosfwd>
+ #include <iomanip>
+ #include <list>
++#include <memory>
+ #include <vector>
+ #include <string>
+ #if __cplusplus >= 201703L

@@ -1,0 +1,10 @@
+--- a/src/test/test_objectstore_memstore.sh	2019-04-25 20:15:48.000000000 +0200
++++ b/src/test/test_objectstore_memstore.sh	2019-07-14 21:18:32.845040824 +0200
+@@ -1,6 +1,6 @@
+ #!/bin/sh -ex
+ 
+ rm -rf memstore.test_temp_dir
+-ceph_test_objectstore --gtest_filter=\*/0
++ceph_test_objectstore --gtest_filter=\*/0 --gtest_death_test_style=threadsafe
+ 
+ echo OK

@@ -1,0 +1,207 @@
+From 40d06ce623f19172721a2f1d5b4f4f8b642a3077 Mon Sep 17 00:00:00 2001
+From: Kefu Chai <kchai@redhat.com>
+Date: Thu, 30 Apr 2020 10:43:01 +0800
+Subject: [PATCH] mgr/PyModuleRegistry: probe modules using std::filesystem
+
+for better readability
+
+Signed-off-by: Kefu Chai <kchai@redhat.com>
+---
+ src/mgr/PyModuleRegistry.cc | 43 +++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 23 deletions(-)
+
+diff --git a/src/mgr/PyModuleRegistry.cc b/src/mgr/PyModuleRegistry.cc
+index 440f7c8bafc1e..466da5d404964 100644
+--- a/src/mgr/PyModuleRegistry.cc
++++ b/src/mgr/PyModuleRegistry.cc
+@@ -11,6 +11,17 @@
+  * Foundation.  See file COPYING.
+  */
+ 
++#include "PyModuleRegistry.h"
++
++#if __has_include(<filesystem>)
++#include <filesystem>
++namespace fs = std::filesystem;
++#elif __has_include(<experimental/filesystem>)
++#include <experimental/filesystem>
++namespace fs = std::experimental::filesystem;
++#else
++#error std::filesystem not available!
++#endif
+ 
+ #include "include/stringify.h"
+ #include "common/errno.h"
+@@ -24,8 +35,6 @@
+ 
+ #include "ActivePyModules.h"
+ 
+-#include "PyModuleRegistry.h"
+-
+ #define dout_context g_ceph_context
+ #define dout_subsys ceph_subsys_mgr
+ 
+@@ -258,29 +267,17 @@ void PyModuleRegistry::shutdown()
+ 
+ std::set<std::string> PyModuleRegistry::probe_modules(const std::string &path) const
+ {
+-  DIR *dir = opendir(path.c_str());
+-  if (!dir) {
+-    return {};
+-  }
+-
+-  std::set<std::string> modules_out;
+-  struct dirent *entry = NULL;
+-  while ((entry = readdir(dir)) != NULL) {
+-    string n(entry->d_name);
+-    string fn = path + "/" + n;
+-    struct stat st;
+-    int r = ::stat(fn.c_str(), &st);
+-    if (r == 0 && S_ISDIR(st.st_mode)) {
+-      string initfn = fn + "/module.py";
+-      r = ::stat(initfn.c_str(), &st);
+-      if (r == 0) {
+-	modules_out.insert(n);
+-      }
++  std::set<std::string> modules;
++  for (const auto& entry: fs::directory_iterator(path)) {
++    if (!fs::is_directory(entry)) {
++      continue;
++    }
++    auto module_path = entry.path() / "module.py";
++    if (fs::exists(module_path)) {
++      modules.emplace(entry.path().filename());
+     }
+   }
+-  closedir(dir);
+-
+-  return modules_out;
++  return modules;
+ }
+ 
+ int PyModuleRegistry::handle_command(
+From 067adbf9a032b5de793fd0b41b071f24f075270a Mon Sep 17 00:00:00 2001
+From: Kefu Chai <kchai@redhat.com>
+Date: Thu, 30 Apr 2020 11:34:07 +0800
+Subject: [PATCH] mgr: do not load disabled modules
+
+an option named "mgr_disabled_modules" is added in this change to
+prevent mgr from loading modules listed in this option. because mgr
+loads *all* modules found in the configured path, and per
+https://tracker.ceph.com/issues/45147, python subinterpreter could hang
+when loading numpy, so this behavior practically creates a deadlock
+in mgr.
+
+this issue is found when mgr uses python3.8 runtime. in development
+environment, it'd be inconvenient to disable the offending mgr module
+without changing the source code, even if we can choose to not install
+them, for instance, the enduser can workaround this issue by
+uninstalling `ceph-mgr-diskprediction-local`.
+
+an option would be useful in this case, so we can add the module to the
+list before mgr tries to load it.
+
+as this issue is found with python3.8 + diskprediction_local (numpy), so
+this mgr module is disabled by default if mgr is compiled with python3.8
+runtime.
+
+Fixes: https://tracker.ceph.com/issues/45147
+Signed-off-by: Kefu Chai <kchai@redhat.com>
+---
+ CMakeLists.txt                |  5 +++++
+ src/common/options.cc         | 14 ++++++++++++++
+ src/include/config-h.in.cmake |  3 +++
+ src/mgr/PyModuleRegistry.cc   | 11 ++++++++++-
+ 4 files changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0f7e86414c2d2..fa00d1316bcc0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -442,6 +442,11 @@ if(WITH_MGR)
+   set(MGR_PYTHON_LIBRARIES ${Python3_LIBRARIES})
+   set(MGR_PYTHON_VERSION_MAJOR ${Python3_VERSION_MAJOR})
+   set(MGR_PYTHON_VERSION_MINOR ${Python3_VERSION_MINOR})
++  # https://tracker.ceph.com/issues/45147
++  if(Python3_VERSION VERSION_GREATER_EQUAL 3.8)
++    set(MGR_DISABLED_MODULES "diskprediction_local")
++    message(STATUS "mgr module disabled for ${Python3_VERSION}: ${MGR_DISABLED_MODULES}")
++  endif()
+   # Boost dependency check deferred to Boost section
+ endif(WITH_MGR)
+ 
+diff --git a/src/common/options.cc b/src/common/options.cc
+index be1e955ab51ea..c78d9b69d7591 100644
+--- a/src/common/options.cc
++++ b/src/common/options.cc
+@@ -5169,6 +5169,20 @@ std::vector<Option> get_global_options() {
+     .add_service("mgr")
+     .set_description("Filesystem path to manager modules."),
+ 
++    Option("mgr_disabled_modules", Option::TYPE_STR, Option::LEVEL_ADVANCED)
++#ifdef MGR_DISABLED_MODULES
++    .set_default(MGR_DISABLED_MODULES)
++#endif
++    .set_flag(Option::FLAG_STARTUP)
++    .add_service("mgr")
++    .set_description("List of manager modules never get loaded")
++    .set_long_description("A comma delimited list of module names. This list "
++        "is read by manager when it starts. By default, manager loads all "
++        "modules found in specified 'mgr_module_path', and it starts the "
++        "enabled ones as instructed. The modules in this list will not be "
++        "loaded at all.")
++    .add_see_also("mgr_module_path"),
++
+     Option("mgr_initial_modules", Option::TYPE_STR, Option::LEVEL_BASIC)
+     .set_default("restful iostat")
+     .set_flag(Option::FLAG_NO_MON_UPDATE)
+diff --git a/src/include/config-h.in.cmake b/src/include/config-h.in.cmake
+index dc213938f5c9c..ea550c81e3a0e 100644
+--- a/src/include/config-h.in.cmake
++++ b/src/include/config-h.in.cmake
+@@ -309,6 +309,9 @@
+ 
+ #cmakedefine MGR_PYTHON_EXECUTABLE "@MGR_PYTHON_EXECUTABLE@"
+ 
++/* the default value of "mgr_disabled_module" option */
++#cmakedefine MGR_DISABLED_MODULES "@MGR_DISABLED_MODULES@"
++
+ /* Define to 1 if you have the `getprogname' function. */
+ #cmakedefine HAVE_GETPROGNAME 1
+ 
+diff --git a/src/mgr/PyModuleRegistry.cc b/src/mgr/PyModuleRegistry.cc
+index 466da5d404964..2e2e080aa76c0 100644
+--- a/src/mgr/PyModuleRegistry.cc
++++ b/src/mgr/PyModuleRegistry.cc
+@@ -25,6 +25,7 @@ namespace fs = std::experimental::filesystem;
+ 
+ #include "include/stringify.h"
+ #include "common/errno.h"
++#include "common/split.h"
+ 
+ #include "BaseMgrModule.h"
+ #include "PyOSDMap.h"
+@@ -267,14 +268,22 @@ void PyModuleRegistry::shutdown()
+ 
+ std::set<std::string> PyModuleRegistry::probe_modules(const std::string &path) const
+ {
++  const auto opt = g_conf().get_val<std::string>("mgr_disabled_modules");
++  const auto disabled_modules = ceph::split(opt);
++
+   std::set<std::string> modules;
+   for (const auto& entry: fs::directory_iterator(path)) {
+     if (!fs::is_directory(entry)) {
+       continue;
+     }
++    const std::string name = entry.path().filename();
++    if (std::count(disabled_modules.begin(), disabled_modules.end(), name)) {
++      dout(10) << "ignoring disabled module " << name << dendl;
++      continue;
++    }
+     auto module_path = entry.path() / "module.py";
+     if (fs::exists(module_path)) {
+-      modules.emplace(entry.path().filename());
++      modules.emplace(name);
+     }
+   }
+   return modules;

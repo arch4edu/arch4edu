@@ -1,0 +1,23 @@
+--- a/src/pybind/mgr/dashboard/.pylintrc	2019-12-06 17:42:34.000000000 +0100
++++ b/src/pybind/mgr/dashboard/.pylintrc	2020-01-03 13:55:54.511393504 +0100
+@@ -119,7 +119,11 @@ disable=import-star-module-level,
+         too-many-arguments,
+         too-many-locals,
+         too-many-statements,
+-        useless-object-inheritance
++        useless-object-inheritance,
++        no-else-raise,
++        multiple-statements,
++        unused-argument,
++        protected-access
+ 
+ 
+ # Enable the message, report, category or checker with the given id(s). You can
+--- a/src/pybind/mgr/dashboard/services/rgw_client.py	2019-12-06 17:42:34.000000000 +0100
++++ b/src/pybind/mgr/dashboard/services/rgw_client.py	2020-01-03 15:13:15.266131061 +0100
+@@ -1,4 +1,5 @@
+ # -*- coding: utf-8 -*-
++# pylint: disable=unused-argument
+ from __future__ import absolute_import
+ 
+ import re
