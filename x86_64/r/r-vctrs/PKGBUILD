@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=vctrs
-_cranver=0.4.1
+_cranver=0.4.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -35,7 +35,7 @@ optdepends=(
   "r-zeallot"
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=("9676881e009aa1217818f326338e8b35dd9a9438918f8b1ac249f4c8afe460dd")
+sha256sums=('5414d1d6977163b4e85efa40d6facdd98089d6ffd460daaba729d4200942d815')
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
