@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggpp
-_pkgver=0.4.4
+_pkgver=0.4.5
 pkgname=r-${_pkgname,,}
-pkgver=0.4.4
-pkgrel=3
+pkgver=0.4.5
+pkgrel=1
 pkgdesc="Grammar Extensions to 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -33,7 +33,7 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('616eba2c452fc5063ac0e5181cc71d61e28a9070eca420207abe6c25fb678a71')
+sha256sums=('e98a9eb121de49c72fa58e5a093f72cadbab0b0be15b80d791ba7ff1dde6360a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
