@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=jsonlite
-_cranver=1.8.0
+_cranver=1.8.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="A Simple and Robust JSON Parser and Generator for R"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -16,7 +16,6 @@ license=(MIT)
 depends=(r)
 optdepends=(
     r-httr
-    r-curl
     r-vctrs
     r-testthat
     r-knitr
@@ -26,7 +25,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('7b1892efebcb4cf4628f716000accd4b43bbf82b3e6ba90b9529d4fa0e55cd4c'
+sha256sums=('de2e45b693f1d892dd043f1cd2bdfecd1060e43a5392357318b1ad68248997d0'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
