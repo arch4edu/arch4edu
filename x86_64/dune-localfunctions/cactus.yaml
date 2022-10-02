@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - x86_64/dune-geometry
 build_prefix: extra-x86_64

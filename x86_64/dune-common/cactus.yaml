@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 makedepends:
   - x86_64/python-portalocker
 build_prefix: extra-x86_64
