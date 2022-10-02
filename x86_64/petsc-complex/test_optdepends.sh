@@ -38,8 +38,8 @@ if [ -f "/usr/lib/libtriangle.so" ]; then
 fi
 
 # Add hdf5-openmpi support
-if [[ "$(h5pcc --version)" ]]; then
-	CONFOPTS="${CONFOPTS} --with-hdf5=1 --download-hdf5-fortran-bindings=1"
+if [ -f "/usr/bin/h5pcc" ]; then
+	CONFOPTS="${CONFOPTS} --with-hdf5=1"
 fi
 
 # Add scalapack support
@@ -109,8 +109,14 @@ if [ -f "/usr/lib/libml.so" ]; then
 	CONFOPTS="${CONFOPTS} --with-boost=1"
 fi
 
+# Add valgrind support
 if [ -f "/usr/lib/pkgconfig/valgrind.pc" ]; then
 	CONFOPTS="${CONFOPTS} --with-valgrind=1"
+fi
+
+# Add yaml support
+if [ -f "/usr/lib/libyaml.so" ]; then
+	CONFOPTS="${CONFOPTS} --with-yaml=1"
 fi
 
 echo "${CONFOPTS}"
