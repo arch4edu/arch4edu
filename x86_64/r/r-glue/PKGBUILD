@@ -6,13 +6,12 @@ _cranname=glue
 _cranver=1.6.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Interpreted String Literals"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(r)
-checkdepends=(r-dbi r-rsqlite r-testthat)
 optdepends=(
     r-covr
     r-crayon
@@ -41,11 +40,6 @@ sha256sums=('9da518f12be584c90e75fe8e07f711ee3f6fc0d03d817f72c25dc0f66499fdbf'
 build() {
   mkdir -p build
   R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
-}
-
-check() {
-  cd "${_cranname}/tests"
-  R_LIBS="${srcdir}/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
