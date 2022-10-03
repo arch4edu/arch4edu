@@ -5,5 +5,5 @@ nvchecker:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed 's|build/lib/retworkx|"build/lib.linux-${CARCH}-${python_version}/retworkx"|' -i PKGBUILD
+  sed '/build\/lib\/retworkx/d' -i PKGBUILD
 post_build: aur-post-build
