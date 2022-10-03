@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=jsonlite
-_cranver=1.8.1
+_cranver=1.8.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -25,7 +25,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('de2e45b693f1d892dd043f1cd2bdfecd1060e43a5392357318b1ad68248997d0'
+sha256sums=('677b645c081a7e004b71f0c48a1d46c1be9715163ccb6b419fbb0342a6c9cc3a'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
