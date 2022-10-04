@@ -7,6 +7,6 @@ build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: |
   aur-pre-build
-  add makedepends nodejs-lts-gallium
+  download-pacman-package nodejs-lts-gallium
   sed 's/pkgver()/_pkgver()/' -i PKGBUILD
 post_build: aur-post-build
