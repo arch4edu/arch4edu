@@ -2,11 +2,12 @@
 _pkgname=multitasking
 pkgname=python-multitasking
 pkgver=0.0.11
-pkgrel=1
+pkgrel=2
 pkgdesc="Non-blocking Python methods using decorators"
 arch=('any')
 url="https://github.com/ranaroussi/multitasking"
 license=('Apache')
+depends=('python')
 makedepends=(
     'python-build'
     'python-installer'
