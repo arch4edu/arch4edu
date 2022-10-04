@@ -3,13 +3,13 @@
 
 pkgname=rpi-imager
 pkgver=1.7.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Raspberry Pi Imaging Utility"
 depends=(
     'hicolor-icon-theme'
     'libarchive'
     'qt5-svg'
-    'qt5-quickcontrols'
+    'qt5-quickcontrols2'
 )
 optdepends=(
     'dosfstools: SD card bootloader support'
@@ -36,13 +36,13 @@ prepare() {
 }
 
 build() {
-    rm -rf build
+    #rm -rf build
     cmake -B build -S "${pkgname}-${pkgver}/src" \
         -DCMAKE_BUILD_TYPE='None' \
         -DCMAKE_INSTALL_PREFIX='/usr'
-    make -C build
+    cmake --build build
 }
 
 package() {
-    make -C build DESTDIR="${pkgdir}" install
+    DESTDIR="$pkgdir" cmake --install build
 }
