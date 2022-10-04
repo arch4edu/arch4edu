@@ -5,9 +5,9 @@
 # Contributor: Lucas H. Gabrielli
 pkgname=mumps
 pkgver=5.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Sparse solver library using Gaussian elimination'
-url='http://mumps.enseeiht.fr'
+url='https://graal.ens-lyon.fr/MUMPS/index.php'
 license=('custom')
 depends=('lapack' 'openmpi' 'scotch' 'scalapack' 'metis' 'zlib' 'bzip2')
 makedepends=('gcc-fortran')
@@ -32,7 +32,7 @@ check () {
   cd "${srcdir}/MUMPS_${pkgver}/examples"
   make all
   # From the README (in examples)
-  MPIRUN="mpirun -np 3 --mca opal_warn_on_missing_libcuda 0 --oversubscribe"
+  MPIRUN="mpirun -np 3 --mca plm_rsh_agent sh --mca opal_warn_on_missing_libcuda 0 --oversubscribe"
   export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${srcdir}/MUMPS_${pkgver}/lib"
   ${MPIRUN} ./ssimpletest < input_simpletest_real
   ${MPIRUN} ./dsimpletest < input_simpletest_real
