@@ -1,2 +1,4 @@
 # Give write to HOME permision for runner
 z /var/lib/github-actions 0775 root github-actions
+Z /var/lib/github-actions/bin 0775 root github-actions
+Z /var/lib/github-actions/externals 0775 root github-actions
