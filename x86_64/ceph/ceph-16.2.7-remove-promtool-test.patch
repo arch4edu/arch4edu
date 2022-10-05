@@ -1,0 +1,14 @@
+diff --git a/src/test/CMakeLists.txt b/src/test/CMakeLists.txt
+index 3c7625d93eb..06fc3ccc015 100644
+--- a/src/test/CMakeLists.txt
++++ b/src/test/CMakeLists.txt
+@@ -604,9 +604,6 @@ if(PROMTOOL_EXECUTABLE)
+     message(WARNING "'${PROMTOOL_EXECUTABLE} test rules' does not work, "
+       "please use a newer prometheus")
+   endif()
+-else()
+-  add_ceph_test(run-promtool-unittests
+-    {CMAKE_CURRENT_SOURCE_DIR}/run-promtool-unittests.sh)
+ endif()
+ 
+ set_property(

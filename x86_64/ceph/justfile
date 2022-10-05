@@ -2,6 +2,7 @@ PkgBase       := "ceph"
 ChrootPath    := env_var("HOME") / "chroot"
 ChrootBase    := ChrootPath / "root"
 ChrootActive  := ChrootPath / PkgVer + "_" + PkgRel
+Scripts       := justfile_directory() / "scripts"
 
 Color         := env_var_or_default("USE_COLOR", "1")
 Chroot        := env_var_or_default("USE_CHROOT", "1")
@@ -61,6 +62,9 @@ clean +what="chroot":
     esac
   done
 
+# Upload built artifacts to Github, using the associated release
+upload pkg="ceph,ceph-libs,ceph-mgr": (_upload pkg)
+
 # Initialize the chroot
 @_mkchroot $cbase:
   {{ if path_exists(cbase) == "true" { ":" } else { "$Say Initializing chroot @$cbase" } }}
@@ -79,9 +83,42 @@ clean +what="chroot":
     PKGBUILD-namcap.log \
     > {{LogFileList}}
 
+# Script to upload a comma separated list of packages to the active Github release
+_upload $pkgstring:
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  [[ -n "$GITHUB_TOKEN" ]] || { $Say "Error: GITHUB_TOKEN must be set" && exit 4; }
+
+  IFS=', ' read -r -a PKGS <<<"$pkgstring"
+
+  $Say "uploading package(s): { ${PKGS[@]} } to {{GithubRepo}}/releases/v{{PkgVer}}-{{PkgRel}}"
+
+  declare -A FILES
+  for pkg in "${PKGS[@]}"; do
+    fname="$pkg-{{PkgVer}}-{{PkgRel}}-{{PkgArch}}.pkg.tar.zst"
+    [[ -f "$fname" ]] || { $Say "Error: unable to locate artifact '$fname' for '$pkg' upload" && exit 7; }
+    FILES[$pkg]=$fname
+  done
+
+  for pkg in "${!FILES[@]}"; do
+    src=${FILES[$pkg]}
+    mime="$(file -b --mime-type $src)"
+    dst="${pkg//-/_}_linux_{{PkgArch}}.tar.$(basename $mime)"
+
+    $Say "uploading '$src' as '$dst'"
+
+    {{Scripts}}.gh-upload-artifact.sh \
+      ${DryRun:+--dry-run} \
+      --repo {{GithubRepo}} \
+      --tag v{{PkgVer}}-{{PkgRel}} \
+      --file "$src:$dst"
+  done
 
 # ~~~ Global shell variables ~~~
 export Say              := "echo " + C_RED + "==> " + C_RESET + BuildId
+export DryRun           := None
+export Debug            := None
 
 # Nicer name for empty strings
 None := ""
@@ -90,6 +127,7 @@ None := ""
 PkgBuild                := justfile_directory() / "PKGBUILD"
 PkgVer                  := `awk -F= '/pkgver=/ {print $2}' PKGBUILD`
 PkgRel                  := `awk -F= '/pkgrel=/ {print $2}' PKGBUILD`
+PkgArch                 := 'x86_64'
 GitCommitish            := if `git tag --points-at HEAD` != None {
                               `git tag --points-at HEAD`
                            } else if `git branch --show-current` != None {
@@ -100,6 +138,7 @@ GitCommitish            := if `git tag --points-at HEAD` != None {
 BuildId                 := "[" + C_YELLOW + PkgBase + C_RESET + "/" + C_GREEN + PkgVer + ":" + PkgRel + C_RESET + "@" + C_CYAN + GitCommitish + C_RESET + "]"
 BuildTriple             := PkgVer + "-" + PkgRel + "-" + "x86_64"
 LogFileList             := env_var_or_default("TEMP", "/tmp") / PkgBase + ".temp" / "logfiles"
+GithubRepo              := `git remote get-url origin | sed -nE 's|[^:]+://[^/]+/([^/]+)/([^./]+)\.?.*|\1/\2|p'`
 
 # ~~~ Color Codes ~~~
 C_ENABLED   := if Color =~ '(?i)^auto|yes|1$' { "1" } else { None }

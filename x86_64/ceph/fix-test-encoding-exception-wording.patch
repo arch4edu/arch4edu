@@ -1,0 +1,15 @@
+diff --git a/src/test/encoding.cc b/src/test/encoding.cc
+index 6d252fae18b..0cba1765d94 100644
+--- a/src/test/encoding.cc
++++ b/src/test/encoding.cc
+@@ -320,8 +320,8 @@ TEST(EncodingRoundTrip, Integers) {
+ }
+ 
+ const char* expected_what[] = {
+-  "void lame_decoder(int) no longer understand old encoding version 100 < 200: Malformed input",
+-  "void lame_decoder(int) decode past end of struct encoding: Malformed input"
++  "void lame_decoder(int) no longer understand old encoding version 100 < 200: Malformed input [buffer:3]",
++  "void lame_decoder(int) decode past end of struct encoding: Malformed input [buffer:3]"
+ };
+ 
+ void lame_decoder(int which) {

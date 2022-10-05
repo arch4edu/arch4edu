@@ -1,0 +1,13 @@
+diff --git a/src/rgw/rgw_string.h b/src/rgw/rgw_string.h
+index 257daa9c1fe..8658e367edc 100644
+--- a/src/rgw/rgw_string.h
++++ b/src/rgw/rgw_string.h
+@@ -7,6 +7,8 @@
+ #include <errno.h>
+ #include <stdlib.h>
+ #include <limits.h>
++#include <string>
++#include <stdexcept>
+ #include <string_view>
+ 
+ #include <boost/container/small_vector.hpp>
