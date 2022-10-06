@@ -2,7 +2,7 @@
 
 pkgname=python-cupy
 _pkgname=cupy
-pkgver=11.1.0
+pkgver=11.2.0
 _cub_commit=c3cceac115c072fb63df1836ff46d8c60d9eb304
 _jitify_commit=4a37de0be4639f222c6565ebd0654cb922b5180e
 pkgrel=1
@@ -16,7 +16,7 @@ optdepends=('cudnn' 'libcutensor' 'nccl')
 source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
         "https://github.com/NVIDIA/cub/archive/$_cub_commit.tar.gz"
         "https://github.com/NVIDIA/jitify/archive/$_jitify_commit.tar.gz")
-md5sums=('90e644f2bf06fd6500aa8b5953030bb0'
+md5sums=('7841de2dd2aef7ee845611e4db13a9e7'
          'ae6435aef98378a8b323b69f6665df33'
          '2ad752c0814c2da9909e2dcac0f50401')
 
