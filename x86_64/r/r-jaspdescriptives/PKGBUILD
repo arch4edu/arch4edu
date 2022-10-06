@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspDescriptives
-_pkgver=0.16.4
+_pkgver=0.17.0
 pkgname=r-${_pkgname,,}
-pkgver=0.16.4
+pkgver=0.17.0
 pkgrel=1
 pkgdesc="Descriptives Module for JASP"
 arch=('any')
