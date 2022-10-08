@@ -4,9 +4,9 @@ pkgdesc="ROS - Standalone Python library for generating ROS message and service 
 url='https://wiki.ros.org/genmsg'
 
 pkgname='ros-noetic-genmsg'
-pkgver='0.5.16'
+pkgver='0.6.0'
 arch=('any')
-pkgrel=2
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(
@@ -29,7 +29,7 @@ depends=(
 
 _dir="genmsg-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/genmsg/archive/${pkgver}.tar.gz")
-sha256sums=('0e414846823a2aaa7781f81268251c7c9a45ff96cef8e6a78bbbbcf7e4c28d56')
+sha256sums=('5e1169b03aebab158f762120cd2f7d8cfabb42885d51d853564f783d2b22fb3e')
 
 build() {
 	# Use ROS environment variables.
