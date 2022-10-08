@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=evaluate
-_cranver=0.16
+_cranver=0.17
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -14,7 +14,7 @@ depends=(r)
 optdepends=(r-covr r-ggplot2 r-testthat)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('10fc0a260aa708bac9f953da17a3e66289864bf5fe82cf4060e4178068302801'
+sha256sums=('49c743c94cb967911af0e5555861a3762cd840b98578882671b583cff86ba963'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
