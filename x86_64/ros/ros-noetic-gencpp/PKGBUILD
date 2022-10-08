@@ -4,7 +4,7 @@ pkgdesc="ROS - C++ ROS message and service generators."
 url='https://wiki.ros.org/gencpp'
 
 pkgname='ros-noetic-gencpp'
-pkgver='0.6.5'
+pkgver='0.7.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 pkgrel=1
 license=('BSD')
@@ -30,7 +30,7 @@ depends=(
 
 _dir="gencpp-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/gencpp/archive/${pkgver}.tar.gz")
-sha256sums=('05acfeeb1bbc374356bf7674fee2a7aab3bf6a48ebad4a06fd0f0d4455a60720')
+sha256sums=('3806b243153cde5c03695d5e2a5899a584b978a20b2c1b45e462219098bbb7b6')
 
 build() {
 	# Use ROS environment variables.
