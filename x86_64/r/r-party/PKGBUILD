@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=party
-_pkgver=1.3-10
+_pkgver=1.3-11
 pkgname=r-${_pkgname,,}
-pkgver=1.3.10
-pkgrel=5
+pkgver=1.3.11
+pkgrel=1
 pkgdesc='A Laboratory for Recursive Partytioning'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -29,7 +29,7 @@ optdepends=(
   r-vcd
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e5892955f6ce662ade568e646d1d672c3ecbf5d4e74b4a887a353e6160f7b56a')
+sha256sums=('3ea41a1775d40bc6d0bdf657b98d939d99f98925ac985a31c969735c56618c9c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
