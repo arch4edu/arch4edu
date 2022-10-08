@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-cli
   - x86_64/r/r-glue
   - x86_64/r/r-rlang
 build_prefix: extra-x86_64
