@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 depends:
   - x86_64/ros/ros-noetic-sensor-msgs
   - x86_64/ros/ros-noetic-roscpp
