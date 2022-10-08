@@ -2,7 +2,7 @@ pkgdesc="ROS - image_geometry contains C++ and Python libraries for interpreting
 url='https://wiki.ros.org/image_geometry'
 
 pkgname='ros-noetic-image-geometry'
-pkgver='1.16.0'
+pkgver='1.16.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 pkgrel=1
 license=('BSD')
@@ -29,7 +29,7 @@ depends=(
 
 _dir="vision_opencv-${pkgver}/image_geometry"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-perception/vision_opencv/archive/${pkgver}.tar.gz")
-sha256sums=('7b78547be0967814c06fb395d8453e53ddf505bb973adcf801237cca0e1adb07')
+sha256sums=('046f3bac5dcdaea5678bf5e6be10d895bbd670cc16c7b97ba4c1a6b661f8557e')
 
 build() {
 	# Use ROS environment variables.
