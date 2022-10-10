@@ -28,6 +28,8 @@ depends:
   - x86_64/ros/ros-noetic-visualization-msgs
   - x86_64/ros/ros-noetic-media-export
   - x86_64/ros/ros-noetic-message-runtime
+  - x86_64/sip4
+  - x86_64/sip4: python-sip4
 makedepends:
   - x86_64/ros/ros-build-tools
   - x86_64/ros/ros-noetic-catkin
