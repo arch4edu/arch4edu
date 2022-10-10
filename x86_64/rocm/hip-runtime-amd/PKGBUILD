@@ -1,8 +1,8 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-runtime-amd
-pkgver=5.2.3
-pkgrel=2
+pkgver=5.3.0
+pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
@@ -18,25 +18,15 @@ _hipamd='https://github.com/ROCm-Developer-Tools/hipamd'
 source=("$pkgname-$pkgver.tar.gz::$_hip/archive/rocm-$pkgver.tar.gz"
         "$pkgname-opencl-$pkgver.tar.gz::$_opencl/archive/rocm-$pkgver.tar.gz"
         "$pkgname-rocclr-$pkgver.tar.gz::$_rocclr/archive/rocm-$pkgver.tar.gz"
-        "$pkgname-hipamd-$pkgver.tar.gz::$_hipamd/archive/rocm-$pkgver.tar.gz"
-        "git-hash.patch::https://github.com/ROCm-Developer-Tools/hipamd/commit/56b32604729cca08bdcf00c7a69da8a75cc95b8a.patch"
-        "noinline.patch::https://github.com/ROCm-Developer-Tools/hipamd/commit/28009bc68faf2b4dd8fda91c99b0725e1b063a18.patch")
-sha256sums=('5b83d1513ea4003bfad5fe8fa741434104e3e49a87e1d7fad49e5a8c1d06e57b'
-            '932ea3cd268410010c0830d977a30ef9c14b8c37617d3572a062b5d4595e2b94'
-            '0493c414d4db1af8e1eb30a651d9512044644244488ebb13478c2138a7612998'
-            '5031d07554ce07620e24e44d482cbc269fa972e3e35377e935d2694061ff7c04'
-            '3b0ec136c9bad206697087df0908922df705ec76085f57e36d0d15f52a5fd981'
-            'f45f2087ba3fab3ee3b9e65baefad604cd774611f3d433273afc1166d146e8ed')
+        "$pkgname-hipamd-$pkgver.tar.gz::$_hipamd/archive/rocm-$pkgver.tar.gz")
+sha256sums=('05225832fb5a4d24f49a773ac27e315239943a6f24291a50d184e2913f2cdbe0'
+            'd251e2efe95dc12f536ce119b2587bed64bbda013969fa72be58062788044a9e'
+            '2bf14116b5e2270928265f5d417b3d0f0f2e13cbc8ec5eb8c80d4d4a58ff7e94'
+            '81e9bd5209a7b400c986f9bf1d7079bcf7169bbcb06fc4fe843644559a4d612e')
 _dirhip="$(basename "$_hip")-$(basename "${source[0]}" ".tar.gz")"
 _diropencl="$(basename "$_opencl")-$(basename "${source[1]}" ".tar.gz")"
 _dirrocclr="$(basename "$_rocclr")-$(basename "${source[2]}" ".tar.gz")"
 _dirhipamd="$(basename "$_hipamd")-$(basename "${source[3]}" ".tar.gz")"
-
-prepare() {
-    cd "$_dirhipamd"
-    patch -Np1 -i "$srcdir/git-hash.patch"
-    patch -Np1 -i "$srcdir/noinline.patch"
-}
 
 build() {
   # build fails if cmake and make are called from outside the build directory
