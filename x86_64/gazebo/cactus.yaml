@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 depends:
   - x86_64/libccd
   - x86_64/ogre-1.9
