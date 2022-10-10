@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 depends:
   - x86_64/flann
   - x86_64/openni2
