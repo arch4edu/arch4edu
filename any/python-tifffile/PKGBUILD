@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2022.8.12
+pkgver=2022.10.10
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -14,9 +14,9 @@ makedepends=('python-setuptools'
              'python-sphinx'
              'python-numpy')
 #makedepends=('python-setuptools' 'python-wheel' 'python-build' 'python-installer')
-checkdepends=('python-pytest' 'python-xarray' 'python-fsspec')
+checkdepends=('python-pytest' 'python-fsspec' 'python-xarray') # numpy <- xarray
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('3e74e0fd48838477ebcf40e09b7780bd095ee5920b2238f485e2c68463a3dcb4')
+sha256sums=('50b61ba943b866d191295bc38a00191c9fdab23ece063544c7f1a264e3f6aa8e')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -48,10 +48,12 @@ check() {
 }
 
 package_python-tifffile() {
-    depends=('python-numpy>=1.22.4')
+    depends=('python-numpy>=1.23.3')
     optdepends=('python-matplotlib>=3.5.2: required for plotting'
-                'python-imagecodecs>=2022.7.31: required for encoding or decoding LZW, JPEG, etc. compressed segments'
+                'python-imagecodecs>=2022.9.26: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=4.9.1: required only for validating and printing XML'
+                'python-zarr>=2.13.0: required for opening Zarr stores'
+                'python-fsspec: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
 
