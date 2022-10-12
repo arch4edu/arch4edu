@@ -2,41 +2,38 @@
 # Contributor: Jakub Okoński <jakub@okonski.org>
 # Contributor: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocfft
-pkgver=5.2.3
+pkgver=5.3.0
 pkgrel=1
 pkgdesc='Next generation FFT implementation for ROCm'
 arch=('x86_64')
-url='https://docs.amd.com/bundle/rocFFT-release-rocm-rel-5.2/page/library.html'
+url='https://rocfft.readthedocs.io/en/latest/library.html'
 license=('MIT')
 depends=('hip')
 makedepends=('cmake')
 _git='https://github.com/ROCmSoftwarePlatform/rocFFT'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('0cee37886f01f1afb3ae5dad1164c819573c13c6675bff4eb668de334adbff27')
+sha256sums=('d655c5541c4aff4267e80e36d002fc3a55c2f84a0ae8631197c12af3bf03fa7d')
 options=(!lto)
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
-  local cmake_args=(-DCMAKE_INSTALL_PREFIX=/opt/rocm
-                    -DCMAKE_CXX_COMPILER=hipcc)
-  if [[ -n "$AMDGPU_TARGETS" ]]; then
-      cmake_args+=(-DAMDGPU_TARGETS="$AMDGPU_TARGETS")
-  fi
-
   # -fcf-protection is not supported by HIP, see
-  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
-  cmake -B build \
-        -S "$_dirname" \
-        "${cmake_args[@]}"
-  make -C build
+  cmake \
+    -Wno-dev \
+    -B build \
+    -S "$_dirname" \
+    -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm
+  cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" make -C build install
+  DESTDIR="$pkgdir" cmake --install build
 
-  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocfft.conf" << EOF
-/opt/rocm/rocfft/lib
-EOF
+  echo "/opt/rocm/$pkgname/lib" > "$pkgname.conf"
+  install -Dm644 "$pkgname.conf" "$pkgdir/etc/ld.so.conf.d/rocfft.conf"
+
   install -Dm644 "$srcdir/$_dirname/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
