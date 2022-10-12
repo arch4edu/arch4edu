@@ -1,7 +1,7 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=rocsparse
-pkgver=5.2.3
+pkgver=5.3.0
 pkgrel=1
 pkgdesc='BLAS for sparse computation on top of ROCm'
 arch=('x86_64')
@@ -10,40 +10,30 @@ license=('MIT')
 depends=('hip' 'rocprim')
 makedepends=('cmake' 'git' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/rocSPARSE'
-source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
-        "gfx1010.patch::$_git/commit/f8934f91f779c291a5cf1157ed58fc427544fd2d.patch")
-sha256sums=('6da3f3303a8ada94c4dbff4b42ee33a2e2883a908ee21c41cb2aa7180382026a'
-            '97e250d386ba318550701bc0f0657d5f7ba282f301c7d81b1bbb1563af9dbe56')
+source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
+sha256sums=('521ca0e7b52f26edbff8507eb1479dc26019f456756d884d7b8b192c3ea518e8')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
-prepare() {
-    cd "$_dirname"
-    patch -Np1 -i "$srcdir/gfx1010.patch"
-}
-
 build() {
-  local cmake_flags=(
-        '-DCMAKE_INSTALL_PREFIX=/opt/rocm'
-        '-Drocprim_DIR=/opt/rocm/rocprim/rocprim/lib/cmake/rocprim'
-        '-DBUILD_CLIENTS_SAMPLES=OFF')
-  if [[ -n "$AMDGPU_TARGETS" ]]; then
-      cmake_flags+=("-DAMDGPU_TARGETS=$AMDGPU_TARGETS")
-  fi
-
   # -fcf-protection is not supported by HIP, see
-  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
-  CXX=/opt/rocm/bin/hipcc \
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
-  cmake -Wno-dev -S "$_dirname" \
-        "${cmake_flags[@]}"
-  make
+  cmake \
+    -Wno-dev \
+    -B build \
+    -S "$_dirname" \
+    -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+    -Drocprim_DIR=/opt/rocm/rocprim/rocprim/lib/cmake/rocprim \
+    -DBUILD_CLIENTS_SAMPLES=OFF
+  cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" make install
+  DESTDIR="$pkgdir" cmake --install build
 
-  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rocsparse.conf" <<EOF
-/opt/rocm/rocsparse/lib
-EOF
+  echo '/opt/rocm/rocsparse/lib' > "$pkgname.conf"
+  install -Dm644 "$pkgname.conf" "$pkgdir/etc/ld.so.conf.d/$pkgname.conf"
+
   install -Dm644 "$_dirname/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
