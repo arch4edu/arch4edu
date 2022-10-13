@@ -1,11 +1,11 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspGraphs
-_pkgver=0.5.2.15
+_pkgver=0.5.2.16
 pkgname=r-${_pkgname,,}
-pkgver=0.5.2.15
+pkgver=0.5.2.16
 pkgrel=1
 pkgdesc="Custom Graphs for JASP"
-arch=('x86_64')
+arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
 license=('GPL')
 depends=(r
@@ -25,12 +25,14 @@ sha256sums=('SKIP')
 
 
 build() {
-  mkdir -p ${srcdir}/usr/lib/R/library
-  R -e "install.packages('${srcdir}/${_pkgname}',\
-     type='source', repos=NULL,lib='${srcdir}/usr/lib/R/library', INSTALL_opts='--no-multiarch --no-docs --no-test-load')"
+  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
-
-  cp -a --no-preserve=ownership "${srcdir}/usr" "${pkgdir}"
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  # we may or may not need this link.
+  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
+  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
