@@ -3,42 +3,38 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=rccl
-pkgver=5.2.3
+pkgver=5.3.0
 pkgrel=1
 pkgdesc="ROCm Communication Collectives Library"
 arch=('x86_64')
-url="https://docs.amd.com/bundle/rccl-release-rocm-rel-5.2/page/library.html"
+url='https://rccl.readthedocs.io/en/rocm-5.3.0/'
 license=('custom')
 depends=('hip' 'rocm-smi-lib')
 makedepends=('cmake' 'python' 'gtest')
 _git='https://github.com/ROCmSoftwarePlatform/rccl'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('ecba09f4c95b4b2dae81b88231a972ac956d29909b5e712e21cf2a74bd251ff4')
+sha256sums=('51da5099fa58c2be882319cebe9ceabe2062feebcc0c5849e8c109030882c10a')
 _dirname="$(basename $_git)-$(basename ${source[0]} .tar.gz)"
 
 build() {
-  local cmake_args=(-DCMAKE_INSTALL_PREFIX=/opt/rocm
-                    -DBUILD_TESTS=OFF)
-  if [[ -n "$AMDGPU_TARGETS" ]]; then
-      cmake_args+=(-DAMDGPU_TARGETS="$AMDGPU_TARGETS")
-  fi
   # -fcf-protection is not supported by HIP, see
-  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
-
-  CXX=/opt/rocm/hip/bin/hipcc \
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
-  cmake -B build -Wno-dev \
-        -S "$_dirname" \
-        "${cmake_args[@]}"
-  make -C build
+  cmake \
+    -Wno-dev \
+    -B build \
+    -S "$_dirname" \
+    -DCMAKE_CXX_COMPILER=/opt/rocm/hip/bin/hipcc \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+    -DBUILD_TESTS=OFF
+  cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" make -C build install
+  DESTDIR="$pkgdir" cmake --install build
 
-  install -Dm644 /dev/stdin "$pkgdir/etc/ld.so.conf.d/rccl.conf" <<EOF
-/opt/rocm/rccl/lib
-EOF
+  echo "/opt/rocm/$pkgname/lib" > "$pkgname.conf"
+  install -Dm644 "$pkgname.conf" "$pkgdir/etc/ld.so.conf.d/$pkgname.conf"
 
   install -Dm644 "$srcdir/$_dirname/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
