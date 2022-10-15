@@ -5,18 +5,18 @@
 pkgname=rocm-llvm-mlir
 pkgdesc="Radeon Open Compute - LLVM Multi-Level IR Compiler Framework"
 pkgver=5.3.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/ROCmSoftwarePlatform/llvm-project-mlir"
 license=('custom:Apache 2.0 with LLVM Exception')
-depends=("hip")
-makedepends=("cmake" "sqlite" "python")
+depends=('hip')
+makedepends=('cmake' 'ninja' 'sqlite' 'python')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/rocm-$pkgver.tar.gz"
         "llvm-project-mlir-fix-rpath-flags.patch::https://patch-diff.githubusercontent.com/raw/ROCmSoftwarePlatform/llvm-project-mlir/pull/688.patch")
-sha256sums=('ee5093aad5459773c350205ef937a186a20994b42798106f8126b9914ad099a5'
+sha256sums=('e8471a13cb39d33adff34730d3162adaa5d20f9544d61a6a94b39b9b5762ad6d'
             '7085543c8726b3b14cae675ecccef54847a2525af3a13d34d6e1d52d2a17907a')
 options=(!lto)
-_dirname="$(basename $url)-$(basename ${source[0]} .tar.gz)"
+_dirname="rocMLIR-$(basename ${source[0]} .tar.gz)"
 
 prepare() {
   cd "$_dirname"
@@ -25,22 +25,24 @@ prepare() {
 
 build() {
   # -fcf-protection is not supported by HIP, see
-  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.2/page/Appendix_A.html
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
   # -fPIC fixes linking.
-  export CXXFLAGS="${CXXFLAGS} -fcf-protection=none -fPIC"
-
-  cmake -S "$_dirname" \
+  CXXFLAGS="${CXXFLAGS} -fcf-protection=none -fPIC" \
+  cmake \
+    -Wno-dev \
+    -G Ninja \
+    -B build \
+    -S "$_dirname" \
     -DCMAKE_BUILD_TYPE=Release \
     -DMLIR_MIOPEN_SQLITE_ENABLED=On \
-    -DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" \
-    -DCMAKE_INSTALL_PREFIX='/opt/rocm' \
+    -DLLVM_TARGETS_TO_BUILD='X86;AMDGPU' \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm \
     -DBUILD_FAT_LIBMLIRMIOPEN=1
-
-  make
+  cmake --build build
 }
 
 package() {
-  make DESTDIR="$pkgdir/" install
+  DESTDIR="$pkgdir" cmake --install build
 
   cd "$_dirname"
   install -Dm644 mlir/LICENSE.TXT "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
