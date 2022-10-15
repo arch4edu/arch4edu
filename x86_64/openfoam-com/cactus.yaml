@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 depends:
   - x86_64/parmetis
   - x86_64/scotch
