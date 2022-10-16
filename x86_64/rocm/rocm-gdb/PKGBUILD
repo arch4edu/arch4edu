@@ -1,15 +1,15 @@
 # Maintainer Torsten Keßler <t dot kessler at posteo dot de>
 pkgname=rocm-gdb
-pkgver=5.2.3
+pkgver=5.3.0
 pkgrel=1
 pkgdesc='ROCm source-level debugger for Linux, based on GDB'
 arch=('x86_64')
 url='https://github.com/ROCm-Developer-Tools/ROCgdb'
 license=('GPL')
-depends=('rocm-dbgapi' 'python' 'guile2.0' 'ncurses' 'expat' 'xz' 'zlib' 'mpfr' 'source-highlight' 'babeltrace')
+depends=('rocm-dbgapi' 'python' 'guile2.0' 'ncurses' 'expat' 'xz' 'zlib' 'mpfr' 'babeltrace')
 makedepends=('texinfo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/rocm-$pkgver.tar.gz")
-sha256sums=('c2df5cccd8bb07ea331b45091fb3141999a37a67696d273f3888b48f6d4281aa')
+sha256sums=('402537baf0779cae586d608505e81173ba85f976fe993f1633e3afe81669350f')
 _dirname="$(basename "$url")-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
@@ -20,7 +20,7 @@ build() {
         --program-prefix=roc \
         --disable-shared \
         --disable-nls \
-        --enable-source-highlight \
+        --disable-gprofng \
         --enable-tui \
         --enable-64-bit-bfd \
         --enable-targets="$CHOST,amdgcn-amd-amdhsa" \
