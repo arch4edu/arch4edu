@@ -9,10 +9,10 @@
 
 pkgname=gazebo
 pkgver=11.12.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A multi-robot simulator for outdoor environments"
 arch=('i686' 'x86_64')
-url="http://gazebosim.org/"
+url="https://classic.gazebosim.org/"
 license=('Apache')
 depends=('boost' 'curl' 'freeglut' 'freeimage' 'tbb' 'libccd' 'libltdl' 'graphviz'
          'libtar' 'libxml2' 'ogre-1.9' 'protobuf>=2.3.0' 'sdformat-9' 'ignition-math>=6' 'ignition-transport-8'
@@ -28,11 +28,13 @@ optdepends=('bullet: Bullet support'
             'urdfdom: Load URDF files')
 makedepends=('cmake' 'doxygen' 'ruby-ronn')
 install="${pkgname}.install"
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/osrf/gazebo/archive/${pkgname}11_$pkgver.tar.gz")
-sha256sums=('6ef2721c1279bc836a845022784fb8bf9860468b36abbc5c1887446ea594d261')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gazebo-classic/archive/${pkgname}11_$pkgver.tar.gz")
+sha256sums=('c4d32b76c213b0f74f01a10d2134232280a13fb58529f9a2ce8a7ab7bca8691a')
+
+_pkgname=gazebo-classic
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgname}11_$pkgver"
+  cd "${srcdir}/${_pkgname}-${pkgname}11_$pkgver"
 
   mkdir -p build && cd build
 
@@ -44,6 +46,6 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgname}11_$pkgver/build"
+  cd "${srcdir}/${_pkgname}-${pkgname}11_$pkgver/build"
   DESTDIR="${pkgdir}" make install
 }
