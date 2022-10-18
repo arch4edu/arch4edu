@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=openxlsx
 _pkgver=4.2.5
 pkgname=r-${_pkgname,,}
 pkgver=4.2.5
-pkgrel=4
+pkgrel=7
 pkgdesc='Read, Write and Edit xlsx Files'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
