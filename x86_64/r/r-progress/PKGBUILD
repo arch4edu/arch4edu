@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=progress
 _pkgver=1.2.2
 pkgname=r-${_pkgname,,}
 pkgver=1.2.2
-pkgrel=5
+pkgrel=8
 pkgdesc='Terminal Progress Bars'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
