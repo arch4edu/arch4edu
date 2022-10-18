@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=multcomp
 _pkgver=1.4-20
 pkgname=r-${_pkgname,,}
 pkgver=1.4.20
-pkgrel=1
+pkgrel=4
 pkgdesc='Simultaneous Inference in General Parametric Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
