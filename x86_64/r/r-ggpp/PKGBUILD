@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
-
+# Maintainer: Robert Greener <me@r0bert.dev>
+# Contributor: Hyacinthe Cartiaux <hyacinthe.cartiaux@free.fr>
 _pkgname=ggpp
 _pkgver=0.4.5
 pkgname=r-${_pkgname,,}
 pkgver=0.4.5
-pkgrel=1
+pkgrel=3
 pkgdesc="Grammar Extensions to 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
