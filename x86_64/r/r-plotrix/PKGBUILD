@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=plotrix
 _pkgver=3.8-2
 pkgname=r-${_pkgname,,}
 pkgver=3.8.2
-pkgrel=4
+pkgrel=9
 pkgdesc='Various Plotting Functions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
