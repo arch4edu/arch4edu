@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Kibouo <csonka.mihaly@hotmail.com>
 
 _pkgname=sys
 _pkgver=3.4
 pkgname=r-${_pkgname,,}
 pkgver=3.4
-pkgrel=5
+pkgrel=11
 pkgdesc='Powerful and Reliable Tools for Running System Commands in R'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
