@@ -1,10 +1,14 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
+# Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=RcppEigen
 _pkgver=0.3.3.9.2
 pkgname=r-${_pkgname,,}
 pkgver=0.3.3.9.2
-pkgrel=3
+pkgrel=6
 pkgdesc="'Rcpp' Integration for the 'Eigen' Templated Linear Algebra Library"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
