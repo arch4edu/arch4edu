@@ -1,11 +1,14 @@
 # system requirements: pandoc (>= 1.12.3), pandoc-citeproc
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+
 
 _pkgname=loo
 _pkgver=2.5.1
 pkgname=r-${_pkgname,,}
 pkgver=2.5.1
-pkgrel=3
+pkgrel=6
 pkgdesc='Efficient Leave-One-Out Cross-Validation and WAIC for Bayesian Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
