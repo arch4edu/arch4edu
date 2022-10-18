@@ -1,11 +1,14 @@
 # system requirements: cairo, freetype2, fontconfig
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: portaloffreedom
 
 _pkgname=gdtools
 _pkgver=0.2.4
 pkgname=r-${_pkgname,,}
 pkgver=0.2.4
-pkgrel=3
+pkgrel=6
 pkgdesc='Utilities for Graphical Rendering'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
