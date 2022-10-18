@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=mathjaxr
 _pkgver=1.6-0
 pkgname=r-${_pkgname,,}
 pkgver=1.6.0
-pkgrel=3
+pkgrel=8
 pkgdesc="Using 'Mathjax' in Rd Files"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
