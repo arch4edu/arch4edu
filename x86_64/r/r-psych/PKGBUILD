@@ -1,10 +1,13 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=psych
 _pkgver=2.2.9
 pkgname=r-${_pkgname,,}
 pkgver=2.2.9
-pkgrel=1
+pkgrel=3
 pkgdesc='Procedures for Psychological, Psychometric, and Personality Research'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
