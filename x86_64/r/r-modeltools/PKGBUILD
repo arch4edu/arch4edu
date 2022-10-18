@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributorr: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=modeltools
 _pkgver=0.2-23
 pkgname=r-${_pkgname,,}
 pkgver=0.2.23
-pkgrel=4
+pkgrel=10
 pkgdesc='Tools and Classes for Statistical Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
