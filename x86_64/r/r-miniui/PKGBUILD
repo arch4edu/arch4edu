@@ -1,10 +1,13 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=miniUI
 _pkgver=0.1.1.1
 pkgname=r-${_pkgname,,}
 pkgver=0.1.1.1
-pkgrel=4
+pkgrel=7
 pkgdesc='Shiny UI Widgets for Small Screens'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
