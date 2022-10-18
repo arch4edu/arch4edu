@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=Rdpack
 _pkgver=2.4
 pkgname=r-${_pkgname,,}
 pkgver=2.4
-pkgrel=1
+pkgrel=4
 pkgdesc='Update and Manipulate Rd Documentation Objects'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
