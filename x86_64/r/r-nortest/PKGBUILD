@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=nortest
 _pkgver=1.0-4
 pkgname=r-${_pkgname,,}
 pkgver=1.0.4
-pkgrel=4
+pkgrel=9
 pkgdesc='Tests for Normality'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
