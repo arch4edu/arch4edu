@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=cowplot
 _pkgver=1.1.1
 pkgname=r-${_pkgname,,}
 pkgver=1.1.1
-pkgrel=4
+pkgrel=7
 pkgdesc="Streamlined Plot Theme and Plot Annotations for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
