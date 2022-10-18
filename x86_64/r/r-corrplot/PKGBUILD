@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=corrplot
 _pkgver=0.92
 pkgname=r-${_pkgname,,}
 pkgver=0.92
-pkgrel=4
+pkgrel=10
 pkgdesc='Visualization of a Correlation Matrix'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
