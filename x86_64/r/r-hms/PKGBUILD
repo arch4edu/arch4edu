@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=hms
 _pkgver=1.1.2
 pkgname=r-${_pkgname,,}
 pkgver=1.1.2
-pkgrel=1
+pkgrel=3
 pkgdesc='Pretty Time of Day'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
