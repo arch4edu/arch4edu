@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=prettyunits
 _pkgver=1.1.1
 pkgname=r-${_pkgname,,}
 pkgver=1.1.1
-pkgrel=5
+pkgrel=11
 pkgdesc='Pretty, Human Readable Formatting of Quantities'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
