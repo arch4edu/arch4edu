@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
 _pkgver=1.7.2
 pkgname=r-${_pkgname,,}
 pkgver=1.7.2
-pkgrel=1
+pkgrel=4
 pkgdesc='Web Application Framework for R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
