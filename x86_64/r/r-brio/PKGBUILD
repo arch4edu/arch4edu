@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=brio
 _pkgver=1.1.3
 pkgname=r-${_pkgname,,}
 pkgver=1.1.3
-pkgrel=4
+pkgrel=10
 pkgdesc='Basic R Input Output'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
