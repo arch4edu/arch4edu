@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
-
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: frichtlm <frichtlm@gmail.com>
 _pkgname=forcats
 _pkgver=0.5.2
 pkgname=r-${_pkgname,,}
 pkgver=0.5.2
-pkgrel=1
+pkgrel=3
 pkgdesc='Tools for Working with Categorical Variables (Factors)'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
