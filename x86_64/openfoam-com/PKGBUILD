@@ -12,7 +12,7 @@ pkgname=openfoam-com
 pkgver=v2206
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=2
+pkgrel=3
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
 url="http://www.openfoam.com"
@@ -159,9 +159,9 @@ package() {
 #      echo "No method to create $session for openfoam${pkgver#v}"
 #  fi
 
-  # create alias in .bashrc
-  echo "alias of='source /opt/${_distname}/${_dist}/etc/bashrc'" >> ~/.bashrc
-  echo "alias paraFoam='paraFoam -builtin'" >> ~/.bashrc
+  # create aliases
+  echo "alias of='source /opt/${_distname}/${_dist}/etc/bashrc'" >> "${pkgdir}/etc/profile.d/openfoam-com.sh"
+  echo "alias paraFoam='paraFoam -builtin'" >> "${pkgdir}/etc/profile.d/openfoam-com.sh"
 }
 
 # ---------------------------------------------------------------------------
