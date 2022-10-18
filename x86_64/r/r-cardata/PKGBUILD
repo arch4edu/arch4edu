@@ -1,10 +1,13 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=carData
 _pkgver=3.0-5
 pkgname=r-${_pkgname,,}
 pkgver=3.0.5
-pkgrel=4
+pkgrel=10
 pkgdesc='Companion to Applied Regression Data Sets'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
