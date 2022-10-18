@@ -1,10 +1,11 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=tmvnsim
 _pkgver=1.0-2
 pkgname=r-${_pkgname,,}
 pkgver=1.0.2
-pkgrel=4
+pkgrel=9
 pkgdesc='Truncated Multivariate Normal Simulation'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
