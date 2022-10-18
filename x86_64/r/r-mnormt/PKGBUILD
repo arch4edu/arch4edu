@@ -1,10 +1,13 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Robert Greener <me@r0bert.dev>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=mnormt
 _pkgver=2.1.1
 pkgname=r-${_pkgname,,}
 pkgver=2.1.1
-pkgrel=1
+pkgrel=3
 pkgdesc='The Multivariate Normal and t Distributions, and Their Truncated Versions'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
