@@ -1,10 +1,13 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contribitor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contribitor: frichtlm <frichtlm@gmail.com>
+# Contribitor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=reshape2
 _pkgver=1.4.4
 pkgname=r-${_pkgname,,}
 pkgver=1.4.4
-pkgrel=4
+pkgrel=7
 pkgdesc='Flexibly Reshape Data: A Reboot of the Reshape Package'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
