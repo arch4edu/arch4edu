@@ -1,10 +1,12 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=pbkrtest
 _pkgver=0.5.1
 pkgname=r-${_pkgname,,}
 pkgver=0.5.1
-pkgrel=3
+pkgrel=6
 pkgdesc='Parametric Bootstrap, Kenward-Roger and Satterthwaite Based Methods for Test in Mixed Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
