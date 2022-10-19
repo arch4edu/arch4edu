@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=DT
-_pkgver=0.25
+_pkgver=0.26
 pkgname=r-${_pkgname,,}
-pkgver=0.25
-pkgrel=3
+pkgver=0.26
+pkgrel=1
 pkgdesc="A Wrapper of the JavaScript Library 'DataTables'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -29,7 +29,7 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0dfc8713062e1fe4e0428936367f35a0a41616c27b6d9b002bdfda58091c442b')
+sha256sums=('c412932be126d44f415559258e1d65adc0e84c3dfb9a70ce3196a2f877f7030c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
