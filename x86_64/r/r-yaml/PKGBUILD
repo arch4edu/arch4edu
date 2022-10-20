@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=yaml
-_cranver=2.3.5
+_cranver=2.3.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -18,7 +18,7 @@ checkdepends=(r-runit)
 optdepends=(r-runit)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-BSD_3_clause-TEMPLATE::https://cran.r-project.org/web/licenses/BSD_3_clause")
-sha256sums=('3edf6c0554a0e184a25e8bec5721a2e66b4ab0dceb3737428e22705e52eb5140'
+sha256sums=('5dd19d8d6654ef2e4ccd6216ce8e96ca5185ae6143f95194955f6908a6e1ba26'
             '07ff367bbf4b36ad86223c722d0798a3cdd0b5b03347fa724d82cc108e324929')
 
 build() {
