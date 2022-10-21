@@ -1,7 +1,10 @@
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Kibouo <csonka.mihaly@hotmail.com>
+# Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=markdown
-_cranver=1.1
+_cranver=1.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -9,17 +12,18 @@ pkgdesc="Render Markdown with the C Library 'Sundown'"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL2)
-depends=('r>=2.11.1' r-xfun 'r-mime>=0.3')
+depends=(r-xfun r-mime)
 optdepends=(r-knitr r-rcurl)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('8d8cd47472a37362e615dbb8865c3780d7b7db694d59050e19312f126e5efc1b')
+sha256sums=('0224cfe9c1037048ea14e0a2dcec6f6935751c946dcab3b35a472b2e9d2afdc0')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
 
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
