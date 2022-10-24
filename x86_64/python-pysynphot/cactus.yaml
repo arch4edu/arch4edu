@@ -1,8 +1,6 @@
 nvchecker:
   - source: aur
     aur:
-depends:
-  - x86_64/python-astropy
 makedepends:
   - any/python-pytest-astropy-header
 build_prefix: extra-x86_64

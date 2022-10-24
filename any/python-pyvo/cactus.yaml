@@ -2,8 +2,6 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-depends:
-  - x86_64/python-astropy
 makedepends:
   - any/python-sphinx-astropy
 build_prefix: extra-x86_64
