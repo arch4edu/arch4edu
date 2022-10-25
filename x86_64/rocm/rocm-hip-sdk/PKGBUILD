@@ -1,45 +1,122 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
-# Contributor: JP-Ellis <josh@jpellis.me>
-# Contributor: wuxxin <wuxxin@gmail.com>
 
-pkgname=rocm-hip-sdk
-_pkgver_major=5
-_pkgver_minor=2
-_pkgver_patch=3
-_pkgver_magic=109
-pkgver=$_pkgver_major.$_pkgver_minor.$_pkgver_patch
+pkgbase=rocm-hip-sdk
+pkgname=(rocm-hip-sdk)
+# pkgbase=rocm-hip-sdk
+# pkgname=(rocm-hip-sdk
+#          rocm-hip-libraries
+#          rocm-openmp-sdk
+#          rocm-opencl-sdk
+#          rocm-hip-runtime
+#          rocm-language-runtime
+#          rocm-ml-sdk
+#          rocm-ml-libraries
+#          rocm-developer-tools)
+pkgver=5.3.0
 pkgrel=1
-pkgdesc="Develop applications using HIP and libraries for AMD platforms"
 arch=('x86_64')
-url="https://rocm-documentation.readthedocs.io/en/latest/"
-license=()
-depends=(
-  'rocm-hip-libraries'
-  'rocm-llvm'
-  'rocm-core'
-  'rocm-hip-runtime'
-  'hipblas'
-  'hipcub'
-  'hipfft'
-  'hipsparse'
-  'hipsolver'
-  'miopen-hip'
-  'rccl'
-  'rocalution'
-  'rocblas'
-  'rocfft'
-  'rocprim'
-  'rocrand'
-  'rocsolver'
-  'rocsparse'
-  'rocthrust'
-)
-makedepends=()
-source=("${pkgname}-${pkgver}.deb::https://repo.radeon.com/rocm/apt/${pkgver}/pool/main/${pkgname:0:1}/${pkgname}/${pkgname}_${pkgver}.${_pkgver_major}$(printf '%02d' $_pkgver_minor $_pkgver_patch)-${_pkgver_magic}_amd64.deb")
-sha256sums=('580d152a8bab21e8706a4bee0a8f356d08f97466f1dc89d6c8982b1b431904f1')
+license=('None')
+url='https://docs.amd.com/'
 
-
-package() {
-    tar -xf data.tar.gz
-    install -D opt/rocm-${pkgver}/.info/version-hip-sdk "$pkgdir/opt/rocm/.info/version-hip-sdk"
+package_rocm-hip-sdk() {
+    pkgdesc='Develop applications using HIP and libraries for AMD platforms'
+    depends=('rocm-hip-libraries'
+             'rocm-llvm'
+             'rocm-core'
+             'rocm-hip-runtime'
+             'hipblas'
+             'hipcub'
+             'hipfft'
+             'hipsparse'
+             'hipsolver'
+             'miopen-hip'
+             'rccl'
+             'rocalution'
+             'rocblas'
+             'rocfft'
+             'rocprim'
+             'rocrand'
+             'rocsolver'
+             'rocsparse'
+             'rocthrust')
 }
+
+# package_rocm-hip-libraries() {
+#     pkgdesc='Develop certain applications using HIP and libraries for AMD platforms'
+#     depends=('rocm-core'
+#              'rocm-hip-runtime'
+#              'hipblas'
+#              'hipfft'
+#              'hipsparse'
+#              'hipsolver'
+#              'rccl'
+#              'rocalution'
+#              'rocblas'
+#              'rocfft'
+#              'rocrand'
+#              'rocsolver'
+#              'rocsparse')
+# }
+
+# package_rocm-openmp-sdk() {
+#     pkgdesc='Develop OpenMP-based applications for AMD platforms'
+#     depends=('rocm-core'
+#              'rocm-llvm'
+#              'openmp-extras'
+#              'rocm-language-runtime')
+# }
+
+# package_rocm-opencl-sdk() {
+#     pkgdesc='Develop OpenCL-based applications for AMD platforms'
+#     depends=('rocm-core'
+#              'hsa-rocr'
+#              'rocm-opencl-runtime'
+#              'hsakmt-roct')
+# }
+
+# package_rocm-hip-runtime() {
+#     pkgdesc='Packages to run HIP applications on the AMD platform'
+#     depends=('rocm-core'
+#              'rocm-language-runtime'
+#              'rocminfo'
+#              'hip-runtime-amd'
+#              'rocm-llvm'
+#              'rocm-cmake')
+# }
+
+# package_rocm-language-runtime() {
+#     pkgdesc='ROCm runtime'
+#     depends=('rocm-core'
+#              'hsakmt-roct'
+#              'hsa-rocr'
+#              'rocm-device-libs'
+#              'comgr')
+# }
+
+# package_rocm-ml-sdk() {
+#     pkgdesc='develop and run Machine Learning applications optimized for AMD platforms'
+#     depends=('rocm-core'
+#              'rocm-hip-sdk'
+#              'rocm-ml-libraries'
+#              'miopen-hip')
+# }
+
+# package_rocm-ml-libraries() {
+#     pkgdesc='Packages for key Machine Learning libraries'
+#     depends=('rocm-core'
+#              'rocm-hip-libraries'
+#              'rocm-llvm'
+#              'miopen-hip')
+# }
+
+# package_rocm-developer-tools() {
+#     pkgdesc='Packages required to debug and profile HIP-based applications'
+#     depends=('rocm-core'
+#              'rocm-hip-sdk'
+#              'hsa-amd-aqlprofile'
+#              'rocprofiler'
+#              'roctracer'
+#              'rocm-gdb'
+#              'rocm-dbgapi'
+#              'rocm-debug-agent')
+# }
