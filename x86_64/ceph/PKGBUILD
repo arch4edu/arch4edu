@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
 _zstdver=1.5.2
-pkgver=16.2.7
+pkgver=16.2.10
 pkgrel=1
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
@@ -55,7 +55,7 @@ source=(
   'ceph-15.2.0-rocksdb-cmake.patch'
   # 'ceph-15.2.4-system-uring.patch'
   # 'ceph-15.2.5-missing-includes.patch'
-  'ceph-15.2.14-gcc12.patch'
+  'ceph-15.2.14-include-memory.patch'
   'disable-empty-readable.sh-test.patch'
   # 'qa-src-update-mypy-to-0.782.patch'
   # 'fix-mgr-dashboard-partial_dict.patch'
@@ -92,11 +92,6 @@ source=(
   # Add a missing dep to a tox virtualenv (python-nose)
   'fix-test-import-tasks-deps.patch'
 
-  # Remove a test that requires docker, and only tests Prometheus metrics anyway
-  # Note this test has been completely removed in 17.2.0, and can be dropped when
-  # we update to 17
-  'ceph-16.2.7-remove-promtool-test.patch'
-
   # Test breaks due to ambigous template in src/common/async/bind_like.h when called
   # in src/test/cls/fifo/bench_* and test_*. Not sure how to fix this so disabled for now
   'disable-test-cls-fifo.patch'
@@ -105,7 +100,7 @@ source=(
   # not sure why yet, need to ask upstream for help
   'ceph-16.2.7-delete-test-librados-asio.patch'
 )
-sha512sums=('eab047e646970d444acf1064d98237b8b1677fb16b5e771082d55880f7bc6d8bdb278c2fe514c82ae12c438878d9ecea29139fa6b8d890f9f737138f10fb740c'
+sha512sums=('ae164c24462c3e08763d202acc3e2fe86ffc09f312b5059bae07863e804fc47bd158fc130aa2923246ffcfe26ae6d6d9317326aec96373226e6f9030d7123c8b'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             'e107508a41fca50845cc2494e64adaba93efb95a2fa486fc962510a8ba4b2180d93067cae9870f119e88e5e8b28a046bc2240b0b23cdd8933d1fb1a6a9668c1e'
             '9e6bb46d5bbdc5d93f4f026b2a8d6bdb692d9ea6e7018c1bb0188d95ea8574c76238d968b340fd67ddaa3d8183b310e393e3549dc3a63a795fde696413b0ca94'
@@ -114,14 +109,13 @@ sha512sums=('eab047e646970d444acf1064d98237b8b1677fb16b5e771082d55880f7bc6d8bdb2
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
             '82c1608928ee669ef60b8930ce82c443152c446e669e7bde9ce32f78571afb19a9620c3818b69ac8cb3ea33e7d7ac40f77c89162c71b19b157336d907fa23e3d'
             '2e62020cce33e3152cdb9a128023ee673124c4bcfdb9ee17718891ba5c9a16d98eb03ed06fe7dc7833c98487c1c1eb67fadfad1aa2f40c2c648829c86b4caab0'
-            '69b058e7b215f85f347b1e4528800ed62635864fa32b24b0f9db97b08fe6576f30d260bf6a19bb5166482f43928feb535e9a6dca8f3c2b3ce7700c108db9fb7a'
+            'f1b54767d8d3c12ca9fe9eafd0590efa8560a52b5c18f1121f8fd8b7e69d70578bdeae9a1803612a8a8d0032f039f8786b5152a889ba359850e3d3d30a6af8c7'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             'cc9f198692ab67ffdf2071c755ab7369fcaa4e1211d1428bb49db3bca5956ae4fbe98ead80a8f691d61e80402b4a06ce9b046a97cb4a3376334f64a4fd16bfb5'
             '1c43b1d466b39b6ad46dd5eb9e5dea4708142ba911b6e901daff427de7889c2018e69e39d5c6b40dc6f979e8533114716ad57b25f7dc3d57e012b5c47a5efb16'
             '6be59a31f0cad390bf9f40041c05049e7d525c6910eab200a5b2a707d59cb80f5119651a86a865680a074a021ff3be8cc3769eb5bf1978691dc2cd91d96e500c'
             '380ae6d3a768dacaaf2bbe634aa4b1d296da3318553256e4bbae747eb477549968a6c4333b9d212d4ea2db74ae554ac3c4edd7408f46f5f86971d84284748686'
             '7297ec3824815f6f5e534f225ae10f0b0c046713c062adf2cb7af12e44db6f699948a87851fc24b7c038bfa95646a9b66c6256c6bad9253f469b75cd4ed81c7d'
-            '49c78ccbd514b22c7de7a72417524d42a8d838275e89d8cf9cf3f7caf54e11e81e86b7ef9a6966a96f30348c45ab7615ac591d66ce2cbe880b77d9015e7fdb8a'
             '3774cbc1a979ee8bf7138b96defcf69499444afe0b7186b21feac3453a3a5ec93741f5942d256d93999e9bc306c8d018206893e04e1a3eb9e03593105d9f5791'
             '66770a80ba4e05ea72d4809cb5819cce7499ea7523b85b1a57370df68de1d7f6f94b1c10d0f9f9a3c8e6a86d0419434c70778c568cd06a0dd2e6126631a3355c')
 
