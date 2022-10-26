@@ -13,5 +13,5 @@ pre_build: |
   aur-pre-build
   sed '/prepare()/a\  git config --global protocol.file.allow always' -i PKGBUILD
   sed '/git submodule update/a\  sed "1i#include <mutex>" -i third_party/kineto/libkineto/src/RoctracerActivityApi.h' -i PKGBUILD
-  sed '/s/79360/87773/g' -i PKGBUILD
+  sed 's/79360/87773/g' -i PKGBUILD
 post_build: aur-post-build
