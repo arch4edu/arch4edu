@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _cranname=ragg
-_cranver=1.2.3
+_cranver=1.2.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -21,7 +21,7 @@ checkdepends=(r-testthat ttf-font)
 optdepends=(r-covr r-testthat)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('976da0007ef0d4dbadda4734727b539671b65c1eff4ff392d734f4e2c846f2b2'
+sha256sums=('c547e5636a2eefaa0021a0d50fad1e813c2ce976ec0c9c3f796d38a110680dcd'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
