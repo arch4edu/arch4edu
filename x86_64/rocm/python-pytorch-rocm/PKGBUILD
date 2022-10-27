@@ -8,7 +8,7 @@ pkgbase="python-${_pkgname}-rocm"
 pkgname=("${pkgbase}" "python-pytorch-opt-rocm")
 pkgver=1.12.1
 _pkgver=1.12.1
-pkgrel=4
+pkgrel=5
 _pkgdesc="Tensors and Dynamic neural networks in Python with strong GPU acceleration"
 pkgdesc="${_pkgdesc}"
 arch=('x86_64')
@@ -63,7 +63,7 @@ source=("${_pkgname}-${pkgver}::git+https://github.com/pytorch/pytorch.git#tag=v
         fix_include_system.patch
         use-system-libuv.patch
         fix-building-for-torchvision.patch
-        https://patch-diff.githubusercontent.com/raw/pytorch/pytorch/pull/79360.patch
+        https://patch-diff.githubusercontent.com/raw/pytorch/pytorch/pull/87773.patch
         ffmpeg4.4.patch
         "rocblas.patch::https://patch-diff.githubusercontent.com/raw/pytorch/pytorch/pull/80849.patch")
 sha256sums=('SKIP'
@@ -119,6 +119,7 @@ get_pyver () {
 }
 
 prepare() {
+  git config --global protocol.file.allow always
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
   # generated using parse-submodules
@@ -166,6 +167,7 @@ prepare() {
   git config submodule."third_party/nlohmann".url "${srcdir}/${pkgname}"-json
 
   git submodule update --init --recursive
+  sed "1i#include <mutex>" -i third_party/kineto/libkineto/src/RoctracerActivityApi.h
 
   # https://bugs.archlinux.org/task/64981
   patch -N torch/utils/cpp_extension.py "${srcdir}"/fix_include_system.patch
@@ -177,7 +179,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/fix-building-for-torchvision.patch"
 
   # Fix building against glog 0.6
-  patch -Np1 -i "${srcdir}/79360.patch"
+  patch -Np1 -i "${srcdir}/87773.patch"
 
   # build against ffmpeg4.4
   patch -Np1 -i "${srcdir}/ffmpeg4.4.patch"
