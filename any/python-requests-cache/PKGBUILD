@@ -8,8 +8,8 @@
 _base=requests-cache
 pkgname=python-${_base}
 pkgdesc="A transparent persistent cache for the requests library"
-pkgver=0.9.6
-pkgrel=2
+pkgver=0.9.7
+pkgrel=1
 arch=(any)
 url="https://github.com/reclosedev/${_base}"
 license=('custom:BSD-2-clause')
@@ -27,7 +27,7 @@ optdepends=(
 )
 checkdepends=(python-pytest python-requests-mock python-responses python-itsdangerous python-ujson python-timeout-decorator)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('88e4745bed278224ccd1eb815a4f9da84051bab79c43122fa97899c3a8ad87ad7bfd929f87680eb6f73b1ff14267d2519afd9ef8815f10597769cab8ada7f8b5')
+sha512sums=('00b2c7080030ed07f5d896871a431aec2625dab6ab84f01f7e6fea9e81692f757304e25ee6addbe7695e93d0c1c04484c31b95a71d7c9e12f6c23a5b7747ae30')
 
 build() {
   cd ${_base}-${pkgver}
