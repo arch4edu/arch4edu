@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgbase=dumux
 pkgname=(${pkgbase} python-${pkgbase})
-pkgver=3.5.0
+pkgver=3.6.0
 _tar="${pkgver}/${pkgbase}-${pkgver}.tar.gz"
 pkgrel=1
 pkgdesc="An open-source simulator and research code in modern C++"
@@ -18,7 +18,7 @@ optdepends=('dune-alugrid'
   'dune-spgrid: for grid manager SPGrid support'
   'dune-mmesh: for grid manager MMesh support')
 source=(https://git.iws.uni-stuttgart.de/${pkgbase}-repositories/${pkgbase}/-/archive/${_tar})
-sha512sums=('62d897340b6de634664f8a7db93ea26b777243643cb1f3c1f249323cf8f596e3964aec4c20f160333bd1b0dfb9291194c07f5237308dfea81f76f6d83dc5d4f7')
+sha512sums=('c47f478297865baddbf3a0770f92a035807f3b87e2ba4becbb03fcc08d073684973a621688c13750d3840fb34f83ad19a091018e5529382a1e049c68bee18d08')
 
 prepare() {
   sed -i 's/#include <opm\/parser\/eclipse\/Parser\/Parser.hpp>/#include <opm\/input\/eclipse\/Parser\/Parser.hpp>/' ${pkgbase}-${pkgver}/dumux/io/grid/cpgridmanager.hh
