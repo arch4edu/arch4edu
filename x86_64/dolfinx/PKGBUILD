@@ -2,7 +2,7 @@
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
 pkgver=0.5.2
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL3)
@@ -14,10 +14,6 @@ optdepends=('adios2: for use ADIOS2 writer'
   'kahip: for compute graph partition in parallel')
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
 sha512sums=('c6a9af8abc37172493a547ff52a3d737bf16b34f35d737d3643b0d7578455e6097eca6c919b49bbfacfed165b028170a1d55a7cf7521e285612f1f9fc7c55522')
-
-prepare() {
-  sed -i '8 a #include <algorithm>' ${pkgname}-${pkgver}/cpp/${pkgname}/common/MPI.h
-}
 
 build() {
   cmake \
