@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mclust
-_pkgver=5.4.10
+_pkgver=6.0.0
 pkgname=r-${_pkgname,,}
-pkgver=5.4.10
-pkgrel=3
+pkgver=6.0.0
+pkgrel=1
 pkgdesc='Gaussian Mixture Modelling for Model-Based Clustering, Classification, and Density Estimation'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2a1bbbf3c4a17df08d1ba8bc4d3c6d9c7241ed5fd68b8aabe660115597b60672')
+sha256sums=('de7c306ecba1ef0f4e4a56c748ce08149417496b711beefb032d561a4c28122a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
