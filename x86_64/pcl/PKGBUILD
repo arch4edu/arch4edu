@@ -9,7 +9,7 @@
 
 pkgname=pcl
 pkgver=1.12.1
-pkgrel=2
+pkgrel=3
 pkgdesc="A comprehensive open source library for n-D Point Clouds and 3D geometry processing"
 arch=('x86_64' 'i686')
 url='http://www.pointclouds.org'
@@ -45,3 +45,4 @@ package() {
 
   install -Dm644 ${srcdir}/pcl-pcl-${pkgver}/LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
+makedepends+=("cli11")
