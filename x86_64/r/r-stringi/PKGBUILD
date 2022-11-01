@@ -6,7 +6,7 @@ _cranname=stringi
 _cranver=1.7.8
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Character String Processing Facilities"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
