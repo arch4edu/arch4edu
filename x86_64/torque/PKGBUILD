@@ -3,7 +3,7 @@
 
 pkgname=torque
 pkgver=6.1.3.h5
-pkgrel=1
+pkgrel=2
 pkgdesc='An open source resource manager providing control over batch jobs and distributed compute nodes'
 arch=('x86_64' 'armv6h' 'armv7h' 'aarch64')
 url="http://www.adaptivecomputing.com/products/open-source/torque/"
