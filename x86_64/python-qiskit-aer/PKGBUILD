@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
-pkgver=0.11.0
-pkgrel=3
+pkgver=0.11.1
+pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit-aer"
@@ -17,6 +17,7 @@ depends=(
 )
 optdepends=(
     'openmp: parallelization with OpenMP'
+    'python-cvxpy: support convex optimization'
     'python-dask: parallel computing with task scheduling'
     'python-distributed: distributed task scheduler for Dask'
 )
@@ -39,7 +40,7 @@ source=(
     "fix.patch"
 )
 b2sums=(
-    '1d48de7ef363475a09d145299de7a5a44417ab810c8821fe6ac7462c3b70004f7fb1a2e85a508f1bc8cd08e989918dc92105ab97ee94ab924fa6d9d386508894'
+    '3795e1f71914bbc0074a2eac10a82a28f3171d50f292a13dcb705f62daa5fa332a1eabd52391c1b168a822ca6428feb79fe08bb7c93cfd2f7ee5b0d38fed012b'
     '4b7763d6b5802f3e1275d760e84b323b4e786c6376615a0cfb440a3fdb1f53ee9f03eea6ed6e23ba245d1f159ecf1b10287b8aac65db76804d4aefb56f55c58e'
 )
 
