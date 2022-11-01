@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Brobdingnag
-_pkgver=1.2-7
+_pkgver=1.2-9
 pkgname=r-${_pkgname,,}
-pkgver=1.2.7
-pkgrel=5
+pkgver=1.2.9
+pkgrel=1
 pkgdesc='Very Large Numbers in R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,7 @@ optdepends=(
   r-cubature
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('73a734342736da5b29c2827d91f662101873503af7ad9cdf9e9e697bb32dd742')
+sha256sums=('f9012d250bc2a0f47815d6a7c06df2d4ddf3d8bab2d3b75e8cdefd964d20e91e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
