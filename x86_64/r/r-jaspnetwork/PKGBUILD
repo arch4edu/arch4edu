@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspNetwork
-_pkgver=0.15
+_pkgver=0.17.0
 pkgname=r-${_pkgname,,}
-pkgver=0.15
-pkgrel=2
+pkgver=0.17.0
+pkgrel=1
 pkgdesc="Network Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
