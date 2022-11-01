@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-commonmark
   - x86_64/r/r-xfun
   - x86_64/r/r-mime
 build_prefix: extra-x86_64
