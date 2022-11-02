@@ -4,18 +4,23 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=markdown
-_cranver=1.2
+_cranver=1.3
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
-pkgdesc="Render Markdown with the C Library 'Sundown'"
-arch=(i686 x86_64)
+pkgdesc="Render Markdown with 'commonmark'"
+arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL2)
-depends=(r-xfun r-mime)
-optdepends=(r-knitr r-rcurl)
+depends=(r-commonmark r-xfun r-mime)
+optdepends=(
+    r-knitr
+    r-rmarkdown
+    r-yaml
+    r-rcurl
+)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('0224cfe9c1037048ea14e0a2dcec6f6935751c946dcab3b35a472b2e9d2afdc0')
+sha256sums=('b1773e94e7b927c3a8540c2704b06e0f7721a0e3538a93abd58fff420ecb30f1')
 
 build() {
   mkdir -p build
