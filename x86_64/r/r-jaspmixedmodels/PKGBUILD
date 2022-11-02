@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspMixedModels
-_pkgver=0.15.0
+_pkgver=0.17.0
 pkgname=r-${_pkgname,,}
-pkgver=0.15.0
-pkgrel=2
+pkgver=0.17.0
+pkgrel=1
 pkgdesc="Mixed Models Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
