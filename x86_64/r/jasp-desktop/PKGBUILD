@@ -1,12 +1,12 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 
 _pkgname=jasp
-_pkgver=0.16.3
+_pkgver=0.16.4
 pkgname=jasp-desktop
-pkgver=0.16.3
-pkgrel=1
+pkgver=0.16.4
+pkgrel=3
 pkgdesc="A complete statistical package for both Bayesian and Frequentist statistical methods"
-arch=('x86_64')
+arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/jasp-desktop"
 license=('AGPL3')
 makedepends=("cmake" 'boost' 'jsoncpp'
@@ -28,11 +28,11 @@ depends=('r'
 'r-rinside'
 'qt6-base'
 'qt6-webengine'
+'qt6-shadertools'
 
 # jaspBase
 "r-jaspbase"
 "r-jaspgraphs"
-"r-jaspresults"
 "r-jasptools"
 
 #jaspCommon
@@ -58,27 +58,26 @@ depends=('r'
 "r-jaspmetaanalysis"
 "r-jaspnetwork"
 "r-jaspprocesscontrol"
+"r-jaspprophet"
 "r-jaspreliability"
 "r-jaspsem"
 "r-jaspsummarystatistics"
 "r-jaspvisualmodeling"
-"r-jaspprophet"
 )
 provides=($_pkgname)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/jasp-stats/jasp-desktop/archive/refs/tags/v${pkgver}.tar.gz"
 'jasp.sh'
 "jaspColumnEncoder::git+https://github.com/jasp-stats/jaspColumnEncoder.git"
-'jaspResults::git+https://github.com/jasp-stats/jaspResults.git'
+# 'jaspResults::git+https://github.com/jasp-stats/jaspResults.git'
 )
-sha256sums=('6ce2062384761d88babf939e9a9a8c4aaa6737c3381cb0ede3c39f8576ba64b7'
+sha256sums=('8671a8f73669e40c0ef4a9e088591a45559bc84bc6a3c745367ffcbca992602d'
             'e0714d980e7549b4c7dcbae50370e95b6ad2e7f0cf21a534ceb3a5a83ee583fd'
-            'SKIP'
             'SKIP')
 
 prepare(){
     cd $srcdir/${pkgname}-${pkgver}
     cp -rf $srcdir/jaspColumnEncoder/*  Common/jaspColumnEncoder
-    cp -rf $srcdir/jaspResults/*        R-Interface/jaspResults
+    # cp -rf $srcdir/jaspResults/*        R-Interface/jaspResults
 
     find Tools/CMake -name *.cmake -print0 | xargs -0 sed -i "s|/usr/local|/usr|g"
     sed -i "s|lib='\${R_LIBRARY_PATH}'|lib='${srcdir}/usr/lib/R'|g"  Tools/CMake/R.cmake
@@ -97,7 +96,7 @@ build(){
 
         # -DBUILD_TESTS=ON does not work on linux.
 
-    cmake --build build -- -j 5
+    cmake --build build
 }
 
 package() {
