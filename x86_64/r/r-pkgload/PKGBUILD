@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgload
-_cranver=1.3.0
+_cranver=1.3.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -25,6 +25,7 @@ optdepends=(
     r-bitops
     r-covr
     r-mathjaxr
+    r-mockr
     r-pak
     r-pkgbuild
     r-rcpp
@@ -33,7 +34,7 @@ optdepends=(
     "r-testthat>=3.1.0"
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=("5af653c901662260cc221971cc968355428cc6183b61c15be80aa9545f9f4228")
+b2sums=('561ab5594c8c3c6ca01bb61e3d7a79101993e5f19afd4d3b116b749547a34876f83933a732f0eec0af78e533390064068948574ed0510aff54d80ee18c39c681')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
