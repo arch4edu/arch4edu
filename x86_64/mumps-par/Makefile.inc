@@ -16,7 +16,6 @@
 #          Metis/ParMetis and SCOTCH/PT-SCOTCH (ver 6.0 and later) orderings are now available for MUMPS.
 #
 
-SONAME_VERSION=5.3
 SCOTCHDIR  = /usr
 ISCOTCH    = -I$(SCOTCHDIR)/include/scotch
 # You have to choose one among the following two lines depending on
