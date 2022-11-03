@@ -4,7 +4,7 @@ _pkgname=jasp
 _pkgver=0.16.4
 pkgname=jasp-desktop
 pkgver=0.16.4
-pkgrel=3
+pkgrel=5
 pkgdesc="A complete statistical package for both Bayesian and Frequentist statistical methods"
 arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/jasp-desktop"
@@ -68,16 +68,18 @@ provides=($_pkgname)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/jasp-stats/jasp-desktop/archive/refs/tags/v${pkgver}.tar.gz"
 'jasp.sh'
 "jaspColumnEncoder::git+https://github.com/jasp-stats/jaspColumnEncoder.git"
-# 'jaspResults::git+https://github.com/jasp-stats/jaspResults.git'
+# only needed in v0.16.4
+"Qt640.patch::https://github.com/jasp-stats/jasp-desktop/compare/v0.16.4..f2956103.diff"
 )
 sha256sums=('8671a8f73669e40c0ef4a9e088591a45559bc84bc6a3c745367ffcbca992602d'
             'e0714d980e7549b4c7dcbae50370e95b6ad2e7f0cf21a534ceb3a5a83ee583fd'
-            'SKIP')
+            'SKIP'
+            '2e53de4fa2983b1a519b6ca0126cbac743e8048211369dcf9d3d58e0f786616d')
 
 prepare(){
     cd $srcdir/${pkgname}-${pkgver}
+    patch --strip=1 < ../Qt640.patch || true
     cp -rf $srcdir/jaspColumnEncoder/*  Common/jaspColumnEncoder
-    # cp -rf $srcdir/jaspResults/*        R-Interface/jaspResults
 
     find Tools/CMake -name *.cmake -print0 | xargs -0 sed -i "s|/usr/local|/usr|g"
     sed -i "s|lib='\${R_LIBRARY_PATH}'|lib='${srcdir}/usr/lib/R'|g"  Tools/CMake/R.cmake
