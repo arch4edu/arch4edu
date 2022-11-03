@@ -1,0 +1,9 @@
+diff --git a/src/compressor/CMakeLists.txt b/src/compressor/CMakeLists.txt
+index 9b10fff5330..412e91ace57 100644
+--- a/src/compressor/CMakeLists.txt
++++ b/src/compressor/CMakeLists.txt
+@@ -46,3 +46,4 @@ endif()
+ 
+ add_custom_target(compressor_plugins DEPENDS
+     ${ceph_compressor_libs})
++add_dependencies(compressor_plugins common-objs)

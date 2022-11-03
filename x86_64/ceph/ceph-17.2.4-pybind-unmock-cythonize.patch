@@ -1,0 +1,72 @@
+diff --git a/src/pybind/cephfs/setup.py b/src/pybind/cephfs/setup.py
+index f6c2025f75d..8d788038e8f 100755
+--- a/src/pybind/cephfs/setup.py
++++ b/src/pybind/cephfs/setup.py
+@@ -169,13 +169,6 @@ except ImportError:
+ else:
+     source = "cephfs.pyx"
+ 
+-# Disable cythonification if we're not really building anything
+-if (len(sys.argv) >= 2 and
+-        any(i in sys.argv[1:] for i in ('--help', 'clean', 'egg_info', '--version')
+-            )):
+-    def cythonize(x, **kwargs):
+-        return x
+-
+ setup(
+     name='cephfs',
+     version=__version__,
+diff --git a/src/pybind/rados/setup.py b/src/pybind/rados/setup.py
+index 62b54d26b6c..5b1a9ade949 100755
+--- a/src/pybind/rados/setup.py
++++ b/src/pybind/rados/setup.py
+@@ -160,13 +160,6 @@ except ImportError:
+ else:
+     source = "rados.pyx"
+ 
+-# Disable cythonification if we're not really building anything
+-if (len(sys.argv) >= 2 and
+-        any(i in sys.argv[1:] for i in ('--help', 'clean', 'egg_info', '--version')
+-            )):
+-    def cythonize(x, **kwargs):
+-        return x
+-
+ setup(
+     name='rados',
+     version=__version__,
+diff --git a/src/pybind/rbd/setup.py b/src/pybind/rbd/setup.py
+index 1f20c3ed42f..93e8a97eb15 100755
+--- a/src/pybind/rbd/setup.py
++++ b/src/pybind/rbd/setup.py
+@@ -167,13 +167,6 @@ except ImportError:
+ else:
+     source = "rbd.pyx"
+ 
+-# Disable cythonification if we're not really building anything
+-if (len(sys.argv) >= 2 and
+-        any(i in sys.argv[1:] for i in ('--help', 'clean', 'egg_info', '--version')
+-            )):
+-    def cythonize(x, **kwargs):
+-        return x
+-
+ setup(
+     name='rbd',
+     version=__version__,
+diff --git a/src/pybind/rgw/setup.py b/src/pybind/rgw/setup.py
+index ed45399d394..92c7e650173 100755
+--- a/src/pybind/rgw/setup.py
++++ b/src/pybind/rgw/setup.py
+@@ -168,13 +168,6 @@ except ImportError:
+ else:
+     source = "rgw.pyx"
+ 
+-# Disable cythonification if we're not really building anything
+-if (len(sys.argv) >= 2 and
+-        any(i in sys.argv[1:] for i in ('--help', 'clean', 'egg_info', '--version')
+-            )):
+-    def cythonize(x, **kwargs):
+-        return x
+-
+ setup(
+     name='rgw',
+     version=__version__,

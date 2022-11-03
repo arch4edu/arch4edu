@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
 _zstdver=1.5.2
-pkgver=16.2.10
+pkgver=17.2.5
 pkgrel=1
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
@@ -39,58 +39,18 @@ makedepends=("zstd=${_zstdver}" 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares
              'xfsprogs' 'xmlstarlet' 'xmlsec' 'xxhash' 'yaml-cpp' 'yasm' 'zlib' )
 checkdepends=('python-mock' 'python-nose' 'python-pycodestyle' 'python-pylint'
               'python-pytest' 'python-pytest-cov')
-# need newer version for LTO (https://github.com/ceph/ceph/pull/42602)
+# Despite the upstream suggesting that LTO is now possible, I still am unable
+# to set this. I get SEGVs in tests, and repeated mentions of C++ One Definition Rule
+# violations in builds -- probably causing the segfaults. Need to look into this some
+# more before I enable it.
+# See: https://github.com/ceph/ceph/pull/42602
 options=('emptydirs' '!lto')
 source=(
   "https://download.ceph.com/tarballs/${pkgbase}-${pkgver}.tar.gz"
   'ceph.sysusers'
   "zstd-${_zstdver}.tar.gz::https://github.com/facebook/zstd/archive/v${_zstdver}.tar.gz"
-  #'glibc2.32-strsignal-compat-backported.patch'
-  'ceph-14.2.0-cflags.patch'
-  'ceph-12.2.4-boost-build-none-options.patch'
-  'ceph-13.2.0-cflags.patch'
   'ceph-13.2.2-dont-install-sysvinit-script.patch'
-  # 'ceph-14.2.0-link-crc32-statically.patch'
-  'ceph-14.2.0-cython-0.29.patch'
-  'ceph-15.2.0-rocksdb-cmake.patch'
-  # 'ceph-15.2.4-system-uring.patch'
-  # 'ceph-15.2.5-missing-includes.patch'
-  'ceph-15.2.14-include-memory.patch'
   'disable-empty-readable.sh-test.patch'
-  # 'qa-src-update-mypy-to-0.782.patch'
-  # 'fix-mgr-dashboard-partial_dict.patch'
-
-  # snappy 1.1.9 removed major parts from their namespace, including the
-  # snappy::uint32 which was an alias for std::uint32_t
-  # 'fix_snappy_namespace_uint.patch'
-
-  # Add python >= 3.8 workaround logic for incompatible modules
-  # This has been designated for upstream backporting into the octupus (15) and pacific (16) branches.
-  # TODO: check if merged and included in next releases
-  # https://tracker.ceph.com/issues/45147
-  # https://github.com/ceph/ceph/pull/34846
-  # 'backport_mgr_disabled_modules_workaround_PR34846.patch'
-
-  # Fix breaking change to PY_SSIZE_T_CLEAN macro defintion requirements in python >= 3.10
-  # by defining the macro ahead of any calls.
-  # https://tracker.ceph.com/issues/53441
-  # https://github.com/ceph/ceph/pull/44112
-  'fix-python310-ssize-macro.patch'
-
-  # RGW string header is missing includes that are required when boost is >=1.75
-  # https://tracker.ceph.com/issues/50924
-  'ceph-16.2.4-rgw-string-missing-includes.patch'
-
-  # Updates more-itertools.py to a version that doesn't depend on removed classes in
-  # python >= 3.10
-  'fix-python310-update-mgr-more-itertools.patch'
-
-  # Fixes an encoding test's expected output to include the new stuff from c++ 17
-  # ... or at least, I think that's what is causing it
-  'fix-test-encoding-exception-wording.patch'
-
-  # Add a missing dep to a tox virtualenv (python-nose)
-  'fix-test-import-tasks-deps.patch'
 
   # Test breaks due to ambigous template in src/common/async/bind_like.h when called
   # in src/test/cls/fifo/bench_* and test_*. Not sure how to fix this so disabled for now
@@ -99,25 +59,57 @@ source=(
   # Test improperly creates librados::async_write templates, in boost 1.80
   # not sure why yet, need to ask upstream for help
   'ceph-16.2.7-delete-test-librados-asio.patch'
+
+  # Compressor code depends on src/common objects existing, but this isn't enforced
+  # by the build, which can lead to racy failures. Fix this by adding explicit CMake
+  # rules
+  'ceph-17.2.4-compressor-common-depends.patch'
+
+  # A .h file for legacy config options depends on some file generation before it can
+  # be safely included. However this dependancy was missing in CMake, leading to racy
+  # build failures
+  'ceph-17.2.4-common-legacy-gen-depends.patch'
+
+  # Test wants to use `git ls-files`, and is sad when it finds itself not running in a
+  # git repo
+  'ceph-17.2.4-tox-flake8-git-ls-files.patch'
+
+  # A problem with mypy versions <= 0.981 causes a false postive around numpy imports.
+  # See: https://github.com/python/mypy/issues/13627
+  'ceph-17.2.4-tox-mypy-false-postive.patch'
+
+  # Cephadm tests rely on some mock fs abstraction which dies in the build chroot,
+  # so disable them
+  'ceph-17.2.4-tox-cephadm-rm.patch'
+
+  # Split up a very IO heavy test suite, as otherwise test is liable to timeout
+  # NOTE: this is a very large patchset and will guarrented break if/when the upstream
+  # touches anything in src/test/objectstore
+  'ceph-17.2.4-test-bluefs-split.patch'
+
+  # pybind cython modules seem to have a longstanding issue with incorrectly mocking
+  # cythonize calls in setup.py when 'egg_info' is a provided directive
+  'ceph-17.2.4-pybind-unmock-cythonize.patch'
+
+  # fixes the few usages of std::iterator which has been deprecated in c++17, quieting
+  # a lot of _GLIBCXX17_DEPRECATED line noise during builds
+  'ceph-17.2.5-fix-iterator-depreciations.patch'
 )
-sha512sums=('ae164c24462c3e08763d202acc3e2fe86ffc09f312b5059bae07863e804fc47bd158fc130aa2923246ffcfe26ae6d6d9317326aec96373226e6f9030d7123c8b'
+sha512sums=('10cd3d9eb01c91c148a92f1f7d040bbd78af5bb1ab15d071d93f54b37097dc9e1268eed9e788fe32794d137f6af81abd6a2aeaee39cef44d2c45234a15cc6020'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             'e107508a41fca50845cc2494e64adaba93efb95a2fa486fc962510a8ba4b2180d93067cae9870f119e88e5e8b28a046bc2240b0b23cdd8933d1fb1a6a9668c1e'
-            '9e6bb46d5bbdc5d93f4f026b2a8d6bdb692d9ea6e7018c1bb0188d95ea8574c76238d968b340fd67ddaa3d8183b310e393e3549dc3a63a795fde696413b0ca94'
-            '6ff46a90d76f667fa23be0f9eb1ed2fb7e30af9a2621aec19944d0a22a431a0f5721603c588286e483ff55c14aac920adfccb039c9678a87cc59640dd70367ae'
-            '8ec0d668fefee12d2c7f5b5297dd81fc6a559f5823d069e6395d9b4240110eb8f95049d3054697a459948c1f3784b4450539849cf9d7f3b1aa1c7fbd96c475df'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
-            '82c1608928ee669ef60b8930ce82c443152c446e669e7bde9ce32f78571afb19a9620c3818b69ac8cb3ea33e7d7ac40f77c89162c71b19b157336d907fa23e3d'
-            '2e62020cce33e3152cdb9a128023ee673124c4bcfdb9ee17718891ba5c9a16d98eb03ed06fe7dc7833c98487c1c1eb67fadfad1aa2f40c2c648829c86b4caab0'
-            'f1b54767d8d3c12ca9fe9eafd0590efa8560a52b5c18f1121f8fd8b7e69d70578bdeae9a1803612a8a8d0032f039f8786b5152a889ba359850e3d3d30a6af8c7'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
-            'cc9f198692ab67ffdf2071c755ab7369fcaa4e1211d1428bb49db3bca5956ae4fbe98ead80a8f691d61e80402b4a06ce9b046a97cb4a3376334f64a4fd16bfb5'
-            '1c43b1d466b39b6ad46dd5eb9e5dea4708142ba911b6e901daff427de7889c2018e69e39d5c6b40dc6f979e8533114716ad57b25f7dc3d57e012b5c47a5efb16'
-            '6be59a31f0cad390bf9f40041c05049e7d525c6910eab200a5b2a707d59cb80f5119651a86a865680a074a021ff3be8cc3769eb5bf1978691dc2cd91d96e500c'
-            '380ae6d3a768dacaaf2bbe634aa4b1d296da3318553256e4bbae747eb477549968a6c4333b9d212d4ea2db74ae554ac3c4edd7408f46f5f86971d84284748686'
-            '7297ec3824815f6f5e534f225ae10f0b0c046713c062adf2cb7af12e44db6f699948a87851fc24b7c038bfa95646a9b66c6256c6bad9253f469b75cd4ed81c7d'
             '3774cbc1a979ee8bf7138b96defcf69499444afe0b7186b21feac3453a3a5ec93741f5942d256d93999e9bc306c8d018206893e04e1a3eb9e03593105d9f5791'
-            '66770a80ba4e05ea72d4809cb5819cce7499ea7523b85b1a57370df68de1d7f6f94b1c10d0f9f9a3c8e6a86d0419434c70778c568cd06a0dd2e6126631a3355c')
+            '66770a80ba4e05ea72d4809cb5819cce7499ea7523b85b1a57370df68de1d7f6f94b1c10d0f9f9a3c8e6a86d0419434c70778c568cd06a0dd2e6126631a3355c'
+            'cd20e9358e49d3342c7c2a00ac538f628cdf86dc25f1870b77ea2d3df386772caedc333506387b68d8d357913ba1eb761700d843103c3c173df71cd79473cefa'
+            '67df3bdf1784ba6ce76aef95569bc89071ddcc38053a4ffedb89d744fe876f8d54bd0c707752eea8c9d2bba101c08b9b068974e45974fe6884d49d5c1c4dbf4c'
+            '31e578b240ceaaf1216b56cdce654661eed6529ef642ecad164a02669e850100a49a85dc70f3d744671e2c5dad10aee64be7d091fa33007cb8fc6788a4336799'
+            'e59cc0ec58d85369ed9f2b8969e2280609fe98828ea66b5bb80a423f4a0aa547da52c6ba9d9610cece442c515e123d1af169e11ec106aff8cd3dadaea35cad90'
+            '6b53e3a2b1941f8dfdb4b83cafc4c500e818dd3a0736d7061f0ebcdfb514094b217e4688384c5b428288181ef6fff0ca73895c65a046e2d6ae2b834375164216'
+            '81f540c8312972887a7cb43b8a4e29bfc6f24d5774787a4a8edfe65cca7d3b08faa08ecd09066d7ea67111769a5aec7385fe9a969546626f58874dd8aff5b664'
+            '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
+            '2a6f33791760e14543c90077bfc6bf1b6b82ee2996e80b4762eadb887a0d9a67c221b6f10832ddf780dc6abaed246a1e2ee7680c9c861c4ff70e61b752a37b36')
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
 # similar issue: https://bugs.archlinux.org/task/54845
@@ -168,6 +160,7 @@ prepare() {
 
   # remove tests that require root privileges
   rm src/test/cli/ceph-authtool/cap*.t
+  sed -i '/add_ceph_test(mgr-dashboard-smoke.sh/d' src/test/mgr/CMakeLists.txt
 
   # disable/remove broken tests
   sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
@@ -177,9 +170,6 @@ prepare() {
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
-  # workaround for boost 1.74 -- similar fix exists upstream but I could
-  # not get it to work: https://github.com/ceph/ceph/commit/3d708219092d
-  CPPFLAGS+=' -DBOOST_ASIO_USE_TS_EXECUTOR_AS_DEFAULT'
   # 2022-09-27 fmt>9 has deprecated an API that is used extensively throughout
   # the code base. See:
   # Upstream: https://tracker.ceph.com/issues/56610
@@ -188,8 +178,6 @@ build() {
 
   export CFLAGS+=" ${CPPFLAGS}"
   export CXXFLAGS+=" ${CPPFLAGS}"
-  export PYTHON_VERSION="$(python --version | awk '{print $2}')"
-  export PYTHON_INCLUDE_DIR="$(python -c "from sysconfig import get_path; print(get_path('include'))")"
   export CMAKE_BUILD_TYPE='RelWithDebInfo'
   export CMAKE_WARN_UNUSED_CLI=no
 
@@ -201,15 +189,11 @@ build() {
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DCEPH_SYSTEMD_ENV_DIR=/etc/default \
     -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
-    -DCMAKE_INSTALL_SYSTEMD_SERVICEDIR=/usr/lib/systemd/system \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DENABLE_GIT_VERSION=ON \
-    -DWITH_PYTHON2=OFF \
-    -DWITH_PYTHON3="${PYTHON_VERSION}" \
-    -DMGR_PYTHON_VERSION=3 \
-    -DPYTHON_INCLUDE_DIR="${PYTHON_INCLUDE_DIR:?}" \
     -DWITH_BABELTRACE=OFF \
     -DWITH_LTTNG=OFF \
+    -DWITH_FIO=OFF \
     -DWITH_OPENLDAP=OFF \
     -DWITH_RDMA=OFF \
     -DWITH_OCF=OFF \
@@ -225,20 +209,22 @@ build() {
     -DWITH_MGR_DASHBOARD_FRONTEND=ON \
     -DDASHBOARD_FRONTEND_LANGS="en-US" \
     -DWITH_RADOSGW=ON \
-    -DWITH_RADOSGW_FCGI_FRONTEND=OFF \
-    -DWITH_RADOSGW_BEAST_FRONTEND=ON \
     -DWITH_RADOSGW_BEAST_OPENSSL=ON \
-    -DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
+    -DWITH_RADOSGW_AMQP_ENDPOINT=ON \
+    -DWITH_RADOSGW_KAFKA_ENDPOINT=ON \
+    -DWITH_RADOSGW_LUA_PACKAGES=ON \
+    -DWITH_RADOSGW_DBSTORE=OFF \
+    -DWITH_RADOSGW_SELECT_PARQUET=OFF \
     -DWITH_SYSTEMD=ON \
     -DWITH_SYSTEM_BOOST=ON \
-    -DWITH_BOOST_CONTEXT=ON \
+    -DWITH_SYSTEM_ZSTD=ON \
     -DWITH_SYSTEM_GTEST=OFF \
     -DWITH_SYSTEM_NPM=OFF \
     -DENABLE_SHARED=ON \
     -DWITH_TESTS=ON \
     -Wno-dev
 
-  VERBOSE=1 make -C build all
+  VERBOSE=1 make -C build all -j1
 }
 
 check() {
@@ -257,7 +243,7 @@ check() {
 package_ceph-libs() {
   depends=('boost-libs' 'curl' 'glibc' 'keyutils' 'libutil-linux' 'bzip2' 'lz4' 'nss'
            'oath-toolkit' 'python' 'snappy' 'systemd-libs' 'fmt' 'cryptsetup'
-           'lua' 'librdkafka'
+           'lua' 'librdkafka' 'libaio' 'gperftools' 'librabbitmq-c'
            'python-prettytable' 'python-yaml' 'python-setuptools')
   provides=("ceph-libs=${pkgver}-${pkgrel}")
   conflicts=('ceph-libs-bin')
@@ -281,12 +267,11 @@ package_ceph-libs() {
 
 package_ceph() {
   depends=("ceph-libs=${pkgver}-${pkgrel}"
-           'boost-libs' 'curl' 'fuse2' 'fuse3' 'fmt' 'glibc' 'gperftools' 'java-runtime'
-           'keyutils' 'leveldb' 'libaio' 'libutil-linux' 'librdkafka' 'cryptsetup' 'libnl'
+           'boost-libs' 'curl' 'fuse3' 'fmt' 'glibc' 'gperftools' 'java-runtime'
+           'keyutils' 'libaio' 'libutil-linux' 'librdkafka' 'cryptsetup' 'libnl'
            'ncurses'
            'nss' 'oath-toolkit' 'python'
-           'snappy' 'sudo' 'systemd-libs' 'lua' 'gawk'
-           'xfsprogs')
+           'snappy' 'sudo' 'systemd-libs' 'lua' 'gawk')
   provides=("ceph=${pkgver}-${pkgrel}")
   conflicts=('ceph-bin')
 
@@ -304,7 +289,7 @@ package_ceph() {
   find "${pkgdir}/usr/lib" -maxdepth 1 -type l -delete
   find "${pkgdir}/usr/lib/ceph" -maxdepth 1 -type f -delete
   find "${pkgdir}/usr/lib/ceph" -maxdepth 1 -type l -delete
-  rm -rf "${pkgdir}"/usr/lib/{ceph/{compressor,crypto,erasure-code,librbd},rados-classes}
+  rm -rf "${pkgdir}"/usr/lib/{ceph/{compressor,crypto,erasure-code,librbd,denc},rados-classes}
   rm -rf "${pkgdir}"/usr/lib/python*
   rm -rf "${pkgdir}/usr/include"
 
@@ -348,7 +333,7 @@ package_ceph() {
 
 package_ceph-mgr() {
   depends=("ceph=${pkgver}-${pkgrel}" "ceph-libs=${pkgver}-${pkgrel}"
-           'bash' 'boost-libs' 'coffeescript' 'curl' 'gperftools' 'nodejs' 'nss' 'fmt'
+           'bash' 'boost-libs' 'curl' 'gperftools' 'nss' 'fmt'
            'python' 'python-cherrypy' 'python-pecan' 'python-pyjwt' 'python-more-itertools'
            'python-numpy' 'python-scipy' 'python-six' 'python-coverage' 'python-pytest' 'python-dateutil'
            'python-prettytable' 'python-requests' 'python-pyopenssl' 'python-bcrypt' 'python-yaml'
@@ -358,7 +343,7 @@ package_ceph-mgr() {
               'python-prometheus_client: prometheus module'
               'python-remoto: ssh module')
   provides=("ceph-mgr=${pkgver}-${pkgrel}")
-  conflicts=('ceph<15.2.1-1' 'ceph-mgr-bin')
+  conflicts=('ceph<16.2.1-1' 'ceph-mgr-bin')
 
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
@@ -370,7 +355,7 @@ package_ceph-mgr() {
   rm -rf "${pkgdir}/usr/sbin"
 
   # remove everything except mgr related stuff, rest is in ceph/ceph-libs
-  rm -rf "${pkgdir}"/usr/lib/{ceph/{compressor,crypto,erasure-code},rados-classes}
+  rm -rf "${pkgdir}"/usr/lib/{ceph/{compressor,crypto,erasure-code,librbd,denc},rados-classes}
   rm -rf "${pkgdir}/usr/include"
   find "${pkgdir}/usr/bin" -maxdepth 1 -type f -not -name 'ceph-mgr' -delete
   find "${pkgdir}"/usr/lib/systemd/system -maxdepth 1 -type f -not -iname 'ceph-mgr*' -delete

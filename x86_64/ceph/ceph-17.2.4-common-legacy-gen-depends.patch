@@ -1,0 +1,15 @@
+diff --git a/src/common/options/CMakeLists.txt b/src/common/options/CMakeLists.txt
+index da24c673f6b..410a4d2615e 100644
+--- a/src/common/options/CMakeLists.txt
++++ b/src/common/options/CMakeLists.txt
+@@ -107,6 +107,10 @@ add_library(common-options-objs OBJECT
+ add_custom_target(legacy-option-headers
+   DEPENDS ${legacy_options_headers})
+ 
++add_custom_target(legacy-config-opts
++  DEPENDS legacy_config_opts.h)
++add_dependencies(legacy-config-opts legacy-option-headers)
++
+ include(AddCephTest)
+ add_ceph_test(validate-options
+   ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/validate-options.py ${options_yamls})

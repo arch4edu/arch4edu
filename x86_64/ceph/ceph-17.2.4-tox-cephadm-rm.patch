@@ -1,0 +1,11 @@
+diff --git a/src/cephadm/CMakeLists.txt b/src/cephadm/CMakeLists.txt
+index 13be09bae21..eb7ce8afd00 100644
+--- a/src/cephadm/CMakeLists.txt
++++ b/src/cephadm/CMakeLists.txt
+@@ -1,4 +1,4 @@
+ if(WITH_TESTS)
+-  include(AddCephTest)
+-  add_tox_test(cephadm TOX_ENVS py3 mypy flake8)
++  #include(AddCephTest)
++  #add_tox_test(cephadm TOX_ENVS py3 mypy flake8)
+ endif()
