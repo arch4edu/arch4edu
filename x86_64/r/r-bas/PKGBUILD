@@ -2,7 +2,7 @@
 
 _cranname=BAS
 pkgname=r-bas
-pkgver=1.6.3
+pkgver=1.6.4
 pkgrel=1
 pkgdesc="Bayesian Variable Selection and Model Averaging using Bayesian Adaptive Sampling"
 arch=(x86_64)
@@ -10,7 +10,7 @@ url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL3)
 depends=(r)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${pkgver}.tar.gz")
-sha256sums=('59d28e381465dd487061799df8fb374d2e9a950237730eb8aad2071ce20ffd50')
+sha256sums=('e517909f3896dad497507b6113ced7db03ad9ce3c97183b998ea06692e1bfef0')
 
 build() {
   R CMD INSTALL ${_cranname}_${pkgver}.tar.gz -l "${srcdir}"
