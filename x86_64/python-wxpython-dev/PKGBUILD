@@ -6,7 +6,7 @@
 
 pkgname=python-wxpython-dev
 _pkgname=wxPython
-pkgver=4.2.1a1.dev5496+7c4d21d7
+pkgver=4.2.1a1.dev5530+3ee614e0
 pkgrel=1
 pkgdesc='Cross-platform GUI toolkit. Developer version'
 arch=('x86_64')
@@ -19,7 +19,7 @@ checkdepends=('xorg-server-xvfb' 'python-pytest-forked' 'python-numpy')
 provides=('python-wxpython')
 conflicts=('python-wxpython')
 source=("https://wxpython.org/Phoenix/snapshot-builds/wxPython-$pkgver.tar.gz")
-sha512sums=('b163631fce276d63087024c8dee500fd56db2795dc179e3dbd90814b486d2aeb0730539c74d77fba4ae7f1296e72809ae048a031abb9d851603c39843fc47739')
+sha512sums=('dfd478b1157dae2a71083a5cff6d5033917fc72203c5e23ce0358da111103d4212f983a4c13bbd0d2be1d1f7e6c130475d53b18489da5b383179d10d507f2e73')
 
 build() {
   cd "$_pkgname-$pkgver"
