@@ -4,7 +4,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _cranname=ggplot2
-_cranver=3.3.6
+_cranver=3.4.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -13,13 +13,15 @@ arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
-    r-digest
+    r-cli
     r-glue
     r-gtable
     r-isoband
+    r-lifecycle
     r-rlang
     r-scales
     r-tibble
+    r-vctrs
     r-withr
 )
 checkdepends=(
@@ -40,7 +42,6 @@ optdepends=(
     r-ggplot2movies
     r-hexbin
     r-hmisc
-    r-interp
     r-knitr
     r-mapproj
     r-maps
@@ -60,7 +61,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('bfcb4eb92a0fcd3fab713aca4bb25e916e05914f2540271a45522ad7e43943a9'
+sha256sums=('a82f9e52f974389439765f71a8206ec26e3be30a8864d2c784d5ea8abcb0473e'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
