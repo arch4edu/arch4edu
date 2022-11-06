@@ -1,45 +1,42 @@
-# Maintainer: James P. Harvey <jamespharvey20 at gmail dot com>
-# Maintainer: Christoph Bayer <chrbayer@criby.de>
+# Contributor: Doug Newgard <dnewgard at outlook dot com>
+# Contributor: James P. Harvey <jamespharvey20 at gmail dot com>
+# Contributor: Christoph Bayer <chrbayer@criby.de>
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=mongodb-tools
-pkgver=4.2.18_rc0
-_pkgver=4.2.18-rc0
+pkgver=100.6.1
 pkgrel=1
 epoch=1
-pkgdesc="The MongoDB tools provide import, export, and diagnostic capabilities."
+pkgdesc="Import, export, and diagnostic tools for MongoDB"
 arch=('x86_64')
 url="https://github.com/mongodb/mongo-tools"
 license=('Apache')
-depends=('libpcap')
-makedepends=('go-pie')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/mongodb/mongo-tools/archive/refs/tags/r${_pkgver}.tar.gz")
-sha256sums=('2a7380f582419396888e95c01e35262a37e6ad36eb149788adb844c005ad8d35')
-
-_tools=('bsondump' 'mongostat' 'mongofiles' 'mongoexport' 'mongoimport' 'mongorestore' 'mongodump' 'mongotop' 'mongoreplay')
+depends=('glibc' 'krb5')
+makedepends=('go')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/mongodb/mongo-tools/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=('8f54132fdc47018d3e300ec3b32425c9e82d218c433a2f4ae8eb86a600c4e1a3')
 
 prepare() {
-  cd "${srcdir}"
-  install -d build/src/github.com/mongodb/bin
-  mv "mongo-tools-r${_pkgver}" build/src/github.com/mongodb/mongo-tools
+  # Patch version check for release
+  sed -e "s/runCmd.*get-version.*/\"$pkgver\", *new(error)/" \
+      -e "s/git\.SHA1(ctx)/\"release\", *new(error)/" \
+      -e "/github.com\/craiggwilson\/goke\/pkg\/git/d" \
+      -i mongo-tools-$pkgver/buildscript/build.go
 }
 
 build() {
-  cd "${srcdir}/build/src/github.com/mongodb/mongo-tools"
-  ./set_goenv.sh
-  export GOPATH="$srcdir/build"
-  export GO111MODULE=auto
+  cd mongo-tools-$pkgver
 
-  for tool in "${_tools[@]}"; do
-    echo "Building ${tool}..."
-    go build -o "bin/${tool}" -tags "ssl sasl" "${tool}/main/${tool}.go"
-  done
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+
+  go run build.go build
 }
 
 package() {
-  cd "${srcdir}/build/src/github.com/mongodb/mongo-tools"
-  for tool in "${_tools[@]}"; do
-    install -Dm755 "bin/${tool}" "${pkgdir}/usr/bin/${tool}"
-  done
+  install -Dm755 mongo-tools-$pkgver/bin/* -t "$pkgdir/usr/bin/"
 }
