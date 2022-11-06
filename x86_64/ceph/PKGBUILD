@@ -6,7 +6,7 @@ pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
 _zstdver=1.5.2
 pkgver=17.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
@@ -60,16 +60,6 @@ source=(
   # not sure why yet, need to ask upstream for help
   'ceph-16.2.7-delete-test-librados-asio.patch'
 
-  # Compressor code depends on src/common objects existing, but this isn't enforced
-  # by the build, which can lead to racy failures. Fix this by adding explicit CMake
-  # rules
-  'ceph-17.2.4-compressor-common-depends.patch'
-
-  # A .h file for legacy config options depends on some file generation before it can
-  # be safely included. However this dependancy was missing in CMake, leading to racy
-  # build failures
-  'ceph-17.2.4-common-legacy-gen-depends.patch'
-
   # Test wants to use `git ls-files`, and is sad when it finds itself not running in a
   # git repo
   'ceph-17.2.4-tox-flake8-git-ls-files.patch'
@@ -102,8 +92,6 @@ sha512sums=('10cd3d9eb01c91c148a92f1f7d040bbd78af5bb1ab15d071d93f54b37097dc9e126
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             '3774cbc1a979ee8bf7138b96defcf69499444afe0b7186b21feac3453a3a5ec93741f5942d256d93999e9bc306c8d018206893e04e1a3eb9e03593105d9f5791'
             '66770a80ba4e05ea72d4809cb5819cce7499ea7523b85b1a57370df68de1d7f6f94b1c10d0f9f9a3c8e6a86d0419434c70778c568cd06a0dd2e6126631a3355c'
-            'cd20e9358e49d3342c7c2a00ac538f628cdf86dc25f1870b77ea2d3df386772caedc333506387b68d8d357913ba1eb761700d843103c3c173df71cd79473cefa'
-            '67df3bdf1784ba6ce76aef95569bc89071ddcc38053a4ffedb89d744fe876f8d54bd0c707752eea8c9d2bba101c08b9b068974e45974fe6884d49d5c1c4dbf4c'
             '31e578b240ceaaf1216b56cdce654661eed6529ef642ecad164a02669e850100a49a85dc70f3d744671e2c5dad10aee64be7d091fa33007cb8fc6788a4336799'
             'e59cc0ec58d85369ed9f2b8969e2280609fe98828ea66b5bb80a423f4a0aa547da52c6ba9d9610cece442c515e123d1af169e11ec106aff8cd3dadaea35cad90'
             '6b53e3a2b1941f8dfdb4b83cafc4c500e818dd3a0736d7061f0ebcdfb514094b217e4688384c5b428288181ef6fff0ca73895c65a046e2d6ae2b834375164216'
@@ -224,6 +212,7 @@ build() {
     -DWITH_TESTS=ON \
     -Wno-dev
 
+  VERBOSE=1 make -C build legacy-option-headers
   VERBOSE=1 make -C build all -j1
 }
 
