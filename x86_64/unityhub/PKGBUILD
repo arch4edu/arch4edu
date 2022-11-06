@@ -5,12 +5,12 @@
 
 pkgname=unityhub
 pkgver=3.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
 arch=('x86_64')
 license=('custom')
-depends=('nss' 'gtk3' 'cpio')
+depends=('nss' 'gtk3' 'cpio' 'openssl-1.1')
 optdepends=(
   'libappindicator-gtk3: The official deb says this an optional dependency'
   'gconf: Required by Unity 2019.4 or older'
