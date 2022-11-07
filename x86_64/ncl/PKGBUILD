@@ -2,7 +2,7 @@
 
 pkgname=ncl
 pkgver=6.6.2
-pkgrel=3
+pkgrel=4
 pkgdesc='Ncar Command Language, is an interpreted language designed specifically for scientific data analysis and visualization'
 url='http://www.ncl.ucar.edu'
 license=('APACHE')
@@ -125,3 +125,4 @@ package() {
     done
     rm -Rf $pkgdir/usr/man/
 }
+makedepends+=("blas" "lapack")
