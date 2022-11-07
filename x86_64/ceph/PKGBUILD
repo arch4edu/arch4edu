@@ -4,14 +4,13 @@
 
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
-_zstdver=1.5.2
 pkgver=17.2.5
-pkgrel=2
+pkgrel=4
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
 license=('GPL')
-makedepends=("zstd=${_zstdver}" 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares' 'cmake' 'coreutils' 'coffeescript'
+makedepends=('zstd' 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares' 'cmake' 'coreutils' 'coffeescript'
              'cpio' 'crypto++' 'cryptsetup' 'cunit' 'curl' 'cython' 'expat'
              'fcgi' 'fontconfig' 'fuse2' 'fuse3' 'fmt' 'gcc' 'gcc-libs' 'git' 'glibc' 'gmock' 'gnutls'
              'gperf' 'gperftools' 'gptfdisk' 'gtest' 'hwloc' 'inetutils' 'java-runtime'
@@ -48,7 +47,7 @@ options=('emptydirs' '!lto')
 source=(
   "https://download.ceph.com/tarballs/${pkgbase}-${pkgver}.tar.gz"
   'ceph.sysusers'
-  "zstd-${_zstdver}.tar.gz::https://github.com/facebook/zstd/archive/v${_zstdver}.tar.gz"
+  'ceph.sudoers'
   'ceph-13.2.2-dont-install-sysvinit-script.patch'
   'disable-empty-readable.sh-test.patch'
 
@@ -87,7 +86,7 @@ source=(
 )
 sha512sums=('10cd3d9eb01c91c148a92f1f7d040bbd78af5bb1ab15d071d93f54b37097dc9e1268eed9e788fe32794d137f6af81abd6a2aeaee39cef44d2c45234a15cc6020'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
-            'e107508a41fca50845cc2494e64adaba93efb95a2fa486fc962510a8ba4b2180d93067cae9870f119e88e5e8b28a046bc2240b0b23cdd8933d1fb1a6a9668c1e'
+            '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             '3774cbc1a979ee8bf7138b96defcf69499444afe0b7186b21feac3453a3a5ec93741f5942d256d93999e9bc306c8d018206893e04e1a3eb9e03593105d9f5791'
@@ -120,31 +119,12 @@ prepare() {
     fi
   done
 
-  # temporarily disable unsubscriptable-object (buggy on Python 3.9)
-  # https://github.com/PyCQA/pylint/issues/3882
-  sed -i '/^disable=/a\        unsubscriptable-object,' \
-    src/pybind/mgr/dashboard/.pylintrc
-
-  # mypy complains about this but the exception is handled; not sure what's up
-  sed -i 's/from base64 import encodestring$/&  # type: ignore/' \
-    src/pybind/mgr/dashboard/awsauth.py
-
-  # suppress deprecation warnings
-  sed -i '/#ifndef CEPH_CONFIG_H/i#define BOOST_ALLOW_DEPRECATED_HEADERS' \
-    src/common/config.h
-  sed -i '/#ifndef CEPH_TYPES_H/i#define BOOST_ALLOW_DEPRECATED_HEADERS' \
-    src/include/types.h
-
   # fix boost stuff for system-boost
   find . -name '*.cmake' -or -name 'CMakeLists.txt' -print0 | xargs --null \
     sed -r \
     -e 's|Boost::|boost_|g' \
     -e 's|Boost_|boost_|g' \
     -e 's|[Bb]oost_boost|boost_system|g' -i || exit 1
-
-  # remove bundled zstd and replace with newer release
-  rm -rf src/zstd
-  ln -sf "${srcdir}/zstd-${_zstdver}" src/zstd
 
   # remove tests that require root privileges
   rm src/test/cli/ceph-authtool/cap*.t
@@ -213,7 +193,7 @@ build() {
     -Wno-dev
 
   VERBOSE=1 make -C build legacy-option-headers
-  VERBOSE=1 make -C build all -j1
+  VERBOSE=1 make -C build all
 }
 
 check() {
@@ -261,6 +241,8 @@ package_ceph() {
            'ncurses'
            'nss' 'oath-toolkit' 'python'
            'snappy' 'sudo' 'systemd-libs' 'lua' 'gawk')
+  optdepends=('smartmontools: disk monitoring via S.M.A.R.T'
+              'nvme-cli: disk monitoring for NVMe drives')
   provides=("ceph=${pkgver}-${pkgrel}")
   conflicts=('ceph-bin')
 
@@ -288,11 +270,26 @@ package_ceph() {
   # remove _test_ binaries from the package, not needed
   find "${pkgdir}/usr/bin" -maxdepth 1 -type f -iname 'ceph_test_*' -delete
 
-  # install tmpfiles.d and sysusers.d stuff
+  # install system config files
+  # tmpfiles
   install -Dm644 "${srcdir}/${pkgbase}-${pkgver}/systemd/ceph.tmpfiles.d" \
     "${pkgdir}/usr/lib/tmpfiles.d/${pkgbase}.conf"
+  # sysusers
   install -Dm644 "${srcdir}/ceph.sysusers" \
     "${pkgdir}/usr/lib/sysusers.d/${pkgbase}.conf"
+  # logrotate
+  install -Dm644 "${srcdir}/${pkgbase}-${pkgver}/src/logrotate.conf" \
+    "${pkgdir}/etc/logrotate.d/ceph"
+  # rbd udev rules
+  install -Dm644 "${srcdir}/${pkgbase}-${pkgver}/udev/50-rbd.rules" \
+    "${pkgdir}/etc/udev/rules.d/50-ceph-rbd.rules"
+  # sysctls
+  sed -i -e '/kernel.pid_max/d' "${srcdir}/${pkgbase}-${pkgver}/etc/sysctl/90-ceph-osd.conf"
+  install -Dm644 "${srcdir}/${pkgbase}-${pkgver}/etc/sysctl/90-ceph-osd.conf" \
+    "${pkgdir}/etc/sysctl.d/90-ceph-osd.conf"
+  # sudoers (for disk monitoring)
+  install -Dm644 "${srcdir}/ceph.sudoers" \
+    "${pkgdir}/etc/sudoers.d/90-ceph"
 
   # remove debian init script
   rm -rf "${pkgdir}/etc/init.d"

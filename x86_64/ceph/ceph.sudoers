@@ -1,0 +1,8 @@
+## allow ceph daemons (which run as user ceph) to collect device health metrics
+# Since v1.9.10 sudo allows for regex as a part of the COMMAND string.
+# vim: ft=sudoers
+
+# Used in src/common/blkdev.cc for collecting device metrics
+# https://docs.ceph.com/en/latest/rados/operations/devices/#enabling-monitoring
+ceph ALL=NOPASSWD: /usr/bin/smartctl ^-x --json=o /dev/[a-zA-Z0-9/_-]+$
+ceph ALL=NOPASSWD: /usr/bin/nvme ^[a-zA-Z0-9_-]+ smart-log-add --json /dev/[a-zA-Z0-9/_-]+$

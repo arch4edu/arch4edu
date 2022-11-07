@@ -1,0 +1,3 @@
+
+# For github, as it doesn't recognize justfiles
+justfile linguist-language=Makefile

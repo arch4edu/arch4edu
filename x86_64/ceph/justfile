@@ -138,7 +138,7 @@ GitCommitish            := if `git tag --points-at HEAD` != None {
 BuildId                 := "[" + C_YELLOW + PkgBase + C_RESET + "/" + C_GREEN + PkgVer + ":" + PkgRel + C_RESET + "@" + C_CYAN + GitCommitish + C_RESET + "]"
 BuildTriple             := PkgVer + "-" + PkgRel + "-" + "x86_64"
 LogFileList             := env_var_or_default("TEMP", "/tmp") / PkgBase + ".temp" / "logfiles"
-GithubRepo              := `git remote get-url origin | sed -nE 's|[^:]+://[^/]+/([^/]+)/([^./]+)\.?.*|\1/\2|p'`
+GithubRepo              := "bazaah/aur-ceph"
 
 # ~~~ Color Codes ~~~
 C_ENABLED   := if Color =~ '(?i)^auto|yes|1$' { "1" } else { None }
