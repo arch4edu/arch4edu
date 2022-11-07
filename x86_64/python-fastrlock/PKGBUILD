@@ -1,7 +1,7 @@
 # Maintainer: Leo Mao <leomaoyw at gmail dot com>
 pkgname=python-fastrlock
 _pkgname=fastrlock
-pkgver=0.8
+pkgver=0.8.1
 pkgrel=1
 pkgdesc="A fast RLock implementation for CPython"
 _github="scoder/fastrlock"
@@ -11,7 +11,7 @@ license=('MIT')
 depends=('python')
 makedepends=('python' 'python-setuptools' 'cython')
 source=("https://github.com/scoder/fastrlock/archive/v$pkgver.tar.gz")
-md5sums=('4394ed1a9c2401e2a5a005feff4e9ef9')
+md5sums=('b495308de27c5089486487fbbffa903a')
 
 build() {
   cd "$srcdir/$_pkgname-$pkgver"
