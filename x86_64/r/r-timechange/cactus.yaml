@@ -2,8 +2,9 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-timechange
-  - x86_64/r/r-generics
+  - x86_64/r/cctz
+makedepends:
+  - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
