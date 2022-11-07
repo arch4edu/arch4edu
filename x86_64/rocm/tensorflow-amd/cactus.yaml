@@ -17,7 +17,7 @@ pre_build: |
   aur-pre-build
   add makedepends gcc11
   echo 'export TF_ROCM_AMDGPU_TARGETS=gfx906,gfx1030,gfx908,gfx90a' >> PKGBUILD
-  sudo mkdir /mnt/tmp
+  sudo mkdir -p /mnt/tmp
 post_build: |
   aur-post-build
   sudo rm -rf /mnt/tmp
