@@ -9,7 +9,7 @@ pkgbase=tensorflow-amd
 
 # Flags for building without/with cpu optimizations
 _build_no_opt=1
-_build_opt=0
+_build_opt=1
 
 pkgname=()
 [ "$_build_no_opt" -eq 1 ] && pkgname+=(tensorflow-amd python-tensorflow-amd)
@@ -21,7 +21,7 @@ _id="4f7f7b9d6489de80eb81572ecc188af299e9e495"
 _srcname="tensorflow-upstream-$_id"
 _pkgver=2.9.2
 pkgver=2.9.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Library for computation using data flow graphs for scalable machine learning (AMD upstream)"
 url="https://www.tensorflow.org/"
 license=('APACHE')
