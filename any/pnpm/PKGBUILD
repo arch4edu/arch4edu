@@ -1,19 +1,20 @@
 # Maintainer: Tomasz Jakub Rup <tomasz.rup@gmail.com>
+
 pkgname=pnpm
-pkgver=7.11.0
-pkgrel=0
+pkgver=7.14.2
+pkgrel=1
 pkgdesc="Fast, disk space efficient package manager"
 arch=('any')
 url="https://pnpm.js.org/"
 license=('MIT')
 depends=('nodejs>=14.6.0')
-makedepends=('npm' 'jq')
-source=("https://registry.npmjs.org/$pkgname/-/$pkgname-$pkgver.tgz")
-noextract=("$pkgname-$pkgver.tgz")
-sha256sums=('4806143590b74b52b5cca2e8851f1aefc7e8a66b6d06188920a1b3321653b913')
+makedepends=('git' 'npm' 'jq')
+source=("git+https://github.com/pnpm/pnpm.git?signed#tag=v$pkgver")
+sha256sums=('SKIP')
+validpgpkeys=("7B74D1299568B586BA9962B5649E4D4AF74E7DEC") # Zoltan Kochan <z@kochan.io>
 
 package() {
-	npm install -g --user root --prefix "$pkgdir"/usr "$srcdir/$pkgname-$pkgver.tgz"
+	npm install -g --user root --prefix "$pkgdir"/usr "$pkgname"
 	local _npmdir="$pkgdir/usr/lib/node_modules/$pkgname"
 	find "$pkgdir"/usr -type d -exec chmod 755 {} +
 	chown -R root:root "$pkgdir"
