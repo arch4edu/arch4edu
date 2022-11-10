@@ -3,7 +3,7 @@
 # Contributor: George Eleftheriou <eleftg>
 
 pkgname=mpich
-pkgver=4.0.2
+pkgver=4.0.3
 pkgrel=1
 pkgdesc="An improved implementation of the Message Passing Interface."
 url="https://mpich.org"
@@ -16,17 +16,19 @@ optdepends=(perl python)
 install="${pkgname}.install"
 source=("https://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
 	"mpich.profile")
-sha256sums=('5a42f1a889d4a2d996c26e48cbf9c595cbf4316c6814f7c181e3320d21dedd42'
+sha256sums=('17406ea90a6ed4ecd5be39c9ddcbfac9343e6ab4f77ac4e8c5ebe4a3e3b6c501'
             'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284')
 options=('!libtool')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
+  sed -i 's|PTR|void *|' modules/ucx/src/ucs/debug/debug.c
+
   # CFLAGS etc are normally written into the wrapper compilers.  This
   # gives surprising results, e.g. when the user wants to compile their
   # program without optimization.
-  export MPICHLIB_CFLAGS="${CFLAGS} -Wno-error=array-bounds";      unset CFLAGS
+  export MPICHLIB_CFLAGS="${CFLAGS}";      unset CFLAGS
   export MPICHLIB_CXXFLAGS="${CXXFLAGS}";  unset CXXFLAGS
   export MPICHLIB_CPPFLAGS="${CPPFLAGS}";  unset CPPFLAGS
   export MPICHLIB_FFLAGS="${FFLAGS}";      unset FFLAGS
