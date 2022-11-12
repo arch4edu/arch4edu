@@ -2,7 +2,7 @@
 
 pkgname=python-leveldb
 pkgver=0.201
-pkgrel=2
+pkgrel=3
 pkgdesc='Python bindings for leveldb database library'
 arch=('x86_64')
 url='https://github.com/rjpower/py-leveldb/'
@@ -18,7 +18,7 @@ sha256sums=('SKIP'
 prepare() {
     git -C py-leveldb submodule init
     git -C py-leveldb config --local submodule.leveldb.url "${srcdir}/leveldb"
-    git -C py-leveldb submodule update
+    git -C py-leveldb -c protocol.file.allow='always' submodule update
 }
 
 build() {
