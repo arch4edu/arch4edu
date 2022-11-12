@@ -4,7 +4,7 @@
 
 pkgbase=opencv3-opt
 pkgname=($pkgbase $pkgbase-samples)
-pkgver=3.4.16
+pkgver=3.4.18
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library (Legacy Version & /opt directory version)"
 arch=(x86_64)
@@ -21,20 +21,14 @@ optdepends=('opencv-samples: samples'
 source=(
 "opencv-$pkgver.tar.gz::https://github.com/opencv/opencv/archive/$pkgver.zip"
 "opencv_contrib-$pkgver.tar.gz::https://github.com/opencv/opencv_contrib/archive/$pkgver.tar.gz"
-"opencv-lapack.patch::https://raw.githubusercontent.com/archlinux/svntogit-packages/ea851b9f93224a4c19cc3ddeafa7b733f3f138b6/opencv/repos/extra-x86_64/opencv-lapack-3.10.patch"
 "opencv-tbb.patch::https://raw.githubusercontent.com/DrAtomic/opencv-tbb-patch/main/opencv-tbb.patch"
-"opencv-cmake.patch"
 )
-sha256sums=('b4eddd83f13a4657e6175b2ffbb411cea6d8d6052242d823e64155d868e6a8ed'
-            '92b4f6ab8107e9de387bafc3c7658263e5c6be68554d6086b37a2cb168e332c5'
-            'f83c64f2731a39910d0d4a48898dd04e4aca5c22f746b7b0ead003992ae11199'
-            'e604f6effe0b2aacd19ad5e11544589f76ffed816036964963984ab8912266f0'
-            '5710070ca513d37c0ee9ff496bfccf9c053e870bbaf5c46c0d18e2abc17c6269')
+sha256sums=('5cf471bd1a5bcfd96d436b359a37d590cc184b6061422eef7d89e063522da1bf'
+            '599bb4d3800a9523a91cecedb7f6d4316890275a39b8f9d66f73263f29ea1f61'
+            'e604f6effe0b2aacd19ad5e11544589f76ffed816036964963984ab8912266f0')
 
 prepare() {
-  patch -d opencv-$pkgver -p1 < opencv-lapack.patch # Fix build with LAPACK
-  patch -d opencv-$pkgver -p1 < opencv-tbb.patch    # Fix build tbb
-  patch opencv-$pkgver/cmake/OpenCVCompilerOptions.cmake opencv-cmake.patch # Disable -Werror=address
+  patch -d opencv-$pkgver -p1 < opencv-tbb.patch # Fix build tbb
   mkdir -p build
 }
 
