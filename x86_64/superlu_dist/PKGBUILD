@@ -2,7 +2,7 @@
 # Maintainer: Gianluca Pettinello <g_pet at hotmail dot com>
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=superlu_dist
-pkgver=8.1.1
+pkgver=8.1.2
 pkgrel=1
 pkgdesc="Distributed memory, MPI based SuperLU"
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('custom')
 depends=(lapack parmetis) # openblas combblas
 makedepends=(cmake)       # gcc-fortran ninja
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('db3c23bbf66a68f27256625d4bbe889558caf1e6411f8128016d767bd686e4dc9a7986ae267ec579ef6bf637730f1280748804b746b4578c3b79fc2d139d2a4d')
+sha512sums=('30dbd8dbf7a2d86c0b8fdadf6f476473514a8698b15fbdb63e1f2de0d47abd5e1de25f5757ed40c941b4165ae3c53d1132caa8b5a03eaaeea7a4868d13778bf3')
 options=('staticlibs')
 
 # -DTPL_ENABLE_COMBBLASLIB=ON \
