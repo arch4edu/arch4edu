@@ -4,13 +4,13 @@
 
 pkgname=flite1
 pkgver=1.4
-pkgrel=3
+pkgrel=4
 pkgdesc='A lighweight speech synthesis engine (version 1.x)'
 arch=('x86_64')
 url='http://www.speech.cs.cmu.edu/flite/'
 license=('custom')
 depends=('glibc')
-makedepends=('texlive-core' 'texinfo' 'ed')
+makedepends=('texlive-core' 'ed')
 provides=("flite=${pkgver}" 'flite1-patched')
 conflicts=('flite' 'flite1-patched')
 replaces=('flite1-patched')
@@ -55,12 +55,11 @@ build() {
         --disable-static \
         --with-vox='cmu_us_kal16'
     make
-    make -C doc flite.{html,pdf}
+    make -C doc flite.pdf
 }
 
 package() {
     make -C "flite-${pkgver}-release" DESTDIR="$pkgdir" install
     install -D -m644 "flite-${pkgver}-release/COPYING" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -D -m644 "flite-${pkgver}-release/doc/flite.pdf" -t "${pkgdir}/usr/share/doc/${pkgname}"
-    cp -dr --no-preserve='ownership' "flite-${pkgver}-release/doc/html" "${pkgdir}/usr/share/doc/${pkgname}"
 }
