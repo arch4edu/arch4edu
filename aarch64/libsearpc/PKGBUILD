@@ -5,8 +5,8 @@
 
 pkgname='libsearpc'
 epoch=2
-pkgver=3.2.0
-pkgrel=6
+pkgver=3.3.0
+pkgrel=1
 pkgdesc="A simple C language RPC framework (including both server side & client side)"
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
 url="https://github.com/haiwen/libsearpc"
@@ -19,7 +19,7 @@ depends=(
 )
 _pkgver="${pkgver%.*}-latest"
 source=("libsearpc-$_pkgver.tar.gz::$url/archive/v$_pkgver.tar.gz")
-sha256sums=('683a78cc6dc66d4db5fd90e3260a23845c6a5ff2510b8f55d2f46b86f9c3f271')
+sha256sums=('34e0d1b4ba7a9e4a63d2ce2ff6f3bd06f46c6f9e41d4607dde7c725f28886929')
 
 prepare () {
     cd "$srcdir/$pkgname-$_pkgver"
