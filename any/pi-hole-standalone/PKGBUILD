@@ -2,7 +2,7 @@
 
 pkgname=pi-hole-standalone
 _pkgname=pi-hole
-pkgver=5.13
+pkgver=5.14.1
 pkgrel=1
 _now=`date +%N`
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch alteration for standalone PC.'
@@ -26,15 +26,15 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	mimic_basic-install.sh
 	piholeDebug.sh)
 
-sha256sums=('26222254df130b56d7e0419c9828c995415b2aafd1717f92850c6cb4e0e20d2d'
-            '06ce5e700f5517fb71200cb57f506fa7a258f829caf5c24bfd0a3818bd8ea528'
+sha256sums=('87c472a887a8cd9211178e5e7321f0c716abd3d7ed8d0cd14c53615d2fa29bac'
+            '58588226b3ed745403637c1c45f34eb3322cce50ba2eba10bc495efd35e762c2'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             '6da6bba6cfac4e87a1f1e8e1488b71858ac6feb0a2e327470a58d8f1e9ad8cbf'
             '9b72d7769036f8f4bb7121968d2ae4bdba427e4b16787ce340205a5f62b45c7c'
             '5228b4f923eab7784952a0fd6da895e7bff2f80a7f91c4a7c6350491dfdbb2e8'
             '88e3c78bbeaf5dc1100df65202ded8207877954a96bdf1b0ab3d9990d9fa759f'
             'ff507ce58c9492cce57e947696e1b814469fc2d856a1e303c6e68f98c62ebf46'
-            '2039755530379ed25a2c0f0ebac32d52f2743004c733ee1cddb2aec1e7e60d14'
+            'b1c38a0cc6fda8b44d55f7270f26bb48b486a93cee1a68f6331af5ad137ec9dd'
             '2424abae1061700ae57629dd6abdb6bc526c22a545d3135b4661d393c468123d'
             '73a8362f7a3eac91c77efbbcb4910ff079203bb5f829e32ecf3391d017117bb8')
 
@@ -49,7 +49,10 @@ package() {
 
   install -dm755 "$pkgdir"/opt/pihole
   install -Dm755 $_pkgname-$pkgver/gravity.sh "$pkgdir"/opt/pihole/gravity.sh
+  install -Dm755 $_pkgname-$pkgver/advanced/Scripts/version.sh "$pkgdir"/opt/pihole/version.sh
+  install -Dm755 $_pkgname-$pkgver/advanced/Scripts/updatecheck.sh "$pkgdir"/opt/pihole/updatecheck.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/piholeLogFlush.sh "$pkgdir"/opt/pihole/piholeLogFlush.sh
+  install -Dm755 $_pkgname-$pkgver/advanced/Scripts/chronometer.sh "$pkgdir"/opt/pihole/chronometer.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/list.sh "$pkgdir"/opt/pihole/list.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/utils.sh "$pkgdir"/opt/pihole/utils.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/webpage.sh "$pkgdir"/opt/pihole/webpage.sh
