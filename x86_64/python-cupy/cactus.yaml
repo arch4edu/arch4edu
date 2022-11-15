@@ -6,7 +6,11 @@ depends:
   - x86_64/python-fastrlock
 group: x86_64
 build_prefix: extra-x86_64
+makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build
   add options "!lto"
-post_build: aur-post-build
+  sudo mkdir -p /mnt/tmp
+post_build: |
+  aur-post-build
+  sudo rm -rf /mnt/tmp
