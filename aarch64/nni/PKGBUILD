@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 
 pkgname=nni
-pkgver=2.9
+pkgver=2.10
 pkgrel=1
 pkgdesc="An open source AutoML toolkit for automate machine learning lifecycle, including feature engineering, neural architecture search, model compression and hyper-parameter tuning."
 arch=('x86_64' 'aarch64')
@@ -10,7 +10,7 @@ license=('MIT')
 depends=(python-cloudpickle python-filelock python-json-tricks python-schema python-typeguard python-websockets)
 makedepends=(cmake jupyterlab python-installer python-pip python-setuptools python-wheel)
 source=("${url}/archive/refs/tags/v${pkgver}.tar.gz")
-md5sums=('ef2e4e55b4e2ec205205d8db784408c5')
+md5sums=('05f88f640a2ef268217f21cf70ffabef')
 
 prepare() {
   cd "$srcdir/${pkgname}-${pkgver}"
