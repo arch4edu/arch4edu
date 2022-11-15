@@ -3,16 +3,16 @@
 
 pkgname=pi-hole-server
 _pkgname=pi-hole
-pkgver=5.13
+pkgver=5.14.1
 pkgrel=1
 _wwwpkgname=AdminLTE
-_wwwpkgver=5.16
+_wwwpkgver=5.17
 _now=`date +%N`
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
 license=('EUPL-1.2')
 url="https://github.com/pi-hole/pi-hole"
-depends=('pi-hole-ftl>=5.0' 'bc' 'perl' 'gnu-netcat' 'inetutils' 'iproute2' 'logrotate' 'bind-tools' 'sudo' 'lsof' 'procps-ng')
+depends=('pi-hole-ftl>=5.0' 'bc' 'perl' 'gnu-netcat' 'inetutils' 'iproute2' 'logrotate' 'bind-tools' 'sudo' 'lsof' 'procps-ng' 'jq')
 optdepends=(
 'lighttpd: a secure, fast, compliant and very flexible web-server'
 'php-cgi: CGI and FCGI SAPI for PHP needed only for lighttpd'
@@ -41,10 +41,10 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	    piholeDebug.sh
 )
 
-sha256sums=('26222254df130b56d7e0419c9828c995415b2aafd1717f92850c6cb4e0e20d2d'
-            '9874e4745068a737cf4f6277719fc725ac25308fef950cdc27ff56aaa551ac4b'
-            'd8de2b5730fb4768e9073f3339c7334c99cff915d89a2966eb3ee913ec2a02e5'
-            '72048f004269b8e571e102ce4865b92297900c45a96e856807a54cf54e0a555b'
+sha256sums=('87c472a887a8cd9211178e5e7321f0c716abd3d7ed8d0cd14c53615d2fa29bac'
+            '0cafb2cff261360470ec3076e25ebe0abc935d2a628b1926565bd4e9ab90d597'
+            '835c8fa81d05a8bedbeabab4503d8fdf484e80a5f46fba7bd130bcdf9320816f'
+            '690ad5d6b055658705107bb21e9d4d073b5683878510dead7a5c5492daad9c38'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             'f70964f8b176d9ffcf4f44140036f0cfc030cbbe836634a885da082cfee4d1f7'
             '032770450ba4a1085bcb0bf3f944c436c5702f3a3faf984fbbba2d3dbc6accea'
@@ -71,6 +71,7 @@ package() {
   install -dm755 "$pkgdir"/opt/pihole
   install -Dm755 $_pkgname-$pkgver/gravity.sh "$pkgdir"/opt/pihole/gravity.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/version.sh "$pkgdir"/opt/pihole/version.sh
+  install -Dm755 $_pkgname-$pkgver/advanced/Scripts/updatecheck.sh "$pkgdir"/opt/pihole/updatecheck.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/piholeLogFlush.sh "$pkgdir"/opt/pihole/piholeLogFlush.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/chronometer.sh "$pkgdir"/opt/pihole/chronometer.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/list.sh "$pkgdir"/opt/pihole/list.sh
