@@ -2,7 +2,7 @@
 
 pkgname=brunsli
 pkgver=0.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Lossless JPEG repacker'
 arch=('x86_64')
 url='https://github.com/google/brunsli/'
@@ -11,7 +11,7 @@ depends=('gcc-libs')
 makedepends=('git' 'cmake')
 source=("git+https://github.com/google/brunsli.git#tag=v${pkgver}"
         'git+https://github.com/google/brotli.git'
-        'git+https://github.com/google/googletest'
+        'git+https://github.com/google/googletest.git'
         'git+https://github.com/google/highwayhash.git')
 sha256sums=('SKIP'
             'SKIP'
@@ -19,12 +19,11 @@ sha256sums=('SKIP'
             'SKIP')
 
 prepare() {
-    cd brunsli
-    git submodule init
-    git config --local submodule.third_party/brotli.url "${srcdir}/brotli"
-    git config --local submodule.third_party/googletest.url "${srcdir}/googletest"
-    git config --local submodule.third_party/highwayhash.url "${srcdir}/highwayhash"
-    git submodule update
+    git -C brunsli submodule init
+    git -C brunsli config --local submodule.third_party/brotli.url "${srcdir}/brotli"
+    git -C brunsli config --local submodule.third_party/googletest.url "${srcdir}/googletest"
+    git -C brunsli config --local submodule.third_party/highwayhash.url "${srcdir}/highwayhash"
+    git -C brunsli -c protocol.file.allow='always' submodule update
 }
 
 build() {
