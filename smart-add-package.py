@@ -62,7 +62,6 @@ def read_provides(package):
 
 def load_provides():
     provides = {}
-    provides.update(read_provides('r'))
     provides.update(read_provides('fuse2'))
     provides.update(read_provides('libjpeg-turbo'))
     provides.update(read_provides('ttf-dejavu'))
@@ -74,8 +73,6 @@ def load_provides():
     provides.update(read_provides('dbus-python'))
     provides.update(read_provides('jdk-openjdk'))
     provides.update(read_provides('jre-openjdk'))
-    provides.update(read_provides('tbb'))
-    #provides.update(read_provides('python-sip4'))
     return provides
 
 if __name__ == '__main__':
@@ -86,6 +83,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--template', '-t', default='template/x86_64-simple.yaml', help='the template used to create cactus.yaml (default: template/x86_64-simple.yaml)')
     #parser.add_argument('--repository', default='.', help='path to the repository (default: current directory)')
+    parser.add_argument('--provides', '-p', action='append', help='read the provides of a package')
     parser.add_argument('--nocheck', action="store_true", help='disable check and ignore checkdepends')
     parser.add_argument('package', help='the package to add (eg: yay)')
     parser.add_argument('directory', help='the output directory (eg: x86_64, x86_64/directory)')
@@ -102,6 +100,8 @@ if __name__ == '__main__':
     pacman_db = load_pacman_packages()
     pkgbases = load_pkgbases()
     provides = load_provides()
+    for i in args.provides:
+        provides.update(read_provides(i))
 
     unresolved = [args.package]
     resolved = {}
