@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=pbapply
-_pkgver=1.5-0
+_pkgver=1.6-0
 pkgname=r-${_pkgname,,}
-pkgver=1.5.0
-pkgrel=4
+pkgver=1.6.0
+pkgrel=1
 pkgdesc="Adding Progress Bar to '*apply' Functions"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,7 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('effdfee286e5ba9534dc2ac3cee96590a37f5cd2af28c836d00c25ca9f070a55')
+sha256sums=('e8c13e7edf2d2415242f5c66377fc9647dba705359ec34813fa9d2f1fbc37f61')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
