@@ -1,11 +1,8 @@
-# Maintainers:
-# + Gavin Lloyd <gavinhungry@gmail.com>
-# + Severen Redwood <me@severen.dev>
-# Contributors:
-# + Tomasz Jakub Rup <tomasz.rup@gmail.com>
+# Maintainer: Severen Redwood <me@severen.dev>
+# Contributor: Tomasz Jakub Rup <tomasz.rup@gmail.com>
 
 pkgname=pnpm
-pkgver=7.15.0
+pkgver=7.16.0
 pkgrel=1
 pkgdesc="Fast, disk space efficient package manager"
 arch=("any")
@@ -14,7 +11,7 @@ license=("MIT")
 depends=("nodejs>=14.6.0")
 makedepends=("git" "npm" "jq")
 source=("git+https://github.com/$pkgname/$pkgname.git?signed#tag=v$pkgver")
-sha256sums=("SKIP")
+sha256sums=('SKIP')
 validpgpkeys=("7B74D1299568B586BA9962B5649E4D4AF74E7DEC") # Zoltan Kochan <z@kochan.io>
 
 package() {
