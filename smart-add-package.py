@@ -100,8 +100,9 @@ if __name__ == '__main__':
     pacman_db = load_pacman_packages()
     pkgbases = load_pkgbases()
     provides = load_provides()
-    for i in args.provides:
-        provides.update(read_provides(i))
+    if not args.provides is None:
+        for i in args.provides:
+            provides.update(read_provides(i))
 
     unresolved = [args.package]
     resolved = {}
