@@ -2,7 +2,7 @@
 
 pkgname=ceres-solver
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Solver for nonlinear least squares problems"
 arch=('i686' 'x86_64')
 url="http://ceres-solver.org/"
