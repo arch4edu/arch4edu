@@ -1,0 +1,19 @@
+_info() {
+    echo "----------------------------------------------------------"
+    echo "Data files for GeographicLib (gravity and magnetic models)"
+    echo "can be downloaded by scripts installed in /usr/bin :"
+    echo "  geographiclib-get-geoids"
+    echo "  geographiclib-get-gravity"
+    echo "  geographiclib-get-magnetic"
+    echo "For details see:"
+    echo "  https://geographiclib.sourceforge.io/doc/library.html#datasets"
+    echo "----------------------------------------------------------"
+}
+
+post_install() {
+    _info
+}
+
+post_upgrade() {
+    _info
+}
