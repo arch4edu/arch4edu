@@ -11,6 +11,7 @@ makedepends:
   - x86_64/rocm/rocsparse
   - x86_64/rocm/rocrand
   - x86_64/rocm/rocthrust
+  - x86_64/rocm/roctracer
   - x86_64/rocm/rocsolver
   - x86_64/rocm/rocfft
   - x86_64/rocm/hipcub
