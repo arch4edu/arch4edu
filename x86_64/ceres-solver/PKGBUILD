@@ -2,7 +2,7 @@
 
 pkgname=ceres-solver
 pkgver=2.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Solver for nonlinear least squares problems"
 arch=('i686' 'x86_64')
 url="http://ceres-solver.org/"
@@ -11,8 +11,8 @@ makedepends=('cmake')
 depends=('google-glog>=0.3.5' 'eigen>=3.3.0'
       'suitesparse>=4.4.5')
 optdepends=('openmp')
-source=("http://ceres-solver.org/ceres-solver-2.1.0.tar.gz")
-sha256sums=('f7d74eecde0aed75bfc51ec48c91d01fe16a6bf16bce1987a7073286701e2fc6')
+source=("http://ceres-solver.org/ceres-solver-2.1.0.tar.gz" "0001-fix-for-suitesparse-6.0.0.patch")
+sha256sums=('f7d74eecde0aed75bfc51ec48c91d01fe16a6bf16bce1987a7073286701e2fc6' '0eb45170ec3e87839a688b78ce2d2cffe562a7aa3d10619043729252d3a56d79')
 options=('staticlibs')
 
 _cmakeopts=('-D CMAKE_BUILD_TYPE=Release'
@@ -25,6 +25,9 @@ _cmakeopts=('-D CMAKE_BUILD_TYPE=Release'
 
 build() {
   cd $srcdir/$pkgname-$pkgver
+  for p in "$srcdir"/*.patch; do
+     patch -p1 < "$p"
+  done
   mkdir -p ./build
   cd ./build
   cmake ${_cmakeopts[@]} ../
@@ -41,3 +44,4 @@ package ()
   index=$(declare -p depends | sed -n "s,.*\[\([^]]*\)\]=\"eigen.*\".*,\1,p")
   depends[$index]=$(pacman -Sp --print-format "%n=%v" eigen|cut -d- -f1)
 }
+makedepends+=("metis")
