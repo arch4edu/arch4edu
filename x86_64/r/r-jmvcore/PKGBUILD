@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=jmvcore
-_pkgver=2.3.12
+_pkgver=2.3.19
 pkgname=r-${_pkgname,,}
-pkgver=2.3.12
+pkgver=2.3.19
 pkgrel=1
 pkgdesc="Dependencies for the 'jamovi' Framework"
 arch=('any')
@@ -27,7 +27,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('16dbbc459aecd534a449f6313b1f0e4f4445d1bb3f8b648f396eeaaf7572b2ee')
+sha256sums=('afbd51b229ce3ba004def57a8fcced5e44f6fc2a33305b8c8d5d8362cf878c33')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
