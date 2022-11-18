@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=markdown
-_cranver=1.3
+_cranver=1.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -20,7 +20,7 @@ optdepends=(
     r-rcurl
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('b1773e94e7b927c3a8540c2704b06e0f7721a0e3538a93abd58fff420ecb30f1')
+sha256sums=('e0e3ade62942a38c129de76454a8cc513487cb00967253a7888cc94f6f8e3c7e')
 
 build() {
   mkdir -p build
