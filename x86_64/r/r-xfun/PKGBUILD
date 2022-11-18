@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=xfun
-_cranver=0.34
+_cranver=0.35
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -11,7 +11,7 @@ arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(r)
-checkdepends=(r-mime r-testit)
+checkdepends=(r-testit)
 optdepends=(
     r-testit
     r-rstudioapi
@@ -31,7 +31,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('50e76c1febb988c044e44fb78e1abc1ba681173c9ff3c336f4c0ad71e6a2853d'
+sha256sums=('85fc4d4ea5c4266c2cd5162bf490d8c2e10fbedbf54f61fb77050437dcf1a613'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
