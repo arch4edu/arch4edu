@@ -16,7 +16,7 @@ _libarchive_ver=3.6.1
 _gpgerrorver=1.46
 _libassuanver=2.5.5
 _gpgmever=1.18.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Statically-compiled pacman (to fix or install systems without libc)"
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://www.archlinux.org/pacman/"
@@ -38,7 +38,8 @@ validpgpkeys+=('27EDEAF22F3ABCEB50DB9A125CC908FDB71E12C2') # Daniel Stenberg <da
 source+=("https://curl.haxx.se/download/curl-${_curlver}.tar.gz"{,.asc})
 # openssl
 source+=("https://www.openssl.org/source/openssl-${_sslver}.tar.gz"{,.asc}
-         "ca-dir.patch")
+         "ca-dir.patch"
+         "openssl-3.0.7-no-atomic.patch")
 validpgpkeys+=('8657ABB260F056B1E5190839D9C4D26D0E604491'  # Matt Caswell <matt@openssl.org>
               '7953AC1FBC3DC8B3B292393ED5E9E43F7DF9EE8C'   # Matt Caswell <matt@openssl.org>
               'A21FAB74B0088AA361152586B8EF1A6BA9DA2D5C')  # Tomá? Mráz <tm@t8m.info>
@@ -78,6 +79,7 @@ sha512sums=('9d76fb58c3a50e89a4b92b1f9e3bfdecca3f69e05022ea88fbd34f9df540c4fc688
             '6c2bcd1cd4b499e074e006150dda906980df505679d8e9d988ae93aa61ee6f8c23c0fa369e2edc1e1a743d7bec133044af11d5ed57633b631ae479feb59e3424'
             'SKIP'
             'b1873dbb7a49460b007255689102062756972de5cc2d38b12cc9f389b6be412da6797579b1acd3717a8cd2ee118fd9801b94e55f063d4328f050f0876a5eb53c'
+            'b5887ea77417fae49b6cb1e9fa782d3021f268d5219701d87a092235964f73fa72a31428b630445517f56f2bb69dcbbb24119ef9dbf8b4e40a753369a9f9a16f'
             '99f0e843f52290e6950cc328820c0f322a4d934a504f66c7caa76bd0cc17ece4bf0546424fc95135de85a2656fed5115abb835fd8d8a390d60ffaf946c8887ad'
             'SKIP'
             '06329fdbd1d897aa99dc96900c6246457288c586d02bb4869a92dd2f97973f95acb3a2fa9598a20613ea029f816836a8e3b65e36fec2b807b5e7553141429ab9'
@@ -104,6 +106,7 @@ b2sums=('648f62307e413cb352ed92e92df1ace510c1fc5e9ddd254baeef071e89cb7dae1786a95
         '141881071fa62f056c514e7c653a61c59cc45fe951ec094041e23fb5e619133b7ebbfe31cd8203969c9d8842b8cbc10ec58da67cc181761a11c1cfdd0869df9a'
         'SKIP'
         '928c0cb15cca44bb7f194db9f95985f6c50aacd3e22fe2eb60ece26ed76469289f10d303c645a48407f3d6435ac66f25dd3c4cbc56fdc5dfd9ea2566feda9ff8'
+        'c72172cf57389718b4722c3482ddaf9c2fc02aafe391c68edeb92d41fd6345a0a98f6fd63ddf01b33fe59a7a3f270ff1ccad432feba578b7b7e0170cd1dea7ef'
         '73cd65f287d662a988287205b74e93d516d6a74e18555d0f1a2777557e73e81249b45341c687fe97e65406a7210f77b8914ed146bac517d3fcc4c9fcb16546d3'
         'SKIP'
         '5363c5d0403e041c6d2e35b5d3321feeb8e63b8556496373c820975850b50e28e0da903446a49ba516fd9f40e0101dd39cfa9a9b8dd143c9849c84a715bb5d7b'
@@ -165,6 +168,8 @@ build() {
         arm|armv6h|armv7h)
             openssltarget='linux-armv4'
             optflags=''
+            # special patch to ommit -latomic when installing pkgconfig files
+            patch -Np1 -i "${srcdir}/openssl-3.0.7-no-atomic.patch"
             ;;
         aarch64)
             openssltarget='linux-aarch64'
