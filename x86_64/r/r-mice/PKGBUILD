@@ -2,10 +2,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mice
-_pkgver=3.14.0
+_pkgver=3.15.0
 pkgname=r-${_pkgname,,}
-pkgver=3.14.0
-pkgrel=4
+pkgver=3.15.0
+pkgrel=1
 pkgdesc='Multivariate Imputation by Chained Equations'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -44,7 +44,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f87bb73d8bfee36c6bf4f15779c59ff6b70c70ca25b1388b4ee236757276d605')
+sha256sums=('3d64dd260e3dce9c4c2f7be8c99f3063769df9ccfd3a0fc827c2de0ac842e87b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
