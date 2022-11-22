@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/metis
   - x86_64/parmetis
   - x86_64/scalapack
   - x86_64/scotch
