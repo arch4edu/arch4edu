@@ -3,9 +3,9 @@ nvchecker:
     aur:
 depends:
   - x86_64/metis
+  - x86_64/parmetis
   - x86_64/scalapack
   - x86_64/scotch
-  - x86_64/parmetis
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
