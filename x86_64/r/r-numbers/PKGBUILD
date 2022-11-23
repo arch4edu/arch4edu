@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=numbers
-_pkgver=0.8-2
+_pkgver=0.8-5
 pkgname=r-${_pkgname,,}
-pkgver=0.8.2
-pkgrel=4
+pkgver=0.8.5
+pkgrel=1
 pkgdesc='Number-Theoretic Functions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,7 @@ optdepends=(
   r-gmp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c1ac232878d64b5ef844524a5f85a7a7f64fcd0652f3d6fc3936f16fa665573d')
+sha256sums=('77d5dedb7f953689ab9e89c14e673c0c8f644c8b392fab4ee4fb793930ad220b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
