@@ -3,7 +3,6 @@ nvchecker:
     aur:
 depends:
   - x86_64/libccd
-  - x86_64/flann
   - x86_64/octomap
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
