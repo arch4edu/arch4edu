@@ -22,6 +22,7 @@ build_prefix: extra-x86_64
 makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build
+  sed 's/# export HCC_AMDGPU_TARGET/export HCC_AMDGPU_TARGET/' -i PKGBUILD
   sudo mkdir -m 777 -p /mnt/tmp
 post_build: |
   aur-post-build
