@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=sass
-_cranver=0.4.3
+_cranver=0.4.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -29,7 +29,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('94883c9e8219ca9609a704690c98d5dd9a0af52dfc9c98b0f7d8655b5a1365c0'
+sha256sums=('d284af829d6a9b2ccc9d2698dd3f60ee0e7cd41594e211edc0a9c375ebd66542'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 prepare() {
