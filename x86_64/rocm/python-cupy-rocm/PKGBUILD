@@ -1,0 +1,48 @@
+# Maintainer: NA <azusanakan0 at outlook dot com>
+
+pkgname=python-cupy-rocm
+_pkgname=cupy
+pkgver=11.3.0
+_cub_commit=c3cceac115c072fb63df1836ff46d8c60d9eb304
+_jitify_commit=4a37de0be4639f222c6565ebd0654cb922b5180e
+pkgrel=1
+pkgdesc="NumPy-like API accelerated with ROCm"
+url="https://cupy.dev"
+arch=('x86_64')
+license=('MIT')
+depends=('rocm-hip-sdk' 'python-fastrlock' 'python-numpy')
+makedepends=('hipblas' 'hipsparse' 'rocsparse' 'rocrand' 'rocthrust' 'roctracer' 'rocsolver' 'rocfft' 'hipcub' 'rocprim' 'rccl'
+             'python-setuptools')
+source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
+        "https://github.com/NVIDIA/cub/archive/$_cub_commit.tar.gz"
+        "https://github.com/NVIDIA/jitify/archive/$_jitify_commit.tar.gz")
+md5sums=('60d2d2de50ace10a4a13fc5a8b111ec2'
+         'ae6435aef98378a8b323b69f6665df33'
+         '2ad752c0814c2da9909e2dcac0f50401')
+
+prepare() {
+  cd "$srcdir/$_pkgname-$pkgver"
+  rmdir cupy/_core/include/cupy/cub
+  ln -srfT "$srcdir/cub-$_cub_commit" cupy/_core/include/cupy/cub
+  rmdir cupy/_core/include/cupy/jitify
+  ln -srfT "$srcdir/jitify-$_jitify_commit" cupy/_core/include/cupy/jitify
+
+  # patch for hipThrust
+  sed -i '4 i\#include <thrust/iterator/constant_iterator.h>'  cupy/cuda/cupy_thrust.cu
+}
+
+build() {
+  cd "$srcdir/$_pkgname-$pkgver"
+  export CUPY_INSTALL_USE_HIP=1
+  export ROCM_HOME=/opt/rocm
+  # Uncomment this when you want to specify specific ROCM_ARCH(s)
+  # Otherwise CuPy will automatically detect your architecture
+  export HCC_AMDGPU_TARGET=gfx906,gfx908,gfx90a,gfx1030
+  python setup.py build
+}
+
+package() {
+  cd "$srcdir/$_pkgname-$pkgver"
+  python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
+  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
