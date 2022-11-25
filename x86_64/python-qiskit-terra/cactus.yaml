@@ -3,7 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/python-retworkx
+  - x86_64/python-rustworkx
   - x86_64/python-tweedledum
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
