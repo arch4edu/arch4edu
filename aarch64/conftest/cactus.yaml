@@ -1,1 +1,9 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  add options "!lto"
+post_build: aur-post-build
