@@ -1,6 +1,7 @@
+# Maintainer: Jingbei Li <i@jingbei.li>
 # Maintainer: heavysink <winstonwu91 at gmail>
 
-_mirrorlist_name=arch4edu-mirrorlist
+_mirrorlist_name=mirrorlist.arch4edu
 _gitname=mirrorlist
 pkgname=$_mirrorlist_name
 pkgver=20221117.e22de92
