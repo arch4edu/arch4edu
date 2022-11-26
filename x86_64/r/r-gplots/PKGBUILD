@@ -4,7 +4,7 @@ _pkgname=gplots
 _pkgver=3.1.3
 pkgname=r-${_pkgname,,}
 pkgver=3.1.3
-pkgrel=1
+pkgrel=4
 pkgdesc='Various R Programming Tools for Plotting Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,6 +18,7 @@ optdepends=(
   r-grid
   r-knitr
   r-mass
+  r-r2d2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('9f853b9e205264d087e61e8825f797ce36c9eb585b187dab794563613a526716')
