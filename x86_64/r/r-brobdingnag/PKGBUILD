@@ -4,7 +4,7 @@ _pkgname=Brobdingnag
 _pkgver=1.2-9
 pkgname=r-${_pkgname,,}
 pkgver=1.2.9
-pkgrel=1
+pkgrel=3
 pkgdesc='Very Large Numbers in R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,6 +14,7 @@ depends=(
 )
 optdepends=(
   r-cubature
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('f9012d250bc2a0f47815d6a7c06df2d4ddf3d8bab2d3b75e8cdefd964d20e91e')
