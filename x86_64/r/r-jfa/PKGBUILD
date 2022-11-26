@@ -4,7 +4,7 @@ _pkgname=jfa
 _pkgver=0.6.4
 pkgname=r-${_pkgname,,}
 pkgver=0.6.4
-pkgrel=1
+pkgrel=4
 pkgdesc='Bayesian and Classical Audit Sampling'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,6 +18,7 @@ optdepends=(
   r-knitr
   r-mus
   r-rmarkdown
+  r-samplingbook
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
