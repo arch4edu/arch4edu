@@ -4,7 +4,7 @@ _pkgname=MGLM
 _pkgver=0.2.1
 pkgname=r-${_pkgname,,}
 pkgver=0.2.1
-pkgrel=3
+pkgrel=8
 pkgdesc='Multivariate Response Generalized Linear Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -17,6 +17,7 @@ optdepends=(
   r-knitr
   r-plyr
   r-reshape2
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('aed900e67f6aa30f1f5da2220a7621fdaad2428697bf4be4a68f9192b29d6d3a')
