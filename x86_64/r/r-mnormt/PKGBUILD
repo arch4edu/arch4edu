@@ -7,14 +7,13 @@ _pkgname=mnormt
 _pkgver=2.1.1
 pkgname=r-${_pkgname,,}
 pkgver=2.1.1
-pkgrel=3
+pkgrel=5
 pkgdesc='The Multivariate Normal and t Distributions, and Their Truncated Versions'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
   r
-  r-tmvnsim
 )
 makedepends=(
   gcc-fortran
