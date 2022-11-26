@@ -4,7 +4,7 @@ _pkgname=interp
 _pkgver=1.1-3
 pkgname=r-${_pkgname,,}
 pkgver=1.1.3
-pkgrel=1
+pkgrel=4
 pkgdesc='Interpolation Methods'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,14 @@ makedepends=(
 )
 optdepends=(
   r-deriv
+  r-ggplot2
+  r-gridextra
+  r-lattice
+  r-rcppeigen
+  r-ryacas
   r-sp
+  r-stringi
+  r-stringr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('b74e606b38cfb02985c1f9e3e45093620f76c0307b1b0b4058761e871eb5fa3f')
