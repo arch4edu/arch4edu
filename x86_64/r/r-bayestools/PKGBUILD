@@ -5,12 +5,13 @@ _pkgname=BayesTools
 _pkgver=0.2.13
 pkgname=r-${_pkgname,,}
 pkgver=0.2.13
-pkgrel=1
+pkgrel=3
 pkgdesc='Tools for Bayesian Analyses'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
+  jags
   r
   r-bridgesampling
   r-coda
@@ -18,16 +19,15 @@ depends=(
   r-ggplot2
   r-mvtnorm
   r-rdpack
-  r-rjags
-  r-runjags
-  jags
 )
 optdepends=(
   r-bayesfactor
   r-covr
   r-knitr
+  r-rjags
   r-rmarkdown
   r-rstan
+  r-runjags
   r-scales
   r-testthat
   r-vdiffr
