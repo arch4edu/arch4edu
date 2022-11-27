@@ -6,7 +6,7 @@ _pkgname=purrr
 _pkgver=0.3.5
 pkgname=r-${_pkgname,,}
 pkgver=0.3.5
-pkgrel=3
+pkgrel=5
 pkgdesc='Functional Programming Tools'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,11 +20,13 @@ optdepends=(
   r-covr
   r-crayon
   r-dplyr
+  r-httr
   r-knitr
   r-rmarkdown
   r-testthat
   r-tibble
   r-tidyselect
+  r-vctrs
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('a2386cd7e78a043cb9c14703023fff15ab1c879bf648816879d2c0c4a554fcef')
