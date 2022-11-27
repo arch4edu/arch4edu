@@ -6,7 +6,7 @@ _pkgname=sandwich
 _pkgver=3.0-2
 pkgname=r-${_pkgname,,}
 pkgver=3.0.2
-pkgrel=4
+pkgrel=6
 pkgdesc='Robust Covariance Matrix Estimators'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,6 +20,7 @@ optdepends=(
   r-car
   r-geepack
   r-lattice
+  r-lme4
   r-lmtest
   r-mass
   r-multiwayvcov
