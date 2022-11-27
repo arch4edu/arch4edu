@@ -5,7 +5,7 @@ _pkgname=igraph
 _pkgver=1.3.5
 pkgname=r-${_pkgname,,}
 pkgver=1.3.5
-pkgrel=1
+pkgrel=3
 pkgdesc='Network Analysis and Visualization'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -17,6 +17,9 @@ depends=(
   r-rlang
 )
 optdepends=(
+  glpk
+  gmp
+  libxml2
   r-ape
   r-digest
   r-graph
@@ -27,9 +30,6 @@ optdepends=(
   r-tcltk
   r-testthat
   r-withr
-  gmp
-  glpk
-  libxml2
 )
 makedepends=(
   gcc-fortran
