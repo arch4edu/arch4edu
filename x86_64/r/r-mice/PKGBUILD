@@ -5,12 +5,13 @@ _pkgname=mice
 _pkgver=3.15.0
 pkgname=r-${_pkgname,,}
 pkgver=3.15.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Multivariate Imputation by Chained Equations'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
+  gcc
   r
   r-broom
   r-cpp11
@@ -19,12 +20,12 @@ depends=(
   r-rcpp
   r-rlang
   r-tidyr
-  r-withr
-  gcc
 )
 optdepends=(
   r-broom.mixed
   r-decor
+  r-furrr
+  r-future
   r-glmnet
   r-haven
   r-knitr
@@ -36,10 +37,13 @@ optdepends=(
   r-mitml
   r-nnet
   r-pan
+  r-parallelly
+  r-purrr
   r-randomforest
   r-ranger
   r-rmarkdown
   r-rpart
+  r-rstan
   r-survival
   r-testthat
 )
