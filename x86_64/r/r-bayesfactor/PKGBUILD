@@ -4,7 +4,7 @@ _pkgname=BayesFactor
 _pkgver=0.9.12-4.4
 pkgname=r-${_pkgname,,}
 pkgver=0.9.12.4.4
-pkgrel=1
+pkgrel=4
 pkgdesc='Computation of Bayes Factors for Common Designs'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -12,7 +12,6 @@ license=('GPL')
 depends=(
   r
   r-coda
-  r-gtools
   r-hypergeo
   r-matrixmodels
   r-mvtnorm
