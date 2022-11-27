@@ -4,7 +4,7 @@ _pkgname=ggdendro
 _pkgver=0.1.23
 pkgname=r-${_pkgname,,}
 pkgver=0.1.23
-pkgrel=3
+pkgrel=6
 pkgdesc="Create Dendrograms and Tree Diagrams Using 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -15,6 +15,7 @@ depends=(
 )
 optdepends=(
   r-cluster
+  r-covr
   r-knitr
   r-rmarkdown
   r-rpart
