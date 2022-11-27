@@ -4,7 +4,7 @@ _pkgname=ggdist
 _pkgver=3.2.0
 pkgname=r-${_pkgname,,}
 pkgver=3.2.0
-pkgrel=1
+pkgrel=4
 pkgdesc='Visualizations of Distributions and Uncertainty'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,7 +14,9 @@ depends=(
   r-distributional
   r-dplyr
   r-ggplot2
+  r-glue
   r-hdinterval
+  r-numderiv
   r-rlang
   r-scales
   r-tibble
@@ -32,6 +34,8 @@ optdepends=(
   r-gdtools
   r-knitr
   r-modelr
+  r-palmerpenguins
+  r-patchwork
   r-pkgdown
   r-png
   r-posterior
