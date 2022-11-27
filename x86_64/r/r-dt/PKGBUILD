@@ -6,7 +6,7 @@ _pkgname=DT
 _pkgver=0.26
 pkgname=r-${_pkgname,,}
 pkgver=0.26
-pkgrel=1
+pkgrel=3
 pkgdesc="A Wrapper of the JavaScript Library 'DataTables'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,6 +23,7 @@ depends=(
 )
 optdepends=(
   r-bslib
+  r-future
   r-knitr
   r-rmarkdown
   r-shiny
