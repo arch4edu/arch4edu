@@ -5,7 +5,7 @@ _pkgname=FrF2
 _pkgver=2.2-3
 pkgname=r-${_pkgname,,}
 pkgver=2.2.3
-pkgrel=1
+pkgrel=4
 pkgdesc="Fractional Factorial Designs with 2-Level Factors"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,9 +18,9 @@ depends=(
   r-igraph
 )
 optdepends=(
- r-frr2.catlg128
- r-bsmd
- r-doe.wrapper
+  r-bsmd
+  r-doe.wrapper
+  r-frf2.catlg128
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('7a2004a998db38b00bbc8caf1eb4c37449e58b05560fb73773069dbc267b47e5')
