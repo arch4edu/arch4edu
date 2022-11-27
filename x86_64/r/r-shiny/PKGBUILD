@@ -5,7 +5,7 @@ _pkgname=shiny
 _pkgver=1.7.3
 pkgname=r-${_pkgname,,}
 pkgver=1.7.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Web Application Framework for R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -46,7 +46,6 @@ optdepends=(
   r-reactlog
   r-rmarkdown
   r-sass
-  r-shinytest
   r-showtext
   r-testthat
   r-yaml
