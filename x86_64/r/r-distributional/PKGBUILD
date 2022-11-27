@@ -4,7 +4,7 @@ _pkgname=distributional
 _pkgver=0.3.1
 pkgname=r-${_pkgname,,}
 pkgver=0.3.1
-pkgrel=1
+pkgrel=3
 pkgdesc='Vectorised Probability Distributions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -12,7 +12,6 @@ license=('GPL')
 depends=(
   r
   r-digest
-  r-ellipsis
   r-farver
   r-generics
   r-ggplot2
