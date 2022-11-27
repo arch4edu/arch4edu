@@ -4,7 +4,7 @@ _pkgname=ggridges
 _pkgver=0.5.4
 pkgname=r-${_pkgname,,}
 pkgver=0.5.4
-pkgrel=1
+pkgrel=3
 pkgdesc="Ridgeline Plots in 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -12,7 +12,6 @@ license=('GPL')
 depends=(
   r
   r-ggplot2
-  r-plyr
   r-scales
   r-withr
 )
