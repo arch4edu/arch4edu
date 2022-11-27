@@ -5,14 +5,17 @@ _pkgname=forcats
 _pkgver=0.5.2
 pkgname=r-${_pkgname,,}
 pkgver=0.5.2
-pkgrel=3
+pkgrel=5
 pkgdesc='Tools for Working with Categorical Variables (Factors)'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('MIT')
 depends=(
   r
+  r-cli
   r-ellipsis
+  r-glue
+  r-lifecycle
   r-magrittr
   r-rlang
   r-tibble
