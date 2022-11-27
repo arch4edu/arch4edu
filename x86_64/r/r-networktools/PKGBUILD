@@ -4,7 +4,7 @@ _pkgname=networktools
 _pkgver=1.5.0
 pkgname=r-${_pkgname,,}
 pkgver=1.5.0
-pkgrel=1
+pkgrel=4
 pkgdesc='Tools for Identifying Important Nodes in Networks'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,8 +16,6 @@ depends=(
   r-ggplot2
   r-gridextra
   r-igraph
-  r-isingfit
-  r-networkcomparisontest
   r-psych
   r-qgraph
   r-r.utils
