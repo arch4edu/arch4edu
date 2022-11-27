@@ -1,9 +1,0 @@
-nvchecker:
-  - source: archpkg
-    archpkg: dotnet-core-6.0
-build_prefix: extra-aarch64
-makepkg_args: -A
-pre_build: download-abs-snapshot
-post_build: |
-  git add PKGBUILD
-  git-commit
