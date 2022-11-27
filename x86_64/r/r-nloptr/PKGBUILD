@@ -6,7 +6,7 @@ _pkgname=nloptr
 _pkgver=2.0.3
 pkgname=r-${_pkgname,,}
 pkgver=2.0.3
-pkgrel=6
+pkgrel=8
 pkgdesc='R Interface to NLopt'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -17,10 +17,11 @@ depends=(
   r-testthat
 )
 optdepends=(
-  r-inline
+  r-covr
   r-knitr
   r-rmarkdown
   r-testthat
+  r-xml2
 )
 makedepends=(
   gcc-fortran
