@@ -1,1 +1,9 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+makedepends:
+  - aarch64/dotnet-sdk-6.0
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
