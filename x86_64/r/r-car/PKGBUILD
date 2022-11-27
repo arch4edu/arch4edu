@@ -6,7 +6,7 @@ _pkgname=car
 _pkgver=3.1-1
 pkgname=r-${_pkgname,,}
 pkgver=3.1.1
-pkgrel=1
+pkgrel=3
 pkgdesc='Companion to Applied Regression'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,9 +16,9 @@ depends=(
   r-abind
   r-cardata
   r-lme4
-  r-maptools
   r-pbkrtest
   r-quantreg
+  r-scales
 )
 optdepends=(
   r-alr4
@@ -30,6 +30,7 @@ optdepends=(
   r-lmtest
   r-matrix
   r-matrixmodels
+  r-mvtnorm
   r-rgl
   r-rio
   r-sandwich
