@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-callr
   - x86_64/r/r-cli
+  - x86_64/r/r-cpp11
   - x86_64/r/r-crayon
   - x86_64/r/r-desc
   - x86_64/r/r-prettyunits
