@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=docplex
 pkgname=python-docplex
-pkgver=2.24.231
+pkgver=2.24.232
 pkgrel=1
 pkgdesc="The IBM Decision Optimization CPLEX Modeling for Python"
 arch=('any')
@@ -15,7 +15,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
-b2sums=('2f005347980f5c2191088ecc3ec2fa615c834f6bbc05f395331bbf81b45a2baec58f709cbb12ad9a915f792b254576facad28d11d3fff73b729e94a9236705fb')
+b2sums=('0c8e6404f933c74fef1b6b8a87c1a05ac4b8f9486aba3ad23fa3942ba7098257c8f6606d7624c8806dc903d6829c7295f8dbb9c8720057483a02ee00ef8466c8')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
