@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+makedepends:
+  - x86_64/levmar
+  - x86_64/lib3ds
+  - x86_64/mpir
+  - x86_64/openctm-tools
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

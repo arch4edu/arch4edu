@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/dlib
+  - x86_64/fbx-sdk
+  - x86_64/mpir
+makedepends:
+  - x86_64/pcl
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
