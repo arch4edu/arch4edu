@@ -1,0 +1,12 @@
+post_upgrade() {
+	post_install $1
+}
+
+post_install() {
+	echo "You must read and agree to the license stored in"
+	echo "/usr/share/licenses/fbx-sdk/LICENSE before using FBX SDK"
+}
+
+op=$1
+shift
+$op $*
