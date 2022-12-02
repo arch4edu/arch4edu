@@ -9,7 +9,7 @@
 pkgname=python-torchvision-rocm
 _pkgname='vision'
 pkgver=0.13.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM GPU support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -69,3 +69,4 @@ package() {
     python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
+export ROCM_HOME=/opt/rocm
