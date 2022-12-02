@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=weibullness
-_pkgver=1.19.8
+_pkgver=1.22.12
 pkgname=r-${_pkgname,,}
-pkgver=1.19.8
-pkgrel=5
+pkgver=1.22.12
+pkgrel=1
 pkgdesc='Goodness-of-Fit Test for Weibull Distribution (Weibullness)'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b9a6296e68d18fd37a2b7e3d5cb9e76bffa446965e43dd5d7c165ad67b2544a7')
+sha256sums=('9dff63268234fdd4d0b9dfdcdae10fe058a298bfcd98086fb9a7b7456f8b7af6')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
