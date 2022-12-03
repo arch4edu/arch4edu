@@ -3,33 +3,37 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=stringr
-_cranver=1.4.1
+_cranver=1.5.0
 pkgname=r-${_cranname,,}
 pkgdesc="Simple, Consistent Wrappers for Common String Operations"
 url="https://cran.r-project.org/package=${_cranname}"
-license=("GPL2")
+license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
-    r
-    "r-glue>=1.2.0"
-    r-magrittr
-    "r-stringi>=1.1.7"
+    "r>=3.3"
+    "r-cli"
+    "r-glue>=1.6.1"
+    "r-lifecycle>=1.0.3"
+    "r-magrittr"
+    "r-rlang>=1.0.0"
+    "r-stringi>=1.5.3"
+    "r-vctrs"
 )
 optdepends=(
-    r-covr
-    r-htmltools
-    r-htmlwidgets
-    r-knitr
-    r-rmarkdown
-    r-testthat
+    "r-covr"
+    "r-htmltools"
+    "r-htmlwidgets"
+    "r-knitr"
+    "r-rmarkdown"
+    "r-testthat>=3.0.0"
 )
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ce3c4917fc21e26eec110a2d49b4f125718368665b324c1110524e411a358ef70db7b750e85474b5061bf1400896739766459a6a7bc5a8e88dad4d114cdc18a1")
+b2sums=('361e3d94de8d9e763316474eff865c6df31461e93e56a8f31cec35ace6984e2140df3d4eaf7e570693e1022a2a5323cdffc88434394b7b067c28daecd84d4784')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
