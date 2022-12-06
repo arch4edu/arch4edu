@@ -1,17 +1,17 @@
 # Maintainer: Josh Hoffer < hoffer dot joshua at gmail dot com >
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
-pkgbase=dune-istl
-pkgname=(${pkgbase} python-${pkgbase})
-_tarver=2.8.0
-_tar="${_tarver}/${pkgbase}-${_tarver}.tar.gz"
-pkgver=${_tarver}
-pkgrel=2
+pkgname=dune-istl
+_tarver=2.9.0
+_tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
+pkgver="${_tarver}"
+pkgrel=1
 pkgdesc="Iterative Solver Template Library"
-arch=('x86_64')
-url="https://dune-project.org/modules/${pkgbase}"
+arch=(x86_64)
+url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
-makedepends=('dune-common>=2.8.0' 'texlive-latexextra' 'biber' 'doxygen' 'graphviz' 'python-setuptools')
+depends=("dune-common>=${pkgver}" arpack)
+makedepends=(texlive-latexextra biber doxygen graphviz python-scikit-build python-ninja)
 optdepends=('vc: C++ Vectorization library'
   'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software'
@@ -21,48 +21,49 @@ optdepends=('vc: C++ Vectorization library'
   'arpackpp: C++ interface to ARPACK'
   'suitesparse: A collection of sparse matrix libraries')
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('03139c71881bc83934a1468937196e77c42deaba776102f49309ee1e46163ff44263524733d2522a1d912bcfdf6de3ba792834f2435cfa6d01670a52a8b80289' 'SKIP')
-validpgpkeys=('ABE52C516431013C5874107C3F71FE0770D47FFB') # Markus Blatt (applied mathematician and DUNE core developer) <markus@dr-blatt.de>
+sha512sums=('1e54f17cd669dc2b91603f5c71ab4a4b24c4252b3ff673855fc1d4423f756e6dabd02cea6ee0603b51ccbdf0836b8fd5cde3621a7193020905a6693b27036f97'
+  'SKIP')
+validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
 
 prepare() {
-  # install header for run test/linear/test_linearsolver.cc in DuMuX
-  sed -i '123 a install(FILES anisotropic.hh DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/dune/istl/paamg/test)' ${pkgbase}-${_tarver}/dune/istl/paamg/test/CMakeLists.txt
-  sed -i '5 a BUILD_ON_INSTALL' ${pkgbase}-${_tarver}/doc/CMakeLists.txt
+  cd ${pkgname}-${pkgver}
+  export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+  # install header for run test/linear/test_linearsolver.cc in dumux
+  sed -i '115 a install(FILES anisotropic.hh DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/dune/istl/paamg/test)' dune/istl/paamg/test/CMakeLists.txt
+  sed -i '8 a BUILD_ON_INSTALL' doc/CMakeLists.txt
+  # https://git.iws.uni-stuttgart.de/dumux-repositories/dumux/-/blob/master/patches/istl-2.6.patch
+  sed -i 's/*coarseSmoother_, 1E-2, 1000, 0/*coarseSmoother_, 1E-12, 1000, 0/' dune/istl/paamg/amg.hh
+  python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
 
 build() {
-  cmake \
-    -S ${pkgbase}-${_tarver} \
-    -B build-cmake \
-    -DCMAKE_BUILD_TYPE=None \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+  cd ${pkgname}-${pkgver}
+
+  XDG_CACHE_HOME="${PWD}" \
+    python setup.py build \
+    --build-type=None \
+    -G 'Unix Makefiles' \
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_FLAGS='-Wall -fdiagnostics-color=always' \
+    -DCMAKE_CXX_FLAGS="-O2 -Wall -fdiagnostics-color=always -mavx" \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+    -DALLOW_CXXFLAGS_OVERWRITE=ON \
+    -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Vc=TRUE \
     -DENABLE_HEADERCHECK=ON \
     -DDUNE_ENABLE_PYTHONBINDINGS=ON \
     -DDUNE_PYTHON_INSTALL_LOCATION='none' \
-    -DCMAKE_DISABLE_FIND_PACKAGE_Vc=TRUE \
-    -Wno-dev
-  cmake --build build-cmake --target all
-  cd "build-cmake/python"
-  python setup.py build
+    -DDUNE_PYTHON_WHEELHOUSE="dist"
 }
 
-package_dune-istl() {
-  depends=('dune-common>=2.8.0')
-  DESTDIR="${pkgdir}" cmake --build build-cmake --target install
-  install -Dm644 ${pkgbase}-${_tarver}/COPYING "${pkgdir}/usr/share/licenses/${pkgbase}/LICENSE"
+package() {
+  cd ${pkgname}-${pkgver}
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py --skip-cmake install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
+  install -Dm 644 COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
   find "${pkgdir}" -type d -empty -delete
-}
-
-package_python-dune-istl() {
-  depends=('dune-istl>=2.8.0' 'python-dune-common>=2.8.0' 'arpack')
-  pkgdesc+=" (python bindings)"
-  cd "build-cmake/python"
-  export PYTHONHASHSEED=0
-  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
 }
