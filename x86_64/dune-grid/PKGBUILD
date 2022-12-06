@@ -1,61 +1,62 @@
 # Maintainer: Josh Hoffer < hoffer dot joshua at gmail dot com >
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
-pkgbase=dune-grid
-pkgname=(${pkgbase} python-${pkgbase})
-_tarver=2.8.0
-_tar="${_tarver}/${pkgbase}-${_tarver}.tar.gz"
-pkgver=${_tarver}
-pkgrel=2
+pkgname=dune-grid
+_tarver=2.9.0
+_tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
+pkgver="${_tarver}"
+pkgrel=1
 pkgdesc="Grid Interface and Implementations"
-arch=('x86_64')
-url="https://dune-project.org/modules/${pkgbase}"
+arch=(x86_64)
+url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
-makedepends=('dune-geometry>=2.8.0' 'dune-uggrid>=2.8.0' 'doxygen' 'graphviz' 'python-setuptools')
-optdepends=('doxygen: Generate the class documentation from C++ sources'
+depends=("dune-geometry>=${pkgver}" "dune-uggrid>=${pkgver}" alberta)
+makedepends=(doxygen graphviz python-scikit-build python-ninja)
+optdepends=('imagemagick: image viewing/manipulation program'
+  'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software'
-  'parmetis: Parallel Graph Partitioning and Fill-reducing Matrix Ordering'
-  'psurface: Piecewise linear bijections between triangulated surfaces'
-  'gnuplot: for provides gnuplot output for 1D and 2D Grids')
+  'gnuplot: for provides gnuplot output for 1D and 2D Grids'
+  'parmetis: Parallel Graph Partitioning and Fill-reducing Matrix Ordering')
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('534c77e5e930a960486945f23d2bb991dd5509aa077192a100e9060966c6ecf4eb977716164a4ae0042b3a77d3713f1079e5ee74666bc4e52b0037bcaac3723e' 'SKIP')
-validpgpkeys=('ABE52C516431013C5874107C3F71FE0770D47FFB') # Markus Blatt (applied mathematician and DUNE core developer) <markus@dr-blatt.de>
+sha512sums=('b74ca105de20a2a760fa51f48e351f884c4ca3e8584abe63f30cb0e30ca29ce6195ef7599a9f7265c257e2acacbd52d2566d604d419026610bd5ccc8454e7659'
+  'SKIP')
+validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+  sed -i 's/^Version: '"${pkgver%%.0}"'-git/Version: '"${pkgver}"'/' dune.module
+  python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
+}
 
 build() {
-  cmake \
-    -S ${pkgbase}-${_tarver} \
-    -B build-cmake \
-    -DCMAKE_BUILD_TYPE=None \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+  cd ${pkgname}-${pkgver}
+
+  XDG_CACHE_HOME="${PWD}" \
+    python setup.py build \
+    --build-type=None \
+    -G 'Unix Makefiles' \
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_FLAGS='-Wall -fdiagnostics-color=always' \
+    -DCMAKE_CXX_FLAGS="-O2 -Wall -fdiagnostics-color=always -mavx" \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+    -DALLOW_CXXFLAGS_OVERWRITE=ON \
+    -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Alberta=FALSE \
     -DENABLE_HEADERCHECK=ON \
     -DDUNE_ENABLE_PYTHONBINDINGS=ON \
     -DDUNE_PYTHON_INSTALL_LOCATION='none' \
-    -DCMAKE_DISABLE_FIND_PACKAGE_Alberta=TRUE \
-    -Wno-dev
-  cmake --build build-cmake --target all
-  cd "build-cmake/python"
-  python setup.py build
+    -DDUNE_PYTHON_WHEELHOUSE="dist"
 }
 
-package_dune-grid() {
-  depends=('dune-geometry>=2.8.0' 'dune-uggrid>=2.8.0')
-  DESTDIR="${pkgdir}" cmake --build build-cmake --target install
-  install -Dm644 ${pkgbase}-${_tarver}/COPYING "${pkgdir}/usr/share/licenses/${pkgbase}/LICENSE"
-  cd "${pkgdir}"
-  rm -rf usr/python
+package() {
+  cd ${pkgname}-${pkgver}
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py --skip-cmake install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
+  install -Dm 644 COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
   find "${pkgdir}" -type d -empty -delete
-}
-
-package_python-dune-grid() {
-  depends=('dune-grid>=2.8.0' 'python-dune-geometry>=2.8.0')
-  pkgdesc+=" (python bindings)"
-  cd "build-cmake/python"
-  export PYTHONHASHSEED=0
-  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
 }
