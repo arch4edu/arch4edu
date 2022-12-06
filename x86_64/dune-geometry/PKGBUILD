@@ -1,63 +1,64 @@
 # Maintainer: Josh Hoffer < hoffer dot joshua at gmail dot com >
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
-pkgbase=dune-geometry
-pkgname=(${pkgbase} python-${pkgbase})
-_tarver=2.8.0
-_tar="${_tarver}/${pkgbase}-${_tarver}.tar.gz"
-pkgver=${_tarver}
-pkgrel=3
+pkgname=dune-geometry
+_tarver=2.9.0
+_tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
+pkgver="${_tarver}"
+pkgrel=1
 pkgdesc="Geometry Transformations, Reference Elements and Quadrature Rules"
-arch=('x86_64')
-url="https://dune-project.org/modules/${pkgbase}"
+arch=(x86_64)
+url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
-makedepends=('dune-common>=2.8.0' 'texlive-latexextra' 'doxygen' 'graphviz' 'gnu-free-fonts' 'inkscape' 'python-setuptools')
+depends=("dune-common>=${pkgver}")
+makedepends=(texlive-latexextra doxygen graphviz inkscape python-scikit-build python-ninja)
 optdepends=('texlive-latexextra: Type setting system'
   'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software'
   'inkscape: converts SVG images')
+# 'python-quadpy: for quadrature rules'
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('9a531afeefb10dd9e7f2cf9fcb6b61bba01fae323c9e67c47cf387f45a25bae7f2f061d6ffe268bff14fbcbfe8e42c20a57b99794f77cfba5c52b1dea0e5c9e1' 'SKIP')
-validpgpkeys=('ABE52C516431013C5874107C3F71FE0770D47FFB') # Markus Blatt (applied mathematician and DUNE core developer) <markus@dr-blatt.de>
+sha512sums=('5b227b3346b7eb3db3887483525a3ce550eddfa13528c30b213a7cc811dead5844bf0032133d2167bd6f341be8b13c014cc208724e67cac074432af28cd39fb1'
+  'SKIP')
+validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
 
 prepare() {
-  sed -i '8 a   BUILD_ON_INSTALL' ${pkgbase}-${_tarver}/doc/refinement/CMakeLists.txt
+  cd ${pkgname}-${pkgver}
+  export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+  sed -i 's/^Version: '"${pkgver%%.0}"'-git/Version: '"${pkgver}"'/' dune.module
+  sed -i '7 a   BUILD_ON_INSTALL' doc/refinement/CMakeLists.txt
+  python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
 
 build() {
-  cmake \
-    -S ${pkgbase}-${_tarver} \
-    -B build-cmake \
-    -DCMAKE_BUILD_TYPE=None \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+  cd ${pkgname}-${pkgver}
+
+  XDG_CACHE_HOME="${PWD}" \
+    python setup.py build \
+    --build-type=None \
+    -G 'Unix Makefiles' \
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_FLAGS='-Wall -fdiagnostics-color=always' \
+    -DCMAKE_CXX_FLAGS="-O2 -Wall -fdiagnostics-color=always -mavx" \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+    -DALLOW_CXXFLAGS_OVERWRITE=ON \
+    -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE \
+    -DINKSCAPE=TRUE \
     -DENABLE_HEADERCHECK=ON \
     -DDUNE_ENABLE_PYTHONBINDINGS=ON \
     -DDUNE_PYTHON_INSTALL_LOCATION='none' \
-    -Wno-dev
-  cmake --build build-cmake --target all
-  cd "build-cmake/python"
-  python setup.py build
+    -DDUNE_PYTHON_WHEELHOUSE="dist" \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Vc=TRUE
 }
 
-package_dune-geometry() {
-  depends=('dune-common>=2.8.0')
-  DESTDIR="${pkgdir}" cmake --build build-cmake --target install
-  install -Dm644 ${pkgbase}-${_tarver}/COPYING "${pkgdir}/usr/share/licenses/${pkgbase}/LICENSE"
-  cd "${pkgdir}"
-  rm -rf usr/python
+package() {
+  cd ${pkgname}-${pkgver}
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py --skip-cmake install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
+  install -Dm 644 COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
   find "${pkgdir}" -type d -empty -delete
-}
-
-package_python-dune-geometry() {
-  depends=('dune-geometry>=2.8.0' 'python-dune-common>=2.8.0')
-  pkgdesc+=" (python bindings)"
-  cd "build-cmake/python"
-  export PYTHONHASHSEED=0
-  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
 }
