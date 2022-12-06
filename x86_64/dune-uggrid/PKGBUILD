@@ -2,21 +2,21 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=dune-uggrid
-_tarver=2.8.0
+_tarver=2.9.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
-pkgver=${_tarver}
+pkgver="${_tarver}"
 pkgrel=1
 pkgdesc="UG grid manager"
-arch=('x86_64')
+arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
 license=('LGPL')
-depends=('dune-common>=2.8.0')
-makedepends=('doxygen' 'graphviz')
+depends=("dune-common>=${pkgver}")
+makedepends=(doxygen graphviz)
 optdepends=('doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software')
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('c3e82b753650e6ae41c91eb92934cacc4874f764ffa15a6077a71d160f6af0366b7e74f8929cf48f9672bd52ff89d85e41f2f6735cb026503693521b25eb7b51' 'SKIP')
-validpgpkeys=('ABE52C516431013C5874107C3F71FE0770D47FFB') # Markus Blatt (applied mathematician and DUNE core developer) <markus@dr-blatt.de>
+sha512sums=('acb711f9b2a086813bfc6ca376ddcca81be3810ecfd451739db67a404c9972b3fb1e8bb88b47e901f847421bd2ddd6f8ab78e513447ff6e75b48ae6fd72467c1' 'SKIP')
+validpgpkeys=('2AA99AA4E2D6214E6EA01C9A4AF42916F6E5B1CF') # Christoph Grüninger <gruenich@dune-project.org>
 
 prepare() {
   sed -i 's/^add_subdirectory(lib)/#add_subdirectory(lib)/' "${pkgname}-${_tarver}/dune/uggrid/CMakeLists.txt"
@@ -28,11 +28,13 @@ build() {
     -B build-cmake \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_FLAGS='-Wall -fdiagnostics-color=always' \
+    -DCMAKE_CXX_FLAGS="-Wall -fdiagnostics-color=always -mavx" \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
     -DENABLE_HEADERCHECK=ON \
     -Wno-dev
