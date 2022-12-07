@@ -2,8 +2,8 @@
 
 pkgname=pypy3
 _pyversion=3.9
-pkgver=7.3.9
-pkgrel=3
+pkgver=7.3.10
+pkgrel=1
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64')
@@ -14,7 +14,7 @@ optdepends=('sqlite: sqlite module'
 options=(!buildflags)
 license=('MIT')
 source=("https://downloads.python.org/pypy/pypy${_pyversion}-v${pkgver}-src.zip")
-sha512sums=('b08e8a6436be18ec26f654029d03883d3a7f5e0ba4f8c091503c5a33ec146f02dda757ef27d6cb92264b2ac80625d8dbe7f20278225a468ecb5f3e97fae7dc82')
+sha512sums=('17fb22eab407c12e76d1ee9968be67f84be8e750a422bdaac4569b09189013dc3b2b61915dfb8c4b9d4569967bfe957b0e8d5e452b92ef85f1f839a7947b5461')
 
 build() {
   cd pypy${_pyversion}-v${pkgver}-src/pypy/goal
