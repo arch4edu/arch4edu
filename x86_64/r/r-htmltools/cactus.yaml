@@ -2,10 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-digest
   - x86_64/r/r-base64enc
-  - x86_64/r/r-rlang
+  - x86_64/r/r-digest
+  - x86_64/r/r-ellipsis
   - x86_64/r/r-fastmap
+  - x86_64/r/r-rlang
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
