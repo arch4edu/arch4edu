@@ -1,0 +1,12 @@
+--- rocSPARSE-rocm-5.4.0/cmake/Dependencies.cmake.bak	2022-12-08 11:37:01.176015424 +0100
++++ rocSPARSE-rocm-5.4.0/cmake/Dependencies.cmake	2022-12-08 11:37:20.093958536 +0100
+@@ -23,9 +23,6 @@
+ 
+ # Dependencies
+ 
+-# Git
+-find_package(Git REQUIRED)
+-
+ # Workaround until hcc & hip cmake modules fixes symlink logic in their config files.
+ # (Thanks to rocBLAS devs for finding workaround for this problem!)
+ list(APPEND CMAKE_PREFIX_PATH /opt/rocm /opt/rocm/hip)
