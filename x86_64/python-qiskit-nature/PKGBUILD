@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-nature
 pkgname=python-${_pkgname}
-pkgver=0.5.1
+pkgver=0.5.2
 pkgrel=1
 pkgdesc="Quantum Nature package for IBM qiskit framework"
 arch=('x86_64')
@@ -24,7 +24,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('8777c485013249903ebd657065bb805b927ba4acf8c0b222f431faa3fca5432b7bff7d32edc783f87f56dc094fb0108419bf141d6750e1570499d7b1dd164c64')
+b2sums=('ed5c0862422cd25517f13fae83acb524ef5fe951ecabe275aed676ff992c43ad1784b4c26224ead6762a44244f66b5250cdc14b25e762a2b4f657611d1d42572')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
