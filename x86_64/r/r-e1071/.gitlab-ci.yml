@@ -1,0 +1,15 @@
+image: "imrehg/archlinux-makepkg"
+
+before_script:
+- sudo pacman -Syu --noconfirm
+
+package:
+  script:
+  - makepkg -s --noconfirm
+  artifacts:
+    paths:
+    - pkg/
+    - r-e1071-*.tar.xz
+    expire_in: 2 days
+
+
