@@ -1,31 +1,36 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=hipcub
-pkgver=5.3.0
+pkgver=5.4.0
 pkgrel=1
 pkgdesc='Header-only library on top of rocPRIM or CUB'
 arch=('x86_64')
-url='https://docs.amd.com/bundle/hipCUB-release-rocm-rel-5.2/page/introduction.html'
+url='https://hipcub.readthedocs.io/en/latest/'
 license=('custom')
-depends=('rocprim')
-makedepends=('rocm-cmake' 'git' 'hip')
+depends=('rocprim' 'hip')
+makedepends=('rocm-cmake')
 _git='https://github.com/ROCmSoftwarePlatform/hipCUB'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('4016cfc240b3cc1a97b549ecc4a5b76369610d46247661834630846391e5fad2')
+sha256sums=('78db2c2ea466a4c5d84beedc000ae934f6d0ff1793eae90bb8d02b2dbff8932c')
 _dirname="$(basename $_git)-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
   # -fcf-protection is not supported by HIP, see
-  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.4/page/Appendix_A.html
 
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
-  cmake -Wno-dev -S "$_dirname" \
-        -DCMAKE_INSTALL_PREFIX=/opt/rocm \
-        -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
-        -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr
+  cmake \
+    -Wno-dev \
+    -S "$_dirname" \
+    -B build \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/opt/rocm \
+    -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
+    -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr
+  cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" make install
+  DESTDIR="$pkgdir" cmake --install build
   install -Dm644 "$_dirname/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
