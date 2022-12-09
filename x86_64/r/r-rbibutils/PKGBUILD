@@ -3,9 +3,9 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=rbibutils
-_pkgver=2.2.10
+_pkgver=2.2.11
 pkgname=r-${_pkgname,,}
-pkgver=2.2.10
+pkgver=2.2.11
 pkgrel=1
 pkgdesc="Read 'Bibtex' Files and Convert Between Bibliography Formats"
 arch=('x86_64')
@@ -18,7 +18,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a6467acad91cd7d62403f5f7da6656d08d7c46bd33fa89c2db368576808c17f7')
+sha256sums=('85a475082f978f2a010029143c3efcac01236ef600c00d1b9530da68d176e381')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
