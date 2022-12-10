@@ -4,7 +4,7 @@
 
 pkgname=mpich
 pkgver=4.0.3
-pkgrel=1
+pkgrel=2
 pkgdesc="An improved implementation of the Message Passing Interface."
 url="https://mpich.org"
 arch=(x86_64)
@@ -42,6 +42,7 @@ build() {
                --with-device=ch4:ucx \
                --with-hwloc \
                --without-java \
+               --without-ze \
                --enable-error-checking=runtime \
                --enable-error-messages=all \
                --enable-g=meminit \
