@@ -2,7 +2,7 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-runtime-amd
 pkgver=5.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
 url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
@@ -32,6 +32,9 @@ build() {
   # build fails if cmake and make are called from outside the build directory
   mkdir build && cd build
 
+  # Disable assertations as a temporary workaround for hipRTC
+  # https://github.com/ROCmSoftwarePlatform/rocFFT/issues/389#issuecomment-1341370581
+  CXXFLAGS="$CXXFLAGS -DNDEBUG" \
   cmake \
     -Wno-dev \
     -S "$srcdir/$_dirhipamd" \
