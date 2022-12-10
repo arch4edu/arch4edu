@@ -1,0 +1,12 @@
+--- hipFFT-rocm-5.4.0/cmake/dependencies.cmake.bak	2022-12-09 17:36:51.944287264 +0100
++++ hipFFT-rocm-5.4.0/cmake/dependencies.cmake	2022-12-09 17:36:56.178248184 +0100
+@@ -21,9 +21,6 @@
+ #
+ # #############################################################################
+ 
+-# Git
+-find_package(Git REQUIRED)
+-
+ # HIP
+ if( NOT CMAKE_CXX_COMPILER MATCHES ".*/hipcc$" )
+   if( NOT BUILD_WITH_LIB STREQUAL "CUDA" )
