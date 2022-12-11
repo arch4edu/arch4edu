@@ -4,9 +4,9 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=digest
-_pkgver=0.6.30
+_pkgver=0.6.31
 pkgname=r-${_pkgname,,}
-pkgver=0.6.30
+pkgver=0.6.31
 pkgrel=1
 pkgdesc='Create Compact Hash Digests of R Objects'
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7b8059943be7dba6053268dfcc229de1bb0b55db497b2943541a6abace076aa7')
+sha256sums=('5a284f490eaca6750f695f00a584cfca3f180ca1046ac1107202141149d431b9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
