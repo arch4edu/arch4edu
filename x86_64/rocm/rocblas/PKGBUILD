@@ -1,30 +1,35 @@
 # Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 # Contributor: Markus Näther <naether.markus@gmail.com>
 pkgname=rocblas
-pkgver=5.3.0
+pkgver=5.4.0
 pkgrel=1
 pkgdesc='Next generation BLAS implementation for ROCm platform'
 arch=('x86_64')
 url='https://rocblas.readthedocs.io/en/latest'
 license=('MIT')
 depends=('hip' 'openmp')
-makedepends=('rocm-cmake' 'git' 'python' 'python-pip' 'python-virtualenv' 'python-pyaml'
-             'perl-file-which' 'msgpack-c' 'gcc-fortran')
+makedepends=('rocm-cmake' 'python' 'python-virtualenv' 'python-pyaml' 'python-wheel'
+             'perl-file-which' 'python-msgpack' 'msgpack-cxx' 'gcc-fortran')
 _rocblas='https://github.com/ROCmSoftwarePlatform/rocBLAS'
-source=("$pkgname-$pkgver.tar.gz::$_rocblas/archive/rocm-$pkgver.tar.gz")
-sha256sums=('8ea7269604cba949a6ea84b78dc92a44fa890427db88334da6358813f6512e34')
+_tensile='https://github.com/ROCmSoftwarePlatform/Tensile'
+source=("$pkgname-$pkgver.tar.gz::$_rocblas/archive/rocm-$pkgver.tar.gz"
+        "$pkgname-tensile-$pkgver.tar.gz::$_tensile/archive/refs/tags/rocm-$pkgver.tar.gz")
+sha256sums=('261e05375024a01e68697c5d175210a07f0f5fc63a756234d996ddedffde78a2'
+            '2da9c1df3c6d9b44afdad621ef59a03389fb1a38a61a8b8bad9c9991b97157eb')
 options=(!lto)
 _dirname="$(basename "$_rocblas")-$(basename "${source[0]}" ".tar.gz")"
+_tensile_dir="$(basename "$_tensile")-$(basename "${source[1]}" ".tar.gz")"
 
 build() {
   # -fcf-protection is not supported by HIP, see
-  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
-  PATH="/opt/rocm/llvm/bin:${PATH}" \
+  # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.4/page/Appendix_A.html
+  PATH="/opt/rocm/llvm/bin:/opt/rocm/bin:${PATH}" \
   CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
   cmake \
     -Wno-dev \
     -B build \
     -S "$_dirname" \
+    -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
     -DCMAKE_INSTALL_PREFIX=/opt/rocm \
     -DCMAKE_PREFIX_PATH=/opt/rocm/llvm/lib/cmake/llvm \
@@ -33,7 +38,7 @@ build() {
     -DTensile_LIBRARY_FORMAT=yaml \
     -DTensile_CODE_OBJECT_VERSION=V3 \
     -DCMAKE_TOOLCHAIN_FILE=toolchain-linux.cmake \
-    -DBUILD_TESTING=OFF
+    -DTensile_TEST_LOCAL_PATH="$srcdir/$_tensile_dir"
   cmake --build build
 }
 
