@@ -4,7 +4,7 @@
 
 pkgname=sublime-text-dev
 pkgver=4.4141
-pkgrel=3
+pkgrel=4
 pkgdesc='Sophisticated text editor for code, html and prose - dev build'
 arch=('x86_64' 'aarch64')
 url='https://www.sublimetext.com/dev'
@@ -33,7 +33,7 @@ package() {
 	done
 
 	sed -i 's#/opt/sublime_text/sublime_text#/usr/bin/subl#g' 'sublime_text/sublime_text.desktop'
-	sed -i '\#^Icon=sublime-text#a StartupWMClass=sublime-text' 'sublime_text/sublime_text.desktop'
+	sed -i '\#^StartupNotify=#a StartupWMClass=subl' 'sublime_text/sublime_text.desktop'
 
 	install -dm755 "${pkgdir}/usr/share/applications"
 	install -Dm644 'sublime_text/sublime_text.desktop' "${pkgdir}/usr/share/applications/sublime_text.desktop"
