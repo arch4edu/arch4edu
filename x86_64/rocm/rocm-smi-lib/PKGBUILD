@@ -3,7 +3,7 @@
 
 pkgname=rocm-smi-lib
 pkgver=5.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc='ROCm System Management Interface Library'
 arch=('x86_64')
 url='https://github.com/RadeonOpenCompute/rocm_smi_lib'
@@ -31,34 +31,6 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/opt/rocm \
     -DCMAKE_BUILD_TYPE=None
   cmake --build build
-}
-
-check() {
-  local _tmpdir="$(mktemp -d -p $srcdir)"
-  DESTDIR="$_tmpdir" cmake --install build
-
-  cmake \
-    -Wno-dev \
-    -B build-test \
-    -S "$_dirname/tests/rocm_smi_test" \
-    -DCMAKE_PREFIX_PATH="$_tmpdir/opt/rocm" \
-    -DROCM_DIR="$_tmpdir/opt/rocm"
-  cmake --build build-test
-
-  #Blacklist tests that require root access
-  local _root_access=('rsmitstReadWrite.TestEvtNotifReadWrite'
-    'rsmitstReadOnly.TestVoltCurvRead'
-    'rsmitstReadWrite.TestOverdriveReadWrite'
-    'rsmitstReadWrite.TestFrequenciesReadWrite'
-    'rsmitstReadWrite.TestPciReadWrite'
-    'rsmitstReadWrite.TestPerfLevelReadWrite'
-    'rsmitstReadWrite.TestPowerReadWrite'
-    'rsmitstReadWrite.TestPowerCapReadWrite'
-    'rsmitstReadWrite.TestPerfDeterminism')
-  local _blacklist=$(IFS=:; echo "${_root_access[*]}")
-
-  LD_LIBRARY_PATH="$_tmpdir/opt/rocm/lib" \
-  ./build-test/rsmitst64 --gtest_filter="-$_blacklist"
 }
 
 package() {
