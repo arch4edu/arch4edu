@@ -1,9 +1,10 @@
 # Maintainer: Luis Sarmiento < Luis.Sarmiento-ala-nuclear.lu.se >
 pkgname='geant4'
-pkgver=11.0.3
-_pkgver=v11.0.3
-pkgrel=2
+pkgver=11.1.0
+_pkgver=v11.1.0
+pkgrel=1
 pkgdesc="A simulation toolkit for particle physics interactions."
+# https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/gettingstarted.html
 depends=('cmake>=3.16'
          'xerces-c>=3'
          'qt6-base'
@@ -38,7 +39,7 @@ options=('!emptydirs')
 install="${pkgname}.install"
 source=("http://geant4-data.web.cern.ch/releases/${pkgname}-${_pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('72f8b687512d6e630dc6c64c5c41ba711220468540132999d00e4fce1908ae48'
+sha256sums=('051e43066152c373f74746bdffe6f0c9e4175ad9cf1eb7b67da0dc1a05d0b985'
             '0eae153900d995603b0b465c9f17225ba76dd8118377507916fc709360482058')
 
 ## Remove this if you want to keep an even smaller package
@@ -58,10 +59,8 @@ build() {
       -DGEANT4_USE_GDML=ON \
       -DGEANT4_USE_INVENTOR_QT=ON \
       -DGEANT4_USE_OPENGL_X11=ON \
-      -DGEANT4_USE_PYTHON=ON \
       -DGEANT4_USE_QT=ON \
       -DGEANT4_USE_RAYTRACER_X11=ON \
-      -DGEANT4_USE_TOOLSSG=QT \
       -DGEANT4_USE_XM=ON \
       -DGEANT4_USE_SYSTEM_ZLIB=ON \
       -DGEANT4_INSTALL_PACKAGE_CACHE=OFF \
@@ -98,7 +97,7 @@ echo ""
 : <<'EOF'
 
  From: https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/installguide.html#geant4-build-options
- Last revisited: Dec 15, 2021. (11.0)
+ Last revisited: Dec 13, 2022. (11.1)
 
  |----------------------------------+------------------------------------------------------+----------------|
  | option                           | default                                              | set to         |
@@ -114,13 +113,11 @@ echo ""
  | GEANT4_USE_INVENTOR_QT           | OFF                                                  | ON             |
  | GEANT4_USE_OPENGL_WIN32          | OFF, Windows Only                                    |                |
  | GEANT4_USE_OPENGL_X11            | OFF, Unix Only                                       | ON             |
- | GEANT4_USE_PYTHON                | OFF                                                  | ON             |
  | GEANT4_USE_QT                    | OFF                                                  | ON             |
  | GEANT4_USE_RAYTRACER_X11         | OFF, Unix only                                       | ON             |
  | GEANT4_USE_SYSTEM_CLHEP          | OFF                                                  |                |
  | GEANT4_USE_SYSTEM_EXPAT          | ON                                                   |                |
  | GEANT4_USE_SYSTEM_ZLIB           | OFF                                                  | ON             |
- | GEANT4_USE_TOOLSSG               | OFF                                                  | QT             |
  | GEANT4_USE_XM                    | OFF, Unix Only                                       | ON             |
  |----------------------------------+------------------------------------------------------+----------------|
  | BUILD_SHARED_LIBS                | ON                                                   |                |
@@ -129,7 +126,6 @@ echo ""
  | CMAKE_INSTALL_BINDIR             | bin                                                  |                |
  | CMAKE_INSTALL_INCLUDEDIR         | include                                              |                |
  | CMAKE_INSTALL_LIBDIR             | lib(+?SUFFIX)                                        |                |
- | CMAKE_INSTALL_PYTHONDIR          | CMAKE_INSTALL_LIBDIR/python3.<PYMINOR>/site-packages |                |
  | CMAKE_INSTALL_DATAROOTDIR        | share                                                |                |
  | GEANT4_INSTALL_DATA_TIMEOUT      | 1500                                                 |                |
  | GEANT4_INSTALL_EXAMPLES          | ON                                                   |                |
