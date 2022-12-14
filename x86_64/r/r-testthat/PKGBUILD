@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=testthat
-_cranver=3.1.5
+_cranver=3.1.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -49,7 +49,7 @@ optdepends=(
     "r-xml2"
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('305ca297cc06c7aff6753e01668e0095c625c8bcb7d9077557ce67c0a71af500e4d40916e9fa04b61782b2fcca4e0337d82070b92b171bde7eb2429bd42a200e')
+b2sums=("3dc685774032d427f53197def4e04b0f464eca92917808e6c7dad42dd624d254206a0a0767d820b37f9f8c070ba7a16a7f0b913a658921f17a036312397adca2")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
