@@ -4,8 +4,8 @@
 # Contributor: katt <magunasu.b97@gmail.com>
 
 pkgname=shellcheck-bin
-pkgver=0.8.0
-pkgrel=3
+pkgver=0.9.0
+pkgrel=1
 url='https://shellcheck.net'
 pkgdesc='Shell script analysis tool (binary release, static)'
 license=(AGPL3)
@@ -21,9 +21,9 @@ source_x86_64=(https://github.com/koalaman/"${pkgname%-bin}"/releases/download/v
 source_armv6h=(https://github.com/koalaman/"${pkgname%-bin}"/releases/download/v"$pkgver"/"${pkgname%-bin}"-v"${pkgver}".linux.armv6hf.tar.xz)
 source_aarch64=(https://github.com/koalaman/"${pkgname%-bin}"/releases/download/v"$pkgver"/"${pkgname%-bin}"-v"${pkgver}".linux.aarch64.tar.xz)
 
-sha512sums_x86_64=('89317d97adb341e627b709e86477734ce236e9fb290de8a8c41cdc62769a3225622fa609deffebeabe9edb71f5639a086f61b677947e3ec4bc07c540fcbd0973')
-sha512sums_armv6h=('a00a00a58d00d0879fbd9f601902eb96105da0b9ac5220a4176dce73d22c1ba8108435fb6f8c0ae0b450e32a207f49ecaf84d7830feb512359f27e8eae2ec190')
-sha512sums_aarch64=('7082a5002a1ea2403cd6c24665149a0444960a66dc2002f2e38726a6ed4f7f0499a051679cef8de619e401e8754b13a65624fdb108d7225cb486219184c44c12')
+sha512sums_x86_64=('157fd8b2c18a257f3876e23015580ea63d27b12c4f13f87d625a180e8ca042e7501271d15edeb36e7b5780da73815b45386a33e063ab1c891d838f35c778a8ac')
+sha512sums_armv6h=('ac495f5bcf358b5de9f2cbb275b30050e586218458c97c01444076947d22e9cb7acc817e361599290e22bf25996deb8006240e0350ef864372a29db3032c1388')
+sha512sums_aarch64=('3c11bc1901d470ba7f95334fcd4d8ea9c39c73ebb15655cd0cc478826279b02413409fa3f7b011c7ecdba98530953be54906b4a99b898b064c236f146f3ec749')
 
 
 package() {
