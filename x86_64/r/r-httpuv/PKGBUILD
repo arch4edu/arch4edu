@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=httpuv
-_cranver=1.6.6
+_cranver=1.6.7
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -26,7 +26,7 @@ optdepends=(
     r-websocket
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('41395fd324c5cb884d4f2a8060744758904119db22eeb312f2ea1e7ad7711293')
+sha256sums=('75d2e1309ba6d9652320eddb805d662cc033aacc84e524899844a19e0a174b4a')
 
 prepare() {
   # build against system libuv
