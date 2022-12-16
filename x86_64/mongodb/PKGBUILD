@@ -11,7 +11,7 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=6.0.2
+pkgver=6.0.3
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
@@ -31,7 +31,7 @@ source=(https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz
         mongodb-6.0.0-boost-1.79.patch
         mongodb-6.0.2-sconstruct-changes.patch
         mongodb-6.0.0-gcc12.patch)
-sha256sums=('39fa695a3a79008c818cb92df1fa716510d66069f7cec20a8fb3051286ac34bf'
+sha256sums=('04bc68160f1d7405bbf1ede50992a6142b8dba027cba3dabf61f75b709db23e5'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             'f7e6d87b68f7703cdbd45e255962ed5a4f6d583aa76d6fcf4fdc7005211fbf06'
