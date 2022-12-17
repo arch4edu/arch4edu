@@ -1,11 +1,11 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 pkgname=hip-runtime-amd
-pkgver=5.4.0
-pkgrel=2
+pkgver=5.4.1
+pkgrel=1
 pkgdesc="Heterogeneous Interface for Portability ROCm"
 arch=('x86_64')
-url='https://rocmdocs.amd.com/en/latest/Installation_Guide/HIP.html'
+url='https://docs.amd.com/bundle/HIP-Programming-Guide-v5.4/page/Introduction_to_HIP_Programming_Guide.html'
 license=('MIT')
 depends=('mesa' 'comgr' 'rocminfo' 'rocm-llvm' 'libelf')
 makedepends=('cmake' 'python' 'python-cppheaderparser')
@@ -19,10 +19,10 @@ source=("$pkgname-$pkgver.tar.gz::$_hip/archive/rocm-$pkgver.tar.gz"
         "$pkgname-opencl-$pkgver.tar.gz::$_opencl/archive/rocm-$pkgver.tar.gz"
         "$pkgname-rocclr-$pkgver.tar.gz::$_rocclr/archive/rocm-$pkgver.tar.gz"
         "$pkgname-hipamd-$pkgver.tar.gz::$_hipamd/archive/rocm-$pkgver.tar.gz")
-sha256sums=('e290f835d69ef23e8b5833a7e616b0a989ff89ada4412d9742430819546efc6c'
-            'a294639478e76c75dac0e094b418f9bd309309b07faf6af126cdfad9aab3c5c7'
-            '46a1579310b3ab9dc8948d0fb5bed4c6b312f158ca76967af7ab69e328d43138'
-            'c4b79738eb6e669160382b6c47d738ac59bd493fc681ca400ff012a2e8212955')
+sha256sums=('12e82877b55324f1910e760f4c5ec105bf6547b69215997d8d098fc463d399c3'
+            '2b3d7b365f569ce64d1408d6e745d005aa10eca3623891be50f6b1b2e802d875'
+            'c0926fa5dad71cd02f21504d82e218d482779df579a400604e13864e6b2a7d9c'
+            '8ca75fa4a472dfbc8059b7f5ad717466c0db544c516950b3fa32c5de32980216')
 _dirhip="$(basename "$_hip")-$(basename "${source[0]}" ".tar.gz")"
 _diropencl="$(basename "$_opencl")-$(basename "${source[1]}" ".tar.gz")"
 _dirrocclr="$(basename "$_rocclr")-$(basename "${source[2]}" ".tar.gz")"
@@ -52,7 +52,7 @@ build() {
 package() {
   DESTDIR="$pkgdir" cmake --install build
 
-  install -Dm644 "$srcdir/HIP-rocm-$pkgver/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/$_dirhip/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   echo '/opt/rocm/hip/lib' > "$pkgname.conf"
   install -Dm644 "$pkgname.conf" "$pkgdir/etc/ld.so.conf.d/$pkgname.conf"
 }
