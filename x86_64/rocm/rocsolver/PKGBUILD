@@ -1,7 +1,7 @@
-# Maintainer Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
 
 pkgname=rocsolver
-pkgver=5.3.0
+pkgver=5.4.0
 pkgrel=1
 pkgdesc='Subset of LAPACK functionality on the ROCm platform'
 arch=('x86_64')
@@ -13,9 +13,9 @@ _git='https://github.com/ROCmSoftwarePlatform/rocSOLVER'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "$pkgname-$pkgver-fmt.tar.gz::https://github.com/fmtlib/fmt/archive/refs/tags/9.1.0.tar.gz"
         "hip-fmt.patch::https://github.com/fmtlib/fmt/commit/0b0f7cfbfcebd021c910078003d413354bd843e2.patch")
-sha256sums=('4569f860d240d50e94e77d498050f5cafe5ad11daddaead3e7e9eaa1957878a7'
+sha256sums=('69690839cb649dee43353b739d3e6b2312f3d965dfe66705c0ea910e57c6a8cb'
             '5dea48d1fcddc3ec571ce2058e13910a0d4a6bab4cc09a809d8b1dd1c88ae6f2'
-            'SKIP')
+            '203f92b8d6d909671d3e84a935acdf256deb4a16db4f51bec07c14113b470dbe')
 options=(!lto)
 _dirname="$(basename "$_git")-$(basename "${source[0]}" .tar.gz)"
 _fmtname="fmt-$(basename "${source[1]}" .tar.gz)"
@@ -36,6 +36,7 @@ build() {
       -Wno-dev \
       -B fmt-build \
       -S "$_fmtname" \
+      -DCMAKE_BUILD_TYPE=None \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DFMT_DOC=OFF \
       -DFMT_TEST=OFF
@@ -43,12 +44,13 @@ build() {
     DESTDIR="$srcdir/fmt-local" cmake --install fmt-build
 
     # -fcf-protection is not supported by HIP, see
-    # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.3/page/Appendix_A.html
+    # https://docs.amd.com/bundle/ROCm-Compiler-Reference-Guide-v5.4/page/Appendix_A.html
     CXXFLAGS="${CXXFLAGS} -fcf-protection=none" \
     cmake \
       -Wno-dev \
       -B build \
       -S "$_dirname" \
+      -DCMAKE_BUILD_TYPE=None \
       -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
       -DCMAKE_PREFIX_PATH="$srcdir/fmt-local/usr/lib/cmake/fmt" \
       -DCMAKE_INSTALL_PREFIX=/opt/rocm \
