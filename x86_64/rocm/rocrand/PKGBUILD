@@ -1,7 +1,7 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 # Contributor: Jakub Okoński <jakub@okonski.org>
 pkgname=rocrand
-pkgver=5.4.0
+pkgver=5.4.1
 pkgrel=1
 pkgdesc='Pseudo-random and quasi-random number generator on ROCm'
 arch=('x86_64')
@@ -15,7 +15,7 @@ _git='https://github.com/ROCmSoftwarePlatform/rocRAND'
 _hiprand='https://github.com/ROCmSoftwarePlatform/hipRAND'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "$pkgname-hiprand-$pkgver.tar.gz::$_hiprand/archive/20ac3db9d7462c15a3e96a6f0507cd5f2ee089c4.tar.gz")
-sha256sums=('0f6a0279b8b5a6dfbe32b45e1598218fe804fee36170d5c1f7b161c600544ef2'
+sha256sums=('44eb2ec7fbbc782796173e0d3c10a65088fd76c0c3f06cc7cd1523505fe15257'
             'ee38a68c9e88056b7ecd41553e496e455dbb3fe08871ff3545430d6733070e6b')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 _hipname="$(basename "$_hiprand")-$(basename "${source[1]}" ".tar.gz")"
