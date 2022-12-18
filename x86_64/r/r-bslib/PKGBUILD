@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=bslib
-_cranver=0.4.1
+_cranver=0.4.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -18,6 +18,8 @@ depends=(
     r-rlang
     r-cachem
     r-memoise
+    r-base64enc
+    r-mime
 )
 optdepends=(
     r-shiny
@@ -29,10 +31,12 @@ optdepends=(
     r-rappdirs
     r-curl
     r-magrittr
+    r-fontawesome
+    r-bsicons
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('4ebd1fc84cd19b414e8f8c13fb95270fc28ede125b6e58b08c574ca8c9e0e62f'
+sha256sums=('9a40b7a1bbe409af273e1e940d921ab198ea576548f06f055f552f70ff822f19'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
