@@ -1,7 +1,7 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 
 pkgname=rocsolver
-pkgver=5.4.0
+pkgver=5.4.1
 pkgrel=1
 pkgdesc='Subset of LAPACK functionality on the ROCm platform'
 arch=('x86_64')
@@ -13,7 +13,7 @@ _git='https://github.com/ROCmSoftwarePlatform/rocSOLVER'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "$pkgname-$pkgver-fmt.tar.gz::https://github.com/fmtlib/fmt/archive/refs/tags/9.1.0.tar.gz"
         "hip-fmt.patch::https://github.com/fmtlib/fmt/commit/0b0f7cfbfcebd021c910078003d413354bd843e2.patch")
-sha256sums=('69690839cb649dee43353b739d3e6b2312f3d965dfe66705c0ea910e57c6a8cb'
+sha256sums=('b1059c476fdef5fff4eab8152385d2dfb6ce914bfac298e612c560defe67aeec'
             '5dea48d1fcddc3ec571ce2058e13910a0d4a6bab4cc09a809d8b1dd1c88ae6f2'
             '203f92b8d6d909671d3e84a935acdf256deb4a16db4f51bec07c14113b470dbe')
 options=(!lto)
