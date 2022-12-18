@@ -1,7 +1,7 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 pkgname=hipcub
-pkgver=5.4.0
+pkgver=5.4.1
 pkgrel=1
 pkgdesc='Header-only library on top of rocPRIM or CUB'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('rocprim' 'hip')
 makedepends=('rocm-cmake')
 _git='https://github.com/ROCmSoftwarePlatform/hipCUB'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('78db2c2ea466a4c5d84beedc000ae934f6d0ff1793eae90bb8d02b2dbff8932c')
+sha256sums=('1900cc34d925d588696ce9de34c4cbfda2f939cb74ed0e1069c3b1417f14393e')
 _dirname="$(basename $_git)-$(basename "${source[0]}" ".tar.gz")"
 
 build() {
@@ -25,8 +25,7 @@ build() {
     -B build \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/opt/rocm \
-    -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc \
-    -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr
+    -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc
   cmake --build build
 }
 
