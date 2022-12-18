@@ -1,6 +1,6 @@
 # Maintainer: Alexander Seiler <seileralex@gmail.com>
 pkgname=sioyek
-pkgver=1.5.0
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="PDF viewer for research papers and technical books."
 arch=('x86_64')
@@ -15,12 +15,11 @@ depends=(
 	'qt5-3d'
 	'qt5-base'
 	'zlib')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz" "mupdf-1.20.patch")
-sha256sums=('2d01c757953c3f2d98428376e642d13b8a9edeba8fee506477e8aa178756f16b' 'cd639043d9978a27f8957db59001c846bc6b5190fd08afd9cd8d2d8875b532fa')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('92398b6da5e297c59f22cd3c6b562194846f28bc17bb4ae9432869aafeb5df17')
 
 prepare() {
 	cd "$pkgname-$pkgver"
-	patch --forward --strip=1 --input="${srcdir}/mupdf-1.20.patch"
 	sed -i 's/-lmupdf-threads/-lfreetype -lgumbo -ljbig2dec -lopenjp2 -ljpeg/' pdf_viewer_build_config.pro
 	sed -i '/#define LINUX_STANDARD_PATHS/s/\/\///' pdf_viewer/main.cpp
 }
@@ -39,5 +38,5 @@ package() {
 	install -Dm644 build/shaders/* -t "$pkgdir/usr/share/$pkgname/shaders/"
 	install -Dm644 -t "$pkgdir/etc/sioyek/" build/keys.config build/prefs.config
 	install -Dm644 -t "$pkgdir/usr/share/man/man1" resources/sioyek.1
-    install -Dm644 -t "$pkgdir/usr/share/sioyek" build/tutorial.pdf
+  install -Dm644 -t "$pkgdir/usr/share/sioyek" build/tutorial.pdf
 }
