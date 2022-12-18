@@ -1,29 +1,32 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 pkgname=python-pytest-filter-subpackage
 _pyname=${pkgname#python-}
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="Pytest plugin for filtering based on sub-packages"
-arch=('i686' 'x86_64')
+arch=('any')
 url="https://github.com/astropy/pytest-filter-subpackage"
 license=('BSD')
 depends=('python-pytest>=3.0')
-makedepends=('python-setuptools')
-#checkdepends=('python-pytest-doctestplus')
+makedepends=('python-setuptools-scm'
+             'python-wheel'
+             'python-build'
+             'python-installer')
+checkdepends=('python-pytest-doctestplus')
+#'python-pytest-cov'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('319b19ffc7e9de77f54febf1b1718074')
+md5sums=('9f99964c03d1db97936db4a683539146')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    python setup.py build
+    python -m build --wheel --no-isolation
 }
 
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    python setup.py test
-#   pytest
+    pytest || warning "Tests failed" # -vv --color=yes
 }
 
 package() {
@@ -31,5 +34,5 @@ package() {
 
     install -D -m644 LICENSE.rst -t "${pkgdir}/usr/share/licenses/${pkgname}"
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
-    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+    python -m installer --destdir="${pkgdir}" dist/*.whl
 }
