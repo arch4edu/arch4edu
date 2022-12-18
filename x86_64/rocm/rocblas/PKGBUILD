@@ -1,7 +1,7 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 # Contributor: Markus Näther <naether.markus@gmail.com>
 pkgname=rocblas
-pkgver=5.4.0
+pkgver=5.4.1
 pkgrel=1
 pkgdesc='Next generation BLAS implementation for ROCm platform'
 arch=('x86_64')
@@ -14,8 +14,8 @@ _rocblas='https://github.com/ROCmSoftwarePlatform/rocBLAS'
 _tensile='https://github.com/ROCmSoftwarePlatform/Tensile'
 source=("$pkgname-$pkgver.tar.gz::$_rocblas/archive/rocm-$pkgver.tar.gz"
         "$pkgname-tensile-$pkgver.tar.gz::$_tensile/archive/refs/tags/rocm-$pkgver.tar.gz")
-sha256sums=('261e05375024a01e68697c5d175210a07f0f5fc63a756234d996ddedffde78a2'
-            '2da9c1df3c6d9b44afdad621ef59a03389fb1a38a61a8b8bad9c9991b97157eb')
+sha256sums=('2f6d30b025306ba5f378154eb0494ac9260190120d085b67c3f499e7d2b6a70b'
+            '6bcc08426c14c203c799c93815293c2a17d5b656936536dcece1302d53816cef')
 options=(!lto)
 _dirname="$(basename "$_rocblas")-$(basename "${source[0]}" ".tar.gz")"
 _tensile_dir="$(basename "$_tensile")-$(basename "${source[1]}" ".tar.gz")"
