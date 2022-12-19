@@ -1,18 +1,18 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 # Contributor: Jakub Okoński <jakub@okonski.org>
 # Contributor: Markus Näther <naetherm@cs.uni-freiburg.de>
 pkgname=rocfft
-pkgver=5.4.0
+pkgver=5.4.1
 pkgrel=1
 pkgdesc='Next generation FFT implementation for ROCm'
 arch=('x86_64')
 url='https://rocfft.readthedocs.io/en/latest/library.html'
 license=('MIT')
-depends=('hip')
+depends=('hip' 'python')
 makedepends=('rocm-cmake')
 _git='https://github.com/ROCmSoftwarePlatform/rocFFT'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz")
-sha256sums=('d35a67332f4425fba1824eed78cf98d5c9a17a422614ff3f4cba2461df952336')
+sha256sums=('b2383cb6dfac285bae37733356dbd0f56b008f14db4b5a05bea8d28624cccffa')
 options=(!lto)
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
