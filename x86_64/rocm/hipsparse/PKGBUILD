@@ -1,9 +1,9 @@
-# Maintainer: Torsten Keßler <t dot kessler at posteo dot de>
+# Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 # Contributor: Markus Näther <naetherm@informatik.uni-freiburg.de>
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=hipsparse
-pkgver=5.4.0
+pkgver=5.4.1
 pkgrel=1
 pkgdesc='rocSPARSE marshalling library.'
 arch=('x86_64')
@@ -14,8 +14,8 @@ makedepends=('rocm-cmake' 'gcc-fortran')
 _git='https://github.com/ROCmSoftwarePlatform/hipSPARSE'
 source=("$pkgname-$pkgver.tar.gz::$_git/archive/rocm-$pkgver.tar.gz"
         "hipsparse-no-git.patch::$_git/commit/23704c1257747f325a1f3db4e9c35f2d6ba724ad.patch")
-sha256sums=('47420d38483c8124813b744971e428a0352c83d9b62a5a50f74ffa8f9b785b20'
-            'SKIP')
+sha256sums=('fdc9b7f6ce27b544c4be102ca25967ff61272111acdd52d6e21eeeace0213792'
+            '0f4ca37b246e9908ebb3a80818abb28b4c6996036b65f8f89be9affc854efa7f')
 _dirname="$(basename "$_git")-$(basename "${source[0]}" ".tar.gz")"
 
 prepare() {
