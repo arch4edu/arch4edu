@@ -4,8 +4,8 @@
 
 pkgname=rpiusbboot
 _pkgname=usbboot
-pkgver=2021.07.01
-_pkgver=v${pkgver}
+_pkgver=20221215-105525
+pkgver=${_pkgver//-/_}
 pkgrel=1
 pkgdesc="Raspberry Pi USB boot"
 arch=("i686" "x86_64")
@@ -14,8 +14,8 @@ license=("Apache")
 depends=("libusb")
 conflict=()
 
-  source=("https://github.com/raspberrypi/${_pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
-sha256sums=('4565314b38e7c7505b7d32a3b51b49f79c7dd5767d45b86d38e5255ae7489a43')
+source=("https://github.com/raspberrypi/${_pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
+sha256sums=('2f02dbe9a88e9dfad5f05e513e1f30afd47b1575820f7c3b09665dfefc45bbaa')
 
 #pkgver()
 #{
@@ -25,13 +25,13 @@ sha256sums=('4565314b38e7c7505b7d32a3b51b49f79c7dd5767d45b86d38e5255ae7489a43')
 
 build()
 {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${srcdir}/${_pkgname}-${_pkgver}"
   make || return 1
 }
 
 package()
 {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${srcdir}/${_pkgname}-${_pkgver}"
   #make DESTDIR="${pkgdir}/" install
   install -D rpiboot ${pkgdir}/usr/bin/rpiusbboot
   #install -d ${pkgdir}/usr/lib/udev/rules.d/
