@@ -1,7 +1,7 @@
 # Maintainer:  Yigit Dallilar <yigit.dallilar@gmail.com>
 
 pkgname=heasoft
-pkgver=6.31
+pkgver=6.31.1
 pkgrel=1
 # _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
 _mod=''
@@ -19,7 +19,7 @@ source=("https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/h
 
 # You could use below to get offical md5
 # curl -s ${source}.md5  | awk '{print "md5sums=(", $1, ")"}'
-md5sums=('65662202001e0f92e37718bb887ee06e')
+md5sums=('06d374d96b0f4ee707b2d32baea3b5a8')
 
 install="$pkgname.install"
 
