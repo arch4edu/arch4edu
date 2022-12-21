@@ -6,7 +6,7 @@
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 # Contributor: Wink Saville <wink at saville dot com>
 pkgname=hypre
-pkgver=2.26.0
+pkgver=2.27.0
 pkgrel=1
 pkgdesc="Parallel solvers for sparse linear systems featuring multigrid methods"
 arch=('x86_64')
@@ -15,7 +15,7 @@ license=('APACHE' 'MIT' 'LGPL')
 depends=('superlu' 'superlu_dist')
 makedepends=('gcc-fortran')
 source=(${pkgname}-${pkgver}::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('d5c5c9f5f7d8e4229ccbc41510d1dea0bc896ce6e969c3df75bac94e5355b8d5405f71a457ec2f0f3252840fe27f8c8bf8735b4595f05d6d4b250c93dd69f435')
+sha512sums=('44a15c4fab2b779bdd22cbab32176dd9563551f538405dc8f48e5c8fee2af21c39b7c4ebc08c663a2e005d09df949a17b529eed74a2a8a6cb398d1eaafab8af8')
 
 build() {
   cd ${pkgname}-${pkgver}/src
