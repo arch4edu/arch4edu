@@ -5,7 +5,7 @@
 
 pkgname=python-gensim
 _pkgname=gensim
-pkgver=4.2.0
+pkgver=4.3.0
 pkgrel=1
 pkgdesc="Library for topic modelling, document indexing and similarity retrieval with large corpora"
 arch=('i686' 'x86_64')
@@ -16,7 +16,7 @@ optdepends=("python-pyro: Usage in a distributed environment"
 	"python-levenshtein: Similarity measure")
 makedepends=('python-setuptools' 'python-wheel' 'python-pip' 'cython')
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/RaRe-Technologies/${_pkgname}/archive/${pkgver}.tar.gz")
-sha512sums=('db3d8a2f9d0e1de1848419ba49175fffa791d365c09a9079e70cff68cbb0303d66fb1c260048a906c8120f2d66c6d6bd597e30ff421a400d1eb6acf155f37e03')
+sha512sums=('683b5f41b831729f77a0d9f891fccade7c2e55cefb543d9e1f8f37130c6657d7a1426cc5efbcc546a50b3b2e8e95d38dbca61edaf6098a8330d7d1b9cda8b034')
 
 build() {
 	cd "${srcdir}/${_pkgname}-${pkgver}"
