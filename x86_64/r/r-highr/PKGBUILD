@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=highr
-_cranver=0.9
+_cranver=0.10
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Syntax Highlighting for R Source Code"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -16,7 +16,7 @@ depends=(r-xfun)
 checkdepends=(r-testit)
 optdepends=(r-knitr r-markdown r-testit)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('beff11390d936c90fdcc00e7ed0eb72220f3de403a51b56659e3d3e0b6d8ed4d')
+sha256sums=('ec55bc1ff66390ed66806dc2a7b6c17dbfd089b3d73fe2e369017f8cb4bc347b')
 
 build() {
   mkdir -p build
