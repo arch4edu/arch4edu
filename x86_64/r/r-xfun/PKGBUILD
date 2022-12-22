@@ -1,8 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Kibouo <csonka.mihaly@hotmail.com>
+# Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=xfun
-_cranver=0.35
+_cranver=0.36
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -31,7 +33,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('85fc4d4ea5c4266c2cd5162bf490d8c2e10fbedbf54f61fb77050437dcf1a613'
+sha256sums=('a8170de571d044eee8c852180b847b1984f8e868a9d5edd1c5e2e663171869ee'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
