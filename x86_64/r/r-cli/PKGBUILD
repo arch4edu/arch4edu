@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=cli
-_cranver=3.4.1
+_cranver=3.5.0
 pkgname=r-${_cranname,,}
 pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -18,6 +18,7 @@ depends=(
 optdepends=(
     "r-callr"
     "r-covr"
+    "r-crayon"
     "r-digest"
     "r-glue>=1.6.0"
     "r-htmltools"
@@ -38,7 +39,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("070fe513cb627291e076a5e620816f659a6b25ae64bd8777d31d57f1890ee65d794a5500b1e255461abaf8b5ee8b2ccdece40ccb64a389a972d96d257fb93a74")
+b2sums=('1fa821d33414cb9acc7a933889090e689a18c781e5e81dc2ab59a60e8df5fa11d1bae00f1424fd8a0828ec70b019eb31252311f835c1f71883c13fe7a7745ffa')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
