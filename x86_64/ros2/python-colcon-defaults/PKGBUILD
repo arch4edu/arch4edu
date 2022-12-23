@@ -2,7 +2,7 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-defaults
 _name=${pkgname:7}
-pkgver=0.2.6
+pkgver=0.2.7
 pkgrel=1
 pkgdesc="An extension for colcon-core to provide custom default values for the command line arguments from a configuration file."
 arch=(any)
@@ -11,7 +11,7 @@ license=('Apache')
 depends=('python-colcon-core')
 makedepends=('python-setuptools')
 source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('6ec16c2e62125ce055a4a1df469667d81c2063decadb0da436bb9c08b9a7b3b7')
+sha256sums=('fa63aa81a4076da835ecd1d08c28d554a58a6ce7a10074c1cc6325aec6bd3205')
 
 
 package() {
