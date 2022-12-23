@@ -2,7 +2,7 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-notification
 _name=${pkgname:7}
-pkgver=0.2.14
+pkgver=0.2.15
 pkgrel=1
 pkgdesc="An extension for colcon-core to provide status notifications."
 arch=(any)
@@ -11,7 +11,7 @@ license=('Apache')
 depends=('python-colcon-core')
 makedepends=('python-setuptools')
 source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('015fad960062445dcdb04f8843380845c4c11add74d5281ac1c939766edac0f3')
+sha256sums=('0a188a4debaa103f1fc620babb6f82a90032f01c559090ac51a5ff4cad326550')
 
 
 package() {
