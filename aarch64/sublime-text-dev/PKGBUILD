@@ -3,7 +3,7 @@
 # Contributor: realitygaps <realitygaps at yahoo dot com>
 
 pkgname=sublime-text-dev
-pkgver=4.4146
+pkgver=4.4147
 pkgrel=1
 pkgdesc='Sophisticated text editor for code, html and prose - dev build'
 arch=('x86_64' 'aarch64')
@@ -17,8 +17,8 @@ install=${pkgname}.install
 source_x86_64=("https://download.sublimetext.com/sublime_text_build_${pkgver:2}_x64.tar.xz")
 source_aarch64=("https://download.sublimetext.com/sublime_text_build_${pkgver:2}_arm64.tar.xz")
 
-sha256sums_x86_64=('120212f57d5865b6a10cdfbcdecbe0a3b5789a8c6fbc44c804a1a41c02abffdf')
-sha256sums_aarch64=('3e425fef260e6cba0ebf261d7b7970b8d35adc6831c85ce923288766659e337d')
+sha256sums_x86_64=('f73b3ed9ca7ea62774cbfbf9b4724de23a7bb0cd68181e44806ccc0122f7cb8a')
+sha256sums_aarch64=('2b2bc724fa8111f7904099eec96640eef1a15a4605a8c693331faecbeddc677d')
 
 package() {
 	cd "${srcdir}"
