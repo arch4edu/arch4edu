@@ -4,6 +4,8 @@ nvchecker:
 depends:
   - x86_64/r/r-htmltools
   - x86_64/r/r-jsonlite
+  - x86_64/r/r-knitr
+  - x86_64/r/r-rmarkdown
   - x86_64/r/r-yaml
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
