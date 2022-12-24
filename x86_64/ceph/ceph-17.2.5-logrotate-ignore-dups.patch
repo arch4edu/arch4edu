@@ -1,0 +1,11 @@
+diff --git a/src/logrotate.conf b/src/logrotate.conf
+index a9a452dd656..7949bebf49b 100644
+--- a/src/logrotate.conf
++++ b/src/logrotate.conf
+@@ -8,5 +8,6 @@
+     endscript
+     missingok
+     notifempty
++    ignoreduplicates
+     su root ceph
+ }

@@ -1,0 +1,39 @@
+From 8d853cc4990dc4dbccdc916115b0b30e0ac9dc19 Mon Sep 17 00:00:00 2001
+From: Patrick Donnelly <pdonnell@redhat.com>
+Date: Tue, 11 Oct 2022 13:43:03 -0400
+Subject: [PATCH] pybind/mgr: use memory temp_store for sqlite3 db
+
+It appears some situations require sqlite3 to open a temporary database
+to execute the old database dump.
+
+Fixes: https://tracker.ceph.com/issues/57851
+Signed-off-by: Patrick Donnelly <pdonnell@redhat.com>
+---
+ src/pybind/mgr/mgr_module.py                       | 1 +
+ src/pybind/mgr/snap_schedule/fs/schedule_client.py | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/pybind/mgr/mgr_module.py b/src/pybind/mgr/mgr_module.py
+index 146901b1578ef..746413fa04e0e 100644
+--- a/src/pybind/mgr/mgr_module.py
++++ b/src/pybind/mgr/mgr_module.py
+@@ -1202,6 +1202,7 @@ def configure_db(self, db: sqlite3.Connection) -> None:
+         db.execute('PRAGMA JOURNAL_MODE = PERSIST')
+         db.execute('PRAGMA PAGE_SIZE = 65536')
+         db.execute('PRAGMA CACHE_SIZE = 64')
++        db.execute('PRAGMA TEMP_STORE = memory')
+         db.row_factory = sqlite3.Row
+         self.load_schema(db)
+ 
+diff --git a/src/pybind/mgr/snap_schedule/fs/schedule_client.py b/src/pybind/mgr/snap_schedule/fs/schedule_client.py
+index 486582074767e..1fc3217ec7d26 100644
+--- a/src/pybind/mgr/snap_schedule/fs/schedule_client.py
++++ b/src/pybind/mgr/snap_schedule/fs/schedule_client.py
+@@ -193,6 +193,7 @@ def get_schedule_db(self, fs: str) -> DBConnectionManager:
+             db.execute('PRAGMA JOURNAL_MODE = PERSIST')
+             db.execute('PRAGMA PAGE_SIZE = 65536')
+             db.execute('PRAGMA CACHE_SIZE = 256')
++            db.execute('PRAGMA TEMP_STORE = memory')
+             db.row_factory = sqlite3.Row
+             # check for legacy dump store
+             pool_param = cast(Union[int, str], poolid)
