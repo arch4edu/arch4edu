@@ -9,8 +9,8 @@
 # package, maintained by T. Borgert.
 
 pkgname=ros2-humble
-pkgver=2022.05.23
-pkgrel=2
+pkgver=2022.11.23
+pkgrel=1
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
 arch=('any')
@@ -23,7 +23,7 @@ depends=(
     'sip4'
 )
 source=(
-    "ros2::git+https://github.com/ros2/ros2#tag=release-humble-20220523"
+    "ros2::git+https://github.com/ros2/ros2#tag=release-humble-20221123"
 )
 sha256sums=(
     'SKIP'
@@ -43,22 +43,6 @@ prepare() {
     # Clone the repos
     mkdir -p $srcdir/ros2/src
     vcs import $srcdir/ros2/src < $srcdir/ros2/ros2.repos
-
-    # Setup git (required for the cherry-pick commands)
-    export GIT_COMMITTER_NAME="PKGBUILD"
-    export GIT_COMMITTER_EMAIL="pkgbuild@example.com"
-    export GIT_AUTHOR_NAME="PKGBUILD"
-    export GIT_AUTHOR_EMAIL="pkgbuild@example.com"
-
-    # Fix some issues in the code (TODO: Gradually move to upstream)
-    ## osrf_testing_tools_cpp
-    git -C $srcdir/ros2/src/osrf/osrf_testing_tools_cpp cherry-pick 869da204dd829308380df5a33e432670e474e54a
-    ## performance_test_fixture
-    git -C $srcdir/ros2/src/ros2/performance_test_fixture cherry-pick d736c276d292a78f9750aba39108d5222bf9629e
-    ## rmw_cyclonedds_cpp
-    git -C $srcdir/ros2/src/ros2/rmw_cyclonedds cherry-pick f57732d15be53796d518e12352866124efcaa939
-    ## ament_cmake
-    git -C $srcdir/ros2/src/ament/ament_cmake cherry-pick ca8c26ea3c89e69c0c636b7cd0c088674c689f5f
 }
 
 build() {
