@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=htmlwidgets
-_pkgver=1.5.4
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
-pkgver=1.5.4
-pkgrel=7
+pkgver=1.6.0
+pkgrel=1
 pkgdesc='HTML Widgets for R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,16 +14,16 @@ depends=(
   r
   r-htmltools
   r-jsonlite
+  r-knitr
+  r-rmarkdown
   r-yaml
 )
 optdepends=(
-  r-knitr
-  r-rmarkdown
   r-shiny
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1a3fc60f40717de7f1716b754fd1c31a132e489a2560a278636ee78eba46ffc1')
+sha256sums=('f081ffbce2bb5f05d8df05d56416ffb3450d0f355f4f50b86a6d09164d97f91a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
