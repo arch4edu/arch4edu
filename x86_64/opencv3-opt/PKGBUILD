@@ -4,7 +4,7 @@
 
 pkgbase=opencv3-opt
 pkgname=($pkgbase $pkgbase-samples)
-pkgver=3.4.18
+pkgver=3.4.19
 pkgrel=1
 pkgdesc="Open Source Computer Vision Library (Legacy Version & /opt directory version)"
 arch=(x86_64)
@@ -23,8 +23,8 @@ source=(
 "opencv_contrib-$pkgver.tar.gz::https://github.com/opencv/opencv_contrib/archive/$pkgver.tar.gz"
 "opencv-tbb.patch::https://raw.githubusercontent.com/DrAtomic/opencv-tbb-patch/main/opencv-tbb.patch"
 )
-sha256sums=('5cf471bd1a5bcfd96d436b359a37d590cc184b6061422eef7d89e063522da1bf'
-            '599bb4d3800a9523a91cecedb7f6d4316890275a39b8f9d66f73263f29ea1f61'
+sha256sums=('9ed59b3939196621253ccc4fcd31f03ae3135fc7f2ff658e9965f3b72b5aa93a'
+            '4e7426f1d0f8dffafa5fe70b72ab33997d0055c7804d7d2760c7ff0a153efb38'
             'e604f6effe0b2aacd19ad5e11544589f76ffed816036964963984ab8912266f0')
 
 prepare() {
