@@ -4,7 +4,7 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seafile
-pkgver=8.0.9
+pkgver=8.0.10
 pkgrel=1
 pkgdesc='An online file storage and collaboration tool'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -13,6 +13,7 @@ license=('GPL2')
 depends=(
     'libsearpc'
     'libevent'
+    'libwebsockets'
     'fuse'
     'python-future'
     'sqlite'
@@ -27,7 +28,7 @@ source=(
     "seaf-cli@.service"
 )
 sha256sums=(
-    '64bbf99f3640ca28f5e59aca13b292ed8ae3898bb68b1d726cc5492a613f3ddc'
+    'bcfa6576a272486cf30b7fa2207992b01b071bcc5744f0923a0d924c0257b8a5'
     'c37510109c1de64c774896df39aece240c056b54414d2119fca01860211156ba'
 )
 provides=('seafile-client-cli')
