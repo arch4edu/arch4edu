@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=statmod
-_pkgver=1.4.37
+_pkgver=1.5.0
 pkgname=r-${_pkgname,,}
-pkgver=1.4.37
-pkgrel=6
+pkgver=1.5.0
+pkgrel=1
 pkgdesc='Statistical Modeling'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,7 +21,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('90d2c8a79e0cb291f2685686436bcf4c5b9abd2efb84759a8553d1b1adb76913')
+sha256sums=('d61c3ef9b09d55b42e038f8d767fa483ebbdec2a9c7172b1b0ccda0ae0016ec9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
