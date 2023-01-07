@@ -1,50 +1,39 @@
 # Maintainer: Pierpaolo Valerio <gondsman@techgeek.co.in>
 # Contributor: Excitable Snowball <excitablesnowball@gmail.com>
 
-pkgbase='python-bokeh'
-pkgname=('python-bokeh')
-pkgver=3.0.2
+pkgname=python-bokeh
+pkgver=3.0.3
 pkgrel=1
 pkgdesc='Interactive Web Plotting for Python'
 arch=('any')
 url='http://bokeh.pydata.org/'
 license=('BSD')
 source=("https://pypi.io/packages/source/b/bokeh/bokeh-${pkgver}.tar.gz")
-sha256sums=('fb537cf24f5a25a6739393f9906ddf8c913bfebc4cb120d342e8262889326f7d')
-makedepends=('python-setuptools')
-
-build() {
-#  cp -r "${srcdir}"/bokeh-$pkgver "${srcdir}"/bokeh-$pkgver-py2
-
-  cd "${srcdir}"/bokeh-$pkgver
-  python setup.py build
-
-#  cd "${srcdir}"/bokeh-$pkgver-py2
-#  python2 setup.py build
-} 
-
-package_python-bokeh() {
-  depends=('python-numpy'
-         'python-six'
-         'python-flask'
-         'python-jinja'
-         'python-requests'
-	 'python-pillow'
+sha256sums=('1c28471ef5e6110ba5bed513137fd26054ebc4454bc768650eaeefc53b898a8a')
+depends=('python-jinja'
+         'python-contourpy'
+         'python-numpy'
+         'python-packaging'
+         'python-pandas'
+         'python-pillow'
          'python-yaml'
          'python-tornado'
-         'python-packaging'
-#        'python-dateutil'
-	 'python-xyzservices'
-	 'python-pandas'
-         'python-typing_extensions')
-  optdepends=('python-selenium: svg export'
-         'geckodriver: svg export'
-         'firefox: svg export'
-         'nodejs: extending Bokeh'
-         'python-psutil: detailed memory logging'
-         'python-networkx: plot directly from NetworkX data'
-         'python-sphinx: support sphinx documentation')
+         'python-xyzservices')
+optdepends=('python-selenium: svg export'
+            'geckodriver: svg export'
+            'firefox: svg export'
+            'nodejs: extending Bokeh'
+            'python-psutil: detailed memory logging'
+            'python-networkx: plot directly from NetworkX data'
+            'python-sphinx: support sphinx documentation')
+makedepends=('python-build' 'python-installer')
 
+build() {
   cd "${srcdir}"/bokeh-$pkgver
-  python setup.py install --root="${pkgdir}" --optimize=1
+  python -m build --wheel
+} 
+
+package() {
+  cd "${srcdir}"/bokeh-$pkgver
+  python -m installer "--destdir=${pkgdir}" ./dist/*.whl
 }
