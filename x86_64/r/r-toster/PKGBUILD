@@ -4,7 +4,7 @@ _pkgname=TOSTER
 _pkgver=0.6.0
 pkgname=r-${_pkgname,,}
 pkgver=0.6.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Two One-Sided Tests (TOST) Equivalence Testing'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,6 +16,7 @@ depends=(
   r-ggdist
   r-ggplot2
   r-jmvcore
+  r-r6
   r-tidyr
 )
 optdepends=(
