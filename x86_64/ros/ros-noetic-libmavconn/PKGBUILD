@@ -2,7 +2,7 @@ pkgdesc="ROS - MAVLink communication library."
 url='https://wiki.ros.org/libmavconn'
 
 pkgname='ros-noetic-libmavconn'
-pkgver='1.14.0'
+pkgver=1.15.0
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 pkgrel=1
 license=('GPLv3, LGPLv3, BSD')
@@ -28,7 +28,7 @@ depends=(
 
 _dir="mavros-${pkgver}/libmavconn"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/mavlink/mavros/archive/${pkgver}.tar.gz")
-sha256sums=('fc067387de1256a7bb2373e3938c242ad79580a16387f7f69be3302a7cb2fe50')
+sha256sums=('784776cc212fcc4f5fe4e346b063ca30f3a921d8e370e0a92dfb53356cf2e6fe')
 
 build() {
   # Use ROS environment variables
