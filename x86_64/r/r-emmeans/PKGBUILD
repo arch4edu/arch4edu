@@ -4,7 +4,7 @@ _pkgname=emmeans
 _pkgver=1.8.3
 pkgname=r-${_pkgname,,}
 pkgver=1.8.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Estimated Marginal Means, aka Least-Squares Means'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,7 +14,6 @@ depends=(
   r-estimability
   r-mvtnorm
   r-numderiv
-  r-xtable
 )
 optdepends=(
   r-bayesplot
@@ -56,6 +55,7 @@ optdepends=(
   r-splines
   r-survival
   r-testthat
+  r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('9ff62f2dcf8b05b6a8d7af68e570cdf30cab03b5021fd47aec84f8f9a7698e00')
