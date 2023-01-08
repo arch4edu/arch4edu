@@ -4,7 +4,7 @@ pkgdesc="ROS - mavros_msgs defines messages for MAVROS."
 url='https://wiki.ros.org/mavros_msgs'
 
 pkgname='ros-noetic-mavros-msgs'
-pkgver='1.14.0'
+pkgver=1.15.0
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 pkgrel=1
 license=('GPLv3, LGPLv3, BSD')
@@ -34,7 +34,7 @@ depends=(
 
 _dir="mavros-release-upstream-${pkgver}/mavros_msgs"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/mavlink/mavros-release/archive/refs/tags/upstream/${pkgver}.tar.gz")
-sha256sums=('4c7a33080cb79b3adb5794c2b3057e64b019c36ee24806d4045120625bec5e02')
+sha256sums=('0d9207a1548d051c0e9fe6630197c48599d720c9833b5be618b9d7857ef01ca8')
 
 build() {
   # Use ROS environment variables
