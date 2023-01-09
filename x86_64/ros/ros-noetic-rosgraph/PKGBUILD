@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rosgraph'
 pkgname='ros-noetic-rosgraph'
 pkgver='1.15.14'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
