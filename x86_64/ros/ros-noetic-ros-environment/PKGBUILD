@@ -6,7 +6,7 @@ url='https://wiki.ros.org/ros_environment'
 pkgname='ros-noetic-ros-environment'
 pkgver='1.3.2'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('Apache License 2.0')
 
 ros_makedepends=(
