@@ -6,7 +6,7 @@ url='https://wiki.ros.org/message_runtime'
 pkgname='ros-noetic-message-runtime'
 pkgver='0.4.13'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
