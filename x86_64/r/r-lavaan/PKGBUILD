@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=lavaan
-_pkgver=0.6-12
+_pkgver=0.6-13
 pkgname=r-${_pkgname,,}
-pkgver=0.6.12
+pkgver=0.6.13
 pkgrel=1
 pkgdesc='Latent Variable Analysis'
 arch=('any')
@@ -16,7 +16,7 @@ depends=(
   r-pbivnorm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8048273e4102f8355ba123c8aff94a9e5a8e9ac9e02a73e986b106ceed4d079e')
+sha256sums=('2af8428e3679ed9889f353015135500ba2b88bd44b5b74f7eea37ff442558c3e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
