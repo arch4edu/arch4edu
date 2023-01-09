@@ -4,7 +4,7 @@ url='https://wiki.ros.org/kdl_parser'
 pkgname='ros-noetic-kdl-parser'
 pkgver='1.14.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
