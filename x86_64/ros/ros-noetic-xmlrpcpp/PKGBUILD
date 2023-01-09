@@ -4,7 +4,7 @@ url='https://wiki.ros.org/xmlrpcpp'
 pkgname='ros-noetic-xmlrpcpp'
 pkgver='1.15.14'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('LGPL-2.1')
 
 ros_makedepends=(
