@@ -10,7 +10,7 @@
 
 pkgname=ros2-humble
 pkgver=2022.11.23
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
 arch=('any')
