@@ -4,7 +4,7 @@ url='https://wiki.ros.org/mavlink'
 pkgname='ros-noetic-mavlink'
 pkgver=2022.12.30
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('LGPLv3')
 
 ros_makedepends=()
