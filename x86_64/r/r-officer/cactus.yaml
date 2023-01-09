@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-openssl
   - x86_64/r/r-r6
   - x86_64/r/r-uuid
   - x86_64/r/r-xml2
