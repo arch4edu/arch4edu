@@ -6,7 +6,7 @@ url='https://wiki.ros.org/mk'
 pkgname='ros-noetic-mk'
 pkgver='1.15.8'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
