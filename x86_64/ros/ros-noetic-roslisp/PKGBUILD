@@ -6,7 +6,7 @@ url='https://wiki.ros.org/roslisp'
 pkgname='ros-noetic-roslisp'
 pkgver='1.9.24'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
