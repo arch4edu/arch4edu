@@ -6,7 +6,7 @@ url='https://wiki.ros.org/nodelet_tutorial_math'
 pkgname='ros-noetic-nodelet-tutorial-math'
 pkgver='0.2.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
