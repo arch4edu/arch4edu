@@ -6,7 +6,7 @@ url='https://wiki.ros.org/laser_pipeline'
 pkgname='ros-noetic-laser-pipeline'
 pkgver='1.6.4'
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
