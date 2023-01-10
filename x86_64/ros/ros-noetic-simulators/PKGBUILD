@@ -7,7 +7,7 @@ pkgname='ros-noetic-simulators'
 pkgver='1.5.0'
 _pkgver_patch=0
 arch=('any')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(ros-noetic-catkin)
