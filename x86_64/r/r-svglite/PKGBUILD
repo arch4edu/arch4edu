@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _cranname=svglite
-_cranver=2.1.0
+_cranver=2.1.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="An 'SVG' Graphics Device"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -27,7 +27,7 @@ optdepends=(
     r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('ad40f590c7e80ae83001a3826b6e8394ba733446ed51fd55faeda974ab839c9b')
+sha256sums=('48700169eec1b05dbee9e2bae000aa84c544617b018cb3ac431a128cfd8dac56')
 
 build() {
   mkdir -p build
