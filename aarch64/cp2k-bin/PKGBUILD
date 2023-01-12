@@ -2,7 +2,7 @@
 
 _name=cp2k
 pkgname=${_name}-bin
-pkgver=2022.1
+pkgver=2023.1
 pkgrel=1
 pkgdesc="A quantum chemistry and solid state physics software package for atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems. (precompiled, OpenMP)"
 arch=("x86_64" "aarch64")
@@ -12,8 +12,8 @@ provides=("${_name}")
 conflicts=("${_name}")
 source_x86_64=("https://github.com/${_name}/${_name}/releases/download/v${pkgver}/${_name}-${pkgver}-Linux-gnu-x86_64.ssmp")
 source_aarch64=("https://github.com/${_name}/${_name}/releases/download/v${pkgver}/${_name}-${pkgver}-Linux-gnu-aarch64.ssmp")
-md5sums_x86_64=('ebae1b3d14f933009a3bcb8d71f4c385')
-md5sums_aarch64=('118f02981454a64da4731344989e5718')
+md5sums_x86_64=('fcdc02e8d5636b7e9b700b24142c209e')
+md5sums_aarch64=('015633e141d7dc84fefa68cc93cfacac')
 
 package() {
   cd "${srcdir}"
