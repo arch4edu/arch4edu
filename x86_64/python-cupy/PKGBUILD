@@ -5,7 +5,7 @@ _pkgname=cupy
 pkgver=11.4.0
 _cub_commit=c3cceac115c072fb63df1836ff46d8c60d9eb304
 _jitify_commit=4a37de0be4639f222c6565ebd0654cb922b5180e
-pkgrel=1
+pkgrel=2
 pkgdesc="NumPy-like API accelerated with CUDA"
 url="https://cupy.dev"
 arch=('x86_64')
@@ -16,7 +16,7 @@ optdepends=('cudnn' 'libcutensor' 'nccl')
 source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
         "https://github.com/NVIDIA/cub/archive/$_cub_commit.tar.gz"
         "https://github.com/NVIDIA/jitify/archive/$_jitify_commit.tar.gz")
-md5sums=('a6b2f725d42835ce7c8b06c673d287cb'
+md5sums=('c6a87d8885d23b49cbdec1becb61688c'
          'ae6435aef98378a8b323b69f6665df33'
          '2ad752c0814c2da9909e2dcac0f50401')
 
