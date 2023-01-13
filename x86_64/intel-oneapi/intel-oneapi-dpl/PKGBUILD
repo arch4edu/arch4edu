@@ -2,8 +2,8 @@
 # Contributor: Intel Corporation <http://www.intel.com/software/products/support>
 
 pkgname=intel-oneapi-dpl
-_pkgver=2021.7.0
-_debpkgrel=631
+_pkgver=2022.0.0
+_debpkgrel=25335
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=1
 pkgdesc="Intel® oneAPI DPC++ Library 2021.7.0 for Linux*"
@@ -11,7 +11,7 @@ arch=('x86_64')
 url='https://software.intel.com/content/www/us/en/develop/tools/oneapi.html'
 license=("custom")
 source=("https://apt.repos.intel.com/oneapi/pool/main/intel-oneapi-libdpstd-devel-${_pkgver}-${_pkgver}-${_debpkgrel}_amd64.deb")
-sha256sums=('1cc950ad392724d53161a3aca1716ef8b26d06b073de551daa9ac408ec215a5a')
+sha256sums=('1f1ae2853ac0bcc826573a60fb121ca34c0f0ca41f17cf4a04a4bc66eccb8f25')
 
 build() {
 	tar xvf data.tar.xz
@@ -19,7 +19,7 @@ build() {
 }
 
 package() {
-	depends=('intel-oneapi-common=2022.1.0')
+	depends=('intel-oneapi-common=2023.0.0')
 	mv ${srcdir}/opt ${pkgdir}
 	ln -sfT "$_pkgver" ${pkgdir}/opt/intel/oneapi/dpl/latest
 
