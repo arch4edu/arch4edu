@@ -1,0 +1,11 @@
+--- Makefile.orig	2023-01-13 04:57:03.000000000 +1100
++++ Makefile	2023-01-13 10:32:52.688654814 +1100
+@@ -2,7 +2,7 @@
+ name = sc-im
+ 
+ # The base directory where everything should be installed.
+-prefix  = /usr/local
++prefix  = /usr
+ 
+ EXDIR   = $(prefix)/bin
+ HELPDIR = $(prefix)/share/$(name)
