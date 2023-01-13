@@ -2,8 +2,8 @@
 # Contributor: Intel Corporation <http://www.intel.com/software/products/support>
 
 pkgname=intel-oneapi-dnnl
-_pkgver=2022.1.0
-_debpkgrel=132
+_pkgver=2023.0.0
+_debpkgrel=25399
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=1
 pkgdesc="Intel® oneAPI Deep Neural Network Library"
@@ -14,8 +14,8 @@ source=("https://apt.repos.intel.com/oneapi/pool/main/${pkgname}-${_pkgver}-${_d
 "https://apt.repos.intel.com/oneapi/pool/main/${pkgname}-devel-${_pkgver}-${_debpkgrel}_amd64.deb"
 "${pkgname}.conf"
 "${pkgname}.sh")
-sha256sums=('21b2d93e74428814cae8f4050d8f4967fc9346bf5dca456d54e47d34605dca8f'
-            '0f9cb9f28f60b05e9a26cf9769be8781407c390c8aa56a63378c027449a2cf56'
+sha256sums=('616f9fac7c702aa12fa032a80bcbda9988c3029300cbe0b7c71f7049885551dc'
+            '6ab85bea0c202b2a31972ebf4eeda89d72403cac293f06617c397b9b7d123979'
             'f1fe419d6cbab4411c5fe68515b1fc8f317185b70a0c2b7400ba7c88dbd32c63'
             'd3fff0cb761be49b766d4fa2e9c34b38e5f99379520201f60654893db47b7dd7')
 
@@ -33,9 +33,9 @@ build() {
 }
 
 package() {
-	depends=('intel-oneapi-common=2022.1.0'
-    'intel-oneapi-tbb>=2021.6.0' 'intel-oneapi-compiler>=2022.1.0' 
-	'intel-oneapi-tbb<2021.6.1' 'intel-oneapi-compiler<2022.1.1' )
+	depends=('intel-oneapi-common=2023.0.0'
+    'intel-oneapi-tbb>=2021.8.0' 'intel-oneapi-compiler>=2023.0.0' 
+	'intel-oneapi-tbb<2021.8.1' 'intel-oneapi-compiler<2023.0.1' )
 	provides=('onednn=2.6')
 	conflicts=('onednn')
 	mv ${srcdir}/opt ${pkgdir}
