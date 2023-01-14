@@ -5,7 +5,7 @@
 
 pkgname='pypy3-setuptools'
 pkgver=32.3.1
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
 arch=('any')
