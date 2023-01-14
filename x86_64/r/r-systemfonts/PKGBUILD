@@ -5,12 +5,13 @@ _cranname=systemfonts
 _cranver=1.0.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="System Native Font Finding"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
-depends=(fontconfig freetype2 r-cpp11)
+depends=(fontconfig freetype2 r)
+makedepends=(r-cpp11)
 checkdepends=(r-testthat ttf-font)
 optdepends=(
     r-testthat
