@@ -4,7 +4,7 @@ _cranname=textshaping
 _cranver=0.3.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Bindings to the 'HarfBuzz' and 'Fribidi' Libraries for Text Shaping"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -13,9 +13,9 @@ depends=(
     freetype2
     harfbuzz
     fribidi
-    r-cpp11
     r-systemfonts
 )
+makedepends=(r-cpp11)
 optdepends=(r-covr r-knitr r-rmarkdown)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
