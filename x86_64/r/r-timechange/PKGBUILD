@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _cranname=timechange
-_cranver=0.1.1
+_cranver=0.2.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -14,7 +14,7 @@ makedepends=(r-cpp11)
 checkdepends=(r-testthat)
 optdepends=(r-testthat r-knitr)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('8503919d233d7d7b81fe47692f0f2d6742ff4cae7320a5522bf98f077f5d7f70')
+sha256sums=('3d602008052123daef94a5c3f5154c5461b4ec0432ab70c37273d7ddd252f7f1')
 
 prepare() {
   # build against system cctz
