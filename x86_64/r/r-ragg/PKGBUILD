@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _cranname=ragg
-_cranver=1.2.4
+_cranver=1.2.5
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Graphic Devices Based on AGG"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -21,7 +21,7 @@ checkdepends=(r-testthat ttf-font)
 optdepends=(r-covr r-testthat)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('c547e5636a2eefaa0021a0d50fad1e813c2ce976ec0c9c3f796d38a110680dcd'
+sha256sums=('936f4d75e0e01cdeefb9f57d121cdd7812d0de5a9e1a3a8315f92ce1c84da8f9'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
