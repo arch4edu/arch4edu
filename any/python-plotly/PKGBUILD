@@ -2,40 +2,59 @@
 # Co-Maintainer: Bert Peters <bert@bertptrs.nl>
 
 pkgname=python-plotly
-pkgver=5.11.0
-pkgrel=1
+pkgver=5.12.0
+pkgrel=4
 pkgdesc="An open-source, interactive graphing library"
+arch=('x86_64')
 url="https://github.com/plotly/plotly.py"
-depends=(python
-python-tenacity)
+license=('MIT')
+depends=(
+python
+python-tenacity
+)
 # optdepends based on optional_requirements.txt
 optdepends=(
-'ipython'
-'jupyterlab'
-'python-ipywidgets'
-'python-numpy'
-'python-matplotlib'
-'python-pillow'
-'python-scipy')
-makedepends=(python-setuptools
+ipython
+jupyterlab
+python-ipywidgets
+python-numpy
+python-matplotlib
+python-pillow
+python-scipy
+python-ipykernel
+python-pandas
+python-colorcet
+python-inflect
+python-psutil
+)
+makedepends=(
+python-setuptools
 python-jupyter_core
 python-tornado
 jupyterlab
-npm)
-license=('MIT')
-arch=('any')
+)
+checkdepends=(
+python-requests
+python-pytest
+)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/plotly/plotly.py/archive/v${pkgver}.tar.gz")
 options=(!strip) # strip isn't useful for python files and takes forever
-sha256sums=('fb85d1c6013cb91324bd610e02f820880e14aa7daa9bbc6c3572b7250764ee33')
+sha256sums=('33548f8abc3310acde8ba7d74a57a652ed278ef5c4a999a61ae9fb45cb1961e4')
 
 build() {
   cd plotly.py-${pkgver}/packages/python/plotly
-  python setup.py build
+  SKIP_NPM=1 python setup.py build
+}
+
+check() {
+  cd plotly.py-${pkgver}/packages/python/plotly
+  pytest plotly/tests/test_core
 }
 
 package() {
   cd plotly.py-${pkgver}/packages/python/plotly
-  python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+  SKIP_NPM=1 python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+  mv ${pkgdir}/usr/etc ${pkgdir}
 
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
