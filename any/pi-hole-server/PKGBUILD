@@ -3,10 +3,10 @@
 
 pkgname=pi-hole-server
 _pkgname=pi-hole
-pkgver=5.14.2
-pkgrel=2
+pkgver=5.15
+pkgrel=1
 _wwwpkgname=AdminLTE
-_wwwpkgver=5.18
+_wwwpkgver=5.18.1
 _now=`date +%N`
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
@@ -41,10 +41,10 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	    piholeDebug.sh
 )
 
-sha256sums=('fb2bf933eb7dc54de7b5ab220458e0298fb48fa84d5cba1bcb3c72c47bee1051'
-            '7d29b443b233a19fd2a8c2e345e4a0ed7c0dc05492a35c75a5627264423dd1f3'
-            '3c5b8744d2af71ee51cf0b3733427aa6f444e98e1a3aa6dcb12f8702974a6d08'
-            'a48b7e62d3d2192c085bed73cc6610a6daafb17d5b9bd4c88a7927828427de10'
+sha256sums=('307b021fd512717de46a448de67737a81b4bf762dce40902983d80e2ca70ca48'
+            '418451f4976b41d4629eeb7e70f35a2336f3f929094225fdb461dfffb4e10cea'
+            '0bb269aa9abb3d48ad9b8fb62a82fe736bb40118b626e2639e84eeeeb5eedbd7'
+            '5cef66a758299c4f3ffd3b2433c718ddc51440429dd7ad3eaf5ffa6624c0ddf4'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             'f70964f8b176d9ffcf4f44140036f0cfc030cbbe836634a885da082cfee4d1f7'
             '032770450ba4a1085bcb0bf3f944c436c5702f3a3faf984fbbba2d3dbc6accea'
@@ -122,7 +122,7 @@ package() {
   install -Dm644 nginx.pi-hole.conf "$pkgdir"/usr/share/pihole/configs/nginx.example.conf
 
   install -dm755 "$pkgdir"/srv/http/pihole/admin
-  install -Dm644 $_pkgname-$pkgver/advanced/index.php "$pkgdir"/srv/http/pihole/pihole/index.php
+#  install -Dm644 $_pkgname-$pkgver/advanced/index.php "$pkgdir"/srv/http/pihole/pihole/index.php
 #  install -Dm644 $_pkgname-$pkgver/advanced/index.js "$pkgdir"/srv/http/pihole/pihole/index.js
 #  install -Dm644 $_pkgname-$pkgver/advanced/blockingpage.css "$pkgdir"/srv/http/pihole/pihole/blockingpage.css
 
