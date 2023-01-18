@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=emmeans
-_pkgver=1.8.3
+_pkgver=1.8.4-1
 pkgname=r-${_pkgname,,}
-pkgver=1.8.3
-pkgrel=3
+pkgver=1.8.4.1
+pkgrel=1
 pkgdesc='Estimated Marginal Means, aka Least-Squares Means'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -58,7 +58,7 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9ff62f2dcf8b05b6a8d7af68e570cdf30cab03b5021fd47aec84f8f9a7698e00')
+sha256sums=('c60fd90b4730485b003286796323d0bb6bbd4d2a47cacb82fd98949117245789')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
