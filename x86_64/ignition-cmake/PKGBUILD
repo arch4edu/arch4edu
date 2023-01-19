@@ -2,19 +2,17 @@
 # Contributor: Tim Rakowski <tim.rakowski@gmail.com>
 
 pkgname=ignition-cmake
-pkgver=2.15.0
+pkgver=3.0.1
 pkgrel=1
-pkgdesc="Provides modules that are used to find dependencies of ignition projects and generate cmake targets for consumers of ignition projects to link against."
+pkgdesc="A set of CMake modules that are used by the C++-based Gazebo projects."
 arch=('any')
 url="https://gazebosim.org/libs/cmake"
 license=('Apache')
 depends=('cmake' 'pkg-config' 'ruby-ronn' 'doxygen')
-optdepends=()
-conflicts=()
-source=("https://github.com/gazebosim/gz-cmake/archive/${pkgname}2_${pkgver}.tar.gz")
-sha256sums=('e89e72bbf9d3ba27442db76478f68a1e56cf280b33c79cdcf23d7a13ea35980d')
+source=("https://github.com/gazebosim/gz-cmake/archive/gz-cmake3_${pkgver}.tar.gz")
+sha256sums=('d211e1a5384b33968a0b755dd6bded512f3e2957d2f04766ec17b0b5114201a0')
 
-_dir="gz-cmake-${pkgname}2_${pkgver}"
+_dir="gz-cmake-gz-cmake3_${pkgver}"
 
 build() {
   cd "$srcdir/$_dir"
