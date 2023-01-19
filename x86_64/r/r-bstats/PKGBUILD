@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=bstats
-_pkgver=0.0.0.9003
+_pkgver=0.0.0.9004
 pkgname=r-${_pkgname,,}
-pkgver=0.0.0.9003
+pkgver=0.0.0.9004
 pkgrel=1
 pkgdesc="Bayesian statistics"
 arch=('x86_64')
