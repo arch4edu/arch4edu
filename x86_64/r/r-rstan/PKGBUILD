@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=rstan
-_pkgver=2.21.7
+_pkgver=2.21.8
 pkgname=r-${_pkgname,,}
-pkgver=2.21.7
-pkgrel=3
+pkgver=2.21.8
+pkgrel=1
 pkgdesc='R Interface to Stan'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -45,7 +45,7 @@ optdepends=(
   r-v8
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4495221310d390925b665c32e05ffabd3ae8857225bda65131a7ed2be41d6d45')
+sha256sums=('b2d4edc315419037970c9fa2e8740b934966d88d40548152811f3d4a28475075')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
