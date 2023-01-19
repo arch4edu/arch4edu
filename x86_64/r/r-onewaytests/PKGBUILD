@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=onewaytests
-_pkgver=2.6
+_pkgver=2.7
 pkgname=r-${_pkgname,,}
-pkgver=2.6
-pkgrel=4
+pkgver=2.7
+pkgrel=1
 pkgdesc='One-Way Tests in Independent Groups Designs'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,7 +21,7 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('39a2e7dc107d9b7848d7b9cc27718c56840a254c02505263d4fba65e4c8e0217')
+sha256sums=('cd0e043cfbe6a630bcbb419b6e57c17b1e0fe75fecb482118f72d66c86ca6490')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
