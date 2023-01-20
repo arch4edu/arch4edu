@@ -1,15 +1,12 @@
 nvchecker:
   - source: aur
     aur:
-depends:
-  - x86_64/rocm/miopen-hip
-  - x86_64/rocm/rocm-hip-sdk
-  - x86_64/rocm/roctracer
 group: x86_64
-build_prefix: testing-x86_64
+build_prefix: arch4edu-x86_64
 pre_build: |
   aur-pre-build
   sed '/prepare()/a\  git config --global protocol.file.allow always' -i PKGBUILD
   sed '/git submodule update/a\  sed "1i#include <mutex>" -i third_party/kineto/libkineto/src/RoctracerActivityApi.h' -i PKGBUILD
   sed 's/79360/87773/g' -i PKGBUILD
+  sudo pacman -S --noconfirm devtools-arch4edu-extra
 post_build: aur-post-build
