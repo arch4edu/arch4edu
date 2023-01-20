@@ -3,10 +3,10 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=pbkrtest
-_pkgver=0.5.1
+_pkgver=0.5.2
 pkgname=r-${_pkgname,,}
-pkgver=0.5.1
-pkgrel=6
+pkgver=0.5.2
+pkgrel=1
 pkgdesc='Parametric Bootstrap, Kenward-Roger and Satterthwaite Based Methods for Test in Mixed Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,7 +21,7 @@ depends=(
   r-numderiv
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b2a3452003d93890f122423b3f2487dcb6925440f5b8a05578509e98b6aec7c5')
+sha256sums=('8e79adf035a0fcf3c82145ad55847497379e009f7be880ba3007ebeb2e69b6e3')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
