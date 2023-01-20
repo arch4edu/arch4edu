@@ -10,7 +10,7 @@ do
 	[ $(yq -c .makedepends $file) = "null" ] && sed '/^makedepends:/d' -i $file
 	for template in template/*
 	do
-		cmp --silent $file $template && rm $file && ln -s $(realpath --relative-to=$file $template) $file
+		cmp --silent $file $template && rm $file && ln -s $(realpath --relative-to=$(dirname $file) $template) $file
 	done
 done
 
