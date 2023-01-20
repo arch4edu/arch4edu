@@ -2,9 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/rocm/hipmagma
   - x86_64/rocm/miopen-hip
-  - x86_64/rocm/rccl
   - x86_64/rocm/rocm-hip-sdk
   - x86_64/rocm/roctracer
 group: x86_64

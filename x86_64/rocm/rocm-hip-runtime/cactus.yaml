@@ -2,14 +2,10 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/rocm/hip-runtime-amd
-  - x86_64/rocm/rocm-cmake
   - x86_64/rocm/rocm-core
   - x86_64/rocm/rocm-language-runtime
-  - x86_64/rocm/rocm-llvm
-  - x86_64/rocm/rocminfo
 makedepends:
   - x86_64/rocm/hipify-clang
-build_prefix: extra-x86_64
+build_prefix: testing-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
