@@ -2,7 +2,7 @@
 pkgbase=python-portalocker
 pkgname=('python-portalocker')
 _pkgname=portalocker
-pkgver=2.6.0
+pkgver=2.7.0
 pkgrel=1
 pkgdesc='Easy, portable file locking API.'
 arch=('any')
@@ -11,7 +11,7 @@ license=('PSF')
 makedepends=('python-setuptools')
 optdepends=('python-redis' 'redis')
 source=("https://pypi.python.org/packages/source/p/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
-sha256sums=('964f6830fb42a74b5d32bce99ed37d8308c1d7d44ddf18f3dd89f4680de97b39')
+sha256sums=('032e81d534a88ec1736d03f780ba073f047a06c478b06e2937486f334e955c51')
 
 build() {
   cp -a "${_pkgname}-${pkgver}" "py2-${_pkgname}-${pkgver}"
