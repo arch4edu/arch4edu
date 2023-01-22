@@ -6,7 +6,7 @@ nvchecker:
 depends:
   - x86_64/python-fenics-ffcx
   - x86_64/parmetis
-  - x86_64/petsc-complex
+  - x86_64/petsc
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
