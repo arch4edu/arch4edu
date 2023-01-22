@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=rmarkdown
-_cranver=2.19
+_cranver=2.20
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -46,12 +46,11 @@ optdepends=(
     r-shiny
     r-testthat
     r-tibble
-    r-tufte
     r-vctrs
     r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('39c2a4c51de8c65886a7a3d7e44c3d21167069a89ee26c0f5db8243b70db9b92')
+sha256sums=('d7f7059bfcb43e4b92432d69ba0e0c74ad10a20f153689262a3e848adb60159d')
 
 prepare() {
   # Skip a test that might fail depending on environment
