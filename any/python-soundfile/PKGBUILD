@@ -1,15 +1,16 @@
-# Maintainer: Christopher Arndt <aur at chrisarndt dot de>
+# Maintainer: OSAMC <https://github.com/osam-cologne/archlinux-proaudio>
+# Contributor: Christopher Arndt <aur -at- chrisarndt -dot- de>
 
 _name=soundfile
 pkgname=python-soundfile
 pkgver=0.11.0
-pkgrel=3
+pkgrel=4
 pkgdesc='A Python library to read and write audio files using libsndfile, CFFI and NumPy'
 url='https://github.com/bastibe/python-soundfile'
 arch=(any)
 license=(BSD)
-depends=(python-cffi libsndfile python-numpy)
 makedepends=(python-build python-installer python-setuptools python-wheel)
+depends=(python-cffi libsndfile python-numpy)
 checkdepends=(python-pytest python-setuptools)
 source=("https://github.com/bastibe/python-soundfile/releases/download/$pkgver/$_name-$pkgver.tar.gz")
 sha256sums=('931738a1c93e8684c2d3e1d514ac63440ce827ec783ea0a2d3e4730e3dc58c18')
