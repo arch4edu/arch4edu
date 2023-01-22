@@ -1,35 +1,60 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
-pkgver=0.5.2
-pkgrel=2
+pkgver=0.6.0
+pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL3)
 makedepends=(cmake)
 depends=(boost python-fenics-ffcx hdf5-openmpi parmetis petsc pugixml)
+checkdepends=(openssh catch2)
 optdepends=('adios2: for use ADIOS2 writer'
   'slepc: for use SLEPc eigen solver'
   'scotch: for compute graph partition'
   'kahip: for compute graph partition in parallel')
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('c6a9af8abc37172493a547ff52a3d737bf16b34f35d737d3643b0d7578455e6097eca6c919b49bbfacfed165b028170a1d55a7cf7521e285612f1f9fc7c55522')
+sha512sums=('6e4bbeca9045cdc558fa5cdfd23abe55bdb773b326381eaa25f843e70d9df39c5707bfdf5412ae1845fc680bbbc7cb641f9cf6e4eb2226a760ddaab8d04237bf')
 
 build() {
   cmake \
     -S ${pkgname}-${pkgver}/cpp \
-    -B build-cmake \
+    -B build \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=20 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DDOLFINX_ENABLE_ADIOS2=ON \
+    -DDOLFINX_ENABLE_KAHIP=ON \
+    -DDOLFINX_ENABLE_PARMETIS=ON \
+    -DDOLFINX_ENABLE_SCOTCH=ON \
+    -DDOLFINX_ENABLE_SLEPC=ON \
     -Wno-dev
-  cmake --build build-cmake --target all
+  cmake --build build --target all
+}
+
+check() {
+  if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
+    export OMPI_MCA_opal_warn_on_missing_libcuda=0
+  fi
+  ffcx ${pkgname}-${pkgver}/cpp/test/poisson.py -o ${pkgname}-${pkgver}/cpp/test
+  DESTDIR="${PWD}/tmp_install" cmake --build build --target install
+  CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
+    -S ${pkgname}-${pkgver}/cpp/test \
+    -B build_test
+  cmake --build build_test
+  ctest --test-dir build_test
+  CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
+    -S ${pkgname}-${pkgver}/cpp/demo \
+    -B build_demo
+  cmake --build build_demo
+  ctest -E "demo_poisson_mpi_*" --test-dir build_demo
 }
 
 package() {
-  DESTDIR="${pkgdir}" cmake --build build-cmake --target install
+  DESTDIR="${pkgdir}" cmake --build build --target install
   install -Dm 644 ${pkgname}-${pkgver}/COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
+makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
