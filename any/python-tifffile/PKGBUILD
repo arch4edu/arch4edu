@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2022.10.10
+pkgver=2023.1.23.1
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -14,9 +14,10 @@ makedepends=('python-setuptools'
              'python-sphinx'
              'python-numpy')
 #makedepends=('python-setuptools' 'python-wheel' 'python-build' 'python-installer')
-checkdepends=('python-pytest' 'python-fsspec' 'python-xarray') # numpy <- xarray
+checkdepends=('python-pytest'
+              'python-fsspec') # numpy ? array
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('50b61ba943b866d191295bc38a00191c9fdab23ece063544c7f1a264e3f6aa8e')
+sha256sums=('a3d0c149cc7faef796fd598856314f43fdcd0895c79c3cb662a38c1c1bd49572')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -25,9 +26,8 @@ build() {
 #   python -m build --wheel --no-isolation
 
     msg "Building Docs"
-    cd ${srcdir}/${_pyname}-${pkgver}/docs
-#   PYTHONPATH="../build/lib" make html
-    PYTHONPATH="../build/lib" python make.py
+#   PYTHONPATH="../build/lib" make -C docs html
+    PYTHONPATH="build/lib" python docs/make.py
 }
 
 check() {
@@ -48,11 +48,11 @@ check() {
 }
 
 package_python-tifffile() {
-    depends=('python-numpy>=1.23.3')
-    optdepends=('python-matplotlib>=3.5.2: required for plotting'
+    depends=('python-numpy>=1.23.5')
+    optdepends=('python-matplotlib>=3.6.2: required for plotting'
                 'python-imagecodecs>=2022.9.26: required for encoding or decoding LZW, JPEG, etc. compressed segments'
-                'python-lxml>=4.9.1: required only for validating and printing XML'
-                'python-zarr>=2.13.0: required for opening Zarr stores'
+                'python-lxml>=4.9.2: required only for validating and printing XML'
+                'python-zarr>=2.13.3: required for opening Zarr stores'
                 'python-fsspec: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
