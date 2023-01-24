@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=fs
-_cranver=1.5.2
+_cranver=1.6.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Cross-Platform File System Operations Based on 'libuv'"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -26,7 +26,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('35cad1781d6d17c1feb56adc4607079c6844b63794d0ce1e74bb18dbc11e1987'
+sha256sums=('9bec6e6177c845b0c012e30a3527fe0a7fcaef68539c64d65997b611ce15f6e6'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 prepare() {
