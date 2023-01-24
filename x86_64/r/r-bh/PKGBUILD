@@ -3,7 +3,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=BH
-_cranver=1.78.0-0
+_cranver=1.81.0-1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -13,7 +13,7 @@ url="https://cran.r-project.org/package=${_cranname}"
 license=(Boost)
 depends=(boost r)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('3b9e9d07682013e0c06a396dda176b405eab99a7273eca6c40d1b4c4110e8cb3')
+sha256sums=('f51c8badd6f181e06353314e1d15a6ec1495cc498ee74b6fa4ea8aba6e97ff64')
 
 build() {
   mkdir -p build
