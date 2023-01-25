@@ -4,7 +4,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _cranname=lubridate
-_cranver=1.9.0
+_cranver=1.9.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -22,7 +22,7 @@ optdepends=(
     r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('b936041f8a71894ef930cfff61b45833e0dd148b5b16697f4f541d25b31a903a')
+sha256sums=('0da9ce77291b6788ba313c62335448a6677344d2b76a1fb1c9c2da4551c032af')
 
 prepare() {
   cd "${_cranname}"
