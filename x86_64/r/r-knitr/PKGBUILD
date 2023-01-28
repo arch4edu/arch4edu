@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=knitr
-_cranver=1.41
+_cranver=1.42
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -16,7 +16,6 @@ license=(GPL)
 depends=(
     r-evaluate
     r-highr
-    r-stringr
     r-yaml
     r-xfun
 )
@@ -52,7 +51,7 @@ optdepends=(
     'rst2pdf: rst2pdf() support'
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('01295f2938509d76474c1637a4260950194a4bae35a9463a07823d6b4a0dfbc7')
+sha256sums=('9344f1a0089e4da101def54aee38d7cfe3b2022d75c560141d8cc22ac65130f3')
 
 build() {
   mkdir -p build
