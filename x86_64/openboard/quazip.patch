@@ -8,7 +8,7 @@ diff -Naur OpenBoard-1.6.0a3.orig/OpenBoard.pro OpenBoard-1.6.0a3/OpenBoard.pro
 -    LIBS += -lquazip5
 -    INCLUDEPATH += "/usr/include/quazip5"
 +    LIBS += "-lquazip1-qt5"
-+    INCLUDEPATH += /usr/include/QuaZip-Qt5-1.3/quazip
++    INCLUDEPATH += /usr/include/QuaZip-Qt5-1.4/quazip
  
      LIBS += -lpoppler
      INCLUDEPATH += "/usr/include/poppler"
