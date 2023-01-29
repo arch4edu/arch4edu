@@ -1,7 +1,7 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 pkgname=gtsam
 pkgver=4.1.1
-pkgrel=2
+pkgrel=3
 pkgdesc="A library of C++ classes that implement smoothing and mapping (SAM) in\
   robotics and vision, using factor graphs and Bayes networks as the underlying\
   computing paradigm rather than sparse matrices."
