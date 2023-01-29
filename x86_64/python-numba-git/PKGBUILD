@@ -3,33 +3,50 @@
 # Contributor: Michael Schubert <mschu.dev at gmail>
 
 pkgname=python-numba-git
-pkgver=0.57.0dev0.r1029.g435ddd3a2
+pkgver=0.57.0dev0.r1070.gfcdb0ee49.pr8691
 pkgrel=1
 pkgdesc='NumPy aware dynamic Python compiler using LLVM (Git version)'
 url='https://github.com/numba/numba'
 arch=('x86_64')
 license=('BSD')
-depends=('python-llvmlite>0.37.999' 'python-numpy' 'python-setuptools' 'tbb')
-makedepends=('git')
+depends=('python-llvmlite>0.39.999' 'python-numpy' 'python-setuptools')
+optdepends=(
+  'openmp: OpenMP threading backend'
+  'tbb: TBB threading backend'
+  'python-scipy: cython bindings used in np.linalg.* support'
+  'python-jinja: “pretty” type annotation output (HTML) via the CLI'
+  'python-cffi: use of CFFI bindings in compiled functions'
+  'python-yaml: use of a .numba_config.yaml file for storing per project configuration options'
+  'python-colorama: error message highlighting'
+  'python-pygments: “pretty” type annotation'
+)
+makedepends=('git' 'openmp' 'python-build' 'python-installer' 'python-wheel' 'tbb')
 conflicts=('python-numba')
-replaces=()
 provides=("python-numba=$pkgver")
 source=('git+https://github.com/numba/numba.git')
 sha256sums=('SKIP')
 
+prepare() {
+  cd numba
+  git config --local user.name "makepkg"
+  git config --local user.email "makepkg@localhost"
+  git fetch origin refs/pull/8691/head:pr8691
+  git merge --commit --no-edit pr8691
+}
+
 pkgver() {
   cd numba
-  git describe --long | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+  printf "%s.pr8691" "$(git describe --long origin/HEAD | sed 's/\([^-]*-g\)/r\1/;s/-/./g')"
 }
 
 build() {
   cd numba
-  python setup.py build
+  python -m build --no-isolation --wheel
 }
 
 package() {
   cd numba
-  python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
+  python -m installer --destdir="$pkgdir" dist/*.whl
   install -dm755 "$pkgdir/usr/share/licenses/$pkgname"
   install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE LICENSES.third-party
 }
