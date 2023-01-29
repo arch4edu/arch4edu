@@ -1,9 +1,9 @@
 # Maintainer: Mark Wagie <mark dot wagie at tutanota dot com>
 pkgname=fastfetch
 pkgver=1.9.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Like Neofetch, but much faster because written in C"
-arch=('x86_64')
+arch=('x86_64' 'aarch64' 'riscv64')
 url="https://github.com/LinusDierheimer/fastfetch"
 license=('MIT')
 depends=('gcc-libs')
