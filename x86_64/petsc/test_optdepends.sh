@@ -48,8 +48,7 @@ if [ -f "/usr/lib/pkgconfig/scalapack.pc" ]; then
 fi
 
 # Scotch
-SCOTCH_DIR="/usr/include"
-if [ -d "${SCOTCH_DIR}" ]; then
+if [ -f /usr/include/scotch.h ]; then
   SCOTCH_LIBS="libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so"
   # Include bzip2 if scotch was build with bzip2 support
   if [ -f /usr/include/bzlib.h ];then
