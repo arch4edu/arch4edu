@@ -3,7 +3,7 @@ _pkgname=jaspAnova
 _pkgver=0.17.0
 pkgname=r-${_pkgname,,}
 pkgver=0.17.0
-pkgrel=3
+pkgrel=5
 pkgdesc="ANOVA Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -31,7 +31,7 @@ depends=(r
 )
 makedepends=('git')
 optdepends=()
-source=("git+https://github.com/jasp-stats/${_pkgname}.git#commit=2fa89df380")
+source=("git+https://github.com/jasp-stats/${_pkgname}.git#commit=7620c262c9")
 sha256sums=('SKIP')
 
 
