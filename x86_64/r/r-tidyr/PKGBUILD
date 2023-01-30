@@ -3,7 +3,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=tidyr
-_cranver=1.2.1
+_cranver=1.3.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,13 +12,14 @@ arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
+    r-cli
     r-dplyr
-    r-ellipsis
     r-glue
     r-lifecycle
     r-magrittr
     r-purrr
     r-rlang
+    r-stringr
     r-tibble
     r-tidyselect
     r-vctrs
@@ -28,7 +29,6 @@ checkdepends=(r-data.table r-testthat)
 optdepends=(
     r-covr
     r-data.table
-    r-jsonlite
     r-knitr
     r-readr
     r-repurrrsive
@@ -37,16 +37,8 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('6971766d3663dc75c2328ab257816f4e42d9fdc05c2d87d171b8b9b5ecce61af'
+sha256sums=('8d532b9366fdd3ec9827b51830e559a49d073425007c766025f0e603964e0a9d'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
-
-prepare() {
-  cd "${_cranname}/tests/testthat"
-
-  # Skip outdated snapshot tests
-  sed -i '/"errors are raised"/a\ \ skip("Outdated snapshot")' test-drop-na.R
-  sed -i '/must be supplied/a\ \ skip("Outdated snapshot")' test-pivot-wide.R
-}
 
 build() {
   mkdir -p build
