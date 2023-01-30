@@ -2,11 +2,12 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-gfonts
+  - x86_64/r/r-crayon
+  - x86_64/r/r-crul
+  - x86_64/r/r-glue
   - x86_64/r/r-htmltools
-  - x86_64/r/r-memoise
-  - x86_64/r/r-rcpp
-  - x86_64/r/r-systemfonts
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-shiny
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -2,11 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-gfonts
-  - x86_64/r/r-htmltools
-  - x86_64/r/r-memoise
   - x86_64/r/r-rcpp
-  - x86_64/r/r-systemfonts
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

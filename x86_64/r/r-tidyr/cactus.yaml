@@ -2,13 +2,14 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-cli
   - x86_64/r/r-dplyr
-  - x86_64/r/r-ellipsis
   - x86_64/r/r-glue
   - x86_64/r/r-lifecycle
   - x86_64/r/r-magrittr
   - x86_64/r/r-purrr
   - x86_64/r/r-rlang
+  - x86_64/r/r-stringr
   - x86_64/r/r-tibble
   - x86_64/r/r-tidyselect
   - x86_64/r/r-vctrs
