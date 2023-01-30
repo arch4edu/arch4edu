@@ -3,8 +3,8 @@
 # Contributor: George Eleftheriou <eleftg>
 
 pkgname=mpich
-pkgver=4.0.3
-pkgrel=2
+pkgver=4.1
+pkgrel=1
 pkgdesc="An improved implementation of the Message Passing Interface."
 url="https://mpich.org"
 arch=(x86_64)
@@ -16,14 +16,15 @@ optdepends=(perl python)
 install="${pkgname}.install"
 source=("https://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
 	"mpich.profile")
-sha256sums=('17406ea90a6ed4ecd5be39c9ddcbfac9343e6ab4f77ac4e8c5ebe4a3e3b6c501'
+sha256sums=('8b1ec63bc44c7caa2afbb457bc5b3cd4a70dbe46baba700123d67c48dc5ab6a0'
             'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284')
 options=('!libtool')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
-  sed -i 's|PTR|void *|' modules/ucx/src/ucs/debug/debug.c
+  # https://github.com/openucx/ucx/pull/8450
+  sed -i -e 's/\<PTR\>/void */' modules/ucx/src/ucs/debug/debug.c
 
   # CFLAGS etc are normally written into the wrapper compilers.  This
   # gives surprising results, e.g. when the user wants to compile their
@@ -45,10 +46,7 @@ build() {
                --without-ze \
                --enable-error-checking=runtime \
                --enable-error-messages=all \
-               --enable-g=meminit \
-               CC=gcc CXX=g++ FC=gfortran \
-               FFLAGS=-fallow-argument-mismatch \
-               FCFLAGS=-fallow-argument-mismatch
+               CC=gcc CXX=g++ FC=gfortran
 
   make
   make mandoc
