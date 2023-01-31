@@ -2,25 +2,25 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r-alabama
+  - x86_64/r/r-alabama
   - x86_64/r/r-cli
   - x86_64/r/r-crayon
-  - x86_64/r-expm
-  - x86_64/r-future
-  - x86_64/r-future.apply
+  - x86_64/r/r-expm
+  - x86_64/r/r-future
+  - x86_64/r/r-future.apply
   - x86_64/r/r-lavaan
   - x86_64/r/r-lifecycle
   - x86_64/r/r-magrittr
-  - x86_64/r-matrixcalc
+  - x86_64/r/r-matrixcalc
   - x86_64/r/r-matrixstats
-  - x86_64/r-polycor
-  - x86_64/r-progressr
+  - x86_64/r/r-polycor
+  - x86_64/r/r-progressr
   - x86_64/r/r-psych
   - x86_64/r/r-purrr
   - x86_64/r/r-rdpack
   - x86_64/r/r-rlang
-  - x86_64/r-symmoments
-  - x86_64/r-truncatednormal
+  - x86_64/r/r-symmoments
+  - x86_64/r/r-truncatednormal
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

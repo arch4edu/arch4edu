@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r-formula.tools
+  - x86_64/r/r-formula.tools
   - x86_64/r/r-mice
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

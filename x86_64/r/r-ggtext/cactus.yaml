@@ -3,7 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-ggplot2
-  - x86_64/r-gridtext
+  - x86_64/r/r-gridtext
   - x86_64/r/r-rlang
   - x86_64/r/r-scales
 build_prefix: extra-x86_64

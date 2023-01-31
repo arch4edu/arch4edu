@@ -9,7 +9,7 @@ depends:
   - x86_64/r/r-ggrepel
   - x86_64/r/r-goftest
   - x86_64/r/r-irr
-  - x86_64/r-jaspbase
+  - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspdescriptives
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-mle.tools

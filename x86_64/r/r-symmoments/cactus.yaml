@@ -3,8 +3,8 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-combinat
-  - x86_64/r-cubature
-  - x86_64/r-multipol
+  - x86_64/r/r-cubature
+  - x86_64/r/r-multipol
   - x86_64/r/r-mvtnorm
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

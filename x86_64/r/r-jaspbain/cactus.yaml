@@ -7,9 +7,9 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-semplot
   - x86_64/r/r-stringr
-  - x86_64/r-jaspbase
+  - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
-  - x86_64/r-jaspsem
+  - x86_64/r/r-jaspsem
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

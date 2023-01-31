@@ -3,9 +3,9 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-digest
-  - x86_64/r-globals
-  - x86_64/r-listenv
-  - x86_64/r-parallelly
+  - x86_64/r/r-globals
+  - x86_64/r/r-listenv
+  - x86_64/r/r-parallelly
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
