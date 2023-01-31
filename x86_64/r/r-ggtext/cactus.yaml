@@ -2,14 +2,10 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-bain
-  - x86_64/r/r-lavaan
   - x86_64/r/r-ggplot2
-  - x86_64/r/r-semplot
-  - x86_64/r/r-stringr
-  - x86_64/r-jaspbase
-  - x86_64/r/r-jaspgraphs
-  - x86_64/r-jaspsem
+  - x86_64/r-gridtext
+  - x86_64/r/r-rlang
+  - x86_64/r/r-scales
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -2,9 +2,10 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r-csem
   - x86_64/r/r-forcats
   - x86_64/r/r-ggplot2
-  - x86_64/r/r-jaspbase
+  - x86_64/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-lavaan
   - x86_64/r/r-reshape2

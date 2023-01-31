@@ -4,10 +4,11 @@ nvchecker:
 depends:
   - x86_64/r/r-dplyr
   - x86_64/r/r-ggplot2
-  - x86_64/r/r-jaspbase
+  - x86_64/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-metabma
   - x86_64/r/r-metafor
+  - x86_64/r-pema
   - x86_64/r/r-psych
   - x86_64/r/r-purrr
   - x86_64/r/r-rstan
