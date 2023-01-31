@@ -1,41 +1,47 @@
-# Maintainer:  Anton Kudelin <kudelin at protonmail dot com>
+# Maintainer:  Anton Kudelin <kudelin at proton dot me>
 # Contributor: Jelle van der Waa <jelle@vdwaa.nl>
 # Contributor: Aaron DeVore <aaron.devore@gmail.com>
 
 _pkgname=selenium
+_suffix=''
 pkgname=python-$_pkgname
-pkgver=4.7.2
+pkgver=4.8.0
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=('any')
 url="https://www.selenium.dev"
 license=('Apache')
-depends=('python-urllib3' 'python-certifi' 'python-debugpy' 'python-inflection'
-         'python-multidict' 'python-importlib-metadata' 'python-trio-websocket'
-         'geckodriver')
+depends=('python-urllib3' 'python-certifi' 'python-debugpy' 'python-multidict'
+         'python-importlib-metadata' 'python-trio-websocket'
+         'python-inflection' 'geckodriver')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest')
-source=("https://github.com/SeleniumHQ/$_pkgname/archive/refs/tags/$_pkgname-$pkgver-python.tar.gz")
-sha256sums=('9a3c2c12688b9d59499848c20ab5a4b97ab8da3df7b128cda886360dbe499fa0')
+source=("https://github.com/SeleniumHQ/${_pkgname}/archive/refs/tags/${_pkgname}-${pkgver}${suffix}.tar.gz")
+sha256sums=('f0bd74b322501f44186b8ce6a214315142c8ae9a354f675416cbe2809307f7cc')
 options=(!makeflags)
 
 prepare() {
-  cd "$srcdir/$_pkgname-$_pkgname-$pkgver-python/py"
+  cd "${srcdir}/${_pkgname}-${_pkgname}-${pkgver}${suffix}/py"
   cp ../rb/lib/$_pkgname/webdriver/atoms/* $_pkgname/webdriver/remote
-  echo '{"frozen":{},"mutable":{}}' > $_pkgname/webdriver/firefox/webdriver_prefs.json
+  echo '{"frozen":{},"mutable":{}}' > \
+    $_pkgname/webdriver/firefox/webdriver_prefs.json
 }
 
 build() {
-  cd "$srcdir/$_pkgname-$_pkgname-$pkgver-python/py"
+  cd "${srcdir}/${_pkgname}-${_pkgname}-${pkgver}${suffix}/py"
   python setup.py build
 }
 
 check() {
-  cd "$srcdir/$_pkgname-$_pkgname-$pkgver-python/py"
+  cd "${srcdir}/${_pkgname}-${_pkgname}-${pkgver}${suffix}/py"
   pytest
 }
 
 package() {
-  cd "$srcdir/$_pkgname-$_pkgname-$pkgver-python/py"
-  python setup.py install --prefix=/usr --root="$pkgdir" -O1 --skip-build
+  cd "${srcdir}/${_pkgname}-${_pkgname}-${pkgver}${suffix}/py"
+  python setup.py install \
+    --prefix=/usr         \
+    --root="$pkgdir"      \
+    --optimize=1          \
+    --skip-build
 }
