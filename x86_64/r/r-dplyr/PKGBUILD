@@ -3,7 +3,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=dplyr
-_cranver=1.0.10
+_cranver=1.1.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,6 +12,7 @@ arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
+    r-cli
     r-generics
     r-glue
     r-lifecycle
@@ -41,13 +42,14 @@ optdepends=(
     r-rmysql
     r-rpostgresql
     r-rsqlite
+    r-stringi
     r-testthat
     r-tidyr
     r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('3ab639f627b4e439052df18f193f0ccab223225a4ae2ff8c18aba4f9807e0f2b'
+sha256sums=('8cb0535e49dd40b3054046735738f1e48507ac9a56b015d16ebcb54593b84ed7'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
