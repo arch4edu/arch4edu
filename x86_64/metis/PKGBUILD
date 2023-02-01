@@ -1,4 +1,5 @@
-# Maintainer: Antonio Rojas <arojas@archlinux.org>
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Antonio Rojas <arojas@archlinux.org>
 # Contributor: jedbrown
 # Contributor: eleftg
 # Contributor: mickele
@@ -6,9 +7,9 @@
 # Contributor: abenson
 
 pkgname=metis
-pkgver=5.1.0.p10
-_pkgver=5.1.0-p10
-pkgrel=2
+pkgver=5.1.0.p11
+_pkgver=5.1.0-p11
+pkgrel=1
 arch=(x86_64)
 pkgdesc="A set of serial programs for partitioning graphs, partitioning finite element meshes, and producing fill reducing orderings for sparse matrices"
 url="http://glaros.dtc.umn.edu/gkhome/metis/metis/overview"
@@ -17,7 +18,7 @@ depends=(glibc)
 makedepends=(cmake)
 options=(docs)
 source=($pkgname-$pkgver.tar.bz2::https://bitbucket.org/petsc/pkg-metis/get/v$_pkgver.tar.bz2)
-sha256sums=('ddcb99746a8795ebb9d9c020acc31b85fe696eb2992c9ee5ac7588074a503a4b')
+sha256sums=('c2d5eb5a731335a2d7168eedcf2b683b990492b5ffceab1eedc2acbb7a422ff0')
 
 prepare() {
   mv petsc-pkg-metis-* $pkgname-$_pkgver
