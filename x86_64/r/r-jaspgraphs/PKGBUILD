@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspGraphs
-_pkgver=0.5.2.17
+_pkgver=0.17.0
 pkgname=r-${_pkgname,,}
-pkgver=0.5.2.17
+pkgver=0.17.0
 pkgrel=1
 pkgdesc="Custom Graphs for JASP"
 arch=('any')
@@ -18,14 +18,13 @@ depends=(r
 'r-viridislite'
 'r-rcolorbrewer'
 )
-makedepends=('git')
 optdepends=('r-testthat')
-source=("git+https://github.com/jasp-stats/${_pkgname}.git")
-sha256sums=('SKIP')
+source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
+sha256sums=('1c6cbd99c7ad370dbd4fcf9c2e52fa48d781c2b6da6557bdea50474229c48562')
 
 
 build() {
-  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
