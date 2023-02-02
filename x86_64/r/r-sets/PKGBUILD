@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=sets
-_pkgver=1.0-21
+_pkgver=1.0-22
 pkgname=r-${_pkgname,,}
-pkgver=1.0.21
-pkgrel=4
+pkgver=1.0.22
+pkgrel=1
 pkgdesc='Sets, Generalized Sets, Customizable Sets and Intervals'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,7 @@ optdepends=(
   r-proxy
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5733f0be59189c058c069583f5c4dc1d772bfad5abbfd16081131414d6002ac0')
+sha256sums=('6fbf9aa6b0113a58e04f803ab35593feabb0fb55d486d54afb59e027008f9ec6')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
