@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=markdown
-_cranver=1.4
+_cranver=1.5
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,7 +12,7 @@ pkgdesc="Render Markdown with 'commonmark'"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL2)
-depends=(r-commonmark r-xfun r-mime)
+depends=(r-commonmark r-xfun)
 optdepends=(
     r-knitr
     r-rmarkdown
@@ -20,7 +20,7 @@ optdepends=(
     r-rcurl
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('e0e3ade62942a38c129de76454a8cc513487cb00967253a7888cc94f6f8e3c7e')
+sha256sums=('001503f95fa59b399c0fc9178b0a4f5ab745f38879d38985c6642e944c2e9816')
 
 build() {
   mkdir -p build
