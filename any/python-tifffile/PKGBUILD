@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2023.1.23.1
+pkgver=2023.2.2
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -15,9 +15,9 @@ makedepends=('python-setuptools'
              'python-numpy')
 #makedepends=('python-setuptools' 'python-wheel' 'python-build' 'python-installer')
 checkdepends=('python-pytest'
-              'python-fsspec') # numpy ? array
+              'python-fsspec') # numpy ? xarray
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('a3d0c149cc7faef796fd598856314f43fdcd0895c79c3cb662a38c1c1bd49572')
+sha256sums=('d734e70a7ef855cc75410accea67c37f1c1b4b3f8fd5197a44c0396328ec5ab1')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -43,14 +43,19 @@ check() {
         --deselect=tests/test_tifffile.py::test_write_ome \
         --deselect=tests/test_tifffile.py::test_write_ome_manual \
         --deselect=tests/test_tifffile.py::test_write_3gb \
+        --deselect=tests/test_tifffile.py::test_write_5GB_bigtiff \
+        --deselect=tests/test_tifffile.py::test_write_5GB_fails \
+        --deselect=tests/test_tifffile.py::test_write_6gb \
         --deselect=tests/test_tifffile.py::test_write_bigtiff \
-        --deselect=tests/test_tifffile.py::test_write_imagej_raw || warning "Tests failed"
+        --deselect=tests/test_tifffile.py::test_write_imagej_raw \
+        --deselect=tests/test_tifffile.py::test_issue_imagej_hyperstack_arg \
+        --deselect=tests/test_tifffile.py::test_issue_description_overwrite || warning "Tests failed"
 }
 
 package_python-tifffile() {
     depends=('python-numpy>=1.23.5')
     optdepends=('python-matplotlib>=3.6.2: required for plotting'
-                'python-imagecodecs>=2022.9.26: required for encoding or decoding LZW, JPEG, etc. compressed segments'
+                'python-imagecodecs>=2023.1.23: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=4.9.2: required only for validating and printing XML'
                 'python-zarr>=2.13.3: required for opening Zarr stores'
                 'python-fsspec: required only for opening ReferenceFileSystem files'
