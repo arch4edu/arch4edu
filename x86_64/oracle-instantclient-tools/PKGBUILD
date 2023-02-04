@@ -6,10 +6,10 @@
 
 _pkgname=instantclient-tools
 pkgname=oracle-${_pkgname}
-pkgver=21.7.0.0.0
+pkgver=21.9.0.0.0
 _pkgver_vendor_suffix=dbru
-_urlver=217000
-_unzippath=instantclient_21_7
+_urlver=219000
+_unzippath=instantclient_21_9
 pkgrel=1
 pkgdesc="Data Pump, SQL*Loader and Workload Replay Client for Oracle Instant Client"
 arch=('x86_64')
@@ -20,8 +20,8 @@ replaces=('instantclient-sqlplus')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('e6156235f35d3c7d4911dfd6a034e49f')
-sha256sums=('cb2a4cddbaa187f6e7f22d8ec4101d22f1e8ae7e7e286b30b2d95559be47e5c2')
+md5sums=('927e6d374e4081fb2e4876f7af5f27a5')
+sha256sums=('e8ad8d8b466aaa9a82ac616b043d3ab3440d8cd103b4d3ebbc343553dee54ca6')
 
 package() {
 	cd "$srcdir/${_unzippath}/"
