@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggalluvial
-_pkgver=0.12.3
+_pkgver=0.12.4
 pkgname=r-${_pkgname,,}
-pkgver=0.12.3
-pkgrel=4
+pkgver=0.12.4
+pkgrel=1
 pkgdesc="Alluvial Plots in 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -34,7 +34,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('032e5959be201df54b19ebe2bc2e3f900a48375cdd0b517594dd8fd75fb26a56')
+sha256sums=('e3ffc55fa2e78d3c4ffd528ef48ad471b3b30a154a8c56d3239465a91f975674')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
