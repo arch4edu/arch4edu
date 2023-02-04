@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _cranname=lpSolve
-_cranver=5.6.17
+_cranver=5.6.18
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -11,7 +11,7 @@ url="https://cran.r-project.org/package=${_cranname}"
 license=(LGPL2.1)
 depends=(lpsolve r)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('f725802bd9dc05c6913daf48f2458441ad4d2996056d0942737886d8b76c9288')
+sha256sums=('751e1926fcd81b852b6c0d5ea7ecd9311ef6fbdbce9143b7872fea79590de712')
 
 prepare() {
   cd "${_cranname}/src"
