@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # This script updates the package version if a new version is available
-
 set -euxo pipefail
 
 # Pull latest changes
@@ -15,7 +14,8 @@ PKG="microsoft-edge-${CHANNEL}"
 VER=$(curl -sSf https://packages.microsoft.com/repos/edge/dists/stable/main/binary-amd64/Packages |
     grep -A6 "Package: ${PKG}" |
     awk '/Version/{print $2}' |
-	cut -d '-' -f1 |
+    cut -d '-' -f1 |
+    sort -rV |
     head -n1)
 
 # Insert latest version into PKGBUILD and update hashes
@@ -32,6 +32,7 @@ fi
 # updpkgsums
 SUM256=$(curl -sSf https://packages.microsoft.com/repos/edge/dists/stable/main/binary-amd64/Packages |
     grep -A15 "Package: ${PKG}" |
+    grep -A14 "Version: ${VER}" |
     awk '/SHA256/{print $2}' |
     head -n1)
 
@@ -53,12 +54,13 @@ if [[ ! -d "$CHROOT" ]]; then
     arch-nspawn $HOME/.local/share/chroot/root pacman -Syu
 fi
 
-# Update .SRCINFO
-makechrootpkg -c -r $CHROOT -- --printsrcinfo >.SRCINFO
-
 # Start generate package
 makechrootpkg -c -r $CHROOT -- -Acsf .
+
+# Update .SRCINFO
+makepkg --printsrcinfo >.SRCINFO
 
 # Commit changes
 git add PKGBUILD .SRCINFO
 git commit -s -m "Update ${PKG} to v${VER}"
+rm -rf *.deb *.log *.zst
