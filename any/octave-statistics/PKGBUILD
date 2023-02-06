@@ -9,7 +9,7 @@
 
 _pack=statistics
 pkgname=octave-$_pack
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="Additional statistics functions for Octave."
 arch=(any)
@@ -24,7 +24,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("$_pack-$pkgver.tar.gz::https://github.com/gnu-octave/statistics/archive/refs/tags/release-$pkgver.tar.gz")
 noextract=("$_archive")
-sha256sums=('26d5f047b6df15c46eeb3443d601981b4e93c6672ee36c360beccc5c48857ff5')
+sha256sums=('f0081d7872ea2eaeafef00a162c78e03e62eb16e98063bc45f8454e4e949c61b')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
