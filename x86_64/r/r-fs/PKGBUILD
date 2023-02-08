@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=fs
-_cranver=1.6.0
+_cranver=1.6.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -26,7 +26,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('9bec6e6177c845b0c012e30a3527fe0a7fcaef68539c64d65997b611ce15f6e6'
+sha256sums=('faf1e421a2c270c60c0a30c74e1a48faad45b339163716102d77d64d23d76732'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 prepare() {
