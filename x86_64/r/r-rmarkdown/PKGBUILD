@@ -9,13 +9,13 @@ _cranname=rmarkdown
 _cranver=2.20
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Dynamic Documents for R"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL3)
 depends=(
-    pandoc
+    pandoc-cli
     r-bslib
     r-evaluate
     r-htmltools
