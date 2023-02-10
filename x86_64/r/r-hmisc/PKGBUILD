@@ -4,7 +4,7 @@ _pkgname=Hmisc
 _pkgver=4.8-0
 pkgname=r-${_pkgname,,}
 pkgver=4.8.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Harrell Miscellaneous'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -12,6 +12,7 @@ license=('GPL')
 depends=(
   r
   r-base64enc
+  r-colorspace
   r-data.table
   r-formula
   r-ggplot2
