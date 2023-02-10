@@ -4,7 +4,7 @@ _pkgname=pbapply
 _pkgver=1.7-0
 pkgname=r-${_pkgname,,}
 pkgver=1.7.0
-pkgrel=1
+pkgrel=3
 pkgdesc="Adding Progress Bar to '*apply' Functions"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,6 +13,8 @@ depends=(
   r
 )
 optdepends=(
+  r-future
+  r-future.apply
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
