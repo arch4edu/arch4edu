@@ -4,7 +4,7 @@ _pkgname=officer
 _pkgver=0.5.2
 pkgname=r-${_pkgname,,}
 pkgver=0.5.2
-pkgrel=1
+pkgrel=3
 pkgdesc='Manipulation of Microsoft Word and PowerPoint Documents'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,6 +23,7 @@ optdepends=(
   r-doconv
   r-ggplot2
   r-knitr
+  r-magick
   r-rmarkdown
   r-rsvg
   r-testthat
