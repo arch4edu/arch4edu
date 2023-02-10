@@ -4,7 +4,7 @@ _pkgname=vcdExtra
 _pkgver=0.8-2
 pkgname=r-${_pkgname,,}
 pkgver=0.8.2
-pkgrel=1
+pkgrel=3
 pkgdesc="'vcd' Extensions and Additions"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -31,6 +31,7 @@ optdepends=(
   r-plyr
   r-rgl
   r-rmarkdown
+  r-seriation
   r-sleuth2
   r-stats4
   r-vgam
