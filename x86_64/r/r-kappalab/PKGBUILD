@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=kappalab
-_pkgver=0.4-8
+_pkgver=0.4-10
 pkgname=r-${_pkgname,,}
-pkgver=0.4.8
+pkgver=0.4.10
 pkgrel=1
 pkgdesc='Non-Additive Measure and Integral Manipulation Functions'
 arch=('x86_64')
@@ -16,7 +16,7 @@ depends=(
   r-kernlab
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9960b581bce0d48ce8124bf4ce62cb09790e95d9b92c0e4392c91110991d79f9')
+sha256sums=('e95d98ace59b0bc0b9f0f8beb52ed60264f62c25a637bdc10f6f57f9d474dd93')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
