@@ -4,7 +4,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _cranname=ggplot2
-_cranver=3.4.0
+_cranver=3.4.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -61,7 +61,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('a82f9e52f974389439765f71a8206ec26e3be30a8864d2c784d5ea8abcb0473e'
+sha256sums=('041bc333f90d6026702c8bd5140a1c8ddd270b15742badf8ca5c53f0e02c6d84'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
