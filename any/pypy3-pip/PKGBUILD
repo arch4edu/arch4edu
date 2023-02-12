@@ -1,29 +1,35 @@
-# Maintainer: dustball
-
-pkgname=pypy3-pip
-pkgver=20.0.2
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: dustball <sebastiansonne@hush.com>
+# Adapted from the package python-pip with the following original contributors:
+# Contributor: David Runge <dvzrv@archlinux.org>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
+# Contributor: Dan McGee <dan@archlinux.org>
+# Contributor: Eli Schwartz <eschwartz@archlinux.org>
+# Contributor: Sebastien Binet <binet@lblbox>
+_base=pip
+pkgname=pypy3-${_base}
+pkgver=23.0
 pkgrel=1
-pkgdesc="An easy_install replacement for installing pypi python packages"
-url="https://pip.pypa.io/"
-arch=('any')
-license=('MIT')
-depends=('pypy3' 'pypy3-setuptools')
-source=(https://files.pythonhosted.org/packages/8e/76/66066b7bc71817238924c7e4b448abdb17eb0c92d645769c223f9ace478f/pip-20.0.2.tar.gz)
+pkgdesc="The PyPA recommended tool for installing Python packages"
+url="https://pip.pypa.io"
+arch=(any)
+license=(MIT)
+depends=(pypy3 pypy3-setuptools)
+source=(https://github.com/pypa/${_base}/archive/${pkgver}/${_base}-${pkgver}.tar.gz)
+sha512sums=('9b791ed15b4e5dd768351043929dc6ee18eeab251a26fb2b0d712dec578101f1620a13d5914d44f2761ecb95e64bc47e6b07096126404ca70345268028524d43')
+b2sums=('693623292e498ec939ce931063bccc8079fc313a0a9f30d406a99a2084fcd84b5b5a17566602c53bb96090920bc2d0615f28b8f9c165022c2b0de62fa9355b21')
 
-package_pypy3-pip() {
-
-  cd "$srcdir/pip-$pkgver"
+build() {
+  cd ${_base}-${pkgver}
   pypy3 setup.py build
-  pypy3 setup.py install --prefix=/opt/pypy3/ --root="$pkgdir"
-
-  mkdir -p "$pkgdir/usr/bin/"
-  mv "$pkgdir/opt/pypy3/bin/pip" "$pkgdir/usr/bin/pip-pypy3"
-  sed -i "s|#!/usr/bin/env python$|#!/usr/bin/env pypy3|" \
-    ${pkgdir}/opt/pypy3/lib/pypy3.8/site-packages/pip/__init__.py
-
-  install -D -m644 LICENSE.txt \
-	  "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
-md5sums=('7d42ba49b809604f0df3d55df1c3fd86')
-sha256sums=('7db0c8ea4c7ea51c8049640e8e6e7fde949de672bfa4949920675563a5a6967f')
+package() {
+  cd ${_base}-${pkgver}
+  pypy3 setup.py install --prefix=/opt/pypy3/ --root="${pkgdir}"
+
+  mkdir -p "${pkgdir}/usr/bin/"
+  mv "${pkgdir}/opt/pypy3/bin/pip" "${pkgdir}/usr/bin/pip-pypy3"
+
+  install -Dm 644 LICENSE.txt -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}
