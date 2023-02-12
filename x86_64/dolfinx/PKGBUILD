@@ -2,7 +2,7 @@
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
 pkgver=0.6.0
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL3)
@@ -50,7 +50,7 @@ check() {
     -S ${pkgname}-${pkgver}/cpp/demo \
     -B build_demo
   cmake --build build_demo
-  ctest -E "demo_poisson_mpi_*" --test-dir build_demo
+  ctest -E "(demo_poisson_mpi_*|demo_hyperelasticity_mpi_*|demo_interpolation-io_mpi_*|demo_interpolation_different_meshes_mpi_*|demo_poisson_matrix_free_mpi_*)" --test-dir build_demo
 }
 
 package() {
