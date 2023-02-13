@@ -2,12 +2,12 @@
 # Contributor: Samuel Williams <samuel.williams@oriontransfer.co.nz>
 pkgname=scotch
 pkgver=7.0.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering. This is the all-inclusive version (MPI/serial/esmumps)."
 url="https//gitlab.inria.fr/scotch/scotch"
 license=("custom:CeCILL-C")
 depends=('zlib' 'openmpi' 'bzip2')
-makedepends=('gcc-fortran' 'cmake')
+makedepends=('gcc-fortran' 'cmake' 'flex' 'bison')
 provides=('ptscotch' 'ptscotch-openmpi' 'scotch_esmumps' 'scotch_ptesmumps')
 conflicts=('ptscotch-openmpi' 'scotch_esmumps' 'scotch_esmumps5')
 arch=('i686' 'x86_64')
@@ -33,7 +33,7 @@ build() {
 }
 
 check() {
-  if [ -z $(ldconfig -p | grep libcuda.so.1) ]; then
+  if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
     export _libcuda=0
   fi
   cmake --build build --parallel --target test
