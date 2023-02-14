@@ -2,10 +2,10 @@
 pkgname=python-trio-websocket
 _pkgname=${pkgname:7}
 pkgver=0.9.2
-pkgrel=2
+pkgrel=3
 pkgdesc="WebSocket library for Trio"
 arch=('any')
-url="https://pypi.org/project/${pkgname}"
+url="https://pypi.org/project/${_pkgname}"
 license=(MIT)
 makedepends=(python-build python-installer python-wheel python-setuptools)
 depends=(python python-async_generator python-trio python-wsproto)
