@@ -1,7 +1,7 @@
 # Maintainer: Torsten Keßler <tpkessler at archlinux dot org>
 pkgname=rocm-gdb
 pkgver=5.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc='ROCm source-level debugger for Linux, based on GDB'
 arch=('x86_64')
 url='https://github.com/ROCm-Developer-Tools/ROCgdb'
