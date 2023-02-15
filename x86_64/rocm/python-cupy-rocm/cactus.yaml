@@ -3,15 +3,9 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/rocm/rocm-hip-sdk
   - x86_64/python-fastrlock
-makedepends:
-  - x86_64/rocm/rocsparse
-  - x86_64/rocm/rocthrust
-  - x86_64/rocm/roctracer
-  - x86_64/rocm/hipcub
 group: x86_64
-build_prefix: testing-x86_64
+build_prefix: extra-x86_64
 makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build

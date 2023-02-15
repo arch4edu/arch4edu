@@ -3,7 +3,6 @@ nvchecker:
     aur:
 depends:
   - x86_64/blaze
-  - x86_64/rocm/miopen-hip
-build_prefix: testing-x86_64
+build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
