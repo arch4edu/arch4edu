@@ -2,7 +2,7 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-output
 _name=${pkgname:7}
-pkgver=0.2.12
+pkgver=0.2.13
 pkgrel=1
 pkgdesc="An extension for colcon-core to customize the output in various ways."
 arch=(any)
@@ -11,7 +11,7 @@ license=('Apache')
 depends=('python-colcon-core')
 makedepends=('python-setuptools')
 source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('a211e9f1f70edb1567c0747532ad222e47799cef25cb863e4a43af4660798b30')
+sha256sums=('44d2d349ebdb61688b41e00d565ea1a199e8fc5c2c77af279cfaac74dc01c04d')
 
 
 package() {
