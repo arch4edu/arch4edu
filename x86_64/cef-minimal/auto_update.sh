@@ -15,14 +15,15 @@ replace_line() {
 update_version() {
   local arch=$1;
 
-  stable=$(echo $versions | jq ".$arch.versions | .[1]");
-
+  stable=$(echo $versions | jq ".$arch.versions | map(select(.channel == \"stable\" )) | .[0]");
   # versions
   version_arr=$(echo $stable | jq '.cef_version | split("+")');
 
   version=$(stripQuotes $(echo $version_arr | jq '.[0]'));
   build_hash=$(stripQuotes $(echo $version_arr | jq '.[1]'));
   chromium_version=$(stripQuotes $(echo $version_arr | jq '.[2] | split("-") | .[1]'));
+
+  echo $version
 
   minimal=$(echo $stable | jq '.files | map(select(.type == "minimal" )) | .[0]');
 
@@ -55,11 +56,12 @@ update_version() {
 echo "UPDATING "
 git pull > /dev/null
 
+echo "- Patching i686..."
+update_version linux32
+
 echo "- Patching x86_64..."
 update_version linux64
 
-echo "- Patching i686..."
-update_version linux32
 
 echo $version
 echo "- Rebuilding(makepkg)..."
