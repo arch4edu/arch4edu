@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBsts
-_pkgver=0.17.0
+_pkgver=0.17.1
 pkgname=r-${_pkgname,,}
-pkgver=0.17.0
+pkgver=0.17.1
 pkgrel=1
 pkgdesc="Bsts Module for JASP"
 arch=('any')
@@ -17,14 +17,13 @@ depends=(r
   r-matrixstats
   r-reshape2
 )
-makedepends=('git')
 optdepends=(r-testthat)
-source=("git+https://github.com/jasp-stats/${_pkgname}.git")
-sha256sums=('SKIP')
+source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
+sha256sums=('4c21a2ec3cb29d475103e2ee4f29e560f0326b7a9ea3786f81b4a44868c3d986')
 
 
 build() {
-  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
