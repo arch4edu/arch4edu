@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspJags
-_pkgver=0.17.0
+_pkgver=0.17.1
 pkgname=r-${_pkgname,,}
-pkgver=0.17.0
+pkgver=0.17.1
 pkgrel=1
 pkgdesc="JAGS Module for JASP"
 arch=('any')
@@ -11,20 +11,20 @@ license=('GPL')
 depends=(r
   r-coda
   r-ggplot2
+  r-ggtext
   r-hexbin
   r-jaspbase
   r-jaspgraphs
   r-rjags
   r-stringr
 )
-makedepends=('git')
 optdepends=()
-source=("git+https://github.com/jasp-stats/${_pkgname}.git#commit=2890de0b60")
-sha256sums=('SKIP')
+source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
+sha256sums=('29fb2b2badf76fb9a36eb151320d5afa22f8b6ab74614635f56d480ff3f11037')
 
 
 build() {
-  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
