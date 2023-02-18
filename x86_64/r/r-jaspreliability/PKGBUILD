@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspReliability
-_pkgver=0.17.0
+_pkgver=0.17.1
 pkgname=r-${_pkgname,,}
-pkgver=0.17.0
-pkgrel=3
+pkgver=0.17.1
+pkgrel=1
 pkgdesc="Reliability Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -21,14 +21,13 @@ depends=(r
   r-lme4
   r-irr
 )
-makedepends=('git')
 optdepends=()
-source=("git+https://github.com/jasp-stats/${_pkgname}.git#commit=665be1aa16")
-sha256sums=('SKIP')
+source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
+sha256sums=('aad7d9ca3b8bab3f6beebec9782785867cd956c5a448f54f1581327aba1d7c61')
 
 
 build() {
-  tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
+
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
