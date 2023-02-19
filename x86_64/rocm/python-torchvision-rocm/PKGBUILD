@@ -1,71 +1,130 @@
 # Maintainer: wuxxin <wuxxin@gmail.com>
 # Based on python-torchvision; original contributors:
+# Contributor: Konstantin Gizdov <arch at kge dot pw>
 # Contributor: Butui Hu <hot123tea123@gmail.com>
 # Contributor: Chih-Hsuan Yen <yan12125@archlinux.org>
 # Contributor: Jean Lucas <jean@4ray.co>
 # Based on python-torchvision-git; original contributors:
 # Contributor: Stephen Zhang <zsrkmyn at gmail dot com>
 
-pkgname=python-torchvision-rocm
 _pkgname='vision'
-pkgver=0.13.1
+pkgbase='python-torchvision-rocm'
+pkgname=('torchvision-rocm' 'python-torchvision-rocm')
+pkgver=0.14.1
 pkgrel=2
-pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM GPU support)'
+pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
 license=('BSD')
 depends=(
-  ffmpeg4.4
   python-numpy
   python-pillow
-  python-pytorch-rocm
   python-requests
   python-scipy
   python-typing_extensions
+  python-pytorch-rocm
+  ffmpeg4.4
+  libjpeg-turbo
+  libpng
 )
 optdepends=(
-  'libjpeg-turbo: support for JPEG image codec'
-  'libpng: support for PNG format graphics files'
   'python-pycocotools: support for MS-COCO dataset'
 )
 makedepends=(
-  miopen
+  cmake
+  ninja
+  rocm-hip-sdk
   python-setuptools
   qt5-base
-  rocm-hip-sdk
+  miopen-hip
 )
-conflicts=(python-torchvision)
-provides=(python-torchvision)
 source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
-  'force_disable_nvjpeg.patch'
 )
 sha512sums=(
-  '219e787cd04632f480120d6ff74d092f6804beb9543dbc9fc9be6cc0dd0c7271bb91508a2183c11f2faf6365e73ed16c2501dc6f6e7cb49f61deb6ce44476e70'
-  'SKIP'
+  '08fb1e35da1c3f1d0446ef879d9b6a7ae839a5137c3b5b46ef8111c2ae890299e2b555d1bd3b3d61f96b8778b831d8f895487cf8a4e36e371fcd4b8acda67d1f'
 )
-
-get_pyver() {
-  python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'
-}
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
-  # workaround wrong nvjpeg detection
-  patch -Np1 -i "${srcdir}/force_disable_nvjpeg.patch"
+
+  # fix building with ffmpeg4.4 by manually setup include and lib dir
+  # and remove other codes to find ffmpeg exe, as ffmpeg4.4 are only headers and libs without ffmpeg cmd
+  sed -e 's#ffmpeg_include_dir = os.path.join(ffmpeg_root, "include")#ffmpeg_include_dir = "/usr/include/ffmpeg4.4"#' \
+    -e 's#ffmpeg_library_dir = os.path.join(ffmpeg_root, "lib")#ffmpeg_library_dir = "/usr/lib/ffmpeg4.4"#' \
+    -e 's#has_ffmpeg = ffmpeg_exe is not None#has_ffmpeg = True#' \
+    -e '/ffmpeg_exe/d' \
+    -e '/ffmpeg_bin/d' \
+    -e '/ffmpeg_root/d' \
+    -i setup.py
 }
 
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
-  FORCE_CUDA=1 TORCHVISION_USE_NVJPEG=0 TORCHVISION_USE_VIDEO_CODEC=0 \
-    CC=gcc CXX=g++ \
+  if test -e build; then rm -rf build; fi
+  mkdir build
+  cd build
+
+  # populate build architecture list if not set with defaults taken from
+  # arch:community:python-pytorch-rocm@1.13.1
+  if test -n "$PYTORCH_ROCM_ARCH"; then
+    export PYTORCH_ROCM_ARCH="$PYTORCH_ROCM_ARCH"
+  else
+    export PYTORCH_ROCM_ARCH="gfx900;gfx906;gfx908;gfx90a;gfx1030"
+  fi
+
+  cmake "../" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_CXX_FLAGS="${CXXFLAGS} -O3" \
+    -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS}" \
+    -DWITH_PNG=ON \
+    -DWITH_JPEG=ON
+  make
+
+  # fix bin/hipcc not found, because ROCM_HOME is lost
+  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  FORCE_CUDA=1 \
+    ROCM_HOME=/opt/rocm/ \
+    TORCHVISION_INCLUDE=${srcdir} \
+    TORCHVISION_LIBRARY=/usr/lib \
+    TORCHVISION_USE_NVJPEG=0 \
+    TORCHVISION_USE_VIDEO_CODEC=0 \
+    TORCHVISION_USE_FFMPEG=1 \
     python setup.py build
 }
 
-package() {
+check() {
+  local python_version=$(python -c 'import sys; print("".join(map(str, sys.version_info[:2])))')
+  # check if VideoReader is build
+  # VideoReader depends on ffmpeg
   cd "${srcdir}/${_pkgname}-${pkgver}"
-  FORCE_CUDA=1 TORCHVISION_USE_NVJPEG=0 TORCHVISION_USE_VIDEO_CODEC=0 \
-    CC=gcc CXX=g++ \
+  PYTHONPATH="${PWD}/build/lib.linux-${CARCH}-cpython-${python_version}" \
+    python -c "from torchvision.io import VideoReader"
+}
+
+package_torchvision-rocm() {
+  pkgdesc='Datasets, transforms, and models specific to computer vision (C++ library only, with ROCM support)'
+  provides+=(torchvision)
+  conflicts+=(torchvision)
+
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  make -C build install DESTDIR="$pkgdir"
+  install -m644 -Dt "$pkgdir/usr/share/licenses/$pkgname" LICENSE
+}
+
+package_python-torchvision-rocm() {
+  pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
+  provides+=(python-torchvision)
+  conflicts+=(python-torchvision)
+
+  cd "${srcdir}/${_pkgname}-${pkgver}"
+  # fix bin/hipcc not found, because ROCM_HOME is lost
+  FORCE_CUDA=1 \
+    ROCM_HOME=/opt/rocm/ \
+    TORCHVISION_INCLUDE=${srcdir} \
+    TORCHVISION_LIBRARY=/usr/lib \
     python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
