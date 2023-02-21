@@ -5,7 +5,7 @@ _pkgname=igraph
 _pkgver=1.4.0
 pkgname=r-${_pkgname,,}
 pkgver=1.4.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Network Analysis and Visualization'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,11 +24,14 @@ optdepends=(
   r-digest
   r-graph
   r-igraphdata
+  r-knitr
   r-rgl
+  r-rmarkdown
   r-scales
   r-stats4
   r-tcltk
   r-testthat
+  r-vdiffr
   r-withr
 )
 makedepends=(
