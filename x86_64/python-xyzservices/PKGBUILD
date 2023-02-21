@@ -3,7 +3,7 @@
 
 pkgname=python-xyzservices
 _name=xyzservices
-pkgver=2022.9.0
+pkgver=2023.2.0
 pkgrel=1
 pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles'
 arch=('x86_64')
@@ -17,7 +17,7 @@ makedepends=(
   'python-installer'
 )
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-b2sums=('8d574bcd89cc06d227ca148daad2266c72102e73a9fe2e27569d2ba0c0e3fdd5d578597d429b890ac059293fee542dc67b49876d8d7d3822b064d5a02421d7f0')
+b2sums=('3f9e2a97b9bccad6be9ec723a2a035da68078b745ef1fe0a1630961ec82975bcd60be0803414340b78f4e4080dbd232d2b162c7f202fb3a620d27272b0228812')
 
 build() {
   cd "$_name-$pkgver"
