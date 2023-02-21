@@ -6,7 +6,7 @@ _pkgname=multcomp
 _pkgver=1.4-22
 pkgname=r-${_pkgname,,}
 pkgver=1.4.22
-pkgrel=1
+pkgrel=3
 pkgdesc='Simultaneous Inference in General Parametric Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -22,6 +22,7 @@ optdepends=(
   r-coxme
   r-fixest
   r-foreign
+  r-glmmtmb
   r-iswr
   r-lme4
   r-lmtest
