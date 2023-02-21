@@ -6,7 +6,7 @@ _pkgname=xts
 _pkgver=0.13.0
 pkgname=r-${_pkgname,,}
 pkgver=0.13.0
-pkgrel=1
+pkgrel=3
 pkgdesc='eXtensible Time Series'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -17,9 +17,9 @@ depends=(
 )
 optdepends=(
   r-chron
-  r-runit
   r-timedate
   r-timeseries
+  r-tinytest
   r-tis
   r-tseries
 )
