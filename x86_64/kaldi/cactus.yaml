@@ -1,6 +1,8 @@
 nvchecker:
   - source: aur
     aur:
+  - source: github
+    github: kaldi-asr/kaldi
 depends:
   - x86_64/kaldi-openfst
 build_prefix: extra-x86_64
