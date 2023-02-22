@@ -11,7 +11,7 @@ _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
 pkgver=0.14.1
-pkgrel=2
+pkgrel=3
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -70,7 +70,7 @@ build() {
   if test -n "$PYTORCH_ROCM_ARCH"; then
     export PYTORCH_ROCM_ARCH="$PYTORCH_ROCM_ARCH"
   else
-    export PYTORCH_ROCM_ARCH="gfx900;gfx906;gfx908;gfx90a;gfx1030"
+    export PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030"
   fi
 
   cmake "../" \
