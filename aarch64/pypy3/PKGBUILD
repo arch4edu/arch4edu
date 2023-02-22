@@ -3,7 +3,7 @@
 pkgname=pypy3
 _pyversion=3.9
 pkgver=7.3.11
-pkgrel=2
+pkgrel=3
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64')
@@ -42,7 +42,8 @@ package() {
 
   # Install symlinks
   ln -s /opt/pypy3/bin/pypy3 "${pkgdir}"/usr/bin/pypy3
-  ln -s /opt/pypy3/bin/libpypy${_pyversion}-c.so "${pkgdir}"/usr/lib/libpypy3-c.so
+  ln -s /opt/pypy3/bin/pypy${_pyversion} "${pkgdir}"/usr/bin/pypy${_pyversion}
+  ln -s /opt/pypy3/bin/libpypy${_pyversion}-c.so "${pkgdir}"/usr/lib/libpypy${_pyversion}-c.so
 
   # Install misc stuff
   install -Dm644 README.rst "${pkgdir}"/opt/pypy3/README.rst
