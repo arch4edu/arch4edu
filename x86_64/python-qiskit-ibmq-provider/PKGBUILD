@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-ibmq-provider
 pkgname=python-${_pkgname}
-pkgver=0.19.2
+pkgver=0.20.1
 pkgrel=1
 pkgdesc="Module for accessing the quantum devices and simulators at IBMQ"
 arch=('any')
@@ -24,7 +24,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('026ee74fffd6a1de02f90ea9d602de397f2aa8ca70abbe869f09d596a43c91d37b5a2ffce18879167258d0a4b0d5e129cd560ced2f63c5a684b51fce589417e6')
+b2sums=('24c362bd21584a5143c7662716bc407507fcae33ac14af040e75b57c6bcb384413f674cea1a64a3dd095c2ba08ae859c94b6a7f73d4b2fc489515cf885f585f1')
 install="${pkgname}.install"
 
 build() {
