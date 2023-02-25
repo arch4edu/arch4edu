@@ -3,37 +3,28 @@
 # Contributor: Ben Duffield <bavardage AT archlinux.us>
 
 pkgname=pocketsphinx
-pkgver=5prealpha
-pkgrel=13
-pkgdesc='Lightweight speech recognition engine'
+pkgver=5.0.0
+pkgrel=1
+pkgdesc='A small speech recognizer'
 arch=('i686' 'x86_64')
-url='http://cmusphinx.sourceforge.net'
-license=('BSD')
-makedepends=('swig' 'python')
-depends=('sphinxbase=5prealpha' 'gst-plugins-base-libs')
-source=("https://downloads.sourceforge.net/cmusphinx/$pkgname-$pkgver.tar.gz")
-sha256sums=('ef5bb5547e2712bdf571f256490ef42a47962033892efd9d7df8eed7fe573ed9')
-options=('!libtool')
-
-prepare() {
-  cd "$pkgname-$pkgver"
-
-  echo "Reconfiguring project for current version of Automake"
-  autoreconf -ivf > /dev/null
-}
+url='https://cmusphinx.github.io'
+license=('custom')
+makedepends=('cmake' 'ninja' 'gst-plugins-base-libs')
+optdepends=('gst-plugins-base-libs: GStreamer plugin')
+source=("https://github.com/cmusphinx/pocketsphinx/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('78ffe5b60b6981b08667435dd26c5a179b612b8ca372bd9c23c896a8b2239a20')
 
 build() {
   cd "$pkgname-$pkgver"
 
-  export PYTHON=/usr/bin/python PYTHONWARNINGS=ignore
-  ./configure --prefix=/usr
-  make
+  cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DBUILD_GSTREAMER=ON
+  cmake --build build
 }
 
 package() {
   cd "$pkgname-$pkgver"
 
-  make DESTDIR="$pkgdir" install
+  DESTDIR=${pkgdir} cmake --build build --target install
 
   install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
   install -D -m644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
