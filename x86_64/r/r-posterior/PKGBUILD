@@ -4,7 +4,7 @@ _pkgname=posterior
 _pkgver=1.4.0
 pkgname=r-${_pkgname,,}
 pkgver=1.4.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Tools for Working with Posterior Distributions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,6 +26,7 @@ optdepends=(
   r-dplyr
   r-e1071
   r-gbm
+  r-ggplot2
   r-knitr
   r-randomforest
   r-rmarkdown
