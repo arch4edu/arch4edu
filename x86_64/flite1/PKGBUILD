@@ -4,7 +4,7 @@
 
 pkgname=flite1
 pkgver=1.4
-pkgrel=4
+pkgrel=5
 pkgdesc='A lighweight speech synthesis engine (version 1.x)'
 arch=('x86_64')
 url='http://www.speech.cs.cmu.edu/flite/'
@@ -54,7 +54,7 @@ build() {
         --enable-shared \
         --disable-static \
         --with-vox='cmu_us_kal16'
-    make
+    make -j1
     make -C doc flite.pdf
 }
 
