@@ -2,7 +2,7 @@
 # Co-Maintainer: Bert Peters <bert@bertptrs.nl>
 
 pkgname=python-plotly
-pkgver=5.13.0
+pkgver=5.13.1
 pkgrel=1
 pkgdesc="An open-source, interactive graphing library"
 arch=('x86_64')
@@ -39,7 +39,7 @@ python-pytest
 )
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/plotly/plotly.py/archive/v${pkgver}.tar.gz")
 options=(!strip) # strip isn't useful for python files and takes forever
-sha256sums=('53fb583f82b72bdd4e8feb9919cb440f6c92fe644c4d9253f93d1a3ab8a8ce91')
+sha256sums=('794b876446b545584601a8d98f47fa61286ebc32036f4be072b9961d8b7b95ac')
 
 build() {
   cd plotly.py-${pkgver}/packages/python/plotly
