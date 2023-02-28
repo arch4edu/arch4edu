@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2023.2.3
+pkgver=2023.2.27
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -17,7 +17,7 @@ makedepends=('python-setuptools'
 checkdepends=('python-pytest'
               'python-fsspec') # numpy ? xarray
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('458df5ad9a5217f668edd636dc19fbc736062bf78aac823ab84cdbae9de8eaa6')
+sha256sums=('dac6e0ceda765657d4ec71491664b8e9329c0da0d15768c3fad8d19baa5aa79b')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -54,10 +54,10 @@ check() {
 
 package_python-tifffile() {
     depends=('python-numpy>=1.23.5')
-    optdepends=('python-matplotlib>=3.6.2: required for plotting'
+    optdepends=('python-matplotlib>=3.6.3: required for plotting'
                 'python-imagecodecs>=2023.1.23: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=4.9.2: required only for validating and printing XML'
-                'python-zarr>=2.13.3: required for opening Zarr stores'
+                'python-zarr>=2.13.6: required for opening Zarr stores'
                 'python-fsspec: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
