@@ -2,7 +2,7 @@
 
 pkgname=opengv-git
 pkgver=r146.91f4b19
-pkgrel=1
+pkgrel=2
 pkgdesc="An efficient C++ library for calibrated camera pose computation using geometric computer vision algorithms."
 arch=('i686' 'x86_64')
 url="https://laurentkneip.github.io/opengv/"
