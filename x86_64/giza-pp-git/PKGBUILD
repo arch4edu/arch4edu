@@ -2,7 +2,7 @@
 _pkgname=giza-pp
 pkgname=giza-pp-git
 pkgver=r28.dad2fd4
-pkgrel=1
+pkgrel=2
 pkgdesc='A statistical machine translation toolkit used to train word alignment models'
 arch=('i686' 'x86_64')
 url='https://github.com/moses-smt/giza-pp'
