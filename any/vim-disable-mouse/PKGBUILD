@@ -2,7 +2,7 @@
 
 pkgname=vim-disable-mouse
 pkgver=r2.e2aebbc
-pkgrel=1
+pkgrel=2
 pkgdesc='Disable mouse in Vim'
 url="https://github.com/petronny/${pkgname}"
 arch=('any')
