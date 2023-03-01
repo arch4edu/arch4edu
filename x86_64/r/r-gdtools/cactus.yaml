@@ -2,6 +2,8 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-curl
+  - x86_64/r/r-fontquiver
   - x86_64/r/r-gfonts
   - x86_64/r/r-htmltools
   - x86_64/r/r-memoise
