@@ -24,10 +24,12 @@ depends:
   - x86_64/ros2/python-colcon-ros
   - x86_64/ros2/python-colcon-test-result
   - x86_64/ros2/python-colcon-zsh
+  - x86_64/ros2/python-pyqt5-sip4
   - x86_64/ros2/python-rosdep
   - x86_64/ros2/python-rosdistro
   - x86_64/ros2/python-rospkg
   - x86_64/ros2/python-vcstool
+  - x86_64/sip4
   - x86_64/sip4: python-sip4
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
