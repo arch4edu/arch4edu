@@ -5,9 +5,9 @@
 # Contributor: portaloffreedom
 
 _pkgname=gdtools
-_pkgver=0.3.0
+_pkgver=0.3.1
 pkgname=r-${_pkgname,,}
-pkgver=0.3.0
+pkgver=0.3.1
 pkgrel=1
 pkgdesc='Utilities for Graphical Rendering'
 arch=('x86_64')
@@ -18,6 +18,8 @@ depends=(
   fontconfig
   freetype2
   r
+  r-curl
+  r-fontquiver
   r-gfonts
   r-htmltools
   r-memoise
@@ -25,12 +27,10 @@ depends=(
   r-systemfonts
 )
 optdepends=(
-  r-curl
-  r-fontquiver
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('548662b38d641acb5c7d1f1f723bcad907ffa3620175ecf7ad7dc7f6b6fa7ed2')
+sha256sums=('fba6166bdefe742d94f33d8904bf2d66432b063cf426d28b3bef22bcd3cc6698')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
