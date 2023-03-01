@@ -1,9 +1,9 @@
-# Maintainer: Tobias Borgert <tobias.borgert@gmail.com>
+# Maintainer: leuko <aur_202302 at aydos.de>
+# Contributor: Tobias Borgert <tobias.borgert@gmail.com>
 # Contributor: kartikmohta
-# Contributor: leuko
 # Contributor: calvertdw
 pkgname=ros2-arch-deps
-pkgver=0.11
+pkgver=0.12
 pkgrel=1
 pkgdesc="Dependencies for building ROS2 on Arch"
 url="https://index.ros.org/doc/ros2/"
@@ -38,7 +38,6 @@ depends=('asio'
          'python-yaml'
          'qt5-base' 
          'qt5-svg'
-         'sip' 
          'tinyxml'
          'tinyxml2'
          'vtk'
@@ -67,9 +66,12 @@ depends=('asio'
          'python-colcon-test-result'
          'python-colcon-zsh'         
          'python-colcon-common-extensions'
+         'python-pyqt5-sip4'
          'python-rospkg'
          'python-rosdistro'
-         'python-rosdep')
+         'python-rosdep'
+		 'sip4'
+ )
 optdepends=('python-pydot: running the node graph in rqt'
             'python-pyqtgraph: for plotting in rqt'
             'python-matplotlib: for plotting in rqt')
