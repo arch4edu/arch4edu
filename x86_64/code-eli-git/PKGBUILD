@@ -3,7 +3,7 @@
 
 pkgname=code-eli-git
 pkgver=r955.ee42985
-pkgrel=1
+pkgrel=2
 pkgdesc='Collection of C++ libraries that provide a variety of functionalities.'
 arch=('i686' 'x86_64')
 url='https://github.com/ramcdona/Code-Eli'
