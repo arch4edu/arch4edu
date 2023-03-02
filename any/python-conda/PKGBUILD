@@ -3,18 +3,19 @@
 
 pkgname=python-conda
 _name=${pkgname#python-}
-pkgver=4.14.0
+pkgver=23.1.0
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
 url="https://github.com/conda/conda"
 license=('BSD')
 depends=(
-  'python>=3.6'
+  'python>=3.7'
   'python-setuptools'
   'python-conda-package-handling'
+  'python-pluggy>=1.0.0'
   'python-pycosat>=0.6.3'
-  'python-requests>=2.12.4'
+  'python-requests>=2.20.1'
   'python-ruamel-yaml>=0.11.14'
 )
 makedepends=('python-setuptools')
@@ -24,7 +25,7 @@ backup=(etc/conda/condarc)
 source=(
   $_name-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz
 )
-sha512sums=('4070e7670b3adde45e30a5f1194f0e99a76be465bf6ee54f340c142f7dcb090b091a97aa58cd02210f3194137602d3b29670f69083dda6e276ea5d08bf5a22cf')
+sha512sums=('43a9786efbee9d1de9f7b19b852a34d6bf120e3e93adf13ac67094b0f53b608fc52fd7d98c478af5e8d679d62bdd7acd339b07f0344b15507554c98eea86caff')
 
 prepare() {
   cd $srcdir/${_name}-$pkgver
