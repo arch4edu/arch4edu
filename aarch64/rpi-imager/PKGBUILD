@@ -2,8 +2,8 @@
 # Contributor: Dmytro Aleksandrov <alkersan@gmail.com>
 
 pkgname=rpi-imager
-pkgver=1.7.3
-pkgrel=2
+pkgver=1.7.4
+pkgrel=1
 pkgdesc="Raspberry Pi Imaging Utility"
 depends=(
     'hicolor-icon-theme'
@@ -26,7 +26,7 @@ source=(
 )
 
 b2sums=(
-    '72ab2c8388a11fd7ad6e442872ed5fd31c9d8ec5b2a66143a8ff45fd2db86a260e4cda7039db0af60a45e32512a3370f79190d9cebd25c4abb587e23a42fe445'
+    'e48c8fd0206eca284bfd71a0fd2d7807a304a597801cf77d900174f509397d30fefc5dea981e943f3153743a9216757af7d966283ecf892160050e64aaf00fee'
     '40bc85ec8d55876e440bf02bc13df7b77ff588a8508402eed9fc27a9e87043c189d70d061355aeac9f8c9b63aa6ea629ea9204f63ea579ab35e0e154e17d41b3'
 )
 
