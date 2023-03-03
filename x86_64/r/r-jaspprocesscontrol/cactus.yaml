@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-car
   - x86_64/r/r-doe.base
   - x86_64/r/r-fitdistrplus
   - x86_64/r/r-frf2
