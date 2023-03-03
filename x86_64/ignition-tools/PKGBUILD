@@ -2,20 +2,18 @@
 # Contributor: Tim Rakowski <tim.rakowski@gmail.com>
 # Contributor: marauder <abhinav.kssk@gmail.com>
 pkgname=ignition-tools
-pkgver=1.5.0
-pkgrel=2
-pkgdesc="Ignition tools provide the ign command line tool that accepts multiple subcommands."
+pkgver=2.0.0
+pkgrel=1
+pkgdesc="Command line tools for the Gazebo libraries"
 arch=('any')
-url="https://github.com/gazebosim/gz-tools"
+url="https://gazebosim.org/libs/tools"
 license=('Apache')
 makedepends=('cmake' 'ignition-cmake' 'doxygen' 'pkg-config' 'ruby-ronn')
 depends=('ruby')
-optdepends=()
-conflicts=()
-source=("$url/archive/${pkgname}_${pkgver}.tar.gz")
-sha256sums=('cc99189063b6556e539836a438bdbb9da6eca1fe95a7058d46bfc17debc3d8f5')
+source=("https://github.com/gazebosim/gz-tools/archive/gz-tools2_${pkgver}.tar.gz")
+sha256sums=('5e3788d5a1d5fa40724f1484cda716e0c050f01d2c516efa9f8a00877e74ef64')
 
-_dir="gz-tools-${pkgname}_${pkgver}"
+_dir="gz-tools-gz-tools2_${pkgver}"
 
 build() {
   cd "$srcdir/$_dir"
