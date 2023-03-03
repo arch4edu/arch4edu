@@ -6,7 +6,7 @@ depends:
   - x86_64/ignition-msgs-5
   - x86_64/ignition-tools
 makedepends:
-  - x86_64/ignition-cmake
+  - x86_64/ignition-cmake-2
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
