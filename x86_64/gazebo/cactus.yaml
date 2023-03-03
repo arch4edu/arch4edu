@@ -6,9 +6,9 @@ depends:
   - x86_64/libccd
   - x86_64/ogre-1.9
   - x86_64/sdformat-9
-  - x86_64/ignition-math
+  - x86_64/ignition-math-6
   - x86_64/ignition-transport-8
-  - x86_64/ignition-cmake
+  - x86_64/ignition-cmake-2
   - x86_64/ignition-common-3
   - x86_64/ignition-fuel_tools-4
   - x86_64/ignition-msgs-5
