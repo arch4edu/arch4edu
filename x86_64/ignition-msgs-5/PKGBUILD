@@ -1,20 +1,21 @@
-# Maintainer: Homalozoa <nx dot tardis at gmail dot com>
+# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Contributor: Homalozoa <nx dot tardis at gmail dot com>
 
 pkgname=ignition-msgs-5
-pkgver=5.9.1
+pkgver=5.11.0
 pkgrel=2
-pkgdesc="Standard set of message definitions, used by Ignition Transport, and other applications."
+pkgdesc="Messages for Gazebo robot simulation."
 arch=('i686' 'x86_64')
-url="https://ignitionrobotics.org/libs/msgs"
+url="https://gazebosim.org/libs/msgs"
 license=('Apache')
-depends=('protobuf' 'protobuf-c' 'ignition-math>=6' 'ignition-tools')
-makedepends=('ignition-cmake>=2' 'ruby-ronn' 'doxygen' 'tinyxml2')
-optdepends=()
-conflicts=()
-source=("${pkgname}-${pkgver}::https://github.com/Sir-Photch/ign-msgs/archive/ignition-msgs5_${pkgver}.tar.gz")
-sha256sums=('eeeb7f403951d3d3eb6c745c802062e7d957cb01fb18e465f30f9929f0002728')
+depends=('protobuf' 'protobuf-c' 'ignition-math=6' 'ignition-utils'
+'ignition-tools' 'python')
+makedepends=('ignition-cmake=2' 'ruby-ronn' 'doxygen' 'tinyxml2')
+provides=('ignition-msgs=5')
+source=("${pkgname}-${pkgver}::https://github.com/gazebosim/gz-msgs/archive/ignition-msgs5_${pkgver}.tar.gz")
+sha256sums=('3cf31cabd0d21fc9cb111aafedd65c13d5523a7585572e85657681baf1878da7')
 
-_dir="ign-msgs-ignition-msgs5_${pkgver}"
+_dir="gz-msgs-ignition-msgs5_${pkgver}"
 
 build() {
   cd "${srcdir}/${_dir}"
