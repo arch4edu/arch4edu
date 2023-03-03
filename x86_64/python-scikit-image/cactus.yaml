@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - any/python-lazy-loader
   - any/python-tifffile
   - x86_64/python-imageio
   - x86_64/python-pywavelets
