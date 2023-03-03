@@ -1,19 +1,19 @@
-# Maintainer: Nxxx <nx dot tardis at gmail dot com>
+# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Contributor: Nxxx <nx dot tardis at gmail dot com>
 
 pkgname=ignition-transport-8
-pkgver=8.2.0
-pkgrel=2
-pkgdesc="The transport library combines ZeroMQ with Protobufs to create a fast and efficient message passing system. Asynchronous message publication and subscription is provided along with service calls and discovery."
+pkgver=8.4.0
+pkgrel=1
+pkgdesc="Transport library for component communication based on publication/subscription and service calls."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/transport"
 license=('Apache')
-depends=('protobuf' 'protobuf-c' 'zeromq' 'ignition-msgs-5' 'ignition-tools'
+depends=('protobuf' 'protobuf-c' 'zeromq' 'ignition-msgs=5' 'ignition-tools'
          'libutil-linux')
-makedepends=('ignition-cmake>=2' 'util-linux')
-optdepends=()
-conflicts=()
+makedepends=('ignition-cmake=2' 'util-linux')
+provides=('ignition-transport=8')
 source=("https://github.com/gazebosim/gz-transport/archive/ignition-transport8_${pkgver}.tar.gz")
-sha256sums=('edc6f184c01a1d2cbc4fe3739428c56c89a56842827c4c6cb43cf35498d5a77d')
+sha256sums=('65472a874bbb0f6bb686b3c0cce4146fb650e750f8f795a159523ecbe731c1c7')
 
 _dir="gz-transport-ignition-transport8_${pkgver}"
 
