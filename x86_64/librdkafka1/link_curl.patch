@@ -1,0 +1,24 @@
+From 23bd03c11c344aaa01ace8951e60913b4bfa3c2e Mon Sep 17 00:00:00 2001
+From: Adrian Costin <adriancostin6@gmail.com>
+Date: Wed, 13 Jul 2022 17:29:18 +0200
+Subject: [PATCH] cmake build fix: link against libcurl explicilty
+
+---
+ src/CMakeLists.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 33b3ced1e..79615187b 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -238,6 +238,10 @@ endif()
+ find_package(Threads REQUIRED)
+ target_link_libraries(rdkafka PUBLIC Threads::Threads)
+ 
++if(WITH_CURL)
++    target_link_libraries(rdkafka PUBLIC curl)
++endif()
++
+ if(WITH_SASL_CYRUS)
+   target_include_directories(rdkafka PRIVATE ${SASL_INCLUDE_DIRS})
+   target_link_libraries(rdkafka PUBLIC ${SASL_LIBRARIES})
