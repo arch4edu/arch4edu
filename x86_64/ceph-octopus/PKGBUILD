@@ -4,9 +4,9 @@
 _pkgbase='ceph'
 pkgbase='ceph-octopus'
 pkgname=('ceph-octopus' 'ceph-octopus-libs' 'ceph-octopus-mgr')
-_zstdver=1.5.2
+_zstdver=1.5.4
 pkgver=15.2.17
-pkgrel=1
+pkgrel=2
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
@@ -18,7 +18,7 @@ makedepends=("zstd=${_zstdver}" 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares
              'jq' 'jre11-openjdk-headless' 'junit' 'keyutils' 'leveldb' 'libaio'
              'libatomic_ops' 'libcap' 'libcap-ng' 'libcroco' 'libcurl-compat'
              'libedit' 'libgudev' 'libnl' 'librabbitmq-c' 'libtool' 'util-linux'
-             'libuv' 'libxml2' 'librdkafka' 'libpciaccess' 'lsb-release' 'lz4' 'ncurses'
+             'libuv' 'libxml2' 'librdkafka1' 'libpciaccess' 'lsb-release' 'lz4' 'ncurses'
              'nss' 'numactl' 'oath-toolkit' 'openssl' 'parted' 'pcre' 'pcre2' 'pkgconf' 'protobuf'
              'procps-ng' 'python-astroid' 'python-attrs' 'python-bcrypt'
              'python-cheroot' 'python-cherrypy' 'python-coverage' 'python-dateutil'
@@ -73,7 +73,7 @@ source=(
 )
 sha512sums=('952cd4db057fcab5efa3c6331fbc19cf1e904f5855266c2ed13e41ffb2e5a7d18ed133bd113fea493149005a182f429eef39931c4ceac7776aefe84a208a745a'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
-            'e107508a41fca50845cc2494e64adaba93efb95a2fa486fc962510a8ba4b2180d93067cae9870f119e88e5e8b28a046bc2240b0b23cdd8933d1fb1a6a9668c1e'
+            'b6f64850ceb6cfed831fff3c43508d2a72338862a96dd9430b1d3ebbfcee40201c8b6dcf8b6b603e252bb96f3f283c9cb07da7f24414187f5f1fea3b51e01863'
             '9e6bb46d5bbdc5d93f4f026b2a8d6bdb692d9ea6e7018c1bb0188d95ea8574c76238d968b340fd67ddaa3d8183b310e393e3549dc3a63a795fde696413b0ca94'
             '6ff46a90d76f667fa23be0f9eb1ed2fb7e30af9a2621aec19944d0a22a431a0f5721603c588286e483ff55c14aac920adfccb039c9678a87cc59640dd70367ae'
             '8ec0d668fefee12d2c7f5b5297dd81fc6a559f5823d069e6395d9b4240110eb8f95049d3054697a459948c1f3784b4450539849cf9d7f3b1aa1c7fbd96c475df'
@@ -140,6 +140,10 @@ prepare() {
   # disable/remove broken tests
   sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
   sed -i '/add_ceph_test(safe-to-destroy.sh/d' src/test/osd/CMakeLists.txt
+
+  # https://aur.archlinux.org/pkgbase/ceph-bin#comment-899146
+  sed -i 's/\.to_string()//g' -i src/rgw/rgw_asio_client.cc
+  sed -i 's/remote_endpoint\.address())/remote_endpoint.address().to_string())/g' -i src/rgw/rgw_asio_client.cc
 }
 
 build() {
@@ -243,7 +247,7 @@ package_ceph-octopus-libs() {
 package_ceph-octopus() {
   depends=("ceph-octopus-libs=${pkgver}-${pkgrel}"
            'boost-libs' 'curl' 'fuse2' 'fuse3' 'fmt' 'glibc' 'gperftools' 'java-runtime'
-           'keyutils' 'leveldb' 'libaio' 'libutil-linux' 'librdkafka'
+           'keyutils' 'leveldb' 'libaio' 'libutil-linux' 'librdkafka1'
            'lsb-release' 'ncurses'
            'nss' 'oath-toolkit' 'python' 'python-bcrypt' 'python-setuptools'
            'python-prettytable' 'python-cmd2' 'python-dateutil' 'snappy' 'sudo' 'systemd-libs'
