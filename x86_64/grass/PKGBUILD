@@ -4,7 +4,7 @@
 
 pkgname=grass
 pkgver=8.2.1
-pkgrel=1
+pkgrel=2
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
 arch=('i686' 'x86_64')
@@ -61,4 +61,8 @@ package() {
                         include/Make/{Platform,Grass}.make \
                         etc/fontcap \
                         "$pkgdir/usr/bin/grass"
+
+  # Link pygrass to main python site-packages
+  mkdir -p "$pkgdir/usr/lib/python3.10/site-packages/"
+  ln -s "$pkgdir/opt/grass/etc/python/grass" "$pkgdir/usr/lib/python3.10/site-packages/grass"
 }
