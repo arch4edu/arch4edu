@@ -9,7 +9,7 @@ pkgbase=netron
 pkgname=(netron)
 ##pkgname+=(netron-cli)
 pkgdesc='Visualizer for neural network, deep learning, and machine learning models'
-pkgver=6.6.1
+pkgver=6.6.8
 pkgrel=1
 url='https://netron.app/'
 arch=(x86_64)
@@ -21,21 +21,23 @@ optdepends=(
   'python-pytorch: serializing PyTorch models'
 )
 source=("https://github.com/lutzroeder/netron/archive/v${pkgver}/netron-${pkgver}.tar.gz")
-sha256sums=('3509568d95ee1c506a713cf1bcdf1e2017e303fd029c485ebf505ef4dc5f02cf')
+sha256sums=('18800221e93c060c64a923fcdaac1c347510cc2ec3e29b3ee513e6941bf06ff1')
 
 prepare() {
   cd "${pkgbase}-${pkgver}"
 
   # Use dependencies from Arch
-  sed '/python -m pip/d' -i Makefile
+  sed '/python -m pip/d' -i package.js
 
   # Disable mac and windows builds
-  sed -e '/--mac /d' -e '/--win /d' -i Makefile
+  sed -e '/--mac /d' -e '/--win /d' -i package.js
 }
 
 build() {
   cd "${pkgbase}-${pkgver}"
-  make clean build_python build_electron
+  npm run clean
+  npm run build python
+  npm run build electron
 }
 
 package_netron() {
