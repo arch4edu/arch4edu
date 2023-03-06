@@ -1,16 +1,16 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=muparserx
-pkgver=4.0.11
+pkgver=4.0.12
 pkgrel=1
 pkgdesc="A fast math parser library with support for arrays, matrices and complex numbers"
 arch=('x86_64')
 url="https://github.com/beltoforion/${pkgname}"
-license=('BSD')
+license=('custom:BSD-2-clause')
 makedepends=(cmake)
 depends=(gcc-libs)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('67846a91b57e41731a656cfee68effdd9166e738108764be5d3080854d8a01bedbeacaaade7bee11c6b5f83019abddeca3b2c9acdfbb48629da6d9b92c79c7af')
+sha512sums=('5be7d846105c2eae7f9a7929147ff6890496ca80348c1b08c62fdf199a6b33d48225c4aeec00e03283e233c91574943b60ee4282169715f5ded8aa18fd9a732d')
 
 build() {
   cmake \
