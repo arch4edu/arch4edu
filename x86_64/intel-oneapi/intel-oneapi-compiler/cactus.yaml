@@ -2,8 +2,6 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/intel-oneapi/intel-oneapi-dev-utilities
-  - x86_64/intel-oneapi/intel-oneapi-dpcpp-debugger
   - x86_64/intel-oneapi/intel-oneapi-dpl
   - x86_64/intel-oneapi/intel-oneapi-mpi
 group: x86_64
