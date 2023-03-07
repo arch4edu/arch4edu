@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CloudCompareView
+Comment=A viewer for Cloud Comare, a 3D point cloud (and triangular mesh) processing software
+Icon=cc_viewer_icon
+Exec=ccViewer
+Terminal=false
+Type=Application
+Categories=Graphics;

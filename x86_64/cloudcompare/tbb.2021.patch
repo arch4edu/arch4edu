@@ -1,0 +1,2455 @@
+From 21a0e7fb08af80d114d0f4dfc40c66d8c521627b Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 14:36:06 +0200
+Subject: [PATCH 01/13] Fix tbb:2021 emit() colision with QT emit()
+
+---
+ libs/qCC_db/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libs/qCC_db/CMakeLists.txt b/libs/qCC_db/CMakeLists.txt
+index 47f49240..e80132eb 100644
+--- a/libs/qCC_db/CMakeLists.txt
++++ b/libs/qCC_db/CMakeLists.txt
+@@ -12,7 +12,7 @@ target_link_libraries( ${PROJECT_NAME}
+     CC_FBO_LIB
+ )
+ 
+-target_compile_definitions( ${PROJECT_NAME} PRIVATE QCC_DB_LIBRARY_BUILD )
++target_compile_definitions( ${PROJECT_NAME} PRIVATE QCC_DB_LIBRARY_BUILD QT_NO_KEYWORDS )
+ 
+ set_target_properties( ${PROJECT_NAME} PROPERTIES
+ 	CXX_VISIBILITY_PRESET hidden
+-- 
+2.36.1
+
+
+From c5880a1faad55d0c74012d045281c083cdfb96b9 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 14:46:32 +0200
+Subject: [PATCH 02/13] Replace signals: with Q_SIGNALS: for QT_NO_KEYWORDS
+
+---
+ libs/qCC_db/include/ccClipBox.h        | 2 +-
+ libs/qCC_db/include/ccOctree.h         | 2 +-
+ libs/qCC_db/include/ccProgressDialog.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/libs/qCC_db/include/ccClipBox.h b/libs/qCC_db/include/ccClipBox.h
+index 9e71c0c6..b59797d5 100644
+--- a/libs/qCC_db/include/ccClipBox.h
++++ b/libs/qCC_db/include/ccClipBox.h
+@@ -122,7 +122,7 @@ public:
+ 	//! Associated entity container
+ 	inline const ccHObject& getContainer() const { return m_entityContainer; }
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal sent each time the box is modified
+ 	void boxModified(const ccBBox* box);
+diff --git a/libs/qCC_db/include/ccOctree.h b/libs/qCC_db/include/ccOctree.h
+index bb11e9ea..09206e23 100644
+--- a/libs/qCC_db/include/ccOctree.h
++++ b/libs/qCC_db/include/ccOctree.h
+@@ -159,7 +159,7 @@ public: //HELPERS
+ 																const BestRadiusParams& params,
+ 																QWidget* parentWidget = nullptr);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal sent when the octree organization is modified (cleared, etc.)
+ 	void updated();
+diff --git a/libs/qCC_db/include/ccProgressDialog.h b/libs/qCC_db/include/ccProgressDialog.h
+index e78a63aa..039645dd 100644
+--- a/libs/qCC_db/include/ccProgressDialog.h
++++ b/libs/qCC_db/include/ccProgressDialog.h
+@@ -78,7 +78,7 @@ protected:
+ 	**/
+ 	void refresh();
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Schedules a call to refresh
+ 	void scheduleRefresh();
+-- 
+2.36.1
+
+
+From a4eb316dda57e4e35a685f07acfce41d427e385c Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 14:52:25 +0200
+Subject: [PATCH 03/13] Replace emit() with Q_EMIT() for QT_NO_KEYWORDS
+
+---
+ libs/qCC_db/src/ccClipBox.cpp        | 10 +++++-----
+ libs/qCC_db/src/ccOctree.cpp         |  2 +-
+ libs/qCC_db/src/ccProgressDialog.cpp |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/libs/qCC_db/src/ccClipBox.cpp b/libs/qCC_db/src/ccClipBox.cpp
+index 8710a4d3..9ad46d61 100644
+--- a/libs/qCC_db/src/ccClipBox.cpp
++++ b/libs/qCC_db/src/ccClipBox.cpp
+@@ -284,7 +284,7 @@ void ccClipBox::reset()
+ 	update();
+ 
+ 	//send 'modified' signal
+-	emit boxModified(&m_box);
++	Q_EMIT boxModified(&m_box);
+ }
+ 
+ void ccClipBox::set(const ccBBox& extents, const ccGLMatrix& transformation)
+@@ -295,7 +295,7 @@ void ccClipBox::set(const ccBBox& extents, const ccGLMatrix& transformation)
+ 	update();
+ 
+ 	//send 'modified' signal
+-	emit boxModified(&m_box);
++	Q_EMIT boxModified(&m_box);
+ }
+ 
+ void ccClipBox::get(ccBBox& extents, ccGLMatrix& transformation)
+@@ -498,7 +498,7 @@ bool ccClipBox::move3D(const CCVector3d& uInput)
+ 		}
+ 		
+ 		//send 'modified' signal
+-		emit boxModified(&m_box);
++		Q_EMIT boxModified(&m_box);
+ 	}
+ 	else if (m_activeComponent == SPHERE)
+ 	{
+@@ -589,7 +589,7 @@ void ccClipBox::setBox(const ccBBox& box)
+ 	update();
+ 
+ 	//send 'modified' signal
+-	emit boxModified(&m_box);
++	Q_EMIT boxModified(&m_box);
+ }
+ 
+ void ccClipBox::shift(const CCVector3& v)
+@@ -600,7 +600,7 @@ void ccClipBox::shift(const CCVector3& v)
+ 	update();
+ 
+ 	//send 'modified' signal
+-	emit boxModified(&m_box);
++	Q_EMIT boxModified(&m_box);
+ }
+ 
+ void ccClipBox::flagPointsInside(	ccGenericPointCloud* cloud,
+diff --git a/libs/qCC_db/src/ccOctree.cpp b/libs/qCC_db/src/ccOctree.cpp
+index 426027ef..0032f70f 100644
+--- a/libs/qCC_db/src/ccOctree.cpp
++++ b/libs/qCC_db/src/ccOctree.cpp
+@@ -81,7 +81,7 @@ void ccOctree::setDisplayMode(DisplayMode mode)
+ void ccOctree::clear()
+ {
+ 	//warn the others that the octree organization is going to change
+-	emit updated();
++	Q_EMIT updated();
+ 
+ 	QOpenGLContext* context = QOpenGLContext::currentContext();
+ 	if (context)
+diff --git a/libs/qCC_db/src/ccProgressDialog.cpp b/libs/qCC_db/src/ccProgressDialog.cpp
+index e59e94b7..f07becb3 100644
+--- a/libs/qCC_db/src/ccProgressDialog.cpp
++++ b/libs/qCC_db/src/ccProgressDialog.cpp
+@@ -67,7 +67,7 @@ void ccProgressDialog::update(float percent)
+ 	if (value != m_currentValue)
+ 	{
+ 		m_currentValue = value;
+-		emit scheduleRefresh();
++		Q_EMIT scheduleRefresh();
+ 		QCoreApplication::processEvents(); //we let the main thread breath (so that the call to 'refresh' can be performed)
+ 	}
+ }
+-- 
+2.36.1
+
+
+From 7da58f1fd6c072eb581b9480d19bd1ffe31801cb Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:05:32 +0200
+Subject: [PATCH 04/13] Plugins: add tbb:2021 fix (emit() colision with QT)
+
+---
+ plugins/core/Standard/qFacets/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/plugins/core/Standard/qFacets/CMakeLists.txt b/plugins/core/Standard/qFacets/CMakeLists.txt
+index b527d392..fe585a7b 100644
+--- a/plugins/core/Standard/qFacets/CMakeLists.txt
++++ b/plugins/core/Standard/qFacets/CMakeLists.txt
+@@ -8,6 +8,7 @@ if( PLUGIN_STANDARD_QFACETS )
+ 	project( QFACETS_PLUGIN )
+ 
+ 	AddPlugin( NAME ${PROJECT_NAME} )
++	target_compile_definitions( ${PROJECT_NAME} PRIVATE QT_NO_KEYWORDS )
+ 		
+ 	add_subdirectory( include )
+ 	add_subdirectory( src )
+-- 
+2.36.1
+
+
+From 5e0cd797caf3e7cb4ac9a0c99ad0757f0e145ac5 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:16:36 +0200
+Subject: [PATCH 05/13] Replace emit() with Q_EMIT() for QT_NO_KEYWORDS
+
+---
+ plugins/core/Standard/qFacets/src/stereogramDlg.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/plugins/core/Standard/qFacets/src/stereogramDlg.cpp b/plugins/core/Standard/qFacets/src/stereogramDlg.cpp
+index 21fb31b7..965ca498 100644
+--- a/plugins/core/Standard/qFacets/src/stereogramDlg.cpp
++++ b/plugins/core/Standard/qFacets/src/stereogramDlg.cpp
+@@ -310,7 +310,7 @@ void StereogramWidget::mousePressEvent(QMouseEvent* e)
+ 				if (m_clickDipDir_deg >= 360.0)
+ 					m_clickDipDir_deg -= 360.0;
+ 
+-				emit pointClicked(m_clickDip_deg, m_clickDipDir_deg);
++				Q_EMIT pointClicked(m_clickDip_deg, m_clickDipDir_deg);
+ 				e->accept();
+ 				return;
+ 			}
+@@ -328,7 +328,7 @@ void StereogramWidget::enableMouseTracking(bool state, double dipSpan_deg/*=30*/
+ 		m_clickDipSpan_deg = dipSpan_deg;
+ 		m_clickDipDirSpan_deg = dipDirSpan_deg;
+ 		//to give to the parent dialog some feedback about the current marker position!
+-		emit pointClicked(m_clickDip_deg, m_clickDipDir_deg);
++		Q_EMIT pointClicked(m_clickDip_deg, m_clickDipDir_deg);
+ 	}
+ }
+ 
+-- 
+2.36.1
+
+
+From 3991b9a35d95933a39ce8f6f2a504d57b32792d6 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:17:02 +0200
+Subject: [PATCH 06/13]  Replace signals: with Q_SIGNALS: for QT_NO_KEYWORDS
+
+---
+ libs/CCPluginAPI/include/ccColorScaleSelector.h       | 2 +-
+ plugins/core/Standard/qFacets/include/stereogramDlg.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libs/CCPluginAPI/include/ccColorScaleSelector.h b/libs/CCPluginAPI/include/ccColorScaleSelector.h
+index 2832262f..5827d2f4 100644
+--- a/libs/CCPluginAPI/include/ccColorScaleSelector.h
++++ b/libs/CCPluginAPI/include/ccColorScaleSelector.h
+@@ -52,7 +52,7 @@ public:
+ 	//! Returns a given color scale by index
+ 	ccColorScale::Shared getScale(int index) const;
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when a color scale is selected
+ 	void colorScaleSelected(int);
+diff --git a/plugins/core/Standard/qFacets/include/stereogramDlg.h b/plugins/core/Standard/qFacets/include/stereogramDlg.h
+index 9f7ed22f..1a3ed034 100644
+--- a/plugins/core/Standard/qFacets/include/stereogramDlg.h
++++ b/plugins/core/Standard/qFacets/include/stereogramDlg.h
+@@ -95,7 +95,7 @@ public:
+ 	//! Sets tracked center position
+ 	void setTrackedCenter(double dip_deg, double dipDir_deg);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when the mouse (left) button is clicked
+ 	/** \param dip_deg dip angle (in degrees)
+-- 
+2.36.1
+
+
+From 2ce0e256a47ed50d73d3204b14aec88d74a7f456 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:27:26 +0200
+Subject: [PATCH 07/13] Fix tbb:2021 emit() collsion with QT emit()
+
+---
+ qCC/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/qCC/CMakeLists.txt b/qCC/CMakeLists.txt
+index 79b3a290..27419dd0 100644
+--- a/qCC/CMakeLists.txt
++++ b/qCC/CMakeLists.txt
+@@ -34,6 +34,7 @@ elseif( APPLE )
+ 	add_executable( ${PROJECT_NAME} MACOSX_BUNDLE ${header_list} ${source_list} ${generated_ui_list} ${generated_qrc_list} ${txt_list} )
+ else()
+ 	add_executable( ${PROJECT_NAME} ${header_list} ${source_list} ${generated_ui_list} ${generated_qrc_list} ${rc_list} ${txt_list} )
++	target_compile_definitions( ${PROJECT_NAME} PRIVATE QT_NO_KEYWORDS )
+ endif()
+ 
+ if( WIN32 )
+-- 
+2.36.1
+
+
+From f0892fb6e18b6c7666b691476f708b58f84f0b80 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:34:07 +0200
+Subject: [PATCH 08/13] Replace signals: with Q_SIGNALS: for QT_NO_KEYWORDS
+
+---
+ qCC/ccHistogramWindow.h                |  2 +-
+ qCC/ccPointPropertiesDlg.h             |  2 +-
+ qCC/db_tree/ccDBRoot.h                 |  2 +-
+ qCC/db_tree/ccPropertiesTreeDelegate.h |  2 +-
+ qCC/db_tree/sfEditDlg.h                |  2 +-
+ qCC/extern/QCustomPlot/qcustomplot.h   | 28 +++++++++++++-------------
+ 6 files changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/qCC/ccHistogramWindow.h b/qCC/ccHistogramWindow.h
+index 80f65aca..3fb9f84b 100644
+--- a/qCC/ccHistogramWindow.h
++++ b/qCC/ccHistogramWindow.h
+@@ -141,7 +141,7 @@ public: //Axis label display Options
+ 	void setMinSatValue(double);
+ 	void setMaxSatValue(double);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	void sfMinDispValChanged(double);
+ 	void sfMaxDispValChanged(double);
+diff --git a/qCC/ccPointPropertiesDlg.h b/qCC/ccPointPropertiesDlg.h
+index f657cbe5..3c16913a 100644
+--- a/qCC/ccPointPropertiesDlg.h
++++ b/qCC/ccPointPropertiesDlg.h
+@@ -57,7 +57,7 @@ protected:
+ 	void processClickedPoint(int x, int y);
+ 	void close2DZone();
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when a new label is created
+ 	void newLabel(ccHObject*);
+diff --git a/qCC/db_tree/ccDBRoot.h b/qCC/db_tree/ccDBRoot.h
+index 6d2e1e32..7b437092 100644
+--- a/qCC/db_tree/ccDBRoot.h
++++ b/qCC/db_tree/ccDBRoot.h
+@@ -217,7 +217,7 @@ private:
+ 	void enableBubbleViewMode();
+ 	void editLabelScalarValue();
+ 
+-signals:
++Q_SIGNALS:
+ 	void selectionChanged();
+ 	void dbIsEmpty();
+ 	void dbIsNotEmptyAnymore();
+diff --git a/qCC/db_tree/ccPropertiesTreeDelegate.h b/qCC/db_tree/ccPropertiesTreeDelegate.h
+index 80d5a3e3..0897baec 100644
+--- a/qCC/db_tree/ccPropertiesTreeDelegate.h
++++ b/qCC/db_tree/ccPropertiesTreeDelegate.h
+@@ -129,7 +129,7 @@ public:
+ 	//! Returns currently bound object
+ 	ccHObject* getCurrentObject();
+ 
+-signals:
++Q_SIGNALS:
+ 	void ccObjectPropertiesChanged(ccHObject* hObject) const;
+ 	void ccObjectAppearanceChanged(ccHObject* hObject) const;
+ 	void ccObjectAndChildrenAppearanceChanged(ccHObject* hObject) const;
+diff --git a/qCC/db_tree/sfEditDlg.h b/qCC/db_tree/sfEditDlg.h
+index ce48726b..700a2f5e 100644
+--- a/qCC/db_tree/sfEditDlg.h
++++ b/qCC/db_tree/sfEditDlg.h
+@@ -61,7 +61,7 @@ public:
+ 	void symmetricalScaleChanged(bool);
+ 	void logScaleChanged(bool);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when the SF display parameters have changed
+ 	void entitySFHasChanged();
+diff --git a/qCC/extern/QCustomPlot/qcustomplot.h b/qCC/extern/QCustomPlot/qcustomplot.h
+index 8f0f78b1..351f58f0 100644
+--- a/qCC/extern/QCustomPlot/qcustomplot.h
++++ b/qCC/extern/QCustomPlot/qcustomplot.h
+@@ -746,7 +746,7 @@ public:
+   // non-property methods:
+   bool realVisibility() const;
+   
+-signals:
++Q_SIGNALS:
+   void layerChanged(QCPLayer *newLayer);
+   
+ protected:
+@@ -1136,7 +1136,7 @@ public:
+   // non-property methods:
+   Q_SLOT void cancel();
+   
+-signals:
++Q_SIGNALS:
+   void started(QMouseEvent *event);
+   void changed(const QRect &rect, QMouseEvent *event);
+   void canceled(const QRect &rect, QInputEvent *event);
+@@ -2289,7 +2289,7 @@ public:
+   static Qt::Orientation orientation(AxisType type) { return type==atBottom || type==atTop ? Qt::Horizontal : Qt::Vertical; }
+   static AxisType opposite(AxisType type);
+   
+-signals:
++Q_SIGNALS:
+   void rangeChanged(const QCPRange &newRange);
+   void rangeChanged(const QCPRange &newRange, const QCPRange &oldRange);
+   void scaleTypeChanged(QCPAxis::ScaleType scaleType);
+@@ -3518,7 +3518,7 @@ public:
+   bool removeFromLegend(QCPLegend *legend) const;
+   bool removeFromLegend() const;
+   
+-signals:
++Q_SIGNALS:
+   void selectionChanged(bool selected);
+   void selectionChanged(const QCPDataSelection &selection);
+   void selectableChanged(QCP::SelectionType selectable);
+@@ -3708,7 +3708,7 @@ public:
+   QCPItemAnchor *anchor(const QString &name) const;
+   bool hasAnchor(const QString &name) const;
+   
+-signals:
++Q_SIGNALS:
+   void selectionChanged(bool selected);
+   void selectableChanged(bool selectable);
+   
+@@ -3907,7 +3907,7 @@ public:
+   QCPAxis *xAxis, *yAxis, *xAxis2, *yAxis2;
+   QCPLegend *legend;
+   
+-signals:
++Q_SIGNALS:
+   void mouseDoubleClick(QMouseEvent *event);
+   void mousePress(QMouseEvent *event);
+   void mouseMove(QMouseEvent *event);
+@@ -5045,7 +5045,7 @@ public:
+   // reimplemented virtual methods:
+   virtual double selectTest(const QPointF &pos, bool onlySelectable, QVariant *details=nullptr) const Q_DECL_OVERRIDE;
+   
+-signals:
++Q_SIGNALS:
+   void selectionChanged(bool selected);
+   void selectableChanged(bool selectable);
+   
+@@ -5182,7 +5182,7 @@ public:
+   void clearItems();
+   QList<QCPAbstractLegendItem*> selectedItems() const;
+   
+-signals:
++Q_SIGNALS:
+   void selectionChanged(QCPLegend::SelectableParts parts);
+   void selectableChanged(QCPLegend::SelectableParts parts);
+   
+@@ -5273,7 +5273,7 @@ public:
+   virtual void mouseReleaseEvent(QMouseEvent *event, const QPointF &startPos) Q_DECL_OVERRIDE;
+   virtual void mouseDoubleClickEvent(QMouseEvent *event, const QVariant &details) Q_DECL_OVERRIDE;
+   
+-signals:
++Q_SIGNALS:
+   void selectionChanged(bool selected);
+   void selectableChanged(bool selectable);
+   void clicked(QMouseEvent *event);
+@@ -5385,7 +5385,7 @@ public:
+   // reimplemented virtual methods:
+   virtual void update(UpdatePhase phase) Q_DECL_OVERRIDE;
+   
+-signals:
++Q_SIGNALS:
+   void dataRangeChanged(const QCPRange &newRange);
+   void dataScaleTypeChanged(QCPAxis::ScaleType scaleType);
+   void gradientChanged(const QCPColorGradient &newGradient);
+@@ -6081,7 +6081,7 @@ public:
+   virtual QCPRange getKeyRange(bool &foundRange, QCP::SignDomain inSignDomain=QCP::sdBoth) const Q_DECL_OVERRIDE;
+   virtual QCPRange getValueRange(bool &foundRange, QCP::SignDomain inSignDomain=QCP::sdBoth, const QCPRange &inKeyRange=QCPRange()) const Q_DECL_OVERRIDE;
+   
+-signals:
++Q_SIGNALS:
+   void dataRangeChanged(const QCPRange &newRange);
+   void dataScaleTypeChanged(QCPAxis::ScaleType scaleType);
+   void gradientChanged(const QCPColorGradient &newGradient);
+@@ -7118,7 +7118,7 @@ public:
+   double radiusToCoord(double radius) const;
+   SelectablePart getPartAt(const QPointF &pos) const;
+   
+-signals:
++Q_SIGNALS:
+   void rangeChanged(const QCPRange &newRange);
+   void rangeChanged(const QCPRange &newRange, const QCPRange &oldRange);
+   void scaleTypeChanged(QCPPolarAxisRadial::ScaleType scaleType);
+@@ -7388,7 +7388,7 @@ public:
+   QPointF center() const { return mCenter; }
+   double radius() const { return mRadius; }
+   
+-signals:
++Q_SIGNALS:
+   void rangeChanged(const QCPRange &newRange);
+   void rangeChanged(const QCPRange &newRange, const QCPRange &oldRange);
+   void selectionChanged(const QCPPolarAxisAngular::SelectableParts &parts);
+@@ -7672,7 +7672,7 @@ public:
+   virtual QCPRange getKeyRange(bool &foundRange, QCP::SignDomain inSignDomain=QCP::sdBoth) const;
+   virtual QCPRange getValueRange(bool &foundRange, QCP::SignDomain inSignDomain=QCP::sdBoth, const QCPRange &inKeyRange=QCPRange()) const;
+   
+-signals:
++Q_SIGNALS:
+   void selectionChanged(bool selected);
+   void selectionChanged(const QCPDataSelection &selection);
+   void selectableChanged(QCP::SelectionType selectable);
+-- 
+2.36.1
+
+
+From 50ddae0f1ba6fa7b570d0db8c1f14a049c10b81c Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:39:36 +0200
+Subject: [PATCH 09/13] Replace signals: with Q_SIGNALS: for QT_NO_KEYWORDS
+
+---
+ libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.h      | 2 +-
+ libs/CCAppCommon/devices/gamepad/GamepadInput.h          | 2 +-
+ libs/CCAppCommon/include/ccDisplayOptionsDlg.h           | 2 +-
+ libs/CCPluginAPI/include/ccColorScaleEditorWidget.h      | 6 +++---
+ libs/CCPluginAPI/include/ccOverlayDialog.h               | 2 +-
+ libs/qCC_glWindow/include/ccGLWindow.h                   | 2 +-
+ libs/qCC_io/include/PlyOpenDlg.h                         | 2 +-
+ plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.h | 2 +-
+ 8 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.h b/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.h
+index d32e881d..7679379d 100644
+--- a/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.h
++++ b/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.h
+@@ -248,7 +248,7 @@ public:
+ 	**/
+ 	bool onSiEvent(void* siGetEventData);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	void sigMove3d(std::vector<float>& motionData);
+ 	void sigReleased();
+diff --git a/libs/CCAppCommon/devices/gamepad/GamepadInput.h b/libs/CCAppCommon/devices/gamepad/GamepadInput.h
+index cee497d0..14c31b34 100644
+--- a/libs/CCAppCommon/devices/gamepad/GamepadInput.h
++++ b/libs/CCAppCommon/devices/gamepad/GamepadInput.h
+@@ -48,7 +48,7 @@ public:
+ 	//! Updates a window with the current gamepad state
+ 	void update(ccGLWindow* win);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	void updated();
+ 
+diff --git a/libs/CCAppCommon/include/ccDisplayOptionsDlg.h b/libs/CCAppCommon/include/ccDisplayOptionsDlg.h
+index bce1d1e0..6c40cf7f 100644
+--- a/libs/CCAppCommon/include/ccDisplayOptionsDlg.h
++++ b/libs/CCAppCommon/include/ccDisplayOptionsDlg.h
+@@ -41,7 +41,7 @@ public:
+ 	explicit ccDisplayOptionsDlg(QWidget* parent);
+ 	~ccDisplayOptionsDlg() override;
+ 
+-signals:
++Q_SIGNALS:
+ 	void aspectHasChanged();
+ 
+ protected:
+diff --git a/libs/CCPluginAPI/include/ccColorScaleEditorWidget.h b/libs/CCPluginAPI/include/ccColorScaleEditorWidget.h
+index 1ba900ea..0fbe519c 100644
+--- a/libs/CCPluginAPI/include/ccColorScaleEditorWidget.h
++++ b/libs/CCPluginAPI/include/ccColorScaleEditorWidget.h
+@@ -166,7 +166,7 @@ public:
+ 	//! Default constructor
+ 	ColorBarWidget(SharedColorScaleElementSliders sliders, QWidget* parent = nullptr, Qt::Orientation orientation = Qt::Horizontal);
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when the mouse (left) button is clicked
+ 	/** \param relativePos relative click position (between 0 and 1)
+@@ -206,7 +206,7 @@ public:
+ 	//! Updates all sliders positions
+ 	void updateAllSlidersPos();
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when a slider is changed (position or color)
+ 	void sliderModified(int index);
+@@ -307,7 +307,7 @@ public:
+ 	//inherited from ColorScaleEditorBaseWidget
+ 	void setSliders(SharedColorScaleElementSliders sliders) override;
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when a slider is selected
+ 	void stepSelected(int index);
+diff --git a/libs/CCPluginAPI/include/ccOverlayDialog.h b/libs/CCPluginAPI/include/ccOverlayDialog.h
+index 5c7b93e2..7b7ae925 100644
+--- a/libs/CCPluginAPI/include/ccOverlayDialog.h
++++ b/libs/CCPluginAPI/include/ccOverlayDialog.h
+@@ -65,7 +65,7 @@ public:
+ 	//! Returns whether the tool is currently started or not
+ 	bool started() const { return m_processing; }
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when process is finished
+ 	/** \param accepted specifies how the process finished (accepted or not)
+diff --git a/libs/qCC_glWindow/include/ccGLWindow.h b/libs/qCC_glWindow/include/ccGLWindow.h
+index 60cbb24c..2fad5447 100644
+--- a/libs/qCC_glWindow/include/ccGLWindow.h
++++ b/libs/qCC_glWindow/include/ccGLWindow.h
+@@ -666,7 +666,7 @@ protected:
+ 	//! Performs standard picking at the last clicked mouse position (see m_lastMousePos)
+ 	void doPicking();
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when an entity is selected in the 3D view
+ 	void entitySelectionChanged(ccHObject* entity);
+diff --git a/libs/qCC_io/include/PlyOpenDlg.h b/libs/qCC_io/include/PlyOpenDlg.h
+index 8713c390..857ea584 100644
+--- a/libs/qCC_io/include/PlyOpenDlg.h
++++ b/libs/qCC_io/include/PlyOpenDlg.h
+@@ -76,7 +76,7 @@ protected:
+ 	void apply();
+ 	void applyAll();
+ 
+-signals:
++Q_SIGNALS:
+ 	void fullyAccepted();
+ 
+ protected:
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.h b/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.h
+index de396a18..6f32870f 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.h
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.h
+@@ -132,7 +132,7 @@ public: //default error codes (reserved between -10 and 1)
+ 	static constexpr int ComputationError = -4;		//!< Generic computation error
+ 	static constexpr int NotEnoughMemory = -5;		//!< Not enough memory
+ 
+-signals:
++Q_SIGNALS:
+ 
+ 	//! Signal emitted when an entity is (visually) modified
+ 	void entityHasChanged(ccHObject*);
+-- 
+2.36.1
+
+
+From ae018d677ef88008b2368a5b44bf97556c09a974 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:41:40 +0200
+Subject: [PATCH 10/13] Replace emit() with Q_EMIT() for QT_NO_KEYWORDS
+
+---
+ .../devices/3dConnexion/Mouse3DInput.cpp      |  12 +-
+ .../devices/gamepad/GamepadInput.cpp          |   2 +-
+ libs/CCAppCommon/src/ccDisplayOptionsDlg.cpp  |   4 +-
+ .../src/ccColorScaleEditorWidget.cpp          |  12 +-
+ libs/CCPluginAPI/src/ccColorScaleSelector.cpp |   2 +-
+ libs/CCPluginAPI/src/ccOverlayDialog.cpp      |   6 +-
+ libs/qCC_glWindow/src/ccGLWindow.cpp          |  72 +++---
+ libs/qCC_io/src/PlyOpenDlg.cpp                |   4 +-
+ .../qCloudLayers/src/ccAsprsModel.cpp         |  10 +-
+ .../qPCL/PclUtils/filters/BaseFilter.cpp      |   2 +-
+ .../qPCL/PclUtils/filters/ExtractSIFT.cpp     |   2 +-
+ .../filters/FastGlobalRegistrationFilter.cpp  |   2 +-
+ .../filters/MLSSmoothingUpsampling.cpp        |   2 +-
+ .../PclUtils/filters/NormalEstimation.cpp     |   2 +-
+ .../filters/StatisticalOutliersRemover.cpp    |   2 +-
+ qCC/ccHistogramWindow.cpp                     |   8 +-
+ qCC/ccPointPropertiesDlg.cpp                  |   2 +-
+ qCC/db_tree/ccDBRoot.cpp                      |  18 +-
+ qCC/db_tree/ccPropertiesTreeDelegate.cpp      |  10 +-
+ qCC/db_tree/sfEditDlg.cpp                     |  24 +-
+ qCC/extern/QCustomPlot/qcustomplot.cpp        | 210 +++++++++---------
+ 21 files changed, 204 insertions(+), 204 deletions(-)
+
+diff --git a/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.cpp b/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.cpp
+index f32ca1ef..8e8cb1be 100644
+--- a/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.cpp
++++ b/libs/CCAppCommon/devices/3dConnexion/Mouse3DInput.cpp
+@@ -220,7 +220,7 @@ bool Mouse3DInput::onSiEvent(void* siGetEventData)
+ 
+ 	case SI_ZERO_EVENT:
+ 		//FIXME: too flickery!
+-		emit sigReleased();
++		Q_EMIT sigReleased();
+ 		break;
+ 
+ 	case SI_BUTTON_EVENT:
+@@ -271,27 +271,27 @@ bool Mouse3DInput::onSiEvent(void* siGetEventData)
+ 
+ void Mouse3DInput::move3d(std::vector<float>& motionData)
+ {
+-	emit sigMove3d(motionData);
++	Q_EMIT sigMove3d(motionData);
+ }
+ 
+ void Mouse3DInput::on3dmouseKeyDown(int virtualKeyCode)
+ {
+-	emit sigOn3dmouseKeyDown(virtualKeyCode);
++	Q_EMIT sigOn3dmouseKeyDown(virtualKeyCode);
+ }
+ 
+ void Mouse3DInput::on3dmouseCMDKeyDown(int virtualCMDCode)
+ {
+-	emit sigOn3dmouseCMDKeyDown(virtualCMDCode);
++	Q_EMIT sigOn3dmouseCMDKeyDown(virtualCMDCode);
+ }
+ 
+ void Mouse3DInput::on3dmouseKeyUp(int virtualKeyCode)
+ {
+-	emit sigOn3dmouseKeyUp(virtualKeyCode);
++	Q_EMIT sigOn3dmouseKeyUp(virtualKeyCode);
+ }
+ 
+ void Mouse3DInput::on3dmouseCMDKeyUp(int virtualCMDCode)
+ {
+-	emit sigOn3dmouseCMDKeyUp(virtualCMDCode);
++	Q_EMIT sigOn3dmouseCMDKeyUp(virtualCMDCode);
+ }
+ 
+ void Mouse3DInput::GetMatrix(const std::vector<float>& vec, ccGLMatrixd& mat)
+diff --git a/libs/CCAppCommon/devices/gamepad/GamepadInput.cpp b/libs/CCAppCommon/devices/gamepad/GamepadInput.cpp
+index 49c3e989..b92638fd 100644
+--- a/libs/CCAppCommon/devices/gamepad/GamepadInput.cpp
++++ b/libs/CCAppCommon/devices/gamepad/GamepadInput.cpp
+@@ -164,6 +164,6 @@ void GamepadInput::updateInternalState()
+ 
+ 	if (m_hasRotation || m_hasPanning || m_hasTranslation || m_zoom != 0)
+ 	{
+-		emit updated();
++		Q_EMIT updated();
+ 	}
+ }
+diff --git a/libs/CCAppCommon/src/ccDisplayOptionsDlg.cpp b/libs/CCAppCommon/src/ccDisplayOptionsDlg.cpp
+index e800f244..93370aee 100644
+--- a/libs/CCAppCommon/src/ccDisplayOptionsDlg.cpp
++++ b/libs/CCAppCommon/src/ccDisplayOptionsDlg.cpp
+@@ -441,7 +441,7 @@ void ccDisplayOptionsDlg::doReject()
+ 	ccGui::Set(m_oldParameters);
+ 	ccOptions::Set(m_oldOptions);
+ 
+-	emit aspectHasChanged();
++	Q_EMIT aspectHasChanged();
+ 
+ 	reject();
+ }
+@@ -466,7 +466,7 @@ void ccDisplayOptionsDlg::apply()
+ 		ccApp->setAppStyle(style);
+ 	}
+ 
+-	emit aspectHasChanged();
++	Q_EMIT aspectHasChanged();
+ }
+ 
+ void ccDisplayOptionsDlg::doAccept()
+diff --git a/libs/CCPluginAPI/src/ccColorScaleEditorWidget.cpp b/libs/CCPluginAPI/src/ccColorScaleEditorWidget.cpp
+index 2490e648..8bdb6985 100644
+--- a/libs/CCPluginAPI/src/ccColorScaleEditorWidget.cpp
++++ b/libs/CCPluginAPI/src/ccColorScaleEditorWidget.cpp
+@@ -179,7 +179,7 @@ void ColorBarWidget::mousePressEvent(QMouseEvent* e)
+ 				relativePos = static_cast<double>(e->pos().y() - contentRect.top()) / contentRect.height();
+ 			}
+ 
+-			emit pointClicked(relativePos);
++			Q_EMIT pointClicked(relativePos);
+ 			e->accept();
+ 			return;
+ 		}
+@@ -292,7 +292,7 @@ void SlidersWidget::select(int index, bool silent/*=false*/)
+ 		m_sliders->element(index)->setSelected(true);
+ 
+ 	if (!silent)
+-		emit sliderSelected(index);
++		Q_EMIT sliderSelected(index);
+ }
+ 
+ ColorScaleElementSlider* SlidersWidget::addNewSlider(double relativePos, QColor color)
+@@ -417,7 +417,7 @@ void SlidersWidget::mouseMoveEvent(QMouseEvent* e)
+ 
+ 			m_sliders->sort();
+ 
+-			emit sliderModified(activeSliderIndex);
++			Q_EMIT sliderModified(activeSliderIndex);
+ 
+ 			e->accept();
+ 
+@@ -449,7 +449,7 @@ void SlidersWidget::mouseDoubleClickEvent(QMouseEvent* e)
+ 				if (newColor.isValid() && newColor != slider->getColor())
+ 				{
+ 					slider->setColor(newColor);
+-					emit sliderModified(i);
++					Q_EMIT sliderModified(i);
+ 				}
+ 
+ 				break;
+@@ -659,7 +659,7 @@ void ccColorScaleEditorWidget::onSliderModified(int sliderIndex)
+ 	if (m_labelsWidget)
+ 		m_labelsWidget->update();
+ 
+-	emit stepModified(sliderIndex);
++	Q_EMIT stepModified(sliderIndex);
+ }
+ 
+ void ccColorScaleEditorWidget::setSliders(SharedColorScaleElementSliders sliders)
+@@ -685,7 +685,7 @@ void ccColorScaleEditorWidget::onSliderSelected(int sliderIndex)
+ 	if (m_slidersWidget)
+ 		m_slidersWidget->update();
+ 
+-	emit stepSelected(sliderIndex);
++	Q_EMIT stepSelected(sliderIndex);
+ }
+ 
+ void ccColorScaleEditorWidget::importColorScale(ccColorScale::Shared scale)
+diff --git a/libs/CCPluginAPI/src/ccColorScaleSelector.cpp b/libs/CCPluginAPI/src/ccColorScaleSelector.cpp
+index 905ce589..8b493519 100644
+--- a/libs/CCPluginAPI/src/ccColorScaleSelector.cpp
++++ b/libs/CCPluginAPI/src/ccColorScaleSelector.cpp
+@@ -112,5 +112,5 @@ void ccColorScaleSelector::setSelectedScale(QString uuid)
+ 		return;
+ 	m_comboBox->setCurrentIndex(pos);
+ 
+-	emit colorScaleSelected(pos);
++	Q_EMIT colorScaleSelected(pos);
+ }
+diff --git a/libs/CCPluginAPI/src/ccOverlayDialog.cpp b/libs/CCPluginAPI/src/ccOverlayDialog.cpp
+index 4aea0aae..2f7e5ff2 100644
+--- a/libs/CCPluginAPI/src/ccOverlayDialog.cpp
++++ b/libs/CCPluginAPI/src/ccOverlayDialog.cpp
+@@ -115,7 +115,7 @@ void ccOverlayDialog::stop(bool accepted)
+ 
+ 	linkWith(nullptr);
+ 
+-	emit processFinished(accepted);
++	Q_EMIT processFinished(accepted);
+ }
+ 
+ void ccOverlayDialog::reject()
+@@ -138,7 +138,7 @@ bool ccOverlayDialog::eventFilter(QObject *obj, QEvent *e)
+ 
+ 		if (m_overriddenKeys.contains(keyEvent->key()))
+ 		{
+-			emit shortcutTriggered(keyEvent->key());
++			Q_EMIT shortcutTriggered(keyEvent->key());
+ 			return true;
+ 		}
+ 		else
+@@ -150,7 +150,7 @@ bool ccOverlayDialog::eventFilter(QObject *obj, QEvent *e)
+ 	{
+ 		if (e->type() == QEvent::Show)
+ 		{
+-			emit shown();
++			Q_EMIT shown();
+ 		}
+ 		
+ 		// standard event processing
+diff --git a/libs/qCC_glWindow/src/ccGLWindow.cpp b/libs/qCC_glWindow/src/ccGLWindow.cpp
+index 6a561107..c6a2cc35 100644
+--- a/libs/qCC_glWindow/src/ccGLWindow.cpp
++++ b/libs/qCC_glWindow/src/ccGLWindow.cpp
+@@ -814,7 +814,7 @@ bool ccGLWindow::initialize()
+ 		glFunc->glLoadIdentity();
+ 
+ 		//we emit the 'baseViewMatChanged' signal
+-		emit baseViewMatChanged(m_viewportParams.viewMat);
++		Q_EMIT baseViewMatChanged(m_viewportParams.viewMat);
+ 
+ 		//set viewport and visu. as invalid
+ 		invalidateViewport();
+@@ -1126,7 +1126,7 @@ bool ccGLWindow::event(QEvent* evt)
+ 					float pseudo_wheelDelta_deg = dist < m_touchBaseDist ? -15.0f : 15.0f;
+ 					onWheelEvent(pseudo_wheelDelta_deg);
+ 
+-					emit mouseWheelRotated(pseudo_wheelDelta_deg);
++					Q_EMIT mouseWheelRotated(pseudo_wheelDelta_deg);
+ 				}
+ 				m_touchBaseDist = dist;
+ 				evt->accept();
+@@ -2499,7 +2499,7 @@ void ccGLWindow::draw3D(CC_DRAW_CONTEXT& CONTEXT, RenderingParams& renderingPara
+ 	//for connected items
+ 	if (m_currentLODState.level == 0)
+ 	{
+-		emit drawing3D();
++		Q_EMIT drawing3D();
+ 	}
+ 
+ 	//update LOD information
+@@ -2802,7 +2802,7 @@ void ccGLWindow::dropEvent(QDropEvent *event)
+ 
+ 		if (!fileNames.empty())
+ 		{
+-			emit filesDropped(fileNames);
++			Q_EMIT filesDropped(fileNames);
+ 		}
+ 
+ 		event->acceptProposedAction();
+@@ -2997,7 +2997,7 @@ void ccGLWindow::setFocalDistance(double focalDistance)
+ 
+ 		if (m_viewportParams.objectCenteredView)
+ 		{
+-			emit cameraPosChanged(m_viewportParams.getCameraCenter());
++			Q_EMIT cameraPosChanged(m_viewportParams.getCameraCenter());
+ 		}
+ 
+ 		invalidateViewport();
+@@ -3014,7 +3014,7 @@ void ccGLWindow::setCameraPos(const CCVector3d& P)
+ 
+ 		//ccLog::Print(QString("[ccGLWindow] Focal distance = %1").arg(m_viewportParams.getFocalDistance()));
+ 
+-		emit cameraPosChanged(P);
++		Q_EMIT cameraPosChanged(P);
+ 
+ 		invalidateViewport();
+ 		invalidateVisualization();
+@@ -3055,7 +3055,7 @@ void ccGLWindow::setPivotPoint(	const CCVector3d& P,
+ 	}
+ 
+ 	m_viewportParams.setPivotPoint(P, true);
+-	emit pivotPointChanged(P);
++	Q_EMIT pivotPointChanged(P);
+ 
+ 	if (verbose)
+ 	{
+@@ -3544,7 +3544,7 @@ void ccGLWindow::setBaseViewMat(ccGLMatrixd& mat)
+ 	invalidateVisualization();
+ 
+ 	//we emit the 'baseViewMatChanged' signal
+-	emit baseViewMatChanged(m_viewportParams.viewMat);
++	Q_EMIT baseViewMatChanged(m_viewportParams.viewMat);
+ }
+ 
+ void ccGLWindow::getGLCameraParameters(ccGLCameraParameters& params)
+@@ -3855,7 +3855,7 @@ void ccGLWindow::onItemPickedFast(ccHObject* pickedEntity, int pickedItemIndex,
+ 		}
+ 	}
+ 
+-	emit fastPickingFinished();
++	Q_EMIT fastPickingFinished();
+ }
+ 
+ void ccGLWindow::mousePressEvent(QMouseEvent *event)
+@@ -3881,7 +3881,7 @@ void ccGLWindow::mousePressEvent(QMouseEvent *event)
+ 
+ 		if (m_interactionFlags & INTERACT_SIG_RB_CLICKED)
+ 		{
+-			emit rightButtonClicked(event->x(), event->y());
++			Q_EMIT rightButtonClicked(event->x(), event->y());
+ 		}
+ 	}
+ 	else if (event->buttons() & Qt::LeftButton)
+@@ -3896,7 +3896,7 @@ void ccGLWindow::mousePressEvent(QMouseEvent *event)
+ 
+ 		if (m_interactionFlags & INTERACT_SIG_LB_CLICKED)
+ 		{
+-			emit leftButtonClicked(event->x(), event->y());
++			Q_EMIT leftButtonClicked(event->x(), event->y());
+ 		}
+ 	}
+ 	if (event->buttons() & Qt::MiddleButton)
+@@ -3904,7 +3904,7 @@ void ccGLWindow::mousePressEvent(QMouseEvent *event)
+ 		//middle click = zooming
+ 		if (m_interactionFlags & INTERACT_SIG_MB_CLICKED)
+ 		{
+-			emit middleButtonClicked(event->x(), event->y());
++			Q_EMIT middleButtonClicked(event->x(), event->y());
+ 		}
+ 	}
+ 	else
+@@ -3956,7 +3956,7 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
+ 
+ 	if (m_interactionFlags & INTERACT_SIG_MOUSE_MOVED)
+ 	{
+-		emit mouseMoved(x, y, event->buttons());
++		Q_EMIT mouseMoved(x, y, event->buttons());
+ 		event->accept();
+ 	}
+ 
+@@ -4030,7 +4030,7 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
+ 
+ 				if (m_interactionFlags & INTERACT_TRANSFORM_ENTITIES)
+ 				{
+-					emit translation(u);
++					Q_EMIT translation(u);
+ 				}
+ 				else if (m_customLightEnabled)
+ 				{
+@@ -4309,7 +4309,7 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
+ 					rotMat = m_viewportParams.viewMat.transposed() * rotMat * m_viewportParams.viewMat;
+ 
+ 					//feedback for 'interactive transformation' mode
+-					emit rotation(rotMat);
++					Q_EMIT rotation(rotMat);
+ 				}
+ 				else
+ 				{
+@@ -4319,7 +4319,7 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
+ 					QApplication::changeOverrideCursor(QCursor(Qt::ClosedHandCursor));
+ 
+ 					//feedback for 'echo' mode
+-					emit viewMatRotated(rotMat);
++					Q_EMIT viewMatRotated(rotMat);
+ 				}
+ 			}
+ 		}
+@@ -4330,7 +4330,7 @@ void ccGLWindow::mouseMoveEvent(QMouseEvent *event)
+ 		float pseudo_wheelDelta_deg = static_cast<float>(-dy);
+ 		onWheelEvent(pseudo_wheelDelta_deg);
+ 
+-		emit mouseWheelRotated(pseudo_wheelDelta_deg);
++		Q_EMIT mouseWheelRotated(pseudo_wheelDelta_deg);
+ 	}
+ 
+ 	m_mouseMoved = true;
+@@ -4446,7 +4446,7 @@ void ccGLWindow::mouseReleaseEvent(QMouseEvent *event)
+ 	if (m_interactionFlags & INTERACT_SIG_BUTTON_RELEASED)
+ 	{
+ 		event->accept();
+-		emit buttonReleased();
++		Q_EMIT buttonReleased();
+ 	}
+ 
+ 	if (m_pivotSymbolShown)
+@@ -4575,7 +4575,7 @@ void ccGLWindow::doPicking()
+ 					cc2DLabel* label = dynamic_cast<cc2DLabel*>(pickedObj);
+ 					if (label && !label->isSelected())
+ 					{
+-						emit entitySelectionChanged(label);
++						Q_EMIT entitySelectionChanged(label);
+ 						QApplication::processEvents();
+ 					}
+ 				}
+@@ -4667,7 +4667,7 @@ void ccGLWindow::wheelEvent(QWheelEvent* event)
+ 		float wheelDelta_deg = event->delta() / 8.0f;
+ 		onWheelEvent(wheelDelta_deg);
+ 
+-		emit mouseWheelRotated(wheelDelta_deg);
++		Q_EMIT mouseWheelRotated(wheelDelta_deg);
+ 
+ 		doRedraw = true;
+ 	}
+@@ -4758,13 +4758,13 @@ void ccGLWindow::processPickingResult(	const PickingParameters& params,
+ 	//standard "entity" picking
+ 	if (params.mode == ENTITY_PICKING)
+ 	{
+-		emit entitySelectionChanged(pickedEntity);
++		Q_EMIT entitySelectionChanged(pickedEntity);
+ 	}
+ 	//rectangular "entity" picking
+ 	else if (params.mode == ENTITY_RECT_PICKING)
+ 	{
+ 		if (selectedIDs)
+-			emit entitiesSelectionChanged(*selectedIDs);
++			Q_EMIT entitiesSelectionChanged(*selectedIDs);
+ 		else
+ 			assert(false);
+ 	}
+@@ -4777,12 +4777,12 @@ void ccGLWindow::processPickingResult(	const PickingParameters& params,
+ 		assert(pickedEntity == nullptr || pickedItemIndex >= 0);
+ 		assert(nearestPoint && nearestPointBC);
+ 
+-		emit itemPicked(pickedEntity, static_cast<unsigned>(pickedItemIndex), params.centerX, params.centerY, *nearestPoint, *nearestPointBC);
++		Q_EMIT itemPicked(pickedEntity, static_cast<unsigned>(pickedItemIndex), params.centerX, params.centerY, *nearestPoint, *nearestPointBC);
+ 	}
+ 	//fast picking (labels, interactors, etc.)
+ 	else if (params.mode == FAST_PICKING)
+ 	{
+-		emit itemPickedFast(pickedEntity, pickedItemIndex, params.centerX, params.centerY);
++		Q_EMIT itemPickedFast(pickedEntity, pickedItemIndex, params.centerX, params.centerY);
+ 	}
+ 	else if (params.mode == LABEL_PICKING)
+ 	{
+@@ -4813,7 +4813,7 @@ void ccGLWindow::processPickingResult(	const PickingParameters& params,
+ 				label->setDisplay(pickedEntity->getDisplay());
+ 				label->setPosition(	static_cast<float>(params.centerX + 20) / glWidth(),
+ 									static_cast<float>(params.centerY + 20) / glHeight());
+-				emit newLabel(static_cast<ccHObject*>(label));
++				Q_EMIT newLabel(static_cast<ccHObject*>(label));
+ 				QApplication::processEvents();
+ 
+ 				toBeRefreshed();
+@@ -5785,7 +5785,7 @@ void ccGLWindow::setPerspectiveState(bool state, bool objectCenteredView)
+ 
+ 	setCameraPos(m_viewportParams.getPivotPoint() + cameraCenterToPivot);
+ 
+-	emit perspectiveStateChanged();
++	Q_EMIT perspectiveStateChanged();
+ 
+ 	//auto-save last perspective settings
+ 	{
+@@ -5853,7 +5853,7 @@ void ccGLWindow::setFov(float fov_deg)
+ 								SCREEN_SIZE_MESSAGE);
+ 		}
+ 
+-		emit fovChanged(m_viewportParams.fov_deg);
++		Q_EMIT fovChanged(m_viewportParams.fov_deg);
+ 	}
+ }
+ 
+@@ -5881,7 +5881,7 @@ void ccGLWindow::setBubbleViewFov(float fov_deg)
+ 			invalidateViewport();
+ 			invalidateVisualization();
+ 			deprecate3DLayer();
+-			emit fovChanged(m_bubbleViewFov_deg);
++			Q_EMIT fovChanged(m_bubbleViewFov_deg);
+ 		}
+ 	}
+ }
+@@ -5916,7 +5916,7 @@ void ccGLWindow::setZNearCoef(double coef)
+ 								SCREEN_SIZE_MESSAGE);
+ 		}
+ 
+-		emit zNearCoefChanged(coef);
++		Q_EMIT zNearCoefChanged(coef);
+ 	}
+ }
+ 
+@@ -5935,10 +5935,10 @@ void ccGLWindow::setViewportParameters(const ccViewportParameters& params)
+ 	invalidateVisualization();
+ 	deprecate3DLayer();
+ 
+-	emit baseViewMatChanged(m_viewportParams.viewMat);
+-	emit pivotPointChanged(m_viewportParams.getPivotPoint());
+-	emit cameraPosChanged(m_viewportParams.getCameraCenter());
+-	emit fovChanged(m_viewportParams.fov_deg);
++	Q_EMIT baseViewMatChanged(m_viewportParams.viewMat);
++	Q_EMIT pivotPointChanged(m_viewportParams.getPivotPoint());
++	Q_EMIT cameraPosChanged(m_viewportParams.getCameraCenter());
++	Q_EMIT fovChanged(m_viewportParams.fov_deg);
+ }
+ 
+ void ccGLWindow::rotateBaseViewMat(const ccGLMatrixd& rotMat)
+@@ -5946,7 +5946,7 @@ void ccGLWindow::rotateBaseViewMat(const ccGLMatrixd& rotMat)
+ 	m_viewportParams.viewMat = rotMat * m_viewportParams.viewMat;
+ 
+ 	//we emit the 'baseViewMatChanged' signal
+-	emit baseViewMatChanged(m_viewportParams.viewMat);
++	Q_EMIT baseViewMatChanged(m_viewportParams.viewMat);
+ 
+ 	invalidateVisualization();
+ 	deprecate3DLayer();
+@@ -6021,7 +6021,7 @@ void ccGLWindow::setView(CC_VIEW_ORIENTATION orientation, bool forceRedraw/*=tru
+ 	deprecate3DLayer();
+ 
+ 	//we emit the 'baseViewMatChanged' signal
+-	emit baseViewMatChanged(m_viewportParams.viewMat);
++	Q_EMIT baseViewMatChanged(m_viewportParams.viewMat);
+ 
+ 	if (forceRedraw)
+ 		redraw();
+@@ -6877,7 +6877,7 @@ void ccGLWindow::toggleExclusiveFullScreen(bool state)
+ 	}
+ 	redraw();
+ 
+-	emit exclusiveFullScreenToggled(state);
++	Q_EMIT exclusiveFullScreenToggled(state);
+ }
+ 
+ void ccGLWindow::renderText(int x, int y, const QString & str, uint16_t uniqueID/*=0*/, const QFont & font/*=QFont()*/)
+diff --git a/libs/qCC_io/src/PlyOpenDlg.cpp b/libs/qCC_io/src/PlyOpenDlg.cpp
+index 5da6b7f0..7da2db82 100644
+--- a/libs/qCC_io/src/PlyOpenDlg.cpp
++++ b/libs/qCC_io/src/PlyOpenDlg.cpp
+@@ -392,7 +392,7 @@ void PlyOpenDlg::apply()
+ 	{
+ 		saveContext(&s_lastContext);
+ 		s_lastContext.applyAll = false;
+-		emit fullyAccepted();
++		Q_EMIT fullyAccepted();
+ 	}
+ }
+ 
+@@ -402,7 +402,7 @@ void PlyOpenDlg::applyAll()
+ 	{
+ 		saveContext(&s_lastContext);
+ 		s_lastContext.applyAll = true;
+-		emit fullyAccepted();
++		Q_EMIT fullyAccepted();
+ 	}
+ }
+ 
+diff --git a/plugins/core/Standard/qCloudLayers/src/ccAsprsModel.cpp b/plugins/core/Standard/qCloudLayers/src/ccAsprsModel.cpp
+index 68b83722..433f0c83 100644
+--- a/plugins/core/Standard/qCloudLayers/src/ccAsprsModel.cpp
++++ b/plugins/core/Standard/qCloudLayers/src/ccAsprsModel.cpp
+@@ -136,7 +136,7 @@ bool ccAsprsModel::setData(const QModelIndex& index, const QVariant& value, int
+ 		if (role == Qt::CheckStateRole)
+ 		{
+ 			item.visible = static_cast<Qt::CheckState>(value.toInt()) == Qt::Checked;
+-			emit colorChanged(item);
++			Q_EMIT colorChanged(item);
+ 		}
+ 		else
+ 		{
+@@ -166,7 +166,7 @@ bool ccAsprsModel::setData(const QModelIndex& index, const QVariant& value, int
+ 		{
+ 			int oldCode = item.code;
+ 			item.code = code;
+-			emit codeChanged(item, oldCode);
++			Q_EMIT codeChanged(item, oldCode);
+ 			break;
+ 		}
+ 		else
+@@ -178,7 +178,7 @@ bool ccAsprsModel::setData(const QModelIndex& index, const QVariant& value, int
+ 	case COLOR:
+ 	{
+ 		item.color = value.value<QColor>();
+-		emit colorChanged(item);
++		Q_EMIT colorChanged(item);
+ 	}
+ 	break;
+ 
+@@ -189,7 +189,7 @@ bool ccAsprsModel::setData(const QModelIndex& index, const QVariant& value, int
+ 	break;
+ 	}
+ 
+-	emit dataChanged(index, index);
++	Q_EMIT dataChanged(index, index);
+ 
+ 	return true;
+ }
+@@ -346,7 +346,7 @@ void ccAsprsModel::refreshData()
+ {
+ 	QModelIndex a = createIndex(0, COUNT);
+ 	QModelIndex b = createIndex(m_data.count() - 1, COUNT);
+-	emit dataChanged(a, b);
++	Q_EMIT dataChanged(a, b);
+ }
+ 
+ bool ccAsprsModel::removeRows(int position, int rows, const QModelIndex& parent)
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.cpp b/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.cpp
+index 77540998..b8995376 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.cpp
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/BaseFilter.cpp
+@@ -66,7 +66,7 @@ void BaseFilter::throwError(int errCode)
+ 	else if (errCode < 0)
+ 	{
+ 		//DGM: as libraries shouldn't issue message themselves, it should be sent to the plugin via a signal
+-		emit newErrorMessage(errMsg);
++		Q_EMIT newErrorMessage(errMsg);
+ 	}
+ }
+ 
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/ExtractSIFT.cpp b/plugins/core/Standard/qPCL/PclUtils/filters/ExtractSIFT.cpp
+index c8e151ec..f4b30835 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/ExtractSIFT.cpp
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/ExtractSIFT.cpp
+@@ -276,7 +276,7 @@ int ExtractSIFT::compute()
+ 		cloud->getParent()->addChild(out_cloud_cc);
+ 	}
+ 
+-	emit newEntity(out_cloud_cc);
++	Q_EMIT newEntity(out_cloud_cc);
+ 
+ 	return Success;
+ }
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/FastGlobalRegistrationFilter.cpp b/plugins/core/Standard/qPCL/PclUtils/filters/FastGlobalRegistrationFilter.cpp
+index 92542066..16849b2f 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/FastGlobalRegistrationFilter.cpp
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/FastGlobalRegistrationFilter.cpp
+@@ -307,7 +307,7 @@ int FastGlobalRegistrationFilter::compute()
+ 		ccLog::Print(ccTrans.toString(12, ' ')); //full precision
+ 		ccLog::Print(tr("Hint: copy it (CTRL+C) and apply it - or its inverse - on any entity with the 'Edit > Apply transformation' tool"));
+ 
+-		emit entityHasChanged(alignedCloud);
++		Q_EMIT entityHasChanged(alignedCloud);
+ 	}
+ 
+ 	return Success;
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/MLSSmoothingUpsampling.cpp b/plugins/core/Standard/qPCL/PclUtils/filters/MLSSmoothingUpsampling.cpp
+index 839c7817..e314067d 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/MLSSmoothingUpsampling.cpp
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/MLSSmoothingUpsampling.cpp
+@@ -181,7 +181,7 @@ int MLSSmoothingUpsampling::compute()
+ 		cloud->getParent()->addChild(outputCCCloud);
+ 	}
+ 
+-	emit newEntity(outputCCCloud);
++	Q_EMIT newEntity(outputCCCloud);
+ 
+ 	return Success;
+ }
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/NormalEstimation.cpp b/plugins/core/Standard/qPCL/PclUtils/filters/NormalEstimation.cpp
+index 6b8832ec..a07c9bb1 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/NormalEstimation.cpp
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/NormalEstimation.cpp
+@@ -155,7 +155,7 @@ int NormalEstimation::compute()
+ 	TO_PCL_CLOUD(rawCloudWithNormals, *cloudWithNormals);
+ 	pcl2cc::CopyScalarField(*cloudWithNormals, "curvature", *cloud, m_overwrite_curvature);
+ 
+-	emit entityHasChanged(cloud);
++	Q_EMIT entityHasChanged(cloud);
+ 
+ 	return Success;
+ }
+diff --git a/plugins/core/Standard/qPCL/PclUtils/filters/StatisticalOutliersRemover.cpp b/plugins/core/Standard/qPCL/PclUtils/filters/StatisticalOutliersRemover.cpp
+index 205626c8..d16732cb 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/filters/StatisticalOutliersRemover.cpp
++++ b/plugins/core/Standard/qPCL/PclUtils/filters/StatisticalOutliersRemover.cpp
+@@ -95,7 +95,7 @@ int StatisticalOutliersRemover::compute()
+ 		cloud->getParent()->addChild(final_cloud);
+ 	}
+ 
+-	emit newEntity(final_cloud);
++	Q_EMIT newEntity(final_cloud);
+ 
+ 	return Success;
+ }
+diff --git a/qCC/ccHistogramWindow.cpp b/qCC/ccHistogramWindow.cpp
+index 3fb37707..71f5eb98 100644
+--- a/qCC/ccHistogramWindow.cpp
++++ b/qCC/ccHistogramWindow.cpp
+@@ -658,7 +658,7 @@ void ccHistogramWindow::setMinDispValue(double val)
+ 			replot();
+ 		}
+ 
+-		emit sfMinDispValChanged(val);
++		Q_EMIT sfMinDispValChanged(val);
+ 	}
+ }
+ 
+@@ -680,7 +680,7 @@ void ccHistogramWindow::setMaxDispValue(double val)
+ 			replot();
+ 		}
+ 
+-		emit sfMaxDispValChanged(val);
++		Q_EMIT sfMaxDispValChanged(val);
+ 	}
+ }
+ 
+@@ -702,7 +702,7 @@ void ccHistogramWindow::setMinSatValue(double val)
+ 			replot();
+ 		}
+ 
+-		emit sfMinSatValChanged(val);
++		Q_EMIT sfMinSatValChanged(val);
+ 	}
+ }
+ 
+@@ -724,7 +724,7 @@ void ccHistogramWindow::setMaxSatValue(double val)
+ 			replot();
+ 		}
+ 
+-		emit sfMaxSatValChanged(val);
++		Q_EMIT sfMaxSatValChanged(val);
+ 	}
+ }
+ 
+diff --git a/qCC/ccPointPropertiesDlg.cpp b/qCC/ccPointPropertiesDlg.cpp
+index 5d98bd6b..4b8546ce 100644
+--- a/qCC/ccPointPropertiesDlg.cpp
++++ b/qCC/ccPointPropertiesDlg.cpp
+@@ -248,7 +248,7 @@ void ccPointPropertiesDlg::exportCurrentLabel()
+ 		m_label->setSelected(true);
+ 	}
+ 
+-	emit newLabel(labelObject);
++	Q_EMIT newLabel(labelObject);
+ 
+ 	if (m_associatedWin)
+ 	{
+diff --git a/qCC/db_tree/ccDBRoot.cpp b/qCC/db_tree/ccDBRoot.cpp
+index 0b8c19c0..9abb8d29 100644
+--- a/qCC/db_tree/ccDBRoot.cpp
++++ b/qCC/db_tree/ccDBRoot.cpp
+@@ -343,7 +343,7 @@ void ccDBRoot::unloadAll()
+ 		endRemoveRows();
+ 	}
+ 
+-	emit dbIsEmpty();
++	Q_EMIT dbIsEmpty();
+ 
+ 	updatePropertiesView();
+ 
+@@ -414,7 +414,7 @@ void ccDBRoot::addElement(ccHObject* object, bool autoExpand/*=true*/)
+ 
+ 	if (wasEmpty && m_treeRoot->getChildrenNumber() != 0)
+ 	{
+-		emit dbIsNotEmptyAnymore();
++		Q_EMIT dbIsNotEmptyAnymore();
+ 	}
+ }
+ 
+@@ -470,7 +470,7 @@ void ccDBRoot::removeElements(ccHObject::Container& objects)
+ 
+ 	if (m_treeRoot->getChildrenNumber() == 0)
+ 	{
+-		emit dbIsEmpty();
++		Q_EMIT dbIsEmpty();
+ 	}
+ }
+ 
+@@ -513,7 +513,7 @@ void ccDBRoot::removeElement(ccHObject* object)
+ 
+ 	if (m_treeRoot->getChildrenNumber() == 0)
+ 	{
+-		emit dbIsEmpty();
++		Q_EMIT dbIsEmpty();
+ 	}
+ }
+ 
+@@ -609,7 +609,7 @@ void ccDBRoot::deleteSelectedEntities()
+ 
+ 	if (m_treeRoot->getChildrenNumber() == 0)
+ 	{
+-		emit dbIsEmpty();
++		Q_EMIT dbIsEmpty();
+ 	}
+ 
+ 	MainWindow::RefreshAllGLWindow(false);
+@@ -738,7 +738,7 @@ bool ccDBRoot::setData(const QModelIndex& idx, const QVariant& value, int role)
+ 
+ 				reflectObjectPropChange(item);
+ 
+-				emit dataChanged(idx, idx);
++				Q_EMIT dataChanged(idx, idx);
+ 			}
+ 
+ 			return true;
+@@ -884,7 +884,7 @@ void ccDBRoot::changeSelection(const QItemSelection & selected, const QItemSelec
+ 
+ 	MainWindow::RefreshAllGLWindow();
+ 
+-	emit selectionChanged();
++	Q_EMIT selectionChanged();
+ }
+ 
+ void ccDBRoot::unselectEntity(ccHObject* obj)
+@@ -1101,7 +1101,7 @@ void ccDBRoot::updatePropertiesView()
+ 
+ 	for (const QModelIndex& idx : selectedIndexes)
+ 	{
+-		emit dataChanged(idx, idx);
++		Q_EMIT dataChanged(idx, idx);
+ 	}
+ }
+ 
+@@ -1112,7 +1112,7 @@ void ccDBRoot::updateCCObject(ccHObject* object)
+ 	QModelIndex idx = index(object);
+ 
+ 	if (idx.isValid())
+-		emit dataChanged(idx, idx);
++		Q_EMIT dataChanged(idx, idx);
+ }
+ 
+ void ccDBRoot::redrawCCObject(ccHObject* object)
+diff --git a/qCC/db_tree/ccPropertiesTreeDelegate.cpp b/qCC/db_tree/ccPropertiesTreeDelegate.cpp
+index 21e9a81c..53801ad5 100644
+--- a/qCC/db_tree/ccPropertiesTreeDelegate.cpp
++++ b/qCC/db_tree/ccPropertiesTreeDelegate.cpp
+@@ -2014,7 +2014,7 @@ void ccPropertiesTreeDelegate::updateItem(QStandardItem * item)
+ 	{
+ 	case OBJECT_NAME:
+ 		m_currentObject->setName(item->text());
+-		emit ccObjectPropertiesChanged(m_currentObject);
++		Q_EMIT ccObjectPropertiesChanged(m_currentObject);
+ 		break;
+ 	case OBJECT_VISIBILITY:
+ 	{
+@@ -2024,9 +2024,9 @@ void ccPropertiesTreeDelegate::updateItem(QStandardItem * item)
+ 		if (objectWasDisplayed != objectIsDisplayed)
+ 		{
+ 			if (m_currentObject->isGroup())
+-				emit ccObjectAndChildrenAppearanceChanged(m_currentObject);
++				Q_EMIT ccObjectAndChildrenAppearanceChanged(m_currentObject);
+ 			else
+-				emit ccObjectAppearanceChanged(m_currentObject);
++				Q_EMIT ccObjectAppearanceChanged(m_currentObject);
+ 		}
+ 	}
+ 	break;
+@@ -2203,11 +2203,11 @@ void ccPropertiesTreeDelegate::updateDisplay()
+ 	{
+ 		if (object->isGroup())
+ 		{
+-			emit ccObjectAndChildrenAppearanceChanged(m_currentObject);
++			Q_EMIT ccObjectAndChildrenAppearanceChanged(m_currentObject);
+ 		}
+ 		else
+ 		{
+-			emit ccObjectAppearanceChanged(m_currentObject);
++			Q_EMIT ccObjectAppearanceChanged(m_currentObject);
+ 		}
+ 	}
+ }
+diff --git a/qCC/db_tree/sfEditDlg.cpp b/qCC/db_tree/sfEditDlg.cpp
+index 994f4528..0d38f865 100644
+--- a/qCC/db_tree/sfEditDlg.cpp
++++ b/qCC/db_tree/sfEditDlg.cpp
+@@ -197,7 +197,7 @@ void sfEditDlg::minValSBChanged(double val)
+ 
+ 	m_associatedSFHisto->setMinDispValue(val);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ 
+@@ -210,7 +210,7 @@ void sfEditDlg::maxValSBChanged(double val)
+ 
+ 	m_associatedSFHisto->setMaxDispValue(val);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -222,7 +222,7 @@ void sfEditDlg::minSatSBChanged(double val)
+ 
+ 	m_associatedSFHisto->setMinSatValue(val);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -234,7 +234,7 @@ void sfEditDlg::maxSatSBChanged(double val)
+ 
+ 	m_associatedSFHisto->setMaxSatValue(val);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -248,7 +248,7 @@ void sfEditDlg::minValHistoChanged(double val)
+ 	m_ui->minValSpinBox->setValue(val);
+ 	m_ui->minValSpinBox->blockSignals(false);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -262,7 +262,7 @@ void sfEditDlg::maxValHistoChanged(double val)
+ 	m_ui->maxValSpinBox->setValue(val);
+ 	m_ui->maxValSpinBox->blockSignals(false);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -276,7 +276,7 @@ void sfEditDlg::minSatHistoChanged(double val)
+ 	m_ui->minSatSpinBox->setValue(val);
+ 	m_ui->minSatSpinBox->blockSignals(false);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -290,7 +290,7 @@ void sfEditDlg::maxSatHistoChanged(double val)
+ 	m_ui->maxSatSpinBox->setValue(val);
+ 	m_ui->maxSatSpinBox->blockSignals(false);
+ 
+-	emit entitySFHasChanged();
++	Q_EMIT entitySFHasChanged();
+ 
+ 	QApplication::processEvents();
+ }
+@@ -303,7 +303,7 @@ void sfEditDlg::nanInGrayChanged(bool state)
+ 	if (m_associatedSF->areNaNValuesShownInGrey() != state)
+ 	{
+ 		m_associatedSF->showNaNValuesInGrey(state);
+-		emit entitySFHasChanged();
++		Q_EMIT entitySFHasChanged();
+ 
+ 		//m_associatedSFHisto->refreshBars();
+ 	}
+@@ -317,7 +317,7 @@ void sfEditDlg::alwaysShow0Changed(bool state)
+ 	if (m_associatedSF->isZeroAlwaysShown() != state)
+ 	{
+ 		m_associatedSF->alwaysShowZero(state);
+-		emit entitySFHasChanged();
++		Q_EMIT entitySFHasChanged();
+ 
+ 		//m_associatedSFHisto->refreshBars();
+ 	}
+@@ -332,7 +332,7 @@ void sfEditDlg::symmetricalScaleChanged(bool state)
+ 	{
+ 		m_associatedSF->setSymmetricalScale(state);
+ 		fillDialogWith(m_associatedSF); //the saturation sliders may need to be updated!
+-		emit entitySFHasChanged();
++		Q_EMIT entitySFHasChanged();
+ 
+ 		//Saturation might change!
+ 		m_associatedSFHisto->refresh();
+@@ -349,7 +349,7 @@ void sfEditDlg::logScaleChanged(bool state)
+ 	{
+ 		m_associatedSF->setLogScale(state);
+ 		fillDialogWith(m_associatedSF); //the saturation sliders + the symmetrical scale checkbox may need to be updated!
+-		emit entitySFHasChanged();
++		Q_EMIT entitySFHasChanged();
+ 
+ 		//Saturation might change!
+ 		m_associatedSFHisto->refresh();
+diff --git a/qCC/extern/QCustomPlot/qcustomplot.cpp b/qCC/extern/QCustomPlot/qcustomplot.cpp
+index 04f3147d..aab879b4 100644
+--- a/qCC/extern/QCustomPlot/qcustomplot.cpp
++++ b/qCC/extern/QCustomPlot/qcustomplot.cpp
+@@ -1584,7 +1584,7 @@ bool QCPLayerable::moveToLayer(QCPLayer *layer, bool prepend)
+   if (mLayer)
+     mLayer->addChild(this, prepend);
+   if (mLayer != oldLayer)
+-    emit layerChanged(mLayer);
++    Q_EMIT layerChanged(mLayer);
+   return true;
+ }
+ 
+@@ -2772,7 +2772,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
+   \ref QCP::srmNone. When the user drags the mouse across the plot, the current selection rect
+   instance (\ref QCustomPlot::setSelectionRect) is forwarded these events and makes sure an
+   according rect shape is drawn. At the begin, during, and after completion of the interaction, it
+-  emits the corresponding signals \ref started, \ref changed, \ref canceled, and \ref accepted.
++  Q_EMITs the corresponding signals \ref started, \ref changed, \ref canceled, and \ref accepted.
+   
+   The QCustomPlot instance connects own slots to the current selection rect instance, in order to
+   react to an accepted selection rect interaction accordingly.
+@@ -2905,7 +2905,7 @@ void QCPSelectionRect::cancel()
+   if (mActive)
+   {
+     mActive = false;
+-    emit canceled(mRect, nullptr);
++    Q_EMIT canceled(mRect, nullptr);
+   }
+ }
+ 
+@@ -2919,7 +2919,7 @@ void QCPSelectionRect::startSelection(QMouseEvent *event)
+ {
+   mActive = true;
+   mRect = QRect(event->pos(), event->pos());
+-  emit started(event);
++  Q_EMIT started(event);
+ }
+ 
+ /*! \internal
+@@ -2931,7 +2931,7 @@ void QCPSelectionRect::startSelection(QMouseEvent *event)
+ void QCPSelectionRect::moveSelection(QMouseEvent *event)
+ {
+   mRect.setBottomRight(event->pos());
+-  emit changed(mRect, event);
++  Q_EMIT changed(mRect, event);
+   layer()->replot();
+ }
+ 
+@@ -2945,7 +2945,7 @@ void QCPSelectionRect::endSelection(QMouseEvent *event)
+ {
+   mRect.setBottomRight(event->pos());
+   mActive = false;
+-  emit accepted(mRect, event);
++  Q_EMIT accepted(mRect, event);
+ }
+ 
+ /*! \internal
+@@ -2959,7 +2959,7 @@ void QCPSelectionRect::keyPressEvent(QKeyEvent *event)
+   if (event->key() == Qt::Key_Escape && mActive)
+   {
+     mActive = false;
+-    emit canceled(mRect, event);
++    Q_EMIT canceled(mRect, event);
+   }
+ }
+ 
+@@ -8370,7 +8370,7 @@ void QCPAxis::setScaleType(QCPAxis::ScaleType type)
+     if (mScaleType == stLogarithmic)
+       setRange(mRange.sanitizedForLogScale());
+     mCachedMarginValid = false;
+-    emit scaleTypeChanged(mScaleType);
++    Q_EMIT scaleTypeChanged(mScaleType);
+   }
+ }
+ 
+@@ -8396,8 +8396,8 @@ void QCPAxis::setRange(const QCPRange &range)
+   {
+     mRange = range.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -8415,7 +8415,7 @@ void QCPAxis::setSelectableParts(const SelectableParts &selectable)
+   if (mSelectableParts != selectable)
+   {
+     mSelectableParts = selectable;
+-    emit selectableChanged(mSelectableParts);
++    Q_EMIT selectableChanged(mSelectableParts);
+   }
+ }
+ 
+@@ -8429,7 +8429,7 @@ void QCPAxis::setSelectableParts(const SelectableParts &selectable)
+   
+   This function can change the selection state of a part, independent of the \ref setSelectableParts setting.
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   \see SelectablePart, setSelectableParts, selectTest, setSelectedBasePen, setSelectedTickPen, setSelectedSubTickPen,
+   setSelectedTickLabelFont, setSelectedLabelFont, setSelectedTickLabelColor, setSelectedLabelColor
+@@ -8439,7 +8439,7 @@ void QCPAxis::setSelectedParts(const SelectableParts &selected)
+   if (mSelectedParts != selected)
+   {
+     mSelectedParts = selected;
+-    emit selectionChanged(mSelectedParts);
++    Q_EMIT selectionChanged(mSelectedParts);
+   }
+ }
+ 
+@@ -8468,8 +8468,8 @@ void QCPAxis::setRange(double lower, double upper)
+   {
+     mRange = mRange.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -8511,8 +8511,8 @@ void QCPAxis::setRangeLower(double lower)
+   {
+     mRange = mRange.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -8533,8 +8533,8 @@ void QCPAxis::setRangeUpper(double upper)
+   {
+     mRange = mRange.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -9120,8 +9120,8 @@ void QCPAxis::moveRange(double diff)
+     mRange.lower *= diff;
+     mRange.upper *= diff;
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -9169,8 +9169,8 @@ void QCPAxis::scaleRange(double factor, double center)
+     } else
+       qDebug() << Q_FUNC_INFO << "Center of scaling operation doesn't lie in same logarithmic sign domain as range:" << center;
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -11546,7 +11546,7 @@ void QCPAbstractPlottable::setValueAxis(QCPAxis *axis)
+   QCP::SelectionType set via \ref setSelectable, the resulting selection will be adjusted
+   accordingly (see \ref QCPDataSelection::enforceType).
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   \see setSelectable, selectTest
+ */
+@@ -11556,8 +11556,8 @@ void QCPAbstractPlottable::setSelection(QCPDataSelection selection)
+   if (mSelection != selection)
+   {
+     mSelection = selection;
+-    emit selectionChanged(selected());
+-    emit selectionChanged(mSelection);
++    Q_EMIT selectionChanged(selected());
++    Q_EMIT selectionChanged(mSelection);
+   }
+ }
+ 
+@@ -11603,11 +11603,11 @@ void QCPAbstractPlottable::setSelectable(QCP::SelectionType selectable)
+     mSelectable = selectable;
+     QCPDataSelection oldSelection = mSelection;
+     mSelection.enforceType(mSelectable);
+-    emit selectableChanged(mSelectable);
++    Q_EMIT selectableChanged(mSelectable);
+     if (mSelection != oldSelection)
+     {
+-      emit selectionChanged(selected());
+-      emit selectionChanged(mSelection);
++      Q_EMIT selectionChanged(selected());
++      Q_EMIT selectionChanged(mSelection);
+     }
+   }
+ }
+@@ -12992,7 +12992,7 @@ void QCPAbstractItem::setSelectable(bool selectable)
+   if (mSelectable != selectable)
+   {
+     mSelectable = selectable;
+-    emit selectableChanged(mSelectable);
++    Q_EMIT selectableChanged(mSelectable);
+   }
+ }
+ 
+@@ -13006,7 +13006,7 @@ void QCPAbstractItem::setSelectable(bool selectable)
+   
+   This function can change the selection state even when \ref setSelectable was set to false.
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   \see setSelectable, selectTest
+ */
+@@ -13015,7 +13015,7 @@ void QCPAbstractItem::setSelected(bool selected)
+   if (mSelected != selected)
+   {
+     mSelected = selected;
+-    emit selectionChanged(mSelected);
++    Q_EMIT selectionChanged(mSelected);
+   }
+ }
+ 
+@@ -13849,7 +13849,7 @@ void QCustomPlot::setAutoAddPlottableToLegend(bool on)
+   need to check their selected state explicitly.
+   
+   If the selection state has changed by user interaction, the \ref selectionChangedByUser signal is
+-  emitted. Each selectable object additionally emits an individual selectionChanged signal whenever
++  Q_EMITted. Each selectable object additionally Q_EMITs an individual selectionChanged signal whenever
+   their selection state has changed, i.e. not only by user interaction.
+   
+   To allow multiple objects to be selected by holding the selection modifier (\ref
+@@ -15128,7 +15128,7 @@ void QCustomPlot::replot(QCustomPlot::RefreshPriority refreshPriority)
+     return;
+   mReplotting = true;
+   mReplotQueued = false;
+-  emit beforeReplot();
++  Q_EMIT beforeReplot();
+   
+ # if QT_VERSION < QT_VERSION_CHECK(4, 8, 0)
+   QTime replotTimer;
+@@ -15161,7 +15161,7 @@ void QCustomPlot::replot(QCustomPlot::RefreshPriority refreshPriority)
+   else
+     mReplotTimeAverage = mReplotTime; // no previous replots to average with, so initialize with replot time
+   
+-  emit afterReplot();
++  Q_EMIT afterReplot();
+   mReplotting = false;
+ }
+ 
+@@ -15504,7 +15504,7 @@ void QCustomPlot::resizeEvent(QResizeEvent *event)
+ */
+ void QCustomPlot::mouseDoubleClickEvent(QMouseEvent *event)
+ {
+-  emit mouseDoubleClick(event);
++  Q_EMIT mouseDoubleClick(event);
+   mMouseHasMoved = false;
+   mMousePressPos = event->pos();
+   
+@@ -15531,15 +15531,15 @@ void QCustomPlot::mouseDoubleClickEvent(QMouseEvent *event)
+       int dataIndex = 0;
+       if (!details.first().value<QCPDataSelection>().isEmpty())
+         dataIndex = details.first().value<QCPDataSelection>().dataRange().begin();
+-      emit plottableDoubleClick(ap, dataIndex, event);
++      Q_EMIT plottableDoubleClick(ap, dataIndex, event);
+     } else if (QCPAxis *ax = qobject_cast<QCPAxis*>(candidates.first()))
+-      emit axisDoubleClick(ax, details.first().value<QCPAxis::SelectablePart>(), event);
++      Q_EMIT axisDoubleClick(ax, details.first().value<QCPAxis::SelectablePart>(), event);
+     else if (QCPAbstractItem *ai = qobject_cast<QCPAbstractItem*>(candidates.first()))
+-      emit itemDoubleClick(ai, event);
++      Q_EMIT itemDoubleClick(ai, event);
+     else if (QCPLegend *lg = qobject_cast<QCPLegend*>(candidates.first()))
+-      emit legendDoubleClick(lg, nullptr, event);
++      Q_EMIT legendDoubleClick(lg, nullptr, event);
+     else if (QCPAbstractLegendItem *li = qobject_cast<QCPAbstractLegendItem*>(candidates.first()))
+-      emit legendDoubleClick(li->parentLegend(), li, event);
++      Q_EMIT legendDoubleClick(li->parentLegend(), li, event);
+   }
+   
+   event->accept(); // in case QCPLayerable reimplementation manipulates event accepted state. In QWidget event system, QCustomPlot wants to accept the event.
+@@ -15556,7 +15556,7 @@ void QCustomPlot::mouseDoubleClickEvent(QMouseEvent *event)
+ */
+ void QCustomPlot::mousePressEvent(QMouseEvent *event)
+ {
+-  emit mousePress(event);
++  Q_EMIT mousePress(event);
+   // save some state to tell in releaseEvent whether it was a click:
+   mMouseHasMoved = false;
+   mMousePressPos = event->pos();
+@@ -15606,7 +15606,7 @@ void QCustomPlot::mousePressEvent(QMouseEvent *event)
+ */
+ void QCustomPlot::mouseMoveEvent(QMouseEvent *event)
+ {
+-  emit mouseMove(event);
++  Q_EMIT mouseMove(event);
+   
+   if (!mMouseHasMoved && (mMousePressPos-event->pos()).manhattanLength() > 3)
+     mMouseHasMoved = true; // moved too far from mouse press position, don't handle as click on mouse release
+@@ -15635,7 +15635,7 @@ void QCustomPlot::mouseMoveEvent(QMouseEvent *event)
+ */
+ void QCustomPlot::mouseReleaseEvent(QMouseEvent *event)
+ {
+-  emit mouseRelease(event);
++  Q_EMIT mouseRelease(event);
+   
+   if (!mMouseHasMoved) // mouse hasn't moved (much) between press and release, so handle as click
+   {
+@@ -15650,15 +15650,15 @@ void QCustomPlot::mouseReleaseEvent(QMouseEvent *event)
+       int dataIndex = 0;
+       if (!mMouseSignalLayerableDetails.value<QCPDataSelection>().isEmpty())
+         dataIndex = mMouseSignalLayerableDetails.value<QCPDataSelection>().dataRange().begin();
+-      emit plottableClick(ap, dataIndex, event);
++      Q_EMIT plottableClick(ap, dataIndex, event);
+     } else if (QCPAxis *ax = qobject_cast<QCPAxis*>(mMouseSignalLayerable))
+-      emit axisClick(ax, mMouseSignalLayerableDetails.value<QCPAxis::SelectablePart>(), event);
++      Q_EMIT axisClick(ax, mMouseSignalLayerableDetails.value<QCPAxis::SelectablePart>(), event);
+     else if (QCPAbstractItem *ai = qobject_cast<QCPAbstractItem*>(mMouseSignalLayerable))
+-      emit itemClick(ai, event);
++      Q_EMIT itemClick(ai, event);
+     else if (QCPLegend *lg = qobject_cast<QCPLegend*>(mMouseSignalLayerable))
+-      emit legendClick(lg, nullptr, event);
++      Q_EMIT legendClick(lg, nullptr, event);
+     else if (QCPAbstractLegendItem *li = qobject_cast<QCPAbstractLegendItem*>(mMouseSignalLayerable))
+-      emit legendClick(li->parentLegend(), li, event);
++      Q_EMIT legendClick(li->parentLegend(), li, event);
+     mMouseSignalLayerable = nullptr;
+   }
+   
+@@ -15689,7 +15689,7 @@ void QCustomPlot::mouseReleaseEvent(QMouseEvent *event)
+ */
+ void QCustomPlot::wheelEvent(QWheelEvent *event)
+ {
+-  emit mouseWheel(event);
++  Q_EMIT mouseWheel(event);
+   
+ #if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+   const QPointF pos = event->pos();
+@@ -15756,7 +15756,7 @@ void QCustomPlot::updateLayout()
+   mPlotLayout->update(QCPLayoutElement::upMargins);
+   mPlotLayout->update(QCPLayoutElement::upLayout);
+ 
+-  emit afterLayout();
++  Q_EMIT afterLayout();
+ }
+ 
+ /*! \internal
+@@ -16098,7 +16098,7 @@ void QCustomPlot::processRectSelection(QRect rect, QMouseEvent *event)
+   
+   if (selectionStateChanged)
+   {
+-    emit selectionChangedByUser();
++    Q_EMIT selectionChangedByUser();
+     replot(rpQueuedReplot);
+   } else if (mSelectionRect)
+     mSelectionRect->layer()->replot();
+@@ -16175,7 +16175,7 @@ void QCustomPlot::processPointSelection(QMouseEvent *event)
+   }
+   if (selectionStateChanged)
+   {
+-    emit selectionChangedByUser();
++    Q_EMIT selectionChangedByUser();
+     replot(rpQueuedReplot);
+   }
+ }
+@@ -18796,7 +18796,7 @@ void QCPAbstractLegendItem::setSelectable(bool selectable)
+   if (mSelectable != selectable)
+   {
+     mSelectable = selectable;
+-    emit selectableChanged(mSelectable);
++    Q_EMIT selectableChanged(mSelectable);
+   }
+ }
+ 
+@@ -18813,7 +18813,7 @@ void QCPAbstractLegendItem::setSelected(bool selected)
+   if (mSelected != selected)
+   {
+     mSelected = selected;
+-    emit selectionChanged(mSelected);
++    Q_EMIT selectionChanged(mSelected);
+   }
+ }
+ 
+@@ -19211,7 +19211,7 @@ void QCPLegend::setSelectableParts(const SelectableParts &selectable)
+   if (mSelectableParts != selectable)
+   {
+     mSelectableParts = selectable;
+-    emit selectableChanged(mSelectableParts);
++    Q_EMIT selectableChanged(mSelectableParts);
+   }
+ }
+ 
+@@ -19227,7 +19227,7 @@ void QCPLegend::setSelectableParts(const SelectableParts &selectable)
+   This function can change the selection state of a part even when \ref setSelectableParts was set to a
+   value that actually excludes the part.
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   Note that it doesn't make sense to set the selected state \ref spItems here when it wasn't set
+   before, because there's no way to specify which exact items to newly select. Do this by calling
+@@ -19257,7 +19257,7 @@ void QCPLegend::setSelectedParts(const SelectableParts &selected)
+       }
+     }
+     mSelectedParts = newSelected;
+-    emit selectionChanged(mSelectedParts);
++    Q_EMIT selectionChanged(mSelectedParts);
+   }
+ }
+ 
+@@ -19856,7 +19856,7 @@ void QCPTextElement::setSelectable(bool selectable)
+   if (mSelectable != selectable)
+   {
+     mSelectable = selectable;
+-    emit selectableChanged(mSelectable);
++    Q_EMIT selectableChanged(mSelectable);
+   }
+ }
+ 
+@@ -19872,7 +19872,7 @@ void QCPTextElement::setSelected(bool selected)
+   if (mSelected != selected)
+   {
+     mSelected = selected;
+-    emit selectionChanged(mSelected);
++    Q_EMIT selectionChanged(mSelected);
+   }
+ }
+ 
+@@ -19979,7 +19979,7 @@ void QCPTextElement::mousePressEvent(QMouseEvent *event, const QVariant &details
+ void QCPTextElement::mouseReleaseEvent(QMouseEvent *event, const QPointF &startPos)
+ {
+   if ((QPointF(event->pos())-startPos).manhattanLength() <= 3)
+-    emit clicked(event);
++    Q_EMIT clicked(event);
+ }
+ 
+ /*!
+@@ -19990,7 +19990,7 @@ void QCPTextElement::mouseReleaseEvent(QMouseEvent *event, const QPointF &startP
+ void QCPTextElement::mouseDoubleClickEvent(QMouseEvent *event, const QVariant &details)
+ {
+   Q_UNUSED(details)
+-  emit doubleClicked(event);
++  Q_EMIT doubleClicked(event);
+ }
+ 
+ /*! \internal
+@@ -20231,7 +20231,7 @@ void QCPColorScale::setDataRange(const QCPRange &dataRange)
+     mDataRange = dataRange;
+     if (mColorAxis)
+       mColorAxis.data()->setRange(mDataRange);
+-    emit dataRangeChanged(mDataRange);
++    Q_EMIT dataRangeChanged(mDataRange);
+   }
+ }
+ 
+@@ -20263,7 +20263,7 @@ void QCPColorScale::setDataScaleType(QCPAxis::ScaleType scaleType)
+       mColorAxis.data()->setScaleType(mDataScaleType);
+     if (mDataScaleType == QCPAxis::stLogarithmic)
+       setDataRange(mDataRange.sanitizedForLogScale());
+-    emit dataScaleTypeChanged(mDataScaleType);
++    Q_EMIT dataScaleTypeChanged(mDataScaleType);
+   }
+ }
+ 
+@@ -20281,7 +20281,7 @@ void QCPColorScale::setGradient(const QCPColorGradient &gradient)
+     mGradient = gradient;
+     if (mAxisRect)
+       mAxisRect.data()->mGradientImageInvalidated = true;
+-    emit gradientChanged(mGradient);
++    Q_EMIT gradientChanged(mGradient);
+   }
+ }
+ 
+@@ -26464,7 +26464,7 @@ void QCPColorMap::setDataRange(const QCPRange &dataRange)
+     else
+       mDataRange = dataRange.sanitizedForLinScale();
+     mMapImageInvalidated = true;
+-    emit dataRangeChanged(mDataRange);
++    Q_EMIT dataRangeChanged(mDataRange);
+   }
+ }
+ 
+@@ -26479,7 +26479,7 @@ void QCPColorMap::setDataScaleType(QCPAxis::ScaleType scaleType)
+   {
+     mDataScaleType = scaleType;
+     mMapImageInvalidated = true;
+-    emit dataScaleTypeChanged(mDataScaleType);
++    Q_EMIT dataScaleTypeChanged(mDataScaleType);
+     if (mDataScaleType == QCPAxis::stLogarithmic)
+       setDataRange(mDataRange.sanitizedForLogScale());
+   }
+@@ -26502,7 +26502,7 @@ void QCPColorMap::setGradient(const QCPColorGradient &gradient)
+   {
+     mGradient = gradient;
+     mMapImageInvalidated = true;
+-    emit gradientChanged(mGradient);
++    Q_EMIT gradientChanged(mGradient);
+   }
+ }
+ 
+@@ -31219,7 +31219,7 @@ void QCPPolarAxisRadial::setScaleType(QCPPolarAxisRadial::ScaleType type)
+     if (mScaleType == stLogarithmic)
+       setRange(mRange.sanitizedForLogScale());
+     //mCachedMarginValid = false;
+-    emit scaleTypeChanged(mScaleType);
++    Q_EMIT scaleTypeChanged(mScaleType);
+   }
+ }
+ 
+@@ -31245,8 +31245,8 @@ void QCPPolarAxisRadial::setRange(const QCPRange &range)
+   {
+     mRange = range.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -31264,7 +31264,7 @@ void QCPPolarAxisRadial::setSelectableParts(const SelectableParts &selectable)
+   if (mSelectableParts != selectable)
+   {
+     mSelectableParts = selectable;
+-    emit selectableChanged(mSelectableParts);
++    Q_EMIT selectableChanged(mSelectableParts);
+   }
+ }
+ 
+@@ -31278,7 +31278,7 @@ void QCPPolarAxisRadial::setSelectableParts(const SelectableParts &selectable)
+   
+   This function can change the selection state of a part, independent of the \ref setSelectableParts setting.
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   \see SelectablePart, setSelectableParts, selectTest, setSelectedBasePen, setSelectedTickPen, setSelectedSubTickPen,
+   setSelectedTickLabelFont, setSelectedLabelFont, setSelectedTickLabelColor, setSelectedLabelColor
+@@ -31288,7 +31288,7 @@ void QCPPolarAxisRadial::setSelectedParts(const SelectableParts &selected)
+   if (mSelectedParts != selected)
+   {
+     mSelectedParts = selected;
+-    emit selectionChanged(mSelectedParts);
++    Q_EMIT selectionChanged(mSelectedParts);
+   }
+ }
+ 
+@@ -31317,8 +31317,8 @@ void QCPPolarAxisRadial::setRange(double lower, double upper)
+   {
+     mRange = mRange.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -31360,8 +31360,8 @@ void QCPPolarAxisRadial::setRangeLower(double lower)
+   {
+     mRange = mRange.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -31382,8 +31382,8 @@ void QCPPolarAxisRadial::setRangeUpper(double upper)
+   {
+     mRange = mRange.sanitizedForLinScale();
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -31895,8 +31895,8 @@ void QCPPolarAxisRadial::moveRange(double diff)
+     mRange.lower *= diff;
+     mRange.upper *= diff;
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -31944,8 +31944,8 @@ void QCPPolarAxisRadial::scaleRange(double factor, double center)
+     } else
+       qDebug() << Q_FUNC_INFO << "Center of scaling operation doesn't lie in same logarithmic sign domain as range:" << center;
+   }
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -32778,8 +32778,8 @@ void QCPPolarAxisAngular::moveRange(double diff)
+   QCPRange oldRange = mRange;
+   mRange.lower += diff;
+   mRange.upper += diff;
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -32813,8 +32813,8 @@ void QCPPolarAxisAngular::scaleRange(double factor, double center)
+   newRange.upper = (mRange.upper-center)*factor + center;
+   if (QCPRange::validRange(newRange))
+     mRange = newRange.sanitizedForLinScale();
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -33185,8 +33185,8 @@ void QCPPolarAxisAngular::setRange(const QCPRange &range)
+   if (!QCPRange::validRange(range)) return;
+   QCPRange oldRange = mRange;
+   mRange = range.sanitizedForLinScale();
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -33204,7 +33204,7 @@ void QCPPolarAxisAngular::setSelectableParts(const SelectableParts &selectable)
+   if (mSelectableParts != selectable)
+   {
+     mSelectableParts = selectable;
+-    emit selectableChanged(mSelectableParts);
++    Q_EMIT selectableChanged(mSelectableParts);
+   }
+ }
+ 
+@@ -33218,7 +33218,7 @@ void QCPPolarAxisAngular::setSelectableParts(const SelectableParts &selectable)
+   
+   This function can change the selection state of a part, independent of the \ref setSelectableParts setting.
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   \see SelectablePart, setSelectableParts, selectTest, setSelectedBasePen, setSelectedTickPen, setSelectedSubTickPen,
+   setSelectedTickLabelFont, setSelectedLabelFont, setSelectedTickLabelColor, setSelectedLabelColor
+@@ -33228,7 +33228,7 @@ void QCPPolarAxisAngular::setSelectedParts(const SelectableParts &selected)
+   if (mSelectedParts != selected)
+   {
+     mSelectedParts = selected;
+-    emit selectionChanged(mSelectedParts);
++    Q_EMIT selectionChanged(mSelectedParts);
+   }
+ }
+ 
+@@ -33251,8 +33251,8 @@ void QCPPolarAxisAngular::setRange(double lower, double upper)
+   mRange.lower = lower;
+   mRange.upper = upper;
+   mRange = mRange.sanitizedForLinScale();
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -33288,8 +33288,8 @@ void QCPPolarAxisAngular::setRangeLower(double lower)
+   QCPRange oldRange = mRange;
+   mRange.lower = lower;
+   mRange = mRange.sanitizedForLinScale();
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -33304,8 +33304,8 @@ void QCPPolarAxisAngular::setRangeUpper(double upper)
+   QCPRange oldRange = mRange;
+   mRange.upper = upper;
+   mRange = mRange.sanitizedForLinScale();
+-  emit rangeChanged(mRange);
+-  emit rangeChanged(mRange, oldRange);
++  Q_EMIT rangeChanged(mRange);
++  Q_EMIT rangeChanged(mRange, oldRange);
+ }
+ 
+ /*!
+@@ -34569,11 +34569,11 @@ void QCPPolarGraph::setSelectable(QCP::SelectionType selectable)
+     mSelectable = selectable;
+     QCPDataSelection oldSelection = mSelection;
+     mSelection.enforceType(mSelectable);
+-    emit selectableChanged(mSelectable);
++    Q_EMIT selectableChanged(mSelectable);
+     if (mSelection != oldSelection)
+     {
+-      emit selectionChanged(selected());
+-      emit selectionChanged(mSelection);
++      Q_EMIT selectionChanged(selected());
++      Q_EMIT selectionChanged(mSelection);
+     }
+   }
+ }
+@@ -34592,7 +34592,7 @@ void QCPPolarGraph::setSelectable(QCP::SelectionType selectable)
+   QCP::SelectionType set via \ref setSelectable, the resulting selection will be adjusted
+   accordingly (see \ref QCPDataSelection::enforceType).
+   
+-  emits the \ref selectionChanged signal when \a selected is different from the previous selection state.
++  Q_EMITs the \ref selectionChanged signal when \a selected is different from the previous selection state.
+   
+   \see setSelectable, selectTest
+ */
+@@ -34602,8 +34602,8 @@ void QCPPolarGraph::setSelection(QCPDataSelection selection)
+   if (mSelection != selection)
+   {
+     mSelection = selection;
+-    emit selectionChanged(selected());
+-    emit selectionChanged(mSelection);
++    Q_EMIT selectionChanged(selected());
++    Q_EMIT selectionChanged(mSelection);
+   }
+ }
+ 
+-- 
+2.36.1
+
+
+From 12563fb8bffe881bce74694e55724ec691a1301c Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:53:25 +0200
+Subject: [PATCH 11/13] Replace slots: with Q_SLOTS: for QT_NO_KEYWORDS
+
+---
+ plugins/core/Standard/qCork/include/ccCorkDlg.h                 | 2 +-
+ .../core/Standard/qMeshBoolean/include/ccMeshBooleanDialog.h    | 2 +-
+ qCC/ccAdjustZoomDlg.h                                           | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/plugins/core/Standard/qCork/include/ccCorkDlg.h b/plugins/core/Standard/qCork/include/ccCorkDlg.h
+index a072c707..dbe97f66 100644
+--- a/plugins/core/Standard/qCork/include/ccCorkDlg.h
++++ b/plugins/core/Standard/qCork/include/ccCorkDlg.h
+@@ -42,7 +42,7 @@ public:
+ 	//! Returns whether mesh order has been swappped or not
+ 	bool isSwapped() const { return m_isSwapped; }
+ 
+-protected slots:
++protected Q_SLOTS:
+ 
+ 	void unionSelected();
+ 	void intersectSelected();
+diff --git a/plugins/core/Standard/qMeshBoolean/include/ccMeshBooleanDialog.h b/plugins/core/Standard/qMeshBoolean/include/ccMeshBooleanDialog.h
+index 0e126568..30855375 100644
+--- a/plugins/core/Standard/qMeshBoolean/include/ccMeshBooleanDialog.h
++++ b/plugins/core/Standard/qMeshBoolean/include/ccMeshBooleanDialog.h
+@@ -41,7 +41,7 @@ public:
+ 	//! Returns whether mesh order has been swappped or not
+ 	bool isSwapped() const { return m_isSwapped; }
+ 
+-protected slots:
++protected Q_SLOTS:
+ 
+ 	void unionSelected();
+ 	void intersectSelected();
+diff --git a/qCC/ccAdjustZoomDlg.h b/qCC/ccAdjustZoomDlg.h
+index 0ccb3d4d..cb718411 100644
+--- a/qCC/ccAdjustZoomDlg.h
++++ b/qCC/ccAdjustZoomDlg.h
+@@ -39,7 +39,7 @@ public:
+ 	//! Returns requested focal distance
+ 	double getFocalDistance() const;
+ 
+-protected slots:
++protected Q_SLOTS:
+ 	void onFocalChanged(double);
+ 	void onPixelSizeChanged(double);
+ 	void onPixelCountChanged(int);
+-- 
+2.36.1
+
+
+From c7d87d3c9f1f6b7c4b5f80c7829ea97f64a7b73f Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 15:59:46 +0200
+Subject: [PATCH 12/13] tbb:2021: no longer has tbb_stddef.h: use version.h
+ instead
+
+---
+ qCC/mainwindow.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/qCC/mainwindow.cpp b/qCC/mainwindow.cpp
+index 878e8296..f23961a4 100644
+--- a/qCC/mainwindow.cpp
++++ b/qCC/mainwindow.cpp
+@@ -142,7 +142,7 @@
+ #endif
+ 
+ #ifdef CC_CORE_LIB_USES_TBB
+-#include <tbb/tbb_stddef.h>
++#include <tbb/version.h>
+ #endif
+ 
+ //Qt
+-- 
+2.36.1
+
+
+From 6e2c66d4b6e2d083f089fa94b264e06ef29ba990 Mon Sep 17 00:00:00 2001
+From: bartus <szczepaniak.bartek+github@gmail.com>
+Date: Sat, 25 Jun 2022 16:10:53 +0200
+Subject: [PATCH 13/13] Replace foreach() with Q_FOREACH() for QT_NO_KEYWORDS
+
+---
+ qCC/extern/QCustomPlot/qcustomplot.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/qCC/extern/QCustomPlot/qcustomplot.h b/qCC/extern/QCustomPlot/qcustomplot.h
+index 351f58f0..6a593af8 100644
+--- a/qCC/extern/QCustomPlot/qcustomplot.h
++++ b/qCC/extern/QCustomPlot/qcustomplot.h
+@@ -4047,7 +4047,7 @@ PlottableType *QCustomPlot::plottableAt(const QPointF &pos, bool onlySelectable,
+   QVariant resultDetails;
+   double resultDistance = mSelectionTolerance; // only regard clicks with distances smaller than mSelectionTolerance as selections, so initialize with that value
+   
+-  foreach (QCPAbstractPlottable *plottable, mPlottables)
++  Q_FOREACH (QCPAbstractPlottable *plottable, mPlottables)
+   {
+     PlottableType *currentPlottable = qobject_cast<PlottableType*>(plottable);
+     if (!currentPlottable || (onlySelectable && !currentPlottable->selectable())) // we could have also passed onlySelectable to the selectTest function, but checking here is faster, because we have access to QCPAbstractPlottable::selectable
+@@ -4093,7 +4093,7 @@ ItemType *QCustomPlot::itemAt(const QPointF &pos, bool onlySelectable) const
+   ItemType *resultItem = 0;
+   double resultDistance = mSelectionTolerance; // only regard clicks with distances smaller than mSelectionTolerance as selections, so initialize with that value
+   
+-  foreach (QCPAbstractItem *item, mItems)
++  Q_FOREACH (QCPAbstractItem *item, mItems)
+   {
+     ItemType *currentItem = qobject_cast<ItemType*>(item);
+     if (!currentItem || (onlySelectable && !currentItem->selectable())) // we could have also passed onlySelectable to the selectTest function, but checking here is faster, because we have access to QCPAbstractItem::selectable
+-- 
+2.36.1
+

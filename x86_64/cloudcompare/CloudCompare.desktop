@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CloudCompare
+Comment=A 3D point cloud (and triangular mesh) processing software
+Icon=cc_icon
+Exec=CloudCompare
+Terminal=false
+Type=Application
+Categories=Graphics;
