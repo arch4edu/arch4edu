@@ -1,1 +1,8 @@
-../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed 's/rm/rm -f/' -i PKGBUILD
+post_build: aur-post-build
