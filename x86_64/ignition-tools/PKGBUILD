@@ -3,13 +3,14 @@
 # Contributor: marauder <abhinav.kssk@gmail.com>
 pkgname=ignition-tools
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Command line tools for the Gazebo libraries"
 arch=('any')
 url="https://gazebosim.org/libs/tools"
 license=('Apache')
 makedepends=('cmake' 'ignition-cmake' 'doxygen' 'pkg-config' 'ruby-ronn')
 depends=('ruby')
+conflicts=('gazebo')
 source=("https://github.com/gazebosim/gz-tools/archive/gz-tools2_${pkgver}.tar.gz")
 sha256sums=('5e3788d5a1d5fa40724f1484cda716e0c050f01d2c516efa9f8a00877e74ef64')
 
