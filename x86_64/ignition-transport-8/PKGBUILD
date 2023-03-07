@@ -3,12 +3,12 @@
 
 pkgname=ignition-transport-8
 pkgver=8.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Transport library for component communication based on publication/subscription and service calls."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/transport"
 license=('Apache')
-depends=('protobuf' 'protobuf-c' 'zeromq' 'ignition-msgs=5' 'ignition-tools'
+depends=('protobuf' 'protobuf-c' 'zeromq' 'ignition-msgs=5' 'ignition-tools=1'
          'libutil-linux')
 makedepends=('ignition-cmake=2' 'util-linux')
 provides=('ignition-transport=8')
