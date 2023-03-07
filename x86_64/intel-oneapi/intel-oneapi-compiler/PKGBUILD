@@ -3,8 +3,8 @@
 
 pkgbase=intel-oneapi-compiler
 pkgname=(intel-oneapi-compiler intel-oneapi-compiler-static)
-_pkgver=2022.1.0
-_debpkgrel=3768
+_pkgver=2023.0.0
+_debpkgrel=25370
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=2
 pkgdesc="Intel® oneAPI Compiler"
@@ -56,26 +56,26 @@ noextract=(
 	"intel-oneapi-compiler-fortran-${_pkgver}-${_pkgver}-${_debpkgrel}_amd64.deb"
 	"intel-oneapi-compiler-fortran-runtime-${_pkgver}-${_debpkgrel}_amd64.deb"
 )
-sha256sums=('0407cf12127f641f1e1b50e8e8e3c6c9cd27be40b849d697401fa8c140604c23'
-            '70d05bfb37754c26e706ce5703b772671685660a386188be817ed81bb2e2a025'
-            '206e3fb5d65391b62a086f21aea82820c1862d1b0665e667fd72d389f6fddfeb'
-            '3185dc02473b3d3a34234dd82a17c285e43701455636f93be235b52c2ac6f2c6'
-            'd505ca48613799f5cd63d22a006f8db69f3bbf999269183fda418f1c04c3088d'
-            '2877196318d0640b9590cf6914f339b17a9d2bea60958bb03246d5aff1d34ab0'
-            '77b7201b5fe991152528ec40d586114edef12bb79c1a1a8fbfd6bd23c2aba5e1'
-            '5bc6452a32f5781c96498515d061d8fe9d7bba13b41eb983fe9bb0f792621906'
-            'adf5082079e72ec8634fa363bb3fd0fb4f394e4f1f927949ed06a2f3f1661956'
-            'c9961b90a9c4f4636c78292b5ba3d6cf6bbd7081f1ce4a4690bb7db94596226e'
-            'c748adc3bac2f0f4c3419f0b1e5bdc34d1508832819deeef68336c290a2fd2be'
-            'c525c416c61cac9aa4e22fec78be95b88d33bca13360d0444c22da52eb8dd318'
-            '34fa220340f3d488beb06bb7fb879712e5a999d7580574f63805b0c93fe506fc'
-            'aaa06115d6cbad606373a61a512162f132c52360f6058970d7a4df55300fb826'
-            'ba1a53e93fbd60fad4d17a0d38f14b8553775508e5400feffc95fbf0a3da562b'
-            '746d30e0794d0b60ab3d7cd31be9d7981b98c2b0305c238f1a9af5612a22b123'
-            '3335b168e758d72aa84f4f16524d311dd48448d34b57fbe3ff62068246b1cbfa'
-            'f21f641c75ade271f4ad31e8501aeada97f7ec583942dcfe4b41d6016bd2fd35'
-            'e87ad5fb97bc6bacc8758c7ba70cf2232cdc5951806f23052e043a8542b0ef6b'
-            '45c79bc0eb26e871838d47632cc15c53f6ef13f9371aab71b815b87379aaa46a'
+sha256sums=('073796db3c0452a08987dd9492f6abc80934c369d80e039bdeeaed39c387d46b'
+            'b5e39e8d1b9b8e4d86cd51e32f79f1cef3fe786d78e071deb5ff6a25b5d106e6'
+            'cfec359010bf71862af2c716b4fa887364d91845a7dc492f7a0c55d428145a3f'
+            '2fa8d9f8bdbada124da24f1d161b4b882f85f54bcc341149ea5a5d1e9dcc826d'
+            '3828f3cb147ec574de90e5fb518355a913c0d727e9d37e63db3a1e06a98f188a'
+            'c7dc0168580eb6d1eb34fef3dfe4595d2af8ee978a84c9461e1974a3624341c6'
+            '21fb81767abbf198b1adadc06e8a2ae912fa4b9a3f121448b6c0576433618677'
+            'ef2791532a7f5afee609e2e81ddadebf1306a248a84b711959a1be3112d8a509'
+            '8c38115b6c132b0c012834e7f7b55c003daac81beaec1678bb19111b848efbfb'
+            'a1dcc49438fc1a83474a6f3bc4543ca6cf7dcb0b5a8dcd1bdffed9ac488825fd'
+            '39c8f307c67129ef8d466561f39bbed3445548fc9bba48aabe58314cbcf0ae91'
+            '2aa3f782f8c5ea1920d7fbabd7758b95b110764c53418f73d3c156164d84f44a'
+            '91aafe8566afc0326b236462e09dfd937b32c91fd04628f6445317479862147d'
+            'b324474eae8bd5bd010df52de880eea55566e91dc043462879fc295ea6b3039c'
+            '7928a9aef5854d60424a9abc6669920f5c46dfd4c8381fcdc9e28bddcf507b8c'
+            '63f63e8e1f02ce34baec35d4892b89a940a745a488fff8d1e04437ab079e7543'
+            '52a1aa257be0014d298f7dc61579768744c4bc0c59fdc951c368322c75facacf'
+            '81a18fca09c78da5bb943fc55b42a5cf38a076e4495e655216611f7b75cbe66b'
+            '86260591af48f75726f9b6ab898140070174e78cd0710089528e6a8e47a2bad4'
+            'df5282db2ff27092fe6ed7574d77684fdd6ee82a14816cd8dcb072d3201e2460'
             '272e9a6015f25f777e092d5c8c4c435e08d4fe640ba7f15d09cd36e07654b83f')
 
 build() {
@@ -125,19 +125,19 @@ build() {
 
 package_intel-oneapi-compiler() {
 	depends=(
-		'intel-oneapi-dpcpp-debugger>=2021.6.0'
-		'intel-oneapi-mpi>=2021.6.0'
-		'intel-oneapi-dpl>=2021.7.0'
-		'intel-oneapi-tbb>=2021.6.0'
-		'intel-oneapi-dev-utilities>=2021.6.0'
+		'intel-oneapi-dpcpp-debugger>=2023.0.0'
+		'intel-oneapi-mpi>=2021.8.0'
+		'intel-oneapi-dpl>=2022.0.0'
+		'intel-oneapi-tbb>=2021.8.0'
+		'intel-oneapi-dev-utilities>=2021.8.0'
 
-		'intel-oneapi-dpcpp-debugger<2021.6.1'
-		'intel-oneapi-mpi<2021.6.1'
-		'intel-oneapi-dpl<2021.7.1'
-		'intel-oneapi-tbb<2021.6.1'
-		'intel-oneapi-dev-utilities<2021.6.1'
+		'intel-oneapi-dpcpp-debugger<2023.0.1'
+		'intel-oneapi-mpi<2021.8.1'
+		'intel-oneapi-dpl<2022.0.1'
+		'intel-oneapi-tbb<2021.8.1'
+		'intel-oneapi-dev-utilities<2021.8.1'
 
-		'intel-oneapi-common=2022.1.0'
+		'intel-oneapi-common=2023.0.0'
 	)
 	provides=("intel-oneapi-openmp" "intel-oneapi-compiler-shared-runtime" "intel-oneapi-compiler-dpcpp-cpp-runtime")
 	conflicts=("intel-oneapi-openmp" "intel-oneapi-compiler-shared-runtime" "intel-oneapi-compiler-dpcpp-cpp-runtime")
