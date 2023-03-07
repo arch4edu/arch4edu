@@ -3,13 +3,13 @@
 
 pkgname=ignition-fuel_tools-4
 pkgver=4.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A client library and command line tools for interacting with Gazebo Fuel servers."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/fuel_tools"
 license=('Apache')
 depends=('curl' 'jsoncpp' 'libyaml' 'libzip' 'ignition-common=3'
-         'ignition-msgs=5' 'ignition-tools')
+         'ignition-msgs=5' 'ignition-tools=1')
 makedepends=('ignition-cmake=2')
 optdepends=('ruby')
 provides=('ignition-fuel_tools=4')
