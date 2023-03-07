@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggnetwork
-_pkgver=0.5.10
+_pkgver=0.5.12
 pkgname=r-${_pkgname,,}
-pkgver=0.5.10
-pkgrel=4
+pkgver=0.5.12
+pkgrel=1
 pkgdesc="Geometries to Plot Networks with 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1b655dbab8eed8d0aa3ab2148aac8e0e5bfa190468f5e3c06b001ce88b7f0d3f')
+sha256sums=('74368662c1a225cdefc8addf606b398f14dafeff03faac56c15aa5e14819e9cd')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
