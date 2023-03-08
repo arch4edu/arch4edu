@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
 pkgver=17.2.5
-pkgrel=5
+pkgrel=6
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
@@ -91,6 +91,15 @@ source=(
   # fixes an issue with mgr usage of libradossqlite and temp tables,
   # backported from the upstream
   'ceph-18.0.0-mgr-sqlite-pragmas.patch'
+
+  # Fix for upstream bugs in pkgconfig of rdkafka
+  # https://github.com/bazaah/aur-ceph/issues/11
+  # https://github.com/confluentinc/librdkafka/issues/4155
+  'rdkafka.mpatch'
+
+  # Fixes API changes to boost::beast string_view type def in 1.81
+  # https://github.com/boostorg/beast/issues/2594
+  'ceph-17.2.5-rgw-client-boost-string-view.patch'
 )
 sha512sums=('10cd3d9eb01c91c148a92f1f7d040bbd78af5bb1ab15d071d93f54b37097dc9e1268eed9e788fe32794d137f6af81abd6a2aeaee39cef44d2c45234a15cc6020'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
@@ -106,7 +115,9 @@ sha512sums=('10cd3d9eb01c91c148a92f1f7d040bbd78af5bb1ab15d071d93f54b37097dc9e126
             '81f540c8312972887a7cb43b8a4e29bfc6f24d5774787a4a8edfe65cca7d3b08faa08ecd09066d7ea67111769a5aec7385fe9a969546626f58874dd8aff5b664'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '2a6f33791760e14543c90077bfc6bf1b6b82ee2996e80b4762eadb887a0d9a67c221b6f10832ddf780dc6abaed246a1e2ee7680c9c861c4ff70e61b752a37b36'
-            'b2e1f495b57f3ed65b466719faded1713d8155e10b6432b704c632501313b6a98a56461164942cf303427770be0d5efe4798572fe8490ee977bf652906166bde')
+            'b2e1f495b57f3ed65b466719faded1713d8155e10b6432b704c632501313b6a98a56461164942cf303427770be0d5efe4798572fe8490ee977bf652906166bde'
+            'e4703027fccdb18be4255ba087a165e2a780248d8d52f18a776ef7b50f09f312a9e9a0d5832440a19f248b508e4ed4a869c1baa4362923f93a61e9a471760178'
+            '02ca1a9bf15f9cd6f474f264ba2bf66ae725bac990a7cac315dabe377c66935a7afd8117f18a1f82c78bdf9ab2c3e5a2a227f2ffc166974dd7bb99b290f1f233')
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
 # similar issue: https://bugs.archlinux.org/task/54845
@@ -143,6 +154,9 @@ prepare() {
   # disable/remove broken tests
   sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
   sed -i '/add_ceph_test(safe-to-destroy.sh/d' src/test/osd/CMakeLists.txt
+
+  mkdir -p "__pkgconfig__"
+  patch /usr/lib/pkgconfig/rdkafka.pc "${srcdir}/rdkafka.mpatch" -o "__pkgconfig__/rdkafka.pc"
 }
 
 build() {
@@ -158,6 +172,7 @@ build() {
   export CXXFLAGS+=" ${CPPFLAGS}"
   export CMAKE_BUILD_TYPE='RelWithDebInfo'
   export CMAKE_WARN_UNUSED_CLI=no
+  export PKG_CONFIG_PATH="$PWD/__pkgconfig__:$(pkg-config --variable pc_path pkg-config)"
 
   cmake \
     -B build \
