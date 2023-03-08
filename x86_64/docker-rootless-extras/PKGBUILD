@@ -3,8 +3,8 @@
 # Contributors: koba1t <kobdotsh at gmail dot com>
 
 pkgname=docker-rootless-extras
-pkgver=20.10.21
-pkgrel=2
+pkgver=23.0.1
+pkgrel=1
 pkgdesc="Extras to run docker as non-root."
 arch=('x86_64' 'aarch64')
 url="https://docs.docker.com/engine/security/rootless/"
@@ -20,8 +20,8 @@ source=(
         "docker.socket"
         "99-docker-rootless.conf")
 
-sha256sums=('07fd43a5adad652bb9d15d5cec851c0f563fe1cf8c5f0d5123b45b0e118404dd'
-            '2c0860d55f05149006ba60ac9dd41f94e45f13465c4445f5027830a5cfdebd40'
+sha256sums=('57d54807195e8801ec41b382940da8fb1718552c4fe93b0870bd3c979175f911'
+            'f631b8464316e37cd399c5034cca414e47314121fd7c97d1bfb8a4af5b35dabc'
             'd8695293e5d4a814763f13e1d36ed37273040666b4b91363d6c33171df8934c7'
             'd0d790d4c3d887b10b2b155b83a58a44980b9fa638f8c0f1faec0739dc0ef473')
 
@@ -39,7 +39,7 @@ package() {
     head -n-1 | \
     sed 's/^[[:space:]]*//' | \
     sed 's|$BIN|/usr/bin|' | \
-    sed 's|\$MAINPID|$MAINPID|' | \
+    sed 's|\\$MAINPID|$MAINPID|' | \
     sed 's| $DOCKERD_ROOTLESS_SH_FLAGS||' \
     > "$pkgdir/usr/lib/systemd/user/docker.service"
 
