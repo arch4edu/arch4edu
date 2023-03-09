@@ -3,9 +3,15 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-ca
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-glue
   - x86_64/r/r-gnm
+  - x86_64/r/r-here
+  - x86_64/r/r-purrr
+  - x86_64/r/r-readxl
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tidyr
   - x86_64/r/r-vcd
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build
