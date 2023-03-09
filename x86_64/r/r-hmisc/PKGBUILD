@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=Hmisc
-_pkgver=5.0-0
+_pkgver=5.0-1
 pkgname=r-${_pkgname,,}
-pkgver=5.0.0
+pkgver=5.0.1
 pkgrel=1
 pkgdesc='Harrell Miscellaneous'
 arch=('x86_64')
@@ -20,16 +20,26 @@ depends=(
   r-gtable
   r-htmltable
   r-htmltools
+  r-knitr
   r-latticeextra
+  r-rmarkdown
   r-viridis
 )
 optdepends=(
+  r-abind
   r-acepack
   r-chron
-  r-knitr
+  r-digest
+  r-kableextra
+  r-leaps
   r-mice
+  r-parallel
+  r-pcapp
   r-plotly
   r-plyr
+  r-polspline
+  r-qreport
+  r-rio
   r-rlang
   r-rms
   r-rstudioapi
@@ -40,7 +50,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a3f71506394de7df970aec092fc25f44c9e2ba1a2bb56a1e5954d377b4245da4')
+sha256sums=('db390f8f8a150cb5cffb812e9609a8e8632ceae0dc198528f190fd670ba8fa59')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
