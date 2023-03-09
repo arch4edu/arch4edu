@@ -5,7 +5,7 @@ _pkgname=ggsci
 _pkgver=3.0.0
 pkgname=r-${_pkgname,,}
 pkgver=3.0.0
-pkgrel=1
+pkgrel=3
 pkgdesc="Scientific Journal and Sci-Fi Themed Color Palettes for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,6 +18,7 @@ depends=(
 optdepends=(
   r-gridextra
   r-knitr
+  r-ragg
   r-reshape2
   r-rmarkdown
 )
