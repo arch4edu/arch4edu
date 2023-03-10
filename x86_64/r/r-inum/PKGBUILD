@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=inum
-_pkgver=1.0-4
+_pkgver=1.0-5
 pkgname=r-${_pkgname,,}
-pkgver=1.0.4
-pkgrel=4
+pkgver=1.0.5
+pkgrel=1
 pkgdesc='Interval and Enum-Type Representation of Vectors'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,7 +14,7 @@ depends=(
   r-libcoin
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5febef69c43a4b95b376c1418550a949d988a5f26b1383ca01c9728a94fc13ce')
+sha256sums=('e696b7e0b31b3bbf405112e60691b6a72fedcaa02e08ee517c59f6bf9cd36bbd')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
