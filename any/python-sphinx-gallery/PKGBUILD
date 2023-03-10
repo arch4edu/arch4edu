@@ -3,7 +3,7 @@ pkgbase=python-sphinx-gallery
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.11.1
+pkgver=0.12.1
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
@@ -12,17 +12,20 @@ license=('BSD')
 makedepends=('python-setuptools')
 #            'python-wheel'
 #            'python-build'
-#            'python-installer')
-#'python-sphinx' 'python-pillow' 'python-scipy' 'python-seaborn')
+#            'python-installer'
+#            'python-sphinx'
+#            'python-pillow'
+#            'python-scipy'
+#            'python-seaborn')
 checkdepends=('python-pytest-cov'
               'python-matplotlib'
-#             'python-pillow'
+              'python-pillow'
               'python-sphinx'
               'python-absl'
-              'python-joblib'
+#              'python-joblib'
               'mayavi')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('34038a82a8dafd1f43dabc0a0968e210')
+md5sums=('df69258eed50f37d4eb6bf0bd4168fe3')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -37,7 +40,13 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed"
+    # require jupyterlite_sphinx, from Gentoo's ebuild
+    pytest \
+        --deselect=sphinx_gallery/tests/test_full.py \
+        --deselect=sphinx_gallery/tests/test_full_noexec.py \
+        --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents \
+        --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_non_default_contents \
+        --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_with_jupyterlite_disabled_via_confi || warning "Tests failed" # -vv --color=yes
 #       --deselect=sphinx_gallery/tests/test_scrapers.py::test_save_mayavi_figures || warning "Tests failed"
 }
 
