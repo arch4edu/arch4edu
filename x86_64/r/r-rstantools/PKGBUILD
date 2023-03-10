@@ -2,10 +2,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rstantools
-_pkgver=2.2.0
+_pkgver=2.3.0
 pkgname=r-${_pkgname,,}
-pkgver=2.2.0
-pkgrel=3
+pkgver=2.3.0
+pkgrel=1
 pkgdesc="Tools for Developing R Packages Interfacing with 'Stan'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,7 +28,7 @@ optdepends=(
   r-usethis
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('cb810baeb90c67668361b666c6862df9917aff6aaec63d2c3a485f28407c4eb7')
+sha256sums=('937e2de6ac80214dccd90c09b26ebcf366c4b55adc84837a6fbb137ebb13822d')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
