@@ -4,7 +4,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _cranname=tibble
-_cranver=3.1.8
+_cranver=3.2.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -35,6 +35,7 @@ optdepends=(
     r-evaluate
     r-formattable
     r-ggplot2
+    r-here
     r-hms
     r-htmltools
     r-knitr
@@ -52,7 +53,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('acf30e075d18d2f61de53ca20a13c502bb32abb8083089b0bb9172a0cb5cedea'
+sha256sums=('8f2ff14bca39e342f36d026776351f21b7627fe0f20f009b7a9e0a69a166298a'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
