@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=VGAM
-_pkgver=1.1-7
+_pkgver=1.1-8
 pkgname=r-${_pkgname,,}
-pkgver=1.1.7
+pkgver=1.1.8
 pkgrel=1
 pkgdesc='Vector Generalized Linear and Additive Models'
 arch=('x86_64')
@@ -22,7 +22,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a4c52d392332477eac557c84b732f3c03dd48f75db3884e23c71cf99d991757e')
+sha256sums=('d4c0f1d4e356d88ab6f39c05076ff97ebef6d20b7fbf1b0fa31d40c73d0ad1cc')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
