@@ -6,13 +6,13 @@
 # Contributor: <gucong43216@gmail.com>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2206
+# /opt/OpenFOAM/OpenFOAM-v2212
 
 pkgname=openfoam-com
-pkgver=v2206
+pkgver=v2212
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=4
+pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
 url="http://www.openfoam.com"
@@ -20,9 +20,9 @@ license=('GPL3')
 install="${pkgname}.install"
 depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
 
-source=('https://sourceforge.net/projects/openfoam/files/v2206/OpenFOAM-v2206.tgz')
+source=('https://sourceforge.net/projects/openfoam/files/v2212/OpenFOAM-v2212.tgz')
 
-md5sums=('6eaf1bb9accdb4bea5b84a72ab11734e')
+md5sums=('889c9a2169c0b6911050de149a5b459b')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]
@@ -70,6 +70,9 @@ build() {
       echo "No $projectDir/etc/bashrc found"
       return 1
   }
+
+  # bugfix OpenFOAM-v2212
+  sed -i 's!#include "CGAL/Robust_circumcenter_filtered_traits_3.h"!#include "CGAL/Robust_weighted_circumcenter_filtered_traits_3.h"!g' $projectDir/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H
 
   # changes to avoid linking problems related to gcc 11
   # check this for the next upgrade!
