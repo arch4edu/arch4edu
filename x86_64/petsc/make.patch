@@ -1,0 +1,56 @@
+diff --color --unified --recursive --text petsc-3.18.5.orig/lib/petsc/conf/rules petsc-3.18.5.new/lib/petsc/conf/rules
+--- petsc-3.18.5.orig/lib/petsc/conf/rules	2023-03-11 20:17:33.736352026 +0100
++++ petsc-3.18.5.new/lib/petsc/conf/rules	2023-03-11 20:22:42.750019218 +0100
+@@ -53,7 +53,21 @@
+ 	@${MKDIR} -p ${PETSC_DIR}/${PETSC_ARCH}/tests && touch -t 197102020000 ${PETSC_DIR}/${PETSC_ARCH}/tests/testfiles
+ 
+ libs: ${PETSC_DIR}/${PETSC_ARCH}/lib/petsc/conf/files ${PETSC_DIR}/${PETSC_ARCH}/tests/testfiles
+-	+@cd ${PETSC_DIR} && MAKEFLAGS="-j$(MAKE_NP) -l$(MAKE_LOAD) $(MAKEFLAGS)" ${OMAKE_PRINTDIR} -f gmakefile ${MAKE_PAR_OUT_FLG} V=${V} libs
++	+@r=`echo "${MAKEFLAGS}" | grep ' \-j'`; \
++        if [ "$$?" = 0 ]; then \
++          make_j="";\
++          echo "Skipping adding -jMAKE_NP option as -j option is already specified"; \
++        else \
++          make_j="-j${MAKE_NP}"; \
++        fi; \
++	r=`echo "${MAKEFLAGS}" | grep ' \-l'`; \
++        if [ "$$?" = 0 ]; then \
++          make_l="";\
++          echo "Skipping adding -lMAKE_LOAD option as -l option is already specified"; \
++        else \
++          make_l="-l${MAKE_LOAD}"; \
++        fi; \
++        cd ${PETSC_DIR} && ${OMAKE_PRINTDIR} -f gmakefile $${make_j} $${make_l} ${MAKE_PAR_OUT_FLG} V=${V} libs
+ 
+ # Does nothing; needed for some rules that require actions.
+ foo:
+@@ -471,6 +485,7 @@
+             DOCTEXT_PATH=${PETSC_DIR}/doc/classic/doctext \
+             ${DOCTEXT} -myst -mpath ${LOC}/docs/manualpages/$${LMANSEC} -heading PETSc -defn ${PETSC_DIR}/doc/classic/doctext/myst.def \
+                 -indexdir ../$${LMANSEC} -index ${LOC}/docs/manualpages/manualpages.cit -locdir ${LOCDIR} -Wargdesc $${doctext_common_def} $${f} 2>&1 | tee -a ${PETSC_DIR}/${PETSC_ARCH}/manualpages.err; \
++            if [ -f "${LOC}/docs/manualpages/$${LMANSEC}" ]; then chmod g+w "${LOC}"/docs/manualpages/$${LMANSEC}/*; fi; \
+           done; \
+         else \
+           if [ "${SUBMANSEC}" = "" ] ; then LMANSEC=${MANSEC}; else LMANSEC=${SUBMANSEC}; fi; \
+@@ -480,6 +495,7 @@
+           DOCTEXT_PATH=${PETSC_DIR}/doc/classic/doctext  \
+           ${DOCTEXT} -myst -mpath ${LOC}/docs/manualpages/$${LMANSEC} -heading PETSc -defn ${PETSC_DIR}/doc/classic/doctext/myst.def \
+               -indexdir ../$${LMANSEC} -index ${LOC}/docs/manualpages/manualpages.cit -locdir ${LOCDIR} -Wargdesc $${doctext_common_def} ${SOURCED} 2>&1 | tee -a ${PETSC_DIR}/${PETSC_ARCH}/manualpages.err; \
++          if [ -f "${LOC}/docs/manualpages/$${LMANSEC}" ]; then chmod g+w "${LOC}"/docs/manualpages/$${LMANSEC}/*; fi; \
+         fi;
+ #
+ #   Example usage for manual pages; adds each example that uses a function to that functions
+diff --color --unified --recursive --text petsc-3.18.5.orig/makefile petsc-3.18.5.new/makefile
+--- petsc-3.18.5.orig/makefile	2023-03-11 20:17:33.416354360 +0100
++++ petsc-3.18.5.new/makefile	2023-03-11 20:17:57.102844766 +0100
+@@ -122,8 +122,8 @@
+ 	-@echo "------------------------------------------"
+ 	-@echo "Using mpiexec: ${MPIEXEC}"
+ 	-@echo "------------------------------------------"
+-	-@echo "Using MAKE: $(MAKE)"
+-	-@echo "Using MAKEFLAGS: -j$(MAKE_NP) -l$(MAKE_LOAD) $(MAKEFLAGS)"
++	-@echo "Using MAKE: ${MAKE}"
++	-@echo "Default MAKEFLAGS: MAKE_NP:${MAKE_NP} MAKE_LOAD:${MAKE_LOAD} MAKEFLAGS:${MAKEFLAGS}"
+ 	-@echo "=========================================="
+ 
+ #
