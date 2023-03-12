@@ -1,0 +1,41 @@
+diff --color -Naur gz-common-ignition-common3_3.15.1/av/src/AudioDecoder.cc gz-common-ignition-common3_3.15.1_new/av/src/AudioDecoder.cc
+--- A/av/src/AudioDecoder.cc    2022-10-11 23:26:53.000000000 +0200
++++ B/av/src/AudioDecoder.cc    2023-03-10 08:25:26.284516672 +0100
+@@ -344,12 +344,9 @@
+     return false;
+   }
+
+-#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(56, 60, 100)
+-  if (this->data->codec->capabilities & AV_CODEC_CAP_TRUNCATED)
+-    this->data->codecCtx->flags |= AV_CODEC_FLAG_TRUNCATED;
+-#else
+-  if (this->data->codec->capabilities & CODEC_CAP_TRUNCATED)
+-    this->data->codecCtx->flags |= CODEC_FLAG_TRUNCATED;
++#if LIBAVCODEC_VERSION_MAJOR < 60
++    if (d->codec->capabilities & CODEC_CAP_TRUNC)
++        d->decoder->flags |= CODEC_FLAG_TRUNC;
+ #endif
+
+   // Open codec
+diff --color -Naur gz-common-ignition-common3_3.15.1/av/src/Video.cc gz-common-ignition-common3_3.15.1_new/av/src/Video.cc
+--- A/av/src/Video.cc   2022-10-11 23:26:53.000000000 +0200
++++ B/av/src/Video.cc   2023-03-10 08:26:11.068487128 +0100
+@@ -181,12 +181,9 @@
+
+   // Inform the codec that we can handle truncated bitstreams -- i.e.,
+   // bitstreams where frame boundaries can fall in the middle of packets
+-#if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(56, 60, 100)
+-  if (codec->capabilities & AV_CODEC_CAP_TRUNCATED)
+-    this->dataPtr->codecCtx->flags |= AV_CODEC_FLAG_TRUNCATED;
+-#else
+-  if (codec->capabilities & CODEC_CAP_TRUNCATED)
+-    this->dataPtr->codecCtx->flags |= CODEC_FLAG_TRUNCATED;
++#if LIBAVCODEC_VERSION_MAJOR < 60
++    if (d->codec->capabilities & CODEC_CAP_TRUNC)
++        d->decoder->flags |= CODEC_FLAG_TRUNC;
+ #endif
+
+   // Open codec
+diff --color -Naur gz-common-ignition-common3_3.15.1/build/av/src/CMakeFiles/ignition-common3-av.dir/AudioDecoder.cc.o gz-common-ignition-common3_3.15.1_new/build/av/src/CMakeFiles/ignition-common3-av.dir/AudioDecoder.cc.o
+--- gz-common-ignition-common3_3.15.1/build/av/src/CMakeFiles/ignition-common3-av.dir/AudioDecoder.cc.o 1970-01-01 01:00:00.000000000 +0100
++++ gz-common-ignition-common3_3.15.1_new/build/av/src/CMakeFiles/ignition-common3-av.dir/AudioDecoder.cc.o 2023-03-10 08:22:05.205049145 +0100
