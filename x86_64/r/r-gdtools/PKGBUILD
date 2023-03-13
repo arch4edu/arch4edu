@@ -5,9 +5,9 @@
 # Contributor: portaloffreedom
 
 _pkgname=gdtools
-_pkgver=0.3.1
+_pkgver=0.3.2
 pkgname=r-${_pkgname,,}
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=1
 pkgdesc='Utilities for Graphical Rendering'
 arch=('x86_64')
@@ -30,7 +30,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('fba6166bdefe742d94f33d8904bf2d66432b063cf426d28b3bef22bcd3cc6698')
+sha256sums=('446afe780e0b0161e4647bb6585274cdbb9dfa58f3d3299f793b75e37c0c5136')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
