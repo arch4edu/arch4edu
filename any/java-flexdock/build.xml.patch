@@ -1,0 +1,22 @@
+--- build.xml
++++ build.xml
+@@ -112,7 +112,7 @@
+ 
+    <target name="compile" depends="init, resources"
+            description="Compile java sources for the framework, demos, and tests">
+-      <javac classpathref="javac.classpath" destdir="${bin.dir}" debug="true" source="1.5" target="1.5" includeAntRuntime="no">
++      <javac classpathref="javac.classpath" destdir="${bin.dir}" debug="true" source="%VERSION%" target="%VERSION%" includeAntRuntime="no">
+          <compilerarg value="-Xlint"/>
+          <src path="${java.src.core}" />
+          <!-- the next 3 are interdependent -->
+@@ -122,8 +122,8 @@
+          <src path="${java.src.drag}"/>
+          <src path="${java.src.perspective}"/>
+       </javac>
+-      <javac classpathref="javac.classpath.demo" srcdir="${java.src.demo}" destdir="${bin.dir.demo}" debug="true" source="1.5" target="1.5" includeAntRuntime="no"/>
+-      <javac classpathref="javac.classpath.test" srcdir="${java.src.test}" destdir="${bin.dir.test}" debug="true" source="1.5" target="1.5"  includeAntRuntime="no"/>
++      <javac classpathref="javac.classpath.demo" srcdir="${java.src.demo}" destdir="${bin.dir.demo}" debug="true" source="%VERSION%" target="%VERSION%" includeAntRuntime="no"/>
++      <javac classpathref="javac.classpath.test" srcdir="${java.src.test}" destdir="${bin.dir.test}" debug="true" source="%VERSION%" target="%VERSION%"  includeAntRuntime="no"/>
+    </target>
+ 
+ 
