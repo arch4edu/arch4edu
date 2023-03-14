@@ -5,8 +5,8 @@
 
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
-pkgver=6.1.1
-pkgrel=5
+pkgver=2023.0.0
+pkgrel=1
 pkgdesc="A software package for numerical computation, providing a powerful computing environment for engineering and scientific applications."
 arch=("x86_64")
 license=("GPL")
@@ -17,8 +17,8 @@ conflicts=('scilab' 'scilab-git')
 provides=('scilab')
 options=(!strip)
 # From Scilab downloads page (https://www.scilab.org/download/)
-source=("https://oos.eu-west-2.outscale.com/scilab-releases/${pkgver}/scilab-${pkgver}.bin.linux-x86_64.tar.gz")
-sha256sums=("3ee1a7cf661d021ae26afc27b9fe50cb2d1c9c27911e5582e9d4337ebedb2c79")
+source=("https://www.scilab.org/download/${pkgver}/${_pkgname}-${pkgver}.bin.x86_64-pc-linux-gnu.tar.xz")
+sha256sums=("1278955d3bfc4b5be9290ec17f40b9e79789dee09be6893ba83f382e89015a66")
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
