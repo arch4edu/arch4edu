@@ -3,7 +3,7 @@
 # Contributor: Michael Schubert <mschu.dev at gmail>
 
 pkgname=python-numba-git
-pkgver=0.57.0dev0.r1270.gec5210242.pr8691
+pkgver=0.57.0dev0.r1306.g26bc50198
 pkgrel=1
 pkgdesc='NumPy aware dynamic Python compiler using LLVM (Git version)'
 url='https://github.com/numba/numba'
@@ -26,17 +26,9 @@ provides=("python-numba=$pkgver")
 source=('git+https://github.com/numba/numba.git')
 sha256sums=('SKIP')
 
-prepare() {
-  cd numba
-  git config --local user.name "makepkg"
-  git config --local user.email "makepkg@localhost"
-  git fetch origin refs/pull/8691/head:pr8691
-  git merge --commit --no-edit pr8691
-}
-
 pkgver() {
   cd numba
-  printf "%s.pr8691" "$(git describe --long origin/HEAD | sed 's/\([^-]*-g\)/r\1/;s/-/./g')"
+  printf "%s" "$(git describe --long origin/HEAD | sed 's/\([^-]*-g\)/r\1/;s/-/./g')"
 }
 
 build() {
