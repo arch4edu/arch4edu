@@ -4,7 +4,7 @@ url='https://wiki.ros.org/perception_pcl'
 pkgname='ros-noetic-pcl-ros'
 pkgver='1.7.5'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 
 ros_makedepends=(
@@ -41,6 +41,11 @@ depends=(
     ${ros_depends[@]}
     eigen
     pcl
+    qhull
+    openmpi
+    nlohmann-json
+    glew
+    fmt
 )
 
 _dir="perception_pcl-${pkgver}/pcl_ros"
