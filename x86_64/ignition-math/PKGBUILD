@@ -4,13 +4,13 @@
 # Contributor: Ramdambo <https://github.com/Ramdambo>
 pkgname=ignition-math
 pkgver=7.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="General purpose math library for robot applications."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/math"
 license=('Apache')
 depends=('gcc-libs' 'swig')
-makedepends=('ignition-cmake>=2' 'ignition-utils' 'eigen' 'python' 'pybind11')
+makedepends=('ignition-cmake>2' 'ignition-utils>1' 'eigen' 'python' 'pybind11')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-math/archive/gz-math7_${pkgver}.tar.gz")
 sha256sums=("3df09a16b84fa27fabf4955b5efb207f417ef9b0b5b801ae28cfda6d8e11765a")
 
