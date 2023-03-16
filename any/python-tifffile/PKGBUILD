@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2023.2.28
+pkgver=2023.3.15
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -17,7 +17,7 @@ makedepends=('python-setuptools'
 checkdepends=('python-pytest'
               'python-fsspec') # numpy ? xarray
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('2d2baba8dea6609f553fe61853db9a61f715d60ba3bce6a20b5a1ab72407dfed')
+sha256sums=('38e95a8f1b0cbcbf50d20011c3953db52c13a7e258afc391e7f681960303dd60')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -71,7 +71,7 @@ package_python-tifffile() {
 }
 
 package_python-tifffile-doc() {
-    pkgdesc="Documentation for Python Photutils module"
+    pkgdesc="Documentation for Python TIFF files"
     cd ${srcdir}/${_pyname}-${pkgver}/docs
 
     install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../LICENSE
