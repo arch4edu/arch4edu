@@ -4,7 +4,7 @@ nvchecker:
 depends:
   - x86_64/ignition-math-6
   - x86_64/ignition-tools-1
-  - x86_64/ignition-utils
+  - x86_64/ignition-utils-1
 makedepends:
   - x86_64/ignition-cmake-2
 build_prefix: extra-x86_64
