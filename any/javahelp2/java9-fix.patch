@@ -1,0 +1,13 @@
+https://www.oracle.com/java/technologies/javase/9-all-relnotes.html#JDK-8037739
+diff --git a/jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicFavoritesNavigatorUI.java b/jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicFavoritesNavigatorUI.java
+index eb08a01..40664c6 100644
+--- a/jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicFavoritesNavigatorUI.java
++++ b/jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicFavoritesNavigatorUI.java
+@@ -65,7 +65,6 @@ import java.awt.geom.Rectangle2D;
+ import java.awt.geom.AffineTransform;
+ import java.awt.datatransfer.*;
+ import java.awt.dnd.*;
+-import java.awt.dnd.peer.*;
+ import java.io.IOException;
+ 
+ /**

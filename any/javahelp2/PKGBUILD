@@ -6,29 +6,42 @@
 # Contributor: Simon Lipp <sloonz+aur at gmail dot com>
 
 pkgname=javahelp2
-pkgver=2.0.05.r90
-pkgrel=5
 # manual versioning
-source=("${pkgname}::git+https://github.com/javaee/javahelp.git#commit=3ca862d8626096770598a3a256886d205246f4a4")
-sha256sums=('SKIP')
+pkgver=2.0.05.r90
+pkgrel=6
 pkgdesc="Java based help system"
-arch=('any')
 url="https://javaee.github.io/javahelp/"
 license=('custom' 'CDDL' 'GPL2')
-makedepends=('apache-ant' 'git' 'jdk8-openjdk')
+arch=('any')
 depends=('java-runtime')
+makedepends=('ant' 'git')
+source=("${pkgname}::git+https://github.com/javaee/javahelp.git#commit=3ca862d8626096770598a3a256886d205246f4a4"
+        'java9-fix.patch')
+sha512sums=('SKIP'
+            '089c778aa937cd288aeae6cc87aaa3747925bf32871266d5f1d2e243b105fb70823a9f4903e4c0fcb60f4c73ea62c2a2927ef56315a826c454a5be9b72b425a6')
 
-build(){
-    cd "${srcdir}/${pkgname}/javahelp_nbproject"
+prepare () {
+    cd "${pkgname}"
+    patch -Np1 -i ../java9-fix.patch
+}
+
+build() {
+    cd "${pkgname}/javahelp_nbproject"
     # http://openjdk.java.net/jeps/182
     # > In JDK 9 and going forward, javac will use a "one + three back" policy of supported source and target options.
     # NOTE: I just hope, that it'll compile right.
     local java_ver="$(javac -version 2>&1 | sed -e 's/^javac\s\+\([0-9]\+\.[0-9]\+\).*$/\1/g')"
-    JAVA_HOME=/usr/lib/jvm/java-8-openjdk ant release
+    # accepted: 1.8, 17
+    # not accepted: 17.0
+    case $java_ver in
+      1.*) ;;
+      *) java_ver="$(echo "$java_ver" | sed -e 's/\..*$//')" ;;
+    esac
+    ant -Djavac.source="$java_ver" -Djavac.target="$java_ver" release
 }
 
 package() {
-    cd "${srcdir}/${pkgname}/javahelp_nbproject/dist/lib"
+    cd "${pkgname}/javahelp_nbproject/dist/lib"
     install -dm755 "${pkgdir}/usr/share/java/javahelp"
     install -m644 -- *.jar "${pkgdir}/usr/share/java/javahelp"
     cd ../bin
