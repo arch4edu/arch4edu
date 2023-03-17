@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=pema
-_pkgver=0.1.2
+_pkgver=0.1.3
 pkgname=r-${_pkgname,,}
-pkgver=0.1.2
+pkgver=0.1.3
 pkgrel=1
 pkgdesc='Penalized Meta-Analysis'
 arch=('x86_64')
@@ -30,7 +30,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0d3c2098dfd713cb0e6c198a8c18ce5b62fc576cae337bda8f92060a7a459c8f')
+sha256sums=('7ecacecaae13d0a15e1236fc4b641a4a897b066c18e11798d2277d8374c1bf7a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
