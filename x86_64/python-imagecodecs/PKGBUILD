@@ -2,7 +2,7 @@
 
 _name=imagecodecs
 pkgname=python-imagecodecs
-pkgver=2023.1.23
+pkgver=2023.3.16
 pkgrel=1
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
@@ -20,7 +20,7 @@ depends=(
   libavif
   libdeflate
   libheif
-  libjpeg
+#  libjpeg
   libjxl
   libmng
   libpng
@@ -38,10 +38,13 @@ makedepends=(
   python-setuptools
 )
 source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz")
-sha256sums=('1c8cad4df4fb0cacd291a9a263257fb8b2900686255049af6e94bbf407c74bbd')
+sha256sums=('314c51d574be27c3648b9ee05d035956469f6b98f61e55d07e0cfa9ac014e1d3')
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
+  # python-imagecodecs >= 2023.3.16 depends on libjpeg-turbo >= 2.1.91
+  # disable it until libjpeg-turbo 2.1.91 is in official repos
+  sed -i '/jpeg8/d' setup.py
   python setup.py build
 }
 
