@@ -2,7 +2,7 @@
 # Contributor: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=4.2.4
+pkgver=4.2.5
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
@@ -58,7 +58,6 @@ source=("${pkgname}-${pkgver}::git+https://github.com/mavlink/qgroundcontrol.git
         "${pkgname}-libevents::git+https://github.com/mavlink/libevents.git"
         "${pkgname}-eigen::git+https://gitlab.com/libeigen/eigen.git"
         "${pkgname}-qmdnsengine::git+https://github.com/patrickelectric/qmdnsengine.git"
-        "gst-volatile.patch::https://patch-diff.githubusercontent.com/raw/mavlink/gst-plugins-good/pull/1.patch"
 )
 
 sha256sums=('SKIP'
@@ -70,11 +69,9 @@ sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
-            'SKIP'
 )
 
 prepare() {
-
   cd "$srcdir/${pkgname}-${pkgver}"
 
   git submodule init
@@ -89,21 +86,16 @@ prepare() {
   git config submodule."libs/qmdnsengine".url "${srcdir}/${pkgname}"-qmdnsengine
 
   git -c protocol.file.allow=always submodule update --init --recursive
-
-  cd "${srcdir}/${pkgname}-${pkgver}/libs/qmlglsink/gst-plugins-good"
-  patch --strip=1 < "${srcdir}/gst-volatile.patch"
 }
 
 build() {
   mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
-
   cd "$srcdir/${pkgname}-${pkgver}/build"
   qmake ..
   make
 }
 
 package() {
-
   mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/applications"
   cp -r "${srcdir}/${pkgname}-${pkgver}/build/staging" "${pkgdir}/opt/${pkgname}"
   cp "${srcdir}/${pkgname}-${pkgver}/resources/icons/qgroundcontrol.png" "${pkgdir}/opt/${pkgname}"
