@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=commonmark
-_cranver=1.8.1
+_cranver=1.9.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="High Performance CommonMark and Github Markdown Rendering in R"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -18,7 +18,7 @@ optdepends=(r-curl r-testthat r-xml2)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "system-cmark-gfm.patch"
         "CRAN-BSD_2_clause-TEMPLATE::https://cran.r-project.org/web/licenses/BSD_2_clause")
-sha256sums=('96adcb093de3d2e48811af402da70e7222a313b97f1e979e0cbe84dd59bd5cbe'
+sha256sums=('6dd01a5a26c8d436486abf69c2f6ad0f8dd1c811f575c31983aeb4dbd376548f'
             '1a9ca36bb1823edcd887e7dcc160bb939e05afea201d833f8cfb8cbf64ad54cb'
             '19a23bcfa6515217ca3bd3b99c27fe425f41817a034e3279b570a60fed27c499')
 
