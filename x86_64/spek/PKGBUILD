@@ -1,7 +1,7 @@
 # Maintainer: Michał Przybyś <michal@przybys.eu>
 pkgname=spek
 pkgver=0.8.5
-pkgrel=1
+pkgrel=2
 pkgdesc='An acoustic spectrum analyser'
 arch=(x86_64)
 url='http://spek.cc/'
