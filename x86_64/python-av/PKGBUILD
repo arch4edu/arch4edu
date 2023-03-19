@@ -6,13 +6,13 @@ pkgdesc="Pythonic bindings for FFmpeg"
 url="https://docs.mikeboers.com/pyav/"
 
 pkgver=10.0.0
-pkgrel=1
+pkgrel=2
 
 arch=("x86_64" "i686")
 license=("BSD")
 
 depends=(
-    "ffmpeg"
+    "ffmpeg4.4"
     "python"
     "python-numpy"
     "python-pillow"
@@ -37,13 +37,13 @@ source=( "https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_na
 b2sums=('0771fb37de072b63b8f276a2c3f76461af52910433793c7261f8216ab0af58ca46d8da871352d419c231a41fdb73b7e65f8d9eb71373f540cd3407148605ea74')
 
 build() {
+    export PKG_CONFIG_PATH="/usr/lib/ffmpeg4.4/pkgconfig"
 
     cd "${srcdir}"/${_name}-${pkgver}
     python setup.py build_ext --inplace
     python setup.py build
 }
 
-# test suite currently fails: https://github.com/PyAV-Org/PyAV/issues/876
 check() {
     cd "${srcdir}"/${_name}-${pkgver}
     export PYTHONPATH="${srcdir}/${_name}-${pkgver}/build/lib.linux-$CARCH-${python_version}"
