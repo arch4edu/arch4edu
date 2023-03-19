@@ -9,7 +9,7 @@
 
 pkgname=gazebo
 pkgver=11.12.0
-pkgrel=4
+pkgrel=5
 pkgdesc="A multi-robot simulator for outdoor environments"
 arch=('i686' 'x86_64')
 url="https://classic.gazebosim.org/"
@@ -49,3 +49,4 @@ package() {
   cd "${srcdir}/${_pkgname}-${pkgname}11_$pkgver/build"
   DESTDIR="${pkgdir}" make install
 }
+makedepends+=("ffmpeg4.4")
