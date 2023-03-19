@@ -2,7 +2,7 @@
 # Contributor: Tomasz Jakub Rup <tomasz.rup@gmail.com>
 
 pkgname=pnpm
-pkgver=7.29.1
+pkgver=7.29.3
 pkgrel=1
 pkgdesc="Fast, disk space efficient package manager"
 arch=("any")
