@@ -6,17 +6,18 @@
 # Contributor: Benjamin Chretien <chretien at lirmm dot fr>
 # Contributor: Anton Bazhenov <anton.bazhenov at gmail>
 # Contributor: Vladimir Ermakov <vooon341@gmail.com>
+# Contributor: Bernd Müller <github@muellerbernd.de>
 
 pkgname=gazebo
 pkgver=11.12.0
-pkgrel=5
+pkgrel=6
 pkgdesc="A multi-robot simulator for outdoor environments"
 arch=('i686' 'x86_64')
 url="https://classic.gazebosim.org/"
 license=('Apache')
 depends=('boost' 'curl' 'freeglut' 'freeimage' 'tbb' 'libccd' 'libltdl' 'graphviz'
-         'libtar' 'libxml2' 'ogre-1.9' 'protobuf>=2.3.0' 'sdformat-9' 'ignition-math>=6' 'ignition-transport-8'
-         'ignition-cmake>=2' 'ignition-common-3' 'ignition-fuel_tools-4' 'ignition-msgs-5' 'tinyxml2' 'qwt')
+         'libtar' 'libxml2' 'ogre-1.9' 'protobuf>=2.3.0' 'sdformat-9' 'ignition-math-6' 'ignition-transport-8'
+         'ignition-cmake-2' 'ignition-common-3' 'ignition-fuel_tools-4' 'ignition-msgs-5' 'tinyxml2' 'qwt')
 optdepends=('bullet: Bullet support'
             'cegui: Design custom graphical interfaces'
             'ffmpeg4.4: Playback movies on textured surfaces'
