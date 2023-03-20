@@ -9,10 +9,10 @@ pkgname=nvidia-container-runtime
 # runtime has been moved into the toolkit repo, this file is basically
 # identical to nvidia-container-toolkit's PKGBUILD.
 
-pkgver=3.12.0
+pkgver=3.12.1
 pkgrel=1
 
-toolkit_ver=1.12.0
+toolkit_ver=1.12.1
 
 pkgdesc='NVIDIA opencontainer runtime fork to expose GPU devices to containers.'
 arch=('x86_64')
@@ -25,7 +25,7 @@ depends=('libseccomp' 'nvidia-container-toolkit>=1.9.0')
 options=(!lto)
 
 source=("v${pkgver}-${pkgrel}.tar.gz"::"${url}/archive/v${toolkit_ver}.tar.gz")
-sha256sums=('b84dbc28dabd8c8d3731e60d75002619f55422d3930d399fb66677c7875e384f')
+sha256sums=('07aa9cb356ba99c6e82815e42e2d5b89a575c193ace4c0acbc07b760124ae1ab')
 
 _srcdir="nvidia-container-toolkit-${toolkit_ver}"
 
