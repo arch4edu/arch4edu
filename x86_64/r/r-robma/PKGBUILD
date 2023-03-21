@@ -5,7 +5,7 @@ _pkgname=RoBMA
 _pkgver=2.3.2
 pkgname=r-${_pkgname,,}
 pkgver=2.3.2
-pkgrel=1
+pkgrel=3
 pkgdesc='Robust Bayesian Meta-Analyses'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,14 +14,12 @@ depends=(
   jags
   r
   r-bayestools
-  r-bridgesampling
   r-coda
-  r-extradistr
   r-ggplot2
   r-mvtnorm
-  r-psych
   r-rdpack
   r-rjags
+  r-rlang
   r-runjags
   r-scales
 )
