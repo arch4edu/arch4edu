@@ -4,7 +4,7 @@
 # Contributor: Ismaël Bouya <ismael.bouya@normalesup.org>
 # Contributor: Martin Wimpress <code@flexion.org>
 pkgname=anaconda
-pkgver=2022.10
+pkgver=2023.03
 pkgrel=1
 pkgdesc="Simplifies package management and deployment of Anaconda"
 arch=(x86_64)
@@ -26,15 +26,15 @@ optdepends=('libxau: for Anaconda Navigator support'
 	'libglvnd: for Anaconda Navigator support')
 source=(https://repo.${pkgname}.com/archive/Anaconda3-${pkgver}-Linux-x86_64.sh)
 options=(!strip libtool staticlibs)
-sha512sums=('a0f17c8bbdcb05397da831af513a027738033844e7f9cdeb6e8b192d9c8f917109e72326e449f74bf3ee2a0da3789e0864c3d51ef2bdc816c62cc85f3395d226')
+sha512sums=('27a44d1da6a6d0bce646e735510c3a16f30a74a310f86c6da09a6364d440717750bad96316ae978f66ed1801310e7d4cf0b5a410808a7c51522a484e636eb4ad')
 install="${pkgname}.install"
 
 package() {
-	prefix=${pkgdir}/opt/${pkgname}
+	prefix="${pkgdir}"/opt/${pkgname}
 	LD_PRELOAD="/usr/lib/libfakeroot/libfakeroot.so"
 
 	# Packaging anaconda for installation to /opt/anaconda
-	bash ${srcdir}/Anaconda3-${pkgver}-Linux-${CARCH}.sh -b -p $prefix -f
+	bash "${srcdir}"/Anaconda3-${pkgver}-Linux-${CARCH}.sh -b -p $prefix -f
 	[ "$BREAK_EARLY" = 1 ] && exit 1
 	cd $prefix
 
@@ -45,5 +45,5 @@ package() {
 	sed -e "s|${pkgdir}||g" -i $(grep "${pkgdir}" . -rIl 2>/dev/null)
 
 	# Installing license
-	install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	install -D -m644 LICENSE.txt "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
