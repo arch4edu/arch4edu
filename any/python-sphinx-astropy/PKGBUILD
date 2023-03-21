@@ -2,7 +2,7 @@
 pkgname=python-sphinx-astropy
 _pyname=${pkgname#python-}
 pkgver=1.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Sphinx extensions and configuration specific to the Astropy project"
 arch=('any')
 url="https://github.com/astropy/sphinx-astropy"
@@ -14,7 +14,7 @@ makedepends=('python-setuptools-scm'
 checkdepends=('python-pytest-doctestplus'
               'python-astropy-sphinx-theme'
               'python-numpydoc'
-              'python-sphinxcontrib.jquery'
+              'python-sphinxcontrib-jquery'
               'python-sphinx-automodapi'
              )
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
@@ -29,7 +29,9 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed" # -vv --color=yes
+    # skip tests that cost times through internet
+    pytest -vv --color=yes \
+        --deselect=sphinx_astropy/tests/test_conf.py::test_conf #|| warning "Tests failed" # -vv --color=yes
 }
 
 package() {
@@ -39,7 +41,7 @@ package() {
              'python-sphinx-automodapi'
              'python-sphinx-gallery'
              'python-numpydoc'
-             'python-sphinxcontrib.jquery'
+             'python-sphinxcontrib-jquery'
              'python-pillow'
              'python-pytest-doctestplus>=0.11')
     cd ${srcdir}/${_pyname}-${pkgver}
