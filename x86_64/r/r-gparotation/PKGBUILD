@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=GPArotation
-_pkgver=2022.10-2
+_pkgver=2023.3-1
 pkgname=r-${_pkgname,,}
-pkgver=2022.10.2
+pkgver=2023.3.1
 pkgrel=1
 pkgdesc='GPA Factor Rotation'
 arch=('any')
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('04f72d8f3a9c204df5df904be563ec272a8437a707daee8823b2a690dde21917')
+sha256sums=('8748086c3d45286b7c9a81f0f8e58df75a09ba555d48a6eb8cd94af0c7c92a26')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
