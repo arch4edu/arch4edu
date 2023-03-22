@@ -6,53 +6,63 @@ _cranname=pillar
 _cranver=1.8.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Coloured Formatting for Columns"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
-    r
+    "r"
     "r-cli>=2.3.0"
-    r-fansi
-    r-glue
-    r-lifecycle
+    "r-fansi"
+    "r-glue"
+    "r-lifecycle"
     "r-rlang>=1.0.2"
     "r-utf8>=1.1.0"
     "r-vctrs>=0.3.8"
 )
 optdepends=(
-    r-bit64
-    r-debugme
-    r-diagrammer
-    r-dplyr
-    r-formattable
-    r-ggplot2
-    r-knitr
-    r-lubridate
-    r-nanotime
-    r-nycflights13
-    r-palmerpenguins
-    r-rmarkdown
-    r-scales
-    r-stringi
-    r-survival
-    "r-testthat>=3.1.1"
-    r-tibble
+    "r-bit64"
+    "r-debugme"
+    "r-diagrammer"
+    "r-dplyr"
+    "r-formattable"
+    "r-ggplot2"
+    "r-knitr"
+    "r-lubridate"
+    "r-nanotime"
+    "r-nycflights13"
+    "r-palmerpenguins"
+    "r-rmarkdown"
+    "r-scales"
+    "r-stringi"
+    "r-survival"
+    "r-tibble"
     "r-units>=0.7.2"
-    r-vdiffr
-    r-withr
+    "r-vdiffr"
+    "r-withr"
 )
+checkdepends=(
+    "${optdepends[@]}"
+    "r-testthat>=3.1.1"
+)
+
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=("2f06a7cc9e5638390c9b98a6ec9a9ec1beec0f2b9dbdfa42e39a5ab2456d87ec")
+b2sums=('d68f2d37424c729e1c3491183f11ba4ea701f696d7c35c2882507a845e6c4a0b0b2581ae7b626f68a4d716f983088329a24fc2e1f8c6238779a256d875ef9479')
 
 build() {
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+    mkdir -p "${srcdir}/build/"
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+}
+
+check() {
+    cd "${srcdir}/${_cranname}/tests"
+    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
 }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
 
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
