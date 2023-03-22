@@ -9,7 +9,7 @@ pkgdesc="Manipulate DESCRIPTION Files"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("any")
 depends=(
@@ -23,22 +23,30 @@ optdepends=(
     "r-covr"
     "r-gh"
     "r-spelling"
-    "r-testthat"
     "r-whoami"
     "r-withr"
 )
-makedepends=()
+checkdepends=(
+    "${optdepends[@]}"
+    "r-testthat"
+)
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('35d1f2f80c2bd9b59c8e7589fe573d90816cebd1fd763a232243a074dfd2ec052dce1424988e931a429c3898845a44bbbc6628405a93b4693a4dabaf5fdc59f3')
+b2sums=("35d1f2f80c2bd9b59c8e7589fe573d90816cebd1fd763a232243a074dfd2ec052dce1424988e931a429c3898845a44bbbc6628405a93b4693a4dabaf5fdc59f3")
 
 build() {
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+    mkdir -p "${srcdir}/build/"
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+}
+
+check() {
+    cd "${srcdir}/${_cranname}/tests"
+    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
 }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
 
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
