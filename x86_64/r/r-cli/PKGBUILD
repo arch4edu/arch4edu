@@ -9,7 +9,7 @@ pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
@@ -31,23 +31,31 @@ optdepends=(
     "r-rmarkdown"
     "r-rprojroot"
     "r-rstudioapi"
-    "r-testthat"
     "r-tibble"
     "r-whoami"
     "r-withr"
 )
-makedepends=()
+checkdepends=(
+    "${optdepends[@]}"
+    "r-testthat"
+)
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=("e04e67732c8dc8c649aea11487a03606cc959c1f1e3eca162027530329c638da5225465e0f53e3f7aa937e2dda322346d9df6ce6d931d5e013dabdfa1116879d")
 
 build() {
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+    mkdir -p "${srcdir}/build/"
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+}
+
+check() {
+    cd "${srcdir}/${_cranname}/tests"
+    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
 }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
 
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
