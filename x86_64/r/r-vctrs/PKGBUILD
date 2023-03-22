@@ -6,7 +6,7 @@ _cranname=vctrs
 _cranver=0.6.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Vector Helpers"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -19,28 +19,33 @@ depends=(
     "r-rlang>=1.1.0"
 )
 optdepends=(
-  "r-bit64"
-  "r-covr"
-  "r-crayon"
-  "r-dplyr>=0.8.5"
-  "r-generics"
-  "r-knitr"
-  "r-pillar>=1.4.4"
-  "r-pkgdown>=2.0.1"
-  "r-rmarkdown"
-  "r-testthat>=3.0.0"
-  "r-tibble>=3.1.3"
-  "r-withr"
-  "r-xml2"
-  "r-waldo>=0.2.0"
-  "r-zeallot"
-)
-checkdepends=(
     "r-bit64"
-    "r-dplyr"
+    "r-covr"
+    "r-crayon"
+    "r-dplyr>=0.8.5"
     "r-generics"
-    "r-testthat>=3.0.0"
+    "r-knitr"
+    "r-pillar>=1.4.4"
+    "r-pkgdown>=2.0.1"
+    "r-rmarkdown"
+    "r-tibble>=3.1.3"
+    "r-withr"
+    "r-xml2"
+    "r-waldo>=0.2.0"
+    "r-zeallot"
 )
+
+# Due to a circular dependency on itself, r-vctrs cannot
+# be checked on first build
+
+# To run the unittests during subsequent builds, uncomment
+# the lines below, as well as the `check()` function further
+# down
+
+# checkdepends=(
+#     "${optdepends[@]}"
+#     "r-testthat>=3.0.0"
+# )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=("beb61d84ed85b5b9ea11da1d95e5a2b7debde033d8ce3c528fcd64d1639769f22a0fffabba3860411b925ffe253e3a285c4248c862d0cac13d85ba4d75663976")
@@ -50,10 +55,10 @@ build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-check() {
-    cd "${srcdir}/${_cranname}/tests"
-    R_LIBS="${srcdir}/build" Rscript --vanilla testthat.R
-}
+# check() {
+#     cd "${srcdir}/${_cranname}/tests"
+#     R_LIBS="${srcdir}/build" Rscript --vanilla testthat.R
+# }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
