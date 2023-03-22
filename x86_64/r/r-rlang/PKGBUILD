@@ -9,7 +9,7 @@ pkgdesc="Functions for Base Types and Core R and ‘Tidyverse’ Features"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("i686" "x86_64")
 depends=(
@@ -25,7 +25,6 @@ optdepends=(
     "r-magrittr"
     "r-pillar"
     "r-rmarkdown"
-    "r-testthat>=3.0.0"
     "r-tibble"
     "r-usethis"
     "r-vctrs>=0.2.3"
