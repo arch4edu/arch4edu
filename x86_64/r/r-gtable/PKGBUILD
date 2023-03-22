@@ -3,10 +3,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=gtable
-_cranver=0.3.2
+_cranver=0.3.3
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Arrange ‘Grobs’ in Tables"
 arch=("any")
 url="https://cran.r-project.org/package=${_cranname}"
@@ -16,7 +16,7 @@ depends=(
     "r-cli"
     "r-glue"
     "r-lifecycle"
-    "r-rlang"
+    "r-rlang>=1.1.0"
 )
 optdepends=(
     "r-covr"
@@ -30,7 +30,7 @@ checkdepends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("b955cc53bae14486a1d332f3e57248893d8ede557b23937a16a596f984e686b747a6d2ca2d390a171b678813a134b6dd1044d78e8387928119137bb1b575cce7")
+b2sums=("11aaeac267036bb9de6e4fc5d7caff7dcf76b9421645393ccff4b1ac4624cd07e94707e5a43f70dcb029cb6df0671ce579a98acbff03eacdc76d07e5c6624582")
 
 build() {
     mkdir -p "${srcdir}/build/"
