@@ -9,7 +9,7 @@ pkgdesc="Encryption, Signatures and Certificates Based on OpenSSLi"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=4
 
 arch=("i686" "x86_64")
 depends=(
@@ -25,11 +25,13 @@ optdepends=(
     "r-knitr"
     "r-rmarkdown"
     "r-sodium"
-    "r-testthat>=2.1.0",
 )
 checkdepends=(
-    "${optdepends[@]}"
-    "r-testthat>=3.0.0"
+    "r-curl"
+    "r-digest"
+    "r-jsonlite"
+    "r-sodium"
+    "r-testthat"
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
