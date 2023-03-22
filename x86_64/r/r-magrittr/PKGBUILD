@@ -5,26 +5,45 @@
 _cranname=magrittr
 _cranver=2.0.3
 pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
 pkgdesc="A Forward-Pipe Operator for R"
-arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
-license=(MIT)
-depends=("r>=3.4.0")
-optdepends=(r-covr r-knitr r-rlang r-rmarkdown r-testthat)
+license=("MIT")
+pkgver=${_cranver//[:-]/.}
+pkgrel=2
+
+arch=("i686" "x86_64")
+depends=(
+    "r>=3.4.0"
+)
+optdepends=(
+    "r-covr"
+    "r-knitr"
+    "r-rlang"
+    "r-rmarkdown"
+)
+checkdepends=(
+    "${optdepends[@]}"
+    "r-testthat"
+)
+
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=("a2bff83f792a1acb801bfe6330bb62724c74d5308832f2cb6a6178336ace55d2")
+b2sums=("f4ebee352cc6e3de831d7a596d7f44b94bc77a19ad110fe53d6cb7d872bd71c0c83da7b6fad8063823fef6e42a12827b01cd2c5ce77b4e274a3abbcf68a0e772")
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+    mkdir -p "${srcdir}/build/"
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+}
+
+check() {
+    cd "${srcdir}/${_cranname}/tests"
+    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+    install -dm0755 "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
 
-  if [[ -f "${_cranname}/LICENSE" ]]; then
-    install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  fi
+    if [[ -f "${_cranname}/LICENSE" ]]; then
+        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    fi
 }
