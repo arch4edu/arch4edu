@@ -9,7 +9,7 @@ _cranname=testthat
 _cranver=3.1.7
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Unit Testing for R"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -48,10 +48,19 @@ optdepends=(
     "r-vctrs>=0.1.0"
     "r-xml2"
 )
-checkdepends=(
-    "${optdepends[@]}"
-    "r-testthat>=3.0.0"
-)
+
+
+# unittests require this very package (r-testthat)
+# Upon first build, it is not available.
+
+# To run the tests on subsequent builds, uncomment
+# the lines below, as well as the `check()` function
+# further down
+
+# checkdepends=(
+#    "${optdepends[@]}"
+#    "r-testthat>=3.0.0"
+#)
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=('aed7c006139c6193408ae02cd28037909313497e7e5cd14706507f4ddfe8632d73b2e3c8d88fd626001bf3fc6fbc42b711b7b10470976c3519fb1a4af8e5b730')
@@ -61,10 +70,10 @@ build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-check() {
-    cd "${srcdir}/${_cranname}/tests"
-    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
-}
+# check() {
+#     cd "${srcdir}/${_cranname}/tests"
+#     R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
+# }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
