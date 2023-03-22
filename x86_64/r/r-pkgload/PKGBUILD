@@ -5,7 +5,7 @@ _cranname=pkgload
 _cranver=1.3.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Simulate Package Installation and Attach"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -31,18 +31,28 @@ optdepends=(
     "r-rcpp"
     "r-remotes"
     "r-rstudioapi"
+)
+checkdepends=(
+    "${optdepends[@]}"
     "r-testthat>=3.1.0"
 )
+
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=("a6113732d047812744902e6fed558b6f7301dd27a970509ec30990853f4bfa9e46e9fd55be3314f8d70e4ddd481f09f0186f8a0f0c85d90bbc8231750443bbf3")
 
 build() {
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+    mkdir -p "${srcdir}/build/"
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+}
+
+check() {
+    cd "${srcdir}/${_cranname}/tests"
+    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
 }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
 
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
