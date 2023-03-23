@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _cranname=hexbin
-_cranver=1.28.2
+_cranver=1.28.3
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -19,7 +19,7 @@ optdepends=(
     r-knitr
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('6241f8d3a6c6be2c1c693c3ddb99554bc103e3c6cf602d0c2787c0ce6fd1702d')
+sha256sums=('0eb33511c1a4ff29dda8b89fee420ea7041033f981c7f16484c9f504d749de5f')
 
 build() {
   mkdir -p build
