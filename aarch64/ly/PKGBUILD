@@ -3,14 +3,15 @@
 
 pkgname=ly
 pkgver=0.5.3
-pkgrel=2
+pkgrel=3
 pkgdesc="TUI display manager"
-arch=('i686' 'x86_64' 'aarch64')
+arch=(i686 x86_64 aarch64)
 url="https://github.com/fairyglade/$pkgname"
 license=('custom:WTFPL')
-makedepends=('git')
-depends=('pam' 'xorg-xauth')
-conflicts=('python-ly') # TODO prevent this
+depends=(pam)
+makedepends=(git libxcb)
+optdepends=('xorg-xauth: for X server sessions')
+conflicts=(python-ly) # TODO prevent this
 backup=(etc/$pkgname/{config.ini,wsetup.sh,xsetup.sh})
 source=("git+$url.git#tag=v$pkgver"
         "git+https://github.com/nullgemm/argoat.git"
