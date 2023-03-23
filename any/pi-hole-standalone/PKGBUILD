@@ -2,7 +2,7 @@
 
 pkgname=pi-hole-standalone
 _pkgname=pi-hole
-pkgver=5.15.5
+pkgver=5.16.1
 pkgrel=1
 _now=`date +%N`
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch alteration for standalone PC.'
@@ -16,7 +16,7 @@ install=$pkgname.install
 backup=('etc/dnsmasq.d/01-pihole.conf')
 
 source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/v$pkgver.tar.gz
-	arch-server-core-$pkgver-$_now.patch::"https://raw.githubusercontent.com/max72bra/pi-hole-standalone-archlinux-customization/master/arch-server-core-$pkgver.patch"
+		"https://raw.githubusercontent.com/max72bra/pi-hole-standalone-archlinux-customization/master/arch-server-core-$pkgver-$pkgrel.patch"
 	dnsmasq.include
 	$_pkgname.tmpfile
 	$_pkgname-gravity.service
@@ -27,8 +27,8 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	mimic_basic-install.sh
 	piholeDebug.sh)
 
-sha256sums=('fa723c7573b0441b5f28300313eb99508853df1752720208f6cf6008da63abc2'
-            'd9f97c5e00874a0bf2d3ca32079485a4209583a77d98498e5df668b0bff440df'
+sha256sums=('b3eb6b62ad208c26a404f619b4afdc34f95980708ebec97387e2a9391c20dad0'
+            'e9e628389e3b27033644e9b235aa4c4217d227da29c1a2ff7921443e0deb2962'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             '6da6bba6cfac4e87a1f1e8e1488b71858ac6feb0a2e327470a58d8f1e9ad8cbf'
             '9b72d7769036f8f4bb7121968d2ae4bdba427e4b16787ce340205a5f62b45c7c'
@@ -41,7 +41,7 @@ sha256sums=('fa723c7573b0441b5f28300313eb99508853df1752720208f6cf6008da63abc2'
 
 prepare() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
-  patch -Np1 -i "$srcdir"/arch-server-core-$pkgver-$_now.patch
+  patch -Np1 -i "$srcdir"/arch-server-core-$pkgver-$pkgrel.patch
 }
 
 package() {
