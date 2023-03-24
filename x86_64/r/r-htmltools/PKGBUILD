@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=htmltools
-_cranver=0.5.4
+_cranver=0.5.5
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -29,7 +29,7 @@ optdepends=(
     r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('008228a8690d39d8ae2716bc614e76337fdbe2bac4e96258c10245fdf24f327e')
+sha256sums=('c8b23fab855a89c6ed0f6d6c7cad0ff9c5ae329c0bdb479940443ee752f26659')
 
 build() {
   mkdir -p build
