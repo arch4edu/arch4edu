@@ -2,14 +2,14 @@
 # Contributor: Nikolay Korotkiy <sikmir@gmail.com>
 
 pkgname=pyglossary
-pkgver=4.5.0
-pkgrel=1
+pkgver=4.6.1
+pkgrel=2
 pkgdesc="A tool for converting dictionary files aka glossaries with various formats for different dictionary applications"
 arch=(any)
 url="https://github.com/ilius/pyglossary"
 license=('GPL3')
 # TODO add python-libzim if/when it exists
-depends=('python>=3.7.0')
+depends=('python>=3.9.0')
 optdepends=(
   'python-gobject: Gtk3-based interface'
   'tix: Tkinter-based interface'
@@ -21,11 +21,15 @@ optdepends=(
   'python-marisa: Writing to Kobo E-Reader Dictionary'
   'python-lzo: Required for some MDX glossaries'
   'python-html5lib: Required to write to AppleDict'
+  'libplist: Required for AppleDict support'
+  'gtk4: Required for the new Gtk4-based interface'
+  'python-psutil: Required to show memory usage'
+  'python-polib: Required for gettext support'
 )
 makedepends=('python-setuptools')
 provides=("${pkgname}=${pkgver}")
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ilius/${pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('cc8eeaf9fd7e0b913b82a70f6e1a855a6d1f06f85f0873422318fdbee27d9e39')
+sha256sums=('1eb56bc7e670b5908ad0997ca5974bee11e717ee186fe19cc8d5c7fcecafead2')
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
