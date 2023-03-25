@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=xfun
-_cranver=0.37
+_cranver=0.38
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -29,11 +29,12 @@ optdepends=(
     r-curl
     r-jsonlite
     r-magick
+    r-yaml
     r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
         "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('3b619ff0b2aea36a1d422d1f7ca2e5cef0102e1d127c94c87acf5e6e8358e1f9'
+sha256sums=('a710c2f895f6c68944f38a106448f8d1e79fb0d99a5c6a3b2ee6bd8c0203c68a'
             'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
 
 build() {
