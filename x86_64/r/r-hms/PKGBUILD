@@ -6,14 +6,13 @@ _pkgname=hms
 _pkgver=1.1.3
 pkgname=r-${_pkgname,,}
 pkgver=1.1.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Pretty Time of Day'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('MIT')
 depends=(
   r
-  r-ellipsis
   r-lifecycle
   r-pkgconfig
   r-rlang
