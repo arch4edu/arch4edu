@@ -8,7 +8,7 @@
 _base=requests-cache
 pkgname=python-${_base}
 pkgdesc="A transparent persistent cache for the requests library"
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 arch=(any)
 url="https://github.com/${_base}/${_base}"
@@ -27,7 +27,7 @@ optdepends=(
 )
 checkdepends=(python-pytest python-requests-mock python-responses python-itsdangerous python-ujson python-timeout-decorator python-rich)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('92d6e1b9afb158f824a4b20d83c7b30a5988476b741213b0663df6095df1753da2dcd6516372ba383864e19d346850a356e9370b2ae27554effcc3f0b6a078c8')
+sha512sums=('ec5788e31f60fd95e575d01af1163f981757972db6557d7a62da2ca0719e84262cf66cdd9b40c73cca540b92d6b7f6beba1aa42bedba528734c61edf5013ec3d')
 
 build() {
   cd ${_base}-${pkgver}
