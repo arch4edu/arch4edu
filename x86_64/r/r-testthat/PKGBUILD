@@ -9,7 +9,7 @@ _cranname=testthat
 _cranver=3.1.7
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Unit Testing for R"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -49,21 +49,27 @@ optdepends=(
     "r-xml2"
 )
 
+# The unittests for `r-testthat` have multiple circular
+# dependency chains.
 
-# unittests require this very package (r-testthat)
-# Upon first build, it is not available.
+# As such, the tests can not be run on first build.
+# While R packages from CRAN, generally, are well-tested
+# before they are released, in some situations, you want to
+# have thorough testing on your own end.
 
-# To run the tests on subsequent builds, uncomment
-# the lines below, as well as the `check()` function
-# further down
+# To run the tests, first build this package without `check()`
+# (i.e., as-is) to bootstrap `r-testthat`. Then, on subsequent builds,
+# (assumining you have a local repository that is accessible from
+# the build chroot), uncomment the lines defining `checkdepends`, below,
+# as well as the `check()` function further down
 
 # checkdepends=(
-#    "${optdepends[@]}"
-#    "r-testthat>=3.0.0"
-#)
+#     "${optdepends[@]}"
+#     "r-testthat>=3.0.0"
+# )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('aed7c006139c6193408ae02cd28037909313497e7e5cd14706507f4ddfe8632d73b2e3c8d88fd626001bf3fc6fbc42b711b7b10470976c3519fb1a4af8e5b730')
+b2sums=("aed7c006139c6193408ae02cd28037909313497e7e5cd14706507f4ddfe8632d73b2e3c8d88fd626001bf3fc6fbc42b711b7b10470976c3519fb1a4af8e5b730")
 
 build() {
     mkdir -p "${srcdir}/build/"
@@ -71,14 +77,13 @@ build() {
 }
 
 # check() {
-#     cd "${srcdir}/${_cranname}/tests"
-#     R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
+#     export R_LIBS="build/"
+#     R CMD check --no-manual "${_cranname}"
 # }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
     cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
