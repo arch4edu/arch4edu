@@ -2,7 +2,19 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-bde
+  - x86_64/r/r-bh
   - x86_64/r/r-extradistr
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-moments
+  - x86_64/r/r-philentropy
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-rcppparallel
+  - x86_64/r/r-rstan
+  - x86_64/r/r-rstantools
+  - x86_64/r/r-stanheaders
+  - x86_64/r/r-truncdist
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

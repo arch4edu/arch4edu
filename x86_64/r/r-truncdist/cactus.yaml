@@ -2,12 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-ggplot2
-  - x86_64/r/r-ic.infer
-  - x86_64/r/r-lavaan
-  - x86_64/r/r-mvtnorm
-  - x86_64/r/r-norm2
-  - x86_64/r/r-quadprog
+  - x86_64/r/r-evd
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
