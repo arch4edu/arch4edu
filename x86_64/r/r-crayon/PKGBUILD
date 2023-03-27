@@ -7,7 +7,7 @@ pkgdesc="Colored Terminal Output"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("any")
 depends=(
@@ -18,10 +18,25 @@ optdepends=(
     "r-rstudioapi"
     "r-withr"
 )
-checkdepends=(
-    "${optdepends[@]}"
-    "r-testthat>=3.0.0"
-)
+
+# The unittests for `r-crayon` have multiple circular
+# dependency chains.
+
+# As such, the tests can not be run on first build.
+# While R packages from CRAN, generally, are well-tested
+# before they are released, in some situations, you want to
+# have thorough testing on your own end.
+
+# To run the tests, first build this package without `check()`
+# (i.e., as-is) to bootstrap `r-crayon`. Then, on subsequent builds,
+# (assumining you have a local repository that is accessible from
+# the build chroot), uncomment the lines defining `checkdepends`, below,
+# as well as the `check()` function further down
+
+# checkdepends=(
+#     "${optdepends[@]}"
+#     "r-testthat>=3.0.0"
+# )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=("8727fa876071c22be0a937d85edaf4c041f4798b72b25281233f3d15387dc49589b933e722591e3297d9d987b4a7c6fe7c20d5ae8acde59d08dc5e463f6e1fa2")
@@ -31,15 +46,14 @@ build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-check() {
-    cd "${srcdir}/${_cranname}/tests"
-    R_LIBS="${srcdir}/build/" Rscript --vanilla testthat.R
-}
+# check() {
+#     export R_LIBS="build/"
+#     R CMD check --no-manual "${_cranname}"
+# }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
     cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
