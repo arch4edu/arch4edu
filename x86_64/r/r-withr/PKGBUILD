@@ -10,7 +10,7 @@ pkgdesc="Lightweight Well-Known Geometry Parsing"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("any")
 depends=(
@@ -24,11 +24,26 @@ optdepends=(
     "r-rmarkdown"
     "r-rsqlite"
 )
-checkdepends=(
-    "${optdepends[@]}"
-    "r-testthat"
-    "texlive-core"
-)
+
+# The unittests for `r-withr` have multiple circular
+# dependency chains.
+
+# As such, the tests can not be run on first build.
+# While R packages from CRAN, generally, are well-tested
+# before they are released, in some situations, you want to
+# have thorough testing on your own end.
+
+# To run the tests, first build this package without `check()`
+# (i.e., as-is) to bootstrap `r-withr`. Then, on subsequent builds,
+# (assumining you have a local repository that is accessible from
+# the build chroot), uncomment the lines defining `checkdepends`, below,
+# as well as the `check()` function further down
+
+# checkdepends=(
+#     "${optdepends[@]}"
+#     "r-testthat"
+#     "texlive-core"
+# )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=("b472aef752317feedab16ab01557f28cdd30d8f2c6902b1a496f308165c1e02f7a8859cc791acf714748ad0a1b2d58dc9567cacfa0083a8427eb487820d8ab10")
@@ -38,14 +53,14 @@ build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-check() {
-    R_BUILD_TAR="tar" R_LIBS="build/" R CMD check "${_cranname}"
-}
+# check() {
+#     export R_LIBS="build/"
+#     R CMD check --no-manual "${_cranname}"
+# }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
     cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-
     if [[ -f "${_cranname}/LICENSE" ]]; then
         install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
