@@ -1,19 +1,34 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=jfa
-_pkgver=0.6.4
+_pkgver=0.6.5
 pkgname=r-${_pkgname,,}
-pkgver=0.6.4
-pkgrel=4
+pkgver=0.6.5
+pkgrel=1
 pkgdesc='Bayesian and Classical Audit Sampling'
-arch=('any')
+arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
   r
+  r-bde
+  r-bh
   r-extradistr
+  r-ggplot2
+  r-moments
+  r-philentropy
+  r-rcpp
+  r-rcppeigen
+  r-rcppparallel
+  r-rstan
+  r-rstantools
+  r-stanheaders
+  r-truncdist
 )
 optdepends=(
+  r-benford.analysis
+  r-benfordtests
+  r-beyondbenford
   r-kableextra
   r-knitr
   r-mus
@@ -22,7 +37,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8237a0d4dfb04a71696bd9123c6c173209a945aa91e9b602943027c8b22457cf')
+sha256sums=('bf21baf2149062090f55c9dbf19a4545dda1e54b758720c510fcf77e4af30f2d')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
