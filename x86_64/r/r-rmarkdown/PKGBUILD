@@ -6,18 +6,19 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=rmarkdown
-_cranver=2.20
+_cranver=2.21
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Dynamic Documents for R"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL3)
 depends=(
-    pandoc-cli
+    pandoc
     r-bslib
     r-evaluate
+    r-fontawesome
     r-htmltools
     r-jquerylib
     r-jsonlite
@@ -50,7 +51,7 @@ optdepends=(
     r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('d7f7059bfcb43e4b92432d69ba0e0c74ad10a20f153689262a3e848adb60159d')
+sha256sums=('c25b20a422d11a115c93460f41c488874002154abb349b14e0d6518682fdac28')
 
 prepare() {
   # Skip a test that might fail depending on environment
