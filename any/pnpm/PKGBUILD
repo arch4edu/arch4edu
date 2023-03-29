@@ -2,13 +2,13 @@
 # Contributor: Tomasz Jakub Rup <tomasz.rup@gmail.com>
 
 pkgname=pnpm
-pkgver=7.30.3
+pkgver=8.0.0
 pkgrel=1
 pkgdesc="Fast, disk space efficient package manager"
 arch=("any")
 url="https://pnpm.js.org/"
 license=("MIT")
-depends=("nodejs>=14.6.0")
+depends=("nodejs>=16.14")
 makedepends=("git" "npm" "jq")
 source=("git+https://github.com/$pkgname/$pkgname.git?signed#tag=v$pkgver")
 sha256sums=('SKIP')
