@@ -3,7 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/python-ml-dtypes
+  - aarch64/python-ml-dtypes
 build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: aur-pre-build
