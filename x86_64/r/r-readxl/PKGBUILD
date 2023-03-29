@@ -5,7 +5,7 @@ _cranname=readxl
 _cranver=1.4.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Read Excel Files"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
