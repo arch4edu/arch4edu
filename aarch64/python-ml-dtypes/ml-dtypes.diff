@@ -1,0 +1,58 @@
+--- ml_dtypes/_src/custom_float.h	2023-03-28 11:25:18.481924852 +0300
++++ ml_dtypes/_src/custom_float.h	2023-03-28 11:25:26.671971453 +0300
+@@ -34,7 +34,7 @@
+ // Place `<locale>` before <Python.h> to avoid a build failure in macOS.
+ #include <Python.h>
+ 
+-#include "eigen/Eigen/Core"
++#include <eigen3/Eigen/Core>
+ 
+ #undef copysign  // TODO(ddunleavy): temporary fix for Windows bazel build
+                  // Possible this has to do with numpy.h being included before
+--- ml_dtypes/_src/dtypes.cc	2023-03-28 11:25:07.021859648 +0300
++++ ml_dtypes/_src/dtypes.cc	2023-03-28 11:24:46.431742499 +0300
+@@ -31,7 +31,7 @@
+ 
+ #include "_src/custom_float.h"
+ #include "_src/float8.h"
+-#include "eigen/Eigen/Core"
++#include <eigen3/Eigen/Core>
+ 
+ namespace ml_dtypes {
+ 
+--- ml_dtypes/_src/float8.h	2023-03-28 11:24:58.835146402 +0300
++++ ml_dtypes/_src/float8.h	2023-03-28 11:24:37.985027775 +0300
+@@ -25,7 +25,7 @@
+ #include <ostream>
+ #include <version>
+ 
+-#include "eigen/Eigen/Core"
++#include <eigen3/Eigen/Core>
+ 
+ namespace ml_dtypes {
+ 
+--- pyproject.toml	2023-03-28 11:31:39.891143447 +0300
++++ pyproject.toml	2023-03-28 11:30:56.360805836 +0300
+@@ -46,10 +46,10 @@
+ [build-system]
+ requires = [
+     # Build with oldest supported numpy for each Python version.
+-    "numpy~=1.21.2; python_version<'3.11'",
++    "numpy>=1.21.2; python_version<'3.11'",
+     "numpy~=1.23.3; python_version>='3.11'",
+     "pybind11~=2.10.0",
+-    "setuptools~=67.6.0",
++    "setuptools>=67.6.0",
+ ]
+ build-backend = "setuptools.build_meta"
+ 
+--- setup.py	2023-03-27 21:32:08.000000000 +0300
++++ setup.py	2023-03-28 11:21:35.207321373 +0300
+@@ -57,7 +57,6 @@
+                 "ml_dtypes/_src/numpy.cc",
+             ],
+             include_dirs=[
+-                "third_party",
+                 "ml_dtypes",
+                 np.get_include(),
+             ],
