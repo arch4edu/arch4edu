@@ -7,8 +7,8 @@
 
 pkgname=saga-gis
 _pkgname=saga
-pkgver=8.5.0
-pkgrel=3
+pkgver=9.0.0
+pkgrel=1
 pkgdesc="A Geographic Information System (GIS) software with immense capabilities for geodata processing and analysis."
 url="http://www.saga-gis.org"
 license=('GPL3' 'LGPL3')
@@ -16,9 +16,8 @@ arch=('i686' 'x86_64')
 depends=('wxwidgets-gtk3' 'proj' 'gdal' 'libtiff' 'unixodbc' 'opencv' 'pdal')
 optdepends=('postgresql' 'vigra' 'liblas' 'libharu' 'libsvm' 'swig' 'python')
 makedepends=('cmake')
-source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz" 'pdal_cpp14.patch')
-sha256sums=('2734aebb5c067c29312037136cfe63a47b4936f97c7803f78f39d7bf048f798d'
-            '2ef217a3a448100f4b29705c335a858baf4c4f7f2f4e72a59260e7375cbf3660')
+source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz")
+sha256sums=('622d33615e919d4cbd9b1eff8d50576b43cec93aa2b0fa851051fe0404e7d986')
 
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -33,12 +32,7 @@ build() {
   -DWITH_CLIPPER_ONE:BOOL=OFF 
 
   msg "Start compiling ..."
-  cmake --build .
-}
-
-prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  patch --forward --strip=2 --input="${srcdir}/pdal_cpp14.patch"
+  cmake --build . --verbose
 }
 
 package () {
