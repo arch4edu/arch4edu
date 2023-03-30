@@ -8,7 +8,7 @@ _pkgname=gdtools
 _pkgver=0.3.3
 pkgname=r-${_pkgname,,}
 pkgver=0.3.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Utilities for Graphical Rendering'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -22,11 +22,11 @@ depends=(
   r-fontquiver
   r-gfonts
   r-htmltools
-  r-memoise
   r-rcpp
   r-systemfonts
 )
 optdepends=(
+  r-methods
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
