@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=FVWM3
+Comment=A highly customizable virtual desktop window manager
+Type=XSession
+Exec=/usr/bin/fvwm3
+TryExec=/usr/bin/fvwm3
