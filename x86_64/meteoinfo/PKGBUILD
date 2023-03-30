@@ -1,7 +1,7 @@
 # Contributor: Heavysink <winstonwu91@gmail.com>
 
 pkgname=meteoinfo
-pkgver=3.5.9
+pkgver=3.5.10
 pkgrel=1
 pkgdesc="An open source software suite to view and analyze meteorological and spatial data interactively (MeteoInfoMap) or do scientific computation and visualization (MeteoInfoLab)"
 arch=("any")
@@ -10,7 +10,7 @@ license=("LGPL")
 depends=("sh" "java-environment")
 makedepends=("unzip")
 source=("http://meteothink.org/downloads/files/MeteoInfo_${pkgver}.zip")
-sha256sums=('f1b70c7195d92bd91e5ccc6818cc95faf6984e9fbd3aa0461dd729475c6ca990')
+sha256sums=('7c751bdd8493b1dd7dd3acff17ad3e80a063babdc2b65d22c26ffa4b29da425e')
 noextract=()
 
 package() {
