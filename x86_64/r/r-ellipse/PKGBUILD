@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ellipse
-_pkgver=0.4.3
+_pkgver=0.4.4
 pkgname=r-${_pkgname,,}
-pkgver=0.4.3
+pkgver=0.4.4
 pkgrel=1
 pkgdesc='Functions for Drawing Ellipses and Ellipse-Like Confidence Regions'
 arch=('any')
@@ -16,7 +16,7 @@ optdepends=(
   r-mass
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('02ef2b11c3462a8b800332e522183f4c7c40c7d2d66c5174d5f3f6d8cc68a946')
+sha256sums=('7f00de52e42d2915465c450cf857244502c91d938f1ce6330399c07f1fce9ae4')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
