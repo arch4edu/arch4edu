@@ -5,10 +5,10 @@
 
 
 _pkgname=loo
-_pkgver=2.5.1
+_pkgver=2.6.0
 pkgname=r-${_pkgname,,}
-pkgver=2.5.1
-pkgrel=6
+pkgver=2.6.0
+pkgrel=1
 pkgdesc='Efficient Leave-One-Out Cross-Validation and WAIC for Bayesian Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -25,6 +25,7 @@ optdepends=(
   r-ggplot2
   r-graphics
   r-knitr
+  r-posterior
   r-rmarkdown
   r-rstan
   r-rstanarm
@@ -33,7 +34,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('866a2f54a4e8726cc3062e27daa8a073e6ac4aeb6719af7845284f7a668745f1')
+sha256sums=('66da60fdf53a62cbc93797fa696a4cc43bce77f1721dd4bc1a58d25b3f981210')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
