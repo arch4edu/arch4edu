@@ -4,7 +4,7 @@ _pkgname=interp
 _pkgver=1.1-4
 pkgname=r-${_pkgname,,}
 pkgver=1.1.4
-pkgrel=1
+pkgrel=3
 pkgdesc='Interpolation Methods'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -22,8 +22,10 @@ optdepends=(
   r-ggplot2
   r-gridextra
   r-lattice
+  r-mass
   r-rcppeigen
   r-ryacas
+  r-scatterplot3d
   r-sp
   r-stringi
   r-stringr
