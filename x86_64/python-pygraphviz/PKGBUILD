@@ -1,41 +1,28 @@
-# Maintainer: alienzj <alienchuj@gmail.com>
-# Co-maintainer: PumpkinCheshire <me at pumpkincheshire dot com>
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: PumpkinCheshire <me at pumpkincheshire dot com>
+# Contributor: alienzj <alienchuj@gmail.com>
 
-pkgname=python-pygraphviz
-_name=pygraphviz
-pkgver=1.9
-pkgrel=2
+_base=pygraphviz
+pkgname=python-${_base}
+pkgver=1.10
+pkgrel=1
 pkgdesc="Python interface to Graphviz graph drawing package"
 arch=('i686' 'x86_64')
-url="https://pygraphviz.github.io/"
+url="https://${_base}.github.io"
 license=('BSD')
-depends=(
-  'python'
-  'graphviz')
-makedepends=(
-  'python-build'
-  'python-installer'
-  'python-wheel'
-  'python-setuptools')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.zip")
-b2sums=('a399742ae5e8323eec0b6890858cc9158c2942c4f0adb8c74fbfb9745321ae013b93227540e5c328f5dd22d8fba2cf9217a9079f99a14feb983d7188e07084c9')
+depends=(python graphviz)
+makedepends=(python-build python-installer python-wheel python-setuptools)
+source=(https://pypi.org/packages/source/${_base::1}/${_base}/${_base}-${pkgver}.zip)
+sha512sums=('571c35f7a8013d5f128fcfbbd68372c8660560847afa0648737eae6d305a9283b69dce23a1b1aeb808bd4eac9c9cefa72b1d358fbc47b724a0b70997ea3f6d84')
 
 build() {
-  cd "$srcdir/$_name-$pkgver"
-  # python setup.py build
-  python -m build --wheel --no-isolation
+  cd ${_base}-${pkgver}
+  python -m build --wheel --skip-dependency-check --no-isolation
 }
 
 package() {
-  cd "$srcdir/$_name-$pkgver"
-
-  # python setup.py install --prefix=/usr --root="${pkgdir}" -O1 --skip-build
-
-  python -m installer --destdir="$pkgdir" dist/*.whl
-
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE.txt"
-  mv "$pkgdir/usr/share/doc/$_name-$pkgver" "$pkgdir/usr/share/doc/$pkgname-$pkgver"
-
+  cd ${_base}-${pkgver}
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
+  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  mv "${pkgdir}/usr/share/doc/${_base}-${pkgver}" "${pkgdir}/usr/share/doc/${pkgname}"
 }
-
-# vim:set ts=2 sw=2 et:
