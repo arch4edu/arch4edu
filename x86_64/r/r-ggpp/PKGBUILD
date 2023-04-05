@@ -5,7 +5,7 @@ _pkgname=ggpp
 _pkgver=0.5.2
 pkgname=r-${_pkgname,,}
 pkgver=0.5.2
-pkgrel=1
+pkgrel=3
 pkgdesc="Grammar Extensions to 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -32,6 +32,8 @@ optdepends=(
   r-knitr
   r-magick
   r-rmarkdown
+  r-testthat
+  r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('b3e25283ab68391bdbe82342d6bd012b00ea9e30099bdc746b30460f8f202371')
