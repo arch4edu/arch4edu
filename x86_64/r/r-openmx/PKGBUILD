@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=OpenMx
-_pkgver=2.21.1
+_pkgver=2.21.8
 pkgname=r-${_pkgname,,}
-pkgver=2.21.1
+pkgver=2.21.8
 pkgrel=1
 pkgdesc='Extended Structural Equation Modelling'
 arch=('x86_64')
@@ -43,7 +43,7 @@ makedepends=(
   make
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('631b5c896baf083827338e115db8665d2f86df203ebc5eb314182c8a0f3b6a8e')
+sha256sums=('bfe13368360434ab5804496bb7f28053f75669b6b264e0e679261a3e705a74ef')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
