@@ -3,9 +3,9 @@
 
 pkgname=python-gpustat
 _pkgname=gpustat
-pkgver=1.0
+pkgver=1.1
 epoch=1
-pkgrel=2
+pkgrel=1
 pkgdesc='A simple command-line utility for querying and monitoring GPU status'
 arch=('any')
 url='https://github.com/wookayin/gpustat'
@@ -18,21 +18,25 @@ depends=(
   python-six
 )
 makedepends=(
-  python-pip
+  python-build
+  python-installer
   python-setuptools
+  python-setuptools-scm
+  python-wheel
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/wookayin/${_pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('c3eceff760474b0e3feb74c4e1d034167283d62d6f1e0b3813f51a1511be7bde')
+sha256sums=('848d76f1c1fa15c84d2f7e59c6fc4cd7a38f3a52e99390a7e966e8f2a020ecac')
 
 build() {
   cd "${_pkgname}-${pkgver}"
-  python setup.py build
+  SETUPTOOLS_SCM_PRETEND_VERSION=${pkgver} \
+  python -m build --wheel --no-isolation
 }
 
 
 package(){
   cd "${_pkgname}-${pkgver}"
-  python setup.py install --root="${pkgdir}" --optimize=1
+  python -m installer --destdir="${pkgdir}" dist/*.whl
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
 
