@@ -4,5 +4,5 @@ nvchecker:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  echo '_config="${_config} NO_AVX2=1"' >> PKGBUILD
+  echo '_config="${_config} DYNAMIC_ARCH=1"' >> PKGBUILD
 post_build: aur-post-build
