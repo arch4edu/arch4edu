@@ -1,7 +1,7 @@
 # Maintainer: Danilo J. S. Bellini <danilo dot bellini at gmail dot com>
 _cranname=maptools
 _cranver=1.1
-_cranrel=4
+_cranrel=6
 pkgname="r-$_cranname"
 pkgver="${_cranver}_$_cranrel"
 pkgrel=1
@@ -12,7 +12,7 @@ url="$_cranurl/web/packages/$_cranname/index.html"
 license=('GPL')
 depends=('r' 'r-sp')
 options=(!emptydirs)
-sha256sums=(f3ee25f9787d97c8373dac3651c6a198c932948eb3a6006b8618c91c6344fdc9)
+sha256sums=('d6a5df52db03b2231f21921b693c67f85df3c3b376181aa13ef4f21710f69308')
 source=("$_cranurl/src/contrib/${_cranname}_${_cranver}-$_cranrel.tar.gz")
 
 package() {
