@@ -2,7 +2,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=DEoptimR
-_cranver=1.0-11
+_cranver=1.0-12
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,7 +12,7 @@ url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL)
 depends=(r)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('1874b30f4b75f9bfa891986598f1ebe1fce27fdced14f8f417d3535cac08165b')
+sha256sums=('6136f98031bceaa691c5725222eca2d0f750a7b7fb60216480633635a9613d79')
 
 build() {
   mkdir -p build
