@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Rcsdp
-_pkgver=0.1.57.4
+_pkgver=0.1.57.5
 pkgname=r-${_pkgname,,}
-pkgver=0.1.57.4
+pkgver=0.1.57.5
 pkgrel=1
 pkgdesc='R Interface to the CSDP Semidefinite Programming Library'
 arch=('x86_64')
@@ -16,7 +16,7 @@ optdepends=(
   r-matrix
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4a317a7cff4edfa439239dbb0de0f5a0287b1af7f91ef6e96cdc815597ab4b3e')
+sha256sums=('50048bcb4a8bb9f9b48c5e43a32126eda1d23d17876c7632e20b04953f3b1cd2')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
