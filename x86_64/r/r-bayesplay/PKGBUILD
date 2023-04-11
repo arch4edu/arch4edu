@@ -4,7 +4,7 @@ _pkgname=bayesplay
 _pkgver=0.9.2
 pkgname=r-${_pkgname,,}
 pkgver=0.9.2
-pkgrel=4
+pkgrel=8
 pkgdesc='The Bayes Factor Playground'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -22,7 +22,7 @@ optdepends=(
   r-testthat
   r-vdiffr
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+source=("https://cran.r-project.org/src/contrib/Archive/${_pkgname}/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('5b134b10c3e702b427f4a40470d21d08cc33f73c83ae324c06d788658632211a')
 
 build() {
