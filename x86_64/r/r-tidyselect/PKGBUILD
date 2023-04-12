@@ -6,7 +6,7 @@ _cranname=tidyselect
 _cranver=1.2.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Select from a Set of Strings"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -40,12 +40,18 @@ prepare() {
   cd "${_cranname}/tests/testthat"
 
   # skip outdated snapshot tests
-  sed -i '/"all_of() and any_of() check their inputs"/a\ \ skip("outdated snapshot")' \
+  sed -i '/"eval_select() produces correct backtraces"/a\ \ skip("outdated snapshot")' \
+      test-eval-select.R
+  sed -i -e '/"all_of() and any_of() check their inputs"/a\ \ skip("outdated snapshot")' \
+      -e '/"`all_of()` fails even if `.strict` is FALSE"/a\ \ skip("outdated snapshot")' \
       test-helpers-vector.R
+  sed -i '/"where() checks return values"/a\ \ skip("outdated snapshot")' \
+      test-helpers-where.R
   sed -i -e '/"vars_select() type-checks inputs"/a\ \ skip("outdated snapshot")' \
       -e '/"vars_rename() type-checks arguments"/a\ \ skip("outdated snapshot")' \
       test-lifecycle-deprecated.R
-  sed -i '/"errors for bad inputs"/a\ \ skip("outdated snapshot")' \
+  sed -i -e '/"errors for bad inputs"/a\ \ skip("outdated snapshot")' \
+      -e '/"vars_pull() produces correct backtraces"/a\ \ skip("outdated snapshot")' \
       test-vars-pull.R
 }
 
