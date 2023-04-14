@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-curl
+  - x86_64/r/r-jsonlite
   - x86_64/r/r-ttr
   - x86_64/r/r-xts
   - x86_64/r/r-zoo
