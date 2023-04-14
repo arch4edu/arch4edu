@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-cpp11
   - x86_64/r/r-magrittr
   - x86_64/r/r-pkgconfig
   - x86_64/r/r-rlang
