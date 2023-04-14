@@ -1,7 +1,7 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 pkgname='python-arch'
 _module='arch'
-pkgver='5.3.1'
+pkgver='5.4.0'
 pkgrel=1
 pkgdesc="ARCH models in Python."
 url="https://pypi.python.org/pypi/arch"
@@ -14,7 +14,7 @@ makedepends=('cython' 'python-setuptools')
 license=('custom:University of Illinois/NCSA Open Source License')
 arch=('x86_64')
 source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_module::1}/$_module/$_module-${pkgver}.tar.gz")
-sha256sums=('106f15c8770a34f71239b6c88f8517814e6b7fea3b8f2e009b3a8a23fd7e77c2')
+sha256sums=('a1e83d4ffc5c09516230e58dc9f9c4af55445e2005507a51896f7ea120d9a5bd')
 
 build() {
     cd "${_module}-${pkgver}"
@@ -30,5 +30,5 @@ package() {
 check() {
     cd "${_module}-${pkgver}"
     python setup.py build_ext --inplace
-    PYTHONPATH=.. pytest arch/tests
+    PYTHONPATH=. pytest arch/tests
 }
