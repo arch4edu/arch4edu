@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=bayesplay
-_pkgver=0.9.2
+_pkgver=0.9.3
 pkgname=r-${_pkgname,,}
-pkgver=0.9.2
-pkgrel=8
+pkgver=0.9.3
+pkgrel=1
 pkgdesc='The Bayes Factor Playground'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,12 +18,13 @@ optdepends=(
   r-ggplot2
   r-knitr
   r-markdown
+  r-patrick
   r-rmarkdown
   r-testthat
   r-vdiffr
 )
-source=("https://cran.r-project.org/src/contrib/Archive/${_pkgname}/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5b134b10c3e702b427f4a40470d21d08cc33f73c83ae324c06d788658632211a')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('a51426f798f6458edd87091d666c227c6d8e0831126b99fdc8310fd0bc7b85bd')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
