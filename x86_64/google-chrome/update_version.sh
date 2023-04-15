@@ -30,7 +30,3 @@ updpkgsums
 
 # Update .SRCINFO
 makepkg --printsrcinfo >.SRCINFO
-
-# Commit changes
-git add PKGBUILD .SRCINFO
-git commit -m "${PKG} v${VER}"
