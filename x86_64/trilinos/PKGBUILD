@@ -7,7 +7,7 @@
 pkgname=trilinos
 pkgver=13.4.1
 _pkgver=${pkgver//./-}
-pkgrel=1
+pkgrel=2
 pkgdesc="algorithms for the solution of large-scale scientific problems"
 arch=('x86_64')
 url="http://trilinos.org"
