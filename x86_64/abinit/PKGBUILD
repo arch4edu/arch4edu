@@ -3,7 +3,7 @@
 
 pkgname=abinit
 pkgver=9.8.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Full-featured atomic-scale first-principles simulation software."
 arch=('i686' 'x86_64')
 url="https://www.abinit.org/"
