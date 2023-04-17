@@ -2,8 +2,8 @@
 
 pkgname='python-ml-dtypes'
 _pkgname=${pkgname#python-}
-pkgver=0.0.4
-pkgrel=6
+pkgver=0.1.0
+pkgrel=1
 pkgdesc='A stand-alone implementation of several NumPy dtype extensions used in ML.'
 arch=('aarch64' 'armv7h' 'x86_64')
 url='https://github.com/jax-ml/ml_dtypes'
@@ -21,8 +21,8 @@ makedepends=(
 )
 source=("ml-dtypes-${pkgver}.tar.gz::https://github.com/jax-ml/ml_dtypes/archive/refs/tags/v${pkgver}.tar.gz"
         'ml-dtypes.diff')
-sha256sums=('b9b09f4c674c7dc7f5074240e9123d31f30cf6572929f566082a5e2ab0a43279'
-            'SKIP')
+sha256sums=('d95d095a558c6f7da21649059146eef7002c17a8756b097ae3f93e96e02fc37f'
+            'f5ff65dc6d81011df5c6169f8b35931e3c61d79075245621d4b5a64882ebdb40')
 
 prepare() {
     cd ml_dtypes-$pkgver
