@@ -3,9 +3,9 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=zip
-_pkgver=2.2.2
+_pkgver=2.3.0
 pkgname=r-${_pkgname,,}
-pkgver=2.2.2
+pkgver=2.3.0
 pkgrel=1
 pkgdesc="Cross-Platform 'zip' Compression"
 arch=('x86_64')
@@ -22,7 +22,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e16cde23bb283efbe9b6bce19575c716c371d09033b42514471ccb444c0a8ea4')
+sha256sums=('33eba844922af9981732ee6ec1582d46cf04c562344f09a0f0f14a22c6f74543')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
