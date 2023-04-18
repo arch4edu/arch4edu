@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=TH.data
-_pkgver=1.1-1
+_pkgver=1.1-2
 pkgname=r-${_pkgname,,}
-pkgver=1.1.1
-pkgrel=9
+pkgver=1.1.2
+pkgrel=1
 pkgdesc="TH's Data Archive"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -31,7 +31,7 @@ optdepends=(
   r-vcd
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('edf3ab16b142f4c52d21fc64e41409ed138e5b3e142f2fae964b00f02d53dd7a')
+sha256sums=('47f94eb57b6fcef42efa30824c1356bf10529c4b94b0d0acdb787b434dddde73')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
