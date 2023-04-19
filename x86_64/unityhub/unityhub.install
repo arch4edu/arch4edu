@@ -1,5 +1,4 @@
 post_install() {
   update-mime-database /usr/share/mime
   update-desktop-database /usr/share/applications
-  xdg-mime default unityhub.desktop x-scheme-handler/unityhub
 }
