@@ -4,13 +4,19 @@
 pkgname=python-llvmlite-git
 _gitname=llvmlite
 pkgver=0.41.0dev0.r0.g54e18cb
-pkgrel=1
-pkgdesc="A lightweight LLVM python binding for writing JIT compilers (Git version)"
+pkgrel=2
+pkgdesc="A lightweight LLVM Python binding for writing JIT compilers (Git version)"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
 license=('BSD')
-depends=('python' 'llvm11-libs')
-makedepends=('git' 'llvm11')
+depends=('python' 'llvm14-libs')
+makedepends=(
+  'git' 'llvm14' 'python-build' 'python-installer'
+  'python-setuptools' 'python-wheel'
+)
+optdepends=(
+  'python-graphviz: visualising control-flow graphs'
+)
 provides=("python-llvmlite=$pkgver")
 conflicts=('python-llvmlite')
 source=(${_gitname}::git+https://github.com/numba/llvmlite.git)
@@ -23,7 +29,7 @@ pkgver() {
 
 build() {
   cd "$srcdir/$_gitname"
-  python setup.py build
+  LLVM_CONFIG=/usr/bin/llvm-config-14 python -m build --no-isolation --wheel
 }
 
 check() {
@@ -32,7 +38,7 @@ check() {
 }
 
 package() {
-  cd ${srcdir}/${_gitname}
-  python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
+  cd "${srcdir}/${_gitname}"
+  python -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
