@@ -4,12 +4,13 @@ _cranname=vdiffr
 _cranver=1.0.5
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Visual Regression Testing and Graphical Diffing"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
+    libpng
     r-diffobj
     r-glue
     r-htmltools
