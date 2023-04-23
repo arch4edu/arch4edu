@@ -1,0 +1,8 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed 's/-DPL_FREETYPE_FONT_PATH/-DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DPL_FREETYPE_FONT_PATH/' -i PKGBUILD
+post_build: aur-post-build
