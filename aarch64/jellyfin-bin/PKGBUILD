@@ -2,7 +2,7 @@
 
 pkgbase=jellyfin-bin
 pkgname=(jellyfin-bin jellyfin-web-bin jellyfin-server-bin)
-pkgver=10.8.9
+pkgver=10.8.10
 _pkgver="${pkgver}-1"
 pkgrel=1
 pkgdesc='The Free Software Media System'
@@ -22,15 +22,15 @@ source_x86_64=("jellyfin-${pkgver}.deb::https://repo.jellyfin.org/releases/serve
 source_aarch64=("jellyfin-${pkgver}.deb::https://repo.jellyfin.org/releases/server/debian/versions/stable/server/${pkgver}/jellyfin-server_${_pkgver}_arm64.deb")
 source_armv7h=("jellyfin-${pkgver}.deb::https://repo.jellyfin.org/releases/server/debian/versions/stable/server/${pkgver}/jellyfin-server_${_pkgver}_armhf.deb")
 sha256sums=(
-	'548367401333f08e84f50f61061915feec581c0608500a2e89e618cd245ac302'
+	'1e43006c2308bc219bc734fee1f6c48e843921ba7ded09188ca8cfa435ee800f'
 	'1ea19635cced6672484937903c27976a5a145d708caff06a687a8defdd23d549'
 	'0f8511673816daf528625366b6c27bc7e6182e4ac789191c87474667398376e2'
 	'9bc1ddb77c73d46cc4078356b5773e5a776ebf8b47a1c820ad5fb17591ad5228'
 	'b7faa4b0c756cdb361ef5b04fddfdc416b00f1246bb3a19a34bf4d185a6a7e5a'
 )
-sha256sums_x86_64=('956f97c53896eae584e738806bb86e1e70ae29a430e2c92693e4a8feea2cd474')
-sha256sums_aarch64=('261f0f6780486e307f2fe5fe4e7e9158062752e527ae4805b284c765ac783743')
-sha256sums_armv7h=('f6d500e33b3415ed7fad4d3b68b98ef00d23a59155a792a2ed750d8fe012e994')
+sha256sums_x86_64=('1d740a2a9603994bd77e77de4dc4097ea40995d77f3b3fdc8766bb2b5a7527ad')
+sha256sums_aarch64=('52efc80ea71b190081b393696b61fa17e85c28eea9651b3510e933d8ce3004bd')
+sha256sums_armv7h=('0a2302dbf6a08485774ed5d6877891ed7109ab012b7c803840a0160d82496bb4')
 noextract=("jellyfin-${pkgver}.deb" "jellyfin-web-${pkgver}.deb")
 options=('staticlibs')
 
