@@ -6,7 +6,7 @@ _pkgname=TH.data
 _pkgver=1.1-2
 pkgname=r-${_pkgname,,}
 pkgver=1.1.2
-pkgrel=1
+pkgrel=4
 pkgdesc="TH's Data Archive"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,13 +18,10 @@ optdepends=(
   r-atr
   r-coin
   r-colorspace
-  r-dplyr
-  r-gdata
   r-gridextra
   r-knitr
   r-lattice
   r-multcomp
-  r-plyr
   r-rms
   r-tram
   r-trtf
