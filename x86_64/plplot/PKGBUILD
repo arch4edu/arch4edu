@@ -4,7 +4,7 @@
 # Contributor: Eric Belanger <eric@archlinux.org>
 pkgname=plplot
 pkgver=5.15.0
-pkgrel=4
+pkgrel=5
 pkgdesc="A cross-platform software package for creating scientific plots"
 arch=('i686' 'x86_64')
 url="http://plplot.sourceforge.net/"
@@ -37,7 +37,7 @@ build() {
   fi
   mkdir build
   cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/usr \
+  cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON-DCMAKE_INSTALL_PREFIX=/usr \
       -DENABLE_octave=off \
       -DENABLE_tcl=ON \
       -DENABLE_tk=ON \
@@ -51,3 +51,4 @@ package() {
     make DESTDIR=${pkgdir} install
     install -D -m644 ../Copyright ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
+depends+=("wxwidgets-gtk3")
