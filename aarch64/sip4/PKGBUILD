@@ -7,7 +7,7 @@
 pkgbase=sip4
 pkgname=(sip4 python-sip4)
 pkgver=4.19.25
-pkgrel=3
+pkgrel=4
 arch=(x86_64)
 url='https://www.riverbankcomputing.com/software/sip/intro'
 license=('custom:"sip"')
@@ -21,14 +21,15 @@ prepare() {
 
 build() {
   cd build
-  python ../sip-$pkgver/configure.py CFLAGS="$CFLAGS" LFLAGS="$LDFLAGS"
+  python ../sip-$pkgver/configure.py CFLAGS="$CFLAGS" LFLAGS="$LDFLAGS" --no-dist-info
   make
 }
 
 package_sip4() {
   pkgdesc="A tool that makes it easy to create Python bindings for C and C++ libraries"
   depends=(glibc)
-  replaces=('sip<5')
+  provides=(sip)
+  conflicts=(sip)
 
   cd build
   make DESTDIR="$pkgdir" install -C sipgen
