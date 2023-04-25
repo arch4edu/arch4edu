@@ -6,7 +6,7 @@
 
 pkgname=java-flexdock
 pkgver=1.2.4
-pkgrel=2
+pkgrel=3
 pkgdesc="Docking framework for Swing"
 arch=('any')
 url="https://gitlab.com/scilab/forge/flexdock"
@@ -26,12 +26,12 @@ prepare () {
   # http://openjdk.java.net/jeps/182
   # > In JDK 9 and going forward, javac will use a "one + three back" policy of supported source and target options.
   # NOTE: I just hope, that it'll compile right.
-  local java_ver="$(javac -version 2>&1 | sed -e 's/^javac\s\+\([0-9]\+\.[0-9]\+\).*$/\1/g')"
+  local java_ver="$(javac -version | sed -e 's/^javac\s\+\([0-9]\+\.[0-9]\+\).*$/\1/g')"
   # accepted: 1.8, 17
   # not accepted: 17.0
   case $java_ver in
     1.*) ;;
-    *) java_ver="$(echo "$java_ver" | sed -e 's/\..*$//')" ;;
+    *) java_ver="${java_ver%.*}" ;;
   esac
   sed "s/%VERSION%/$java_ver/g" < ../build.xml.patch | patch -Np0
 }
