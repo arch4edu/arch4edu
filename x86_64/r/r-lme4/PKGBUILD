@@ -4,9 +4,9 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=lme4
-_pkgver=1.1-32
+_pkgver=1.1-33
 pkgname=r-${_pkgname,,}
-pkgver=1.1.32
+pkgver=1.1.33
 pkgrel=1
 pkgdesc="Linear Mixed-Effects Models using 'Eigen' and S4"
 arch=('x86_64')
@@ -41,7 +41,7 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5e46cba4384d95c6ec70db7f56f3e4c17dc6dccb7e873cb3e5b47f448dc50348')
+sha256sums=('d956a5ed7cbcc016114a836bad89acf6cdafcd0f82a7d85e3805ced936b40910')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
