@@ -8,7 +8,7 @@
 pkgname=javahelp2
 # manual versioning
 pkgver=2.0.05.r90
-pkgrel=6
+pkgrel=7
 pkgdesc="Java based help system"
 url="https://javaee.github.io/javahelp/"
 license=('custom' 'CDDL' 'GPL2')
@@ -30,12 +30,12 @@ build() {
     # http://openjdk.java.net/jeps/182
     # > In JDK 9 and going forward, javac will use a "one + three back" policy of supported source and target options.
     # NOTE: I just hope, that it'll compile right.
-    local java_ver="$(javac -version 2>&1 | sed -e 's/^javac\s\+\([0-9]\+\.[0-9]\+\).*$/\1/g')"
+    local java_ver="$(javac -version | sed -e 's/^javac\s\+\([0-9]\+\.[0-9]\+\).*$/\1/g')"
     # accepted: 1.8, 17
     # not accepted: 17.0
     case $java_ver in
       1.*) ;;
-      *) java_ver="$(echo "$java_ver" | sed -e 's/\..*$//')" ;;
+      *) java_ver="${java_ver%.*}" ;;
     esac
     ant -Djavac.source="$java_ver" -Djavac.target="$java_ver" release
 }
