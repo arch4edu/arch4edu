@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fitdistrplus
-_pkgver=1.1-8
+_pkgver=1.1-11
 pkgname=r-${_pkgname,,}
-pkgver=1.1.8
-pkgrel=3
+pkgver=1.1.11
+pkgrel=1
 pkgdesc='Help to Fit of a Parametric Distribution to Non-Censored or Censored Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f3c72310f40773b3839a9506c3cb781d044e09b94f2f38d332bb24e5f9960f5a')
+sha256sums=('26274f2b710b2417a8bca314d400abf320d4ccf0387ad082743056699501b53d')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
