@@ -6,14 +6,14 @@
 
 pkgname=java-flexdock
 pkgver=1.2.4
-pkgrel=3
+pkgrel=4
 pkgdesc="Docking framework for Swing"
 arch=('any')
 url="https://gitlab.com/scilab/forge/flexdock"
 license=('MIT')
 depends=('java-runtime')
 makedepends=(ant)
-privides=('flexdock')
+provides=('flexdock')
 conflicts=('flexdock')
 source=("${pkgname}-${pkgver}.tar.gz::https://gitlab.com/scilab/forge/flexdock/-/archive/f12705f1934ea347b59f5f2befee156d29b0ea44/flexdock-f12705f1934ea347b59f5f2befee156d29b0ea44.tar.gz"
 'build.xml.patch')
@@ -33,6 +33,7 @@ prepare () {
     1.*) ;;
     *) java_ver="${java_ver%.*}" ;;
   esac
+  msg2 "Using javac version $java_ver"
   sed "s/%VERSION%/$java_ver/g" < ../build.xml.patch | patch -Np0
 }
 
