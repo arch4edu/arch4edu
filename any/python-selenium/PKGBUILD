@@ -5,7 +5,7 @@
 _pkgname=selenium
 _suffix=''
 pkgname=python-$_pkgname
-pkgver=4.8.0
+pkgver=4.9.0
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=('any')
@@ -17,7 +17,7 @@ depends=('python-urllib3' 'python-certifi' 'python-debugpy' 'python-multidict'
 makedepends=('python-setuptools')
 checkdepends=('python-pytest')
 source=("https://github.com/SeleniumHQ/${_pkgname}/archive/refs/tags/${_pkgname}-${pkgver}${suffix}.tar.gz")
-sha256sums=('f0bd74b322501f44186b8ce6a214315142c8ae9a354f675416cbe2809307f7cc')
+sha256sums=('a8bafe09fb0d6eb1b3bbc08d4baf0c2de230ca2f0834a17598610d59059eac66')
 options=(!makeflags)
 
 prepare() {
