@@ -4,7 +4,7 @@ _pkgname=afex
 _pkgver=1.3-0
 pkgname=r-${_pkgname,,}
 pkgver=1.3.0
-pkgrel=1
+pkgrel=4
 pkgdesc='Analysis of Factorial Experiments'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -33,6 +33,7 @@ optdepends=(
   r-ggpubr
   r-ggresidpanel
   r-glmmtmb
+  r-grid
   r-jtools
   r-knitr
   r-lattice
@@ -56,6 +57,7 @@ optdepends=(
   r-statmod
   r-testthat
   r-tidyr
+  r-vdiffr
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
