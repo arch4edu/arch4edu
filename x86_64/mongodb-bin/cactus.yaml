@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+depends:
+  - x86_64/mongodb-tools
+  - x86_64/mongosh-bin
+pre_build: aur-pre-build
+post_build: aur-post-build
