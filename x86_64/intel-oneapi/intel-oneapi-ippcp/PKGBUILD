@@ -3,8 +3,8 @@
 
 pkgbase=intel-oneapi-ippcp
 pkgname=(intel-oneapi-ippcp intel-oneapi-ippcp-static)
-_pkgver=2021.6.3
-_debpkgrel=25343
+_pkgver=2021.7.0
+_debpkgrel=43492
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=1
 pkgdesc="Intel® Integrated Performance Primitives Cryptography common"
@@ -25,10 +25,10 @@ noextract=(
 	"${pkgname}-common-${_pkgver}-${_pkgver}-${_debpkgrel}_all.deb"
 	"${pkgname}-common-devel-${_pkgver}-${_pkgver}-${_debpkgrel}_all.deb"
 )
-sha256sums=('91284815ba38f7d327531ff6ca5104dcb31ac753f94c1eb9961d25b441fe33bb'
-            '4e20832bffb8b873f3f30d06ce2aff3abc4bd6a24ce2897d267527deeb685747'
-            '369f1ece17876453876dba326872a38ab4755b862ea4ce4c04d949b38327c61d'
-            'eaec1556207835b6602c2f845c21d0897e863bb95bf5c3f3d9c2d4db9bd89a26'
+sha256sums=('51c8ba51ffb8aa8d8fb89cb0e33e52ba6a1b415e6dcfa8dbf3e6c111f33f67d9'
+            '8b682da8d14c940779845385b9a68b9a71c5a488791ea1c3f64d4eb317abd23f'
+            'acda55e5e660fb0a15183310aaf5acd42b2a5aef82395964e2aa2d74012b8fde'
+            'd2c7e3f1c6a1cb0c84bfeb8ab1d398dc5dd4ebd48569a2a1d4d64292bb4bf938'
             '76925aa5c6d4dfcb5f87dbc6b51f5480a36abd05ff9e5cc7531bb95c7bee059c'
             '8c52433232e6b703f31298646385430887676b2c6fdbcb909d181b3fb436dd7f')
 
@@ -49,7 +49,7 @@ build() {
 }
 
 package_intel-oneapi-ippcp() {
-	depends=('intel-oneapi-common=2023.0.0')
+	depends=('intel-oneapi-common=2023.1.0')
 	cp -r ${srcdir}/opt ${pkgdir}
 	ln -sfT "$_pkgver" ${pkgdir}/opt/intel/oneapi/ippcp/latest
 
