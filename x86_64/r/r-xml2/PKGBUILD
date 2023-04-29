@@ -4,16 +4,16 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _cranname=xml2
-_cranver=1.3.3
+_cranver=1.3.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Parse XML"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(r libxml2)
-checkdepends=(r-httr r-mockery r-testthat)
+checkdepends=(r-mockery r-testthat)
 optdepends=(
     r-covr
     r-curl
@@ -24,26 +24,23 @@ optdepends=(
     r-rmarkdown
     r-testthat
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
-        "R-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('cb4e9c0d31618ed67d2bfa4c7b5e52680e11612ed356a8164b541d44163c1c8d'
-            'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
+source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+sha256sums=('340bb1a18e643a5008c0b4e92d71c3b0abacb44f1742e3a77d0cb33cb73b3030')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_cranname" -l build
 }
 
 check() {
-  cd "${_cranname}/tests"
-  R_LIBS="${srcdir}/build" NOT_CRAN=true Rscript --vanilla testthat.R
+  cd "$_cranname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_cranname" "$pkgdir/usr/lib/R/library"
 
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-
-  install -Dm644 R-MIT-TEMPLATE "${pkgdir}/usr/share/licenses/${pkgname}/MIT"
-  install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_cranname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
