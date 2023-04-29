@@ -3,8 +3,8 @@
 
 pkgbase=intel-oneapi-ipp
 pkgname=(intel-oneapi-ipp intel-oneapi-ipp-static)
-_pkgver=2021.7.0
-_debpkgrel=25396
+_pkgver=2021.8.0
+_debpkgrel=46345
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=1
 pkgdesc="Intel® Integrated Performance Primitives"
@@ -25,10 +25,10 @@ noextract=(
 	"${pkgname}-common-${_pkgver}-${_pkgver}-${_debpkgrel}_all.deb"
 	"${pkgname}-common-devel-${_pkgver}-${_pkgver}-${_debpkgrel}_all.deb"
 )
-sha256sums=('c6f30709c98a16e879edb824f384ab6ad5723a3b6cf111fc1a6b4fc07a5060e1'
-            '70a6fc980ad128f95ae735d4c9f00e4e39f3e1828730017ddd0faeb219b9230e'
-            'c870add93cb529c23dabaf1e62bbb4d059a38ca85d930e5187989aa79a19b7c2'
-            '9c23b560ee4a035656c2f502aad171c65386d62f7180cfe099b08bb73adbf0a9'
+sha256sums=('2e7e6bdf92b650bcb56e5f72224289531b35de870e16b46b2000ee1276185186'
+            '0651c32a8875ffad2c627aae8c120366b51ae5bf62aa3fb3ac478e635aeeb871'
+            'd367b5eb7135fd16e78be64e31be8fabf82bdd7ff5b7e20c0cab7aa89da82612'
+            '16f5d9448492023b701b36dbe860ede13fb771ca60d5165464151f4fec086423'
             '6d107c6b8da27adb2d643596512282c26f557387d184b8271298df831b29421f'
             '140334f0e2bed5ecfaa1a9a5f8a65034aa87ad8104ec63c579259f21c97c24d8')
 
@@ -49,9 +49,9 @@ build() {
 }
 
 package_intel-oneapi-ipp() {
-	depends=('intel-oneapi-common=2023.0.0'
-    'intel-oneapi-tbb>=2021.8.0' 'intel-oneapi-compiler>=2023.0.0'
-	'intel-oneapi-tbb<2021.8.1' 'intel-oneapi-compiler<2023.0.1')
+	depends=('intel-oneapi-common=2023.1.0'
+    'intel-oneapi-tbb>=2021.9.0' 'intel-oneapi-compiler>=2023.1.0'
+	'intel-oneapi-tbb<2021.9.1' 'intel-oneapi-compiler<2023.1.1')
 	cp -r ${srcdir}/opt ${pkgdir}
 	ln -sfT "$_pkgver" ${pkgdir}/opt/intel/oneapi/ipp/latest
 
