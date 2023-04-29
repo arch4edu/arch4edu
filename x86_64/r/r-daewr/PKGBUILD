@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=daewr
-_pkgver=1.2-9
+_pkgver=1.2-10
 pkgname=r-${_pkgname,,}
-pkgver=1.2.9
+pkgver=1.2.10
 pkgrel=1
 pkgdesc='Design and Analysis of Experiments with R'
 arch=('any')
@@ -14,7 +14,7 @@ depends=(
   r-stringi
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('fb86af72ae4d8f81ffa0bc498fb9d972117b0bd95dbeaad8a989925750a0917a')
+sha256sums=('6ea1af5488a9ec719987e742e0e00683b0e2d5051451bcd6947e5211acc49341')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
