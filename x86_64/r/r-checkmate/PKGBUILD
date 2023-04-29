@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=checkmate
-_pkgver=2.1.0
+_pkgver=2.2.0
 pkgname=r-${_pkgname,,}
-pkgver=2.1.0
-pkgrel=8
+pkgver=2.2.0
+pkgrel=1
 pkgdesc='Fast and Versatile Argument Checks'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,7 +30,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b784dd5163a0350d084ef34882d9781373839dedeaa9a8b8e6187d773d0d21c6')
+sha256sums=('96ec14b057e875465f8ef194f35b8e124cd5b5919697692fb392706201359118')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
