@@ -3,8 +3,8 @@
 
 pkgbase=intel-oneapi-ccl
 pkgname=(intel-oneapi-ccl intel-oneapi-ccl-static)
-_pkgver=2021.8.0
-_debpkgrel=25371
+_pkgver=2021.9.0
+_debpkgrel=43543
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=1
 pkgdesc="Intel® oneAPI Collective Communications Library"
@@ -21,8 +21,8 @@ noextract=(
 	"${pkgname}-${_pkgver}-${_pkgver}-${_debpkgrel}_amd64.deb"
 	"${pkgname}-devel-${_pkgver}-${_pkgver}-${_debpkgrel}_amd64.deb"
 )
-sha256sums=('a4a022ceb878f12d42f96d53819869eab3c76ea3e142bf444c2e82cf9fcf0df0'
-            'fed1c30ead5dee45c4c25305bbc3ebe36ba0ad022f0333ff203f8c400d0fc2ce'
+sha256sums=('153807818d0f67bf351acdcb30520e34d3b21e57d2feecb35bbffce741b220ab'
+            '4271cd383fc618633566340b7f8ae1fcf7882f208dffcf854d50c10f4389cf72'
             '711518e543c0b4cd40cda37357936d6c5923da64862f7afa54f673f3daadd065'
             'dcd7b76690d94a2e86d926fbfe8d5297e616e5a49dc8d6eb146c36262aaa2041')
 
@@ -37,7 +37,7 @@ build() {
 }
 
 package_intel-oneapi-ccl() {
-	depends=('intel-oneapi-common=2023.0.0' 'intel-oneapi-mpi>=2021.8.0' 'intel-oneapi-mpi<2021.8.1')
+	depends=('intel-oneapi-common=2023.1.0' 'intel-oneapi-mpi>=2021.9.0' 'intel-oneapi-mpi<2021.9.1')
 	cp -r ${srcdir}/opt ${pkgdir}
 	ln -sfT "${_pkgver}" ${pkgdir}/opt/intel/oneapi/ccl/latest
 
