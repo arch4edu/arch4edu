@@ -4,7 +4,7 @@ _pkgname=fitdistrplus
 _pkgver=1.1-11
 pkgname=r-${_pkgname,,}
 pkgver=1.1.11
-pkgrel=1
+pkgrel=3
 pkgdesc='Help to Fit of a Parametric Distribution to Non-Censored or Censored Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,6 +14,7 @@ depends=(
 )
 optdepends=(
   r-actuar
+  r-bookdown
   r-gamlss.dist
   r-generalizedhyperbolic
   r-ggplot2
