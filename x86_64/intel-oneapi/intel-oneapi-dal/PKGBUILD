@@ -2,8 +2,8 @@
 # Contributor: Intel Corporation <http://www.intel.com/software/products/support>
 
 pkgname=intel-oneapi-dal
-_pkgver=2023.0.0
-_debpkgrel=25395
+_pkgver=2023.1.0
+_debpkgrel=46349
 pkgver=${_pkgver}_${_debpkgrel}
 pkgrel=1
 pkgdesc="Intel® oneAPI Data Analytics Library"
@@ -28,12 +28,12 @@ noextract=(
     "${pkgname}-daal4py-${_pkgver}-${_pkgver}-${_debpkgrel}_amd64.deb"
     "${pkgname}-scikit-learn-intelex-${_pkgver}-${_pkgver}-${_debpkgrel}_amd64.deb"
 )
-sha256sums=('5c60fd10142bf8030a371da57ded1281b1cc27f1a450dfdcaf2b9cd19d838ebd'
-            'cdefa731b17c8bfe9f69ba61161004d33650273bdd8ef2fc784eb206abf51d4d'
-            '0e5a00df088bb049c4e725a9f0ecfc437646e932dddb15506d1b4fd6793ddf34'
-            'fe8210d31da4e6d1e4b4cae5b83cb44a3bbbe36b8ccb23199604b25770ec07a5'
-            'de4fdfe444c91d05ab6f1818986a8f79824fd15dd2d2c44c2879097ca44ce8e9'
-            'c32974d14adb3871cd6f08989d425e53f1e14108f3142f470406f414bfd62ee7'
+sha256sums=('1c7c79398aad2010590ac092087bd8430232cf79bd859b8f3a5ac08bf8b1e9f9'
+            '202b28dc9cba1d978d3dd296b66fb2de266adb53f8c1aaeead3dd70d713756d6'
+            'ffa4620fe6deeb71779ecc8ea6e4b113d93d0abb326632ec87a2be6aa62b579f'
+            '72f539982ef75acc8d236144529715d656f35b3ffff486f5205295aa97fe097b'
+            'ef04ef5b2e0357c0f72c05055af64715a87b464685f9899ac4fe9d794ac55113'
+            'b5b749e93e9677d71420e4be36d60c3c00e345719909978c4db1fae23eff96b3'
             '3bb0049f5245c836472bdb977106ad9fb706d2d04d2544c49c11839d01361cbf'
             '9e93f51d0857508a661c9724d0f4041fcc449aa0bd19cfd78d3bf6065c09ed62')
 
@@ -60,8 +60,8 @@ build() {
 }
 
 package() {
-	depends=('intel-oneapi-common=2023.0.0'
-    'intel-oneapi-tbb>=2021.8.0' 'intel-oneapi-tbb<2021.8.1' 'intel-oneapi-compiler>=2023.0.0' 'intel-oneapi-compiler<2023.0.1')
+	depends=('intel-oneapi-common=2023.1.0'
+    'intel-oneapi-tbb>=2021.9.0' 'intel-oneapi-tbb<2021.9.1' 'intel-oneapi-compiler>=2023.0.0' 'intel-oneapi-compiler<2023.0.1')
 	mv ${srcdir}/opt ${pkgdir}
 	ln -sfT "$_pkgver" ${pkgdir}/opt/intel/oneapi/dal/latest
 
