@@ -1,12 +1,12 @@
 diff --git a/src/pybind/mgr/tox.ini b/src/pybind/mgr/tox.ini
-index 3426ae28735..88b4c5e840b 100644
+index d6ae7a29b3d..bb886a2d59e 100644
 --- a/src/pybind/mgr/tox.ini
 +++ b/src/pybind/mgr/tox.ini
-@@ -82,7 +82,6 @@ mypy_args = --config-file=../../mypy.ini
-            -m crash
-            -m dashboard
-            -m devicehealth
--           -m diskprediction_local
-            -m hello
-            -m influx
-            -m iostat
+@@ -88,7 +88,6 @@ commands =
+            -m crash \
+            -m dashboard \
+            -m devicehealth \
+-           -m diskprediction_local \
+            -m hello \
+            -m influx \
+            -m iostat \

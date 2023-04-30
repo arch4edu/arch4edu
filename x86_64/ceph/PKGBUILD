@@ -4,8 +4,8 @@
 
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
-pkgver=17.2.5
-pkgrel=6
+pkgver=17.2.6
+pkgrel=1
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
@@ -55,10 +55,6 @@ source=(
   # typically around cephadm auto-generated rotate rules
   'ceph-17.2.5-logrotate-ignore-dups.patch'
 
-  # Test breaks due to ambigous template in src/common/async/bind_like.h when called
-  # in src/test/cls/fifo/bench_* and test_*. Not sure how to fix this so disabled for now
-  'disable-test-cls-fifo.patch'
-
   # Test improperly creates librados::async_write templates, in boost 1.80
   # not sure why yet, need to ask upstream for help
   'ceph-16.2.7-delete-test-librados-asio.patch'
@@ -88,35 +84,23 @@ source=(
   # a lot of _GLIBCXX17_DEPRECATED line noise during builds
   'ceph-17.2.5-fix-iterator-depreciations.patch'
 
-  # fixes an issue with mgr usage of libradossqlite and temp tables,
-  # backported from the upstream
-  'ceph-18.0.0-mgr-sqlite-pragmas.patch'
-
-  # Fix for upstream bugs in pkgconfig of rdkafka
-  # https://github.com/bazaah/aur-ceph/issues/11
-  # https://github.com/confluentinc/librdkafka/issues/4155
-  'rdkafka.mpatch'
-
   # Fixes API changes to boost::beast string_view type def in 1.81
   # https://github.com/boostorg/beast/issues/2594
   'ceph-17.2.5-rgw-client-boost-string-view.patch'
 )
-sha512sums=('10cd3d9eb01c91c148a92f1f7d040bbd78af5bb1ab15d071d93f54b37097dc9e1268eed9e788fe32794d137f6af81abd6a2aeaee39cef44d2c45234a15cc6020'
+sha512sums=('dca9aea2ce210c15fcc34cb06a5dc5b4488ffa36d684166d47ebd87e48b54b6fee0882e1c67007a780e1c25754e9bc6e760cc10f60ea1183263f8504ef2dbd9b'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
-            '3774cbc1a979ee8bf7138b96defcf69499444afe0b7186b21feac3453a3a5ec93741f5942d256d93999e9bc306c8d018206893e04e1a3eb9e03593105d9f5791'
             '66770a80ba4e05ea72d4809cb5819cce7499ea7523b85b1a57370df68de1d7f6f94b1c10d0f9f9a3c8e6a86d0419434c70778c568cd06a0dd2e6126631a3355c'
             '31e578b240ceaaf1216b56cdce654661eed6529ef642ecad164a02669e850100a49a85dc70f3d744671e2c5dad10aee64be7d091fa33007cb8fc6788a4336799'
-            'e59cc0ec58d85369ed9f2b8969e2280609fe98828ea66b5bb80a423f4a0aa547da52c6ba9d9610cece442c515e123d1af169e11ec106aff8cd3dadaea35cad90'
+            '85c0a00419c292204be03e8962b0d4bc67c5dc21eb19e74897ec88168f19ac93fc2e38c405b212421c419a74923ec8c5c10844e23269225c52937fd2ad40d817'
             '6b53e3a2b1941f8dfdb4b83cafc4c500e818dd3a0736d7061f0ebcdfb514094b217e4688384c5b428288181ef6fff0ca73895c65a046e2d6ae2b834375164216'
             '81f540c8312972887a7cb43b8a4e29bfc6f24d5774787a4a8edfe65cca7d3b08faa08ecd09066d7ea67111769a5aec7385fe9a969546626f58874dd8aff5b664'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '2a6f33791760e14543c90077bfc6bf1b6b82ee2996e80b4762eadb887a0d9a67c221b6f10832ddf780dc6abaed246a1e2ee7680c9c861c4ff70e61b752a37b36'
-            'b2e1f495b57f3ed65b466719faded1713d8155e10b6432b704c632501313b6a98a56461164942cf303427770be0d5efe4798572fe8490ee977bf652906166bde'
-            'e4703027fccdb18be4255ba087a165e2a780248d8d52f18a776ef7b50f09f312a9e9a0d5832440a19f248b508e4ed4a869c1baa4362923f93a61e9a471760178'
             '02ca1a9bf15f9cd6f474f264ba2bf66ae725bac990a7cac315dabe377c66935a7afd8117f18a1f82c78bdf9ab2c3e5a2a227f2ffc166974dd7bb99b290f1f233')
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
@@ -154,9 +138,6 @@ prepare() {
   # disable/remove broken tests
   sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
   sed -i '/add_ceph_test(safe-to-destroy.sh/d' src/test/osd/CMakeLists.txt
-
-  mkdir -p "__pkgconfig__"
-  patch /usr/lib/pkgconfig/rdkafka.pc "${srcdir}/rdkafka.mpatch" -o "__pkgconfig__/rdkafka.pc"
 }
 
 build() {
@@ -172,7 +153,6 @@ build() {
   export CXXFLAGS+=" ${CPPFLAGS}"
   export CMAKE_BUILD_TYPE='RelWithDebInfo'
   export CMAKE_WARN_UNUSED_CLI=no
-  export PKG_CONFIG_PATH="$PWD/__pkgconfig__:$(pkg-config --variable pc_path pkg-config)"
 
   cmake \
     -B build \
