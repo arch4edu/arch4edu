@@ -1,0 +1,30 @@
+From 66685a74bb55d82a97c6ae46b7cd91152bbbfffd Mon Sep 17 00:00:00 2001
+From: Sam Ford <1584702+samford@users.noreply.github.com>
+Date: Thu, 16 Feb 2023 15:11:10 -0500
+Subject: [PATCH] fix: use trailing slash with include directory
+
+`CMakeLists.txt` references the `include` directory without a trailing
+slash, which can cause related files to be installed to
+`include/include` (e.g., in Homebrew). Using `include/` ensures the
+files will be installed to `include`, as expected.
+
+Co-authored-by: Carlo Cabrera <30379873+carlocab@users.noreply.github.com>
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 64b0c53be..09501c82c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -108,8 +108,8 @@ else()
+   endif()
+   configure_file(pocketsphinx.pc.in pocketsphinx.pc @ONLY)
+   install(TARGETS pocketsphinx LIBRARY)
+-  install(DIRECTORY include TYPE INCLUDE)
+-  install(DIRECTORY ${CMAKE_BINARY_DIR}/include TYPE INCLUDE)
++  install(DIRECTORY include/ TYPE INCLUDE)
++  install(DIRECTORY ${CMAKE_BINARY_DIR}/include/ TYPE INCLUDE)
+   install(FILES ${CMAKE_BINARY_DIR}/pocketsphinx.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+ 
+   option(BUILD_GSTREAMER "Build GStreamer plugin" OFF)
