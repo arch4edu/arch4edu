@@ -4,7 +4,7 @@ _dunever=2.9.0
 _tarver=3.7.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="An open-source simulator and research code in modern C++"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -25,6 +25,7 @@ prepare() {
   cd ${pkgname}-${pkgver}
   export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
   sed -i 's/^Version: '"${pkgver%%.0}"'/Version: '"${pkgver}"'/' dune.module
+  sed -i 's/"python"/"\/usr\/include\/dumux\/common\/"/' python/dumux/common/properties.py
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
 
@@ -55,7 +56,8 @@ package() {
   cd ${pkgname}-${pkgver}
   PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py --skip-cmake install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
   install -Dm 644 LICENSE.md -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+  install -Dm 644 python/${pkgname}/__init__.py -t "${pkgdir}${site_packages}"/${pkgname}
+  mv "${pkgdir}"/usr/python/dune/data "${pkgdir}${site_packages}"/${pkgname}
   find "${pkgdir}" -type d -empty -delete
-  cd "${pkgdir}"
-  rm -r usr/python
 }
