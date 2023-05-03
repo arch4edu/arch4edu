@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=logistf
-_pkgver=1.24.1
+_pkgver=1.25.0
 pkgname=r-${_pkgname,,}
-pkgver=1.24.1
-pkgrel=3
+pkgver=1.25.0
+pkgrel=1
 pkgdesc="Firth's Bias-Reduced Logistic Regression"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -15,7 +15,7 @@ depends=(
   r-mice
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e7e0d9054cf7f3221ba363afa0fdf1c8bb65b8841700ec0010fa4886be26a661')
+sha256sums=('3d3ed3ce30a8b2afb82ccbf2dff3dbf119f533d252eb91131d50166ebd96e870')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
