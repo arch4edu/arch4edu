@@ -2,7 +2,7 @@
 pkgname=python-pytest-filter-subpackage
 _pyname=${pkgname#python-}
 pkgver=0.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Pytest plugin for filtering based on sub-packages"
 arch=('any')
 url="https://github.com/astropy/pytest-filter-subpackage"
