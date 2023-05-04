@@ -4,7 +4,7 @@
 pkgname=python-conda-package-handling
 _name=${pkgname#python-}
 pkgver=1.8.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Create and extract conda package of various formats"
 arch=('any')
 url="https://github.com/conda/conda-package-handling"
