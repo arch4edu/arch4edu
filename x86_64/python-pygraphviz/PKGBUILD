@@ -5,7 +5,7 @@
 _base=pygraphviz
 pkgname=python-${_base}
 pkgver=1.10
-pkgrel=1
+pkgrel=2
 pkgdesc="Python interface to Graphviz graph drawing package"
 arch=('i686' 'x86_64')
 url="https://${_base}.github.io"
