@@ -2,7 +2,7 @@
 
 pkgname=python-lmfit
 pkgver=1.0.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Non-Linear Least Squares Minimization, with flexible Parameter settings, based on scipy.optimize.leastsq, and with many additional classes and methods for curve fitting"
 arch=(x86_64)
 url=http:/lmfit.github.io/lmfit-py/
