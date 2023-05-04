@@ -2,7 +2,7 @@
 
 pkgname=python-pygmo
 pkgver=2.19.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model (Python version)"
 arch=('i686' 'x86_64')
 url="https://esa.github.io/pygmo2/"
