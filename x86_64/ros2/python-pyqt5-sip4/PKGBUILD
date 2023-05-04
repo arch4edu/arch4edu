@@ -10,7 +10,7 @@
 pkgname=('python-pyqt5-sip4')
 pkgdesc="A set of Python bindings for the Qt5 toolkit"
 pkgver=5.15.9
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://riverbankcomputing.com/software/pyqt/intro"
 license=('GPL')
