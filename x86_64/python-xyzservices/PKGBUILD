@@ -4,7 +4,7 @@
 pkgname=python-xyzservices
 _name=xyzservices
 pkgver=2023.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles'
 arch=('x86_64')
 url="https://github.com/geopandas/xyzservices"
