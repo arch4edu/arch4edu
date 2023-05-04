@@ -5,7 +5,7 @@
 pkgname=python-progress
 _name=${pkgname#python-}
 pkgver=1.6
-pkgrel=6
+pkgrel=7
 pkgdesc="Easy to use progress bars for Python"
 arch=(any)
 url="https://github.com/verigak/progress"
