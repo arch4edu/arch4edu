@@ -4,7 +4,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=0.13.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
 url="http://sphinx-gallery.github.io"
@@ -55,7 +55,7 @@ check() {
 package_python-sphinx-gallery() {
     depends=('python-sphinx>=4' 'python-pillow' 'python-matplotlib')
     optdepends=('python-seaborn'
-                'mayavi'
+#               'mayavi'
                 'python-pypandoc')
 #               'python-sphinx-gallery-doc: Documentation of Sphinx-Gallery')
     cd ${srcdir}/${_pyname}-${pkgver}
