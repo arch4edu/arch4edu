@@ -2,7 +2,7 @@
 _name=retworkx
 pkgname=python-retworkx
 pkgver=0.11.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A high performance Python graph library implemented in Rust."
 url="https://github.com/Qiskit/retworkx"
 license=('Apache')
