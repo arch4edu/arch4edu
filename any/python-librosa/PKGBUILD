@@ -4,7 +4,7 @@
 pkgname=python-librosa
 _pkgname=librosa
 pkgver=0.10.0.post2
-pkgrel=1
+pkgrel=2
 pkgdesc="Python library for music and audio analysis"
 arch=('any')
 url="https://librosa.org"
