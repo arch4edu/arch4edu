@@ -3,7 +3,7 @@ _base=ninja-python-distributions
 pkgname=python-${_base%%-*}
 pkgdesc="Ninja is a small build system with a focus on speed"
 pkgver=1.11.1
-pkgrel=1
+pkgrel=2
 arch=(any)
 url="https://github.com/scikit-build/${_base}"
 license=(Apache)
@@ -16,7 +16,7 @@ sha512sums=('f6193ba9d1d55da11a437d17b96ef7c0574fd0033c05b1f2d2a4c652241a460a106
 
 build() {
   cd ${_base}-${pkgver}
-  python -m build --wheel --skip-dependency-check --no-isolation
+  CMAKE_GENERATOR="Unix Makefiles" python -m build --wheel --skip-dependency-check --no-isolation
 }
 
 package() {
