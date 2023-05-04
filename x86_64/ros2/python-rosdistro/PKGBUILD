@@ -2,7 +2,7 @@
 
 pkgname=('python-rosdistro')
 pkgver='0.9.0'
-pkgrel=1
+pkgrel=2
 pkgdesc='A tool to work with rosdistro files'
 arch=('any')
 url='https://github.com/ros-infrastructure/rosdistro'
