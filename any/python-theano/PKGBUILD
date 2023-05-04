@@ -7,7 +7,7 @@ pkgname=(
 )
 _pkgname="Theano"
 pkgver="1.0.5"
-pkgrel="1"
+pkgrel=2
 pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
 arch=('any')
 url='http://www.deeplearning.net/software/theano/'
