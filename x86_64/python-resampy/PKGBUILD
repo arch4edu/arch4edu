@@ -3,7 +3,7 @@
 pkgname=python-resampy
 _pkgname=resampy
 pkgver=0.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Efficient sample rate conversion in python"
 arch=('any')
 url="https://github.com/bmcfee/resampy"
