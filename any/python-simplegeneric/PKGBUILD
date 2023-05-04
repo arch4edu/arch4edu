@@ -1,7 +1,7 @@
 _pkgname=simplegeneric
 pkgname=python-${_pkgname}
 pkgver=0.8.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)"
 arch=('any')
 url="http://cheeseshop.python.org/pypi/simplegeneric"
