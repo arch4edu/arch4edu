@@ -2,7 +2,7 @@
 
 pkgname=python-pymavlink
 pkgver=2.4.37
-pkgrel=1
+pkgrel=2
 pkgdesc='python MAVLink interface and utilities'
 arch=('any')
 url='https://github.com/ArduPilot/pymavlink/'
