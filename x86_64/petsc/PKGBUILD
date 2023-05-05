@@ -2,7 +2,7 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.19.0
+pkgver=3.19.1
 pkgrel=1
 pkgname=petsc
 _config=linux-c-opt
@@ -36,7 +36,7 @@ optdepends=('trilinos: support for trilinos'
 install=petsc.install
 source=(http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('2fb065b622e1c9839a7ddc618a5fbdfb4ec6ec01b996c79ccb4c171d901ad0f2cf97e40573e752583e3580ef7765c33ea46e4c4d886aa33f8c7fe06df5a1013e'
+sha512sums=('5b9b71599a95e2d82d18d5313c424a08eead0c10f27f40c82159839ef0fa8aeda88ddea693a12d58b8ac29a41c4138e8188a3c91d6af540196ee3a977cf9539d'
             'bdbff55c99205ae6edf574af319d19133aaf91eeae2dbb826f207be9f77ec08dfaf4afca6642b1536f159b7516c1fdeb29f35356dbc69c53c4ce506d44bf5e40')
 
 _install_dir=/opt/petsc/${_config}
