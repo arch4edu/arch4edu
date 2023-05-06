@@ -7,16 +7,15 @@
 # Contributor: Roman Haritonov <reclosedev[at]gmail[dot]com>
 _base=requests-cache
 pkgname=python-${_base}
-pkgdesc="A transparent persistent cache for the requests library"
+pkgdesc="A persistent cache for python requests"
 pkgver=1.0.1
-pkgrel=2
+pkgrel=3
 arch=(any)
 url="https://github.com/${_base}/${_base}"
 license=('custom:BSD-2-clause')
-depends=(python-requests python-platformdirs python-cattrs python-url-normalize)
+depends=(python-requests python-cattrs python-platformdirs python-url-normalize)
 makedepends=(python-poetry-core python-build python-installer python-wheel)
-optdepends=(
-  'python-boto3: Cache backend for Amazon DynamoDB database'
+optdepends=('python-boto3: Cache backend for Amazon DynamoDB database'
   'python-botocore: Interface for Amazon Web Services'
   'python-pymongo: Cache backend for MongoDB database'
   'python-redis: Cache backend for Redis cache'
