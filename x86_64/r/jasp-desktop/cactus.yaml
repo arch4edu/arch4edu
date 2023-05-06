@@ -5,7 +5,6 @@ depends:
   - x86_64/r/r-rinside
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
-  - x86_64/r/r-jaspresults
   - x86_64/r/r-jasptools
   - x86_64/r/r-jaspdescriptives
   - x86_64/r/r-jaspttests
@@ -26,12 +25,13 @@ depends:
   - x86_64/r/r-jaspmachinelearning
   - x86_64/r/r-jaspmetaanalysis
   - x86_64/r/r-jaspnetwork
-  - x86_64/r/r-jaspprocesscontrol
+  - x86_64/r/r-jaspprophet
   - x86_64/r/r-jaspreliability
   - x86_64/r/r-jaspsem
   - x86_64/r/r-jaspsummarystatistics
   - x86_64/r/r-jaspvisualmodeling
-  - x86_64/r/r-jaspprophet
+  - x86_64/r/r-jaspacceptancesampling
+  - x86_64/r/r-jaspqualitycontrol
 makedepends:
   - x86_64/r/jags
 build_prefix: extra-x86_64
