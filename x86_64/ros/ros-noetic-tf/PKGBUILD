@@ -6,7 +6,7 @@ url='https://wiki.ros.org/tf'
 pkgname='ros-noetic-tf'
 pkgver='1.13.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
@@ -47,8 +47,15 @@ depends=(
 )
 
 _dir="geometry-${pkgver}/tf"
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/geometry/archive/${pkgver}.tar.gz")
-sha256sums=('6b653d4e10503d3da56bc4000e39ce58d6a85547a37837da576edccecc0c6ae2')
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/geometry/archive/${pkgver}.tar.gz"
+        "boost.patch"::"https://github.com/ros/geometry/pull/233.patch")
+sha256sums=('6b653d4e10503d3da56bc4000e39ce58d6a85547a37837da576edccecc0c6ae2'
+            'SKIP')
+
+prepare() {
+    cd "$srcdir/geometry-${pkgver}"
+    patch -Np1 -i "$srcdir/boost.patch"
+}
 
 build() {
 	# Use ROS environment variables.
@@ -65,7 +72,6 @@ build() {
 		-DCMAKE_INSTALL_PREFIX=/opt/ros/noetic \
 		-DPYTHON_EXECUTABLE=/usr/bin/python \
 		-DSETUPTOOLS_DEB_LAYOUT=OFF \
-        -DCMAKE_CXX_STANDARD=17
 	make
 }
 
