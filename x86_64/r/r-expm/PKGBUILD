@@ -4,7 +4,7 @@
 _cranver=0.999-7
 pkgname=r-expm
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc='Matrix Exponential, Log, etc'
 arch=('x86_64')
 url='https://cran.r-project.org/package=expm'
