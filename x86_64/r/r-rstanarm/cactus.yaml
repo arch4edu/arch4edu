@@ -17,6 +17,6 @@ depends:
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
+  sudo sed '/nproc/d' -i /etc/makepkg.conf
   aur-pre-build
-  sed '/-j5/d' -i PKGBUILD
 post_build: aur-post-build
