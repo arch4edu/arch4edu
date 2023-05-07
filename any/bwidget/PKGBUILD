@@ -5,7 +5,7 @@
 
 pkgname=bwidget
 pkgver=1.9.16
-pkgrel=1
+pkgrel=2
 pkgdesc="A suite of megawidgets for Tk"
 arch=('any')
 url="https://wiki.tcl.tk/2251"
@@ -18,4 +18,5 @@ package() {
   cd "${srcdir}"
   install -d "${pkgdir}"/usr/lib/tcl8.6
   cp -r bwidget-$pkgver "${pkgdir}"/usr/lib/tcl8.6/
+  chmod -R 755  "${pkgdir}"/usr/lib/tcl8.6/*
 }
