@@ -3,7 +3,7 @@
 
 pkgname=python-astroquery
 pkgver=0.4.6
-pkgrel=2
+pkgrel=3
 pkgdesc="Set of tools for querying astronomical web forms and databases"
 arch=('x86_64')
 url="http://astroquery.readthedocs.org/en/latest/"
