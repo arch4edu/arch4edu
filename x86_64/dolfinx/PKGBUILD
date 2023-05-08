@@ -2,19 +2,33 @@
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
 pkgver=0.6.0
-pkgrel=5
+pkgrel=6
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL3)
 makedepends=(cmake)
 depends=(boost python-fenics-ffcx hdf5-openmpi parmetis petsc pugixml)
-checkdepends=(openssh catch2)
+checkdepends=(catch2)
 optdepends=('adios2: for use ADIOS2 writer'
   'slepc: for use SLEPc eigen solver'
   'scotch: for compute graph partition'
   'kahip: for compute graph partition in parallel')
-source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('6e4bbeca9045cdc558fa5cdfd23abe55bdb773b326381eaa25f843e70d9df39c5707bfdf5412ae1845fc680bbbc7cb641f9cf6e4eb2226a760ddaab8d04237bf')
+source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz
+  requires-fix.patch::${url}/pull/2513.patch
+  enum-fix.patch::${url}/pull/2646.patch)
+sha512sums=('6e4bbeca9045cdc558fa5cdfd23abe55bdb773b326381eaa25f843e70d9df39c5707bfdf5412ae1845fc680bbbc7cb641f9cf6e4eb2226a760ddaab8d04237bf'
+  '00c52da9c6af1babc57160930ff00e200cbfbe27baaa13874fa13dadbadfc03d42540873693cb451a5af6a9bc7bdab6d239b25ca5c8eecb21c40ea9cd47502c4'
+  '5c5ea77d17604b740419066f9342314461c9b48216b4021d6ee822338721859c2e9c5a4406fb489d03416567735f4238cc8900d592b87a13956c08010a35b856')
+
+prepare() {
+  sed -i '/#include <vector>/a #include <cstdint>' ${pkgname}-${pkgver}/cpp/dolfinx/graph/AdjacencyList.h
+  sed -i '/#include <vector>/a #include <cstdint>' ${pkgname}-${pkgver}/cpp/dolfinx/io/xdmf_mesh.h
+  cd ${pkgname}-${pkgver}
+  # https://github.com/FEniCS/dolfinx/issues/2645
+  patch -p1 -i ../requires-fix.patch
+  patch -p1 -i ../enum-fix.patch
+  # gcc-13-compatibilty
+}
 
 build() {
   cmake \
