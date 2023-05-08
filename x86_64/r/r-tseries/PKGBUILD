@@ -4,13 +4,14 @@ _pkgname=tseries
 _pkgver=0.10-54
 pkgname=r-${_pkgname,,}
 pkgver=0.10.54
-pkgrel=1
+pkgrel=3
 pkgdesc='Time Series Analysis and Computational Finance'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
   r
+  r-jsonlite
   r-quadprog
   r-quantmod
   r-zoo
