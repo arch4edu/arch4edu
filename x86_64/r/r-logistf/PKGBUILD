@@ -4,7 +4,7 @@ _pkgname=logistf
 _pkgver=1.25.0
 pkgname=r-${_pkgname,,}
 pkgver=1.25.0
-pkgrel=1
+pkgrel=3
 pkgdesc="Firth's Bias-Reduced Logistic Regression"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,6 +13,10 @@ depends=(
   r
   r-formula.tools
   r-mice
+)
+optdepends=(
+  r-emmeans
+  r-estimability
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('3d3ed3ce30a8b2afb82ccbf2dff3dbf119f533d252eb91131d50166ebd96e870')
