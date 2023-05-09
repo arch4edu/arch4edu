@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
-pkgver=0.11.2
-pkgrel=2
+pkgver=0.12.0
+pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit-aer"
@@ -38,17 +38,17 @@ source=(
     "${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz"
     "fix.patch"
 )
-b2sums=('ae32a469d23a31f202b9f970c59e9efb76c290243bce6179b0a58590d671f6dec0428245131e7cb2966b818dae9fbe7e7078a63fac107572e9e7d4a66e47a539'
-        '4b7763d6b5802f3e1275d760e84b323b4e786c6376615a0cfb440a3fdb1f53ee9f03eea6ed6e23ba245d1f159ecf1b10287b8aac65db76804d4aefb56f55c58e')
+b2sums=('8d14012ffb0e12f32dc954dfa883bc43be6ac7aa4e01597d6abb11c22d7f39e9b419ab78db0c613d951555590498e1f0a5dbc7bb7047d2a8e71ae9a6216c79ab'
+        '17720f9591855941c0378ae38008a873d6c3c2f7496b2dda58fd85a2b156fe2d6307cc198727a3aaf483a4d1e60f84c97f878728a847d2c34a36831c7a9d3837')
 
 prepare() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
-    patch --forward --strip=1 --input="${srcdir}/fix.patch"
+    patch --forward --input="${srcdir}/fix.patch"
 }
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
-    DISABLE_CONAN=1 python -m build --wheel --no-isolation
+    DISABLE_CONAN=ON python -m build --wheel --no-isolation
     #python setup.py bdist_wheel
 }
 
