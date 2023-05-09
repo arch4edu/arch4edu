@@ -2,7 +2,7 @@
 _pkgname=qiskit-finance
 pkgname=python-${_pkgname}
 pkgver=0.3.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Quantum Finance package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-finance"
