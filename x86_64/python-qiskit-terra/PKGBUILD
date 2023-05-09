@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-terra
 pkgname=python-${_pkgname}
-pkgver=0.23.2
+pkgver=0.24.0
 pkgrel=1
 pkgdesc="An open-source framework for working with noisy quantum computers at the level of pulses, circuits, and algorithms"
 arch=('x86_64')
@@ -19,7 +19,6 @@ depends=(
     'python-stevedore'
     'python-symengine'
     'python-sympy'
-    'python-tweedledum'
 )
 
 optdepends=(
@@ -35,6 +34,7 @@ optdepends=(
     'python-qiskit-qasm3-import: import OpenQASM 3 files'
     'python-qiskit-toqm: Time-Optimal Qubit Mapping (TOQM) transpiler support'
     'python-seaborn: statistical data visualization'
+    'python-tweedledum: synthesizing and manipulating quantum circuits'
     #'z3-solver: efficient SMT solver library'
 )
 makedepends=(
@@ -45,7 +45,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('72160fc302162b3432aa11e5e063004e8eca7ba4d16320b96b6ba6e5621e7e89fd8d34a129fd6d41548d626aacd6461f084b23471fc126ef9e475afa9540b314')
+b2sums=('db2e4627b5f9680efaf97f04d957c3d257e69df1d24a283b8fd17a0ed6f663cc77512c8c29831ef941535f7f6875141d1191694cd95d052048e58f995a6b28b4')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
