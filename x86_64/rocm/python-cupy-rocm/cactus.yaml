@@ -12,6 +12,7 @@ pre_build: |
   sed 's/# export HCC_AMDGPU_TARGET/export HCC_AMDGPU_TARGET/' -i PKGBUILD
   sudo rm -rf /mnt/tmp
   sudo mkdir -m 1777 -p /mnt/tmp
+  add makedepends python-pip
 post_build: |
   aur-post-build
   sudo rm -rf /mnt/tmp
