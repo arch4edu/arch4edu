@@ -5,7 +5,7 @@ _pkgname=cupy
 pkgver=11.3.0
 _cub_commit=c3cceac115c072fb63df1836ff46d8c60d9eb304
 _jitify_commit=4a37de0be4639f222c6565ebd0654cb922b5180e
-pkgrel=2
+pkgrel=3
 pkgdesc="NumPy-like API accelerated with ROCm"
 url="https://cupy.dev"
 arch=('x86_64')
@@ -46,3 +46,4 @@ package() {
   python setup.py install --skip-build --prefix=/usr --root="$pkgdir" --optimize=1
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
+makedepends+=("python-pip")
