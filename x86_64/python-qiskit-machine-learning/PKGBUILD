@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-machine-learning
 pkgname=python-${_pkgname}
-pkgver=0.6.0
+pkgver=0.6.1
 pkgrel=1
 pkgdesc="Quantum Machine Learning package for IBM qiskit framework"
 arch=('x86_64')
@@ -23,7 +23,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('267b934f691455ac5f30e18a372f40e531cd8b5b0cc46f0112ad1bd139cb199e905e42f2f5717a2f08ac423a9560d5664e31aa08a04bb24245951c6d7470e140')
+b2sums=('b81fba27891efcd6541404a664427cf21ffdd3a1d25889d9f37420ecdbf447d6d9d1564a7f9f138be51057be7683566c80cd44e65e936214222ba676d9707a32')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
