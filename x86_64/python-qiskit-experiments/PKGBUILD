@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-experiments
 pkgname=python-${_pkgname}
-pkgver=0.4.0
-pkgrel=2
+pkgver=0.5.1
+pkgrel=1
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-experiments"
@@ -12,7 +12,6 @@ depends=(
     'python-matplotlib'
     'python-numpy'
     'python-qiskit-ibm-experiment'
-    'python-qiskit-ibmq-provider'
     'python-qiskit-terra'
     'python-scipy'
     'python-uncertainties'
@@ -24,7 +23,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('1dea052f004f3df8d15d799cb8bdf5cfe8f0f7bc5acc22bf9788d7e2df2c734a6295f239af0c69792f0c6c6520ce9c3861ff2e23126fee38a34334aa19e3fec3')
+b2sums=('784867a2ab7ce087cece755494d4597e2bec3a63073599718f69b9e1048b2f1753bcf5d448cb9f5f4742d1ed49af1575e6ce7ef8d7642ee5dbebb534314d80ae')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
