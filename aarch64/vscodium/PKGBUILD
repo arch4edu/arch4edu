@@ -3,7 +3,7 @@
 
 pkgname=vscodium
 # Make sure the pkgver matches the git tags in vscodium and vscode git repo's!
-pkgver=1.77.3.23102
+pkgver=1.78.1.23130
 pkgrel=1
 pkgdesc="Free/Libre Open Source Software Binaries of VSCode (git build from latest release)."
 arch=('x86_64' 'aarch64' 'armv7h')
@@ -45,7 +45,7 @@ source=(
 )
 sha256sums=('63eccd0977b9dc783a11ff401940f48bbabd0d098b9563b7ef26402495dc9b88'
             'fd3dc7cbea2b3eb74dc205f8faa28e913108d11aba41fcffe19a4e5222be33fd'
-            '9d10e92276d7c5d3b36486c2d0b378c1fef8990463749535b7e4642e791c8cbc')
+            'ca8be4cced0ae0d9880b6dfbbb6d9e43182259b14df03e7a476d7fb8c63e51e6')
 provides=(
     'codium'
     'vscodium'
@@ -88,11 +88,21 @@ build() {
     nvm use
 
     # Check if the correct version of node is being used
-    if [[ "$(node --version)" != "$(cat .nvmrc)" ]]
+    nvmrc_version="$(cat .nvmrc)"
+    if [[ "$nvmrc_version" != "v"* ]]
     then
-    	echo "Using the wrong version of NodeJS! Expected ["$(cat .nvmrc)"] but using ["$(node --version)"]."
+        # Add the v prefix, because it seems to be missing in .nvmrc
+        echo "Configured .nvmrc version is [$nvmrc_version], adding the v prefix before checking if it matches with the node command."
+        nvmrc_version="v$nvmrc_version"
+    fi
+
+    # Now check if the version matches exactly, or at least starts with the same prefix
+    if [[ "$(node --version)" != "$nvmrc_version"* ]]
+    then
+    	echo "Using the wrong version of NodeJS! Expected ["$nvmrc_version"] but using ["$(node --version)"]."
     	exit 1
     fi
+    echo "Installed version of node ["$(node --version)"] matches required version ["$nvmrc_version"], continuing."
 
     # Remove old build
     if [ -d "vscode" ]; then
