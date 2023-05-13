@@ -5,7 +5,7 @@
 
 pkgname=android-sdk-platform-tools
 pkgver=34.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Platform-Tools for Google Android SDK (adb and fastboot)'
 arch=('x86_64')
 url='http://developer.android.com/sdk/index.html'
@@ -17,7 +17,7 @@ install="${pkgname}.install"
 source=("https://dl.google.com/android/repository/platform-tools_r${pkgver}-linux.zip"
         "adb.service"
         "license.html")
-sha1sums=('784446b1626e9a7e79aff08189acd04e24c8bd77'
+sha1sums=('7e8f205a0cfe574ffecb6ec41e6496f5328211fd'
           '49a40c129199844603afe71fce69c0908e062393'
           'bfb91be7e0b602d765b7a1fcaf0ce1b7e1a93faa')
 
