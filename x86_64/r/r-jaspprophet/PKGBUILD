@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspProphet
-_pkgver=0.17.1
+_pkgver=0.17.2
 pkgname=r-${_pkgname,,}
-pkgver=0.17.1
+pkgver=0.17.2
 pkgrel=1
 pkgdesc="Prophet Module (Beta) for JASP"
 arch=('any')
@@ -17,7 +17,7 @@ depends=(r
   r-rstan
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('5c7ea91f01bd8cc133055b1fbaa548039a30e41f3d98b202afcd6587b04e1e5c')
+sha256sums=('6148252daf3e38ba3264f0aa32d29b81cf89af58ff65e44df546e20637b2faff')
 
 
 build() {
