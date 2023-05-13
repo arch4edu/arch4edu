@@ -1,0 +1,10 @@
+diff --git a/src/pybind/mgr/dashboard/constraints.txt b/src/pybind/mgr/dashboard/constraints.txt
+index 55f81c92dec..c3620497f42 100644
+--- a/src/pybind/mgr/dashboard/constraints.txt
++++ b/src/pybind/mgr/dashboard/constraints.txt
+@@ -1,4 +1,4 @@
+-CherryPy~=13.1
++CherryPy~=18.7
+ more-itertools~=8.14
+ PyJWT~=2.0
+ bcrypt~=3.1

@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
 pkgver=17.2.6
-pkgrel=1
+pkgrel=2
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
@@ -87,6 +87,19 @@ source=(
   # Fixes API changes to boost::beast string_view type def in 1.81
   # https://github.com/boostorg/beast/issues/2594
   'ceph-17.2.5-rgw-client-boost-string-view.patch'
+
+  # Fix missing includes from gcc 13 changes
+  'ceph-17.2.6-rocksdb-gcc13-includes.patch'
+  'ceph-17.2.6-ceph-gcc13-includes.patch'
+
+  # Fixes node-gyp errors due to py3.11 incompatibilities
+  'ceph-17.2.6-mgr-dashboard-node-version.patch'
+
+  # Fixes inspect.getargspec errors due to removal in py3.11
+  'ceph-17.2.6-mgr-dashboard-cherrypy-18.patch'
+
+  # Fixes inspect.formatargspec errors in pylint2.6->wrapt due to removal in py3.11
+  'ceph-17.2.6-mgr-dashboard-pylint-217.patch'
 )
 sha512sums=('dca9aea2ce210c15fcc34cb06a5dc5b4488ffa36d684166d47ebd87e48b54b6fee0882e1c67007a780e1c25754e9bc6e760cc10f60ea1183263f8504ef2dbd9b'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
@@ -101,7 +114,12 @@ sha512sums=('dca9aea2ce210c15fcc34cb06a5dc5b4488ffa36d684166d47ebd87e48b54b6fee0
             '81f540c8312972887a7cb43b8a4e29bfc6f24d5774787a4a8edfe65cca7d3b08faa08ecd09066d7ea67111769a5aec7385fe9a969546626f58874dd8aff5b664'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '2a6f33791760e14543c90077bfc6bf1b6b82ee2996e80b4762eadb887a0d9a67c221b6f10832ddf780dc6abaed246a1e2ee7680c9c861c4ff70e61b752a37b36'
-            '02ca1a9bf15f9cd6f474f264ba2bf66ae725bac990a7cac315dabe377c66935a7afd8117f18a1f82c78bdf9ab2c3e5a2a227f2ffc166974dd7bb99b290f1f233')
+            '02ca1a9bf15f9cd6f474f264ba2bf66ae725bac990a7cac315dabe377c66935a7afd8117f18a1f82c78bdf9ab2c3e5a2a227f2ffc166974dd7bb99b290f1f233'
+            '1897ddfcd21fbbd1f18f304db6fddb5ba9336bbe2be365ece57a3ae8195f075ceb66f40fc37a4b5bf6481e8a87561383108493aa88cb01d78a904c9da28bb36c'
+            '2971475ed43480802d6053e259e8540475b3da0d2a84edc9df05e822d51f31b25de450f387fb33e1f7034d3139e502e8da1b0b00ccbb066d01091055e880804b'
+            'd9729c33f2b8c03ab918919e3b62cbc0825314ad09596dc12984ac5964f8b421db3376b84fa26e0952e0781deb218f8aff6ba32f9c8e5a22bd27afac8dcaf6d3'
+            '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
+            'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782')
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
 # similar issue: https://bugs.archlinux.org/task/54845

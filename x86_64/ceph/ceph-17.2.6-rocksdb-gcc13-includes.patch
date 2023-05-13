@@ -1,0 +1,77 @@
+diff --git a/src/rocksdb/table/block_based/data_block_hash_index.h b/src/rocksdb/table/block_based/data_block_hash_index.h
+index f356395f329..3215221755d 100644
+--- a/src/rocksdb/table/block_based/data_block_hash_index.h
++++ b/src/rocksdb/table/block_based/data_block_hash_index.h
+@@ -5,6 +5,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/src/rocksdb/util/string_util.h b/src/rocksdb/util/string_util.h
+index 55d106fff02..11178fd1d7b 100644
+--- a/src/rocksdb/util/string_util.h
++++ b/src/rocksdb/util/string_util.h
+@@ -6,6 +6,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <sstream>
+ #include <string>
+ #include <unordered_map>
+
+diff --git a/src/rocksdb/db/compaction/compaction_iteration_stats.h b/src/rocksdb/db/compaction/compaction_iteration_stats.h
+index 963c1d8..73487ed 100644
+--- a/src/rocksdb/db/compaction/compaction_iteration_stats.h
++++ b/src/rocksdb/db/compaction/compaction_iteration_stats.h
+@@ -5,6 +5,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include "rocksdb/rocksdb_namespace.h"
+ 
+ struct CompactionIterationStats {
+
+diff --git a/src/rocksdb/utilities/checkpoint/checkpoint_impl.h b/src/rocksdb/utilities/checkpoint/checkpoint_impl.h
+index dfa8460..9a899e8 100644
+--- a/src/rocksdb/utilities/checkpoint/checkpoint_impl.h
++++ b/src/rocksdb/utilities/checkpoint/checkpoint_impl.h
+@@ -8,6 +8,7 @@
+ 
+ #include "rocksdb/utilities/checkpoint.h"
+ 
++#include <cstdint>
+ #include <string>
+ #include "file/filename.h"
+ #include "rocksdb/db.h"
+
+diff --git a/src/rocksdb/include/rocksdb/utilities/checkpoint.h b/src/rocksdb/include/rocksdb/utilities/checkpoint.h
+index 1b6a740..ad54ca7 100644
+--- a/src/rocksdb/include/rocksdb/utilities/checkpoint.h
++++ b/src/rocksdb/include/rocksdb/utilities/checkpoint.h
+@@ -8,6 +8,7 @@
+ #pragma once
+ #ifndef ROCKSDB_LITE
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ #include "rocksdb/status.h"
+
+diff --git a/src/rocksdb/third-party/folly/folly/synchronization/detail/ProxyLockable-inl.h b/src/rocksdb/third-party/folly/folly/synchronization/detail/ProxyLockable-inl.h
+index 573330c..ada1e63 100644
+--- a/src/rocksdb/third-party/folly/folly/synchronization/detail/ProxyLockable-inl.h
++++ b/src/rocksdb/third-party/folly/folly/synchronization/detail/ProxyLockable-inl.h
+@@ -14,6 +14,7 @@
+ #include <mutex>
+ #include <stdexcept>
+ #include <utility>
++#include <system_error>
+ 
+ namespace folly {
+ namespace detail {
+

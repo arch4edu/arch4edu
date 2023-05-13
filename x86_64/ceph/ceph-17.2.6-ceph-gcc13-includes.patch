@@ -1,0 +1,49 @@
+diff --git a/src/librbd/api/PoolMetadata.h b/src/librbd/api/PoolMetadata.h
+index c0a8173596e..8d982879aa9 100644
+--- a/src/librbd/api/PoolMetadata.h
++++ b/src/librbd/api/PoolMetadata.h
+@@ -9,6 +9,7 @@
+ 
+ #include <map>
+ #include <string>
++#include <cstdint>
+ 
+ namespace librbd {
+ 
+diff --git a/src/msg/async/compression_onwire.h b/src/msg/async/compression_onwire.h
+index dcd6d26c4ca..d3b35a4655c 100644
+--- a/src/msg/async/compression_onwire.h
++++ b/src/msg/async/compression_onwire.h
+@@ -4,6 +4,7 @@
+ #ifndef CEPH_COMPRESSION_ONWIRE_H
+ #define CEPH_COMPRESSION_ONWIRE_H
+ 
++#include <cstdint>
+ #include <optional>
+ 
+ #include "compressor/Compressor.h"
+diff --git a/src/test/librados/op_speed.cc b/src/test/librados/op_speed.cc
+index 90c7bdac571..c477f552ab9 100644
+--- a/src/test/librados/op_speed.cc
++++ b/src/test/librados/op_speed.cc
+@@ -3,6 +3,8 @@
+ 
+ #include "include/rados/librados.hpp"
+ 
++#include <cstdint>
++
+ constexpr int to_create = 10'000'000;
+ 
+ int main() {
+diff --git a/src/test/mon/test_log_rss_usage.cc b/src/test/mon/test_log_rss_usage.cc
+index f6e85f414c8..53b9f1834df 100644
+--- a/src/test/mon/test_log_rss_usage.cc
++++ b/src/test/mon/test_log_rss_usage.cc
+@@ -8,6 +8,7 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <unistd.h>
++#include <cstdint>
+ 
+ using namespace std;
+ 

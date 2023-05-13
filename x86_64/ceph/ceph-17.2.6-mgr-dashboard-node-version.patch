@@ -1,0 +1,13 @@
+diff --git a/src/pybind/mgr/dashboard/frontend/CMakeLists.txt b/src/pybind/mgr/dashboard/frontend/CMakeLists.txt
+index 4fd2130b93a..7df5de57c66 100644
+--- a/src/pybind/mgr/dashboard/frontend/CMakeLists.txt
++++ b/src/pybind/mgr/dashboard/frontend/CMakeLists.txt
+@@ -63,7 +63,7 @@ else(WITH_SYSTEM_NPM)
+     OUTPUT "${mgr-dashboard-nodeenv-dir}/bin/npm"
+     COMMAND ${CMAKE_SOURCE_DIR}/src/tools/setup-virtualenv.sh --python=${MGR_PYTHON_EXECUTABLE} ${mgr-dashboard-nodeenv-dir}
+     COMMAND ${mgr-dashboard-nodeenv-dir}/bin/pip install nodeenv
+-    COMMAND ${mgr-dashboard-nodeenv-dir}/bin/nodeenv --verbose ${node_mirror_opt} -p --node=14.15.1
++    COMMAND ${mgr-dashboard-nodeenv-dir}/bin/nodeenv --verbose ${node_mirror_opt} -p --node=16.15.0
+     COMMAND mkdir ${mgr-dashboard-nodeenv-dir}/.npm
+     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+     COMMENT "dashboard nodeenv is being installed")
