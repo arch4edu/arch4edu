@@ -3,7 +3,7 @@
 pkgname=eccodes
 pkgver=2.30.0
 _attnum=45757960
-pkgrel=1
+pkgrel=2
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
 arch=("i686" "x86_64")
 url="https://confluence.ecmwf.int/display/ECC/ecCodes+Home"
@@ -13,7 +13,7 @@ makedepends=("gcc-fortran" "cmake")
 conflicts=("grib_api" "libbufr-ecmwf")
 source=(
     "${pkgname}-${pkgver}-Source.tar.gz::https://confluence.ecmwf.int/download/attachments/${_attnum}/${pkgname}-${pkgver}-Source.tar.gz?api=v2"
-    "${pkgname}-${pkgver}-test-data.tar.gz::http://download.ecmwf.org/test-data/eccodes/eccodes_test_data.tar.gz"
+    "${pkgname}-${pkgver}-test-data.tar.gz::https://get.ecmwf.int/repository/test-data/eccodes/eccodes_test_data.tar.gz"
 )
 sha512sums=(
     "07b67cef67cefb32ad4581813ed8814f9394d27846c8bc41b78b1504d296f84547d1fb72ce4813f214fe09b9391449995dd53cf9ae7d27721e2b34353ee58b00"
