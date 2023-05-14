@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggdist
-_pkgver=3.2.1
+_pkgver=3.3.0
 pkgname=r-${_pkgname,,}
-pkgver=3.2.1
-pkgrel=2
+pkgver=3.3.0
+pkgrel=1
 pkgdesc='Visualizations of Distributions and Uncertainty'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -47,7 +47,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('76016ad99e049fdb5be5f93c431733a3c1911ac737930b4deda1648e0af3e228')
+sha256sums=('1441a6dae5bc4b084a741a6f8782a13235171013cc028bf1d694662e4e5a252c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
