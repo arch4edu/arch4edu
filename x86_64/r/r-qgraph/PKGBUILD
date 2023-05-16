@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=qgraph
-_pkgver=1.9.4
+_pkgver=1.9.5
 pkgname=r-${_pkgname,,}
-pkgver=1.9.4
+pkgver=1.9.5
 pkgrel=1
 pkgdesc='Graph Plotting Methods, Psychometric Data Visualization and Graphical Model Estimation'
 arch=('x86_64')
@@ -34,7 +34,7 @@ optdepends=(
   r-huge
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6410b557f896e753b0b5917b70a573087f55d70f7588611e43443ce2bb1c368b')
+sha256sums=('4c5a2c7247b48d896ac56df99a07647c3f428732e1ac57b920eb0fd4e54a21d6')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
