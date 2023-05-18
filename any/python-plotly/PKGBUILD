@@ -3,7 +3,7 @@
 
 pkgname=python-plotly
 pkgver=5.14.1
-pkgrel=1
+pkgrel=2
 pkgdesc="An open-source, interactive graphing library"
 arch=('x86_64')
 url="https://github.com/plotly/plotly.py"
@@ -37,9 +37,18 @@ checkdepends=(
 python-requests
 python-pytest
 )
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/plotly/plotly.py/archive/v${pkgver}.tar.gz")
+source=(
+"${pkgname}-${pkgver}.tar.gz::https://github.com/plotly/plotly.py/archive/v${pkgver}.tar.gz"
+fix_for_python3.11.patch
+)
 options=(!strip) # strip isn't useful for python files and takes forever
-sha256sums=('e1b58deb79a278e6ea7329c0dbcd0988d01688c101ec0d13b64f62e2ca2a8ad1')
+sha256sums=('e1b58deb79a278e6ea7329c0dbcd0988d01688c101ec0d13b64f62e2ca2a8ad1'
+            '30260d0c0ed32ce0469e0081e79509dae5c58e4e048a94e37a1ef5108af22d63')
+
+prepare() {
+  cd plotly.py-${pkgver}
+  cat ../fix_for_python3.11.patch | patch -p1
+}
 
 build() {
   cd plotly.py-${pkgver}/packages/python/plotly
