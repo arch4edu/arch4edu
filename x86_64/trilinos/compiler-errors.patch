@@ -1,28 +1,34 @@
-diff --color -ruN Trilinos-trilinos-release-13-4-0.orig/packages/krino/cmake/Dependencies.cmake Trilinos-trilinos-release-13-4-0.patch/packages/krino/cmake/Dependencies.cmake
---- Trilinos-trilinos-release-13-4-0.orig/packages/krino/cmake/Dependencies.cmake	2022-07-26 10:21:25.533252070 +0200
-+++ Trilinos-trilinos-release-13-4-0.patch/packages/krino/cmake/Dependencies.cmake	2022-07-26 10:22:45.580487344 +0200
+diff --color -urt Trilinos-trilinos-release-14-0-0.orig/packages/krino/cmake/Dependencies.cmake Trilinos-trilinos-release-14-0-0.new/packages/krino/cmake/Dependencies.cmake
+--- Trilinos-trilinos-release-14-0-0.orig/packages/krino/cmake/Dependencies.cmake	2023-05-18 08:34:11.085906271 +0200
++++ Trilinos-trilinos-release-14-0-0.new/packages/krino/cmake/Dependencies.cmake	2023-05-18 08:29:48.930168370 +0200
 @@ -1,6 +1,6 @@
--SET(LIB_REQUIRED_DEP_PACKAGES SEACASIoss SEACASExodus SEACASAprepro STKBalance STKMath STKIO STKSearch STKTopology STKUtil STKTools STKEmend Percept Intrepid)
-+SET(LIB_REQUIRED_DEP_PACKAGES SEACASIoss SEACASExodus SEACASAprepro STKBalance STKMath STKIO STKSearch STKTopology STKUtil STKTools STKEmend Percept Intrepid STKUnit_test_utils)
+ SET(LIB_REQUIRED_DEP_PACKAGES SEACASIoss SEACASExodus SEACASAprepro STKBalance STKMath STKIO STKSearch STKTopology STKUtil STKTools STKEmend Percept Intrepid)
  SET(LIB_OPTIONAL_DEP_PACKAGES)
 -SET(TEST_REQUIRED_DEP_PACKAGES Gtest STKUnit_test_utils)
 +SET(TEST_REQUIRED_DEP_PACKAGES Gtest)
  SET(TEST_OPTIONAL_DEP_PACKAGES)
  SET(LIB_REQUIRED_DEP_TPLS Boost)
- SET(LIB_OPTIONAL_DEP_TPLS MPI yaml-cpp)
-diff --color -ruN Trilinos-trilinos-release-13-4-0.orig/packages/seacas/libraries/exodus/src/ex_utils.c Trilinos-trilinos-release-13-4-0.patch/packages/seacas/libraries/exodus/src/ex_utils.c
---- Trilinos-trilinos-release-13-4-0.orig/packages/seacas/libraries/exodus/src/ex_utils.c	2022-07-26 10:21:25.809920802 +0200
-+++ Trilinos-trilinos-release-13-4-0.patch/packages/seacas/libraries/exodus/src/ex_utils.c	2022-07-26 11:54:27.865751226 +0200
-@@ -1742,11 +1742,10 @@
-         */
+ SET(LIB_OPTIONAL_DEP_TPLS MPI ParMETIS yaml-cpp)
+diff --color -urt Trilinos-trilinos-release-14-0-0.orig/packages/krino/krino/CMakeLists.txt Trilinos-trilinos-release-14-0-0.new/packages/krino/krino/CMakeLists.txt
+--- Trilinos-trilinos-release-14-0-0.orig/packages/krino/krino/CMakeLists.txt	2023-05-18 08:34:11.085906271 +0200
++++ Trilinos-trilinos-release-14-0-0.new/packages/krino/krino/CMakeLists.txt	2023-05-18 08:35:25.202277721 +0200
+@@ -4,7 +4,6 @@
+ add_subdirectory(region)
+ add_subdirectory(rebalance_utils)
+ add_subdirectory(parser)
+-add_subdirectory(unit_tests)
  
-         /* const int NC_SZIP_EC = 4; */ /* Selects entropy coding method for szip. */
--        const int NC_SZIP_NN = 32;      /* Selects nearest neighbor coding method for szip. */
-         /* Even and between 4 and 32; typical values are 8, 10, 16, 32 */
-         const int SZIP_PIXELS_PER_BLOCK =
-             file->compression_level == 0 ? 32 : file->compression_level;
--        nc_def_var_szip(exoid, varid, NC_SZIP_NN, SZIP_PIXELS_PER_BLOCK);
-+        nc_def_var_szip(exoid, varid, 32, SZIP_PIXELS_PER_BLOCK);
- #else
-         char errmsg[MAX_ERR_LENGTH];
-         snprintf(errmsg, MAX_ERR_LENGTH,
+ SET(SOURCES_MAIN Apps_krino.cpp)
+ 
+diff --color -urt Trilinos-trilinos-release-14-0-0.orig/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp Trilinos-trilinos-release-14-0-0.new/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp
+--- Trilinos-trilinos-release-14-0-0.orig/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp	2023-05-18 08:34:11.735903734 +0200
++++ Trilinos-trilinos-release-14-0-0.new/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp	2023-05-18 08:29:49.596832958 +0200
+@@ -43,7 +43,7 @@
+ #define TEUCHOS_BIG_UINT_DECL_HPP
+ 
+ #include <iosfwd>
+-
++#include <cstdint>
+ /*! \file Teuchos_BigUIntDecl.hpp
+     \brief Arbitrary-precision unsigned integer declaration.
+ */
