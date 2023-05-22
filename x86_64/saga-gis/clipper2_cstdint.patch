@@ -1,0 +1,12 @@
+diff --unified --recursive --text package.orig/saga-9.0.1/saga-gis/src/saga_core/saga_api/clipper.core.h package.new/saga-9.0.1/saga-gis/src/saga_core/saga_api/clipper.core.h
+--- package.orig/saga-9.0.1/saga-gis/src/saga_core/saga_api/clipper.core.h	2023-05-22 12:36:50.228892258 +0200
++++ package.new/saga-9.0.1/saga-gis/src/saga_core/saga_api/clipper.core.h	2023-05-22 12:37:43.156387830 +0200
+@@ -11,6 +11,7 @@
+ #ifndef CLIPPER_CORE_H
+ #define CLIPPER_CORE_H
+ 
++#include <cstdint>
+ #include <cstdlib>
+ #include <cmath>
+ #include <vector>
+Only in package.new/saga-9.0.1/saga-gis/src/saga_core/saga_api: package.patch
