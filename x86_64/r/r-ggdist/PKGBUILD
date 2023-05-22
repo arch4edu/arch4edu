@@ -4,18 +4,18 @@ _pkgname=ggdist
 _pkgver=3.3.0
 pkgname=r-${_pkgname,,}
 pkgver=3.3.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Visualizations of Distributions and Uncertainty'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
   r
+  r-cli
   r-distributional
   r-dplyr
   r-ggplot2
   r-glue
-  r-hdinterval
   r-numderiv
   r-quadprog
   r-rlang
@@ -31,9 +31,11 @@ optdepends=(
   r-covr
   r-cowplot
   r-fda
+  r-fontquiver
   r-forcats
   r-knitr
   r-modelr
+  r-mvtnorm
   r-palmerpenguins
   r-patchwork
   r-pkgdown
@@ -41,7 +43,9 @@ optdepends=(
   r-posterior
   r-purrr
   r-rmarkdown
+  r-showtext
   r-svglite
+  r-sysfonts
   r-testthat
   r-tidyr
   r-vdiffr
