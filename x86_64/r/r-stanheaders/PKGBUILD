@@ -7,7 +7,7 @@ _pkgname=StanHeaders
 _pkgver=2.26.25
 pkgname=r-${_pkgname,,}
 pkgver=2.26.25
-pkgrel=1
+pkgrel=3
 pkgdesc='C++ Header Files for Stan'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -25,6 +25,7 @@ optdepends=(
   r-rcpp
   r-rmarkdown
   r-rstan
+  r-withr
 )
 makedepends=(
   gcc-fortran
