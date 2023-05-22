@@ -4,7 +4,7 @@ _pkgname=bootnet
 _pkgver=1.5.1
 pkgname=r-${_pkgname,,}
 pkgver=1.5.1
-pkgrel=1
+pkgrel=3
 pkgdesc='Bootstrap Methods for Various Network Estimation Routines'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -29,6 +29,7 @@ depends=(
   r-snow
   r-tibble
   r-tidyr
+  r-tidyselect
 )
 optdepends=(
   r-bdgraph
