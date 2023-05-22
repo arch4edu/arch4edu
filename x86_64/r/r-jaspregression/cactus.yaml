@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-bas
   - x86_64/r/r-bstats
+  - x86_64/r/r-combinat
   - x86_64/r/r-emmeans
   - x86_64/r/r-ggplot2
   - x86_64/r/r-ggrepel
