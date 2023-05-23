@@ -2,8 +2,8 @@
 # Contributor: Dmytro Aleksandrov <alkersan@gmail.com>
 
 pkgname=rpi-imager
-pkgver=1.7.4
-pkgrel=2
+pkgver=1.7.4.1
+pkgrel=1
 pkgdesc="Raspberry Pi Imaging Utility"
 depends=(
     'hicolor-icon-theme'
@@ -23,19 +23,16 @@ license=("Apache")
 source=(
     "${pkgname}-${pkgver}.tar.gz::https://github.com/raspberrypi/${pkgname}/archive/v${pkgver}.tar.gz"
     "remove_update_checking.patch"
-    "fix_header.patch::https://github.com/raspberrypi/rpi-imager/commit/569a70671b.patch"
 )
 
 b2sums=(
-    'e48c8fd0206eca284bfd71a0fd2d7807a304a597801cf77d900174f509397d30fefc5dea981e943f3153743a9216757af7d966283ecf892160050e64aaf00fee'
+    'aaee1a5186bc6b1ec4c93d44b5ae7437cc6a970a13951a5f649f9c2bcaa2a4dd1c5c76c9da37d768cd7b840d093eeb59cdeccefef23111705ff041b2a8c4d809'
     '40bc85ec8d55876e440bf02bc13df7b77ff588a8508402eed9fc27a9e87043c189d70d061355aeac9f8c9b63aa6ea629ea9204f63ea579ab35e0e154e17d41b3'
-    '1def01f322477a595f4729a698f3ca8aea17110d71705fce83738010c719c4c3c617ebc2599be9782ca3d308f0af853c44a8ff11c41966a31a5f11d00470bd75'
 )
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
     patch --strip=1 --input="$srcdir/remove_update_checking.patch"
-    patch --strip=1 --input="$srcdir/fix_header.patch"
 }
 
 build() {
