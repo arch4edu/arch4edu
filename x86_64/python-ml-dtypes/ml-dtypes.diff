@@ -31,15 +31,16 @@
  
  namespace ml_dtypes {
  
---- pyproject.toml	2023-03-28 11:31:39.891143447 +0300
-+++ pyproject.toml	2023-03-28 11:30:56.360805836 +0300
-@@ -46,10 +46,10 @@
+--- pyproject.toml	2023-04-11 22:19:20.000000000 +0200
++++ pyproject.toml	2023-05-23 10:38:06.782249398 +0200
+@@ -48,10 +48,10 @@
  [build-system]
  requires = [
      # Build with oldest supported numpy for each Python version.
 -    "numpy~=1.21.2; python_version<'3.11'",
+-    "numpy~=1.23.3; python_version>='3.11'",
 +    "numpy>=1.21.2; python_version<'3.11'",
-     "numpy~=1.23.3; python_version>='3.11'",
++    "numpy>=1.23.3; python_version>='3.11'",
      "pybind11~=2.10.0",
 -    "setuptools~=67.6.0",
 +    "setuptools>=67.6.0",
