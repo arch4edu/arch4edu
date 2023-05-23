@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspAudit
-_pkgver=0.17.2
+_pkgver=0.17.2.1
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2
+pkgver=0.17.2.1
 pkgrel=1
 pkgdesc="Audit Module for JASP"
 arch=('any')
@@ -19,7 +19,7 @@ depends=(r
   r-jfa
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('fce04ac1e6954dfdf019a288a0aa8cd6d1390a3858333a83f974e1c7240eb28f')
+sha256sums=('8f6367153eb1152c2495b48aa952e3f8958ce3037c45eef1b3c0a9d559778f40')
 
 
 build() {
