@@ -3,8 +3,8 @@ nvchecker:
     aur:
   - alias: python
 depends:
+  - any/python-face_recognition_models
   - x86_64/python-dlib
-  - x86_64/python-face_recognition_models
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
