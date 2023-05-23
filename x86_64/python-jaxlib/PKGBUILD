@@ -2,7 +2,7 @@
 
 pkgname=python-jaxlib
 pkgver=0.4.7
-pkgrel=2
+pkgrel=3
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/google/jax/'
