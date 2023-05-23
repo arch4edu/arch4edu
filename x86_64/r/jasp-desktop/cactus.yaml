@@ -25,6 +25,7 @@ depends:
   - x86_64/r/r-jaspmachinelearning
   - x86_64/r/r-jaspmetaanalysis
   - x86_64/r/r-jaspnetwork
+  - x86_64/r/r-jasppower
   - x86_64/r/r-jaspprophet
   - x86_64/r/r-jaspreliability
   - x86_64/r/r-jaspsem
