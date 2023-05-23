@@ -3,9 +3,9 @@
 # Contributor: Kibouo <csonka.mihaly@hotmail.com>
 
 _pkgname=sys
-_pkgver=3.4.1
+_pkgver=3.4.2
 pkgname=r-${_pkgname,,}
-pkgver=3.4.1
+pkgver=3.4.2
 pkgrel=1
 pkgdesc='Powerful and Reliable Tools for Running System Commands in R'
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=(
   r-unix
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('324e6d8fde58264e62bc04867b719c5fd16296de1542689801b8cb13621ecf52')
+sha256sums=('b7bdce66f0fb681830ea6fb77b5a2c6babb43920abb1eddc733f95c0a63ce5b3')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
