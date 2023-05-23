@@ -41,7 +41,7 @@
 #
 
 SCOTCHDIR  = /usr
-ISCOTCH    = -I$(SCOTCHDIR)/include/scotch
+ISCOTCH    = -I$(SCOTCHDIR)/include
 #
 # You have to choose one among the following two lines depending on
 # the type of analysis you want to perform. If you want to perform only
@@ -58,7 +58,7 @@ IPORD    = -I$(topdir)/PORD/include/
 LPORD    = -L$(LPORDDIR) -lpord
 
 LMETISDIR = /usr/lib
-IMETIS    = -I/usr/include/metis
+IMETIS    = -I/usr/include
 
 # You have to choose one among the following two lines depending on
 # the type of analysis you want to perform. If you want to perform only
