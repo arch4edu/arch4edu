@@ -1,6 +1,6 @@
 pkgname=devtools-arch4edu-extra
-pkgver=21.27a741d
-pkgrel=2
+pkgver=24.43b032d
+pkgrel=1
 pkgdesc='Extra tools for arch4edu package maintainers'
 arch=('x86_64' 'armv7h' 'aarch64')
 url='http://github.com/arch4edu/devtools-arch4edu-extra'
@@ -22,9 +22,11 @@ package() {
 
 	if [ "$CARCH" = 'x86_64' ]
 	then
+		mkdir -p $pkgdir/usr/share/devtools/makepkg.conf.d
+		mkdir -p $pkgdir/usr/share/devtools/pacman.conf.d
 		ln -sf /usr/bin/archbuild $pkgdir/usr/bin/arch4edu-x86_64-build
-		cat /usr/share/devtools/pacman-extra.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman-arch4edu.conf
-		cat /usr/share/devtools/pacman-extra.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman-multilib-arch4edu.conf
+		cat /usr/share/devtools/pacman.conf.d/extra.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman.conf.d/arch4edu.conf
+		cat /usr/share/devtools/pacman.conf.d/multilib.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman.conf.d/multilib-arch4edu.conf
 	else
 		for i in armv7h aarch64
 		do
