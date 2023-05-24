@@ -4,7 +4,7 @@ pkgdesc="ROS - rosgraph contains the rosgraph command-line tool, which prints in
 url='https://wiki.ros.org/rosgraph'
 
 pkgname='ros-noetic-rosgraph'
-pkgver='1.15.14'
+pkgver='1.16.0'
 arch=('any')
 pkgrel=2
 license=('BSD')
@@ -30,11 +30,14 @@ depends=(
 )
 
 _dir="ros_comm-${pkgver}/tools/rosgraph"
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/ros_comm/archive/${pkgver}.tar.gz")
-sha256sums=('1083b58470a81323bc3a13aa9ae7c813e9fbc27b18f0e95a76b53e4076f3d872')
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/ros_comm/archive/${pkgver}.tar.gz"
+        "frame.patch"::"https://github.com/ros/ros_comm/pull/2331.patch")
+sha256sums=('0a51857a50cf646db4af85469cb0e4877b1484f7aa0c00ec65a8be7ff574a886'
+            'SKIP')
 
 prepare() {
-  cd "${srcdir}/${_dir}"
+  cd "${srcdir}/ros_comm-${pkgver}"
+  patch -Np1 -i "${srcdir}/frame.patch"
 }
 
 
