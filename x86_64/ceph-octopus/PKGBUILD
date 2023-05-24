@@ -4,16 +4,16 @@
 _pkgbase='ceph'
 pkgbase='ceph-octopus'
 pkgname=('ceph-octopus' 'ceph-octopus-libs' 'ceph-octopus-mgr')
-_zstdver=1.5.4
+_zstdver=1.5.5
 pkgver=15.2.17
-pkgrel=2
+pkgrel=3
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
 license=('GPL')
 makedepends=("zstd=${_zstdver}" 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares' 'cmake' 'coreutils' 'coffeescript'
              'cpio' 'crypto++' 'cryptsetup' 'cunit' 'curl' 'cython' 'expat'
-             'fcgi' 'fontconfig' 'fuse2' 'fuse3' 'fmt' 'gcc' 'gcc-libs' 'git' 'glibc' 'gmock' 'gnutls'
+             'fcgi' 'fontconfig' 'fuse2' 'fuse3' 'fmt' 'gcc11' 'git' 'glibc' 'gmock' 'gnutls'
              'gperf' 'gperftools' 'gptfdisk' 'gtest' 'hwloc' 'inetutils' 'java-runtime'
              'jq' 'jre11-openjdk-headless' 'junit' 'keyutils' 'leveldb' 'libaio'
              'libatomic_ops' 'libcap' 'libcap-ng' 'libcroco' 'libcurl-compat'
@@ -36,7 +36,7 @@ makedepends=("zstd=${_zstdver}" 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares
              'python-setuptools' 'python-six' 'python-sphinx' 'python-tempora'
              'python-virtualenv' 'python-werkzeug' 'python-wrapt' 'rabbitmq'
              'sed' 'snappy' 'socat' 'systemd' 'systemd-libs' 'valgrind'
-             'xfsprogs' 'xmlstarlet' 'xmlsec' 'xxhash' 'yaml-cpp' 'yasm' 'zlib' )
+             'xfsprogs' 'xmlstarlet' 'xmlsec' 'xxhash' 'yaml-cpp' 'yasm' 'zlib')
 checkdepends=('python-mock' 'python-nose' 'python-pycodestyle' 'python-pylint'
               'python-pytest' 'python-pytest-cov')
 # need newer version for LTO (https://github.com/ceph/ceph/pull/42602)
@@ -73,7 +73,7 @@ source=(
 )
 sha512sums=('952cd4db057fcab5efa3c6331fbc19cf1e904f5855266c2ed13e41ffb2e5a7d18ed133bd113fea493149005a182f429eef39931c4ceac7776aefe84a208a745a'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
-            'b6f64850ceb6cfed831fff3c43508d2a72338862a96dd9430b1d3ebbfcee40201c8b6dcf8b6b603e252bb96f3f283c9cb07da7f24414187f5f1fea3b51e01863'
+            '356994e0d8188ce97590bf86b602eb50cbcb2f951594afb9c2d6e03cc68f966862505afc4a50e76efd55e4cfb11dbc9b15c7837b7827a961a1311ef72cd23505'
             '9e6bb46d5bbdc5d93f4f026b2a8d6bdb692d9ea6e7018c1bb0188d95ea8574c76238d968b340fd67ddaa3d8183b310e393e3549dc3a63a795fde696413b0ca94'
             '6ff46a90d76f667fa23be0f9eb1ed2fb7e30af9a2621aec19944d0a22a431a0f5721603c588286e483ff55c14aac920adfccb039c9678a87cc59640dd70367ae'
             '8ec0d668fefee12d2c7f5b5297dd81fc6a559f5823d069e6395d9b4240110eb8f95049d3054697a459948c1f3784b4450539849cf9d7f3b1aa1c7fbd96c475df'
@@ -153,6 +153,8 @@ build() {
   # not get it to work: https://github.com/ceph/ceph/commit/3d708219092d
   CPPFLAGS+=' -DBOOST_ASIO_USE_TS_EXECUTOR_AS_DEFAULT'
 
+  export CC=gcc-11
+  export CXX=g++-11
   export CFLAGS+=" ${CPPFLAGS}"
   export CXXFLAGS+=" ${CPPFLAGS}"
   export PYTHON_VERSION="$(python --version | awk '{print $2}')"
