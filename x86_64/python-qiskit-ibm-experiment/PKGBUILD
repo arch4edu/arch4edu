@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-ibm-experiment
 pkgname=python-${_pkgname}
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=1
 pkgdesc="Service that allows accessing the IBM Quantum experiment database."
 arch=('any')
@@ -19,7 +19,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('9d51b88651b7fadbe4177c19b702f0b07a476541bd15dad328206d8627334a7f0a8bd6c5c1adcc773bdaa2815a0168e24005104d79a4e819c9722434ce175a7c')
+b2sums=('a4d39a36eacf2bf187b0ab29b90c9ba725145d2d69e0be01c5ae33031afc0af84b907c9fffa8beb7807d7fe4edbba2b57c4222f434b58bf8c6fb75b809f8ee75')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
