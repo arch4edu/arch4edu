@@ -6,7 +6,7 @@ _cranname=Rcpp
 _cranver=1.0.10
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Seamless R and C++ Integration"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -21,6 +21,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 sha256sums=('1e65e24a9981251ab5fc4f9fd65fe4eab4ba0255be3400a8c5abe20b62b5d546')
+
+prepare() {
+  # upstream issue https://github.com/RcppCore/Rcpp/issues/1251
+  sed -i 's/-447.1974945/-447.197893678525/' "$_cranname/inst/tinytest/test_stats.R"
+}
 
 build() {
   mkdir -p build
