@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=parallelly
-_cranver=1.35.0
+_cranver=1.36.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,7 +12,7 @@ url="https://cran.r-project.org/package=${_cranname}"
 license=(LGPL)
 depends=(r)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('3f5e9b6507196aab052c5e67f8b524b75aa356731c5eaffbadde76c967ad5dcd')
+sha256sums=('b9c0a29155944aae8fdb4cab00c521c7ed16af250450dd2a3dd69d5661427c88')
 
 build() {
   mkdir -p build
