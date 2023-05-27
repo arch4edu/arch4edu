@@ -7,8 +7,8 @@
 
 pkgname=saga-gis
 _pkgname=saga
-pkgver=9.0.1
-pkgrel=2
+pkgver=9.0.2
+pkgrel=1
 pkgdesc="A Geographic Information System (GIS) software with immense capabilities for geodata processing and analysis."
 url="http://www.saga-gis.org"
 license=('GPL3' 'LGPL3')
@@ -16,9 +16,8 @@ arch=('i686' 'x86_64')
 depends=('wxwidgets-gtk3' 'proj' 'gdal' 'libtiff' 'unixodbc' 'opencv' 'pdal')
 optdepends=('postgresql' 'vigra' 'liblas' 'libharu' 'libsvm' 'swig' 'python')
 makedepends=('cmake')
-source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz" 'clipper2_cstdint.patch')
-sha256sums=('f12f00bbe68bc25f17d066ea3cfbf643a10bf7c292a13ebae5a20b739bdc6e90'
-            '1dcc12671070f12b47fefe8cf49c348952615794b3f477975530a8ba839c03f8')
+source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz") 
+sha256sums=('772aae9ee44e4251752e8fd7b0d8fd42537b59b8a692c7d3d6cf13aea07d3d71')
 
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -36,11 +35,6 @@ build() {
   cmake --build . --verbose
 }
 
-
-prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  patch --forward --strip=2 --input="${srcdir}/clipper2_cstdint.patch"
-}
 
 package () {
   cd "${srcdir}/${_pkgname}-${pkgver}/build"
