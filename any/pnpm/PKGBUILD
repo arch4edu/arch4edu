@@ -2,7 +2,7 @@
 # Contributor: Tomasz Jakub Rup <tomasz.rup@gmail.com>
 
 pkgname=pnpm
-pkgver=8.5.0
+pkgver=8.6.0
 pkgrel=1
 pkgdesc="Fast, disk space efficient package manager"
 arch=("any")
@@ -11,7 +11,7 @@ license=("MIT")
 depends=("nodejs>=16.14")
 makedepends=("git" "npm" "jq")
 source=("$pkgname-$pkgver.tar.gz::https://github.com/pnpm/$pkgname/archive/v$pkgver.tar.gz")
-sha256sums=('f69c7ef19d5c3e9fefa1b0a52ba5814dfd3f97c0a19ba35d6aa8af3a920108a2')
+sha256sums=('9da1b29fd9fb1936584d27a69845136884190e46373ae23ca38387164bb387f6')
 
 package() {
   npm install -g \
