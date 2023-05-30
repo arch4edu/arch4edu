@@ -4,7 +4,7 @@ url='https://wiki.ros.org/qt_dotgraph'
 pkgname='ros-noetic-qt-dotgraph'
 pkgver='0.4.2'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
