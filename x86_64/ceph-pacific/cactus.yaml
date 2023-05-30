@@ -1,7 +1,10 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
+  - x86_64/gcc11
+  - x86_64/gcc11: gcc11-libs
   - x86_64/librdkafka1
 group: x86_64
 build_prefix: extra-x86_64
