@@ -6,7 +6,7 @@ url='https://wiki.ros.org/shape_msgs'
 pkgname='ros-noetic-shape-msgs'
 pkgver='1.13.1'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
