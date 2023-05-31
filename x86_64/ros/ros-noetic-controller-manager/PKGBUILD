@@ -6,7 +6,7 @@ url='https://github.com/ros-controls/ros_control/wiki'
 pkgname='ros-noetic-controller-manager'
 pkgver='0.19.5'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
