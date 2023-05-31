@@ -9,6 +9,6 @@ build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   sed 's/_build_opt=1/_build_opt=0/' -i PKGBUILD
-  sed 's|/opt/cuda/bin/gcc|gcc11|' -i PKGBUILD
+  sed 's|/opt/cuda/bin/gcc|gcc-11|' -i PKGBUILD
   echo 'export TF_ROCM_AMDGPU_TARGETS=gfx906,gfx1030,gfx908,gfx90a' >> PKGBUILD
 post_build: aur-post-build
