@@ -4,8 +4,8 @@
 _pkgbase='ceph'
 pkgbase='ceph-pacific'
 pkgname=('ceph-pacific' 'ceph-pacific-libs' 'ceph-pacific-mgr')
-_zstdver=1.5.4
-pkgver=16.2.11
+_zstdver=1.5.5
+pkgver=16.2.13
 pkgrel=1
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
@@ -13,7 +13,7 @@ url='https://ceph.com/'
 license=('GPL')
 makedepends=("zstd=${_zstdver}" 'bash' 'bc' 'boost' 'boost-libs' 'bzip2' 'c-ares' 'cmake' 'coreutils' 'coffeescript'
              'cpio' 'crypto++' 'cryptsetup' 'cunit' 'curl' 'cython' 'expat'
-             'fcgi' 'fontconfig' 'fuse2' 'fuse3' 'fmt' 'gcc' 'gcc-libs' 'git' 'glibc' 'gmock' 'gnutls'
+             'fcgi' 'fontconfig' 'fuse2' 'fuse3' 'fmt' 'gcc11' 'gcc11-libs' 'git' 'glibc' 'gmock' 'gnutls'
              'gperf' 'gperftools' 'gptfdisk' 'gtest' 'hwloc' 'inetutils' 'java-runtime'
              'jq' 'jre11-openjdk-headless' 'junit' 'keyutils' 'leveldb' 'libaio'
              'libatomic_ops' 'libcap' 'libcap-ng' 'libcroco' 'libcurl-compat'
@@ -70,9 +70,9 @@ source=(
   # https://github.com/ceph/ceph/pull/34846
   # 'backport_mgr_disabled_modules_workaround_PR34846.patch'
 )
-sha512sums=('905e36bc08f5cf1af1eca7fb467dd9e946d44f7ed3561c262afa9caeb35443a445a86e0b1f662754727213a4a123bc2a5eb1f080ec6697743d235449d34681fd'
+sha512sums=('39ec2bed1de0276f08bf93241f9fb275893041fd5f20ade75e68728107011ae5d01aed532d5afd8805951d09061a5a3d96c4311701c8897a29668f77126c19ab'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
-            'b6f64850ceb6cfed831fff3c43508d2a72338862a96dd9430b1d3ebbfcee40201c8b6dcf8b6b603e252bb96f3f283c9cb07da7f24414187f5f1fea3b51e01863'
+            '356994e0d8188ce97590bf86b602eb50cbcb2f951594afb9c2d6e03cc68f966862505afc4a50e76efd55e4cfb11dbc9b15c7837b7827a961a1311ef72cd23505'
             '9e6bb46d5bbdc5d93f4f026b2a8d6bdb692d9ea6e7018c1bb0188d95ea8574c76238d968b340fd67ddaa3d8183b310e393e3549dc3a63a795fde696413b0ca94'
             '6ff46a90d76f667fa23be0f9eb1ed2fb7e30af9a2621aec19944d0a22a431a0f5721603c588286e483ff55c14aac920adfccb039c9678a87cc59640dd70367ae'
             '8ec0d668fefee12d2c7f5b5297dd81fc6a559f5823d069e6395d9b4240110eb8f95049d3054697a459948c1f3784b4450539849cf9d7f3b1aa1c7fbd96c475df'
@@ -148,6 +148,8 @@ build() {
   # https://salsa.debian.org/ceph-team/ceph/-/merge_requests/9
   CPPFLAGS+=' -DFMT_DEPRECATED_OSTREAM'
 
+  export C=gcc-11
+  export CXX=g++-11
   export CFLAGS+=" ${CPPFLAGS}"
   export CXXFLAGS+=" ${CPPFLAGS}"
   export PYTHON_VERSION="$(python --version | awk '{print $2}')"
