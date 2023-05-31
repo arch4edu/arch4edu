@@ -4,7 +4,7 @@ url='https://github.com/ros-controls/ros_controllers/wiki'
 pkgname='ros-noetic-diff-drive-controller'
 pkgver='0.20.0'
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
