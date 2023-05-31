@@ -6,7 +6,7 @@ url='https://wiki.ros.org/tf2_ros'
 pkgname='ros-noetic-tf2-geometry-msgs'
 pkgver='0.7.5'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
