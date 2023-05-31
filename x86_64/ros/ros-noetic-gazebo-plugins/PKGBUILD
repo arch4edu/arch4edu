@@ -6,7 +6,7 @@ url='https://wiki.ros.org/gazebo_plugins'
 pkgname='ros-noetic-gazebo-plugins'
 pkgver='2.9.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=8
+pkgrel=9
 license=('BSD, Apache 2.0')
 
 ros_makedepends=(ros-noetic-diagnostic-updater
