@@ -1,7 +1,7 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 pkgname='python-arch'
 _module='arch'
-pkgver='6.0.0'
+pkgver='6.1.0'
 pkgrel=1
 pkgdesc="ARCH models in Python."
 url="https://pypi.python.org/pypi/arch"
@@ -14,7 +14,7 @@ makedepends=('cython3' 'python-build' 'python-installer' 'python-setuptools' 'py
 license=('custom:University of Illinois/NCSA Open Source License')
 arch=('x86_64')
 source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_module::1}/$_module/$_module-${pkgver}.tar.gz")
-sha256sums=('f42caa5444f98ca12d5f32395149314b94e033291154e3c9e8747c99d637c169')
+sha256sums=('c398f1fd89e23911ca65f04b17a1cc67e87df14bb1a0478b5cd05dde772eb996')
 
 build() {
     cd "${_module}-${pkgver}"
