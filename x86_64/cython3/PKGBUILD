@@ -3,7 +3,7 @@
 # Contributor: Igor Scabini <furester @ gmail.com>
 
 pkgname=cython3
-pkgver=3.0.0b2
+pkgver=3.0.0b3
 pkgrel=1
 pkgdesc="C-Extensions for Python"
 arch=(x86_64)
@@ -14,7 +14,7 @@ makedepends=(python-setuptools)
 provides=('cython')
 conflicts=('cython')
 source=($pkgname-$pkgver.tar.gz::"https://github.com/cython/cython/archive/$pkgver.tar.gz")
-sha256sums=('bcac516794738fef590b954f210b80e34f577fef273bf536cd83e65b1a3f85b4')
+sha256sums=('06fb018a0c380cf247d8be2ec4ae1f06978ea905bbecafd9efd67744b7b7a97e')
 
 build() {
   cd "cython-$pkgver"
