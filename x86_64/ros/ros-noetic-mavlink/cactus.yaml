@@ -8,5 +8,5 @@ makedepends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed '/Build project/a\  sed "/config.h/d" -i ${_dir}/CMakeLists.txt' -i PKGBUILD
+  sed '/Build project/a\    touch ${_dir}/config.h.in' -i PKGBUILD
 post_build: aur-post-build
