@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rqt_reconfigure'
 pkgname='ros-noetic-rqt-reconfigure'
 pkgver='0.5.5'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
