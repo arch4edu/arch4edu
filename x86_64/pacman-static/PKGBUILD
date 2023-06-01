@@ -16,7 +16,7 @@ _libarchive_ver=3.6.1
 _gpgerrorver=1.46
 _libassuanver=2.5.5
 _gpgmever=1.18.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Statically-compiled pacman (to fix or install systems without libc)"
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://www.archlinux.org/pacman/"
@@ -137,6 +137,10 @@ if [[ $CARCH = i686 || $CARCH = pentium4 || $CARCH = i486 ]]; then
     export CFLAGS="${CFLAGS/-fstack-protector-strong/}"
     export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/}"
 fi
+
+# to enable func64 interface in musl for 64-bit file system functions
+export CFLAGS+=' -D_LARGEFILE64_SOURCE'
+export CXXFLAGS+=' -D_LARGEFILE64_SOURCE'
 
 # keep using xz-compressed packages, because one use of the package is to
 # recover on systems with broken zstd support in libarchive
