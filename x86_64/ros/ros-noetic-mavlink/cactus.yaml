@@ -8,5 +8,5 @@ makedepends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed '/Build project/a\    touch ${_dir}/config.h.in' -i PKGBUILD
+  sed '/Build project/a\    curl -L https://github.com/ros-noetic-arch/ros-noetic-mavlink/files/11622511/config.h.in.txt -o ${_dir}/config.h.in' -i PKGBUILD
 post_build: aur-post-build
