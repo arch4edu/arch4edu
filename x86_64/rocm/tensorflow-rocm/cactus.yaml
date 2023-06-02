@@ -12,6 +12,7 @@ pre_build: |
   sed 's/_build_opt=1/_build_opt=0/' -i PKGBUILD
   sed 's|/opt/cuda/bin/gcc|gcc-11|' -i PKGBUILD
   echo 'export TF_ROCM_AMDGPU_TARGETS=gfx906,gfx1030,gfx908,gfx90a' >> PKGBUILD
+  sudo rm -rf /mnt
   sudo mkdir -p /mnt/tmp
 post_build: |
   aur-post-build
