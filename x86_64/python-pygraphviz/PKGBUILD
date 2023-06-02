@@ -4,8 +4,8 @@
 
 _base=pygraphviz
 pkgname=python-${_base}
-pkgver=1.10
-pkgrel=2
+pkgver=1.11
+pkgrel=1
 pkgdesc="Python interface to Graphviz graph drawing package"
 arch=('i686' 'x86_64')
 url="https://${_base}.github.io"
@@ -13,7 +13,7 @@ license=('BSD')
 depends=(python graphviz)
 makedepends=(python-build python-installer python-wheel python-setuptools)
 source=(https://pypi.org/packages/source/${_base::1}/${_base}/${_base}-${pkgver}.zip)
-sha512sums=('571c35f7a8013d5f128fcfbbd68372c8660560847afa0648737eae6d305a9283b69dce23a1b1aeb808bd4eac9c9cefa72b1d358fbc47b724a0b70997ea3f6d84')
+sha512sums=('3914d29fb214e1f7d59c7849e1e63e783902acd262912eccffbf6a67f8cbf6f540b9f2e84c9e7b4f0d90fae27f451a701a3b75a4dcb15b8a81bed463b34e2ef2')
 
 build() {
   cd ${_base}-${pkgver}
