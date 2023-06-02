@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=platform-services-python-sdk
 pkgname=python-ibm-platform-services
-pkgver=0.35.0
+pkgver=0.36.0
 pkgrel=1
 pkgdesc="Python client library for IBM Cloud Platform Services"
 arch=('any')
@@ -20,7 +20,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/IBM/${_pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
-b2sums=('e2af22b88c83e49d26c5f7981de5652a44a8175e70f976f84b454f67ce25c6d497b1d44b4a4a79d5cd3251bf1c8c47b90aa2bd25839e829e724b44181c6e02c8')
+b2sums=('9a3f8e7737c8e355426a9c766ede28ed978e7d7ee4accae8ca7be42496ad49f0af9e88da7d031a0571c959a9979649d4109cd361c3ffc5ce6b7bff0b8fb2fd17')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
