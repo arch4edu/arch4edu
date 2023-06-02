@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-terra
 pkgname=python-${_pkgname}
-pkgver=0.24.0
+pkgver=0.24.1
 pkgrel=1
 pkgdesc="An open-source framework for working with noisy quantum computers at the level of pulses, circuits, and algorithms"
 arch=('x86_64')
@@ -45,7 +45,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('db2e4627b5f9680efaf97f04d957c3d257e69df1d24a283b8fd17a0ed6f663cc77512c8c29831ef941535f7f6875141d1191694cd95d052048e58f995a6b28b4')
+b2sums=('6702c698efdd438588f86c300fec1fb047f0c7e890558798dc767d428a924e6a2a1c87145000e53af3ca538c5dc0eaf0ff7514d6521a42996d42c19efe93298a')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
