@@ -7,7 +7,7 @@ _pkgname=processx
 _pkgver=3.8.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//[:-]/.}
-pkgrel=5
+pkgrel=6
 pkgdesc="Execute and Control System Processes"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,6 +28,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('bd1a39f2e4034d5f455217459fd65daa')
 sha256sums=('e008472b81d4ca1a37a4ba7dd58e5e944f96ab2e44c8ccc8840d43e9fe99e93c')
 
 build() {
