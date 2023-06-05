@@ -10,7 +10,7 @@ _pkgname=rmarkdown
 _pkgver=2.22
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Dynamic Documents for R"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -51,6 +51,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('28f72cac8b8b3c646f5cbaf1c195178a')
 sha256sums=('c6635519503e0fcdd518696d3ac96d8d28d9d4ecd9db0532c53426002f6387b8')
 
 prepare() {
