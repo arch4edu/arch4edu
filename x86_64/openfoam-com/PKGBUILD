@@ -4,6 +4,7 @@
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 # Contributor: <gucong43216@gmail.com>
+# Contributor: Carlos Aznarán <caznaranl@uni.pe>
 
 # Installs as (for example)
 # /opt/OpenFOAM/OpenFOAM-v2212
@@ -12,7 +13,7 @@ pkgname=openfoam-com
 pkgver=v2212
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=2
+pkgrel=3
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
 url="http://www.openfoam.com"
@@ -20,9 +21,11 @@ license=('GPL3')
 install="${pkgname}.install"
 depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
 
-source=('https://sourceforge.net/projects/openfoam/files/v2212/OpenFOAM-v2212.tgz')
+source=('https://sourceforge.net/projects/openfoam/files/v2212/OpenFOAM-v2212.tgz'
+  gcc-13-compatibility.patch::https://develop.openfoam.com/Development/openfoam/-/commit/70451e680cd0987c8220a0276bba4ce6bba58e9e.patch)
 
-md5sums=('889c9a2169c0b6911050de149a5b459b')
+md5sums=('889c9a2169c0b6911050de149a5b459b'
+  '686c135b63e923de449763cf5f1ea6e9')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]
@@ -54,6 +57,12 @@ export WM_MPLIB=SYSTEMOPENMPI
     -scotch scotch-system \
     -paraview paraview-system \
     ;
+
+    # check this for next update!
+    # https://develop.openfoam.com/Development/openfoam/-/issues/2714
+    # gcc-13-compatibilty
+    cd "$projectDir"
+    patch -p1 -i ../gcc-13-compatibility.patch
 }
 
 build() {
