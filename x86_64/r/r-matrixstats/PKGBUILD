@@ -3,13 +3,13 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=matrixStats
-_cranver=0.63.0
+_cranver=1.0.0
 pkgname=r-${_cranname,,}
 pkgdesc="Functions that Apply to Rows and Columns of Matrices (and to Vectors)"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("Artistic2.0")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
@@ -40,13 +40,13 @@ optdepends=(
 # as well as the `check()` function further down
 
 # checkdepends=(
-#     "@{optdepends[@]}"
+#     "${optdepends[@]}"
 #     "qpdf"
 #     "r-rcmdcheck"
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("4d2cb8b7c0f9f1e5656a0de081955a071af207089fc1ff2e4103465cb889c7a4a8a37a190d47fe0a32732137665b4ab753f39f53bbd503e5023cf7c8bfa1abef")
+b2sums=("ade8ba444f379758b232052eb23a78dec8e14246e1e4254d7c40e1dffa00910e5a8e2114d58aa2afc841dfae9a3d03d9b14485e52b2ef2ebe7304b099aed3e27")
 
 build() {
     mkdir -p "${srcdir}/build/"
