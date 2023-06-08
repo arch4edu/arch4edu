@@ -2,15 +2,14 @@
 
 pkgname='python-ml-dtypes'
 _pkgname=${pkgname#python-}
-pkgver=0.1.0
-pkgrel=2
+pkgver=0.2.0
+pkgrel=1
 pkgdesc='A stand-alone implementation of several NumPy dtype extensions used in ML.'
 arch=('aarch64' 'armv7h' 'x86_64')
 url='https://github.com/jax-ml/ml_dtypes'
 license=('Apache')
 depends=('python-numpy')
 makedepends=(
-    'eigen'
     'pybind11'
     'python-absl'
     'python-build'
@@ -20,11 +19,17 @@ makedepends=(
     'python-wheel'
 )
 source=("ml-dtypes-${pkgver}.tar.gz::https://github.com/jax-ml/ml_dtypes/archive/refs/tags/v${pkgver}.tar.gz"
-        'ml-dtypes.diff')
-sha256sums=('d95d095a558c6f7da21649059146eef7002c17a8756b097ae3f93e96e02fc37f'
-            'bd51a6bd8dcf51a71314be83dc3a2cdbe56f2007472464ccde820783eb2df5f9')
+        'ml-dtypes.diff'
+        "eigen-7bf2968.tar.gz::https://gitlab.com/libeigen/eigen/-/archive/7bf2968fed5f246c0589e1111004cb420fcd7c71/eigen-7bf2968.tar.gz")
+sha256sums=('cb38843a9802bad96d333de257edd68e834f5db0db812a6218589535bf56c3a3'
+            '79754f2860d80e094f17c03eb850fdf36c301cee19c1f0b6c675932f347b4e65'
+            'beca76e4663a75ef3ff00b0704009a7a60cec3783ce3cada0b828982da87130b')
 
 prepare() {
+    ln -fs \
+        $srcdir/eigen-7bf2968fed5f246c0589e1111004cb420fcd7c71/Eigen \
+        $srcdir/ml_dtypes-$pkgver/third_party/eigen/Eigen
+
     cd ml_dtypes-$pkgver
     patch -p0 -i ../ml-dtypes.diff
 }
@@ -45,4 +50,7 @@ package() {
         --compile-bytecode 1 \
         --destdir $pkgdir \
         ml_dtypes-$pkgver/dist/ml_dtypes-$pkgver-*-*.whl
+
+    # Remove artefacts of broken distribution.
+    rm -rfv $pkgdir/usr/lib/python3.11/site-packages/third_party
 }
