@@ -3,7 +3,7 @@ _base=dolfinx
 pkgname=python-fenics-${_base}
 pkgdesc="Next generation FEniCS problem solving environment (python interface)"
 pkgver=0.6.0
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
 license=(LGPL3)
@@ -13,6 +13,13 @@ makedepends=(cmake python-setuptools pybind11)
 optdepends=('gmsh: for extract data from Gmsh models')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
 sha512sums=('6e4bbeca9045cdc558fa5cdfd23abe55bdb773b326381eaa25f843e70d9df39c5707bfdf5412ae1845fc680bbbc7cb641f9cf6e4eb2226a760ddaab8d04237bf')
+
+prepare() {
+  # https://github.com/FEniCS/dolfinx/pull/2657
+  sed -i 's/#include "caster_petsc.h"/\/\/#include "caster_petsc.h"/' ${_base}-${pkgver}/python/dolfinx/wrappers/common.cpp
+  sed -i 's/#include "caster_petsc.h"/\/\/#include "caster_petsc.h"/' ${_base}-${pkgver}/python/dolfinx/wrappers/io.cpp
+  sed -i 's/#include "caster_petsc.h"/\/\/#include "caster_petsc.h"/' ${_base}-${pkgver}/python/dolfinx/wrappers/mesh.cpp
+}
 
 build() {
   cd ${_base}-${pkgver}/python
