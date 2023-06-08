@@ -23,8 +23,11 @@ if [ -f "/usr/lib/libHYPRE.so" ]; then
 fi
 
 # Add mumps support
-if [ -f "/usr/lib/libmumps_common.so" ]; then
-	CONFOPTS="${CONFOPTS} --with-mumps=1"
+MUMPS_DIR="/usr/include"
+if [ -d "/usr/include/cmumps_c.h" ]; then
+	MUMPS_LIBS="libcmumps.so,libdmumps.so,libmumps_common.so,libpord.so,libsmumps.so,libzmumps.so"
+	CONFOPTS="${CONFOPTS} --with-mumps=1 --with-mumps-lib=${SCOTCH_LIBS} --with-mumps-include=${SCOTCH_DIR}"
+	# CONFOPTS="${CONFOPTS} --with-mumps=1"
 fi
 
 # Add fftw support
@@ -62,8 +65,8 @@ if [ -f "/usr/include/metis.h" ]; then
 fi
 
 # Add scotch support
-SCOTCH_DIR="/usr/include/scotch"
-if [ -d "${SCOTCH_DIR}" ]; then
+SCOTCH_DIR="/usr/include"
+if [ -d "/usr/include/scotch.h" ]; then
 	SCOTCH_LIBS="libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so"
 	# Include bzip2 if scotch was build with bzip2 support
 	if [ -f /usr/include/bzlib.h ];then

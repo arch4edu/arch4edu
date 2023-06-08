@@ -1,4 +1,5 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: Auto update bot <auto-update-bot@jingbei.li>
 # Maintainer: Jingbei Li <i@jingbei.li>
 # Contributor: Sigvald Marholm <marholm@marebakken.com>
 # Adapted from the package petsc with the following original contributors:
@@ -8,8 +9,8 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.18.2
-pkgrel=1
+pkgver=3.19.2
+pkgrel=2
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
 #"linux-c-debug" for some things, so the _config should be changed too
@@ -42,8 +43,8 @@ optdepends=('trilinos: support for zoltan'
 install=${_base}.install
 source=(https://ftp.mcs.anl.gov/pub/${_base}/release-snapshots/${_base}-lite-${pkgver}.tar.gz
   test_optdepends.sh)
-sha512sums=('a8e9757144a20d61c004f54615821df7f9dbd920af71fea4674eb0fd1bf9f0b50dbc5c89aae285fef35a23daf67ba9647e479a6e92dbcd26e53fd8302735a47b'
-  '3b64124b5775a0f61128b56c936899096355f694a98bc545657fe7744733b6829bffa6ddea904463d6782e0900ba654a65adf7fdb8642e9161f08fb56e74e56b')
+sha512sums=('f8feeb66fa8bd2406227be0e2cc2946485238362270d40e3f07dc89491177751f6bf680f51b70696bc30b677624c0e525c3fa9784eabdeb2337697ec56f63fc1'
+            'f6ddebd3d9bd5bfe987b282db6895ae0156a71ae597fd570bcfea9376c44e1968ed83b035ceef2b0f31c7648e67b9bf6a778074804de7458b47d2e0f0a199efd')
 
 _install_dir=/opt/${_base}/${_config}
 _petsc_arch=arch-${_config}
