@@ -3,21 +3,29 @@
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=superlu_dist
 pkgver=8.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Distributed memory, MPI based SuperLU"
 arch=('x86_64')
 url="https://github.com/xiaoyeli/${pkgname}"
 license=('custom')
 depends=(lapack parmetis) # openblas combblas
 makedepends=(cmake)       # gcc-fortran ninja
-source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('30dbd8dbf7a2d86c0b8fdadf6f476473514a8698b15fbdb63e1f2de0d47abd5e1de25f5757ed40c941b4165ae3c53d1132caa8b5a03eaaeea7a4868d13778bf3')
+source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz
+  get_metis_dist.patch::${url}/commit/b64fe36742f1468075670129ac460915eb7130fe.patch)
+sha512sums=('30dbd8dbf7a2d86c0b8fdadf6f476473514a8698b15fbdb63e1f2de0d47abd5e1de25f5757ed40c941b4165ae3c53d1132caa8b5a03eaaeea7a4868d13778bf3'
+  '4f99d5900917a428597ff788205bd536cb1b591fdf400ed4d9ba0bc05d19f6db7612bd2797d94cdf4572b213758b2e8e7c11919f88023114a4b61d7455d58d9f')
 options=('staticlibs')
 
 # -DTPL_ENABLE_COMBBLASLIB=ON \
 # -DTPL_COMBBLAS_INCLUDE_DIRS="/usr/include/CombBLAS;/usr/include/CombBLAS/Applications/BipartiteMatchings" \
 # -DTPL_COMBBLAS_LIBRARIES="/usr/lib/libCombBLAS.so" \
 # -DCMAKE_Fortran_COMPILER=mpifort \
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  # https://github.com/xiaoyeli/superlu_dist/issues/141#issuecomment-1519344163
+  patch -p1 -i ../get_metis_dist.patch
+}
 
 build() {
   cmake \
