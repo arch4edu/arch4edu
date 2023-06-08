@@ -1,27 +1,19 @@
 # Maintainer: Core_UK <dev@coredev.uk>
 
 pkgname=cider
-pkgver=1.6.0.
-pkgrel=6
-pkgdesc="Project Cider. An open-source Apple Music client built from the ground up with Vue.js and Electron. Compiled from the GitHub repositories ${_pkgbranch} branch."
-arch=("armv7h" "i686" "x86_64")
-
-_repo="Cider"
-_author="CiderApp"
-_branch="main"
-
-url="https://github.com/${_author}/${_repo}"
-license=('GPL')
+pkgver=1.6.1
+pkgrel=8
+pkgdesc="Project Cider. An open-source Apple Music client built from the ground up with Vue.js and Electron. Build from tar file on GitHub releases."
+arch=(x86_64)
+url="https://github.com/ciderapp/${pkgname}.git"
+license=(AGPL3)
+depends=(gtk3 nss alsa-lib libxcrypt-compat)
 optdepends=('libnotify: Playback notifications')
-makedepends=('npm' 'nvm' 'fontconfig' 'yarn')
-provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}")
-source=(
-    "${pkgname%-git}::git+https://github.com/${_author}/${_repo}.git#branch=${_branch}"
-    "${pkgname%-git}.desktop"
-)
-sha256sums=('SKIP'
-            'c41e9b1019411019fce8509e32f770edf33c9e864bf707c30ffe2e3f2dcf1571')
+makedepends=(npm nvm fontconfig yarn)
+provides=(${pkgname})
+conflicts=(${pkgname})
+source_x86_64=("https://github.com/ciderapp/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums_x86_64=('162fed4df8a47aca47e68bd42779204e1f323b322b63ce094989b59b94a2a547')
 
 _ensure_local_nvm() {
   # lets be sure we are starting clean
@@ -34,43 +26,26 @@ _ensure_local_nvm() {
   source /usr/share/nvm/init-nvm.sh || [[ $? != 1 ]]
 }
 
-_pkgver() {
-    cd "${srcdir}/${pkgname%-git}"
-    printf "%s.r%s.%s" "$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' package.json)" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
-
 prepare() {
+  cd "${srcdir}/${pkgname^}-${pkgver}"
   _ensure_local_nvm
-  cd "${srcdir}/${pkgname%-git}"
   nvm install
 }
 
 build() {
-    _ensure_local_nvm
-    cd "${srcdir}/${pkgname%-git}"
-    git submodule update --init
-    npm run bootstrap
-    npm run dist
+  cd "${srcdir}/${pkgname^}-${pkgver}"
+  _ensure_local_nvm
+  npx -y check-engine && yarn install && yarn dist && mv dist/*.deb "${srcdir}/" && cd "${srcdir}"
+  ar x ${pkgname}_${pkgver}_amd64.deb data.tar.xz
 }
 
 package() {
-    cd "${srcdir}/${pkgname%-git}"
+  # Extract package data
+  bsdtar -xf ${srcdir}/data.tar.xz -C ${pkgdir}/
+  mv "${pkgdir}/opt/${pkgname^}" "${pkgdir}/opt/${pkgname}"
 
-    # Desktop File
-    install -Dm644 "${srcdir}/${pkgname%-git}.desktop" "${pkgdir}/usr/share/applications/${pkgname%-git}.desktop"
-    # Install the icon
-    install -Dm644 "${srcdir}/${pkgname%-git}/resources/icons/icon.png" "${pkgdir}/usr/share/icons/hicolor/256x256/apps/${pkgname%-git}.png"
-    # Install the build files
-    install -d "$pkgdir/opt/"
-    install -d "$pkgdir/usr/bin/"
-
-    cd ${srcdir}/${pkgname%-git}/dist/linux-unpacked/
-    mkdir "${pkgdir}/opt/${pkgname%-git}"
-    cp -r --preserve=mode * "${pkgdir}/opt/${pkgname%-git}"
-    ln -sf "/opt/${pkgname%-git}/${pkgname%-git}" "${pkgdir}/usr/bin/${pkgname%-git}"
-
-    # License and Readme
-    install -d "$pkgdir/usr/share/licenses" "$pkgdir/usr/share/doc"
-    install -Dm644 "${srcdir}/${pkgname%-git}/README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+  # Symlink the binary
+  install -d "$pkgdir/usr/bin/"
+  ln -sf "/opt/${pkgname}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
 }
 makedepends+=("git")
