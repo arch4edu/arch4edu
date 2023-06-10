@@ -3,7 +3,7 @@
 # Contributor: George Eleftheriou <eleftg>
 
 pkgname=mpich
-pkgver=4.1
+pkgver=4.1.2
 pkgrel=1
 pkgdesc="An improved implementation of the Message Passing Interface."
 url="https://mpich.org"
@@ -15,16 +15,13 @@ makedepends=(texlive-core sowing autoconf python)
 optdepends=(perl python)
 install="${pkgname}.install"
 source=("https://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
-	"mpich.profile")
-sha256sums=('8b1ec63bc44c7caa2afbb457bc5b3cd4a70dbe46baba700123d67c48dc5ab6a0'
+	      "mpich.profile")
+sha256sums=('3492e98adab62b597ef0d292fb2459b6123bc80070a8aa0a30be6962075a12f0'
             'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284')
 options=('!libtool')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
-
-  # https://github.com/openucx/ucx/pull/8450
-  sed -i -e 's/\<PTR\>/void */' modules/ucx/src/ucs/debug/debug.c
 
   # CFLAGS etc are normally written into the wrapper compilers.  This
   # gives surprising results, e.g. when the user wants to compile their
