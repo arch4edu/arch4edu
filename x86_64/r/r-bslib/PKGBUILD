@@ -1,54 +1,54 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-_cranname=bslib
-_cranver=0.4.2
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=bslib
+_pkgver=0.5.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//[:-]/.}
+pkgrel=2
 pkgdesc="Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'"
 arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(MIT)
 depends=(
-    r-htmltools
-    r-jsonlite
-    r-sass
-    r-jquerylib
-    r-rlang
-    r-cachem
-    r-memoise
-    r-base64enc
-    r-mime
+  r-base64enc
+  r-cachem
+  r-htmltools
+  r-jquerylib
+  r-jsonlite
+  r-memoise
+  r-mime
+  r-rlang
+  r-sass
 )
 optdepends=(
-    r-shiny
-    r-rmarkdown
-    r-thematic
-    r-knitr
-    r-testthat
-    r-withr
-    r-rappdirs
-    r-curl
-    r-magrittr
-    r-fontawesome
-    r-bsicons
+  r-bsicons
+  r-curl
+  r-fontawesome
+  r-ggplot2
+  r-knitr
+  r-magrittr
+  r-rappdirs
+  r-rmarkdown
+  r-shiny
+  r-testthat
+  r-thematic
+  r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
-        "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('9a40b7a1bbe409af273e1e940d921ab198ea576548f06f055f552f70ff822f19'
-            'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('9a9e505cf4f08ffa3f7af77bf684cb1f')
+sha256sums=('a2c6fbc62242806e10bb58c5d1ba04a6d3bf4e546bc53d7acf1b8eb1160bd115')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-
-  install -Dm644 CRAN-MIT-TEMPLATE "${pkgdir}/usr/share/licenses/${pkgname}/MIT"
-  install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
