@@ -4,10 +4,10 @@ pkgdesc="ROS - this package contains a set of messages that are used by the intr
 url='https://wiki.ros.org/smach_msgs'
 
 pkgname='ros-noetic-smach-msgs'
-pkgver='2.5.0'
+pkgver='2.5.1'
 _pkgver_patch=0
 arch=('any')
-pkgrel=3
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(
@@ -33,7 +33,7 @@ depends=(
 
 _dir="executive_smach-${pkgver}/smach_msgs"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/executive_smach/archive/${pkgver}.tar.gz")
-sha256sums=('f46d9618f7a218501469320f1bab272b6b6675513bc5c4be674ac154d0429ecb')
+sha256sums=('e0fa3efcac6eed2b6dbe45f376c6b8e9a1080c2d84a116c1591ec60fbb8e0065')
 
 build() {
 	# Use ROS environment variables.
