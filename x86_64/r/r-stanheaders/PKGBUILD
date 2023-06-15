@@ -4,9 +4,9 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=StanHeaders
-_pkgver=2.26.26
+_pkgver=2.26.27
 pkgname=r-${_pkgname,,}
-pkgver=2.26.26
+pkgver=2.26.27
 pkgrel=1
 pkgdesc='C++ Header Files for Stan'
 arch=('x86_64')
@@ -31,7 +31,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('93609d8058a59c9a903cccd74f68a85f7631b34d18f4f1df94e03c88a9d325cb')
+sha256sums=('70e06546eadc448fc272d4b790620304d02a181df28cc924380bb5f10f83c9b1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
