@@ -10,7 +10,7 @@
 # package, maintained by T. Borgert.
 
 pkgname=ros2-humble
-pkgver=2023.03.08
+pkgver=2023.05.02
 pkgrel=1
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
@@ -18,12 +18,13 @@ arch=('any')
 license=('Apache')
 depends=(
     'ros2-arch-deps'
-    'python-pyqt5-sip4'
+    'qt6-base'
     'assimp'
     'gmock'
 )
+makedepends=('git')
 source=(
-    "ros2::git+https://github.com/ros2/ros2#tag=release-humble-20230308"
+    "ros2::git+https://github.com/ros2/ros2#tag=release-humble-${pkgver//.}"
 )
 sha256sums=(
     'SKIP'
@@ -43,6 +44,26 @@ prepare() {
     # Clone the repos
     mkdir -p $srcdir/ros2/src
     vcs import $srcdir/ros2/src < $srcdir/ros2/ros2.repos
+
+    # Setup git (required for the cherry-pick commands)
+    export GIT_COMMITTER_NAME="PKGBUILD"
+    export GIT_COMMITTER_EMAIL="pkgbuild@example.com"
+    export GIT_AUTHOR_NAME="PKGBUILD"
+    export GIT_AUTHOR_EMAIL="pkgbuild@example.com"
+
+    # Fix some issues in the code (TODO: Gradually move to upstream)
+    ## eProsima Fast-DDS: fix missing cstdint include
+    git -C $srcdir/ros2/src/eProsima/Fast-DDS cherry-pick -X theirs 02539b98a3a36e711da8f416372cbab2ecc178bb
+    ## rcpputils: fix missing cstdint include
+    git -C $srcdir/ros2/src/ros2/rcpputils cherry-pick f96811a9047fa6a084a885219c88b415bc544487
+    ## libstatistics_collector: Fix missing cstdint include
+    git -C $srcdir/ros2/src/ros-tooling/libstatistics_collector cherry-pick 1c340c97c731019d0c7b40f8c167b0ef666bcf75
+    ## rclcpp: Fix missing stdexcept includes
+    git -C $srcdir/ros2/src/ros2/rclcpp cherry-pick 86c77143c96d85711a87f2a5adcc4d7f0fb0dbeb
+    ## pybind11_vendor: Support for python 3.11
+    git -C $srcdir/ros2/src/ros2/pybind11_vendor checkout 3.0.3
+    ## rosbag2_compression: cherry pick to fix missing cstdint include
+    git -C $srcdir/ros2/src/ros2/rosbag2 cherry-pick 65c889e1fa55dd85a148b27b8c27dadc73238e67
 }
 
 build() {

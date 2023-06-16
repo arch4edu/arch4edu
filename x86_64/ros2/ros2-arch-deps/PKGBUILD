@@ -3,7 +3,7 @@
 # Contributor: kartikmohta
 # Contributor: calvertdw
 pkgname=ros2-arch-deps
-pkgver=0.12
+pkgver=0.13
 pkgrel=1
 pkgdesc="Dependencies for building ROS2 on Arch"
 url="https://index.ros.org/doc/ros2/"
@@ -65,6 +65,7 @@ depends=('asio'
          'python-colcon-ros'
          'python-colcon-test-result'
          'python-colcon-zsh'         
+         'python-colcon-cd'         
          'python-colcon-common-extensions'
          'python-pyqt5-sip4'
          'python-rospkg'
