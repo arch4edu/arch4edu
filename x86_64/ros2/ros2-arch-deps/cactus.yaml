@@ -5,6 +5,7 @@ depends:
   - x86_64/ros2/python-catkin_pkg
   - x86_64/ros2/python-colcon-argcomplete
   - x86_64/ros2/python-colcon-bash
+  - x86_64/ros2/python-colcon-cd
   - x86_64/ros2/python-colcon-cmake
   - x86_64/ros2/python-colcon-common-extensions
   - x86_64/ros2/python-colcon-core
