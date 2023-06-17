@@ -20,6 +20,10 @@ post_upgrade() {
       groupdel "flutterusers"
     fi
   fi
+  
+  mv "/opt/flutter/.git-refs" "/opt/flutter/.git"
+}
 
+post_install() {
   mv "/opt/flutter/.git-refs" "/opt/flutter/.git"
 }
