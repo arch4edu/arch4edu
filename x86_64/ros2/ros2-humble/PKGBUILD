@@ -10,7 +10,7 @@
 # package, maintained by T. Borgert.
 
 pkgname=ros2-humble
-pkgver=2023.05.02
+pkgver=2023.06.14
 pkgrel=1
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
