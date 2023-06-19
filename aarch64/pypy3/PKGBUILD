@@ -1,9 +1,9 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 
 pkgname=pypy3
-_pyversion=3.9
-pkgver=7.3.11
-pkgrel=4
+_pyversion=3.10
+pkgver=7.3.12
+pkgrel=1
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64')
@@ -14,7 +14,7 @@ optdepends=('sqlite: sqlite module'
 options=(!buildflags)
 license=('MIT')
 source=("https://downloads.python.org/pypy/pypy${_pyversion}-v${pkgver}-src.zip")
-sha512sums=('96432c03ab7f69b39cd6be073e80d4ed3ac2d1a1cec66724f11964ad453f9c3511b476b0601558ca1d8f9cc108471aa2f0a372ec3b76b4f51c79a9a31bce13bd')
+sha512sums=('0b85a6a3caed71faef013a0dcef4d67199464454f8af0018dea4570ea644a2d43926e8a988bed7838d1e7a6449e3c1fec97aa60afab8652277f1f2677dd62031')
 
 build() {
   cd pypy${_pyversion}-v${pkgver}-src/pypy/goal
@@ -25,7 +25,7 @@ build() {
   pypy ../../rpython/bin/rpython -Ojit --shared targetpypystandalone
 
   # Compile binary modules
-  PYTHONPATH=../.. ./pypy3.9-c ../../lib_pypy/pypy_tools/build_cffi_imports.py
+  PYTHONPATH=../.. ./pypy3.10-c ../../lib_pypy/pypy_tools/build_cffi_imports.py
 }
 
 package() {
