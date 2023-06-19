@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
-pkgver=0.12.0
+pkgver=0.12.1
 pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=(
     'cython'
     'muparserx'
     'nlohmann-json'
-    'openblas-lapack'
+    'blas-openblas'
     'python-numpy'
     'python-qiskit-terra'
     'python-scipy'
@@ -38,8 +38,8 @@ source=(
     "${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz"
     "fix.patch"
 )
-b2sums=('8d14012ffb0e12f32dc954dfa883bc43be6ac7aa4e01597d6abb11c22d7f39e9b419ab78db0c613d951555590498e1f0a5dbc7bb7047d2a8e71ae9a6216c79ab'
-        '17720f9591855941c0378ae38008a873d6c3c2f7496b2dda58fd85a2b156fe2d6307cc198727a3aaf483a4d1e60f84c97f878728a847d2c34a36831c7a9d3837')
+b2sums=('48e33054714a964589bc7500ad9853bb7aa64aa82288200c955ac82ed453d0a294a025fda43021b12ea6d45e82303f93544709bdf15e6570b2131fc5300ffec6'
+        '5523350559706d94f6eeb169360759d32bfd1dec8384948bfb04823eec6440e03377860ae53dc6ba3e7a9a087f0429d9f9bb4a4c3d7c523e713f5e6b34c20dc9')
 
 prepare() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
