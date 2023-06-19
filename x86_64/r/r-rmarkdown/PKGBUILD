@@ -10,7 +10,7 @@ _pkgname=rmarkdown
 _pkgver=2.22
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgrel=5
 pkgdesc="Dynamic Documents for R"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -33,7 +33,8 @@ checkdepends=(
   r-curl
   r-shiny
   r-testthat
-  texlive-core
+  texlive-basic
+  texlive-fontsrecommended
   texlive-latexextra
 )
 optdepends=(
