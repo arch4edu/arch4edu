@@ -12,10 +12,10 @@ pkgbase="${_pkgbase}11"
 pkgname=("${pkgbase}"
          "${pkgbase}-libs"
          "${pkgbase}-fortran")
-pkgver=11.3.0
+pkgver=11.4.0
 _majorver=${pkgver%%.*}
 _islver=0.24
-pkgrel=6
+pkgrel=1
 pkgdesc='The GNU Compiler Collection (11.x.x)'
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -48,7 +48,7 @@ validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
               13975A70E63C361C73AE69EF6EEB81F8981C74C7  # richard.guenther@gmail.com
               D3A93CAD751C2AF4F8C7AD516C35B99309B5FA62) # Jakub Jelinek <jakub@redhat.com>
-b2sums=('7e562d25446ca4ab9fe8cdb714866f66aba3744d78bf84f31bfb097c1a981e4c7f990cb1e6bcfec5ae6671836a4984e2b70eb8fed81dcef5e244f88da8623469'
+b2sums=('6e3b095a5837d4b5512719f848f4b9c4b4a6d7dc40ba96b269023ea5ea84f632c42a13855c030e255f3265445a45e6d2648dfe0e2cc0ea47da87c4660b052e24'
         'SKIP'
         '88a178dad5fe9c33be5ec5fe4ac9abc0e075a86cff9184f75cedb7c47de67ce3be273bd0db72286ba0382f4016e9d74855ead798ad7bccb015b853931731828e'
         '2c64090b879d6faea7f20095eff1b9bd6a09fe3b15b3890783d3715171678ab62d32c91af683b878746fb14441dbe09768474417840f96a561443415f76afb63'
