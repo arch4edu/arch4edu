@@ -4,6 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-ibm-platform-services
+  - x86_64/python-qiskit-ibm-provider
   - x86_64/python-qiskit-terra
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
