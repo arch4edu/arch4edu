@@ -1,33 +1,36 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: frichtlm <frichtlm@gmail.com>
 
-_cranname=BH
-_cranver=1.81.0-1
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=BH
+_pkgver=1.81.0-1
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//[:-]/.}
+pkgrel=3
 pkgdesc="Boost C++ Header Files"
 arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(Boost)
-depends=(boost r)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+depends=(
+  boost
+  r
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('897f0d1cd97ba1047eff09acf68c07a8')
 sha256sums=('f51c8badd6f181e06353314e1d15a6ec1495cc498ee74b6fa4ea8aba6e97ff64')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 
   # Use system boost headers from the `boost` package
-  cd "${pkgdir}/usr/lib/R/library/${_cranname}/include"
+  cd "$pkgdir/usr/lib/R/library/$_pkgname/include"
   rm -r boost
-  install -dm0755 "${pkgdir}/usr/include/boost"
   ln -s /usr/include/boost
 }
