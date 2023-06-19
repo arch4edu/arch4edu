@@ -1,5 +1,5 @@
 pkgname=devtools-arch4edu-extra
-pkgver=24.43b032d
+pkgver=25.8578d81
 pkgrel=1
 pkgdesc='Extra tools for arch4edu package maintainers'
 arch=('x86_64' 'armv7h' 'aarch64')
