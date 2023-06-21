@@ -3,9 +3,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=multcomp
-_pkgver=1.4-24
+_pkgver=1.4-25
 pkgname=r-${_pkgname,,}
-pkgver=1.4.24
+pkgver=1.4.25
 pkgrel=1
 pkgdesc='Simultaneous Inference in General Parametric Models'
 arch=('any')
@@ -34,7 +34,7 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7e64ed3013620772f802863704f9530eabdf62c1a9df936c3e42636d344fb411')
+sha256sums=('9dfa7821a699e7b6fc99f2b8bf6bc5fecf6e3d83ece814882b5c8ed8faffd282')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
