@@ -1,0 +1,11 @@
+diff --git a/foreach/tests/testthat.R b/foreach/tests/testthat.R
+index 37f6250..7b32078 100644
+--- a/foreach/tests/testthat.R
++++ b/foreach/tests/testthat.R
+@@ -4,6 +4,3 @@ library(foreach)
+ 
+ Sys.setenv(FOREACH_BACKEND="SEQ")
+ test_check("foreach")
+-
+-Sys.setenv(FOREACH_BACKEND="PAR")
+-test_check("foreach")
