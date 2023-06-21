@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=testthat
-_cranver=3.1.8
+_cranver=3.1.9
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -26,7 +26,7 @@ depends=(
     "r-jsonlite"
     "r-lifecycle"
     "r-magrittr"
-    "r-pkgload"
+    "r-pkgload>=1.3.0"
     "r-praise"
     "r-processx"
     "r-ps>=1.3.4"
@@ -68,7 +68,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("fdb8a205d87931a40501e28803d3e79ce81116232df93940ad9966368f8731982b6d2eb7c926a6e381e7b4cb91a67676cce5efdc9e74c5543d8779ccdcc892d3")
+b2sums=("b5d2f824eeb2d244056d59aad447583cbadea1711a788ca1b22b90fca5c984eaaf9dba9318244936b6507e170af2b3b010eff0d85b8dd1ec0537a52144da7bb5")
 
 build() {
     mkdir -p "${srcdir}/build/"
