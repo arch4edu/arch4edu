@@ -4,13 +4,13 @@
 
 pkgname=flite1
 pkgver=1.4
-pkgrel=5
+pkgrel=6
 pkgdesc='A lighweight speech synthesis engine (version 1.x)'
 arch=('x86_64')
 url='http://www.speech.cs.cmu.edu/flite/'
 license=('custom')
 depends=('glibc')
-makedepends=('texlive-core' 'ed')
+makedepends=('texlive-plaingeneric' 'ed')
 provides=("flite=${pkgver}" 'flite1-patched')
 conflicts=('flite' 'flite1-patched')
 replaces=('flite1-patched')
