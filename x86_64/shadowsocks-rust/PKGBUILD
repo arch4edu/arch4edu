@@ -3,7 +3,7 @@
 
 pkgname=shadowsocks-rust
 pkgver=1.15.3
-pkgrel=3
+pkgrel=4
 pkgdesc='A Rust port of shadowsocks https://shadowsocks.org/'
 arch=(x86_64)
 url='https://github.com/shadowsocks/shadowsocks-rust'
@@ -23,6 +23,7 @@ build() {
     [[ "$CARCH" == "riscv64" ]] && CARCH="riscv64gc"
     cd "${srcdir}/${pkgname}-${pkgver}"
     export CARGO_TARGET_DIR=target
+    export RUSTUP_TOOLCHAIN=stable
     cargo fetch --locked --target "${CARCH}-unknown-linux-gnu"
     cargo build --frozen --release --features local-redir,local-tun,local-dns,local-http-native-tls
 }
