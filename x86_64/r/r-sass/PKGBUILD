@@ -5,8 +5,8 @@
 _pkgname=sass
 _pkgver=0.4.6
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Syntactically Awesome Style Sheets ('Sass')"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
