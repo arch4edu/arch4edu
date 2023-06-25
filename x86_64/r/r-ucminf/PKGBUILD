@@ -3,8 +3,8 @@
 _pkgname=ucminf
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="General-Purpose Unconstrained Non-Linear Optimization"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
