@@ -5,8 +5,8 @@
 _pkgname=robustbase
 _pkgver=0.99-0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Basic Robust Statistics"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
