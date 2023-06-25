@@ -6,8 +6,8 @@
 _pkgname=fs
 _pkgver=1.6.2
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Cross-Platform File System Operations Based on 'libuv'"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,16 +28,16 @@ optdepends=(
   r-vctrs
   r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3827672b1f4747ce6bd3a224a74a9f61')
-sha256sums=('548b7c0ed5ab26dc4fbd88707ae12987bcaef834dbc6de4e17d453846dc436b2')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "system-libuv.patch")
+md5sums=('3827672b1f4747ce6bd3a224a74a9f61'
+         'e9cd06be1a987fd1cdab9b577736bfe0')
+sha256sums=('548b7c0ed5ab26dc4fbd88707ae12987bcaef834dbc6de4e17d453846dc436b2'
+            'd03eb4684d9e62ceb77292a10cb6b3e638140f9431b0625a8f8196e0dce14752')
 
 prepare() {
   # build against system libuv
-  sed -e 's#PKG_LIBS = ./$(LIBUV)/.libs/libuv.a#PKG_LIBS = -luv#' \
-      -e 's#-I./$(LIBUV)/include ##' \
-      -e '/$(SHLIB):/d' \
-      -i "$_pkgname/src/Makevars"
+  patch -Np1 -i system-libuv.patch
 }
 
 build() {
