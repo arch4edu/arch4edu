@@ -1,0 +1,20 @@
+diff --git a/commonmark/src/Makevars b/commonmark/src/Makevars
+index 23ba950..7a1df04 100644
+--- a/commonmark/src/Makevars
++++ b/commonmark/src/Makevars
+@@ -12,13 +12,12 @@ LIBCMARK = cmark/cmark.o cmark/node.o cmark/iterator.o cmark/blocks.o cmark/inli
+ 	extensions/autolink.o extensions/core-extensions.o extensions/ext_scanners.o \
+ 	extensions/strikethrough.o extensions/table.o extensions/tagfilter.o extensions/tasklist.o
+ 
+-PKG_LIBS = -Lcmark -lstatcmark
++PKG_LIBS = -lcmark-gfm -lcmark-gfm-extensions
+ STATLIB = cmark/libstatcmark.a
+ 
+ # For development only
+-all: clean
+ 
+-$(SHLIB): $(STATLIB)
++$(SHLIB):
+ 
+ $(STATLIB): $(LIBCMARK)
+ 	$(AR) rcs $(STATLIB) $(LIBCMARK)

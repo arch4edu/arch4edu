@@ -7,8 +7,8 @@
 _pkgname=commonmark
 _pkgver=1.9.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=4
+pkgver=${_pkgver//-/.}
+pkgrel=6
 pkgdesc="High Performance CommonMark and Github Markdown Rendering in R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,16 +26,16 @@ optdepends=(
   r-testthat
   r-xml2
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a6c6a1c1bf0ee0cc0cde65ce2d577cfc')
-sha256sums=('6dd01a5a26c8d436486abf69c2f6ad0f8dd1c811f575c31983aeb4dbd376548f')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "system-cmark-gfm.patch")
+md5sums=('a6c6a1c1bf0ee0cc0cde65ce2d577cfc'
+         '31357c9e94c77a617485e752ead93868')
+sha256sums=('6dd01a5a26c8d436486abf69c2f6ad0f8dd1c811f575c31983aeb4dbd376548f'
+            'd2360beb79eeee5fcb34e468704aa9af1c98c6effbe2cadafde4f32a6d6fab86')
 
 prepare() {
   # build against system cmark-gfm
-  sed -e 's/-Lcmark -lstatcmark/-lcmark-gfm -lcmark-gfm-extensions/' \
-      -e 's/$(SHLIB): $(STATLIB)/$(SHLIB):/' \
-      -e '/all: clean/d' \
-      -i "$_pkgname/src/Makevars"
+  patch -Np1 -i system-cmark-gfm.patch
 }
 
 build() {
