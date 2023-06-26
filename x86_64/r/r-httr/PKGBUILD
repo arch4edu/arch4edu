@@ -3,7 +3,7 @@
 
 _pkgname=httr
 pkgname=r-$_pkgname
-pkgver=1.4.5
+pkgver=1.4.6
 pkgrel=1
 pkgdesc='Useful tools for working with HTTP organised by HTTP verbs (GET(), POST(), etc). Configuration functions make it easy to control additional request components'
 arch=('any')
@@ -13,7 +13,7 @@ depends=('r' 'r-curl' 'r-jsonlite' 'r-mime' 'r-openssl' 'r-r6')
 makedepends=('r-testthat')
 optdepends=('r-covr' 'r-httpuv' 'r-jpeg' 'r-knitr' 'r-png' 'r-readr' 'r-xml2' 'r-rmarkdown')
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_$pkgver.tar.gz")
-sha512sums=('e836e9b08edbde1fe05cc25417be1bcaecfaf1ce20f8858b49c22a5c449b8a658511eeb50f10d84881d95fec44d68423305401dfeb7d8ab2fa35c3e1f840a071')
+sha512sums=('bb5c4d2fb9a96187a8bd16338e50f66c5e88300f87b30283a365f0b5b55404eba18a9e68a89cb04d6e4e58e13a0e16372f00ca8ea8cb9aced90821417296d1bd')
 
 build(){
     R CMD INSTALL ${_pkgname}_$pkgver.tar.gz -l "$srcdir"
