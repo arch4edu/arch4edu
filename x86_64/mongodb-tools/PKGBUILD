@@ -5,7 +5,7 @@
 # Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=mongodb-tools
-pkgver=100.7.2
+pkgver=100.7.3
 pkgrel=1
 epoch=1
 pkgdesc="Import, export, and diagnostic tools for MongoDB"
@@ -15,7 +15,7 @@ license=('Apache')
 depends=('glibc' 'krb5')
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/mongodb/mongo-tools/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('6128d1e44536b7bc6b86ce3ea15872e937fa0237e5b57ae98cbfab2a318af09b')
+sha256sums=('e3197849430f08e68a39c961e087d4e3f5b0c624b3a4c454c4b492703ee1092b')
 
 prepare() {
   # Patch version check for release
