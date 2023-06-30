@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=jsonlite
-_pkgver=1.8.5
+_pkgver=1.8.7
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=5
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="A Simple and Robust JSON Parser and Generator for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -27,8 +27,8 @@ optdepends=(
   r-vctrs
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6c49fda00ace69deda82998c0b97427d')
-sha256sums=('dc3cca4bdca1b6d6836c412760ea9656140683126c54cb89c3e42219dec4a3ad')
+md5sums=('5037941afb9ace65fa180d8a44d86b43')
+sha256sums=('7d42b7784b72d728698ea02b97818df51e2015ffa39fec2eaa2400771b0f601c')
 
 build() {
   mkdir -p build
