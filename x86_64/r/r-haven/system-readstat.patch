@@ -1,0 +1,14 @@
+diff --git a/haven/src/Makevars.in b/haven/src/Makevars.in
+index 27c35b6..f805d61 100644
+--- a/haven/src/Makevars.in
++++ b/haven/src/Makevars.in
+@@ -4,8 +4,5 @@ CPPFILES = $(wildcard *.cpp)
+ SOURCES = $(CFILES) $(CPPFILES)
+ 
+ # This must be defined identically in Makevars.win
+-OBJECTS = $(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
+ 
+-PKG_CFLAGS = @cflags@ -Ireadstat -DHAVE_ZLIB
+-PKG_CXXFLAGS = @cflags@ -Ireadstat -DHAVE_ZLIB
+-PKG_LIBS = @libs@
++PKG_LIBS = -lreadstat
