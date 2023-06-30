@@ -3,7 +3,7 @@
 pkgname=openboard
 pkgver=1.6.4
 _src_folder="OpenBoard-${pkgver}"
-pkgrel=6
+pkgrel=7
 pkgdesc="Interactive whiteboard software for schools and universities"
 arch=('x86_64' 'i686')
 url="http://openboard.ch/index.en.html"
@@ -57,3 +57,4 @@ package() {
   install -dm755 "$pkgdir"/usr/bin/
   ln -s /opt/openboard/OpenBoard "$pkgdir"/usr/bin/openboard
 }
+makedepends+=("icu")
