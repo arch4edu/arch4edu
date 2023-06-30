@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=logspline
-_pkgver=2.1.19
+_pkgver=2.1.20
 pkgname=r-${_pkgname,,}
-pkgver=2.1.19
+pkgver=2.1.20
 pkgrel=1
 pkgdesc='Routines for Logspline Density Estimation'
 arch=('x86_64')
@@ -16,7 +16,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('37219e6edfdee59d8edee96ca1cb97902905ae049a7a921fbab2e162ad654794')
+sha256sums=('8bbd4b5126b597fb274be83b89ce0ff8bf0b3145649e0ea4130f27a8d37f59db')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
