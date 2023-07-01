@@ -1,5 +1,5 @@
-# system requirements: cairo, freetype2, fontconfig
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Robert Greener <me@r0bert.dev>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: portaloffreedom
@@ -7,17 +7,15 @@
 _pkgname=gdtools
 _pkgver=0.3.3
 pkgname=r-${_pkgname,,}
-pkgver=0.3.3
-pkgrel=3
-pkgdesc='Utilities for Graphical Rendering'
-arch=('x86_64')
+pkgver=${_pkgver//-/.}
+pkgrel=5
+pkgdesc="Utilities for Graphical Rendering and Fonts Management"
+arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL3)
 depends=(
   cairo
-  fontconfig
   freetype2
-  r
   r-curl
   r-fontquiver
   r-gfonts
@@ -25,19 +23,27 @@ depends=(
   r-rcpp
   r-systemfonts
 )
+checkdepends=(
+  r-testthat
+)
 optdepends=(
-  r-methods
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('3e41f8aef071adfe58e259e20b485be9')
 sha256sums=('da5a189841475b1d69c94a30ff834eb44560c69e6c0ec0a257006e1f59e83483')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
