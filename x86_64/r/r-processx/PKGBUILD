@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=processx
-_pkgver=3.8.1
+_pkgver=3.8.2
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=6
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Execute and Control System Processes"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,8 +28,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('bd1a39f2e4034d5f455217459fd65daa')
-sha256sums=('e008472b81d4ca1a37a4ba7dd58e5e944f96ab2e44c8ccc8840d43e9fe99e93c')
+md5sums=('d353baed9a1e0a6c4355e4a6df0b4574')
+sha256sums=('e91b87af5b23c14b71003ec880f749dca81fd74f0601ab59ea1847c7fe857ecd')
 
 build() {
   mkdir -p build
