@@ -4,13 +4,14 @@
 pkgname=python-smart_open
 _pkgname=smart_open
 pkgver=6.3.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Library for efficient streaming of very large files from/to S3, HDFS, WebHDFS, HTTP, or local (compressed) files"
 arch=('any')
 license=('MIT')
 url="https://github.com/RaRe-Technologies/smart_open"
-depends=('python-boto3')
-optdepends=("python-bz2file: Handling bz2 files"
+depends=()
+optdepends=("python-boto3: AWS support"
+	"python-bz2file: Handling bz2 files"
 	"python-requests: HTTP support"
 	"python-paramiko: SSH support")
 makedepends=('python-setuptools')
