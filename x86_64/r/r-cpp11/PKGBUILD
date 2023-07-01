@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=cpp11
-_pkgver=0.4.3
+_pkgver=0.4.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="A C++11 Interface for R's C Interface"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -44,8 +44,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('af41a95ad71f4179f680c8e3138d5ba5')
-sha256sums=('f1a60e4971a86dbbcf6a16bbd739b59bb66d9c45d93cfd8dedc2a87e302598f1')
+md5sums=('54ceb5f689b02034e1e3153ec6df7dcc')
+sha256sums=('7256d56add317b40251e4389dba4037bfa587a024cdee00027be0fae5a898681')
 
 build() {
   mkdir -p build
