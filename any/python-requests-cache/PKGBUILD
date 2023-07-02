@@ -8,13 +8,13 @@
 _base=requests-cache
 pkgname=python-${_base}
 pkgdesc="A persistent cache for python requests"
-pkgver=1.0.1
-pkgrel=3
+pkgver=1.1.0
+pkgrel=1
 arch=(any)
 url="https://github.com/${_base}/${_base}"
 license=('custom:BSD-2-clause')
 depends=(python-requests python-cattrs python-platformdirs python-url-normalize)
-makedepends=(python-poetry-core python-build python-installer python-wheel)
+makedepends=(python-build python-installer python-poetry-core python-wheel)
 optdepends=('python-boto3: Cache backend for Amazon DynamoDB database'
   'python-botocore: Interface for Amazon Web Services'
   'python-pymongo: Cache backend for MongoDB database'
@@ -24,9 +24,10 @@ optdepends=('python-boto3: Cache backend for Amazon DynamoDB database'
   'python-yaml: for bindings yaml support'
   'python-ujson: for JSON serializer for improved performance'
 )
-checkdepends=(python-pytest python-requests-mock python-responses python-itsdangerous python-ujson python-timeout-decorator python-rich)
+checkdepends=(python-pytest python-requests-mock python-responses python-timeout-decorator
+  python-time-machine python-rich python-ujson python-itsdangerous)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('ec5788e31f60fd95e575d01af1163f981757972db6557d7a62da2ca0719e84262cf66cdd9b40c73cca540b92d6b7f6beba1aa42bedba528734c61edf5013ec3d')
+sha512sums=('8fa9fdf4f47d67a6ad877fc181e04378b4540b35cef200735caff14e4907519aa5de74acaf61c6588856d5c8b2f9529768250a8e5fe28962b7861daf2279bb94')
 
 build() {
   cd ${_base}-${pkgver}
@@ -38,7 +39,6 @@ build() {
 
 check() {
   cd ${_base}-${pkgver}
-  # https://bugs.archlinux.org/task/75188
   python -m pytest --ignore=tests/integration
 }
 
