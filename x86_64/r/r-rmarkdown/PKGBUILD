@@ -7,10 +7,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=rmarkdown
-_pkgver=2.22
+_pkgver=2.23
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=5
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Dynamic Documents for R"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -38,6 +38,7 @@ checkdepends=(
   texlive-latexextra
 )
 optdepends=(
+  r-cleanrmd
   r-digest
   r-downlit
   r-dygraphs
@@ -52,8 +53,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('28f72cac8b8b3c646f5cbaf1c195178a')
-sha256sums=('c6635519503e0fcdd518696d3ac96d8d28d9d4ecd9db0532c53426002f6387b8')
+md5sums=('bfc71ab439b3f619329568cce6f6b91b')
+sha256sums=('668d086f0ca597ef6f665b471f19b176be45971828b74ec8c25c3a46947bc825')
 
 prepare() {
   # Skip a test that might fail depending on environment
