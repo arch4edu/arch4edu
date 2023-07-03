@@ -1,16 +1,12 @@
 nvchecker:
   - source: aur
     aur:
-makedepends:
-  - x86_64/gcc11
-  - x86_64/gcc11: gcc11-libs
 group: x86_64
 build_prefix: extra-x86_64
 makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build
   sed 's/_build_opt=1/_build_opt=0/' -i PKGBUILD
-  sed 's|/opt/cuda/bin/gcc|gcc-11|' -i PKGBUILD
   echo 'export TF_ROCM_AMDGPU_TARGETS=gfx906,gfx1030,gfx908,gfx90a' >> PKGBUILD
   sudo rm -rf /mnt/tmp
   sudo mkdir -p /mnt/tmp
