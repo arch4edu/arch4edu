@@ -4,7 +4,7 @@ nvchecker:
 makedepends:
   - x86_64/gcc11
   - x86_64/gcc11: gcc11-libs
-roup: x86_64
+group: x86_64
 build_prefix: extra-x86_64
 makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
