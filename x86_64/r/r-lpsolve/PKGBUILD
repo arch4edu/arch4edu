@@ -5,7 +5,7 @@ _pkgname=lpSolve
 _pkgver=5.6.18
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Interface to 'Lp_solve' v. 5.5 to Solve Linear/Integer Programs"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,6 +24,7 @@ sha256sums=('751e1926fcd81b852b6c0d5ea7ecd9311ef6fbdbce9143b7872fea79590de712'
 prepare() {
   # build against system lpsolve
   patch -Np1 -i system-lpsolve.patch
+  rm "$_pkgname"/src/*.h
 }
 
 build() {
