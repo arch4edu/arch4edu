@@ -2,9 +2,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.7.4
+_pkgver=1.7.4.1
 pkgname=r-${_pkgname,,}
-pkgver=1.7.4
+pkgver=1.7.4.1
 pkgrel=1
 pkgdesc='Web Application Framework for R'
 arch=('any')
@@ -51,7 +51,7 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bbfcdd7375013b8f59248b3f3f4e752acd445feb25179f3f7f65cd69614da4b5')
+sha256sums=('264359a4de30b0c95b98f56143a36649cd3e27e54145bcbe19a37728ca94251f')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
