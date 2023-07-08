@@ -1,37 +1,42 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=textshaping
-_cranver=0.3.6
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=2
+_pkgname=textshaping
+_pkgver=0.3.6
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=7
 pkgdesc="Bindings to the 'HarfBuzz' and 'Fribidi' Libraries for Text Shaping"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
+arch=(x86_64)
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(MIT)
 depends=(
-    freetype2
-    harfbuzz
-    fribidi
-    r-systemfonts
+  freetype2
+  fribidi
+  harfbuzz
+  r-systemfonts
 )
-makedepends=(r-cpp11)
-optdepends=(r-covr r-knitr r-rmarkdown)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz"
-        "CRAN-MIT-TEMPLATE::https://cran.r-project.org/web/licenses/MIT")
-sha256sums=('80e2c087962f55ce2811fbc798b09f5638c06c6b28c10cd3cb3827005b902ada'
-            'e76e4aad5d3d9d606db6f8c460311b6424ebadfce13f5322e9bae9d49cc6090b')
+makedepends=(
+  r-cpp11
+)
+optdepends=(
+  r-covr
+  r-knitr
+  r-rmarkdown
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('aa719e7479b76e990775e65bf0173e22')
+sha256sums=('80e2c087962f55ce2811fbc798b09f5638c06c6b28c10cd3cb3827005b902ada')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-
-  install -Dm644 CRAN-MIT-TEMPLATE "${pkgdir}/usr/share/licenses/${pkgname}/MIT"
-  install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
