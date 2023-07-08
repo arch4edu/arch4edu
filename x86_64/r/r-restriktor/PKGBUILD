@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=restriktor
-_pkgver=0.5-10
+_pkgver=0.5-20
 pkgname=r-${_pkgname,,}
-pkgver=0.5.10
+pkgver=0.5.20
 pkgrel=1
 pkgdesc='Restricted Statistical Estimation and Inference for Linear Models'
 arch=('any')
@@ -19,7 +19,7 @@ depends=(
   r-quadprog
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('96149cc35eb2d8cfb8eb6072b4d87b305906579f40eecbf27c313114e201d9be')
+sha256sums=('b43386d44da5938cfbc8b9c94256dcaa504bc1442b85bd32cdf7027e623c1091')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
