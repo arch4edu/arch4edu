@@ -4,8 +4,8 @@
 
 pkgbase=opencv3-opt
 pkgname=($pkgbase $pkgbase-samples)
-pkgver=3.4.19
-pkgrel=2
+pkgver=3.4.20
+pkgrel=1
 pkgdesc="Open Source Computer Vision Library (Legacy Version & /opt directory version)"
 arch=(x86_64)
 license=(BSD)
@@ -21,14 +21,11 @@ optdepends=('opencv-samples: samples'
 source=(
 "opencv-$pkgver.tar.gz::https://github.com/opencv/opencv/archive/$pkgver.zip"
 "opencv_contrib-$pkgver.tar.gz::https://github.com/opencv/opencv_contrib/archive/$pkgver.tar.gz"
-"opencv-tbb.patch::https://raw.githubusercontent.com/DrAtomic/opencv-tbb-patch/main/opencv-tbb.patch"
 )
-sha256sums=('9ed59b3939196621253ccc4fcd31f03ae3135fc7f2ff658e9965f3b72b5aa93a'
-            '4e7426f1d0f8dffafa5fe70b72ab33997d0055c7804d7d2760c7ff0a153efb38'
-            'e604f6effe0b2aacd19ad5e11544589f76ffed816036964963984ab8912266f0')
+sha256sums=('82098bd221d18aa75a01b0ee91eca146c5868107306709721257330da54f0074'
+            'b0bb3fa7ae4ac00926b83d4d95c6500c2f7af542f8ec78d0f01b2961a690d5dc')
 
 prepare() {
-  patch -d opencv-$pkgver -p1 < opencv-tbb.patch # Fix build tbb
   mkdir -p build
 }
 
