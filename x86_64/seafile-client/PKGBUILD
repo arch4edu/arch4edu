@@ -4,9 +4,8 @@
 # Contributor: Edvinas Valatka <edacval@gmail.com>
 
 pkgname=seafile-client
-pkgver=9.0.2
-_pkgver="$pkgver-1"
-pkgrel=2
+pkgver=9.0.3
+pkgrel=1
 pkgdesc='GUI client for synchronizing your local files with seafile server'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
 url="https://github.com/haiwen/$pkgname"
@@ -20,21 +19,21 @@ depends=(
 optdepends=('gtk-update-icon-cache')
 makedepends=('cmake' 'qt6-tools')
 source=(
-    "$pkgname-$_pkgver.tar.gz::$url/archive/v$_pkgver.tar.gz"
+    "$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
     'fix_build_with_QT6.diff'
 )
 sha256sums=(
-    '5f3b616cdc4e527986fed220f5640b647c6c05215254c6070b70ed73a08c801b'
+    'b51a26961aaec1646fe5f0bdddb5ba95552da4e663a9c64b5c5834dc94e2d87e'
     '5fc54daff54d3ea4e263aea6c23b8c812fe5287e487a56bbf05cf935dd149229'
 )
 
 prepare() {
-    cd "$srcdir/$pkgname-$_pkgver"
+    cd "$srcdir/$pkgname-$pkgver"
     patch -p1 -i "$srcdir/fix_build_with_QT6.diff"
 }
 
 build() {
-    cmake -B build -S "$srcdir/$pkgname-$_pkgver" \
+    cmake -B build -S "$srcdir/$pkgname-$pkgver" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX='/usr' \
         -DBUILD_SHIBBOLETH_SUPPORT=ON
