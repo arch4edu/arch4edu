@@ -7,13 +7,13 @@
 # Contributor: Carlos Aznarán <caznaranl@uni.pe>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2212
+# /opt/OpenFOAM/OpenFOAM-v2306
 
 pkgname=openfoam-com
-pkgver=v2212
+pkgver=v2306
 _distname=OpenFOAM
 _dist=$_distname-$pkgver
-pkgrel=3
+pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=('i686' 'x86_64')
 url="http://www.openfoam.com"
@@ -21,11 +21,9 @@ license=('GPL3')
 install="${pkgname}.install"
 depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
 
-source=('https://sourceforge.net/projects/openfoam/files/v2212/OpenFOAM-v2212.tgz'
-  gcc-13-compatibility.patch::https://develop.openfoam.com/Development/openfoam/-/commit/70451e680cd0987c8220a0276bba4ce6bba58e9e.patch)
+source=('https://dl.openfoam.com/source/v2306/OpenFOAM-v2306.tgz')
 
-md5sums=('889c9a2169c0b6911050de149a5b459b'
-  '686c135b63e923de449763cf5f1ea6e9')
+md5sums=('236c87f9ba7640a0b3fd78171f50158a')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]
@@ -57,12 +55,6 @@ export WM_MPLIB=SYSTEMOPENMPI
     -scotch scotch-system \
     -paraview paraview-system \
     ;
-
-    # check this for next update!
-    # https://develop.openfoam.com/Development/openfoam/-/issues/2714
-    # gcc-13-compatibilty
-    cd "$projectDir"
-    patch -p1 -i ../gcc-13-compatibility.patch
 }
 
 build() {
@@ -79,9 +71,6 @@ build() {
       echo "No $projectDir/etc/bashrc found"
       return 1
   }
-
-  # bugfix OpenFOAM-v2212
-  sed -i 's!#include "CGAL/Robust_circumcenter_filtered_traits_3.h"!#include "CGAL/Robust_weighted_circumcenter_filtered_traits_3.h"!g' $projectDir/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H
 
   # changes to avoid linking problems related to gcc 11
   # check this for the next upgrade!
@@ -157,19 +146,6 @@ package() {
 
   [ -e "${projectDir}"/ThirdParty ] || \
       echo "system dependencies" >| "${projectDir}"/ThirdParty
-
-#  # Install shell-session script. Could be via post-install
-#  session="/usr/bin/openfoam${pkgver#v}"
-#  wrapper="$projectDir/bin/tools/openfoam.in"
-#
-#  if [ -f "$wrapper" ]
-#  then
-#      echo "Create $session"
-#      sed -e "s#@PROJECT_DIR@#${projectDir}#" "$wrapper" >| "$session"
-#      chmod 0755 "$session"
-#  else
-#      echo "No method to create $session for openfoam${pkgver#v}"
-#  fi
 
   # create aliases
   echo "alias of='source /opt/${_distname}/${_dist}/etc/bashrc'" >> "${pkgdir}/etc/profile.d/openfoam-com.sh"
