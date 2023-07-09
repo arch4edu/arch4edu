@@ -4,9 +4,8 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seafile
-pkgver=9.0.2
-_pkgver="$pkgver-1"
-pkgrel=2
+pkgver=9.0.3
+pkgrel=1
 pkgdesc='An online file storage and collaboration tool'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
 url="https://github.com/haiwen/$pkgname"
@@ -24,22 +23,22 @@ makedepends=(
 )
 conflicts=('seafile-server')
 source=(
-    "seafile-$_pkgver.tar.gz::$url/archive/v$_pkgver.tar.gz"
+    "seafile-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
     "seaf-cli@.service"
 )
 sha256sums=(
-    '619dd87bcb3a2d1a8e3ce08ab53d73e622b7d5591d2ac33f719dd53c82e8467b'
+    '287812758771d698b7bff9ffe50de9c35b9760fb008a5e971ab2ce824c7d2ec6'
     'c37510109c1de64c774896df39aece240c056b54414d2119fca01860211156ba'
 )
 provides=('seafile-client-cli')
 
 prepare() {
-    cd "$srcdir/seafile-$_pkgver"
+    cd "$srcdir/seafile-$pkgver"
     sed -i 's|(DESTDIR)@prefix@|@prefix@|' './lib/libseafile.pc.in'
 }
 
 build() {
-    cd "$srcdir/seafile-$_pkgver"
+    cd "$srcdir/seafile-$pkgver"
     ./autogen.sh
     ./configure \
         --enable-console \
@@ -49,7 +48,7 @@ build() {
 }
 
 package() {
-    cd "$srcdir/seafile-$_pkgver"
+    cd "$srcdir/seafile-$pkgver"
     make DESTDIR="$pkgdir" install
 
     install -Dm644 \
