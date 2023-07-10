@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgload
-_cranver=1.3.2
+_cranver=1.3.2.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Simulate Package Installation and Attach"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -53,7 +53,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("a6113732d047812744902e6fed558b6f7301dd27a970509ec30990853f4bfa9e46e9fd55be3314f8d70e4ddd481f09f0186f8a0f0c85d90bbc8231750443bbf3")
+b2sums=("ecb25929696c2714d91391040038301d3626d8f570ace6cba5ffa993e7d3860482af45000c9d7139517dc60104ad95e59d7fa648f61207ee4a3e9cb43384f15b")
 
 build() {
     mkdir -p "${srcdir}/build/"
