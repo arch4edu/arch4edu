@@ -3,7 +3,7 @@
 pkgname=vvc-vtm
 _gitname=VVCSoftware_VTM
 _short=VTM
-pkgver=20.2
+pkgver=21.0
 pkgrel=1
 pkgdesc='VTM reference software for VVC (H.266)'
 url="https://vcgit.hhi.fraunhofer.de/jvet/${_gitname}"
@@ -12,7 +12,7 @@ license=('BSD')
 depends=('gcc-libs')
 makedepends=('cmake' 'lsb-release' 'python')
 source=("${url}/-/archive/${_short}-${pkgver}/${_gitname}-${_short}-${pkgver}.tar.gz")
-b2sums=('c9042144892fb85ed875c9a3c5d3cc924c2c848bd57f24cf90b2ff89454c36ecc328dc711dec17b456899c3d9c531beeee56c31c8cdb2c0853c9ee0dfa1aaf8b')
+b2sums=('424a1ca4487167b4cdbf1e5e0a259fc8475b408ac4800db8d8491d1ca42530a47ea00f22f74d2a05fd2bffabf3ca9162055618fea0af532f1533c1cf6ec3e3b2')
 
 prepare() {
     cd "${_gitname}-${_short}-${pkgver}"
