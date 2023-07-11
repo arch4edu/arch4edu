@@ -3,7 +3,7 @@
 pkgname=openface
 _pkgname=OpenFace
 pkgver=2.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A state-of-the art tool intended for facial landmark detection, head pose estimation, facial action unit recognition, and eye-gaze estimation"
 arch=('x86_64')
 url="https://github.com/TadasBaltrusaitis/${_pkgname}"
