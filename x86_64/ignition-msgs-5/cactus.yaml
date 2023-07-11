@@ -1,6 +1,10 @@
 nvchecker:
   - source: aur
     aur:
+  - source: archpkg
+    archpkg: protobuf
+    from_pattern: '-.*'
+    to_pattern: ''
 depends:
   - x86_64/ignition-math-6
   - x86_64/ignition-tools-1
