@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
-pkgver=0.12.1
+pkgver=0.12.2
 pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
@@ -38,7 +38,7 @@ source=(
     "${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz"
     "fix.patch"
 )
-b2sums=('48e33054714a964589bc7500ad9853bb7aa64aa82288200c955ac82ed453d0a294a025fda43021b12ea6d45e82303f93544709bdf15e6570b2131fc5300ffec6'
+b2sums=('c7f12c9b8f53a9031844e123b8ef6d723e0099be028c5cfba03143fb8b3c7269768ade99d3ef3b4b82c0b36756bf8e82971a3f70c0f5735891eb77a78a6d9512'
         '5523350559706d94f6eeb169360759d32bfd1dec8384948bfb04823eec6440e03377860ae53dc6ba3e7a9a087f0429d9f9bb4a4c3d7c523e713f5e6b34c20dc9')
 
 prepare() {
