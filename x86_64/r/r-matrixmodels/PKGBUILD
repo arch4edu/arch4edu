@@ -8,8 +8,8 @@
 _pkgname=MatrixModels
 _pkgver=0.5-1
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="Modelling with Sparse and Dense Matrices"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
