@@ -3,7 +3,7 @@
 
 pkgname=python-xyzservices
 _name=xyzservices
-pkgver=2023.5.0
+pkgver=2023.7.0
 pkgrel=1
 pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles'
 arch=('x86_64')
@@ -17,7 +17,7 @@ makedepends=(
   'python-installer'
 )
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-b2sums=('0bec019dd881ff7c4ec47a866883bd9f1339499d4bedc98dc087e3b8fb4cf56d1827f137eadd074f23e206f66be48b0e402391ea85291cb55f81e3dee6f4e0de')
+b2sums=('1d758c9781c02744d580324fd34d3f7f7321645ffa39f7ef33a68606c30c9bf0fd1e9c59818417cb4cfdaea3f0b6f5bd110f3aac3b0c2fdb45a9626f062935b0')
 
 build() {
   cd "$_name-$pkgver"
@@ -27,6 +27,6 @@ build() {
 package() {
   cd "$_name-$pkgver"
   python -m installer --destdir="$pkgdir" dist/*.whl
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/python-$_name/LICENSE"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 makedepends+=("python-setuptools")
