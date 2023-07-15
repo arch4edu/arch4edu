@@ -1,17 +1,24 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Alex Branham <branham@utexas.edu>
+# Contributor: fordprefect <fordprefect@dukun.de>
 
-_cranname=bit
-_cranver=4.0.5
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//-/.}
-pkgrel=1
+_pkgname=bit
+_pkgver=4.0.5
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Classes and Methods for Fast Memory-Efficient Boolean Selections"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
+arch=(x86_64)
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(GPL)
-depends=(r)
+depends=(
+  r
+)
+checkdepends=(
+  r-testthat
+)
 optdepends=(
   r-bit64
   r-ff
@@ -21,15 +28,21 @@ optdepends=(
   r-roxygen2
   r-testthat
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('df4e6215d31058ea2860fadc7a7c80f4')
 sha256sums=('f0f2536a8874b6a30b80baefbc68cb21f0ffbf51f3877bda8038c3f9f354bfbc')
 
 build() {
-  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
