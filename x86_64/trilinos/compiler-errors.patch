@@ -20,15 +20,3 @@ diff --color -urt Trilinos-trilinos-release-14-0-0.orig/packages/krino/krino/CMa
  
  SET(SOURCES_MAIN Apps_krino.cpp)
  
-diff --color -urt Trilinos-trilinos-release-14-0-0.orig/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp Trilinos-trilinos-release-14-0-0.new/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp
---- Trilinos-trilinos-release-14-0-0.orig/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp	2023-05-18 08:34:11.735903734 +0200
-+++ Trilinos-trilinos-release-14-0-0.new/packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp	2023-05-18 08:29:49.596832958 +0200
-@@ -43,7 +43,7 @@
- #define TEUCHOS_BIG_UINT_DECL_HPP
- 
- #include <iosfwd>
--
-+#include <cstdint>
- /*! \file Teuchos_BigUIntDecl.hpp
-     \brief Arbitrary-precision unsigned integer declaration.
- */

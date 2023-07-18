@@ -5,7 +5,7 @@
 # Contributor: Simon Pintarelli <simon.pintarelli@gmail.com>
 # Contributor: Feng Wang <wanng.fenng@gmail.com>
 pkgname=trilinos
-pkgver=14.0.0
+pkgver=14.2.0
 _pkgver=${pkgver//./-}
 pkgrel=1
 pkgdesc="algorithms for the solution of large-scale scientific problems"
@@ -18,8 +18,8 @@ provides=('trilinos-sacado' 'zoltan')
 checkdepends=('cmake')
 source=("https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-$_pkgver.tar.gz"
         'compiler-errors.patch')
-sha256sums=('054d2fabdf70fce0dfaeb20eed265bd7894045d3e00c3d1ddb72d1c77c339ca1'
-            '09546864a36ec83cfbedb29c97ead05778b4da370a84185565973f28f49f2880')
+sha256sums=('c96606e5cd7fc9d25b9dc20719cd388658520d7cbbd2b4de77a118440d1e0ccb'
+            'a75cf248121cb7284982075523f3e4eadcc799c9cc40ee9527330905e29bb3c3')
 
 prepare() {
   patch -d  Trilinos-trilinos-release-"$_pkgver" -p1 -i ../compiler-errors.patch
