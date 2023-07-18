@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=quantmod
-_pkgver=0.4.23
+_pkgver=0.4.24
 pkgname=r-${_pkgname,,}
-pkgver=0.4.23
+pkgver=0.4.24
 pkgrel=1
 pkgdesc='Quantitative Financial Modelling Framework'
 arch=('any')
@@ -26,7 +26,7 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4d7cb5cd1fec7f0daca617ea0dcb434ab83c376a512397f676ebc8502e9b504a')
+sha256sums=('28235d3d9668cee1f65a8a1cdc5869b1d22b49eb29b51441bdfd98394fd31203')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
