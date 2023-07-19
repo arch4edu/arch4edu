@@ -1,18 +1,18 @@
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=lifecycle
 _pkgver=1.0.3
 pkgname=r-${_pkgname,,}
-pkgver=1.0.3
-pkgrel=5
-pkgdesc='Manage the Life Cycle of your Package Functions'
-arch=('any')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="Manage the Life Cycle of your Package Functions"
+arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('MIT')
+license=(MIT)
 depends=(
-  r
   r-cli
   r-glue
   r-rlang
@@ -26,20 +26,22 @@ optdepends=(
   r-testthat
   r-tibble
   r-tidyverse
-  r-tools
   r-vctrs
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('023bff9f9b99ca56ed01b705a41a8bed')
 sha256sums=('6459fdc3211585c0cdf120427579c12149b02161efe273a64b825c05e9aa69c2')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
