@@ -2,12 +2,12 @@
 
 pkgname=('python-catkin_pkg')
 pkgver='0.5.2'
-pkgrel=2
+pkgrel=3
 pkgdesc='Standalone Python library for the catkin package system'
 arch=('any')
 url='https://github.com/ros-infrastructure/catkin_pkg'
 license=('BSD')
-depends=('python' 'python-argparse' 'python-dateutil' 'python-docutils' 'python-pyparsing')
+depends=('python' 'python-dateutil' 'python-docutils' 'python-pyparsing' 'python-setuptools')
 makedepends=('python-setuptools')
 provides=('python-catkin-pkg')
 conflicts=('python2-catkin_pkg' 'python-catkin-pkg')
