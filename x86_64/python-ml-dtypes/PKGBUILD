@@ -3,7 +3,7 @@
 pkgname='python-ml-dtypes'
 _pkgname=${pkgname#python-}
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='A stand-alone implementation of several NumPy dtype extensions used in ML.'
 arch=('aarch64' 'armv7h' 'x86_64')
 url='https://github.com/jax-ml/ml_dtypes'
@@ -22,7 +22,7 @@ source=("ml-dtypes-${pkgver}.tar.gz::https://github.com/jax-ml/ml_dtypes/archive
         'ml-dtypes.diff'
         "eigen-7bf2968.tar.gz::https://gitlab.com/libeigen/eigen/-/archive/7bf2968fed5f246c0589e1111004cb420fcd7c71/eigen-7bf2968.tar.gz")
 sha256sums=('cb38843a9802bad96d333de257edd68e834f5db0db812a6218589535bf56c3a3'
-            '79754f2860d80e094f17c03eb850fdf36c301cee19c1f0b6c675932f347b4e65'
+            'aadee17e4d410d7975ac49c4d02d07d2532ababf8af7ef7a9400fdb8365b109b'
             'beca76e4663a75ef3ff00b0704009a7a60cec3783ce3cada0b828982da87130b')
 
 prepare() {
