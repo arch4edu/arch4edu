@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=quantreg
-_pkgver=5.95
+_pkgver=5.96
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Quantile Regression"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -34,8 +34,8 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f9f4806d086cdc1bbcb37079c3abb68a')
-sha256sums=('4b05a81eceebbd927372cefdc4912dfa70b6dfcd96528489f78e125eb32a96cc')
+md5sums=('ff42ab9808fd4bff74c79cf1980d49da')
+sha256sums=('a2aa0638cdd626d8da0e573856177c4637841c6de143463a3fc0bbe268e6fd92')
 
 build() {
   mkdir -p build
