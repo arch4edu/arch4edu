@@ -4,9 +4,9 @@ pkgdesc="ROS - Messages and services for the controller manager."
 url='https://github.com/ros-controls/ros_control/wiki'
 
 pkgname='ros-noetic-controller-manager-msgs'
-pkgver='0.19.5'
+pkgver='0.19.6'
 arch=('any')
-pkgrel=3
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(ros-noetic-message-generation
@@ -21,7 +21,7 @@ depends=(${ros_depends[@]})
 
 _dir="ros_control-${pkgver}/controller_manager_msgs"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-controls/ros_control/archive/${pkgver}.tar.gz")
-sha256sums=('a9e031f7a4a448657f689971d8049351ec31776d15efac45c8c9b44b950f55b1')
+sha256sums=('9dc3db0ca726d4e862e2d25290f973b26578656935d17d896f2597e521545d98')
 
 build() {
   # Use ROS environment variables
