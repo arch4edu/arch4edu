@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=fs
-_pkgver=1.6.2
+_pkgver=1.6.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Cross-Platform File System Operations Based on 'libuv'"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,9 +30,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libuv.patch")
-md5sums=('3827672b1f4747ce6bd3a224a74a9f61'
+md5sums=('25dc9b509f6a8fba2718ffd2c691124a'
          'e9cd06be1a987fd1cdab9b577736bfe0')
-sha256sums=('548b7c0ed5ab26dc4fbd88707ae12987bcaef834dbc6de4e17d453846dc436b2'
+sha256sums=('fa82061e50d7a4d94b7e404f9f2b699e75ae8fbfb575fabdfc2c39f536c0f971'
             'd03eb4684d9e62ceb77292a10cb6b3e638140f9431b0625a8f8196e0dce14752')
 
 prepare() {
