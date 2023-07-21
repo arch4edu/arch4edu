@@ -11,7 +11,7 @@ _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
 pkgver=0.15.1
-pkgrel=5
+pkgrel=6
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -26,9 +26,6 @@ depends=(
   ffmpeg4.4
   libjpeg-turbo
   libpng
-)
-optdepends=(
-  'python-pycocotools: support for MS-COCO dataset'
 )
 makedepends=(
   cmake
@@ -65,13 +62,19 @@ build() {
   mkdir build
   cd build
 
-  # populate build architecture list if not set with defaults taken from
-  # arch:community:python-pytorch-rocm@1.13.1
+  # populate build architecture list if not set from arch:python-pytorch-rocm@2.0.1#7
   if test -n "$PYTORCH_ROCM_ARCH"; then
     export PYTORCH_ROCM_ARCH="$PYTORCH_ROCM_ARCH"
   else
-    export PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030"
+    export PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102"
   fi
+
+  # hardcode ROCM_PATH and HIP_ROOT_DIR to /opt/rocm (from arch:python-pytorch-rocm@2.0.1#7)
+  export ROCM_PATH=/opt/rocm
+  export HIP_ROOT_DIR=/opt/rocm
+  # fix bin/hipcc not found, because ROCM_HOME is lost
+  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
+  export ROCM_HOME=/opt/rocm
 
   cmake "../" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -82,11 +85,8 @@ build() {
     -DWITH_JPEG=ON
   make
 
-  # fix bin/hipcc not found, because ROCM_HOME is lost
-  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
   cd "${srcdir}/${_pkgname}-${pkgver}"
-  ROCM_HOME=/opt/rocm/ \
-    TORCHVISION_INCLUDE=${srcdir} \
+  TORCHVISION_INCLUDE=${srcdir} \
     TORCHVISION_LIBRARY=/usr/lib \
     TORCHVISION_USE_NVJPEG=0 \
     TORCHVISION_USE_VIDEO_CODEC=0 \
