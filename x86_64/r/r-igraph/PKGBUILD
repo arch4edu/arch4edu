@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=igraph
-_pkgver=1.5.0
+_pkgver=1.5.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Network Analysis and Visualization"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -51,9 +51,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "igraph-system-libs.patch")
-md5sums=('5e77d6cd9b04e72ceb0d51d2e5a232c8'
+md5sums=('9809e51f7a65bbb6ae45a480228a8d04'
          '34283a0a206240ab1f33f83d2526ffca')
-sha256sums=('d80778ff0fd0ee00a348c5d63b3b398b7467a1af49d85dc57fbee0a900fd7306'
+sha256sums=('a80a157ee290252f89c7c690654d82eadf72eba389d3100da26a5bf2eb0da3b4'
             '38731c656da7f1fe34a4d21c3e3dcae65592898ba81620b96cd27c7894539530')
 
 prepare() {
