@@ -8,7 +8,7 @@
 # Contributor: Sebastien Binet <binet@lblbox>
 _base=pip
 pkgname=pypy3-${_base}
-pkgver=23.2
+pkgver=23.2.1
 pkgrel=1
 pkgdesc="The PyPA recommended tool for installing Python packages"
 url="https://pip.pypa.io"
@@ -16,8 +16,8 @@ arch=(any)
 license=(MIT)
 depends=(pypy3 pypy3-setuptools)
 source=(https://github.com/pypa/${_base}/archive/${pkgver}/${_base}-${pkgver}.tar.gz)
-sha512sums=('fe915a8f85b21d59b416a5b1fad6e6ce2874b27e055c86ad71efe31c492f117a468734da239882c3d7f4678f91389daf0e8d13abc6429ddca5bfef87cb29dae0')
-b2sums=('dbce43e29ed453e32e13a6d2f18ba2d8095021de0073d13de18cb55b5410415d0feeb2610e31ae8a0025864e6d05eb41aab3dd8adeaecf990fa31e7284e71fa5')
+sha512sums=('a6c629976c332cffe5dff0ec1e201d694c7a42fa8def202ebf1db251a6dbd90091eaac89c36a354a0cf0c60cdb267b4e0ec9ff6a88b0ac61cfaafdf159e34fc8')
+b2sums=('9e7855aae371a773a070c24b50f985dac6ff7c2412d51e268368b911b92d0d0b52a839f9d761d5f6aaff33f1e7570d5f930e5063e8af98aa99f50d2f1c1b5ed2')
 
 build() {
   cd ${_base}-${pkgver}
