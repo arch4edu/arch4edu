@@ -2,7 +2,7 @@
 # Contributor: Excitable Snowball <excitablesnowball@gmail.com>
 
 pkgname=python-bokeh
-pkgver=3.2.0
+pkgver=3.2.1
 pkgrel=1
 pkgdesc='Interactive Web Plotting for Python'
 arch=('any')
@@ -12,7 +12,7 @@ source=(
   "https://pypi.io/packages/source/b/bokeh/bokeh-$pkgver.tar.gz"
 )
 sha256sums=(
-  'cdb3a8c3109d8d91a2814f4cddea045c14d049021f7fb6ce2a6b2c15e224bb17'
+  '2371e9a08fd60766879ee8607a4ae54267acfed1e5dee0cc6a20d8348e02e814'
 )
 depends=('python-jinja'
          'python-contourpy'
