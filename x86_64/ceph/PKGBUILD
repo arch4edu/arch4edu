@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgname=('ceph' 'ceph-libs' 'ceph-mgr')
 pkgver=17.2.6
-pkgrel=2
+pkgrel=3
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 arch=('x86_64')
 url='https://ceph.com/'
@@ -100,6 +100,13 @@ source=(
 
   # Fixes inspect.formatargspec errors in pylint2.6->wrapt due to removal in py3.11
   'ceph-17.2.6-mgr-dashboard-pylint-217.patch'
+
+  # Backports a cmake opt to allow us to use the bundled fmtlib rather than system
+  # Should be removed before v18
+  'ceph-17.2.6-backport-with-fmt-version.patch'
+
+  # Fixes a couple breaking changes from cython v3.0.0
+  'ceph-17.2.6-cython-fixes.patch'
 )
 sha512sums=('dca9aea2ce210c15fcc34cb06a5dc5b4488ffa36d684166d47ebd87e48b54b6fee0882e1c67007a780e1c25754e9bc6e760cc10f60ea1183263f8504ef2dbd9b'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
@@ -119,7 +126,9 @@ sha512sums=('dca9aea2ce210c15fcc34cb06a5dc5b4488ffa36d684166d47ebd87e48b54b6fee0
             '2971475ed43480802d6053e259e8540475b3da0d2a84edc9df05e822d51f31b25de450f387fb33e1f7034d3139e502e8da1b0b00ccbb066d01091055e880804b'
             'd9729c33f2b8c03ab918919e3b62cbc0825314ad09596dc12984ac5964f8b421db3376b84fa26e0952e0781deb218f8aff6ba32f9c8e5a22bd27afac8dcaf6d3'
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
-            'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782')
+            'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782'
+            '6b4d829c9ecacdc8fbbc6d36eb59bcd844544b728121f75101d5078fd87f6531aeafff5de636c325ebcb88eb0da49f9f62f947bf7d7db4be426ab8ddb02996f6'
+            '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1')
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
 # similar issue: https://bugs.archlinux.org/task/54845
@@ -211,6 +220,7 @@ build() {
     -DWITH_SYSTEM_ZSTD=ON \
     -DWITH_SYSTEM_GTEST=OFF \
     -DWITH_SYSTEM_NPM=OFF \
+    -DWITH_FMT_VERSION="9.0.0" \
     -DENABLE_SHARED=ON \
     -DWITH_TESTS=ON \
     -Wno-dev
