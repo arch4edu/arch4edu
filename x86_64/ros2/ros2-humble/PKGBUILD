@@ -10,7 +10,7 @@
 # package, maintained by T. Borgert.
 
 pkgname=ros2-humble
-pkgver=2023.06.14
+pkgver=2023.07.24
 pkgrel=1
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
@@ -26,9 +26,7 @@ makedepends=('git')
 source=(
     "ros2::git+https://github.com/ros2/ros2#tag=release-humble-${pkgver//.}"
 )
-sha256sums=(
-    'SKIP'
-)
+sha256sums=('SKIP')
 install=ros2-humble.install
 
 prepare() {
