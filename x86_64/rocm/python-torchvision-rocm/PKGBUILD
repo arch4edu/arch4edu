@@ -10,8 +10,8 @@
 _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.15.1
-pkgrel=6
+pkgver=0.15.2
+pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -39,7 +39,7 @@ source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
 )
 sha512sums=(
-  'd6c1f55684a6d08b3501c4c166268684fbe8753fc034f8db7ddc1ee39efcff2ec39ce864cd97b95b784eb08345b999a928d5431d8d66bec82dc6f32ffd18c3bb'
+  'b126d7204500ba84de010beca9c2c51d05071ad4a57f0230474bdcb011a999481b550343ccbd003a1359b6e63528232aa19a90f4003b139fc372d655a41b5007'
 )
 
 prepare() {
