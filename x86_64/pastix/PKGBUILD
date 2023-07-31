@@ -2,8 +2,8 @@
 # Contributor: Myles English <myles at tdma dot co>
 
 pkgname=pastix
-pkgver=6.2.2
-pkgrel=2
+pkgver=6.3.0
+pkgrel=1
 pkgdesc="High performance parallel solver for very large sparse linear systems based on direct methods"
 arch=('x86_64')
 url="https://gitlab.inria.fr/solverstack/pastix"
@@ -22,9 +22,6 @@ prepare() {
     cd "${pkgname}"
     patch -p2 < ../gitmodules.diff
     git submodule update --init --recursive
-
-    # fix for metis-5.1.0.p10-1 https://bugs.archlinux.org/task/70446
-    sed -i 's|LIBRARIES metis|LIBRARIES metis m|' cmake_modules/morse_cmake/modules/find/FindMETIS.cmake
 
     [ -d build ] && rm -rf build
     mkdir build
@@ -49,6 +46,9 @@ package() {
 
     # remove the env script (not necessary since we install into /usr which is searched by default)
     rm "${pkgdir}/usr/bin/pastix_env.sh"
+    # remove the completion script (useless since this package does not install anything in bin/)
+    rm "${pkgdir}/usr/bin/pastix_completion.sh"
+    # remove empty directory
     rmdir "${pkgdir}/usr/bin"
 
     # move examples into proper doc directory
