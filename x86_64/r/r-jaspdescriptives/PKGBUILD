@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspDescriptives
-_pkgver=0.17.2.1
+_pkgver=0.17.3
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.17.3
 pkgrel=1
 pkgdesc="Descriptives Module for JASP"
 arch=('any')
@@ -16,7 +16,7 @@ depends=(r
 'r-jaspgraphs'
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('75b319ad0a997e5a0ce7771fda47ff7bcfd9e642426a264e73a52cd30735f913')
+sha256sums=('9fd376569d1c2c449d2b70feb65ac2b0b66d2b20b1d65404cf93be03167a400e')
 
 
 build() {
