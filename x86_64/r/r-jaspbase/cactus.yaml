@@ -5,6 +5,7 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-gridextra
   - x86_64/r/r-gridgraphics
+  - x86_64/r/r-jaspgraphs
   - x86_64/r/r-jsonlite
   - x86_64/r/r-kknn
   - x86_64/r/r-modules
