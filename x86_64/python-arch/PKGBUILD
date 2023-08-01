@@ -2,7 +2,7 @@
 pkgname='python-arch'
 _module='arch'
 pkgver='6.1.0'
-pkgrel=1
+pkgrel=2
 pkgdesc="ARCH models in Python."
 url="https://pypi.python.org/pypi/arch"
 depends=('python-oldest-supported-numpy'
@@ -10,7 +10,7 @@ depends=('python-oldest-supported-numpy'
     'python-scipy'
     'python-statsmodels')
 checkdepends=('python-jupyter-client' 'python-pytest' 'python-matplotlib' 'jupyter-nbconvert' 'jupyter-nbformat' 'python-property-cached' 'python-seaborn')
-makedepends=('cython3' 'python-build' 'python-installer' 'python-setuptools' 'python-setuptools-scm' 'python-wheel')
+makedepends=('cython' 'python-build' 'python-installer' 'python-setuptools' 'python-setuptools-scm' 'python-wheel')
 license=('custom:University of Illinois/NCSA Open Source License')
 arch=('x86_64')
 source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_module::1}/$_module/$_module-${pkgver}.tar.gz")
