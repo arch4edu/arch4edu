@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspMixedModels
-_pkgver=0.17.2.1
+_pkgver=0.17.3
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.17.3
 pkgrel=1
 pkgdesc="Mixed Models Module for JASP"
 arch=('any')
@@ -23,7 +23,7 @@ depends=(r
   r-stanova
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('6b5c9ad622543b50b593ef49850db6e059dcd78478f54f6420eadce3220ed97a')
+sha256sums=('394ced24924202df13386d12a7b4424860660fbf26c3149fd59eae2d2fb80017')
 
 
 build() {
