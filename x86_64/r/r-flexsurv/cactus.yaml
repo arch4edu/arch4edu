@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-assertthat
+  - x86_64/r/r-desolve
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-generics
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-mstate
+  - x86_64/r/r-muhaz
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-purrr
+  - x86_64/r/r-quadprog
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rlang
+  - x86_64/r/r-rstpm2
+  - x86_64/r/r-statmod
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-tidyselect
+makedepends:
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,40 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-generics
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-globals
+  - x86_64/r/r-glue
+  - x86_64/r/r-hardhat
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-pillar
+  - x86_64/r/r-prettyunits
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rlang
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-vctrs
+  - x86_64/r/r-withr
+makedepends:
+  - x86_64/r/r-c50
+  - x86_64/r/r-dials
+  - x86_64/r/r-earth
+  - x86_64/r/r-flexsurv
+  - x86_64/r/r-keras
+  - x86_64/r/r-kernlab
+  - x86_64/r/r-kknn
+  - x86_64/r/r-liblinear
+  - x86_64/r/r-modeldata
+  - x86_64/r/r-partykit
+  - x86_64/r/r-ranger
+  - x86_64/r/r-tensorflow
+  - x86_64/r/r-testthat
+  - x86_64/r/r-xgboost
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

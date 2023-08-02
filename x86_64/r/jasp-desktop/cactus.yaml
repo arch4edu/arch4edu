@@ -30,6 +30,7 @@ depends:
   - x86_64/r/r-jaspreliability
   - x86_64/r/r-jaspsem
   - x86_64/r/r-jaspsummarystatistics
+  - x86_64/r/r-jasptimeseries
   - x86_64/r/r-jaspvisualmodeling
   - x86_64/r/r-jaspacceptancesampling
   - x86_64/r/r-jaspqualitycontrol

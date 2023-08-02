@@ -1,0 +1,27 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-clipr
+  - x86_64/r/r-crayon
+  - x86_64/r/r-curl
+  - x86_64/r/r-desc
+  - x86_64/r/r-fs
+  - x86_64/r/r-gert
+  - x86_64/r/r-gh
+  - x86_64/r/r-glue
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rappdirs
+  - x86_64/r/r-rlang
+  - x86_64/r/r-rprojroot
+  - x86_64/r/r-rstudioapi
+  - x86_64/r/r-whisker
+  - x86_64/r/r-withr
+  - x86_64/r/r-yaml
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

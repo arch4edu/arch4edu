@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-geometry
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-robustbase
+  - x86_64/r/r-sfsmisc
+makedepends:
+  - x86_64/r/r-bh
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

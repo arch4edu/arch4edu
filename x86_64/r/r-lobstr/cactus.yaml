@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-crayon
+  - x86_64/r/r-prettyunits
+  - x86_64/r/r-rlang
+makedepends:
+  - x86_64/r/r-cpp11
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

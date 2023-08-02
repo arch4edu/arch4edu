@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-generics
+  - x86_64/r/r-glue
+  - x86_64/r/r-hardhat
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-modelenv
+  - x86_64/r/r-parsnip
+  - x86_64/r/r-rlang
+  - x86_64/r/r-tidyselect
+  - x86_64/r/r-vctrs
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-curl
+  - x86_64/r/r-glue
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-openssl
+  - x86_64/r/r-r6
+  - x86_64/r/r-rappdirs
+  - x86_64/r/r-rlang
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

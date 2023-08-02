@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-blob
+  - x86_64/r/r-callr
+  - x86_64/r/r-dbi
+  - x86_64/r/r-desc
+  - x86_64/r/r-hms
+  - x86_64/r/r-lubridate
+  - x86_64/r/r-palmerpenguins
+  - x86_64/r/r-r6
+  - x86_64/r/r-rlang
+  - x86_64/r/r-testthat
+  - x86_64/r/r-vctrs
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
