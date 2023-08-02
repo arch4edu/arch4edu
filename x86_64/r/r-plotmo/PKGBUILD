@@ -1,0 +1,43 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=plotmo
+_pkgver=3.6.2
+pkgname=r-${_pkgname,,}
+pkgver=3.6.2
+pkgrel=3
+pkgdesc="Plot a Model's Residuals, Response, and Partial Dependence Plots"
+arch=('any')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+  r-formula
+  r-plotrix
+  r-teachingdemos
+)
+optdepends=(
+  r-c50
+  r-earth
+  r-gbm
+  r-glmnet
+  r-glmnetutils
+  r-mass
+  r-mlr
+  r-neuralnet
+  r-partykit
+  r-pre
+  r-rpart
+  r-rpart.plot
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('cde33a8ec558b12d8e11d7d0531e73f6678a25ee589b79897d2fc425a3fd353c')
+
+build() {
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+}
+# vim:set ts=2 sw=2 et:
