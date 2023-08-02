@@ -1,0 +1,44 @@
+diff --git a/NAMESPACE b/NAMESPACE
+index 6f2d21e4..cde11ac7 100644
+--- a/NAMESPACE
++++ b/NAMESPACE
+@@ -44,6 +44,7 @@ S3method(conditionCall,python.builtin.BaseException)
+ S3method(conditionMessage,python.builtin.BaseException)
+ S3method(dim,pandas.core.frame.DataFrame)
+ S3method(dim,pandas.core.series.Series)
++S3method(dim,scipy.sparse._base._spbase)
+ S3method(dim,scipy.sparse._base.spmatrix)
+ S3method(dim,scipy.sparse.base.spmatrix)
+ S3method(format,py_config)
+@@ -56,6 +57,7 @@ S3method(length,python.builtin.dict)
+ S3method(length,python.builtin.list)
+ S3method(length,python.builtin.object)
+ S3method(length,python.builtin.tuple)
++S3method(length,scipy.sparse._base._spbase)
+ S3method(length,scipy.sparse._base.spmatrix)
+ S3method(length,scipy.sparse.base.spmatrix)
+ S3method(names,python.builtin.module)
+@@ -97,6 +99,7 @@ S3method(py_to_r,scipy.sparse._base.spmatrix)
+ S3method(py_to_r,scipy.sparse._coo.coo_matrix)
+ S3method(py_to_r,scipy.sparse._csc.csc_matrix)
+ S3method(py_to_r,scipy.sparse._csr.csr_matrix)
++S3method(py_to_r,scipy.sparse._matrix.spmatrix)
+ S3method(py_to_r,scipy.sparse.base.spmatrix)
+ S3method(py_to_r,scipy.sparse.coo.coo_matrix)
+ S3method(py_to_r,scipy.sparse.csc.csc_matrix)
+diff --git a/R/conversion.R b/R/conversion.R
+index e819223c..e2d47ec6 100644
+--- a/R/conversion.R
++++ b/R/conversion.R
+@@ -646,3 +646,11 @@ py_to_r.scipy.sparse._csc.csc_matrix <- py_to_r.scipy.sparse.csc.csc_matrix
+ py_to_r.scipy.sparse._csr.csr_matrix <- py_to_r.scipy.sparse.csr.csr_matrix
+ #' @export
+ py_to_r.scipy.sparse._coo.coo_matrix <- py_to_r.scipy.sparse.coo.coo_matrix
++
++# updated locations for scipy 1.11.0
++#' @export
++dim.scipy.sparse._base._spbase <- dim.scipy.sparse.base.spmatrix
++#' @export
++length.scipy.sparse._base._spbase <- length.scipy.sparse.base.spmatrix
++#' @export
++py_to_r.scipy.sparse._matrix.spmatrix <- py_to_r.scipy.sparse.base.spmatrix
