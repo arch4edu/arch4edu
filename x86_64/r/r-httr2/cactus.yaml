@@ -13,5 +13,7 @@ depends:
   - x86_64/r/r-withr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  echo 'source=(https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz)' >> PKGBUILD
 post_build: aur-post-build
