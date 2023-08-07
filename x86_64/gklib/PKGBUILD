@@ -2,12 +2,12 @@
 _base=GKlib
 pkgname=${_base,,}
 pkgver=5.1.1
-pkgrel=3
+pkgrel=4
 pkgdesc="A library of various helper routines and frameworks used by many of the lab's software"
 arch=(x86_64)
 url="https://github.com/KarypisLab/${_base}"
 license=(Apache)
-depends=(pcre) # openmp
+depends=(glibc) # openmp
 makedepends=(cmake)
 source=(${url}/archive/METIS-v${pkgver}-DistDGL-0.5.tar.gz
   gk_GetProcVmPeak.patch::${url}/commit/33b8c8bb8dada74b824badff961532f11d0d5e1c.patch
@@ -21,26 +21,19 @@ prepare() {
   # https://github.com/KarypisLab/METIS/issues/54
   patch -p1 -i ../gk_GetProcVmPeak.patch
   patch -p1 -i ../gk_creadfilebin.patch
+  # Enable shared library
+  sed -i 's/OFF/ON/' CMakeLists.txt
 }
 
 build() {
-  cmake \
-    -S ${_base}-METIS-v${pkgver}-DistDGL-0.5 \
-    -B build \
-    -DCMAKE_BUILD_TYPE=None \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DBUILD_SHARED_LIBS=ON \
-    -DCMAKE_C_COMPILER=gcc \
-    -DGDB=ON \
-    -DGKRAND=ON \
-    -DGKREGEX=OFF \
-    -DGPROF=ON \
-    -DOPENMP=ON \
-    -DPCRE=ON \
-    -Wno-dev
-  cmake --build build --target all
+  cd ${_base}-METIS-v${pkgver}-DistDGL-0.5
+  make config \
+    cc=gcc \
+    prefix=/usr
 }
+
 package() {
-  DESTDIR="${pkgdir}" cmake --build build --target install
-  install -Dm 644 ${_base}-METIS-v${pkgver}-DistDGL-0.5/LICENSE.txt -t ${pkgdir}/usr/share/licenses/${_base}
+  cd ${_base}-METIS-v${pkgver}-DistDGL-0.5
+  make install DESTDIR="${pkgdir}"
+  install -Dm 644 LICENSE.txt -t ${pkgdir}/usr/share/licenses/${pkgname}
 }
