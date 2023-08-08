@@ -4,10 +4,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=gert
-_pkgver=1.9.2
+_pkgver=1.9.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Simple Git Client for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,8 +28,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9a9ec6677a1e0a975bd405d1a7c3ad40')
-sha256sums=('42ca1b4bcafb1fdbbc7f54df0ee4476ecd19e9e7d563b53fe7064e0086ab665e')
+md5sums=('a42e1d69ba92b88c1d4f7c4b66b1f1ec')
+sha256sums=('628c236fb9d6aacd42d3703515d54c3d4a9a61e9058ee8c33bec7de5c36e6827')
 
 build() {
   mkdir -p build
