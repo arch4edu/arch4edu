@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=DEoptimR
-_pkgver=1.1-0
+_pkgver=1.1-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,8 +15,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('424334ada458ad9d6beffb9f6eb5748f')
-sha256sums=('164104919c0aa3755679d60457095f76c4ba029e75df305d8fd0f432538fd696')
+md5sums=('c28ce1eec97a9b33137e8f54175581b5')
+sha256sums=('df38f0f64bcb5b9409e9f607b1721848e3a955d78ddde28c6a4e79f57ab9f7aa')
 
 build() {
   mkdir -p build
