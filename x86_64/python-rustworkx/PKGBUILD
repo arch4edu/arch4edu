@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 pkgname=python-rustworkx
 _name=${pkgname#python-}
-pkgver=0.13.0
+pkgver=0.13.1
 pkgrel=1
 pkgdesc="A high performance Python graph library implemented in Rust"
 arch=("x86_64")
@@ -31,7 +31,7 @@ checkdepends=(
 )
 conflicts=('python-retworkx')
 source=("${_name}-${pkgver}.tar.gz::https://github.com/Qiskit/${_name}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('e8f5f8b74e995321369f3e512440f2c04f40c3759a8d07caa5a85591893bc63be1f0a8b771ff10c3392291f07becc8eea5ff9fc672e7452aa2f4561791b969eb')
+b2sums=('b82732d08d45f7b07ea05ba786a6889e43814b5440e69ec37916e7899d0e618eb49d5727e05a7b25f189a053f720a82320a9accd790ba91a6d477e0bdf866721')
 
 build() {
     cd "${srcdir}/${_name}-${pkgver}"
