@@ -1,90 +1,73 @@
-# Maintainer: David McInnis <dave@dave3.xyz>
-
-pkgbase="python-theano"
-pkgname=(
-	"python-theano"
-	#"python2-theano"
-)
-_pkgname="Theano"
-pkgver="1.0.5"
+# Maintainer: Astro Benzene <universebenzene at sina dot com>
+pkgbase=python-theano-pymc
+_pname=${pkgbase#python-}
+_pyname=Theano-PyMC
+pkgname=("python-${_pname}" "python-${_pname}-doc")
+pkgver=1.1.2
 pkgrel=2
-pkgdesc='Definition and optimized evaluation of mathematical expressions on Numpy arrays.'
+pkgdesc="Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs"
 arch=('any')
-url='http://www.deeplearning.net/software/theano/'
+url="https://pypi.org/project/Theano-PyMC"
 license=('BSD')
-makedepends=(
-	'python-distribute'
-	#'python2-distribute'
-	)
-#checkdepends=('python-nose' 'python-parameterized' 'python2-nose' 'python2-parameterized')
-source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
-sha256sums=('6e9439dd53ba995fcae27bf20626074bfc2fff446899dc5c53cb28c1f9202e89')
+makedepends=('python-setuptools')
+#            'python-wheel'
+#            'python-build'
+#            'python-installer'
+#            'python-sphinx')
+checkdepends=('python-pytest' 'python-scipy' 'python-filelock' 'python-pydot')
+source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
+#       'Makefile')
+md5sums=('5ed1cb188fbe417946480219b5ba334b')
 
-prepare() {
-  cd "${_pkgname}-${pkgver}"
-  chmod +x "${_pkgname}.egg-info"
-  chmod 644 ${_pkgname}.egg-info/*
-  chmod -R a+r ./
-  cd "$srcdir/"
-  cp -a "${_pkgname}-${pkgver}" "${_pkgname}-${pkgver}-py2"
-  cd "${_pkgname}-${pkgver}-py2"
-  sed -e "s|#![ ]*/usr/bin/python$|#!/usr/bin/python2|" \
-      -e "s|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|" \
-      -e "s|#![ ]*/bin/env python$|#!/usr/bin/env python2|" \
-      -i $(find . -name '*.py')
+get_pyver() {
+    python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))'
 }
+
+#prepare() {
+#    cd ${srcdir}/${_pyname}-${pkgver}
+#
+#    ln -s ${srcdir}/Makefile doc
+#}
 
 build() {
-  # msg "Building Python 2"
-  # cd "$srcdir/${_pkgname}-${pkgver}-py2"
-  # python2 setup.py build
+    cd ${srcdir}/${_pyname}-${pkgver}
+#   python -m build --wheel --no-isolation
+    python setup.py build
 
-  msg "Building Python 3"
-  cd "$srcdir/${_pkgname}-${pkgver}"
-  python setup.py build
+#   msg "Building Docs"
+#   cd ${srcdir}/${_pyname}-${pkgver}/doc
+#   for _ftxt in $(find . -name '*.txt'); do mv -v ${_ftxt} ${_ftxt%.txt}.rst; done
+#   PYTHONPATH="../build/lib" make html
 }
 
-# Tests take many hours and need over 8G of memory
-# All Python and Python2 tests pass
-#
-# -------------------------------------------------
-#check() {
-#  msg "Checking Python 2"
-#  cd "$srcdir/${_pkgname}-${pkgver}-py2"/build/lib/theano/
-#  nosetests2 -vv -d
-#
-#  msg "Checking Python 3"
-#  cd "$srcdir/${_pkgname}-${pkgver}"/build/lib/theano/
-#  nosetests3 -vv -d
-#}
+check() {
+    cd ${srcdir}/${_pyname}-${pkgver}
 
-#package_python2-theano() {
-#  depends=('python2-numpy')
-#  optdepends=('python2-sympy: Recommended'
-#              'python2-scipy: Recommended'
-#              'python2-pycuda'
-#              'python2-pydot-ng: Preferred over python-pydot'
-#              'python2-pydot'
-#              'python2-pygpu-git'
-#              'python2-mpi4py: minimal support for opencl')
-#  cd "$srcdir/${_pkgname}-${pkgver}-py2"
-#  python2 setup.py install --root="$pkgdir"/ --optimize=1 --skip-build
-#  mv "${pkgdir}/usr/bin/theano-cache" "${pkgdir}/usr/bin/theano2-cache"
-#  mv "${pkgdir}/usr/bin/theano-nose" "${pkgdir}/usr/bin/theano2-nose"
-#  install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python2-theano/LICENSE.txt"
-#}
+    pytest || warning "Tests failed"
+}
 
-package_python-theano() {
-  depends=('python-numpy')
-  optdepends=('python-sympy: Recommended'
-             'python-scipy: Recommended'
-             'python-pycuda'
-             'python-pydot-ng: Preferred over python-pydot'
-             'python-pydot'
-             'python-pygpu-git'
-             'python-scikit-sparse'
-             'python-mpi4py: minimal support for opencl')
-  cd "$srcdir/${_pkgname}-${pkgver}"
-  python setup.py install --root="$pkgdir"/ --optimize=1 --skip-build
-  install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-theano/LICENSE.txt"
+package_python-theano-pymc() {
+    depends=('python>=3.6' 'python-scipy>=0.14' 'python-filelock')
+    optdepends=('python-theano-pymc-doc: Documentation for Theano-PyMC')
+    provides=('python-theano')
+    cd ${srcdir}/${_pyname}-${pkgver}
+
+    install -Dm644 -t "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE.txt
+    install -Dm644 -t "${pkgdir}/usr/share/doc/${pkgname}" README.rst
+#   python -m installer --destdir="${pkgdir}" dist/*.whl
+    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+    rm -r "${pkgdir}/usr/lib/python$(get_pyver)/site-packages/tests"
+    rm -r "${pkgdir}/usr/lib/python$(get_pyver)/site-packages/bin/"/__{init__.py,pycache__}
+}
+
+package_python-theano-pymc-doc() {
+    pkgdesc="Documentation for Python Theano-PyMC"
+    cd ${srcdir}/${_pyname}-${pkgver}
+#   cd ${srcdir}/${_pyname}-${pkgver}/docs/_build
+
+    install -Dm644 -t "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE.txt
+#   install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../../LICENSE.txt
+    install -dm755 "${pkgdir}/usr/share/doc/${pkgbase}"
+    cp -a doc/* "${pkgdir}/usr/share/doc/${pkgbase}"
+#   cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
 }
