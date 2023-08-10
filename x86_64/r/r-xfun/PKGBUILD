@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xfun
-_pkgver=0.39
+_pkgver=0.40
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Supporting Functions for Packages Maintained by 'Yihui Xie'"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -38,8 +38,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('97d013cfb2a4503ef16936a950ce04a2')
-sha256sums=('d0ecaabb243dd3496da6029932fcdd4772914843de7ffd0b78a172efde1356c9')
+md5sums=('bf4fbf0473e11b223e93746a09468cd4')
+sha256sums=('1ea96a191a440a021b8a1414fed28cbdde5362e9b2fe95066507b535017c76f7')
 
 build() {
   mkdir -p build
