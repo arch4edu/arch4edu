@@ -1,7 +1,7 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=units
-_cranver=0.8-2
+_cranver=0.8-3
 pkgname=r-${_cranname,,}
 pkgdesc="Measurement Units for R Vectors"
 url="https://cran.r-project.org/package=units"
@@ -49,7 +49,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("a7ae8953afb2ef6e993dab6512d5b6af54045db4e462af104bd8141c4fe4b0d9c8ba4bf0610d03730c5e43c4bbd2d2b06227bb89859292218e32e1cff1353680")
+b2sums=("8bb66f927d399b7a0467b18e520d836df8a3514c34134334c23525e4d7f87ffe806e6eb11ff217162760a7009b0cbd1a1f7c1b9ae06f60be25417029aa2c906a")
 
 build() {
     mkdir -p "${srcdir}/build/"
