@@ -3,10 +3,10 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=reticulate
-_pkgver=1.30
+_pkgver=1.31
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Interface to 'Python'"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -46,18 +46,9 @@ optdepends=(
   r-rmarkdown
   r-testthat
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "scipy-1.11.0-fixes.patch")
-md5sums=('9063282d659c73afbf9bcaec50878eb7'
-         '4247ebf82b55d3bebfdd2f5235d082a7')
-sha256sums=('ee8f8a3a90fa49faf802c345a23e103d897e40dadc5ec75bfb13ce06576017df'
-            '943a11211e86181987e726e76801383bef4a433a82d86e953733e14b4e4a796a')
-
-prepare() {
-  cd "$_pkgname"
-  # Fix compatibility with python-scipy 1.11.0 and newer
-  patch -Np1 -i ../scipy-1.11.0-fixes.patch
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('4f5ac00a8e542fcb6e44148870aeea48')
+sha256sums=('9295ffa2fe6a0861e71f174306e456d371722d54e4da3cacbb65f39e92edd9a7')
 
 build() {
   mkdir -p build
