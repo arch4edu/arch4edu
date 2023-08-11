@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=htmltools
-_pkgver=0.5.5
+_pkgver=0.5.6
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Tools for HTML"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -33,8 +33,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('27fa1c4bebbd27ab12b3277309a13aca')
-sha256sums=('c8b23fab855a89c6ed0f6d6c7cad0ff9c5ae329c0bdb479940443ee752f26659')
+md5sums=('d95781d5275b257942860ae484ea2319')
+sha256sums=('15eb8e2745c3be5e9926aa773f21d551435e903aa1dd20712f8ab54055b5a067')
 
 build() {
   mkdir -p build
