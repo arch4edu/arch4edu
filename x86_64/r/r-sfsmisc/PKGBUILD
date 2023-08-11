@@ -6,10 +6,10 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=sfsmisc
-_pkgver=1.1-15
+_pkgver=1.1-16
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Utilities from 'Seminar fuer Statistik' ETH Zurich"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,8 +23,8 @@ optdepends=(
   r-rmpfr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c1d1c3eb90b89e508918f1e4692cf16e')
-sha256sums=('4afa42cf83a287f62cac21741fc0559dee9dbd69dee59a740defce9a0e7c81e6')
+md5sums=('9826b78f9d6debb71a6bec0f51fb1e77')
+sha256sums=('511b4a661e3cfec540eb3d08f67b715f3cda398eb135a011b9be84305c11436c')
 
 build() {
   mkdir -p build
