@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=progressr
-_pkgver=0.13.0
+_pkgver=0.14.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=5
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="An Inclusive, Unifying API for Progress Updates"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -34,8 +34,8 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('48826c14b381db8d640665bf5bfb1135')
-sha256sums=('0ffb3dcadde0cc191bad0ff9e05d000aa65e2fc339cfc94ebbb263088df5a4e1')
+md5sums=('553ed3dd68689ea70694f2672fa3766a')
+sha256sums=('9a2899f879a5577f043be99c18d52bfe4d655cc52a96cae834e8a301b36258af')
 
 build() {
   mkdir -p build
