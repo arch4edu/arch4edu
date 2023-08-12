@@ -3,7 +3,7 @@ pkgbase=python-pytest-doctestplus
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.13.0
+pkgver=1.0.0
 pkgrel=1
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('any')
@@ -14,7 +14,7 @@ makedepends=('python-setuptools-scm' 'python-wheel' 'python-build' 'python-insta
 checkdepends=('python-pytest-remotedata'
               'python-numpy')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('f0ad13f205a300b79b5a5aa4fcab4309')
+md5sums=('cd3f754dd96f14f7b6a23b1a09c8ccb3')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -33,7 +33,7 @@ check() {
 
     ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
         build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
-    PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv --color=yes
+    PYTHONPATH="build/lib" pytest -vv -l -ra --color=yes -o console_output_style=count #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package_python-pytest-doctestplus() {
