@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=bslib
-_pkgver=0.5.0
+_pkgver=0.5.1
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -37,8 +37,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9a9e505cf4f08ffa3f7af77bf684cb1f')
-sha256sums=('a2c6fbc62242806e10bb58c5d1ba04a6d3bf4e546bc53d7acf1b8eb1160bd115')
+md5sums=('ace239ed273febffe063920a353865c6')
+sha256sums=('b175612322e3ba929cf67a9261dd253346a981ce15bbb63d4a6874f54d5ef00e')
 
 build() {
   mkdir -p build
