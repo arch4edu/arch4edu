@@ -8,7 +8,7 @@ pkgver=3.15.1.400
 _pkgver_arm=${pkgver} # 两个版本有时候不一样
 _x86_md5=174f137e819ba174c7be6949bb03e665
 _arm_md5=a7642088c0e903f1e7ac25f416e7a8e9
-pkgrel=2
+pkgrel=3
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -21,14 +21,17 @@ depends=(
     bash
     qt5-webengine qt5-x11extras libxinerama
     libpulse # 无 pulseaudio 无法连接到系统音频
-    # implicit dependencies
-    curl gcc-libs qt5-declarative libglvnd libxfixes alsa-lib libunwind qt5-webchannel openssl
-    wayland libxrandr libxext libx11 hicolor-icon-theme qt5-location glibc zlib libxcomposite
+    # dependencies detected by namcap
+    gcc-libs qt5-declarative libglvnd libxfixes alsa-lib qt5-webchannel openssl
+    libxrandr libxext libx11 hicolor-icon-theme glibc zlib libxcomposite
     qt5-base systemd-libs libxdamage
 )
-optdepends=('bubblewrap: Fix abnormal text color in dark mode and prevent messing files.')
+optdepends=(
+    'qt5-wayland: Wayland support'
+    'bubblewrap: Fix abnormal text color in dark mode and prevent messing files.'
+)
 makedepends=('patchelf')
-sha512sums=('3079f1c3f5077bad200c2b325fbc9dbe5b7aabd7fb3b1c23eadc83a156d4d1b84be33735fbaf163523046895ebc699f4cce5f5bd894c00e06996fe50fc8911d3'
+sha512sums=('b1c4f8ad45153c7b243dfcbbbb10a1eb1b53983c67c6676d2999f11b41540885b9ffb974a6e330613b0134a93db35e1d116d9c782c1af8c518c9d72604a558af'
             '48e40dfaf425f096802bfff081a9a1a3122f1f677227f1dbe67cfb37cef7ab8fe6060258161c79b07cd559c4022de6cea42245400ccfd1eac8456c7b42260550')
 sha512sums_x86_64=('45998b34b06568f311d9779664be99ce6fe674aceb8188397201fe34e92bef0cfa95b33069186b26c184aa91b8997859f35ea3414b1786e7c8164c473563d490')
 sha512sums_aarch64=('5fc6fb65a7d6c45bb544e775c0e1b20735994e0693ddb9007ee8d690f491bc0583ed2b73041c71b4d71c22452b828eeee2704288090f4821ce57239dbd9bfd3f')
@@ -76,6 +79,7 @@ package() {
     cd opt/$_pkgname
 
     install -Dm755 "$srcdir/$_pkgname.sh" "$pkgdir/usr/bin/$_pkgname"
+    ln -s "/usr/bin/$_pkgname" "$pkgdir/usr/bin/$_pkgname-x11"
     install -Dm644 $_pkgname.svg -t "$pkgdir/usr/share/icons/hicolor/scalable/apps"
 
     install -Dm755 lib/lib{bugly,crbase,desktop_common,ImSDK,nxui*,qt_*,service*,tms_*,ui*,wemeet*,xcast*,xnn*}.so \
