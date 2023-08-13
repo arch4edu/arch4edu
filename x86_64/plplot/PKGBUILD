@@ -4,7 +4,7 @@
 # Contributor: Eric Belanger <eric@archlinux.org>
 pkgname=plplot
 pkgver=5.15.0
-pkgrel=6
+pkgrel=7
 pkgdesc="A cross-platform software package for creating scientific plots"
 arch=('i686' 'x86_64')
 url="http://plplot.sourceforge.net/"
@@ -31,19 +31,21 @@ prepare() {
 }
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
-  if [ -d build ]; then
-      rm -r build
-  fi
-  mkdir build
-  cd build
-  cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr \
-      -DENABLE_octave=off \
-      -DENABLE_tcl=ON \
-      -DENABLE_tk=ON \
-      -DPL_FREETYPE_FONT_PATH=/usr/share/fonts/TTF ..
-  find . -name '*.make' -exec sed -i 's|-isystem /usr/include ||g' '{}' ';'
-  make 
+    cd ${srcdir}/${pkgname}-${pkgver}
+    if [ -d build ]; then
+        rm -r build
+    fi
+    mkdir build
+    cd build
+    cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr \
+        -DENABLE_octave=off \
+        -DENABLE_tcl=ON \
+        -DENABLE_tk=ON \
+        -DENABLE_wxwidgets=ON \
+        -DPLD_wxwidgets=ON \
+        -DPL_FREETYPE_FONT_PATH=/usr/share/fonts/TTF ..
+    find . -name '*.make' -exec sed -i 's|-isystem /usr/include ||g' '{}' ';'
+    make
 }
 
 package() {
