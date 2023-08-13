@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2023.7.18
+pkgver=2023.8.12
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -18,7 +18,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('5a5a624b2f7ab7f37e9ec4174ae2df1805b9658f89013f9b4b5550672f65f2a1')
+sha256sums=('824956b6d974b9d346aae59932bea862a2ad18fcc2b1a820b6941b7f6ddb2bca')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -51,16 +51,16 @@ check() {
         --deselect=tests/test_tifffile.py::test_write_imagej_raw \
         --deselect=tests/test_tifffile.py::test_issue_imagej_hyperstack_arg \
         --deselect=tests/test_tifffile.py::test_issue_description_overwrite \
-        --deselect=tests/test_tifffile.py::test_issue_invalid_predictor || warning "Tests failed" # -vv -ra --color=yes -o console_output_style=count
+        --deselect=tests/test_tifffile.py::test_issue_invalid_predictor || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package_python-tifffile() {
-    depends=('python-numpy>=1.25.0')
+    depends=('python-numpy>=1.25.1')
     optdepends=('python-matplotlib>=3.7.2: required for plotting'
-                'python-imagecodecs>=2023.7.10: required for encoding or decoding LZW, JPEG, etc. compressed segments'
+                'python-imagecodecs>=2023.8.12: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=4.9.2: required only for validating and printing XML'
-                'python-zarr>=2.15.0: required for opening Zarr stores'
-                'python-fsspec: required only for opening ReferenceFileSystem files'
+                'python-zarr>=2.16.0: required for opening Zarr stores'
+                'python-fsspec>=2023.6.0: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
 
