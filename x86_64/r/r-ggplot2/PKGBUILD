@@ -5,10 +5,10 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=ggplot2
-_pkgver=3.4.2
+_pkgver=3.4.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Create Elegant Data Visualisations Using the Grammar of Graphics"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -61,8 +61,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ae74c0829b62eb7ff8a425df4645c85f')
-sha256sums=('70230aa70a2c6f844fc41dd93e5f62af6859dfed390026ae58f223637e5283ca')
+md5sums=('56b406dd3fa5a2839fac8415a7a1b6e1')
+sha256sums=('5ce29ace6be7727be434506a1c759dfc322f65b17eabeec863b93be10f91a543')
 
 build() {
   mkdir -p build
