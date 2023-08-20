@@ -5,14 +5,14 @@
 
 pkgname=r-mkl
 pkgver=4.3.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Language and environment for statistical computing and graphics, linked to the Intel(R) MKL."
 arch=('x86_64')
 license=('GPL')
 url='http://www.r-project.org/'
 provides=("r=${pkgver}")
 conflicts=('r' 'microsoft-r-open')
-depends=('intel-mkl'
+depends=('intel-oneapi-mkl'
          'bzip2'
          'curl'
          'icu'
@@ -28,15 +28,16 @@ depends=('intel-mkl'
          'perl'
          'readline'
          'unzip'
+         'which'
          'xz'
          'zip'
          'zlib')
-makedepends=('java-environment'
+makedepends=('jdk-openjdk'
              'gcc-fortran'
-             'texlive-latex'
              'texlive-latexrecommended'
+             'texlive-fontsrecommended'
              'tk')
-optdepends=('texlive-bin: LaTeX sty files'
+optdepends=('texlive-latex: LaTeX sty files'
             'gcc-fortran: needed to compile some CRAN packages'
             'tk: tcl-tk interface')
 backup=('etc/R/Makeconf'
@@ -51,23 +52,22 @@ source=("http://cran.r-project.org/src/base/R-${pkgver%%.*}/R-${pkgver}.tar.gz"
         'r.desktop'
         'r.png'
         'R.conf'
-        'mklvars.sh')
+        'vars.sh')
 
-sha1sums=('bf5d4d3d9f8dd6380a6a4e17c5732db94de301a0'
-          'dd214eee232b7aced7366722ad416b6b39be8e1b'
-          'af80774f5a8d0e669e8ff90662638a0f4e1105d7'
-          '43668da6cfd1b4455a99f23e79e2059294dddac9'
-          '2cc0e30ca5de872ea7f5af417b8cac988f3e9f8e')
+sha256sums=('8dd0bf24f1023c6f618c3b317383d291b4a494f40d73b983ac22ffea99e4ba99'
+            '25b01ea93fa704884b65ba002d44d4e99725bd826997e8c73b6467df9f23c798'
+            '82e3f55f9954dd89700605362fea8bb3589ff09fa9a442b09cbd5f249407e7e0'
+            'b7833166041b06f716b6a79095d27d4abd83549816dc53193213827139eae6ef'
+            'f14c5efb017f970363ddc7509960b7f04f9942074d82ef7567ecd41313bf0aeb')
 
 # Build with the Intel Compiler Suite or GCC/GFortran.
 # Comment the following line to build the package with GCC
-# _CC="icc"
+# _CC="icx"
 
 # update dependencies w.r.t the compiler used
-if [[ $_CC = "icc" ]]; then
-  depends+=('intel-compiler-base'
-            'intel-fortran-compiler'
-            'intel-openmp')
+if [[ $_CC = "icx" ]]; then
+  depends+=('intel-oneapi-dpcpp-cpp'
+            'intel-oneapi-openmp')
 fi
 
 
@@ -75,42 +75,41 @@ prepare() {
   cd R-${pkgver}
   # set texmf dir correctly in makefile
   sed -i 's|$(rsharedir)/texmf|${datarootdir}/texmf|' share/Makefile.in
-  # align mklvars.sh with Arch Linux intel-mkl
+  # align vars.sh with Arch Linux intel-oneapi-mkl
   cd ..
-  sed -i 's|CPRO_PATH=/opt/intel/compilers.*$|CPRO_PATH=/opt/intel|g' mklvars.sh
+  sed -i 's|CPRO_PATH=/opt/intel/compilers.*$|CPRO_PATH=/opt/intel|g' vars.sh
 }
 
 
 build() {
   cd R-${pkgver}
 
-  # https://software.intel.com/sites/products/mkl/mkl_link_line_advisor.htm
+  # https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html
   # Interface Layer: LP64 (R uses 32-bit integers)
 
   _intel_arch=intel64
-  _intel_lib=mkl_intel_lp64
-  _gfortran_lib=mkl_gf_lp64
+  _mkl_interface=lp64
+  _intel_lib=mkl_intel_${_mkl_interface}
+  _gfortran_lib=mkl_gf_${_mkl_interface}
 
   # Set up the environment for MKL
+  source /etc/profile.d/intel-oneapi-mkl.sh
   if [ -z ${MKLROOT+x} ]; then
     echo -e "\nError: MKLROOT is unset\n"
     exit
   fi
-  if [ -f /opt/intel/mkl/bin/mklvars.sh ]; then
-    echo "Sourcing /opt/intel/mkl/bin/mklvars.sh"
-    source /opt/intel/mkl/bin/mklvars.sh ${_intel_arch}
-  elif [ -f /usr/bin/mklvars.sh ]; then
-    echo "Sourcing /usr/bin/mklvars.sh"
-    source /usr/bin/mklvars.sh ${_intel_arch}
+  if [ -f ${MKLROOT}/env/vars.sh ]; then
+    echo "Sourcing ${MKLROOT}/env/vars.sh"
+    source ${MKLROOT}/env/vars.sh ${_intel_arch} ${_mkl_interface} verbose
   else
-    echo "Sourcing mklvars.sh"
-    source ../mklvars.sh ${_intel_arch}
+    echo "Sourcing local vars.sh"
+    source ../vars.sh ${_intel_arch} ${_mkl_interface} verbose
   fi
 
-  if [[ $_CC = "icc" ]]; then
-    source ${MKLROOT}/../bin/compilervars.sh ${_intel_arch}
-    _intel_cc_opt=" -O3 -fPIC -m64 -march=native -fp-model precise -fp-model source -I${MKLROOT}/include"
-    # export LDFLAGS=" -qopenmp"
+  if [[ $_CC = "icx" ]]; then
+    source ${MKLROOT}/../../compiler/latest/env/vars.sh ${_intel_arch}
+    _intel_cc_opt=" -O3 -xhost -fPIC -fp-model precise -fp-model source -I${MKLROOT}/include"
+    # export LDFLAGS=" -fiopenmp"
     export FLIBS=" -lgfortran -lifcore -lifport"
 
     # Dynamic Linking
@@ -123,18 +122,19 @@ build() {
       -lm \
       -ldl"
 
-    export CC="icc"
-    export CXX="icpc"
+    export CC="icx"
+    export CXX="icpx"
     export AR="xiar"
     export LD="xild"
-    export F77="ifort"
-    export FC="ifort"
+    export F77="ifx"
+    export FC="ifx"
     export CFLAGS="${_intel_cc_opt}"
     export CXXFLAGS="${_intel_cc_opt}"
     export FFLAGS="${_intel_cc_opt}"
     export FCFLAGS="${_intel_cc_opt}"
   else
-    _gcc_opt=" -m64 -I${MKLROOT}/include"
+    # -ffat-lto-objects is needed for third-party packages shipping static libraries
+    _gcc_opt=" -m64 -ffat-lto-objects -I${MKLROOT}/include"
     # export LDFLAGS=" -fopenmp"
 
     # Dynamic Linking
@@ -171,6 +171,8 @@ build() {
     --with-blas="${_mkllibs}" \
     --with-lapack \
     --enable-R-shlib \
+    --enable-memory-profiling \
+    F77=${F77} \
     LIBnn=lib
 
   # Place Intel's basic math library prior to GLIBC libm
@@ -178,6 +180,7 @@ build() {
 
   # Build the package
   make
+  make pdf info
 
   # make libRmath.so
   cd src/nmath/standalone
@@ -193,7 +196,7 @@ check() {
 
 package() {
   cd R-${pkgver}
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR="${pkgdir}" install install-pdf install-info
 
   # install libRmath.so
   cd src/nmath/standalone
@@ -201,25 +204,32 @@ package() {
 
   # Fix R wrapper scripts.
   sed -i "s|${pkgdir} ||" "${pkgdir}/usr/bin/R"
-  rm "${pkgdir}/usr/lib/R/bin/R"
-  cd "${pkgdir}/usr/lib/R/bin"
+  rm "${pkgdir}"/usr/lib/R/bin/R
+  cd "${pkgdir}"/usr/lib/R/bin
   ln -s ../../../bin/R
 
   # install some freedesktop.org compatibility
-  install -Dm644 "${srcdir}/r.desktop" \
-    "${pkgdir}/usr/share/applications/r.desktop"
-  install -Dm644 "${srcdir}/r.png" \
-    "${pkgdir}/usr/share/pixmaps/r.png"
+  install -Dm644 "${srcdir}"/r.desktop -t "${pkgdir}"/usr/share/applications
+  install -Dm644 "${srcdir}"/r.png -t "${pkgdir}"/usr/share/pixmaps
 
   # move the config directory to /etc and create symlinks
-  install -d "${pkgdir}/etc/R"
-  cd "${pkgdir}/usr/lib/R/etc"
-  for i in *; do
-    mv -f ${i} "${pkgdir}/etc/R"
-    ln -s /etc/R/${i} ${i}
+  install -d "${pkgdir}"/etc/R
+  cd "${pkgdir}"/usr/lib/R/etc
+  for _i in *; do
+    mv -f ${_i} "${pkgdir}"/etc/R
+    ln -s /etc/R/${_i} ${_i}
   done
 
   # Install ld.so.conf.d file to ensure other applications access the shared lib
-  install -Dm644 "${srcdir}/R.conf" "${pkgdir}/etc/ld.so.conf.d/R.conf"
+  install -Dm644 "${srcdir}"/R.conf -t "${pkgdir}"/etc/ld.so.conf.d/R.conf
+
+  # Add provides for bundled packages
+  for _f in "$pkgdir"/usr/lib/R/library/*/DESCRIPTION; do
+    _pkg=$(grep Package: $_f | cut -d' ' -f2 | tr '[:upper:]' '[:lower:]')
+    _ver=$(grep Version $_f | cut -d' ' -f2)
+    _prov="r-$_pkg=${_ver/-/.}"
+    provides+=($_prov)
+  done
 }
 
+makedepends+=("procps-ng")
