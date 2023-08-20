@@ -1,17 +1,19 @@
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=optimx
-_pkgver=2022-4.30
+_pkgver=2023-8.13
 pkgname=r-${_pkgname,,}
-pkgver=2022.4.30
+pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Expanded Replacement and Extension of the 'optim' Function"
-arch=('any')
+arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL2)
 depends=(
-  r
+  r-nloptr
   r-numderiv
+  r-pracma
 )
 optdepends=(
   r-bb
@@ -19,21 +21,24 @@ optdepends=(
   r-knitr
   r-lbfgs
   r-lbfgsb3c
+  r-marqlevalg
   r-minqa
   r-rmarkdown
   r-setrng
   r-subplex
+  r-testthat
   r-ucminf
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ebe9887a22296cf4b2db07981aaa1f898bf7c17fb61a4b398c228d4077d0b410')
+md5sums=('f936dff9a2dba66f63876b463957ea9f')
+sha256sums=('163956791eb3b09f6a9a1c8e2ccb7f44fe8e02124fc2a732701be9070a818803')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
