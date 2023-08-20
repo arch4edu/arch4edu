@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=themis
-_pkgver=1.0.1
+_pkgver=1.0.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,6 +22,7 @@ depends=(
   r-rlang
   r-rose
   r-tibble
+  r-vctrs
   r-withr
 )
 checkdepends=(
@@ -37,8 +38,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d88baad98cbabe3c7fea5ace64d1fd8f')
-sha256sums=('01bde2f10dacc435685a8df19aa4992e71d099c67e239faa9baa45da15c3d056')
+md5sums=('8f13545a8a8d475f3323e75dd40a66d3')
+sha256sums=('f1350109904c302b1d5ec8ab9d692172a4334a60e252f93241da18d4559fe1e1')
 
 build() {
   mkdir -p build
