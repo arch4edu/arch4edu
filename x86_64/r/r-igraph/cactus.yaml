@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-cli
+  - x86_64/r/r-lifecycle
   - x86_64/r/r-magrittr
   - x86_64/r/r-pkgconfig
   - x86_64/r/r-rlang
