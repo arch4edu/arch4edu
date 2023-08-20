@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=FrF2
-_pkgver=2.3-1
+_pkgver=2.3-2
 pkgname=r-${_pkgname,,}
-pkgver=2.3.1
+pkgver=2.3.2
 pkgrel=1
 pkgdesc="Fractional Factorial Designs with 2-Level Factors"
 arch=('any')
@@ -23,7 +23,7 @@ optdepends=(
   r-frf2.catlg128
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bae926b7863d25e08556066d772fc633fe0d66678bba8a356979525ffadcc1db')
+sha256sums=('0fe868a2d861ddc389e9188801f8fc031c3c6602b382ceefb8f19dc6f7322c98')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
