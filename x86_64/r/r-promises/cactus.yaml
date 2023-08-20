@@ -2,11 +2,12 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-fastmap
+  - x86_64/r/r-later
+  - x86_64/r/r-magrittr
   - x86_64/r/r-r6
   - x86_64/r/r-rcpp
-  - x86_64/r/r-later
   - x86_64/r/r-rlang
-  - x86_64/r/r-magrittr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
