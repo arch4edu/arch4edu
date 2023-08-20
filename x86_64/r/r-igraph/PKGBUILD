@@ -1,9 +1,11 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Alex Branham <branham@utexas.edu>
+# Contributor: Phil Schaf <flying-sheep@web.de>
+# Contributor: Oleg Smirnov <oleg.smirnov@gmail.com>
 
 _pkgname=igraph
-_pkgver=1.5.0.1
+_pkgver=1.5.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -20,6 +22,7 @@ depends=(
   libxml2
   plfit
   r-cli
+  r-lifecycle
   r-magrittr
   r-pkgconfig
   r-rlang
@@ -51,10 +54,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "igraph-system-libs.patch")
-md5sums=('9809e51f7a65bbb6ae45a480228a8d04'
-         '34283a0a206240ab1f33f83d2526ffca')
-sha256sums=('a80a157ee290252f89c7c690654d82eadf72eba389d3100da26a5bf2eb0da3b4'
-            '38731c656da7f1fe34a4d21c3e3dcae65592898ba81620b96cd27c7894539530')
+md5sums=('c4a753bfe2eac76eccc3aaa6786e2fa1'
+         '3863e3b0e1f9356f607103096c0b011c')
+sha256sums=('add90a1e77ad4a5d95641f0556553e3f1d1c4443cb2d5afb70171efd278ab14a'
+            '4a910e3248983dc27f3306eb3b260988cb592d4dd806f73e0a77aa8aca2a5068')
 
 prepare() {
   cd "$_pkgname"
