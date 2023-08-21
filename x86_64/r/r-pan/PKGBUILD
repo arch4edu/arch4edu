@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=pan
-_pkgver=1.8
+_pkgver=1.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -20,8 +20,8 @@ optdepends=(
   r-mitools
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2915c6196eaa2eaff77cb3e3a1489ba8')
-sha256sums=('d1a77a02c158a4a10e913024d5019cf078cb0ff636c923e5e3e93e10643113ee')
+md5sums=('8f1ae1763e8058b7810ca65f696c916f')
+sha256sums=('e37e184c3c1b7a34f54dd95335e6bc730fd5716d2d2dc20c24279401aa673c52')
 
 build() {
   mkdir -p build
