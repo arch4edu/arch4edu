@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=multipol
-_pkgver=1.0-7
+_pkgver=1.0-9
 pkgname=r-${_pkgname,,}
-pkgver=1.0.7
+pkgver=1.0.9
 pkgrel=1
 pkgdesc='Multivariate Polynomials'
 arch=('any')
@@ -17,7 +17,7 @@ optdepends=(
   r-polynom
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0abe3c894c0d8e928a920e73708a397133386a0d73a1e7952c4075afe67879e6')
+sha256sums=('4ec305565c214872705f7d5ea4928c8761750663d664a77f1676d81a1ca0c632')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
