@@ -1,0 +1,12 @@
+pre_remove() {
+       if systemctl -q is-enabled $_pkgname.service; then
+              systemctl disable $_pkgname.service
+       fi
+}
+
+post_remove() {
+       echo
+       echo "Remove $_pkgname user and this HOME /var/lib/$_pkgname manually, if not needed anymore."
+       echo
+}
+

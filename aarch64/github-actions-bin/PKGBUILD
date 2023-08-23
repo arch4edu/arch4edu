@@ -5,7 +5,7 @@
 _pkgname=github-actions
 pkgname=${_pkgname}-bin
 pkgver=2.308.0
-pkgrel=1
+pkgrel=2
 pkgdesc='GitHub Actions self-hosted runner tools.'
 arch=('x86_64' 'armv6h' 'armv7h' 'aarch64')
 url='https://github.com/actions/runner'
@@ -13,7 +13,7 @@ license=('MIT')
 
 OPTIONS=(!strip !docs libtool emptydirs)
 
-install=PKGBUILD
+install="${pkgname}.install"
 
 provides=($_pkgname)
 conflicts=($_pkgname)
@@ -68,16 +68,3 @@ package() {
        install -Dm644 "$srcdir"/$_pkgname.sysusers "${pkgdir}"/usr/lib/sysusers.d/$_pkgname.conf
        install -Dm644 "$srcdir"/$_pkgname.service  "${pkgdir}"/usr/lib/systemd/system/$_pkgname.service
 }
-
-pre_remove() {
-       if systemctl -q is-enabled $_pkgname.service; then
-              systemctl disable $_pkgname.service
-       fi
-}
-
-post_remove() {
-       echo
-       echo "Remove $_pkgname user and this HOME /var/lib/$_pkgname manually, if not needed anymore."
-       echo
-}
-
