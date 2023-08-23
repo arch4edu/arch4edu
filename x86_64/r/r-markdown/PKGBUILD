@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=markdown
-_pkgver=1.7
+_pkgver=1.8
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Render Markdown with 'commonmark'"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,8 +24,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d689f83db8e827a5d42d984be260bed1')
-sha256sums=('cb2b9a4752174406b3b3557b0da943ab37041e6b1d993281d59614bb2acdcfb1')
+md5sums=('40652e4961999ba37b2fd65f87082ba4')
+sha256sums=('0de97777c0a8262a1e24ca34cc81a3bef2952d46bdc4c6a619ddb56c9ba0e5ab')
 
 build() {
   mkdir -p build
