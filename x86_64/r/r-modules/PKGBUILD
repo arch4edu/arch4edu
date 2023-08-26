@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=modules
-_pkgver=0.11.0
+_pkgver=0.12.0
 pkgname=r-${_pkgname,,}
-pkgver=0.11.0
+pkgver=0.12.0
 pkgrel=1
 pkgdesc='Self Contained Units of Source Code'
 arch=('any')
@@ -21,7 +21,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('77c3c18e4a81d6f53dbc16d09a4c6634eff0ec301e36f1b398585ce666824cf8')
+sha256sums=('8ba60a82d7a8f1d2350b294d0a3e7c5451dff3f113c2d0f0c77981489d9da4ea')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
