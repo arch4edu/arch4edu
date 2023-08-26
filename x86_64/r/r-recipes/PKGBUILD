@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=recipes
-_pkgver=1.0.7
+_pkgver=1.0.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -73,8 +73,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8ac886599631b8b8da455a37e78aadee')
-sha256sums=('64ae7f8163e0b31c2b7963a3503c602bab8ecf1b2d9e5978701be6d6b7c851c6')
+md5sums=('d0a31c6aa161bcb7a17af128382f7aa1')
+sha256sums=('d3d20824b36e1195ed072b632c3be89714c335f56c0a2e942386fdadcd78a00d')
 
 prepare() {
   # skip failing snapshot test
