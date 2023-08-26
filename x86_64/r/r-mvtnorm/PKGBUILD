@@ -3,9 +3,9 @@
 # Contributor: Kibouo <csonka.mihaly@hotmail.com>
 
 _pkgname=mvtnorm
-_pkgver=1.2-2
+_pkgver=1.2-3
 pkgname=r-${_pkgname,,}
-pkgver=1.2.2
+pkgver=1.2.3
 pkgrel=1
 pkgdesc='Multivariate Normal and t Distributions'
 arch=('x86_64')
@@ -18,7 +18,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6f5566b33f930334e07a9f5d3f17cdac8a0e1d86dc6b9d7ffd7a371fb626fe10')
+sha256sums=('2adadc5df5e5303d51c9b0c1881930f51ff84bfb9b1a9754354e012f982bc6c7')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
