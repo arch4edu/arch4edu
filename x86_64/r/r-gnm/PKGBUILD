@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gnm
-_pkgver=1.1-3
+_pkgver=1.1-4
 pkgname=r-${_pkgname,,}
-pkgver=1.1.3
+pkgver=1.1.4
 pkgrel=1
 pkgdesc='Generalized Nonlinear Models'
 arch=('x86_64')
@@ -19,7 +19,7 @@ optdepends=(
   r-vcdextra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d22962963545b3aa1de3a563c5ae4b8038b09c7a9a96185708b35c4d032b1c37')
+sha256sums=('ac98095cb05caa768f1c541ba7977e12a7b4e91ad562eeed168a8846b2482eb7')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
