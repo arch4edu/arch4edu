@@ -4,7 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/muparserx
-  - x86_64/python-qiskit-terra
+  - x86_64/python-qiskit
 makedepends:
   - pacman: blas-openblas
 build_prefix: extra-x86_64
