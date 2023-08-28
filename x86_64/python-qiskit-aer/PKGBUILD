@@ -2,7 +2,7 @@
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
 pkgver=0.12.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit-aer"
@@ -13,7 +13,7 @@ depends=(
     'nlohmann-json'
     'blas-openblas'
     'python-numpy'
-    'python-qiskit-terra'
+    'python-qiskit'
     'python-scipy'
 )
 optdepends=(
