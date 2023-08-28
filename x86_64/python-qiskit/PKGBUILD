@@ -1,14 +1,27 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
-_pkgname=qiskit-metapackage
-pkgname=python-qiskit
-pkgver=0.44.0
+_pkgname=qiskit
+pkgname=python-${_pkgname}
+pkgver=0.25.1
 pkgrel=1
-pkgdesc="An open-source SDK for working with quantum computers at the level of circuits, algorithms, and application modules"
-arch=('any')
+epoch=1
+pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
+arch=('x86_64')
 url="https://github.com/Qiskit/qiskit"
 license=('Apache')
+replaces=('python-qiskit-terra')
+conflicts=('python-qiskit-terra')
 depends=(
-    'python-qiskit-terra>=0.25.0'
+    'cython'
+    'python-dateutil'
+    'python-dill'
+    'python-numpy'
+    'python-ply'
+    'python-psutil'
+    'python-rustworkx'
+    'python-scipy'
+    'python-stevedore'
+    'python-symengine'
+    'python-sympy'
 )
 optdepends=(
     'python-qiskit-aer: high performance simulator for quantum circuits'
@@ -17,15 +30,29 @@ optdepends=(
     'python-qiskit-machine-learning: sample datasets and quantum classification algorithms'
     'python-qiskit-nature: ground state energy computations, excited states and dipole moments of molecules'
     'python-qiskit-optimization: quantum optimization algorithms'
+    'cplex: commercial solver for mathematical optimization problems'
+    'python-constraint: support for handling CSPs (Constraint Solving Problems)'
+    'python-docplex: IBM Decision Optimization CPLEX Modeling'
+    'python-ipywidgets: IPython HTML widgets for Jupyter'
+    'python-matplotlib: plotting support'
+    'python-pillow: image support'
+    "python-pydot: Graphviz's Dot support"
+    'python-pygments: syntax highlighter'
+    'python-pylatexenc: LaTeX support'
+    'python-qiskit-qasm3-import: import OpenQASM 3 files'
+    'python-qiskit-toqm: Time-Optimal Qubit Mapping (TOQM) transpiler support'
+    'python-seaborn: statistical data visualization'
+    'python-tweedledum: synthesizing and manipulating quantum circuits'
 )
 makedepends=(
     'python-build'
     'python-installer'
     'python-setuptools'
+    'python-setuptools-rust'
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('5b6ad790a66963c43e4c6414b8ed4e3a0380fae3f2b7cdbec15a529a43ea536f36840a73b38520ba469b905da87eeb8a7ee39ccf303b673ea43309f1c79a3c7e')
+b2sums=('6fcc24f01888d1e1e8a2dbc491f361d1fb2afd306cfa5da9ffd26e7448224a210ce3e7ab1ecf04efb36be7c85a6ccbf71a8d4817a291fe0af1b66e6297d1e6e1')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
