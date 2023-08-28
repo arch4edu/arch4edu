@@ -2,7 +2,7 @@
 _pkgname=qiskit-experiments
 pkgname=python-${_pkgname}
 pkgver=0.5.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-experiments"
@@ -12,7 +12,7 @@ depends=(
     'python-matplotlib'
     'python-numpy'
     'python-qiskit-ibm-experiment'
-    'python-qiskit-terra'
+    'python-qiskit'
     'python-scipy'
     'python-uncertainties'
 )
