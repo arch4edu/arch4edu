@@ -2,7 +2,7 @@
 _pkgname=qiskit-ibm-runtime
 pkgname=python-${_pkgname}
 pkgver=0.11.3
-pkgrel=1
+pkgrel=2
 pkgdesc="IBM Client for Qiskit Runtime"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-ibm-runtime"
@@ -12,7 +12,7 @@ depends=(
     'python-ibm-platform-services'
     'python-numpy'
     'python-qiskit-ibm-provider'
-    'python-qiskit-terra'
+    'python-qiskit'
     'python-requests'
     'python-requests-ntlm'
     'python-typing_extensions'
