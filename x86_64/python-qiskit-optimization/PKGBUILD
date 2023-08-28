@@ -2,7 +2,7 @@
 _pkgname=qiskit-optimization
 pkgname=python-${_pkgname}
 pkgver=0.5.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Quantum Optimization package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-optimization"
@@ -11,7 +11,7 @@ depends=(
     'python-docplex'
     'python-networkx'
     'python-numpy'
-    'python-qiskit-terra'
+    'python-qiskit'
     'python-scipy'
 )
 makedepends=(
