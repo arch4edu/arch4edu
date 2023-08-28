@@ -4,7 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-fastdtw
-  - x86_64/python-qiskit-terra
+  - x86_64/python-qiskit
 makedepends:
   - x86_64/python-qiskit-aer
 build_prefix: extra-x86_64
