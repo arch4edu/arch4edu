@@ -5,7 +5,6 @@ nvchecker:
 depends:
   - x86_64/python-lmfit
   - x86_64/python-qiskit-ibm-experiment
-  - x86_64/python-qiskit-ibmq-provider
   - x86_64/python-qiskit
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
