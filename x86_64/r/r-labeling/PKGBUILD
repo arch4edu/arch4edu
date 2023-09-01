@@ -3,13 +3,13 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=labeling
-_cranver=0.4.2
+_cranver=0.4.3
 pkgname=r-${_cranname,,}
 pkgdesc="Axis Labeling"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 
 arch=("any")
 depends=(
@@ -17,7 +17,7 @@ depends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('6ea0ff707d929ba69b13f81508ba4db90b922b953d0ef3a94dfbfb765979f2b1fb70746c6b508b906157b138e2f0943897fd472afbb392f0452eb30855ae87c7')
+b2sums=("f33ac346a00ea3839bd0d7a7fd1917f10c55a676d756903b7de9d39af2632a988ffe82ea0bd4b3edd3c7bfb3bfd0a28c68a51f56f92d510d59e9a6f0e3581712")
 
 build() {
     mkdir -p "${srcdir}/build/"
