@@ -2,7 +2,7 @@
 
 pkgname='python-jax'
 pkgver=0.4.15
-pkgrel=2
+pkgrel=3
 pkgdesc='Differentiate, compile, and transform Numpy code.'
 arch=('any')
 url='https://github.com/google/jax/'
