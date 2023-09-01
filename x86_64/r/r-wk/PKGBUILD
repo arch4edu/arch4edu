@@ -7,7 +7,7 @@ pkgdesc="Lightweight Well-Known Geometry Parsing"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
@@ -35,10 +35,10 @@ optdepends=(
 # the build chroot), uncomment the lines defining `checkdepends`, below,
 # as well as the `check()` function further down
 
-checkdepends=(
-    "${optdepends[@]}"
-    "r-testthat>=3.0.0"
-)
+# checkdepends=(
+#     "${optdepends[@]}"
+#     "r-testthat>=3.0.0"
+# )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 b2sums=("4c13054ce7e2be903a4c5a877f64426ef183102227432088ddaba09128cec61e38119a6946f5e8e0df6038667f57d9f5a25f0839a0875006c62bafc45bfe2f97")
@@ -48,10 +48,10 @@ build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-check() {
-    export R_LIBS="build/"
-    R CMD check --no-manual "${_cranname}"
-}
+# check() {
+#     export R_LIBS="build/"
+#     R CMD check --no-manual "${_cranname}"
+# }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
