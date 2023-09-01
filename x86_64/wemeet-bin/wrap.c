@@ -1,11 +1,17 @@
 // by https://aur.archlinux.org/account/AvianaCruz
+#include <X11/Xlibint.h>
+#include <dlfcn.h>
 #include <openssl/ssl.h>
+#include <stdlib.h>
 
 #ifdef WRAP_FORCE_SINK_HARDWARE
-#include <dlfcn.h>
 #include <pulse/introspect.h>
 #include <pulse/subscribe.h>
 #include <string.h>
+#endif
+
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
 #endif
 
 #ifdef SSL_get_peer_certificate
@@ -14,6 +20,23 @@
 
 X509 *SSL_get_peer_certificate(const SSL *s) {
   return SSL_get1_peer_certificate(s);
+}
+
+// temporary hack for Wayland screen sharing crash
+typedef int (*wrap_XMapWindow_t)(register Display *dpy, Window w);
+static wrap_XMapWindow_t wrap_orig_XMapWindow;
+
+int XMapWindow(register Display *dpy, Window w) {
+  const char *env = getenv("XDG_SESSION_TYPE");
+  if (env == NULL || strcmp(env, "wayland") != 0) {
+    if (!wrap_orig_XMapWindow) {
+      wrap_orig_XMapWindow = dlsym(RTLD_NEXT, "XMapWindow");
+    }
+
+    return wrap_orig_XMapWindow(dpy, w);
+  }
+
+  return 1;
 }
 
 #ifdef WRAP_FORCE_SINK_HARDWARE

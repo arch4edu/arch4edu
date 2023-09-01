@@ -8,7 +8,7 @@ pkgver=3.15.1.400
 _pkgver_arm=${pkgver} # 两个版本有时候不一样
 _x86_md5=174f137e819ba174c7be6949bb03e665
 _arm_md5=a7642088c0e903f1e7ac25f416e7a8e9
-pkgrel=3
+pkgrel=4
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -32,7 +32,7 @@ optdepends=(
 )
 makedepends=('patchelf')
 sha512sums=('b1c4f8ad45153c7b243dfcbbbb10a1eb1b53983c67c6676d2999f11b41540885b9ffb974a6e330613b0134a93db35e1d116d9c782c1af8c518c9d72604a558af'
-            '48e40dfaf425f096802bfff081a9a1a3122f1f677227f1dbe67cfb37cef7ab8fe6060258161c79b07cd559c4022de6cea42245400ccfd1eac8456c7b42260550')
+            'bc2fdbf682ab888ba58a03d637ccc069d409e882c21266b2b1357ff246707f9084b6ca3b7dff256f0b6a5635b559c86b825fc4d3ab9874be00de332ca862e5e5')
 sha512sums_x86_64=('45998b34b06568f311d9779664be99ce6fe674aceb8188397201fe34e92bef0cfa95b33069186b26c184aa91b8997859f35ea3414b1786e7c8164c473563d490')
 sha512sums_aarch64=('5fc6fb65a7d6c45bb544e775c0e1b20735994e0693ddb9007ee8d690f491bc0583ed2b73041c71b4d71c22452b828eeee2704288090f4821ce57239dbd9bfd3f')
 
@@ -47,11 +47,15 @@ prepare() {
     popd
 
     pushd opt/$_pkgname
-    for res in 16 32 64 128 256; do
-        install -dm755 "$srcdir/usr/share/icons/hicolor/${res}x${res}/apps"
-        mv "icons/hicolor/${res}x${res}/mimetypes/${_pkgname}app.png" \
-            "$srcdir/usr/share/icons/hicolor/${res}x${res}/apps/${_pkgname}app.png"
-    done
+    if [ -d 'icons' ]; then
+        for res in 16 32 64 128 256; do
+            install -dm755 "$srcdir/usr/share/icons/hicolor/${res}x${res}/apps"
+            mv "icons/hicolor/${res}x${res}/mimetypes/${_pkgname}app.png" \
+                "$srcdir/usr/share/icons/hicolor/${res}x${res}/apps/${_pkgname}app.png"
+        done
+    else
+        echo 'icons directory not found'
+    fi
 
     rm bin/qt.conf
     patchelf --set-rpath /usr/lib/$_pkgname bin/wemeetapp
@@ -82,8 +86,14 @@ package() {
     ln -s "/usr/bin/$_pkgname" "$pkgdir/usr/bin/$_pkgname-x11"
     install -Dm644 $_pkgname.svg -t "$pkgdir/usr/share/icons/hicolor/scalable/apps"
 
-    install -Dm755 lib/lib{bugly,crbase,desktop_common,ImSDK,nxui*,qt_*,service*,tms_*,ui*,wemeet*,xcast*,xnn*}.so \
+    install -Dm755 lib/lib{crbase,desktop_common,ImSDK,nxui*,qt_*,service*,tms_*,ui*,wemeet*,xcast*,xnn*}.so \
         -t "$pkgdir/usr/lib/$_pkgname"
+    if [ -f 'lib/libcrbase.so' ]; then
+        install -Dm755 lib/libcrbase.so -t "$pkgdir/usr/lib/$_pkgname"
+    else
+        echo 'lib/libcrbase.so not found'
+    fi
+
     for lib in "$pkgdir/usr/lib/$_pkgname"/*; do
         patchelf --set-rpath '$ORIGIN' "$lib"
     done
