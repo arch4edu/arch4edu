@@ -4,9 +4,9 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=deSolve
-_pkgver=1.36
+_pkgver=1.37
 pkgname=r-${_pkgname,,}
-pkgver=1.36
+pkgver=1.37
 pkgrel=1
 pkgdesc="Solvers for Initial Value Problems of Differential Equations ('ODE', 'DAE', 'DDE')"
 arch=('x86_64')
@@ -23,7 +23,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5c3ae7ea995ca1749e8badf1859bb47e16c09775bf8a5afb982f9e58b794f1f9')
+sha256sums=('c1fa61c2c61d327733ac62a23b2c605a8ff28602540c510c2e8fa49e01a39fb3')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
