@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=config
-_pkgver=0.3.1
+_pkgver=0.3.2
 pkgname=r-${_pkgname,,}
-pkgver=0.3.1
-pkgrel=4
+pkgver=0.3.2
+pkgrel=1
 pkgdesc='Manage Environment Specific Configuration Values'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,7 +21,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d48878be8f47041e4ffeaa449dd1e5f48f6174a4592e465913e72b6cf6b95f50')
+sha256sums=('7b5c21c2b86d5ba88d6e888bc614d5633f4fb5c0b50bb498a529c32ccf931065')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
