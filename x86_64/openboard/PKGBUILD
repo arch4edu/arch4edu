@@ -3,7 +3,7 @@
 pkgname=openboard
 pkgver=1.6.4
 _src_folder="OpenBoard-${pkgver}"
-pkgrel=7
+pkgrel=8
 pkgdesc="Interactive whiteboard software for schools and universities"
 arch=('x86_64' 'i686')
 url="http://openboard.ch/index.en.html"
