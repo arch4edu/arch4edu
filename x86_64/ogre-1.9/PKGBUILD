@@ -4,7 +4,7 @@
 pkgbase=ogre-1.9
 pkgname=('ogre-1.9' 'ogre-docs-1.9')
 pkgver=1.9.1
-pkgrel=9
+pkgrel=10
 pkgdesc='Scene-oriented, flexible 3D engine written in C++'
 arch=('x86_64')
 url='https://www.ogre3d.org'
