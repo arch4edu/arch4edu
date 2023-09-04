@@ -4,10 +4,10 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=dplyr
-_pkgver=1.1.2
+_pkgver=1.1.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="A Grammar of Data Manipulation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -56,8 +56,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f139a07119594ad50882f14fc8bd90e1')
-sha256sums=('c220c38a3a44977c43eeae3d9aef90e8bb297150cad0993ea8d3cc13150096e3')
+md5sums=('4e5aacdbe9cb21fe53f39902cdf845b5')
+sha256sums=('6843a247db0fcbba6cbffc869efbdfb25247ee6cf2fbdc36fae7e36cccfe1742')
 
 build() {
   mkdir -p build
