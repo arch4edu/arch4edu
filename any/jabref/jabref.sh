@@ -14,14 +14,14 @@
 
 ROOT=/usr/share/java/jabref
 
-/usr/bin/archlinux-java-run -a 19 -- \
+/usr/bin/archlinux-java-run -a 20 -- \
 --add-modules javafx.controls,javafx.fxml,javafx.swing,javafx.web \
 --add-exports javafx.controls/com.sun.javafx.scene.control=org.controlsfx.controls \
 --add-exports org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref \
---add-exports javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls \
 --add-exports javafx.graphics/com.sun.javafx.scene=org.controlsfx.controls \
 --add-exports javafx.graphics/com.sun.javafx.scene.traversal=org.controlsfx.controls \
 --add-exports javafx.graphics/com.sun.javafx.css=org.controlsfx.controls \
+--add-exports javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls \
 --add-exports javafx.controls/com.sun.javafx.scene.control.inputmap=org.controlsfx.controls \
 --add-exports javafx.base/com.sun.javafx.event=org.controlsfx.controls \
 --add-exports javafx.base/com.sun.javafx.collections=org.controlsfx.controls \
@@ -32,10 +32,6 @@ ROOT=/usr/share/java/jabref
 --add-opens javafx.controls/com.sun.javafx.scene.control=org.jabref \
 --add-opens javafx.controls/javafx.scene.control.skin=org.controlsfx.controls \
 --add-opens javafx.graphics/javafx.scene=org.controlsfx.controls \
---add-opens javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix \
---add-opens javafx.base/com.sun.javafx.binding=com.jfoenix \
---add-opens javafx.graphics/com.sun.javafx.stage=com.jfoenix \
---add-opens javafx.base/com.sun.javafx.event=com.jfoenix \
 --module-path ${ROOT}/lib \
 --patch-module org.jabref=${ROOT}/resources/main \
 ${JABREF_OPTIONS} \

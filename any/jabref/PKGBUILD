@@ -7,21 +7,21 @@
 # https://github.com/michaellass/AUR
 
 pkgname=jabref
-pkgver=5.9
+pkgver=5.10
 pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
 license=(MIT)
-depends=('archlinux-java-run>=7' 'java-runtime>=19')
-makedepends=('java-environment=19')
+depends=('archlinux-java-run>=7' 'java-runtime>=20')
+makedepends=('java-environment>=20')
 optdepends=('python: browser extension')
 options=(!strip !emptydirs)
 source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v${pkgver}.tar.gz
         jabref.sh
         jabref.desktop)
-sha256sums=('3afca55ff8aa8341226cc9d95090704870269acfd0e3523896a29385251b68b8'
-            'b89e7a3eb74031999c441ebfe9520618198dd68d416dd5b5b3b2271a1617ee2f'
+sha256sums=('f6560e584f48f537fd580c8caac19925ea54c74d8d05bdb230b0daf2132c4b7e'
+            'f5e977628bc224f63ae4b05d8aaf13786c384478a70cda8a708cef8316892874'
             'b0e3ed5cde4072a2d10de887b50217c03bbe30a1ea9b39bea1255ea80db15b77')
 
 # Note on supported Java versions:
@@ -45,7 +45,7 @@ build() {
   mkdir -p "${srcdir}"/gradle
   export GRADLE_USER_HOME=${srcdir}/gradle
 
-  export JAVA_HOME=$(archlinux-java-run -a 19 -b 19 -f jdk -j)
+  export JAVA_HOME=$(archlinux-java-run -a 20 -f jdk -j)
   echo "Using JDK from $JAVA_HOME to build JabRef."
 
   #/usr/bin/gradle \
@@ -74,7 +74,4 @@ package() {
   cd build
   cp -r resources "${pkgdir}"/usr/share/java/${pkgname}
   tar xf distributions/JabRef-${pkgver}.tar -C "${pkgdir}"/usr/share/java/${pkgname} JabRef-${pkgver}/lib --strip-components=1
-
-  # delete windows jar files that currently come with openjfx
-  rm "${pkgdir}"/usr/share/java/${pkgname}/lib/*-win.jar
 }
