@@ -1,4 +1,8 @@
 // by https://aur.archlinux.org/account/AvianaCruz
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 #include <X11/Xlibint.h>
 #include <dlfcn.h>
 #include <openssl/ssl.h>
@@ -8,10 +12,6 @@
 #include <pulse/introspect.h>
 #include <pulse/subscribe.h>
 #include <string.h>
-#endif
-
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
 #endif
 
 #ifdef SSL_get_peer_certificate

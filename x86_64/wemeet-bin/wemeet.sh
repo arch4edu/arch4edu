@@ -29,6 +29,7 @@ if [ -f /usr/bin/bwrap ]; then
         --tmpfs /sys/devices/virtual \
         --bind "$USER_RUN_DIR" "$USER_RUN_DIR" \
         --tmpfs /var \
+        --tmpfs /tmp \
         --tmpfs "$CONFIG_DIR" \
         --ro-bind-try "$KDE_GLOBALS_FILE" "$KDE_GLOBALS_FILE" \
         --ro-bind-try "$FONTCONFIG_DIR" "$FONTCONFIG_DIR" \
