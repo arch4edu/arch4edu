@@ -1,3 +1,5 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+
 # Maintainer: JustKidding <jk@vin.ovh>
 # Maintainer: James P. Harvey <jamespharvey20 at gmail dot com>
 # Maintainer: Christoph Bayer <chrbayer@criby.de>
@@ -11,58 +13,55 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=6.0.9
+pkgver=7.0.1
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.mongodb.com/"
 license=("Apache" "custom:SSPL1")
-depends=('libstemmer' 'snappy' 'boost-libs' 'pcre' 'yaml-cpp' 'curl')
-makedepends=('python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3' 'python-yaml' 'python-requests' 'python-pymongo' 'boost')
+depends=('libstemmer' 'snappy' 'boost-libs' 'pcre2' 'yaml-cpp' 'curl' 'gperftools' 'libunwind')
+makedepends=('python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3'
+             'python-yaml' 'python-requests' 'python-pymongo' 'boost' 'mongo-c-driver')
 optdepends=('mongodb-tools: mongoimport, mongodump, mongotop, etc'
             'mongosh-bin: interactive shell to connect with MongoDB')
 backup=("etc/mongodb.conf")
 provides=(mongodb="$pkgver")
-source=(https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz
+source=("https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz"
         mongodb.sysusers
         mongodb.tmpfiles
-        mongodb-4.4.1-gcc11.patch
-        mongodb-5.0.2-no-compass.patch
         mongodb-5.0.2-skip-reqs-check.patch
-        mongodb-6.0.0-boost-1.79.patch
-        mongodb-6.0.2-sconstruct-changes.patch
-        mongodb-6.0.0-gcc12.patch
-        mongodb-4.4.8-gcc-13.patch
-        mongodb-4.4.10-boost-1.81.patch
-        mongodb-6.0.7-gcc-13.patch)
-sha256sums=('133f32101befff67112d91cfb49ed7aadf11c0c3eedf20342375c5cb09752f31'
+        mongodb-5.0.2-no-compass.patch
+        mongodb-7.0.1-sconstruct.patch
+        mongodb-7.0.1-gcc13.patch)
+sha256sums=('448c45a05a053b917bd08a1e2d04b9829838fb97582a371c1bb764893dc14241'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
-            'f7e6d87b68f7703cdbd45e255962ed5a4f6d583aa76d6fcf4fdc7005211fbf06'
-            '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
             '4ff40320e04bf8c3e05cbc662f8ea549a6b8494d1fda64b1de190c88587bfafd'
-            '82346677cdab545bacd7b75d828ef0bcc76ac47f9fbae92b689bfdf2af6a0845'
-            '1122835f8bb046be9732af24e9a849d3833e349aca56a793d277eb45c10c1c90'
-            '64592754a74ce976893a5a392f2e782dd289b1bf4c3363f3897467442ce1e9fe'
-            '99ca771ae8d8f2617b1cf002586e10e1501dbde80407f5a555bfed4ab183569e'
-            '7bfeadf2fb7e13bd93c4515faada070410ddd8e276cc947b5b2b2292539051b7'
-            '0a38c8648dd6bcb1714b61b501d6350817f26ca2c913fa27c0e0a3cd751304aa')
+            '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
+            'b9b2b45e19a964975323da087c1b4615d84b4aef41f559ee016926d71bd38d09'
+            '0629ed44fe3f7682b8a19632c87bc5c33140acea5940b8a598e3860a1e5d773c')
 
 _scons_args=(
   CC="${CC:-gcc}"
   CXX="${CXX:-g++}"
   AR="${AR:-ar}"
+  MONGO_DISTMOD=arch
 
-  --use-system-pcre
+  --use-system-boost
+  --use-system-pcre2
   --use-system-snappy
+  --use-system-stemmer
   --use-system-yaml
   --use-system-zlib
-  --use-system-stemmer
+  --use-system-zstd
+  --use-system-tcmalloc
+  --use-system-libunwind
+  --use-system-libbson
+  --use-system-mongo-c
+
   --use-sasl-client
   --ssl
   --disable-warnings-as-errors
-  --use-system-boost
-  --use-system-zstd
   --runtime-hardening=off
 )
 
@@ -77,17 +76,17 @@ _filter-var() {
   for f in ${!var} ; do
     for x in "$@" ; do
       # Note this should work with globs like -O*
-      [[ ${f} == ${x} ]] && continue 2
+      [[ ${f} == "${x}" ]] && continue 2
     done
     new+=( "${f}" )
   done
-  export ${var}="${new[*]}"
+  export "${var}"="${new[*]}"
 }
 
 filter-flags() {
   local v
   for v in $(all-flag-vars) ; do
-    _filter-var ${v} "$@"
+    _filter-var "${v}" "$@"
   done
   return 0
 }
@@ -123,9 +122,9 @@ prepare() {
   fi
 
   # apply gentoo patches
-  for file in $srcdir/*.patch; do
+  for file in "$srcdir"/*.patch; do
     echo "Applying patch $file..."
-    patch -Np1 -i $file
+    patch -Np1 -i "$file"
   done
 }
 
@@ -168,5 +167,4 @@ package() {
   install -D LICENSE-Community.txt "$pkgdir/usr/share/licenses/mongodb/LICENSE"
 }
 # vim:set ts=2 sw=2 et:
-
 options+=("!lto")

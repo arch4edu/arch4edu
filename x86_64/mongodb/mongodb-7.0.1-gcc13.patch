@@ -1,0 +1,12 @@
+diff --git a/src/mongo/db/free_mon/free_mon_options.h b/src/mongo/db/free_mon/free_mon_options.h
+index 19f707e..6bf8b3b 100644
+--- a/src/mongo/db/free_mon/free_mon_options.h
++++ b/src/mongo/db/free_mon/free_mon_options.h
+@@ -31,6 +31,7 @@
+ 
+ #include <string>
+ #include <vector>
++#include <cstdint>
+ 
+ namespace mongo {
+ 
