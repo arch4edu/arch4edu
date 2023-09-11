@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=credentials
-_pkgver=1.3.2
+_pkgver=2.0.1
 pkgname=r-${_pkgname,,}
-pkgver=1.3.2
-pkgrel=9
+pkgver=2.0.1
+pkgrel=1
 pkgdesc='Tools for Managing SSH and Git Credentials'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,7 +26,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2ffa7c11bedbfa034adf553d0a2f2e4f6a496b858af753a09a89219cff9028b8')
+sha256sums=('2c7cfc45bd4afa9a2c2b85d43e907b212da3468781e1b617737bd095253c358b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
