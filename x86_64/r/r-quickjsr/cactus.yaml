@@ -2,12 +2,9 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-broom
-  - x86_64/r/r-car
-  - x86_64/r/r-magrittr
-  - x86_64/r/r-purrr
-  - x86_64/r/r-rgl
-  - x86_64/r/r-tibble
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-r6
+  - x86_64/r/r-rcpp
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

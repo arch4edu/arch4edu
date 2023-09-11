@@ -3,7 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-isingfit
-  - x86_64/r/r-isingsampler
+  - x86_64/r/r-networktools
   - x86_64/r/r-qgraph
   - x86_64/r/r-reshape2
 build_prefix: extra-x86_64
