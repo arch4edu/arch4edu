@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBase
-_pkgver=0.17.3
+_pkgver=0.18.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.3
-pkgrel=4
+pkgver=0.18.0
+pkgrel=1
 pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
 arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -43,8 +43,8 @@ source=(
 "${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
 "jaspColumnEncoder-${_pkgver}.tar.gz::https://github.com/jasp-stats/jaspColumnEncoder/archive/refs/tags/v${_pkgver}.tar.gz"
 )
-sha256sums=('fdf791a22c2c60ef3ed6335e8cba44ac8186b2d15de08eac6c616d191fa421d0'
-            'dd01b40259e2114bed2de0d75f71e82b68ff684d01ddbb9e74953ab7a8b54552')
+sha256sums=('04310efd1cb8869672a43729fb7791cb045851777a36067bcd11218a890e9269'
+            'da345bb73e365bb345935fd7263575ef0be1af79490105713cca06de258096ad')
 
 build() {
   export INCLUDE_DIR=${srcdir}/jaspColumnEncoder-${_pkgver}
