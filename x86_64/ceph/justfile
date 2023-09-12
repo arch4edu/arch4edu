@@ -16,25 +16,26 @@ build:
   @$Say Building @{{PkgBuild}} via chroot
   makechrootpkg -c -r {{ChrootPath}} -d "/tmp:/tmp" -C -n -l {{PkgVer}}_{{PkgRel}}
 
+# Repackage without rebuilding
+repackage:
+  @$Say Repackaging @{{PkgBuild}} via chroot
+  makechrootpkg -r {{ChrootPath}} -l {{PkgVer}}_{{PkgRel}} -- --skipint --noprepare --noextract --nocheck --repackage --force
+
+# Run a command in the chroot environment
+cexec +args: (_cexec "." args)
+
+# Run ctest in the chroot environment
+ctest *args: (_cexec "build" "ctest" args)
+
 # Create and update the base chroot
 chroot: (_update_chroot ChrootBase)
 
 # Initialize the base chroot for building packages
 mkchroot: (_mkchroot ChrootBase)
 
-# Watch build log streams, optionally filtering them with the given regex and options
-watch $filter=None $opts="-iP": _mkloglist
-  @$Say Watching build {{BuildTriple}} logs ${filter:+"(filter: $filter $opts)"}
-  tail -F -n +1 --silent $(cat {{LogFileList}} | xargs) 2>/dev/null {{ if filter == None { None } else { '| rg ' + opts + ' "' + filter + '"' } }}
-
-# Print build logs, optionally filtering them with the given regex and options
-logs $filter=None $opts="-iP": _mkloglist
-  @$Say Printing {{BuildTriple}} logs ${filter:+"(filter: $filter $opts)"}
-  cat *.log 2>/dev/null {{ if filter == None { None } else { '| rg ' + opts + ' "' + filter + '"' } }}
-
 # Install required dependencies
 deps:
-  pacman -S base-devel sudo devtools ripgrep --needed --noconfirm
+  pacman -S base-devel util-linux sudo devtools ripgrep --needed --noconfirm
 
 # Clean one or more of: chroot|deps|artifacts|logs
 clean +what="chroot":
@@ -63,7 +64,7 @@ clean +what="chroot":
   done
 
 # Upload built artifacts to Github, using the associated release
-upload pkg="ceph,ceph-libs,ceph-mgr": (_upload pkg)
+upload pkg="@all": (_upload pkg)
 
 # Initialize the chroot
 @_mkchroot $cbase:
@@ -75,24 +76,25 @@ upload pkg="ceph,ceph-libs,ceph-mgr": (_upload pkg)
   $Say Updating chroot packages @$cbase
   arch-nspawn $cbase pacman -Syu
 
-@_mkloglist:
-  mkdir -p $(dirname {{LogFileList}})
-  echo \
-    ceph-{{BuildTriple}}-{build,prepare,check,package_ceph{,-libs,-mgr}}.log \
-    ceph-{,mgr-,libs-}{{BuildTriple}}.pkg.tar.zst-namcap.log \
-    PKGBUILD-namcap.log \
-    > {{LogFileList}}
+# Exec into the chroot to a path relative to the workdir, and run the given args
+_cexec path +args:
+  arch-nspawn {{ChrootActive}} --chdir /build/{{PkgBase}}/src/{{PkgBase}}-{{PkgVer}}/{{path}} sh -c {{quote(trim(args))}}
 
 # Script to upload a comma separated list of packages to the active Github release
 _upload $pkgstring:
   #!/usr/bin/env bash
   set -euo pipefail
 
-  [[ -n "$GITHUB_TOKEN" ]] || { $Say "Error: GITHUB_TOKEN must be set" && exit 4; }
+  [[ -v GITHUB_TOKEN ]] || { $Say "Error: GITHUB_TOKEN must be set" && exit 4; }
 
   IFS=', ' read -r -a PKGS <<<"$pkgstring"
+  if printf '%s\0' "${PKGS[@]}" | grep -zxqF -- '@all'; then
+    $Say Expanding '@all' to package set
+    PKGS=($(rg -P --only-matching --replace '$1' '^package_(.+)\(\) {' {{PkgBuild}} | sort | xargs))
+  fi
 
-  $Say "uploading package(s): { ${PKGS[@]} } to {{GithubRepo}}/releases/v{{PkgVer}}-{{PkgRel}}"
+  $Say "Uploading ${#PKGS[@]} package(s) to {{GithubRepo}}/releases/v{{PkgVer}}-{{PkgRel}}"
+  printf '  > %s %s %s %s %s\n' "${PKGS[@]}" | column -t
 
   declare -A FILES
   for pkg in "${PKGS[@]}"; do
@@ -137,7 +139,6 @@ GitCommitish            := if `git tag --points-at HEAD` != None {
                            }
 BuildId                 := "[" + C_YELLOW + PkgBase + C_RESET + "/" + C_GREEN + PkgVer + ":" + PkgRel + C_RESET + "@" + C_CYAN + GitCommitish + C_RESET + "]"
 BuildTriple             := PkgVer + "-" + PkgRel + "-" + "x86_64"
-LogFileList             := env_var_or_default("TEMP", "/tmp") / PkgBase + ".temp" / "logfiles"
 GithubRepo              := "bazaah/aur-ceph"
 
 # ~~~ Color Codes ~~~

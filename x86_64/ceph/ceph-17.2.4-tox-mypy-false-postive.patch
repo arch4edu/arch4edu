@@ -1,5 +1,5 @@
 diff --git a/src/pybind/mgr/tox.ini b/src/pybind/mgr/tox.ini
-index d6ae7a29b3d..bb886a2d59e 100644
+index 85e7ae3db11..9a8d009b973 100644
 --- a/src/pybind/mgr/tox.ini
 +++ b/src/pybind/mgr/tox.ini
 @@ -88,7 +88,6 @@ commands =
