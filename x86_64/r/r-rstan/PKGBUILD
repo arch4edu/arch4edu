@@ -1,58 +1,64 @@
-# system requirements: GNU make, pandoc
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Robert Greener <me@r0bert.dev>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Ward Segers <w@rdsegers.be>
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=rstan
-_pkgver=2.21.8
+_pkgver=2.26.23
 pkgname=r-${_pkgname,,}
-pkgver=2.21.8
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='R Interface to Stan'
-arch=('x86_64')
+pkgdesc="R Interface to Stan"
+arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL3)
 depends=(
-  r
-  r-bh
+  pandoc
   r-ggplot2
   r-gridextra
   r-inline
   r-loo
   r-pkgbuild
+  r-quickjsr
   r-rcpp
-  r-rcppeigen
   r-rcppparallel
   r-stanheaders
-  make
-  pandoc
+)
+makedepends=(
+  r-bh
+  r-rcppeigen
+)
+checkdepends=(
+  r-testthat
 )
 optdepends=(
   r-bayesplot
-  r-bh
-  r-kernsmooth
+  r-coda
   r-knitr
-  r-matrix
-  r-parallel
-  r-rcppeigen
   r-rmarkdown
+  r-rstanarm
   r-rstantools
   r-rstudioapi
-  r-runit
   r-shinystan
-  r-v8
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b2d4edc315419037970c9fa2e8740b934966d88d40548152811f3d4a28475075')
+md5sums=('2e01ed18b705fb0fbd0b90e1577f08dc')
+sha256sums=('91fddeb9460755e02b7fbc7caa964df8d0d77417528ae96ce3e2f6d56fe60d22')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
