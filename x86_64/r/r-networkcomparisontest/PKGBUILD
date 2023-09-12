@@ -1,33 +1,46 @@
-# Maintainer: sukanka <su975853527@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=NetworkComparisonTest
-_pkgver=2.2.1
+_pkgver=2.2.2
 pkgname=r-${_pkgname,,}
-pkgver=2.2.1
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Statistical Comparison of Two Networks Based on Three Invariance Measures'
-arch=('any')
+pkgdesc="Statistical Comparison of Two Networks Based on Several Invariance Measures"
+arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL2)
 depends=(
-  r
   r-isingfit
-  r-isingsampler
+  r-networktools
   r-qgraph
   r-reshape2
 )
+checkdepends=(
+  r-bootnet
+  r-isingsampler
+  r-testthat
+)
 optdepends=(
-  r-networktools
+  r-bootnet
+  r-isingsampler
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1753961e9fb41d3aae6d12392445d7468d312a5e42629d34597ffa1e6e329b28')
+md5sums=('c699e7be5bafd726a02a5721f625b4cc')
+sha256sums=('11f61db9031c54ed28dce0310f51270b0bbd60bbdbf0ec565beb79a80f4e6223')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
