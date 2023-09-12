@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspEquivalenceTTests
-_pkgver=0.17.3
+_pkgver=0.18.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.3
+pkgver=0.18.0
 pkgrel=1
 pkgdesc="Equivalence T-Tests Module for JASP"
 arch=('any')
@@ -18,7 +18,7 @@ depends=(r
   r-jaspttests
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('48b435b6124110e03550b2038b42640c9ccc64fc71f5b3c4eebd43b0d959e53d')
+sha256sums=('7c1a2ffe92ba86c806b1c5b64078657ac17d47f8ea19cdabd004a85e6c7b7313')
 
 
 build() {
