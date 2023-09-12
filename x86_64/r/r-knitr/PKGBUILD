@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=knitr
-_pkgver=1.43
+_pkgver=1.44
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="A General-Purpose Package for Dynamic Report Generation in R"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -45,6 +45,7 @@ optdepends=(
   r-sass
   r-showtext
   r-styler
+  r-svglite
   r-targets
   r-testit
   r-tibble
@@ -54,8 +55,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('94653f9976f8ea8f6ce183802b2cee73')
-sha256sums=('3d29baea8c349aaa9310879ceb9a9d51bcaec39827ad46d422c3793c8a4ed53c')
+md5sums=('149912d4207f1023a2f856cdc74ac7f8')
+sha256sums=('718e893aea0af02167c36af4720f0570db20c0086812c86a840283be25a5be04')
 
 build() {
   mkdir -p build
