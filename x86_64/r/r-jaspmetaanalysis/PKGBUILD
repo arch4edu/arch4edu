@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspMetaAnalysis
-_pkgver=0.17.3
+_pkgver=0.18.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.3
+pkgver=0.18.0
 pkgrel=1
 pkgdesc="Meta-Analysis Module for JASP"
 arch=('any')
@@ -30,7 +30,7 @@ depends=(r
   r-ggmcmc
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('16b50af5baf13e7141321287bec1d6482cd0039fff20e8dccfeef5ed4823d86a')
+sha256sums=('627b95efe59b093de9b11bf4fc3b83461cea8a0bda1dc4602dcb7e57f428cb66')
 
 
 build() {
