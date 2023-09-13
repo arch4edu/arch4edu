@@ -2,8 +2,8 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.19.2
-pkgrel=1
+pkgver=3.19.4
+pkgrel=2
 pkgname=petsc
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
@@ -36,8 +36,8 @@ optdepends=('trilinos: support for trilinos'
 install=petsc.install
 source=(http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('f8feeb66fa8bd2406227be0e2cc2946485238362270d40e3f07dc89491177751f6bf680f51b70696bc30b677624c0e525c3fa9784eabdeb2337697ec56f63fc1'
-            'bdbff55c99205ae6edf574af319d19133aaf91eeae2dbb826f207be9f77ec08dfaf4afca6642b1536f159b7516c1fdeb29f35356dbc69c53c4ce506d44bf5e40')
+sha512sums=('b32b8cf72ea6bf3d976067ce0b722a6fb2ede525bc2293b72daf5693de48c6256e50f3968c0464a5e0d3bb067b936e1d78b66b51626fd27bbef2f57322509564'
+            '42aabecfc41b76ce5590bccb6799dde88ebad65310f1cddba52f3790a70ada0eb56224f336c609ff790e7ff18f3af332196ff29ac2454e41a020ac9c91a10de2')
 
 _install_dir=/opt/petsc/${_config}
 _petsc_arch=arch-${_config}
@@ -97,4 +97,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${_build_dir}/${_petsc_arch}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
+makedepends+=("fftw" "hdf5-openmpi" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")

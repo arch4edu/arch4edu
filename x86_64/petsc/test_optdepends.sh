@@ -16,11 +16,15 @@ fi
 
 # HDF5
 if [ -f "/usr/lib/pkgconfig/hdf5.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-hdf5=1 --download-hdf5-fortran-bindings=1"
+  CONFOPTS="${CONFOPTS} --with-hdf5=1 --with-hdf5-fortran-bindings=1"
 fi
 
 # HYPRE
 if [ -f "/usr/lib/libHYPRE.so" ]; then
+  if [ -f "/usr/lib/libHYPRE-2.29.0.so" ]; then
+    echo "HYPRE 2.29.0 is not supported" 1>&2
+    exit 1
+  fi
   CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
 fi
 
