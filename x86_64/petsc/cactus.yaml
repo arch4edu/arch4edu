@@ -8,6 +8,7 @@ makedepends:
   - x86_64/scotch
   - x86_64/superlu_dist
   - x86_64/archimedes-tools: triangle
+  - pacman: cython0
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
