@@ -1,7 +1,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 
 pkgname=python-ray
-pkgver=2.0.0
+pkgver=2.6.3
 pkgrel=1
 pkgdesc='A fast and simple framework for building and running distributed
 applications.'
@@ -17,7 +17,7 @@ optdepends=(
             'python-fsspec: for ray[data]'
             'python-aiohttp: for ray[default, serve]'
             'python-aiosignal: for ray[default, serve]'
-            'python-aiohttps_cors: for ray[default, serve]'
+            'python-aiohttps-cors: for ray[default, serve]'
             'python-aioredis: for ray[default, serve]'
             'python-colorful: for ray[default, serve]'
             'python-frozenlist: for ray[default, serve]'
@@ -25,7 +25,7 @@ optdepends=(
             'python-requests: for ray[default, serve, tune]'
             'python-gpustat: for ray[default, serve]'
             'python-opencensus: for ray[default, serve]'
-            'python-prometheus-client: for ray[default, serve]'
+            'python-prometheus_client: for ray[default, serve]'
             'python-smart-open: for ray[default, serve]'
             'uvicorn: for ray[serve]'
             'python-starlette: for ray[serve]'
@@ -51,7 +51,7 @@ makedepends=(python python-build python-installer python-wheel python-setuptools
 _pkgname=ray
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ray-project/ray/archive/${_pkgname}-$pkgver.tar.gz")
 
-sha256sums=('333841d6e8ad328e0bcbaa2a1adc4ea1ddb302016debb955acc23eeb121417bf')
+sha256sums=('8cb87bc70fdc00c8c028906280e27f5139d6c7ebcee30f88f92beccfde296338')
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${_pkgname}-${pkgver}"
@@ -69,3 +69,5 @@ package() {
   cd "${srcdir}/${_pkgname}-${_pkgname}-${pkgver}/python"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }
+makedepends+=("git" "libxcrypt-compat" "gcc12")
+export CC=gcc-12 CXX=g++-12
