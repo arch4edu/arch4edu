@@ -6,7 +6,6 @@ depends:
   - x86_64/dolfinx
 makedepends:
   - any/python-cppimport
-  - x86_64/hypre
   - x86_64/mumps
   - x86_64/parmetis
   - x86_64/pastix
@@ -16,5 +15,5 @@ makedepends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add makedepends fftw hdf5-openmpi hypre metis mumps parmetis pastix scotch suitesparse superlu superlu_dist triangle valgrind
+  add makedepends fftw hdf5-openmpi metis mumps parmetis pastix scotch suitesparse superlu superlu_dist triangle valgrind
 post_build: aur-post-build
