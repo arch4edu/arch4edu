@@ -6,8 +6,8 @@ build_prefix: extra-x86_64
 makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build
-  sed 's/_build_opt=1/_build_opt=0/' -i PKGBUILD
   sed 's/# export TF_ROCM_AMDGPU_TARGETS/export TF_ROCM_AMDGPU_TARGETS/' -i PKGBUILD
+  sed 's|--gpu.*|--src "${srcdir}"/tmprocm-src --dst "${srcdir}"/tmprocm --rocm|g' -i PKGBUILD
   sudo rm -rf /mnt/tmp
   sudo mkdir -p /mnt/tmp
 post_build: |
