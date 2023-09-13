@@ -2,7 +2,7 @@
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
 pkgver=0.6.0
-pkgrel=9
+pkgrel=10
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL3)
@@ -71,4 +71,4 @@ package() {
   DESTDIR="${pkgdir}" cmake --build build --target install
   install -Dm 644 ${pkgname}-${pkgver}/COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
-makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
+makedepends+=("fftw" "hdf5-openmpi" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
