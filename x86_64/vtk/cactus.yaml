@@ -1,0 +1,7 @@
+nvchecker:
+  - source: archpkg
+    archpkg: vtk
+  - alias: boost
+build_prefix: extra-x86_64
+pre_build: abs-pre-build
+post_build: abs-post-build
