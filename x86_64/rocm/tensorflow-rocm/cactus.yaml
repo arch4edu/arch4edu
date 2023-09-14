@@ -7,8 +7,8 @@ makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build
   sed 's/# export TF_ROCM_AMDGPU_TARGETS/export TF_ROCM_AMDGPU_TARGETS/' -i PKGBUILD
-  sed 's|--gpu.*|--src "${srcdir}"/tmprocm-src --dst "${srcdir}"/tmprocm --rocm|' -i PKGBUILD
-  sed 's|--gpu.*|--src "${srcdir}"/tmpoptrocm-src --dst "${srcdir}"/tmpoptrocm --rocm|' -i PKGBUILD
+  sed 's|--gpu.*tmprocm|--src "${srcdir}"/tmprocm-src --dst "${srcdir}"/tmprocm --rocm|' -i PKGBUILD
+  sed 's|--gpu.*tmpoptrocm|--src "${srcdir}"/tmpoptrocm-src --dst "${srcdir}"/tmpoptrocm --rocm|' -i PKGBUILD
   sudo rm -rf /mnt/tmp
   sudo mkdir -p /mnt/tmp
 post_build: |
