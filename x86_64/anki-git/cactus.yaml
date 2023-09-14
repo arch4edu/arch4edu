@@ -8,5 +8,6 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
+  add options "!lto"
   echo 'arch=(x86_64)' >> PKGBUILD
 post_build: aur-post-build
