@@ -9,7 +9,7 @@ name=cloudcompare
 _fragment="#tag=v2.12.4"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=2
+pkgrel=3
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
@@ -99,7 +99,7 @@ build() {
         -DEIGEN_ROOT_DIR=/usr/include/eigen3
   )
   msg2 "Build Cork lib"
-  make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS" CXX="g++"
+  make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS -fPIC" CC="gcc" CXX="g++"
   msg2 "Build CloudCompare"
   cmake -B build -S "${srcdir}/${name}" -G Ninja "${CMAKE_FLAGS[@]}"
 # shellcheck disable=SC2086 # allow slitting for MAKEFLAGS carrying multiple flags.
