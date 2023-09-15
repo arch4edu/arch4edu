@@ -6,11 +6,11 @@
 pkgname=openblas-lapack
 _PkgName=OpenBLAS
 _pkgname=openblas
-pkgver=0.3.23
+pkgver=0.3.24
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.11.0
 _blasver=3.11.0
-pkgrel=3
+pkgrel=2
 pkgdesc="Optimized BLAS library based on GotoBLAS2 1.13 BSD (providing blas, lapack, and cblas)"
 arch=('x86_64')
 url="http://www.openblas.net/"
@@ -21,7 +21,7 @@ provides=('openblas' "blas=${_blasver}" "lapack=${_lapackver}" "cblas=${_blasver
 conflicts=('openblas' 'blas' 'lapack' 'cblas' 'lapacke')
 options=(!emptydirs)
 source=(${_PkgName}-${pkgver}.tar.gz::https://github.com/xianyi/OpenBLAS/releases/download/v${pkgver}/OpenBLAS-$pkgver.tar.gz)
-sha256sums=('5d9491d07168a5d00116cdc068a40022c3455bf9293c7cb86a65b1054d7e5114')
+sha256sums=('ceadc5065da97bd92404cac7254da66cc6eb192679cf1002098688978d4d5132')
 
 # Add the following line to the _config variable if you want to set the number of make jobs
 #  MAKE_NB_JOBS=2 \
@@ -51,22 +51,12 @@ package(){
 
   # Symlink to provide blas, cblas, lapack and lapacke
   cd "${pkgdir}/usr/lib/"
-  # BLAS
-  ln -sf libopenblas.so libblas.so
-  ln -sf libopenblas.so libblas.so.${_blasver:0:1}
-  ln -sf libopenblas.so libblas.so.${_blasver}
-  # CBLAS
-  ln -sf libopenblas.so libcblas.so
-  ln -sf libopenblas.so libcblas.so.${_blasver:0:1}
-  ln -sf libopenblas.so libcblas.so.${_blasver}
-  # LAPACK
-  ln -sf libopenblas.so liblapack.so
-  ln -sf libopenblas.so liblapack.so.${_lapackver:0:1}
-  ln -sf libopenblas.so liblapack.so.${_lapackver}
-  # LAPACKE
-  ln -sf libopenblas.so liblapacke.so
-  ln -sf libopenblas.so liblapacke.so.${_lapackver:0:1}
-  ln -sf libopenblas.so liblapacke.so.${_lapackver}
+  for _lib in blas cblas lapack lapacke; do
+    ln -s libopenblas.so lib${_lib}.so
+    ln -s libopenblas.so lib${_lib}.so.${_blasver:0:1}
+    ln -s libopenblas.so lib${_lib}.so.${_blasver}
+    ln -s openblas.pc "${pkgdir}/usr/lib/pkgconfig/${_lib}.pc"
+  done
 }
 # vim:set ts=2 sw=2 et:
 _config="${_config} DYNAMIC_ARCH=1"
