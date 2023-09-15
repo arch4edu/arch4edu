@@ -4,7 +4,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
-pkgver=0.13.3
+pkgver=0.14.0
 pkgrel=1
 pkgdesc="Bootstrap-based Sphinx theme from the PyData community"
 arch=('any')
@@ -29,13 +29,13 @@ makedepends=('python-installer')
 #             'python-xarray')
 #checkdepends=('python-pytest-regressions')
 checkdepends=('python-nose'
-              'python-jinja'
+              'python-requests'
               'python-beautifulsoup4'
               'python-sphinx')
 #source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
 #        'Makefile')
 source=("https://files.pythonhosted.org/packages/py3/${_pyname:0:1}/${_pyname}/${_pyname//-/_}-${pkgver}-py3-none-any.whl")
-md5sums=('7b2fa05ebe0d453b83940521652de1b6')
+md5sums=('13622744e51d5fbda3df1e05f2eebd4c')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
@@ -60,17 +60,17 @@ check() {
 #   cd ${srcdir}/${_pyname}-${pkgver}
 
 #   PYTHONPATH="dist/lib" pytest || warning "Tests failed" # -vv --color=yes
-    nosetests
+    nosetests #-v -x
 }
 
 package_python-pydata-sphinx-theme() {
-    depends=('python-sphinx>=4.2'
+    depends=('python-sphinx>=5.0'
              'python-beautifulsoup4'
              'python-docutils>0.17.0'
              'python-packaging'
              'python-babel'
              'python-accessible-pygments'
-             'python-typing_extensions')
+             'python-typing_extensions')    # pygments required by accessible-pygments
 #   cd ${srcdir}/${_pyname}-${pkgver}
 
 #   install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
