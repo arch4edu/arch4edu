@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=kutils
-_pkgver=1.72
+_pkgver=1.73
 pkgname=r-${_pkgname,,}
-pkgver=1.72
+pkgver=1.73
 pkgrel=1
 pkgdesc='Project Management Tools'
 arch=('any')
@@ -20,7 +20,7 @@ optdepends=(
   r-rockchalk
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e44e867ffeeb4b3b81b1033ee1bb233a75cc95e3fb6a5a64e25af3eb5680d956')
+sha256sums=('8919b8a93924cc0072fa04f7cb0a70b2bd20f5f8dc615a0117f63a85880e0f77')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
