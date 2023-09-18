@@ -7,7 +7,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=rmarkdown
-_pkgver=2.24
+_pkgver=2.25
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -53,8 +53,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c96192e4ab4c47afdce5fb29fa83fabc')
-sha256sums=('3873efa46df4b1d2613b49d345d6442cd1a332e08594c204c8fa177edcd53d86')
+md5sums=('c30424fc39406007031cf4e62ea572a8')
+sha256sums=('06e4662666fe018fbe3bef3531280a461c7bc24bb00f34b9d4c7b08d52210155')
 
 prepare() {
   # Skip a test that might fail depending on environment
