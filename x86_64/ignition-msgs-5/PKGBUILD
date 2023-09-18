@@ -3,7 +3,7 @@
 
 pkgname=ignition-msgs-5
 pkgver=5.11.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Messages for Gazebo robot simulation."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/msgs"
@@ -32,3 +32,4 @@ package() {
   cd "${srcdir}/${_dir}/build"
   make DESTDIR="${pkgdir}/" install
 }
+export LDFLAGS="-Wl,--copy-dt-needed-entries"
