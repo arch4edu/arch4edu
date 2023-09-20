@@ -7,7 +7,7 @@ nvchecker:
 makedepends:
   - x86_64/gcc11
   - x86_64/gcc11: gcc11-libs
-group: GithubActionsUnsafe
+group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

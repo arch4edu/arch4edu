@@ -4,7 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-fastrlock
-group: GithubActionsUnsafe
+group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
