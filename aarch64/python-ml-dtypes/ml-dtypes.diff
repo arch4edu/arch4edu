@@ -1,17 +1,27 @@
---- pyproject.toml	2023-04-11 22:19:20.000000000 +0200
-+++ pyproject.toml	2023-05-23 10:38:06.782249398 +0200
-@@ -48,10 +48,10 @@
+--- pyproject.toml	2023-09-20 17:23:16.484758779 +0300
++++ pyproject.toml	2023-09-20 17:24:29.128552227 +0300
+@@ -18,9 +18,6 @@
+ dependencies = [
+     # Ensure numpy release supports Python version.
+     "numpy>1.20",
+-    "numpy>=1.21.2; python_version>'3.9'",
+-    "numpy>=1.23.3; python_version>'3.10'",
+-    "numpy>=1.26.0; python_version>'3.12'",
+ ]
+ 
+ [project.urls]
+@@ -49,11 +46,9 @@
  [build-system]
  requires = [
      # Build with oldest supported numpy for each Python version.
 -    "numpy~=1.21.2; python_version<'3.11'",
--    "numpy~=1.23.3; python_version>='3.11'",
--    "pybind11~=2.10.0",
--    "setuptools~=67.6.0",
-+    "numpy>=1.21.2; python_version<'3.11'",
-+    "numpy>=1.23.3; python_version>='3.11'",
-+    "pybind11>=2.10.0",
-+    "setuptools>=67.6.0",
+-    "numpy~=1.23.3; python_version>='3.11' and python_version<'3.12'",
+-    "numpy~=1.26.0; python_version>='3.12'",
+-    "pybind11~=2.11.1",
+-    "setuptools~=68.1.0",
++    "numpy>1.20",
++    "pybind11>=2.11.1",
++    "setuptools>=68",
  ]
  build-backend = "setuptools.build_meta"
  
