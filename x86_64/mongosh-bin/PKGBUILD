@@ -4,10 +4,12 @@
 pkgname=mongosh-bin
 _pkgname=mongosh
 pkgver=2.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc='An interactive shell to connect with MongoDB with syntax highlighting, autocomplete, contextual help and error messages.'
 arch=('x86_64' 'aarch64')
 depends=('krb5')
+conflicts=('mongosh')
+provides=('mongosh')
 url='https://github.com/mongodb-js/mongosh.git'
 license=('Apache')
 _mongosh_folder=mongosh-${pkgver}-linux
