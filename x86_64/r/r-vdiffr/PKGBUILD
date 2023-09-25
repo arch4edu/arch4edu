@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=vdiffr
-_pkgver=1.0.6
+_pkgver=1.0.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,9 +34,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "$pkgname-skip_tests.patch::https://github.com/r-lib/vdiffr/commit/630a29d013361fd63fea242f531e2db6aef37919.patch")
-md5sums=('e7fe2f95c2c2560eb6cbcb58a3aedc45'
+md5sums=('392bc1fd9d13c621c5ad496e0548a828'
          '2f12d37581d0e3af037a7066bdb9ee3b')
-sha256sums=('620194676791fbbb303ea998d12544017d97c4ee975fed1e416ae99de74d23d6'
+sha256sums=('ed432e5b67ee8b08e1aab5f7edb89da74e768da68ae6c6e2be483fcc354952d2'
             '66c843887b82cc78edd9300ef38140b19924a29c77e736897bef7520a5bb0d2f')
 
 prepare() {
