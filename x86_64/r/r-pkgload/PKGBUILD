@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgload
-_cranver=1.3.2.1
+_cranver=1.3.3
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -17,6 +17,7 @@ depends=(
     "r-desc"
     "r-fs"
     "r-glue"
+    "r-pkgbuild"
     "r-rlang>=1.0.3"
     "r-rprojroot"
     "r-withr>=2.4.3"
@@ -27,7 +28,6 @@ optdepends=(
     "r-mathjaxr"
     "r-mockr"
     "r-pak"
-    "r-pkgbuild"
     "r-rcpp"
     "r-remotes"
     "r-rstudioapi"
@@ -53,7 +53,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ecb25929696c2714d91391040038301d3626d8f570ace6cba5ffa993e7d3860482af45000c9d7139517dc60104ad95e59d7fa648f61207ee4a3e9cb43384f15b")
+b2sums=("702a7f3797f7f98328fec0e0afabb4bfc901f34298e55db26638b8825e305d5ba7d5562a7e12579b857d76b7f5e5aa42813df3dcb0c81dbdfb571f07d3b830dd")
 
 build() {
     mkdir -p "${srcdir}/build/"
