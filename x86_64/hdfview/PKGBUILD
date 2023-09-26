@@ -2,7 +2,7 @@
 
 pkgname=hdfview
 _pkgname=HDFView
-pkgver=3.3.0
+pkgver=3.3.1
 pkgrel=1
 pkgdesc="A visual tool for browsing and editing HDF4 and HDF5 files."
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=(hdf5 java-runtime)
 makedepends=(ant gendesk hdf4 inetutils 'java-environment>=15')
 optdepends=(hdf4)
 source=("https://support.hdfgroup.org/ftp/HDF5/releases/HDF-JAVA/hdfview-${pkgver}/src/hdfview-${pkgver}.tar.gz")
-sha256sums=('0916161861c21fa8dd354b445b48eff5a53d80a5c0b383e79eb64b7b108e2430')
+sha256sums=('59c19871e30e07c802c9c2525b829d029cb68080604e713f7743f11990a552a8')
 
 #check() {
 #  cd "${srcdir}/${pkgname}-${pkgver}"
