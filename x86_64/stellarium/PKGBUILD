@@ -4,7 +4,7 @@
 # Contributor: Damir Perisa <damir.perisa@bluewin.ch>
 
 pkgname=stellarium
-pkgver=23.2
+pkgver=23.3
 pkgrel=1
 pkgdesc="Software which renders realistic skies in real time with OpenGL"
 arch=(x86_64)
@@ -17,12 +17,12 @@ optdepends=('man-db: manual pages for stellarium')
 source=(https://github.com/Stellarium/${pkgname}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz{,.asc}
   indi-2.0.patch::https://github.com/Stellarium/${pkgname}/pull/3269.patch)
 validpgpkeys=('79151C2E6351E7278DA1A730BF38D4D02A328DFF') # Alexander Wolf <alex.v.wolf@gmail.com>
-md5sums=('b42a829ffe080ba7c27b8ff25ba8a9c8'
-  'SKIP'
-  'c7dc3c0de63fc38136c96d1ce039483a')
-sha256sums=('01bf23f7ff007c58b91bffe233938e2cf23e9182bd36bfe72715fbfbde57ec0a'
-  'SKIP'
-  '31c4024074705d5abe1236fa5a735c8d20fddc2d07a02603cb4600ce00cb5a63')
+md5sums=('04bcc9996f73f9861700126eba1645ce'
+         'SKIP'
+         'd36659c25e74041aa297885c865cdc78')
+sha256sums=('55afd3bd44de76c156dadb17d52023ed5d4a74297dcff3c98eb71adef0fd66d9'
+            'SKIP'
+            '5f0dfb32194621afb50c3c52b46760e0bf588a938dc95c78d463a8ca554e327f')
 
 prepare() {
   # FIXME: https://github.com/Stellarium/stellarium/issues/3132#issuecomment-1485304021
