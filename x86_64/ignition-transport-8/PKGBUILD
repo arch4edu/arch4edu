@@ -3,19 +3,26 @@
 
 pkgname=ignition-transport-8
 pkgver=8.4.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Transport library for component communication based on publication/subscription and service calls."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/transport"
 license=('Apache')
 depends=('protobuf' 'protobuf-c' 'zeromq' 'ignition-msgs=5' 'ignition-tools=1'
-         'libutil-linux')
+         'libutil-linux' 'cppzmq')
 makedepends=('ignition-cmake=2' 'util-linux')
 provides=('ignition-transport=8')
-source=("https://github.com/gazebosim/gz-transport/archive/ignition-transport8_${pkgver}.tar.gz")
-sha256sums=('65472a874bbb0f6bb686b3c0cce4146fb650e750f8f795a159523ecbe731c1c7')
+source=("https://github.com/gazebosim/gz-transport/archive/ignition-transport8_${pkgver}.tar.gz"
+        protobuf-stubs-casts.patch)
+sha256sums=('65472a874bbb0f6bb686b3c0cce4146fb650e750f8f795a159523ecbe731c1c7'
+            'c6490e7d8099dd11a00338f7440d7355ab28ca7f43cdbe3dea1db12bbd583d76')
 
 _dir="gz-transport-ignition-transport8_${pkgver}"
+
+prepare() {
+    cd ${srcdir}/${_dir}
+    patch -Np1 -i ${srcdir}/protobuf-stubs-casts.patch
+}
 
 build() {
   cd "${srcdir}/${_dir}"
@@ -32,3 +39,4 @@ package() {
   cd "${srcdir}/${_dir}/build"
   make DESTDIR="${pkgdir}/" install
 }
+makedepends+=("cppzmq")
