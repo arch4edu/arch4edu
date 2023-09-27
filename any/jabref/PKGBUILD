@@ -8,20 +8,20 @@
 
 pkgname=jabref
 pkgver=5.10
-pkgrel=1
+pkgrel=2
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
 license=(MIT)
-depends=('archlinux-java-run>=7' 'java-runtime>=20')
-makedepends=('java-environment>=20')
+depends=('archlinux-java-run>=10' 'java-runtime=21')
+makedepends=('java-environment=21')
 optdepends=('python: browser extension')
 options=(!strip !emptydirs)
 source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v${pkgver}.tar.gz
         jabref.sh
         jabref.desktop)
 sha256sums=('f6560e584f48f537fd580c8caac19925ea54c74d8d05bdb230b0daf2132c4b7e'
-            'f5e977628bc224f63ae4b05d8aaf13786c384478a70cda8a708cef8316892874'
+            'f8b9b6cb92c1a564a8bbf379819ad4c11cff5f760b346e1003928fd48fd38a1c'
             'b0e3ed5cde4072a2d10de887b50217c03bbe30a1ea9b39bea1255ea80db15b77')
 
 # Note on supported Java versions:
@@ -37,6 +37,8 @@ prepare() {
   cp -r buildres/csl/csl-styles/* src/main/resources/csl-styles/
   cp -r buildres/csl/csl-locales/* src/main/resources/csl-locales/
 
+  # gradle will use the specified Java version regardless of JAVA_HOME
+  sed -i 's/languageVersion = JavaLanguageVersion.of(20)/languageVersion = JavaLanguageVersion.of(21)/' build.gradle
 }
 
 build() {
@@ -45,7 +47,7 @@ build() {
   mkdir -p "${srcdir}"/gradle
   export GRADLE_USER_HOME=${srcdir}/gradle
 
-  export JAVA_HOME=$(archlinux-java-run -a 20 -f jdk -j)
+  export JAVA_HOME=$(archlinux-java-run -a 21 -b 21 -f jdk -j)
   echo "Using JDK from $JAVA_HOME to build JabRef."
 
   #/usr/bin/gradle \
