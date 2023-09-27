@@ -3,7 +3,7 @@
 
 pkgname=ignition-fuel_tools-4
 pkgver=4.9.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A client library and command line tools for interacting with Gazebo Fuel servers."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/fuel_tools"
