@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2023.9.18
+pkgver=2023.9.26
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -18,7 +18,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('391d49e5e10a0f50f627b9083116f965e37d40bfe4e4713154e5edd57591590c')
+sha256sums=('67e355e4595aab397f8405d04afe1b4ae7c6f62a44e22d933fee1a571a48c7ae')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -60,7 +60,7 @@ package_python-tifffile() {
                 'python-imagecodecs>=2023.9.4: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=4.9.2: required only for validating and printing XML'
                 'python-zarr>=2.16.0: required for opening Zarr stores'
-                'python-fsspec>=2023.6.0: required only for opening ReferenceFileSystem files'
+                'python-fsspec>=2023.9.2: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
 
