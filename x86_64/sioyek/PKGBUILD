@@ -1,7 +1,7 @@
 # Maintainer: Alexander Seiler <seileralex@gmail.com>
 pkgname=sioyek
 pkgver=2.0.0
-pkgrel=3
+pkgrel=4
 pkgdesc="PDF viewer for research papers and technical books."
 arch=('x86_64')
 license=('GPL3')
@@ -27,6 +27,7 @@ prepare() {
 	cd "$pkgname-$pkgver"
 	patch --forward --strip=1 --input="${srcdir}/mupdf-1.23.0.patch"
 	sed -i 's/-lmupdf-threads/-lfreetype -lgumbo -ljbig2dec -lopenjp2 -ljpeg/' pdf_viewer_build_config.pro
+	sed -i 's/-lmupdf-third//' pdf_viewer_build_config.pro
 	sed -i '/#define LINUX_STANDARD_PATHS/s/\/\///' pdf_viewer/main.cpp
 }
 
