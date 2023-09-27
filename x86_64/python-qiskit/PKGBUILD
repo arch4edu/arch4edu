@@ -2,13 +2,13 @@
 _pkgname=qiskit
 pkgname=python-${_pkgname}
 pkgver=0.25.1
-pkgrel=1
+pkgrel=3
 epoch=1
 pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit"
 license=('Apache')
-replaces=('python-qiskit-terra')
+provides=('python-qiskit-terra')
 conflicts=('python-qiskit-terra')
 depends=(
     'cython'
