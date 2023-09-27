@@ -5,10 +5,10 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=lubridate
-_pkgver=1.9.2
+_pkgver=1.9.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Make Dealing with Dates a Little Easier"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,8 +28,8 @@ optdepends=(
   r-vctrs
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('625d6478985cfeb135546b1321e046d5')
-sha256sums=('8976431a4affe989261cbaa5e09cd44bb42a3b16eed59a42c1698da34c6544a7')
+md5sums=('eaa5966c86bf744c2f5d58bbb39cbec3')
+sha256sums=('2b6e1406d231b0a14d60b99cc406d159fea5465a5694725ad25343f12cf37fff')
 
 prepare() {
   # skip test that requires a French locale
