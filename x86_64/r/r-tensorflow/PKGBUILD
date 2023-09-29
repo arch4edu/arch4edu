@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=tensorflow
-_pkgver=2.13.0
+_pkgver=2.14.0
 pkgname=r-${_pkgname,,}
-pkgver=2.13.0
+pkgver=2.14.0
 pkgrel=1
 pkgdesc="R Interface to 'TensorFlow'"
 arch=('any')
@@ -26,7 +26,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9f3085401ee85d9cca6246949f364e976d13bb212bfb9a960785878acea8d304')
+sha256sums=('7df9d2d2ca22648c4099ac29522b3bbf8a3d876bfb962470f6df0a86f25867ff')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
