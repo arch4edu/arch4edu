@@ -1,0 +1,52 @@
+pkgname='cloudflare-warp-bin'
+
+post_install() {
+        setcap CAP_NET_ADMIN=+ei /usr/bin/warp-svc
+        echo ""
+        echo "==>"
+        echo "==> CAP_NET_ADMIN set on /usr/bin/warp-svc"
+        echo "==>"
+	echo "==> You need to start the WARP service before using it. To start once:"
+        echo "==>"
+	echo "==>   sudo systemctl start warp-svc.service"
+        echo "==>"
+        echo "==>"
+	echo "==> To start right now and automatically after startup:"
+        echo "==>"
+	echo "==>   sudo systemctl enable --now warp-svc.service"
+        echo "==>"
+        echo "==>"
+	echo "==> To also enable the taskbar now and automatically after startup:"
+        echo "==>"
+	echo "==>   systemctl --user enable --now warp-taskbar"
+        echo "==>"
+        echo ""
+}
+
+post_remove() {
+        echo ""
+        echo "==>"
+	echo "==> If you have warp service set to run at startup, you should remove it by using the command below:"
+        echo "==>"
+	echo "==>   sudo systemctl disable warp-svc.service"
+        echo "==>"
+        echo ""
+}
+
+post_upgrade() {
+        setcap CAP_NET_ADMIN=+ei /usr/bin/warp-svc
+        echo ""
+        echo "==>"
+        echo "==> CAP_NET_ADMIN set on /usr/bin/warp-svc"
+        echo "==>"
+	echo "==> If you are currently running the WARP service, you may need to restart it "
+	echo "==> to finalize the upgrade:"
+        echo "==>"
+	echo "==>   sudo systemctl restart warp-svc.service"
+        echo "==>"
+        echo "==> If you are upgrading from an older version of cloudflare-warp-bin, not that you are now able to enable the taskbar as follows: "
+        echo "==>"
+	echo "==>   systemctl --user enable --now warp-taskbar"
+        echo "==>"
+        echo ""
+}

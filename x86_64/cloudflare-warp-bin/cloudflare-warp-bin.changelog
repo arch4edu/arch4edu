@@ -1,0 +1,314 @@
+cloudflare-warp (2023.3.470) unstable; urgency=medium
+  * Migrated package repository to new infrastructure
+
+ -- Logan Praneis <lpraneis@cloudflare.com> Tue, 13 Jun 2023 012:53:00 -0500
+
+cloudflare-warp (2023.3.398) unstable; urgency=medium
+  * Added support for millisecond timestamps for use in Digital Experience Monitoring
+  * Fixed an issue with Root CA installation feature
+
+  -- Jeff Hiner <jhiner@cloudflare.com> Thu, 7 Apr 2023 09:51:00 -0700
+
+cloudflare-warp (2023.3.258) unstable; urgency=medium
+  * Improve timeouts with broken CNAME records that could result in very long load times for certain apps
+  * Fixed issue where systems with significantly out of sync system clocks could fail registration
+  * Improved user validation logic during manual ZT login
+  * Fixed issue where the WARP daemon can crash and lose connectivity
+  * Fixed issue where warp-diag could run traceroutes longer than expected.
+    Traceroute tests will now timeout after 65 seconds.
+  * Fixed issue where manually logging into a ZT org could fail if certificate authentication was used
+  * Added support for Zero Trust Digital Experience Monitoring.
+    More information coming soon for customers who signed up for the beta
+  * Added new log message to help customers and support identify when a users local
+    network IP space overlaps with a remote network configured to go through the tunnel
+  * Added support for Zero Trust customers to opt in to having the WARP Client install the root CA
+    for your organization if TLS Decryption is enabled.
+    A new toggle switch will appear in the dashboard under Settings->WARP Client soon to enable this
+  * Modified behavior of Managed networks tests to always happen outside the tunnel as per original intent
+  * Improved logging of application posture checks to understand rationale behind
+    statuses of application checks (file missing, process not found, etc.)
+  * Added support for more detailed statuses in the output of warp-cli status
+  * Modified initial connectivity check behavior to retry on errors
+
+ -- Logan Praneis <lpraneis@cloudflare.com>  Wed, 22 Mar 2023 12:33:12 -0500
+
+cloudflare-warp (2023.1.133) unstable; urgency=medium
+  * Fixed an issue where clients could lose IPv4 connectivity
+  * Fixed an issue where clients would attempt to configure DNS in posture-only or proxy modes.
+  * Increased MDM check timeout to improve compatibility with certain management solutions.
+
+  -- Logan Praneis <lpraneis@cloudflare.com> Thu, 18 Jan 2023 00:00:00 -0600
+
+cloudflare-warp (2022.12.542) unstable; urgency=medium
+  * Added support for network location aware for Zero Trust organizations
+  * Improved captive portal handling for some captive portals
+  * Fixes for several edge case issues with Zero Trust organizations
+  * Turning on DNS logging no longer forces a disconnect and reconnect
+  * Modified initial connectivity check behavior to now validate both IPv4 and
+    IPv6 are working (previously we only checked IPv4). Test will pass if either
+    connects successfully.
+  * Fixed DNS issue where TXT records were not being correctly returned when at
+    the end of a CNAME chain.
+  * Addressed some edge case performance issues with certain NXDOMAIN returns
+
+ -- Jeff Hiner <jhiner@cloudflare.com> Thu, 5 Jan 2023 09:51:00 -0700
+
+cloudflare-warp (2022.10.116) unstable; urgency=medium
+  * Modified behavior of warp-cli enable-dns-log to automatically turn off after
+    7 days (this is the equivalent of manually running warp-cli disable-dns-log)
+  * Fixed issue where device posture timers were paused while device was asleep.
+    Posture tests are now immediately ran on device wakeup and all timers
+    restarted.
+  * Decreased warp-diag zip file sizes by 60-80%.
+  * Fixed issue where mdm.xml file updates may have been missed.
+  * Fixed issue where warp DNS servers were still set after WARP was turned off
+
+ -- Matt Schulte <mschulte@cloudflare.com> Mon, 21 Nov 2022 11:00:00 -0400
+
+cloudflare-warp (2022.9.591) unstable; urgency=medium
+  * Fixed issue where device posture check results stopped sending after 24
+    hours (or possibly even sooner)
+
+ -- Matt Schulte <mschulte@cloudflare.com> Wed, 12 Oct 2022 07:00:00 -0700
+
+cloudflare-warp (2022.9.505) unstable; urgency=medium
+  * Improved connection time on slow network connections
+  * Fixed bug where initial teams registration could take awhile to show up on
+    client UI
+  * Fixed bug that could cause Teams registration to fail (mostly server side
+    but mentioning here as well) and handoff from the success page in the
+    browser to the client
+  * Fixed DNS fallback timeouts and related performance issues
+  * Fixed issue where coming out of sleep on some systems could take an
+    unreasonably long time to connect
+  * Fixed InvalidPacket error in logs that indicated the client needed to reset
+    its connection
+  * Fixed issue where user experienced no network after boot
+  * Fixed issue where warp-diag rotated daemon logs did not collect older logs
+
+ -- Matt Schulte <mschulte@cloudflare.com> Thu, 6 Oct 2022 11:00:00 -0700
+
+cloudflare-warp (2022.8.936) unstable; urgency=medium
+
+  * Fixed issue where warp-cli set-custom-endpoint could be used by users
+    without local admin rights as a way to bypass Gateway policies.
+  * Fixed issue where warp-cli add-trusted-ssid worked in Zero Trust mode when
+    it should not have.
+  * Fixed issue where warp-cli teams-enroll would run even if already joined to
+    an organization and users were not allowed to disconnect or leave.
+  * Fixed issue that could result in connection issues coming out of certain
+    sleep states (AddrInUse error or Multiple WARP Connections or
+    NoCurrentSession).
+  * Fixed issue that could result in connection flickering between
+    connected/disconnected.
+  * Fixed issue where connectivity test could report wrong status in logs when
+    in Include Only split tunnel configuration.
+  * Fixed issue where warp-cli could hang if service was in a bad state.
+  * Fixed issue where sometimes Zero Trust device settings configured in the
+    dash wouldn't take effect for machines in a disconnected state and asleep
+    state.
+  * Fixed issue where our DNS proxy wasn't correctly handling EDNS0 requests.
+  * Fixed issue where the DNS Answer for records at the end of a CNAME chain
+    would appear in the ADDITIONAL response section instead of the ANSWER
+    section. This broke certain connectivity checks for Microsoft and Android
+    studio in particular (probably other things). We now put the IP address
+    found in the ANSWER section.
+  * Fixed issue where multiple instances of the service could run at the same
+    time.
+  * Fixed issue that could occur during registration if the user clicks on on
+    the Launch Cloudflare WARP button after already registering.
+  * Fixed issue where the Zero Trust client was starting in connected mode when
+    dash settings Switched Locked and Auto Connect were turned off/disabled. The
+    client should only ever auto connect when these are enabled.
+  * Fixed issue where DNS functionality may be in a broken state when device
+    wakes from sleep
+  * Improved performance of warp-diag to now collects logs in parallel and now
+    collect additional routes to help with debugging.
+  * Use desktop notifications for re-authentication notifications
+
+ -- Matt Schulte <mschulte@cloudflare.com> Mon, 19 Sep 2022 15:00:00 -0700
+
+
+cloudflare-warp (2022.7.472) unstable; urgency=medium
+
+  * Fixed issue where OS version and device name may not update in ZT Dashboard
+  * Prevent users from brute forcing admin override code
+  * Prevent disable-on-wifi feature for ZT customers
+  * Add support for environment variables in device posture files paths
+  * Prevent flushing all nftable rulesets when WARP is disabled
+  * Fix incorrect output in "include-only" mode
+  * Fix routing issues when running microk8s
+  * Fix issue with wildcard expansion on domain fallback and split tunnel rules
+  * Fix issue with `warp-diag feedback` failing to upload
+  * Prevent hangs and failures on network traffic when in proxy-mode
+  * Prevent log files from growing too large
+  * Add "Don't Fragment" bit to encapsulated traffic
+  * Ensure our DNS servers stay set if another program tries to change them
+  * Add ability to upload device state to API for ZT customers
+
+cloudflare-warp (2022.7.472) unstable; urgency=medium
+
+  * Fixed issue where OS version and device name may not update in ZT Dashboard
+  * Prevent users from brute forcing admin override code
+  * Prevent disable-on-wifi feature for ZT customers
+  * Add support for environment variables in device posture files paths
+  * Prevent flushing all nftable rulesets when WARP is disabled
+  * Fix incorrect output in "include-only" mode
+  * Fix routing issues when running microk8s
+  * Fix issue with wildcard expansion on domain fallback and split tunnel rules
+  * Fix issue with `warp-diag feedback` failing to upload
+  * Prevent hangs and failures on network traffic when in proxy-mode
+  * Prevent log files from growing too large
+  * Add "Don't Fragment" bit to encapsulated traffic
+  * Ensure our DNS servers stay set if another program tries to change them
+  * Add ability to upload device state to API for ZT customers
+
+cloudflare-warp (2022.5.346) unstable; urgency=medium
+
+  * Fixed issue where all nftables rulesets were flushed after warp-cli disconnect
+  * Fixed false positives when attempting to detect a captive portal
+  * Fixed issue where OS version would not be updated in dash after OS update
+  * Added support for DNS over TCP
+  * Fixed issue where updated posture checks might not take effect until restart
+  * Fixed issue with warp-cli where enable/disable with wifi was allowed in Zero Trust mode
+  * Fixed issue where too many DNS requests could result in the following error
+    appearing in logs: WARN warp::dns: Shedding DNS load
+  * Bug fixes and enhancements
+
+ -- Matt Schulte <mschulte@cloudflare.com> Fri, 17 Jun 2022 15:00:00 -0700
+
+cloudflare-warp (2022.4.235) unstable; urgency=medium
+
+  * Removed periodic tunnel checks
+  * Changed `warp-cli connect` to mimic 'warp-cli enable-always-on`
+  * Changed `warp-cli disconnect` to mimic `warp-cli disable-always-on`
+  * Added a simple taskbar icon to show status
+  * Added virtual network switching support via warp-cli (`warp-cli
+    get-virtual-networks` and `warp-cli set-virtual-network`).
+  * Bug fixes and enhancements
+
+ -- Matt Schulte <mschulte@cloudflare.com> Mon, 18 April 2022 12:00:00 -0700
+
+cloudflare-warp (2022.3.253) unstable; urgency=medium
+
+  * `warp-cli delete` run as root will remove the user for an organization
+    even if "Allowed To Leave" is disabled in Zero Trust dashboard.
+  * Added `warp-cli disable-connectivity-checks` and `warp-cli
+    enabled-connectivity-checks` to control connectivity checks
+  * Fixed issue with `warp-cli teams-enroll` on platforms where the default
+    browser is installed with snap.
+  * Added "Device Posture Only" support
+
+ -- Matt Schulte <mschulte@cloudflare.com> Wed, 40 March 2022 15:30:00 -0700
+
+cloudflare-warp (2022.2.288) unstable; urgency=medium
+
+  * Fixed an issue where the organization name became case sensitive and could
+    cause a device to lose registration
+
+ -- Matt Schulte <mschulte@cloudflare.com> Thu, 24 Feb 2022 10:10:00 -0800
+
+cloudflare-warp (2022.2.29) unstable; urgency=medium
+
+  * Fixed issue with warp working on distros with v248 of systemd or newer
+  * Fixed issue with device posture application checks detecting running
+    processes
+  * Now that settings exist in the Zero Trust Dashboard the Client UI should
+    behave the same regardless of if you manually joined to a Team or if you
+    were forced to by local mdm.xml policy
+  * Fixed issue where the WARP Client might not get updated settings when it
+    initial starts
+  * Fixed issue where the Last Seen value was not updated properly in the Zero
+    Trust Dashboard while in "doh" mode
+  * Fixed issue where device name was not updated in the Zero trust Dashboard if
+    the computer name changed after initial registration
+  * Added the ability for daemon to parse mdm.xml file on Linux
+  * Shows the Zero Trust Terms of Service when user joins an organization
+
+ -- Matt Schulte <mschulte@cloudflare.com> Wed, 9 Feb 2022 14:07:00 -0800
+
+cloudflare-warp (2021.12.0) unstable; urgency=high
+
+  * Removes leaked signing key from apt key store
+  * Fixed connectivity issue when attempting to reconnect to WARP
+  * Add a background connectivity check
+  * you can now specify specific DNS servers to use for domains in Local
+    Domain fallback in the Teams Dashboard.
+
+ -- Matt Schulte <mschulte@cloudflare.com> Fri, 10 Dec 2021 14:34:00 -0700
+
+cloudflare-warp (2021.10.0) unstable; urgency=medium
+
+  * Client now supports include only split tunnel rules while in Teams mode
+  * Improved overall reliability of DNS and general connectivity when in Teams
+    modes
+  * Improved logging and fixed bug where we got incomplete logs from warp-diag
+  * Fixed connectivity issues some users experienced when coming out of sleep
+  * Fixed occasional registration issues when trying to join Teams
+    organization
+  * Fixed bug in restoring previous DNS settings on crash
+  * Fixed bug in Linux firewall blocking certain DNS requests
+  * Fixed issues in handling SIGTERM/SIGINT
+
+ -- Matt Schulte <mschulte@cloudflare.com>  Wed, 27 Oct 2021 10:13:15 -0700
+
+cloudflare-warp (2021.8.1) unstable; urgency=low
+
+  * Minor fixes to network changes while in proxy mode
+  * Minor stability fixes and improvements
+
+ -- Jeff Hiner <jhiner@cloudflare.com>  Fri, 13 Aug 2021 15:50:50 -0600
+
+cloudflare-warp (2021.8.0) unstable; urgency=medium
+
+  * Rewrite teams-client enrollment flow for Linux clients, including no-auth
+  * Implement nftables support for Linux
+  * Fix potential stack overflow errors in some clients
+  * Fix an issue where the client would stop working properly after a suspend
+  * Various stability improvements and other minor fixes
+
+ -- Jeff Hiner <jhiner@cloudflare.com>  Thu, 12 Aug 2021 12:24:00 -0600
+
+cloudflare-warp (2021.7.1) unstable; urgency=medium
+
+  * Teams registration now correctly sends serial number
+  * Added reset-settings command to CLI
+  * Fixed an issue that could prevent Teams registration on some systems
+  * Clarified behavior of host-based tunnel exclusion in Teams mode.
+    (Not yet supported, but doesn't drop traffic.)
+  * Minor bug fixes and improvements
+
+ -- Jeff Hiner <jhiner@cloudflare.com>  Fri, 26 Jul 2021 12:11:01 -0600
+
+cloudflare-warp (2021.7.0) unstable; urgency=medium
+
+  * Logging into Teams can now be done automatically from the CLI.
+  * The client can now collect requested device metadata and device posture
+    information in Teams mode.
+  * The client now sets system resolvers to better capture DNS traffic.
+  * Logs have been move to /var/logs/cloudflare-warp.
+  * Minor bug fixes and improvements.
+
+ -- Brendan McMillion <brendan@cloudflare.com>  Fri, 9 Jul 2021 12:59:36 -0700
+
+cloudflare-warp (2021.6.0) unstable; urgency=medium
+
+  * warp-diag can now directly upload logs to Cloudflare.
+  * Improves performance of DNS resolution.
+  * Minor bug fixes and improvements.
+
+ -- Brendan McMillion <brendan@cloudflare.com>  Thu, 10 Jun 2021 12:38:41 -0700
+
+cloudflare-warp (2021.5.0) unstable; urgency=medium
+
+  * No longer requires sudo to run warp-diag.
+  * Fills in extended metadata when Zendesk tickets are submitted.
+  * Minor bug fixes and improvements.
+
+ -- Brendan McMillion <brendan@cloudflare.com>  Tue, 04 May 2021 08:47:32 -0700
+
+cloudflare-warp (2021.4.1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Brendan McMillion <brendan@cloudflare.com>  Mon, 03 May 2021 18:13:12 -0700
