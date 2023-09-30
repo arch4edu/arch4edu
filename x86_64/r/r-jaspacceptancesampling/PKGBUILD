@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspAcceptanceSampling
-_pkgver=0.18.0
+_pkgver=0.18.1
 pkgname=r-${_pkgname,,}
-pkgver=0.18.0
+pkgver=0.18.1
 pkgrel=1
 pkgdesc="Lot sampling for acceptance/rejection of lots"
 arch=('any')
@@ -22,7 +22,7 @@ depends=(r
   r-acceptancesampling
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('a613119a5a8c072c33cea5eb47fbe5f726d033c669f5653db727f6ae2817af8b')
+sha256sums=('1da5ce5d8c63455f33269875142a74ab6d6f290e860e432020cd2e2b18b56852')
 
 
 build() {
