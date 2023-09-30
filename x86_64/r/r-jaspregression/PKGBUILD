@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspRegression
-_pkgver=0.18.0
+_pkgver=0.18.1
 pkgname=r-${_pkgname,,}
-pkgver=0.18.0
+pkgver=0.18.1
 pkgrel=1
 pkgdesc="Regression Module for JASP"
 arch=('x86_64')
@@ -32,7 +32,7 @@ depends=(r
   r-statmod
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('fcb11ce86c509995400d7c9fb57884fd9541f5de319a42b97dedc96376e6da9c')
+sha256sums=('7ce7bd6a4cf17e67e336b791fa3fdb3ea1039e82e74fdac98f92321fb25216b3')
 
 
 build() {
