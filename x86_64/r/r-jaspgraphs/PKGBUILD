@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspGraphs
-_pkgver=0.18.0
+_pkgver=0.18.1
 pkgname=r-${_pkgname,,}
-pkgver=0.18.0
+pkgver=0.18.1
 pkgrel=1
 pkgdesc="Custom Graphs for JASP"
 arch=('any')
@@ -20,7 +20,7 @@ depends=(r
 )
 optdepends=('r-testthat')
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('476c2b032336174090b9ae816a3f561049e3216b46ef224a41fe1b5bbb9ca4f1')
+sha256sums=('161f9661d0730bb8ca90710387dd83c7ddc87564d7d9d36f17d258f810783cb6')
 
 
 build() {
