@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBase
-_pkgver=0.18.0
+_pkgver=0.18.1
 pkgname=r-${_pkgname,,}
-pkgver=0.18.0
-pkgrel=1
+pkgver=0.18.1
+pkgrel=2
 pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
 arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -41,13 +41,13 @@ depends=(r
 optdepends=()
 source=(
 "${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
-"jaspColumnEncoder-${_pkgver}.tar.gz::https://github.com/jasp-stats/jaspColumnEncoder/archive/refs/tags/v${_pkgver}.tar.gz"
+"jaspColumnEncoder-${_pkgver}.tar.gz::https://github.com/jasp-stats/jaspColumnEncoder/archive/refs/tags/v0.18.0.tar.gz"
 )
-sha256sums=('04310efd1cb8869672a43729fb7791cb045851777a36067bcd11218a890e9269'
+sha256sums=('1406977c23acc322b57e97cc90da54aed6fb95ea20c9f157506554335d0edcd2'
             'da345bb73e365bb345935fd7263575ef0be1af79490105713cca06de258096ad')
 
 build() {
-  export INCLUDE_DIR=${srcdir}/jaspColumnEncoder-${_pkgver}
+  export INCLUDE_DIR=${srcdir}/jaspColumnEncoder-0.18.0
 
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
