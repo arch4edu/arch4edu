@@ -5,10 +5,10 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=plyr
-_pkgver=1.8.8
+_pkgver=1.8.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Tools for Splitting, Applying and Combining Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0a22da16605ee765e7d4f1efc9f7a61f')
-sha256sums=('a73211b4bbe13e4e5e764966a8dd90172c1cc311938dd464d142e1c7a701070c')
+md5sums=('5a8b129534abace172059ecc5c0b5072')
+sha256sums=('15b5e7f711d53bf41b8687923983b8ef424563aa2f74c5195feb5b1df1aee103')
 
 build() {
   mkdir -p build
