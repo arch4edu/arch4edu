@@ -15,9 +15,7 @@ if [ -f "/usr/lib/libHYPRE.so" ]; then
   VERSION=$(readlink -f '/usr/lib/libHYPRE.so' | sed -r 's/^.*libHYPRE-(.*)\.so/\1/')
 
 	if [ "$VERSION_MIN" = "$(printf '%s\n' "$VERSION_MIN" "$VERSION" | sort -V | head -n1)" ]; then
-		echo "HYPRE 2.29.0 is not supported" 1>&2
-		exit 1
-		# CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
+		CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
 	else
 		(>&2 echo "WARNING: COMPILING PETSc WITHOUT HYPRE.")
 		(>&2 echo "HYPRE $VERSION FOUND BUT AT LEAST $VERSION_MIN IS REQUIRED.")
