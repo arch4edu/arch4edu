@@ -6,7 +6,7 @@ pkgbase=python-scikit-image
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
-pkgver=0.21.0
+pkgver=0.22.0
 pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
@@ -15,19 +15,27 @@ license=('BSD')
 makedepends=('cython>=0.29.32'
              'python-setuptools'
              'python-numpy'
-             'meson-python'
+             'meson-python>=0.14'
 #            'ninja'
              'python-wheel'
              'python-build'
              'python-installer'
              'python-pythran'
              'python-packaging>=21')
-depends=('python-numpy>=1.21.1' 'python-scipy>=1.8' 'python-networkx>=2.8' 'python-pillow>=9.0.1' 'python-pywavelets>=1.1.1' 'python-imageio>=2.27' 'python-tifffile>=2022.8.12' 'python-packaging>=21' 'python-lazy-loader>=0.2')
+depends=('python-numpy>=1.22' 'python-scipy>=1.8' 'python-networkx>=2.8' 'python-pillow>=9.0.1' 'python-imageio>=2.27' 'python-tifffile>=2022.8.12' 'python-packaging>=21' 'python-lazy-loader>=0.3')
 checkdepends=('python-pytest>=5.2.0'
-              'python-pytest-cov>=2.7.0'
+              'python-astropy>=5.0'
+              'python-pytest-cov>=2.11.0'
+              'python-dask'
+              'python-imread'
               'python-matplotlib>=3.5'
+              'python-matplotlib>=3.5'
+              'python-numpydoc>=1.5'
 #             'python-pytest-flake8'
               'python-pytest-localserver'
+              'python-pywavelets>=1.1.1'
+              'python-scikit-learn'
+              'python-simpleitk'
               'python-pooch>=1.6.0')
 #             'python-pyqt5')
 #             'python-pytest-faulthandler')
@@ -39,14 +47,15 @@ optdepends=('python-matplotlib>=3.5'
             'python-dask>2021.1.0: used to speed up certain functions'
             'python-cloudpickle>=0.2.1: necessary to provide the 'processes' scheduler for dask'
             'python-pooch>=1.6.0'
-            'python-scikit-learn>=0.24.0')
+            'python-scikit-learn>=1.1'
+            'python-pywavelets>=1.1.1')
 #           'python-imread: Optional I/O plugin providing most standard formats'
 #           'python-pyqt5: for imshow[x, fancy=True] and skivi'
 #           'pyside2: for imshow[x, fancy=True] and skivi'
 #           'python-qtpy'
 options=('!emptydirs')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('b33e823c54e6f11873ea390ee49ef832b82b9f70752c8759efd09d5a4e3d87f0')
+sha256sums=('018d734df1d2da2719087d15f679d19285fce97cd37695103deadfaef2873236')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -117,7 +126,7 @@ check() {
         --deselect=dist/lib/skimage/restoration/tests/test_restoration.py::test_unsupervised_wiener[float64] \
         --deselect=dist/lib/skimage/restoration/tests/test_restoration.py::test_richardson_lucy[1] \
         --deselect=dist/lib/skimage/restoration/tests/test_restoration.py::test_richardson_lucy[2] \
-        --deselect=dist/lib/skimage/registration/tests/test_masked_phase_cross_correlation.py::test_masked_registration_padfield_data || warning "Tests failed" # -vv --color=yes
+        --deselect=dist/lib/skimage/registration/tests/test_masked_phase_cross_correlation.py::test_masked_registration_padfield_data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 
 #       --deselect=dist/lib/skimage/io/tests/test_tifffile.py::test_imread_uint16 \
 #       --deselect=dist/lib/skimage/io/tests/test_tifffile.py::test_imread_uint16_big_endian \
