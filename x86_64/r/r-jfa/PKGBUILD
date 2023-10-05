@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=jfa
-_pkgver=0.6.7
+_pkgver=0.7.0
 pkgname=r-${_pkgname,,}
-pkgver=0.6.7
+pkgver=0.7.0
 pkgrel=1
 pkgdesc='Bayesian and Classical Audit Sampling'
 arch=('x86_64')
@@ -35,7 +35,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2b0328d4bbc06c19e3005274e0deccd1104a85aa0c9d7b34de93c84e93c8d12b')
+sha256sums=('a748c6521121c989a87af0631871903c7418b9cb9f5da87646fee61bc479d794')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
