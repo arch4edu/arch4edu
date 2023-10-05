@@ -21,10 +21,6 @@ fi
 
 # HYPRE
 if [ -f "/usr/lib/libHYPRE.so" ]; then
-  if [ -f "/usr/lib/libHYPRE-2.29.0.so" ]; then
-    echo "HYPRE 2.29.0 is not supported" 1>&2
-    exit 1
-  fi
   CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
 fi
 
