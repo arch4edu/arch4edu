@@ -2,7 +2,7 @@
 # Maintainer : Austin Cross <austincross@gmail.com>
 pkgname=g2clib
 pkgver=1.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc="GRIB2 encoder/decoder (C version)"
 url="https://github.com/NOAA-EMC/NCEPLIBS-g2c"
 license=("LGPL3")
