@@ -1,5 +1,5 @@
 diff --git a/SConstruct b/SConstruct
-index 2ebeb0e..44ce93a 100644
+index 92d557b..80ee9e8 100644
 --- a/SConstruct
 +++ b/SConstruct
 @@ -23,7 +23,6 @@ from pkg_resources import parse_version
@@ -10,7 +10,7 @@ index 2ebeb0e..44ce93a 100644
  from site_scons.mongo import build_profiles
  
  # This must be first, even before EnsureSConsVersion, if
-@@ -1657,13 +1656,6 @@ env.AddMethod(lambda env, name, **kwargs: add_option(name, **kwargs), 'AddOption
+@@ -1649,13 +1648,6 @@ env.AddMethod(lambda env, name, **kwargs: add_option(name, **kwargs), 'AddOption
  
  # The placement of this is intentional. Here we setup an atexit method to store tooling metrics.
  # We should only register this function after env, env_vars and the parser have been properly initialized.
@@ -24,7 +24,7 @@ index 2ebeb0e..44ce93a 100644
  
  if get_option('build-metrics'):
      env['BUILD_METRICS_ARTIFACTS_DIR'] = '$BUILD_ROOT/$VARIANT_DIR'
-@@ -3034,7 +3026,6 @@ if env.TargetOSIs('posix'):
+@@ -3026,7 +3018,6 @@ if env.TargetOSIs('posix'):
      env.Append(
          CCFLAGS=[
              "-fasynchronous-unwind-tables",
@@ -32,7 +32,7 @@ index 2ebeb0e..44ce93a 100644
              "-Wall",
              "-Wsign-compare",
              "-Wno-unknown-pragmas",
-@@ -3101,6 +3092,8 @@ if env.TargetOSIs('posix'):
+@@ -3093,6 +3084,8 @@ if env.TargetOSIs('posix'):
  
      # env.Append( " -Wconversion" ) TODO: this doesn't really work yet
      env.Append(CXXFLAGS=["-Woverloaded-virtual"])
@@ -41,7 +41,7 @@ index 2ebeb0e..44ce93a 100644
  
      # On OS X, clang doesn't want the pthread flag at link time, or it
      # issues warnings which make it impossible for us to declare link
-@@ -3151,7 +3144,7 @@ if env.TargetOSIs('posix'):
+@@ -3143,7 +3136,7 @@ if env.TargetOSIs('posix'):
          ], )
  
      #make scons colorgcc friendly
@@ -50,7 +50,7 @@ index 2ebeb0e..44ce93a 100644
          try:
              env['ENV'][key] = os.environ[key]
          except KeyError:
-@@ -3553,33 +3546,6 @@ def doConfigure(myenv):
+@@ -3543,33 +3536,6 @@ def doConfigure(myenv):
          myenv.AddMethod(
              functools.partial(var_func, var=var, func=CheckFlag), f"Check{var}Supported")
  
@@ -84,7 +84,51 @@ index 2ebeb0e..44ce93a 100644
      detectCompiler = Configure(
          myenv,
          help=False,
-@@ -5119,17 +5085,13 @@ def doConfigure(myenv):
+@@ -4621,43 +4587,6 @@ def doConfigure(myenv):
+     if optBuild == "off" and myenv.ToolchainIs('clang') and env.TargetOSIs('darwin'):
+         myenv.AddToLINKFLAGSIfSupported("-Wl,-no_deduplicate")
+ 
+-    # Apply any link time optimization settings as selected by the 'lto' option.
+-    if has_option('lto'):
+-        if myenv.ToolchainIs('msvc'):
+-            # Note that this is actually more aggressive than LTO, it is whole program
+-            # optimization due to /GL. However, this is historically what we have done for
+-            # windows, so we are keeping it.
+-            #
+-            # /GL implies /LTCG, so no need to say it in CCFLAGS, but we do need /LTCG on the
+-            # link flags.
+-            myenv.Append(CCFLAGS=['/GL'])
+-            myenv.Append(LINKFLAGS=['/LTCG'])
+-            myenv.Append(ARFLAGS=['/LTCG'])
+-        elif myenv.ToolchainIs('gcc', 'clang'):
+-            # For GCC and clang, the flag is -flto, and we need to pass it both on the compile
+-            # and link lines.
+-            if not myenv.AddToCCFLAGSIfSupported('-flto') or \
+-                    not myenv.AddToLINKFLAGSIfSupported('-flto'):
+-                myenv.ConfError("Link time optimization requested, "
+-                                "but selected compiler does not honor -flto")
+-
+-            if myenv.TargetOSIs('darwin'):
+-                myenv.AddToLINKFLAGSIfSupported('-Wl,-object_path_lto,${TARGET}.lto')
+-            else:
+-                # According to intel benchmarks -fno-plt increases perf
+-                # See PM-2215
+-                if linker_ld != "gold":
+-                    myenv.ConfError("lto compilation currently only works with the --linker=gold")
+-                if link_model != "object":
+-                    myenv.ConfError(
+-                        "lto compilation currently only works with the --link-model=object")
+-                if not myenv.AddToCCFLAGSIfSupported('-fno-plt') or \
+-                    not myenv.AddToLINKFLAGSIfSupported('-fno-plt'):
+-                    myenv.ConfError("-fno-plt is not supported by the compiler")
+-
+-        else:
+-            myenv.ConfError("Don't know how to enable --lto on current toolchain")
+-
+     if get_option('runtime-hardening') == "on" and optBuild != "off":
+         # Older glibc doesn't work well with _FORTIFY_SOURCE=2. Selecting 2.11 as the minimum was an
+         # emperical decision, as that is the oldest non-broken glibc we seem to require. It is possible
+@@ -5120,17 +5049,13 @@ def doConfigure(myenv):
          "BOOST_LOG_NO_SHORTHAND_NAMES",
          "BOOST_LOG_USE_NATIVE_SYSLOG",
          "BOOST_LOG_WITHOUT_THREAD_ATTR",
@@ -103,7 +147,7 @@ index 2ebeb0e..44ce93a 100644
      if use_system_version_of_library("boost"):
          if not conf.CheckCXXHeader("boost/filesystem/operations.hpp"):
              myenv.ConfError("can't find boost headers")
-@@ -5326,6 +5288,9 @@ def doConfigure(myenv):
+@@ -5327,6 +5252,9 @@ def doConfigure(myenv):
  
      mongoc_mode = get_option('use-system-mongo-c')
      conf.env['MONGO_HAVE_LIBMONGOC'] = False

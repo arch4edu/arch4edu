@@ -13,7 +13,7 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=7.0.1
+pkgver=7.0.2
 pkgrel=2
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
@@ -32,15 +32,13 @@ source=("https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz"
         mongodb.tmpfiles
         mongodb-5.0.2-skip-reqs-check.patch
         mongodb-5.0.2-no-compass.patch
-        mongodb-7.0.1-sconstruct.patch
-        mongodb-7.0.1-gcc13.patch)
-sha256sums=('448c45a05a053b917bd08a1e2d04b9829838fb97582a371c1bb764893dc14241'
+        mongodb-7.0.2-sconstruct.patch)
+sha256sums=('64fab0b107464e08fdead98bd6be7d94a269d32af6a557a55cb5a62a86e09f4b'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             '4ff40320e04bf8c3e05cbc662f8ea549a6b8494d1fda64b1de190c88587bfafd'
             '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
-            'b9b2b45e19a964975323da087c1b4615d84b4aef41f559ee016926d71bd38d09'
-            '0629ed44fe3f7682b8a19632c87bc5c33140acea5940b8a598e3860a1e5d773c')
+            '078d94d712c3bb86a77d13bf2021299f4db2332c9d5346dba1ceb0cce1ba8492')
 
 _scons_args=(
   CC="${CC:-gcc}"
