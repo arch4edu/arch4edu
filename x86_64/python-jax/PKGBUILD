@@ -2,7 +2,7 @@
 
 pkgname='python-jax'
 pkgver=0.4.17
-pkgrel=1
+pkgrel=2
 pkgdesc='Differentiate, compile, and transform Numpy code.'
 arch=('any')
 url='https://github.com/google/jax/'
@@ -18,6 +18,10 @@ makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel
 source=("jax-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jax-v${pkgver}.tar.gz")
 sha256sums=('31d8e55b6c2655f57d4f5214e4620834d484fcdd783e33f51ec83fa2a4700918')
 
+prepare() {
+    export JAX_RELEASE=$pkgver
+}
+
 build() {
     cd jax-jax-v$pkgver
     python -m build -n -w
@@ -27,5 +31,5 @@ package() {
     python -m installer \
         --compile-bytecode 1 \
         --destdir $pkgdir \
-        jax-jax-v$pkgver/dist/jax-*.whl
+        jax-jax-v$pkgver/dist/jax-$pkgver-*.whl
 }
