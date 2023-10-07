@@ -2,7 +2,7 @@
 
 pkgbase=jellyfin-bin
 pkgname=(jellyfin-bin jellyfin-web-bin jellyfin-server-bin)
-pkgver=10.8.10
+pkgver=10.8.11
 _pkgver="${pkgver}-1"
 pkgrel=1
 pkgdesc='The Free Software Media System'
@@ -22,15 +22,15 @@ source_x86_64=("jellyfin-${pkgver}.deb::https://repo.jellyfin.org/releases/serve
 source_aarch64=("jellyfin-${pkgver}.deb::https://repo.jellyfin.org/releases/server/debian/versions/stable/server/${pkgver}/jellyfin-server_${_pkgver}_arm64.deb")
 source_armv7h=("jellyfin-${pkgver}.deb::https://repo.jellyfin.org/releases/server/debian/versions/stable/server/${pkgver}/jellyfin-server_${_pkgver}_armhf.deb")
 sha256sums=(
-	'1e43006c2308bc219bc734fee1f6c48e843921ba7ded09188ca8cfa435ee800f'
+	'9875062909d8a4e7081a50c5aac2fb6378edfeebccb0830a6eadd7e0d04b7f6d'
 	'1ea19635cced6672484937903c27976a5a145d708caff06a687a8defdd23d549'
 	'0f8511673816daf528625366b6c27bc7e6182e4ac789191c87474667398376e2'
 	'9bc1ddb77c73d46cc4078356b5773e5a776ebf8b47a1c820ad5fb17591ad5228'
 	'b7faa4b0c756cdb361ef5b04fddfdc416b00f1246bb3a19a34bf4d185a6a7e5a'
 )
-sha256sums_x86_64=('1d740a2a9603994bd77e77de4dc4097ea40995d77f3b3fdc8766bb2b5a7527ad')
-sha256sums_aarch64=('52efc80ea71b190081b393696b61fa17e85c28eea9651b3510e933d8ce3004bd')
-sha256sums_armv7h=('0a2302dbf6a08485774ed5d6877891ed7109ab012b7c803840a0160d82496bb4')
+sha256sums_x86_64=('8d512bf3d457c8cd92ade0cd32ce99d70f5549677779404ae89413ec77248e87')
+sha256sums_aarch64=('a1d132fbf624e9745e43a6600f6364ff15e86c8cf75950a5a44b7a20e6fd41ca')
+sha256sums_armv7h=('f35d0cda50b22be9d5480f68db70bf1b66f0a974d93739a333fa540e941147d1')
 noextract=("jellyfin-${pkgver}.deb" "jellyfin-web-${pkgver}.deb")
 options=('staticlibs')
 
@@ -46,7 +46,7 @@ package_jellyfin-bin() {
 
 package_jellyfin-server-bin() {
 	pkgdesc="Jellyfin server component"
-	optdepends=('jellyfin-ffmpeg5: Patched FFmpeg providing hardware acceleration and tonemapping support')
+	optdepends=('jellyfin-ffmpeg6-bin: Patched FFmpeg providing hardware acceleration and tonemapping support')
 	depends=('ffmpeg')
 	provides=('jellyfin-server')
 	conflicts=('jellyfin-server')
