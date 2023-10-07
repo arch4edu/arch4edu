@@ -6,6 +6,7 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-moments
   - x86_64/r/r-nortest
+  - x86_64/r/r-wesanderson
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
