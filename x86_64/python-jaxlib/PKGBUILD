@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname=python-jaxlib
-pkgver=0.4.17
+pkgver=0.4.18
 pkgrel=1
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
@@ -15,7 +15,7 @@ depends=('python-absl'
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 conflicts=('python-jaxlib')
 source=("jaxlib-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jaxlib-v${pkgver}.tar.gz")
-sha256sums=('cab7e011de94e60dbdd62779508097edb959ffdae9329e44b388900348e461a4')
+sha256sums=('7500534702189e221fccb6eb7bac2dee55769789ef99c161eeaf9b30d7f05c7c')
 
 prepare() {
     export JAXLIB_RELEASE=$pkgver
