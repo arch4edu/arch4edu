@@ -1,7 +1,7 @@
 # Maintainer: "Jan Kohnert <bughunter@jan-kohnert.de"
 # Contributor: Graziano Giuliani <graziano.giuliani@poste.it>
 pkgname=eccodes
-pkgver=2.31.0
+pkgver=2.32.0
 _attnum=45757960
 pkgrel=1
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
@@ -17,7 +17,7 @@ source=(
     "${pkgname}-${pkgver}-test-data.tar.gz::https://get.ecmwf.int/repository/test-data/eccodes/eccodes_test_data.tar.gz"
 )
 sha512sums=(
-    "f3fe70ad0a765ae6e9d23b1b0c6ac96ad81a8324b15b7ebbcc958ffa1a046079d4a9953d720a8c15ac421897059a74c96ea678254f59c88538e3dd4970da131c"
+    "30b867b396c13cc7f0a8049b4c5e938a634a3e90d1e8835923a068b645ac3f4ec43df30ecb0dcd6e29aaf81a0e40cbbf75c49f6172109def26e6ec330ce4ed9f"
     "0457878caad6a3395daf60e27cfb72121526065b0cf4da144c7499b8d38bebae0952ddbd20ef0eb53fad77ada60160039340da01001f19fbb7fb1ccbb3d0547a"
 )
     
