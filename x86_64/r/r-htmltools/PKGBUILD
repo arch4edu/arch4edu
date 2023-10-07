@@ -8,7 +8,7 @@ _pkgname=htmltools
 _pkgver=0.5.6.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Tools for HTML"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,6 +21,7 @@ depends=(
   r-rlang
 )
 checkdepends=(
+  r-knitr
   r-markdown
   r-testthat
 )
