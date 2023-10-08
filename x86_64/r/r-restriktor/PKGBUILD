@@ -1,32 +1,38 @@
-# Maintainer: sukanka <su975853527@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=restriktor
-_pkgver=0.5-20
+_pkgver=0.5-30
 pkgname=r-${_pkgname,,}
-pkgver=0.5.20
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Restricted Statistical Estimation and Inference for Linear Models'
-arch=('any')
+pkgdesc="Restricted Statistical Estimation and Inference for Linear Models"
+arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL)
 depends=(
-  r
   r-ggplot2
   r-ic.infer
   r-lavaan
   r-mvtnorm
-  r-norm2
+  r-norm
   r-quadprog
 )
+optdepends=(
+  r-bain
+  r-knitr
+  r-rmarkdown
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b43386d44da5938cfbc8b9c94256dcaa504bc1442b85bd32cdf7027e623c1091')
+md5sums=('ec3023fa71654bd421e7c1f82c1be9fc')
+sha256sums=('2f91995e1248280a4068017fa418431211a480a8add0166915248a9e45428be2')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
