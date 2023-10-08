@@ -8,39 +8,39 @@
 
 pkgname=python-numpy-mkl
 pkgver=1.26.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
-arch=('x86_64' 'i686')
+arch=('x86_64')
 license=('custom')
-url="http://numpy.scipy.org/"
+url="http://www.numpy.org/"
 provides=("python-numpy=$pkgver")
 conflicts=('python-numpy')
 depends=('python' 'intel-oneapi-mkl')
-optdepends=('python-nose: testsuite')
-makedepends=('cython' 'gcc-fortran' 'procps-ng' 'python-nose' 'python-setuptools')
+makedepends=('cython' 'meson-python' 'procps-ng' 'python-build' 'python-installer')
 checkdepends=('python-pytest' 'python-hypothesis')
-options=('staticlibs')
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
 sha256sums=('f93fc78fe8bf15afe2b8d6b6499f1c73953169fad1e9a8dd086cdff3190e7fdf')
 
 build() {
   source /opt/intel/oneapi/setvars.sh
   cd numpy-$pkgver
-  python setup.py build
+  python -m build --wheel --no-isolation \
+    -Csetup-args="-Dblas=mkl-dynamic-lp64-seq" \
+    -Csetup-args="-Dlapack=mkl-dynamic-lp64-seq"
 }
 
 check() {
-  # TODO: Fix fortran tests here (it works fine after installation)
+  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+
   cd numpy-$pkgver
-  python setup.py install --root="$PWD/tmp_install" --optimize=1
+  python -m installer --destdir="$PWD/tmp_install" dist/*.whl
   cd "$PWD/tmp_install"
-  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/usr/lib/python3.11/site-packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
+  PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/$site_packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
 }
 
 package() {
   cd numpy-$pkgver
-  python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1
+  python -m installer --destdir="$pkgdir" dist/*.whl
 
-  install -m755 -d "${pkgdir}/usr/share/licenses/python-numpy"
-  install -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-numpy/"
+  install -D -m644 LICENSE.txt -t "${pkgdir}/usr/share/licenses/python-numpy/"
 }
