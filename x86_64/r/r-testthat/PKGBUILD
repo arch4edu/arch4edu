@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=testthat
-_cranver=3.1.10
+_cranver=3.2.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -15,25 +15,25 @@ arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
-    "r>=3.1"
-    "r-brio"
-    "r-callr>=3.5.1"
-    "r-cli>=3.4.0"
-    "r-desc"
-    "r-digest"
-    "r-ellipsis>=0.2.0"
-    "r-evaluate"
-    "r-jsonlite"
-    "r-lifecycle"
-    "r-magrittr"
-    "r-pkgload>=1.3.0"
-    "r-praise"
+    "r>=3.6.0"
+    "r-brio>=1.1.3"
+    "r-callr>=3.7.3"
+    "r-cli>=3.6.1"
+    "r-desc>=1.4.2"
+    "r-digest>=0.6.33"
+    "r-ellipsis>=0.3.2"
+    "r-evaluate>=0.21"
+    "r-jsonlite>=1.8.7"
+    "r-lifecycle>=1.0.3"
+    "r-magrittr>=2.0.3"
+    "r-pkgload>=1.3.2.1"
+    "r-praise>=1.0.0"
     "r-processx>=3.8.2"
-    "r-ps>=1.3.4"
-    "r-r6>=2.2.0"
-    "r-rlang>=1.0.1"
-    "r-waldo>=0.5.0"
-    "r-withr>=2.4.3"
+    "r-ps>=1.7.5"
+    "r-r6>=2.5.1"
+    "r-rlang>=1.1.1"
+    "r-waldo>=0.5.1"
+    "r-withr>=2.5.0"
 )
 optdepends=(
     "r-covr"
@@ -49,7 +49,7 @@ optdepends=(
 )
 
 # The unittests for `r-testthat` have multiple circular
-# dependency chains.
+# dependency chains (including itself!).
 
 # As such, the tests can not be run on first build.
 # While R packages from CRAN, generally, are well-tested
@@ -68,7 +68,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("9fcdfb2119f5446815cd3a03c849a87be0e1048d54bb360db45d94b431f2b64469595bcfe9077379700c7675f300a93f744ef445598699ca774b7f513b78a1a3")
+b2sums=("654cad527ed81955bd4508866ea7ff81915203fae252ba7f85f123fac74ca4f59f455a78ac50af4cb3df3187f323c9b446382e23669ba8a670413117bd160b7d")
 
 build() {
     mkdir -p "${srcdir}/build/"
