@@ -2,42 +2,40 @@
 _base=dolfinx
 pkgname=python-fenics-${_base}
 pkgdesc="Next generation FEniCS problem solving environment (python interface)"
-pkgver=0.6.0
-pkgrel=3
+pkgver=0.7.0
+pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
 license=(LGPL3)
 depends=(dolfinx python-mpi4py)
-makedepends=(cmake python-setuptools pybind11)
-# checkdepends=(python-pytest python-scipy python-matplotlib python-cppimport python-numba openssh)
-optdepends=('gmsh: for extract data from Gmsh models')
+makedepends=(python-build python-installer python-setuptools python-wheel pybind11 cmake)
+checkdepends=(python-pytest python-cppimport python-scipy eigen python-matplotlib python-numba)
+optdepends=('python-pyvista: for plotting'
+  'python-numba: for jit support'
+  'slepc: for eigenvalue solver support'
+  'gmsh: for extract data from Gmsh models')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('6e4bbeca9045cdc558fa5cdfd23abe55bdb773b326381eaa25f843e70d9df39c5707bfdf5412ae1845fc680bbbc7cb641f9cf6e4eb2226a760ddaab8d04237bf')
-
-prepare() {
-  # https://github.com/FEniCS/dolfinx/pull/2657
-  sed -i 's/#include "caster_petsc.h"/\/\/#include "caster_petsc.h"/' ${_base}-${pkgver}/python/dolfinx/wrappers/common.cpp
-  sed -i 's/#include "caster_petsc.h"/\/\/#include "caster_petsc.h"/' ${_base}-${pkgver}/python/dolfinx/wrappers/io.cpp
-  sed -i 's/#include "caster_petsc.h"/\/\/#include "caster_petsc.h"/' ${_base}-${pkgver}/python/dolfinx/wrappers/mesh.cpp
-}
+sha512sums=('69c7f740b69492894c2dad8a968e614abcba7faa345befa6383fa939442df1627bb05286ddbdc11fa96eb754d7e5983030a7df36320e238e0bfb6f21fc933059')
 
 build() {
   cd ${_base}-${pkgver}/python
   source /etc/profile.d/petsc.sh
-  python setup.py build
+  python -m build --wheel --skip-dependency-check --no-isolation
 }
 
-# check() {
-#   if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
-#     export OMPI_MCA_opal_warn_on_missing_libcuda=0
-#   fi
-#   local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
-#   PYTHONPATH="${srcdir}/${_base}-${pkgver}/python/build/lib.linux-${CARCH}-cpython-${_pyversion}:$PYTHONPATH" python -m pytest ${_base}-${pkgver}/python/test/unit -k 'not version'
-#   PYTHONPATH="${srcdir}/${_base}-${pkgver}/python/build/lib.linux-${CARCH}-cpython-${_pyversion}:$PYTHONPATH" python -m pytest ${_base}-${pkgver}/python/demo/test.py -k 'not demos[path9-demo_static-condensation.py] and not demos[path10-demo_stokes.py] and not demos_mpi[path9-demo_static-condensation.py] and not demos_mpi[path10-demo_stokes.py]'
-# }
+check() {
+  if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
+    export OMPI_MCA_opal_warn_on_missing_libcuda=0
+  fi
+
+  python -m venv --system-site-packages test-env
+  test-env/bin/python -m installer ${_base}-${pkgver}/python/dist/*.whl
+  test-env/bin/python -m pytest ${_base}-${pkgver}/python/test/unit -k 'not context_manager_anonymous'
+  test-env/bin/python -m pytest ${_base}-${pkgver}/python/demo/test.py
+}
 
 package() {
   cd ${_base}-${pkgver}/python
-  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
 }
-makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
+makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
