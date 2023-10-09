@@ -28,6 +28,7 @@ depends:
   - x86_64/r/r-jasppower
   - x86_64/r/r-jaspprophet
   - x86_64/r/r-jaspreliability
+  - x86_64/r/r-jasprobustttests
   - x86_64/r/r-jaspsem
   - x86_64/r/r-jaspsummarystatistics
   - x86_64/r/r-jasptimeseries

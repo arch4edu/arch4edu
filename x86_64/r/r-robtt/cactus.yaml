@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bayestools
+  - x86_64/r/r-bridgesampling
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcppparallel
+  - x86_64/r/r-rdpack
+  - x86_64/r/r-rstan
+  - x86_64/r/r-rstantools
+makedepends:
+  - x86_64/r/r-bh
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-stanheaders
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
