@@ -10,8 +10,8 @@
 # package, maintained by T. Borgert.
 
 pkgname=ros2-humble
-pkgver=2023.07.24
-pkgrel=1
+pkgver=2023.09.25
+pkgrel=2
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
 arch=('any')
@@ -19,6 +19,7 @@ license=('Apache')
 depends=(
     'ros2-arch-deps'
     'qt6-base'
+    'nvidia-cg-toolkit'
     'assimp'
     'gmock'
 )
@@ -50,8 +51,6 @@ prepare() {
     export GIT_AUTHOR_EMAIL="pkgbuild@example.com"
 
     # Fix some issues in the code (TODO: Gradually move to upstream)
-    ## eProsima Fast-DDS: fix missing cstdint include
-    git -C $srcdir/ros2/src/eProsima/Fast-DDS cherry-pick -X theirs 02539b98a3a36e711da8f416372cbab2ecc178bb
     ## rcpputils: fix missing cstdint include
     git -C $srcdir/ros2/src/ros2/rcpputils cherry-pick f96811a9047fa6a084a885219c88b415bc544487
     ## libstatistics_collector: Fix missing cstdint include
@@ -79,7 +78,7 @@ build() {
     CXXFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=2\s//g" <(echo $CXXFLAGS))
 
     # Build
-    colcon build --merge-install ${COLCON_EXTRA_ARGS}
+    colcon build --merge-install ${COLCON_EXTRA_ARGS} --cmake-args -Wno-dev
 }
 
 package() {
