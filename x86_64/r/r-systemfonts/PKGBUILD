@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=systemfonts
-_pkgver=1.0.4
+_pkgver=1.0.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=1
 pkgdesc="System Native Font Finding"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b099fee0892289e48b34cd412dacc535')
-sha256sums=('ef766c75b942f147d382664a00d6a4930f1bfe0cce9d88943f571682a85a84c0')
+md5sums=('92edbeac47df03bf8015ac2d97c2a739')
+sha256sums=('840ffb1d8293739c79cbc868101d9f9a84f4a9de4c7b3625e30af2fb63e15823')
 
 build() {
   mkdir -p build
