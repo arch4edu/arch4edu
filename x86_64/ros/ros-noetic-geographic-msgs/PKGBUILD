@@ -6,7 +6,7 @@ url='https://wiki.ros.org/geographic_msgs'
 pkgname='ros-noetic-geographic-msgs'
 pkgver='0.5.6'
 arch=('any')
-pkgrel=3
+pkgrel=4
 license=('BSD')
 
 ros_makedepends=(ros-noetic-catkin
@@ -31,9 +31,14 @@ depends=(${ros_depends[@]})
 
 # Tarball version (faster download)
 _dir="geographic_info-${pkgver}/geographic_msgs"
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-geographic-info/geographic_info/archive/${pkgver}.tar.gz")
-sha256sums=('0e0e30544c26aba82e9436650848b1442ac5cb4a51157c5acbfdc348d6aadaae')
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-geographic-info/geographic_info/archive/${pkgver}.tar.gz"
+        "https://github.com/ros-geographic-info/geographic_info/pull/50.patch")
+sha256sums=('0e0e30544c26aba82e9436650848b1442ac5cb4a51157c5acbfdc348d6aadaae'
+            '87b4cb2e8538092c6b05c9959447c6bf190da0760b0c32c6c514cc72f86e5fcc')
 
+prepare() {
+  patch --directory="$srcdir/geographic_info-$pkgver" --forward --strip=1 --input="${srcdir}/50.patch"
+}
 build() {
   # Use ROS environment variables
   source /usr/share/ros-build-tools/clear-ros-env.sh
@@ -45,6 +50,7 @@ build() {
 
   # Build project
   cmake ${srcdir}/${_dir} \
+        -Wno-dev \
         -DCATKIN_BUILD_BINARY_PACKAGE=ON \
         -DCMAKE_INSTALL_PREFIX=/opt/ros/noetic \
         -DPYTHON_EXECUTABLE=/usr/bin/python \
