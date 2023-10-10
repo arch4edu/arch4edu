@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=markdown
-_pkgver=1.9
+_pkgver=1.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,8 +24,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3992577cbfe850366b9ce2532b1fc3bd')
-sha256sums=('70c557b9644442e8a932cfa76a4143f0a73f5461aab5d90b2b0ad177f5d80108')
+md5sums=('90c877fecec1e6567b24ccd2ecbbea15')
+sha256sums=('211347b17065b8796a6899e047891220e23872f655bb6baa3b1b2a0f69d34be2')
 
 build() {
   mkdir -p build
