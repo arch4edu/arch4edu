@@ -1,0 +1,208 @@
+diff --git a/dart/common/detail/SharedLibraryManager.cpp b/dart/common/detail/SharedLibraryManager.cpp
+index c10e7df..b742822 100644
+--- a/dart/common/detail/SharedLibraryManager.cpp
++++ b/dart/common/detail/SharedLibraryManager.cpp
+@@ -33,7 +33,7 @@
+ #include "dart/common/detail/SharedLibraryManager.hpp"
+ 
+ #include <fstream>
+-
++#include <cassert>
+ #include "dart/common/Console.hpp"
+ #include "dart/common/SharedLibrary.hpp"
+ 
+diff --git a/dart/dynamics/BoxShape.cpp b/dart/dynamics/BoxShape.cpp
+index 83b581e..391c14b 100644
+--- a/dart/dynamics/BoxShape.cpp
++++ b/dart/dynamics/BoxShape.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/dynamics/BoxShape.hpp"
+-
++#include <cassert>
+ #include <cmath>
+ 
+ namespace dart {
+diff --git a/dart/dynamics/CapsuleShape.cpp b/dart/dynamics/CapsuleShape.cpp
+index aa95124..52add89 100644
+--- a/dart/dynamics/CapsuleShape.cpp
++++ b/dart/dynamics/CapsuleShape.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/dynamics/CapsuleShape.hpp"
+-
++#include <cassert>
+ #include <cmath>
+ 
+ #include "dart/dynamics/CylinderShape.hpp"
+diff --git a/dart/dynamics/ConeShape.cpp b/dart/dynamics/ConeShape.cpp
+index 30fe19c..ff86c99 100644
+--- a/dart/dynamics/ConeShape.cpp
++++ b/dart/dynamics/ConeShape.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/dynamics/ConeShape.hpp"
+-
++#include <cassert>
+ #include <cmath>
+ 
+ #include "dart/dynamics/CylinderShape.hpp"
+diff --git a/dart/dynamics/CylinderShape.cpp b/dart/dynamics/CylinderShape.cpp
+index e3bbad0..5e1387d 100644
+--- a/dart/dynamics/CylinderShape.cpp
++++ b/dart/dynamics/CylinderShape.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/dynamics/CylinderShape.hpp"
+-
++#include <cassert>
+ #include <cmath>
+ 
+ #include "dart/math/Helpers.hpp"
+diff --git a/dart/dynamics/EllipsoidShape.cpp b/dart/dynamics/EllipsoidShape.cpp
+index 286b238..43a0925 100644
+--- a/dart/dynamics/EllipsoidShape.cpp
++++ b/dart/dynamics/EllipsoidShape.cpp
+@@ -29,7 +29,7 @@
+  *   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  *   POSSIBILITY OF SUCH DAMAGE.
+  */
+-
++#include <cassert>
+ #include "dart/dynamics/EllipsoidShape.hpp"
+ 
+ #include "dart/math/Helpers.hpp"
+diff --git a/dart/dynamics/MeshShape.cpp b/dart/dynamics/MeshShape.cpp
+index 64ab7ef..4b0089e 100644
+--- a/dart/dynamics/MeshShape.cpp
++++ b/dart/dynamics/MeshShape.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/dynamics/MeshShape.hpp"
+-
++#include <cassert>
+ #include <limits>
+ #include <string>
+ 
+diff --git a/dart/dynamics/PyramidShape.cpp b/dart/dynamics/PyramidShape.cpp
+index 5ca0f3f..fbc4c0d 100644
+--- a/dart/dynamics/PyramidShape.cpp
++++ b/dart/dynamics/PyramidShape.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/dynamics/PyramidShape.hpp"
+-
++#include <cassert>
+ #include <cmath>
+ 
+ #include "dart/common/Console.hpp"
+diff --git a/dart/dynamics/SphereShape.cpp b/dart/dynamics/SphereShape.cpp
+index 35388a9..2d20abe 100644
+--- a/dart/dynamics/SphereShape.cpp
++++ b/dart/dynamics/SphereShape.cpp
+@@ -29,7 +29,7 @@
+  *   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  *   POSSIBILITY OF SUCH DAMAGE.
+  */
+-
++#include <cassert>
+ #include "dart/dynamics/SphereShape.hpp"
+ 
+ #include "dart/math/Helpers.hpp"
+diff --git a/dart/optimizer/GenericMultiObjectiveProblem.cpp b/dart/optimizer/GenericMultiObjectiveProblem.cpp
+index 187200b..00cc106 100644
+--- a/dart/optimizer/GenericMultiObjectiveProblem.cpp
++++ b/dart/optimizer/GenericMultiObjectiveProblem.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/optimizer/GenericMultiObjectiveProblem.hpp"
+-
++#include <cassert>
+ #include <algorithm>
+ #include <limits>
+ #include <numeric>
+diff --git a/dart/optimizer/GradientDescentSolver.cpp b/dart/optimizer/GradientDescentSolver.cpp
+index 8b1f4b1..0d466bf 100644
+--- a/dart/optimizer/GradientDescentSolver.cpp
++++ b/dart/optimizer/GradientDescentSolver.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/optimizer/GradientDescentSolver.hpp"
+-
++#include <cassert>
+ #include <iostream>
+ 
+ #include "dart/common/Console.hpp"
+diff --git a/dart/optimizer/MultiObjectiveProblem.cpp b/dart/optimizer/MultiObjectiveProblem.cpp
+index 70cfbdb..12f3b2a 100644
+--- a/dart/optimizer/MultiObjectiveProblem.cpp
++++ b/dart/optimizer/MultiObjectiveProblem.cpp
+@@ -35,7 +35,7 @@
+ #include <algorithm>
+ #include <limits>
+ #include <numeric>
+-
++#include <cassert>
+ #include "dart/common/Console.hpp"
+ #include "dart/math/Helpers.hpp"
+ #include "dart/optimizer/Function.hpp"
+diff --git a/dart/optimizer/Population.cpp b/dart/optimizer/Population.cpp
+index ccffcad..04c03e0 100644
+--- a/dart/optimizer/Population.cpp
++++ b/dart/optimizer/Population.cpp
+@@ -29,7 +29,7 @@
+  *   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  *   POSSIBILITY OF SUCH DAMAGE.
+  */
+-
++#include <cassert>
+ #include "dart/optimizer/Population.hpp"
+ 
+ #include "dart/common/Console.hpp"
+diff --git a/dart/optimizer/Problem.cpp b/dart/optimizer/Problem.cpp
+index 94d9794..38662a3 100644
+--- a/dart/optimizer/Problem.cpp
++++ b/dart/optimizer/Problem.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/optimizer/Problem.hpp"
+-
++#include <cassert>
+ #include <algorithm>
+ #include <limits>
+ 
+diff --git a/dart/utils/XmlHelpers.cpp b/dart/utils/XmlHelpers.cpp
+index 42d2805..1bf8469 100644
+--- a/dart/utils/XmlHelpers.cpp
++++ b/dart/utils/XmlHelpers.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include "dart/utils/XmlHelpers.hpp"
+-
++#include <cassert>
+ #include <iostream>
+ #include <vector>
+ 
+diff --git a/dart/utils/mjcf/detail/Weld.cpp b/dart/utils/mjcf/detail/Weld.cpp
+index 98f62f1..d2868f6 100644
+--- a/dart/utils/mjcf/detail/Weld.cpp
++++ b/dart/utils/mjcf/detail/Weld.cpp
+@@ -29,7 +29,7 @@
+  *   ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  *   POSSIBILITY OF SUCH DAMAGE.
+  */
+-
++#include <cassert>
+ #include "dart/utils/mjcf/detail/Weld.hpp"
+ 
+ #include "dart/utils/XmlHelpers.hpp"
