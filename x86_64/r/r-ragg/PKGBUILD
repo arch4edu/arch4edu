@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ragg
-_pkgver=1.2.5
+_pkgver=1.2.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Graphic Devices Based on AGG"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -27,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('036a14c8b00767c65f2e69629d31d2b4')
-sha256sums=('936f4d75e0e01cdeefb9f57d121cdd7812d0de5a9e1a3a8315f92ce1c84da8f9')
+md5sums=('6c17c0056931ea12af1bb718a87e769a')
+sha256sums=('1014dc493ab52e98e4114fbabfca753bebd4d64db7ef7946bd064fb404e0f7c7')
 
 build() {
   mkdir -p build
