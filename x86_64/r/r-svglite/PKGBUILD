@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=svglite
-_pkgver=2.1.1
+_pkgver=2.1.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="An 'SVG' Graphics Device"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -33,8 +33,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('95ce45d5f57c8e82b7b2322fbe4868fb')
-sha256sums=('48700169eec1b05dbee9e2bae000aa84c544617b018cb3ac431a128cfd8dac56')
+md5sums=('0a81b2dd4e1f55970106aabe66b064c7')
+sha256sums=('c2c163e17de8174408062b969a1fc298aa1dba957dc0acc1c898384bb76c0030')
 
 build() {
   mkdir -p build
