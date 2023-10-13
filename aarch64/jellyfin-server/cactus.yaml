@@ -1,0 +1,10 @@
+nvchecker:
+  - source: archpkg
+    archpkg: jellyfin-server
+makedepends:
+  - aarch64/dotnet-core-6.0-bin: dotnet-runtime-6.0-bin
+  - aarch64/dotnet-core-6.0-bin: dotnet-targeting-pack-6.0-bin
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: abs-pre-build
+post_build: abs-post-build
