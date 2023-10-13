@@ -3,7 +3,7 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=reticulate
-_pkgver=1.32.0
+_pkgver=1.34.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -47,8 +47,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c9615e8e4645cba68059a2e3fc58d60a')
-sha256sums=('3aa9ccd6a87d7be3a221d4f6c2a14fa2a045175ffed360c52cdb131b39f33965')
+md5sums=('109bbcb55d3a8e779babe90e432c172a')
+sha256sums=('8d0d8922cd811153836e95354357615968b005a4d0d4c5734441953c526e4206')
 
 build() {
   mkdir -p build
