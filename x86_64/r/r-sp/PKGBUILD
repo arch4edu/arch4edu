@@ -2,7 +2,7 @@
 # Contributor: Jooa <aur at (name) dot xyz>
 
 _cranname=sp
-_cranver=2.0-0
+_cranver=2.1-0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -13,7 +13,7 @@ license=(GPL2 GPL3)
 depends=('r>=3.2.0')
 optdepends=(r-rcolorbrewer r-rgdal r-rgeos r-gstat r-maptools r-deldir r-knitr r-rmarkdown)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('09f8db5fc93061021d7aa296e1e0b3c5543a5eddd3e5f658d4eb52851d5f88f1')
+sha256sums=('73030667b4d346dbba92a2b897e4042485317821e17e1ff42ef47c72ae0c040c')
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
