@@ -3,9 +3,11 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: frichtlm <frichtlm@gmail.com>
 # Contributor: wagnerflo <florian@wagner-flo.net>
+# Contributor: Tobias Neumann <mail at tobias dash neumann dot eu>
+# Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=ggplot2
-_pkgver=3.4.3
+_pkgver=3.4.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -45,14 +47,12 @@ optdepends=(
   r-knitr
   r-mapproj
   r-maps
-  r-maptools
   r-multcomp
   r-munsell
   r-profvis
   r-quantreg
   r-ragg
   r-rcolorbrewer
-  r-rgeos
   r-rmarkdown
   r-sf
   r-svglite
@@ -61,8 +61,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('56b406dd3fa5a2839fac8415a7a1b6e1')
-sha256sums=('5ce29ace6be7727be434506a1c759dfc322f65b17eabeec863b93be10f91a543')
+md5sums=('13e7ad92c109bb07993373317e428415')
+sha256sums=('2d76ec065d3e604d019506f45b3b713ae20f38e47dbebfb5ba1648b47fe63e46')
 
 build() {
   mkdir -p build
