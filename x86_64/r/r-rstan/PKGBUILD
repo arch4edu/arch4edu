@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=rstan
-_pkgver=2.26.23
+_pkgver=2.32.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -38,15 +38,15 @@ optdepends=(
   r-coda
   r-knitr
   r-rmarkdown
-  r-rstanarm
   r-rstantools
   r-rstudioapi
   r-shinystan
   r-testthat
+  r-v8
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2e01ed18b705fb0fbd0b90e1577f08dc')
-sha256sums=('91fddeb9460755e02b7fbc7caa964df8d0d77417528ae96ce3e2f6d56fe60d22')
+md5sums=('6414d45665fbc9aa1fd0e7d4ef3e8d0b')
+sha256sums=('a29d9e1abf6d7c7b5ce98e10e60f14f18bad076aff4c7affa4b6263945ba549d')
 
 build() {
   mkdir -p build
