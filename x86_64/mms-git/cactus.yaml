@@ -1,4 +1,6 @@
 nvchecker:
+  - source: aur
+    aur: mms-git
   - source: github
     github: mackorone/mms
 build_prefix: extra-x86_64
