@@ -3,10 +3,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=vctrs
-_cranver=0.6.3
+_cranver=0.6.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Vector Helpers"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -48,7 +48,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('c60d9243ce99007646d6a49afff29cb814fb79dc8aae246820286268f9c22e413ec8d912f7c341ac11bdaba35232e33922bdf25b389b1a7d236c8a70b55c8a90')
+b2sums=("c4bf9a10e41a01502e0b5e3aebcc993290a3434397e610a07bdbc6cb6ea19890c3ac1293d68206a9a31057f2af702e07cd13b6feac59b443d930392eacc3dea1")
 
 build() {
     mkdir -p "${srcdir}/build/"
