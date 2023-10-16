@@ -5,10 +5,10 @@
 # Contributor: portaloffreedom
 
 _pkgname=gdtools
-_pkgver=0.3.3
+_pkgver=0.3.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Utilities for Graphical Rendering and Fonts Management"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3e41f8aef071adfe58e259e20b485be9')
-sha256sums=('da5a189841475b1d69c94a30ff834eb44560c69e6c0ec0a257006e1f59e83483')
+md5sums=('4c55822c259bca2c93f1ed604199e0c6')
+sha256sums=('aad743033fba0b48aa05867df4bc9643802fa82542b559579105e8a0659aaa02')
 
 build() {
   mkdir -p build
