@@ -4,10 +4,10 @@
 
 pkgname=pi-hole-server
 _pkgname=pi-hole
-pkgver=5.17.1
-pkgrel=3
-_wwwpkgname=AdminLTE
-_wwwpkgver=5.20.1
+pkgver=5.17.2
+pkgrel=1
+_wwwpkgname=web
+_wwwpkgver=5.20.2
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
 license=('EUPL-1.2')
@@ -25,8 +25,8 @@ conflicts=('pi-hole-standalone')
 install=$pkgname.install
 backup=('etc/dnsmasq.d/01-pihole.conf' 'etc/pihole/adlists.list' 'etc/dnsmasq.conf' 'etc/sudoers.d/pihole')
 
-source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/v$pkgver.tar.gz
-	    $pkgname-admin-$_wwwpkgver.tar.gz::https://github.com/$_pkgname/$_wwwpkgname/archive/v$_wwwpkgver.tar.gz
+source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/refs/tags/v$pkgver.tar.gz
+	    $pkgname-admin-$_wwwpkgver.tar.gz::https://github.com/$_pkgname/$_wwwpkgname/archive/refs/tags/v$_wwwpkgver.tar.gz
         "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-core-$pkgver-$pkgrel.patch"
         "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-admin-$_wwwpkgver-$pkgrel.patch"
 	    dnsmasq.include
@@ -42,10 +42,10 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	    piholeDebug.sh
 )
 
-sha256sums=('507d7ce2424666374f7a566c9486a20696ca2be78587e8934a6236acf095af4e'
-            'fe302a23f9bef6fdd979010cb212c2dde9a4af442afd8c87aba929aad2c8d118'
-            '0b9ec16a8948c968537b800f400c8db25f0f7f168eb43a8d4473e5a38e602ac5'
-            '8c24e11502aabb20f95c191d6044c821baea4311cc7335984012fb195e606b8c'
+sha256sums=('0eb64cc29cb4ca0548b5f57634291680a404f26a4f1b5161c74c0377a7330cec'
+            'be5a188104a3c1d5419abe67e9db4d08b6e6a16e78cd165fe553ede3af87919e'
+            '40f0ca43edb3a3d208c8ee6f2e0b7f38d3fedc979527eba1101922af4a69492c'
+            'bb1f4ba73038096ac4a116affd51500b631a4fc05cb127863ecc89323ebf4314'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             '3a3baa92a635d602824f184d901e947a0e14650c950e89325dda6f7d71b39db9'
             'f5906ed845e030ee18baeb8767295e1a76848a10ffd6fe60d34501ae45e2b6a8'
