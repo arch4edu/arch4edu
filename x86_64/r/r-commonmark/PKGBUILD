@@ -8,7 +8,7 @@ _pkgname=commonmark
 _pkgver=1.9.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=6
+pkgrel=7
 pkgdesc="High Performance CommonMark and Github Markdown Rendering in R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
