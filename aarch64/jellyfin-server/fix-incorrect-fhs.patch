@@ -1,0 +1,11 @@
+--- a/Jellyfin.Server/Program.cs
++++ b/Jellyfin.Server/Program.cs
+@@ -479,7 +479,7 @@ namespace Jellyfin.Server
+                 if (string.IsNullOrEmpty(webDir))
+                 {
+                     // Use default location under ResourcesPath
+-                    webDir = Path.Combine(AppContext.BaseDirectory, "jellyfin-web");
++                    webDir = Path.Combine("/usr/share", "jellyfin-web");
+                 }
+             }
+ 
