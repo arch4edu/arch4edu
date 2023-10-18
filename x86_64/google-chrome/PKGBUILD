@@ -1,13 +1,13 @@
 # Maintainer: Christian Heusel <christian@heusel.eu>
 # Contributor: Knut Ahlers <knut at ahlers dot me>
 # Contributor: Det <nimetonmaili g-mail>
-# Contributor: t3ddy, Lex Rivera aka x-demon, ruario
+# Contributor: t3ddy, Lex Rivera aka x-demon, ruario, Abdullah
 
 # Check for new Linux releases in: http://googlechromereleases.blogspot.com/search/label/Stable%20updates
 # or use: $ curl -sSf https://dl.google.com/linux/chrome/deb/dists/stable/main/binary-amd64/Packages | grep -A1 "Package: google-chrome-stable" | awk '/Version/{print $2}' | cut -d '-' -f1
 
 pkgname=google-chrome
-pkgver=118.0.5993.70
+pkgver=118.0.5993.88
 pkgrel=1
 pkgdesc="The popular web browser by Google (Stable Channel)"
 arch=('x86_64')
@@ -35,7 +35,7 @@ _channel=stable
 source=("https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-${_channel}/google-chrome-${_channel}_${pkgver}-1_amd64.deb"
 	'eula_text.html'
 	"google-chrome-$_channel.sh")
-sha512sums=('d3d751912a521d72a88470d319d02e012e5933a250546a52b5ad8738d2534584c5886839922a29946e4f46f2b1ca6dbaed9b2b03bfc1b6882447a05f0dd9c23d'
+sha512sums=('cae6a5cd8632ad350b41f4dfaf80449e6cf19d0b02816b9a1600f54b15df2adf5c4ded3792bfbe3855fa11a79ea256622f50180aa3c6779cedd75a55e7a6da9d'
             'a225555c06b7c32f9f2657004558e3f996c981481dbb0d3cd79b1d59fa3f05d591af88399422d3ab29d9446c103e98d567aeafe061d9550817ab6e7eb0498396'
             'de02b498a4b5b93e21622c8dba57befe795d733a04656be911cc38e28bfef0e20470450f44be523bbde8d4de28f79c10434846ca01fc2a2f4e67707b79332f94')
 
