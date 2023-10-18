@@ -5,7 +5,7 @@ pkgname="mongodb-bin"
 pkgver="7.0.2"
 _basever="7.0"
 _basedist="focal"
-pkgrel="1"
+pkgrel=2
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
@@ -41,7 +41,7 @@ sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
 sha256sums_x86_64=('2d126e2b08b09725b222cebd23432cf8b73f5906709f4fb37728382eb487a81c'
                    '7dab5e72db8a659303ad72e3947e141c737a45ab1a8dd9329e2ada24c03b7950')
 sha256sums_aarch64=('7a15345f04445de36eec04df2cb7d634d69aee5b89fa7d4bdb5fa71fe7f88509'
-                    '189c6f8bf59065347ae6262b8fd57a95a0bce89f3f1751fa4627b5e776342ed1')
+                    '8591512ae612d0ad44d977afcadb703e92a08c1e453de90120599ea5d0271298')
 
 prepare() {
   mkdir -p output
