@@ -4,11 +4,11 @@
 _pkgname=wemeet
 pkgname=$_pkgname-bin
 provides=('wemeet' 'tencent-meeting')
-pkgver=3.15.1.401
+pkgver=3.15.1.403
 _pkgver_arm=3.15.1.402 # 两个版本有时候不一样
-_x86_md5=a05d53f96ab7331d2b2d245981f055d0
+_x86_md5=da1c30b1a927cd691e4ee60aba829c88
 _arm_md5=87439695193afbf8b1faa23202ce7306
-pkgrel=4
+pkgrel=1
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -33,7 +33,7 @@ optdepends=(
 makedepends=('patchelf')
 sha512sums=('533f9dc9b2110f689ed04551c703ffeddb2c2143e059f5468ba6b34fcfa865b8a22371eb3ee52c9c257323937f8365af931029c82224cfecbf09dac00d086a9a'
             'e766239691d77029345f4c2c0a0936c9271c7bedcf8727e3cd9a97777a399ab097425ab6e8f3626a6e98e3f56fc46d1247e8e5c91d6af82b1807cca04985a149')
-sha512sums_x86_64=('fcb8a162685186e526cb5a5211e16f02e67aa132c4f6a91a1b9ff7138f7c1aac2915c813df18e00311f0a52fb5baad984734436de08f2035a0b2fcd67d75f20f')
+sha512sums_x86_64=('e215e89b9a28e55b10d4c9c2afcbc7f973b7178e9f2fd14635c9330485a6252823536b7032bd3f783e46fd92e47533f4486aeac2e359249d4c88fb8f57d14e90')
 sha512sums_aarch64=('a45519a7a8e7964f553831695887223b0ee1d2df635b1e1d2b499bd966cebc9a15221802c94cadc7e13af4f2c42483f4d4b7c1faf5e7b6efc8819df9eae67030')
 
 prepare() {
