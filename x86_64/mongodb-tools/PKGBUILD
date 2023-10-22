@@ -6,7 +6,7 @@
 
 pkgname=mongodb-tools
 pkgver=100.9.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Import, export, and diagnostic tools for MongoDB"
 arch=('x86_64')
@@ -15,7 +15,7 @@ license=('Apache')
 depends=('glibc' 'krb5')
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/mongodb/mongo-tools/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('246093cdb36716baeacc4eb20c26f574f6459c86746e81702337e2d64b52c860')
+sha256sums=('c9d2e94e5f96e2e9cf36c0a9acb8a78063ea3f060e20cf9edd830b391350016a')
 
 prepare() {
 # Patch version check for release
