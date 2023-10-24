@@ -3,7 +3,7 @@
 # Contributor: realitygaps <realitygaps at yahoo dot com>
 
 pkgname=sublime-text-dev
-pkgver=4.4159
+pkgver=4.4160
 pkgrel=1
 pkgdesc='Sophisticated text editor for code, html and prose - dev build'
 arch=('x86_64' 'aarch64')
@@ -17,8 +17,8 @@ install=${pkgname}.install
 source_x86_64=("${pkgname//-/_}_${pkgver/./_}_${pkgrel}_x64.tar.xz::https://download.sublimetext.com/sublime_text_build_${pkgver:2}_x64.tar.xz")
 source_aarch64=("${pkgname//-/_}_${pkgver/./_}_${pkgrel}_arm64.tar.xz::https://download.sublimetext.com/sublime_text_build_${pkgver:2}_arm64.tar.xz")
 
-sha512sums_x86_64=('f3a7454160266bb229f4a45366750799a831af24a1fd48b031d717d58c393ce5b154ae0448d6b51feedfc34b50089bc6f97029e1d3e99444add9282c1cdf850e')
-sha512sums_aarch64=('b3d5feda95fc731b3ad1676aca7ff7b18cda8e3b07cc9c16af0b4c29fb8d430e7e359ca1b9223f8c8620d7dace40a2348cade31927f5aa588411eb24b55dc103')
+sha512sums_x86_64=('b32e716ef8a336a9e80517c6837df0a97fcc5c9fcd5587a151ea3821e40b87b3be614a761757e0b3ef646ecd12d190201dbe89e19c59db8c28d98c733439a08a')
+sha512sums_aarch64=('bf9d9022430f5d571938715ed77dc4ed55a3591e6d98140293d3597e9a5809f04c73e0ae8cc0405a40b374868ef34606c922e488a2f8bf1fc784fc2c27b166ba')
 
 package() {
 	cd "${srcdir}"
