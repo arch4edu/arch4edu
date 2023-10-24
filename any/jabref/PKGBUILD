@@ -6,21 +6,31 @@
 # This PKGBUILD is maintained on github:
 # https://github.com/michaellass/AUR
 
+_abbrv=cf71cb48dbd78b2d85856e689e2834f14b91fdbc
+_locales=3fd551ca87ea464f89b1509e4987015691f3132b
+_styles=010b77c19b0928db4cc046258d6797a937e0f460
+
 pkgname=jabref
-pkgver=5.10
-pkgrel=2
+pkgver=5.11
+pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
 license=(MIT)
 depends=('archlinux-java-run>=10' 'java-runtime=21')
-makedepends=('java-environment=21')
+makedepends=('gradle' 'java-environment=21')
 optdepends=('python: browser extension')
 options=(!strip !emptydirs)
 source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v${pkgver}.tar.gz
+        abbrv.jabref.org-${_abbrv}.tar.gz::https://github.com/JabRef/abbrv.jabref.org/archive/${_abbrv}.tar.gz
+        locales-${_locales}.tar.gz::https://github.com/citation-style-language/locales/archive/${_locales}.tar.gz
+        styles-${_styles}.tar.gz::https://github.com/citation-style-language/styles/archive/${_styles}.tar.gz
         jabref.sh
         jabref.desktop)
-sha256sums=('f6560e584f48f537fd580c8caac19925ea54c74d8d05bdb230b0daf2132c4b7e'
+sha256sums=('d09666f240a9ba8a4bb1759b44a676e723f7b48477e57ef0189349ad4489b822'
+            '9345f022dca8d341928adecd0e82be00b205371da71ec0109d86a20c4b9b25c2'
+            'a2533c5dfc43de52e8acedd656c5af257c7da4baf8dda844b81c7f98d4e018e8'
+            'c5629699d899cc02d09062c76f8c8e6a0d2f44c99ef402b6671b0aa46b942372'
             'f8b9b6cb92c1a564a8bbf379819ad4c11cff5f760b346e1003928fd48fd38a1c'
             'b0e3ed5cde4072a2d10de887b50217c03bbe30a1ea9b39bea1255ea80db15b77')
 
@@ -33,12 +43,9 @@ sha256sums=('f6560e584f48f537fd580c8caac19925ea54c74d8d05bdb230b0daf2132c4b7e'
 prepare() {
   cd ${pkgname}-${pkgver}
 
-  # Include CSL styles and locales in our build
-  cp -r buildres/csl/csl-styles/* src/main/resources/csl-styles/
-  cp -r buildres/csl/csl-locales/* src/main/resources/csl-locales/
-
-  # gradle will use the specified Java version regardless of JAVA_HOME
-  sed -i 's/languageVersion = JavaLanguageVersion.of(20)/languageVersion = JavaLanguageVersion.of(21)/' build.gradle
+  cp -a "${srcdir}"/abbrv.jabref.org-${_abbrv}/* buildres/abbrv.jabref.org/
+  cp -a "${srcdir}"/locales-${_locales}/* src/main/resources/csl-locales/
+  cp -a "${srcdir}"/styles-${_styles}/* src/main/resources/csl-styles/
 }
 
 build() {
@@ -50,8 +57,8 @@ build() {
   export JAVA_HOME=$(archlinux-java-run -a 21 -b 21 -f jdk -j)
   echo "Using JDK from $JAVA_HOME to build JabRef."
 
-  #/usr/bin/gradle \
-  ./gradlew \
+  #./gradlew \
+  /usr/bin/gradle \
     --no-daemon \
     -PprojVersion="${pkgver}" \
     -PprojVersionInfo="${pkgver}--ArchLinux--${pkgrel}" \
