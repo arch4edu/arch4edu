@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=httpuv
-_pkgver=1.6.11
+_pkgver=1.6.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="HTTP and WebSocket Server Library"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -31,20 +31,21 @@ optdepends=(
   r-websocket
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "system-libuv.patch")
-md5sums=('38ca2017f9a45faa2f45df08de147096'
-         'f3a1ba807642c566ae7a47fd33fc9911')
-sha256sums=('8ba79e0a8351274daf2dc566c71f88e891127cdedca62ad77a4b27a8103eeef5'
-            '555ba06ceb96fe3d944ae189c07671034db6033b8bad61ce740f6cb44dbac855')
+        "link-zlib.patch")
+md5sums=('fe7156e4f6a61906d3258aa0cfea94dd'
+         'b2a2549bfef0d3a442b6ed545fc2f1f9')
+sha256sums=('b1d972b1c240702c38cb844a1040670d62876abf462256764b49c120a52f5e74'
+            '95c708ea54de715494bcb43d40973296fb2ee8fb066fb582bfc69cdaf5d4e667')
 
 prepare() {
-  # build against system libuv and link to zlib
-  patch -Np1 -i system-libuv.patch
+  # link to zlib
+  patch -Np1 -i link-zlib.patch
 }
 
 build() {
   mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  R CMD INSTALL "$_pkgname" -l build \
+      --configure-vars=USE_BUNDLED_LIBUV=false
 }
 
 check() {
