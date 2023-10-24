@@ -3,7 +3,7 @@
 pkgname=jellyfin-server
 _pkgname="${pkgname%-server}"
 pkgver=10.8.11
-pkgrel=2
+pkgrel=3
 pkgdesc='Jellyfin server backend'
 arch=('x86_64')
 url='https://jellyfin.org'
@@ -12,6 +12,7 @@ license=('GPL2')
 _dotnet_ver=6.0
 _dotnet_runtime=linux-x64
 depends=(
+  "aspnet-runtime-$_dotnet_ver"
   'bash'
   'sqlite'
   'fontconfig'
@@ -92,7 +93,8 @@ build(){
     publish \
     Jellyfin.Server \
     --configuration Release \
-    --self-contained \
+    --output builddir \
+    --self-contained false\
     --runtime "$_dotnet_runtime" \
     -p:DebugSymbols=false \
     -p:DebugType=none
@@ -103,11 +105,11 @@ package() {
 
   # install binaries
   install -vd "$pkgdir/usr/"{lib,bin}
-  cp -r "Jellyfin.Server/bin/Release/net$_dotnet_ver/$_dotnet_runtime/publish" "$pkgdir/usr/lib/jellyfin"
+  cp -r builddir "$pkgdir/usr/lib/jellyfin"
   ln -sf /usr/lib/jellyfin/jellyfin "$pkgdir/usr/bin/jellyfin"
 
   # ensure binaries have correct permissions
-  chmod 755 "$pkgdir/usr/lib/$_pkgname/"{jellyfin,createdump}
+  chmod 755 "$pkgdir/usr/lib/$_pkgname/jellyfin"
 
   # logging configuration
   install -vdm 750 "$pkgdir/etc/$_pkgname"
