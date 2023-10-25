@@ -8,14 +8,13 @@ pkgdesc="Find Tools Needed to Build R Packages"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("any")
 depends=(
     "r>=3.4"
     "r-callr>=3.2.0"
     "r-cli>=3.4.0"
-    "r-cpp11"
     "r-crayon"
     "r-desc"
     "r-prettyunits"
@@ -25,6 +24,7 @@ depends=(
 )
 optdepends=(
     "r-covr"
+    "r-cpp11"
     "r-knitr"
     "r-mockery"
     "r-rcpp"
