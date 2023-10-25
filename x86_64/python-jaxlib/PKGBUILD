@@ -2,7 +2,7 @@
 
 pkgname=python-jaxlib
 pkgver=0.4.19
-pkgrel=1
+pkgrel=2
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/google/jax/'
@@ -17,13 +17,9 @@ conflicts=('python-jaxlib')
 source=("jaxlib-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jaxlib-v${pkgver}.tar.gz")
 sha256sums=('51242b217a1f82474e42d24f09ed5dedff951eeb4579c6e49e706d1adfd6949d')
 
-prepare() {
-    export JAXLIB_RELEASE=$pkgver
-}
-
 build() {
     cd $srcdir/jax-jaxlib-v$pkgver
-    python build/build.py \
+    JAXLIB_RELEASE=$pkgver python build/build.py \
         --bazel_startup_options="--output_user_root=$srcdir/bazel"\
         --bazel_options='--action_env=JAXLIB_RELEASE' \
         --noenable_cuda \
