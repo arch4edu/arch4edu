@@ -4,7 +4,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
-pkgver=0.14.1
+pkgver=0.14.2
 pkgrel=1
 pkgdesc="Bootstrap-based Sphinx theme from the PyData community"
 arch=('any')
@@ -35,7 +35,7 @@ checkdepends=('python-nose'
 #source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
 #        'Makefile')
 source=("https://files.pythonhosted.org/packages/py3/${_pyname:0:1}/${_pyname}/${_pyname//-/_}-${pkgver}-py3-none-any.whl")
-md5sums=('f4078a306f1da7513b2ed642fd312f5a')
+md5sums=('d8f8971d52f250736357935ffb855c0b')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
