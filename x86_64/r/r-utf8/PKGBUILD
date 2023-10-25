@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=utf8
-_cranver=1.2.3
+_cranver=1.2.4
 pkgname=r-${_cranname,,}
 pkgdesc="Unicode Text Processing"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -27,7 +27,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('14d380cb019ecc96bb7faaf8ae948b1789180e482a846346b3d26d42c9af7d8239bb57faecff499e59bf6a2b2afea16e44c3c122ba1a485746943a3be9328287')
+b2sums=("5a2ba55901aebc5e22ecce51bc388d556207ec9ada521f6cddb03f58215de875cd5d9d767a28979b227c8fdfba22b473d5ed76a4113ed22bf46616fc5c15b7c8")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
