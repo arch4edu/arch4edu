@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mixOmics
-_pkgver=6.24.0
+_pkgver=6.26.0
 pkgname=r-${_pkgname,,}
-pkgver=6.24.0
+pkgver=6.26.0
 pkgrel=1
 pkgdesc='Omics Data Integration Project'
 arch=('any')
@@ -33,7 +33,7 @@ optdepends=(
   r-testthat
 )
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1a7525609e800a5ef91a9bd7f89f80a9122d676e3b1195b538e79912eb6d1637')
+sha256sums=('ec1ad9959f3c290fb3b4c37c1b9719f10bac0d5d59ef6b99a56b86607442d145')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
