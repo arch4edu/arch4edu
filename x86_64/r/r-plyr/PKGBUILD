@@ -3,12 +3,13 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Matt Frichtl <frichtlm@gmail.com>
 # Contributor: wagnerflo <florian@wagner-flo.net>
+# Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=plyr
 _pkgver=1.8.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Tools for Splitting, Applying and Combining Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
