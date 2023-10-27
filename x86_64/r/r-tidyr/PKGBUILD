@@ -6,8 +6,8 @@
 _pkgname=tidyr
 _pkgver=1.3.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="Tidy Messy Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
