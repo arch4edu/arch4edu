@@ -1,17 +1,17 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
-pkgver=0.12.2
-pkgrel=2
+pkgver=0.13.0
+pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit-aer"
 license=('Apache')
 depends=(
+    'blas-openblas'
     'cython'
     'muparserx'
     'nlohmann-json'
-    'blas-openblas'
     'python-numpy'
     'python-qiskit'
     'python-scipy'
@@ -31,14 +31,13 @@ makedepends=(
     'python-installer'
     'python-scikit-build'
     'python-setuptools'
-    'python-wheel'
     'spdlog'
 )
 source=(
     "${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz"
     "fix.patch"
 )
-b2sums=('c7f12c9b8f53a9031844e123b8ef6d723e0099be028c5cfba03143fb8b3c7269768ade99d3ef3b4b82c0b36756bf8e82971a3f70c0f5735891eb77a78a6d9512'
+b2sums=('ca38dc3ec718a2e1c29bb54e69b0c327e8b0b3b7be5de41aef92c45c4e192565e43e9a21bd53bd2fa55cff4b0259052c59112d45d413d4eb3ba091e1855de4ca'
         '5523350559706d94f6eeb169360759d32bfd1dec8384948bfb04823eec6440e03377860ae53dc6ba3e7a9a087f0429d9f9bb4a4c3d7c523e713f5e6b34c20dc9')
 
 prepare() {
@@ -49,7 +48,6 @@ prepare() {
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
     DISABLE_CONAN=ON python -m build --wheel --no-isolation
-    #python setup.py bdist_wheel
 }
 
 package() {
