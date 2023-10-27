@@ -5,7 +5,7 @@ _pkgname=pROC
 _pkgver=1.18.4
 pkgname=r-${_pkgname,,}
 pkgver=1.18.4
-pkgrel=1
+pkgrel=3
 pkgdesc='Display and Analyze ROC Curves'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,6 +21,7 @@ optdepends=(
   r-logcondens
   r-mass
   r-microbenchmark
+  r-rlang
   r-tcltk
   r-testthat
   r-vdiffr
