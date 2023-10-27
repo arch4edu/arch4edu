@@ -6,7 +6,7 @@ _pkgname=usethis
 _pkgver=2.2.2
 pkgname=r-${_pkgname,,}
 pkgver=2.2.2
-pkgrel=1
+pkgrel=3
 pkgdesc='Automate Package and Project Setup'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -37,7 +37,6 @@ optdepends=(
   r-covr
   r-knitr
   r-magick
-  r-mockr
   r-pkgload
   r-rmarkdown
   r-roxygen2
