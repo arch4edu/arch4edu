@@ -5,7 +5,7 @@ _pkgname=BayesTools
 _pkgver=0.2.16
 pkgname=r-${_pkgname,,}
 pkgver=0.2.16
-pkgrel=1
+pkgrel=3
 pkgdesc='Tools for Bayesian Analyses'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,6 +19,7 @@ depends=(
   r-ggplot2
   r-mvtnorm
   r-rdpack
+  r-rlang
 )
 optdepends=(
   r-bayesfactor
