@@ -7,7 +7,7 @@ _pkgname=rgl
 _pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=1.2.1
-pkgrel=1
+pkgrel=3
 pkgdesc='3D Visualization Using OpenGL'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -36,6 +36,7 @@ optdepends=(
   r-downlit
   r-extrafont
   r-interp
+  r-jpeg
   r-js
   r-lattice
   r-magick
@@ -46,6 +47,7 @@ optdepends=(
   r-orientlib
   r-pkgdown
   r-plotrix
+  r-png
   r-rmarkdown
   r-shiny
   r-tcltk
