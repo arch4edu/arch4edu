@@ -3,8 +3,8 @@
 _pkgname=mitml
 _pkgver=0.4-5
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Tools for Multiple Imputation in Multilevel Modeling"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
