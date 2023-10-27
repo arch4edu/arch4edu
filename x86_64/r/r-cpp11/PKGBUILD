@@ -6,7 +6,7 @@ _pkgname=cpp11
 _pkgver=0.4.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A C++11 Interface for R's C Interface"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -43,9 +43,17 @@ optdepends=(
   r-vctrs
   r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('786e1fdd894c982290d4ae401123fe59')
-sha256sums=('d1c56954671d3398078ad52aaa4efce0864e8166465c8c5e5e9a1e40599055b3')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "fix-tests.patch")
+md5sums=('786e1fdd894c982290d4ae401123fe59'
+         '7b7abe5ee87b665f50a36776475111ce')
+sha256sums=('d1c56954671d3398078ad52aaa4efce0864e8166465c8c5e5e9a1e40599055b3'
+            '88d4f13e8b518250c520c906784f68971782a470f5451e510c3b25b47f3b11b9')
+
+prepare() {
+  # fix test snapshots
+  patch -Np1 -i fix-tests.patch
+}
 
 build() {
   mkdir -p build
