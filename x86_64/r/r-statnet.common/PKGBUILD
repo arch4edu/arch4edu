@@ -4,7 +4,7 @@ _pkgname=statnet.common
 _pkgver=4.9.0
 pkgname=r-${_pkgname,,}
 pkgver=4.9.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Common R Scripts and Utilities Used by the Statnet Project Software'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -15,6 +15,8 @@ depends=(
 )
 optdepends=(
   r-covr
+  r-mass
+  r-matrix
   r-rlang
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
