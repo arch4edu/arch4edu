@@ -4,15 +4,17 @@ _pkgname=patchwork
 _pkgver=1.1.3
 pkgname=r-${_pkgname,,}
 pkgver=1.1.3
-pkgrel=1
+pkgrel=3
 pkgdesc='The Composer of Plots'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('MIT')
 depends=(
   r
+  r-cli
   r-ggplot2
   r-gtable
+  r-rlang
 )
 optdepends=(
   r-covr
