@@ -4,7 +4,7 @@ _pkgname=prabclus
 _pkgver=2.3-3
 pkgname=r-${_pkgname,,}
 pkgver=2.3.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Functions for Clustering and Testing of Presence-Absence, Abundance and Multilocus Genetic Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,6 @@ depends=(
 optdepends=(
   r-bootstrap
   r-foreign
-  r-maptools
   r-mvtnorm
   r-spatialreg
   r-spdep
