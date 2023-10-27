@@ -4,7 +4,7 @@ _pkgname=Hmisc
 _pkgver=5.1-1
 pkgname=r-${_pkgname,,}
 pkgver=5.1.1
-pkgrel=1
+pkgrel=3
 pkgdesc='Harrell Miscellaneous'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -29,10 +29,12 @@ optdepends=(
   r-acepack
   r-chron
   r-digest
+  r-getpass
   r-gt
   r-htmlwidgets
   r-jsonlite
   r-kableextra
+  r-keyring
   r-lattice
   r-latticeextra
   r-leaps
@@ -43,10 +45,12 @@ optdepends=(
   r-plyr
   r-polspline
   r-qreport
+  r-qs
   r-rio
   r-rlang
   r-rms
   r-rstudioapi
+  r-safer
   r-sparkline
   r-survival
   r-tables
