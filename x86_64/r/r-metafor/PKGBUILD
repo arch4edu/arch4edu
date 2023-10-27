@@ -4,7 +4,7 @@ _pkgname=metafor
 _pkgver=4.4-0
 pkgname=r-${_pkgname,,}
 pkgver=4.4.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Meta-Analysis Package for R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -45,6 +45,7 @@ optdepends=(
   r-rcgmin
   r-rmarkdown
   r-rsolnp
+  r-rstudioapi
   r-rvmmin
   r-sp
   r-subplex
