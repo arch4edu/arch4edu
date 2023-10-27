@@ -3,8 +3,8 @@
 _pkgname=ordinal
 _pkgver=2022.11-16
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Regression Models for Ordinal Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
