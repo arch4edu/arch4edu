@@ -4,17 +4,19 @@ _pkgname=rsample
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=1.2.0
-pkgrel=1
+pkgrel=3
 pkgdesc='General Resampling Infrastructure'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('MIT')
 depends=(
   r
+  r-cli
   r-dplyr
   r-furrr
   r-generics
   r-glue
+  r-lifecycle
   r-pillar
   r-purrr
   r-rlang
