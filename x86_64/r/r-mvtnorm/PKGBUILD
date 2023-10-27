@@ -6,13 +6,17 @@ _pkgname=mvtnorm
 _pkgver=1.2-3
 pkgname=r-${_pkgname,,}
 pkgver=1.2.3
-pkgrel=1
+pkgrel=3
 pkgdesc='Multivariate Normal and t Distributions'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('GPL')
 depends=(
   r
+)
+optdepends=(
+  r-numderiv
+  r-qrng
 )
 makedepends=(
   gcc-fortran
