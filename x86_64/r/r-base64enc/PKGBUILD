@@ -7,8 +7,8 @@
 _pkgname=base64enc
 _pkgver=0.1-3
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=10
+pkgver=${_pkgver//-/.}
+pkgrel=11
 pkgdesc="Tools for base64 encoding"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
