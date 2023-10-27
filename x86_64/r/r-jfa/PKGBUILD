@@ -4,7 +4,7 @@ _pkgname=jfa
 _pkgver=0.7.0
 pkgname=r-${_pkgname,,}
 pkgver=0.7.0
-pkgrel=1
+pkgrel=3
 pkgdesc='Bayesian and Classical Audit Sampling'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -27,6 +27,7 @@ optdepends=(
   r-benford.analysis
   r-benfordtests
   r-beyondbenford
+  r-fairness
   r-kableextra
   r-knitr
   r-mus
