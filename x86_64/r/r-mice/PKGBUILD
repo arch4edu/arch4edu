@@ -4,8 +4,8 @@
 _pkgname=mice
 _pkgver=3.16.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Multivariate Imputation by Chained Equations"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
