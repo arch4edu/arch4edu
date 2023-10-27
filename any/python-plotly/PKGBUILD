@@ -2,7 +2,7 @@
 # Co-Maintainer: Bert Peters <bert@bertptrs.nl>
 
 pkgname=python-plotly
-pkgver=5.17.0
+pkgver=5.18.0
 pkgrel=1
 pkgdesc="An open-source, interactive graphing library"
 arch=('x86_64')
@@ -42,7 +42,7 @@ source=(
 fix_for_python3.11.patch
 )
 options=(!strip) # strip isn't useful for python files and takes forever
-sha256sums=('71b2b25ad82f2a949dcf4f764ba9da972f2ef62442afa3005ca08b4102a2ba36'
+sha256sums=('a8ad150640528e28b9bcac7cc5fc98befebc51c9b105d274f121433ba113e31d'
             'e235e66eae73bcd8579a64a241a79fb7cad0aa94e62f45acc3ac487277282b1b')
 
 prepare() {
