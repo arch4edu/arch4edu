@@ -4,7 +4,7 @@ _pkgname=gnm
 _pkgver=1.1-5
 pkgname=r-${_pkgname,,}
 pkgver=1.1.5
-pkgrel=1
+pkgrel=3
 pkgdesc='Generalized Nonlinear Models'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -15,6 +15,7 @@ depends=(
   r-relimp
 )
 optdepends=(
+  r-logmult
   r-testthat
   r-vcdextra
 )
