@@ -4,7 +4,7 @@ _pkgname=BayesFactor
 _pkgver=0.9.12-4.5
 pkgname=r-${_pkgname,,}
 pkgver=0.9.12.4.5
-pkgrel=1
+pkgrel=3
 pkgdesc='Computation of Bayes Factors for Common Designs'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,6 +28,7 @@ optdepends=(
   r-languager
   r-lme4
   r-markdown
+  r-rmarkdown
   r-testthat
   r-xtable
 )
