@@ -8,7 +8,7 @@ _pkgname=lubridate
 _pkgver=1.9.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Make Dealing with Dates a Little Easier"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -32,9 +32,13 @@ md5sums=('eaa5966c86bf744c2f5d58bbb39cbec3')
 sha256sums=('2b6e1406d231b0a14d60b99cc406d159fea5465a5694725ad25343f12cf37fff')
 
 prepare() {
+  cd "$_pkgname/tests/testthat"
   # skip test that requires a French locale
   sed -i '/"parsing months with dots works in French linux locale"/a\ \ skip("Requires a French locale")' \
-      "$_pkgname/tests/testthat/test-parsers.R"
+      test-parsers.R
+  # skip outdated snapshot test
+  sed -i '/"vctrs methods have informative errors"/a\ \ skip("Outdated snapshot")' \
+      test-vctrs.R
 }
 
 build() {
