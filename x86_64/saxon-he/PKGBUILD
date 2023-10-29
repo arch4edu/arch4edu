@@ -1,23 +1,23 @@
-# Maintainer:  Anton Kudelin <kudelin at protonmail dot com>
+# Maintainer:  Anton Kudelin <kudelin at proton dot me>
 # Contributor: eolianoe <eolianoe [at] gmail [DoT] com>
 # Contributor: Andya <hugo981@gmx.com>
 # Contributor: Lazaros Koromilas <koromilaz@gmail.com>
 
 pkgname=saxon-he
-pkgver=11.4
+pkgver=12.3
 _pkgver=${pkgver//./-}
 pkgrel=1
-pkgdesc="XSLT 2.0 / XPath 2.0 and 3.0 / XQuery 1.0 and 3.0 processor for Java - Home Edition"
+arch=(any)
+pkgdesc="XSLT 3.0, XQuery 3.1, and XPath 3.1 processor for Java - Home Edition"
 url="http://saxon.sourceforge.net"
-license=('MPL')
-arch=('any')
-depends=('java-runtime-headless')
-provides=('java-saxon')
-conflicts=('java-saxon')
-source=("https://downloads.sourceforge.net/saxon/SaxonHE${_pkgver}J.zip"
-        "saxon-xslt.sh"
-        "saxon-xquery.sh")
-sha256sums=('2ec48dde4092862b1d3510d7a673d3149ad48885f8831c7878c9a85d79417094'
+license=(MPL)
+depends=(java-runtime-headless)
+provides=(java-saxon)
+conflicts=(java-saxon)
+source=(https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE${_pkgver}/SaxonHE${_pkgver}J.zip
+        saxon-xslt.sh
+        saxon-xquery.sh)
+sha256sums=('3b69ea2f817cab49072f9e85dae5e01979515f2458844f7334d26025f5ec9418'
             '0ad3cae41f7a351e5311ddea5ac0bc27bb19197f0ce9c552a7aa209864089c2b'
             '00447c1917a5ef5531dfa76d8779e4da21609b4d2b45dbb0dd4227d2299ebde8')
 

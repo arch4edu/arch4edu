@@ -4,23 +4,20 @@
 # Contributor: Ben Duffield <bavardage AT archlinux.us>
 
 pkgname=pocketsphinx
-pkgver=5.0.0
-pkgrel=2
+pkgver=5.0.2
+pkgrel=1
 pkgdesc='A small speech recognizer'
 arch=('i686' 'x86_64')
 url='https://cmusphinx.github.io'
 license=('BSD' 'MIT')
 makedepends=('cmake' 'ninja' 'gst-plugins-base-libs')
 optdepends=('gst-plugins-base-libs: GStreamer plugin')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/cmusphinx/pocketsphinx/archive/refs/tags/v$pkgver.tar.gz"
-        '66685a74bb55d82a97c6ae46b7cd91152bbbfffd.patch')
-sha256sums=('78ffe5b60b6981b08667435dd26c5a179b612b8ca372bd9c23c896a8b2239a20'
-            '428fc297f047ea95fe24f7e43b723cdfdb7215de518455e939ef86ff1aa10af6')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/cmusphinx/pocketsphinx/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('c2c58aa702195c46c44575fb9ed5790e749ab647df648b4557cc963aeac638b2')
 
 prepare() {
   cd $pkgname-$pkgver
 
-  patch -p1 -i ../66685a74bb55d82a97c6ae46b7cd91152bbbfffd.patch
 }
 
 build() {

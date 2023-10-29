@@ -1,0 +1,27 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-e1071
+  - x86_64/r/r-foreach
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-modelmetrics
+  - x86_64/r/r-plyr
+  - x86_64/r/r-proc
+  - x86_64/r/r-recipes
+  - x86_64/r/r-reshape2
+  - x86_64/r/r-withr
+makedepends:
+  - x86_64/r/r-earth
+  - x86_64/r/r-fastica
+  - x86_64/r/r-glmnet
+  - x86_64/r/r-kernlab
+  - x86_64/r/r-mda
+  - x86_64/r/r-mlmetrics
+  - x86_64/r/r-randomforest
+  - x86_64/r/r-testthat
+  - x86_64/r/r-themis
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

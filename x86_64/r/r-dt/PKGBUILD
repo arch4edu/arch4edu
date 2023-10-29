@@ -1,25 +1,29 @@
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Robert Greener <me@r0bert.dev>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=DT
-_pkgver=0.27
+_pkgver=0.30
 pkgname=r-${_pkgname,,}
-pkgver=0.27
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="A Wrapper of the JavaScript Library 'DataTables'"
-arch=('any')
+arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL3)
 depends=(
-  r
   r-crosstalk
   r-htmltools
   r-htmlwidgets
+  r-httpuv
   r-jquerylib
   r-jsonlite
   r-magrittr
   r-promises
+)
+checkdepends=(
+  r-testit
 )
 optdepends=(
   r-bslib
@@ -31,14 +35,20 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e32fdccd2be430933cff88a9ce79045bfdbe3e08e0cd8d15037445808613289a')
+md5sums=('1fee03267daa820716da3ef95fc888d0')
+sha256sums=('2f1a53e32a9b493efc9041758810c6a744ebb17ad7a942b376389b7e95ff698e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" _R_CHECK_PACKAGE_NAME_=false Rscript --vanilla test-all.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

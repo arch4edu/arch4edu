@@ -1,1 +1,7 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: archpkg
+    archpkg: timeshift
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: abs-pre-build
+post_build: abs-post-build

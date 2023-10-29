@@ -2,8 +2,8 @@
 _base=ninja-python-distributions
 pkgname=python-${_base%%-*}
 pkgdesc="Ninja is a small build system with a focus on speed"
-pkgver=1.11.1
-pkgrel=2
+pkgver=1.11.1.1
+pkgrel=1
 arch=(any)
 url="https://github.com/scikit-build/${_base}"
 license=(Apache)
@@ -12,7 +12,7 @@ makedepends=(python-build python-installer python-scikit-build)
 provides=(${_base%%-*})
 conflicts=(${_base%%-*})
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('f6193ba9d1d55da11a437d17b96ef7c0574fd0033c05b1f2d2a4c652241a460a1066f2044bbbe9f134e2af3c8ff185304053da5dd7a10e337cdf60f910a11062')
+sha512sums=('64116a57218589c9420f689fba67ca7ab50fa0935790398d8f55ebc09301b570fb05b180cc1e3d4b8c58a00208940ecfbe4602578b0667c97d012c61d079da44')
 
 build() {
   cd ${_base}-${pkgver}

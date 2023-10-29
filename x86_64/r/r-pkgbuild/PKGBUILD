@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgbuild
-_cranver=1.4.0
+_cranver=1.4.2
 pkgname=r-${_cranname,,}
 pkgdesc="Find Tools Needed to Build R Packages"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -15,14 +15,12 @@ depends=(
     "r>=3.4"
     "r-callr>=3.2.0"
     "r-cli>=3.4.0"
-    "r-cpp11"
     "r-crayon"
     "r-desc"
     "r-prettyunits"
     "r-processx"
     "r-r6"
     "r-rprojroot"
-    "r-withr>=2.3.0"
 )
 optdepends=(
     "r-covr"
@@ -31,6 +29,7 @@ optdepends=(
     "r-mockery"
     "r-rcpp"
     "r-rmarkdown"
+    "r-withr>=2.3.0"
 )
 
 # The unittests for `r-pkgbuild` have multiple circular
@@ -53,7 +52,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("23e88c9a0bdb934823a2360ed40742695f615a1545a3d637c09c1a9af5752b1d0cbe01202b5b756b74745bdac4b3dcbdc83ce5cf9634ccadabb6d32ee46d9ad5")
+b2sums=("a8c29a56cd83338fde68457fe31e928b1be719b5122d5c06bb5a41488cf75b194848192023d4c9dbb99dd5a71f5242a28040f7a867094513aa1a4bbcd93d5761")
 
 build() {
     mkdir -p "${srcdir}/build/"
@@ -62,6 +61,7 @@ build() {
 
 # check() {
 #     export R_LIBS="build/"
+#     rm "${srcdir}/${_cranname}/tests/testthat/test-build.R"  # fails in current toolchain
 #     R CMD check --no-manual "${_cranname}"
 # }
 

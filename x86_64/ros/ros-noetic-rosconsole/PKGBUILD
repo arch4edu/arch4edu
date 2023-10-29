@@ -4,7 +4,7 @@ url='https://wiki.ros.org/rosconsole'
 pkgname='ros-noetic-rosconsole'
 pkgver='1.14.3'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=11
+pkgrel=12
 license=('BSD')
 
 ros_makedepends=(

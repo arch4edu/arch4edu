@@ -3,7 +3,7 @@
 pkgname=python-property-cached
 _pkgname=property-cached
 pkgver=1.6.4
-pkgrel=1
+pkgrel=2
 pkgdesc="A decorator for caching properties in classes"
 arch=('any')
 url="https://github.com/althonos/property-cached/"

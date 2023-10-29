@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bbmle
+  - x86_64/r/r-desolve
+  - x86_64/r/r-fastghquad
+  - x86_64/r/r-rcpp
+makedepends:
+  - x86_64/r/r-bh
+  - x86_64/r/r-rcpparmadillo
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

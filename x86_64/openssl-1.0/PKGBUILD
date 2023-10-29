@@ -5,7 +5,7 @@ _ver=1.0.2u
 # use a pacman compatible version scheme
 pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
 #pkgver=$_ver
-pkgrel=5
+pkgrel=6
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -23,13 +23,15 @@ source=("https://www.openssl.org/source/openssl-${_ver}.tar.gz"
         'no-rpath.patch'
         'ssl3-test-failure.patch'
         'openssl-1.0-versioned-symbols.patch'
-        'nist-explicit-inline.patch')
+        'nist-explicit-inline.patch'
+        'updated-test-certs.patch')
 sha256sums=('ecd0c6ffb493dd06707d38b14bb4d8c2288bb7033735606569d8f90f89669d16'
             'SKIP'
             '754d6107a306311e15a1db6a1cc031b81691c8b9865e8809ac60ca6f184c957c'
             'c54ae87c602eaa1530a336ab7c6e22e12898e1941012349c153e52553df64a13'
             '353a84e4c92e36c379ebd9216b8f8fb9c271396583561eb84ac8c825979acaa6'
-            'fe5e678556ce723dbc480ddf851b795eca645003b28ae947b446f311e65b2294')
+            'fe5e678556ce723dbc480ddf851b795eca645003b28ae947b446f311e65b2294'
+            '45d79d419a9f2380c91b04f1eb6ffe6ab42bf1f9b46a26a1446a15ac84907cf9')
 validpgpkeys=('8657ABB260F056B1E5190839D9C4D26D0E604491'
               '7953AC1FBC3DC8B3B292393ED5E9E43F7DF9EE8C')
 
@@ -47,6 +49,9 @@ prepare() {
 
 	# fix NIST curve errors when building with newer clang versions
 	patch -p1 -i "$srcdir/nist-explicit-inline.patch"
+
+	# fix tests failing because of expired certificates
+	patch -p1 -i "$srcdir/updated-test-certs.patch"
 }
 
 build() {

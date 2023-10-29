@@ -1,0 +1,45 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-clock
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-ellipsis
+  - x86_64/r/r-generics
+  - x86_64/r/r-glue
+  - x86_64/r/r-gower
+  - x86_64/r/r-hardhat
+  - x86_64/r/r-ipred
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-lubridate
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rlang
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-tidyselect
+  - x86_64/r/r-timedate
+  - x86_64/r/r-vctrs
+  - x86_64/r/r-withr
+makedepends:
+  - x86_64/r/r-ddalpha
+  - x86_64/r/r-dials
+  - x86_64/r/r-dimred
+  - x86_64/r/r-fastica
+  - x86_64/r/r-igraph
+  - x86_64/r/r-kernlab
+  - x86_64/r/r-mixomics
+  - x86_64/r/r-modeldata
+  - x86_64/r/r-rann
+  - x86_64/r/r-rcppml
+  - x86_64/r/r-rcpproll
+  - x86_64/r/r-rsample
+  - x86_64/r/r-rspectra
+  - x86_64/r/r-splines2
+  - x86_64/r/r-testthat
+  - x86_64/r/r-workflows
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

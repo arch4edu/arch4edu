@@ -3,13 +3,15 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-broom
-  - x86_64/r/r-cpp11
   - x86_64/r/r-dplyr
   - x86_64/r/r-generics
+  - x86_64/r/r-glmnet
+  - x86_64/r/r-mitml
   - x86_64/r/r-rcpp
   - x86_64/r/r-rlang
   - x86_64/r/r-tidyr
-  - x86_64/r/r-withr
+makedepends:
+  - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-desc
+  - x86_64/r/r-ellipsis
+  - x86_64/r/r-fs
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-memoise
+  - x86_64/r/r-miniui
+  - x86_64/r/r-pkgbuild
+  - x86_64/r/r-pkgdown
+  - x86_64/r/r-pkgload
+  - x86_64/r/r-profvis
+  - x86_64/r/r-rcmdcheck
+  - x86_64/r/r-remotes
+  - x86_64/r/r-rlang
+  - x86_64/r/r-roxygen2
+  - x86_64/r/r-rversions
+  - x86_64/r/r-sessioninfo
+  - x86_64/r/r-testthat
+  - x86_64/r/r-urlchecker
+  - x86_64/r/r-usethis
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

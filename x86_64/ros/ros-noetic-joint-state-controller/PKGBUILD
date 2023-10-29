@@ -4,10 +4,10 @@ pkgdesc="ROS - Controller to publish joint state."
 url='https://github.com/ros-controls/ros_controllers/wiki'
 
 pkgname='ros-noetic-joint-state-controller'
-pkgver='0.20.0'
+pkgver='0.21.1'
 _pkgver_patch=0
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=2
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(
@@ -41,7 +41,7 @@ depends=(
 
 _dir="ros_controllers-${pkgver}/joint_state_controller"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-controls/ros_controllers/archive/${pkgver}.tar.gz")
-sha256sums=('c9a42db66d8a90604f255592fb0f2c20d315a235a0a20aaa07a1e045dcda6d27')
+sha256sums=('f3768fe4ee700cc4e1bc69370fbbcf04cc4b31a77989f639dd4091fe9ed35e4a')
 
 build() {
 	# Use ROS environment variables.

@@ -1,8 +1,8 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 
 pkgname=pypy-bin
-pkgver=7.3.9
-pkgrel=2
+pkgver=7.3.13
+pkgrel=1
 pkgdesc="A Python implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64' 'aarch64')
@@ -13,8 +13,8 @@ options=(!buildflags)
 license=('MIT')
 source_x86_64=("https://downloads.python.org/pypy/pypy2.7-v${pkgver}-linux64.tar.bz2")
 source_aarch64=("https://downloads.python.org/pypy/pypy2.7-v${pkgver}-aarch64.tar.bz2")
-sha512sums_x86_64=('6b088351aece695513ceb14f2d3be6bbb7d0c17077a727eebb97e87a7e15fd9b8e8259f83f6893b5bc1a04bf4341dc6959aabf39ed9820e7ded869bfdcc18664')
-sha512sums_aarch64=('23567afe48eeee01846cf24f3b45e579a39ea540144a0fa50e106bc0c9a0a3770515204cf505da8d9604bf64e097b60a881eb3a197ab0a6935778741ec18b95e')
+sha512sums_x86_64=('4ee943e516c2be4e294b7dbc8ca796e71909ab3bbe3eac0bd1373be11973509c90b5a6d143ca153619fff23122c367fa8ee6816b713fa5337392bb5840621534')
+sha512sums_aarch64=('de832df246d356e479a902930c37d392e21c5c848f33eb61ab226520a01e2d3ea7e804b62cfa413640f1168e8495afd43ccf262874e4746ce6faaa03a1176b91')
 
 package() {
   [ "$CARCH" = "x86_64" ] && cd pypy2.7-v${pkgver}-linux64

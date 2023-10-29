@@ -4,7 +4,7 @@
 _mirrorlist_name=mirrorlist.arch4edu
 _gitname=mirrorlist
 pkgname=$_mirrorlist_name
-pkgver=20230426.dddb521
+pkgver=20231019.0b53b1e
 pkgrel=1
 pkgdesc="Arch4edu repo mirror list for use by pacman"
 arch=('any')

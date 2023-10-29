@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-later
+  - x86_64/r/r-r6
+makedepends:
+  - x86_64/r/r-asioheaders
+  - x86_64/r/r-cpp11
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

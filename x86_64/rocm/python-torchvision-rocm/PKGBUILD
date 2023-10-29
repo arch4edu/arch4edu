@@ -10,8 +10,8 @@
 _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.15.1
-pkgrel=3
+pkgver=0.15.2
+pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -27,9 +27,6 @@ depends=(
   libjpeg-turbo
   libpng
 )
-optdepends=(
-  'python-pycocotools: support for MS-COCO dataset'
-)
 makedepends=(
   cmake
   ninja
@@ -42,7 +39,7 @@ source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
 )
 sha512sums=(
-  'd6c1f55684a6d08b3501c4c166268684fbe8753fc034f8db7ddc1ee39efcff2ec39ce864cd97b95b784eb08345b999a928d5431d8d66bec82dc6f32ffd18c3bb'
+  'b126d7204500ba84de010beca9c2c51d05071ad4a57f0230474bdcb011a999481b550343ccbd003a1359b6e63528232aa19a90f4003b139fc372d655a41b5007'
 )
 
 prepare() {
@@ -65,13 +62,19 @@ build() {
   mkdir build
   cd build
 
-  # populate build architecture list if not set with defaults taken from
-  # arch:community:python-pytorch-rocm@1.13.1
+  # populate build architecture list if not set from arch:python-pytorch-rocm@2.0.1#7
   if test -n "$PYTORCH_ROCM_ARCH"; then
     export PYTORCH_ROCM_ARCH="$PYTORCH_ROCM_ARCH"
   else
-    export PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030"
+    export PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102"
   fi
+
+  # hardcode ROCM_PATH and HIP_ROOT_DIR to /opt/rocm (from arch:python-pytorch-rocm@2.0.1#7)
+  export ROCM_PATH=/opt/rocm
+  export HIP_ROOT_DIR=/opt/rocm
+  # fix bin/hipcc not found, because ROCM_HOME is lost
+  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
+  export ROCM_HOME=/opt/rocm
 
   cmake "../" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -82,12 +85,8 @@ build() {
     -DWITH_JPEG=ON
   make
 
-  # fix bin/hipcc not found, because ROCM_HOME is lost
-  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
   cd "${srcdir}/${_pkgname}-${pkgver}"
-  FORCE_CUDA=1 \
-    ROCM_HOME=/opt/rocm/ \
-    TORCHVISION_INCLUDE=${srcdir} \
+  TORCHVISION_INCLUDE=${srcdir} \
     TORCHVISION_LIBRARY=/usr/lib \
     TORCHVISION_USE_NVJPEG=0 \
     TORCHVISION_USE_VIDEO_CODEC=0 \
@@ -121,8 +120,7 @@ package_python-torchvision-rocm() {
 
   cd "${srcdir}/${_pkgname}-${pkgver}"
   # fix bin/hipcc not found, because ROCM_HOME is lost
-  FORCE_CUDA=1 \
-    ROCM_HOME=/opt/rocm/ \
+  ROCM_HOME=/opt/rocm/ \
     TORCHVISION_INCLUDE=${srcdir} \
     TORCHVISION_LIBRARY=/usr/lib \
     python setup.py install --root="${pkgdir}" --optimize=1 --skip-build

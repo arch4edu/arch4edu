@@ -5,7 +5,7 @@ pkgname=dune-common
 _tarver=2.9.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=3
+pkgrel=4
 pkgdesc="Infrastructure and foundation classes"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
@@ -21,7 +21,7 @@ optdepends=('vc: C++ Vectorization library'
   'bash-completion: for completion when using bash'
   'parmetis: Parallel Graph Partitioning and Fill-reducing Matrix Ordering'
   'scotch: Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering'
-  'tbb: High level abstract threading library'
+  'onetbb: High level abstract threading library'
   'man-db: manual pages for dune'
   'python-matplotlib: for Matplotlib rendering'
   'python-mayavi: for 3D plotting')

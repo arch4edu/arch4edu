@@ -6,7 +6,7 @@ depends:
   - x86_64/r/r-ic.infer
   - x86_64/r/r-lavaan
   - x86_64/r/r-mvtnorm
-  - x86_64/r/r-norm2
+  - x86_64/r/r-norm
   - x86_64/r/r-quadprog
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

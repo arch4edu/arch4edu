@@ -2,8 +2,8 @@
 
 pkgname="python-imageio"
 _pkgname="imageio"
-pkgver=2.28.1
-pkgrel=2
+pkgver=2.31.5
+pkgrel=5
 pkgdesc="a Python library that provides an easy interface to read and write a wide range of image data"
 arch=('any')
 _github="imageio/imageio"
@@ -12,19 +12,19 @@ url="https://github.com/imageio/imageio"
 license=('BSD')
 depends=('python-numpy' 'python-pillow')
 optdepends=('avbin' 'python-imageio-ffmpeg' 'freeimage' 'python-astropy' 'python-simpleitk')
-makedepends=('python' 'python-setuptools')
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/imageio/imageio/archive/v${pkgver}.tar.gz")
-sha256sums=('27c7c0004c62fc890198e0534177b4fad1a31d2ee9cfe0e957abacf597e37230')
+sha256sums=('a04e1d87e01734c8981c2989b1d2b5bd729821705b09066cfc6c31d5ffe0ffd7')
 
 build() {
   msg "Building Python 3"
   cd "$srcdir/${_pkgname}-${pkgver}"
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$srcdir/${_pkgname}-${pkgver}"
-  python setup.py install --root="$pkgdir"/ --optimize=1 --skip-build
+  python -m installer --destdir="$pkgdir" --compile-bytecode=1 dist/*.whl
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt"
 
   # remove utilities for downloading binary dependencies

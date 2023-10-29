@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-here
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-png
+  - x86_64/r/r-rappdirs
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcpptoml
+  - x86_64/r/r-rlang
+  - x86_64/r/r-withr
+makedepends:
+  - any/python-plotly
+  - x86_64/r/r-rmarkdown
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

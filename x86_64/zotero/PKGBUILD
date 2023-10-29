@@ -1,7 +1,7 @@
 # Maintainer: Aaron Keesing <agkphysics at gmail dot com>
 
 pkgname=zotero
-pkgver=6.0.26
+pkgver=6.0.27
 pkgrel=1
 pkgdesc="A free, easy-to-use tool to help you collect, organize, cite, and share your research sources."
 arch=('x86_64' 'i686')
@@ -9,11 +9,11 @@ url="https://github.com/zotero/zotero"
 license=('AGPL3')
 depends=('dbus-glib' 'gtk3' 'nss' 'libxt')
 makedepends=('npm' 'git' 'zip' 'unzip' 'perl' 'python>=3' 'curl' 'wget' 'rsync' 'nodejs')
-_tag=8251c007431e06305c49aa9a871a4aea4bbc231c  # git rev-parse $pkgver
+_tag=0120c7c7ad3f6b2159d9d28abfb5f10f424b860d  # git rev-parse $pkgver
 source=("zotero.desktop"
         "zotero-client::git+https://github.com/zotero/zotero.git#tag=${_tag}"
         "zotero-build::git+https://github.com/zotero/zotero-build.git"
-        "zotero-standalone-build::git+https://github.com/zotero/zotero-standalone-build.git#tag=6.0.23"
+        "zotero-standalone-build::git+https://github.com/zotero/zotero-standalone-build.git#tag=6.0.27"
         "zotero-translators::git+https://github.com/zotero/translators.git"
         "zotero-styles::git+https://github.com/zotero/bundled-styles.git"
         "zotero-pdf-worker::git+https://github.com/zotero/pdf-worker.git"
@@ -51,12 +51,8 @@ pkgver() {
 }
 
 prepare() {
-  cd "$srcdir/zotero-build"
-  git submodule init
-  git config submodule.xpi/zotero-transfw.url "$srcdir/zotero-transfw"
-  git -c protocol.file.allow=always submodule update
-
   cd "$srcdir/zotero-client"
+  npm i --legacy-peer-deps
   git submodule init
   git config submodule.translators.url "$srcdir/zotero-translators"
   git config submodule.styles.url "$srcdir/zotero-styles"
@@ -70,19 +66,20 @@ prepare() {
   git config submodule.chrome/content/zotero/locale/csl.url "$srcdir/zotero-csl"
   git -c protocol.file.allow=always submodule update
 
-  cd pdf-reader
+  cd "$srcdir/zotero-client/pdf-reader"
   git submodule init
   git config submodule.pdf.js.url "$srcdir/zotero-pdf-js"
   git -c protocol.file.allow=always submodule update
-  cd ..
 
-  cd pdf-worker
+  cd "$srcdir/zotero-client/pdf-worker"
   git submodule init
   git config submodule.pdf.js.url "$srcdir/zotero-pdf-js"
   git -c protocol.file.allow=always submodule update
-  cd ..
 
-  npm i --legacy-peer-deps
+  cd "$srcdir/zotero-build"
+  git submodule init
+  git config submodule.xpi/zotero-transfw.url "$srcdir/zotero-transfw"
+  git -c protocol.file.allow=always submodule update
 
   cd "$srcdir/zotero-standalone-build"
   git submodule init

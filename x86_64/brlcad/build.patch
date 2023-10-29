@@ -30,3 +30,13 @@
  #include <algorithm>
  #include <locale>
  #include <fstream>
+--- src/other/ext/assetimport.cmake
++++ src/other/ext/assetimport.cmake
+@@ -68,6 +68,7 @@ if (BRLCAD_ASSETIMPORT_BUILD)
+     -DASSIMP_BUILD_MINIZIP=ON
+     -DASSIMP_INJECT_DEBUG_POSTFIX=OFF
+     -DASSIMP_INSTALL_PDB=OFF
++    -DASSIMP_WARNINGS_AS_ERRORS=OFF
+     DEPENDS ${ASSETIMPORT_DEPS}
+     LOG_CONFIGURE ${EXT_BUILD_QUIET}
+     LOG_BUILD ${EXT_BUILD_QUIET}

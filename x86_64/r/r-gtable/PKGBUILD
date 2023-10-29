@@ -3,10 +3,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=gtable
-_cranver=0.3.3
+_cranver=0.3.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Arrange ‘Grobs’ in Tables"
 arch=("any")
 url="https://cran.r-project.org/package=${_cranname}"
@@ -40,23 +40,23 @@ optdepends=(
 # the build chroot), uncomment the lines defining `checkdepends`, below,
 # as well as the `check()` function further down
 
-# checkdepends=(
-#     "${optdepends[@]}"
-#     "r-testthat>=3.0.0"
-# )
+checkdepends=(
+    "${optdepends[@]}"
+    "r-testthat>=3.0.0"
+)
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("11aaeac267036bb9de6e4fc5d7caff7dcf76b9421645393ccff4b1ac4624cd07e94707e5a43f70dcb029cb6df0671ce579a98acbff03eacdc76d07e5c6624582")
+b2sums=("6c2975721cbbfbf3ebff542cbdc436f3302bd81e45be421bc9586364195e2c71a57b247b51ee13057d600e24147b5f80852a9b4dabc12144d8e9c0e0feba4e7b")
 
 build() {
     mkdir -p "${srcdir}/build/"
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-# check() {
-#     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
-# }
+check() {
+    export R_LIBS="build/"
+    R CMD check --no-manual "${_cranname}"
+}
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"

@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - any/python-lazy-loader
   - any/python-tifffile

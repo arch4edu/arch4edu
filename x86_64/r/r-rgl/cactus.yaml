@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-base64enc
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-htmlwidgets
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-knitr
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-mime
+  - x86_64/r/r-r6
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

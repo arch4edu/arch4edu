@@ -9,6 +9,7 @@ depends:
   - x86_64/r/r-foreach
   - x86_64/r/r-ggplot2
   - x86_64/r/r-gtools
+  - x86_64/r/r-hdinterval
   - x86_64/r/r-huge
   - x86_64/r/r-isingsampler
   - x86_64/r/r-jaspbase

@@ -2,7 +2,7 @@
 # Contributor: Tim Rakowski <tim.rakowski@gmail.com>
 
 pkgname=ignition-cmake-2
-pkgver=2.16.0
+pkgver=2.17.0
 pkgrel=1
 pkgdesc="A set of CMake modules that are used by the C++-based Gazebo projects."
 arch=('any')
@@ -11,7 +11,7 @@ license=('Apache')
 depends=('cmake' 'pkg-config' 'ruby-ronn' 'doxygen')
 provides=('ignition-cmake=2')
 source=("https://github.com/gazebosim/gz-cmake/archive/ignition-cmake2_${pkgver}.tar.gz")
-sha256sums=('fcbe3de79b711fff8f8a94f24652e5d0e5d3cac8a79dd8f96e03c4b1886db3cc')
+sha256sums=('f7953691bbeb09f1e86db89417cf15f34e7e2c025f76925297cf82e1fd17e1cf')
 
 _dir="gz-cmake-ignition-cmake2_${pkgver}"
 

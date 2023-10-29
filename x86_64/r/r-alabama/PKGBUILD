@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=alabama
-_pkgver=2022.4-1
+_pkgver=2023.1.0
 pkgname=r-${_pkgname,,}
-pkgver=2022.4.1
+pkgver=2023.1.0
 pkgrel=1
 pkgdesc='Constrained Nonlinear Optimization'
 arch=('any')
@@ -14,7 +14,7 @@ depends=(
   r-numderiv
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a8c62859b39a8340ecf7bbf411fac303c059e4237d28ff7bba9ba3daaca1d36c')
+sha256sums=('925f67c72d9cdb677105377777bd09e9b56a61573bea7e3f69e0a49595c7bf1c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

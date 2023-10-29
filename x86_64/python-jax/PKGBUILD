@@ -1,31 +1,30 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname='python-jax'
-pkgver=0.4.8
+pkgver=0.4.19
 pkgrel=1
-pkgdesc='Differentiate, compile, and transform Numpy code.'
+pkgdesc='Composable transformations of Python+NumPy programs'
 arch=('any')
 url='https://github.com/google/jax/'
 license=('Apache')
 depends=('python-absl'
-         'python-jaxlib'
+         'python-jaxlib>=0.4.14'
          'python-ml-dtypes'
-         'python-numpy>=1.20'
+         'python-numpy'
          'python-opt_einsum'
-         'python-scipy>=1.5')
+         'python-scipy')
 optdepends=('python-protobuf: Australis')
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 source=("jax-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jax-v${pkgver}.tar.gz")
-sha256sums=('c0a2f16d0e832860f695eb860ebde6de08dc002fde1b27119445e7ee7e21e059')
+sha256sums=('da7c8563941caec1b47936c0328a377dd3106fb4bb10696719f8919325ac1bf7')
 
 build() {
-    cd jax-jax-v$pkgver
-    python -m build -n -w
+    JAX_RELEASE=$pkgver python -m build -nw jax-jax-v$pkgver
 }
 
 package() {
     python -m installer \
         --compile-bytecode 1 \
         --destdir $pkgdir \
-        jax-jax-v$pkgver/dist/jax-$pkgver-py3-*-*.whl
+        jax-jax-v$pkgver/dist/jax-$pkgver-*.whl
 }

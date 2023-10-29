@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=prettyunits
-_pkgver=1.1.1
+_pkgver=1.2.0
 pkgname=r-${_pkgname,,}
-pkgver=1.1.1
-pkgrel=11
+pkgver=1.2.0
+pkgrel=1
 pkgdesc='Pretty, Human Readable Formatting of Quantities'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9a199aa80c6d5e50fa977bc724d6e39dae1fc597a96413053609156ee7fb75c5')
+sha256sums=('f059f27e2a5c82e351fe05b87ad712f7afc273c651450453f59d99af5deeacea')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

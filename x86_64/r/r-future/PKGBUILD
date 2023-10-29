@@ -1,32 +1,37 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-_cranname=future
-_cranver=1.32.0
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=future
+_pkgver=1.33.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Unified Parallel and Distributed Processing in R for Everyone"
 arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(LGPL)
 depends=(
-    r-digest
-    r-globals
-    r-listenv
-    r-parallelly
+  r-digest
+  r-globals
+  r-listenv
+  r-parallelly
 )
-optdepends=(r-rhpcblasctl r-r.rsp r-markdown)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('d5bb74512d069745184dd580a36449dc0b50d95b1cbbbc1605db82de596f2f76')
+optdepends=(
+  r-markdown
+  r-r.rsp
+  r-rhpcblasctl
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('153aa3ab46f23974538f1069f26930b8')
+sha256sums=('4228eb9b35ce4b56bf4168977661fed4f83bb36131b2dc7120b2898d8747935b')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }

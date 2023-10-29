@@ -3,7 +3,7 @@ nvchecker:
     aur:
 depends:
   - any/ccache-ext
-group: x86_64
+group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build

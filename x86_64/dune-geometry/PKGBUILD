@@ -5,7 +5,7 @@ pkgname=dune-geometry
 _tarver=2.9.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=2
+pkgrel=3
 pkgdesc="Geometry Transformations, Reference Elements and Quadrature Rules"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
@@ -16,7 +16,6 @@ optdepends=('texlive-latexextra: Type setting system'
   'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software'
   'inkscape: converts SVG images')
-# 'python-quadpy: for quadrature rules'
 source=(https://dune-project.org/download/${_tar}{,.asc}
   gcc13-compatibility.patch::https://gitlab.dune-project.org/core/${pkgname}/-/commit/3df3cb68b6b2c1b28d29c0353e42a63ab54768d1.patch)
 sha512sums=('5b227b3346b7eb3db3887483525a3ce550eddfa13528c30b213a7cc811dead5844bf0032133d2167bd6f341be8b13c014cc208724e67cac074432af28cd39fb1'

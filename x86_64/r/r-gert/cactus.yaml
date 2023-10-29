@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-askpass
+  - x86_64/r/r-credentials
+  - x86_64/r/r-openssl
+  - x86_64/r/r-rstudioapi
+  - x86_64/r/r-sys
+  - x86_64/r/r-zip
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

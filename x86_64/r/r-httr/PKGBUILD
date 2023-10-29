@@ -1,25 +1,60 @@
 # Maintainer: dhn <neilson+aur@sent.com>
-# Co-maintainer: alhirzel
+# Maintainer: alhirzel
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: Filipe Laíns (FFY00) <lains@archlinux.org>
+# Contributor: Ward Segers <w@rdsegers.be>
+# Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=httr
-pkgname=r-$_pkgname
-pkgver=1.4.5
+_pkgver=1.4.7
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Useful tools for working with HTTP organised by HTTP verbs (GET(), POST(), etc). Configuration functions make it easy to control additional request components'
-arch=('any')
-url="https://cran.r-project.org/web/packages/$_pkgname/"
-license=('GPL')
-depends=('r' 'r-curl' 'r-jsonlite' 'r-mime' 'r-openssl' 'r-r6')
-makedepends=('r-testthat')
-optdepends=('r-covr' 'r-httpuv' 'r-jpeg' 'r-knitr' 'r-png' 'r-readr' 'r-xml2' 'r-rmarkdown')
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_$pkgver.tar.gz")
-sha512sums=('e836e9b08edbde1fe05cc25417be1bcaecfaf1ce20f8858b49c22a5c449b8a658511eeb50f10d84881d95fec44d68423305401dfeb7d8ab2fa35c3e1f840a071')
+pkgdesc="Tools for Working with URLs and HTTP"
+arch=(any)
+url="https://cran.r-project.org/package=${_pkgname}"
+license=(MIT)
+depends=(
+  r-curl
+  r-jsonlite
+  r-mime
+  r-openssl
+  r-r6
+)
+checkdepends=(
+  r-httpuv
+  r-testthat
+)
+optdepends=(
+  r-covr
+  r-httpuv
+  r-jpeg
+  r-knitr
+  r-png
+  r-readr
+  r-rmarkdown
+  r-testthat
+  r-xml2
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('8965ffef86aea39922f435c019daf9fb')
+sha256sums=('1555e6c2fb67bd38ff11b479f74aa287b2d93f4add487aec53b836ff07de3a3a')
 
-build(){
-    R CMD INSTALL ${_pkgname}_$pkgver.tar.gz -l "$srcdir"
+build() {
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" Rscript --vanilla testthat.R
 }
 
 package() {
-    install -dm 755 "$pkgdir"/usr/lib/R/library
-    cp -a --no-preserve=ownership httr "$pkgdir"/usr/lib/R/library
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }

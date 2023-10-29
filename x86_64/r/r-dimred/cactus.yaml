@@ -1,0 +1,25 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-drr
+  - x86_64/r/r-magrittr
+makedepends:
+  - x86_64/r/r-coranking
+  - x86_64/r/r-diffusionmap
+  - x86_64/r/r-fastica
+  - x86_64/r/r-igraph
+  - x86_64/r/r-keras
+  - x86_64/r/r-pcal1
+  - x86_64/r/r-rann
+  - x86_64/r/r-reticulate
+  - x86_64/r/r-rspectra
+  - x86_64/r/r-rtsne
+  - x86_64/r/r-tensorflow
+  - x86_64/r/r-testthat
+  - x86_64/r/r-umap
+  - x86_64/r/r-vegan
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-pwr
+  - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspgraphs
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

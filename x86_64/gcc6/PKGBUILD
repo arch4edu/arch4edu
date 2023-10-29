@@ -14,7 +14,7 @@ pkgver=6.5.0
 _ver=${pkgver%%.*}
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=8
+pkgrel=9
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
 license=(GPL LGPL FDL custom)
@@ -231,6 +231,7 @@ package_gcc6() {
 
   # Lazy way of dealing with conflicting files...
   rm -rf "${pkgdir}"/usr/share/{info,locale,man}
+  rm -rf "${pkgdir}"/"${_libdir}"/libstdc++.{a,la}
 
   # Move potentially conflicting stuff to version specific subdirectory
   mv "${pkgdir}"/usr/lib/bfd-plugins/liblto_plugin.so "${pkgdir}"/usr/lib/bfd-plugins/liblto_plugin-${_ver}.so

@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-future.apply
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-progressr
+  - x86_64/r/r-squarem
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

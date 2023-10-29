@@ -2,9 +2,9 @@ pkgdesc="ROS - MAVLink message marshaling library."
 url='https://wiki.ros.org/mavlink'
 
 pkgname='ros-noetic-mavlink'
-pkgver=2022.12.30
+pkgver=2023.9.9
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=2
+pkgrel=1
 license=('LGPLv3')
 
 ros_makedepends=()
@@ -28,7 +28,7 @@ depends=(
 
 _dir="mavlink-gbp-release-upstream-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/mavlink/mavlink-gbp-release/archive/upstream/${pkgver}.tar.gz")
-sha256sums=('5f11fcc01a5844dee31354d19ba58226daa3ea36ff2d05fcf1f22e2fa2cd3c88')
+sha256sums=('b6708f193c3fe2906a8c5c295a969ef36cd715a467db457cf329954c3d404ad7')
 
 build() {
     # Use ROS environment variables
@@ -36,6 +36,7 @@ build() {
     [ -f /opt/ros/noetic/setup.bash ] && source /opt/ros/noetic/setup.bash
 
     # Build project
+    curl -L https://github.com/ros-noetic-arch/ros-noetic-mavlink/files/11622511/config.h.in.txt -o ${_dir}/config.h.in
     export ROS_PYTHON_VERSION=3
     cmake -Wno-dev -B build -S ${_dir} \
           -DCMAKE_INSTALL_PREFIX=/opt/ros/noetic

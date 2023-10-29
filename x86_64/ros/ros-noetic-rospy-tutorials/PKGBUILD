@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rospy_tutorials'
 pkgname='ros-noetic-rospy-tutorials'
 pkgver='0.10.2'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(

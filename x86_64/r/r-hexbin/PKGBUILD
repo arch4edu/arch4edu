@@ -1,33 +1,38 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=hexbin
-_cranver=1.28.3
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=hexbin
+_pkgver=1.28.3
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//[:-]/.}
+pkgrel=3
 pkgdesc="Hexagonal Binning Routines"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
+arch=(x86_64)
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(GPL2)
-depends=(r)
-makedepends=(gcc-fortran)
-optdepends=(
-    r-marray
-    r-affy
-    r-biobase
-    r-limma
-    r-knitr
+depends=(
+  r
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+makedepends=(
+  gcc-fortran
+)
+optdepends=(
+  r-affy
+  r-biobase
+  r-knitr
+  r-limma
+  r-marray
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('d0035d06e66b9229586590b03d258288')
 sha256sums=('0eb33511c1a4ff29dda8b89fee420ea7041033f981c7f16484c9f504d749de5f')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }

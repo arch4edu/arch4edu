@@ -6,7 +6,7 @@ pkgdesc="Pythonic bindings for FFmpeg"
 url="https://docs.mikeboers.com/pyav/"
 
 pkgver=10.0.0
-pkgrel=4
+pkgrel=5
 
 arch=("x86_64" "i686")
 license=("BSD")
@@ -18,7 +18,7 @@ depends=(
     "python-pillow"
 )
 makedepends=(
-    "cython"
+    "cython0"
     "python-google-api-core"
     "python-setuptools"
     "python-wheel"

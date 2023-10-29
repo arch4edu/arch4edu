@@ -4,10 +4,10 @@
 
 
 _pkgname=rematch
-_pkgver=1.0.1
+_pkgver=2.0.0
 pkgname=r-${_pkgname,,}
-pkgver=1.0.1
-pkgrel=10
+pkgver=2.0.0
+pkgrel=1
 pkgdesc="Match Regular Expressions with a Nicer 'API'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a409dec978cd02914cdddfedc974d9b45bd2975a124d8870d52cfd7d37d47578')
+sha256sums=('15daf7bf2907aef8503635bc8631fce9fd75248a1fc2496825588c4bdf785c26')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

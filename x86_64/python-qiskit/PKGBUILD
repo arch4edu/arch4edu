@@ -1,32 +1,58 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
-_pkgname=qiskit-metapackage
-pkgname=python-qiskit
-pkgver=0.43.0
+_pkgname=qiskit
+pkgname=python-${_pkgname}
+pkgver=0.25.3
 pkgrel=1
-pkgdesc="An open-source SDK for working with quantum computers at the level of circuits, algorithms, and application modules"
-arch=('any')
+epoch=1
+pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
+arch=('x86_64')
 url="https://github.com/Qiskit/qiskit"
 license=('Apache')
+provides=('python-qiskit-terra')
+conflicts=('python-qiskit-terra')
 depends=(
-    'python-qiskit-aer>=0.12.0'
-    'python-qiskit-ibmq-provider>=0.20.2'
-    'python-qiskit-terra>=0.24.0'
+    'cython'
+    'python-dateutil'
+    'python-dill'
+    'python-numpy'
+    'python-ply'
+    'python-psutil'
+    'python-rustworkx'
+    'python-scipy'
+    'python-stevedore'
+    'python-symengine'
+    'python-sympy'
 )
 optdepends=(
+    'python-qiskit-aer: high performance simulator for quantum circuits'
     'python-qiskit-experiments: tools for building, running, and analysis of experiments on noisy quantum computers'
     'python-qiskit-finance: stock/securities problems, portfolio optimizations and finance experiments'
     'python-qiskit-machine-learning: sample datasets and quantum classification algorithms'
     'python-qiskit-nature: ground state energy computations, excited states and dipole moments of molecules'
     'python-qiskit-optimization: quantum optimization algorithms'
+    'cplex: commercial solver for mathematical optimization problems'
+    'python-constraint: support for handling CSPs (Constraint Solving Problems)'
+    'python-docplex: IBM Decision Optimization CPLEX Modeling'
+    'python-ipywidgets: IPython HTML widgets for Jupyter'
+    'python-matplotlib: plotting support'
+    'python-pillow: image support'
+    "python-pydot: Graphviz's Dot support"
+    'python-pygments: syntax highlighter'
+    'python-pylatexenc: LaTeX support'
+    'python-qiskit-qasm3-import: import OpenQASM 3 files'
+    'python-qiskit-toqm: Time-Optimal Qubit Mapping (TOQM) transpiler support'
+    'python-seaborn: statistical data visualization'
+    'python-tweedledum: synthesizing and manipulating quantum circuits'
 )
 makedepends=(
     'python-build'
     'python-installer'
     'python-setuptools'
+    'python-setuptools-rust'
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('f168b3b9191a9cfbf4aa68313be9421d7b1803a1ba047ec56cab24be0c4402eccf2b6b7d810a8300e10ecc385ca6e3247cdddb72a8033e9e8d3b61a78616b73b')
+b2sums=('b9263523c908fa755cfb811398d6c8dda146fb1e0210be23336db272aa3bebadca24c44ecad27f79973af1a24fd5e7345d08c4ed7634168860d69421fa758c3b')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"

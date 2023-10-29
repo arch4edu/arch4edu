@@ -7,7 +7,7 @@
 
 pkgname=saga-gis
 _pkgname=saga
-pkgver=9.0.1
+pkgver=9.2.0
 pkgrel=1
 pkgdesc="A Geographic Information System (GIS) software with immense capabilities for geodata processing and analysis."
 url="http://www.saga-gis.org"
@@ -16,8 +16,8 @@ arch=('i686' 'x86_64')
 depends=('wxwidgets-gtk3' 'proj' 'gdal' 'libtiff' 'unixodbc' 'opencv' 'pdal')
 optdepends=('postgresql' 'vigra' 'liblas' 'libharu' 'libsvm' 'swig' 'python')
 makedepends=('cmake')
-source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz")
-sha256sums=('f12f00bbe68bc25f17d066ea3cfbf643a10bf7c292a13ebae5a20b739bdc6e90')
+source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz") 
+sha256sums=('8c7662d5cd4ce5641fa819ad22f23b4bd9963579b3194b2f809202bd76d28d57')
 
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -29,11 +29,11 @@ build() {
   cmake -G "Unix Makefiles" ../saga-gis \
   -DCMAKE_INSTALL_PREFIX:PATH=/usr/ \
   -DwxWidgets_CONFIG_EXECUTABLE=/usr/bin/wx-config   \
-  -DWITH_CLIPPER_ONE:BOOL=OFF 
+  -DWITH_CLIPPER_ONE:BOOL=OFF
 
-  msg "Start compiling ..."
   cmake --build . --verbose
 }
+
 
 package () {
   cd "${srcdir}/${_pkgname}-${pkgver}/build"

@@ -1,0 +1,35 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=config
+_pkgver=0.3.2
+pkgname=r-${_pkgname,,}
+pkgver=0.3.2
+pkgrel=3
+pkgdesc='Manage Environment Specific Configuration Values'
+arch=('any')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+  r-yaml
+)
+optdepends=(
+  r-covr
+  r-knitr
+  r-rmarkdown
+  r-spelling
+  r-testthat
+  r-withr
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('7b5c21c2b86d5ba88d6e888bc614d5633f4fb5c0b50bb498a529c32ccf931065')
+
+build() {
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+}
+# vim:set ts=2 sw=2 et:

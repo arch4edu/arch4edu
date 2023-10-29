@@ -1,0 +1,12 @@
+diff --git a/packages/python/plotly/plotly/tests/test_core/test_errors/test_dict_path_errors.py b/packages/python/plotly/plotly/tests/test_core/test_errors/test_dict_path_errors.py
+index 8b899a6f5..6ee06e03f 100644
+--- a/packages/python/plotly/plotly/tests/test_core/test_errors/test_dict_path_errors.py
++++ b/packages/python/plotly/plotly/tests/test_core/test_errors/test_dict_path_errors.py
+@@ -402,7 +402,7 @@ template_layout_plot_bgcolor_x
+         print(e.args[0])
+         e_substr = error_substr(
+             e.args[0],
+-            """string indices must be integers
++            """string indices must be integers, not 'str'
+ 
+ Invalid value received for the 'plot_bgcolor' property of layout

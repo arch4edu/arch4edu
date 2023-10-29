@@ -82,10 +82,10 @@ index 3294616b9b2..4d1cac3b4fe 100644
    add_executable(unittest_bluestore_types
      test_bluestore_types.cc
 diff --git a/src/test/objectstore/test_bluefs.cc b/src/test/objectstore/test_bluefs.cc
-index 2a84b27c999..4780669181e 100644
+index 4f77d8597ae..04b25842bcd 100644
 --- a/src/test/objectstore/test_bluefs.cc
 +++ b/src/test/objectstore/test_bluefs.cc
-@@ -171,6 +171,7 @@ TEST(BlueFS, small_appends) {
+@@ -172,6 +172,7 @@ TEST(BlueFS, small_appends) {
    fs.umount();
  }
  
@@ -93,7 +93,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, very_large_write) {
    // we'll write a ~5G file, so allocate more than that for the whole fs
    uint64_t size = 1048576 * 1024 * 6ull;
-@@ -244,7 +245,9 @@ TEST(BlueFS, very_large_write) {
+@@ -245,7 +246,9 @@ TEST(BlueFS, very_large_write) {
  
    g_ceph_context->_conf.set_val("bluefs_buffered_io", stringify((int)old));
  }
@@ -103,7 +103,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, very_large_write2) {
    // we'll write a ~5G file, so allocate more than that for the whole fs
    uint64_t size_full = 1048576 * 1024 * 6ull;
-@@ -297,6 +300,7 @@ TEST(BlueFS, very_large_write2) {
+@@ -298,6 +301,7 @@ TEST(BlueFS, very_large_write2) {
  
    g_ceph_context->_conf.set_val("bluefs_buffered_io", stringify((int)old));
  }
@@ -111,7 +111,7 @@ index 2a84b27c999..4780669181e 100644
  
  #define ALLOC_SIZE 4096
  
-@@ -410,6 +414,7 @@ void join_all(std::vector<std::thread>& v)
+@@ -411,6 +415,7 @@ void join_all(std::vector<std::thread>& v)
  #define NUM_SINGLE_FILE_WRITERS 1
  #define NUM_MULTIPLE_FILE_WRITERS 2
  
@@ -119,7 +119,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_flush_1) {
    uint64_t size = 1048576 * 128;
    TempBdev bdev{size};
-@@ -443,7 +448,9 @@ TEST(BlueFS, test_flush_1) {
+@@ -444,7 +449,9 @@ TEST(BlueFS, test_flush_1) {
    }
    fs.umount();
  }
@@ -129,7 +129,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_flush_2) {
    uint64_t size = 1048576 * 256;
    TempBdev bdev{size};
-@@ -470,7 +477,9 @@ TEST(BlueFS, test_flush_2) {
+@@ -471,7 +478,9 @@ TEST(BlueFS, test_flush_2) {
    }
    fs.umount();
  }
@@ -139,7 +139,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_flush_3) {
    uint64_t size = 1048576 * 256;
    TempBdev bdev{size};
-@@ -504,7 +513,9 @@ TEST(BlueFS, test_flush_3) {
+@@ -505,7 +514,9 @@ TEST(BlueFS, test_flush_3) {
    }
    fs.umount();
  }
@@ -149,7 +149,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_simple_compaction_sync) {
    g_ceph_context->_conf.set_val(
      "bluefs_compact_log_sync",
-@@ -556,7 +567,9 @@ TEST(BlueFS, test_simple_compaction_sync) {
+@@ -557,7 +568,9 @@ TEST(BlueFS, test_simple_compaction_sync) {
    fs.compact_log();
    fs.umount();
  }
@@ -159,7 +159,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_simple_compaction_async) {
    g_ceph_context->_conf.set_val(
      "bluefs_compact_log_sync",
-@@ -608,7 +621,9 @@ TEST(BlueFS, test_simple_compaction_async) {
+@@ -609,7 +622,9 @@ TEST(BlueFS, test_simple_compaction_async) {
    fs.compact_log();
    fs.umount();
  }
@@ -169,7 +169,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_compaction_sync) {
    uint64_t size = 1048576 * 128;
    TempBdev bdev{size};
-@@ -672,7 +687,9 @@ TEST(BlueFS, test_compaction_sync) {
+@@ -673,7 +688,9 @@ TEST(BlueFS, test_compaction_sync) {
    }
    fs.umount();
  }
@@ -179,7 +179,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_compaction_async) {
    uint64_t size = 1048576 * 128;
    TempBdev bdev{size};
-@@ -736,7 +753,9 @@ TEST(BlueFS, test_compaction_async) {
+@@ -737,7 +754,9 @@ TEST(BlueFS, test_compaction_async) {
    }
    fs.umount();
  }
@@ -189,7 +189,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_replay) {
    uint64_t size = 1048576 * 128;
    TempBdev bdev{size};
-@@ -777,7 +796,9 @@ TEST(BlueFS, test_replay) {
+@@ -778,7 +797,9 @@ TEST(BlueFS, test_replay) {
    ASSERT_EQ(0, fs.maybe_verify_layout({ BlueFS::BDEV_DB, false, false }));
    fs.umount();
  }
@@ -199,7 +199,7 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_replay_growth) {
    uint64_t size = 1048576LL * (2 * 1024 + 128);
    TempBdev bdev{size};
-@@ -815,7 +836,9 @@ TEST(BlueFS, test_replay_growth) {
+@@ -816,7 +837,9 @@ TEST(BlueFS, test_replay_growth) {
    ASSERT_EQ(0, fs.maybe_verify_layout({ BlueFS::BDEV_DB, false, false }));
    fs.umount();
  }
@@ -209,40 +209,20 @@ index 2a84b27c999..4780669181e 100644
  TEST(BlueFS, test_tracker_50965) {
    uint64_t size_wal = 1048576 * 64;
    TempBdev bdev_wal{size_wal};
-@@ -881,7 +904,9 @@ TEST(BlueFS, test_tracker_50965) {
- 
-   fs.umount();
- }
-+*/
- 
-+/*
- TEST(BlueFS, test_truncate_stable_53129) {
- 
-   ConfSaver conf(g_ceph_context->_conf);
-@@ -966,7 +991,9 @@ TEST(BlueFS, test_truncate_stable_53129) {
- 
-   fs.umount();
- }
-+*/
- 
-+/*
- TEST(BlueFS, test_update_ino1_delta_after_replay) {
-   uint64_t size = 1048576LL * (2 * 1024 + 128);
-   TempBdev bdev{size};
-@@ -1012,6 +1039,7 @@ TEST(BlueFS, test_update_ino1_delta_after_replay) {
+@@ -1013,6 +1036,7 @@ TEST(BlueFS, test_update_ino1_delta_after_replay) {
    ASSERT_EQ(0, fs.maybe_verify_layout({ BlueFS::BDEV_DB, false, false }));
    fs.umount();
  }
 +*/
  
- int main(int argc, char **argv) {
-   auto args = argv_to_vec(argc, argv);
+ TEST(BlueFS, broken_unlink_fsync_seq) {
+   uint64_t size = 1048576 * 128;
 diff --git a/src/test/objectstore/test_bluefs_compact_async.cc b/src/test/objectstore/test_bluefs_compact_async.cc
 new file mode 100644
-index 00000000000..45939890459
+index 00000000000..dc5bd2b1e53
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_compact_async.cc
-@@ -0,0 +1,336 @@
+@@ -0,0 +1,338 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -255,13 +235,14 @@ index 00000000000..45939890459
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -579,12 +560,13 @@ index 00000000000..45939890459
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_compact_sync.cc b/src/test/objectstore/test_bluefs_compact_sync.cc
 new file mode 100644
-index 00000000000..e6f19fb9e53
+index 00000000000..8ac84a2ca67
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_compact_sync.cc
-@@ -0,0 +1,336 @@
+@@ -0,0 +1,338 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -597,13 +579,14 @@ index 00000000000..e6f19fb9e53
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -921,12 +904,13 @@ index 00000000000..e6f19fb9e53
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_flush_1.cc b/src/test/objectstore/test_bluefs_flush_1.cc
 new file mode 100644
-index 00000000000..f34533085ba
+index 00000000000..92112624c02
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_flush_1.cc
-@@ -0,0 +1,254 @@
+@@ -0,0 +1,256 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -939,13 +923,14 @@ index 00000000000..f34533085ba
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -1181,12 +1166,13 @@ index 00000000000..f34533085ba
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_flush_2.cc b/src/test/objectstore/test_bluefs_flush_2.cc
 new file mode 100644
-index 00000000000..db588dc22a4
+index 00000000000..622ab391dd1
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_flush_2.cc
-@@ -0,0 +1,247 @@
+@@ -0,0 +1,249 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -1199,13 +1185,14 @@ index 00000000000..db588dc22a4
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -1434,12 +1421,13 @@ index 00000000000..db588dc22a4
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_flush_3.cc b/src/test/objectstore/test_bluefs_flush_3.cc
 new file mode 100644
-index 00000000000..9e1e4d05ed1
+index 00000000000..ce3fdf7487d
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_flush_3.cc
-@@ -0,0 +1,254 @@
+@@ -0,0 +1,256 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -1452,13 +1440,14 @@ index 00000000000..9e1e4d05ed1
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -1694,12 +1683,13 @@ index 00000000000..9e1e4d05ed1
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_large_write_1.cc b/src/test/objectstore/test_bluefs_large_write_1.cc
 new file mode 100644
-index 00000000000..2b9bf34acfd
+index 00000000000..3ef45c6e6a0
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_large_write_1.cc
-@@ -0,0 +1,294 @@
+@@ -0,0 +1,183 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -1712,13 +1702,14 @@ index 00000000000..2b9bf34acfd
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -1852,7 +1843,7 @@ index 00000000000..2b9bf34acfd
 +    delete h;
 +    ASSERT_EQ(0, fs.open_for_read("dir", "bigfile", &h));
 +    ASSERT_EQ(h->file->fnode.size, total_written);
-+    unique_ptr<char> huge_buf(new char[h->file->fnode.size]);
++    auto huge_buf = std::make_unique<char[]>(h->file->fnode.size);
 +    auto l = h->file->fnode.size;
 +    int64_t r = fs.read(h, 0, l, NULL, huge_buf.get());
 +    ASSERT_EQ(r, l);
@@ -1862,118 +1853,6 @@ index 00000000000..2b9bf34acfd
 +
 +  g_ceph_context->_conf.set_val("bluefs_buffered_io", stringify((int)old));
 +}
-+
-+#define ALLOC_SIZE 4096
-+
-+void write_data(BlueFS &fs, uint64_t rationed_bytes)
-+{
-+    int j=0, r=0;
-+    uint64_t written_bytes = 0;
-+    rationed_bytes -= ALLOC_SIZE;
-+    stringstream ss;
-+    string dir = "dir.";
-+    ss << std::this_thread::get_id();
-+    dir.append(ss.str());
-+    dir.append(".");
-+    dir.append(to_string(j));
-+    ASSERT_EQ(0, fs.mkdir(dir));
-+    while (1) {
-+      string file = "file.";
-+      file.append(to_string(j));
-+      BlueFS::FileWriter *h;
-+      ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+      ASSERT_NE(nullptr, h);
-+      auto sg = make_scope_guard([&fs, h] { fs.close_writer(h); });
-+      bufferlist bl;
-+      std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+      bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+      bl.push_back(bp);
-+      h->append(bl.c_str(), bl.length());
-+      r = fs.fsync(h);
-+      if (r < 0) {
-+         break;
-+      }
-+      written_bytes += g_conf()->bluefs_alloc_size;
-+      j++;
-+      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
-+        break;
-+      }
-+    }
-+}
-+
-+void create_single_file(BlueFS &fs)
-+{
-+    BlueFS::FileWriter *h;
-+    stringstream ss;
-+    string dir = "dir.test";
-+    ASSERT_EQ(0, fs.mkdir(dir));
-+    string file = "testfile";
-+    ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+    bufferlist bl;
-+    std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+    bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+    bl.push_back(bp);
-+    h->append(bl.c_str(), bl.length());
-+    fs.fsync(h);
-+    fs.close_writer(h);
-+}
-+
-+void write_single_file(BlueFS &fs, uint64_t rationed_bytes)
-+{
-+    stringstream ss;
-+    const string dir = "dir.test";
-+    const string file = "testfile";
-+    uint64_t written_bytes = 0;
-+    rationed_bytes -= ALLOC_SIZE;
-+    while (1) {
-+      BlueFS::FileWriter *h;
-+      ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+      ASSERT_NE(nullptr, h);
-+      auto sg = make_scope_guard([&fs, h] { fs.close_writer(h); });
-+      bufferlist bl;
-+      std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+      bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+      bl.push_back(bp);
-+      h->append(bl.c_str(), bl.length());
-+      int r = fs.fsync(h);
-+      if (r < 0) {
-+         break;
-+      }
-+      written_bytes += g_conf()->bluefs_alloc_size;
-+      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
-+        break;
-+      }
-+    }
-+}
-+
-+bool writes_done = false;
-+
-+void sync_fs(BlueFS &fs)
-+{
-+    while (1) {
-+      if (writes_done == true)
-+        break;
-+      fs.sync_metadata(false);
-+      sleep(1);
-+    }
-+}
-+
-+
-+void do_join(std::thread& t)
-+{
-+    t.join();
-+}
-+
-+void join_all(std::vector<std::thread>& v)
-+{
-+    std::for_each(v.begin(),v.end(),do_join);
-+}
-+
-+#define NUM_WRITERS 3
-+#define NUM_SYNC_THREADS 1
-+
-+#define NUM_SINGLE_FILE_WRITERS 1
-+#define NUM_MULTIPLE_FILE_WRITERS 2
 +
 +int main(int argc, char **argv) {
 +  auto args = argv_to_vec(argc, argv);
@@ -1996,10 +1875,10 @@ index 00000000000..2b9bf34acfd
 +}
 diff --git a/src/test/objectstore/test_bluefs_large_write_2.cc b/src/test/objectstore/test_bluefs_large_write_2.cc
 new file mode 100644
-index 00000000000..4c44353fa15
+index 00000000000..c71db31a6c1
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_large_write_2.cc
-@@ -0,0 +1,273 @@
+@@ -0,0 +1,163 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -2012,13 +1891,14 @@ index 00000000000..4c44353fa15
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -2142,118 +2022,6 @@ index 00000000000..4c44353fa15
 +  g_ceph_context->_conf.set_val("bluefs_buffered_io", stringify((int)old));
 +}
 +
-+#define ALLOC_SIZE 4096
-+
-+void write_data(BlueFS &fs, uint64_t rationed_bytes)
-+{
-+    int j=0, r=0;
-+    uint64_t written_bytes = 0;
-+    rationed_bytes -= ALLOC_SIZE;
-+    stringstream ss;
-+    string dir = "dir.";
-+    ss << std::this_thread::get_id();
-+    dir.append(ss.str());
-+    dir.append(".");
-+    dir.append(to_string(j));
-+    ASSERT_EQ(0, fs.mkdir(dir));
-+    while (1) {
-+      string file = "file.";
-+      file.append(to_string(j));
-+      BlueFS::FileWriter *h;
-+      ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+      ASSERT_NE(nullptr, h);
-+      auto sg = make_scope_guard([&fs, h] { fs.close_writer(h); });
-+      bufferlist bl;
-+      std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+      bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+      bl.push_back(bp);
-+      h->append(bl.c_str(), bl.length());
-+      r = fs.fsync(h);
-+      if (r < 0) {
-+         break;
-+      }
-+      written_bytes += g_conf()->bluefs_alloc_size;
-+      j++;
-+      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
-+        break;
-+      }
-+    }
-+}
-+
-+void create_single_file(BlueFS &fs)
-+{
-+    BlueFS::FileWriter *h;
-+    stringstream ss;
-+    string dir = "dir.test";
-+    ASSERT_EQ(0, fs.mkdir(dir));
-+    string file = "testfile";
-+    ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+    bufferlist bl;
-+    std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+    bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+    bl.push_back(bp);
-+    h->append(bl.c_str(), bl.length());
-+    fs.fsync(h);
-+    fs.close_writer(h);
-+}
-+
-+void write_single_file(BlueFS &fs, uint64_t rationed_bytes)
-+{
-+    stringstream ss;
-+    const string dir = "dir.test";
-+    const string file = "testfile";
-+    uint64_t written_bytes = 0;
-+    rationed_bytes -= ALLOC_SIZE;
-+    while (1) {
-+      BlueFS::FileWriter *h;
-+      ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+      ASSERT_NE(nullptr, h);
-+      auto sg = make_scope_guard([&fs, h] { fs.close_writer(h); });
-+      bufferlist bl;
-+      std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+      bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+      bl.push_back(bp);
-+      h->append(bl.c_str(), bl.length());
-+      int r = fs.fsync(h);
-+      if (r < 0) {
-+         break;
-+      }
-+      written_bytes += g_conf()->bluefs_alloc_size;
-+      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
-+        break;
-+      }
-+    }
-+}
-+
-+bool writes_done = false;
-+
-+void sync_fs(BlueFS &fs)
-+{
-+    while (1) {
-+      if (writes_done == true)
-+        break;
-+      fs.sync_metadata(false);
-+      sleep(1);
-+    }
-+}
-+
-+
-+void do_join(std::thread& t)
-+{
-+    t.join();
-+}
-+
-+void join_all(std::vector<std::thread>& v)
-+{
-+    std::for_each(v.begin(),v.end(),do_join);
-+}
-+
-+#define NUM_WRITERS 3
-+#define NUM_SYNC_THREADS 1
-+
-+#define NUM_SINGLE_FILE_WRITERS 1
-+#define NUM_MULTIPLE_FILE_WRITERS 2
-+
 +int main(int argc, char **argv) {
 +  auto args = argv_to_vec(argc, argv);
 +  map<string,string> defaults = {
@@ -2273,12 +2041,13 @@ index 00000000000..4c44353fa15
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_regression.cc b/src/test/objectstore/test_bluefs_regression.cc
 new file mode 100644
-index 00000000000..ab50ee86fd9
+index 00000000000..9588ffc7c56
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_regression.cc
-@@ -0,0 +1,417 @@
+@@ -0,0 +1,419 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -2291,13 +2060,14 @@ index 00000000000..ab50ee86fd9
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -2696,12 +2466,13 @@ index 00000000000..ab50ee86fd9
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_replay.cc b/src/test/objectstore/test_bluefs_replay.cc
 new file mode 100644
-index 00000000000..d050a68343e
+index 00000000000..be87affdcd1
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_replay.cc
-@@ -0,0 +1,261 @@
+@@ -0,0 +1,263 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -2714,13 +2485,14 @@ index 00000000000..d050a68343e
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -2963,12 +2735,13 @@ index 00000000000..d050a68343e
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++
 diff --git a/src/test/objectstore/test_bluefs_replay_growth.cc b/src/test/objectstore/test_bluefs_replay_growth.cc
 new file mode 100644
-index 00000000000..01e3ecd88b1
+index 00000000000..a02b8e185ef
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_replay_growth.cc
-@@ -0,0 +1,259 @@
+@@ -0,0 +1,260 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -2981,13 +2754,14 @@ index 00000000000..01e3ecd88b1
 +#include <random>
 +#include <thread>
 +#include <stack>
++#include <gtest/gtest.h>
 +#include "global/global_init.h"
 +#include "common/ceph_argparse.h"
 +#include "include/stringify.h"
 +#include "include/scope_guard.h"
 +#include "common/errno.h"
-+#include <gtest/gtest.h>
 +
++#include "os/bluestore/Allocator.h"
 +#include "os/bluestore/BlueFS.h"
 +
 +using namespace std;
@@ -3228,3 +3002,4 @@ index 00000000000..01e3ecd88b1
 +  ::testing::InitGoogleTest(&argc, argv);
 +  return RUN_ALL_TESTS();
 +}
++

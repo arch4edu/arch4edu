@@ -1,0 +1,95 @@
+# 2.1.66-1
+   * Windows and Mac builds have been updated to the latest toolkit version, which will hopefully fix some crashes/bugs.
+   * The v3 scheduler is now the default for new users.
+   * When imports complete, a summary window is now shown (thanks to Abdo).
+   * Use a different approach for detecting copy+paste from Anki fields, which may fix some crashes.
+   * The minimalist/reduce motion toggles should no longer affect card content.
+   * Media check now automatically extracts images that have been embedded in fields.
+   * Handle importing of legacy AnkiDroid backups.
+   * The built-in sync server can now be built without Python if you prefer.
+   * Add keyboard shortcut for legacy stats (thanks to Luc).
+   * Accessibility improvements (thanks to Derek and Kenny).
+   * Fix addon update dialog showing twice (thanks to Rumo).
+   * Fix bold toggle not working in certain circumstances (thanks to mmjang).
+   * Align code blocks to left (thanks to shunlog).
+   * Make weekday font smaller for Chinese locale (thanks to mmjang).
+   * Improve performance of invalid ID fix in DB check.
+   * Fix main window geometry/state not being restored in some cases (thanks to Abdo).
+   * Handle invalid float mtimes in DB check.
+   * Fix total note count not being logged in apkg import.
+   * Report actual error when DbError occurs.
+   * Fix two issues with MathJax editor (thanks to Hikaru).
+   * Don't fail silently when an empty csv is imported.
+   * Fix two issues that can cause editor fields to behave incorrectly (thanks to Hikaru).
+   * When cards are in intraday learning queue, don't use original due.
+   * Fix "Add-ons possibly involved" message never appearing on Windows (thanks to Abdo).
+   * Add partial support for Hangul keyboard shortcuts during review (thanks to Christopher).
+   * Disable add-on buttons when no field is focused by default (thanks to Abdo).
+   * Fix toggleable editor button styles (thanks to Abdo).
+   * Fixed a sporadic error in the review screen (thanks to mjuhanne).
+   * Fixed an error that could occur when syncing between newer and older clients.
+   * Fixed tab order in find&replace screen (thanks to Gabriel).
+   * Various other minor fixes and behind-the-scenes changes.
+
+Dev related:
+
+   * Fix incorrect handling of locals in debug console (thanks to Rumo).
+   * Add did-add-field-hook analogous to did-delete-field (thanks to 3ter).
+   * Fix run-qt5.15.bat (thanks to Hikaru).
+   * Support more mime types for add_extension_based_on_mime (thanks to BenYip).
+   * Make set_config_help_action work with submodules (thanks to Abdo).
+   * Exclude Fabric's large canvas dependency (thanks to Kavel).
+
+PKGBUILD:
+   * fix patch for changed file
+   * yarn run postinstall now runs in prepare()
+
+# 2.1.65-1
+  * Default to current deck in csv import if settings allow it.
+  * Disable Toggle Bury when nothing is selected (thanks to Abdo).
+  * Fix broken window styling when installation path includes certain Latin1 chars on Windows.
+  * Fix illegible tooltips when system in dark mode on some Linux installs.
+  * Fix incorrect font sizes on X11 when fractional scaling in use.
+  * If the old Anki uninstaller fails, allow installation to proceed.
+  * Improve phrasing in dialog that asks which deck's options should be shown (thanks to
+  chrissy0).
+  * Fix some add-on installation errors not being reported (thanks to Abdo)
+  * Add add-on installation hooks (thanks to Abdo).
+
+PKGBUILD:
+  * When using rustup as the system cargo provider, force an update before compilation to use most recent stable branch. This way, builds using rust or rustup should be more easily recreatable
+
+# 2.1.64-1
+Functional changes:
+
+  * The Windows installer no longer requires admin access (thanks to Martin). The first time you update, you'll need to run the installer again after uninstall completes.
+  * Allow the user to configure answer keys in the preferences, fixing conflicts (thanks to Ren).
+  * Preload embedded fonts to prevent flicker, and tweak wait time for image preloading (thanks to Hikaru).
+  * Add the ability to search for FSRS scheduling properties, eg. prop:cdn:d>0.5 to search for the difficulty > 0.5.
+  * Window positions, state and browser headers are now reset each time the Qt version changes, which should fix a number of crashes that users were reporting.
+  * Add-on shortcuts will now override Anki defaults (thanks to Ren).
+
+Fixes:
+
+  * Fix media files being imported incorrectly when importing an .apkg file exported without support for older Anki versions.
+  * Increase the number of supported fields in the editor (thanks to Hikaru).
+  * Attempt to work around intermittent color setting failures in Qt6.5 on macOS.
+  * Fix ugly text rendering on Wayland when using fractional scaling.
+  * Fix inability to import csv when path contains single quote.
+  * Show an error pop-up when csv import screen fails to load.
+  * Don't disable animations on card templates when reduce motion is on.
+  * Fix an error in the console when resizing windows (thanks to Austin)
+  * Fix a panic when user sets a huge learning step.
+  * Fix page scrolling when input box loses focus (thanks to Hikaru).
+  * Fix failure to start on Windows when path contains non-Latin text.
+  * Fix due/ivl prop queries not working in filtered decks.
+  * Make some collection methods public in the Rust API (thanks to Joel).
+
+PKGBUILD changes:
+  * major overhaul. All fetching is now done in prepare() the latest. build() can be run offline
+  * moved back to tarballs, patching .git folder manually
+  * all typecheck/formatting dependencies are stripped out as this is only required for development
+  * pip-sync is masked during build as we provide dependencies ourselves
+  * we use the most recent stable rust toolchain in the build
+  * yarn and cargo store their cache in $srcdir, a `yay/paru -Sc` will now more reliably reset the build environment
+  * added this changelog

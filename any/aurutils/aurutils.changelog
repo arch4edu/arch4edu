@@ -1,3 +1,189 @@
+## 18.3
+
+* `aur-build--pkglist`
+  + do not source `PKGBUILD` in `$PATH` (#1115)
+
+* `aur-repo`
+  + use pacman `DBPath` as `root` (`--sync`)
+
+* `aur-depends`
+  + skip lines with equal `pkgbase` (`--pkgbase`)
+
+## 18.2
+
+* `aur-repo`
+  + do not require `file://` path for specified repository (#1113)
+
+* `aur-depends`
+  + fix regression introduced in v18 (#1112)
+
+* `aur-build`
+  + fix `--temp` (#1111)
+
+## 18.1
+
+* `aur-chroot`
+  + remove `/usr/share/devtools/pacman.conf.d/aurutils.conf` path introduced in v18
+
+## 18
+
+* `aur-build`
+  + add `--dbext`
+  + shell escape file paths in diagnostics
+
+* `aur-chroot`
+  + take file paths in `/etc/aurutils` into account
+  + add `--build` options (`-A`, `--nocheck`, `--namcap`, `--checkpkg`, `--temp`, `--user`)
+  + add `--status`
+    + `--path` is now deprecated
+  + `--suffix` no longer defaults to `extra`
+
+* `aur-depends`
+  + `RequiredBy` is now a flat dictionary (`--json`, `--jsonl`)
+
+* `aur-fetch`
+  + only run git-rebase/merge on new upstream commits
+
+* `aur-repo`
+  + shell escape printed file paths
+  + add `--dbext`
+  + require a configured pacman repository (`--database`)
+
+## 17.3
+
+* `aur-build`
+  + use `printf` instead of `warning` (#1101)
+
+## 17.2
+
+* `aur-sync`
+  + remove repository write check
+
+* `examples`
+  + rename `sync-rebuild --vcs` to `--pkgver`
+
+## 17.1
+
+* `examples`
+  + add `--vcs` for `sync-rebuild`
+
+## 17
+
+* `aur-sync`
+  + `--no-build` now prints `AURDEST` paths regardless of `AUR_SYNC_USE_NINJA` (#1096)
+
+* `examples`
+  + remove `python-pyxdg` dependency (#1096)
+  + fixes for `sync-rebuild` (#1096)
+
+## 16.5
+
+* `examples`
+  + add `--chroot`, `--user` for `sync-rebuild`
+
+## 16.4
+
+* `aur-repo-parse`
+  + improve `Repository` field
+  + check database extension
+
+* `examples`
+  + add AUR dependency resolution for `sync-rebuild`
+
+## 16.3
+* `aur-sync`
+  + only print queue with `--no-build` to standard output
+
+## 16.2
+
+* `aur-sync`
+  + `--save` now applies when building packages
+
+## 16.1
+
+* `examples`
+  + fixes for `sync-rebuild`
+
+## 16
+
+* `aur-repo`
+  + `--status` is now the default
+  + add `Repository` to `--json` / `--jsonl` output
+
+* `aur-format`
+  + add `%R` format option
+
+* `perl`
+  + `write_json()` now returns a string
+
+* `aur`
+  `--env` now prints `PERL5LIB`
+
+## 15.7
+
+* `aur-repo`
+  + add `--search`, `--search-by` (#1057)
+
+* `aur-sync`
+  + `--save`: do not use `/dev/stdout` (#1083)
+
+## 15.6
+
+* `examples`
+  + remove `AUR_EXEC_PATH` from `sync-asroot` [fixup]
+
+## 15.5
+
+* `aur-build`
+  + support makepkg configuration in `/etc/aurutils` (#1076)
+
+* `aur-depends`
+  + add `--jsonl`
+
+## 15.4
+
+* `aur-sync`
+  + add `--save`
+
+* `examples`
+  + `sync-asroot` now works with `AUR_PAGER=ranger` (#1077)
+  + `sync-rebuild` python rewrite
+
+## 15.3
+
+* `aur-pkglist`, `aur-view`, `aur-search`
+  + prefix errors with command name
+
+## 15.2
+
+* `aur-chroot`
+  + adjust default `makepkg`, `pacman` paths depending on `devtools` version (#1072)
+
+## 15.1
+
+* `aur-pkglist`
+  + remove deprecated options (`-J` (`--json`), `-I`, `-S`) [fixup]
+
+## 15
+
+* `aur-repo`
+  + add `--format` (`-f`), `--delim`
+
+* `aur-format`
+  + support `aur-repo-parse --jsonl` input (`AUR::Json.pm`)
+
+* `aur-pkglist`
+  + remove deprecated options (`-J` (`--json`), `-I`, `-S`)
+  + update documentation
+
+* `examples`
+  + `sync-rebuild` now respects package `epoch`
+
+## 14.1
+
+* `aur-sync`
+  + fix exit codes for `tsort`, `aur-repo-parse`
+
 ## 14
 
 * `aur-depends`

@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - x86_64/ros/ros-noetic-tf2
   - x86_64/ros/ros-noetic-rospy

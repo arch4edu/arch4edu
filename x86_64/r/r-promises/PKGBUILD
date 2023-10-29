@@ -1,25 +1,29 @@
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=promises
-_pkgver=1.2.0.1
+_pkgver=1.2.1
 pkgname=r-${_pkgname,,}
-pkgver=1.2.0.1
-pkgrel=7
-pkgdesc='Abstractions for Promise-Based Asynchronous Programming'
-arch=('x86_64')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Abstractions for Promise-Based Asynchronous Programming"
+arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('MIT')
+license=(MIT)
 depends=(
-  r
+  r-fastmap
   r-later
   r-magrittr
   r-r6
   r-rcpp
   r-rlang
 )
+checkdepends=(
+  r-future
+  r-testthat
+)
 optdepends=(
-  r-fastmap
   r-future
   r-knitr
   r-purrr
@@ -29,15 +33,23 @@ optdepends=(
   r-vembedr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8d3a8217909e91f4c2a2eebba5ac8fc902a9ac1a9e9d8a30815c9dc0f162c4b7')
+md5sums=('0332949e499adeb8ede2d583d813b6c5')
+sha256sums=('3ce0a26df39ea27536877ec6db13083b2952108245024baa8b40ae856d2ce5be')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:

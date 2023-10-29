@@ -3,9 +3,7 @@ nvchecker:
     aur:
   - alias: boost
 depends:
-  - x86_64/openni2
-  - x86_64/qt5-webkit
-group: x86_64
+  - x86_64/vtk
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build

@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgload
-_cranver=1.3.2
+_cranver=1.3.3
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Simulate Package Installation and Attach"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -17,6 +17,7 @@ depends=(
     "r-desc"
     "r-fs"
     "r-glue"
+    "r-pkgbuild"
     "r-rlang>=1.0.3"
     "r-rprojroot"
     "r-withr>=2.4.3"
@@ -27,7 +28,6 @@ optdepends=(
     "r-mathjaxr"
     "r-mockr"
     "r-pak"
-    "r-pkgbuild"
     "r-rcpp"
     "r-remotes"
     "r-rstudioapi"
@@ -53,7 +53,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("a6113732d047812744902e6fed558b6f7301dd27a970509ec30990853f4bfa9e46e9fd55be3314f8d70e4ddd481f09f0186f8a0f0c85d90bbc8231750443bbf3")
+b2sums=("702a7f3797f7f98328fec0e0afabb4bfc901f34298e55db26638b8825e305d5ba7d5562a7e12579b857d76b7f5e5aa42813df3dcb0c81dbdfb571f07d3b830dd")
 
 build() {
     mkdir -p "${srcdir}/build/"

@@ -16,7 +16,7 @@ fi
 
 # HDF5
 if [ -f "/usr/lib/pkgconfig/hdf5.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-hdf5=1 --download-hdf5-fortran-bindings=1"
+  CONFOPTS="${CONFOPTS} --with-hdf5=1 --with-hdf5-fortran-bindings=1"
 fi
 
 # HYPRE

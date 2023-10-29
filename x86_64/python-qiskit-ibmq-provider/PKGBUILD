@@ -2,8 +2,8 @@
 _pkgname=qiskit-ibmq-provider
 pkgname=python-${_pkgname}
 pkgver=0.20.2
-pkgrel=1
-pkgdesc="Module for accessing the quantum devices and simulators at IBMQ"
+pkgrel=2
+pkgdesc="(DEPRECATED) Module for accessing the quantum devices and simulators at IBMQ"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-ibmq-provider"
 license=('Apache')

@@ -2,12 +2,12 @@
 
 pkgname=('python-rosdep')
 pkgver='0.22.2'
-pkgrel=2
+pkgrel=3
 pkgdesc='rosdep package manager abstraction tool for ROS'
 arch=('any')
 url='https://github.com/ros-infrastructure/rosdep'
 license=('BSD')
-depends=('python' 'python-catkin_pkg' 'python-rosdistro' 'python-rospkg' 'python-yaml')
+depends=('python' 'python-catkin_pkg' 'python-rosdistro' 'python-rospkg' 'python-setuptools' 'python-yaml')
 makedepends=('python-setuptools')
 
 conflicts=('python2-rosdep')

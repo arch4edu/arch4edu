@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=libcoin
-_pkgver=1.0-9
+_pkgver=1.0-10
 pkgname=r-${_pkgname,,}
-pkgver=1.0.9
-pkgrel=7
+pkgver=1.0.10
+pkgrel=1
 pkgdesc='Linear Test Statistics for Permutation Inference'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,7 +18,7 @@ optdepends=(
   r-coin
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2d7dd0b7c6dfc20472430570419ea36a714da7bbafd336da1fb53c5c6463d9eb')
+sha256sums=('3023e0495d0789765bdf04c0ef0990a57b48fefa322c55f20e250d2d70d67eaf')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

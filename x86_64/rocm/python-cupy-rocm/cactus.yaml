@@ -4,15 +4,10 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-fastrlock
-group: x86_64
+group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
-makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
   aur-pre-build
   sed 's/# export HCC_AMDGPU_TARGET/export HCC_AMDGPU_TARGET/' -i PKGBUILD
-  sudo rm -rf /mnt/tmp
-  sudo mkdir -m 1777 -p /mnt/tmp
   add makedepends python-pip
-post_build: |
-  aur-post-build
-  sudo rm -rf /mnt/tmp
+post_build: aur-post-build

@@ -12,6 +12,6 @@ pre_remove() {
 }
 
 post_remove() {
-	userdel hadoop
-	rm -rf /var/{lib,log}/hadoop
+	userdel -r hadoop
+	rm -rf /var/log/hadoop
 }

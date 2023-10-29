@@ -4,7 +4,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=broom
-_cranver=1.0.4
+_cranver=1.0.5
 pkgname=r-${_cranname,,}
 pkgdesc="Convert Statistical Objects into Tidy Tibbles"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -73,7 +73,7 @@ optdepends=(
     "r-lmtest>=0.9.38"
     "r-lsmeans"
     "r-maps"
-    "r-maptools"
+    "r-maps"
     "r-margins"
     "r-mass"
     "r-mclust"
@@ -94,7 +94,6 @@ optdepends=(
     "r-polca"
     "r-psych"
     "r-quantreg"
-    "r-rgeos"
     "r-rmarkdown"
     "r-robust"
     "r-robustbase"
@@ -114,7 +113,7 @@ optdepends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('05fa38c748a8f6eb37664773fa26e6a5bc5b8caebfe8336b5fc43fb633afacbe91db037b5bd4244def546645c1f5a52d290e1c5b6e72f2728691bbf93313c2c2')
+b2sums=("e2652bcb99c50a4a97107939bfbdbc55739355d4239a43c2c49a2b5db6c46dabfc6971c74dd8723576131831fed01f9ac3a22c0a6b18c7a86c156f1df9feab11")
 
 build() {
     mkdir -p "${srcdir}/build/"

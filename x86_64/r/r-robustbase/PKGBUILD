@@ -1,42 +1,49 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
-_cranname=robustbase
-_cranver=0.95-1
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=robustbase
+_pkgver=0.99-0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Basic Robust Statistics"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
+arch=(x86_64)
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(GPL)
-depends=(r-deoptimr)
-makedepends=(gcc-fortran)
-optdepends=(
-    r-robust
-    r-fit.models
-    r-mpv
-    r-xtable
-    r-ggplot2
-    r-ggally
-    r-rcolorbrewer
-    r-reshape2
-    r-sfsmisc
-    r-catdata
-    r-doparallel
-    r-foreach
-    r-skewt
+depends=(
+  blas
+  lapack
+  r-deoptimr
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('862cd26db3ecdf34ab47c52d355fd65ffebbff448aea17999a9b95a1f13ba3ea')
+makedepends=(
+  gcc-fortran
+)
+optdepends=(
+  r-catdata
+  r-doparallel
+  r-fit.models
+  r-foreach
+  r-ggally
+  r-ggplot2
+  r-mpv
+  r-rcolorbrewer
+  r-reshape2
+  r-robust
+  r-sfsmisc
+  r-skewt
+  r-xtable
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('03172533b8059f9da2ae781aa236c032')
+sha256sums=('437d422eec29c4345ea65efa6b2c7c21944059a79643d74f4187e06db6e35077')
 
 build() {
   mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }

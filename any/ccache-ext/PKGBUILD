@@ -1,7 +1,7 @@
 # Maintainer: pingplug < aur at pingplug dot me >
 
 pkgname=ccache-ext
-pkgver=2
+pkgver=3
 pkgrel=1
 pkgdesc='pacman hook for adding more compiler links to ccache'
 arch=('any')
@@ -9,7 +9,7 @@ license=('custom')
 depends=('ccache')
 source=('update-ccache-links.sh'
         'update-ccache-links.hook')
-sha256sums=('d030775bced390d7f0f090f5b9c364229ebbd2e39b51da297784dd19502c866f'
+sha256sums=('152d8d3cbe25c9c8380f98846f3f80e9b36fe375d4c2c182a9ab3e02ad757146'
             'e7c0cb74b47371162262e1ad57590cbd41a3fdeaa4988370fde98ae19c75703c')
 install=$pkgname.install
 

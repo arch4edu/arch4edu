@@ -1,0 +1,21 @@
+pre_install() {
+    pre_upgrade
+}
+
+pre_upgrade() {
+  cat << EOF
+
+  This package requires java-runtime>= 16, if you have multiple jdks installed
+  please ensure the correct one is set;
+
+  # archlinux-java set java-16-openjdk
+
+  -----
+
+  Please notice that this AUR repo is a build-from-source package.
+
+  The binary version can be found as 'logisim-evolution-bin'.
+
+
+EOF
+}

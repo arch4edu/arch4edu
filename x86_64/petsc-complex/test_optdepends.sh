@@ -62,8 +62,8 @@ if [ -f "/usr/include/metis.h" ]; then
 fi
 
 # Add scotch support
-SCOTCH_DIR="/usr/include/scotch"
-if [ -d "${SCOTCH_DIR}" ]; then
+SCOTCH_DIR="/usr/include"
+if [ -f "/usr/include/scotch.h" ]; then
 	SCOTCH_LIBS="libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so"
 	# Include bzip2 if scotch was build with bzip2 support
 	if [ -f /usr/include/bzlib.h ];then

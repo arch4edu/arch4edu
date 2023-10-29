@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-fracdiff
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-generics
+  - x86_64/r/r-lmtest
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcpparmadillo
+  - x86_64/r/r-timedate
+  - x86_64/r/r-tseries
+  - x86_64/r/r-urca
+  - x86_64/r/r-zoo
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

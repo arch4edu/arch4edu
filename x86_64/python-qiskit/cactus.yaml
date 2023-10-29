@@ -3,9 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/python-qiskit-aer
-  - x86_64/python-qiskit-ibmq-provider
-  - x86_64/python-qiskit-terra
+  - x86_64/python-rustworkx
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

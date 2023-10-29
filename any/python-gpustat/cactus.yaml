@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - any/python-nvidia-ml-py
 build_prefix: extra-x86_64

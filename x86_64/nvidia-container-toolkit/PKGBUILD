@@ -3,7 +3,7 @@
 
 pkgname=nvidia-container-toolkit
 
-pkgver=1.13.1
+pkgver=1.13.5
 pkgrel=1
 
 pkgdesc='NVIDIA container runtime toolkit'
@@ -19,8 +19,8 @@ options=(!lto)
 
 backup=('etc/nvidia-container-runtime/config.toml')
 
-source=("v${pkgver}-${pkgrel}.tar.gz"::"${url}/archive/v${pkgver}.tar.gz")
-sha256sums=('76c783143f3a91cc5fd0070a75666f0f4bee4c7153b1af6074037a9b6a94e0c2')
+source=("${pkgname}-${pkgver}-${pkgrel}.tar.gz"::"${url}/archive/v${pkgver}.tar.gz")
+sha256sums=('2e95a89ca3ab95528df4bf32c5e0c8333e283e0465b9636458282c3d49a1b1da')
 
 _srcdir="nvidia-container-toolkit-${pkgver}"
 
@@ -37,7 +37,7 @@ build() {
     -buildmode=pie \
     -gcflags "all=-trimpath=${PWD}" \
     -asmflags "all=-trimpath=${PWD}" \
-    -ldflags "-s -w -extldflags=${GO_LDFLAGS/%,/}" \
+    -ldflags "-s -w -X github.com/NVIDIA/nvidia-container-toolkit/internal/info.version=${pkgver} -extldflags=${GO_LDFLAGS/%,/}" \
     -o bin \
     "./..."
     # -trimpath \  # only go > 1.13

@@ -5,8 +5,8 @@
 # Contributor: Bernd Müller <github@muellerbernd.de>
 
 pkgname=ignition-math-6
-pkgver=6.13.0
-pkgrel=3
+pkgver=6.14.0
+pkgrel=1
 pkgdesc="General purpose math library for robot applications."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/math"
@@ -15,7 +15,7 @@ depends=('gcc-libs' 'swig')
 makedepends=('ignition-cmake=2' 'ignition-utils=1' 'eigen' 'python' 'pybind11')
 provides=('ignition-math=6')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-math/archive/ignition-math6_${pkgver}.tar.gz")
-sha256sums=("6b4a826a4fd25c8816126dfe41f65d805917f3b6488008155db97f2530b70739")
+sha256sums=("d03a4f68f000e226388959e01e8fbbbd3a984e92a3511a0b2ac1598143f394aa")
 
 _dir="gz-math-ignition-math6_${pkgver}"
 

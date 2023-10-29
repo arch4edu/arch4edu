@@ -1,1 +1,10 @@
-../../../template/x86_64-nocheck.yaml
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/google-crc32c
+  - x86_64/libblake3
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

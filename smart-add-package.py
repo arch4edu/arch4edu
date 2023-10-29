@@ -25,8 +25,8 @@ def symlink(source, target):
 def load_pacman_packages():
     run(['sudo', 'pacman', '-Sy'])
     results = set()
-    #for repository in ['core', 'extra', 'community', 'arch4edu']:
-    for repository in ['core', 'extra', 'community']:
+    #for repository in ['core', 'extra', 'arch4edu']:
+    for repository in ['core', 'extra']:
         packages = run(['sudo', 'pacman', '-Slq', repository], capture_output=True)
         results.update(packages.stdout.decode('utf-8').split('\n')[:-1])
     return results

@@ -7,7 +7,7 @@ pkgname='ros-noetic-laser-geometry'
 pkgver='1.6.7'
 _pkgver_patch=0
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=7
+pkgrel=8
 license=('BSD')
 
 ros_makedepends=(

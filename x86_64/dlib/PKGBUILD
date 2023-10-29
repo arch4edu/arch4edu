@@ -3,7 +3,7 @@
 # Contributor: perlawk
 
 pkgname=dlib
-pkgver=19.24
+pkgver=19.24.2
 pkgrel=1
 pkgdesc="A general purpose cross-platform C++ library designed using contract programming and modern C++ techniques"
 arch=('x86_64')
@@ -15,12 +15,13 @@ depends=('cblas'
          'libjpeg-turbo'
          'libpng'
          'libx11')
-optdepends=('giflib: for GIF support'
+optdepends=('ffmpeg: for FFmpeg support'
+            'giflib: for GIF support'
             'libwebp: for WebP support'
             'sqlite: for sqlite support')
 makedepends=('cmake' 'ninja')
 source=("https://codeload.github.com/davisking/dlib/tar.gz/refs/tags/v${pkgver}")
-sha256sums=('3cc42e84c7b1bb926c6451a21ad1595f56c5b10be3a1d7aa2f3c716a25b7ae39')
+sha256sums=('0f5c7e3de6316a513635052c5f0a16a84e1cef26a7d233bf00c21348462b6d6f')
 
 build() {
     cd "${srcdir}"

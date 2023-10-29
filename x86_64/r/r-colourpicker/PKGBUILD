@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=colourpicker
-_pkgver=1.2.0
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
-pkgver=1.2.0
+pkgver=1.3.0
 pkgrel=1
 pkgdesc='A Colour Picker Tool for Shiny and for Selecting Colours in Plots'
 arch=('any')
@@ -26,7 +26,7 @@ optdepends=(
   r-shinydisconnect
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bc2c80eee046219038baef9f8f213c9824d7fec7f893f6a1b881dd44b4a8638a')
+sha256sums=('c7f2618cd1ae1f7ac15aee072c648e6494dfff6714e13dc7cd1da993d1102510')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

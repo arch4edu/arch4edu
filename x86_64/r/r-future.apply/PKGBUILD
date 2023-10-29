@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=future.apply
-_cranver=1.10.0
+_cranver=1.11.0
 pkgname="r-${_cranname,,}"
 pkgdesc="Apply Function to Elements in Parallel using Futures"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -25,7 +25,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("532f977f5416624f5ec10e9da5dfc7891f628fe1923115b33a22214046586136d5dfb165a3f7056289ac41d58b29e18e4685269d26c64f7853373b5619f1210b")
+b2sums=("94570b6aa84fa044566f7956392ef812bfe66e92edaf773b95eb0fa176584c66c40f128e6158afb6daa802831251bf183ffb4178fbd4223e9faf5c0ef5eea1b5")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"

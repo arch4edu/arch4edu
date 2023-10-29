@@ -4,7 +4,7 @@ url='https://wiki.ros.org/laser_filters'
 pkgname='ros-noetic-laser-filters'
 pkgver='1.9.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(

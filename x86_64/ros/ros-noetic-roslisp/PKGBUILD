@@ -4,9 +4,9 @@ pkgdesc="ROS - Lisp client library for ROS, the Robot Operating System."
 url='https://wiki.ros.org/roslisp'
 
 pkgname='ros-noetic-roslisp'
-pkgver='1.9.24'
+pkgver='1.9.25'
 arch=('any')
-pkgrel=2
+pkgrel=1
 license=('BSD')
 
 ros_makedepends=(
@@ -33,7 +33,7 @@ depends=(
 
 _dir="roslisp-${pkgver}"
 source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros/roslisp/archive/${pkgver}.tar.gz")
-sha256sums=('5b6fdbf3047172f542ac00e45f26c708766fb724bc5b270e236341f7b555d45d')
+sha256sums=('2a1b5d052ae8e08509d231353ba4b52742871594cb848d40519f741bf03f0b83')
 
 build() {
 	# Use ROS environment variables.

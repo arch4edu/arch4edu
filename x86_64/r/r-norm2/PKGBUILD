@@ -4,7 +4,7 @@ _pkgname=norm2
 _pkgver=2.0.4
 pkgname=r-${_pkgname,,}
 pkgver=2.0.4
-pkgrel=1
+pkgrel=4
 pkgdesc='Analysis of Incomplete Multivariate Data under a Normal Model'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -15,7 +15,7 @@ depends=(
 makedepends=(
   gcc-fortran
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+source=("https://cran.r-project.org/src/contrib/Archive/${_pkgname}/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('6739ff7fdda6ed047955493dad655655fbe057946a30f9a9c21780994a371f2a')
 
 build() {

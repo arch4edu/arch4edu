@@ -1,29 +1,33 @@
-# system requirements: GNU make
-# Maintainer: sukanka <su975853527@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=metaBMA
-_pkgver=0.6.7
+_pkgver=0.6.9
 pkgname=r-${_pkgname,,}
-pkgver=0.6.7
-pkgrel=3
-pkgdesc='Bayesian Model Averaging for Random and Fixed Effects Meta-Analysis'
-arch=('x86_64')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Bayesian Model Averaging for Random and Fixed Effects Meta-Analysis"
+arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL3)
 depends=(
-  r
-  r-bh
   r-bridgesampling
   r-coda
   r-laplacesdemon
   r-logspline
   r-mvtnorm
   r-rcpp
-  r-rcppeigen
   r-rcppparallel
   r-rstan
   r-rstantools
+)
+makedepends=(
+  r-bh
+  r-rcppeigen
   r-stanheaders
+)
+checkdepends=(
+  r-testthat
 )
 optdepends=(
   r-knitr
@@ -31,16 +35,23 @@ optdepends=(
   r-spelling
   r-testthat
 )
-makedepends=('make')
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('330bccb4b2297bc3a8b7291197c5e978b90b002907f762ede40f2d3e383367da')
+md5sums=('0eb28a09739c53d68ecd1c72101b5746')
+sha256sums=('c1e43fdc4c866a065c11bfa65b9f895256d0a11a19861c5212fbd4f82a6205f8')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  # compilation needs a lot of memory
+  MAKEFLAGS+=" -j1"
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

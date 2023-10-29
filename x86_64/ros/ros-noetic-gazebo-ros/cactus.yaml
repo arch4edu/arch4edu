@@ -1,7 +1,8 @@
 nvchecker:
   - source: aur
     aur:
-  - alias: boost
+  - alias:  boost
+  - alias: python
 depends:
   - x86_64/ros/ros-noetic-gazebo-dev
   - x86_64/ros/ros-noetic-gazebo-msgs
@@ -19,5 +20,7 @@ makedepends:
   - x86_64/ros/ros-noetic-cmake-modules
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed '/Build project/a\  export CXXFLAGS="${CXXFLAGS} -I/usr/include/ffmpeg4.4"' -i PKGBUILD
 post_build: aur-post-build

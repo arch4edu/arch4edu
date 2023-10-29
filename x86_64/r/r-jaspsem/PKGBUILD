@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspSem
-_pkgver=0.17.2
+_pkgver=0.18.1
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2
+pkgver=0.18.1
 pkgrel=1
 pkgdesc="SEM Module for JASP"
 arch=('any')
@@ -23,7 +23,7 @@ depends=(r
   r-tidyr
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('12787e5587731582abf1dc54040008d6ba33fcfbb4005ea63b8c6bf8967e0742')
+sha256sums=('fd929eb180087002b40b23b9f3bb7840ea7af206bd77326b4e0a00132e539596')
 
 
 build() {

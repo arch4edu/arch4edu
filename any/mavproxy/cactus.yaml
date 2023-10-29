@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - any/python-pymavlink
 build_prefix: extra-x86_64

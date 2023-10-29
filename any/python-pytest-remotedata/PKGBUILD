@@ -1,8 +1,8 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 pkgname=python-pytest-remotedata
 _pyname=${pkgname#python-}
-pkgver=0.4.0
-pkgrel=2
+pkgver=0.4.1
+pkgrel=1
 pkgdesc="Pytest plugin used for controlling access to data files hosted online"
 arch=('any')
 url="https://github.com/astropy/pytest-remotedata"
@@ -13,7 +13,7 @@ makedepends=('python-setuptools-scm'
              'python-build'
              'python-installer')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('8e7cff311898c945510b42e424906c00')
+md5sums=('30a44b25501b3cdfe72c58cb17338ea7')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -28,9 +28,10 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
+    # ValueError: Pytest terminal summary report not found
     ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
         build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
-    PYTHONPATH="build/lib" pytest --remote-data || warning "Tests failed" # -vv --color=yes
+    PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data
 }
 
 package() {

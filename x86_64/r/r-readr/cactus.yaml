@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-clipr
+  - x86_64/r/r-crayon
+  - x86_64/r/r-hms
+  - x86_64/r/r-rlang
+  - x86_64/r/r-r6
+  - x86_64/r/r-tibble
+  - x86_64/r/r-vroom
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-cpp11
+  - x86_64/r/r-tzdb
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

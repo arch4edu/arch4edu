@@ -4,7 +4,7 @@ XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-~/.config}
 
 # Allow users to override command-line options
 if [[ -f $XDG_CONFIG_HOME/chrome-flags.conf ]]; then
-   CHROME_USER_FLAGS="$(cat $XDG_CONFIG_HOME/chrome-flags.conf)"
+    CHROME_USER_FLAGS="$(grep -v '^#' $XDG_CONFIG_HOME/chrome-flags.conf)"
 fi
 
 # Launch

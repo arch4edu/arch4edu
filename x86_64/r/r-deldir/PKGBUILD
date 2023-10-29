@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=deldir
-_pkgver=1.0-6
+_pkgver=1.0-9
 pkgname=r-${_pkgname,,}
-pkgver=1.0.6
-pkgrel=4
+pkgver=1.0.9
+pkgrel=1
 pkgdesc='Delaunay Triangulation and Dirichlet (Voronoi) Tessellation'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6df6d8325c607e0b7d63cbc53c29e774eff95ad4acf9c7ec8f70693b0505f8c5')
+sha256sums=('127a24ec3aa7e41e441d5b2f5654f3b59fbe47bf61ba8038d81a6110c8670687')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

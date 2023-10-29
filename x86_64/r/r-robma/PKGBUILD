@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=RoBMA
-_pkgver=2.3.2
+_pkgver=3.1.0
 pkgname=r-${_pkgname,,}
-pkgver=2.3.2
+pkgver=3.1.0
 pkgrel=3
 pkgdesc='Robust Bayesian Meta-Analyses'
 arch=('x86_64')
@@ -14,7 +14,6 @@ depends=(
   jags
   r
   r-bayestools
-  r-coda
   r-ggplot2
   r-mvtnorm
   r-rdpack
@@ -25,16 +24,20 @@ depends=(
 )
 optdepends=(
   r-covr
+  r-fixest
   r-knitr
+  r-lme4
   r-metabma
+  r-metadat
+  r-metafor
   r-parallel
   r-rmarkdown
-  r-rstan
   r-testthat
   r-vdiffr
+  r-weightr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a191303346f85318236ef7bc03ab40ea944f72df53ccd0f86057a29d0f17a55f')
+sha256sums=('42e56cb2d5661d13cc50dacc3af8cae0827a2937ce46bbbfa544ea44aa840133')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

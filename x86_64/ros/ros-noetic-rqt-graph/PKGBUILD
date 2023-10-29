@@ -4,7 +4,7 @@ url='https://wiki.ros.org/rqt_graph'
 pkgname='ros-noetic-rqt-graph'
 pkgver='0.4.14'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(

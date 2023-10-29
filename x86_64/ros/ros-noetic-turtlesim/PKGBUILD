@@ -6,7 +6,7 @@ url='https://wiki.ros.org/turtlesim'
 pkgname='ros-noetic-turtlesim'
 pkgver='0.10.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(

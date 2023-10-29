@@ -2,14 +2,15 @@
 
 _name=imagecodecs
 pkgname=python-imagecodecs
-pkgver=2023.3.16
-pkgrel=4
+pkgver=2023.9.18
+pkgrel=1
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
 license=('BSD')
 depends=(
   blosc
+  blosc2
   brotli
   brunsli
   cfitsio
@@ -21,7 +22,7 @@ depends=(
   libavif
   libdeflate
   libheif
-#  libjpeg
+  libjpeg-turbo
   libjxl
   libmng
   libpng
@@ -33,6 +34,7 @@ depends=(
   python-numpy
   snappy
   zfp
+  zlib-ng
   zopfli
 )
 makedepends=(
@@ -45,8 +47,8 @@ makedepends=(
 source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz"
         "0001.fix-deps.patch"
 )
-sha256sums=('314c51d574be27c3648b9ee05d035956469f6b98f61e55d07e0cfa9ac014e1d3'
-            '4bc2af7f9d7894c71fdb9507af30a633db83901b85a24838c4d1a09c6bedb606')
+sha256sums=('f2bd9f9e04a3e98fc785b206cb86ec5aaca659a200f5f2c7c62b3e9e08fc7946'
+            '53fbec4857eb1bfc306cafd4835934ac7371e17a82b5e66daf21b2668d3b0b29')
 
 prepare() {
   cd "${_name}-${pkgver}"
@@ -55,9 +57,6 @@ prepare() {
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
-  # python-imagecodecs >= 2023.3.16 depends on libjpeg-turbo >= 2.1.91
-  # disable it until libjpeg-turbo 2.1.91 is in official repos
-  sed -i '/jpeg8/d' setup.py
   python -m build --wheel --no-isolation
 }
 

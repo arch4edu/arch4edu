@@ -1,0 +1,48 @@
+diff --git a/src/pybind/rbd/c_rbd.pxd b/src/pybind/rbd/c_rbd.pxd
+index 275984209f7..d5aed200b74 100644
+--- a/src/pybind/rbd/c_rbd.pxd
++++ b/src/pybind/rbd/c_rbd.pxd
+@@ -8,7 +8,7 @@ cdef extern from "rados/librados.h":
+         _LIBRADOS_SNAP_HEAD "LIBRADOS_SNAP_HEAD"
+ 
+ cdef extern from "rbd/librbd.h":
+-    ctypedef int (*librbd_progress_fn_t)(uint64_t offset, uint64_t total, void* ptr)
++    ctypedef int (*librbd_progress_fn_t)(uint64_t offset, uint64_t total, void* ptr) noexcept
+ 
+ cdef extern from "rbd/librbd.h" nogil:
+     enum:
+@@ -282,7 +282,7 @@ cdef extern from "rbd/librbd.h" nogil:
+ 
+     ctypedef void* rbd_encryption_options_t
+ 
+-    ctypedef void (*rbd_callback_t)(rbd_completion_t cb, void *arg)
++    ctypedef void (*rbd_callback_t)(rbd_completion_t cb, void *arg) noexcept
+ 
+     void rbd_version(int *major, int *minor, int *extra)
+ 
+diff --git a/src/pybind/rbd/rbd.pyx b/src/pybind/rbd/rbd.pyx
+index 16014f1409c..02b8a01901d 100644
+--- a/src/pybind/rbd/rbd.pyx
++++ b/src/pybind/rbd/rbd.pyx
+@@ -370,10 +370,10 @@ ELSE:
+     cdef rados_ioctx_t convert_ioctx(rados.Ioctx ioctx) except? NULL:
+         return <rados_ioctx_t>ioctx.io
+ 
+-cdef int progress_callback(uint64_t offset, uint64_t total, void* ptr) with gil:
++cdef int progress_callback(uint64_t offset, uint64_t total, void* ptr) noexcept with gil:
+     return (<object>ptr)(offset, total)
+ 
+-cdef int no_op_progress_callback(uint64_t offset, uint64_t total, void* ptr):
++cdef int no_op_progress_callback(uint64_t offset, uint64_t total, void* ptr) noexcept:
+     return 0
+ 
+ def cstr(val, name, encoding="utf-8", opt=False):
+@@ -425,7 +425,7 @@ RBD_MIRROR_PEER_ATTRIBUTE_NAME_KEY = decode_cstr(_RBD_MIRROR_PEER_ATTRIBUTE_NAME
+ 
+ cdef class Completion
+ 
+-cdef void __aio_complete_cb(rbd_completion_t completion, void *args) with gil:
++cdef void __aio_complete_cb(rbd_completion_t completion, void *args) noexcept with gil:
+     """
+     Callback to oncomplete() for asynchronous operations
+     """

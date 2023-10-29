@@ -8,6 +8,7 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-multibridge
   - x86_64/r/r-plyr
   - x86_64/r/r-stringr
   - x86_64/r/r-vcd

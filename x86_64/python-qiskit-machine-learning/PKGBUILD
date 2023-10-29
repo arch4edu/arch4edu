@@ -2,7 +2,7 @@
 _pkgname=qiskit-machine-learning
 pkgname=python-${_pkgname}
 pkgver=0.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Quantum Machine Learning package for IBM qiskit framework"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit-machine-learning"
@@ -12,7 +12,7 @@ depends=(
     'python-fastdtw'
     'python-numpy'
     'python-psutil'
-    'python-qiskit-terra'
+    'python-qiskit'
     'python-scikit-learn'
     'python-scipy'
 )

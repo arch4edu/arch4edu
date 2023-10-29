@@ -9,13 +9,13 @@ name=cloudcompare
 _fragment="#tag=v2.12.4"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=1
+pkgrel=3
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
 license=('GPL2')
-depends=('cgal' 'dlib' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pdal' 'qt5-base' 'qt5-tools' 'qt5-svg' 'shapelib' 'tbb' 'gdal')
-makedepends=('clang' 'cmake' 'doxygen' 'git' 'laz-perf' 'libharu' 'ninja' 'pcl' 'proj' 'python')
+depends=('cgal' 'dlib' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pdal' 'qt5-base' 'qt5-tools' 'qt5-svg' 'shapelib' 'tbb' 'gdal' 'openmpi')
+makedepends=('clang' 'cmake' 'doxygen' 'git' 'laz-perf' 'libharu' 'ninja' 'pcl' 'proj' 'python' 'nlohmann-json')
 optdepends=('pcl')
 source=("${name}::git+https://github.com/CloudCompare/CloudCompare.git${_fragment}"
         "${name}-cork::git+https://github.com/CloudCompare/cork.git"
@@ -39,6 +39,7 @@ sha256sums=('SKIP'
 prepare() {
   prepare_submodule
 # sed "/CXX_STANDARD/s/14/17/" -i "${srcdir}/${name}"/cmake/CMakeSetCompilerOptions.cmake
+  sed '35i #include <cstdint>' -i "${srcdir}/${name}"/plugins/core/IO/qE57IO/extern/libE57Format/include/E57Format.h
   git -C "${srcdir}/${name}" apply -v "${srcdir}"/tbb.2021.patch
 }
 
@@ -98,7 +99,7 @@ build() {
         -DEIGEN_ROOT_DIR=/usr/include/eigen3
   )
   msg2 "Build Cork lib"
-  make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS" CXX="g++"
+  make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS -fPIC" CC="gcc" CXX="g++"
   msg2 "Build CloudCompare"
   cmake -B build -S "${srcdir}/${name}" -G Ninja "${CMAKE_FLAGS[@]}"
 # shellcheck disable=SC2086 # allow slitting for MAKEFLAGS carrying multiple flags.
@@ -145,4 +146,3 @@ source+=(
   "dlib::git+https://github.com/davisking/dlib"
 )
 # vim:set sw=2 ts=2 et:
-makedepends+=("openmpi" "nlohmann-json")

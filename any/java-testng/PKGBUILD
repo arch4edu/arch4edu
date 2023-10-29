@@ -1,25 +1,28 @@
-# Maintainer:  Anton Kudelin <kudelin at protonmail dot com>
+# Maintainer:  Anton Kudelin <kudelin at proton dot me>
 # Contributor: eolianoe <eolianoe [at] gmail [DoT] com>
 # Contributor: Daniel Nagy <danielnagy at gmx de>
 # Contributor: grimsock <lord.grimsock at gmail dot com>
 # Contributor: Alucryd <alucryd at gmail dot com>
 
 _pkgname=testng
-pkgname=java-${_pkgname}
-pkgver=7.6.1
+pkgname=java-$_pkgname
+pkgver=7.8.0
 pkgrel=1
+arch=(any)
 pkgdesc='A testing framework inspired by JUnit and NUnit'
-arch=('any')
 url="http://testng.org"
-license=('Apache')
-depends=('jdk11-openjdk')
-makedepends=('gradle')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/cbeust/$_pkgname/archive/$pkgver.tar.gz")
-sha256sums=('78ccf9122b62a2d4bdff90cab219254997f4120a94da49f72f2df2f2ea65c870')
+license=(Apache)
+depends=(jdk11-openjdk)
+makedepends=(gradle)
+source=($pkgname-$pkgver.tar.gz::https://github.com/cbeust/$_pkgname/archive/$pkgver.tar.gz)
+sha256sums=('94337f64dfc2d461adf9d3a7c6db9d0e4174ae314a061108713b2e8e7f28fe0a')
 
 prepare() {
   echo "It's recommended to build in a clean chroot"
   unset _JAVA_OPTIONS
+
+  cd "$srcdir/$_pkgname-$pkgver"
+  sed -i '/enableFeaturePreview("VERSION_CATALOGS")/d' settings.gradle.kts
 }
 
 build() {

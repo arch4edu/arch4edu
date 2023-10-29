@@ -2,8 +2,8 @@
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.4.1
-pkgrel=2
+pkgver=1.4.2
+pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
 url="https://pyvo.readthedocs.io"
@@ -13,15 +13,15 @@ makedepends=('python-setuptools-scm'
              'python-build'
              'python-installer'
              'python-sphinx-astropy'
-             'graphviz'
-             'python-astropy')
-checkdepends=('python-pytest-doctestplus'
-              'python-pytest-astropy-header'
+             'python-astropy'
+             'graphviz')
+checkdepends=('python-pytest-astropy-header'
+              'python-pytest-doctestplus'
               'python-pytest-remotedata'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('ba163b4248cf0e696ea82a063f077f6b')
+md5sums=('45ec15cf255529d35db73250aa8f1d4a')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -34,7 +34,7 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed" # --remote-data -vv --color=yes
+    pytest || warning "Tests failed" # --remote-data -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package_python-pyvo() {

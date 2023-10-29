@@ -1,34 +1,36 @@
-# Maintainer: sukanka <su975853527@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=onewaytests
-_pkgver=2.7
+_pkgver=3.0
 pkgname=r-${_pkgname,,}
-pkgver=2.7
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='One-Way Tests in Independent Groups Designs'
-arch=('any')
+pkgdesc="One-Way Tests in Independent Groups Designs"
+arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL)
 depends=(
-  r
   r-car
   r-ggplot2
   r-moments
   r-nortest
+  r-wesanderson
 )
 optdepends=(
   r-aid
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('cd0e043cfbe6a630bcbb419b6e57c17b1e0fe75fecb482118f72d66c86ca6490')
+md5sums=('3adc7b0e56ef5dc3599c373eb165d9f4')
+sha256sums=('67836ba322b457c45dd637d0ee08b0a95f61be00cd7e149d1eb2dd64d07bbf62')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

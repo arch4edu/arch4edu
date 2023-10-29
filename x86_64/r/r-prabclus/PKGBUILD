@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=prabclus
-_pkgver=2.3-2
+_pkgver=2.3-3
 pkgname=r-${_pkgname,,}
-pkgver=2.3.2
-pkgrel=4
+pkgver=2.3.3
+pkgrel=3
 pkgdesc='Functions for Clustering and Testing of Presence-Absence, Abundance and Multilocus Genetic Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,13 +16,12 @@ depends=(
 optdepends=(
   r-bootstrap
   r-foreign
-  r-maptools
   r-mvtnorm
   r-spatialreg
   r-spdep
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f421bcbcb557281e0de4a06b15f9a496adb5c640e883c0f7bb12051efc69e441')
+sha256sums=('005d000a9ac357e670de26e5b8fc4ddb1617351275fa43bf6d2e88b8774358c1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

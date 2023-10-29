@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname=python-jaxlib
-pkgver=0.4.7
-pkgrel=2
+pkgver=0.4.19
+pkgrel=3
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/google/jax/'
@@ -12,15 +12,17 @@ depends=('python-absl'
          'python-ml-dtypes'
          'python-numpy'
          'python-scipy')
-makedepends=('python-installer' 'python-setuptools' 'python-wheel')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 conflicts=('python-jaxlib')
-provides=('python-jaxlib')
 source=("jaxlib-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jaxlib-v${pkgver}.tar.gz")
-sha256sums=('0578d5dd5035b5225cadb6a62ca5f93dd76b70292268502fc01a0fd9ca7001d0')
+sha256sums=('51242b217a1f82474e42d24f09ed5dedff951eeb4579c6e49e706d1adfd6949d')
 
 build() {
     cd $srcdir/jax-jaxlib-v$pkgver
-    python build/build.py \
+    JAXLIB_RELEASE=$pkgver python build/build.py \
+        --bazel_startup_options="--output_user_root=$srcdir/bazel"\
+        --bazel_options='--action_env=JAXLIB_RELEASE' \
+        --noenable_cuda \
         --target_cpu_features release
 }
 

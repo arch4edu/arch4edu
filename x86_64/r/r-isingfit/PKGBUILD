@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=IsingFit
-_pkgver=0.3.1
+_pkgver=0.4
 pkgname=r-${_pkgname,,}
-pkgver=0.3.1
+pkgver=0.4
 pkgrel=1
 pkgdesc='Fitting Ising Models Using the ELasso Method'
 arch=('any')
@@ -18,7 +18,7 @@ optdepends=(
   r-isingsampler
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8741d65b63818c927819155f13a62d21f7d7f4942b9d218e6f93ce12eeff2ddf')
+sha256sums=('18ab6a8d366fc8d1c4ff8305419b97b28503820ffd84dbc2d3ec1012e550b7df')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

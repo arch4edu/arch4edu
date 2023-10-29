@@ -2,6 +2,8 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
+  - alias: python
+  - alias: opencv
 depends:
   - x86_64/ros/ros-noetic-rosconsole
   - x86_64/ros/ros-noetic-sensor-msgs
