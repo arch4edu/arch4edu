@@ -1,8 +1,8 @@
 # Maintainer: Gordian Edenhofer <gordian.edenhofer@gmail.com>
 
 pkgname=zoom
-pkgver=5.16.5
-_subver=303
+pkgver=5.16.6
+_subver=382
 pkgrel=1
 pkgdesc="Video Conferencing and Web Conferencing Service"
 arch=('x86_64')
@@ -11,7 +11,7 @@ url="https://zoom.us/"
 depends=('fontconfig' 'glib2' 'libpulse' 'libsm' 'ttf-font' 'libx11' 'libxtst' 'libxcb'
 	'libxcomposite' 'libxfixes' 'libxi' 'libxcursor' 'libxkbcommon-x11' 'libxrandr'
 	'libxrender' 'libxshmfence' 'libxslt' 'mesa' 'nss' 'xcb-util-image'
-	'xcb-util-keysyms' 'dbus' 'libdrm')
+	'xcb-util-keysyms' 'dbus' 'libdrm' 'gtk3')
 optdepends=('pulseaudio-alsa: audio via PulseAudio'
 	'qt5-webengine: SSO login support'
 	'ibus: remote control'
@@ -19,7 +19,7 @@ optdepends=('pulseaudio-alsa: audio via PulseAudio'
 	'xcompmgr: extra compositor needed by some window managers for screen sharing')
 options=(!strip)
 source=("${pkgname}-${pkgver}.${_subver}_orig_x86_64.pkg.tar.xz"::"https://cdn.zoom.us/prod/${pkgver}.${_subver}/zoom_x86_64.pkg.tar.xz")
-sha512sums=('2b4325e36d536416e32a791571f016ad405a38ac54bb01392f51df3ecc9514c72305a19fb60498ee95a98eeda6214b7bd69976732faa00cffd38c583165106e5')
+sha512sums=('c70acebcda8719c12a5c69607c5b6195e16b8c70ad9cb65d1878064134988fdbfd01288df7ce8d41153614f7c5678222ad98ee3deac08f23acbacfd694860d65')
 
 prepare() {
 	sed -i 's/Zoom\.png/Zoom/g' "${srcdir}/usr/share/applications/Zoom.desktop"
