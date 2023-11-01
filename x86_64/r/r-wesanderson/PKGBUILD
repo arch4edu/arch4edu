@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=wesanderson
-_pkgver=0.3.6
+_pkgver=0.3.7
 pkgname=r-${_pkgname,,}
-pkgver=0.3.6
-pkgrel=4
+pkgver=0.3.7
+pkgrel=1
 pkgdesc='A Wes Anderson Palette Generator'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -16,7 +16,7 @@ optdepends=(
   r-ggplot2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('22b6ea042a01d68a3bb471fc747f12c9beee61e1e4a4cf8ec0b2e12ac535b926')
+sha256sums=('c92e5604e1e149e00f49fd236c6ab8cd09d96106eb14479f7839e6996bf95e4e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
