@@ -6,7 +6,7 @@
 
 pkgname=libdart
 pkgver=6.13.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Dynamic Animation and Robotics Toolkit"
 arch=('i686' 'x86_64')
 url="https://dartsim.github.io"
@@ -38,6 +38,7 @@ build() {
     mkdir -p "${srcdir}/${_pkgname}-${pkgver}/build"
     cd "${srcdir}/${_pkgname}-${pkgver}/build"
 
+    export CXXFLAGS="$CFLAGS"
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="/usr" \
         -DCMAKE_INSTALL_LIBDIR="lib" \
