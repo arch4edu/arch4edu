@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=posterior
-_pkgver=1.4.1
+_pkgver=1.5.0
 pkgname=r-${_pkgname,,}
-pkgver=1.4.1
+pkgver=1.5.0
 pkgrel=1
 pkgdesc='Tools for Working with Posterior Distributions'
 arch=('any')
@@ -34,7 +34,7 @@ optdepends=(
   r-tidyr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2b8953fa8d6890a105521023c431ddea725465eb95cf9454a88852e43ebb58d3')
+sha256sums=('4a10307fcae321f2cd4ca7871504a0c6c9152b8473dc9a033721e8dcda18e2de')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
