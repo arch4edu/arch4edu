@@ -4,7 +4,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=withr
-_cranver=2.5.1
+_cranver=2.5.2
 pkgname=r-${_cranname,,}
 pkgdesc="Lightweight Well-Known Geometry Parsing"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -47,7 +47,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("7456a010073fae2275d996653041765cad61b3b128d487a066a63e671d03a359fc0fa1d89e8d9bb61ac6a7825c2e10c9afbab6a357a887fb597b909ed09ed4e7")
+b2sums=("90de8ab583f7a3aff711ce367e9048d51433ff44ce43d1051ba18c076a066fd94281dd1348098592103b0592508fbbf1342f4e5f4b67eb8fa11e8291f6d6a779")
 
 build() {
     mkdir -p "${srcdir}/build/"
