@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _bcname=BiocGenerics
-_bcver=0.46.0
+_bcver=0.48.0
 pkgname=r-${_bcname,,}
 pkgver=${_bcver//[:-]/.}
 pkgrel=1
@@ -31,7 +31,7 @@ optdepends=(
     "r-runit"
 )
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_bcname}_${_bcver}.tar.gz")
-b2sums=("8f1a05c67bbd03d2110e7b5d485fc42d9cccc8d47c79bed6cdee787b3a11ff1ed17f37f5468b1900c1a651536476a2976f6a359e38f26e308a8be9510f2c3bef")
+b2sums=("36194816c349b10aad7aa5f8acd558cc8365057b89a50868bdfd8068f55d02ca32eb6f103c723e605199a2050d013f79f909a74ec6104deef0457a7323edd329")
 
 build() {
     R CMD INSTALL ${_bcname}_${_bcver}.tar.gz -l "${srcdir}"
