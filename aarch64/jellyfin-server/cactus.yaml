@@ -11,5 +11,7 @@ makedepends:
   - aarch64/dotnet-core-bin: netstandard-targeting-pack-bin
 build_prefix: extra-aarch64
 makepkg_args: -A
-pre_build: abs-pre-build
+pre_build: |
+  abs-pre-build
+  sed 's/Jellyfin.Server \\/Jellyfin.Server -p:Platform=arm64 \\/' -i PKGBUILD
 post_build: abs-post-build
