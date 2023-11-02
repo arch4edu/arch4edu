@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-experiments
 pkgname=python-${_pkgname}
-pkgver=0.5.3
-pkgrel=2
+pkgver=0.5.4
+pkgrel=1
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-experiments"
@@ -23,7 +23,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('d2ef5439410b239872e5fd92b3051c214c9b239a946c8a1c48791c2fa4cec92446953a1135de37ca27b1bacbb85d661645c29f1629be8e3c38cb0fda3dcf6652')
+b2sums=('07663241aed0272646cc43529e0440dac5f80d7d0586d0067c12f7527829dd100a3e516af9368d9cc517f105d790380644b95cab9d5c98aeb7194fea3925f208')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
