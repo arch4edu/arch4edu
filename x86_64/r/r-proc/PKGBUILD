@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=pROC
-_pkgver=1.18.4
+_pkgver=1.18.5
 pkgname=r-${_pkgname,,}
-pkgver=1.18.4
-pkgrel=3
+pkgver=1.18.5
+pkgrel=1
 pkgdesc='Display and Analyze ROC Curves'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -27,7 +27,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d590ea7bab21559150ee58bc0833d41451c6ae6d33a725898dc190ba68c80a53')
+sha256sums=('5593c841a6df5a2f2d209d0c14401971eb9427092ed9c3ac2059273807b42c89')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
