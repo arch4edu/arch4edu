@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=plotrix
-_pkgver=3.8-2
+_pkgver=3.8-3
 pkgname=r-${_pkgname,,}
-pkgver=3.8.2
-pkgrel=9
+pkgver=3.8.3
+pkgrel=1
 pkgdesc='Various Plotting Functions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,7 +14,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bb72953102889cea41cd6521874e35d2458ebd10aab97ba6f262e102cac0bc1f')
+sha256sums=('b961d3b59ba0850e4c198b57fcceb1735c1c10d5ddcda0ecd6c2c731f114bc05')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
