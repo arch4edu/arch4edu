@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=waldo
-_cranver=0.5.1
+_cranver=0.5.2
 pkgname=r-${_cranname,,}
 pkgdesc="Anything to ‘POSIXct’ or ‘Date’ Converter"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -49,7 +49,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("019b9e17d5c4d9f3b687c03dffdffa640ee05abd52ad1b77651c698e3292e4229aa538336955d8cd4ef8ca4d75307647c8a4d259e27a404e048d394ec69604e4")
+b2sums=('ac0cddc9eadedbc94834bb72fbb5745c8d66fb425c75b2fb7ef103e0443b39c4c7efafca63a57053434305cf65b3926d674211c047a72bda7394e2d8644a08ec')
 
 build() {
     mkdir -p "${srcdir}/build/"
