@@ -3,9 +3,9 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=lava
-_pkgver=1.7.2.1
+_pkgver=1.7.3
 pkgname=r-${_pkgname,,}
-pkgver=1.7.2.1
+pkgver=1.7.3
 pkgrel=1
 pkgdesc='Latent Variable Models'
 arch=('any')
@@ -46,7 +46,7 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d42b1f5c7e4e76718e4f014c44608295f82b5de0eb25ce8e9b35c40c7839ef2e')
+sha256sums=('4e087df1350b05c3d0403597a1ad97f4b0e183047d5d8636a62143f26bd86a08')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
