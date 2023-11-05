@@ -4,7 +4,7 @@
 # Contributor: Guillaume Dollé < dolle dot guillaume at gmail dot com >
 # Contributor: Lucas H. Gabrielli
 pkgname=mumps
-pkgver=5.6.1
+pkgver=5.6.2
 pkgrel=1
 pkgdesc='Sparse solver library using Gaussian elimination'
 url='https://graal.ens-lyon.fr/MUMPS/index.php'
@@ -15,7 +15,7 @@ conflicts=('mumps-par' 'mumps4')
 arch=('i686' 'x86_64')
 source=(http://graal.ens-lyon.fr/MUMPS/MUMPS_${pkgver}.tar.gz
         Makefile.inc)
-sha512sums=('7d0f7e6e852a967ee93b7eac1a13b491d85e1c3fa39df8c5aed6f12069f0a4f8ee369c049fddba52f19f60ff579eff189e5546a7dd41a1de0a80d915398f0f53'
+sha512sums=('5ee2659ed963ca525fc253986504250d0529257d79f18534032b970985528670cbadea023ff596829936c1b18ec6ef8925c3a6c0451eb1ad50caa88b20706adf'
             '348dc692cb66f428d38808e4ec50c259a7a841d6c09ccd9fce829a731967358e7b9db2be5436b86e20539ddcc014b7c577fb5dd0d114a418a91573f49cf38ef0')
 
 prepare () {
