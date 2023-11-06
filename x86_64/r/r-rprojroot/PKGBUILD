@@ -2,13 +2,13 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=rprojroot
-_cranver=2.0.3
+_cranver=2.0.4
 pkgname=r-${_cranname,,}
 pkgdesc="Find Files in Project Subdirectories"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("any")
 depends=(
@@ -43,7 +43,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ccb1d8f06ada72aa666e7f81cfdf5ce77596fce543c525c80f6eb91a5239c78d42aa16f192d900f9a90fc98d8c283af1ec2eada755a2dff9147bcd03002ceca3")
+b2sums=("44b81761a084c49834288ff903e5bbddd76d0dad436f80c5515bcb98520c0d02a874e961554d73bd04170e8a96404ac4879439c6e524c82ce8cced5c38e5197d")
 
 build() {
     mkdir -p "${srcdir}/build/"
