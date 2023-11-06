@@ -1,7 +1,7 @@
 # Maintainer: Aaron Keesing <agkphysics at gmail dot com>
 
 pkgname=zotero
-pkgver=6.0.27
+pkgver=6.0.30
 pkgrel=1
 pkgdesc="A free, easy-to-use tool to help you collect, organize, cite, and share your research sources."
 arch=('x86_64' 'i686')
@@ -9,11 +9,11 @@ url="https://github.com/zotero/zotero"
 license=('AGPL3')
 depends=('dbus-glib' 'gtk3' 'nss' 'libxt')
 makedepends=('npm' 'git' 'zip' 'unzip' 'perl' 'python>=3' 'curl' 'wget' 'rsync' 'nodejs')
-_tag=0120c7c7ad3f6b2159d9d28abfb5f10f424b860d  # git rev-parse $pkgver
+_tag=5350a60c9aeb14480372b552e59df4386ad10b7d  # git rev-parse $pkgver
 source=("zotero.desktop"
         "zotero-client::git+https://github.com/zotero/zotero.git#tag=${_tag}"
         "zotero-build::git+https://github.com/zotero/zotero-build.git"
-        "zotero-standalone-build::git+https://github.com/zotero/zotero-standalone-build.git#tag=6.0.27"
+        "zotero-standalone-build::git+https://github.com/zotero/zotero-standalone-build.git#tag=6.0.30"
         "zotero-translators::git+https://github.com/zotero/translators.git"
         "zotero-styles::git+https://github.com/zotero/bundled-styles.git"
         "zotero-pdf-worker::git+https://github.com/zotero/pdf-worker.git"
