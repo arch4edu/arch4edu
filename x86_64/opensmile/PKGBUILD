@@ -4,7 +4,7 @@
 # Contributor: jzombi <jzombi at gmail.com>
 
 pkgname=opensmile
-pkgver=3.0.1
+pkgver=3.0.2
 pkgrel=2
 pkgdesc="A fast, real-time (audio) feature extraction utility for automatic speech, music and paralinguistic recognition research"
 arch=('x86_64')
@@ -13,11 +13,10 @@ license=('custom')
 depends=('portaudio' 'ffmpeg4.4')
 makedepends=('cmake')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/audeering/opensmile/archive/v$pkgver.tar.gz")
-sha256sums=('b8e5d69d6c3d729eb6e7825e2bd913c819e61315524a739b245069dcaed0d8c3')
+sha256sums=('b423c785c948e6e8d5b84c002419875ba456f048f5f86ce29f5e21bba9ef5bdd')
 
 prepare() {
   export PKG_CONFIG_PATH="/usr/lib/ffmpeg4.4/pkgconfig/"
-  sed 's/PC_LIB/PC_/g' -i "$srcdir/$pkgname-$pkgver/cmake/FindFFmpeg.cmake"
 }
 
 build() {
