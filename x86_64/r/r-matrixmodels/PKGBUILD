@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=MatrixModels
-_pkgver=0.5-2
+_pkgver=0.5-3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -18,8 +18,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4f91dd97fdb1ca38d6635c0e95af61e9')
-sha256sums=('1c06dbbc969eac965c75b0f4cf295d2895429917fa4ba727e5525fb1beabe32a')
+md5sums=('5ad7c5222f8f8322a307de4445ab9985')
+sha256sums=('c2db5406c6b0b9d348b44eea215a39c64fc087099fea1342a04d50326577f20f')
 
 build() {
   mkdir -p build
