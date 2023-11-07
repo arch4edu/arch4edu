@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 pkgver=18.2.0
-pkgrel=1
+pkgrel=2
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL')
@@ -185,7 +185,6 @@ build() {
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DCEPH_SYSTEMD_ENV_DIR=/etc/default \
     -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
-    -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DENABLE_GIT_VERSION=ON \
     -DWITH_BABELTRACE=OFF \
     -DWITH_LTTNG=OFF \
@@ -231,8 +230,8 @@ build() {
     -DWITH_TESTS=ON \
     -Wno-dev
 
-  VERBOSE=1 make -C build legacy-option-headers
-  VERBOSE=1 make -C build all
+  make -C build legacy-option-headers
+  make -C build all
 }
 
 check() {
@@ -240,12 +239,8 @@ check() {
 
   export CTEST_PARALLEL_LEVEL=7
   export CTEST_OUTPUT_ON_FAILURE=1
-  VERBOSE=1 make -C build check || true
 
-  # sometimes processes are not properly terminated...
-  for process in ceph-mon ceph-mgr ceph-osd; do
-    pkill -9 "${process}" || true
-  done
+  VERBOSE=1 make -C build check || true
 }
 
 _package() {
