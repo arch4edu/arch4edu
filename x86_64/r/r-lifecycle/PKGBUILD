@@ -4,10 +4,10 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=lifecycle
-_pkgver=1.0.3
+_pkgver=1.0.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=1
 pkgdesc="Manage the Life Cycle of your Package Functions"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,8 +30,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('023bff9f9b99ca56ed01b705a41a8bed')
-sha256sums=('6459fdc3211585c0cdf120427579c12149b02161efe273a64b825c05e9aa69c2')
+md5sums=('4490cb8f9777f1ff4bae184d51d24405')
+sha256sums=('ada4d3c7e84b0c93105e888647c5754219a8334f6e1f82d5afaf83d4855b91cc')
 
 build() {
   mkdir -p build
