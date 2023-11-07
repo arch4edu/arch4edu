@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=matrixStats
-_cranver=1.0.0
+_cranver=1.1.0
 pkgname=r-${_cranname,,}
 pkgdesc="Functions that Apply to Rows and Columns of Matrices (and to Vectors)"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -46,7 +46,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ade8ba444f379758b232052eb23a78dec8e14246e1e4254d7c40e1dffa00910e5a8e2114d58aa2afc841dfae9a3d03d9b14485e52b2ef2ebe7304b099aed3e27")
+b2sums=("fdfd7ee6bb8565afdd0dfc3bc73d9d5b95f074026f295fe83a566851fee587196c61435d970b97f27eedd2726df6bc197c0db4febdf59c1873390de1e4b244d7")
 
 build() {
     mkdir -p "${srcdir}/build/"
