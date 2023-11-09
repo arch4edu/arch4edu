@@ -1,5 +1,5 @@
 pkgname=coin-or-ipopt
-pkgver=3.14.12
+pkgver=3.14.13
 pkgrel=1
 pkgdesc="Interior Point OPTimizer"
 arch=('x86_64')
@@ -7,7 +7,7 @@ url="https://github.com/coin-or/Ipopt"
 license=('EPL')
 depends=('lapack' 'coin-or-asl' 'coin-or-coinmumps')
 source=("https://github.com/coin-or/Ipopt/archive/releases/${pkgver}.tar.gz")
-sha256sums=('6b06cd6280d5ca52fc97ca95adaaddd43529e6e8637c274e21ee1072c3b4577f')
+sha256sums=('2afcb057e7cf8ed7e07f50ee0a4a06d2e4d39e0f964777e9dd55fe56199a5e0a')
 
 build() {
   cd "$srcdir"
