@@ -9,10 +9,10 @@
 # Contributor: Dave Pretty <david dot pretty at gmail dot com>
 
 pkgname=anki-git
-pkgver=r10656.a58b2a986
+pkgver=r10673.d49162241
 pkgrel=1
 pkgdesc="Helps you remember facts (like words/phrases in a foreign language) efficiently"
-url="http://ankisrs.net/"
+url="hhttps://apps.ankiweb.net/"
 license=('AGPL3')
 arch=('any')
 provides=('anki')
@@ -61,22 +61,16 @@ optdepends=(
     'mpv: play sound. prefered over mplayer'
     'mplayer: play sound'
 )
-source=(
-    $pkgname::git+https://github.com/dae/anki.git
-
-    #ankitects-anki-core-i18n-master.tar.gz::https://github.com/ankitects/anki-core-i18n/tarball/master
-    #ankitects-anki-desktop-ftl-master.tar.gz::https://github.com/ankitects/anki-desktop-ftl/tarball/master
-    #ankitects-anki-desktop-i18n-master.tar.gz::https://github.com/ankitects/anki-desktop-i18n/tarball/master
-)
+source=('git+https://github.com/ankitects/anki.git')
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "$pkgname"
+    cd anki
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
-    cd "$pkgname"
+    cd anki
 
     # Put translations in place.
     #ln -sf "$srcdir"/ankitects-anki-core-i18n-*/ rslib/ftl/repo
@@ -85,7 +79,7 @@ prepare() {
 }
 
 build() {
-    cd "$pkgname"
+    cd anki
 
     export CC=/usr/bin/clang
     export CXX=/usr/bin/clang++
@@ -94,7 +88,7 @@ build() {
 }
 
 package() {
-    cd "$pkgname"
+    cd anki
     PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-deps out/wheels/*.whl
 
     install -Dm755 qt/runanki.py "$pkgdir"/usr/bin/anki
