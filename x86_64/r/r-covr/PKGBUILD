@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=covr
-_pkgver=3.6.3
+_pkgver=3.6.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Test Coverage for Packages"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -47,8 +47,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('37f5087c63b1f25b4c6f8df36fcdecbe')
-sha256sums=('c0ce1846a4d12cd7d365ed1844c221cd8a40f50ea2c6d7d87f27c3e7deffa29e')
+md5sums=('8fadf3538ed1edfefb3a20bd5c5e887d')
+sha256sums=('2b6204036510c629d0b1d58daaee34d4e38baf54164f8d4c9afd6d6b1fb1862a')
 
 build() {
   mkdir -p build
