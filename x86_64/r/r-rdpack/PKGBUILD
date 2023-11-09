@@ -3,9 +3,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=Rdpack
-_pkgver=2.5
+_pkgver=2.6
 pkgname=r-${_pkgname,,}
-pkgver=2.5
+pkgver=2.6
 pkgrel=1
 pkgdesc='Update and Manipulate Rd Documentation Objects'
 arch=('any')
@@ -23,7 +23,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4d4db2e1431feb9bd785eced8b44ca5af37b866992ec17dc28b605aee8e0c877')
+sha256sums=('6a75d98c651778358732429258056a327def2be4d2af244a8daaac5b500c220a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
