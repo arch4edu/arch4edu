@@ -3,10 +3,10 @@
 # Contributor: Thomas Ivesdal-Tronstad <thotro at lyse dot net>
 
 _pkgname=pracma
-_pkgver=2.4.2
+_pkgver=2.4.4
 pkgname=r-${_pkgname,,}
-pkgver=2.4.2
-pkgrel=3
+pkgver=2.4.4
+pkgrel=1
 pkgdesc='Practical Numerical Math Functions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,7 @@ optdepends=(
   r-quadprog
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1d50337fdfd9a8d704a64f01dae5d52b9a2bd6d872fdaa4a6685b8d3bde89c16')
+sha256sums=('1a4ef3af2197f999dbaa614bf5a70f09ec463d8c91feb5aa0d995de24ec6ba7f')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
