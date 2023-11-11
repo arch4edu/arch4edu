@@ -2,7 +2,7 @@
 pkgname=catch2v3
 _gitcommit=6e79e682b726f524310d55dec8ddac4e9c52fb5f
 pkgver=3.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Modern, C++-native, header-only, test framework for unit-tests, TDD and BDD (v3)"
 arch=('x86_64')
 url="https://github.com/catchorg/Catch2/"
