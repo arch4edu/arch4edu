@@ -2,10 +2,10 @@
 _pkgname=qiskit-finance
 pkgname=python-${_pkgname}
 pkgver=0.3.4
-pkgrel=3
+pkgrel=4
 pkgdesc="Quantum Finance package for IBM qiskit framework"
 arch=('any')
-url="https://github.com/Qiskit/qiskit-finance"
+url="https://github.com/qiskit-community/qiskit-finance"
 license=('Apache')
 depends=(
     'python-fastdtw'
@@ -25,7 +25,7 @@ makedepends=(
     'python-setuptools'
     'python-wheel'
 )
-source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
+source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/qiskit-community/${_pkgname}/archive/${pkgver}.tar.gz")
 b2sums=('2666e60cc43dbc86b4ce6c4f6e7f2e971e66b5a5ef540026713dfecc65e3b4ed9432e1598c91f199e2da9964a4ad7a60c2836bb13d634a5461b0ac22b4f38488')
 
 build() {
