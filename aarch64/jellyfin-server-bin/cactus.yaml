@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - aarch64/dotnet-core-6.0-bin: aspnet-runtime-6.0
+  - aarch64/dotnet-core-6.0-bin: dotnet-runtime-6.0-bin
+  - aarch64/dotnet-core-bin: dotnet-host-bin
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
