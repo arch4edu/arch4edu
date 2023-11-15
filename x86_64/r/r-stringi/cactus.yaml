@@ -3,9 +3,6 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-cpp11
-makedepends:
-  - x86_64/r/r-roxygen2
-  - x86_64/r/r-pkgbuild
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
