@@ -1,10 +1,10 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dumux
 _dunever=2.9.0
-_tarver=3.7.0
+_tarver=3.8.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=4
+pkgrel=1
 pkgdesc="An open-source simulator and research code in modern C++"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -19,7 +19,7 @@ optdepends=('dune-alugrid: for grid manager ALUGrid support'
   'dune-spgrid: for grid manager SPGrid support'
   'dune-mmesh: for grid manager MMesh support')
 source=(https://git.iws.uni-stuttgart.de/${pkgname}-repositories/${pkgname}/-/archive/${_tar})
-sha512sums=('b68a75d73700c4cda4b65450b0b2f0a63521e3211c36f01be0d8c2ef5406d810c30b939042bd76edb90ed76f8d38da0e07becc6c94990a5f9d14c0dce36abc2e')
+sha512sums=('f276afaf636832db649bf4519388f4eb392d865d5f3b9fb622f326a8f59c0be7bc85f168711501302a7ec130375106d97bd1593e935cff7ca99ffd03348290d4')
 
 prepare() {
   cd ${pkgname}-${pkgver}
