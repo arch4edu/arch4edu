@@ -4,8 +4,8 @@
 # Contributor: James Duley <jagduley gmail>
 
 pkgname=xflr5
-_revision=1431
-_pkgver=6.57
+_revision=1481
+_pkgver=6.61
 pkgver=$_pkgver.r$_revision
 pkgrel=1
 pkgdesc="An analysis tool for airfoils, wings and planes operating at low Reynolds Numbers."
