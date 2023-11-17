@@ -2,8 +2,8 @@
 # Contributor: Myles English <myles at tdma dot co>
 
 pkgname=pastix
-pkgver=6.3.0
-pkgrel=5
+pkgver=6.3.1
+pkgrel=1
 pkgdesc="High performance parallel solver for very large sparse linear systems based on direct methods"
 arch=('x86_64')
 url="https://gitlab.inria.fr/solverstack/pastix"
@@ -13,8 +13,8 @@ makedepends=('gcc-fortran' 'cmake' 'ninja' 'doxygen')
 provides=('libpastix.so' 'libpastix_kernels.so'
           # also provide the SpM library (internal module)
           'libspm.so' 'libspmf.so')
-source=("https://files.inria.fr/pastix/releases/v6/pastix-6.3.0.tar.gz")
-sha256sums=('a6bfec32a3279d7b24c5fc05885c6632d177e467f1584707c6fd7c42a8703c3e')
+source=("https://files.inria.fr/pastix/releases/v${pkgver%%.*}/pastix-${pkgver}.tar.gz")
+sha256sums=('290464d73b7d43356e4735a29932bf6f23a88e94ec7139ba7744c21e42c52681')
 
 build() {
     cmake -B build -S "${pkgname}-${pkgver}" -G Ninja \
@@ -28,6 +28,14 @@ build() {
     cmake --build build
 }
 
+prepare() {
+    cd "${pkgname}-${pkgver}"
+    # version 6.3.1 temporarily replaces "-Werror" for one check, but it leaves
+    # "=format-security" in there from the "-Werror=format-security" flag
+    sed -i '/-Werror/d' spm/cmake_modules/morse_cmake/modules/find/FindM.cmake
+    sed -i '/-Werror/d' cmake_modules/morse_cmake/modules/find/FindM.cmake
+}
+
 package() {
     DESTDIR="${pkgdir}" cmake --install build
 
@@ -39,8 +47,8 @@ package() {
     rmdir "${pkgdir}/usr/bin"
 
     # move examples into proper doc directory
-    install -dm755 "${pkgdir}/usr/share/doc/pastix/"
-    mv "${pkgdir}/usr/examples" "${pkgdir}/usr/share/doc/pastix/"
+    mv "${pkgdir}/usr/examples/"* "${pkgdir}/usr/share/doc/pastix/examples/"
+    rmdir "${pkgdir}/usr/examples/"
 
     # fix fucked up Python install path
     local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
