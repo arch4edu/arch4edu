@@ -1,7 +1,7 @@
 # maintainer: Ricardo Band <email@ricardo.band>
 
 pkgname=cephadm
-pkgver=18.2.0
+pkgver=18.2.1
 pkgrel=1
 pkgdesc='Cephadm deploys and manages a Ceph cluster by connection to hosts from the manager daemon via SSH to add, remove, or update Ceph daemon containers'
 arch=('any')
@@ -15,7 +15,7 @@ optdepends=('podman: container backend'
 provides=('cephadm')
 conflicts=('cephadm-git')
 source=("https://github.com/ceph/ceph/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('106fe2dd6ef512a904fb2fe3179eed8534a585ffb55de79fd8f4315bff04dd7a')
+sha256sums=('ace45d7c9d7f16c6109bfcb7a232d5d8a369b9f1c986574288b35d02792bffb2')
 
 package() {
     cd $srcdir/ceph-${pkgver}/src/cephadm/
