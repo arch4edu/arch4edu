@@ -3,64 +3,43 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=stringr
-_cranver=1.5.0
+_cranver=1.5.1
 pkgname=r-${_cranname,,}
 pkgdesc="Simple, Consistent Wrappers for Common String Operations"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
-    "r>=3.3"
+    "r>=3.6"
     "r-cli"
     "r-glue>=1.6.1"
     "r-lifecycle>=1.0.3"
     "r-magrittr"
     "r-rlang>=1.0.0"
     "r-stringi>=1.5.3"
-    "r-vctrs"
+    "r-vctrs>=0.4.0"
 )
 optdepends=(
     "r-covr"
+    "r-dplyr"
+    "r-gt"
     "r-htmltools"
     "r-htmlwidgets"
     "r-knitr"
     "r-rmarkdown"
+    "r-tibble"
 )
 
-# The unittests for `r-stringr` have multiple circular
-# dependency chains.
-
-# As such, the tests can not be run on first build.
-# While R packages from CRAN, generally, are well-tested
-# before they are released, in some situations, you want to
-# have thorough testing on your own end.
-
-# To run the tests, first build this package without `check()`
-# (i.e., as-is) to bootstrap `r-stringr`. Then, on subsequent builds,
-# (assumining you have a local repository that is accessible from
-# the build chroot), uncomment the lines defining `checkdepends`, below,
-# as well as the `check()` function further down
-
-# checkdepends=(
-#     "${optdepends[@]}"
-#     "r-testthat>=3.0.0"
-# )
-
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("361e3d94de8d9e763316474eff865c6df31461e93e56a8f31cec35ace6984e2140df3d4eaf7e570693e1022a2a5323cdffc88434394b7b067c28daecd84d4784")
+b2sums=("8b8b9fa545798fca619429f17c224f89b18cfff0a2890edf53ac12436df3ef9c3e1309edb42569df72fe3058ac392065d9d3482addce86067dd5918844afa771")
 
 build() {
     mkdir -p "${srcdir}/build/"
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
-
-# check() {
-#     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
-# }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
