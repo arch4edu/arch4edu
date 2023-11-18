@@ -4,7 +4,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=dplyr
-_pkgver=1.1.3
+_pkgver=1.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -56,8 +56,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4e5aacdbe9cb21fe53f39902cdf845b5')
-sha256sums=('6843a247db0fcbba6cbffc869efbdfb25247ee6cf2fbdc36fae7e36cccfe1742')
+md5sums=('29bdf98592722336f0d07484baf2a959')
+sha256sums=('cf730414d5d4ab387b4e9890a4b1df9d17a3903488e8da8df1cf2e11e44558cb')
 
 build() {
   mkdir -p build
