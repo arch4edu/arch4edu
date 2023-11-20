@@ -2,7 +2,7 @@
 # Contributor: Dmytro Aleksandrov <alkersan@gmail.com>
 
 pkgname=rpi-imager
-pkgver=1.8.1
+pkgver=1.8.3
 pkgrel=1
 pkgdesc="Raspberry Pi Imaging Utility"
 depends=(
@@ -25,8 +25,8 @@ source=(
     "remove_update_checking.patch"
 )
 
-b2sums=('8e7e4b94a9c01140f01e1fdaa1b7e5dd9b577b706493518584a3e68039bd10f41813cb889d8fa851706d6f446beb76098f1aee7c9d1ca74a68865bf2af13caf1'
-        '7b25aa38d43dc35a29fabf12aa4a33508ecf10161c6ad3cd70983e68cc79d6a9231af0df4a9e02b60ceedbe618859aaad640542853f52cc334bce7605561ff91')
+b2sums=('512388d2243aded032a867e6a9b717ebe463631d20f58dc82d12d29245eb59b5b6628b955741911778405baab3048026b8ebcede5b651d113e0e0dcfb85a0f78'
+        '18b8cb55be4e46279dfab42f8d742d52f5ad68d74b45195066d8d2422aa6875d644fbc81f293629f71bd12498a402a91a359a7793058429d5d60a20f061ceef2')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
