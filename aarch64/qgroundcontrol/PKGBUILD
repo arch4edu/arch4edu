@@ -2,7 +2,7 @@
 # Contributor: K. Morton <pryre.dev@outlook.com>
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
-pkgver=4.2.8
+pkgver=4.2.9
 pkgrel=1
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
