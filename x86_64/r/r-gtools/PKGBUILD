@@ -5,10 +5,10 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=gtools
-_pkgver=3.9.4
+_pkgver=3.9.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Various R Programming Tools"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -25,8 +25,8 @@ optdepends=(
   r-taxize
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e76b59c1eff674bc0bd2e4aa990a9395')
-sha256sums=('59cf8b194fe98b1cc05dbb4d686810a1068f59d8b402b731548a898ece85f111')
+md5sums=('6d7837a6d8b8019e16a7c9eb567899db')
+sha256sums=('dee9b6c1152db1a5dc427d074b32bbbb738708683f17a95e0e95e4d79fdf174b')
 
 build() {
   mkdir -p build
