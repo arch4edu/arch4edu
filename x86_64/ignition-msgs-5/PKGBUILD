@@ -4,7 +4,7 @@
 
 pkgname=ignition-msgs-5
 pkgver=5.11.0
-pkgrel=9
+pkgrel=10
 pkgdesc="Messages for Gazebo robot simulation."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/msgs"
