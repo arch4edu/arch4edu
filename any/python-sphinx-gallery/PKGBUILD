@@ -3,7 +3,7 @@ pkgbase=python-sphinx-gallery
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.14.0
+pkgver=0.15.0
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
@@ -26,14 +26,13 @@ checkdepends=('python-pytest-cov'
 ##              'python-joblib'
 ##             'mayavi'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('d66041acf34685868ec3dac471d910d5')
+md5sums=('f3cd552e0556c818ade28ab36f5743bb')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
     python -m build --wheel --no-isolation
 
 #   msg "Building Docs"
-#   python setup.py build_sphinx
 #   PYTHONPATH="../build/lib" make html
 }
 
