@@ -2,9 +2,9 @@
 # Contributor: NexAdn <nexadn@yandex.com>
 
 pkgname=cef-minimal
-pkgver="111.2.6"
-_pkgcommit="g491d238"
-_chromiumver="111.0.5563.65"
+pkgver="119.4.3"
+_pkgcommit="gc76a3b9"
+_chromiumver="119.0.6045.159"
 _pkgver="${pkgver}+${_pkgcommit}+chromium-${_chromiumver}"
 _url_pkgver="${pkgver}%2B${_pkgcommit}%2Bchromium-${_chromiumver}"
 pkgrel=1
@@ -26,7 +26,7 @@ source_x86_64=(
 )
 
 sha1sums_i686=("254e40a3da38d50ae5c44539bac6627c9bc85bf4")
-sha1sums_x86_64=("1972faac2265685d4a9952eac457290de5dfe44e")
+sha1sums_x86_64=("862db95eb2b98d8655cb8db36291302cc172ed07")
 
 [[ "$CARCH" = "i686" ]] && _arch="32"
 [[ "$CARCH" = "x86_64" ]] && _arch="64"
