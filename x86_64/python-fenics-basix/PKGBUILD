@@ -2,7 +2,7 @@
 _base=basix
 pkgname=python-fenics-${_base}
 pkgdesc="Basix Python interface"
-pkgver=0.7.0
+pkgver=0.7.0.post0
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
@@ -12,7 +12,7 @@ makedepends=(python-build python-installer python-setuptools python-wheel cmake 
 checkdepends=(python-pytest python-sympy python-fenics-ufl) # python-numba
 optdepends=('python-numba: for Numba helper function support')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('6d4981e31f5e476a3baefbcee1ccdf182a0723a02d2fd1582c9f26c75e1c215e7a25647af3dc385562ca5a35088bed263c5bffc19a15812001ccb3ed8c2f426b')
+sha512sums=('39e13ed43be0429ed0193832bd31d1db30d81cdb62215cd2d82f17c4a847a34b2b80ebeae1ce6b324c9840e95ff5abcfa6fa17a570b56bae2c365942131308fe')
 
 build() {
   cd ${_base}-${pkgver}/python
