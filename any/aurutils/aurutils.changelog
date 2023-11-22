@@ -1,3 +1,16 @@
+## 18.5
+
+* `aur-repo`
+  + prefix pacman.conf in error messages (#1118)
+
+* `aur-build`
+  + propagate `--pacman-conf` to local repository upgrade
+
+## 18.4
+
+* `aur-repo`
+  + fix incomplete output with `--search` (`--json`, #1120)
+
 ## 18.3
 
 * `aur-build--pkglist`
