@@ -10,7 +10,7 @@
 _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.15.2
+pkgver=0.16.1
 pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
@@ -22,7 +22,7 @@ depends=(
   python-requests
   python-scipy
   python-typing_extensions
-  python-pytorch-rocm
+  'python-pytorch-rocm>=2.1.0'
   ffmpeg4.4
   libjpeg-turbo
   libpng
@@ -32,14 +32,14 @@ makedepends=(
   ninja
   rocm-hip-sdk
   python-setuptools
-  qt5-base
+  qt6-base
   miopen-hip
 )
 source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
 )
 sha512sums=(
-  'b126d7204500ba84de010beca9c2c51d05071ad4a57f0230474bdcb011a999481b550343ccbd003a1359b6e63528232aa19a90f4003b139fc372d655a41b5007'
+  'ef82ce6a9a35c4034127b4204a87149619102395ac9671f91736289ade97e2fe50759dd05f468800fa0d6c5f1e70fb4a568a321ca79b1b28bd4172fbc5fd7d78'
 )
 
 prepare() {
@@ -54,6 +54,27 @@ prepare() {
     -e '/ffmpeg_bin/d' \
     -e '/ffmpeg_root/d' \
     -i setup.py
+
+  # if not set, populate build architecture list from arch:python-pytorch-rocm@2.1.0-1
+  if test -z "$PYTORCH_ROCM_ARCH"; then
+    if test -z "$AMDGPU_TARGETS"; then
+      if test -z "$GPU_TARGETS"; then
+        PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102"
+      else
+        PYTORCH_ROCM_ARCH="$GPU_TARGETS"
+      fi
+    else
+      PYTORCH_ROCM_ARCH="$AMDGPU_TARGETS"
+    fi
+  fi
+  export PYTORCH_ROCM_ARCH
+
+  # hardcode ROCM_PATH and HIP_ROOT_DIR to ROCM_HOME to /opt/rocm
+  # fixes bin/hipcc not found, and others.
+  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
+  export ROCM_HOME=${ROCM_HOME:-/opt/rocm}
+  export ROCM_PATH=$ROCM_HOME
+  export HIP_ROOT_DIR=$ROCM_HOME
 }
 
 build() {
@@ -61,20 +82,6 @@ build() {
   if test -e build; then rm -rf build; fi
   mkdir build
   cd build
-
-  # populate build architecture list if not set from arch:python-pytorch-rocm@2.0.1#7
-  if test -n "$PYTORCH_ROCM_ARCH"; then
-    export PYTORCH_ROCM_ARCH="$PYTORCH_ROCM_ARCH"
-  else
-    export PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102"
-  fi
-
-  # hardcode ROCM_PATH and HIP_ROOT_DIR to /opt/rocm (from arch:python-pytorch-rocm@2.0.1#7)
-  export ROCM_PATH=/opt/rocm
-  export HIP_ROOT_DIR=/opt/rocm
-  # fix bin/hipcc not found, because ROCM_HOME is lost
-  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
-  export ROCM_HOME=/opt/rocm
 
   cmake "../" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -119,10 +126,7 @@ package_python-torchvision-rocm() {
   conflicts+=(python-torchvision)
 
   cd "${srcdir}/${_pkgname}-${pkgver}"
-  # fix bin/hipcc not found, because ROCM_HOME is lost
-  ROCM_HOME=/opt/rocm/ \
-    TORCHVISION_INCLUDE=${srcdir} \
-    TORCHVISION_LIBRARY=/usr/lib \
+  TORCHVISION_INCLUDE=${srcdir} TORCHVISION_LIBRARY=/usr/lib \
     python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
   install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
