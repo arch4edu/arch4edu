@@ -1,10 +1,11 @@
-# Maintainer:  Anton Kudelin <kudelin at protonmail dot com>
+# Maintainer:  Renato Caldas <renato at calgera dot com>
+# Contributor:  Anton Kudelin <kudelin at protonmail dot com>
 # Contributor: saxonbeta <saxonbeta [[at]] gmail _dot com
 # Contributor: Randy Heydon <randy dot heydon at clockworklab dot net>
 
 pkgname=elmerfem
 pkgver=9.0
-pkgrel=3
+pkgrel=4
 pkgdesc="A finite element software for multiphysical problems"
 arch=('x86_64')
 url="http://www.elmerfem.org"
@@ -31,6 +32,7 @@ prepare() {
   patch -p0 < "$srcdir/DCRComplexSolve.patch"
   patch -p1 < "$srcdir/qwt_6.2.patch"
   sed -i '/#include <QPainter>/a #include <QPainterPath>' ElmerGUI/Application/twod/renderarea.cpp
+  sed -i 's#mmg/mmg3d/libmmgtypesf.h#mmg/common/libmmgtypesf.h#g' elmerice/Solvers/CalvingRemeshMMG.F90
 }
 
 build() {
@@ -62,7 +64,7 @@ package() {
   cd "$srcdir/build"
   make DESTDIR="$pkgdir" install
   cd "$pkgdir/usr"
-  
+
   # Remove unecessary libraries
   rm -rf -- lib/{*.a,*arpack.so,ElmerGUI}
 
