@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 _base=KaHIP
 pkgname=${_base,,}
-pkgver=3.15
+pkgver=3.16
 pkgrel=1
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=(openmpi openmp metis gperftools)
 makedepends=(cmake)
 optdepends=('gurobi: for ILP solver in ilp_improve')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('3e06a2fd205facc1bd7e19a89ccfc8bb31e66565afff09c7709e9ce0759da3219992c846ba51b900c4b8192dc9fcc037d7ac39d150c9f1b64f53b0a68cd1d67b')
+sha512sums=('58f6865159250f2e70fcdd9aec87bf5f3c1e7574b599caca934dc11c4d3b7028ecdc6b802dd4a55ea33f827b1e6e012981f5bbc50c3e91fca6cdb5c237ded423')
 
 build() {
   cmake \
