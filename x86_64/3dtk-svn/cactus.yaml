@@ -1,0 +1,6 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: regex
+    regex: 'Revision (\d+): /trunk'
+    url: http://svn.code.sf.net/p/slam6d/code/trunk/
