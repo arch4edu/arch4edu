@@ -1,29 +1,24 @@
-# Maintainer: David Garfias <jose.garfias@ingenieria.unam.edu> 
+# Maintainer: David Garfias <dgarfiasme@gmail.com> 
 # Contributor: ffcc <ffercc at gmail dot com>
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Marcel Hasler <mahasler at gmail dot com>
 
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
-pkgver=2023.1.0
+pkgver=2024.0.0
 pkgrel=1
 pkgdesc="A software package for numerical computation, providing a powerful computing environment for engineering and scientific applications."
 arch=("x86_64")
 license=("GPL")
 url="https://www.scilab.org"
 # Standalone package
-depends=('ncurses5-compat-libs' 'jre8-openjdk')
+depends=('ncurses5-compat-libs')
 conflicts=('scilab' 'scilab-git')
 provides=('scilab')
 options=(!strip)
 # From Scilab downloads page (https://www.scilab.org/download/)
 source=("https://www.scilab.org/download/${pkgver}/${_pkgname}-${pkgver}.bin.x86_64-linux-gnu.tar.xz")
-sha256sums=("8abcd28bc560f47a48479c37d3aaf9a976156611f1ca238cda1ac4ad866fa8c5")
-
-prepare() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
-  rm -R thirdparty/java
-}
+sha256sums=("20afcaa58de5b61bc5f42db805c7e7ebf2cdcddeb8d9ccca7b788c286e18b276")
 
 package() {
   install -d "${pkgdir}/opt"
