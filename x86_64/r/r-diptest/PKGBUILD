@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=diptest
-_pkgver=0.76-0
+_pkgver=0.77-0
 pkgname=r-${_pkgname,,}
-pkgver=0.76.0
-pkgrel=4
+pkgver=0.77.0
+pkgrel=1
 pkgdesc="Hartigan's Dip Test Statistic for Unimodality - Corrected"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('508a5ebb161519cd0fcd156dc047b51becb216d545d62c6522496463f94ec280')
+sha256sums=('c3c835155e6bddce730623c4e9b4eeed00624c26d493076e79db203a55f8ca32')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
