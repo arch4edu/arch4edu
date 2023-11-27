@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
     for package, info in reversed(resolved.items()):
         pkgbase = info['PackageBase']
-        if pkgbase in pkgbases:
+        if pkgbase in pkgbases and pkgbase != args.package:
             continue
 
         pkgbase = directory / pkgbase
