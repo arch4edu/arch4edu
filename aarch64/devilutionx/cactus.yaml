@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - any/simpleini
+makedepends:
+  - aarch64/devilutionx-graphics-tools-git
+  - aarch64/smpq
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
