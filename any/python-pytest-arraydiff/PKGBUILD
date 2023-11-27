@@ -2,7 +2,7 @@
 pkgbase=python-pytest-arraydiff
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
-pkgver=0.6.0
+pkgver=0.6.1
 pkgrel=1
 pkgdesc="Pytest plugin to help with comparing array output from tests"
 arch=('any')
@@ -13,11 +13,10 @@ makedepends=('python-setuptools-scm'
              'python-build'
              'python-installer')
 checkdepends=('python-pytest'
-              'python-numpy'
               'python-astropy'
               'python-pandas')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('00cf2eebeb576e8ba70908fca1128294')
+md5sums=('ee1a683fa6a312d86dd8bd9342744f78')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -34,7 +33,7 @@ check() {
 
     ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
         build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
-    PYTHONPATH="build/lib" pytest || warning "Tests failed" #-vv -l -ra --color=yes -o console_output_style=count
+    PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package() {
