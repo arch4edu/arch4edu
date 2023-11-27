@@ -1,22 +1,24 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-finance
 pkgname=python-${_pkgname}
-pkgver=0.3.4
-pkgrel=4
+pkgver=0.4.0
+pkgrel=1
 pkgdesc="Quantum Finance package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/qiskit-community/qiskit-finance"
 license=('Apache')
 depends=(
+    'python-certifi'
     'python-fastdtw'
+    'python-nasdaq-data-link'
     'python-numpy'
     'python-pandas'
     'python-psutil'
-    'python-qiskit-optimization'
     'python-qiskit'
-    'python-quandl'
-    'python-scikit-learn'
+    'python-qiskit-algorithms'
+    'python-qiskit-optimization'
     'python-scipy'
+    'python-urllib3'
     'python-yfinance'
 )
 makedepends=(
@@ -26,7 +28,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/qiskit-community/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('2666e60cc43dbc86b4ce6c4f6e7f2e971e66b5a5ef540026713dfecc65e3b4ed9432e1598c91f199e2da9964a4ad7a60c2836bb13d634a5461b0ac22b4f38488')
+b2sums=('16f0335f9447bed5b99d860cdf38cbc296546091102f99f786fde2e0dfb3a95fe7e27886e6863f7c293b90cae53cb7a1f824b0b1139626ccf3abc071a96bdb5d')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
