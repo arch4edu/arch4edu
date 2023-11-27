@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-optimization
 pkgname=python-${_pkgname}
-pkgver=0.5.0
-pkgrel=4
+pkgver=0.6.0
+pkgrel=1
 pkgdesc="Quantum Optimization package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/qiskit-community/qiskit-optimization"
@@ -12,6 +12,7 @@ depends=(
     'python-networkx'
     'python-numpy'
     'python-qiskit'
+    'python-qiskit-algorithms'
     'python-scipy'
 )
 makedepends=(
@@ -21,7 +22,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/qiskit-community/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('271001d0293e05f145f5db20b09fef8dd90313eccf7b77d00d4bc249b7b4379dcdea817f19f80ec4bf4e022ef16a35d928022a8fd6a9d5ad21d5e9fcfdebbb0d')
+b2sums=('d3d5641a1efd56f74502e04326ce135301e831ec660e09ab4f0fed708d1bdf606ae0d300e3c2b6c681182bd2f9e9b743f12377a72b6eced322bd4b45790700c7')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
