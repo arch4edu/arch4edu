@@ -2,16 +2,13 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-base64enc
-  - x86_64/r/r-cachem
-  - x86_64/r/r-htmltools
-  - x86_64/r/r-jquerylib
-  - x86_64/r/r-jsonlite
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-haven
   - x86_64/r/r-lifecycle
-  - x86_64/r/r-memoise
-  - x86_64/r/r-mime
   - x86_64/r/r-rlang
-  - x86_64/r/r-sass
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-vctrs
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
