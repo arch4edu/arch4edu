@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=LZDoom
+Comment=Advanced Doom source port with OpenGL support for slow hardware.
+Icon=lzdoom
+Exec=lzdoom %F
+Terminal=false
+MimeType=application/x-doom-wad;
+Categories=Game;ActionGame;
