@@ -5,5 +5,5 @@ build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: |
   aur-pre-build
-  echo 'VCPKG_FORCE_SYSTEM_BINARIES=1' >> PKGBUILD
+  echo 'export VCPKG_FORCE_SYSTEM_BINARIES=1' >> PKGBUILD
 post_build: aur-post-build
