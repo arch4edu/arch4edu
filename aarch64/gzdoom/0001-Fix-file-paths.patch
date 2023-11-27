@@ -1,0 +1,47 @@
+From 749acb5c34edad113b083e37df034887674aad3e Mon Sep 17 00:00:00 2001
+From: Jan Cholasta <jan@cholasta.net>
+Date: Tue, 25 Feb 2020 12:53:07 +0100
+Subject: [PATCH] Fix file paths
+
+---
+ src/gameconfigfile.cpp | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/src/gameconfigfile.cpp b/src/gameconfigfile.cpp
+index 82b8071b60..a6584fa6f5 100644
+--- a/src/gameconfigfile.cpp
++++ b/src/gameconfigfile.cpp
+@@ -121,8 +121,6 @@ FGameConfigFile::FGameConfigFile ()
+ 		// Arch Linux likes them in /usr/share/doom
+ 		// Debian likes them in /usr/share/games/doom
+ 		// I assume other distributions don't do anything radically different
+-		SetValueForKey ("Path", "/usr/local/share/doom", true);
+-		SetValueForKey ("Path", "/usr/local/share/games/doom", true);
+ 		SetValueForKey ("Path", "/usr/share/doom", true);
+ 		SetValueForKey ("Path", "/usr/share/games/doom", true);
+ #endif
+@@ -143,8 +141,6 @@ FGameConfigFile::FGameConfigFile ()
+ 		SetValueForKey ("Path", "$HOME/" GAME_DIR, true);
+ 		SetValueForKey ("Path", "$HOME/.local/share/games/doom", true);
+ 		SetValueForKey ("Path", SHARE_DIR, true);
+-		SetValueForKey ("Path", "/usr/local/share/doom", true);
+-		SetValueForKey ("Path", "/usr/local/share/games/doom", true);
+ 		SetValueForKey ("Path", "/usr/share/doom", true);
+ 		SetValueForKey ("Path", "/usr/share/games/doom", true);
+ #endif
+@@ -172,10 +168,8 @@ FGameConfigFile::FGameConfigFile ()
+ 		SetValueForKey("Path", "$HOME/" GAME_DIR "/fm_banks", true);
+ 		SetValueForKey("Path", "$HOME/.local/share/games/doom/soundfonts", true);
+ 		SetValueForKey("Path", "$HOME/.local/share/games/doom/fm_banks", true);
+-		SetValueForKey("Path", "/usr/local/share/doom/soundfonts", true);
+-		SetValueForKey("Path", "/usr/local/share/doom/fm_banks", true);
+-		SetValueForKey("Path", "/usr/local/share/games/doom/soundfonts", true);
+-		SetValueForKey("Path", "/usr/local/share/games/doom/fm_banks", true);
++		SetValueForKey("Path", "$PROGDIR/soundfonts", true);
++		SetValueForKey("Path", "$PROGDIR/fm_banks", true);
+ 		SetValueForKey("Path", "/usr/share/doom/soundfonts", true);
+ 		SetValueForKey("Path", "/usr/share/doom/fm_banks", true);
+ 		SetValueForKey("Path", "/usr/share/games/doom/soundfonts", true);
+-- 
+2.38.1
+
