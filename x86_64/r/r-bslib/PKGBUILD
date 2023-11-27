@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=bslib
-_pkgver=0.5.1
+_pkgver=0.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,6 +17,7 @@ depends=(
   r-htmltools
   r-jquerylib
   r-jsonlite
+  r-lifecycle
   r-memoise
   r-mime
   r-rlang
@@ -37,8 +38,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ace239ed273febffe063920a353865c6')
-sha256sums=('b175612322e3ba929cf67a9261dd253346a981ce15bbb63d4a6874f54d5ef00e')
+md5sums=('b0e68d66d86b1bd279fa2a4838662cea')
+sha256sums=('c1d0eb3a77427911c18b919f533492c0d77e6c03bff675fcbc4bfb0b5af4a2be')
 
 build() {
   mkdir -p build
