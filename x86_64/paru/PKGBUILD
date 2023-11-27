@@ -1,7 +1,7 @@
 # Maintainer: Morgan <morganamilo@archlinux.org>
 pkgname=paru
-pkgver=1.11.1
-pkgrel=2
+pkgver=2.0.0
+pkgrel=1
 pkgdesc='Feature packed AUR helper'
 url='https://github.com/morganamilo/paru'
 source=("$pkgname-$pkgver.tar.gz::https://github.com/Morganamilo/paru/archive/v$pkgver.tar.gz")
@@ -10,8 +10,13 @@ arch=('i686' 'pentium4' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
 license=('GPL3')
 makedepends=('cargo')
 depends=('git' 'pacman')
-optdepends=('asp: downloading repo pkgbuilds' 'bat: colored pkgbuild printing' 'devtools: build in chroot')
-sha256sums=('42cefa8cdf48e3aec3f9922235f1e1126a9fe3262f1644494e1be51980e520d8')
+optdepends=('bat: colored pkgbuild printing' 'devtools: build in chroot and downloading pkgbuilds')
+sha256sums=('8926eb947b27b1de3df2f4aa76b919f3dc2c401e5131ab5c9ba9a14859b68c8c')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
 
 build () {
   cd "$srcdir/$pkgname-$pkgver"
@@ -24,7 +29,7 @@ build () {
     export CARGO_PROFILE_RELEASE_LTO=off
   fi
 
-  cargo build --locked --features "${_features:-}" --release --target-dir target
+  cargo build --frozen --features "${_features:-}" --release --target-dir target
   ./scripts/mkmo locale/
 }
 
