@@ -1,0 +1,25 @@
+From 174eb60580c9ffedad91951eefe65a517e040d4e Mon Sep 17 00:00:00 2001
+From: Jan Cholasta <jan@cholasta.net>
+Date: Tue, 11 Feb 2020 14:26:04 +0100
+Subject: [PATCH] Use correct soundfont path
+
+---
+ source/mididevices/music_fluidsynth_mididevice.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/mididevices/music_fluidsynth_mididevice.cpp b/source/mididevices/music_fluidsynth_mididevice.cpp
+index 675b4f9..8a11198 100644
+--- a/source/mididevices/music_fluidsynth_mididevice.cpp
++++ b/source/mididevices/music_fluidsynth_mididevice.cpp
+@@ -644,7 +644,7 @@ void Fluid_SetupConfig(const char* patches, std::vector<std::string> &patch_path
+ 		// The following will only be used if no soundfont at all is provided, i.e. even the standard one coming with GZDoom is missing.
+ #ifdef __unix__
+ 		// This is the standard location on Ubuntu.
+-		Fluid_SetupConfig("/usr/share/sounds/sf2/FluidR3_GS.sf2:/usr/share/sounds/sf2/FluidR3_GM.sf2", patch_paths, false);
++		Fluid_SetupConfig("/usr/share/soundfonts/FluidR3_GS.sf2:/usr/share/soundfonts/FluidR3_GM.sf2", patch_paths, false);
+ #endif
+ #ifdef _WIN32
+ 		// On Windows, look for the 4 megabyte patch set installed by Creative's drivers as a default.
+-- 
+2.25.0
+
