@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=TTR
-_pkgver=0.24.3
+_pkgver=0.24.4
 pkgname=r-${_pkgname,,}
-pkgver=0.24.3
-pkgrel=4
+pkgver=0.24.4
+pkgrel=1
 pkgdesc='Technical Trading Rules'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ optdepends=(
   r-runit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4d9aef32647664be5cf965b05f21ed62cde9425fa87c21530852e05ef7aaba87')
+sha256sums=('89732b9c359bae2f41cd23db649f0897c10fab0702d780c4c25a997322710284')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
