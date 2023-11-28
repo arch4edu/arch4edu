@@ -11,7 +11,7 @@ _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
 pkgver=0.16.1
-pkgrel=2
+pkgrel=3
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -115,7 +115,7 @@ check() {
 
 package_torchvision-rocm() {
   pkgdesc='Datasets, transforms, and models specific to computer vision (C++ library only, with ROCM support)'
-  provides+=(torchvision)
+  provides+=(torchvision torchvision=${pkgver})
   conflicts+=(torchvision)
 
   cd "${srcdir}/${_pkgname}-${pkgver}"
@@ -125,7 +125,7 @@ package_torchvision-rocm() {
 
 package_python-torchvision-rocm() {
   pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
-  provides+=(python-torchvision)
+  provides+=(python-torchvision python-torchvision=${pkgver})
   conflicts+=(python-torchvision)
 
   cd "${srcdir}/${_pkgname}-${pkgver}"
