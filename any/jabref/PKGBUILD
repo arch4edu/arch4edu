@@ -12,7 +12,7 @@ _styles=010b77c19b0928db4cc046258d6797a937e0f460
 
 pkgname=jabref
 pkgver=5.11
-pkgrel=2
+pkgrel=3
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
@@ -31,7 +31,7 @@ sha256sums=('d09666f240a9ba8a4bb1759b44a676e723f7b48477e57ef0189349ad4489b822'
             '9345f022dca8d341928adecd0e82be00b205371da71ec0109d86a20c4b9b25c2'
             'a2533c5dfc43de52e8acedd656c5af257c7da4baf8dda844b81c7f98d4e018e8'
             'c5629699d899cc02d09062c76f8c8e6a0d2f44c99ef402b6671b0aa46b942372'
-            'f8b9b6cb92c1a564a8bbf379819ad4c11cff5f760b346e1003928fd48fd38a1c'
+            '6a377ca631aab1d6a9bba927714e0571a19fbf4c1bb6b798921ca254e3e0588f'
             'b0e3ed5cde4072a2d10de887b50217c03bbe30a1ea9b39bea1255ea80db15b77')
 
 # Note on supported Java versions:
