@@ -5,10 +5,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=deSolve
-_pkgver=1.38
+_pkgver=1.40
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Solvers for Initial Value Problems of Differential Equations ('ODE', 'DAE', 'DDE')"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -25,8 +25,8 @@ optdepends=(
   r-scatterplot3d
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('408826378a07259725f6ad13b71be4c5')
-sha256sums=('a0b4fe5c46ae560a3f36eb31e474b08ed85a928e86ae52dd59457409de188969')
+md5sums=('50361fb9eef3e96c00387476509dfe5d')
+sha256sums=('8c09ae6bb6875b569b9844eede30b790f39fc227f5c9d045fa63ce1b22f500ef')
 
 build() {
   mkdir -p build
