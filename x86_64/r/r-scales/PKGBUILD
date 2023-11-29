@@ -2,22 +2,24 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname="scales"
-_cranver=1.2.1
+_cranver=1.3.0
 pkgname="r-${_cranname,,}"
 pkgdesc="Scale Functions for Visualization"
 pkgver="${_cranver//[:-]/.}"
-pkgrel=3
+pkgrel=1
 
 arch=("any")
 license=("MIT")
 
 url="https://cran.r-project.org/package=${_cranname}"
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("db15b378fafb37a4adb5bb426582d2ab4ef53ba76ac88fabfe2c87f813e0863f8d89dd2a24cae9e9657c4f0bf889dba1b5d75cc1345496dc163d61b45b1ace33")
+b2sums=("99cffd41b85e2aaa15e7049c3c997fda47acfc7ea8a004955e3085b6e074f606be66deeea97a02dda0864b06eaa560944961743f0d37348ef3751011040957fb")
 
 depends=(
-    "r>=3.2"
+    "r>=3.6"
+    "r-cli"
     "r-farver>=2.0.3"
+    "r-glue"
     "r-labeling"
     "r-lifecycle"
     "r-munsell>=0.5"
@@ -33,7 +35,6 @@ optdepends=(
     "r-ggplot2"
     "r-hms>=0.5.0"
     "r-stringi"
-    "r-waldo>=0.4.0"
 )
 
 # The unittests for `r-scales` have multiple circular
@@ -54,8 +55,6 @@ optdepends=(
 #     "${optdepends[@]}"
 #     "r-testthat>=3.0.0"
 # )
-
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
 
 build() {
     mkdir -p "${srcdir}/build/"
