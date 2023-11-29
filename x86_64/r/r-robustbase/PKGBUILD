@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=robustbase
-_pkgver=0.99-0
+_pkgver=0.99-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Basic Robust Statistics"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -35,8 +35,8 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('03172533b8059f9da2ae781aa236c032')
-sha256sums=('437d422eec29c4345ea65efa6b2c7c21944059a79643d74f4187e06db6e35077')
+md5sums=('b6c0746bcd5c8368d08e86b808a96334')
+sha256sums=('ae1a1bece804172e30c1aa6ee7dafb638b53123bed1e906b4863c2310cef7858')
 
 build() {
   mkdir -p build
