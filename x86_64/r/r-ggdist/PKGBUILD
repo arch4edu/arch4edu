@@ -1,16 +1,16 @@
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggdist
-_pkgver=3.3.0
+_pkgver=3.3.1
 pkgname=r-${_pkgname,,}
-pkgver=3.3.0
-pkgrel=3
-pkgdesc='Visualizations of Distributions and Uncertainty'
-arch=('any')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Visualizations of Distributions and Uncertainty"
+arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=(GPL3)
 depends=(
-  r
   r-cli
   r-distributional
   r-dplyr
@@ -18,12 +18,28 @@ depends=(
   r-glue
   r-numderiv
   r-quadprog
+  r-rcpp
   r-rlang
   r-scales
   r-tibble
   r-tidyselect
   r-vctrs
   r-withr
+)
+checkdepends=(
+  r-beeswarm
+  r-fda
+  r-fontquiver
+  r-forcats
+  r-mvtnorm
+  r-posterior
+  r-purrr
+  r-showtext
+  r-svglite
+  r-sysfonts
+  r-testthat
+  r-tidyr
+  r-vdiffr
 )
 optdepends=(
   r-beeswarm
@@ -39,7 +55,6 @@ optdepends=(
   r-palmerpenguins
   r-patchwork
   r-pkgdown
-  r-png
   r-posterior
   r-purrr
   r-rmarkdown
@@ -51,14 +66,20 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1441a6dae5bc4b084a741a6f8782a13235171013cc028bf1d694662e4e5a252c')
+md5sums=('1dd3ff51bdfffa5fc48032ace31a2470')
+sha256sums=('6705e8a252701bc162bbbe26f7cbb3e95e93a11af6288456ab711f5d0c0df929')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir -p build
+  R CMD INSTALL "$_pkgname" -l build
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
