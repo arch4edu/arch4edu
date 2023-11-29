@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gmp
-_pkgver=0.7-2
+_pkgver=0.7-3
 pkgname=r-${_pkgname,,}
-pkgver=0.7.2
+pkgver=0.7.3
 pkgrel=1
 pkgdesc='Multiple Precision Arithmetic'
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=(
   r-round
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7c9528b484197d13e69e91f8a1c9957729997b9e71e44ebebbf173a587042d8b')
+sha256sums=('606d0f7fbbf81ad61dcfa5e83002fc274a5ebf6b4ff5c9a9b69f141f886ac665')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
