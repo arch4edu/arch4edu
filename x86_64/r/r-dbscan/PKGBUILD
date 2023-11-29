@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=dbscan
-_pkgver=1.1-11
+_pkgver=1.1-12
 pkgname=r-${_pkgname,,}
-pkgver=1.1.11
+pkgver=1.1.12
 pkgrel=1
 pkgdesc='Density Based Clustering of Applications with Noise (DBSCAN) and Related Algorithms'
 arch=('x86_64')
@@ -25,7 +25,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f0498e67e612629340a2758fbe747c4d9d4ca648f002230a03499cb73735e62f')
+sha256sums=('56f8b1bdb392f8fb679a343b2ad5b4656c4f21d4ead85d6d81900d2f8b63ceea')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
