@@ -1,5 +1,5 @@
 _cranname=sp
-_cranver=2.1-1
+_cranver=2.1-2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -10,7 +10,7 @@ license=(GPL2 GPL3)
 depends=('r>=3.2.0')
 optdepends=(r-rcolorbrewer r-rgdal r-rgeos r-gstat r-maptools r-deldir r-knitr r-rmarkdown)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('2d34cde2a8d5c7876425f99d9d3b24ae192430d316bd2a397a62b52412b1405b')
+sha256sums=('bfdbb4a62f9fe0c554f88c75af6f214dc9a550da09bd3aefe1115ac6963e0dc5')
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
