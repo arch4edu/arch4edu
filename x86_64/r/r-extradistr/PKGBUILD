@@ -2,10 +2,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=extraDistr
-_pkgver=1.9.1
+_pkgver=1.10.0
 pkgname=r-${_pkgname,,}
-pkgver=1.9.1
-pkgrel=4
+pkgver=1.10.0
+pkgrel=1
 pkgdesc='Additional Univariate and Multivariate Distributions'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,7 +26,7 @@ optdepends=(
   r-vgam
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9990348c4dbc611684fcb58ab8db7e856dfde1c9c86ffb7705f4b3dff6b2d7bf')
+sha256sums=('f4264a6c2c95bb7a865655b0e84f48e30dcd584498b49d626a71adaec8eda3a9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
