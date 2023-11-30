@@ -15,22 +15,26 @@ a prebuild python-torchvision-rocm binary build from this source available.
 ### Issue Template
 
 Please paste the output of
+
 ```sh
 /opt/rocm/bin/rocminfo | grep -E "(Name|ID):"
 export | grep -E "(GPU_TARGETS|AMDGPU_TARGETS|PYTORCH_ROCM_ARCH|HSA_OVERRIDE_GFX_VERSION)"
 ```
 
-in your issue, alongside the commandline used to build this package
+in the issue, alongside the commandline used to build this package.
 
-### Currently supported GPU-Architectures
+### Supported GPU-Architectures
 
-See https://rocm.docs.amd.com/en/latest/release/gpu_os_support.html for currently supported GPU-Architectures.
+See https://rocm.docs.amd.com/en/docs-5.7.1/release/gpu_os_support.html#linux-supported-gpus for supported GPU-Architectures.
 
-Currently (as of ROCM 5.7.1) users with a gfx1103 should set
+Currently, users with a gfx1103 should set `export HSA_OVERRIDE_GFX_VERSION=11.0.0` before building the package.
 
-`export HSA_OVERRIDE_GFX_VERSION=11.0.0`
+To build for a specific architecture only, `export PYTORCH_ROCM_ARCH=gfx01234` before starting the build.
 
-before building the package.
+### Unsupported GPU-Architectures
+
+If you run into issues or have worarkounds to share for unsupported architecture builds,
+search in [discussions](https://github.com/orgs/rocm-arch/discussions) or create a new [discussion](https://github.com/orgs/rocm-arch/discussions/new?category=support). Please don't open issues for unsupported GPU-Architectures.
 
 ### Runing pytorch/torchvision on an old/custom build ROCM stack
 

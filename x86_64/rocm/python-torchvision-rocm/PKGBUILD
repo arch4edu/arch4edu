@@ -11,7 +11,7 @@ _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
 pkgver=0.16.1
-pkgrel=3
+pkgrel=4
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -23,7 +23,7 @@ depends=(
   python-scipy
   python-typing_extensions
   python-pytorch-rocm
-  ffmpeg4.4
+  ffmpeg
   libjpeg-turbo
   libpng
 )
@@ -40,44 +40,18 @@ conflicts=(
 )
 source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
+  "pytorch-vision-8096.patch"
 )
 sha512sums=(
   'ef82ce6a9a35c4034127b4204a87149619102395ac9671f91736289ade97e2fe50759dd05f468800fa0d6c5f1e70fb4a568a321ca79b1b28bd4172fbc5fd7d78'
+  'SKIP'
 )
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
-  # fix building with ffmpeg4.4 by manually setup include and lib dir
-  # and remove other codes to find ffmpeg exe, as ffmpeg4.4 are only headers and libs without ffmpeg cmd
-  sed -e 's#ffmpeg_include_dir = os.path.join(ffmpeg_root, "include")#ffmpeg_include_dir = "/usr/include/ffmpeg4.4"#' \
-    -e 's#ffmpeg_library_dir = os.path.join(ffmpeg_root, "lib")#ffmpeg_library_dir = "/usr/lib/ffmpeg4.4"#' \
-    -e 's#has_ffmpeg = ffmpeg_exe is not None#has_ffmpeg = True#' \
-    -e '/ffmpeg_exe/d' \
-    -e '/ffmpeg_bin/d' \
-    -e '/ffmpeg_root/d' \
-    -i setup.py
-
-  # if not set, populate build architecture list from arch:python-pytorch-rocm@2.1.0-1
-  if test -z "$PYTORCH_ROCM_ARCH"; then
-    if test -z "$AMDGPU_TARGETS"; then
-      if test -z "$GPU_TARGETS"; then
-        PYTORCH_ROCM_ARCH="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102"
-      else
-        PYTORCH_ROCM_ARCH="$GPU_TARGETS"
-      fi
-    else
-      PYTORCH_ROCM_ARCH="$AMDGPU_TARGETS"
-    fi
-  fi
-  export PYTORCH_ROCM_ARCH
-
-  # hardcode ROCM_PATH and HIP_ROOT_DIR to ROCM_HOME to /opt/rocm
-  # fixes bin/hipcc not found, and others.
-  # https://github.com/pytorch/vision/issues/6707#issuecomment-1269640873
-  export ROCM_HOME=${ROCM_HOME:-/opt/rocm}
-  export ROCM_PATH=$ROCM_HOME
-  export HIP_ROOT_DIR=$ROCM_HOME
+  # Fix build with ffmpeg 6.0
+  patch -Np1 -i "${srcdir}/pytorch-vision-8096.patch"
 }
 
 build() {
@@ -85,6 +59,19 @@ build() {
   if test -e build; then rm -rf build; fi
   mkdir build
   cd build
+
+  # if not set, populate build architecture list from arch:python-pytorch-rocm@2.1.1-2
+  if test -n "$GPU_TARGETS"; then _PYTORCH_ROCM_ARCH="$GPU_TARGETS"; fi
+  if test -n "$AMDGPU_TARGETS"; then _PYTORCH_ROCM_ARCH="$AMDGPU_TARGETS"; fi
+  if test -n "$PYTORCH_ROCM_ARCH"; then _PYTORCH_ROCM_ARCH="$PYTORCH_ROCM_ARCH"; fi
+  if test -z "$_PYTORCH_ROCM_ARCH"; then _PYTORCH_ROCM_ARCH="gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102"; fi
+  export PYTORCH_ROCM_ARCH="${_PYTORCH_ROCM_ARCH}"
+
+  # hardcode ROCM_PATH and HIP_ROOT_DIR to ROCM_HOME to /opt/rocm
+  # fixes bin/hipcc not found, and others.
+  export ROCM_HOME="${ROCM_HOME:-/opt/rocm}"
+  export ROCM_PATH="$ROCM_HOME"
+  export HIP_ROOT_DIR="$ROCM_HOME"
 
   cmake "../" \
     -DCMAKE_INSTALL_PREFIX=/usr \
