@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=haven
-_pkgver=2.5.3
+_pkgver=2.5.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -44,9 +44,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-readstat.patch")
-md5sums=('7cf02ffb8b99f7deaeffa1cbb00e5c5c'
+md5sums=('ef0337da48b61ae98b03413e02177822'
          '73da7cc2ff7f7c1a5d4ffbaa45e359df')
-sha256sums=('9a5999afad09f0cf80515241b2ff19a0c480658c4bd3810638ad52762e04b7e3'
+sha256sums=('9e1531bb37aa474abd91db5e0ed9e3a355c03faa65f4e653b3ea68b7c61ea835'
             '8986ddaefd714bd4d2a42364863437116b14f38275196720d88d247794b94bf8')
 
 prepare() {
