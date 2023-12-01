@@ -2,10 +2,10 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="7.0.3"
+pkgver="7.0.4"
 _basever="7.0"
 _basedist="focal"
-pkgrel=2
+pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
@@ -38,10 +38,10 @@ noextract=(
 sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
             '51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
             '09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('87944f26b2e4ea21380bf63ad5c084f7b4703d62f047c685aee5e8ea550bf5b9'
-                   '8fcc4ba15c33eaa8017afdfc56eafdaea413fce2e7fded15c5471c365694bdeb')
-sha256sums_aarch64=('8573d84bbee9c63d95a559fd2ebc90303af5d00a642316c068da09fcbeefbfb4'
-                    '6dbb0271311bb72c1d6b34a66500e916c9c2202d6f1f805b85aa1ec050595806')
+sha256sums_x86_64=('f5d4010ec7a5f33026db43d7b6ccc28ee282516faca7f7f28a88a152706291a6'
+                   'e319d3beb2c43c2ccd0a2ac227247521803fb4304ef61557e6962b4ad32bf443')
+sha256sums_aarch64=('4cb7ea0d9ee142368a101e69888cfe01d837a987a1d1244d8a98741f98c7bae6'
+                    '45aab9d1d4a0849ad10fe263a316ac578131f72a87c23588b10ddac94ffb8b2c')
 
 prepare() {
   mkdir -p output
