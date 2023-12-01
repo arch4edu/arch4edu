@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rjags
-_pkgver=4-14
+_pkgver=4-15
 pkgname=r-${_pkgname,,}
-pkgver=4.14
+pkgver=4.15
 pkgrel=1
 pkgdesc='Bayesian Graphical Models using MCMC'
 arch=('x86_64')
@@ -19,7 +19,7 @@ optdepends=(
   r-tcltk
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('313b5df702598ce3bbc5f8b027b654c8489420ca5a4e0a794954ea9f4837e2cb')
+sha256sums=('35cd4c1faaaa8523b87ac053b881dccf29798f073f438459589e786b95ef18a1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
