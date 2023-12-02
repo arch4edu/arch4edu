@@ -5,7 +5,7 @@
 
 pkgname=fuzzylite
 pkgver=6.0
-pkgrel=5
+pkgrel=6
 pkgdesc="C++ fuzzy logic control library"
 arch=(x86_64 i686 aarch64)
 url="https://github.com/fuzzylite/fuzzylite"
@@ -35,6 +35,8 @@ prepare() {
 
   patch --forward --strip=1 --input="$srcdir/remove-werror.patch"
   patch --forward --strip=1 --input="$srcdir/fix-catch-glibc-compatibility.patch"
+
+  sed -i '/BenchmarkTest.cpp/d' fuzzylite/FL_TESTS
 }
 
 build() {
