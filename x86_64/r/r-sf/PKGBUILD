@@ -7,7 +7,7 @@ pkgdesc="Simple Features for R"
 url="https://cran.r-project.org/package=sf"
 license=("GPL-2 | MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("i686" "x86_64")
 depends=(
