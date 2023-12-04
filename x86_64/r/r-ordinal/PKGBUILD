@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ordinal
-_pkgver=2022.11-16
+_pkgver=2023.12-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Regression Models for Ordinal Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -22,8 +22,8 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('66cc1aa18294ae6295d237b92e111817')
-sha256sums=('5488ad1dfa531a09d017d68d7393d376c8bc49cceeaa6a3e5f7d57b99168d493')
+md5sums=('a14e655e739d633b0d4e19220509f638')
+sha256sums=('f5582ad983dfd2ffbaf1e90b49af6f2cc319953d1fcb33f31c6c6f335cbd9fa2')
 
 build() {
   mkdir -p build
