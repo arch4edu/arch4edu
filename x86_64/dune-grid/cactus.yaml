@@ -6,8 +6,6 @@ depends:
   - x86_64/alberta
   - x86_64/dune-geometry
   - x86_64/dune-uggrid
-makedepends:
-  - x86_64/python-ninja
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
