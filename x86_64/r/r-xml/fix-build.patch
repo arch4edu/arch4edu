@@ -1,0 +1,24 @@
+diff --git a/XML/src/HTMLParse.c b/XML/src/HTMLParse.c
+index 8d71f9f..7dea289 100644
+--- a/XML/src/HTMLParse.c
++++ b/XML/src/HTMLParse.c
+@@ -11,6 +11,7 @@
+ 
+ #include "libxml/HTMLparser.h"
+ #include "libxml/HTMLtree.h"
++#include "libxml/xmlsave.h"
+ 
+ #include <sys/stat.h>
+ #include <unistd.h>  
+diff --git a/XML/src/XMLTree.c b/XML/src/XMLTree.c
+index 6047de0..c28d5d0 100644
+--- a/XML/src/XMLTree.c
++++ b/XML/src/XMLTree.c
+@@ -35,6 +35,7 @@
+ #include <libxml/HTMLtree.h>
+ #endif
+ 
++#include <libxml/xmlsave.h>
+ 
+ #define R_USE_XML_ENCODING 1
+ #include "Utils.h"  /* R_createXMLNodeRef, Encoding macros. */
