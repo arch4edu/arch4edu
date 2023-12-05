@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=jsonlite
-_pkgver=1.8.7
+_pkgver=1.8.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -27,8 +27,8 @@ optdepends=(
   r-vctrs
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5037941afb9ace65fa180d8a44d86b43')
-sha256sums=('7d42b7784b72d728698ea02b97818df51e2015ffa39fec2eaa2400771b0f601c')
+md5sums=('d1ec8467abf43d41aabeec24d5a9096a')
+sha256sums=('7de21316984c3ba3d7423d12f43d1c30c716007c5e39bf07e11885e0ceb0caa4')
 
 build() {
   mkdir -p build
