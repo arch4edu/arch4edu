@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=httpuv
-_pkgver=1.6.12
+_pkgver=1.6.13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -32,9 +32,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "link-zlib.patch")
-md5sums=('fe7156e4f6a61906d3258aa0cfea94dd'
+md5sums=('7229873a363a999055f885867c4a69c5'
          'b2a2549bfef0d3a442b6ed545fc2f1f9')
-sha256sums=('b1d972b1c240702c38cb844a1040670d62876abf462256764b49c120a52f5e74'
+sha256sums=('cb6ef97bb58a062626ed0e7a6cfbc604f82ebd698daa4641c59166b2ab683b5f'
             '95c708ea54de715494bcb43d40973296fb2ee8fb066fb582bfc69cdaf5d4e667')
 
 prepare() {
