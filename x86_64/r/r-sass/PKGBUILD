@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=sass
-_pkgver=0.4.7
+_pkgver=0.4.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,9 +34,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libsass.patch")
-md5sums=('c7ed9afd18a0e56ca42c7a21f49fb62c'
+md5sums=('1b541e8a0ce9ec67ade93869740db4b8'
          '6a430d63f1fdeced20c3117763d2cb7c')
-sha256sums=('717a08b63615a4fd9e494f775c33f0f965db83677cf1cc37849afc3da1c5e9ee'
+sha256sums=('42ba2930cd22ad9f5e0022b9ac53bdbc4c9250f00e0646e6502f635a6db3c40c'
             '5149aa34e5ab5ce03370495705e4162bbf1a3e7c7389be3ebe318c46d394eb10')
 
 prepare() {
