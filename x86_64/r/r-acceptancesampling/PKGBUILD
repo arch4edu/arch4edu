@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=AcceptanceSampling
-_pkgver=1.0-8
+_pkgver=1.0-10
 pkgname=r-${_pkgname,,}
-pkgver=1.0.8
+pkgver=1.0.10
 pkgrel=1
 pkgdesc='Creation and Evaluation of Acceptance Sampling Plans'
 arch=('any')
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5784fa82f3287ef5d57ed294334e61974f77a261fc8c1e90f4c76d8c367841c9')
+sha256sums=('c574f742d1a9c2ea6153aff54a6dcae6694ab7f895ca8d6b7b1f58bbb3177be9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
