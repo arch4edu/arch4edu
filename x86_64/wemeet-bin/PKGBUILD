@@ -4,9 +4,9 @@
 _pkgname=wemeet
 pkgname=$_pkgname-bin
 provides=('wemeet' 'tencent-meeting')
-pkgver=3.15.1.403
+pkgver=3.19.0.400
 _pkgver_arm=3.15.1.402 # 两个版本有时候不一样
-_x86_md5=da1c30b1a927cd691e4ee60aba829c88
+_x86_md5=6a7031cb5c543a4d9dcd566e33128986
 _arm_md5=87439695193afbf8b1faa23202ce7306
 pkgrel=1
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
@@ -32,8 +32,8 @@ optdepends=(
 )
 makedepends=('patchelf')
 sha512sums=('533f9dc9b2110f689ed04551c703ffeddb2c2143e059f5468ba6b34fcfa865b8a22371eb3ee52c9c257323937f8365af931029c82224cfecbf09dac00d086a9a'
-            'e766239691d77029345f4c2c0a0936c9271c7bedcf8727e3cd9a97777a399ab097425ab6e8f3626a6e98e3f56fc46d1247e8e5c91d6af82b1807cca04985a149')
-sha512sums_x86_64=('e215e89b9a28e55b10d4c9c2afcbc7f973b7178e9f2fd14635c9330485a6252823536b7032bd3f783e46fd92e47533f4486aeac2e359249d4c88fb8f57d14e90')
+    'e766239691d77029345f4c2c0a0936c9271c7bedcf8727e3cd9a97777a399ab097425ab6e8f3626a6e98e3f56fc46d1247e8e5c91d6af82b1807cca04985a149')
+sha512sums_x86_64=('4e878430b61c40966eb3d0838dee33b62edb9b617b5a54ef8682892fc140074d6dea6c387fa89cc381bc017df20544da75f8d243e45b94832814b9e7bd28cb19')
 sha512sums_aarch64=('a45519a7a8e7964f553831695887223b0ee1d2df635b1e1d2b499bd966cebc9a15221802c94cadc7e13af4f2c42483f4d4b7c1faf5e7b6efc8819df9eae67030')
 
 prepare() {
@@ -41,7 +41,8 @@ prepare() {
     tar xpf data.tar.xz
 
     pushd usr/share/applications
-    sed -i 's|^Exec=.*|Exec=wemeet %u|g;s|^Icon=.*|Icon=wemeet|g' ${_pkgname}app.desktop
+    # 暂时使用 x11, wayland 无法开启会议
+    sed -i 's|^Exec=.*|Exec=wemeet-x11 %u|g;s|^Icon=.*|Icon=wemeet|g' ${_pkgname}app.desktop
     sed -i '$i Comment=Tencent Meeting Linux Client\nComment[zh_CN]=腾讯会议Linux客户端\nKeywords=wemeet;tencent;meeting;' \
         "$srcdir/usr/share/applications/wemeetapp.desktop"
     popd
@@ -63,9 +64,7 @@ prepare() {
 
     pushd opt/$_pkgname/bin
     rm Qt*
-    for dir in modules/*; do
-        patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' "$dir"/*.so
-    done
+    find modules/ -type f -name '*.so'|xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
     popd
 }
 
