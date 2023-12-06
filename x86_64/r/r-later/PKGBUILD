@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=later
-_pkgver=1.3.1
+_pkgver=1.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Utilities for Scheduling Functions to Execute Later with Event Loops"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,8 +24,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('04a2e2203f3b4c78477378eb414f80ca')
-sha256sums=('23eed681f0b9eacebbc3c6a5ba14ee0b676a4bf6e69af194c5a36edfe11464ac')
+md5sums=('d051b4ebe4f306287003877aae5ab95c')
+sha256sums=('52f5073d33cd0d3c12e56526c9c53c323ebafcc79b22cc6e51fb0c41ee2b561e')
 
 prepare() {
   # skip failing tests
