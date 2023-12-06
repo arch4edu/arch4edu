@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=rstpm2
-_pkgver=1.6.2
+_pkgver=1.6.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,6 +15,7 @@ depends=(
   r-bbmle
   r-desolve
   r-fastghquad
+  r-mvtnorm
   r-rcpp
 )
 makedepends=(
@@ -37,13 +38,8 @@ optdepends=(
   r-timereg
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f08087c40bf11c67cf70510b96b0e63e')
-sha256sums=('064ec8c56ecbff44cae7a5acf307838d4558a3c0ab5b2c4d50da8a1a9d0bade3')
-
-prepare() {
-  # skip a failing test
-  sed -i '/"offset"/a\ \ skip("known failure")' "$_pkgname/tests/testthat/test_base.R"
-}
+md5sums=('2fb292e291b311986d90f7783f4e1ea2')
+sha256sums=('5e6079a876a43473768ee54e4b34081ea3b5e1f466f9f76e8cfc2bb461b2031f')
 
 build() {
   mkdir -p build
