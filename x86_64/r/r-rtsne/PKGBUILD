@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=Rtsne
-_pkgver=0.16
+_pkgver=0.17
 pkgname=r-${_pkgname,,}
-pkgver=0.16
-pkgrel=5
+pkgver=0.17
+pkgrel=1
 pkgdesc='T-Distributed Stochastic Neighbor Embedding using a Barnes-Hut Implementation'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,7 +18,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('52a05adc826c28212e97d11c54eba3fec45d14eb52039c0f47f62a8e338ffbd5')
+sha256sums=('3aae6814d6c6d406785145f07374135652f2b26a58690dfd4bfbc8365dc5590b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
