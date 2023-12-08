@@ -4,7 +4,7 @@ _pkgname=pan
 _pkgver=1.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Multiple Imputation for Multivariate Panel or Clustered Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,8 +20,8 @@ optdepends=(
   r-mitools
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8f1ae1763e8058b7810ca65f696c916f')
-sha256sums=('e37e184c3c1b7a34f54dd95335e6bc730fd5716d2d2dc20c24279401aa673c52')
+md5sums=('b6c1c18a3f9b89f068878e065b1f00a4')
+sha256sums=('cd91232d653783ea7f34c0eebaa80c472b5501b21eea500c4c1a8e57116c6eea')
 
 build() {
   mkdir -p build
