@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=DiceDesign
-_pkgver=1.9
+_pkgver=1.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,8 +17,8 @@ optdepends=(
   r-rgl
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('559d62babcbefb75bef9bb872e4ab0d3')
-sha256sums=('93c23730e02471e4225f0254f47d838b5e113162316e3640cccebf5e8cea11a9')
+md5sums=('1006a4bae25c296e3ad5a60a62ed719c')
+sha256sums=('06543b207b8c1732bda575b9f60ca4ec004f896676e04200af8b222f8933c73d')
 
 build() {
   mkdir -p build
