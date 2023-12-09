@@ -1,8 +1,8 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
 pkgname='python-rtslib-fb'
 _pkgname=rtslib-fb
-pkgver=2.1.75
-pkgrel=2
+pkgver=2.1.76
+pkgrel=1
 pkgdesc="free branch version of the LIO target API"
 arch=('any')
 url="https://github.com/open-iscsi/$_pkgname"
@@ -14,7 +14,7 @@ source=(
   "https://github.com/open-iscsi/$_pkgname/archive/v${pkgver}.tar.gz"
   target.service
 )
-sha512sums=('204729e779da1d0961ecff822c6ce914de5fa80e8159f440e0e69a7ba986da6d627a6377c143043d855bcaacaf086f4c73f3ccb4697dfaf061434c197ae24c3e'
+sha512sums=('50bc9f4ebff71cc87fd62036ff9d929fb1e5989be6251b1111904e76a7c026215692dc8930b90552a4ff850c6252338e420fe710993b8c8a0c737b65590a520d'
             '3c634f1c466d0a8c3dd2b57a230438aaeeb0e66324863a2ded57dd69a2ca5946f83c4ab511766f510f3e63b43aedcf7e368bcf5bc325ee69c016bb0bb2612de5')
 
 package() {
