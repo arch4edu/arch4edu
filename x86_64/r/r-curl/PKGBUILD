@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=curl
-_pkgver=5.1.0
+_pkgver=5.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,6 +22,7 @@ optdepends=(
   r-httpuv
   r-jsonlite
   r-knitr
+  r-later
   r-magrittr
   r-rmarkdown
   r-spelling
@@ -29,8 +30,8 @@ optdepends=(
   r-webutils
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8f4d84ce6ffa8d08611c66ae0d6238bc')
-sha256sums=('57218da84b85bd01ce7daa4bca3e271eda1bf688e0cdb211c397ccb272ecba97')
+md5sums=('f016784d6247ffe293187ac9eaa81ebe')
+sha256sums=('bfdba4115f9fc6bc92e5287cee38ae33317c5996372c0aa0a9bc4d375b6bf489')
 
 build() {
   mkdir -p build
