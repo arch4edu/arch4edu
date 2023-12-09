@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=bbmle
-_pkgver=1.0.25
+_pkgver=1.0.25.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.25
+pkgver=1.0.25.1
 pkgrel=1
 pkgdesc='Tools for General Maximum Likelihood Estimation'
 arch=('any')
@@ -28,7 +28,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('86a8c69902fbf6caf337f9bc532afe89dc2a59dd24287a2423d781797010b255')
+sha256sums=('d92a0cf819fe4c08b8eb17f5e03275c8accde7f3b54f990cbba5ab926575b60b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
