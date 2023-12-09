@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=admisc
-_pkgver=0.33
+_pkgver=0.34
 pkgname=r-${_pkgname,,}
-pkgver=0.33
+pkgver=0.34
 pkgrel=1
 pkgdesc="Adrian Dusa's Miscellaneous"
 arch=('x86_64')
@@ -16,7 +16,7 @@ optdepends=(
   r-qca
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('3911bea32326bfc2e19d4f47d05e8ad7260da36fa2ae0bfde03540195081dbaa')
+sha256sums=('fdcf875e6440fd049a78171db2594d6d963c484eca9387f852c5c8b3208a5bdf')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
