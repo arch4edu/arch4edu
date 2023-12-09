@@ -8,7 +8,6 @@ depends:
   - x86_64/python-fenics-ffcx
   - x86_64/scotch
 makedepends:
-  - x86_64/catch2v3
   - x86_64/hypre
   - x86_64/mumps
   - x86_64/parmetis
