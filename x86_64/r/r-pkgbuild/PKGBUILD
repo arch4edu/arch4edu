@@ -2,25 +2,22 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgbuild
-_cranver=1.4.2
+_cranver=1.4.3
 pkgname=r-${_cranname,,}
 pkgdesc="Find Tools Needed to Build R Packages"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("any")
 depends=(
-    "r>=3.4"
+    "r>=3.5"
     "r-callr>=3.2.0"
     "r-cli>=3.4.0"
-    "r-crayon"
     "r-desc"
-    "r-prettyunits"
     "r-processx"
     "r-r6"
-    "r-rprojroot"
 )
 optdepends=(
     "r-covr"
@@ -52,7 +49,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("a8c29a56cd83338fde68457fe31e928b1be719b5122d5c06bb5a41488cf75b194848192023d4c9dbb99dd5a71f5242a28040f7a867094513aa1a4bbcd93d5761")
+b2sums=("0f7f46959831cec55a49888f9a856f0cf1fffd1fc607526318b1530a7d9af5b5d3b71a9f9b72f600b81436681be9cad300f8d91ef6e0bcca56b709f3ca530d5f")
 
 build() {
     mkdir -p "${srcdir}/build/"
