@@ -3,20 +3,19 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=desc
-_cranver=1.4.2
+_cranver=1.4.3
 pkgname=r-${_cranname,,}
 pkgdesc="Manipulate DESCRIPTION Files"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("any")
 depends=(
     "r>=3.4.0"
     "r-cli"
     "r-r6"
-    "r-rprojroot"
 )
 optdepends=(
     "r-callr"
@@ -47,7 +46,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("35d1f2f80c2bd9b59c8e7589fe573d90816cebd1fd763a232243a074dfd2ec052dce1424988e931a429c3898845a44bbbc6628405a93b4693a4dabaf5fdc59f3")
+b2sums=("57102b726b60e9be3aaf80e795e705af930a68e49c9a246dc0cce796d9a7e776e0ddbd543dabd275155c6f89cb59e651317f065335f980e88df7ad8d3fe683ec")
 
 build() {
     mkdir -p "${srcdir}/build/"
