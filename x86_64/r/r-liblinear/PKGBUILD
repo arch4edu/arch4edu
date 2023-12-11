@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=LiblineaR
-_pkgver=2.10-22
+_pkgver=2.10-23
 pkgname=r-${_pkgname,,}
-pkgver=2.10.22
+pkgver=2.10.23
 pkgrel=1
 pkgdesc='Linear Predictive Models Based on the LIBLINEAR C/C++ Library'
 arch=('x86_64')
@@ -17,7 +17,7 @@ optdepends=(
   r-sparsem
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bcc04245c4737a1f152c20eb168e7527154eed9597568581469c219b124e77be')
+sha256sums=('09640dde3e446a903a19b20fae065fcead59fc75c7f55e4ec4ccbbec1f921a31')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
