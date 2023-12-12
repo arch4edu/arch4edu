@@ -5,10 +5,10 @@
 # Contributor: Oleg Smirnov <oleg.smirnov@gmail.com>
 
 _pkgname=igraph
-_pkgver=1.5.1
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Network Analysis and Visualization"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -53,19 +53,13 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "fix-test-snapshots.patch"
         "igraph-system-libs.patch")
-md5sums=('c4a753bfe2eac76eccc3aaa6786e2fa1'
-         '1ffe5fc15f4fe62b1f5c6f0bbe72bd23'
+md5sums=('7fda567ea719475a17929dd3de6d0808'
          '3863e3b0e1f9356f607103096c0b011c')
-sha256sums=('add90a1e77ad4a5d95641f0556553e3f1d1c4443cb2d5afb70171efd278ab14a'
-            'f7b1987927ab31a3c3749dd1c1195d725935430dec3a7cef06283d70e7ac377a'
+sha256sums=('410ecc37fb38e72079dc72f839bde19093100a422729c343e0b2523df6453bb8'
             '4a910e3248983dc27f3306eb3b260988cb592d4dd806f73e0a77aa8aca2a5068')
 
 prepare() {
-  # fix test snapshots
-  patch -Np1 -i fix-test-snapshots.patch
-
   cd "$_pkgname"
   # Build using system libraries
   patch -Np1 -i ../igraph-system-libs.patch
