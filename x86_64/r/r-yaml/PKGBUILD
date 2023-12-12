@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=yaml
-_pkgver=2.3.7
+_pkgver=2.3.8
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Methods to Convert R Data to YAML and Back"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,8 +26,8 @@ optdepends=(
   r-runit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('38607c0b966d0b3b6c4f00419d251c8d')
-sha256sums=('d20cb219e0f9c48aba02f132f81cfa9ecda5e22c925e36726840218ed56680ab')
+md5sums=('25606fd9de01159019b5acd8d0410af7')
+sha256sums=('9ed079e2159cae214f3fefcbc4c8eb3b888ceabe902350adbdb1d181eda23fd8')
 
 build() {
   # generate implicit tag discovery code
