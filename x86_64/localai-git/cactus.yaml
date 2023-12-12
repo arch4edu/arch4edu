@@ -3,6 +3,7 @@ nvchecker:
     aur:
   - source: github
     github: mudler/LocalAI
+group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
