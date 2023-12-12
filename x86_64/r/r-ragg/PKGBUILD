@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ragg
-_pkgver=1.2.6
+_pkgver=1.2.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -27,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6c17c0056931ea12af1bb718a87e769a')
-sha256sums=('1014dc493ab52e98e4114fbabfca753bebd4d64db7ef7946bd064fb404e0f7c7')
+md5sums=('b3552306bc07a827415f7c6fd1f9fc23')
+sha256sums=('d77a18662d127881dcb5046033eb809293ad9ad439fa4b217202b8cef4280c9f')
 
 build() {
   mkdir -p build
