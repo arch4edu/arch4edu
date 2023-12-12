@@ -1,7 +1,7 @@
 # Maintainer: Luis Sarmiento < Luis.Sarmiento-ala-nuclear.lu.se >
 pkgname='geant4'
-pkgver=11.1.3
-_pkgver=v11.1.3
+pkgver=11.2.0
+_pkgver=v${pkgver}
 pkgrel=1
 pkgdesc="A simulation toolkit for particle physics interactions."
 # https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/gettingstarted.html
@@ -16,8 +16,7 @@ depends=('cmake>=3.16'
 	 'boost'
         )
 conflicts=('geant4_devel')
-optdepends=('java-environment: for histogram visualizations and
-analysis'
+optdepends=('java-environment: for histogram visualizations and analysis'
   'tcsh: for C Shell support'
   'python: for G4Python support'
   'geant4-abladata: Data files for nuclear shell effects in INCL/ABLA hadronic mode'
@@ -25,7 +24,8 @@ analysis'
   'geant4-incldata: Data files for proton and neutron density profiles'
   'geant4-ledata: Data files for low energy electromagnetic processes'
   'geant4-levelgammadata: Data files for photon evaporation'
-  'geant4-neutronhpdata: Neutron data files with thermal cross sections'
+  'geant4-neutronhpdata: Experimental neutron data files with thermal cross sections'
+  'geant4-particlehpdata: Data files from the TALYS nuclear model code'
   'geant4-particlexsdata: Data files for evaluated p, d, t, He3, He4 and gamma cross sections, replaces geant4-neutronxsdata'
   'geant4-piidata: Data files for shell ionisation cross sections'
   'geant4-radioactivedata: Data files for radioactive decay hadronic processes'
@@ -39,7 +39,7 @@ options=('!emptydirs')
 install="${pkgname}.install"
 source=("http://geant4-data.web.cern.ch/releases/${pkgname}-${_pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('4c5fbea6789d8d619edacca0631d6b5211a60e1bf9974c3d3fab9ef9e22692f5'
+sha256sums=('46ad7fab3c5cb4bd0bdd77dd6d3e2283184819235bcbc01b2d117d81b35596a6'
             '0eae153900d995603b0b465c9f17225ba76dd8118377507916fc709360482058')
 
 ## Remove this if you want to keep an even smaller package
@@ -97,7 +97,7 @@ echo ""
 : <<'EOF'
 
  From: https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/installguide.html#geant4-build-options
- Last revisited: Dec 13, 2022. (11.1)
+ Last revisited: Dec 11, 2023. (11.2)
 
  |----------------------------------+------------------------------------------------------+----------------|
  | option                           | default                                              | set to         |
@@ -118,6 +118,7 @@ echo ""
  | GEANT4_USE_SYSTEM_CLHEP          | OFF                                                  |                |
  | GEANT4_USE_SYSTEM_EXPAT          | ON                                                   |                |
  | GEANT4_USE_SYSTEM_ZLIB           | OFF                                                  | ON             |
+ | GEANT4_USE_VTK                   | OFF                                                  |                |
  | GEANT4_USE_XM                    | OFF, Unix Only                                       | ON             |
  |----------------------------------+------------------------------------------------------+----------------|
  | BUILD_SHARED_LIBS                | ON                                                   |                |
@@ -136,8 +137,9 @@ echo ""
  | GEANT4_BUILD_STORE_TRAJECTORY    | ON                                                   |                |
  | GEANT4_BUILD_VERBOSE_CODE        | ON                                                   |                |
  | GEANT4_BUILD_BUILTIN_BACKTRACE   | OFF                                                  |                |
- | GEANT4_BUILD_PHP_AS_HP           | OFF                                                  | what's this?   |
- | GEANT4_USE_SMARTSTACK            | OFF                                                  | what's this?   |
+ | GEANT4_BUILD_PHP_AS_HP           | OFF what's this?                                     |                |
+ | GEANT4_USE_QT_QT6                | OFF                                                  |                |
+ | GEANT4_USE_SMARTSTACK            | OFF what's this                                      |                |
  | GEANT4_USE_SYSTEM_PTL            | OFF                                                  |                |
  | GEANT4_USE_TBB                   | OFF                                                  |                |
  | GEANT4_ENABLE_TESTING            | OFF                                                  |                |
@@ -145,8 +147,7 @@ echo ""
  | GEANT4_USE_HDF5                  | OFF                                                  |                |
  | GEANT4_USE_USOLIDS               | OFF                                                  |                |
  | GEANT4_USE_TIMEMORY              | OFF                                                  |                |
- | GEANT4_USE_VTK                   | OFF                                                  |                |
- | CMAKE_PREFIX_PATH                | OFF                                                  |                |
+ | CMAKE_PREFIX_PATH                |                                                      |                |
  |----------------------------------+------------------------------------------------------+----------------|
 
  |--------------------------------+-----------------------------------------------------------------------------------------|
