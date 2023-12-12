@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=sandwich
-_pkgver=3.0-2
+_pkgver=3.1-0
 pkgname=r-${_pkgname,,}
-pkgver=3.0.2
-pkgrel=6
+pkgver=3.1.0
+pkgrel=1
 pkgdesc='Robust Covariance Matrix Estimators'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -34,7 +34,7 @@ optdepends=(
   r-survival
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6e30b6b554eb19430a60c45a8132fb7918ddb0013577bf6a62caeb163bdfe2b4')
+sha256sums=('96b0e105ee50391a1fd286e9556ba6669f08565fa30788b1a21bc861b0a023fa')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
