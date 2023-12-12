@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=cli
-_cranver=3.6.1
+_cranver=3.6.2
 pkgname=r-${_cranname,,}
 pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -56,7 +56,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("52a259a13a02fb1c08d11347b75246b3deb64a05feeb9230fe3419b97023a2398e599eb96b7bd823fa30c1cabc5390ac88db97b31a692b344bf435a23d220b36")
+b2sums=("5e297757ffecbe6b9b8f62096fa9a58a9c301ad5ace99cd82cb7e7f9c11719b4963cc35441d5104d5e1e772cecbc275756f11f0372770c4beeccb32a3c67219d")
 
 build() {
     mkdir -p "${srcdir}/build/"
