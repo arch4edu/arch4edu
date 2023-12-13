@@ -146,15 +146,18 @@ if __name__ == '__main__':
 
         pkgbase = directory / pkgbase
         pkgbase.mkdir(exist_ok=True)
+        config = pkgbase / 'cactus.yaml'
+        config.unlink(missing_ok=True)
 
         if len(info['Depends']) + len(info['MakeDepends']) == 0:
-            symlink('../' * (len(directory.parents) + 1) + template, pkgbase / 'cactus.yaml')
+            symlink('../' * (len(directory.parents) + 1) + template, config)
             logger.info('Added %s with %s', package, template)
             pkgbases[pkgbase.name] = str(pkgbase)
         else:
             with open(template) as f:
                 lines = f.readlines()
-            with open(pkgbase / 'cactus.yaml', 'w') as f:
+
+            with open(config, 'w') as f:
                 for line in lines:
                     if line.startswith('build_prefix'):
                         if len(info['Depends']) > 0:
