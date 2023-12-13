@@ -1,9 +1,9 @@
 # Maintainer: wuxxin <wuxxin@gmail.com>
 
-# to only build for cpu, set ENABLE_CUDA and ENABLE_ROCM to 0
-_ENABLE_CUDA=1
-_ENABLE_ROCM=0
-_SKIP_CPU=0
+# to only build for cpu, set _ENABLE_CUDA and _ENABLE_ROCM to 0
+_ENABLE_CUDA=${_ENABLE_CUDA:-1}
+_ENABLE_ROCM=${_ENABLE_ROCM:-1}
+_SKIP_CPU=${_SKIP_CPU:-0}
 _GO_TAGS=""
 # _GO_TAGS="tts stablediffusion"
 _OPTIONAL_BACKENDS=""
@@ -14,14 +14,14 @@ if test -n "$(echo "$_GO_TAGS" | grep -o "stablediffusion")"; then
   _OPTIONAL_BACKENDS="backend-assets/grpc/stablediffusion $_OPTIONAL_BACKENDS"
 fi
 # list of backends to be build
-_GRPC_BACKENDS="backend-assets/grpc/bert-embeddings backend-assets/grpc/llama-cpp backend-assets/grpc/whisper $_OPTIONAL_BACKENDS"
+_GRPC_BACKENDS="backend-assets/grpc/llama-cpp backend-assets/grpc/whisper $_OPTIONAL_BACKENDS backend-assets/grpc/bert-embeddings"
 _pkgname="localai"
 
 pkgbase="${_pkgname}-git"
 pkgname=("${pkgbase}")
-pkgver=v2.0.0.6.g997119c
+pkgver=v2.0.0.27.g72325fd
 pkgrel=1
-pkgdesc="The free, Open Source OpenAI alternative. Self-hosted, community-driven and local-first."
+pkgdesc="Self-hosted OpenAI API alternative - Open Source, community-driven and local-first."
 url="https://github.com/mudler/LocalAI"
 license=('MIT')
 arch=('x86_64')
@@ -30,23 +30,23 @@ provides=('localai')
 conflicts=('localai')
 
 depends=(
+)
+makedepends=(
+  'go'
+  'git'
+  'cmake'
   'grpc'
   'opencv'
   'blas-openblas'
   'sdl2'
   'ffmpeg'
 )
-makedepends=(
-  'go'
-  'git'
-  'cmake'
-)
 
 if test "$(echo "$_GO_TAGS" | grep -o "tts")" = "tts"; then
-  depends+=(
+  makedepends+=(
     'onnxruntime'
-    'piper-phonemize'
   )
+  # 'piper-phonemize' is build from piper
 fi
 
 if [[ $_ENABLE_CUDA = 1 ]]; then
@@ -108,6 +108,15 @@ prepare() {
     if test -d "$n"; then rm -rf "$n"; fi
     cp -r "${_pkgname}" "$n"
   done
+
+  cd "${srcdir}/${_pkgname}-rocm"
+  # XXX workaround build error on ROCM by removing unsupported cf-protection from CMAKE_CXX_FLAGS
+  sed -i '1s/^/string(REPLACE "-fcf-protection" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")\n/' \
+    backend/cpp/llama/llama.cpp/CMakeLists.txt
+  # XXX workaround deprecated --offload-arch for multiple GPU_TARGETS
+  for i in backend/cpp/llama/llama.cpp/Makefile sources/whisper.cpp/Makefile; do
+    sed -ri 's/^(.+HIPFLAGS.+\+=).+offload-arch=.+$/\1 -DGPU_TARGETS="$(GPU_TARGETS)"/g' "$i"
+  done
 }
 
 _build() {
@@ -135,11 +144,9 @@ build() {
     cd "${srcdir}/${_pkgname}-rocm"
     export ROCM_HOME="${ROCM_HOME:-/opt/rocm}"
     export PATH="$ROC_HOME/bin:$PATH"
-    if test -n "$GPU_TARGETS"; then
-      _AMDGPU_TARGETS="$GPU_TARGETS"
-    else
-      _AMDGPU_TARGETS="${AMDGPU_TARGETS:-gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102}"
-    fi
+    if test -n "$GPU_TARGETS"; then _AMDGPU_TARGETS="$GPU_TARGETS"; fi
+    if test -n "$AMDGPU_TARGETS"; then _AMDGPU_TARGETS="$AMDGPU_TARGETS"; fi
+    _AMDGPU_TARGETS="${_AMDGPU_TARGETS:-gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx1102}"
     MAGMA_HOME="$ROCM_HOME" AMDGPU_TARGETS="$_AMDGPU_TARGETS" GPU_TARGETS="$_AMDGPU_TARGETS" \
       _build hipblas
   fi
@@ -147,11 +154,6 @@ build() {
 
 _package_install() {
   install -Dm755 "local-ai" "${pkgdir}/usr/bin/local-ai"
-  # sources/go-piper/piper/build/pi/lib/* /usr/lib/
-
-  # add 1-2 7b high performing models yaml configs based on mistral as gpt-3.5
-  # prefer chatml, add example working preload-models.yaml,
-
   install -Dm644 README.md -t "${pkgdir}/usr/share/doc/${_pkgname}"
 }
 
