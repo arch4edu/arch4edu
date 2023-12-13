@@ -1,7 +1,7 @@
 # Maintainer: Adrien Wu <adrien.sf.wu@gmail.com>
 
 pkgname=hopscotch-map
-pkgver=2.3.0
+pkgver=2.3.1
 pkgrel=1
 pkgdesc="C++ implementation of a fast hash map and hash set using hopscotch hashing"
 arch=(x86_64)
@@ -9,7 +9,7 @@ url="https://github.com/Tessil/hopscotch-map"
 license=('MIT')
 makedepends=('cmake')
 source=("$pkgname-$pkgver.tar.gz::${url}/archive/v${pkgver}.tar.gz")
-sha256sums=('a59d65b552dc7682521989842418c92257147f5068152b5af50e917892ad9317')
+sha256sums=('53dab49005cd5dc859f2546d0d3eef058ec7fb3b74fc3b19f4965a9a151e9b20')
 
 build() {
   cd $pkgname-$pkgver
