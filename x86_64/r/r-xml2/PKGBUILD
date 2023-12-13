@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xml2
-_pkgver=1.3.5
+_pkgver=1.3.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,10 +15,10 @@ url="https://cran.r-project.org/package=${_pkgname}"
 license=(MIT)
 depends=(
   libxml2
-  r
+  r-cli
+  r-rlang
 )
 checkdepends=(
-  r-mockery
   r-testthat
 )
 optdepends=(
@@ -32,8 +32,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('20780f576451bb22e74ba6bb3aa09435')
-sha256sums=('3d6a10a7ab76e0cc024b73d3fb8af65a662efe0e707681d9ffc2b3ff1f09e282')
+md5sums=('fc6679028dca1f3047c8c745fb724524')
+sha256sums=('e81991ff99bff3616dde8683c1327194e3ea64fa3b8062f52d8ce32673dd308f')
 
 build() {
   mkdir -p build
