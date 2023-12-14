@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Boom
-_pkgver=0.9.11
+_pkgver=0.9.12
 pkgname=r-${_pkgname,,}
-pkgver=0.9.11
+pkgver=0.9.12
 pkgrel=1
 pkgdesc='Bayesian Object Oriented Modeling'
 arch=('x86_64')
@@ -17,7 +17,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7185c0f91b62c382ce1ad922b6b298611ecac1655433fe307b337da1e81e779e')
+sha256sums=('f24cd06b0a99e06487f2afa68b2bfc9d6e585fd03247c8a2f10eacc1b94b01ea')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
