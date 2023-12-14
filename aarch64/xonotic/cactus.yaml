@@ -1,0 +1,9 @@
+nvchecker:
+  - source: archpkg
+    archpkg: xonotic
+makedepends:
+  - aarch64/xonotic-data
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: abs-pre-build
+post_build: abs-post-build
