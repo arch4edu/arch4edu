@@ -6,6 +6,7 @@
 #include <X11/Xlibint.h>
 #include <dlfcn.h>
 #include <openssl/ssl.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 #ifdef WRAP_FORCE_SINK_HARDWARE
@@ -22,13 +23,17 @@ X509 *SSL_get_peer_certificate(const SSL *s) {
   return SSL_get1_peer_certificate(s);
 }
 
-// temporary hack for Wayland screen sharing crash
-typedef int (*wrap_XMapWindow_t)(register Display *dpy, Window w);
+// temporary hack for Wayland crashes
+static bool warp_is_wayland() {
+  const char *env = getenv("XDG_SESSION_TYPE");
+  return env != NULL && strcmp(env, "wayland") == 0;
+}
+
+typedef int (*wrap_XMapWindow_t)(Display *dpy, Window w);
 static wrap_XMapWindow_t wrap_orig_XMapWindow;
 
-int XMapWindow(register Display *dpy, Window w) {
-  const char *env = getenv("XDG_SESSION_TYPE");
-  if (env == NULL || strcmp(env, "wayland") != 0) {
+int XMapWindow(Display *dpy, Window w) {
+  if (!warp_is_wayland()) {
     if (!wrap_orig_XMapWindow) {
       wrap_orig_XMapWindow = dlsym(RTLD_NEXT, "XMapWindow");
     }
@@ -38,6 +43,66 @@ int XMapWindow(register Display *dpy, Window w) {
 
   return 1;
 }
+
+typedef Atom (*wrap_XInternAtom_t)(Display *dpy, const char *name,
+                                   Bool onlyIfExists);
+static wrap_XInternAtom_t wrap_orig_XInternAtom;
+
+Atom XInternAtom(Display *dpy, const char *name, Bool onlyIfExists) {
+  if (!warp_is_wayland()) {
+    if (!wrap_orig_XInternAtom) {
+      wrap_orig_XInternAtom = dlsym(RTLD_NEXT, "XInternAtom");
+    }
+
+    return wrap_orig_XInternAtom(dpy, name, onlyIfExists);
+  } else {
+    dpy->lock_fns = NULL;
+  }
+
+  return None;
+}
+
+typedef Status (*wrap_XSendEvent_t)(Display *dpy, Window w, Bool propagate,
+                                    long event_mask, XEvent *event);
+static wrap_XSendEvent_t wrap_orig_XSendEvent;
+
+Status XSendEvent(Display *dpy, Window w, Bool propagate, long event_mask,
+                  XEvent *event) {
+  if (!warp_is_wayland()) {
+    if (!wrap_orig_XSendEvent) {
+      wrap_orig_XSendEvent = dlsym(RTLD_NEXT, "XSendEvent");
+    }
+
+    return wrap_orig_XSendEvent(dpy, w, propagate, event_mask, event);
+  } else {
+    dpy->lock_fns = NULL;
+  }
+
+  return 0;
+}
+
+typedef Status (*wrap_XFlush_t)(Display *dpy);
+static wrap_XFlush_t wrap_orig_XFlush;
+
+Status XFlush(Display *dpy) {
+  if (!warp_is_wayland()) {
+    if (!wrap_orig_XFlush) {
+      wrap_orig_XFlush = dlsym(RTLD_NEXT, "XFlush");
+    }
+
+    return wrap_orig_XFlush(dpy);
+  } else {
+    dpy->lock_fns = NULL;
+  }
+
+  return 0;
+}
+
+/* workaround crash on Account and security page
+/opt/wemeet/bin/wemeetapp: symbol lookup error:
+/usr/lib/wemeet/libwemeet_framework.so: undefinedsymbol:
+_ZN7QWidget16setPaintsEnabledEb, version Qt_5 */
+void _ZN7QWidget16setPaintsEnabledEb() { return; }
 
 #ifdef WRAP_FORCE_SINK_HARDWARE
 typedef pa_operation *(*wrap_pa_get_sink_by_name_t)(pa_context *c,

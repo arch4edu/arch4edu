@@ -8,7 +8,7 @@ pkgver=3.19.0.401
 _pkgver_arm=${pkgver} # 两个版本有时候不一样
 _x86_md5=bb4001c715553579a8b3e496233331d4
 _arm_md5=0f96a97b0aaea9b9d5d2c2b912ede656
-pkgrel=1
+pkgrel=2
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -31,8 +31,8 @@ optdepends=(
     'bubblewrap: Fix abnormal text color in dark mode and prevent messing files.'
 )
 makedepends=('patchelf')
-sha512sums=('533f9dc9b2110f689ed04551c703ffeddb2c2143e059f5468ba6b34fcfa865b8a22371eb3ee52c9c257323937f8365af931029c82224cfecbf09dac00d086a9a'
-            'e766239691d77029345f4c2c0a0936c9271c7bedcf8727e3cd9a97777a399ab097425ab6e8f3626a6e98e3f56fc46d1247e8e5c91d6af82b1807cca04985a149')
+sha512sums=('86fad230304c9d12fc3c34635e4afb4eed5419298f1e357192ebd36953c273aae78f1c89587200e6ebeb374fec23f0486222a2ea86a73f9b72cf06d4628b587f'
+            'f98e9ae5842c05a19ad4f883c8f9d88ef3b64e04b034e7fd8b23ddca81510f0bd38688ad7c63ddf8badaa727a7b599ceede87419e9694c06d7a4b06138b94c15')
 sha512sums_x86_64=('2814febb1596cb8e6db75a7d71915771a9d6750cf162c3cb9b70379130da41d7fca7b3df1567a8de1d2967d97add4d2fc08764fbf4155a79852c75ea8fed754b')
 sha512sums_aarch64=('6099ec383e74dc776a9864743c9a2c624a5bea34e2ffb32b3fb57b66016a60dc1356ad3b58c6142ed2f3d9db83fc38ffd9c9661b282bf895e20d837277a07c76')
 
@@ -73,7 +73,7 @@ build() {
     read -ra openssl_args < <(pkgconf --libs openssl)
     read -ra libpulse_args < <(pkgconf --cflags --libs libpulse)
     # Comment out `-D WRAP_FORCE_SINK_HARDWARE` to disable the patch that forces wemeet detects sink as hardware sink
-    "${CC:-cc}" $CFLAGS -fPIC -shared "${openssl_args[@]}" "${libpulse_args[@]}" -o libwemeetwrap.so wrap.c -D WRAP_FORCE_SINK_HARDWARE
+    "${CC:-cc}" $CFLAGS -Wall -Wextra -fPIC -shared "${openssl_args[@]}" "${libpulse_args[@]}" -o libwemeetwrap.so wrap.c -D WRAP_FORCE_SINK_HARDWARE
 }
 
 package() {
