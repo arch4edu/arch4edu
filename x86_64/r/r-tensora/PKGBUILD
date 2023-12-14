@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=tensorA
-_pkgver=0.36.2
+_pkgver=0.36.2.1
 pkgname=r-${_pkgname,,}
-pkgver=0.36.2
-pkgrel=4
+pkgver=0.36.2.1
+pkgrel=1
 pkgdesc='Advanced Tensor Arithmetic with Named Indices'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8e8947566bd3b65a54de4269df1abaa3d49cf5bfd2a963c3274a524c8a819ca7')
+sha256sums=('06588261fe7dff6a8edafe2b9d436b39a3b46c754f2ed327ae6322561a617db7')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
