@@ -7,10 +7,10 @@ _pkgname=recipes
 _pkgver=1.0.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Preprocessing and Feature Engineering Steps for Modeling"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(MIT)
 depends=(
   r-cli
@@ -74,16 +74,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('f3f30f40a1b9b65aa5ad80b887a32786')
-sha256sums=('111ab7f1d3fd60a088c32cc54316e685ab88fea9d49c5d94fa359328644cd790')
-
-prepare() {
-  # skip failing snapshot test
-  sed -i '/"ISOmap fails gracefully"/a\ \ skip("Outdated snapshot")' "$_pkgname/tests/testthat/test-isomap.R"
-}
+b2sums=('98ba47fde5cdb93d71fad3a391c9846714f80dd1d7387bbb9339f87596006ecdf9816d7fe5622725b44e6ca465681df490c9f597c6c1fb82c200bfb243de79bc')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
