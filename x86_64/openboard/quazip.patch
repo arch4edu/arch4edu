@@ -1,18 +1,22 @@
 diff -Naur OpenBoard-1.6.0a3.orig/OpenBoard.pro OpenBoard-1.6.0a3/OpenBoard.pro
 --- OpenBoard-1.6.0a3.orig/OpenBoard.pro	2020-05-22 18:40:49.000000000 +0200
 +++ OpenBoard-1.6.0a3/OpenBoard.pro	2020-10-12 07:26:16.628748656 +0200
-@@ -433,8 +431,8 @@
-     LIBS += -lcrypto
-     #LIBS += -lprofiler
+@@ -466,11 +466,11 @@
      LIBS += -lX11
--    LIBS += -lquazip5
--    INCLUDEPATH += "/usr/include/quazip5"
-+    LIBS += "-lquazip1-qt5"
-+    INCLUDEPATH += /usr/include/QuaZip-Qt5-1.4/quazip
  
-     LIBS += -lpoppler
-     INCLUDEPATH += "/usr/include/poppler"
-diff -Naur OpenBoard-1.6.0a3.orig/plugins/cffadaptor/UBCFFAdaptor.pro OpenBoard-1.6.0a3/plugins/cffadaptor/UBCFFAdaptor.pro
+     greaterThan(QT_MAJOR_VERSION, 5) {
+-        LIBS += -lquazip6
+-        INCLUDEPATH += "/usr/include/quazip6"
++        LIBS += -lquazip1-qt6
++        INCLUDEPATH += "/usr/include/QuaZip-Qt6-1.4/quazip"
+     } else {
+-        LIBS += -lquazip5
+-        INCLUDEPATH += "/usr/include/quazip5"
++        LIBS += -lquazip1-qt5
++        INCLUDEPATH += "/usr/include/QuaZip-Qt5-1.4/quazip"
+     }
+ 
+     LIBS += -lpopplerdiff -Naur OpenBoard-1.6.0a3.orig/plugins/cffadaptor/UBCFFAdaptor.pro OpenBoard-1.6.0a3/plugins/cffadaptor/UBCFFAdaptor.pro
 --- OpenBoard-1.6.0a3.orig/plugins/cffadaptor/UBCFFAdaptor.pro	2020-05-22 18:40:49.000000000 +0200
 +++ OpenBoard-1.6.0a3/plugins/cffadaptor/UBCFFAdaptor.pro	2020-10-12 07:20:08.496096917 +0200
 @@ -13,9 +13,6 @@
@@ -41,7 +45,7 @@ diff -Naur OpenBoard-1.6.0a3.orig/plugins/cffadaptor/UBCFFAdaptor.pro OpenBoard-
 -DEPENDPATH  += $$THIRD_PARTY_PATH/quazip/
 -INCLUDEPATH += $$THIRD_PARTY_PATH/quazip/
 -include($$THIRD_PARTY_PATH/quazip/quazip.pri)
-+INCLUDEPATH += /usr/include/QuaZip-Qt5-1.3/quazip
++INCLUDEPATH += /usr/include/QuaZip-Qt5-1.4/quazip
  
  
  SOURCES += \
