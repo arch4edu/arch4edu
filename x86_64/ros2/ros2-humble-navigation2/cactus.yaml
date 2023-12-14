@@ -1,0 +1,35 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-nav2-amcl
+  - x86_64/ros2/ros2-humble-nav2-behavior-tree
+  - x86_64/ros2/ros2-humble-nav2-bt-navigator
+  - x86_64/ros2/ros2-humble-nav2-collision-monitor
+  - x86_64/ros2/ros2-humble-nav2-constrained-smoother
+  - x86_64/ros2/ros2-humble-nav2-controller
+  - x86_64/ros2/ros2-humble-nav2-core
+  - x86_64/ros2/ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-nav2-dwb-controller
+  - x86_64/ros2/ros2-humble-nav2-lifecycle-manager
+  - x86_64/ros2/ros2-humble-nav2-map-server
+  - x86_64/ros2/ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-nav2-navfn-planner
+  - x86_64/ros2/ros2-humble-nav2-planner
+  - x86_64/ros2/ros2-humble-nav2-behaviors
+  - x86_64/ros2/ros2-humble-nav2-smoother
+  - x86_64/ros2/ros2-humble-nav2-regulated-pure-pursuit-controller
+  - x86_64/ros2/ros2-humble-nav2-rotation-shim-controller
+  - x86_64/ros2/ros2-humble-nav2-rviz-plugins
+  - x86_64/ros2/ros2-humble-nav2-simple-commander
+  - x86_64/ros2/ros2-humble-nav2-smac-planner
+  - x86_64/ros2/ros2-humble-nav2-theta-star-planner
+  - x86_64/ros2/ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-nav2-velocity-smoother
+  - x86_64/ros2/ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-nav2-waypoint-follower
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

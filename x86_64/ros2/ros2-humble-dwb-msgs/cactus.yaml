@@ -1,0 +1,10 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-nav-2d-msgs
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
