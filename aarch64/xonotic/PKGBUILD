@@ -1,0 +1,71 @@
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
+# Contributor: Alexander Suhoverhov <cy at ngs dot ru>
+# Contributor: Jookia <166291@gmail.com>
+
+pkgname=xonotic
+pkgver=0.8.6
+pkgrel=1
+pkgdesc="A free, fast-paced cross-platform first person shooter"
+arch=('x86_64')
+url="https://xonotic.org"
+license=('GPL')
+depends=('alsa-lib' 'curl' 'libjpeg-turbo' 'libmodplug' 'libvorbis' 'libxpm'
+         'libxxf86vm' 'sdl2' 'libpng>=1.4.0' 'xonotic-data' 'hicolor-icon-theme'
+         'gtk-update-icon-cache' 'desktop-file-utils')
+makedepends=('mesa' 'xorgproto')
+source=("https://dl.xonotic.org/xonotic-${pkgver}-source.zip"
+        "xonotic-glx.desktop"
+        "xonotic-sdl.desktop")
+sha512sums=('88aa9cf35aa8e4b067dcc313037414fbc3a3769d60e88097ae8a3fbd2343369e2e4eff454b19d8a59b9c0bcbe183ec6eb289f35fa9f36564a300a3664c0e9498'
+            '2e06d588d68d629a9690b4dd3372c7ad77b240afcd86cf0cdf2de15548d3feaa0e446df1a29339be4593d23bfcf389930bdd1d7021f1e2558d70bb15e28646bd'
+            '963273811453f713ab70f5d12b918c1513a9a7995cd1d2572f0b9060d945391bf7db4ae04ae586531ecf3a088f837803a66ac267d9285928d8b2e82c98b7158b')
+
+build() {
+  # compile engine
+  make -C Xonotic/source/darkplaces \
+    CPUOPTIMIZATIONS="${CFLAGS}" \
+    DP_FS_BASEDIR=/usr/share/xonotic/ \
+    DP_LINK_TO_LIBJPEG=1 \
+    cl-release
+
+  make -C Xonotic/source/darkplaces \
+    CPUOPTIMIZATIONS="${CFLAGS}" \
+    DP_FS_BASEDIR=/usr/share/xonotic/ \
+    DP_LINK_TO_LIBJPEG=1 \
+    sdl-release
+
+  make -C Xonotic/source/darkplaces \
+    CPUOPTIMIZATIONS="${CFLAGS}" \
+    DP_FS_BASEDIR=/usr/share/xonotic/ \
+    DP_LINK_TO_LIBJPEG=1 \
+    sv-release
+
+  cd Xonotic/source/d0_blind_id
+  ./autogen.sh
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd Xonotic
+
+  # binaries
+  install -Dm755 source/darkplaces/darkplaces-dedicated "$pkgdir"/usr/bin/xonotic-dedicated
+  install -Dm755 source/darkplaces/darkplaces-glx "$pkgdir"/usr/bin/xonotic-glx
+  install -Dm755 source/darkplaces/darkplaces-sdl "$pkgdir"/usr/bin/xonotic-sdl
+
+  # convenience files
+  install -d "$pkgdir"/usr/share/applications
+  install -Dm644 "$srcdir"/*.desktop -t "$pkgdir"/usr/share/applications
+
+  for size in 16 22 24 32 48 64 128 256 512; do
+    install -Dm644 misc/logos/icons_png/xonotic_${size}.png \
+      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/xonotic.png"
+  done
+
+  # crypto stuff
+  cd source/d0_blind_id
+  make DESTDIR="$pkgdir" install
+}
+
+# vim: ts=2:sw=2 et:
