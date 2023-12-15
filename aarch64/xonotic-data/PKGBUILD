@@ -1,0 +1,29 @@
+# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Contributor: Alexander Suhoverhov <cy at ngs dot ru>
+
+pkgname=xonotic-data
+pkgver=0.8.6
+pkgrel=2
+pkgdesc="A free, fast-paced cross-platform first person shooter (data files)"
+arch=('any')
+url="https://xonotic.org"
+license=('GPL')
+depends=('bash' 'perl')
+options=('!debug' '!strip')
+source=("https://dl.xonotic.org/xonotic-${pkgver}.zip")
+sha512sums=('cb39879e96f19abb2877588c2d50c5d3e64dd68153bec3dd1bebedf4d765e506afa419c28381d7005aed664cb1a042571c132b5b319e4308cab67745d996c2a6')
+
+package() {
+  cd Xonotic
+
+  # data
+  install -d "$pkgdir"/usr/share/xonotic/
+  mv data "$pkgdir"/usr/share/xonotic/
+
+  # server stuff
+  cp -r server "$pkgdir"/usr/share/xonotic/
+
+  # key
+  install -Dm644 key_0.d0pk "$pkgdir"/usr/share/xonotic/key_0.d0pk
+}
+# vim: ts=2:sw=2 et:
