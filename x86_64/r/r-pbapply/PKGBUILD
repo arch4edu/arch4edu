@@ -3,12 +3,12 @@
 _pkgname=pbapply
 _pkgver=1.7-2
 pkgname=r-${_pkgname,,}
-pkgver=1.7.2
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Adding Progress Bar to '*apply' Functions"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
@@ -18,14 +18,15 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('aeed8c8c308c7e3827daf10b01b8ed4b88c1d68cea57d72d67c600c0ce0dae13')
+md5sums=('76c7702f9ffb732731c431ee4b6fdfb2')
+b2sums=('c7f9ea987824de96a46d6fed40d12102c6f378cc5e4db41fddb7ceccdb36f2aa0891b7ebd940252c75340d43c7ad183c63e7f04f6e53618c2e94db0fbb5decfc')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
