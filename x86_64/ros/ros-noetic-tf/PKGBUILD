@@ -6,7 +6,7 @@ url='https://wiki.ros.org/tf'
 pkgname='ros-noetic-tf'
 pkgver='1.13.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=6
+pkgrel=7
 license=('BSD')
 
 ros_makedepends=(
