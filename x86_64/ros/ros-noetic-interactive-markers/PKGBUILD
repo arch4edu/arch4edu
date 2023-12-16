@@ -6,7 +6,7 @@ url='https://wiki.ros.org/interactive_markers'
 pkgname='ros-noetic-interactive-markers'
 pkgver='1.12.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=6
+pkgrel=7
 license=('BSD')
 
 ros_makedepends=(
