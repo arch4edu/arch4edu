@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=brew
-_pkgver=1.0-8
+_pkgver=1.0-10
 pkgname=r-${_pkgname,,}
-pkgver=1.0.8
-pkgrel=5
+pkgver=1.0.10
+pkgrel=1
 pkgdesc='Templating Framework for Report Generation'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('11652d5a7042d645cc5be5f9f97ff4d46083cea7d3ad2dd6ad1570b52c097826')
+sha256sums=('4181f7334e032ae0775c5dec49d6137eb25d5430ca3792d321793307b3dda38f')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
