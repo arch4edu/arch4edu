@@ -6,7 +6,7 @@ url='https://wiki.ros.org/actionlib/Tutorials'
 pkgname='ros-noetic-actionlib-tutorials'
 pkgver='0.2.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
