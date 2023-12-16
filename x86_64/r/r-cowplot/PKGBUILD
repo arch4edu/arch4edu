@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=cowplot
-_pkgver=1.1.1
+_pkgver=1.1.2
 pkgname=r-${_pkgname,,}
-pkgver=1.1.1
-pkgrel=7
+pkgver=1.1.2
+pkgrel=1
 pkgdesc="Streamlined Plot Theme and Plot Annotations for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -37,7 +37,7 @@ optdepends=(
   r-venndiagram
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c7dce625b456dffc59ba100c816e16226048d12fdd29a7335dc1f6f6e12eed48')
+sha256sums=('c6915d091476d43303587d846d96348b7ac48b6c3f1e84bf092a7dbcf278fade')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
