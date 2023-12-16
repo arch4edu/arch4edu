@@ -25,7 +25,7 @@ _pkgname="localai"
 
 pkgbase="${_pkgname}-git"
 pkgname=("${pkgbase}")
-pkgver=v2.0.0.29.gfb6a5bc
+pkgver=v2.0.0.30.gdd982ac
 pkgrel=1
 pkgdesc="Self-hosted OpenAI API alternative - Open Source, community-driven and local-first."
 url="https://github.com/mudler/LocalAI"
