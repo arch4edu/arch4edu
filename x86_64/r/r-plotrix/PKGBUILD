@@ -4,24 +4,25 @@
 _pkgname=plotrix
 _pkgver=3.8-4
 pkgname=r-${_pkgname,,}
-pkgver=3.8.4
-pkgrel=1
-pkgdesc='Various Plotting Functions'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Various Plotting Functions"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e6a22d93ab61c67af21cbbe1fe333c06934cf576a44745bf2beee59bceaae8d6')
+md5sums=('553079f4dd3f183030b5157ae00cb5ae')
+b2sums=('e4f9da834540b389c3b4d279338163d1844dbb27067bf75b99a7316f9089eb9d9e62ff67edb69e4b6798a1d7a1a403f28d0567a03bcb04fba0b96e408901aac8')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
