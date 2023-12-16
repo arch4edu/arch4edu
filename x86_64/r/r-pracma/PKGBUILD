@@ -5,12 +5,12 @@
 _pkgname=pracma
 _pkgver=2.4.4
 pkgname=r-${_pkgname,,}
-pkgver=2.4.4
-pkgrel=1
-pkgdesc='Practical Numerical Math Functions'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Practical Numerical Math Functions"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL3)
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-quadprog
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1a4ef3af2197f999dbaa614bf5a70f09ec463d8c91feb5aa0d995de24ec6ba7f')
+md5sums=('f45e85a91a5e14b56a86191dd0bc9abd')
+b2sums=('b68f72b31f410dd8b59f19dec8a5246a1b3e7c40abe0ded0fe2de9baa720230edfcedfea7fa10881434114bffa5733530ab54ddb98485f4c2db361ac8166a594')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
