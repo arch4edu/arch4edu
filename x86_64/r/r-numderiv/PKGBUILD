@@ -5,24 +5,25 @@
 _pkgname=numDeriv
 _pkgver=2016.8-1.1
 pkgname=r-${_pkgname,,}
-pkgver=2016.8.1.1
-pkgrel=10
-pkgdesc='Accurate Numerical Derivatives'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=13
+pkgdesc="Accurate Numerical Derivatives"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL2)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d8c4d19ff9aeb31b0c628bd4a16378e51c1c9a3813b525469a31fe89af00b345')
+md5sums=('f894081f6d73822a362f156e849c9657')
+b2sums=('33bf377a66146eeff74795930ff32d7db73d19b4e9c6a147d3222e8d1cebae39751ae457c49a6da23b4040532f3bb077788a4ae6d22b1ffb7b66a26487e70c00')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
