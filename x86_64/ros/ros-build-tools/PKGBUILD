@@ -9,20 +9,15 @@ url="https://github.com/ros-arch/ros-build-tools"
 pkgname='ros-build-tools'
 pkgver='0.3.2'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 makedepends=()
 depends=('bash')
-
-pkg_destination_dir="/usr/share/ros-build-tools"
 
 source=('clear-ros-env.sh')
 
 sha256sums=('9626b8e5f3865f5640660f4a7f6a00afc4db8448b95329b4d5a64bd691677a88')
 
 package() {
-  mkdir -p ${pkgdir}${pkg_destination_dir}
-  for file in "${source[@]}"; do
-    cp $file ${pkgdir}${pkg_destination_dir}/$file
-  done
+  install -D -t "${pkgdir}/usr/share/${pkgname}" "${srcdir}/clear-ros-env.sh"
 }
