@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=BoomSpikeSlab
-_pkgver=1.2.5
+_pkgver=1.2.6
 pkgname=r-${_pkgname,,}
-pkgver=1.2.5
+pkgver=1.2.6
 pkgrel=1
 pkgdesc='MCMC for Spike and Slab Regression'
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bc88ad95075b91799476e9e56281e4bf421106601acdbee5de783c9048b22bf8')
+sha256sums=('87f622e20f13c255da5ea65b7bf07467cca5733184dc4ad4fd134c88cc72c63e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
