@@ -9,8 +9,8 @@
 
 pkgname=('python-pyqt5-sip4')
 pkgdesc="A set of Python bindings for the Qt5 toolkit"
-pkgver=5.15.9
-pkgrel=3
+pkgver=5.15.10
+pkgrel=1
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 url="https://riverbankcomputing.com/software/pyqt/intro"
 license=('GPL')
@@ -40,7 +40,7 @@ makedepends=('sip' 'pyqt-builder' 'python-opengl' 'python-dbus'
 conflicts=('pyqt5-common' 'python-pyqt5')
 source=("https://pypi.python.org/packages/source/P/PyQt5/PyQt5-$pkgver.tar.gz"
          restore-sip4-support.patch)
-sha256sums=('dc41e8401a90dc3e2b692b411bd5492ab559ae27a27424eed4bd3915564ec4c0'
+sha256sums=('d46b7804b1b10a4ff91753f8113e5b5580d2b4462f3226288e2d84497334898a'
             'c8881a8dc666e509773f93330615d310f9f040c2167dc9e98843741691395f72')
 
 prepare() {
