@@ -1,6 +1,6 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=stepcode
-pkgver=0.8.1
+pkgver=0.8.2
 pkgrel=1
 pkgdesc="Data exchange with ISO 10303. Used with IFC, STEP, and other standards
 to exchange data wit C++ and Python."
@@ -10,7 +10,7 @@ license=('BSD 3-Clause')
 depends=('gcc')
 makedepends=('cmake')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/stepcode/${pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('ff335210ce9a8a4e9ab9ba37b368efbe132c8244d8646583ad221d0db4332437')
+sha256sums=('a0307185313a55e127db4476bf234b9ea90edfeee6ac7a57923f7608a48d91e5')
 
 build() {
     mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
