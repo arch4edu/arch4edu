@@ -3,24 +3,25 @@
 _pkgname=rjson
 _pkgver=0.2.21
 pkgname=r-${_pkgname,,}
-pkgver=0.2.21
-pkgrel=4
-pkgdesc='JSON for R'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=11
+pkgdesc="JSON for R"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL2)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('982b56d35ccc0c7db0b20c1d3eab5f5f47c620309646fdc278ff1cc3433ea2e2')
+md5sums=('1670add2df4997c5ea615a6803d356a3')
+b2sums=('f9bccabb8beab62d3dd6331bacb2a2ad40af38c459ee73b71592f5904b809685682566d2d606d98cd9b7f3a6e1f47b1e252e565827b1836460041e8fc228c45c')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
