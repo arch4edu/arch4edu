@@ -7,12 +7,12 @@
 _pkgname=whisker
 _pkgver=0.4.1
 pkgname=r-${_pkgname,,}
-pkgver=0.4.1
-pkgrel=1
-pkgdesc='{{mustache}} for R, Logicless Templating'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="{{mustache}} for R, Logicless Templating"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL3)
 depends=(
   r
 )
@@ -20,14 +20,15 @@ optdepends=(
   r-markdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bf5151494508032f68ac41e211bda80da9087c65c7068ffdd12f16669bf1f2bc')
+md5sums=('eda4d778ea813e892c86511d355ee26c')
+b2sums=('d31d591a7285a7ce12b3740d67fb61d2acf55beb177603ec90ac5643a071a1b84553c77a8642c27ce04b261d20f764b649126ea9454cb81acd2bc352749ca7ad')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
