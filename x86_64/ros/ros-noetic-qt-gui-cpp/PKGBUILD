@@ -4,7 +4,7 @@ url='https://wiki.ros.org/qt_gui_cpp'
 pkgname='ros-noetic-qt-gui-cpp'
 pkgver='0.4.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=7
+pkgrel=8
 license=('BSD')
 
 ros_makedepends=(
@@ -32,8 +32,6 @@ ros_depends=(
 depends=(
     ${ros_depends[@]}
     tinyxml
-    sip
-    python-sip
     sip4
     python-sip4
 )
