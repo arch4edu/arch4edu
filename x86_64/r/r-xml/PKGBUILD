@@ -8,10 +8,10 @@ _pkgname=XML
 _pkgver=3.99-0.16
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Tools for Parsing and Generating XML Within R and S-Plus"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(BSD)
 depends=(
   libxml2
@@ -21,21 +21,13 @@ optdepends=(
   r-bitops
   r-rcurl
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "fix-build.patch")
-md5sums=('afa1fd1496595b5aa4f6cb758bad0122'
-         'fe644b51ff4b55a2b594a6c7dda5bc25')
-sha256sums=('350d37bab99ba3dac03313fa3901cc053ab2d962a94a9c3404fb3ad0a91cc95b'
-            '5fd93db9dbd4100d4db55714c62340b025d0a871eaf61bffe145fb743e5d26da')
-
-prepare() {
-  # fix build
-  patch -Np1 -i fix-build.patch
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('afa1fd1496595b5aa4f6cb758bad0122')
+b2sums=('90a917aa23ce6c617e9136af62f699703a59d2732a86c81c12e77456b046c93efebebf790618de6fb2b6ae807bb6cc4fdc31a60d63120e99f45444a46c8fbb7a')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
