@@ -2,16 +2,16 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=dune-istl
-_tarver=2.9.0
+_tarver=2.9.1
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=3
+pkgrel=1
 pkgdesc="Iterative Solver Template Library"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
 depends=("dune-common>=${pkgver}" arpack)
-makedepends=(texlive-latexextra biber doxygen graphviz python-scikit-build python-ninja)
+makedepends=(texlive-latexextra biber doxygen graphviz python-scikit-build)
 optdepends=('vc: C++ Vectorization library'
   'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software'
@@ -21,14 +21,13 @@ optdepends=('vc: C++ Vectorization library'
   'arpackpp: C++ interface to ARPACK'
   'suitesparse: A collection of sparse matrix libraries')
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('1e54f17cd669dc2b91603f5c71ab4a4b24c4252b3ff673855fc1d4423f756e6dabd02cea6ee0603b51ccbdf0836b8fd5cde3621a7193020905a6693b27036f97'
+sha512sums=('d2b00d3e16f5420f0999699aa09288da10cf5cf2d89fd59ca0657cb28ada1154af2622ed54484da887d322244a5537a3c7716f9375f14d480dc92f5316326616'
   'SKIP')
-validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
+validpgpkeys=('2AA99AA4E2D6214E6EA01C9A4AF42916F6E5B1CF') # Christoph Grüninger <pgp@grueninger.de>
 
 prepare() {
   cd ${pkgname}-${pkgver}
   export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-  sed -i 's/^Version: '"${pkgver%%.0}"'-git/Version: '"${pkgver}"'/' dune.module
   # install header for run test/linear/test_linearsolver.cc in dumux
   sed -i '115 a install(FILES anisotropic.hh DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/dune/istl/paamg/test)' dune/istl/paamg/test/CMakeLists.txt
   sed -i '8 a BUILD_ON_INSTALL' doc/CMakeLists.txt
