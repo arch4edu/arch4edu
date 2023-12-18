@@ -4,12 +4,12 @@
 _pkgname=listenv
 _pkgver=0.9.0
 pkgname=r-${_pkgname,,}
-pkgver=0.9.0
-pkgrel=1
-pkgdesc='Environments Behaving (Almost) as Lists'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('LGPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Environments Behaving (Almost) as Lists"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(LGPL)
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-r.utils
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('352841e04f0725d361b78cfdc75e00511f740d97237dd651ea86aa5484674887')
+md5sums=('e0ab27f35467ce48ad347758f4e1e8d8')
+b2sums=('d2692bb7fe41f738a6751ec8a067764405451bef1b4e558f77564c657e773ed30ef3453f6e39a39ead919885bccdaeb9356229fcb5e8c490864245d4e38f8426')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
