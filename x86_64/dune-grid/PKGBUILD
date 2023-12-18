@@ -2,30 +2,29 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=dune-grid
-_tarver=2.9.0
+_tarver=2.9.1
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=3
+pkgrel=1
 pkgdesc="Grid Interface and Implementations"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
 depends=("dune-geometry>=${pkgver}" "dune-uggrid>=${pkgver}" alberta)
-makedepends=(doxygen graphviz python-scikit-build python-ninja)
+makedepends=(doxygen graphviz python-scikit-build)
 optdepends=('imagemagick: image viewing/manipulation program'
   'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software'
   'gnuplot: for provides gnuplot output for 1D and 2D Grids'
   'parmetis: Parallel Graph Partitioning and Fill-reducing Matrix Ordering')
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('b74ca105de20a2a760fa51f48e351f884c4ca3e8584abe63f30cb0e30ca29ce6195ef7599a9f7265c257e2acacbd52d2566d604d419026610bd5ccc8454e7659'
+sha512sums=('aac36d1a84673ff474eb7073d84eb10279dcbfca84ad20a4441683d405f9c4a8962f4634a324affad9ad9b201a2175e6f4cdac947cf5b19ad955b8f807b16a7e'
   'SKIP')
-validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
+validpgpkeys=('2AA99AA4E2D6214E6EA01C9A4AF42916F6E5B1CF') # Christoph Grüninger <pgp@grueninger.de>
 
 prepare() {
   cd ${pkgname}-${pkgver}
   export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-  sed -i 's/^Version: '"${pkgver%%.0}"'-git/Version: '"${pkgver}"'/' dune.module
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
 
