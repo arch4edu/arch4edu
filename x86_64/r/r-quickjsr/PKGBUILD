@@ -1,13 +1,13 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=QuickJSR
-_pkgver=1.0.8
+_pkgver=1.0.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Interface for the 'QuickJS' Lightweight 'JavaScript' Engine"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(MIT)
 depends=(
   r-jsonlite
@@ -21,12 +21,12 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('adf26df0b395c0193bba7f1d6a9a9468')
-sha256sums=('7697faa26d7c67b7d218ae6be74c86e7249842d6f0ea8a3932920825398a9e81')
+md5sums=('6b597fe688d93113f482c9f28341d5bd')
+b2sums=('efba7da87155eb00d6d579c733e20933e77e409f2c3d441b4c03bb91bb5c35e2d07feb03ff793e69cef5d43af4b5be90064601d18d17d510a057d3da5038d912')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
