@@ -5,27 +5,25 @@
 _pkgname=R.methodsS3
 _pkgver=1.8.2
 pkgname=r-${_pkgname,,}
-pkgver=1.8.2
-pkgrel=7
-pkgdesc='S3 Methods Simplified'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('LGPL')
+pkgver=${_pkgver//-/.}
+pkgrel=10
+pkgdesc="S3 Methods Simplified"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(LGPL)
 depends=(
   r
 )
-optdepends=(
-  r-codetools
-)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('822d5e61dad4c91e8883be2b38d7b89f87492046d0fe345704eb5d2658927c2e')
+md5sums=('8af7a9c90f4f1daebfa0e6c7722e05b8')
+b2sums=('5f86f9302bca53497421a0d6bb34e6757657b8f81867f73934865de9c54fcf2a14f3520c3164c95c6b4e7f360b30c59aa04a2e1beedad9777f7408e4791b2b07')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
