@@ -3,8 +3,7 @@
 pkgbase=ttf-misans
 _Mi=MiSans
 _mi=(${_Mi,,})
-# _MultiLang=(Lao Arabic Devanagari Gujarati Gurmukhi Khmer L3 Latin Myanmar TC Thai Tibetan)
-_MultiLang=(Lao Arabic Devanagari Gujarati Gurmukhi Khmer Latin Myanmar TC Thai Tibetan)
+_MultiLang=(Lao Arabic Devanagari Gujarati Gurmukhi Khmer L3 Latin Myanmar TC Thai Tibetan)
 _multilang=(${_MultiLang[@],,})
 
 _mi_ml=()
@@ -26,7 +25,7 @@ done
 
 pkgname=(misans ${_pkgbase[@]} misans-fontconfig)
 pkgver=4.003
-pkgrel=0
+pkgrel=1
 pkgdesc="MiSans Global is a global language font customization project led by Xiaomi and co-created with Mona font and Han Yi font."
 arch=(any)
 url='https://hyperos.mi.com/font/download'
