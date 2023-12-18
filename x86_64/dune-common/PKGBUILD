@@ -2,17 +2,16 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=dune-common
-_tarver=2.9.0
+_tarver=2.9.1
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=4
+pkgrel=1
 pkgdesc="Infrastructure and foundation classes"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
-depends=(cmake git lapack python-setuptools
-  python-portalocker python-numpy python-mpi4py python-jinja)
-makedepends=(python-scikit-build python-ninja doxygen graphviz python-sphinx texlive-latexextra biber)
+depends=(cmake git lapack python-setuptools python-portalocker python-numpy python-mpi4py python-jinja)
+makedepends=(python-scikit-build doxygen graphviz python-sphinx texlive-latexextra biber)
 optdepends=('vc: C++ Vectorization library'
   'texlive-latexextra: Type setting system'
   'doxygen: Generate the class documentation from C++ sources'
@@ -26,25 +25,16 @@ optdepends=('vc: C++ Vectorization library'
   'python-matplotlib: for Matplotlib rendering'
   'python-mayavi: for 3D plotting')
 provides=('dunecontrol' 'dune-ctest' 'dune-git-whitespace-hook' 'dunepackaging.py' 'duneproject' 'rmgenerated.py')
-source=(https://dune-project.org/download/${_tar}{,.asc}
-  pybind11-compatibility.patch::https://gitlab.dune-project.org/core/${pkgname}/-/commit/f3b4ac266d37b7255e68d203dfce4a22bda9b4f1.patch
-  gcc13-compatibility.patch::https://gitlab.dune-project.org/core/dune-common/-/commit/56655f6910f3bfcfa86e7573b47228c0f28794f3.patch)
-sha512sums=('4d1f05ee7d5c2376f0fc782b4978596501eed0e7c6d6c68b3a37949a0141cf308b42a6df1b171804a9606907f6597039f28916731c1caa0c54a36775402e6e97'
-  'SKIP'
-  'af34c7f82db9a03568649090b5ba3c870202619d835341709a3e43aff8649b58bfff69057fecb40fe205bb63d3fff345c066dd965389d29af5c29c80837fd9a7'
-  'aa0e6cd1af73bee0231dc40cb46081753ed38a3712c30ce79080dbb0023a8d9bacc318b2c5e1e46fa9e8f64a82b4594d2672a00ed178e32f05f3a003e2c9c0f9')
-validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
+source=(https://dune-project.org/download/${_tar}{,.asc})
+sha512sums=('554d9f5dde66930d8966b99832728d17bb7670aa055c071e00260c6f90e739818672e3b9fb3f292bcb96f128f9e82679c921d8603bb993eb768f89a7b3951ac1'
+  'SKIP')
+validpgpkeys=('2AA99AA4E2D6214E6EA01C9A4AF42916F6E5B1CF') # Christoph Grüninger <pgp@grueninger.de>
 
 prepare() {
   cd ${pkgname}-${pkgver}
   local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-  sed -i 's/^Version: '"${pkgver%%.0}"'-git/Version: '"${pkgver}"'/' dune.module
   # https://salsa.debian.org/science-team/dune-common/-/blob/master/debian/patches/skip-dirs-starting-with-dot.patch
   sed -i 's/^        $(find -H "$dir" -name $CONTROL | $GREP -v '\''dune-\[-_a-zA-Z\]\/dune-\[-a-zA-Z_\]\*-\[0-9\]\\{1,\\}.\[0-9\]\\{1,\\}\/'\'')/        $(find -H "$dir" -name '\''.?\*'\'' -prune -o -name $CONTROL -print | $GREP -v '\''dune-\[-_a-zA-Z\]\/dune-\[-a-zA-Z_\]\*-\[0-9\]\\{1,\\}.\[0-9\]\\{1,\\}\/'\'')/' lib/dunemodules.lib
-  # https://github.com/FEniCS/basix/issues/591
-  patch -p1 -i ../pybind11-compatibility.patch
-  # https://gitlab.dune-project.org/core/dune-common/-/merge_requests/1214
-  patch -p1 -i ../gcc13-compatibility.patch
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
 
