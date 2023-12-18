@@ -3,31 +3,32 @@
 _pkgname=nnls
 _pkgver=1.5
 pkgname=r-${_pkgname,,}
-pkgver=1.5
-pkgrel=3
-pkgdesc='The Lawson-Hanson algorithm for non-negative least squares (NNLS)'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="The Lawson-Hanson Algorithm for Non-Negative Least Squares (NNLS)"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
+)
+makedepends=(
+  gcc-fortran
 )
 optdepends=(
   r-bvls
   r-quadprog
 )
-makedepends=(
-  gcc-fortran
-)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('cd70feb286f86f6dead75da693a8f67c9bd3b91eb738e6e6ac659e3b8c7a3452')
+md5sums=('f1aaeef79fbbd3aee167b19b3f512e27')
+b2sums=('6696f86729404e9187923a6b6ce2e2e26103024ffa289d84a0162113b6994746a5d7f0d9cbbc4ce6971b596753b07b20eb6d21bd4bad5ef4bf0e216b5e3be855')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
