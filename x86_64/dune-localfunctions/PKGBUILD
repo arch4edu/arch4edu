@@ -2,28 +2,27 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=dune-localfunctions
-_tarver=2.9.0
+_tarver=2.9.1
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=3
+pkgrel=1
 pkgdesc="Local Finite Elements"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
 license=('custom:GPL2 with runtime exception')
 depends=("dune-geometry>=${pkgver}")
-makedepends=(texlive-core doxygen graphviz python-scikit-build python-ninja)
-optdepends=('texlive-core: Type setting system'
+makedepends=(texlive-basic doxygen graphviz python-scikit-build)
+optdepends=('texlive-basic: Type setting system'
   'doxygen: Generate the class documentation from C++ sources'
   'graphviz: Graph visualization software')
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('683973333f4bfb6f77e65798d516b98c28e639e9c20e0186ee8ef343ee270f112a1e41218772662c9f0dc2f55616aa6b93cbf053277bc4145a2bd1044b2e7fb7'
+sha512sums=('3f52f2c48d7d3ae6dcfba9cd3c310a774a93d8571e13590641405a20fdff7ff4a154892ce709a68b3a8da1a9c3651ca46016eded7e2e1bf7cd02aa0e57e2b28d'
   'SKIP')
-validpgpkeys=('E5B47782DE09813BCC3518E159DA94F1FC8FD313') # Andreas Dedner <a.s.dedner@warwick.ac.uk>
+validpgpkeys=('2AA99AA4E2D6214E6EA01C9A4AF42916F6E5B1CF') # Christoph Grüninger <pgp@grueninger.de>
 
 prepare() {
   cd ${pkgname}-${pkgver}
   export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-  sed -i 's/^Version: '"${pkgver%%.0}"'-git/Version: '"${pkgver}"'/' dune.module
   sed -i '8 a BUILD_ON_INSTALL' doc/CMakeLists.txt
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
