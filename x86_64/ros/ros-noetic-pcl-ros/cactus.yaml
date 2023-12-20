@@ -27,6 +27,7 @@ makedepends:
   - x86_64/ros/ros-noetic-cmake-modules
   - x86_64/ros/ros-noetic-rosconsole
   - x86_64/ros/ros-noetic-roslib
+  - x86_64/openni2
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
