@@ -1,0 +1,7 @@
+build --action_env TF_CUDA_PATHS=/opt/cuda,/usr/lib,/usr
+build --action_env CUDA_TOOLKIT_PATH=/opt/cuda
+build --action_env NCCL_INSTALL_PATH=/usr
+build --action_env TF_CUDA_COMPUTE_CAPABILITIES=sm_70,sm_72,sm_75,sm_80,sm_86,sm_87,sm_89,sm_90,compute_90
+build --action_env GCC_HOST_COMPILER_PATH=/usr/bin/gcc-12
+build --config=mkl_open_source_only
+build --config=cuda
