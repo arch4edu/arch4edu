@@ -10,8 +10,8 @@
 _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.16.1
-pkgrel=4
+pkgver=0.16.2
+pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
 url='https://github.com/pytorch/vision'
@@ -36,14 +36,14 @@ makedepends=(
   miopen-hip
 )
 conflicts=(
-  'python-pytorch<2.1.0'
+  'python-pytorch<2.1.2'
 )
 source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
   "pytorch-vision-8096.patch"
 )
-sha512sums=(
-  'ef82ce6a9a35c4034127b4204a87149619102395ac9671f91736289ade97e2fe50759dd05f468800fa0d6c5f1e70fb4a568a321ca79b1b28bd4172fbc5fd7d78'
+sha256sums=(
+  '8c1f2951e98d8ada6e5a468f179af4be9f56d2ebc3ab057af873da61669806d7'
   'SKIP'
 )
 
