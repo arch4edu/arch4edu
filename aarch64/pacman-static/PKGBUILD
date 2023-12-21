@@ -7,7 +7,7 @@ pkgver=6.0.2
 _cares_ver=1.23.0
 _nghttp2_ver=1.58.0
 _curlver=8.5.0
-_sslver=3.1.4
+_sslver=3.2.0
 _zlibver=1.3
 _xzver=5.4.5
 _bzipver=1.0.8
@@ -16,7 +16,7 @@ _libarchive_ver=3.7.2
 _gpgerrorver=1.47
 _libassuanver=2.5.6
 _gpgmever=1.23.2
-pkgrel=12
+pkgrel=13
 pkgdesc="Statically-compiled pacman (to fix or install systems without libc)"
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://www.archlinux.org/pacman/"
@@ -98,7 +98,7 @@ sha512sums=('9d76fb58c3a50e89a4b92b1f9e3bfdecca3f69e05022ea88fbd34f9df540c4fc688
             'SKIP'
             '1ff70e8fd5f233b373dea2a031d46698c03ed35f384c2eacbe9368f9daed65e91d7f45ade350c3ac3dd3d662c913b17cdc8702a0c23879b0c78fbd396fd0b926'
             'SKIP'
-            'a69df4a018f57dee7d8a57c8003a6869eba11f1eaa394518976642a993780d0de3326019e92dea4c679c6c581fef568ea616ec541afc0792800359c606dffcd2'
+            'ba3ac38365fd0c50f1eaf1693b6200a0d66f01ff53c2d3bb0358643cd83fc0c61fc3b84c0658cf74b6ae91d7d8a9da7291697bd9be3063ada8a9df879e58ed52'
             'SKIP'
             'b1873dbb7a49460b007255689102062756972de5cc2d38b12cc9f389b6be412da6797579b1acd3717a8cd2ee118fd9801b94e55f063d4328f050f0876a5eb53c'
             'b5887ea77417fae49b6cb1e9fa782d3021f268d5219701d87a092235964f73fa72a31428b630445517f56f2bb69dcbbb24119ef9dbf8b4e40a753369a9f9a16f'
@@ -131,7 +131,7 @@ b2sums=('648f62307e413cb352ed92e92df1ace510c1fc5e9ddd254baeef071e89cb7dae1786a95
         'SKIP'
         '31dabc25452f91e71e6367d340a89711ea9d55180a4c5e2c1a5a0f4e2ffeed56952e95c9eba21bca65cfa6643910cf2c979c76b6efea6c8758c71edf501c4991'
         'SKIP'
-        'bd6a3ef458f86dd5173e87b10432bd81c1570e1848da3c4d7a06eb021d2f67e4075421885c402f6ea792e383e756d78757c17ef060094e840ed5df6faf3d7f9e'
+        '776123929796d2eb0f3974bf6ee3a55df9187231632837576bf5ded7b5917f052683cdfc756693c1bee6fe1ffc7c3cb1ebcf833018d3caf51886f4f4e7a495f1'
         'SKIP'
         '928c0cb15cca44bb7f194db9f95985f6c50aacd3e22fe2eb60ece26ed76469289f10d303c645a48407f3d6435ac66f25dd3c4cbc56fdc5dfd9ea2566feda9ff8'
         'c72172cf57389718b4722c3482ddaf9c2fc02aafe391c68edeb92d41fd6345a0a98f6fd63ddf01b33fe59a7a3f270ff1ccad432feba578b7b7e0170cd1dea7ef'
