@@ -1,13 +1,13 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=sf
-_cranver=1.0-14
+_cranver=1.0-15
 pkgname=r-${_cranname,,}
 pkgdesc="Simple Features for R"
 url="https://cran.r-project.org/package=sf"
 license=("GPL-2 | MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
@@ -25,6 +25,7 @@ depends=(
 )
 optdepends=(
     "r-blob"
+    "r-nanoarrow"
     "r-covr"
     "r-dplyr>=0.8.3"
     "r-ggplot2"
@@ -56,7 +57,7 @@ optdepends=(
     "r-tidyselect>=1.0.0"
     #"r-tmap"
     "r-vctrs"
-    "r-wk"
+    "r-wk>=0.9.0"
 )
 
 # The unittests for `r-sf` have multiple circular
@@ -79,7 +80,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("0d501b4cee1a457cf1e1eeb3f498077bc54503b854fab4088ea439db961724ceb0f96e921819631c3c37acc7da5978f2b5a3247c9a34b047fe04d33f5d45d27a")
+b2sums=("e310735fe1e746f2a47d363c486f1a05a2479dbdd0cc68e351165016ddbce108b6ce70a456a19c98162a53eed1c2f6630abef1c46323d302b083d5cd22209842")
 
 build() {
     mkdir -p "${srcdir}/build/"
