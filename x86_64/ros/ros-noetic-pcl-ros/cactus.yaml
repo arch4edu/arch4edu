@@ -32,5 +32,5 @@ build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
-  add makedepends openmpi nlohmann-json glew qhull fmt
+  add makedepends openmpi nlohmann-json glew qhull fmt verdict
 post_build: aur-post-build
