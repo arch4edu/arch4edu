@@ -3,13 +3,13 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=future
-_pkgver=1.33.0
+_pkgver=1.33.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Unified Parallel and Distributed Processing in R for Everyone"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(LGPL)
 depends=(
   r-digest
@@ -23,12 +23,12 @@ optdepends=(
   r-rhpcblasctl
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('153aa3ab46f23974538f1069f26930b8')
-sha256sums=('4228eb9b35ce4b56bf4168977661fed4f83bb36131b2dc7120b2898d8747935b')
+md5sums=('71fb731f2ea10ca8e2d9767c203959f2')
+b2sums=('6b02661593e4d7fb6f25559bfa79eed17f557eaa50d961fb689439f4e9d726a418b1b37510e7e13c27b29fa465c0d93cfbce3bfce2b9b8c73a4aa00490c26757')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
