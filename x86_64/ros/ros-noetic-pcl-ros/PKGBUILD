@@ -4,7 +4,7 @@ url='https://wiki.ros.org/perception_pcl'
 pkgname='ros-noetic-pcl-ros'
 pkgver='1.7.5'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=3
+pkgrel=4
 license=('BSD')
 
 ros_makedepends=(
@@ -76,4 +76,4 @@ package() {
     cd "${srcdir}/build"
     make DESTDIR="${pkgdir}/" install
 }
-makedepends+=("openmpi" "nlohmann-json" "glew" "qhull" "fmt")
+makedepends+=("openmpi" "nlohmann-json" "glew" "qhull" "fmt" "verdict")
