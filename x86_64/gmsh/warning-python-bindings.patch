@@ -1,0 +1,13 @@
+diff --color --unified --recursive --no-dereference gmsh-4.12.0-source/api/gmsh.py gmsh/gmsh-4.12.0-source/api/gmsh.py
+--- gmsh-4.12.0-source/api/gmsh.py	2023-12-21 03:07:36.000000000 -0500
++++ gmsh/gmsh-4.12.0-source/api/gmsh.py	2023-12-21 18:46:21.232675901 -0500
+@@ -61,7 +61,8 @@
+                      # second parent dir
+                      os.path.join(parentdir2, libname),
+                      os.path.join(parentdir2, "lib", libname),
+-                     os.path.join(parentdir2, "Lib", libname)
++                     os.path.join(parentdir2, "Lib", libname),
++                     os.path.join("/usr/lib", libname)
+                      ]
+ 
+ for libpath_to_look in possible_libpaths:
