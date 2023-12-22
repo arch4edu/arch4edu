@@ -4,7 +4,7 @@ url='https://wiki.ros.org/image_view'
 pkgname='ros-noetic-image-view'
 pkgver='1.16.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=6
+pkgrel=7
 license=('BSD')
 
 ros_makedepends=(
