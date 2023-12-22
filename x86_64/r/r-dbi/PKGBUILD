@@ -3,15 +3,16 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Matt Frichtl <frichtlm@gmail.com>
 # Contributor: Alex Branham <branham@utexas.edu>
+# Contributor: Lydgate <archlinux@vo.racio.us>
 
 _pkgname=DBI
-_pkgver=1.1.3
+_pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=1
 pkgdesc="R Database Interface"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(LGPL)
 depends=(
   r
@@ -30,20 +31,22 @@ optdepends=(
   r-hms
   r-knitr
   r-magrittr
+  r-nanoarrow
   r-rmariadb
   r-rmarkdown
   r-rprojroot
   r-rsqlite
   r-testthat
+  r-vctrs
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('39053945cef7f76c45c8bc6f5733033f')
-sha256sums=('38bb33753da5bddb78893a5228a5d269dae3bf16f21dc5d9853ac9c24d31428d')
+md5sums=('9ae1dc1cf5b28cb52836617fbb233674')
+b2sums=('3485bdaed29f308fa798d6af5a8c8836f37a2218bc9bf810002bcdb31abaf68865605363fad4226bbb886375c177f3e81e23fe9b263137b041721399435f403b')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
