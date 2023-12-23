@@ -8,8 +8,9 @@ depends:
   - x86_64/r/r-desc
   - x86_64/r/r-hms
   - x86_64/r/r-lubridate
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-nanoarrow
   - x86_64/r/r-palmerpenguins
-  - x86_64/r/r-r6
   - x86_64/r/r-rlang
   - x86_64/r/r-testthat
   - x86_64/r/r-vctrs
