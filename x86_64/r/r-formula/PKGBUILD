@@ -4,24 +4,25 @@
 _pkgname=Formula
 _pkgver=1.2-5
 pkgname=r-${_pkgname,,}
-pkgver=1.2.5
-pkgrel=1
-pkgdesc='Extended Model Formulas'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Extended Model Formulas"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('86254674600d64e18b65d52f42d7ebfc217c8e1945cb63ac06da22cbf04d355c')
+md5sums=('fa5128b436b67051b231e0a8281f36a4')
+b2sums=('4906509d841059bb0d94a797acfc50f636180f67d910affad83d6107ad41c33dafb89e204a219bd8ba74de43a97b1ef58cb95a8679bf3ef721ea5084b90b41ae')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
