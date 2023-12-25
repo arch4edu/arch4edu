@@ -4,24 +4,25 @@
 _pkgname=nortest
 _pkgver=1.0-4
 pkgname=r-${_pkgname,,}
-pkgver=1.0.4
-pkgrel=9
-pkgdesc='Tests for Normality'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=11
+pkgdesc="Tests for Normality"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a3850a048181d5d059c1e74903437569873b430c915b709808237d71fee5209f')
+md5sums=('de58446c1da50602a9c85dba5fe409ca')
+b2sums=('3d6e81de1296529c28641feaba04ed907c662755787b076b4b87d1a6b33362a710bc354a5388065c05877967aa805ed4148f8deff1192842585ea1a772651d53')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
