@@ -6,12 +6,12 @@
 _pkgname=brew
 _pkgver=1.0-10
 pkgname=r-${_pkgname,,}
-pkgver=1.0.10
-pkgrel=1
-pkgdesc='Templating Framework for Report Generation'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Templating Framework for Report Generation"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4181f7334e032ae0775c5dec49d6137eb25d5430ca3792d321793307b3dda38f')
+md5sums=('c1ebbea7284161a8884ffe9ae5ca451f')
+b2sums=('de4ef8171ae15ecea559a4a0a6e1414bef9eec0bd457aa00601a34738277bddad72eff90f41fd6c3dc3579bd849297922f2eb8e411238b736f9d8808b526ac54')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
