@@ -4,24 +4,25 @@
 _pkgname=modeltools
 _pkgver=0.2-23
 pkgname=r-${_pkgname,,}
-pkgver=0.2.23
-pkgrel=10
-pkgdesc='Tools and Classes for Statistical Models'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=12
+pkgdesc="Tools and Classes for Statistical Models"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL2)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6b3e8d5af1a039db5c178498dbf354ed1c5627a8cea9229726644053443210ef')
+md5sums=('954e3f72a5fd9086f070f7fcc41a08f1')
+b2sums=('af734abbab0177159bcb62babe233d777c697d510d0d152b3b1303c02e174a2ee6bc1a3767725ba89b20a83222a1e848d62ac31cf625d0ccc0aa3db150204c33')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
