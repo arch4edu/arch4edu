@@ -4,13 +4,13 @@ _dunever=2.9.0
 _tarver=3.8.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="An open-source simulator and research code in modern C++"
 arch=(x86_64)
 url="https://${pkgname}.org"
 license=(GPL3)
 depends=("dune-grid>=${_dunever}" "dune-istl>=${_dunever}" "dune-localfunctions>=${_dunever}")
-makedepends=(doxygen graphviz python-scikit-build python-ninja)
+makedepends=(doxygen graphviz python-scikit-build)
 optdepends=('dune-alugrid: for grid manager ALUGrid support'
   'dune-foamgrid: for grid manager FoamGrids support'
   'dune-functions: for functions spaces support'
@@ -58,6 +58,5 @@ package() {
   install -Dm 644 LICENSE.md -t "${pkgdir}/usr/share/licenses/${pkgname}"
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -Dm 644 python/${pkgname}/__init__.py -t "${pkgdir}${site_packages}"/${pkgname}
-  mv "${pkgdir}"/usr/python/dune/data "${pkgdir}${site_packages}"/${pkgname}
   find "${pkgdir}" -type d -empty -delete
 }
