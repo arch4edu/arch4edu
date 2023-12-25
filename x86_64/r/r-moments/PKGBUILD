@@ -3,24 +3,25 @@
 _pkgname=moments
 _pkgver=0.14.1
 pkgname=r-${_pkgname,,}
-pkgver=0.14.1
-pkgrel=1
-pkgdesc='Moments, cumulants, skewness, kurtosis and related tests'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="Moments, Cumulants, Skewness, Kurtosis and Related Tests"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2ed2b84802da132ae0cf826a65de5bfa85042b82e086be844002fe1ce270d864')
+md5sums=('622afd35702c45ad010c106af2457458')
+b2sums=('60e12f8a33c051cb91282438d8afb1459882b332ccdde217cdd10cafab32d97084b49a0e670b1716035188d37be7199740ac5baf06ab803309e9586bc7c683b0')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
