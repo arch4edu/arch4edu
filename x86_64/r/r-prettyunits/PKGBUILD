@@ -4,30 +4,32 @@
 _pkgname=prettyunits
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
-pkgver=1.2.0
-pkgrel=1
-pkgdesc='Pretty, Human Readable Formatting of Quantities'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('MIT')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Pretty, Human Readable Formatting of Quantities"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(MIT)
 depends=(
   r
 )
 optdepends=(
-  r-codetools
   r-covr
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f059f27e2a5c82e351fe05b87ad712f7afc273c651450453f59d99af5deeacea')
+md5sums=('2e2db8105f214b80d3d4254b8aabb255')
+b2sums=('1ab33348ad19218962ec8de12ad7e86a570c0567a2a77daa5f4d9a99c7b03ae987e0ec54db598526b0c8775099ce3f9aed273b9a4e2a081dce1cb52f86e5a958')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
