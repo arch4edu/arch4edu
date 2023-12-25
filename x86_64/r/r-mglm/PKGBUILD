@@ -3,12 +3,12 @@
 _pkgname=MGLM
 _pkgver=0.2.1
 pkgname=r-${_pkgname,,}
-pkgver=0.2.1
-pkgrel=8
-pkgdesc='Multivariate Response Generalized Linear Models'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=10
+pkgdesc="Multivariate Response Generalized Linear Models"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
@@ -20,14 +20,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('aed900e67f6aa30f1f5da2220a7621fdaad2428697bf4be4a68f9192b29d6d3a')
+md5sums=('d4c964eaa6fd83920fd9948ade55a0f4')
+b2sums=('4900e0585fdc4da3f96839d9f3f9efa9eb101069d5d56531bded5b9636ebb59b9e3dd4c0e1652d56af2ae7950a09c5cbfa7c024dc2261c07c315ebf57383e6ea')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
