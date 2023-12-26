@@ -1,0 +1,31 @@
+diff --git a/zip/src/Makevars b/zip/src/Makevars
+index 660aff8..87df0bd 100644
+--- a/zip/src/Makevars
++++ b/zip/src/Makevars
+@@ -1,15 +1,21 @@
+ 
+-OBJECTS = init.o miniz.o rzip.o zip.o unixutils.o
++OBJECTS = init.o rzip.o
++PKG_LIBS = -L. -lr-zip
+ 
+ .PHONY: all clean
+ 
+ all: tools/cmdzip tools/cmdunzip $(SHLIB)
+ 
+-tools/cmdzip: miniz.c zip.c unixutils.c tools/cmdzip.c
+-	$(CC) $(CFLAGS) miniz.c zip.c unixutils.c tools/cmdzip.c -o tools/cmdzip
++tools/cmdzip: tools/cmdzip.o libr-zip.so
++	$(CC) $(LDFLAGS) -o $@ $^
+ 
+-tools/cmdunzip: miniz.c zip.c unixutils.c tools/cmdunzip.c
+-	$(CC) $(CFLAGS) miniz.c zip.c unixutils.c tools/cmdunzip.c -o tools/cmdunzip
++tools/cmdunzip: tools/cmdunzip.o libr-zip.so
++	$(CC) $(LDFLAGS) -o $@ $^
++
++$(SHLIB): libr-zip.so
++
++libr-zip.so: miniz.o zip.o unixutils.o
++	$(CC) -shared $(LDFLAGS) -o $@ $^
+ 
+ clean:
+ 	rm -rf $(SHLIB) $(OBJECTS) \
