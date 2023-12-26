@@ -3,24 +3,25 @@
 _pkgname=matrixcalc
 _pkgver=1.0-6
 pkgname=r-${_pkgname,,}
-pkgver=1.0.6
-pkgrel=1
-pkgdesc='Collection of Functions for Matrix Calculations'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Collection of Functions for Matrix Calculations"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0bc7d2f11f62d8b1969474defe27c924a243ccba0c856d585f317f6caa07f326')
+md5sums=('3b7acd84cfbe8085fab05d2f40ff0c79')
+b2sums=('b9f4a3af74abf04c32bf9a3acaafa23cc6ea42fd45e79add4213c909501adaff4331947eeb925c1eec6f142d5dd8e75e92e675430de5ac6d793356e9a1df36c8')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
