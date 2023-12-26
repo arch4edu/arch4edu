@@ -1,15 +1,14 @@
-# system requirements: GNU Make, C++11
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Boom
 _pkgver=0.9.14
 pkgname=r-${_pkgname,,}
-pkgver=0.9.14
-pkgrel=1
-pkgdesc='Bayesian Object Oriented Modeling'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('LGPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Bayesian Object Oriented Modeling"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('LGPL-2.1-only')
 depends=(
   r
 )
@@ -17,14 +16,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('212d1d64b4a04d60fdaece47aebbe7668203d09cb5477808de3f2c5b3b2c7d80')
+md5sums=('a9d64876d3c5c6e4166a406cc8c16d87')
+b2sums=('cb56eb9a516bc68e2b0712d0cefa078c843205e07fce456d593d7618e7f399270552913e85a0162fb6412db03a3ed0b287d3942049b0e9c657fdc1209ccb03aa')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
