@@ -2,7 +2,7 @@
 # Contributor: Samuel Williams <samuel.williams@oriontransfer.co.nz>
 pkgname=scotch
 pkgver=7.0.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering. This is the all-inclusive version (MPI/serial/esmumps)."
 url="https://gitlab.inria.fr/scotch/scotch"
 license=("custom:CeCILL-C")
@@ -21,22 +21,24 @@ prepare(){
 }
 
 build() {
-  cmake -S ${pkgname}-v${pkgver} -B build -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=ON \
-      -DINSTALL_METIS_HEADERS=OFF \
-      -DCOMMON_PTHREAD_FILE=ON \
-      -DSCOTCH_PTHREAD=ON \
-      -DSCOTCH_PTHREAD_MPI=ON \
-      -DCOMMON_PTHREAD_AFFINITY_LINUX=ON
-  cmake --build build --parallel
+  cmake -S ${pkgname}-v${pkgver} \
+        -B build \
+        -D CMAKE_INSTALL_PREFIX:PATH=/usr \
+        -D CMAKE_BUILD_TYPE:STRING=Release \
+        -D BUILD_SHARED_LIBS:BOOL=ON \
+        -D INSTALL_METIS_HEADERS:BOOL=OFF \
+        -D COMMON_PTHREAD_FILE:BOOL=ON \
+        -D SCOTCH_PTHREAD:BOOL=ON \
+        -D SCOTCH_PTHREAD_MPI:BOOL=ON \
+        -D COMMON_PTHREAD_AFFINITY_LINUX:BOOL=ON
+  make -C build
 }
 
 check() {
   if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
     export _libcuda=0
   fi
-  cmake --build build --parallel --target test
+  make -C build test
 }
 
 package() {
