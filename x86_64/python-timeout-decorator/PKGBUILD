@@ -3,11 +3,11 @@
 _name=timeout-decorator
 pkgname=python-${_name}
 pkgver=0.5.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Timeout decorator for Python"
-arch=('i686' 'x86_64' 'armv6')
+arch=('any')
 depends=('python')
-makedepends=('python-setuptools')
+makedepends=(python-build python-installer python-setuptools python-wheel)
 url="https://github.com/pnpnpn/timeout-decorator"
 license=('MIT')
 options=(!emptydirs)
@@ -16,15 +16,13 @@ source=("https://files.pythonhosted.org/packages/source/t/${_name}/${_name}-$pkg
 build() {
   cd "$srcdir/${pkgname#python-}-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$srcdir/${pkgname#python-}-$pkgver"
 
-  python setup.py install \
-    --root="$pkgdir" \
-    --optimize=1
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 
-md5sums=('8545649e70b3ca43bcff11f08a996c3e')
+sha256sums=('6a2f2f58db1c5b24a2cc79de6345760377ad8bdc13813f5265f6c3e63d16b3d7')
