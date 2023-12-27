@@ -4,7 +4,7 @@
 
 pkgname=vcmi
 pkgver=1.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Open-source engine for Heroes of Might and Magic III"
 arch=('i686' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
 url="http://vcmi.eu"
@@ -12,7 +12,7 @@ license=('GPL2')
 depends=('boost-libs' 'ffmpeg' 'sdl2_image' 'sdl2_mixer' 'sdl2_ttf' 'qt5-base' 'qt5-tools' 'libxkbcommon-x11'
          'desktop-file-utils' 'gtk-update-icon-cache' 'hicolor-icon-theme' 'tbb' 'fuzzylite'
          'luajit')
-makedepends=('boost' 'cmake' 'git')
+makedepends=('boost' 'cmake' 'git' 'ccache')
 optdepends=('innoextract: required by vcmibuilder' 'unshield: required by vcmibuilder' 'unzip: required by vcmibuilder')
 provides=('vcmi')
 conflicts=('vcmi')
@@ -34,7 +34,9 @@ build() {
     -DENABLE_TEST=OFF \
     -DFORCE_BUNDLED_FL=OFF \
     -DCMAKE_BUILD_TYPE='Release' \
-    -DCMAKE_POLICY_DEFAULT_CMP0074=NEW
+    -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+    -DCMAKE_CXX_COMPILER_LAUNCHER='ccache' \
+    -DCMAKE_C_COMPILER_LAUNCHER='ccache'
   make
 }
 
