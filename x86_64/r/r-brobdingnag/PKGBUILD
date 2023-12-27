@@ -3,12 +3,12 @@
 _pkgname=Brobdingnag
 _pkgver=1.2-9
 pkgname=r-${_pkgname,,}
-pkgver=1.2.9
-pkgrel=3
-pkgdesc='Very Large Numbers in R'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=5
+pkgdesc="Very Large Numbers in R"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
@@ -17,14 +17,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f9012d250bc2a0f47815d6a7c06df2d4ddf3d8bab2d3b75e8cdefd964d20e91e')
+md5sums=('0933a3366ef2f614998e8feee06473cc')
+b2sums=('2fa605c4a16fe95fa169f61f301ddcef16ecc8d0e87498fd409d23db4e9541291902f610afe93e18b932edfe49d11aa738ccd39a51e62e5b7962d1659d2f0860')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
