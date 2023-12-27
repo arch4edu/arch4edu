@@ -6,13 +6,13 @@
 # This PKGBUILD is maintained on github:
 # https://github.com/michaellass/AUR
 
-_abbrv=cf71cb48dbd78b2d85856e689e2834f14b91fdbc
+_abbrv=5a48c1b35b762f7c14a973099dd53bc686413498
 _locales=3fd551ca87ea464f89b1509e4987015691f3132b
-_styles=010b77c19b0928db4cc046258d6797a937e0f460
+_styles=9c43a7dacc170d7f0225b53603e5dbc1666aaeb0
 
 pkgname=jabref
-pkgver=5.11
-pkgrel=3
+pkgver=5.12
+pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
@@ -27,10 +27,10 @@ source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v$
         styles-${_styles}.tar.gz::https://github.com/citation-style-language/styles/archive/${_styles}.tar.gz
         jabref.sh
         jabref.desktop)
-sha256sums=('d09666f240a9ba8a4bb1759b44a676e723f7b48477e57ef0189349ad4489b822'
-            '9345f022dca8d341928adecd0e82be00b205371da71ec0109d86a20c4b9b25c2'
+sha256sums=('ce0bef26c6ace8ec5dc065d83084bfd1c5940210d5bc9c30fe7a1610ea7e342b'
+            '22bf841a23510f741be576afcc921fac5c2efd2fe39abd64fc6b936da253e2ae'
             'a2533c5dfc43de52e8acedd656c5af257c7da4baf8dda844b81c7f98d4e018e8'
-            'c5629699d899cc02d09062c76f8c8e6a0d2f44c99ef402b6671b0aa46b942372'
+            '1b36b4457533158d6ac1f7fae356d835a1760e2c6b3199604f5c1473d618ba0e'
             '6a377ca631aab1d6a9bba927714e0571a19fbf4c1bb6b798921ca254e3e0588f'
             'b0e3ed5cde4072a2d10de887b50217c03bbe30a1ea9b39bea1255ea80db15b77')
 
@@ -71,7 +71,7 @@ package() {
   install -Dm644 jabref.desktop "${pkgdir}"/usr/share/applications/${pkgname}.desktop
 
   cd ${pkgname}-${pkgver}
-  install -Dm644 LICENSE.md "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.md
+  install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
   install -Dm644 src/main/resources/icons/jabref.svg "${pkgdir}"/usr/share/pixmaps/${pkgname}.svg
 
   # script to support browser extensions
