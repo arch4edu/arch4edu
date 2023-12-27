@@ -3,12 +3,12 @@
 _pkgname=SuppDists
 _pkgver=1.1-9.7
 pkgname=r-${_pkgname,,}
-pkgver=1.1.9.7
-pkgrel=4
-pkgdesc='Supplementary Distributions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="Supplementary Distributions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-rcppziggurat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6b5527e2635c0ff762eb7af8154704c85e66d7f79a9524089a5c98dfa94dab08')
+md5sums=('2d385b616b980e5187cf5bd8efdbaa4a')
+b2sums=('1784969cb99caddddb81142efc401ce50db7be39074ed6b0179b2ef1f51d6d39d8362e96050cbaa37ab66ce2f1f14a06b39c4bdda279a58328688ad9fae96f2c')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
