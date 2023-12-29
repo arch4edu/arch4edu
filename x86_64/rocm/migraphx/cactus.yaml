@@ -1,8 +1,6 @@
 nvchecker:
   - source: aur
     aur:
-depends:
-  - x86_64/blaze
 group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
