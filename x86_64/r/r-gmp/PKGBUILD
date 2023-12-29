@@ -1,33 +1,32 @@
-# system requirements: gmp (>= 4.2.3)
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gmp
 _pkgver=0.7-3
 pkgname=r-${_pkgname,,}
-pkgver=0.7.3
-pkgrel=1
-pkgdesc='Multiple Precision Arithmetic'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Multiple Precision Arithmetic"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
-  r
   gmp
+  r
 )
 optdepends=(
-  r-mass
   r-rmpfr
   r-round
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('606d0f7fbbf81ad61dcfa5e83002fc274a5ebf6b4ff5c9a9b69f141f886ac665')
+md5sums=('a5d59ee060a3b2f83f01df8ee48343c5')
+b2sums=('6f4affd57c1537a72c1680865c806fbf1014b1efbb751025a19d39602b4b09382d08958b0a942a662815c021d580849297364b9bfbcc9784c8577271dc5595e0')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
