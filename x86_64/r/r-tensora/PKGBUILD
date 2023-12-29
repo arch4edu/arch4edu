@@ -3,24 +3,25 @@
 _pkgname=tensorA
 _pkgver=0.36.2.1
 pkgname=r-${_pkgname,,}
-pkgver=0.36.2.1
-pkgrel=1
-pkgdesc='Advanced Tensor Arithmetic with Named Indices'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Advanced Tensor Arithmetic with Named Indices"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL)
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('06588261fe7dff6a8edafe2b9d436b39a3b46c754f2ed327ae6322561a617db7')
+md5sums=('262cae742a4518d5e16fd13aa45158cc')
+b2sums=('df87d0fc1fdd22ce56c806b4ff2aaad9e95930b19c28e3711bbc621e513e0b81ccf49c97b052e512db515e5db2a99d22c9e07e1ece05c3c8575e988c4437053e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
