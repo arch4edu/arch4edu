@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=vcd
-_pkgver=1.4-11
+_pkgver=1.4-12
 pkgname=r-${_pkgname,,}
-pkgver=1.4.11
+pkgver=1.4.12
 pkgrel=1
 pkgdesc='Visualizing Categorical Data'
 arch=('any')
@@ -22,7 +22,7 @@ optdepends=(
   r-mvtnorm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7a54e855689e1429d46e0d4d7a956f96b0ad2fd0c7084fa023902c55849e0932')
+sha256sums=('c931ef115529931cddb1d5caec4d4d3569ebf12aadde719b2f5019812c9ded88')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
