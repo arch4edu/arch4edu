@@ -4,12 +4,12 @@
 _pkgname=ini
 _pkgver=0.3.1
 pkgname=r-${_pkgname,,}
-pkgver=0.3.1
-pkgrel=10
+pkgver=${_pkgver//-/.}
+pkgrel=12
 pkgdesc="Read and Write '.ini' Files"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL3)
 depends=(
   r
 )
@@ -17,14 +17,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7b191a54019c8c52d6c2211c14878c95564154ec4865f57007953742868cd813')
+md5sums=('b0e2d7388fc69327d3c4bbaab9067f3d')
+b2sums=('f106cb98cfdceec65ad56206f25c433c74fa91f96751730888ad42f7453f6faa0811470fd00e038e2a0c05c024ed7118369e7175634315f7a0b5e45086a6f072')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
