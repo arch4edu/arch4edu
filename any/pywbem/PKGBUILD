@@ -4,10 +4,10 @@
 _name='pywbem'
 pkgbase="${_name}"
 pkgname=('python-pywbem')
-pkgver='1.4.1'
-pkgrel=4
+pkgver='1.6.2'
+pkgrel='1'
 pkgdesc='A WBEM client and related utilities'
-arch=('any')
+arch=('x86_64' 'aarch64')
 url="https://github.com/${_name}/${_name}"
 depends=('python-pyyaml' 'python-six' 'python-requests'
 	 'python-urllib3' 'python-nocasedict' 'python-nocaselist'
@@ -16,9 +16,9 @@ makedepends=('python' 'python-setuptools' 'python-wheel'
 	     'python-mock' 'python-ply')
 license=('LGPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('8c20d6e6e4a6987531180b3ddf51c04e175d3044359f3385d2fdac624b77af8b')
+sha256sums=('0437e869719effd85ba7316d5db1e8783dd4ccec4b05e95d49e878265abfc820')
 
 package() {
-  cd "${srcdir}/${_name}-${pkgver}"
+  cd "${_name}-${pkgver}"
   python setup.py install -O1 --root="${pkgdir}"
 }
