@@ -1,21 +1,33 @@
+# Contributor: robertfoster
 # Maintainer: Tobias Borgert <tobias.borgert@gmail.com>
 
 pkgname=simpleini
-pkgver=4.19
+pkgver=4.22
 pkgrel=1
 pkgdesc="Cross-platform C++ library providing a simple API to read and write INI-style configuration files"
-arch=('any')
+arch=('x86_64' 'aarch64')
 url="https://github.com/brofield/simpleini"
 license=('MIT')
-depends=()
-makedepends=()
-optdepends=()
-source=(https://github.com/brofield/simpleini/archive/$pkgver.tar.gz)
-sha256sums=('dc10df3fa363be2c57627d52cbb1b5ddd0689d474bf13908e822c1522df8377e')
+makedepends=('cmake' 'gtest')
+source=("${url}/archive/refs/tags/v$pkgver.tar.gz")
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  cmake . -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DINSTALL_GTEST=OFF \
+    -DSIMPLEINI_USE_SYSTEM_GTEST=ON
+  cmake --build build
+}
 
 package() {
-  install -D -m644 "${srcdir}"/"${pkgname}"-"${pkgver}"/SimpleIni.h "${pkgdir}"/usr/include/SimpleIni.h
-  install -D -m644 "${srcdir}"/"${pkgname}"-"${pkgver}"/ConvertUTF.h "${pkgdir}"/usr/include/ConvertUTF.h
-  install -D -m644 "${srcdir}"/"${pkgname}"-"${pkgver}"/ConvertUTF.c "${pkgdir}"/usr/src/SimpleIni/ConvertUTF.c
-  install -D -m644 "${srcdir}"/"${pkgname}"-"${pkgver}"/LICENCE.txt "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENCE.txt
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  DESTDIR="${pkgdir}" \
+    cmake --install build
+
+  install -D -m644 LICENCE.txt \
+    "${pkgdir}"/usr/share/licenses/${pkgname}"/LICENSE.txt"
 }
+
+sha256sums=('b3a4b8f9e03aabd491aa55fd57457115857b9b9c7ecf4abf7ff035ca9d026eb8')
