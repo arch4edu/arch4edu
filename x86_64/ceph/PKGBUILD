@@ -4,8 +4,8 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=18.2.0
-pkgrel=2
+pkgver=18.2.1
+pkgrel=1
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL')
@@ -88,9 +88,6 @@ source=(
   # https://github.com/boostorg/beast/issues/2594
   'ceph-17.2.5-rgw-client-boost-string-view.patch'
 
-  # Fixes node-gyp errors due to py3.11 incompatibilities
-  'ceph-17.2.6-mgr-dashboard-node-version.patch'
-
   # Fixes inspect.getargspec errors due to removal in py3.11
   'ceph-17.2.6-mgr-dashboard-cherrypy-18.patch'
 
@@ -111,7 +108,7 @@ source=(
   # pattern
   'ceph-18.2.0-backport-log-runway-expansion.patch'
 )
-sha512sums=('fe6a3ca4227cc05b5effc33a02670c466583ec9e4c7c025241248223992254e6e6551d7db486d5ead36bf0ba922d54e0aabc2aaf456d4593679376ec88bd971a'
+sha512sums=('88e1c18bc6c824b6203cf026cca4c9409000e7cf5b2b986e22ab74d2790d8b93d91556bd3af15a320dbdd0cf2302308f0b2c75fd1243bc5a65f76fc6b3d70736'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
@@ -123,7 +120,6 @@ sha512sums=('fe6a3ca4227cc05b5effc33a02670c466583ec9e4c7c025241248223992254e6e65
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '612faebfb5eec3651832f349ea3c23b50d2386889ff77592b0acff653049efdc5c2254f63c30d88b9a730813bf1f1945dda0d0beab0db7db3e0708ba8d057a40'
             '02ca1a9bf15f9cd6f474f264ba2bf66ae725bac990a7cac315dabe377c66935a7afd8117f18a1f82c78bdf9ab2c3e5a2a227f2ffc166974dd7bb99b290f1f233'
-            'd9729c33f2b8c03ab918919e3b62cbc0825314ad09596dc12984ac5964f8b421db3376b84fa26e0952e0781deb218f8aff6ba32f9c8e5a22bd27afac8dcaf6d3'
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
             'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782'
             '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1'
