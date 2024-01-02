@@ -1,25 +1,31 @@
-# system requirements: GNU make
-# Maintainer: sukanka <su975853527@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=OpenMx
 _pkgver=2.21.11
 pkgname=r-${_pkgname,,}
-pkgver=2.21.11
-pkgrel=1
-pkgdesc='Extended Structural Equation Modelling'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('Apache')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Extended Structural Equation Modelling"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(Apache)
 depends=(
-  r
-  r-bh
   r-digest
   r-lifecycle
   r-rcpp
-  r-rcppeigen
   r-rcppparallel
+)
+makedepends=(
+  gcc-fortran
+  r-bh
+  r-rcppeigen
   r-rpf
   r-stanheaders
+)
+checkdepends=(
+  r-numderiv
+  r-testthat
 )
 optdepends=(
   r-covr
@@ -38,19 +44,23 @@ optdepends=(
   r-testthat
   r-umx
 )
-makedepends=(
-  gcc-fortran
-  make
-)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('152570b9cdb2d6b91f309b352458ed1b29ae2f7ce1f97c091f84c617a14071cc')
+md5sums=('01c7dafc8a54ab6da5ff7ba5d0c0f14a')
+b2sums=('5ffb72ac38eeb578b09aa6a153c5cb2384d3242a3157ac37acb532cbc126536a09c967761ad160bb25e353fc28f7e86e63151df28f954a315f9a3ed6d1b1d73f')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  # compilation needs a lot of memory
+  MAKEFLAGS+=" -j1"
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
