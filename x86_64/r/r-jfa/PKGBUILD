@@ -1,27 +1,39 @@
-# Maintainer: sukanka <su975853527@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=jfa
 _pkgver=0.7.0
 pkgname=r-${_pkgname,,}
-pkgver=0.7.0
-pkgrel=3
-pkgdesc='Bayesian and Classical Audit Sampling'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="Statistical Methods for Auditing"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=(GPL3)
 depends=(
-  r
   r-bde
-  r-bh
   r-extradistr
   r-ggplot2
   r-rcpp
-  r-rcppeigen
   r-rcppparallel
   r-rstan
   r-rstantools
-  r-stanheaders
   r-truncdist
+)
+makedepends=(
+  r-bh
+  r-rcppeigen
+  r-stanheaders
+)
+checkdepends=(
+  r-benford.analysis
+  r-benfordtests
+  r-beyondbenford
+  r-fairness
+  r-mus
+  r-rmarkdown
+  r-samplingbook
+  r-testthat
 )
 optdepends=(
   r-benford.analysis
@@ -36,14 +48,20 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a748c6521121c989a87af0631871903c7418b9cb9f5da87646fee61bc479d794')
+md5sums=('cf512f96cfd13b56fab2669a34fb3aaf')
+b2sums=('b72eb1a9e20b382c7c0c81b85881c3c13e9c14720f3ab2b9600baebd5831e9dd47e0a5697df1ddf0e6ccbe1b71538cdc688c20dff2da665e5dc77722f7e401f5')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
