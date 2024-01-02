@@ -1,0 +1,10 @@
+--- third-party/rsutils/include/rsutils/version.h	2024-01-02 16:58:12.497365990 +0900
++++ third-party/rsutils/include/rsutils/version.h.new	2024-01-02 16:57:04.747601168 +0900
+@@ -5,6 +5,7 @@
+ 
+ #include <string>
+ #include <iosfwd>
++#include <cstdint>
+ 
+ 
+ struct tm;
