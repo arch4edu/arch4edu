@@ -7,7 +7,7 @@
 # Adapted to mkl by Simone Riva
 
 pkgname=python-numpy-mkl
-pkgver=1.26.2
+pkgver=1.26.3
 pkgrel=1
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=('x86_64')
@@ -19,7 +19,7 @@ depends=('python' 'intel-oneapi-mkl')
 makedepends=('cython' 'meson-python' 'procps-ng' 'python-build' 'python-installer')
 checkdepends=('python-pytest' 'python-hypothesis')
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-sha256sums=('f65738447676ab5777f11e6bbbdb8ce11b785e105f690bc45966574816b6d3ea')
+sha256sums=('697df43e2b6310ecc9d95f05d5ef20eacc09c7c4ecc9da3f235d39e71b7da1e4')
 
 build() {
   source /opt/intel/oneapi/setvars.sh
