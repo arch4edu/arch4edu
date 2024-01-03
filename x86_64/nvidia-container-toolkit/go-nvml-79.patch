@@ -1,0 +1,37 @@
+From b8d34ba5dc71c7b5a261bbdfdec63fe337fac2a5 Mon Sep 17 00:00:00 2001
+From: braydonk <braydonk@google.com>
+Date: Tue, 3 Oct 2023 03:32:50 +0000
+Subject: [PATCH] gen/nvml: add --export-dynamic linker flag
+
+Signed-off-by: braydonk <braydonk@google.com>
+---
+ pkg/nvml/const.go | 2 +-
+ pkg/nvml/nvml.go  | 2 +-
+ 32files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/nvml/const.go b/pkg/nvml/const.go
+index 1a0efaf..a9a3a56 100644
+--- a/pkg/nvml/const.go
++++ b/pkg/nvml/const.go
+@@ -18,7 +18,7 @@
+ package nvml
+
+ /*
+-#cgo LDFLAGS: -Wl,--unresolved-symbols=ignore-in-object-files
++#cgo LDFLAGS: -Wl,--export-dynamic -Wl,--unresolved-symbols=ignore-in-object-files
+ #cgo CFLAGS: -DNVML_NO_UNVERSIONED_FUNC_DEFS=1
+ #include "nvml.h"
+ #include <stdlib.h>
+diff --git a/pkg/nvml/nvml.go b/pkg/nvml/nvml.go
+index f63dfe8..bf2d6fc 100644
+--- a/pkg/nvml/nvml.go
++++ b/pkg/nvml/nvml.go
+@@ -18,7 +18,7 @@
+ package nvml
+
+ /*
+-#cgo LDFLAGS: -Wl,--unresolved-symbols=ignore-in-object-files
++#cgo LDFLAGS: -Wl,--export-dynamic -Wl,--unresolved-symbols=ignore-in-object-files
+ #cgo CFLAGS: -DNVML_NO_UNVERSIONED_FUNC_DEFS=1
+ #include "nvml.h"
+ #include <stdlib.h>
