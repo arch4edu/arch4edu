@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspNetwork
-_pkgver=0.18.1
+_pkgver=0.18.2
 pkgname=r-${_pkgname,,}
-pkgver=0.18.1
+pkgver=0.18.2
 pkgrel=1
 pkgdesc="Network Module for JASP"
 arch=('any')
@@ -28,7 +28,7 @@ depends=(r
   r-stringr
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('0113e128922a039ee7fd28c79229f07239cced712b61f50c2828c275a412827a')
+sha256sums=('fc57509edf219d632e5b6e8f2e7d1d213a803a48127cb546ccc6a953d15acdab')
 
 
 build() {
