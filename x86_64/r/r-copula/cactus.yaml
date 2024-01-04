@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-adgoftest
+  - x86_64/r/r-colorspace
+  - x86_64/r/r-gsl
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-pcapp
+  - x86_64/r/r-pspline
+  - x86_64/r/r-stabledist
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

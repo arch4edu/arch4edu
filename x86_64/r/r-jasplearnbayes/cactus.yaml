@@ -12,6 +12,8 @@ depends:
   - x86_64/r/r-scales
   - x86_64/r/r-ggalluvial
   - x86_64/r/r-ragg
+  - x86_64/r/r-runjags
+  - x86_64/r/r-posterior
   - x86_64/r/r-ggdist
   - x86_64/r/r-png
 build_prefix: extra-x86_64

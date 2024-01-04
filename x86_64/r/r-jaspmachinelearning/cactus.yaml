@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-auc
   - x86_64/r/r-colorspace
+  - x86_64/r/r-dalex
   - x86_64/r/r-dbscan
   - x86_64/r/r-e1071
   - x86_64/r/r-fpc
@@ -18,6 +19,7 @@ depends:
   - x86_64/r/r-glmnet
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-mvnormaltest
   - x86_64/r/r-neuralnet
   - x86_64/r/r-network
   - x86_64/r/r-partykit
