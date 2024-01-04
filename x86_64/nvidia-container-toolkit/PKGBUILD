@@ -3,14 +3,15 @@
 # Contributor: Julie Shapiro <jshapiro at nvidia dot com>
 pkgname=nvidia-container-toolkit
 pkgver=1.14.3
-pkgrel=8
+pkgrel=9
 pkgdesc="NVIDIA container runtime toolkit"
 arch=('x86_64')
 url="https://github.com/NVIDIA/nvidia-container-toolkit"
 license=('Apache')
 depends=("libnvidia-container-tools=$pkgver")
 makedepends=('git' 'go')
-conflicts=('nvidia-container-runtime-hook' 'nvidia-container-runtime<2.0.0')
+provides=('nvidia-container-runtime')
+conflicts=('nvidia-container-runtime' 'nvidia-container-runtime-hook')
 replaces=('nvidia-container-runtime-hook')
 backup=('etc/nvidia-container-runtime/config.toml')
 options=('!makeflags' '!lto')
