@@ -1,7 +1,7 @@
 # Maintainer: Miguel Revilla <yo (at) miguelrevilla.com>
 # Contributor: joyfulgirl <joyfulgirl (at) archlinux.us>
 pkgname=pspp
-pkgver=1.6.2
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="Statistical analysis program. Free replacement for SPSS."
 arch=('i686' 'x86_64')
@@ -12,11 +12,15 @@ makedepends=('python')
 optdepends=('zlib: GNUmeric support'
             'libxml2: GNUmeric support')
 options=('!libtool' '!emptydirs')
-source=("https://ftp.gnu.org/gnu/pspp/pspp-${pkgver}.tar.gz")
-md5sums=('0e2aecdf978b9de9feb94214e39185bd')
+source=("https://ftp.gnu.org/gnu/pspp/pspp-${pkgver}.tar.gz"
+		"docbuild.patch::https://git.savannah.gnu.org/cgit/pspp.git/patch/?id=d8f8542df36afc05f526af2ddd1e2782d09495e3")
+sha1sums=('8f858fea536f5c2c8f656d4954bfcce1c2462344'
+          '50ca3cd856dc0c3acba3522e4da5b2e213b3f4e9')
 
 prepare() {
 	cd "${srcdir}/${pkgname}-${pkgver}"
+
+	patch -p1 < ../docbuild.patch
 
 	./configure --prefix=/usr \
 				--sysconfdir=/etc \
