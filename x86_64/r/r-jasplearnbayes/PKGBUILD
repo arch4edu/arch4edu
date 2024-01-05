@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspLearnBayes
-_pkgver=0.18.1
+_pkgver=0.18.2
 pkgname=r-${_pkgname,,}
-pkgver=0.18.1
-pkgrel=1
+pkgver=0.18.2
+pkgrel=2
 pkgdesc="Learn Bayes Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -19,13 +19,15 @@ depends=(r
   r-scales
   r-ggalluvial
   r-ragg
+  r-runjags
+  r-posterior
   r-ggdist
   r-grid
   r-grdevices
   r-png
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('79e0ec9c155375722c0b91d3b4f2fb27558ddf33d4f473eef02074e453b0948d')
+sha256sums=('7769e1bb7bc76af8bcdd32f003e8a985e5fd6cf032daa063a4aa4bb2b09c2fe8')
 
 
 build() {
