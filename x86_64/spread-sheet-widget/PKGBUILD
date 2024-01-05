@@ -1,7 +1,7 @@
 # Maintainer: Miguel Revilla <yo at miguelrevilla dot com>
 
 pkgname=spread-sheet-widget
-pkgver=0.8
+pkgver=0.10
 pkgrel=1
 pkgdesc="Library for Gtk+ which provides a widget for viewing and manipulating 2 dimensional tabular data"
 arch=('i686' 'x86_64')
@@ -10,7 +10,7 @@ license=("GPL3")
 depends=(gtk3)
 makedepends=(python)
 source=("https://alpha.gnu.org/gnu/ssw/${pkgname}-${pkgver}.tar.gz")
-md5sums=('429ab7326a95f237c680d770c226a7c0')
+sha1sums=('7ee14a5f8f18a8c88193b5ee671a1223dc3fd499')
 
 prepare() {
 	cd "${srcdir}/${pkgname}-${pkgver}"
