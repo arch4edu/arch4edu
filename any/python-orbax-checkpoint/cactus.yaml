@@ -3,7 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/python-etils
+  - any/python-etils
   - x86_64/python-jax
   - x86_64/python-tensorstore
 build_prefix: extra-x86_64
