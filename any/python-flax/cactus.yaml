@@ -3,8 +3,6 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any/python-tensorstore
-  - x86_64/python-jax
   - x86_64/python-optax
   - x86_64/python-orbax-checkpoint
 build_prefix: extra-x86_64
