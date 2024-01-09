@@ -6,7 +6,7 @@
 pkgname=openblas-lapack
 _PkgName=OpenBLAS
 _pkgname=openblas
-pkgver=0.3.25
+pkgver=0.3.26
 # grep VERSION "${srcdir}/${_PkgName}-${pkgver}"/lapack-netlib/README.md | tail -n 1 | cut -d ' ' -f 2
 _lapackver=3.11.0
 _blasver=3.11.0
@@ -21,13 +21,13 @@ provides=('openblas' "blas=${_blasver}" "lapack=${_lapackver}" "cblas=${_blasver
 conflicts=('openblas' 'blas' 'lapack' 'cblas' 'lapacke')
 options=(!emptydirs)
 source=(${_PkgName}-${pkgver}.tar.gz::https://github.com/xianyi/OpenBLAS/releases/download/v${pkgver}/OpenBLAS-$pkgver.tar.gz)
-sha256sums=('4c25cb30c4bb23eddca05d7d0a85997b8db6144f5464ba7f8c09ce91e2f35543')
+sha256sums=('4e6e4f5cb14c209262e33e6816d70221a2fe49eb69eaf0a06f065598ac602c68')
 
 # Add the following line to the _config variable if you want to set the number of make jobs
 #  MAKE_NB_JOBS=2 \
 _config="FC=gfortran USE_OPENMP=1 USE_THREAD=1 \
   USE_TLS=1 \
-  MAJOR_VERSION=${_lapackver:0:1} NO_STATIC=1"
+  MAJOR_VERSION=0 NO_STATIC=1"
 
 build(){
   cd "${_PkgName}-${pkgver}"

@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=patchwork
-_pkgver=1.1.3
+_pkgver=1.2.0
 pkgname=r-${_pkgname,,}
-pkgver=1.1.3
-pkgrel=3
+pkgver=1.2.0
+pkgrel=1
 pkgdesc='The Composer of Plots'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -28,7 +28,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e976424f4bd88e075f2ca6836db2aa1eb5fa7ad6a20ad0a34a4d5047d59ad71e')
+sha256sums=('cc31ea13560c424de9bfe2287d926a7d9e6cc8da2d5561402bb145b4f51b68a1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
