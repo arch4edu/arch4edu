@@ -1,0 +1,9 @@
+--- a/pyproject.toml	2023-02-14 18:45:43.000000000 +0300
++++ b/pyproject.toml	2023-02-16 13:32:27.818838893 +0300
+@@ -3,5 +3,5 @@
+     "setuptools>=30.3.0",
+     "wheel",
+     "setuptools_scm",
+-    "oldest-supported-numpy",
++    "numpy",
+ ]
