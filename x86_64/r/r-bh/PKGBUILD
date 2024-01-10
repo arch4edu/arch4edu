@@ -4,25 +4,25 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=BH
-_pkgver=1.81.0-1
+_pkgver=1.84.0-0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Boost C++ Header Files"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(Boost)
 depends=(
   boost
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('897f0d1cd97ba1047eff09acf68c07a8')
-sha256sums=('f51c8badd6f181e06353314e1d15a6ec1495cc498ee74b6fa4ea8aba6e97ff64')
+md5sums=('34c6a9cf6213e6e93417b3168c4c84b4')
+b2sums=('3747e6ad5c8534abf9ca54159002628fbfdd9adec9ed28cee4e38a5e6a96e2605ce1ed63928c26e04abcd81d3df592b5fcde4281762407aad98ecdca350ac873')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
