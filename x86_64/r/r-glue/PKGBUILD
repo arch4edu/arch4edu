@@ -4,44 +4,38 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=glue
-_pkgver=1.6.2
+_pkgver=1.7.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=9
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Interpreted String Literals"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(MIT)
 depends=(
   r
 )
 optdepends=(
-  r-covr
   r-crayon
   r-dbi
   r-dplyr
-  r-forcats
-  r-ggplot2
   r-knitr
   r-magrittr
-  r-microbenchmark
-  r-r.utils
+  r-rlang
   r-rmarkdown
-  r-rprintf
   r-rsqlite
-  r-stringr
   r-testthat
   r-vctrs
   r-waldo
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4a92a6b8f8015a2ac8b0bfeac7f163fc')
-sha256sums=('9da518f12be584c90e75fe8e07f711ee3f6fc0d03d817f72c25dc0f66499fdbf')
+md5sums=('e4e7b07da0c02b008d9a9759b2acbc99')
+b2sums=('24dfe8da1b1c6aa2f2696919adc37388464b6467bfdaaeacfaf93f13a06259c126e8bd94f5bac6fd9d4a5a6403fd342911b43e2593a60ff34e360cd62acfe0c1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
