@@ -1,6 +1,9 @@
 nvchecker:
   - source: aur
     aur:
+  - source: github
+    github: LinuxCNC/linuxcnc
+  - alias: python
 depends:
   - any/bwidget
   - any/python-yapps2
