@@ -1,0 +1,40 @@
+# Maintainer: Will Handley <wh260@cam.ac.uk> (aur.archlinux.org/account/wjhandley)
+# Maintainer: Daniel Bershatsky <d.bershatsky2@skoltech.ru> (aur.archlinux.org/account/daskol)
+pkgname=python-flax
+_pkgname=${pkgname#python-}
+pkgver=0.7.5
+pkgrel=1
+pkgdesc='A neural network library and ecosystem for JAX designed for flexibility'
+arch=('any')
+url='https://github.com/google/flax'
+license=('Apache')
+depends=(
+    'python-jax'
+    'python-msgpack'
+    'python-numpy'
+    'python-optax'
+    'python-orbax-checkpoint'
+    'python-rich'
+    'python-tensorstore'
+    'python-typing_extensions'
+    'python-yaml'
+)
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-setuptools-scm' 'python-wheel')
+optdepends=(
+    'python-matplotlib: Export to TensorBoard.'
+    'tensorboard: TensorBoard visualization and logging.'
+)
+source=("flax-$pkgver.tar.gz::https://github.com/google/flax/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('ba8a87c8a7df880e1cc701783827494af1d312251f6bd0e1dfe1bbd8734d6400')
+
+build() {
+    python -m build -nw $_pkgname-$pkgver
+}
+
+package() {
+    python -m installer \
+        --compile-bytecode 1 \
+        --destdir=$pkgdir \
+        $_pkgname-$pkgver/dist/$_pkgname-$pkgver*.whl
+}
