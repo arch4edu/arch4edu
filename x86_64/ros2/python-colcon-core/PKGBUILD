@@ -2,7 +2,7 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 
 pkgname=python-colcon-core
-pkgver=0.15.0
+pkgver=0.15.1
 pkgrel=1
 pkgdesc="Command line tool to build sets of software packages."
 arch=(any)
@@ -13,17 +13,18 @@ depends=('python-pytest' 'python-pytest-runner' 'python-pytest-rerunfailures'
          'python-distlib' 'python-notify2' 'python-empy')
 makedepends=('python-setuptools')
 source=("$pkgname-$pkgver.tar.gz"::"https://github.com/colcon/colcon-core/archive/$pkgver.tar.gz")
-sha256sums=('f96c6f34bd780f70570a03d5606f5831d5800db6a06983de43e040fe8a10e11b')
+sha256sums=('b8b019e9dfe871e9a12e029bb37b31ecc9fb7b869b51c9abdcc9a7da8ec25809')
 
 _pkgname=colcon-core
 
 build() {
-    cd ${srcdir}/${_pkgname}-${pkgver}
-    python setup.py build
+    cd "$_pkgname-${pkgver}"
+    python -m build --wheel --no-isolation
 }
 
 package() {
     cd ${srcdir}/${_pkgname}-${pkgver}
-    python setup.py install --root="$pkgdir" --optimize=1
+    python -m installer --destdir="$pkgdir" dist/*.whl
     install -D -m644 README.rst -t "$pkgdir/usr/share/doc/$pkgname"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")
