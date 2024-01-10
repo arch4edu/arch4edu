@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: LinuxCNC/linuxcnc
+  - alias: python
+depends:
+  - any/bwidget
+  - any/python-yapps2
+  - x86_64/tkimg
+  - x86_64/tclx
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
