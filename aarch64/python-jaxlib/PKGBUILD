@@ -2,7 +2,7 @@
 
 pkgname=python-jaxlib
 pkgver=0.4.23
-pkgrel=2
+pkgrel=3
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/google/jax/'
@@ -22,7 +22,7 @@ build() {
         --bazel_startup_options="--output_user_root=$srcdir/bazel"\
         --bazel_options='--action_env=JAXLIB_RELEASE' \
         --noenable_cuda \
-        --target_cpu_feature=release
+        --target_cpu_features=release
 }
 
 package() {
