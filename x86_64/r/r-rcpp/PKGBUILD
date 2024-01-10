@@ -4,13 +4,13 @@
 # Contributor: Matt Frichtl <frichtlm@gmail.com>
 
 _pkgname=Rcpp
-_pkgver=1.0.11
+_pkgver=1.0.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Seamless R and C++ Integration"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(GPL)
 depends=(
   r
@@ -24,18 +24,21 @@ optdepends=(
   r-rbenchmark
   r-tinytest
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5b9b45cde810d8b9762dd58c5d80da3a')
-sha256sums=('df757c3068599c6c05367900bcad93547ba3422d59802dbaca20fd74d4d2fa5f')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "fix-version.patch")
+md5sums=('85d8f0c330b934bc8f498be40185a315'
+         '50440aea988c07da6fbcfc6ad945679e')
+b2sums=('511f3071d81531cdbb6de9b633e1406bb865a462587ea1e0e36c9d760cd9ea80a4ae67b44f2e2b7b5861fde727c0324bf9c3ea2b3cb9085f829fb1cb8dcd88c5'
+        'a11024a357cfda063cd3599290ba58f749b8107d888407ec333f1cd2558ba6cdd07a24e7d61aff74d176e31b9470b475e5e86c682b71637e2bea9776b714835d')
 
 prepare() {
-  # upstream issue https://github.com/RcppCore/Rcpp/issues/1251
-  sed -i 's/-447.1974945/-447.197893678525/' "$_pkgname/inst/tinytest/test_stats.R"
+  # fix version definition https://github.com/RcppCore/Rcpp/issues/1294
+  patch -Np1 -i fix-version.patch
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
