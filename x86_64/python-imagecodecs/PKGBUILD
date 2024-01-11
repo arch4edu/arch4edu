@@ -2,8 +2,8 @@
 
 _name=imagecodecs
 pkgname=python-imagecodecs
-pkgver=2023.9.18
-pkgrel=1
+pkgver=2024.1.1
+pkgrel=2
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
@@ -15,6 +15,7 @@ depends=(
   brunsli
   cfitsio
   charls
+  giflib
   jxrlib
   lcms2
   lerc
@@ -23,14 +24,13 @@ depends=(
   libdeflate
   libheif
   libjpeg-turbo
-  libjxl
+  # libjxl
   libmng
   libpng
   libtiff
   libwebp
   lzfse
   openjpeg2
-  python-imread
   python-numpy
   snappy
   zfp
@@ -47,8 +47,8 @@ makedepends=(
 source=("${_name}-${pkgver}.tar.gz::https://github.com/cgohlke/imagecodecs/archive/v${pkgver}.tar.gz"
         "0001.fix-deps.patch"
 )
-sha256sums=('f2bd9f9e04a3e98fc785b206cb86ec5aaca659a200f5f2c7c62b3e9e08fc7946'
-            '53fbec4857eb1bfc306cafd4835934ac7371e17a82b5e66daf21b2668d3b0b29')
+sha256sums=('6af69181a3fe828f9fea5fd440af1b88610fd05665665e6885c3a84c1055b648'
+            '3f698523d4f941bc83a2c58b1aa55bcac0484e284f5d6b1b00da2dcfc5caa14b')
 
 prepare() {
   cd "${_name}-${pkgver}"
