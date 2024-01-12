@@ -8,13 +8,13 @@
 # Contributor: Francois Garillot <francois[@]garillot.net>
 
 _pkgname=digest
-_pkgver=0.6.33
+_pkgver=0.6.34
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Create Compact Hash Digests of R Objects"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(GPL)
 depends=(
   google-crc32c
@@ -31,8 +31,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f47359e9e90e279714c9fd50a47ad2ed')
-sha256sums=('be702c886b1639be7eda4ea25a4261b30ce418c580f79bd78ec8d6cb4d327819')
+md5sums=('2433ecb059ed52176f16aab34f9238cf')
+b2sums=('9046fdea4f2fabe4a680cb55ecc058322224eccb04eec442c5156b342eb9c74d79a2cc730591a32d5c7b6f01796a89695a4733a5a1afe296881a107fafb5b65b')
 
 prepare() {
   cd "$_pkgname/src"
@@ -46,8 +46,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
