@@ -1,7 +1,7 @@
 # Maintainer: Alexander Bocken <alexander@bocken.org>
 
 _cranname=httr2
-_cranver=0.2.3
+_cranver=1.0.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -9,10 +9,10 @@ pkgdesc="Perform HTTP Requests and Process the Responses"
 arch=('any')
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
-depends=('r>=3.4' 'r-cli>=3.0.0' 'r-curl' 'r-glue' 'r-magrittr' 'r-openssl' 'r-r6' 'r-rappdirs' 'r-rlang>=1.0.0' 'r-withr')
-optdepends=('r-askpass' 'r-bench' 'r-clipr' 'r-covr' 'r-docopt' 'r-httpuv' 'r-jose' 'r-jsonlite' 'r-knitr' 'r-purrr' 'r-rmarkdown' 'r-testthat>=3.0.0' 'r-tibble' 'r-webfakes' 'r-xml2')
+depends=('r>=3.4' 'r-cli>=3.0.0' 'r-curl' 'r-glue' 'r-magrittr' 'r-openssl' 'r-r6' 'r-rappdirs' 'r-rlang>=1.1.0' 'r-vctrs>=0.6.3' 'r-withr')
+optdepends=('r-askpass' 'r-bench' 'r-clipr' 'r-covr' 'r-docopt' 'r-httpuv' 'r-jose' 'r-jsonlite' 'r-knitr' 'r-purrr' 'r-rmarkdown' 'r-testthat>=3.1.8' 'r-tibble' 'r-webfakes' 'r-xml2')
 source=(https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz)
-sha256sums=(352032029512f28f6f440ace0078e859ad3945d6b20841963b372523b6974b3d)
+sha256sums=(cb852d6f560c329a7dc17aa760f09a0950413513dc8abfc3facb6418b2934a49)
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
@@ -23,4 +23,3 @@ package() {
 
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-source=(https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz)
