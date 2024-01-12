@@ -10,10 +10,9 @@ depends:
   - x86_64/r/r-r6
   - x86_64/r/r-rappdirs
   - x86_64/r/r-rlang
+  - x86_64/r/r-vctrs
   - x86_64/r/r-withr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: |
-  aur-pre-build
-  echo 'source=(https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz)' >> PKGBUILD
+pre_build: aur-pre-build
 post_build: aur-post-build
