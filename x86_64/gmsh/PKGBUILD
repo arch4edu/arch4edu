@@ -2,8 +2,8 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=('gmsh' 'gmsh-docs')
-pkgver=4.12.0
-pkgrel=2
+pkgver=4.12.1
+pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities."
 arch=('x86_64')
 url="https://gmsh.info"
@@ -12,12 +12,10 @@ makedepends=('cmake' 'desktop-file-utils' 'sed' 'swig' 'texlive-meta' 'voro++'
              'fltk' 'med-openmpi' 'opencascade' 'cairo' 'metis' 'alglib' 'ann'
              'glu' 'cgns' 'lapack')
 options=(!emptydirs)
-source=("${url}/src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion
-warning-python-bindings.patch)
-sha256sums=('2a6007872ba85abd9901914826f6986a2437ab7104f564ccefa1b7a3de742c17'
+source=("${url}/src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
+sha256sums=('59ee2118ba7b099e9d1502572c9af4221501af955103d2b687aaa3890d13325e'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
-            '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef'
-            '7f0bba9bfe1d636b6758af394d97778791acb0e3484098128af379219a9a9574')
+            '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
 prepare() {
    cd "${srcdir}/${pkgname}-${pkgver}-source"
@@ -29,7 +27,6 @@ prepare() {
        -i src/fltk/graphicWindow.cpp
    sed -e "s|https://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
        -i src/fltk/helpWindow.cpp
-   patch -p1 -i ../warning-python-bindings.patch
 }
 
 build() {
