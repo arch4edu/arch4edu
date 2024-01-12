@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspTools
-_pkgver=0.18.2
+_pkgver=0.18.3
 pkgname=r-${_pkgname,,}
-pkgver=0.18.2
-pkgrel=2
+pkgver=0.18.3
+pkgrel=1
 epoch=1
 pkgdesc="Helps preview and debug JASP analyses"
 arch=('any')
@@ -26,7 +26,7 @@ depends=(r
 'r-archive'
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('3afa834b35c298864f1c38270dee99812afbd045058503d066b17670201b961e')
+sha256sums=('e1fc1f5d1823e7c1a4f71a47fb608bd036bbc3af024faa3015a3eafb19d62dda')
 
 
 build() {
