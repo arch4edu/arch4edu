@@ -2,13 +2,13 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ddalpha
-_pkgver=1.3.13
+_pkgver=1.3.15
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Depth-Based Classification and Calculation of Data Depth"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(GPL2)
 depends=(
   r-geometry
@@ -21,12 +21,12 @@ makedepends=(
   r-bh
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('60c444f7f82ed56607c87df9c7caec05')
-sha256sums=('e4a60a4e0950a3587db2a2d5958ab4fbe07b2548f7c3d4795912fe45c77a4eae')
+md5sums=('eee5e25fb1559d4aebf0c4343c1214c7')
+b2sums=('5e25e4a2cbedbbd82f822a76502862811b2ca2612cc4cff74bf12b0d9972db7b2b4001cd3f3c35aa2063af547d808c23fc4362226a5f0cf31becadde32e029e8')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
