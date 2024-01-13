@@ -6,7 +6,7 @@
 # Contributor: Lydgate <archlinux@vo.racio.us>
 
 _pkgname=DBI
-_pkgver=1.2.0
+_pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,6 +21,7 @@ checkdepends=(
   r-testthat
 )
 optdepends=(
+  r-arrow
   r-blob
   r-covr
   r-dbitest
@@ -41,8 +42,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9ae1dc1cf5b28cb52836617fbb233674')
-b2sums=('3485bdaed29f308fa798d6af5a8c8836f37a2218bc9bf810002bcdb31abaf68865605363fad4226bbb886375c177f3e81e23fe9b263137b041721399435f403b')
+md5sums=('5c74f3d0cbf627e67eb4d0557369411b')
+b2sums=('5c68048b9aa25161dda417128e0444184e3be249373c38277e4de40a4165b49e9020db603e1682cbacbb06d63e839afeafdfc1933915d3c0218fbd4fea28430b')
 
 build() {
   mkdir build
