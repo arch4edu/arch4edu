@@ -4,8 +4,8 @@ nvchecker:
   - alias: python
 depends:
   - any/python-huggingface-hub
-  - x86_64/python-safetensors
   - any/python-tokenizers
+  - x86_64/python-safetensors
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
