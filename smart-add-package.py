@@ -121,7 +121,7 @@ if __name__ == '__main__':
                 sys.exit(1)
 
             aur_info[package]['Depends'] = [] if not 'Depends' in aur_info[package] else aur_info[package]['Depends']
-            aur_info[package]['Depends'] = [i.split('>')[0].split('=')[0] for i in aur_info[package]['Depends']]
+            aur_info[package]['Depends'] = [i.split('<')[0].split('>')[0].split('=')[0] for i in aur_info[package]['Depends']]
             aur_info[package]['Depends'] = [provides[i] if i in provides else i for i in aur_info[package]['Depends']]
             aur_info[package]['Depends'] = [i for i in aur_info[package]['Depends'] if not i in pacman_db]
             _unresolved.update([i for i in aur_info[package]['Depends'] if not i in resolved])
