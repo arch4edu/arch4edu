@@ -5,7 +5,7 @@
 # Contributor: Christoph Drexler <chrdr at gmx dot at>
 
 pkgname=openfst
-pkgver=1.8.2
+pkgver=1.8.3
 pkgrel=1
 pkgdesc='Library for constructing, combining, optimizing, and searching weighted finite-state transducers (FSTs)'
 arch=(x86_64)
@@ -14,7 +14,7 @@ license=(Apache)
 depends=(gcc-libs glibc)
 options=(!libtool !lto)
 source=("${url}/twiki/pub/FST/FstDownload/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('de987bf3624721c5d5ba321af95751898e4f4bb41c8a36e2d64f0627656d8b42')
+sha256sums=('077714159d5cf3e38a80b6c6656d3ccc2c8b8b6c50bb41bb65c5fec10796bf53')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
