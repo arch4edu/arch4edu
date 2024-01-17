@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgload
-_cranver=1.3.3
+_cranver=1.3.4
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -53,7 +53,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("702a7f3797f7f98328fec0e0afabb4bfc901f34298e55db26638b8825e305d5ba7d5562a7e12579b857d76b7f5e5aa42813df3dcb0c81dbdfb571f07d3b830dd")
+b2sums=("ac2fdc0d429ef5be97b24b984646acad2dc9def5447713ee9689070f2a54228dd3f353a24a307d24c12ec72021e91db0bc033ca1ee8c15b0d5ef7c1fa4aa8900")
 
 build() {
     mkdir -p "${srcdir}/build/"
