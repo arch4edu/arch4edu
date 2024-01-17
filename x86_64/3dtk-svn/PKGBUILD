@@ -2,7 +2,7 @@
 
 _pkgname=3dtk
 pkgname="$_pkgname-svn"
-pkgver=r2396
+pkgver=r2398
 pkgrel=1
 pkgdesc='3D Toolkit with algorithms and methods to process 3D point clouds'
 url='https://slam6d.sourceforge.io'
