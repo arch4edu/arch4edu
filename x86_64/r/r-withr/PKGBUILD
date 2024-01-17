@@ -4,7 +4,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=withr
-_cranver=2.5.2
+_cranver=3.0.0
 pkgname=r-${_cranname,,}
 pkgdesc="Lightweight Well-Known Geometry Parsing"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -40,24 +40,24 @@ optdepends=(
 # the build chroot), uncomment the lines defining `checkdepends`, below,
 # as well as the `check()` function further down
 
-# checkdepends=(
-#     "${optdepends[@]}"
-#     "r-testthat>=3.0.0"
-#     "texlive-core"
-# )
+checkdepends=(
+    "${optdepends[@]}"
+    "r-testthat>=3.0.0"
+    "texlive-core"
+)
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("90de8ab583f7a3aff711ce367e9048d51433ff44ce43d1051ba18c076a066fd94281dd1348098592103b0592508fbbf1342f4e5f4b67eb8fa11e8291f6d6a779")
+b2sums=('12ee381cbd50dfc7f2e1395d061bac5879e40c12f87a5952706987634ba097d7dd93854ed2997e81d5f18fa5b63508d550379652df4326914b42cd0aebb94968')
 
 build() {
     mkdir -p "${srcdir}/build/"
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
 }
 
-# check() {
-#     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
-# }
+check() {
+    export R_LIBS="build/"
+    R CMD check --no-manual "${_cranname}"
+}
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
