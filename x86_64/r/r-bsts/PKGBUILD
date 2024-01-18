@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=bsts
-_pkgver=0.9.9
+_pkgver=0.9.10
 pkgname=r-${_pkgname,,}
-pkgver=0.9.9
+pkgver=0.9.10
 pkgrel=1
 pkgdesc='Bayesian Structural Time Series'
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8f9053fc8398ee19eb7d50d1f4c3234e0688243f7c1624065e2408ee4362517d')
+sha256sums=('a302bc08d04ef8de83a7bf8dce03e949cadb423361bd85f9ad5dac77918271b1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
