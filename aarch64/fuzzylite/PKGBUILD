@@ -5,18 +5,19 @@
 
 pkgname=fuzzylite
 pkgver=6.0
-pkgrel=6
+pkgrel=7
 pkgdesc="C++ fuzzy logic control library"
-arch=(x86_64 i686 aarch64)
+arch=(x86_64 aarch64 i686)
 url="https://github.com/fuzzylite/fuzzylite"
-license=(GPL3)
+license=(GPL-3.0-only)
 depends=(
   gcc-libs
   glibc
 )
 makedepends=(cmake)
-provides=('libfuzzylite.so')
+provides=(libfuzzylite.so)
 changelog=CHANGELOG
+
 source=(
   "$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
   "remove-werror.patch"
@@ -42,14 +43,12 @@ prepare() {
 build() {
   cd "$_archive"
 
-  cmake \
-    -B build \
-    -S "$pkgname" \
+  cmake -S fuzzylite -B build \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -Wno-dev \
     -DFL_BUILD_STATIC=OFF \
-    -DFL_BUILD_TESTS=ON \
-    -Wno-dev
+    -DFL_BUILD_TESTS=ON
   cmake --build build
 }
 
@@ -64,6 +63,6 @@ package() {
 
   DESTDIR="$pkgdir" cmake --install build
 
-  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
-  install -Dm644 "$pkgname/$pkgname.1" "$pkgdir/usr/share/man/man1/$pkgname.1"
+  install -Dm644 -t "$pkgdir/usr/share/doc/$pkgname" README.md
+  install -Dm644 -t "$pkgdir/usr/share/man/man1" fuzzylite/fuzzylite.1
 }
