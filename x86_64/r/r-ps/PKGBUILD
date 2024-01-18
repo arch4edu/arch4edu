@@ -4,13 +4,13 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ps
-_pkgver=1.7.5
+_pkgver=1.7.6
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=7
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="List, Query, Manipulate System Processes"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=(MIT)
 depends=(
   r
@@ -28,12 +28,12 @@ optdepends=(
   r-webfakes
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('62142c0448dd961f12955a8582e887fe')
-sha256sums=('1abc3ae3c55797b994973f7e43bf5c7bbb4da649a0dcfad36675e196dba4cb4e')
+md5sums=('9a1d826feaafb2150f5c35bec3ff7255')
+b2sums=('9d35e2790406a0b33c836afe2834ec03fd513e58dac5941ef2622b2b34a4886498ef5a413f09b7467f8643f88b4cc12034f7fc71f73230caf1279a4df3281e74')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
