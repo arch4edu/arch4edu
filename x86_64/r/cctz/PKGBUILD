@@ -3,11 +3,11 @@
 
 pkgname=cctz
 pkgver=2.3
-pkgrel=4
+pkgrel=5
 pkgdesc="A C++ library for translating between absolute and civil times using the rules of a time zone"
 arch=(x86_64)
 url="https://github.com/google/cctz"
-license=(Apache)
+license=('Apache-2.0')
 depends=(
   gcc-libs
 )
