@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=timechange
-_pkgver=0.2.0
+_pkgver=0.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Efficient Manipulation of Date-Times"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   cctz
   r
@@ -25,10 +25,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-cctz.patch")
-md5sums=('9e8dea7a23e233cccec70f7838381582'
-         'a573af9ccae2bad5627178a50de35e5b')
-sha256sums=('3d602008052123daef94a5c3f5154c5461b4ec0432ab70c37273d7ddd252f7f1'
-            '77d128c19ede66d6f0a27d3751c15da2ac322bdf2ca0914d047ac36396156001')
+md5sums=('f62746e78800a3edb8bfdc2ceffe0722'
+         '0111def4195dc0497273ed1c287e1906')
+b2sums=('992441ced5f4bd1f707f2fe6172bfa838a399f0b58a36a818bdf643d20600f761b31ab09b632adc9475523c2fbdcf97c3e6cb670410a6ceb84719a13993550de'
+        'b3178081cb18390b88fc540fe5ea29393336b03bb51b582c281c5dee371d7b419f3dec7acd02f850f853bad3fc2bbe2173eb9c8526a28abde5d030f7b95feb15')
 
 prepare() {
   # build against system cctz
@@ -36,8 +36,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
