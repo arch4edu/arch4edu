@@ -4,9 +4,9 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=psych
-_pkgver=2.3.12
+_pkgver=2.4.1
 pkgname=r-${_pkgname,,}
-pkgver=2.3.12
+pkgver=2.4.1
 pkgrel=1
 pkgdesc='Procedures for Psychological, Psychometric, and Personality Research'
 arch=('any')
@@ -27,7 +27,7 @@ optdepends=(
   r-rgraphviz
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1755cd644b18b1b9e703a0ba1e80c4d1f28c7291235254293fb33f8082ae1861')
+sha256sums=('2b1937fe60c5bcace30b7580c2a4bd2470635939657f14d4b6111a1652153722')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
