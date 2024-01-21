@@ -12,7 +12,7 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.28.14
+pkgver=3.28.15
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
@@ -31,7 +31,7 @@ conflicts=("$_pkgname")
 source=("https://download.qgis.org/downloads/$_pkgname-$pkgver.tar.bz2"
         protobuf-23.patch
         exiv2-0.28.patch)
-sha256sums=('6b79f84de5e0e0a718cc67bbdf05de338d08999ad45279cb27e11aa6fb8d41dd'
+sha256sums=('217342ba2232cc8fe5bf8f3671c2b3d6daf5504c33006b67424373e70d568dfa'
             'ac6c96e88346c1cec739b1e628afb02aef1895c0d09213269bad75b1a8cee617'
             'b8f7181211263866829531d239e07ab7400d18b9afde70a8ced23f602dfb5c2f')
 # curl https://download.qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
