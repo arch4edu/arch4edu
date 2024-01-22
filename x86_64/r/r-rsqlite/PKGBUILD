@@ -2,14 +2,14 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=RSQLite
-_pkgver=2.3.4
+_pkgver=2.3.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="SQLite Interface for R"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(LGPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('LGPL-2.1-or-later')
 depends=(
   r-bit64
   r-blob
@@ -44,10 +44,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libs.patch")
-md5sums=('790c93e203a4698bb4c0e21f2667b327'
+md5sums=('3564aeb57c0bf8dc14f4babe573de4a5'
          '29102318ffe7e673c7106be0041c7811')
-sha256sums=('73cdc81bb3cfce6f680a8ee384927867520a883e6d0705f6d6c79dccd4fbc4eb'
-            '744c6d1ba721cc0dcde85d0e861257bc3687aa066764c3b898750b3436799084')
+b2sums=('815f8e4c0ca53bb8536472698ebe12c0591e33da2aadac9921b39f79b2dfc1c5ac8f609d2f3a629ad5f9eda33eb39ec857561b697b57bda079442c92e0df8c9b'
+        '8a6c00d199a0a7940c4bca7cd4d162badbdb290c8754552f3a888fd1a6eeabfd2bf8a065d952bae11034071b0a7eb72e39f0786af820ab19908aa9b67bdbfa4f')
 
 prepare() {
   cd "$_pkgname"
@@ -61,8 +61,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
