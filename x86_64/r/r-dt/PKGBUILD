@@ -7,11 +7,11 @@ _pkgname=DT
 _pkgver=0.31
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A Wrapper of the JavaScript Library 'DataTables'"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only AND MIT AND Apache-2.0')
 depends=(
   r-crosstalk
   r-htmltools
@@ -36,11 +36,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('81c595d562de4f585dd8da8a80317086')
-sha256sums=('956f42a784d1c426ddc75ebfb22a854886e2d6ae8b7014b95669aed0cd699c87')
+b2sums=('2d1595490aa901bc4b462b41cc805a3d1dfe53ec34af44f08a62b62f176be41371f3b41de87d7f8e6ef8ab8bd7d5bffd4330e8d15d60ea0d28a3aefb5949e17e')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
@@ -51,4 +51,7 @@ check() {
 package() {
   install -d "$pkgdir/usr/lib/R/library"
   cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
