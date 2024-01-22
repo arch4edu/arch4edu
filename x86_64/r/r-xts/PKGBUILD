@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xts
-_pkgver=0.13.1
+_pkgver=0.13.2
 pkgname=r-${_pkgname,,}
-pkgver=0.13.1
-pkgrel=4
+pkgver=0.13.2
+pkgrel=1
 pkgdesc='eXtensible Time Series'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ optdepends=(
   r-tseries
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2c3907c6d0162e48d1898647105bbb32cfe0cb005788481a64ee675a941d825d')
+sha256sums=('4ad590f65c4c9daa7fe920aee0274a23478daacbfcd6edc2566dc392460f1dfb')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
