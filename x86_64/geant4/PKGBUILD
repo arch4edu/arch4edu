@@ -2,16 +2,16 @@
 pkgname='geant4'
 pkgver=11.2.0
 _pkgver=v${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc="A simulation toolkit for particle physics interactions."
 # https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/gettingstarted.html
 depends=('cmake>=3.16'
          'xerces-c>=3'
-         'qt6-base'
+         'qt6-base' # soqt depends on qt6-base
          'glu'
          'openmotif'
-         'soqt'
-         'zlib'
+         'soqt' # this depends on qt6-base anyway
+         'zlib>=1.2.3'
 	 'python>=3'
 	 'boost'
         )
@@ -45,6 +45,10 @@ sha256sums=('46ad7fab3c5cb4bd0bdd77dd6d3e2283184819235bcbc01b2d117d81b35596a6'
 ## Remove this if you want to keep an even smaller package
 ## No need to wait for compression when just installing it.
 
+prepare() {
+    sed -i '142s#SoQt 1.6.0 REQUIRED#SoQt 1.6.1 REQUIRED#' ${srcdir}/${pkgname}-${_pkgver}/cmake/Modules/G4InterfaceOptions.cmake
+}
+
 build() {
 
   [ -d ${srcdir}/build ] || mkdir ${srcdir}/build
@@ -65,6 +69,7 @@ build() {
       -DGEANT4_USE_SYSTEM_ZLIB=ON \
       -DGEANT4_INSTALL_PACKAGE_CACHE=OFF \
       -DGEANT4_BUILD_TLS_MODEL=global-dynamic \
+      -DGEANT4_USE_QT_QT6=ON \
       ../${pkgname}-${_pkgver}
 
   G4VERBOSE=1 make
@@ -138,7 +143,7 @@ echo ""
  | GEANT4_BUILD_VERBOSE_CODE        | ON                                                   |                |
  | GEANT4_BUILD_BUILTIN_BACKTRACE   | OFF                                                  |                |
  | GEANT4_BUILD_PHP_AS_HP           | OFF what's this?                                     |                |
- | GEANT4_USE_QT_QT6                | OFF                                                  |                |
+ | GEANT4_USE_QT_QT6                | OFF                                                  | ON             |
  | GEANT4_USE_SMARTSTACK            | OFF what's this                                      |                |
  | GEANT4_USE_SYSTEM_PTL            | OFF                                                  |                |
  | GEANT4_USE_TBB                   | OFF                                                  |                |
