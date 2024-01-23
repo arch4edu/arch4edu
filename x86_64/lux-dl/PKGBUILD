@@ -5,7 +5,7 @@
 # Contributer: Xinzhao Xu <z2d@jifangcheng.com>
 
 pkgname=lux-dl
-pkgver=0.20.0
+pkgver=0.22.0
 pkgrel=1
 pkgdesc="Fast and simple video download library and CLI tool written in Go"
 arch=('x86_64' 'i686')
@@ -16,7 +16,7 @@ makedepends=('go')
 conflicts=('annie')
 replaces=('annie')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('29988118bf57d8925ab15ec5bf039d4ed23bb6f11e90b65b9e599ccbb3e649e0')
+sha256sums=('34352ad29006e443b41bad04c24f89783efd063755e71cb98484b165953d4b59')
 
 build(){
     cd lux-$pkgver
@@ -31,7 +31,8 @@ build(){
         -buildmode=pie \
         -mod=readonly \
         -modcacherw \
-        -ldflags "-linkmode=external"
+        -ldflags "-linkmode=external \
+            -X \"github.com/iawia002/lux/app.version=$pkgver\""
 }
 
 package() {
