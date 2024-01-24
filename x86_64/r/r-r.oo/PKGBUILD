@@ -4,10 +4,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=R.oo
-_pkgver=1.25.0
+_pkgver=1.26.0
 pkgname=r-${_pkgname,,}
-pkgver=1.25.0
-pkgrel=4
+pkgver=1.26.0
+pkgrel=1
 pkgdesc='R Object-Oriented Programming with or without References'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ optdepends=(
   r-tools
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b8b19061774918ee7d9d4330c16c0ea505f7cd02d01343df1e8b2e4fb847beef')
+sha256sums=('f7602b388c2216fbb4d1a31d4040ed92b40dc83d3e3746db7011637db4d44365')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
