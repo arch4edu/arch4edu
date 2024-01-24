@@ -1,12 +1,12 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 pkgname=python-rustworkx
 _name=${pkgname#python-}
-pkgver=0.13.2
+pkgver=0.14.0
 pkgrel=1
 pkgdesc="A high performance Python graph library implemented in Rust"
 arch=("x86_64")
 url="https://github.com/Qiskit/rustworkx"
-license=('Apache')
+license=('Apache-2.0')
 depends=('python-numpy')
 optdepends=(
     'graphviz: graphviz based drawer function'
@@ -31,25 +31,24 @@ checkdepends=(
 )
 conflicts=('python-retworkx')
 source=("${_name}-${pkgver}.tar.gz::https://github.com/Qiskit/${_name}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('77067f1ac27fd578b9e9d0e485fd5f516a7799941ff51b83eb5fb6644de328c29567c7ac2a0bea4944be5ae412f130ca12f6fd42efa57272a3cc35955399d003')
+b2sums=('aad2c95f5e3fee6939cbfc53b81197b5fd149925a3be683a09412c5f2d0b32da90ed06d5efb5f24b6f77138074fb4234d16296119890c9e15a8d3002c2112638')
 
 build() {
-    cd "${srcdir}/${_name}-${pkgver}"
+    cd "${_name}-${pkgver}"
     python -m build --wheel --no-isolation
 }
 
 check() {
-    cd "${srcdir}/${_name}-${pkgver}"
-    rm -rf test
-    python -m installer --destdir="test" dist/*.whl
-    local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-    export PYTHONPATH="${PWD}/test/usr/lib/python${python_version}/site-packages"
-    rm -rf rustworkx
-    python -m pytest -k "not test_edge_colormap and not test_labels_and_colors and not test_node_list" tests/rustworkx_tests/
+    local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+    cd "${_name}-${pkgver}"
+    rm -rf test rustworkx
+    python -m installer --destdir=test_dir dist/*.whl
+    # The 3 tests configured not to run halt the system indefinitely
+    PYTHONPATH="test_dir/${_site_packages}:${PYTHONPATH}" pytest -v -k "not test_edge_colormap and not test_labels_and_colors and not test_node_list"
 }
 
 package() {
-    cd "${srcdir}/${_name}-${pkgver}"
+    cd "${_name}-${pkgver}"
     python -m installer --destdir="${pkgdir}" dist/*.whl
     install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
