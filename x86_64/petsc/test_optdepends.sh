@@ -14,11 +14,6 @@ if [ -f "/usr/lib/pkgconfig/fftw3.pc" ]; then
   CONFOPTS="${CONFOPTS} --with-fftw=1"
 fi
 
-# HDF5
-if [ -f "/usr/lib/pkgconfig/hdf5.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-hdf5=1 --with-hdf5-fortran-bindings=1"
-fi
-
 # HYPRE
 if [ -f "/usr/lib/libHYPRE.so" ]; then
   CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
@@ -56,16 +51,6 @@ if [ -f /usr/include/scotch.h ]; then
   fi
   SCOTCH_LIBS="[${SCOTCH_LIBS}]"
   CONFOPTS="${CONFOPTS} --with-ptscotch=1 --with-ptscotch-lib=${SCOTCH_LIBS} --with-ptscotch-include=${SCOTCH_DIR}"
-fi
-
-# SuiteSparse
-if [ -f "/usr/include/SuiteSparse_config.h" ]; then
-  CONFOPTS="${CONFOPTS} --with-suitesparse=1"
-fi
-
-# SuperLU
-if [ -f "/usr/lib/pkgconfig/superlu.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu"
 fi
 
 # SuperLU_DIST
