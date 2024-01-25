@@ -1,24 +1,20 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
-pkgver=0.7.0
+pkgver=0.7.3
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL3)
 makedepends=(cmake)
 depends=(boost hdf5-openmpi petsc pugixml python-fenics-ffcx scotch)
-checkdepends=(catch2v3)
+checkdepends=(catch2)
 optdepends=('adios2: for use ADIOS2 writer'
   'kahip: for compute graph partition in parallel'
   'parmetis: for parallel graph partitioning'
   'slepc: for use SLEPc eigen solver')
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('69c7f740b69492894c2dad8a968e614abcba7faa345befa6383fa939442df1627bb05286ddbdc11fa96eb754d7e5983030a7df36320e238e0bfb6f21fc933059')
-
-prepare() {
-  sed -i '/#include <random>/a #include <functional>' ${pkgname}-${pkgver}/cpp/test/common/sort.cpp
-}
+sha512sums=('2181247edef9f4e3f7b181dc6fc755402a2b9dcf871ed0bcfda53b8bc36a98678cab3306918c16b67e13f04ffc1f161f0c9c290241a4222013b47eac4c8c261c')
 
 build() {
   cmake \
@@ -58,11 +54,11 @@ check() {
     -S ${pkgname}-${pkgver}/cpp/demo \
     -B build_demo
   cmake --build build_demo
-  ctest -E "(demo_poisson_mpi_*|demo_hyperelasticity_mpi_*|demo_biharmonic_mpi_*)" --test-dir build_demo
+  ctest -E "(demo_poisson_mpi_*|demo_hyperelasticity_mpi_*|demo_biharmonic_mpi_*|demo_poisson_matrix_free_mpi_*|demo_interpolation-io_mpi_*|emo_interpolation_different_meshes_mpi_*|demo_mixed_topology_mpi_*)" --test-dir build_demo
 }
 
 package() {
   DESTDIR="${pkgdir}" cmake --build build --target install
   install -Dm 644 ${pkgname}-${pkgver}/COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
-makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
+makedepends+=("fftw" "hypre" "metis" "mumps" "parmetis" "pastix" "superlu_dist" "triangle" "valgrind")
