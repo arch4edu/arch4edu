@@ -2,7 +2,7 @@
 
 pkgname=python-apex-git
 _pkgname=apex
-pkgver=22.03.r230.g6c8f384b
+pkgver=22.03.r231.g141bbf1c
 pkgrel=1
 pkgdesc="A PyTorch Extension: Tools for easy mixed precision and distributed training in Pytorch"
 arch=('x86_64')
