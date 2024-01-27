@@ -5,7 +5,7 @@
 pkgname=microsoft-edge-stable-bin
 _pkgname=microsoft-edge
 _pkgshortname=msedge
-pkgver=120.0.2210.144
+pkgver=121.0.2277.83
 pkgrel=1
 pkgdesc="A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier"
 arch=('x86_64')
@@ -27,7 +27,7 @@ _channel=stable
 source=("https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/${_pkgname}-stable_${pkgver}-1_amd64.deb"
         "microsoft-edge-stable.sh"
         "Microsoft Standard Application License Terms - Standalone (free) Use Terms.pdf")
-sha256sums=('3bfecb768a5c31f498c7c720f4134353a2b16cf7e717dad85c3ed0ea3ba004b5'
+sha256sums=('5ae0eee387a5365918644b6897e4d936971102402af071c04d809cf4eaff6ef5'
             'dc3765d2de6520b13f105b8001aa0e40291bc9457ac508160b23eea8811e26af'
             'edf2ed596eb068f168287fc76aa713ad5e0afb59f0a0a47a4f29c0c124ade15e')
 
