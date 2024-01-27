@@ -3,14 +3,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=httpuv
-_pkgver=1.6.13
+_pkgver=1.6.14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="HTTP and WebSocket Server Library"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later AND MIT')
 depends=(
   libuv
   r-later
@@ -32,10 +32,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "link-zlib.patch")
-md5sums=('7229873a363a999055f885867c4a69c5'
+md5sums=('ee8e55894d9e63e991dd28224da42b93'
          'b2a2549bfef0d3a442b6ed545fc2f1f9')
-sha256sums=('cb6ef97bb58a062626ed0e7a6cfbc604f82ebd698daa4641c59166b2ab683b5f'
-            '95c708ea54de715494bcb43d40973296fb2ee8fb066fb582bfc69cdaf5d4e667')
+b2sums=('136a42004dfde552e60eef6690ff755da18dfb7503a0bedc809ba587bcc259adf8e77f0ea52bb22fd50f8b70faf26b29853a9f286c6bea7fe4706eecaabf494f'
+        '8aeff9d8175384692fcf729078e44c98a52d5e70cfc2edf8679b092abe94d6372178b1d6ca28a427b30080e1359e2ebec30db9e089d0e54f9c230ec4e094b99a')
 
 prepare() {
   # link to zlib
@@ -43,8 +43,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build \
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname" \
       --configure-vars=USE_BUNDLED_LIBUV=false
 }
 
