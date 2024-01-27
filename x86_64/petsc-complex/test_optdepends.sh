@@ -48,8 +48,9 @@ if [ -f "/usr/lib/pkgconfig/scalapack.pc" ]; then
 fi
 
 # Add suitesparse support
-if [ -f "/usr/include/SuiteSparse_config.h" ]; then
-	CONFOPTS="${CONFOPTS} --with-suitesparse=1"
+SUITESPARSE_DIR="/usr/include/suitesparse"
+if [ -f "/usr/include/suitesparse/umfpack.h" ]; then
+	CONFOPTS="${CONFOPTS} --with-suitesparse=1 --with-suitesparse-lib=[libamd.so,libbtf.so,libcamd.so,libccolamd.so,libcholmod.so,libcolamd.so,libcxsparse.so,libgraphblas.so,libklu.so,libklu_cholmod.so,liblagraph.so,liblagraphx.so,libldl.so,libparu.so,librbio.so,libspex.so,libspqr.so,libsuitesparse_mongoose.so,libsuitesparseconfig.so,libumfpack.so] --with-suitesparse-include=${SUITESPARSE_DIR}"
 fi
 
 # Add metis support
