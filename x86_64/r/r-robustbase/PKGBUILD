@@ -3,14 +3,14 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=robustbase
-_pkgver=0.99-1
+_pkgver=0.99-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Basic Robust Statistics"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   blas
   lapack
@@ -35,12 +35,12 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b6c0746bcd5c8368d08e86b808a96334')
-sha256sums=('ae1a1bece804172e30c1aa6ee7dafb638b53123bed1e906b4863c2310cef7858')
+md5sums=('1b79921bca8334ef03f67f0ca0afd63f')
+b2sums=('977547562f85831fb712f5aacc79a6d2c8fb223dedd50b196e1e4e4196dccaa1e8eac1de27b9b9bf96c10c69f26720fb9260909f808b46ded1d039675aaf8138')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
