@@ -1,9 +1,11 @@
 diff --git a/zip/src/Makevars b/zip/src/Makevars
-index 660aff8..87df0bd 100644
+index 9bf6e3b..f622216 100644
 --- a/zip/src/Makevars
 +++ b/zip/src/Makevars
-@@ -1,15 +1,21 @@
- 
+@@ -1,17 +1,20 @@
+-
+-PKG_CFLAGS = $(C_VISIBILITY)
+-
 -OBJECTS = init.o miniz.o rzip.o zip.o unixutils.o
 +OBJECTS = init.o rzip.o
 +PKG_LIBS = -L. -lr-zip

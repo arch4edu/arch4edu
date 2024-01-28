@@ -4,14 +4,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=zip
-_pkgver=2.3.0
+_pkgver=2.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Cross-Platform 'zip' Compression"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(MIT)
+license=('MIT')
 depends=(
   r
 )
@@ -27,14 +27,17 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "libr-zip.patch")
-md5sums=('4f4294028c8902df55475b69a249c06c'
-         '66828a1ae6c6d7bb94b97864f6b57029')
-b2sums=('c2a0b41370f73b42d24101d53077f48bb818637e1bdb2da1b4ad11b2c0284ed21784144ed35248a397d951b45419b1911cb7b89c27a9b0f04c06bfaafc55f9de'
-        'bd8012554ac72052ca748acc8990a20d685788fc03ff17036fa83f7ec3c82a63026f567bd1c84ae0980213d82ed2c93211de299cd9657d59e2cff8a9b69fc7f2')
+md5sums=('8a8a132cd0456e498d479d21c91facce'
+         '54567d238fb1409ea2a6fcd82034b15b')
+b2sums=('dc1334e069693b47d45887319bd3f446d2582476c0d24d0eb31465de5df1bdb28272b538d68dafd844ecd7ea96ca27481c00cf613bbec19d1ef0641255aa706c'
+        '9f00d0cae1521ffc8831e0c2261e8a88f9a255d01fedb5d0f0f2f6e82c6c30834d0c21130e51d131c9414c058f35d640ac50affdb312a7c3255e40c85b85b181')
 
 prepare() {
   # fix LDFLAGS, put common functionality into libr-zip.so
   patch -Np1 -i libr-zip.patch
+  # rename miniz symbols with r_ prefix, see https://github.com/r-lib/zip/issues/98
+  cd "$_pkgname/src"
+  sed -i 's/mz_/r_mz_/g' *.c *.h
 }
 
 build() {
