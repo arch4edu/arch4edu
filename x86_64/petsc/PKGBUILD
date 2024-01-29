@@ -3,7 +3,7 @@
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 pkgver=3.20.3
-pkgrel=4
+pkgrel=5
 pkgname=petsc
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
@@ -14,26 +14,30 @@ arch=('i686' 'x86_64')
 url="https://petsc.org"
 license=('BSD')
 options=(staticlibs)
-depends=('python-numpy' 'openmpi' 'boost' 'lapack' 'hdf5-openmpi' 'fftw' 'superlu' 'suitesparse')
+# note: zlib is not really needed by PETSc, but netcdf requires an HDF5 version with zlib
+depends=('openmpi' 'lapack' 'hdf5-openmpi' 'fftw' 'superlu' 'suitesparse' 'libyaml' 'gsl' 'libjpeg-turbo' 'netcdf-openmpi' 'zfp' 'zlib'
+         'python-numpy' 'python-mpi4py')
 makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython')
 provides=('petsc4py')
 optdepends=('trilinos: support for trilinos'
   'hypre: support for HYPRE'
+  'kokkos: support Kokkos'
   'metis: support for METIS'
   'mumps: support for MUMPS'
   'parmetis: support for ParMETIS'
   'scalapack: support for ScaLAPACK'
   'scotch: support for Scotch'
-  'superlu_dist: support for SuperLU_DIST',
+  'superlu_dist: support for SuperLU_DIST'
   'triangle: support for Triangle'
-  'trilinos: support for the ML package from Trilinos'
+  'trilinos-ml: support for ML (part of Trilinos)'
+  'zoltan: support for zoltan'
   )
 
 install=petsc.install
 source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
 sha512sums=('912538850eeaf6d78c090438f8198963cd787ef7ff3bbc841719b08fc738c7b20b7955850baacca4eada4a97b113492b9111d35afa33918ec52123e2f1a73f9b'
-            '80dfd422ba16e0fe529b65fd195d825095483282a2b202f03f81c507cfe694ce0ec9db606cbd74ac68d206343818a6aec15d32aea8faceddd1cec756409d5932')
+            '13e1c625e12ff8a701bf91f4bf5aa7cfe4766821feab32314b2dbf48a2f26c0ea85586e18c3e72a55c4f26c21bb8675896ee0ddd60a9f06cb68814a03d6057ea')
 
 _install_dir=/opt/petsc/${_config}
 _petsc_arch=arch-${_config}
@@ -49,8 +53,16 @@ build() {
   CONFOPTS="--with-shared-libraries=1 \
             --with-petsc4py=1 \
             --with-mpi-f90module-visibility=0 \
+            --with-bison=0 \
+            --with-cmake=0 \
             --with-mpi-dir=/usr \
+            --with-zfp=1 \
+            --with-netcdf=1 \
+            --with-libjpeg=1 \
+            --with-yaml=1 \
             --with-fftw=1 \
+            --with-gsl=1 \
+            --with-zlib=1 \
             --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
             --with-suitesparse-include=/usr/include/suitesparse \
             --with-suitesparse-lib=[libamd.so,libbtf.so,libcamd.so,libccolamd.so,libcholmod.so,libcolamd.so,libcxsparse.so,libgraphblas.so,libklu.so,libklu_cholmod.so,liblagraph.so,liblagraphx.so,libldl.so,libparu.so,librbio.so,libspex.so,libspqr.so,libsuitesparse_mongoose.so,libsuitesparseconfig.so,libumfpack.so] \

@@ -14,6 +14,11 @@ if [ -f "/usr/lib/pkgconfig/fftw3.pc" ]; then
   CONFOPTS="${CONFOPTS} --with-fftw=1"
 fi
 
+# Kokkos
+if [ -f "/usr/lib/libkokkoscore.so" ]; then
+  CONFOPTS="${CONFOPTS} --with-kokkos=1"
+fi
+
 # HYPRE
 if [ -f "/usr/lib/libHYPRE.so" ]; then
   CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
@@ -50,7 +55,7 @@ if [ -f /usr/include/scotch.h ]; then
     SCOTCH_LIBS="${SCOTCH_LIBS},libbz2.so"
   fi
   SCOTCH_LIBS="[${SCOTCH_LIBS}]"
-  CONFOPTS="${CONFOPTS} --with-ptscotch=1 --with-ptscotch-lib=${SCOTCH_LIBS} --with-ptscotch-include=${SCOTCH_DIR}"
+  CONFOPTS="${CONFOPTS} --with-ptscotch=1"
 fi
 
 # SuperLU_DIST
@@ -63,11 +68,16 @@ if [ -f "/usr/lib/libtriangle.so" ]; then
   CONFOPTS="${CONFOPTS} --with-triangle=1"
 fi
 
-# Trilinos (ML)
+# ML (Trilinos)
 if [ -f "/usr/lib/libml.so" ]; then
   CONFOPTS="${CONFOPTS} --with-ml=1"
-  # Add boost support (may be useful for trilinos)
+  # Add boost support
   CONFOPTS="${CONFOPTS} --with-boost=1"
+fi
+
+# Zoltan
+if [ -f "/usr/lib/lizoltan.so" ]; then
+  CONFOPTS="${CONFOPTS} --with-zoltan=1"
 fi
 
 echo "${CONFOPTS}"
