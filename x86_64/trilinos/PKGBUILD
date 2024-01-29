@@ -7,14 +7,14 @@
 pkgname=trilinos
 pkgver=15.0.0
 _pkgver=${pkgver//./-}
-pkgrel=2
+pkgrel=3
 pkgdesc="algorithms for the solution of large-scale scientific problems"
 arch=('x86_64')
 url="http://trilinos.org"
 license=('LGPL3')
-depends=('python' 'lapack' 'boost' 'netcdf' 'libmatio' 'libx11' 'hdf5-openmpi')
+depends=('python' 'lapack' 'boost' 'netcdf-openmpi' 'libmatio' 'libx11' 'hdf5-openmpi')
 makedepends=('gcc-fortran' 'perl' 'blas' 'cmake' 'bc' 'python-numpy')
-provides=('trilinos-sacado' 'zoltan')
+provides=('trilinos-sacado' 'trilinos-ml' 'zoltan' 'kokkos')
 checkdepends=('cmake')
 source=("https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-$_pkgver.tar.gz"
         'compiler-errors.patch')
