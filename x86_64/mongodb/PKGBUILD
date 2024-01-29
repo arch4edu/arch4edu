@@ -13,12 +13,12 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=7.0.4
+pkgver=7.0.5
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
-arch=("x86_64")
+arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
-license=("Apache" "custom:SSPL1")
+license=("SSPL-1.0")
 depends=('libstemmer' 'snappy' 'boost-libs' 'pcre2' 'yaml-cpp' 'gperftools' 'libunwind')
 makedepends=('python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3'
              'python-yaml' 'python-requests' 'python-pymongo' 'boost' 'mongo-c-driver')
@@ -33,7 +33,7 @@ source=("https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz"
         mongodb-5.0.2-skip-reqs-check.patch
         mongodb-5.0.2-no-compass.patch
         mongodb-7.0.2-sconstruct.patch)
-sha256sums=('8d4fa3c01a1dc97f04e2e51d2a9e661e60bfddb674a8902336ba00e09d74c123'
+sha256sums=('68b43633c0b104cdf05af0403af57e5b16117485e2c0f1df90e18d2dc5d2e253'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             '4ff40320e04bf8c3e05cbc662f8ea549a6b8494d1fda64b1de190c88587bfafd'
