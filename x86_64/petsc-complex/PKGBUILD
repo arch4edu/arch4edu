@@ -9,7 +9,7 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.20.3
+pkgver=3.20.4
 pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
@@ -43,8 +43,8 @@ optdepends=('trilinos: support for zoltan'
 install=${_base}.install
 source=(https://web.cels.anl.gov/projects/${_base}/download/release-snapshots/${_base}-lite-${pkgver}.tar.gz
   test_optdepends.sh)
-sha512sums=('912538850eeaf6d78c090438f8198963cd787ef7ff3bbc841719b08fc738c7b20b7955850baacca4eada4a97b113492b9111d35afa33918ec52123e2f1a73f9b'
-  '68bed9f836bf362b5d528af040afc2c572e87c43fac716d257862bcba06401a212adeec1fb84080a352831c22b968c9da65aa3eb5ef9e44be38ee0c0897c4b8d')
+sha512sums=('68abd97377e1e30d3c09afa1617385e8ba56acc8508000c8da47112454462e9da35135076e678cea7a4fa6e46c5b807da3e715b93cb812c4584f2a06df86b951'
+            '68bed9f836bf362b5d528af040afc2c572e87c43fac716d257862bcba06401a212adeec1fb84080a352831c22b968c9da65aa3eb5ef9e44be38ee0c0897c4b8d')
 
 _install_dir=/opt/${_base}/${_config}
 _petsc_arch=arch-${_config}
