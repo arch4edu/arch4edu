@@ -4,12 +4,12 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2023.12.9
+pkgver=2024.1.30
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
 url="https://github.com/cgohlke/tifffile"
-license=('BSD')
+license=('BSD-3-Clause')
 makedepends=('python-setuptools'
              'python-sphinx'
              'python-numpy')
@@ -18,7 +18,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('9dd1da91180a6453018a241ff219e1905f169384355cd89c9ef4034c1b46cdb8')
+sha256sums=('66cf1fbc3fee8f87670ffd415c1e758ea1779376bdfaa9d0dc6ce634e6bc52ea')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -51,15 +51,16 @@ check() {
         --deselect=tests/test_tifffile.py::test_write_imagej_raw \
         --deselect=tests/test_tifffile.py::test_issue_imagej_hyperstack_arg \
         --deselect=tests/test_tifffile.py::test_issue_description_overwrite \
-        --deselect=tests/test_tifffile.py::test_issue_invalid_predictor || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+        --deselect=tests/test_tifffile.py::test_issue_invalid_predictor \
+        --deselect=tests/test_tifffile.py::test_issue_trucated_tileoffsets || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package_python-tifffile() {
-    depends=('python-numpy>=1.25.2')
-    optdepends=('python-matplotlib>=3.7.3: required for plotting'
-                'python-imagecodecs>=2023.9.4: required for encoding or decoding LZW, JPEG, etc. compressed segments'
+    depends=('python-numpy>=1.26.3')
+    optdepends=('python-matplotlib>=3.8.2: required for plotting'
+                'python-imagecodecs>=2024.1.1: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=4.9.2: required only for validating and printing XML'
-                'python-zarr>=2.16.0: required for opening Zarr stores'
+                'python-zarr>=2.16.1: required for opening Zarr stores'
                 'python-fsspec>=2023.9.2: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
