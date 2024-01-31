@@ -4,7 +4,7 @@
 pkgname=vscodium
 # Make sure the pkgver matches the git tags in vscodium and vscode git repo's!
 pkgver=1.85.2.24019
-pkgrel=1
+pkgrel=2
 pkgdesc="Free/Libre Open Source Software Binaries of VSCode (git build from latest release)."
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://github.com/VSCodium/vscodium.git'
@@ -40,11 +40,13 @@ makedepends=(
 )
 source=(
     "${pkgname}.desktop"
+    "${pkgname}-wayland.desktop"
     "${pkgname}-uri-handler.desktop"
     "https://github.com/VSCodium/vscodium/releases/download/${pkgver}/VSCodium-${pkgver}-src.tar.gz"
 )
-sha256sums=('63eccd0977b9dc783a11ff401940f48bbabd0d098b9563b7ef26402495dc9b88'
-            '34da81ee4fd8b663237bfc946b4c95b8368b9c45e3b1404c3c3f86fbc3565e1c'
+sha256sums=('f76eb3ecf7fa531e0f711938e4e10f82145b5a7bf8b24bda218acb2d47466d60'
+            '1841d08fdb512f32433eefa21132bf7ad13e106cb45ca3218d0da7b7be9cfc81'
+            '6eef345b65bf2679c928c763529540435ab9c6e1836917319810a7a2d484ae1b'
             '2cc43e5d6feb3fe198403df4aec9dc94168bf769bfe06c330134b891adc39cb9')
 provides=(
     'codium'
@@ -84,7 +86,7 @@ build() {
     source /usr/share/nvm/init-nvm.sh || [[ $? != 1 ]]
 
     # Install the correct version of NodeJS (read from .nvmrc)
-	nvm install $(cat .nvmrc)
+    nvm install $(cat .nvmrc)
     nvm use
 
     # Check if the correct version of node is being used
@@ -120,6 +122,8 @@ build() {
     # the app will be updated with pacman
     export DISABLE_UPDATE="yes"
 
+    # Disabling this patch, since it is for win32 and does not apply here
+    rm -rf patches/cleanup-archive.patch
     . get_repo.sh
     . build.sh
 }
@@ -136,6 +140,7 @@ package() {
     ln -s /usr/share/${pkgname}/bin/codium ${pkgdir}/usr/bin/vscodium
     
     install -D -m644 ${pkgname}.desktop ${pkgdir}/usr/share/applications/${pkgname}.desktop
+    install -D -m644 ${pkgname}-wayland.desktop ${pkgdir}/usr/share/applications/${pkgname}-wayland.desktop
     install -D -m644 ${pkgname}-uri-handler.desktop ${pkgdir}/usr/share/applications/${pkgname}-uri-handler.desktop
     install -D -m644 ${srcdir}/VSCode-linux-${_vscode_arch}/resources/app/resources/linux/code.png ${pkgdir}/usr/share/pixmaps/${pkgname}.png
 
