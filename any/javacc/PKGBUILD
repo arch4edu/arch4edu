@@ -1,25 +1,28 @@
-# Maintainer: Rémi Saurel <patadune@gmail.com>
+# Maintainer: Darkfish Tech <arch at darkfish dot com dot au>
+# Contributor: Rémi Saurel <patadune@gmail.com>
 # Contributor: Matthew Longley <randomticktock@gmail.com>
 
 pkgname=javacc
-pkgver=7.0.9
+pkgver=7.0.13
 pkgrel=1
 pkgdesc="Parser/scanner generator for Java"
 arch=('any')
 url="http://javacc.org/"
+_url="https://github.com/javacc/javacc"
 license=('BSD')
-depends=('java-environment' 'apache-ant')
-makedepends=('git')
-source=("git+https://github.com/javacc/javacc.git#tag=javacc-$pkgver")
-sha256sums=('SKIP')
+depends=('java-environment' )
+makedepends=('apache-ant')
+source=("${pkgname}-${pkgver}.tar.gz::${_url}/archive/${pkgname}-${pkgver}.tar.gz")
+_pkgsrcdir=${pkgname}-${pkgname}-${pkgver}
+sha256sums=('d1bfebb4ca9261c5c3b16b00280b3278a41b193ca8503f2987f72de453bf99c6')
 
 build() {
-    cd $srcdir/$pkgname
+    cd $_pkgsrcdir
     ant
 }
 
 package() {
-    cd $srcdir/$pkgname
+    cd $_pkgsrcdir
 
     install -D LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     mkdir -m755 -p "$pkgdir/usr/share/java/$pkgname/bin" "$pkgdir/usr/bin"
@@ -36,8 +39,8 @@ package() {
 
     # generate scripts to allow direct execution
     for i in jjtree jjdoc javacc; do
-	printf "#\!bin/sh\nJAR=\"/usr/share/java/$pkgname/bin/lib/javacc.jar\"\n\njava -classpath \"\$JAR\" $i \"\$@\"\n" > "$pkgdir/usr/share/java/$pkgname/bin/$i";
-	ln -s "/usr/share/java/$pkgname/bin/$i" "$pkgdir/usr/bin/$i";
+        printf "#\!bin/sh\nJAR=\"/usr/share/java/$pkgname/bin/lib/javacc.jar\"\n\njava -classpath \"\$JAR\" $i \"\$@\"\n" > "$pkgdir/usr/share/java/$pkgname/bin/$i";
+        ln -s "/usr/share/java/$pkgname/bin/$i" "$pkgdir/usr/bin/$i";
     done
 
     # Set permissions
