@@ -6,24 +6,24 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=coda
-_pkgver=0.19-4
+_pkgver=0.19-4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=12
+pkgrel=1
 pkgdesc="Output Analysis and Diagnostics for MCMC"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('23122681735275c7178481d819440039')
-sha256sums=('422d3cfd34797a3631e9c4812431940599c0ca4bb9937797bed07b7b1d6fe58f')
+md5sums=('ad15d9b971ee8593ddfeb74430775c81')
+b2sums=('c21d75b903b2194f1f17f09e079bbbd3f1c6b0d2c54f5e436dae5c836d8cb9f764d07678008570e07ea1fd37ab73fe2a2751e0097c5f4a6cbfea2beff6a7032b')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
