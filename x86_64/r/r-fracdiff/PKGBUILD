@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fracdiff
-_pkgver=1.5-2
+_pkgver=1.5-3
 pkgname=r-${_pkgname,,}
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=1
 pkgdesc='Fractionally Differenced ARIMA aka ARFIMA(P,d,q) Models'
 arch=('x86_64')
@@ -18,7 +18,7 @@ optdepends=(
   r-urca
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ac5f881330287f5bc68b5cdce4fb74156a95356ffb875ee171538bc44200f437')
+sha256sums=('0f90946b4092feff93fad094a2c91bb47c8051595210e86c029c70238dbf7fc0')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
