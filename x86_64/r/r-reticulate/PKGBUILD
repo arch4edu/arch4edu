@@ -3,14 +3,14 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=reticulate
-_pkgver=1.34.0
+_pkgver=1.35.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Interface to 'Python'"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(Apache)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('Apache-2.0')
 depends=(
   python
   r-here
@@ -49,12 +49,12 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('109bbcb55d3a8e779babe90e432c172a')
-sha256sums=('8d0d8922cd811153836e95354357615968b005a4d0d4c5734441953c526e4206')
+md5sums=('16e16602150f6cdf6841b63b6bff1acf')
+b2sums=('ef86eb4274c5ef3959e52aeaa5f3af0457ba9b8f100b348092facce13e32c12a8d6792fc245777d2e0c27e7e058590726c0cc2c1c617ef0dc5f619b985140ed8')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 
   # compile python bytecode
   python -m compileall -o 0 -o 1 -s build -p /usr/lib/R/library "build/$_pkgname/python/rpytools"
