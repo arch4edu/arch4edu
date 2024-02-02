@@ -6,14 +6,14 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=sfsmisc
-_pkgver=1.1-16
+_pkgver=1.1-17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Utilities from 'Seminar fuer Statistik' ETH Zurich"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -23,12 +23,12 @@ optdepends=(
   r-rmpfr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9826b78f9d6debb71a6bec0f51fb1e77')
-sha256sums=('511b4a661e3cfec540eb3d08f67b715f3cda398eb135a011b9be84305c11436c')
+md5sums=('64b3bdc77274ba039f0229135b9290ea')
+b2sums=('17852abc95b61a98f0e6aded0153f22b11847f449d9303c47c38ce818669a11759875aa33c4809c8ecc1b593a77fecf19e01cafbd53271c6573f36c7c1da270f')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
