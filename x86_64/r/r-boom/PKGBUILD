@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Boom
-_pkgver=0.9.14
+_pkgver=0.9.15
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Bayesian Object Oriented Modeling"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a9d64876d3c5c6e4166a406cc8c16d87')
-b2sums=('cb56eb9a516bc68e2b0712d0cefa078c843205e07fce456d593d7618e7f399270552913e85a0162fb6412db03a3ed0b287d3942049b0e9c657fdc1209ccb03aa')
+md5sums=('4a0c497336570708c98b611676359249')
+b2sums=('4bd6fd2b838dd36b2b11def25192e1ce01d64c91494436d6fddd58c1c25ed8a61d54197c5909838320d9d0542f1e02d732d10d8b611cae3eeeacee06b23f452f')
 
 build() {
   mkdir build
