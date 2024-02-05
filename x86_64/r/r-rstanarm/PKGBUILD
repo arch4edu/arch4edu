@@ -2,14 +2,14 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=rstanarm
-_pkgver=2.26.1
+_pkgver=2.32.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Bayesian Applied Regression Modeling via Stan"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   pandoc
   r-bayesplot
@@ -49,10 +49,11 @@ optdepends=(
   r-shiny
   r-stanheaders
   r-testthat
+  r-v8
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8505a33ae9ff139e9f0b3d5b8cc6ee7e')
-sha256sums=('4a54792d6e035931b613647aebfc98b81d1aac646a5a3f6f116b6f560d544444')
+md5sums=('7156d76d81012785925295a8e4bdd7bc')
+b2sums=('5c6e256a9066287eb600259c957c86e488cb2ce79d80a5e62404c10ab5331e21e2e93a7a49699753f4af67ec4f78cb94a2a98142ecea6fa1a4ebc36c0ad0c45f')
 
 prepare() {
   cd "$_pkgname/tests/testthat"
@@ -65,10 +66,10 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
+  mkdir build
   # compilation needs a lot of memory
   MAKEFLAGS+=" -j1"
-  R CMD INSTALL "$_pkgname" -l build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
