@@ -1,22 +1,25 @@
 # Initial Contribution: Benjamin Chretien <chretien at lirmm dot fr>
 # Maintainer: Guilhem Saurel <gsaurel at laas dot fr>
 
-pkgname=urdfdom
-pkgver=3.1.1
+_org='ros'
+_pkgname=urdfdom
+pkgname="$_pkgname"
+pkgver=4.0.0
 pkgrel=1
 pkgdesc="The URDF (U-Robot Description Format) library provides core data structures and a simple XML parsers for populating the class data structures from an URDF file."
 arch=('i686' 'x86_64')
-url="https://github.com/ros/$pkgname"
-license=('BSD')
-depends=('tinyxml' 'console-bridge' 'urdfdom-headers')
+url="https://github.com/$_org/$_pkgname"
+license=('BSD-3-Clause')
+depends=('tinyxml2' 'console-bridge' 'urdfdom-headers' 'gcc-libs' 'glibc')
 makedepends=('cmake')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha256sums=('dd69b2077b8fc1bd2b67022c1dc861cd896ac882df065aa08cabdf2f945a9ac0')
+sha256sums=('9848d106dc88dc0b907d5667c09da3ca53241fbcf17e982d8c234fe3e0d6ddcc')
 
 build() {
-    cmake -B "build-$pkgver" -S "$pkgname-$pkgver" \
+    cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
+        -DCMAKE_INSTALL_LIBDIR=lib \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_INSTALL_LIBDIR=lib
+        -Wno-dev
     cmake --build "build-$pkgver"
 }
 
@@ -25,8 +28,6 @@ check() {
 }
 
 package() {
-    DESTDIR="$pkgdir/" cmake --install "build-$pkgver"
-
-    # install licence
-    install -Dm644 "$pkgname-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    DESTDIR="$pkgdir/" cmake --build "build-$pkgver" -t install
+    install -Dm644 "$pkgbase-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
