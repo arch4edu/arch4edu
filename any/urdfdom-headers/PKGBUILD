@@ -1,24 +1,25 @@
 # Initial Contribution: Benjamin Chretien <chretien at lirmm dot fr>
 # Maintainer: Guilhem Saurel <gsaurel at laas dot fr>
 
+_org='ros'
 pkgname=urdfdom-headers
 _pkgname=urdfdom_headers
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=1
 pkgdesc="The URDF (U-Robot Description Format) headers provides core data structure headers for URDF."
 arch=('any')
-url="https://github.com/ros/$_pkgname"
-license=('BSD')
+url="https://github.com/$_org/$_pkgname"
+license=('BSD-3-Clause')
 depends=()
 makedepends=('cmake')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/ros/$_pkgname/archive/$pkgver.tar.gz")
-sha256sums=('01b91c2f7cb42b0033cbdf559684a60001f9927e5d0a5a3682a344cc354f1d39')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
+sha256sums=('b2ee5bffa51eea4958f64479b4fa273881d82a3bfa1d98686a16f8d8ca6c2350')
 
 build() {
     cmake -B "build-$pkgver" -S "$_pkgname-$pkgver" \
-        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_LIBDIR=lib \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_INSTALL_LIBDIR=lib
+        -Wno-dev
     cmake --build "build-$pkgver"
 }
 
