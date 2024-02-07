@@ -5,8 +5,8 @@
 # Contributor: Zhirui Dai <daizhirui at hotmail dot com>
 
 pkgname=libdart
-pkgver=6.13.0
-pkgrel=5
+pkgver=6.13.1
+pkgrel=1
 pkgdesc="Dynamic Animation and Robotics Toolkit"
 arch=('i686' 'x86_64')
 url="https://dartsim.github.io"
@@ -23,7 +23,7 @@ source=(
     "gnu13.patch"
 )
 sha256sums=(
-    '4da3ff8cee056252a558b05625a5ff29b21e71f2995e6d7f789abbf6261895f7'
+    'd3792b61bc2a7ae6682b6d87e09b5d45e325cb08c55038a01e58288ddc3d58d8'
     '1a617e94035d4e1259e795908cd76df64f5e64e35a6a8fea250fd264282ead01'
 )
 
