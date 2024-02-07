@@ -4,7 +4,7 @@
 
 pkgbase=devilutionx
 pkgname=("${pkgbase}" "${pkgbase}-fonts" "${pkgbase}-voices")
-pkgver=1.5.1
+pkgver=1.5.2
 pkgrel=1
 pkgdesc="Diablo devolved for linux"
 arch=('armv6h' 'armv7h' 'arm' 'aarch64' 'i686' 'x86_64')
@@ -58,7 +58,7 @@ package_devilutionx-fonts() {
     "${pkgdir}/usr/share/diasurgical/devilutionx/fonts.mpq"
 }
 
-sha256sums=('e3d478aa7da95385d67d6e37016441df969965f5653f83c64e0019ee824ebd4f'
-            '551ecee2d95b4e7807737a7794a6bacf0b4a03a91634816277b91db35ce1e259'
-            '715763a7e35347fd42041b35d961189c932d9d320ee29b6929106e550b0e42de'
-            '48bfb5baeed370b565a61db5eab90214700121311a3c40e50d2671d5bac8778b')
+sha256sums=('27dc99cb8b40cb6fccbb5935aac7ce0c906664cc3815bcf9e27195747db46ed3'
+  '551ecee2d95b4e7807737a7794a6bacf0b4a03a91634816277b91db35ce1e259'
+  '715763a7e35347fd42041b35d961189c932d9d320ee29b6929106e550b0e42de'
+  '48bfb5baeed370b565a61db5eab90214700121311a3c40e50d2671d5bac8778b')
