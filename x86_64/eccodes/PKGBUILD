@@ -3,11 +3,11 @@
 pkgname=eccodes
 pkgver=2.33.0
 _attnum=45757960
-pkgrel=1
+pkgrel=2
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
 arch=("i686" "x86_64")
 url="https://confluence.ecmwf.int/display/ECC/ecCodes+Home"
-license=("Apache")
+license=("Apache-2.0")
 depends=("glibc" "gcc-libs" "libaec" "libpng" "openjpeg2" "netcdf")
 makedepends=("gcc-fortran" "cmake")
 optdepends=("bash" "ksh")
@@ -18,7 +18,7 @@ source=(
 )
 sha512sums=(
     "4afc2a9e59da54093eb318a1447904faac7371df980a57ce21e04ef98d1d7e02f10ef363a497d29f086b1f17a86ba4e46bf14898cd227eae8bbe0297c62b4183"
-    "86767a308841849c7ece006e9f6c68123dc07d8640b038e25529b91ab495d3f10ad5356e9100ef238de6756c67917be13a676f4ab0708fb381021c746e00183e"
+    "c495a71f18ea01aa480b0920fbfce8d370574d412c95eb04823d0d4544fed0e2dba8e98d63e2be0a3c33a127840e7262d391373fab9304a773e9764457ade5a7"
 )
     
 prepare() {
