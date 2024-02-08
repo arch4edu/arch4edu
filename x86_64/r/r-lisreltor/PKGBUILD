@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=lisrelToR
-_pkgver=0.1.5
+_pkgver=0.3
 pkgname=r-${_pkgname,,}
-pkgver=0.1.5
-pkgrel=7
+pkgver=0.3
+pkgrel=1
 pkgdesc="Import Output from 'LISREL' into 'R'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -13,7 +13,7 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d35981f45f08c82272d2fd58b284c19f60c3492aadbd3781a7e788833ad8a144')
+sha256sums=('6bbebbdd6f78ae5d503a4d53558c709233e6e94fe8206f62d5edca3d5b41b4a7')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
