@@ -5,12 +5,13 @@ _pkgname=OpenMx
 _pkgver=2.21.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Extended Structural Equation Modelling"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(Apache)
+license=('Apache-2.0')
 depends=(
+  onetbb
   r-digest
   r-lifecycle
   r-rcpp
