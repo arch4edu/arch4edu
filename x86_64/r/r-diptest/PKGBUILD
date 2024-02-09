@@ -3,24 +3,25 @@
 _pkgname=diptest
 _pkgver=0.77-0
 pkgname=r-${_pkgname,,}
-pkgver=0.77.0
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Hartigan's Dip Test Statistic for Unimodality - Corrected"
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c3c835155e6bddce730623c4e9b4eeed00624c26d493076e79db203a55f8ca32')
+md5sums=('f7229b4ba1ca5ad70d996ce984329d73')
+b2sums=('45cca9d159591eec95c19bd4abaf35049d66295c5546f7e21293f7f4566c92a2b3f9f5f68dc91ccabd6471d0fe5c8c6fe74d3cc05235911a82268d3851b0eb5c')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
