@@ -3,24 +3,25 @@
 _pkgname=ppcor
 _pkgver=1.1
 pkgname=r-${_pkgname,,}
-pkgver=1.1
-pkgrel=4
-pkgdesc='Partial and Semi-Partial (Part) Correlation'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="Partial and Semi-Partial (Part) Correlation"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6a78f0c4d9caa17ab0252c5d351c2371e4ffb9047ebd13964877018dd6142bf5')
+md5sums=('1b9b87359c7b491cfc5e4acdb2b2125a')
+b2sums=('bfcbaeb71131fa68c5f7da01aa856a20d339384fd22337587ebb9029eb9d9e656c8eba7b373dcccc58fb25e3c88699e64ad341fd5dc0357e5f1dd64fc13a0e7e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
