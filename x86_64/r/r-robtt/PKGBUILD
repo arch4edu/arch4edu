@@ -5,12 +5,13 @@ _pkgname=RoBTT
 _pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Robust Bayesian T-Test"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
+  onetbb
   r-bayestools
   r-bridgesampling
   r-ggplot2
@@ -38,7 +39,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('50e0eea609a0aae0eb0cce7451076fd9')
-sha256sums=('cf68d586be51470169f23877a273b728857e1ee65e77e6bb2ab8b88cd76627b1')
+b2sums=('27018211f78ffdfc4f028e66168ec3af6aef3601614c0f3b372796ca1890bffe6e6044d1ddd165d2eaccbcd066086f6a05c65ff337f06d7b8ee6e02ea6b2f8a4')
 
 prepare() {
   # skip test that requires external files
@@ -47,10 +48,10 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
+  mkdir build
   # compilation needs a lot of memory
   MAKEFLAGS+=" -j1"
-  R CMD INSTALL "$_pkgname" -l build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
