@@ -5,14 +5,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xfun
-_pkgver=0.41
+_pkgver=0.42
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Supporting Functions for Packages Maintained by 'Yihui Xie'"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -38,12 +38,12 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('762d90da1dec41f701e35cd9450df7ef')
-sha256sums=('2374c3b8f141f1e5ff01b291d8aa5c3dc807dd8e99ab4dc7a048c9534a7e3b02')
+md5sums=('8435824d449ee92b4ee5d74643fffe33')
+b2sums=('90d48cd062ca27196db22c1bc99fee7b5e3f756ddde972b2088d5497b552e87360ea7425f10ed6bd1117409a5eba8b56dc55854a366ee5eb81b148589c055be9')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
