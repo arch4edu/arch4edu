@@ -5,12 +5,13 @@ _pkgname=jfa
 _pkgver=0.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Statistical Methods for Auditing"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL3)
+license=('GPL-3.0-or-later')
 depends=(
+  onetbb
   r-bde
   r-extradistr
   r-ggplot2
