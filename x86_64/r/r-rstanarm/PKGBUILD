@@ -5,12 +5,13 @@ _pkgname=rstanarm
 _pkgver=2.32.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Bayesian Applied Regression Modeling via Stan"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-3.0-or-later')
 depends=(
+  onetbb
   pandoc
   r-bayesplot
   r-ggplot2
