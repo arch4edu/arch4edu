@@ -5,12 +5,13 @@ _pkgname=prophet
 _pkgver=1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Automatic Forecasting Procedure"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(MIT)
+license=('MIT')
 depends=(
+  onetbb
   r-dplyr
   r-dygraphs
   r-extradistr
