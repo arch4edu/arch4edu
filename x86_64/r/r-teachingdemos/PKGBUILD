@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=TeachingDemos
-_pkgver=2.12
+_pkgver=2.12.1
 pkgname=r-${_pkgname,,}
-pkgver=2.12
-pkgrel=4
+pkgver=2.12.1
+pkgrel=1
 pkgdesc='Demonstrations for Teaching and Learning'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -27,7 +27,7 @@ optdepends=(
   r-tkrplot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('3e75405ce1affa406d6df85e06f96381412bc7a2810b25d8c81bfe64c4698644')
+sha256sums=('f5b189c767b76594808ae678b7e4b1e0e6bf0cee80c70df9e41edfb81aaaf3a8')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
