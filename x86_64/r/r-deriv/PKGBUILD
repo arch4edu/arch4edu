@@ -3,12 +3,12 @@
 _pkgname=Deriv
 _pkgver=4.1.3
 pkgname=r-${_pkgname,,}
-pkgver=4.1.3
-pkgrel=4
-pkgdesc='Symbolic Differentiation'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="Symbolic Differentiation"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('dbdbf5ed8babf706373ae33a937d013c46110a490aa821bcd158a70f761d0f8c')
+md5sums=('e4405e9b07cda190696378cf7fb77e71')
+b2sums=('bf04f06718243431f2436cca424de285ead05051f2f8ca6a586b4f5ec1e946f630172cdd4bcfd88da6eedb455e52a5649270fd2a5818dbc87e7d056fb4c40aa5')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
