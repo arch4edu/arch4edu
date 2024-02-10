@@ -3,12 +3,12 @@
 _pkgname=numbers
 _pkgver=0.8-5
 pkgname=r-${_pkgname,,}
-pkgver=0.8.5
-pkgrel=1
-pkgdesc='Number-Theoretic Functions'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Number-Theoretic Functions"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-gmp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('77d5dedb7f953689ab9e89c14e673c0c8f644c8b392fab4ee4fb793930ad220b')
+md5sums=('3f9d482326ca6c5360df4f49c0849c2f')
+b2sums=('8554d6f469f2a97ce250d46c131d15a986eee77c43878f4c8f3235b81a0b65118c0fdfbfe664e3614e415c0ef651e7f509eec757ce6dd9aa9f5bc9eda764ddd6')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
