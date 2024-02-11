@@ -2,7 +2,7 @@
 _base=trame-server
 pkgname=python-${_base}
 pkgdesc="Internal server side implementation of trame"
-pkgver=2.16.0
+pkgver=2.16.1
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
@@ -11,7 +11,7 @@ depends=(python-wslink python-more-itertools)
 makedepends=(python-build python-installer python-setuptools python-wheel)
 checkdepends=(python-pytest)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('46498979beb6cafffe4da70c88ddca57902d7c215361a7b9c360bf464cd3c96b46056fbe67dfb5dbc47aa0d0720a5671021b40af15cc62087d6a8bc99da40f3f')
+sha512sums=('f938c3906a84f76732d06dd686af1be56f404c77b3e485ad9d0314abc20ea3fe0aecf841217a8569e5540a963ffbba68f6284b93b2aa37ad8d7419e6ad2e38d0')
 
 prepare() {
   sed -i 's/^include/#include/' ${_base}-${pkgver}/MANIFEST.in
