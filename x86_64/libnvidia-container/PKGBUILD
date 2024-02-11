@@ -1,118 +1,96 @@
-# Maintainer: Julie Shapiro <jshapiro at nvidia dot com>
-# Maintainer: Kien Dang <mail at kien dot ai>
-
+# Maintainer: Mark Wagie <mark dot wagie at proton dot me>
+# Contributor: Julie Shapiro <jshapiro at nvidia dot com>
+# Contributor: Kien Dang <mail at kien dot ai>
+pkgname=('libnvidia-container' 'libnvidia-container-tools')
 pkgbase=libnvidia-container
-pkgname=(libnvidia-container libnvidia-container-tools)
-
-pkgver=1.14.3
+pkgver=1.14.5
 pkgrel=1
 _elfver=0.7.1
-_nvmpver=495.44
-
-pkgdesc='NVIDIA container runtime library'
+_tirpcver=1.3.2
+_nvmodver=495.44
+pkgdesc="NVIDIA container runtime library"
 arch=('x86_64')
 url='https://github.com/NVIDIA/libnvidia-container'
-license=('Apache')
-
-makedepends=(go bmake lsb-release rpcsvc-proto pkgconf)
-depends=(libcap libseccomp libtirpc)
-
-# yikes! somehow the default flags cause a linking error :(
-options=(!makeflags !lto)
-
-# This make process downloads files from other sources to build the libs as deps cleanly in place.
-# This pkgbuild elects to download them ahead of time so their checksums can be validated.
-# See:
-# https://github.com/NVIDIA/libnvidia-container/blob/c8f267be0bac1c654d59ad4ea5df907141149977/mk/elftoolchain.mk
-# https://github.com/NVIDIA/libnvidia-container/blob/c8f267be0bac1c654d59ad4ea5df907141149977/mk/nvidia-modprobe.mk
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/NVIDIA/${pkgbase}/archive/v${pkgver}.tar.gz"
-        "${pkgname}-${pkgver}-elftoolchain-${_elfver}.tar.bz2::https://sourceforge.net/projects/elftoolchain/files/Sources/elftoolchain-${_elfver}/elftoolchain-${_elfver}.tar.bz2"
-        "${pkgname}-${pkgver}-nvidia-modprobe-${nvmpver}.tar.gz::https://github.com/NVIDIA/nvidia-modprobe/archive/${_nvmpver}.tar.gz"
-        fix_rpc_flags.patch
-        fix_git_rev_unavail.patch
-        fix_libelf_so_name.patch
-        fix_elftoolchain.patch)
-sha256sums=('0d1db40b5470e0b672dbc0521867f5933db7df5e0f89941e135cc00ad4e37435'
+license=('BSD-3-Clause AND Apache-2.0 AND GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT AND GPL-2.0-only')
+depends=('libcap' 'libelf' 'libseccomp' 'libtirpc')
+makedepends=('bmake' 'git' 'go' 'lsb-release' 'rpcsvc-proto')
+_commit=870d7c5d957f5780b8afa57c4d5cc924d4d9ed26  # tags/v1.14.5^0
+source=("git+https://github.com/NVIDIA/libnvidia-container.git#commit=${_commit}"
+        "https://sourceforge.net/projects/elftoolchain/files/Sources/elftoolchain-${_elfver}/elftoolchain-${_elfver}.tar.bz2"
+        "https://downloads.sourceforge.net/project/libtirpc/libtirpc/${_tirpcver}/libtirpc-${_tirpcver}.tar.bz2"
+        "nvidia-modprobe-${_nvmodver}.tar.gz::https://github.com/NVIDIA/nvidia-modprobe/archive/${_nvmodver}.tar.gz"
+        'no-manual-debuginfo.patch')
+noextract=("elftoolchain-${_elfver}.tar.bz2"
+           "libtirpc-${_tirpcver}.tar.bz2"
+           "nvidia-modprobe-${_nvmodver}.tar.gz")
+sha256sums=('SKIP'
             '44f14591fcf21294387215dd7562f3fb4bec2f42f476cf32420a6bbabb2bd2b5'
+            'e24eb88b8ce7db3b7ca6eb80115dd1284abc5ec32a8deccfed2224fc2532b9fd'
             'ae6e9c7e6b43368945c28f6b8b6d0d7cc36ee7e1be8955a009a1cb189e46de92'
-            '6738c0f8738cb272ee5c723e77008f5f512be842bad26abc2e8f78911131165a'
-            '12986dd405971dd2af9cd8ab0c75db37e09c8ec0657f1b148d59822831b8e40e'
-            '42412db6bbcf0c2f76c426b6f51cf12eda6a78b5c9c64d29e9a80739790ea6b9'
-            '1af7dcdc7f13cac3ddf1f4b4c7b225d8cd7f8407915b63aacea736a2a751db46')
+            '4c0ffca77dee2d0c98ea92716b5c3cff0d41f974000fea29ca905435d3acbe8e')
 
-_srcdir="${pkgname}-${pkgver}"
+# v1.14.4 and v1.14.5 are identical
+
+#pkgver() {
+#  cd "${pkgbase}"
+#  git describe --tags | sed 's/^v//;s/-/+/g'
+#}
 
 prepare(){
-  cd ${_srcdir}
+  cd "${pkgbase}"
 
-  patch -Np1 -i "${srcdir}/fix_rpc_flags.patch"
-  patch -Np1 -i "${srcdir}/fix_git_rev_unavail.patch"
-  patch -Np1 -i "${srcdir}/fix_libelf_so_name.patch"
+  # NVIDIA modprobe configuration based on mk/elftoolchain.mk, libtirpc.mk & mk/nvidia-modprobe.mk
+  mkdir -p deps/src/{"elftoolchain-${_elfver}","libtirpc-${_tirpcver}","nvidia-modprobe-${_nvmodver}"}
+  bsdtar -xvf "${srcdir}/elftoolchain-${_elfver}.tar.bz2" -C "deps/src/elftoolchain-${_elfver}/" \
+    --strip-components=1 -xj $(addprefix elftoolchain-${_elfver}/,mk common libelf)
+  bsdtar -xvf "${srcdir}/libtirpc-${_tirpcver}.tar.bz2" -C "deps/src/libtirpc-${_tirpcver}/" \
+    --strip-components=1 -xj
+  bsdtar -xvf "${srcdir}/nvidia-modprobe-${_nvmodver}.tar.gz" -C "deps/src/nvidia-modprobe-${_nvmodver}/" \
+    --strip-components=1 -xz "nvidia-modprobe-${_nvmodver}/modprobe-utils"
 
-  deps_dir="deps/src/"
-  mkdir -p "${deps_dir}"
-  # mimic behavior from:
-  # https://github.com/NVIDIA/libnvidia-container/blob/56704b8dd297bf4daf82a2da4b270dc7f14e0008/mk/libtirpc.mk
-  for dep in "elftoolchain-${_elfver}" "nvidia-modprobe-${_nvmpver}"; do
-    mv "${srcdir}/${dep}" "${deps_dir}"
-    touch "${deps_dir}/${dep}/.download_stamp"
+  for dep in "elftoolchain-${_elfver}" "libtirpc-${_tirpcver}" "nvidia-modprobe-${_nvmodver}"; do
+    touch "deps/src/${dep}/.download_stamp"
   done
+  patch -d "deps/src/nvidia-modprobe-${_nvmodver}" -p1 < mk/nvidia-modprobe.patch
 
-  patch -Np1 -i "${srcdir}/fix_elftoolchain.patch"
-  patch -d "${deps_dir}/nvidia-modprobe-${_nvmpver}" -p1 < "mk/nvidia-modprobe.patch"
+  patch -Np1 -i ../no-manual-debuginfo.patch
 }
 
 build(){
-  cd ${_srcdir}
-
-  export MAKESYSPATH=/usr/share/mk
-
-  # finally actually make
-  front=${pkgver%.*}
-  back=${pkgver#*.}
-  MAJOR=${front%.*} MINOR=${back%.*} PATCH=${pkgver##*.} 
-  GIT_TAG=$pkgver CC=gcc make
-}
-
-make_dist(){
-  cd ${_srcdir}
-  # package
-  GIT_TAG=$pkgver make DESTDIR="${pkgdir}" install
+  cd "${pkgbase}"
+  make WITH_LIBELF=yes WITH_TIRPC=yes prefix=/usr
 }
 
 package_libnvidia-container() {
-  make_dist
+  cd "${pkgbase}"
+  make prefix=/usr DESTDIR="${pkgdir}" install
 
-  # cleanup
+  # remove empty leftover directory
   rm -rf "${pkgdir}/usr/lib/debug"
-  rm -rf "${pkgdir}/usr/lib/pkgconfig"
 
-  # save bin/ for -tools
+  # remove CLI for tools
   rm -rf "${pkgdir}/usr/bin"
 
-  #mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
-  #install -D -m644 "${pkgdir}/usr/share/doc/${pkgname}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/"
-  #rm -rf "${pkgdir}/usr/share/doc"
+  # remove duplicate licenses
   rm -rf "${pkgdir}/usr/share"
+
+  # install BSD-3-Clause license
+  install -Dm644 NOTICE -t "$pkgdir/usr/share/licenses/$pkgname/"
 }
 
 package_libnvidia-container-tools() {
-  depends=(libnvidia-container)
+  pkgdesc+=" (command-line tools)"
+  depends=('libnvidia-container')
 
-  make_dist
+  cd "${pkgbase}"
+  make prefix=/usr DESTDIR="${pkgdir}" install
 
-  # cleanup
-  rm -rf "${pkgdir}/usr/lib/debug"
-  rm -rf "${pkgdir}/usr/lib/pkgconfig"
+  # remove lib and include
+  rm -rf "${pkgdir}"/usr/{include,lib}
 
-  # save lib/ and include/ for -tools
-  rm -rf "${pkgdir}/usr/lib"
-  rm -rf "${pkgdir}/usr/include"
-
-  #mkdir -p "${pkgdir}/usr/share/licenses/${pkgname}"
-  #install -D -m644 "${pkgdir}/usr/share/doc/${pkgbase}-${pkgver}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/"
-  #rm -rf "${pkgdir}/usr/share/doc"
+  # remove duplicate licenses
   rm -rf "${pkgdir}/usr/share"
-}
 
-# vim:set ts=2 sw=2 et:
+  # install BSD-3-Clause license
+  install -Dm644 NOTICE -t "$pkgdir/usr/share/licenses/$pkgname/"
+}
