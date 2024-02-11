@@ -1,18 +1,20 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-experiments
 pkgname=python-${_pkgname}
-pkgver=0.5.4
-pkgrel=2
+pkgver=0.6.0
+pkgrel=1
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=('any')
 url="https://github.com/Qiskit-Extensions/qiskit-experiments"
-license=('Apache')
+license=('Apache-2.0')
 depends=(
     'python-lmfit'
     'python-matplotlib'
     'python-numpy'
-    'python-qiskit-ibm-experiment'
+    'python-pandas'
     'python-qiskit'
+    'python-qiskit-ibm-experiment'
+    'python-rustworkx'
     'python-scipy'
     'python-uncertainties'
 )
@@ -22,8 +24,14 @@ makedepends=(
     'python-setuptools'
     'python-wheel'
 )
+optdepends=(
+    'python-cvxpy: for tomography'
+    'python-scikit-learn: for discriminators'
+    'python-qiskit-aer'
+    'python-qiskit-dynamics: for the PulseBackend'
+)
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit-Extensions/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('07663241aed0272646cc43529e0440dac5f80d7d0586d0067c12f7527829dd100a3e516af9368d9cc517f105d790380644b95cab9d5c98aeb7194fea3925f208')
+b2sums=('ca70a579f7f22c2a1f83a0f5a499f36af29a7be8155ec9e2ce62b9b6b23f23d4bbd6c08af54251fbf13ff8c9fd1a0da1b7635b0bf88227f7d85af00e8f5b1f55')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
