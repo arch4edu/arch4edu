@@ -1,12 +1,12 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-${_pkgname}
-pkgver=0.13.2
+pkgver=0.13.3
 pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=('x86_64')
 url="https://github.com/Qiskit/qiskit-aer"
-license=('Apache')
+license=('Apache-2.0')
 depends=(
     'blas-openblas'
     'cython'
@@ -37,7 +37,7 @@ source=(
     "${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz"
     "fix.patch"
 )
-b2sums=('583937a3515f3de0714100cf7586f42b028c5918d50e2352fa3658b6e53e185ce5db5dc4a5abbe0ad8cf4634da123a47c7708eeee7f9ec53af2fdedc2d6192ef'
+b2sums=('0ecc1929b0fec476b8e80012d78d9a65fcd8994f7c0fd66880e31c44bc3fa3d050774d696a9b5726f18cd401113dc8068e4391002743936baa09c283e06ba9bf'
         '5523350559706d94f6eeb169360759d32bfd1dec8384948bfb04823eec6440e03377860ae53dc6ba3e7a9a087f0429d9f9bb4a4c3d7c523e713f5e6b34c20dc9')
 
 prepare() {
