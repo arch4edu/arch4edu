@@ -2,14 +2,14 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=GGally
-_pkgver=2.2.0
+_pkgver=2.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Extension to 'ggplot2'"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-dplyr
   r-ggplot2
@@ -63,12 +63,12 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ba770293c7c59d282359e9425e0c3f7b')
-sha256sums=('dce20b47d639aa1ad63d9f14aae48c554d1e787758876c9842bf0e093bab80dd')
+md5sums=('9acff4b4e2fd3197ac98fada1266434a')
+b2sums=('20f2e5ff8a7c002e509641f7248a140a6a738bf11c68215bd38f04c701e195b98ac738607a42d9dbcc3ad55e3cf7565549d9b3e5a6d68166149c3f557db116f1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
