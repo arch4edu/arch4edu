@@ -2,14 +2,14 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=heplots
-_pkgver=1.6.0
+_pkgver=1.6.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Visualizing Hypothesis Tests in Multivariate Linear Models"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-broom
   r-car
@@ -36,12 +36,12 @@ optdepends=(
   r-tidyr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a426647892c067aa64f60ffffdd48a08')
-sha256sums=('b085c00fe14801647e6c239d46ea68dae7158183ec35fb1b2b38287996708405')
+md5sums=('8e6ec4d6adbe95bccccaa81aedb4315c')
+b2sums=('56694ec405321a5a06237da5a045538d4bd53c05dfed4ccaa6ae30e5967bab2aee26cbd98122ec32e683b70756f3f2d2ca8c13b7b7024cf928453b972a374cbd')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
