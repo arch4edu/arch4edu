@@ -6,7 +6,7 @@
 _gitname="tokenizers"
 _pkgname="python-$_gitname"
 pkgname="$_pkgname"
-pkgver=0.15.1
+pkgver=0.15.2
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 url="https://github.com/huggingface/tokenizers"
@@ -41,8 +41,7 @@ prepare() {
 
   cd "$_pkgsrc/bindings/python"
 
-  # sed -E -e 's@, default-features = false@@' -i Cargo.toml
-
+  # fix typo
   sed -E -e 's@defaut@default@' -i Cargo.toml
 
   cargo update
@@ -54,8 +53,6 @@ build() {
   export GIT_DIR='.'
   export RUSTUP_TOOLCHAIN=stable
   export CARGO_TARGET_DIR=target
-
-  #export RUSTONIG_SYSTEM_LIBONIG=1
 
   cd "$_pkgsrc/bindings/python"
   cargo build --frozen --release
