@@ -1,8 +1,8 @@
 # Maintainer: Luis Sarmiento < Luis.Sarmiento-ala-nuclear.lu.se >
 pkgname='geant4'
-pkgver=11.2.0
+pkgver=11.2.1
 _pkgver=v${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc="A simulation toolkit for particle physics interactions."
 # https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/gettingstarted.html
 depends=('cmake>=3.16'
@@ -39,15 +39,11 @@ options=('!emptydirs')
 install="${pkgname}.install"
 source=("http://geant4-data.web.cern.ch/releases/${pkgname}-${_pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('46ad7fab3c5cb4bd0bdd77dd6d3e2283184819235bcbc01b2d117d81b35596a6'
+sha256sums=('835db6543d5cb2e801675958965be96877f66d6907bb521954b598b785deae5e'
             '0eae153900d995603b0b465c9f17225ba76dd8118377507916fc709360482058')
 
 ## Remove this if you want to keep an even smaller package
 ## No need to wait for compression when just installing it.
-
-prepare() {
-    sed -i '142s#SoQt 1.6.0 REQUIRED#SoQt 1.6.1 REQUIRED#' ${srcdir}/${pkgname}-${_pkgver}/cmake/Modules/G4InterfaceOptions.cmake
-}
 
 build() {
 
