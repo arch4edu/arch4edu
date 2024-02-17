@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=parsnip
-_pkgver=1.1.1
+_pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="A Common API to Modeling and Analysis Functions"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-dplyr
@@ -67,12 +67,12 @@ optdepends=(
   r-xgboost
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4bd785c12a9ef091a3a69db37b29f463')
-sha256sums=('2241336c3cd1fed7c882228d524388aa4bc6645110e781afad3d932a769d0bc8')
+md5sums=('5511bd877b251ff068613fd7e47d387c')
+b2sums=('2824147e2f4c46329ab4575f9a4493cc68d141ec031271799e5874a5b4e4148842db38d638b567ed4091e1f9fbe05e371a828c00f2fb603c6d6506c8d07c4181')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
