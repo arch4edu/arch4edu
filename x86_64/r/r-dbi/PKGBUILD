@@ -6,14 +6,14 @@
 # Contributor: Lydgate <archlinux@vo.racio.us>
 
 _pkgname=DBI
-_pkgver=1.2.1
+_pkgver=1.2.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="R Database Interface"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(LGPL)
+license=('LGPL-2.1-or-later')
 depends=(
   r
 )
@@ -42,8 +42,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5c74f3d0cbf627e67eb4d0557369411b')
-b2sums=('5c68048b9aa25161dda417128e0444184e3be249373c38277e4de40a4165b49e9020db603e1682cbacbb06d63e839afeafdfc1933915d3c0218fbd4fea28430b')
+md5sums=('f7e3698666cec735a4e0da7e18dc025c')
+b2sums=('4e222f499b5262de4d24fd0a8cb31d03382c964ed6089da342454fce13684799ab960f11ab0d4571e09524ba52f8ed19641d43bd798a0d56d5d92380a5e70211')
 
 build() {
   mkdir build
