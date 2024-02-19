@@ -25,7 +25,7 @@ done
 
 pkgname=(misans ${_pkgbase[@]} misans-fontconfig)
 pkgver=4.003
-pkgrel=1
+pkgrel=2
 pkgdesc="MiSans Global is a global language font customization project led by Xiaomi and co-created with Mona font and Han Yi font."
 arch=(any)
 url='https://hyperos.mi.com/font/download'
@@ -52,7 +52,7 @@ build() {
 }
 
 function _package {
-    depends+=(misans-fontconfig)
+    optdepends+=(misans-fontconfig)
     local _pkgname=$1
     pkgdesc+=" - ${_pkgname}"
     local ext="${_pkgname%%-*}"
@@ -87,7 +87,7 @@ package_misans-fontconfig () {
     provides=()
     conflicts=()
     depends=(fontconfig)
-    install -Dm755 /dev/stdin "${pkgdir}/usr/share/fontconfig/conf.default/75-misans.conf" <<EOF
+    install -Dm755 /dev/stdin "${pkgdir}/usr/share/fontconfig/conf.avail/75-misans.conf" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fontconfig SYSTEM "../fonts.dtd">
 <fontconfig>
@@ -97,8 +97,8 @@ package_misans-fontconfig () {
     </alias>
 </fontconfig>
 EOF
-    install -dm755 "${pkgdir}/usr/share/fontconfig/conf.avail"
-    ln -nsf /usr/share/fontconfig/conf.default/75-misans.conf "${pkgdir}/usr/share/fontconfig/conf.avail/75-misans.conf"
+    install -dm755 "${pkgdir}/usr/share/fontconfig/conf.default"
+    ln -rs /usr/share/fontconfig/conf.avail/75-misans.conf "${pkgdir}/usr/share/fontconfig/conf.default/75-misans.conf"
 }
 
 package_misans () {
