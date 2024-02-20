@@ -5,12 +5,12 @@
 _pkgname=mathjaxr
 _pkgver=1.6-0
 pkgname=r-${_pkgname,,}
-pkgver=1.6.0
-pkgrel=8
+pkgver=${_pkgver//-/.}
+pkgrel=10
 pkgdesc="Using 'Mathjax' in Rd Files"
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -18,14 +18,15 @@ optdepends=(
   r-js
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ecc47607111b788d84789459af7f4f9102719f98640b7a23bd5a4eb1a6d3c179')
+md5sums=('aa2b8ff5e046b8681d3f0fdcdb046880')
+b2sums=('39577dcf01ed3cfb3a00b40cbd7fb3c7597ed180974afc1842cc56f82136fe62e3ead8f93f7c92b3755573aa24c6c224887c48bfe145a99566e0ca6588f1faf3')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
