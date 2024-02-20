@@ -8,7 +8,7 @@ pkgver=3.19.0.401
 _pkgver_arm=${pkgver} # 两个版本有时候不一样
 _x86_md5=bb4001c715553579a8b3e496233331d4
 _arm_md5=0f96a97b0aaea9b9d5d2c2b912ede656
-pkgrel=2
+pkgrel=3
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -24,7 +24,7 @@ depends=(
     # dependencies detected by namcap
     gcc-libs qt5-declarative libglvnd libxfixes alsa-lib qt5-webchannel openssl
     libxrandr libxext libx11 hicolor-icon-theme glibc zlib libxcomposite
-    qt5-base systemd-libs libxdamage
+    qt5-base systemd-libs libxdamage qt5-svg
 )
 optdepends=(
     'qt5-wayland: Wayland support'
