@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=estimability
-_pkgver=1.4.1
+_pkgver=1.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=6
+pkgrel=1
 pkgdesc="Tools for Assessing Estimability of Linear Predictions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -12,9 +12,13 @@ license=('GPL-3.0-or-later')
 depends=(
   r
 )
+optdepends=(
+  r-knitr
+  r-rmarkdown
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ca07f605e63b51168a096ea3b8e5f545')
-b2sums=('978d4425003ad837def4bfe4da5c4c81dfd556bb5c0614c655af7a25ea04adb25728af30e8661ba88d628c0b040562118ca40fde2d2256989ab996787ccc4d68')
+md5sums=('36a7cd52f48a9421d8152cc2e814f603')
+b2sums=('681d81d3d931b575401dae6f3fb427d44c266c7dcabaa0c5de7db319e499f27b12a5fdbb415c14fd7abad17779b07c18dad8c897ffa4a4509978dbb09dc5746a')
 
 build() {
   mkdir build
