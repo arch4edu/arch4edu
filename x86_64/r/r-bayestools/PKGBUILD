@@ -2,10 +2,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=BayesTools
-_pkgver=0.2.16
+_pkgver=0.2.17
 pkgname=r-${_pkgname,,}
-pkgver=0.2.16
-pkgrel=3
+pkgver=0.2.17
+pkgrel=1
 pkgdesc='Tools for Bayesian Analyses'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -34,7 +34,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('75d05cd6ccaa81655202c47959ffb01d8b90489c1c85078d0d281211a15fa7d6')
+sha256sums=('f6d2bfb6fae46677e5af444f757c58eb46084d4225aec315140d041534318cef')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
