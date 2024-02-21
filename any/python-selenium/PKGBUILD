@@ -6,29 +6,29 @@
 _pyname=selenium
 _suffix=-python
 pkgname=python-$_pyname
-pkgver=4.17.2
+pkgver=4.18.1
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=(any)
-url="https://www.selenium.dev"
-license=(Apache)
+url="https://github.com/SeleniumHQ/selenium"
+license=(Apache-2.0)
 depends=(python python-urllib3 python-certifi python-trio
-         python-trio-websocket)
+         python-trio-websocket python-typing_extensions)
 makedepends=(python-build python-installer python-setuptools python-wheel)
 checkdepends=(python-pytest)
-source=("https://github.com/SeleniumHQ/${_pyname}/archive/refs/tags/${_pyname}-${pkgver}${_suffix}.tar.gz")
-sha256sums=('ba9222c983fa34eb03b8847515bf0c170bf12e89ad291e859e0bf05f183e540a')
+source=("$url/archive/${_pyname}-${pkgver}.tar.gz")
+sha256sums=('6e5c8903253f9541bc839e3e31f99680d8ceb202b2b6d75ebe51e95f348ee1c5')
 options=(!makeflags)
 
 prepare() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${_suffix}/py"
+  cd "${_pyname}-${_pyname}-${pkgver}/py"
   cp ../rb/lib/$_pyname/webdriver/atoms/* $_pyname/webdriver/remote
   echo '{"frozen":{},"mutable":{}}' > \
     $_pyname/webdriver/firefox/webdriver_prefs.json
 }
 
 build() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${_suffix}/py"
+  cd "${_pyname}-${_pyname}-${pkgver}/py"
   python -m build \
     --wheel \
     --no-isolation \
@@ -36,13 +36,13 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${_suffix}/py"
+  cd "${_pyname}-${_pyname}-${pkgver}/py"
 
   python -m pytest
 }
 
 package() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${_suffix}/py"
+  cd "${_pyname}-${_pyname}-${pkgver}/py"
   python -m installer \
     --destdir="$pkgdir" \
     --compile-bytecode=2 \
