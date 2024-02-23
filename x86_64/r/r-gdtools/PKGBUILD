@@ -5,14 +5,14 @@
 # Contributor: portaloffreedom
 
 _pkgname=gdtools
-_pkgver=0.3.5
+_pkgver=0.3.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Utilities for Graphical Rendering and Fonts Management"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   cairo
   freetype2
@@ -30,12 +30,12 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b778af979e49476c8b4c45acb6d1b667')
-sha256sums=('8cb46da05b87440aadf6958baa37dd9b62d526c558622285146ea7cc4b51b894')
+md5sums=('25d12129c0ac5997757b5526e80d4efc')
+b2sums=('9c1c0277be857de7e913491c3a30482667b3abf5ec0cdffcb2d5cd5abbe635c4ba6539ff83adcc7fc1db1ae6ec6511fd1a346f25015347104a23f075be1bdbe1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
