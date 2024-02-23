@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=dials
-_pkgver=1.2.0
+_pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Tools for Creating Tuning Parameter Values"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-dicedesign
@@ -38,12 +38,12 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('07b785283bd9d6d8c491acbea8db484f')
-sha256sums=('24660e7200cca6f2c63dc70dec3702a2bed027e02639c7c66d5ebd2f0f7148fe')
+md5sums=('71af0aae8351ff80de1e3d8c55f5c135')
+b2sums=('2763d0e81b810fc632f7396fd6b41324553e11180cf8293743201652f8915b0fdedca3c657bde6bff7cbeb0b93f5299990de431b32eeddecbc66b92491bc9d41')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
