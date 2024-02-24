@@ -2,12 +2,12 @@
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.5
+pkgver=1.5.1
 pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
 url="https://pyvo.readthedocs.io"
-license=('BSD')
+license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm'
              'python-wheel'
              'python-build'
@@ -21,7 +21,13 @@ checkdepends=('python-pytest-astropy-header'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('c4ef068dc7c2e9bb7ddba954802a38ab')
+md5sums=('09e8bb1a5bcd29843e4e91a00e0c651f')
+
+prepare() {
+    cd ${srcdir}/${_pyname}-${pkgver}
+
+    sed -i "/error/a \	ignore:leap-second auto-update failed:astropy.utils.exceptions.AstropyWarning" setup.cfg
+}
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
