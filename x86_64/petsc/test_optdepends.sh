@@ -9,11 +9,6 @@ CONFOPTS=""
   #CONFOPTS="${CONFOPTS} --download-${external_pkg}=1"
 #done
 
-# FFTW
-if [ -f "/usr/lib/pkgconfig/fftw3.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-fftw=1"
-fi
-
 # Kokkos
 if [ -f "/usr/lib/libkokkoscore.so" ]; then
   CONFOPTS="${CONFOPTS} --with-kokkos=1"
