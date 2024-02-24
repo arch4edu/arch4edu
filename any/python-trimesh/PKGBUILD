@@ -1,10 +1,11 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: Auto update bot <auto-update-bot@arch4edu.org>
 # Contributor: Brad Pitcher <bradpitcher@gmail.com>
 # Contributor: Jelle van der Waa <jelle@archlinux.org>
 
 _base=trimesh
 pkgname=python-${_base}
-pkgver=4.1.4
+pkgver=4.1.5
 pkgrel=1
 pkgdesc="Import, export, process, analyze and view triangular meshes"
 arch=(any)
@@ -20,10 +21,9 @@ optdepends=('python-scipy: convex hulls'
   'python-networkx: graph operations'
   'python-shapely: vector path handling'
   'python-rtree: vector path handling'
-  'python-requests: network requests'
+  'python-httpx: network requests'
   'python-sympy: do analytical math'
   'python-xxhash: hash ndarrays faster than built-in MD5/CRC'
-  'python-msgpack: serialize into msgpack'
   'python-chardet: encoding'
   'python-colorlog: print logs with colors'
   'python-pillow: load images'
@@ -31,16 +31,16 @@ optdepends=('python-scipy: convex hulls'
   'python-jsonschema: validate JSON schemas like GLTF'
   'python-collada: parse collada/dae/zae files'
   'python-pyglet: preview windows'
+  'python-fcl: collision queries between meshes'
   'python-meshio: load mesh formats'
   'python-scikit-image: for voxel ops'
   'python-mapbox-earcut: triangulate polygons'
   'python-psutil: get memory usage'
   'python-ruff: static code analyzer'
-  'autopep8: code formatter'
   'python-pytest: test runner'
-  'python-pyinstrument: sampling based profiler') # python-xatlas python-fcl python-glooey
+  'python-pyinstrument: sampling based profiler') # python-xatlas python-glooey
 source=(${_base}-${pkgver}.tar.gz::https://github.com/mikedh/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('bbdc3ec24d5a53e329b3b3021bec14668b1bb19e231ebb5f2ee186449e9c4ad162a14c4f42b8bdaed513ff5c874bf7ec1f0fc4bf103ee6b79ca7564494316984')
+sha512sums=('a62cdbad4a053fe6bf3d70285c2484600af09f9bc6a638214b10718bdf3c0901053bad0d25c4d7dc96f396c66fb3d438981d3fc96ea179bb078abb3d8b87695b')
 
 build() {
   cd ${_base}-${pkgver}
