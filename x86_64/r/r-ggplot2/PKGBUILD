@@ -7,14 +7,14 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=ggplot2
-_pkgver=3.4.4
+_pkgver=3.5.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Create Elegant Data Visualisations Using the Grammar of Graphics"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-glue
@@ -61,12 +61,12 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('13e7ad92c109bb07993373317e428415')
-sha256sums=('2d76ec065d3e604d019506f45b3b713ae20f38e47dbebfb5ba1648b47fe63e46')
+md5sums=('81c1b4d3661e2b7d2420f1b01235ed60')
+b2sums=('44e1e46bd3327e953f77431a0a625b06ba7f0ac772f96104935a0978df5115661309e07a12d2439940d8ada429cd06a9d8f5ed6a9119fdd8fd7f83d04d7836de')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
