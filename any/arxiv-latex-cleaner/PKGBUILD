@@ -3,7 +3,7 @@
 
 pkgname=arxiv-latex-cleaner
 _pkgname=arxiv-latex-cleaner
-pkgver=1.0.1
+pkgver=1.0.4
 pkgrel=1
 pkgdesc="Easily clean the LaTeX code of your paper to submit to arXiv"
 arch=('any')
