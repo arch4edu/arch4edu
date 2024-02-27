@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=earth
-_pkgver=5.3.2
+_pkgver=5.3.3
 pkgname=r-${_pkgname,,}
-pkgver=5.3.2
+pkgver=5.3.3
 pkgrel=1
 pkgdesc='Multivariate Adaptive Regression Splines'
 arch=('x86_64')
@@ -25,7 +25,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c844d75edf9a2706a911bb05ed4287aad9acf6f3fed357e037763a300eac0bea')
+sha256sums=('786a0fcabb3db13e0e0a4ba61ecccb7e171030b39bc97926f8e7159485d2f572')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
