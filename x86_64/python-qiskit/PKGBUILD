@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit
 pkgname=python-${_pkgname}
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 epoch=1
 pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
@@ -56,7 +56,7 @@ makedepends=(
 #    'python-pytest-xdist'
 #)
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('3e5903ef439e27770b24efe8a5dd7adafdee28d894a77255cae8a76f43d09e847d4f8da0face242eebc8f479beef846c00527a6e285f588271f07e91f89871d2')
+b2sums=('fcc9eb8ea4b3ceeea3238b927d68cd7cc20ea4ed74e981122d922a2bdfca13d55628c7947129cfd4fe9aa2cdf4fc5e07ff9252ffac95527daf2231436ba2b8a7')
 
 build() {
     cd "${_pkgname}-${pkgver}"
