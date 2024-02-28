@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-nature
 pkgname=python-${_pkgname}
-pkgver=0.7.1
+pkgver=0.7.2
 pkgrel=1
 pkgdesc="Quantum Nature package for IBM qiskit framework"
 arch=('x86_64')
@@ -28,7 +28,7 @@ checkdepends=(
     'python-pytest'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/qiskit-community/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('c7abc4e1f6bc5763ea2c1b154fe5ab06523b2ced85ccbd648bba128fc4015b0a4de43c4f47e902ad0e88c1ad041e3053c70a9ac6d6605d0a8fd41c328ffd9af1')
+b2sums=('413df37a8fb9d76f4284b91675e3f52d6b2dd8c0b53b67264d903c7853fb87ff3eefd7bffedc309cc0623d365cd8b41fad80f5a398e6589d943978ea27142dba')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
