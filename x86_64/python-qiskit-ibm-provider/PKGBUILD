@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-ibm-provider
 pkgname=python-${_pkgname}
-pkgver=0.9.0
+pkgver=0.10.0
 pkgrel=1
 pkgdesc="Qiskit Provider for accessing the IBM Quantum Services: Online Systems and Simulators"
 arch=('any')
@@ -25,7 +25,7 @@ makedepends=(
     'python-wheel'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('0496eef075600f5b69e8c344a1c161a6861958f5878e046b3e287c2aca4fee74f2dc61265cd41eca85bf00dd530fd15ed14cb2f31b74f487bfc3f5e1906f030d')
+b2sums=('8675a8e7006332a786d62b4fe96914f75e24ee0f9e81c89157c51f880ef8ecc9b0acb357478ed83606d40dc6edda68af8954cb9fdd2257d9856dd58f521bc83a')
 
 build() {
     cd "${_pkgname}-${pkgver}"
