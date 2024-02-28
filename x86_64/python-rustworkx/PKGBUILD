@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 pkgname=python-rustworkx
 _name=${pkgname#python-}
-pkgver=0.14.0
+pkgver=0.14.1
 pkgrel=1
 pkgdesc="A high performance Python graph library implemented in Rust"
 arch=("x86_64")
@@ -31,7 +31,7 @@ checkdepends=(
 )
 conflicts=('python-retworkx')
 source=("${_name}-${pkgver}.tar.gz::https://github.com/Qiskit/${_name}/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=('aad2c95f5e3fee6939cbfc53b81197b5fd149925a3be683a09412c5f2d0b32da90ed06d5efb5f24b6f77138074fb4234d16296119890c9e15a8d3002c2112638')
+b2sums=('03ebbd55762ef3f8834ed688782580a2ffb05dc34410c9970337d776bcc52afb2ee474860cbcd173d57c3736b8562a1848df558d304de872d4f0e98522c57d46')
 
 build() {
     cd "${_name}-${pkgver}"
@@ -50,5 +50,4 @@ check() {
 package() {
     cd "${_name}-${pkgver}"
     python -m installer --destdir="${pkgdir}" dist/*.whl
-    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
