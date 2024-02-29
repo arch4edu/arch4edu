@@ -3,30 +3,31 @@
 # Contributor: Kien Dang <mail at kien dot ai>
 pkgname=('libnvidia-container' 'libnvidia-container-tools')
 pkgbase=libnvidia-container
-pkgver=1.14.5
-pkgrel=2
-_nvmodver=495.44
+pkgver=1.14.6
+pkgrel=1
+_nvmodver=550.54.14
+_tirpcver=1.3.2
 pkgdesc="NVIDIA container runtime library"
 arch=('x86_64')
 url='https://github.com/NVIDIA/libnvidia-container'
-license=('BSD-3-Clause AND Apache-2.0 AND GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT AND GPL-2.0-only')
-depends=('libcap' 'libelf' 'libseccomp')
-makedepends=('bmake' 'git' 'go' 'libtirpc' 'lsb-release' 'rpcsvc-proto')
-_commit=870d7c5d957f5780b8afa57c4d5cc924d4d9ed26  # tags/v1.14.5^0
+license=('BSD-3-Clause AND Apache-2.0 AND GPL-3.0-or-later AND LGPL-3.0-or-later AND GPL-2.0-only')
+depends=('libcap' 'libelf' 'libseccomp' 'libtirpc')
+makedepends=('bmake' 'git' 'go' 'lsb-release' 'rpcsvc-proto')
+_commit=d2eb0afe86f0b643e33624ee64f065dd60e952d4  # tags/v1.14.6^0
 source=("git+https://github.com/NVIDIA/libnvidia-container.git#commit=${_commit}"
         "nvidia-modprobe-${_nvmodver}.tar.gz::https://github.com/NVIDIA/nvidia-modprobe/archive/${_nvmodver}.tar.gz"
+        'fix-makefile.patch'
         'no-manual-debuginfo.patch')
 noextract=("nvidia-modprobe-${_nvmodver}.tar.gz")
 sha256sums=('SKIP'
-            'ae6e9c7e6b43368945c28f6b8b6d0d7cc36ee7e1be8955a009a1cb189e46de92'
+            '5687b0dfa6087dd480ae91e91ff1dca975794e35a2edcf9ec08d8f9cb98ef905'
+            'ca38bc4d67dc1c585a21d903dfe6dc1ca79db04320e76fff93b82b4d102896fe'
             '4c0ffca77dee2d0c98ea92716b5c3cff0d41f974000fea29ca905435d3acbe8e')
 
-# v1.14.4 and v1.14.5 are identical
-
-#pkgver() {
-#  cd "$pkgbase"
-#  git describe --tags | sed 's/^v//;s/-/+/g'
-#}
+pkgver() {
+  cd "$pkgbase"
+  git describe --tags | sed 's/^v//;s/-/+/g'
+}
 
 prepare(){
   cd "$pkgbase"
@@ -37,12 +38,14 @@ prepare(){
     --strip-components=1 -xz "nvidia-modprobe-${_nvmodver}/modprobe-utils"
   touch "deps/src/nvidia-modprobe-${_nvmodver}/.download_stamp"
   patch -d "deps/src/nvidia-modprobe-${_nvmodver}" -p1 < mk/nvidia-modprobe.patch
+
+  patch -Np1 -i ../fix-makefile.patch
   patch -Np1 -i ../no-manual-debuginfo.patch
 }
 
 build(){
   cd "$pkgbase"
-  make prefix=/usr WITH_LIBELF=yes WITH_TIRPC=yes
+  make prefix=/usr WITH_LIBELF=yes
 }
 
 package_libnvidia-container() {

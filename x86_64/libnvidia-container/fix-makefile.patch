@@ -1,0 +1,15 @@
+Index: libnvidia-container-1.4.0/Makefile
+===================================================================
+--- libnvidia-container-1.4.0.orig/Makefile
++++ libnvidia-container-1.4.0/Makefile
+@@ -143,6 +143,9 @@ ifeq ($(WITH_TIRPC), yes)
+ LIB_CPPFLAGS       += -isystem $(DEPS_DIR)$(includedir)/tirpc -DWITH_TIRPC
+ LIB_LDLIBS_STATIC  += -l:libtirpc.a
+ LIB_LDLIBS_SHARED  += -lpthread
++else
++CPPFLAGS           += -I/usr/include/tirpc
++LIB_LDLIBS_SHARED  += -lpthread -ltirpc
+ endif
+ ifeq ($(WITH_SECCOMP), yes)
+ LIB_CPPFLAGS       += -DWITH_SECCOMP $(shell pkg-config --cflags libseccomp)
+
