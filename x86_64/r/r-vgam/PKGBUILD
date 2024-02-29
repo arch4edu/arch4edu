@@ -1,14 +1,14 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=VGAM
-_pkgver=1.1-9
+_pkgver=1.1-10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Vector Generalized Linear and Additive Models"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL3)
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -19,8 +19,8 @@ optdepends=(
   r-vgamextra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f51f80d9943e8773bfb12a5139151b2e')
-b2sums=('759aa1a780bd64ac7b8d8289c8031ddc20cde5f82a20cdc6d049712a38016fd7107d6931431c88bae660468e5e480d485ce95126fa992c4b6fd376034ed86f2b')
+md5sums=('4775c04874f72d7920d38462f321cdf9')
+b2sums=('2666fd04c1a7303dd0d03c6f9de22e963b019ed9217b0f027f64d36b6f111af8763f9bb2821518fbd4035eb293b8747cbb47623abb1ef93e43a1a9e0c9b0709a')
 
 build() {
   mkdir build
