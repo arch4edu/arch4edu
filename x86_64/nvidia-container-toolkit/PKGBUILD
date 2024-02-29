@@ -2,7 +2,7 @@
 # Contributor: Kien Dang <mail at kien dot ai>
 # Contributor: Julie Shapiro <jshapiro at nvidia dot com>
 pkgname=nvidia-container-toolkit
-pkgver=1.14.5
+pkgver=1.14.6
 pkgrel=1
 pkgdesc="NVIDIA container runtime toolkit"
 arch=('x86_64')
@@ -18,7 +18,7 @@ options=('!makeflags' '!lto')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
 #        'go-nvml-79.patch'  # only for Go 1.21.X
         )
-sha256sums=('6c6ae02b46a56e3a8b23ab3b0d0f46ad908d0771e6db4b3f6b5cfa64050ce83c')
+sha256sums=('9e93bd30e93f83f3771360a3e325091ca8213f7a129c9e002ad069a206475e4d')
 
 prepare() {
   cd "$pkgname-$pkgver"
