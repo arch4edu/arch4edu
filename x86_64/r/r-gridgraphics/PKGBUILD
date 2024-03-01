@@ -3,12 +3,12 @@
 _pkgname=gridGraphics
 _pkgver=0.5-1
 pkgname=r-${_pkgname,,}
-pkgver=0.5.1
-pkgrel=4
+pkgver=${_pkgver//-/.}
+pkgrel=11
 pkgdesc="Redraw Base Graphics Using 'grid' Graphics"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -17,14 +17,15 @@ optdepends=(
   r-pdftools
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('29086e94e63891884c933b186b35511aac2a2f9c56967a72e4050e2980e7da8b')
+md5sums=('ec6a5183d4597929f18ae491b9adecf9')
+b2sums=('6ee9cac3e7cfcb8e1b598b14a49fd9521c86995d0d9634c9efd4c1afaf746a50510c74d5d4f9798002333f37cafdf93700022fb9fa15c97376bd70de55f05b0f')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
