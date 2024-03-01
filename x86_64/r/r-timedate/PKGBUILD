@@ -6,12 +6,12 @@
 _pkgname=timeDate
 _pkgver=4032.109
 pkgname=r-${_pkgname,,}
-pkgver=4032.109
-pkgrel=1
-pkgdesc='Rmetrics - Chronological and Calendar Objects'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Rmetrics - Chronological and Calendar Objects"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-runit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('402841bda47e8c31f49773de2ff5447e9780bc7c8af5fb18be9287b546fcb958')
+md5sums=('96ed5f3e9a0bd034dfb65dc2a4aff33f')
+b2sums=('edd0d2c9f0ef8c30ee149e01b2650ad4d01a34f91a33bf26af02ae1c13626348c5f42f907eb4ac4a7ff5228a45786f66a2da6cc77de2f7cf6951546507bfe798')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
