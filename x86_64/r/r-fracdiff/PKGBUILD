@@ -3,13 +3,14 @@
 _pkgname=fracdiff
 _pkgver=1.5-3
 pkgname=r-${_pkgname,,}
-pkgver=1.5.3
-pkgrel=1
-pkgdesc='Fractionally Differenced ARIMA aka ARFIMA(P,d,q) Models'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Fractionally Differenced ARIMA aka ARFIMA(P,d,q) Models"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
+  blas
   r
 )
 optdepends=(
@@ -18,14 +19,15 @@ optdepends=(
   r-urca
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0f90946b4092feff93fad094a2c91bb47c8051595210e86c029c70238dbf7fc0')
+md5sums=('f709c0a691bc7287bb5ab1f014885a4f')
+b2sums=('be61604f7afe4d706402a0906ab4dcdd2d702aaa8250908ebde16657afb2703bf3f4481116701c97fdf0260dafd87e6d2c20a7d2eff11170cbcc47b688615200')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
