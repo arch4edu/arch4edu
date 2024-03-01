@@ -5,12 +5,12 @@
 _pkgname=polynom
 _pkgver=1.4-1
 pkgname=r-${_pkgname,,}
-pkgver=1.4.1
-pkgrel=9
-pkgdesc='A Collection of Functions to Implement a Class for Univariate Polynomial Manipulations'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=11
+pkgdesc="A Collection of Functions to Implement a Class for Univariate Polynomial Manipulations"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bc1edb7bb16c8b299103f80a52ab8c5fc200cd07a9056578c1f672e9f5019278')
+md5sums=('5511178c91fd6eb33fdeefc64deb0546')
+b2sums=('47870cddc2998ffe1c764d26f9624e9eb0024bd0f8336e1786d197515d2db1bf3c6929598dae8c8944deb184bf323e27d637361d81d04f5cb8cee20f840f6287')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
