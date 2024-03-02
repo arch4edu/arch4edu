@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=smacof
-_pkgver=2.1-5
+_pkgver=2.1-6
 pkgname=r-${_pkgname,,}
-pkgver=2.1.5
+pkgver=2.1.6
 pkgrel=1
 pkgdesc='Multidimensional Scaling'
 arch=('x86_64')
@@ -33,7 +33,7 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('fb0369a94bbdcb2b024d11731f2dda1a783b535aa243a00dd783a47a86192ac5')
+sha256sums=('4a1d58f6f2e8fb5582fd672dc2f6d5784a03702d8c748b972e0be1c4d6dcad1a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
