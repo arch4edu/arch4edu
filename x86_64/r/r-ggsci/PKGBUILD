@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=ggsci
-_pkgver=3.0.0
+_pkgver=3.0.1
 pkgname=r-${_pkgname,,}
-pkgver=3.0.0
-pkgrel=3
+pkgver=3.0.1
+pkgrel=1
 pkgdesc="Scientific Journal and Sci-Fi Themed Color Palettes for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8901316516d78f82a2a8685d93ba479424bcfd8cb5e28a28adbd50e68964e129')
+sha256sums=('f16d85168c39d4dd861863d8b51396de8a14355de392d352f0905662ba9c190c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
