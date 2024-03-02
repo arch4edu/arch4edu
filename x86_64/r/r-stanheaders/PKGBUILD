@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=StanHeaders
-_pkgver=2.32.5
+_pkgver=2.32.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="C++ Header Files for Stan"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -28,9 +28,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-flags.patch")
-md5sums=('b6451f9244ccd0682327dcbaf63685c4'
+md5sums=('6186e76365d883342e98effa1176b3f3'
          '0d0c50619b42dc9d75209fc43320c71b')
-b2sums=('3aa5e2d4b68e7cfbb97346b2e044ef8530eb6be39d6ddebfc53e8e10c151a0ebc053b664a8aefaced3cce2a59b9dc01efafe9bfba6c2ba67f06df1b80a9fcbd9'
+b2sums=('5864e8df45e52056264ac607166234fabf20a97ee6e4bf423d2c51e3faeec8d0b91b7758a79c846275ce70a211b72b98c65fa0f784a7b2ba6011b43a720bda7f'
         '11ef9d240340ee8aaee7d0786dfbd8b412c90b22289a4fc1b9787907b78c6fd75a401078f1be796833fbc87f18095a0960c1b132efc2481e339a10bccf8782aa')
 
 prepare() {
