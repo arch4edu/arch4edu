@@ -6,16 +6,17 @@
 _pkgname=lme4
 _pkgver=1.1-35.1
 pkgname=r-${_pkgname,,}
-pkgver=1.1.35.1
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Linear Mixed-Effects Models using 'Eigen' and S4"
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-minqa
   r-nloptr
+)
+makedepends=(
   r-rcpp
   r-rcppeigen
 )
@@ -28,7 +29,6 @@ optdepends=(
   r-knitr
   r-memss
   r-merderiv
-  r-mgcv
   r-mlmrev
   r-numderiv
   r-optimx
@@ -41,14 +41,15 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e4a411396f68bf93751dfd01c8cd431e2d4658340186c47d164ebb2b840afb5b')
+md5sums=('b452706beaa895b70d874a8a0154f87d')
+b2sums=('f24c9d48813ef6ecb23777831055089924868de54febe1f7d9114b502e052002f5a7da7cf739df18d34a0d0c54cbe3577eed02a1042cca2eab3a125252ab93aa')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
