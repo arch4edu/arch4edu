@@ -9,21 +9,21 @@ _pkgname=MatrixModels
 _pkgver=0.5-3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Modelling with Sparse and Dense Matrices"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('5ad7c5222f8f8322a307de4445ab9985')
-sha256sums=('c2db5406c6b0b9d348b44eea215a39c64fc087099fea1342a04d50326577f20f')
+b2sums=('f1f9c21c7a588a8448f3466ebfd78a90fb27c596a68d0518cb8012faa1aad18087b3008a1f8301ccb4f01a88087920d3ea869e420d96d7261954f437ecec10f1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
