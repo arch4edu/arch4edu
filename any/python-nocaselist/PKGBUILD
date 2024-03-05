@@ -3,17 +3,23 @@
 
 _name='nocaselist'
 pkgname="python-${_name}"
-pkgver='1.0.6'
-pkgrel=2
+pkgver='2.0.0'
+pkgrel='2'
 pkgdesc='A case-insensitive list for Python'
 arch=('any')
 url="https://github.com/pywbem/${_name}"
-makedepends=('python' 'python-setuptools' 'python-wheel')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 license=('GPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('c462290af329193c7e43613f947563c8f7165676e69c2a3fc71bddfea15d7033')
+sha256sums=('2e13029432b95d4890fb75c5d97d3d5a002940de14ac4ea0569e6a4d9fd81d71')
+
+build() {
+  cd "${srcdir}/${_name}-${pkgver}"
+  python -m build --wheel --no-isolation
+}
 
 package() {
   cd "${srcdir}/${_name}-${pkgver}"
-  python setup.py install -O1 --root="${pkgdir}"
+  python -m installer --destdir="${pkgdir}" "dist/"*".whl"
+  install -Dm0644 "LICENSE" "${pkgdir}/usr/share/doc/${pkgname}/LICENSE"
 }
