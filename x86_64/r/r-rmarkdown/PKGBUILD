@@ -7,14 +7,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=rmarkdown
-_pkgver=2.25
+_pkgver=2.26
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Dynamic Documents for R"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   pandoc
   r-bslib
@@ -24,7 +24,6 @@ depends=(
   r-jquerylib
   r-jsonlite
   r-knitr
-  r-stringr
   r-tinytex
   r-xfun
   r-yaml
@@ -53,8 +52,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c30424fc39406007031cf4e62ea572a8')
-sha256sums=('06e4662666fe018fbe3bef3531280a461c7bc24bb00f34b9d4c7b08d52210155')
+md5sums=('d4f5e42ce1e7d2ab04fb1beff82c4ff5')
+b2sums=('787c2e0505c07345cc1e20826ca1a85d8fabc58a0468f76d7fb0e5d2a555168913afa0fca38fad5d7359c1fb6f0bcb44fdddbd9f2686a828c0e7d8f3818f829f')
 
 prepare() {
   # Skip a test that might fail depending on environment
@@ -63,8 +62,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
