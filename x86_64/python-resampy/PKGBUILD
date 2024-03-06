@@ -2,8 +2,8 @@
 # Contributer: Jose Riha <jose1711 gmail com>
 pkgname=python-resampy
 _pkgname=resampy
-pkgver=0.4.2
-pkgrel=2
+pkgver=0.4.3
+pkgrel=1
 pkgdesc="Efficient sample rate conversion in python"
 arch=('any')
 url="https://github.com/bmcfee/resampy"
@@ -12,7 +12,7 @@ depends=('python-numba' 'python-numpy')
 makedepends=('python-setuptools')
 #checkdepends=('python-scipy')
 source=("$url/archive/${pkgver}.tar.gz")
-md5sums=('30ab808120e5ee6468456f3d21e0d584')
+md5sums=('07c2d3f5e57035b329fa9b58da346e3d')
 
 build() {
   cd "$srcdir/${_pkgname}-${pkgver}"
