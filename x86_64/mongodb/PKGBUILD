@@ -13,7 +13,7 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=7.0.5
+pkgver=7.0.6
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
@@ -33,14 +33,14 @@ source=("https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz"
         mongodb-5.0.2-skip-reqs-check.patch
         mongodb-5.0.2-no-compass.patch
         mongodb-7.0.2-sconstruct.patch)
-sha256sums=('68b43633c0b104cdf05af0403af57e5b16117485e2c0f1df90e18d2dc5d2e253'
+sha256sums=('eeedf8e2ff39da491518d3dfa25ad251c27db60c4436c421773fe9f419f31c5f'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             '4ff40320e04bf8c3e05cbc662f8ea549a6b8494d1fda64b1de190c88587bfafd'
             '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
             '078d94d712c3bb86a77d13bf2021299f4db2332c9d5346dba1ceb0cce1ba8492')
-source_aarch64=(extrapatch-sconstruct.patch)
 sha256sums_aarch64=('6dd9f20e153ff2a3e185d9411e9d9ec54ba8ed29a0a1489828ccb047205cceac')
+source_aarch64=(extrapatch-sconstruct.patch)
 
 _scons_args=(
   CC="${CC:-gcc}"
