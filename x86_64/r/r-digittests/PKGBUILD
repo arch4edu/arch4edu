@@ -3,12 +3,12 @@
 _pkgname=digitTests
 _pkgver=0.1.2
 pkgname=r-${_pkgname,,}
-pkgver=0.1.2
-pkgrel=1
-pkgdesc='Tests for Detecting Irregular Digit Patterns'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="Tests for Detecting Irregular Digit Patterns"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
@@ -21,14 +21,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('258e0e64bef1a407b0b57fe84570d6563159d575c6e38acdd86eb38cf2073f3e')
+md5sums=('042939d50f5a96f5298d77069167d227')
+b2sums=('def1d38a3511adcfb64ba50af2843c9724eb8ccc4b9789ca9b08231dc4aacec14ac9219a902270f7e71fbe6a094fd94cac5f82d064274a35acd2fe983d034d71')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
