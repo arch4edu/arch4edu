@@ -3,24 +3,25 @@
 _pkgname=AcceptanceSampling
 _pkgver=1.0-10
 pkgname=r-${_pkgname,,}
-pkgver=1.0.10
-pkgrel=1
-pkgdesc='Creation and Evaluation of Acceptance Sampling Plans'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Creation and Evaluation of Acceptance Sampling Plans"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c574f742d1a9c2ea6153aff54a6dcae6694ab7f895ca8d6b7b1f58bbb3177be9')
+md5sums=('cccf037fcede6abc4636d6d4cfe88d0f')
+b2sums=('ee6e7b5a2fd116c1cd0be0ec04ea009cf05677a1e1ec8bc70516b4da2732cdf32502a70b5d4f5df8fd59fa9dbbd1f941fa1b6011edd2cecdc5a53bc477529268')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
