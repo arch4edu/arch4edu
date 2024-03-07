@@ -3,30 +3,28 @@
 _pkgname=relimp
 _pkgver=1.0-5
 pkgname=r-${_pkgname,,}
-pkgver=1.0.5
-pkgrel=4
-pkgdesc='Relative Contribution of Effects in a Regression Model'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="Relative Contribution of Effects in a Regression Model"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
 optdepends=(
-  r-mass
-  r-nnet
   r-rcmdr
-  r-tcltk
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('acac7cf72ea39916761b51c825db0ffcb2bb1640e0a04086831fb78e9e40b679')
+md5sums=('0ce1f03f9ec99b940941d708e505afd0')
+b2sums=('5bedb34d02d224934adb2cf2b43a1a0ff9d21f867f6632ae050061799abf2269a9cbf49de8558496f16e841c258fe03d0693d35363321eaf7e06073d9dedcbd5')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
