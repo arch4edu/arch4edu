@@ -1,0 +1,5 @@
+checking whether readline license is compatible with GPL-2... no
+configure: WARNING: The LinuxCNC binary you are building may not be
+distributable due to a license incompatibility with LinuxCNC (some portions
+GPL-2 only) and Readline version 6 and greater (GPL-3 or later).
+configure: WARNING: User requested to enable non-distributable builds.  Continuing.
