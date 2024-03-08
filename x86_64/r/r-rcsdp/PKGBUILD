@@ -3,27 +3,27 @@
 _pkgname=Rcsdp
 _pkgver=0.1.57.5
 pkgname=r-${_pkgname,,}
-pkgver=0.1.57.5
-pkgrel=1
-pkgdesc='R Interface to the CSDP Semidefinite Programming Library'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('CPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="R Interface to the CSDP Semidefinite Programming Library"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('CPL-1.0')
 depends=(
+  blas
+  lapack
   r
 )
-optdepends=(
-  r-matrix
-)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('50048bcb4a8bb9f9b48c5e43a32126eda1d23d17876c7632e20b04953f3b1cd2')
+md5sums=('dec4357fda5865cfabd9f4ad7bf74d76')
+b2sums=('2ff445ed29b3f845bfc0d58bcaddaf2e2b1a314bdded2a137e59a0d920c23388a214f993af4592b4dee681bf0a86840d9fb36b648a88487d254e84187d76d7c8')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
