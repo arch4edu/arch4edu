@@ -3,12 +3,12 @@
 _pkgname=Rspc
 _pkgver=1.2.2
 pkgname=r-${_pkgname,,}
-pkgver=1.2.2
-pkgrel=5
-pkgdesc='Nelson Rules for Control Charts'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=8
+pkgdesc="Nelson Rules for Control Charts"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-knitr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9e78d619e09bf1fb210dab1cd6cc424ac537706a91b0168a763c0100edc5dfb2')
+md5sums=('c300edbfe9ca39424c356bdd48e30432')
+b2sums=('ffef7ae48fb8740e6cdde8b81e12297f36289f74f3f97d0f38861def71624b5b358bdbb50cda36fb64199484b950b71ef1c783f6d44b97ebb1419e041172c487')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
