@@ -3,12 +3,12 @@
 _pkgname=pwr
 _pkgver=1.3-0
 pkgname=r-${_pkgname,,}
-pkgver=1.3.0
-pkgrel=4
-pkgdesc='Basic Functions for Power Analysis'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="Basic Functions for Power Analysis"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-scales
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5bb00747aa599b11f133e94c6e4999e592456e966cba3607bbd1fcb1c7f1dfcd')
+md5sums=('8855e45d6dabfa18015f97bda4b40547')
+b2sums=('a2b3c0deba52b158dbecfdf6f167d4a0470e10aabb3c3603cdee4176afc155ae8218f0a2fe18f43fed8be70b575226226018928cbf870c9bc0504f7b510a7bc0')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
