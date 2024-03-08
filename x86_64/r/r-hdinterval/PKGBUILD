@@ -3,12 +3,12 @@
 _pkgname=HDInterval
 _pkgver=0.2.4
 pkgname=r-${_pkgname,,}
-pkgver=0.2.4
-pkgrel=1
-pkgdesc='Highest (Posterior) Density Intervals'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Highest (Posterior) Density Intervals"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-coda
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bb07f0edd660a02ed18e578c2798eb8c2db0e181a5e0c3e23db182d13e9494f6')
+md5sums=('20e8122b31cc3c110d4a65ce4343ef8a')
+b2sums=('2818aa2841a42b02cb71653d8f74a0925336106330655dd47d0d9d00f4cfd36705cfbd71af0fbca45289fa748092ecbf36f748debf762704504b2290a77b55ce')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
