@@ -3,11 +3,11 @@
 _pkgname=modules
 _pkgver=0.13.0
 pkgname=r-${_pkgname,,}
-pkgver=0.13.0
-pkgrel=1
-pkgdesc='Self Contained Units of Source Code'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Self Contained Units of Source Code"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
   r
@@ -16,20 +16,22 @@ optdepends=(
   r-devtools
   r-knitr
   r-lintr
-  r-parallel
   r-rmarkdown
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('553b42f26627db265de5279f93f4b1f9d141d67e51c8f56b86e86fd6a5b7c7fc')
+md5sums=('3a07ad7260c200f44081628ead32ffbf')
+b2sums=('4e24c748d09d500e46b6c9dfcb5bd21c71b20cf3158974c23d3204f63f596a6dd071e28d8b8a3ddea3ca70834adc13b93728afbb35b42b5d0b907a9c23d21f27')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
