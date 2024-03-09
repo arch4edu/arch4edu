@@ -3,12 +3,12 @@
 _pkgname=pbivnorm
 _pkgver=0.6.0
 pkgname=r-${_pkgname,,}
-pkgver=0.6.0
-pkgrel=7
-pkgdesc='Vectorized Bivariate Normal CDF'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=12
+pkgdesc="Vectorized Bivariate Normal CDF"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('07c37d507cb8f8d2d9ae51a9a6d44dfbebd8a53e93c242c4378eaddfb1cc5f16')
+md5sums=('8b88ddf960b19cb47add2879d9d7f7ef')
+b2sums=('97c66eb9a19bb09066e7b4213fe6d16c2462cd67052534d50beae3dcc581cb66daf5eb6c2a4206e178efcd9712dd08177795435670a247e8492a4d5d87e4ca9d')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
