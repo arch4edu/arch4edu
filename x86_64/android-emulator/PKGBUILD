@@ -1,7 +1,7 @@
 # Maintainer: Hai Zhang <dreaming.in.code.zh@gmail.com>
 
 pkgname=android-emulator
-pkgver=34.1.18
+pkgver=34.1.19
 pkgrel=1
 pkgdesc='Google Android Emulator'
 arch=('x86_64')
@@ -12,14 +12,14 @@ depends=('alsa-lib' 'dbus' 'expat' 'gcc-libs' 'glibc' 'libpulse'
          'libxdamage' 'libxext' 'libxfixes' 'libxi' 'libxrender' 'libxtst'
          'nspr' 'nss' 'zlib')
 install="${pkgname}.install"
-source=('https://dl.google.com/android/repository/emulator-linux_x64-11481568.zip'
+source=('https://dl.google.com/android/repository/emulator-linux_x64-11525734.zip'
         "${pkgname}.sh"
         "${pkgname}.csh"
         'package.xml')
-sha1sums=('86aa24fd7e58c68c31efa339aedc034af5974ef9'
+sha1sums=('d6cc94109b081c5f6042dcb71a453144f7e62ce7'
           '80c9b3ffc8865b5f8e55b1ffed36c08ee7a9d8ad'
           'e1485ef14463f275005cae43a0a1e43ce52354ca'
-          'a4df9f4841acb50a675835f925534faf502788be')
+          'eed12bc2f0cc77d7baa16f02c623cc9e81584e10')
 
 package() {
   install -Dm755 "${pkgname}.sh" "${pkgdir}/etc/profile.d/${pkgname}.sh"
