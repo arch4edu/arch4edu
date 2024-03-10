@@ -4,7 +4,7 @@ pkgbase=python-pytest-doctestplus
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=1.2.0
+pkgver=1.2.1
 pkgrel=1
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('any')
@@ -16,7 +16,7 @@ checkdepends=('python-pytest-remotedata>=0.3.2'
               'python-numpy'
               'git')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('ad2d435e2709026636c19b9cc9f5b429')
+md5sums=('b169993d24e84bc57454fcc614a8a2d8')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
