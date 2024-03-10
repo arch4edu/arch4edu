@@ -3,11 +3,11 @@
 _pkgname=mcmc
 _pkgver=0.9-8
 pkgname=r-${_pkgname,,}
-pkgver=0.9.8
-pkgrel=1
-pkgdesc='Markov Chain Monte Carlo'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Markov Chain Monte Carlo"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
   r
@@ -17,15 +17,18 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6a06440d4b58e8a7f122747d92046ff40da4bb58a20bf642228a648a0c826ea7')
+md5sums=('429599a7f24105629c41dd7c9f36b992')
+b2sums=('d804249a6244e3104687497c83472ec69411e05f3ce580d11b79b3a0278ed2c27d8b902ca6aa3d87f8da3ec169249ffb135ac99e4db17dc688e144e6b95912d7')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
