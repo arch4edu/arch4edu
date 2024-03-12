@@ -5,17 +5,17 @@
 
 _base=trimesh
 pkgname=python-${_base}
-pkgver=4.1.8
+pkgver=4.2.0
 pkgrel=1
 pkgdesc="Import, export, process, analyze and view triangular meshes"
 arch=(any)
 url="https://trimsh.org"
 license=(MIT)
-depends=(python python-numpy)
+depends=(python-numpy)
 makedepends=(python-build python-installer python-setuptools python-wheel)
 # checkdepends=(python-pytest python-scipy python-lxml python-rtree python-networkx
-#   python-jsonschema python-pillow python-requests python-shapely python-pyinstrument
-#   python-collada python-svg.path python-mapbox-earcut) # python-sympy python-msgpack python-pyglet openscad
+# python-jsonschema python-pillow python-requests python-shapely python-pyinstrument
+# python-collada python-svg.path python-mapbox-earcut) # python-sympy python-msgpack python-pyglet openscad
 optdepends=('python-scipy: convex hulls'
   'python-lxml: handle XML better and faster than built- in XML'
   'python-networkx: graph operations'
@@ -40,7 +40,7 @@ optdepends=('python-scipy: convex hulls'
   'python-pytest: test runner'
   'python-pyinstrument: sampling based profiler') # python-xatlas python-glooey
 source=(${_base}-${pkgver}.tar.gz::https://github.com/mikedh/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('e20ca45f08a4d65c44c214b104af7c6d9d27121716ed7efd53a521c5b896ce788dba91b7794db518f26bb2ae86a1b8269af94f9b9381f8fdd342372b4ba86ce4')
+sha512sums=('75efd00ef5ff8f9c25bdfb06ab92fa09db154771356b18ebcf457cba4c2f366645084eb078e5e324cfb41fe101797694aa6b00005f7ccd1290ba4d2d6c088ebd')
 
 build() {
   cd ${_base}-${pkgver}
