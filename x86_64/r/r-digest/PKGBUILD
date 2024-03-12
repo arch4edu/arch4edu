@@ -8,14 +8,14 @@
 # Contributor: Francois Garillot <francois[@]garillot.net>
 
 _pkgname=digest
-_pkgver=0.6.34
+_pkgver=0.6.35
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Create Compact Hash Digests of R Objects"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   google-crc32c
   libblake3
@@ -31,8 +31,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2433ecb059ed52176f16aab34f9238cf')
-b2sums=('9046fdea4f2fabe4a680cb55ecc058322224eccb04eec442c5156b342eb9c74d79a2cc730591a32d5c7b6f01796a89695a4733a5a1afe296881a107fafb5b65b')
+md5sums=('5982282cd780b1202925fe8f5a06a52e')
+b2sums=('1e081dba76845fbcee036d7ac6bfa6171dfad7a0f7eac6b087186725fa8b0b84cbcb13784596a8a54b3c4af43fef50852defa6e376e7e9c86f093b1f1e163eb4')
 
 prepare() {
   cd "$_pkgname/src"
