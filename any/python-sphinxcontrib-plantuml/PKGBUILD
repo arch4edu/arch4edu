@@ -1,6 +1,6 @@
 pkgname=python-sphinxcontrib-plantuml
 _pyname=sphinxcontrib-plantuml
-pkgver=0.28
+pkgver=0.29
 pkgrel=1
 arch=(any)
 pkgdesc="Sphinx 'plantuml' extension"
@@ -9,7 +9,7 @@ license=('BSD')
 makedepends=(python-setuptools)
 depends=('plantuml' 'python-sphinx')
 source=("https://files.pythonhosted.org/packages/source/s/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('ce9362ad3d4bbcc4c30dfdfc308aacad2c07b344635316681a711269b8e00bea')
+sha256sums=('97a4f2a26af91db88770ccf8a3b2e03305bcda7ec41a7f969fc8cb27b84a3c44')
 
 build() {
   cd $_pyname-$pkgver
