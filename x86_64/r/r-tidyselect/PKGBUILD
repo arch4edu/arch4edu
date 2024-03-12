@@ -4,14 +4,14 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=tidyselect
-_pkgver=1.2.0
+_pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Select from a Set of Strings"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-glue
@@ -36,31 +36,12 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('147069ee8d8bc42f63f253311f6c1806')
-sha256sums=('538d26b727e37d618e2efd3b00836048f103112a03e6994bf07a02392e269e3b')
-
-prepare() {
-  cd "$_pkgname/tests/testthat"
-
-  # skip outdated snapshot tests
-  sed -i '/"eval_select() produces correct backtraces"/a\ \ skip("outdated snapshot")' \
-      test-eval-select.R
-  sed -i -e '/"all_of() and any_of() check their inputs"/a\ \ skip("outdated snapshot")' \
-      -e '/"`all_of()` fails even if `.strict` is FALSE"/a\ \ skip("outdated snapshot")' \
-      test-helpers-vector.R
-  sed -i '/"where() checks return values"/a\ \ skip("outdated snapshot")' \
-      test-helpers-where.R
-  sed -i -e '/"vars_select() type-checks inputs"/a\ \ skip("outdated snapshot")' \
-      -e '/"vars_rename() type-checks arguments"/a\ \ skip("outdated snapshot")' \
-      test-lifecycle-deprecated.R
-  sed -i -e '/"errors for bad inputs"/a\ \ skip("outdated snapshot")' \
-      -e '/"vars_pull() produces correct backtraces"/a\ \ skip("outdated snapshot")' \
-      test-vars-pull.R
-}
+md5sums=('49c581292e819a2a39aac321f27ab0a8')
+b2sums=('f742f3be6807caf31213331a8aa72f7603fdef3e66665f2d667a4a518716c134b0864e107157745462a97c1fa4138e1c3efc83b0df463d8f525c80981b864475')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
