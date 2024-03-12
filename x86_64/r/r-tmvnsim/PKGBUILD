@@ -4,12 +4,12 @@
 _pkgname=tmvnsim
 _pkgver=1.0-2
 pkgname=r-${_pkgname,,}
-pkgver=1.0.2
-pkgrel=9
-pkgdesc='Truncated Multivariate Normal Simulation'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=11
+pkgdesc="Truncated Multivariate Normal Simulation"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
@@ -17,14 +17,15 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('97f63d0bab3b240cc7bdbe6e6e74e90ad25a4382a345ee51a26fe3959edeba0f')
+md5sums=('50a38f2142ee328060aca7d2672b5dcf')
+b2sums=('09105660070368676a161201c1e0a8b12ab265353ef51f4fcb4e223b0fa7a3261d531dc8a629620f0c9d17ade5e5689d7e50bdb8a8266ccb8166f54e98408286')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
