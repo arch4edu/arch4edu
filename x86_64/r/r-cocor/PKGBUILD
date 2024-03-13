@@ -3,28 +3,28 @@
 _pkgname=cocor
 _pkgver=1.1-4
 pkgname=r-${_pkgname,,}
-pkgver=1.1.4
-pkgrel=1
-pkgdesc='Comparing Correlations'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="Comparing Correlations"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
 optdepends=(
-  r-rkward
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('28f8bf5ffd647675ed9b28d2e3a28cc97cb9dc996095caccd0aac6dfa9451416')
+md5sums=('2e5d0b5a82bd9db4d0d1b33201c0f481')
+b2sums=('c8e9aaa012a2f61f22b96bf2809fa060276788e392ed82ccddaa2031e1bc5f53b92b0253df56a7b4d2bc861fc663839bd9c1f015e7c86a93248e2fb991a61857')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
