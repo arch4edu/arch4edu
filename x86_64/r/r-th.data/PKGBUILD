@@ -5,12 +5,12 @@
 _pkgname=TH.data
 _pkgver=1.1-2
 pkgname=r-${_pkgname,,}
-pkgver=1.1.2
-pkgrel=4
+pkgver=${_pkgver//-/.}
+pkgrel=5
 pkgdesc="TH's Data Archive"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -20,7 +20,6 @@ optdepends=(
   r-colorspace
   r-gridextra
   r-knitr
-  r-lattice
   r-multcomp
   r-rms
   r-tram
@@ -28,14 +27,15 @@ optdepends=(
   r-vcd
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('47f94eb57b6fcef42efa30824c1356bf10529c4b94b0d0acdb787b434dddde73')
+md5sums=('4e6e59fee15e056be3721f7c0d4e017c')
+b2sums=('c091698b1761d54e8281b6fc74466ec5f000ccb71e143e9aeef50125154012d391cf93e4b71661301f896ce46d8fcd94459dff8a1596565c1ab705f9a98ddb7b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
