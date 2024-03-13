@@ -1,12 +1,12 @@
 # Maintainer: rpkak <rpkak@users.noreply.github.com>
 pkgname='libblake3'
-pkgver=1.5.0
+pkgver=1.5.1
 pkgrel=1
 epoch=
 pkgdesc="the C implementations of the BLAKE3 cryptographic hash function"
 arch=('x86_64')
 url="https://blake3.io/"
-license=('Apache')
+license=('Apache-2.0')
 depends=(glibc)
 makedepends=(cmake)
 checkdepends=()
@@ -19,16 +19,15 @@ options=()
 install=
 changelog=
 source=("$pkgname-$pkgver.tar.gz::https://github.com/BLAKE3-team/BLAKE3/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('f506140bc3af41d3432a4ce18b3b83b08eaa240e94ef161eb72b2e57cdc94c69')
+sha256sums=('822cd37f70152e5985433d2c50c8f6b2ec83aaf11aa31be9fe71486a91744f37')
 validpgpkeys=()
 
 build() {
-    echo "BLAKE3-$pkgver/c"
     cmake -B "BLAKE3-$pkgver/c/build" -S "BLAKE3-$pkgver/c" -DBUILD_SHARED_LIBS=True -DCMAKE_BUILD_TYPE='Release' -DCMAKE_INSTALL_PREFIX='/usr' -Wno-dev
     cmake --build "BLAKE3-$pkgver/c/build"
 }
 
 package() {
     DESTDIR="$pkgdir" cmake --install "BLAKE3-$pkgver/c/build"
-    install -Dm644 "BLAKE3-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dvm644 "BLAKE3-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
