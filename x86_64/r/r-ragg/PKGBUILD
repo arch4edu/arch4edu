@@ -2,14 +2,14 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ragg
-_pkgver=1.2.7
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Graphic Devices Based on AGG"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   freetype2
   libjpeg-turbo
@@ -27,12 +27,12 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b3552306bc07a827415f7c6fd1f9fc23')
-sha256sums=('d77a18662d127881dcb5046033eb809293ad9ad439fa4b217202b8cef4280c9f')
+md5sums=('dc546005cff17506bf712be3e7dbf610')
+b2sums=('2325959985b5e915e4a09b4cc6d69d9e0d3b92b99b04156286b16ccce183bdfab9f14a92b90d1de37965344cb988ae16f6df9dd506be8a8ad8494f0e7015cca6')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
