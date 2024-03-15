@@ -3,12 +3,12 @@
 _pkgname=evd
 _pkgver=2.3-6.1
 pkgname=r-${_pkgname,,}
-pkgver=2.3.6.1
-pkgrel=6
-pkgdesc='Functions for Extreme Value Distributions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=8
+pkgdesc="Functions for Extreme Value Distributions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-interp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('662c592d3f5c5693dbf1c673d1137c4a60a347e330b71be1f3933f201d2c8971')
+md5sums=('01db8aaa75099d3afb844c0378ce49d0')
+b2sums=('384a900123ad6647c7a79d517c8c6ac2d805823c1bfc5c1a927ff46a310bbd0b9ac998605bf8d61427cd7523735c425d6f8eafa880078347b2e204bc2d88c200')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
