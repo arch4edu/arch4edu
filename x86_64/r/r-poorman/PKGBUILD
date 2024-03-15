@@ -3,33 +3,34 @@
 _pkgname=poorman
 _pkgver=0.2.7
 pkgname=r-${_pkgname,,}
-pkgver=0.2.7
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="A Poor Man's Dependency Free Recreation of 'dplyr'"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
   r
 )
 optdepends=(
   r-knitr
-  r-markdown
-  r-pkgdown
   r-rmarkdown
   r-roxygen2
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('089418293cdfde3b46bf53e891a3a8ad924d953a1a7e5ae981de54ebde62b4aa')
+md5sums=('4bbc26912e651669c58e9eab98856f0f')
+b2sums=('9193ee73722ee4e26ded6d258429f665e51d17cc3ce233822a708febd856a47669dc904b0c1323d15fc58c95067b409a1aefb5e8462116d826de20f0932da6ef')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
