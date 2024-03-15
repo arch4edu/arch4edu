@@ -3,12 +3,12 @@
 _pkgname=admisc
 _pkgver=0.35
 pkgname=r-${_pkgname,,}
-pkgver=0.35
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Adrian Dusa's Miscellaneous"
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-qca
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('cf4b5b3f09f0fd0ad085d97bd589be0cfe6652e5a365f7b09c0e93515b5aed3f')
+md5sums=('8e54030336e1debf07c674345ab9a812')
+b2sums=('753bb2878c130bf5fb50f94b69d70a139d1bb8d9e543cc78c74d80a2afc8c446208321934c8c5d781b93f9e200b45a616a1e51c74a5f36698957adafb996d552')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
