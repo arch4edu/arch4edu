@@ -3,14 +3,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=sass
-_pkgver=0.4.8
+_pkgver=0.4.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Syntactically Awesome Style Sheets ('Sass')"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   libsass
   r-fs
@@ -34,10 +34,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libsass.patch")
-md5sums=('1b541e8a0ce9ec67ade93869740db4b8'
+md5sums=('7d4e8b37ce87b4307b6661b9fe62e393'
          '6a430d63f1fdeced20c3117763d2cb7c')
-sha256sums=('42ba2930cd22ad9f5e0022b9ac53bdbc4c9250f00e0646e6502f635a6db3c40c'
-            '5149aa34e5ab5ce03370495705e4162bbf1a3e7c7389be3ebe318c46d394eb10')
+b2sums=('5d18e9430645ce11e0c19a6002538b96583493a12d4b7547b659855ff046505a8b71649ea68279017a0de94152037d6caaa65503e4df37d614ec5b2fe6377953'
+        '8dce8f0d0eeff57916129505b0651115a1616431d0e4214a34b605ab89cefaee0d1e121e9a7db7709a880cd388f4c3305ade34e084938a413e32cffff46035e6')
 
 prepare() {
   # build against system libsass
@@ -45,8 +45,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
