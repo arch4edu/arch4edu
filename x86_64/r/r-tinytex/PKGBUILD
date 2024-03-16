@@ -6,14 +6,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=tinytex
-_pkgver=0.49
+_pkgver=0.50
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Helper Functions to Install and Maintain TeX Live, and Compile LaTeX Documents"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-xfun
 )
@@ -25,12 +25,12 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0e44e8589e71a5257ddac72c5113e440')
-sha256sums=('941169ec65445d172658d0fb6ea8d839736f3f1b5f6ce20637d7d8e299663145')
+md5sums=('d82bbbf55cbc746ca1ba74fedf9ee27b')
+b2sums=('00afc360d41659035052a143889ed69d34bac22f13e3cf924b29638ad5f49f098e5bbb689d7b95534f4e6964061e27883f39da07bcff8b3328dce32f8f8666ed')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
