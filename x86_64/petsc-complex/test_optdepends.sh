@@ -9,6 +9,11 @@ CONFOPTS=""
 	#CONFOPTS="${CONFOPTS} --download-${external_pkg}=1"
 #done
 
+# Kokkos
+if [ -f "/usr/lib/libkokkoscore.so" ]; then
+  CONFOPTS="${CONFOPTS} --with-kokkos=1"
+fi
+
 # Add hypre support
 if [ -f "/usr/lib/libHYPRE.so" ]; then
   VERSION_MIN=2.14.0
@@ -27,30 +32,14 @@ if [ -f "/usr/lib/libmumps_common.so" ]; then
 	CONFOPTS="${CONFOPTS} --with-mumps=1"
 fi
 
-# Add fftw support
-if [ -f "/usr/lib/libfftw3_mpi.so" ]; then
-	CONFOPTS="${CONFOPTS} --with-fftw=1"
-fi
-
 # Add triangle support
 if [ -f "/usr/lib/libtriangle.so" ]; then
 	CONFOPTS="${CONFOPTS} --with-triangle=1"
 fi
 
-# Add hdf5-openmpi support
-if [ -f "/usr/bin/h5pcc" ]; then
-	CONFOPTS="${CONFOPTS} --with-hdf5=1"
-fi
-
 # Add scalapack support
 if [ -f "/usr/lib/pkgconfig/scalapack.pc" ]; then
 	CONFOPTS="${CONFOPTS} --with-scalapack=1"
-fi
-
-# Add suitesparse support
-SUITESPARSE_DIR="/usr/include/suitesparse"
-if [ -f "/usr/include/suitesparse/umfpack.h" ]; then
-	CONFOPTS="${CONFOPTS} --with-suitesparse=1 --with-suitesparse-lib=[libamd.so,libbtf.so,libcamd.so,libccolamd.so,libcholmod.so,libcolamd.so,libcxsparse.so,libgraphblas.so,libklu.so,libklu_cholmod.so,liblagraph.so,liblagraphx.so,libldl.so,libparu.so,librbio.so,libspex.so,libspqr.so,libsuitesparse_mongoose.so,libsuitesparseconfig.so,libumfpack.so] --with-suitesparse-include=${SUITESPARSE_DIR}"
 fi
 
 # Add metis support
@@ -72,12 +61,6 @@ if [ -f "/usr/include/scotch.h" ]; then
 	fi
 	SCOTCH_LIBS="[${SCOTCH_LIBS}]"
 	CONFOPTS="${CONFOPTS} --with-ptscotch=1 --with-ptscotch-lib=${SCOTCH_LIBS} --with-ptscotch-include=${SCOTCH_DIR}"
-fi
-
-# Add superlu support
-SUPERLU_DIR="/usr/include/superlu"
-if [ -d "${SUPERLU_DIR}" ]; then
-	CONFOPTS="${CONFOPTS} --with-superlu=1 --with-superlu-lib=-lsuperlu --with-superlu-include=${SUPERLU_DIR}"
 fi
 
 # Add superlu_dist support
@@ -113,11 +96,6 @@ fi
 # Add valgrind support
 if [ -f "/usr/lib/pkgconfig/valgrind.pc" ]; then
 	CONFOPTS="${CONFOPTS} --with-valgrind=1"
-fi
-
-# Add yaml support
-if [ -f "/usr/lib/libyaml.so" ]; then
-	CONFOPTS="${CONFOPTS} --with-yaml=1"
 fi
 
 echo "${CONFOPTS}"
