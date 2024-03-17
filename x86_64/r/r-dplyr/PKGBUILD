@@ -7,11 +7,11 @@ _pkgname=dplyr
 _pkgver=1.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A Grammar of Data Manipulation"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-generics
@@ -55,13 +55,21 @@ optdepends=(
   r-tidyr
   r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('29bdf98592722336f0d07484baf2a959')
-sha256sums=('cf730414d5d4ab387b4e9890a4b1df9d17a3903488e8da8df1cf2e11e44558cb')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "fix-tests.patch")
+md5sums=('29bdf98592722336f0d07484baf2a959'
+         '386fe9fd45e30f6833f4c4f86b86b2ea')
+b2sums=('3f16d1b818bae28f1cda84244378d9a4a1981cad6ee00ce1f905d5828b8dd4a29d2f4bfe161483300924784c3bdab2cc02a16571042776922dc4bfb845b351da'
+        '304013a86b786a05f53a57c124c73af4941c3a91ee9d2ef8facfb4d15d6b864c2b75fc3ace66c532dfdfd6c81fe01bb22bd2e3ecbf65b31c0992cc34ec507647')
+
+prepare() {
+  # fix test snapshots
+  patch -Np1 -i fix-tests.patch
+}
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
