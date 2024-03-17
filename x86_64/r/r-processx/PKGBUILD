@@ -4,14 +4,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=processx
-_pkgver=3.8.3
+_pkgver=3.8.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Execute and Control System Processes"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-ps
   r-r6
@@ -28,12 +28,12 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ad4eef6b9a21f570f8686c0157712ddf')
-sha256sums=('1ad8c51482b89702fbbb6621b1a179c1ae67b78388b8fd9c841bbc8cf035d831')
+md5sums=('57e96dd74090594f1b1a63ec1d59091b')
+b2sums=('a5657b616af5cfd1a911ff4c5d9f61c7cf75aa4cb0f4580eee3f4686e8dc39e40bd19132f44ec28cb32db0f789443c2c5c342a7e6d2065078f13f38dbb34aa99')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
