@@ -1,5 +1,5 @@
 pkgname=fheroes2
-pkgver=1.0.12
+pkgver=1.0.13
 pkgrel=1
 pkgdesc="Recreation of the Heroes of Might and Magic II game engine"
 arch=('i686' 'x86_64' 'armv7h')
@@ -25,7 +25,7 @@ conflicts=('fheroes2-git')
 source=(
   "$pkgname-$pkgver.tar.gz::https://github.com/ihhub/$pkgname/archive/$pkgver.tar.gz"
 )
-sha256sums=('a5b088ff4c1c6c2e05e72d755bbabde8c0cbea19debea3b5a82b5d08b16cc2be')
+sha256sums=('eb7f960e77ee8012e5bbab385baf4959797e578454ace82574a3c6fee24f94c8')
 
 build() {
   cd "$pkgname-$pkgver"
