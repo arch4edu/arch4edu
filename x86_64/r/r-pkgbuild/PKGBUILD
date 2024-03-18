@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgbuild
-_cranver=1.4.3
+_cranver=1.4.4
 pkgname=r-${_cranname,,}
 pkgdesc="Find Tools Needed to Build R Packages"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -49,7 +49,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("0f7f46959831cec55a49888f9a856f0cf1fffd1fc607526318b1530a7d9af5b5d3b71a9f9b72f600b81436681be9cad300f8d91ef6e0bcca56b709f3ca530d5f")
+b2sums=("aff689582b5f1a3a4ea0fade29a1c0d442abc2c3935f5b84e56bfac3df5aac3dbac41ee025c98a7d94af33c9b69746121a1ad237d75ed37744a73252ddcc4afb")
 
 build() {
     mkdir -p "${srcdir}/build/"
