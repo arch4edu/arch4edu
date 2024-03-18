@@ -6,27 +6,34 @@
 # shellcheck disable=SC2034,SC2154 # allow unused/uninitialized variables.
 
 name=cloudcompare
-_fragment="#tag=v2.12.4"
+_fragment="#tag=v2.13"
 pkgname=${name}
-pkgver="${_fragment###tag=v}"
+pkgver="${_fragment###tag=v}.0"
 pkgrel=3
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
 license=('GPL2')
-depends=('cgal' 'dlib' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pdal' 'qt5-base' 'qt5-tools' 'qt5-svg' 'shapelib' 'tbb' 'gdal' 'openmpi')
-makedepends=('clang' 'cmake' 'doxygen' 'git' 'laz-perf' 'libharu' 'ninja' 'pcl' 'proj' 'python' 'nlohmann-json')
-optdepends=('pcl')
+depends=('cgal' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pcl' 'pdal' 'laszip' 'qt5-base' 'qt5-tools' 'qt5-svg' 'qt5-websockets' 'shapelib' 'tbb' 'opencascade' 'opencv' 'gdal')
+#fix pcl:>vtk:>vtkm:>openmp missing deps
+depends+=(openmpi)
+depends+=(nlohmann-json fmt jsoncpp)
+depends+=(utf8cpp fast_float)
+makedepends=('clang' 'cmake' 'doxygen' 'git' 'laz-perf' 'libharu' 'ninja' 'proj' 'python')
 source=("${name}::git+https://github.com/CloudCompare/CloudCompare.git${_fragment}"
         "${name}-cork::git+https://github.com/CloudCompare/cork.git"
         CloudCompare.desktop
         ccViewer.desktop
-        tbb.2021.patch)
-sha256sums=('SKIP'
+        vtk_jsoncpp.patch)
+sha256sums=('df02d30895845ce67cf1736edfb1b9e4e87f480d14781dd63eea7b6f59d15835'
             'SKIP'
             '14096df9cf7aca3099d5df1585d1cf669544e9b10754dce3d2507100dd7034fe'
             '821ac2540e1196774e26f8033946ce7b36223dae7a2a7c78f4a901b4177f68cc'
-            'f10ac084b1ec626c7a9c51e09faf87054edd0c069f4114334d9b1ed664a16ff1'
+            'ce48e2816ebb5d388283396b12cdb94272b3fd3eb1655845eacbf226ad918969'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -38,30 +45,27 @@ sha256sums=('SKIP'
 
 prepare() {
   prepare_submodule
+  git -C "${srcdir}"/cloudcompare apply -v "${srcdir}"/vtk_jsoncpp.patch
 # sed "/CXX_STANDARD/s/14/17/" -i "${srcdir}/${name}"/cmake/CMakeSetCompilerOptions.cmake
-  sed '35i #include <cstdint>' -i "${srcdir}/${name}"/plugins/core/IO/qE57IO/extern/libE57Format/include/E57Format.h
-  git -C "${srcdir}/${name}" apply -v "${srcdir}"/tbb.2021.patch
 }
 
 build() {
   export CCACHE_BASEDIR="$srcdir"
 # shellcheck disable=SC2191
-  CMAKE_FLAGS=(
+  CMAKE_FLAGS+=(
         -Wno-dev
+        -DPCL_QHULL_REQUIRED_TYPE=SHARED
         -DCMAKE_CXX_STANDARD=14
         -DCMAKE_CXX_FLAGS="$CXXFLAGS -fpermissive -DSUPPORT_TOPO_STREAM_OPERATORS -Wno-deprecated-declarations"
         -DCMAKE_INSTALL_PREFIX=/usr
         -DCMAKE_INSTALL_LIBDIR=lib
         -DCMAKE_BUILD_TYPE=Release
-        -DCCCORELIB_USE_CGAL:BOOL=ON
-        -DCCCORELIB_USE_TBB:BOOL=OFF
-        -DQANIMATION_WITH_FFMPEG_SUPPORT:BOOL=ON
-        -DFFMPEG_INCLUDE_DIR:PATH=/usr/include/ffmpeg4.4
-        -DFFMPEG_LIBRARY_DIR:PATH=/usr/lib/ffmpeg4.4
+        -DCCCORELIB_USE_CGAL=ON
+        -DCCCORELIB_USE_TBB=ON
         -DPOISSON_RECON_WITH_OPEN_MP:BOOL=ON
-        -DPLUGIN_EXAMPLE_GL:BOOL=ON
-        -DPLUGIN_EXAMPLE_IO:BOOL=ON
-        -DPLUGIN_EXAMPLE_STANDARD:BOOL=ON
+        -DPLUGIN_EXAMPLE_GL:BOOL=OFF # no need to bundle examples
+        -DPLUGIN_EXAMPLE_IO:BOOL=OFF
+        -DPLUGIN_EXAMPLE_STANDARD:BOOL=OFF
         -DPLUGIN_GL_QEDL:BOOL=ON
         -DPLUGIN_GL_QSSAO:BOOL=ON
         -DPLUGIN_IO_QADDITIONAL:BOOL=ON
@@ -71,16 +75,19 @@ build() {
         -DPLUGIN_IO_QFBX:BOOL=ON # requires update of AUR/fbx-sdk (https://www.autodesk.com/content/dam/autodesk/www/adn/fbx/2020-1-1/fbx202011_fbxsdk_linux.tar.gz)
         -DFBX_SDK_INCLUDE_DIR:PATH=/usr/include
         -DFBX_SDK_LIBRARY_FILE:FILEPATH=/usr/lib/libfbxsdk.so
-        -DPLUGIN_IO_QPDAL:BOOL=ON
+        -DPLUGIN_IO_QLAS:BOOL=ON
         -DPLUGIN_IO_QPHOTOSCAN:BOOL=ON
         -DPLUGIN_IO_QRDB:BOOL=OFF # requires rdblib (package for AUR from http://www.riegl.com/products/software-packages/rdblib/)
-        -DPLUGIN_STANDARD_QANIMATION:BOOL=ON
-        -DPLUGIN_STANDARD_QBROOM:BOOL=ON
-        -DPLUGIN_STANDARD_QCANUPO:BOOL=ON # requires dlib
+        -DPLUGIN_IO_QSTEP=ON # requires opencascade
+        -DOPENCASCADE_INC_DIR="/usr/include/opencascade"
+        -DOPENCASCADE_LIB_DIR="/usr/lib"
+        -DPLUGIN_STANDARD_QCANUPO:BOOL=ON 
         -DPLUGIN_STANDARD_QCOMPASS:BOOL=ON
         -DPLUGIN_STANDARD_QCORK:BOOL=ON # require mpir, cork (cork-git is not enough)
         -DMPIR_INCLUDE_DIR:PATH=/usr/include # required by qcork plugin
         -DCORK_INCLUDE_DIR:PATH="${srcdir}/${name}-cork/src" # required by qcork plugin
+        -DFFMPEG_INCLUDE_DIR:PATH=/usr/include/ffmpeg4.4 # required by qAnimation plugin
+        -DFFMPEG_LIBRARY_DIR:PATH=/usr/lib/ffmpeg4.4 # required by qAnimation plugin
         -DCORK_RELEASE_LIBRARY_FILE:FILEPATH="${srcdir}/${name}-cork/lib/libcork.a" # required by qcork plugin
         -DMPIR_RELEASE_LIBRARY_FILE:FILEPATH=/usr/lib/libmpir.so # require by qcork plugin
         -DPLUGIN_STANDARD_QCSF:BOOL=ON
@@ -96,7 +103,18 @@ build() {
         -DPLUGIN_STANDARD_QRANSAC_SD:BOOL=ON
         -DPLUGIN_STANDARD_QSRA:BOOL=ON
         -DOPTION_USE_DXF_LIB:BOOL=ON # required by qsra plugin
+        -DPLUGIN_STANDARD_MASONRY_QAUTO_SEG=ON
+        -DPLUGIN_STANDARD_MASONRY_QMANUAL_SEG=ON
+        -DPLUGIN_STANDARD_QANIMATION=ON
+        -DQANIMATION_WITH_FFMPEG_SUPPORT=ON
+        -DPLUGIN_STANDARD_QBROOM=ON
+        -DPLUGIN_STANDARD_QCANUPO=ON
+        -DPLUGIN_STANDARD_QCOLORIMETRIC_SEGMENTER=ON
+        -DPLUGIN_STANDARD_QJSONRPC=ON
+        -DPLUGIN_STANDARD_QMPLANE=ON
         -DEIGEN_ROOT_DIR=/usr/include/eigen3
+        -DJsonCpp_INCLUDE_DIR=/usr/include
+        -DJsonCpp_LIBRARY=/usr/lib
   )
   msg2 "Build Cork lib"
   make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS -fPIC" CC="gcc" CXX="g++"
@@ -125,6 +143,7 @@ package() {
 # Call prepare_submodule in prepare() function
 
 prepare_submodule() {
+  git -C "$srcdir/CCCoreLib" config submodule.extern/nanoflann.url "$srcdir/nanoflann"
   git -C "$srcdir/cloudcompare" config submodule.plugins/core/IO/qE57IO/extern/libE57Format.url "$srcdir/libE57Format"
   git -C "$srcdir/cloudcompare" config submodule.extern/CCCoreLib.url "$srcdir/CCCoreLib"
   git -C "$srcdir/cloudcompare" config submodule.plugins/core/Standard/qPoissonRecon/extern/PoissonRecon.url "$srcdir/PoissonRecon"
@@ -133,9 +152,13 @@ prepare_submodule() {
   git -C "$srcdir/cloudcompare" config submodule.plugins/core/Standard/qMasonry.url "$srcdir/masonry-cc"
   git -C "$srcdir/cloudcompare" config submodule.plugins/core/Standard/qJSonRPCPlugin.url "$srcdir/JSonRPCPlugin"
   git -C "$srcdir/cloudcompare" config submodule.plugins/core/Standard/qCanupo/contrib/dlib.url "$srcdir/dlib"
-  git -C "$srcdir/cloudcompare" -c protocol.file.allow=always submodule update --init
+  git -C "$srcdir/cloudcompare" config submodule.plugins/core/Standard/cc-treeiso-plugin.url "$srcdir/cc-treeiso-plugin"
+  git -C "$srcdir/cloudcompare" config submodule.plugins/core/Standard/q3DMASC.url "$srcdir/q3DMASC"
+  git -C "$srcdir/libE57Format" config submodule.test/extern/googletest.url "$srcdir/googletest"
+  git -C "$srcdir/cloudcompare" -c protocol.file.allow=always submodule update --init --recursive
 }
 source+=(
+  "nanoflann::git+https://github.com/jlblancoc/nanoflann"
   "libE57Format::git+https://github.com/asmaloney/libE57Format"
   "CCCoreLib::git+https://github.com/CloudCompare/CCCoreLib"
   "PoissonRecon::git+https://github.com/cloudcompare/PoissonRecon"
@@ -144,5 +167,8 @@ source+=(
   "masonry-cc::git+https://github.com/CyberbuildLab/masonry-cc"
   "JSonRPCPlugin::git+https://gitlab.com/theadib/JSonRPCPlugin"
   "dlib::git+https://github.com/davisking/dlib"
+  "cc-treeiso-plugin::git+https://github.com/truebelief/cc-treeiso-plugin"
+  "q3DMASC::git+https://github.com/dgirardeau/q3DMASC"
+  "googletest::git+https://github.com/google/googletest"
 )
 # vim:set sw=2 ts=2 et:
