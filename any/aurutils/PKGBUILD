@@ -3,7 +3,7 @@
 # Co-Maintainer: zoorat <zoorat [at] protonmail [dot] com>
 
 pkgname=aurutils
-pkgver=18.5
+pkgver=19
 pkgrel=1
 pkgdesc='helper tools for the arch user repository'
 url='https://github.com/AladW/aurutils'
@@ -12,7 +12,7 @@ license=('custom:ISC')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz")
 changelog=aurutils.changelog
 install=aurutils.install
-sha256sums=('b2a5a9dcd9b65acce9db9924293c6ed36f14d559f9337b75b0281503c2c6a118')
+sha256sums=('d152670c0a47864fd2ec7dfa63e6cc628dad859e0e0891dd1f5ba5df70478a74')
 depends=('git' 'pacutils' 'curl' 'perl' 'perl-json-xs' 'bash')
 optdepends=('bash-completion: bash completion'
             'zsh: zsh completion'
@@ -30,5 +30,5 @@ build() {
 
 package() {
     cd "$pkgname-$pkgver"
-    make PREFIX=/usr ETCDIR=/etc DESTDIR="$pkgdir" install
+    make AURUTILS_VERSION="$pkgver" PREFIX=/usr ETCDIR=/etc DESTDIR="$pkgdir" install
 }
