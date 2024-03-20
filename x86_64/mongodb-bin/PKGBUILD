@@ -2,14 +2,14 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="7.0.6"
+pkgver="7.0.7"
 _basever="7.0"
 _basedist="focal"
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
-license=("custom:SSPLv1" "Apache")
+license=("SSPL-1.0")
 depends=(mongosh-bin curl openssl-1.1)
 makedepends=(chrpath)
 optdepends=("mongodb-tools: The MongoDB tools provide import, export, and diagnostic capabilities.")
@@ -38,10 +38,10 @@ noextract=(
 sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
             '51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
             '09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('0368b0f4175270c6da3af1bdef0d5d824fc7be2c43639db8951aee8e14acb1cf'
-                   '258a8b3cf04c017d295aee9bca95939443d491ced60345e670d03e18e6640fa7')
-sha256sums_aarch64=('269c139b14bdd62ff1fc619f6e44fa2cb505b3f5ce4b71010130e68516f7c162'
-                    'bb487ac52965886cb90765f037003a9cff6dc201c776989069b1c8d3b65fc39e')
+sha256sums_x86_64=('0a2199ff2007253b181e2460b5d99a64c7093f3dff7f5566d05d7d27e5cf79d0'
+                   '2576ba15796f93d482f34b6d7d22e82af641df5de65f80af9959acc0642d20ac')
+sha256sums_aarch64=('5cc40a9b1b201d93bdfc80347ef4508ce882fe4a426dc2eb194ec4b124c60599'
+                    '728fe9236555d1cffa601a761443ca5f2e1df57e13ed76b6fec583977bc54189')
 
 prepare() {
   mkdir -p output
