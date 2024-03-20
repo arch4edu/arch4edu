@@ -3,11 +3,11 @@
 # Contributor: Chih-Hsuan Yen <yan12125@archlinux.org>
 _base=etils
 pkgname=python-${_base}
-pkgver=1.7.0
+pkgver=1.8.0
 pkgrel=1
 pkgdesc="Collection of common python utils"
 url="https://github.com/google/${_base}"
-license=(Apache)
+license=(Apache-2.0)
 arch=(any)
 depends=(python)
 makedepends=(python-build python-installer python-flit-core python-wheel)
@@ -27,7 +27,7 @@ optdepends=('python-numpy: for etils.array_types, etils.ecolab, etils.enp'
   'python-tensorflow: for etils.etree.nest'
 )
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('43ebfb54cf28639cebdde639a787503fdbd1772e90e57140460b16da4403997c3deb14af21acfec8207659929c9a7c075c142de9bb1bb56b775f785cddbbcd18')
+sha512sums=('6471a0e8c8b70c70d3e7641db30a24793022a8be95107ad1c031a5c7b36e4e1be9dcca803fd54e09a4566ee562ac728afbc60d8e8936aba1418fdcecdc767a1d')
 
 build() {
   cd ${_base}-${pkgver}
@@ -40,15 +40,15 @@ check() {
   test-env/bin/python -m installer dist/*.whl
   test-env/bin/python -m pytest \
     --ignore etils/eapp/dataclass_flags_test.py \
+    --ignore etils/ecolab/adhoc_lib/module_deps_utils_test.py \
     --ignore etils/ecolab/array_as_img_test.py \
     --ignore etils/ecolab/auto_display_utils_test.py \
     --ignore etils/ecolab/colab_utils_test.py \
     --ignore etils/ecolab/inplace_reload_test.py \
-    --ignore etils/ecolab/lazy_imports_test.py \
-    --ignore etils/ecolab/test_utils.py \
     --ignore etils/ecolab/inspects/attrs_test.py \
     --ignore etils/ecolab/inspects/html_helper_test.py \
     --ignore etils/ecolab/inspects/nodes_test.py \
+    --ignore etils/ecolab/lazy_imports_test.py \
     --ignore etils/edc/frozen_utils_test.py \
     --ignore etils/epy/lazy_imports_utils_test.py \
     --ignore etils/etree/tree_utils_test.py
