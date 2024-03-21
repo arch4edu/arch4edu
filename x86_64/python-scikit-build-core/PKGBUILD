@@ -3,7 +3,7 @@
 pkgname=python-scikit-build-core
 pkgdesc='Next generation Python CMake adaptor and Python API for plugins'
 url='https://scikit-build-core.readthedocs.io/'
-pkgver=0.8.1
+pkgver=0.8.2
 pkgrel=1
 arch=('any')
 license=('Apache-2.0')
@@ -37,7 +37,7 @@ source=(
   "https://files.pythonhosted.org/packages/source/${_pypi::1}/$_pypi/$_pypi-$pkgver.tar.gz"
 )
 sha256sums=(
-  'da058cff222e7fc0396bba7eae42af2ca35a684b7681ec4e9c91b1783b132030'
+  '50ec24b9568c9aa6e27233deeb2978932bc79856212b30575cbfa4049655c436'
 )
 
 build() {
