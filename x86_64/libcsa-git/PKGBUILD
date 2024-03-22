@@ -1,6 +1,6 @@
 # Maintainer: Heavysink <winstonwu91 at gmail>
 pkgname=libcsa-git
-pkgver=20240131.5ab388c
+pkgver=20240322.7b48134
 pkgrel=1
 pkgdesc="Bivariate Cubic Spline approximation library + standalone utility"
 arch=(i686 x86_64)
