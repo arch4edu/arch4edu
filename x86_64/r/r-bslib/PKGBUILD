@@ -3,14 +3,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=bslib
-_pkgver=0.6.1
+_pkgver=0.6.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-base64enc
   r-cachem
@@ -38,12 +38,12 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('688035c1317d99324ef73bb5100664b1')
-sha256sums=('642735afd7d3895f1ac8c5a5f7f5e08001bfabcf62a56d2d85904655a2e931db')
+md5sums=('586b211dbbd3c4622a0ba99f059565d8')
+b2sums=('5ac4ab17a47aba06f95309d463449b3f3a9beafec8ff4fa01f9a736a1ab644a5237d6f4d8cdf866aac459fa3bf1e0844b90fdc86ecd43058ac864f8e90319189')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
