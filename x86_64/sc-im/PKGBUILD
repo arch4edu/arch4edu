@@ -3,7 +3,7 @@
 
 pkgname=sc-im
 pkgver=0.8.3
-pkgrel=1
+pkgrel=2
 pkgdesc='A spreadsheet program based on SC'
 arch=('i686' 'x86_64' 'armv7h' 'aarch64')
 url='https://github.com/andmarti1424/sc-im'
@@ -26,6 +26,7 @@ prepare() {
 build() {
   cd "$pkgname-$pkgver/src"
   CFLAGS+=' -fcommon '
+  CFLAGS+=' -Wp,-D_FORTIFY_SOURCE=2 '
   make
 }
 
