@@ -1,7 +1,7 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=sf
-_cranver=1.0-15
+_cranver=1.0-16
 pkgname=r-${_cranname,,}
 pkgdesc="Simple Features for R"
 url="https://cran.r-project.org/package=sf"
@@ -27,10 +27,10 @@ optdepends=(
     "r-blob"
     "r-nanoarrow"
     "r-covr"
-    "r-dplyr>=0.8.3"
+    "r-dplyr>=1.0.0"
     "r-ggplot2"
     "r-knitr"
-    "r-lwgeom>=0.2.1"
+    "r-lwgeom>=0.2.14"
     "r-maps"
     #"r-mapview"
     "r-matrix"
@@ -80,7 +80,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("e310735fe1e746f2a47d363c486f1a05a2479dbdd0cc68e351165016ddbce108b6ce70a456a19c98162a53eed1c2f6630abef1c46323d302b083d5cd22209842")
+b2sums=("07601b1235b5cc2c7f9fcb0785d8388a2bc6acf1abc95de05a31d6c59b14863d28579936a06a6b80ccda1ca8bcbf90b10541e52c6d087f094a69821fdf4f1333")
 
 build() {
     mkdir -p "${srcdir}/build/"
