@@ -5,18 +5,17 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=htmltools
-_pkgver=0.5.7
+_pkgver=0.5.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Tools for HTML"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-base64enc
   r-digest
-  r-ellipsis
   r-fastmap
   r-rlang
 )
@@ -34,12 +33,12 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3c644008d5b8c8dd01bedfda0d8a6527')
-sha256sums=('ecb0d82619063f49e4d001c44fcc1b811a06928fd66c2bb8c86632798d98b386')
+md5sums=('2ff5dd2b9ff8e1b29a153cf58822fb38')
+b2sums=('43101ed9e78e25b281b778d9b5c0551228e24a1b2934f5a3d7e5c5b53d72a21b613b15b82377b6dfea8ad6fe678f5a3247ddf20eefcef47c8409a51c63d124d3')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
