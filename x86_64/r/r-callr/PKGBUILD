@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=callr
-_pkgver=3.7.5
+_pkgver=3.7.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -20,7 +20,6 @@ depends=(
 optdepends=(
   r-asciicast
   r-cli
-  r-covr
   r-mockery
   r-ps
   r-rprojroot
@@ -29,8 +28,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fde3ee8095a576b253627bfe840ad133')
-b2sums=('e8d7959b924a786491d73dc96332f23784ec09648967f317f96f45cad1f82d17dbe9d665e3cbcc1eb6e267502c2de2b3e96e1f5257cceef76e82d27dea14bec4')
+md5sums=('9bd3ca85c73b182bce6367962ce8e59a')
+b2sums=('42b710af7fbf289bbce3d17263ae808ce40400a222a936d33ea3e5730fdaf31dfab6bb98624d8a8b9b0789aa2f3709aa9229691d220be8bf19d19abef83fba9f')
 
 build() {
   mkdir build
