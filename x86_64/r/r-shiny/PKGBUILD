@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.8.0
+_pkgver=1.8.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Web Application Framework for R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,7 +16,6 @@ depends=(
   r-cachem
   r-commonmark
   r-crayon
-  r-ellipsis
   r-fastmap
   r-fontawesome
   r-glue
@@ -41,6 +40,7 @@ checkdepends=(
 )
 optdepends=(
   r-cairo
+  r-dt
   r-dygraphs
   r-future
   r-ggplot2
@@ -55,17 +55,9 @@ optdepends=(
   r-testthat
   r-yaml
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "$_pkgname-fix-tabpanel-tests.patch::https://github.com/rstudio/shiny/pull/3936/commits/f00bd9fbf0da890d743d81c0c9fd00c907e59bbf.patch")
-md5sums=('cde8fa9cf462ecf2aabb7947826eea52'
-         'b8f4e70fb7dde043a41a9bd4cc15195c')
-b2sums=('e1d78df0ca5628f05f49b7777a1ed6d064c24d5d3a2a6d785671bc4879408b453b0e7a3eb5b45ba0717f874581f96b9402cb3db2be533f6d4ccabc88675f2780'
-        '468544fd220a39f99a2df131dea694d2cd7c44662e998dd870091baf775153c44b658bf593a890c3c4305cb3cb0c0cdd63e102535722e0ad89f4c5e777998ce9')
-
-prepare() {
-  # fix outdated snapshot test
-  patch -Np1 -d "$_pkgname" < "$_pkgname-fix-tabpanel-tests.patch"
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('2ca63a8d9ecc6127c155366d8ef6929c')
+b2sums=('c63019aaae28b9357dc021c023a920dfca58c35183c644c3c9896912751218a2f6d7cf44a91f418983df2bc8cbfa9cb971bd0938502314e42d1dad97efac458d')
 
 build() {
   mkdir build
