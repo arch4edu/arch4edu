@@ -2,23 +2,22 @@
 # Contributor: Antonio Rojas <arojas@archlinux.org>
 # Contributor: Ronald van Haren <ronald.archlinux.org>
 # Contributor: Damir Perisa <damir.perisa@bluewin.ch>
-
 pkgname=stellarium
-pkgver=23.4
-pkgrel=4
+pkgver=24.1
+pkgrel=1
 pkgdesc="Software which renders realistic skies in real time with OpenGL"
 arch=(x86_64)
 url="https://${pkgname}.org"
-license=(GPL2)
+license=(GPL-2.0-or-later)
 depends=(nlopt libpng libglvnd freetype2 openssl gpsd calcmysky qt6-charts qt6-serialport
   qt6-multimedia qt6-positioning qt6-webengine qxlsx-qt6) # libindi
 makedepends=(cmake ninja mesa qt6-tools)                  # doxygen graphviz
 optdepends=('man-db: manual pages for stellarium')
 source=(https://github.com/Stellarium/${pkgname}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz{,.asc})
 validpgpkeys=('79151C2E6351E7278DA1A730BF38D4D02A328DFF') # Alexander Wolf <alex.v.wolf@gmail.com>
-md5sums=('6107d1e352216b1e20d3cf3d45cea277'
+md5sums=('240f71a2a707d7b5cf321b20963cc82e'
   'SKIP')
-sha256sums=('db4db9f205cc13fb68e3f3c4c895754d16868e4d25a14da44db6d0d809e39943'
+sha256sums=('5a48fb2c5b17c9ebfa23153604f470dc87a5eab5fafb0510f71e115ac76072a8'
   'SKIP')
 
 build() {
