@@ -4,14 +4,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=recipes
-_pkgver=1.0.9
+_pkgver=1.0.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Preprocessing and Feature Engineering Steps for Modeling"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(MIT)
+license=('MIT')
 depends=(
   r-cli
   r-clock
@@ -73,8 +73,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f3f30f40a1b9b65aa5ad80b887a32786')
-b2sums=('98ba47fde5cdb93d71fad3a391c9846714f80dd1d7387bbb9339f87596006ecdf9816d7fe5622725b44e6ca465681df490c9f597c6c1fb82c200bfb243de79bc')
+md5sums=('678b530e6c97ca93445dc99cf69fe7b5')
+b2sums=('5f82026c0e7473ed8bb8bb132b96674dfe29d1e5fb15ecd6edaae43d62c3bef8a9cab9241dad4cf54546dbffcba32d5d10e67097520f908ea2777dde8d6fedf1')
 
 build() {
   mkdir build
