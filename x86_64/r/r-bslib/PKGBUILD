@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=bslib
-_pkgver=0.6.2
+_pkgver=0.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,6 +14,7 @@ license=('MIT')
 depends=(
   r-base64enc
   r-cachem
+  r-fastmap
   r-htmltools
   r-jquerylib
   r-jsonlite
@@ -27,6 +28,7 @@ optdepends=(
   r-bsicons
   r-curl
   r-fontawesome
+  r-future
   r-ggplot2
   r-knitr
   r-magrittr
@@ -38,8 +40,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('586b211dbbd3c4622a0ba99f059565d8')
-b2sums=('5ac4ab17a47aba06f95309d463449b3f3a9beafec8ff4fa01f9a736a1ab644a5237d6f4d8cdf866aac459fa3bf1e0844b90fdc86ecd43058ac864f8e90319189')
+md5sums=('081e2345dcf8260e89fd196f399e996b')
+b2sums=('f895e6038349e0028be7bf8c5956d3bd6fba1dc29a714a6f040ebdf501dbcbb950a5d3c8c3a3dd04e31c95ebf3a3d8b6f38ccc62bc2343811e27a69b883d8712')
 
 build() {
   mkdir build
