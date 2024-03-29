@@ -5,12 +5,13 @@ _pkgname=metaBMA
 _pkgver=0.6.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Bayesian Model Averaging for Random and Fixed Effects Meta-Analysis"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
+  onetbb
   r-bridgesampling
   r-coda
   r-laplacesdemon
@@ -37,13 +38,13 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('0eb28a09739c53d68ecd1c72101b5746')
-sha256sums=('c1e43fdc4c866a065c11bfa65b9f895256d0a11a19861c5212fbd4f82a6205f8')
+b2sums=('0ceec3ecfba8b3f51b8b8cb1800d70213f355694569483a672d8e24f29f29399ef482f5bdd059f667151b9263f82312ba820e69774007c836ecbb49972dfb813')
 
 build() {
-  mkdir -p build
+  mkdir build
   # compilation needs a lot of memory
   MAKEFLAGS+=" -j1"
-  R CMD INSTALL "$_pkgname" -l build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
