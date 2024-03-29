@@ -18,28 +18,20 @@ Please paste the output of
 
 ```sh
 /opt/rocm/bin/rocminfo | grep -E "(Name|ID):"
-export | grep -E "(GPU_TARGETS|AMDGPU_TARGETS|PYTORCH_ROCM_ARCH|HSA_OVERRIDE_GFX_VERSION)"
+export | grep -E \
+  "(GPU_TARGETS|AMDGPU_TARGETS|PYTORCH_ROCM_ARCH|HSA_OVERRIDE_GFX_VERSION|ROCR_VISIBLE_DEVICES)"
+python -c 'import torch.version as v; \
+  print("torch: {}\nrocm: {}\n".format(v.git_version, v.hip))'
 ```
 
 in the issue, alongside the commandline used to build this package.
 
-### Supported GPU-Architectures
+### Supported GPU-Architectures, python-pytorch and ROCM stack
 
-See https://rocm.docs.amd.com/en/docs-5.7.1/release/gpu_os_support.html#linux-supported-gpus for supported GPU-Architectures.
+This packages uses the gpu-architectures list from the corresponding python-pytorch package which in turn relies on the ROCM Version it is build with. See https://rocm.docs.amd.com/projects/install-on-linux/en/docs-6.0.0/reference/system-requirements.html for the current supported GPU-Architectures.
 
-Currently, users with a gfx1103 should set `export HSA_OVERRIDE_GFX_VERSION=11.0.0` before building the package.
+At the moment, users with a gfx1103 should set `export HSA_OVERRIDE_GFX_VERSION=11.0.0` before building the package.
 
-To build for a specific architecture only, `export PYTORCH_ROCM_ARCH=gfx01234` before starting the build.
+To build only for a specific architecture, `export PYTORCH_ROCM_ARCH=gfx01234` before starting the build. GPU_TARGETS, AMDGPU_TARGETS will be used in addition to PYTORCH_ROCM_ARCH, the later overriding the ealier if more than one is set.
 
-### Unsupported GPU-Architectures
-
-If you run into issues or have worarkounds to share for unsupported architecture builds,
-search in [discussions](https://github.com/orgs/rocm-arch/discussions) or create a new [discussion](https://github.com/orgs/rocm-arch/discussions/new?category=support). Please don't open issues for unsupported GPU-Architectures.
-
-### Runing pytorch/torchvision on an old/custom build ROCM stack
-
-Since Jan 2023, the whole ROCM stack is now in archlinux and its derivates (eg. manjaro).
-
-If running into trouble with newer pytorch versions,
-uninstall **all** ROCM related custom build packages
-and reinstall python-pytorch-rocm to get the integrated packages from your distro.
+Please don't open issues for unsupported GPU-Architectures.

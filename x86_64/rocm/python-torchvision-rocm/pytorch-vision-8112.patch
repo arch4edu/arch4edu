@@ -1,0 +1,41 @@
+From c2f3f03dc7ac4438fbd35e43c1ea8e915fd3d19d Mon Sep 17 00:00:00 2001
+From: Huy Do <huydhn@gmail.com>
+Date: Sat, 11 Nov 2023 01:38:27 -0800
+Subject: [PATCH] Fix import torchvision after
+ https://github.com/pytorch/pytorch/pull/113182
+
+Fixes https://github.com/pytorch/vision/issues/8101
+---
+ torchvision/_meta_registrations.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/torchvision/_meta_registrations.py b/torchvision/_meta_registrations.py
+index 4ff55280e89..56742200e26 100644
+--- a/torchvision/_meta_registrations.py
++++ b/torchvision/_meta_registrations.py
+@@ -1,7 +1,6 @@
+ import functools
+ 
+ import torch
+-import torch._custom_ops
+ import torch.library
+ 
+ # Ensure that torch.ops.torchvision is visible
+@@ -160,7 +159,7 @@ def meta_ps_roi_pool_backward(
+     return grad.new_empty((batch_size, channels, height, width))
+ 
+ 
+-@torch._custom_ops.impl_abstract("torchvision::nms")
++@torch.library.impl_abstract("torchvision::nms")
+ def meta_nms(dets, scores, iou_threshold):
+     torch._check(dets.dim() == 2, lambda: f"boxes should be a 2d tensor, got {dets.dim()}D")
+     torch._check(dets.size(1) == 4, lambda: f"boxes should have 4 elements in dimension 1, got {dets.size(1)}")
+@@ -169,7 +168,7 @@ def meta_nms(dets, scores, iou_threshold):
+         dets.size(0) == scores.size(0),
+         lambda: f"boxes and scores should have same number of elements in dimension 0, got {dets.size(0)} and {scores.size(0)}",
+     )
+-    ctx = torch._custom_ops.get_ctx()
++    ctx = torch.library.get_ctx()
+     num_to_keep = ctx.create_unbacked_symint()
+     return dets.new_empty(num_to_keep, dtype=torch.long)
+ 
