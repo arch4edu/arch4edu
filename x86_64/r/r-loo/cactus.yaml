@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-checkmate
   - x86_64/r/r-matrixstats
+  - x86_64/r/r-posterior
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

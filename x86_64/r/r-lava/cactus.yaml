@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-cli
   - x86_64/r/r-future.apply
   - x86_64/r/r-numderiv
   - x86_64/r/r-progressr
