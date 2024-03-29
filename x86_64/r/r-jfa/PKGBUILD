@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=jfa
-_pkgver=0.7.0
+_pkgver=0.7.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Statistical Methods for Auditing"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -41,7 +41,6 @@ optdepends=(
   r-benfordtests
   r-beyondbenford
   r-fairness
-  r-kableextra
   r-knitr
   r-mus
   r-rmarkdown
@@ -49,11 +48,13 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cf512f96cfd13b56fab2669a34fb3aaf')
-b2sums=('b72eb1a9e20b382c7c0c81b85881c3c13e9c14720f3ab2b9600baebd5831e9dd47e0a5697df1ddf0e6ccbe1b71538cdc688c20dff2da665e5dc77722f7e401f5')
+md5sums=('2d99aa11cb75b26c85f0fde696ee2fcc')
+b2sums=('44d5b877d4a37394870fc6ab62ae755a87e9221a2c32ac55d7d96dc48c99c186dca94c0cf7606f4c94ddd69cf8097bae788cd3590806ff45c91e2ae2718cbd27')
 
 build() {
   mkdir build
+  # compilation needs a lot of memory
+  MAKEFLAGS+=" -j1"
   R CMD INSTALL -l build "$_pkgname"
 }
 
