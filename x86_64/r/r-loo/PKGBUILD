@@ -1,31 +1,27 @@
-# system requirements: pandoc (>= 1.12.3), pandoc-citeproc
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Robert Greener <me@r0bert.dev>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-
 _pkgname=loo
-_pkgver=2.6.0
+_pkgver=2.7.0
 pkgname=r-${_pkgname,,}
-pkgver=2.6.0
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Efficient Leave-One-Out Cross-Validation and WAIC for Bayesian Models'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgdesc="Efficient Leave-One-Out Cross-Validation and WAIC for Bayesian Models"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
-  r
+  pandoc
   r-checkmate
   r-matrixstats
-  pandoc
+  r-posterior
 )
 optdepends=(
   r-bayesplot
   r-brms
   r-ggplot2
-  r-graphics
   r-knitr
-  r-posterior
   r-rmarkdown
   r-rstan
   r-rstanarm
@@ -34,14 +30,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('66da60fdf53a62cbc93797fa696a4cc43bce77f1721dd4bc1a58d25b3f981210')
+md5sums=('f603c34f25a3c083c2a2b4760afa932f')
+b2sums=('90ed3e766eacb2d6cc4838e7b8b05876fab4f69dabd3f0c424c29b666c55ad091a68eb526870df74e62217949327ca82cac3f97fd9698361a04e0d30f9a6340e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
