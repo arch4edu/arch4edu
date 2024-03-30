@@ -4,8 +4,10 @@ nvchecker:
   - alias: python
 depends:
   - any/python-audioread
-  - any/python-soundfile
+  - any/python-lazy-loader
   - x86_64/python-resampy
+  - any/python-soundfile
+  - x86_64/python-soxr
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
