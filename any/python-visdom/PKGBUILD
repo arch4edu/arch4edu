@@ -3,11 +3,11 @@
 pkgname=python-visdom
 _name=visdom
 pkgver=0.2.4
-pkgrel=4
+pkgrel=5
 pkgdesc='A flexible tool for creating, organizing, and sharing visualizations of live, rich data. Supports Torch and Numpy.'
 arch=(any)
 url='https://github.com/facebookresearch/visdom'
-license=('Apache')
+license=('Apache-2.0')
 depends=(
   python-jsonpatch
   python-networkx
