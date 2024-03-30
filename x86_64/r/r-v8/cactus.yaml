@@ -5,8 +5,10 @@ depends:
   - x86_64/r/r-curl
   - x86_64/r/r-jsonlite
   - x86_64/r/r-rcpp
-  - x86_64/v8-r
+  - x86_64/nodejs-shared
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed 's/v8-r/nodejs-shared/g' -i PKGBUILD
 post_build: aur-post-build
