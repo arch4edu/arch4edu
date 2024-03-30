@@ -6,7 +6,7 @@
 _pyname=selenium
 _suffix=-python
 pkgname=python-$_pyname
-pkgver=4.18.1
+pkgver=4.19.0
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=(any)
@@ -17,8 +17,7 @@ depends=(python python-urllib3 python-certifi python-trio
 makedepends=(python-build python-installer python-setuptools python-wheel)
 checkdepends=(python-pytest)
 source=("$url/archive/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('6e5c8903253f9541bc839e3e31f99680d8ceb202b2b6d75ebe51e95f348ee1c5')
-options=(!makeflags)
+sha256sums=('0494cad8db8df39d8d6e6cb181718a8ee727d0e65e9967c36b0ea998abebc415')
 
 prepare() {
   cd "${_pyname}-${_pyname}-${pkgver}/py"
@@ -31,20 +30,18 @@ build() {
   cd "${_pyname}-${_pyname}-${pkgver}/py"
   python -m build \
     --wheel \
-    --no-isolation \
-    --skip-dependency-check
+    --no-isolation
 }
 
 check() {
   cd "${_pyname}-${_pyname}-${pkgver}/py"
 
-  python -m pytest
+  pytest
 }
 
 package() {
   cd "${_pyname}-${_pyname}-${pkgver}/py"
   python -m installer \
     --destdir="$pkgdir" \
-    --compile-bytecode=2 \
     dist/*.whl
 }
