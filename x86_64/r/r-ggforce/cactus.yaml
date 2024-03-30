@@ -1,0 +1,22 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gtable
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-polyclip
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-rlang
+  - x86_64/r/r-scales
+  - x86_64/r/r-systemfonts
+  - x86_64/r/r-tidyselect
+  - x86_64/r/r-tweenr
+  - x86_64/r/r-vctrs
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

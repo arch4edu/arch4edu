@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-data.table
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gridextra
+  - x86_64/r/r-km.ci
+  - x86_64/r/r-kmsurv
+  - x86_64/r/r-knitr
+  - x86_64/r/r-xtable
+  - x86_64/r/r-zoo
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

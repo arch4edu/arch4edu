@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-farver
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-rlang
+  - x86_64/r/r-vctrs
+makedepends:
+  - x86_64/r/r-cpp11
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
