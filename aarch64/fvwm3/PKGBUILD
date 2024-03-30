@@ -2,7 +2,7 @@
 # Maintainer: boonpatrol
 
 pkgname=fvwm3
-pkgver=1.0.9
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="A highly customizable virtual desktop window manager with small memory footprint."
 arch=('x86_64')
@@ -27,7 +27,7 @@ optdepends=('fontconfig'
             'sharutils' )
 options=('!emptydirs' '!makeflags')
 source=("https://github.com/fvwmorg/fvwm3/releases/download/${pkgver}/fvwm3-${pkgver}.tar.gz" 'fvwm3.desktop')
-sha256sums=('c6d0411a97b621d8c0eed35bc4167804151480e847f64694adca8e55dd190648'
+sha256sums=('cb427d58d49e4f8db013d878fa9aa7a360e98706f1c6d08ea3ad8066ae8660d3'
             'e18c21b37219328309ac97b0026778299fc5db8d4aec3a4610287d92cec260db')
 
 build() {
