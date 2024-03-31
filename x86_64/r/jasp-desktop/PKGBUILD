@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 
 _pkgname=jasp
-_pkgver=0.18.2.beta
+_pkgver=0.18.3
 pkgname=jasp-desktop
-pkgver=0.18.2.beta
+pkgver=0.18.3
 pkgrel=1
 pkgdesc="A complete statistical package for both Bayesian and Frequentist statistical methods"
 arch=('x86_64' 'aarch64')
@@ -59,11 +59,13 @@ depends=('r'
 "r-jaspmetaanalysis"
 "r-jaspnetwork"
 "r-jasppower"
+"r-jaspprocess"
 "r-jaspprophet"
 "r-jaspreliability"
 "r-jasprobustttests"
 "r-jaspsem"
 "r-jaspsummarystatistics"
+"r-jaspsurvival"
 "r-jasptimeseries"
 "r-jaspvisualmodeling"
 "r-jaspacceptancesampling"
@@ -73,7 +75,7 @@ provides=($_pkgname)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/jasp-stats/jasp-desktop/archive/refs/tags/v${pkgver}.tar.gz"
 'jasp.sh'
 )
-sha256sums=('183fae12a72e3f8bb421c4ae860e5f5e4280f74e9ab2008ec132ac8026fd8738'
+sha256sums=('d5a00fb1cbb3bda9b7017cd1a1436267d56bb9f58ff376936b544479b8bbfa92'
             'e0714d980e7549b4c7dcbae50370e95b6ad2e7f0cf21a534ceb3a5a83ee583fd')
 
 prepare(){
