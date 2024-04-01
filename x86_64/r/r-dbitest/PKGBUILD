@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=DBItest
-_pkgver=1.8.0
+_pkgver=1.8.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Testing DBI Backends"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(LGPL)
+license=('LGPL-2.1-or-later')
 depends=(
   r-blob
   r-callr
@@ -21,7 +21,6 @@ depends=(
   r-palmerpenguins
   r-rlang
   r-testthat
-  r-vctrs
   r-withr
 )
 optdepends=(
@@ -29,7 +28,6 @@ optdepends=(
   r-constructive
   r-debugme
   r-devtools
-  r-dplyr
   r-knitr
   r-lintr
   r-pkgload
@@ -37,8 +35,8 @@ optdepends=(
   r-rsqlite
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c30ed34e11c4e2e44ecb051fad564b66')
-b2sums=('06bf87c55f921fa832f96968334932c59dcdd810eeeadeb1837ff4258cecd6c7b921053e84eb31356ea1ec7186a7b31f6e27a55da961b147f3fad352cfc68730')
+md5sums=('4c364d7e113a1ed755412a9601c4be00')
+b2sums=('634b480e4a697b64b572e6957909845d279332a7fa0d8dd4c72bba81a29867dd2a798227a73623f8ed0aaedac0f69bd27cd66bafa7b1570b28c7b61ac426ff9c')
 
 build() {
   mkdir build
