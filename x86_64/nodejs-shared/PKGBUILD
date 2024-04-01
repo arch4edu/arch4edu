@@ -10,8 +10,7 @@
 pkgbase=nodejs-shared
 pkgname=(nodejs-shared libnode)
 pkgver=21.7.1
-_commit=84c7e6fad4adbc972e0fecf537d6c6a3accf6b9e
-pkgrel=2
+pkgrel=3
 pkgdesc='Evented I/O for V8 javascript'
 arch=('x86_64')
 url='https://nodejs.org/'
@@ -19,11 +18,11 @@ license=('MIT')
 options=(!lto)
 depends=('icu' 'libuv' 'libnghttp2' 'libnghttp3' 'libngtcp2' 'openssl' 'zlib' 'brotli' 'c-ares') # 'http-parser' 'v8')
 makedepends=('git' 'python' 'procps-ng')
-source=("node-${pkgver}.zip::https://github.com/nodejs/node/archive/${_commit}.zip")
-sha512sums=('82699400af0ee082c6ff24560e3acfd99dd9e28f1701ad1ad1a41d8a925462b63cffa6a30b282e742c2ccc3a32fc13064f6d783feb5ed1282a95905532978c5a')
+source=("nodejs-${pkgver}.tar.gz::https://github.com/nodejs/node/archive/refs/tags/v${pkgver}.tar.gz")
+sha512sums=('8d8c4d006c72315da80a52d15ea59c9cda3109bd58b086c3c5a153fa8af098c221cc3f3eb5bef287ad233195ab0ff728dfbbe14f0fed0f3c286479d63d29aab5')
 
 build() {
-  cd node-${_commit}
+  cd node-${pkgver}
 
   # /usr/lib/libnode.so uses malloc_usable_size, which is incompatible with fortification level 3
   export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
@@ -49,16 +48,16 @@ build() {
 }
 
 #check() {
-#  cd node-${_commit}
+#  cd node-${pkgver}
 #  make test || :
 #}
 
 package_nodejs-shared() {
   optdepends=('npm: nodejs package manager')
-  provides=('nodejs')
-  conflicts=('nodejs')
+  provides=('nodejs' 'libnode')
+  conflicts=('nodejs' 'libnode')
 
-  cd node-${_commit}
+  cd node-${pkgver}
   make DESTDIR="$pkgdir" install
   install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
 
@@ -67,14 +66,18 @@ package_nodejs-shared() {
 }
 
 package_libnode() {
-  cd node-${_commit}
+  conflicts=('nodejs-shared')
+
+  cd node-${pkgver}
   make DESTDIR="$pkgdir" install
   install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
 
   cd "$pkgdir"/usr/lib
   ln -s libnode.so.* libnode.so
 
-  rm -r "$pkgdir"/usr/{bin,include,lib/node_modules,share/doc,share/man}
+  mv "$pkgdir"/usr/include/node "$pkgdir/usr/include/$pkgname"
+
+  rm -r "$pkgdir"/usr/{bin,lib/node_modules,share/doc,share/man}
 }
 
 # vim:set ts=2 sw=2 et:
