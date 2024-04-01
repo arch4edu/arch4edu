@@ -10,7 +10,7 @@
 pkgbase=nodejs-shared
 pkgname=(nodejs-shared libnode)
 pkgver=21.7.1
-pkgrel=3
+pkgrel=4
 pkgdesc='Evented I/O for V8 javascript'
 arch=('x86_64')
 url='https://nodejs.org/'
@@ -63,6 +63,8 @@ package_nodejs-shared() {
 
   cd "$pkgdir"/usr/lib
   ln -s libnode.so.* libnode.so
+
+  ln -s node "$pkgdir/usr/include/libnode"
 }
 
 package_libnode() {
