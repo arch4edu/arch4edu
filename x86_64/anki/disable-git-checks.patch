@@ -1,16 +1,5 @@
 We provide source tarballs without git functionality.
 'MY_REV' gets replaced with the corresponding revision in prepare().
---- a/build/ninja_gen/src/git.rs
-+++ b/build/ninja_gen/src/git.rs
-@@ -13,7 +13,7 @@ pub struct SyncSubmodule {
-
- impl BuildAction for SyncSubmodule {
-     fn command(&self) -> &str {
--        "git -c protocol.file.allow=always submodule update --init $path"
-+        "true"
-     }
-
-     fn files(&mut self, build: &mut impl build::FilesHandle) {
 --- a/build/runner/src/build.rs
 +++ b/build/runner/src/build.rs
 @@ -161,13 +161,7 @@ fn maybe_update_buildhash(build_root: &Utf8Path) {
