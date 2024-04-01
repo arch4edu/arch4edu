@@ -3,60 +3,73 @@
 
 pkgname=python-plotly
 pkgver=5.20.0
-pkgrel=1
+pkgrel=3
 pkgdesc="An open-source, interactive graphing library"
-arch=('x86_64')
+arch=('any')
 url="https://github.com/plotly/plotly.py"
 license=('MIT')
 depends=(
-python
-python-tenacity
+    python
+    python-tenacity
 )
 # optdepends based on optional_requirements.txt
 optdepends=(
-ipython
-jupyterlab
-python-ipywidgets
-python-numpy
-python-matplotlib
-python-pillow
-python-scipy
-python-ipykernel
-python-pandas
-python-colorcet
-python-inflect
-python-psutil
+    ipython
+    jupyterlab
+    python-ipywidgets
+    python-numpy
+    python-matplotlib
+    python-pillow
+    python-scipy
+    python-ipykernel
+    python-pandas
+    python-colorcet
+    python-inflect
+    python-psutil
 )
 makedepends=(
-python-setuptools
-python-jupyter_core
-python-tornado
-jupyterlab
+    git
+    python-wheel
+    python-build
+    python-installer
+    python-setuptools
+    python-jupyter_core
+    python-tornado
+    jupyterlab
 )
 checkdepends=(
-python-requests
-python-pytest
+     python-requests
+     python-pytest
 )
 source=(
-"${pkgname}-${pkgver}.tar.gz::https://github.com/plotly/plotly.py/archive/v${pkgver}.tar.gz"
+     "${pkgname}::git+https://github.com/plotly/plotly.py#tag=v$pkgver"
 )
-options=(!strip) # strip isn't useful for python files and takes forever
-sha256sums=('5f871e5ec2ec5c554210f735414f1d12031175a401cf90bbca7556501a48b1df')
+sha256sums=('b0e4718894929e788aa5823d999f18246997dc256d94adc51e26b205c318ef50')
+options=(!strip !debug) # strip and debug aren't useful for python files and take forever
+
+prepare() {
+  cd python-plotly/packages/python/plotly
+
+  git clean -dfx
+}
 
 build() {
-  cd plotly.py-${pkgver}/packages/python/plotly
-  SKIP_NPM=1 python setup.py build
+  cd python-plotly/packages/python/plotly
+
+  # Skip the dependency check as the version bounds on jupyterlab are too tight
+  # and don't allow 4.x, which Arch currently ships.
+  SKIP_NPM=1 python -m build --wheel --no-isolation --skip-dependency-check
 }
 
 check() {
-  cd plotly.py-${pkgver}/packages/python/plotly
+  cd python-plotly/packages/python/plotly
   pytest plotly/tests/test_core
 }
 
 package() {
-  cd plotly.py-${pkgver}/packages/python/plotly
-  SKIP_NPM=1 python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
-  mv ${pkgdir}/usr/etc ${pkgdir}
+  cd python-plotly/packages/python/plotly
+  python -m installer --destdir="$pkgdir"/ dist/*.whl
+  mv "${pkgdir}/usr/etc" "${pkgdir}"
 
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
