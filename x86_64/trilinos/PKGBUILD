@@ -5,9 +5,9 @@
 # Contributor: Simon Pintarelli <simon.pintarelli@gmail.com>
 # Contributor: Feng Wang <wanng.fenng@gmail.com>
 pkgname=trilinos
-pkgver=15.0.0
+pkgver=15.1.1
 _pkgver=${pkgver//./-}
-pkgrel=3
+pkgrel=1
 pkgdesc="algorithms for the solution of large-scale scientific problems"
 arch=('x86_64')
 url="http://trilinos.org"
@@ -16,14 +16,9 @@ depends=('python' 'lapack' 'boost' 'netcdf-openmpi' 'libmatio' 'libx11' 'hdf5-op
 makedepends=('gcc-fortran' 'perl' 'blas' 'cmake' 'bc' 'python-numpy')
 provides=('trilinos-sacado' 'trilinos-ml' 'zoltan' 'kokkos')
 checkdepends=('cmake')
-source=("https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-$_pkgver.tar.gz"
-        'compiler-errors.patch')
-sha512sums=('a364e67686cdd4e1e34aa0e14b6cc051ed21a72b63719c47260d7839d47590b9e652be76cb9d61e513c7933b965fc8141c3ff898167e22353b33c9491a525c84'
-            'cccd319861b33b9e809e6bee3a11f5f8604dbb765b9c074b0c02cb941231f621dc332eab58fcb07d4e291150be3372d0e58b4916de98b5a01b096a9ad5e5cfe8')
+source=("https://github.com/trilinos/Trilinos/archive/refs/tags/trilinos-release-$_pkgver.tar.gz")
+sha512sums=('5a1a7d321dd3b47fafe0422884d1a7bf6731d5ee806a4fd1bf31f179ca5d6f4290cda4515d0d7786024ea15c17e88422a9518370c5cfb32b4b44761de232e0de')
 
-prepare() {
-  patch -d  Trilinos-trilinos-release-"$_pkgver" -p1 -i ../compiler-errors.patch
-}
 
 build() {
   cmake -S Trilinos-trilinos-release-"$_pkgver" \
