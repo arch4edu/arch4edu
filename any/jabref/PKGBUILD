@@ -6,12 +6,12 @@
 # This PKGBUILD is maintained on github:
 # https://github.com/michaellass/AUR
 
-_abbrv=5a48c1b35b762f7c14a973099dd53bc686413498
-_locales=3fd551ca87ea464f89b1509e4987015691f3132b
-_styles=9c43a7dacc170d7f0225b53603e5dbc1666aaeb0
+_abbrv=8fbad5a1285926b177803087b35b0eb6b0fd0142
+_locales=cf4b49404fc15cf9a37372e4707ce710b0935ccc
+_styles=fe9db541ea06c31c8ff91c7c989fc8d4ef987b92
 
 pkgname=jabref
-pkgver=5.12
+pkgver=5.13
 pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
@@ -27,12 +27,12 @@ source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v$
         styles-${_styles}.tar.gz::https://github.com/citation-style-language/styles/archive/${_styles}.tar.gz
         jabref.sh
         jabref.desktop)
-sha256sums=('ce0bef26c6ace8ec5dc065d83084bfd1c5940210d5bc9c30fe7a1610ea7e342b'
-            '22bf841a23510f741be576afcc921fac5c2efd2fe39abd64fc6b936da253e2ae'
-            'a2533c5dfc43de52e8acedd656c5af257c7da4baf8dda844b81c7f98d4e018e8'
-            '1b36b4457533158d6ac1f7fae356d835a1760e2c6b3199604f5c1473d618ba0e'
-            '6a377ca631aab1d6a9bba927714e0571a19fbf4c1bb6b798921ca254e3e0588f'
-            'b0e3ed5cde4072a2d10de887b50217c03bbe30a1ea9b39bea1255ea80db15b77')
+sha256sums=('35b4415acb3b8892d3d4e86d8a6f46095ba5e0f285f2daa53a19abaca0a76bca'
+            '7be22f96eaea7a901f17830f7fccb72f46191b2fa9ec97e85ba9eabb9c4e7099'
+            'ebb01bff2fdb76f88800badce3499adbae4d9cdf6d6cefc20cc4278df44a3829'
+            'c593638e5be4cf93c0dd17d1c22865ecc8d91e31e8a1ab218e96204b44b00206'
+            'f466d2cbf88d4d37c0e39cb3aa3fb5bb2f0ac486d617591b2b47817c762317b0'
+            'aebafd8955b35d440c233f6e9d7cfa68bec17f58418320920b52c334e965db3a')
 
 # Note on supported Java versions:
 # The file build.gradle contains the version of Java that is required and tested.

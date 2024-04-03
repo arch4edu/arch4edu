@@ -15,7 +15,6 @@
 ROOT=/usr/share/java/jabref
 
 /usr/bin/archlinux-java-run -a 21 -b 21 -f jdk -- \
---add-modules javafx.controls,javafx.fxml,javafx.swing,javafx.web \
 --add-exports javafx.controls/com.sun.javafx.scene.control=org.controlsfx.controls \
 --add-exports org.controlsfx.controls/impl.org.controlsfx.skin=org.jabref \
 --add-exports javafx.graphics/com.sun.javafx.scene=org.controlsfx.controls \
@@ -35,5 +34,5 @@ ROOT=/usr/share/java/jabref
 --module-path ${ROOT}/lib \
 --patch-module org.jabref=${ROOT}/resources/main \
 ${JABREF_OPTIONS} \
---module org.jabref/org.jabref.cli.Launcher \
+--module org.jabref/org.jabref.Launcher \
 "$@"
