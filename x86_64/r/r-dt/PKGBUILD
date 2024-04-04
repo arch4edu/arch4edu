@@ -4,7 +4,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=DT
-_pkgver=0.32
+_pkgver=0.33
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,8 +35,8 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e43c80e1b807de68609808b62971034c')
-b2sums=('d157a5ce07e1a8e01dfc98e5a29c79726df0ae3ef734192f9c5b77a951d9ed9d9e43fdfcd9da6ab09632824637b34ca61a813219d5569d37e51ecdc0d9b91f3e')
+md5sums=('360d1d38b0f28485d564bb246a27c1f2')
+b2sums=('b9fa2c7c3e6960ea4ba638ed5029397e428c53422eef9b6a17a5a20b184c26a1665fa9d973c4c31b050130189b2714a4aa0f72d55b6f874dbea022fa7555e452')
 
 build() {
   mkdir build
