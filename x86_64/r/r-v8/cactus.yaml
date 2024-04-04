@@ -5,11 +5,8 @@ depends:
   - x86_64/r/r-curl
   - x86_64/r/r-jsonlite
   - x86_64/r/r-rcpp
-  - x86_64/nodejs-shared
+  - x86_64/nodejs-shared: libnode
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: |
-  aur-pre-build
-  sed 's/v8-r/nodejs-shared/g' -i PKGBUILD
-  sed '/R CMD INSTALL/s/$/ --configure-vars="V8_PKG_LIBS=-lnode V8_PKG_CFLAGS=-I\/usr\/include\/node"/' -i PKGBUILD
+pre_build: aur-pre-build
 post_build: aur-post-build
