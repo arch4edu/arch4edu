@@ -7,16 +7,16 @@ _pkgname=V8
 _pkgver=4.4.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Embedded JavaScript and WebAssembly Engine for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
+  libnode
   r-curl
   r-jsonlite
   r-rcpp
-  nodejs-shared
 )
 checkdepends=(
   r-testthat
@@ -32,7 +32,8 @@ b2sums=('668830408eab269dd9bffb1abc0bdfba7f89d1fc4ec713ede68204bd97a5d03aa2e8f1c
 
 build() {
   mkdir build
-  R CMD INSTALL -l build "$_pkgname" --configure-vars="V8_PKG_LIBS=-lnode V8_PKG_CFLAGS=-I/usr/include/node"
+  R CMD INSTALL -l build "$_pkgname" \
+      --configure-vars="V8_PKG_LIBS=-lnode V8_PKG_CFLAGS=-I/usr/include/libnode"
 }
 
 check() {
