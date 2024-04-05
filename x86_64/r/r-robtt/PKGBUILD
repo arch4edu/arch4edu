@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=RoBTT
-_pkgver=1.2.1
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Robust Bayesian T-Test"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -38,8 +38,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('50e0eea609a0aae0eb0cce7451076fd9')
-b2sums=('27018211f78ffdfc4f028e66168ec3af6aef3601614c0f3b372796ca1890bffe6e6044d1ddd165d2eaccbcd066086f6a05c65ff337f06d7b8ee6e02ea6b2f8a4')
+md5sums=('aa8b805fa470d5bb0845eec1cf08ddf8')
+b2sums=('0e79d62fc434d8f42860e68f7da2783b28c6cfc46efc3a112fa5d2687332d340f76b66f63155d276715ac857b5941b05d916b65e80212e439da17ddaac982250')
 
 prepare() {
   # skip test that requires external files
