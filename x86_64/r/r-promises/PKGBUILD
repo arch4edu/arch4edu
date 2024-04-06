@@ -3,14 +3,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=promises
-_pkgver=1.2.1
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Abstractions for Promise-Based Asynchronous Programming"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-fastmap
   r-later
@@ -33,12 +33,12 @@ optdepends=(
   r-vembedr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0332949e499adeb8ede2d583d813b6c5')
-sha256sums=('3ce0a26df39ea27536877ec6db13083b2952108245024baa8b40ae856d2ce5be')
+md5sums=('1b1184329736b045e11ba2dff81ce6ea')
+b2sums=('28c1c66e1ffa72e2ae6f577589a6d413046329aac5c582adf7157c8855b69e80542465c5596d7dbaef6c85eca040b37dead16ddea7495e4c9e0bc01a85c43864')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
