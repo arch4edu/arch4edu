@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ggstats
-_pkgver=0.5.1
+_pkgver=0.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Extension to 'ggplot2' for Plotting Stats"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r-broom.helpers
   r-cli
@@ -51,12 +51,12 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d615412a8c42e91abadd45f5d88c49a0')
-sha256sums=('2c6a563fb7072e820837d052855aa475a3486b9519a06a63678166c5af6a9ec9')
+md5sums=('6e82ffaa172a83d3063bb7e30c40da41')
+b2sums=('fe087398fcae03ac7fefb2b04dd3ab1eb7a4df34b7b84b21fc4e35209da6408bc54e5c8c2ec6ae8dc726aff93e952d8ebc5d10844da1636dc4caa88643fbea0d')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
