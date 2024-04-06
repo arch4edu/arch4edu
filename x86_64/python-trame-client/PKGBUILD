@@ -2,7 +2,7 @@
 _base=trame-client
 pkgname=python-${_base}
 pkgdesc="Internal client of trame"
-pkgver=2.16.5
+pkgver=2.17.1
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
@@ -11,7 +11,7 @@ depends=(python)
 makedepends=(python-build python-installer python-setuptools python-wheel nodejs-lts-hydrogen npm)
 checkdepends=(python-pytest-xprocess python-pillow python-pixelmatch python-seleniumbase)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('6b6b59a5fa152f07ed1aa79d971ccdef4d9a7bd7fe6549d0ed97a5f8a2a919b600c495605bde842764a677be042d70527ac468bae75dbc6fa81635406a683012')
+sha512sums=('6fb2c7115d8a6e5c79b50081bec172127e7f46e7d3496c82539defe5e18e705237cf877dc41e5d098c61d929a342cae4953c29a43c6ef013e76246c07193df2d')
 
 prepare() {
   sed -i 's/^include/#include/' ${_base}-${pkgver}/MANIFEST.in
