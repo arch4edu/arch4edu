@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=broom.helpers
-_pkgver=1.14.0
+_pkgver=1.15.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Helpers for Model Coefficients Tibbles"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r-broom
   r-cli
@@ -51,6 +51,7 @@ optdepends=(
   r-marginaleffects
   r-margins
   r-mice
+  r-mmrm
   r-multgee
   r-ordinal
   r-parameters
@@ -68,12 +69,12 @@ optdepends=(
   r-vgam
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1f788779512992613da0c5619f0e0d33')
-sha256sums=('cdc12f35bfed5d3da55ac7c7e09974584c8e4cb7a2147429c53b7b1176c76a93')
+md5sums=('19e5599a0d7734b4264d658e18f8f6d2')
+b2sums=('18ce303ac7a4906f772fcc32fcfe0aea1d9962129875c48ea46ffe476df514f543d24b72a928fef4114ec867b044cc856973aea32986ba589d1e3b6cd4914358')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
