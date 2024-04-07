@@ -3,35 +3,33 @@
 _pkgname=graph
 _pkgver=1.80.0
 pkgname=r-${_pkgname,,}
-pkgver=1.80.0
-pkgrel=1
-pkgdesc='graph: A package to handle graph data structures'
-arch=('x86_64')
-url="https://bioconductor.org/packages/${_pkgname}"
-license=('Artistic2.0')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="A package to handle graph data structures"
+arch=(x86_64)
+url="https://bioconductor.org/packages/$_pkgname"
+license=('Artistic-2.0')
 depends=(
-  r
   r-biocgenerics
 )
 optdepends=(
   r-biocstyle
-  r-cluster
   r-knitr
   r-rbgl
-  r-rgraphviz
   r-runit
   r-sparsem
   r-xml
 )
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('017446e90386aba89d2326d30006db14d191bc9b4ce916e0d0ebd979a73fef5c')
+md5sums=('735b96df0f7c955806148170220b75b2')
+b2sums=('67c60fe3b3160bbe16db9e5e31e7d85d8fa4bd812a39dce1ac7c57bb8dbe5789abd2e983b595e0d68a87087effc34550060ddd9d6e95dcb4a3f46154a3c7a77b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
