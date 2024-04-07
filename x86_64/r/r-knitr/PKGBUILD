@@ -6,14 +6,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=knitr
-_pkgver=1.45
+_pkgver=1.46
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="A General-Purpose Package for Dynamic Report Generation in R"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-evaluate
   r-highr
@@ -24,7 +24,6 @@ optdepends=(
   'pandoc: R Markdown v2 and reStructuredText support'
   'rst2pdf: rst2pdf() support'
   r-bslib
-  r-curl
   r-dbi
   r-digest
   r-formatr
@@ -52,15 +51,14 @@ optdepends=(
   r-tikzdevice
   r-tinytex
   r-webshot
-  r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('334f8f963b3d8e9e0ce5c278775cb7ec')
-sha256sums=('ee2edea53bc53efa51d131ab5a0b0c829c0f950b79d3c6ee34705354bf7584fb')
+md5sums=('ac4eae7a57b7ff78c5bd3faf76d4ec04')
+b2sums=('3b6b4c08b47ad40519c8c36af4d7e4d625665f998b23bd75cdc618411141dd0466372ea8e2c11ea2a7d2938e79ba6a43b4da77575141fec9bf95761047ce401c')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
