@@ -5,14 +5,13 @@
 _pkgname=xts
 _pkgver=0.13.2
 pkgname=r-${_pkgname,,}
-pkgver=0.13.2
-pkgrel=1
-pkgdesc='eXtensible Time Series'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="eXtensible Time Series"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-zoo
 )
 optdepends=(
@@ -23,14 +22,15 @@ optdepends=(
   r-tseries
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4ad590f65c4c9daa7fe920aee0274a23478daacbfcd6edc2566dc392460f1dfb')
+md5sums=('58945668fa13f12e2efd18d327c422e4')
+b2sums=('97dd5388ab1ce8f87782c7650706bc32a232262efb856f3b285e3026f7f76a4e7024067916efdfd89809de35ce6a4a88115063d853b5f4ac5db79ab8059b8b6e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
