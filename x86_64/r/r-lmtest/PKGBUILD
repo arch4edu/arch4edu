@@ -5,37 +5,35 @@
 _pkgname=lmtest
 _pkgver=0.9-40
 pkgname=r-${_pkgname,,}
-pkgver=0.9.40
-pkgrel=6
-pkgdesc='Testing Linear Regression Models'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=8
+pkgdesc="Testing Linear Regression Models"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
-  r
   r-zoo
+)
+makedepends=(
+  gcc-fortran
 )
 optdepends=(
   r-aer
   r-car
   r-dynlm
   r-sandwich
-  r-stats4
   r-strucchange
-  r-survival
-)
-makedepends=(
-  gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('64400d4d6cc635316531042971f1783539686e9015c76f5741c07304fa14d997')
+md5sums=('f3ae15407707b219b2bdc5c72405d21b')
+b2sums=('b5a8bbe9b8759b72a789b4eca8d09e97fd8b4ebda67957d93622add329caacf3066d25f7cc656fe55644311a503eff466fc31cf68e4472d43ca57b28db872ebc')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
