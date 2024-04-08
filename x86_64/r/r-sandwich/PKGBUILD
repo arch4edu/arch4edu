@@ -5,43 +5,38 @@
 _pkgname=sandwich
 _pkgver=3.1-0
 pkgname=r-${_pkgname,,}
-pkgver=3.1.0
-pkgrel=1
-pkgdesc='Robust Covariance Matrix Estimators'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Robust Covariance Matrix Estimators"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
-  r
   r-zoo
 )
 optdepends=(
   r-aer
   r-car
   r-geepack
-  r-lattice
   r-lme4
   r-lmtest
-  r-mass
   r-multiwayvcov
-  r-parallel
   r-pcse
   r-plm
   r-pscl
   r-scatterplot3d
-  r-stats4
   r-strucchange
-  r-survival
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('96b0e105ee50391a1fd286e9556ba6669f08565fa30788b1a21bc861b0a023fa')
+md5sums=('a5abc91469c1f1ae604dba272268b10b')
+b2sums=('6d4ae6329c77573e4b1c7404746c3e1a8014b725fac58fd4bd84ebfa1f884b30e6a11056e318b28886dc504457200569ac77667a50b0a20cd1a51ffb4ae9198f')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
