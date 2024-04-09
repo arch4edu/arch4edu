@@ -1,17 +1,15 @@
-# system requirements: GNU make, C++14
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=xgboost
 _pkgver=1.7.7.1
 pkgname=r-${_pkgname,,}
-pkgver=1.7.7.1
-pkgrel=1
-pkgdesc='Extreme Gradient Boosting'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('Apache')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Extreme Gradient Boosting"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('Apache-2.0')
 depends=(
-  r
   r-data.table
   r-jsonlite
 )
@@ -30,14 +28,15 @@ optdepends=(
   r-vcd
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f7912ccf3a583a27208f74ca15c3b272cc930bae6b10ae7e5958ff2951ee9723')
+md5sums=('476b159d54e363c37e7f14aa34bfc01d')
+b2sums=('3693e2148f9f93adc5540846114585b69b952a5edf41a00061116d5617641886756cae4adcf20cb8dd272e7ec0f73ad1b89e882b603c718c2a07d411981a927e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
