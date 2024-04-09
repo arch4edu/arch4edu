@@ -3,13 +3,13 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=munsell
-_cranver=0.5.0
+_cranver=0.5.1
 pkgname=r-${_cranname,,}
 pkgdesc="Utilities for Using Munsell Colours"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=4
+pkgrel=1
 
 arch=("any")
 depends=(
@@ -40,7 +40,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("534463ce90f276b5fb3c874fadd882b1f824cef7b8ba1a7817994a1949d312fc85acf7893df03ca11403e0d20b2b3223e606ee2a92b8d735904b37f41b2706f3")
+b2sums=("e1b00e414f5868e43f2f81ac81042aca0fc0e972e4fa56a7fd34857bf1f97a6ebc5beabe2ea95c0642652d9006023a65962fe75c728d3508908e6d32d4b8e8ff")
 
 build() {
     mkdir -p "${srcdir}/build/"
