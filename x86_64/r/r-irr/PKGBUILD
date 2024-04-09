@@ -3,25 +3,25 @@
 _pkgname=irr
 _pkgver=0.84.1
 pkgname=r-${_pkgname,,}
-pkgver=0.84.1
-pkgrel=4
-pkgdesc='Various Coefficients of Interrater Reliability and Agreement'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="Various Coefficients of Interrater Reliability and Agreement"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-lpsolve
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e7bae8476b723a2246564c013194e8b7fcc9b34affc0ab5fcd55875231f544c3')
+md5sums=('802ae19d1fc45cede1afafb5012cfdf0')
+b2sums=('41f6e4046a498394cb53a1c4599a7ac6ec66b9301272f7bb523740887bd8c8ed3b23a74c48e5eb177042c36a9f968fb7e47b55426ea1318a71183c01e4c537fa')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
