@@ -4,7 +4,7 @@
 # Contributor: kartikmohta
 # Contributor: calvertdw
 pkgname=ros2-arch-deps
-pkgver=0.19
+pkgver=0.20
 pkgrel=1
 pkgdesc="[Meta-PKG] Dependencies for building ROS2 on Arch"
 url="https://docs.ros.org/"
@@ -28,7 +28,7 @@ depends=(
   'openssl'
   'poco'
   'procps-ng' # provides /usr/bin/free command
-  'pyside2'
+  'pyside2-tools'
   'python'
   'python-argcomplete'
   'python-build'
@@ -50,6 +50,7 @@ depends=(
   'python-wheel'
   'qt5-base'
   'qt5-svg'
+  'shiboken2'
   'sip'
   'tinyxml2'
   'vtk'
