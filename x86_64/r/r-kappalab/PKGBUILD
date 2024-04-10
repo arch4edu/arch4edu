@@ -3,27 +3,29 @@
 _pkgname=kappalab
 _pkgver=0.4-12
 pkgname=r-${_pkgname,,}
-pkgver=0.4.12
-pkgrel=1
-pkgdesc='Non-Additive Measure and Integral Manipulation Functions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('CeCILL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Non-Additive Measure and Integral Manipulation Functions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('CECILL-2.0')
 depends=(
-  r
+  r-kernlab
   r-lpsolve
   r-quadprog
-  r-kernlab
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b30829a18cc7ee3ee466edbbd6f85e3e41d445887e34eaf6a3fa58f53911138c')
+md5sums=('cd88e018c6513b3931021f2391c6282b')
+b2sums=('59d191c1e249b4b5435b1c2fcf35b7805e8030eea85eb6cfc714b690ae421a688dbf1d63ae05a37f040bfb7efa80d19e030504344d21281583c539ed67ae1358')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -Dm644 "$_pkgname/COPYING" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
-# vim:set ts=2 sw=2 et:
