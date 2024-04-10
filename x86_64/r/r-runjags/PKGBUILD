@@ -1,19 +1,17 @@
-# system requirements: JAGS >= 4.3.0 (https://mcmc-jags.sourceforge.io/)
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=runjags
 _pkgver=2.2.2-4
 pkgname=r-${_pkgname,,}
-pkgver=2.2.2.4
-pkgrel=1
-pkgdesc='Interface Utilities, Model Templates, Parallel Computing Methods and Additional Distributions for MCMC Models in JAGS'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Interface Utilities, Model Templates, Parallel Computing Methods and Additional Distributions for MCMC Models in JAGS"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
-  r
-  r-coda
   jags
+  r-coda
 )
 optdepends=(
   r-knitr
@@ -24,14 +22,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6f656e4d0620c0806e596ddb4bfec3934534ec17c02da699fcbfd6720a6f424f')
+md5sums=('0c6bbf7794879f2a345929252d83041c')
+b2sums=('787baaf661a16f97f27f721db8a7c7bf040798d53411c09a037b815149906d5f627c5af8b857eeb80f24540c33d2008970b3f426e3bfd7d88b647cc65d98e05a')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
