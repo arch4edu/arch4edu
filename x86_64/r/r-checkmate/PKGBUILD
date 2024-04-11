@@ -5,14 +5,13 @@
 _pkgname=checkmate
 _pkgver=2.3.1
 pkgname=r-${_pkgname,,}
-pkgver=2.3.1
-pkgrel=1
-pkgdesc='Fast and Versatile Argument Checks'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('BSD')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Fast and Versatile Argument Checks"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('BSD-3-Clause')
 depends=(
-  r
   r-backports
 )
 optdepends=(
@@ -30,15 +29,18 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e7e6ba0cca400137f352a599ea29cf35a83f40a5ad26e7c4f06e6c35471884f6')
+md5sums=('187badb003e010483a10dd43a084592d')
+b2sums=('ad44ab0c585bb5c8247bf24bfb38fcdf2ffa1a8e5e7777bccde625b5b7510372b2c2b4ffd02133c829c4f5a23964ff29865ae9def250ec1949bb618bd8275ec0')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
