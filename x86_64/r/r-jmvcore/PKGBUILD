@@ -3,14 +3,13 @@
 _pkgname=jmvcore
 _pkgver=2.4.7
 pkgname=r-${_pkgname,,}
-pkgver=2.4.7
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Dependencies for the 'jamovi' Framework"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-base64enc
   r-jsonlite
   r-r6
@@ -27,14 +26,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6a5c520ea8d94fbd4863415323a5dc6566579a29d7cde4d838cec13973d9ecdf')
+md5sums=('f27afb95f291240751e3f530c16b6e28')
+b2sums=('0de0dc4fe2957233ba8f58b60aa59f6d2addaa45b0399d010fe557abd5d23051c474d6c9a415085f3652ccb1fec171ef669e27e9533d87fe8b2e077ea773a011')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
