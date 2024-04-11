@@ -18,14 +18,14 @@
 pkgname=meshlab
 pkgver=2023.12
 _pkgver_vcg=${pkgver}
-pkgrel=2
+pkgrel=3
 pkgdesc="System for processing and editing of unstructured 3D models arising in 3D scanning (qt5 version)"
 arch=('i686' 'x86_64')
 url="https://www.meshlab.net"
 license=('GPL2')
 depends=('bzip2' 'cgal' 'glew' 'glu' 'openssl' 'qt5-base' 'qt5-declarative' 'qt5-script' 'qt5-xmlpatterns' 'xerces-c'
          'gmp' 'mpfr' 'mesa' 'qhull')
-makedepends=('boost' 'cmake' 'eigen' 'ninja' 'git' 'muparser' 'lib3ds' 'openctm-tools' 'gcc12')
+makedepends=('boost' 'cmake' 'eigen' 'ninja' 'git' 'muparser' 'lib3ds' 'openctm-tools')
 optdepends=('lib3ds: for Autodesk`s 3D-Studio r3 and r4 .3DS file support'
             'muparser: for filer_func plugins'
             'openctm-tools: for compressed triangle mesh file format')
@@ -43,10 +43,12 @@ prepare() {
 build() {
   _cmake_flags+=( '-DCMAKE_INSTALL_PREFIX=/usr'
                   '-DCMAKE_BUILD_TYPE=Release'
-                  '-DCMAKE_C_COMPILER=gcc-12'
-                  '-DCMAKE_CXX_COMPILER=g++-12'
+                  '-DCMAKE_C_COMPILER=gcc'
+                  '-DCMAKE_CXX_COMPILER=g++'
                 )
   cmake "${_cmake_flags[@]}" -G Ninja -B "${srcdir}/build" -S "${srcdir}/meshlab"
+# Fix gcc:13 build
+  sed -i '1 i\#include <cstdint>' "${srcdir}"/meshlab/src/external/downloads/{nexus-master/src/corto/include/corto/tunstall.h,libE57Format-2.3.0/include/E57Format.h}
 # shellcheck disable=SC2046 # allow MAKEFLAGS to split when passing multiple flags.
  ninja $(grep -oP -- '-+[A-z]+ ?[0-9]*'<<<"${MAKEFLAGS:--j1}") -C "${srcdir}/build"
 }
