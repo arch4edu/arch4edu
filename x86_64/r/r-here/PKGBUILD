@@ -4,14 +4,13 @@
 _pkgname=here
 _pkgver=1.0.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.1
-pkgrel=7
-pkgdesc='A Simpler Way to Find Your Files'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="A Simpler Way to Find Your Files"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  r
   r-rprojroot
 )
 optdepends=(
@@ -29,15 +28,18 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('08ed908033420d3d665c87248b3a14d1b6e2b37844bf736be620578c20ca346b')
+md5sums=('67367162e286ae95c06abb6e7d70dd75')
+b2sums=('840269e8beaf58ef987bdb54fe51110e39d3e071da0623cb9b687d752b80714837a415fdf7618b1c6fa02fe8f5facd0aa700e82d34f6d2ca4579294af410ac71')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
