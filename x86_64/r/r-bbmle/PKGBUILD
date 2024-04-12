@@ -3,14 +3,13 @@
 _pkgname=bbmle
 _pkgver=1.0.25.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.25.1
-pkgrel=1
-pkgdesc='Tools for General Maximum Likelihood Estimation'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Tools for General Maximum Likelihood Estimation"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-bdsmatrix
   r-mvtnorm
   r-numderiv
@@ -28,14 +27,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d92a0cf819fe4c08b8eb17f5e03275c8accde7f3b54f990cbba5ab926575b60b')
+md5sums=('73de3800a92640884c5db0e85724cdd3')
+b2sums=('0c881ad4cb9ae16c660365b5abd2cd0e42893c614e0618b9505ad08d21df536d1f4cb5aa4d085e7fc77862a3e012a87458155e1abd13cf2731a857a3b4774af6')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
