@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=matrixStats
-_cranver=1.2.0
+_cranver=1.3.0
 pkgname=r-${_cranname,,}
 pkgdesc="Functions that Apply to Rows and Columns of Matrices (and to Vectors)"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -23,6 +23,7 @@ optdepends=(
     "r-microbenchmark"
     "r-r.devices"
     "r-r.rsp"
+    "r-utils"
 )
 
 # The unittests for `r-matrixstats` have multiple circular
@@ -46,7 +47,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("847f435794c8e78d6cc82ae0079bd61fd6d52a82102b792ea22b19e2945afd7c8691388a866ce0c456a5b7e16e119298fa153067106a88e410b85b91ef537748")
+b2sums=("79aaa70c60d1965c979c7e482d1fefc504a61516a20f26497088b7e59efa8a95a51243e4c91b474f0334860dc5e48d324705b608e65ff9657a3aee6bc1dabcc3")
 
 build() {
     mkdir -p "${srcdir}/build/"
