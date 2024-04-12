@@ -3,34 +3,33 @@
 _pkgname=vegan
 _pkgver=2.6-4
 pkgname=r-${_pkgname,,}
-pkgver=2.6.4
-pkgrel=1
-pkgdesc='Community Ecology Package'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Community Ecology Package"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
-  r
+  lapack
   r-permute
-)
-optdepends=(
-  r-knitr
-  r-markdown
-  r-parallel
-  r-tcltk
 )
 makedepends=(
   gcc-fortran
 )
+optdepends=(
+  r-knitr
+  r-markdown
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5d8ad4bebe79ae2bbd840a34100cf54c62f089c66ea484a542a201afcba21d06')
+md5sums=('3e8bff267537730be8ec6dd3970a2b4a')
+b2sums=('9b576cb953ad8bb1e4e659495881a1a60aaeae63c154a197e409d0da0a288e0965c441d398c77238fcf76525bf4b32bed0495d2af9c7abb91da5f46f15d1704b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
