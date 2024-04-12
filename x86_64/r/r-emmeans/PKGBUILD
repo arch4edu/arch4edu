@@ -3,14 +3,13 @@
 _pkgname=emmeans
 _pkgver=1.10.1
 pkgname=r-${_pkgname,,}
-pkgver=1.10.1
-pkgrel=1
-pkgdesc='Estimated Marginal Means, aka Least-Squares Means'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Estimated Marginal Means, aka Least-Squares Means"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
-  r
   r-estimability
   r-mvtnorm
   r-numderiv
@@ -21,51 +20,35 @@ optdepends=(
   r-biglm
   r-brms
   r-car
-  r-carbayes
   r-coda
-  r-coxme
-  r-gee
-  r-geepack
   r-ggplot2
   r-knitr
-  r-lattice
   r-lme4
   r-lmertest
   r-logspline
-  r-mass
-  r-mcmcglmm
-  r-mcmcpack
   r-mediation
-  r-mgcv
-  r-mice
   r-multcomp
   r-multcompview
   r-mumin
-  r-nlme
-  r-nnet
   r-ordinal
   r-pbkrtest
-  r-pscl
   r-rmarkdown
   r-rsm
-  r-rstanarm
   r-sandwich
   r-scales
-  r-sommer
-  r-splines
-  r-survival
   r-testthat
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ca09b68f84320cbcfc00d460ec8fcf70e52982516c6f92a296f90ba90efaaa9c')
+md5sums=('add807ebe4314fd923b13a7c667c0191')
+b2sums=('723410c3bbb7f63686b9095bf3a2d8b254b99071f2822a5be14d6663c374e53632c6eb793c9f51eb3dc21f707a343c62c8f004203e57c9b5db9d7a0372552b2c')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
