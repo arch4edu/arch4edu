@@ -3,14 +3,13 @@
 _pkgname=metadat
 _pkgver=1.2-0
 pkgname=r-${_pkgname,,}
-pkgver=1.2.0
-pkgrel=1
-pkgdesc='Meta-Analysis Datasets'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="Meta-Analysis Datasets"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-mathjaxr
 )
 optdepends=(
@@ -31,14 +30,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f0cce5e30c3d256eaf5a41e4f52ffc7108e195016a4b99409e0ab4c2ef58f5b8')
+md5sums=('4303e4a28efd69147f6f95fc939ea5db')
+b2sums=('878d52d721e644c73da7692bae40463ca7d30b81a54bf9515a223f5d17b0f653da857077276f7dfffdf5a16e861a5373ab65ab15887be336917244f267746e8b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
