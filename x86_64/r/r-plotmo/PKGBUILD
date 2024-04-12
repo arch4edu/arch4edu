@@ -3,17 +3,15 @@
 _pkgname=plotmo
 _pkgver=3.6.3
 pkgname=r-${_pkgname,,}
-pkgver=3.6.3
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Plot a Model's Residuals, Response, and Partial Dependence Plots"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
-  r
   r-formula
   r-plotrix
-  r-teachingdemos
 )
 optdepends=(
   r-c50
@@ -21,23 +19,22 @@ optdepends=(
   r-gbm
   r-glmnet
   r-glmnetutils
-  r-mass
   r-mlr
   r-neuralnet
   r-partykit
   r-pre
-  r-rpart
   r-rpart.plot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6917cd8185325f1f2998fb14def9e6a8d93f1b708cf70d7c443d3960c9189b7b')
+md5sums=('92a109886fbf544f525c22390171e30c')
+b2sums=('db9b095c4f2e5eb177bb3bcf9fdcdedc2d5422dbe230d8d1e6e5b18d632c399d137c25284dc34a76160ca271cbfb1480853b91abe00343f0e0736e82a01e348b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
