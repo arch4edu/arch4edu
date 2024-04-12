@@ -18,14 +18,14 @@
 pkgname=meshlab
 pkgver=2023.12
 _pkgver_vcg=${pkgver}
-pkgrel=3
+pkgrel=4
 pkgdesc="System for processing and editing of unstructured 3D models arising in 3D scanning (qt5 version)"
 arch=('i686' 'x86_64')
 url="https://www.meshlab.net"
 license=('GPL2')
 depends=('bzip2' 'cgal' 'glew' 'glu' 'openssl' 'qt5-base' 'qt5-declarative' 'qt5-script' 'qt5-xmlpatterns' 'xerces-c'
          'gmp' 'mpfr' 'mesa' 'qhull')
-makedepends=('boost' 'cmake' 'eigen' 'ninja' 'git' 'muparser' 'lib3ds' 'openctm-tools')
+makedepends=('boost' 'cmake' 'eigen' 'ninja' 'git' 'muparser' 'lib3ds' 'openctm-tools' 'patchelf')
 optdepends=('lib3ds: for Autodesk`s 3D-Studio r3 and r4 .3DS file support'
             'muparser: for filer_func plugins'
             'openctm-tools: for compressed triangle mesh file format')
@@ -55,6 +55,8 @@ build() {
 
 package() {
   DESTDIR="$pkgdir" ninja -C "${srcdir}/build" install
+  # Fix libio_u3d.so missing rpath
+  patchelf --set-rpath '$ORIGIN/../' ${pkgdir}/usr/lib/meshlab/plugins/libio_u3d.so
 }
 
 # Generated with git_submodule_PKGBUILD_conf.sh ( https://gist.github.com/bartoszek/41a3bfb707f1b258de061f75b109042b )
