@@ -1,7 +1,7 @@
 _name=skypeforlinux
 pkgname=${_name}-bin
-pkgver=8.116.0.213
-pkgrel=2
+pkgver=8.117.0.202
+pkgrel=1
 pkgdesc='Skype for Linux'
 arch=('x86_64')
 url='https://www.skype.com/'
@@ -31,10 +31,10 @@ optdepends=(
 
 # curl -H 'Snap-Device-Series: 16' 'https://api.snapcraft.io/v2/snaps/info/skype'
 source=('flags.sh')
-source_x86_64=("${_name}-${pkgver}-x86_64.snap::https://api.snapcraft.io/api/v1/snaps/download/QRDEfjn4WJYnm0FzDKwqqRZZI77awQEV_340.snap")
+source_x86_64=("${_name}-${pkgver}-x86_64.snap::https://api.snapcraft.io/api/v1/snaps/download/QRDEfjn4WJYnm0FzDKwqqRZZI77awQEV_342.snap")
 
 sha256sums=('d83693ffd8034c21030262ac00ce529c8da7b0196ea4b4eb2168861fc2657a2a')
-sha256sums_x86_64=('2bba37a1222e18787533cd402a4fd277d83b1338a23c4c47bfb18041b8c26783')
+sha256sums_x86_64=('7b8acb67490139ee4ab8be9756ed32345850f4ad018babf106d3e073e1f3e053')
 
 package() {
     local sname="source_${CARCH}"
