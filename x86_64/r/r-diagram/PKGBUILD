@@ -3,25 +3,25 @@
 _pkgname=diagram
 _pkgver=1.6.5
 pkgname=r-${_pkgname,,}
-pkgver=1.6.5
-pkgrel=4
-pkgdesc='Functions for Visualising Simple Graphs (Networks), Plotting Flow Diagrams'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="Functions for Visualising Simple Graphs (Networks), Plotting Flow Diagrams"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-shape
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e9c03e7712e0282c5d9f2b760bafe2aac9e99a9723578d9e6369d60301f574e4')
+md5sums=('58198d8486863f032a89989c8b858f02')
+b2sums=('f58bf791e10e1a0a02931a78c02717c228eebddbc6e14a92b5b86397d19ebb8e9f4b46e9cce8bdafd49fbeb58c172565e2bbd58d0b3aec4f7717735b7244908b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
