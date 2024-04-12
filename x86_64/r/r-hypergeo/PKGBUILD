@@ -3,27 +3,27 @@
 _pkgname=hypergeo
 _pkgver=1.2-13
 pkgname=r-${_pkgname,,}
-pkgver=1.2.13
-pkgrel=4
-pkgdesc='The Gauss Hypergeometric Function'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="The Gauss Hypergeometric Function"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
-  r
   r-contfrac
   r-desolve
   r-elliptic
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6d5b78353aad1d13091ccbeb340867dad7b9eb00d0e2185286dc7e13848f4d8e')
+md5sums=('fe7a150c10ab854fa5f6d70ee0f7549e')
+b2sums=('8fec028c73b04b531d294c247081ab707ae7c1df3f2638d2996fe4c5dfb776a8109900db0d5473fb04a5aa959b2fee7ed0f6832e0f298bb0c447de0af2847c1d')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
