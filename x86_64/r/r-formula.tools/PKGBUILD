@@ -4,14 +4,13 @@
 _pkgname=formula.tools
 _pkgver=1.7.1
 pkgname=r-${_pkgname,,}
-pkgver=1.7.1
-pkgrel=7
-pkgdesc='Programmatic Utilities for Manipulating Formulas, Expressions, Calls, Assignments and Other R Objects'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=9
+pkgdesc="Programmatic Utilities for Manipulating Formulas, Expressions, Calls, Assignments and Other R Objects"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
-  r
   r-operator.tools
 )
 optdepends=(
@@ -19,14 +18,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4fe0e72d9d96f2398e86cbd8536d0c84de38e5583d4ff7dcd73f415ddd8ca395')
+md5sums=('ab6ac9a593b99ef94148b2c908abc07d')
+b2sums=('9ac3f837e38cb02d6716ca3a76e1fd2db733109f8024bf7c4f5cea31b9757e71516df61d31f53cdc926193aa2936325871753571d21e2e1a8c73cc1337053644')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
