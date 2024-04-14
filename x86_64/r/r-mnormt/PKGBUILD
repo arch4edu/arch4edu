@@ -6,12 +6,12 @@
 _pkgname=mnormt
 _pkgver=2.1.1
 pkgname=r-${_pkgname,,}
-pkgver=2.1.1
-pkgrel=5
-pkgdesc='The Multivariate Normal and t Distributions, and Their Truncated Versions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="The Multivariate Normal and t Distributions, and Their Truncated Versions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
@@ -19,14 +19,15 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('95fca70378af0afd5a388982ba5528f5b27e02157eeb9940a0a9762d11511308')
+md5sums=('ba4df780cf81a10c7ace080973342390')
+b2sums=('391f6934bab51398b4d14ef340ef50f98d22ea0d631ca2cd9d50218fe9eea06f800685c5eddc2fd496b43c1127f185afa0155690e4850cead57083c9514e34ec')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
