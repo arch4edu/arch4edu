@@ -3,26 +3,28 @@
 _pkgname=randtoolbox
 _pkgver=2.0.4
 pkgname=r-${_pkgname,,}
-pkgver=2.0.4
-pkgrel=1
-pkgdesc='Toolbox for Pseudo and Quasi Random Number Generation and Random Generator Tests'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('BSD')
+pkgver=${_pkgver//-/.}
+pkgrel=3
+pkgdesc="Toolbox for Pseudo and Quasi Random Number Generation and Random Generator Tests"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('BSD-3-Clause')
 depends=(
-  r
   r-rngwell
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('94da14953e4ffc7981d7a9398622082c4eda3bd9d912d1437b527d949da39e4b')
+md5sums=('a17ceb0e2e5062191249235e50e832f6')
+b2sums=('e2b0b762355e56c03c9312395651a8cb8616243596b16740cf3695e8f5c6bfc842abcf3097c9eba78ade616f6c829c8b631b8c3c484c43314f332bf0d8221cc7')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:
