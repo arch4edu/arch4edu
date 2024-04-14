@@ -3,30 +3,29 @@
 _pkgname=maxstat
 _pkgver=0.7-25
 pkgname=r-${_pkgname,,}
-pkgver=0.7.25
-pkgrel=4
-pkgdesc='Maximally Selected Rank Statistics'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=7
+pkgdesc="Maximally Selected Rank Statistics"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-exactranktests
   r-mvtnorm
 )
 optdepends=(
-  r-survival
   r-th.data
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6fc13b8d83797e10fc148183eb440a30584442fdf73628652c606ede790e9f84')
+md5sums=('35b234371e4321d98e7659d2f3a35546')
+b2sums=('b5e5e9dfd2ad959b3fc0acba1379ae27f004f6d7b2babcadec35cb730fcc278ba1ad032800c6f62e324ed1a478b8597334a96a730e905a513b5cb2c45227e4cb')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
