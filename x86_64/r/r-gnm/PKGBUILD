@@ -3,14 +3,14 @@
 _pkgname=gnm
 _pkgver=1.1-5
 pkgname=r-${_pkgname,,}
-pkgver=1.1.5
-pkgrel=3
-pkgdesc='Generalized Nonlinear Models'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="Generalized Nonlinear Models"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
-  r
+  blas
   r-qvcalc
   r-relimp
 )
@@ -20,14 +20,15 @@ optdepends=(
   r-vcdextra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('44d94ef3785cf8a070a1d816698e5ec726b506bbc6b73c18e661d6a64dfdf845')
+md5sums=('9f281639da06726027e78b0465563d0c')
+b2sums=('87e29781a9843e3f14f055279f8ace668328e95c068ddbe36b5a0fbba367cbd04383ebd83f441700ded0135a1c5cb32a5c42d4933cad563b34b65890a3e92166')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
