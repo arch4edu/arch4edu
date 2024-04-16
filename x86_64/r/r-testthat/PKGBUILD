@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=testthat
-_cranver=3.2.1
+_cranver=3.2.1.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -67,7 +67,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("83be91814b5b4606a0581fd30153cd7c0189abf7634396243f5a639fde023de65a0ba742da4259bbd5062585638203fa61a2a92b13a007db3c1349c1f3585730")
+b2sums=("c2fa93c7027ebcc56ab1f1d1322b151b46436c7f1533249843f4655053c5c0a413103b2a3e9752f6a973de5db2fd5208ae4e30d79799475483b119f82344fb45")
 
 build() {
     mkdir -p "${srcdir}/build/"
@@ -76,7 +76,7 @@ build() {
 
 # check() {
 #     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
+#     R CMD check --no-manual --ignore-vignettes "${_cranname}"
 # }
 
 package() {
