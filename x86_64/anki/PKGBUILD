@@ -9,9 +9,9 @@
 # anki -> git rev-parse --short=8 $pkgver
 # ftl -> git submodule
 declare -gA _tags=(
- [ftl_core]="c74c15b7f82c0f184910e5b6f695b635e6d81faf"
- [ftl_desktop]="06ad12df7a2c8400cf64e9c7b986e9ee722e5b38"
- [anki]="baf18ef6"
+ [ftl_core]="e3af3c983241448a239871ca573c9dd2fa5e8619"
+ [ftl_desktop]="45155310c3302cbbbe645dec52ca196894422463"
+ [anki]="832d7b16"
 )
 declare -gA _caches=(
     [yarn]="yarn-cache"
@@ -19,8 +19,8 @@ declare -gA _caches=(
 )
 
 pkgname=anki
-pkgver=24.04
-pkgrel=2
+pkgver=24.04.1
+pkgrel=1
 pkgdesc="Helps you remember facts (like words/phrases in a foreign language) efficiently"
 url="https://apps.ankiweb.net/"
 license=('AGPL3')
@@ -49,7 +49,6 @@ depends=(
     'qt6-multimedia'	# recording voice
     'python-pyqt6-webengine>=6.2'
     'qt6-svg'
-    'python-pip-system-certs'
 )
 makedepends=(
     'rsync'
@@ -72,18 +71,18 @@ changelog="$pkgname.changelog"
 source=("$pkgname-$pkgver.tar.gz::https://github.com/ankitects/anki/archive/refs/tags/${pkgver}.tar.gz"
         "anki-core-i18n-${_tags[ftl_core]}.tar.gz::https://github.com/ankitects/anki-core-i18n/archive/${_tags[ftl_core]}.tar.gz"
         "anki-desktop-ftl-${_tags[ftl_desktop]}.tar.gz::https://github.com/ankitects/anki-desktop-ftl/archive/${_tags[ftl_desktop]}.tar.gz"
-        "disable-git-checks.patch"
         "no-update.patch"
         "strip-formatter-deps.patch"
         "strip-type-checking-deps.patch"
+        "strip-python-pip-system-certs.patch"
 )
-sha256sums=('65cbaf6d3f5ad27cfba65de9a6d24af6782490acd10e7dfc9e2e49ab6ca26a96'
-            '6f09e99fdda2b9e2e32a9aff30441a7e66ee5cef56a9bf46e0d6c4731ec55ba2'
-            'bcec6d806f09c3f13eb05394f619059d87e99a862e10f85256e210afd021d15a'
-            '24302e7628c53dd25155fd2bb94947fa85b97e052fc5dc89fe272f4b3c6081ae'
+sha256sums=('7cebd7745830392f9b6ec62c2300f3c45c934969b47f25275ecee0ee53f9aa68'
+            '91dcc310b265a2d2b43d99a4af6b04790049b9f7fc927d4f68ba24db60c6025c'
+            '32dd2158dc12a3e672862723715e5e775794412b96b7755066be8c823defa6b8'
             'cc546f4e5af642af89f82be0375800c2721dd904c0a212cf46f6459495b75bff'
             '9858fefa254812980d252b29fc6f32bd19bb83ee7e5a96d72c707626ed5193a7'
             '198bc2ec14439e3ba41a03c4823f07df4b0c559c1dcbdaf678416ed12a720c2e'
+            '2506cf9d5b0c47a2c519ec4bb0ef87e7921dca8db5cae39b0dae265d01e253b3'
 )
 
 prepare() {
@@ -92,14 +91,13 @@ prepare() {
     patch -p1 < "$srcdir/no-update.patch"
     patch -p1 < "$srcdir/strip-formatter-deps.patch"
     patch -p1 < "$srcdir/strip-type-checking-deps.patch"
-    patch -p1 < "$srcdir/disable-git-checks.patch"
+    patch -p1 < "$srcdir/strip-python-pip-system-certs.patch"
     sed -i 's/opt-level = 1$/opt-level= 3/' Cargo.toml	# optimize more
     sed -i 's/channel = "[0-9\.]*"$/channel = "stable"/' rust-toolchain.toml # use most recent stable rust toolchain
     # Build process wants .git/HEAD to be present. Workaround to be able to use tarballs
-    # (together with disable-git-checks.patch)
-    mkdir -p .git
+    mkdir -p out .git
     touch .git/HEAD
-    sed -i "s/MY_REV/${_tags[anki]}/" build/runner/src/build.rs
+    echo "${_tags[anki]}" > out/buildhash	# manually write the buildhash into out/buildhash to avoid git dependency in build
 
     # place translations in build dir
     rm -r ftl/core-repo ftl/qt-repo
@@ -144,7 +142,7 @@ build() {
     # See https://gitlab.archlinux.org/archlinux/packaging/packages/pacman/-/issues/20 and https://github.com/briansmith/ring/issues/1444
     # export CFLAGS+=' -ffat-lto-objects'
     # ./ninja wheels -v
-    export OFFLINE_BUILD=1 # do not download anything, disables git update checks
+    export OFFLINE_BUILD=1 # do not download anything, disables git checks
     mold -run ./ninja wheels -v
 }
 

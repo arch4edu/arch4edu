@@ -1,3 +1,15 @@
+# 24.04.1-1
+ * Fix crashing on first sync.
+ * Image occlusion fixes, thanks to @krmanik and @abdnh.
+ * Fix dark mode not being detected on Intel Macs.
+ * Another attempt at fixing a rounding issue with optimal retention.
+ * Rename optimal retention and clarify wording, thanks to @AntoineQ1.
+ * Fix an error that can occur when using Linux distro packages, thanks to @escape0707.
+
+PKGBUILD:
+ * remove python-pip-system-certs and patch anki accordingly
+ * remove disable-git-checks.patch as it is no longer needed
+
 # 24.04-2
 PKGBUILD:
  * add forgotten update to disable git checks
