@@ -4,7 +4,7 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=lme4
-_pkgver=1.1-35.2
+_pkgver=1.1-35.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -41,8 +41,8 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7577eaf538481d62805b330e7e4c5e30')
-b2sums=('f6c700cc463150078031695b5d821df54116733d8f89d8661f8989be14e6615c4020b8d634816149063420775f3bba3188419d7063be9383200d9cf6c73774c2')
+md5sums=('766487e9f542f0d66c6b1d7570d076e2')
+b2sums=('36a472f89c027232ec1213bf0a2b5531e473080aeda1ed2d69937f5b378983eff08d1154dc72b9088121d631e1bac89b1d4ecb46de9529b21dd7b340d2594821')
 
 build() {
   mkdir build
