@@ -7,8 +7,8 @@
 # Maintainer: Daffa Haj Tsaqif <narutohaj00@gmail.com>
 
 pkgname=cloudflare-warp-bin
-pkgver=2024.2
-pkgrel=1
+pkgver=2024.4.133
+pkgrel=2
 pkgdesc="Cloudflare Warp Client"
 url="https://1.1.1.1"
 license=("unknown")
