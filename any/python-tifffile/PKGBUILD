@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2024.2.12
+pkgver=2024.4.18
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -18,7 +18,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('4920a3ec8e8e003e673d3c6531863c99eedd570d1b8b7e141c072ed78ff8030d')
+sha256sums=('5ffcd77b9d77c3aada1278631af5c8ac788438452fda2eb1b9b60d5553e95c82')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -48,19 +48,19 @@ check() {
         --deselect=tests/test_tifffile.py::test_write_5GB_fails \
         --deselect=tests/test_tifffile.py::test_write_6gb \
         --deselect=tests/test_tifffile.py::test_write_bigtiff \
-        --deselect=tests/test_tifffile.py::test_write_imagej_raw \
-        --deselect=tests/test_tifffile.py::test_issue_imagej_hyperstack_arg \
-        --deselect=tests/test_tifffile.py::test_issue_description_overwrite \
-        --deselect=tests/test_tifffile.py::test_issue_invalid_predictor \
-        --deselect=tests/test_tifffile.py::test_issue_trucated_tileoffsets || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+        --deselect=tests/test_tifffile.py::test_write_imagej_raw || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+#       --deselect=tests/test_tifffile.py::test_issue_imagej_hyperstack_arg \
+#       --deselect=tests/test_tifffile.py::test_issue_description_overwrite \
+#       --deselect=tests/test_tifffile.py::test_issue_invalid_predictor \
+#       --deselect=tests/test_tifffile.py::test_issue_trucated_tileoffsets #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package_python-tifffile() {
-    depends=('python-numpy>=1.26.3')
-    optdepends=('python-matplotlib>=3.8.2: required for plotting'
+    depends=('python-numpy>=1.26.4')
+    optdepends=('python-matplotlib>=3.8.3: required for plotting'
                 'python-imagecodecs>=2024.1.1: required for encoding or decoding LZW, JPEG, etc. compressed segments'
-                'python-lxml>=4.9.2: required only for validating and printing XML'
-                'python-zarr>=2.16.1: required for opening Zarr stores'
+                'python-lxml>=5.1.0: required only for validating and printing XML'
+                'python-zarr>=2.17.0: required for opening Zarr stores'
                 'python-fsspec>=2023.9.2: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
