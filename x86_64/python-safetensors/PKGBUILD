@@ -2,7 +2,7 @@
 # Contributor: Henry-ZHR <henry-zhr@qq.com>
 pkgname=python-safetensors
 pkgver=0.4.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Simple, safe way to store and distribute tensors'
 arch=('x86_64')
 url='https://github.com/huggingface/safetensors'
@@ -39,11 +39,13 @@ source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz
 sha512sums=('278469d7bc8a4285519cf8020891d0f0e107d8124ad2c24686ca8a19ef2f210c49d9483c502bd5aa5d73940a775ac3eb5e3b90f62825dd7845c351bbdc8c82c3')
 
 prepare() {
-  mkdir "safetensors-${pkgver}/.git"
+  mkdir -p "safetensors-${pkgver}/.git"
 }
 
 build() {
   cd "safetensors-${pkgver}/bindings/python"
+
+  export RUSTUP_TOOLCHAIN=stable
   python -m build --wheel --no-isolation
 }
 
