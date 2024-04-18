@@ -2,8 +2,8 @@
 # Co-Maintainer: Bert Peters <bert@bertptrs.nl>
 
 pkgname=python-plotly
-pkgver=5.20.0
-pkgrel=4
+pkgver=5.21.0
+pkgrel=1
 pkgdesc="An open-source, interactive graphing library"
 arch=('any')
 url="https://github.com/plotly/plotly.py"
@@ -46,7 +46,7 @@ source=(
      "${pkgname}::git+https://github.com/plotly/plotly.py#tag=v$pkgver"
      "js-build.patch"
 )
-sha256sums=('b0e4718894929e788aa5823d999f18246997dc256d94adc51e26b205c318ef50'
+sha256sums=('7fee32a41d1f1b9b3646f4d6b746882a3ec89766fa4e2f94d97646315514c50b'
             '347d8de2ed5c6529a0113086780ecdd0b21c0a167fa60a890ca18bbac0d99392')
 options=(!strip !debug) # strip and debug aren't useful for python files and take forever
 
