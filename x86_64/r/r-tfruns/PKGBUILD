@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=tfruns
-_pkgver=1.5.2
+_pkgver=1.5.3
 pkgname=r-${_pkgname,,}
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="Training Run Tools for 'TensorFlow'"
 arch=('any')
@@ -30,7 +30,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1cab3346df741623cfdd1b12ade6397d6f28bd1ac57144fc7ab63519460688c7')
+sha256sums=('be2efd773b59ce8f8df0ebf11eb3376dad335aed6d03dd04d2e48cec085f0c7c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
