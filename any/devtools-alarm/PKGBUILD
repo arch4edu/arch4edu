@@ -9,7 +9,7 @@
 pkgname=devtools-alarm
 _pkgname=devtools
 pkgver=20220621
-pkgrel=2
+pkgrel=3
 pkgdesc='Tools for Arch Linux ARM package maintainers'
 arch=('any')
 license=('GPL')
