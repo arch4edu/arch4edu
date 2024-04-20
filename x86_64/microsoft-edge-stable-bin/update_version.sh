@@ -10,13 +10,19 @@ git pull
 CHANNEL=$(awk -F '=' '/^_channel/{ print $2 }' PKGBUILD)
 PKG="microsoft-edge-${CHANNEL}"
 
+#Get filelists URL
+FILELISTS=$(curl -sSf "https://packages.microsoft.com/yumrepos/edge/repodata/repomd.xml" |
+    xmllint --xpath 'string(//*[local-name()="data"][@type="filelists"]/*[local-name()="location"]/@href)' -)
+
 # Get latest version
-VER=$(curl -sSf https://packages.microsoft.com/repos/edge/dists/stable/main/binary-amd64/Packages |
-    grep -A6 "Package: ${PKG}" |
-    awk '/Version/{print $2}' |
-    cut -d '-' -f1 |
-    sort -rV |
-    head -n1)
+VER=$(curl -sSf "https://packages.microsoft.com/yumrepos/edge/${FILELISTS}" |
+    gzip -dc |
+    xmllint --xpath 'string(//*[local-name()="package"][@name="microsoft-edge-stable"][last()]/*[local-name()="version"]/@ver)' -)
+
+# updpkgsums
+SUM256=$(curl -sSf "https://packages.microsoft.com/yumrepos/edge/${FILELISTS}" |
+    gzip -dc |
+    xmllint --xpath 'string(//*[local-name()="package"][@name="microsoft-edge-stable"][last()]/@pkgid)' -)
 
 # Insert latest version into PKGBUILD and update hashes
 sed -i \
@@ -28,13 +34,6 @@ if (git diff --exit-code PKGBUILD); then
     echo "Package ${PKG} has most recent version ${VER}"
     exit 0
 fi
-
-# updpkgsums
-SUM256=$(curl -sSf https://packages.microsoft.com/repos/edge/dists/stable/main/binary-amd64/Packages |
-    grep -A15 "Package: ${PKG}" |
-    grep -A14 "Version: ${VER}" |
-    awk '/SHA256/{print $2}' |
-    head -n1)
 
 # Insert latest shasum into PKGBUILD and update hashes
 sed -i \
@@ -63,4 +62,4 @@ makepkg --printsrcinfo >.SRCINFO
 # Commit changes
 git add PKGBUILD .SRCINFO
 git commit -s -m "Update ${PKG} to v${VER}"
-rm -rf *.deb *.log *.zst
+rm -rf *.deb *.rpm *.log *.zst
