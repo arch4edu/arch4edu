@@ -6,7 +6,7 @@ pkgbase=python-scikit-image
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
-pkgver=0.23.1
+pkgver=0.23.2
 pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
@@ -28,9 +28,8 @@ checkdepends=('python-pytest>=5.2.0'
               'python-pytest-cov>=2.11.0'
               'python-dask'
               'python-imread'
-              'python-matplotlib>=3.5'
-              'python-matplotlib>=3.5'
-              'python-numpydoc>=1.5'
+              'python-matplotlib>=3.6'
+              'python-numpydoc>=1.6'
 #             'python-pytest-flake8'
               'python-pytest-localserver'
               'python-pywavelets>=1.1.1'
@@ -55,7 +54,7 @@ optdepends=('python-matplotlib>=3.6'
 #           'python-qtpy'
 options=('!emptydirs')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('4ff756161821568ed56523f1c4ab9094962ba79e817a9a8e818d9f51d223d669')
+sha256sums=('c9da4b2c3117e3e30364a3d14496ee5c72b09eb1a4ab1292b302416faa360590')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
