@@ -12,12 +12,12 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.34.5
+pkgver=3.34.6
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
 url='https://qgis.org/'
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(ocl-icd proj geos gdal expat spatialindex qwt libzip sqlite3 protobuf
          zlib exiv2 postgresql-libs libspatialite zstd pdal
          qt5-base qt5-svg qt5-serialport qt5-location qt5-3d qt5-declarative qt5-multimedia
@@ -29,7 +29,7 @@ optdepends=('fcgi: Map server'
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
 source=(https://qgis.org/downloads/$_pkgname-$pkgver.tar.bz2)
-sha256sums=('d27f12423061718fa4e981051af334a07fb904c8a985911736e370d7f5722d35')
+sha256sums=('57395caa3042c009e1446232d6356dc2d789201ea03c7106cc798fb257f61eff')
 # curl -s https://download.qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
 
 build() {
