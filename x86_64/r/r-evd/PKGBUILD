@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=evd
-_pkgver=2.3-6.1
+_pkgver=2.3-7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=1
 pkgdesc="Functions for Extreme Value Distributions"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-interp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('01db8aaa75099d3afb844c0378ce49d0')
-b2sums=('384a900123ad6647c7a79d517c8c6ac2d805823c1bfc5c1a927ff46a310bbd0b9ac998605bf8d61427cd7523735c425d6f8eafa880078347b2e204bc2d88c200')
+md5sums=('8a5fe3fb5097036c69422cd0848ea841')
+b2sums=('6e762331d6bfa6b911a17ed58e9f44c05d6d92899720b9dbf3912b5c8b11266246bb4fcf9e2ea7fef91939f73bcc26ba5bbfea407bb583275fcf3b5b8d9547ff')
 
 build() {
   mkdir build
