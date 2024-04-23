@@ -7,7 +7,7 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=ggplot2
-_pkgver=3.5.0
+_pkgver=3.5.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -61,8 +61,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('81c1b4d3661e2b7d2420f1b01235ed60')
-b2sums=('44e1e46bd3327e953f77431a0a625b06ba7f0ac772f96104935a0978df5115661309e07a12d2439940d8ada429cd06a9d8f5ed6a9119fdd8fd7f83d04d7836de')
+md5sums=('f2add92370293ac6078f1963427d6ab2')
+b2sums=('6082e08ffed5d945d444890c5ef6084ed477a4e7db70c23a02ff0664571a7ca8d1c74c06c77a3aff5ff6913505ab5a6cf116f310ab78d7c3d63583c948587b78')
 
 build() {
   mkdir build
