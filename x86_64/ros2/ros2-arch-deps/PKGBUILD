@@ -4,7 +4,7 @@
 # Contributor: kartikmohta
 # Contributor: calvertdw
 pkgname=ros2-arch-deps
-pkgver=0.20
+pkgver=0.22
 pkgrel=1
 pkgdesc="[Meta-PKG] Dependencies for building ROS2 on Arch"
 url="https://docs.ros.org/"
@@ -33,11 +33,9 @@ depends=(
   'python-argcomplete'
   'python-build'
   'python-cryptography'
-  'python-empy'
   'python-installer'
   'python-lark-parser'
   'python-netifaces'
-  'python-nose'
   'python-notify2'
   'python-numpy'
   'python-pyqt5'
@@ -56,32 +54,10 @@ depends=(
   'vtk'
   'wget'
    # AUR
-  'python-catkin_pkg'
-  'python-colcon-argcomplete'
-  'python-colcon-bash'
+  'python-bloom'
   'python-colcon-cd'
-  'python-colcon-cmake'
-  'python-colcon-common-extensions'
-  'python-colcon-core'
-  'python-colcon-defaults'
-  'python-colcon-devtools'
-  'python-colcon-library-path'
-  'python-colcon-metadata'
-  'python-colcon-notification'
-  'python-colcon-output'
-  'python-colcon-package-information'
-  'python-colcon-package-selection'
-  'python-colcon-parallel-executor'
-  'python-colcon-pkg-config'
-  'python-colcon-powershell'
-  'python-colcon-python-setup-py'
-  'python-colcon-recursive-crawl'
-  'python-colcon-ros'
-  'python-colcon-test-result'
-  'python-colcon-zsh'
-  'python-rosdep'
-  'python-rosdistro'
-  'python-rospkg'
+  'python-colcon-common-extensions'   # metapackage that covers most colcon deps
+  'python-rosinstall-generator'
   'python-vcstool'
 )
 
