@@ -1,37 +1,15 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
-  - x86_64/ros2/python-catkin_pkg
-  - x86_64/ros2/python-colcon-argcomplete
-  - x86_64/ros2/python-colcon-bash
+  - x86_64/ros2/pyside2: pyside2-tools
+  - x86_64/ros2/pyside2: shiboken2
+  - x86_64/ros2/python-bloom
   - x86_64/ros2/python-colcon-cd
-  - x86_64/ros2/python-colcon-cmake
   - x86_64/ros2/python-colcon-common-extensions
-  - x86_64/ros2/python-colcon-core
-  - x86_64/ros2/python-colcon-defaults
-  - x86_64/ros2/python-colcon-devtools
-  - x86_64/ros2/python-colcon-library-path
-  - x86_64/ros2/python-colcon-metadata
-  - x86_64/ros2/python-colcon-notification
-  - x86_64/ros2/python-colcon-output
-  - x86_64/ros2/python-colcon-package-information
-  - x86_64/ros2/python-colcon-package-selection
-  - x86_64/ros2/python-colcon-parallel-executor
-  - x86_64/ros2/python-colcon-pkg-config
-  - x86_64/ros2/python-colcon-powershell
-  - x86_64/ros2/python-colcon-python-setup-py
-  - x86_64/ros2/python-colcon-recursive-crawl
-  - x86_64/ros2/python-colcon-ros
-  - x86_64/ros2/python-colcon-test-result
-  - x86_64/ros2/python-colcon-zsh
-  - x86_64/ros2/python-pyqt5-sip4
-  - x86_64/ros2/python-rosdep
-  - x86_64/ros2/python-rosdistro
-  - x86_64/ros2/python-rospkg
+  - x86_64/ros2/python-rosinstall_generator
   - x86_64/ros2/python-vcstool
-  - x86_64/sip4
-  - x86_64/sip4: python-sip4
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
