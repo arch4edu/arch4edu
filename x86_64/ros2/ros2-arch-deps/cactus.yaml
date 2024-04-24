@@ -3,7 +3,9 @@ nvchecker:
     aur:
   - alias: python
 depends:
+  - x86_64/ros2/pyside2: pyside2
   - x86_64/ros2/pyside2: pyside2-tools
+  - x86_64/ros2/pyside2: python-shiboken2
   - x86_64/ros2/pyside2: shiboken2
   - x86_64/ros2/python-bloom
   - x86_64/ros2/python-colcon-cd
