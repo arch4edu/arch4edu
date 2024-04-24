@@ -2,8 +2,8 @@
 
 pkgname=python-apex-git
 _pkgname=apex
-pkgver=22.03.r234.gb496d85f
-pkgrel=2
+pkgver=22.03.r237.gb5df1ccf
+pkgrel=1
 pkgdesc="A PyTorch Extension: Tools for easy mixed precision and distributed training in Pytorch"
 arch=('x86_64')
 url="https://github.com/NVIDIA/apex"
@@ -13,12 +13,18 @@ depends=('python' 'cuda' 'python-pytorch-cuda' 'python-sympy')
 makedepends=('git' 'numactl' 'python-setuptools' 'python-pip')
 provides=('python-apex')
 conflicts=('python-apex')
-source=("git+$url")
-sha256sums=('SKIP')
+source=("git+$url" "https://patch-diff.githubusercontent.com/raw/NVIDIA/apex/pull/1791.diff")
+sha256sums=('SKIP'
+            '5e9eac8d5eb578b834a268bdf42b85c937fcad3fe895a26e5813ec134c3cb152')
 
 pkgver () {
   cd "${_pkgname}"
   git describe --tags | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
+}
+
+prepare() {
+  cd "$srcdir/${_pkgname}"
+  patch -p1 -N -i "$srcdir/1791.diff"
 }
 
 build() {
