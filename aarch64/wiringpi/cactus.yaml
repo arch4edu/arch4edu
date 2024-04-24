@@ -4,7 +4,7 @@ nvchecker:
     path: core/archlinuxarm-keyring
   - source: github
     github: WiringPi/WiringPi
-build_prefix: extra-x86_64
+build_prefix: extra-aarch64
 pre_build: |
   git-rm-all
   download-github-files archlinuxarm/PKGBUILDs alarm/wiringpi
