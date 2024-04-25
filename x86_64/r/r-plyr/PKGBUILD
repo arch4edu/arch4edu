@@ -9,11 +9,11 @@ _pkgname=plyr
 _pkgver=1.8.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Tools for Splitting, Applying and Combining Data"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-rcpp
 )
@@ -32,11 +32,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('5a8b129534abace172059ecc5c0b5072')
-sha256sums=('15b5e7f711d53bf41b8687923983b8ef424563aa2f74c5195feb5b1df1aee103')
+b2sums=('b91e0d24366b3948a4574e71ea4e66b495f9e387ab67c78ff58146b76c184bcfc9b598f4f25cc587962069dc0a2989937a98de9d81945a3591dc32dd6c102f8b')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
