@@ -5,11 +5,11 @@ _pkgname=modeltools
 _pkgver=0.2-23
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=12
+pkgrel=13
 pkgdesc="Tools and Classes for Statistical Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL2)
+license=('GPL-2.0-only')
 depends=(
   r
 )
