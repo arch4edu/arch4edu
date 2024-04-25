@@ -4,11 +4,11 @@ _pkgname=fastICA
 _pkgver=1.2-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="FastICA Algorithms to Perform ICA and Projection Pursuit"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   blas
   lapack
