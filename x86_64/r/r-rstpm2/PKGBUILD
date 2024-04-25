@@ -4,11 +4,11 @@ _pkgname=rstpm2
 _pkgver=1.6.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Smooth Survival Models, Including Generalized Survival Models"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   blas
   lapack
@@ -39,11 +39,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('2fb292e291b311986d90f7783f4e1ea2')
-sha256sums=('5e6079a876a43473768ee54e4b34081ea3b5e1f466f9f76e8cfc2bb461b2031f')
+b2sums=('50cd108d8b899f487528c8cfbcb3941902ba17b0220f5aebe38a5ff49629b193dc44a06659918df31efe0fd15a39512d04bc832226870e4e8374a4f22c2d441d')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
