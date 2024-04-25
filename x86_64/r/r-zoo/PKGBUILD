@@ -9,11 +9,11 @@ _pkgname=zoo
 _pkgver=1.8-12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="S3 Infrastructure for Regular and Irregular Time Series (Z's Ordered Observations)"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
@@ -34,11 +34,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('9bf826a22610f5a3f8ebd063404e7183')
-sha256sums=('e6c3862668f9e3422bced3b6fba485c76a1e91b48f5d6153822d6a61863b2fb8')
+b2sums=('ba341e8084edee64d357c6cf6fe774ba7276c14cedc37ff41086ca8245d33991f6b5b238145755eabfc1666cde5ac93b7307c1c429feed90295bbe467a213d29')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
