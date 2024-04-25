@@ -6,11 +6,11 @@ _pkgname=fastmap
 _pkgver=1.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=6
 pkgdesc="Fast Data Structures"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -27,8 +27,8 @@ source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-hopscotch-map.patch")
 md5sums=('57a70be74ce88c5dc7e97c5547526f9f'
          'bb23578b236de5d3de6a2fd2505814ba')
-sha256sums=('3623809dd016ae8abd235200ba7834effc4b916915a059deb76044137c5c7173'
-            'a189963fc1d1c913df21bc02d0ba17678965d628775c03d39c2ffb6d4624680d')
+b2sums=('764fff53679057bddeccbf64e964479d884f870d726b315694b2a6525e3c5a98ff74c60535be79a847bcee01eb730d18878a7a06a93a53d599794fb5b6fb3703'
+        'c8b327935db8add02be58fba70f99fc71b83322b293c9284897cbf34a5f31cb3151e3268f99088380528cbd53fd35b3d873bc8707ff3dac36ef382412722b82e')
 
 prepare() {
   # Use system hopscotch_map
@@ -36,8 +36,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
