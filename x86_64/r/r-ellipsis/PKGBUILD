@@ -7,11 +7,11 @@ _pkgname=ellipsis
 _pkgver=0.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="Tools for Working with ..."
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-rlang
 )
@@ -24,11 +24,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('c453b4514da3717af5d5b97f0e3d2415')
-sha256sums=('a90266e5eb59c7f419774d5c6d6bd5e09701a26c9218c5933c9bce6765aa1558')
+b2sums=('4dc77787aa019c720e96a6136a75b68a8ba94fd571cc2080c71188020f5c323712b23609c0cf22aba4eb2fcf75dd5d702c4c4ccfd442f15df6da8d9d7748260a')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
