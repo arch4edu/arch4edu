@@ -4,11 +4,11 @@ _pkgname=clock
 _pkgver=0.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=4
 pkgdesc="Date-Time Types and Tools"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-lifecycle
@@ -35,11 +35,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('d28202660aa1adbc17c996def84ad6d8')
-sha256sums=('54e57a3b3f8c308d67536e2a75d48f3493cf7fe821bfa4da9159b4fb2ceca874')
+b2sums=('ab976631c8a6210d82b8532695292e9939852a48945bbf07711d5eb84cebda062ec317895d8a98be9dfaeac6010c0d7a78833d3a81da035c6fb201245ba3dd20')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
