@@ -5,12 +5,12 @@
 _pkgname=isoband
 _pkgver=0.2.7
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="Generate Isolines and Isobands from Regularly Spaced Elevation Grids"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -30,11 +30,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('7241f95bafb46b44aa380b9a71b10467')
-sha256sums=('7693223343b45b86de2b5b638ff148f0dafa6d7b1237e822c5272902f79cdf61')
+b2sums=('ba44409e12e7bed6349842e87cc3fbd71348e009e6db112dcb203cbb2834cc8e800b49c2e97ee948412deee220e9cbac7fe13f754ddff20ca2f3ff4403e20ba6')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
