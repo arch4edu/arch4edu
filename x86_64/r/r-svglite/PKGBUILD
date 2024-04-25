@@ -5,11 +5,11 @@ _pkgname=svglite
 _pkgver=2.1.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="An 'SVG' Graphics Device"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   libpng
   r-systemfonts
@@ -34,11 +34,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('46154cf187ad6ec377269b6307de16f4')
-sha256sums=('f0a8564e6f9127f4d1e05cf5a5f36b4e244aee0008e27473e504c63873ef0a54')
+b2sums=('6a2a1dc2a4e08bc7e93a7ddc9ce9a8e0451974bb186ab88351603a6cd5d69cb5a8f71c0087be288e935fd2d3cf7515f67a9bea4f2c545132f1c7a2249a5af8c9')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
