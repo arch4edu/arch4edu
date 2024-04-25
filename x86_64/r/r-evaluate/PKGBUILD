@@ -9,11 +9,11 @@ _pkgname=evaluate
 _pkgver=0.23
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Parsing and Evaluation Tools that Provide More Details than the Default"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -26,11 +26,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('f95f31851168165421c128109668a213')
-sha256sums=('c9cf9c37502b8fbfa78e4eb96b8c3d1789060e49505c86c07cb7476da804a45c')
+b2sums=('c84b36bbc37f8fa0799d2e68eb55b393d520121c00960a80e4e77b7ff805dc96c33e003e8e0531287e3f821a35e0424685b31510825caa6807878b57e7333e38')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
