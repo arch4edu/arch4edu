@@ -4,11 +4,11 @@ _pkgname=fitdistrplus
 _pkgver=1.1-11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Help to Fit of a Parametric Distribution to Non-Censored or Censored Data"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
