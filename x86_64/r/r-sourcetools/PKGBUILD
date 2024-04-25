@@ -6,11 +6,11 @@ _pkgname=sourcetools
 _pkgver=0.1.7-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Tools for Reading, Tokenizing and Parsing R Code"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -22,7 +22,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('dd4a9af00de6e874802f6e6622b774fb')
-sha256sums=('96812bdb7a0dd99690d84e4b0a3def91389e4290f53f01919ef28a50554e31d1')
+b2sums=('c74d603d6878aae3915cb90a28f08e8930bf64c72b46d0d139489aea561f40cd09cb56fe40bec31a147856cde6e54f49d493dc436448e14b544b6dc92b40b7c2')
 
 prepare() {
   # skip a test that expects certain files in home directory
@@ -31,8 +31,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
