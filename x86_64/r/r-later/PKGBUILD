@@ -6,11 +6,11 @@ _pkgname=later
 _pkgver=1.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Utilities for Scheduling Functions to Execute Later with Event Loops"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-rcpp
   r-rlang
@@ -25,7 +25,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('d051b4ebe4f306287003877aae5ab95c')
-sha256sums=('52f5073d33cd0d3c12e56526c9c53c323ebafcc79b22cc6e51fb0c41ee2b561e')
+b2sums=('f30329988dce72d5c53a1bfe97ad97fd437e49387aa0f04ce74137368a660b0d10cc1f0fab7a6928d1faaa06622be89b21a465090601347171ba2180f5dd339e')
 
 prepare() {
   # skip failing tests
@@ -37,8 +37,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
