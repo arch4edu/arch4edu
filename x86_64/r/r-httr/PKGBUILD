@@ -10,11 +10,11 @@ _pkgname=httr
 _pkgver=1.4.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Tools for Working with URLs and HTTP"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-curl
   r-jsonlite
@@ -39,11 +39,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('8965ffef86aea39922f435c019daf9fb')
-sha256sums=('1555e6c2fb67bd38ff11b479f74aa287b2d93f4add487aec53b836ff07de3a3a')
+b2sums=('85b4e8ebb549d09d4637b1cd339d070879e44d0e6e6f5743129806b7be430dc13deea36af9c1c716b591ea93b4e6953de4bf0caa9b5ee3d0253c17282ae0c538')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
