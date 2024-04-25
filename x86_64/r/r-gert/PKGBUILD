@@ -7,11 +7,11 @@ _pkgname=gert
 _pkgver=2.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Simple Git Client for R"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   libgit2
   r-askpass
@@ -29,11 +29,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('2efae501b706f98b74f97f9a8a5b7d38')
-sha256sums=('0ed784837809ce89797ea77834d420e89351728f70d8d2f4b34487df813cd092')
+b2sums=('ca84a48f65254583c8ba89536784ea330031f6c3c9bd4372b3cecc86388f6b8fd879a45d952869500a7ba486ef9db850161a207c5e98772646ca203098627748')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
