@@ -6,11 +6,11 @@ _pkgname=progressr
 _pkgver=0.14.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="An Inclusive, Unifying API for Progress Updates"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r-digest
 )
@@ -35,11 +35,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('553ed3dd68689ea70694f2672fa3766a')
-sha256sums=('9a2899f879a5577f043be99c18d52bfe4d655cc52a96cae834e8a301b36258af')
+b2sums=('904cac728a9ba594eb1cfda98b1cb498addc87dffdad5baf3aa64ba44e25ccbf4117b442f1d304b5753c3f3aefc1b2671aa89687542432279948f2f890c9a8cc')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
