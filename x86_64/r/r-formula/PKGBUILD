@@ -5,11 +5,11 @@ _pkgname=Formula
 _pkgver=1.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Extended Model Formulas"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
