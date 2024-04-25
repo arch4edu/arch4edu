@@ -6,11 +6,11 @@ _pkgname=numDeriv
 _pkgver=2016.8-1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=14
 pkgdesc="Accurate Numerical Derivatives"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL2)
+license=('GPL-2.0-only')
 depends=(
   r
 )
