@@ -4,11 +4,11 @@ _pkgname=nnls
 _pkgver=1.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="The Lawson-Hanson Algorithm for Non-Negative Least Squares (NNLS)"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
