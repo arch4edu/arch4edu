@@ -7,11 +7,11 @@ _pkgname=plogr
 _pkgver=0.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="The 'plog' C++ Logging Library"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -20,11 +20,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('655c301276dac0098568248e47602851')
-sha256sums=('0e63ba2e1f624005fe25c67cdd403636a912e063d682eca07f2f1d65e9870d29')
+b2sums=('6531caabddb63f3a85ca9f29ae8352dcbab3e84d5c9c9f52c2d6a321aafc04666461c57e0a9ff43d0c6f1a8cb084f7e46f1e4845828075b24fc7f01de7008797')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
