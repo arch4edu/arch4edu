@@ -7,11 +7,11 @@ _pkgname=lifecycle
 _pkgver=1.0.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Manage the Life Cycle of your Package Functions"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cli
   r-glue
@@ -31,11 +31,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('4490cb8f9777f1ff4bae184d51d24405')
-sha256sums=('ada4d3c7e84b0c93105e888647c5754219a8334f6e1f82d5afaf83d4855b91cc')
+b2sums=('48eb74135c79eb06914d6451458a60c1890de97fde88a16c01bcf8c9367432f4c116d887b4d6f25675c1874770286cba1b65de928ba129966a991f3ccf6d4d84')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
