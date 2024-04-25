@@ -7,12 +7,12 @@
 _pkgname=tibble
 _pkgver=3.2.1
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=5
+pkgver=${_pkgver//-/.}
+pkgrel=6
 pkgdesc="Simple Data Frames"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-fansi
   r-lifecycle
@@ -54,11 +54,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('e4ccfbe28c84b11f86388379c8b43925')
-sha256sums=('65a72d0c557fd6e7c510d150c935ed6ced5db7d05fc20236b370f11428372131')
+b2sums=('7368a112ee6729736610a44acdbdc651fb786635d7126c88fe0aa1ccac669feba014fce2b1de15e63faf6f34651885855bd659138a339661660012c8b3ef443c')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
