@@ -1,10 +1,11 @@
-# Maintainer: Chih-Hsuan Yen <yan12125@gmail.com>
+# Maintainer: Miguel Revilla Rodríguez <yo at miguelrevilla dot com>
+# Contributor: Chih-Hsuan Yen <yan12125@gmail.com>
 # Contributor: Alexander F Rødseth <xyproto@archlinux.org>
 # Contributor: Daniel Micay <danielmicay@gmail.com>
 # Contributor: frownlee <florez.brownlee@gmail.com>
 
 pkgname=android-ndk
-pkgver=r26.c
+pkgver=r26.d
 pkgrel=1
 pkgdesc='Android C/C++ developer kit'
 arch=('x86_64')
@@ -30,9 +31,9 @@ source=("$pkgname.sh")
 source_x86_64=("https://dl.google.com/android/repository/$pkgname-${pkgver/./}-linux.zip")
 # SHA1 sums is kept to follow upstream releases https://github.com/android-ndk/ndk/issues/673
 sha1sums=('38c46b7b1a1c54a0845d027a8eaf37ed0447d3b2')
-sha1sums_x86_64=('7faebe2ebd3590518f326c82992603170f07c96e')
+sha1sums_x86_64=('fcdad75a765a46a9cf6560353f480db251d14765')
 sha256sums=('2050ff500443f6cfa4567c02248cb3ec6ccbc67ce81b32d8dda79383c5103db2')
-sha256sums_x86_64=('6d6e659834d28bb24ba7ae66148ad05115ebbad7dabed1af9b3265674774fcf6')
+sha256sums_x86_64=('eefeafe7ccf177de7cc57158da585e7af119bb7504a63604ad719e4b2a328b54')
 
 package() {
   install -Ddm755 "$pkgdir/opt"
