@@ -4,11 +4,11 @@ _pkgname=rjson
 _pkgver=0.2.21
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="JSON for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL2)
+license=('GPL-2.0-only')
 depends=(
   r
 )
