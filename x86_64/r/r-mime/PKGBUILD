@@ -8,21 +8,21 @@ _pkgname=mime
 _pkgver=0.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=14
 pkgdesc="Map Filenames to MIME Types"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('7314f3b57f70474d9b4d2b831d6bb59d')
-sha256sums=('a9001051d6c1e556e881910b1816b42872a1ee41ab76d0040ce66a27135e3849')
+b2sums=('62f88bc0f414216f062d93541f20ef650756a51ec88e27a29ecf1e4418182a5bedf855cbfd77dc63497f15a0e2a64c8b07d81eb91c4ef2f74e74a2c54ca4926f')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
