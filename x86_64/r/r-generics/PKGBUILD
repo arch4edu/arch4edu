@@ -7,11 +7,11 @@ _pkgname=generics
 _pkgver=0.1.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Common S3 Generics not Provided by Base R Methods Related to Model Fitting"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -27,11 +27,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('655261e97ea23c9193b047a27eee5d0e')
-sha256sums=('75046163bfa8b8a4f4214c1b689e796207f6447182f2e5062cf570302387d053')
+b2sums=('100745ecd8f979975e45852ffb41befc0ae8a34156d333b3e723743e2ecc93e882d31bae5f8dde192d21452edae119f4ed4f18eb9379203c67679b739450a374')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
