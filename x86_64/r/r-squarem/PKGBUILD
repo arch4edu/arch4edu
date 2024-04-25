@@ -6,11 +6,11 @@ _pkgname=SQUAREM
 _pkgver=2021.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=12
+pkgrel=13
 pkgdesc="Squared Extrapolation Methods for Accelerating EM-Like Monotone Algorithms"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
