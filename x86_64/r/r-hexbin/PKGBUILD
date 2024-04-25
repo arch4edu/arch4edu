@@ -4,12 +4,12 @@
 _pkgname=hexbin
 _pkgver=1.28.3
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="Hexagonal Binning Routines"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL2)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
@@ -25,11 +25,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('d0035d06e66b9229586590b03d258288')
-sha256sums=('0eb33511c1a4ff29dda8b89fee420ea7041033f981c7f16484c9f504d749de5f')
+b2sums=('a0c72648bf35e32407dd5d09bb2a43d274e4984a0bfa10145829fd56b20e224ff56787e9712b1c727d6dd17fb6cabcb212b1dce633656983c0eb1222b16e4006')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
