@@ -4,11 +4,11 @@ _pkgname=websocket
 _pkgver=1.4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=6
 pkgdesc="'WebSocket' Client Library"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL2)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   openssl
   r-later
@@ -27,7 +27,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('4e9a99ca5f1d29209393c3569b1efaa4')
-sha256sums=('281fa0e5d8739ef90626117c8d5ca9e30c7aeb642346d16706cbca34a46749cf')
+b2sums=('106e13668eb329774e1829aa11a60fe4b7e405a41c5be99cbee3fea0e29d65e13c4dab3b7e1b42641aa25e0994d3ae0b26e7860a7da7d2779a7297f9caf626c5')
 
 prepare() {
   cd "$_pkgname/src"
@@ -37,8 +37,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
