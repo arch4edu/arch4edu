@@ -6,12 +6,12 @@
 _pkgname=gower
 _pkgver=1.0.1
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="Gower's Distance"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -23,11 +23,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('e83037d172ecc81bf45b69dbd902d216')
-sha256sums=('296a9d8e5efa8c3a8cc6b92cf38880915753afdef30281629af9dc8eae8315fc')
+b2sums=('e2d82eda30b05b838fcea9d02f0ddea53ca89e81e6afac785342e6998ed5144e845fdfe523d050d75762718e304ea6bc8a794b7cc9fb03de55704d6506e55454')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
