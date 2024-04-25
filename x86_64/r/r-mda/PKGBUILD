@@ -4,11 +4,11 @@ _pkgname=mda
 _pkgver=0.5-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Mixture and Flexible Discriminant Analysis"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL2)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
@@ -24,11 +24,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('d05782cc524a7c680211bfacdc799ad7')
-sha256sums=('f25f7f28807d0fa478b1b55eb9d026ebc30577d9d5ff288f9abfe1f3fdb8a759')
+b2sums=('2ded407127166310c6314a726c922cc95a9bbe5ae3d8eef2492f8485c2eef60da502125ff5893fef7aebeda448bf749ff177349586012e17a5ab75c7ed15e4ba')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
