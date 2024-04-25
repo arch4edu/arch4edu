@@ -4,11 +4,11 @@ _pkgname=dagitty
 _pkgver=0.3-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Graphical Analysis of Structural Causal Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL2)
+license=('GPL-2.0-only')
 depends=(
   r-jsonlite
   r-v8
