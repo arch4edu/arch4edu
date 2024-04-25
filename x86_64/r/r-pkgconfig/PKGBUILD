@@ -7,11 +7,11 @@ _pkgname=pkgconfig
 _pkgver=2.0.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=14
 pkgdesc="Private Configuration for 'R' Packages"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -22,11 +22,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('7b9ca1d45d941238381cb55d13ff4d68')
-sha256sums=('330fef440ffeb842a7dcfffc8303743f1feae83e8d6131078b5a44ff11bc3850')
+b2sums=('0f779734326569e95b80d376d97b51d10114b2e8b8804a4c1e54ea67830708b295fc783aaf271028df33b13c45b3788f522e7831755626e37cf94ecc99bd7b58')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
