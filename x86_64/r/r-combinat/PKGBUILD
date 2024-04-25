@@ -4,11 +4,11 @@ _pkgname=combinat
 _pkgver=0.0-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=10
 pkgdesc="combinatorics utilities"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL2)
+license=('GPL-2.0-only')
 depends=(
   r
 )
