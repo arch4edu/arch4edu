@@ -5,11 +5,11 @@ _pkgname=statmod
 _pkgver=1.5.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Statistical Modeling"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
