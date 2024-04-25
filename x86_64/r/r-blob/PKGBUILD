@@ -5,12 +5,12 @@
 _pkgname=blob
 _pkgver=1.2.4
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="A Simple S3 Class for Representing Vectors of Binary Data ('BLOBS')"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-rlang
   r-vctrs
@@ -26,11 +26,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('3133f827ee7c1e4ca99c16659984627e')
-sha256sums=('d08922ebc4147d930fe4762b1b289935217308c6d3fcaa5ae028ce3f5cf2728f')
+b2sums=('2898e3dcc5f9e46f17a1e66f75399580165f8b07a400722808a1da4687fef4a44645cb9f3c11b0f2f2331e99c580651bdc23da0a116b4aa7f40c30c09bfa4fd1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
