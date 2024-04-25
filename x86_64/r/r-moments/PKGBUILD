@@ -4,11 +4,11 @@ _pkgname=moments
 _pkgver=0.14.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Moments, Cumulants, Skewness, Kurtosis and Related Tests"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
