@@ -8,12 +8,12 @@
 _pkgname=memoise
 _pkgver=2.0.1
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=8
+pkgver=${_pkgver//-/.}
+pkgrel=9
 pkgdesc="'Memoisation' of Functions"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-cachem
   r-rlang
@@ -32,7 +32,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('89da4ce771967d851db47132b762ce6f')
-sha256sums=('f85034ee98c8ca07fb3cd826142c1cd1e1e5747075a94c75a45783bbc4fe2deb')
+b2sums=('0bf5e7e14a9835358367c49053289dbe929197e3c9e93cdf8dc11a73e034783269c7b392189c31f800790ed4eba2caa54fba3ec2885a6f64b669b3b970afff44')
 
 prepare() {
   # skip tests that require AWS or GCS
@@ -41,8 +41,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
