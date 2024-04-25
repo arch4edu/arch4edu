@@ -5,10 +5,10 @@ _pkgname=palmerpenguins
 _pkgver=0.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Palmer Archipelago (Antarctica) Penguin Data"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
+url="https://cran.r-project.org/package=$_pkgname"
 license=('CC0-1.0')
 depends=(
   r
@@ -24,11 +24,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('dff628ed0c5f7b8e265127221491934e')
-sha256sums=('2a40d48ba6c7978fdf2a6daf647ccb39cd17590680138931d11194d3dd1a30b4')
+b2sums=('55db3d0bd451dace7d71328e55a8477ca0ecd40067d92b13fb1d9f6d3957cd3cc75118191acc12bb2d707099d45642eec8918a5e098a72ba8c5aeca635b43267')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
