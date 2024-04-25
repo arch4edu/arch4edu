@@ -7,11 +7,11 @@ _pkgname=brio
 _pkgver=1.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Basic R Input Output"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -21,11 +21,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('e18151323dcddd193fac454f70f138f1')
-sha256sums=('0cbbf38948682b2435eea69b04be59187b149183dc7562df71dc0d3e260e18e8')
+b2sums=('24bda987df92575dddc0f127a60ef596f80104ceec4c1e777af129a742702b96027c5d1cfb68fd168279c7a6ec71e3e8221b53df00625b38dcf27bae136f3e1d')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
