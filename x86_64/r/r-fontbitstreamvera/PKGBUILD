@@ -4,22 +4,22 @@ _pkgname=fontBitstreamVera
 _pkgver=0.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Fonts with 'Bitstream Vera Fonts' License"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(custom)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('Bitstream-Vera')
 depends=(
   r
   ttf-bitstream-vera
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('c32821c06d909336ace68f2df3d8710e')
-sha256sums=('3298b3dd95605bdda0c5fce5594c9bedde6aa63d89b216d5c83c6c092b6d375a')
+b2sums=('a9a5a0d8db6547a317789150d3e073f604d13c38cf583e14d20ab61659f6dd185b873acf809095245deef10d8dc909b39998eb3755506aebb3b3a5117cf50790')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
