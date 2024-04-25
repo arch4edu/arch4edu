@@ -4,11 +4,11 @@ _pkgname=quadprog
 _pkgver=1.5-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Functions to Solve Quadratic Programming Problems"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   blas
   r
