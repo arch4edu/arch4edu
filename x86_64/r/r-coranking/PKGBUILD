@@ -4,11 +4,11 @@ _pkgname=coRanking
 _pkgver=0.2.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Co-Ranking Matrix"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -24,11 +24,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('73f07ed26db31ef7d0e67f4174de1b66')
-sha256sums=('8b8a361f25ebf3c4bced4ca9233b723b1104fad06c9bca914124b7830b002bb0')
+b2sums=('685c912ef4e86aeddd34e140be3c2fcf451797df906158aaebfedd3e5c653e14cd3f85787ac2ce087b16acb6edac4b73a69e1df41c7b7ed9352a931bed097d50')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
