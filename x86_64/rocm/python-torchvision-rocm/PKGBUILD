@@ -11,11 +11,11 @@
 # Contributor: Stephen Zhang <zsrkmyn at gmail dot com>
 
 _pkgname='vision'
-# if not set, populate build architecture list from arch:python-pytorch@2.2.0-1
+# if not set, populate build architecture list from arch:python-pytorch@2.2.2-3
 _PYTORCH_ROCM_ARCH="gfx906;gfx908;gfx90a;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102"
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.17.1
+pkgver=0.17.2
 pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
@@ -41,10 +41,6 @@ makedepends=(
   qt6-base
   miopen-hip
 )
-conflicts=(
-  'python-pytorch<2.2.0'
-  'rocm-hip-sdk<6.0.0'
-)
 source=(
   "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
   "pytorch-vision-8096.patch"
@@ -52,7 +48,7 @@ source=(
   "torchvision-0_17_1-fix-build.patch"
 )
 sha256sums=(
-  'a01c7bce4098c41b62cd3a08d87569113e25d12994b1370f0fd5f531952b6cef'
+  '0f9304acd77aafb7cfaf3fd5e318b2986ecc73547394b971d710eacd59f3e78e'
   'SKIP'
   'SKIP'
   'SKIP'
