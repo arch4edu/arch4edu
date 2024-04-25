@@ -4,11 +4,11 @@ _pkgname=randomForest
 _pkgver=4.7-1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=10
 pkgdesc="Breiman and Cutler's Random Forests for Classification and Regression"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
