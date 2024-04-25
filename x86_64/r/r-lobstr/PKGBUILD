@@ -5,11 +5,11 @@ _pkgname=lobstr
 _pkgver=1.1.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=11
 pkgdesc="Visualize R Data Structures with Trees"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-crayon
   r-prettyunits
@@ -29,7 +29,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('742ca7fe19f22d6d8246e6d5696b70f5')
-sha256sums=('9bc533ed7e8f816097a03acfbca33308c9940ba26d02674f4ba06311cf3a1718')
+b2sums=('6856da7ced123e19962979d0ca516261ab1ac8abc2c76e491fb8e9767d1146adc76a9ee7bbf7dd7991974f7705f01f7e619763a95ae3aa3e6d347ba3eb0d447f')
 
 prepare() {
   # Fix test
@@ -38,8 +38,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
