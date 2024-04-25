@@ -8,11 +8,11 @@ _pkgname=markdown
 _pkgver=1.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Render Markdown with 'commonmark'"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-commonmark
   r-xfun
@@ -25,11 +25,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('cb7221fdb4efa85cdcd15fc871c69889')
-sha256sums=('7ddce3e8f08ce2e5feaa9fab30b50671ea200a8cfe2be230a98601d940124ba0')
+b2sums=('4b44cffa99206484280c996e833c9144dda0cdb94bd61f5dbad0372b1ebcb14a8f3f5ea987e27f56cccbf849f45ff431d4b9d76a5f67dbe3f4a41b00654aa83d')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
