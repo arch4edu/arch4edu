@@ -8,21 +8,21 @@ _pkgname=base64enc
 _pkgver=0.1-3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="Tools for base64 encoding"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('0f476dacdd11a3e0ad56d13f5bc2f190')
-sha256sums=('6d856d8a364bcdc499a0bf38bfd283b7c743d08f0b288174fba7dbf0a04b688d')
+b2sums=('1410fcf6f7031eaa2d93550797acaa1cb86c972076f6e69c1e59d9798e9fab494968a0ddaafc00ffc5e656065c6fb8ebb1fdec851d12200c17eb74cb3b1ceac8')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
