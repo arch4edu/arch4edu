@@ -4,11 +4,11 @@ _pkgname=DiceDesign
 _pkgver=1.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Designs of Computer Experiments"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -18,11 +18,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('1006a4bae25c296e3ad5a60a62ed719c')
-sha256sums=('06543b207b8c1732bda575b9f60ca4ec004f896676e04200af8b222f8933c73d')
+b2sums=('6175f768e8a51949471ff81dbad83f527d5c1b2a10730899ec84f5208dc73b42d7f5e584174787c3814566ad2a2291fe7f3d44c3ba0780aee8812f431af20b9f')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
