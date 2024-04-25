@@ -4,22 +4,22 @@ _pkgname=fontLiberation
 _pkgver=0.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Liberation Fonts"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(custom:OFL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('OFL-1.1-RFN')
 depends=(
   r
   ttf-liberation
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('7a317aca78d58fc0b2417380cc702864')
-sha256sums=('acdea423e005873aa509e280074a3cef4796e4f7e9d77b3945d77b451ea039f0')
+b2sums=('6c01af50df129aaed422f328af0a75b2041a4f6e844c9d3a39fd79473d15fb48e1d9d864082c9abe4d5ca74bdd8f7e5f0a577732af42ac075f59c071e442ffcf')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
