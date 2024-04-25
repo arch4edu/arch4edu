@@ -8,11 +8,11 @@ _pkgname=yaml
 _pkgver=2.3.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Methods to Convert R Data to YAML and Back"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(BSD)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('BSD-3-Clause')
 depends=(
   r
 )
@@ -27,14 +27,14 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('25606fd9de01159019b5acd8d0410af7')
-sha256sums=('9ed079e2159cae214f3fefcbc4c8eb3b888ceabe902350adbdb1d181eda23fd8')
+b2sums=('9dc5d33660dbcaf326fe9239304c7884363f60966a2a60538c59f8281d3de5eb616a05081d74bb85d3b14dc4268c4fb43f5ae0bbda6e5e7e1ff09520fad7a280')
 
 build() {
   # generate implicit tag discovery code
   re2c -o "$_pkgname/src/implicit.c" --no-generation-date "$_pkgname/inst/implicit.re"
 
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
