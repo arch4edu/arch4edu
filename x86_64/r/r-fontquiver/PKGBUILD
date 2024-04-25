@@ -4,11 +4,11 @@ _pkgname=fontquiver
 _pkgver=0.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Set of Installed Fonts"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r-fontbitstreamvera
   r-fontliberation
@@ -23,11 +23,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('eddbde07ef14475acfbdc9e82d45385a')
-sha256sums=('95871814c2d55c03ee15a54e29aadfb840c791e1430f94127d9e1dc8608a6363')
+b2sums=('5cf4b9c82b574be02b7f0b5e9b6c7f1bc9d7defc713d1b0a3a45d352cfff5340678751e78505157c28f69585aaceb3674a9cd237e44649c53f461b4f401d21f4')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
