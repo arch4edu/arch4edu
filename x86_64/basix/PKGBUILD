@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=basix
 pkgdesc="FEniCS finite element basis evaluation library"
-pkgver=0.7.0.post0
+pkgver=0.8.0
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
@@ -10,12 +10,7 @@ depends=(lapack)
 makedepends=(cmake)
 checkdepends=(python)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('39e13ed43be0429ed0193832bd31d1db30d81cdb62215cd2d82f17c4a847a34b2b80ebeae1ce6b324c9840e95ff5abcfa6fa17a570b56bae2c365942131308fe')
-
-prepare() {
-  # gcc-13-compatibilty
-  sed -i '/#include <vector>/a #include <cstdint>' ${pkgname}-${pkgver}/cpp/basix/finite-element.h
-}
+sha512sums=('4f259173e97da9141b79f66e76baddab9e0d00f672feedde18742ac95d6d31668b80e319b939a67a4558bc7dd8e7479d9c75f3a1c2bf5abdf077ed3202ea4f99')
 
 build() {
   cmake \
