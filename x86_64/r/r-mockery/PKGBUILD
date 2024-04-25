@@ -4,11 +4,11 @@ _pkgname=mockery
 _pkgver=0.4.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Mocking Library for R"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-testthat
 )
@@ -19,11 +19,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('98297a49097c3c952c9321de4710df7f')
-sha256sums=('072220a0f2455fca91649fc7ce4ed503cfaa965aa769d1bd0fd6622b222845c3')
+b2sums=('9a19ce9ffe07413132945c2a9c9cb1760f9910712be7598ab5ba3d9267cf85cecd40e0b5578d2f5b274157a201c5b5d90f1795c8cdfdb4a989d3e454a5b0fa6c')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
