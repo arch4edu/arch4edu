@@ -7,11 +7,11 @@ _pkgname=glue
 _pkgver=1.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Interpreted String Literals"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(MIT)
+license=('MIT')
 depends=(
   r
 )
