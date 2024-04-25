@@ -4,11 +4,11 @@ _pkgname=permute
 _pkgver=0.9-7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=12
+pkgrel=13
 pkgdesc="Functions for Generating Restricted Permutations of Data"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL2)
+license=('GPL-2.0-only')
 depends=(
   r
 )
