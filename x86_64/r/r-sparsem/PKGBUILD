@@ -9,11 +9,11 @@ _pkgname=SparseM
 _pkgver=1.81
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Sparse Linear Algebra"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -22,11 +22,11 @@ makedepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('482572eed65ae53bb988a2753ce09718')
-sha256sums=('bd838f381ace680fa38508ff70b3d83cb9ffa28ac1ab568509249bca53c34b33')
+b2sums=('5aace65663c6f627bfe18524b24bdf106107443361fce2ca2fae022c6b2cb3e0b4951e66973444df70ad335ff1622dffbbc888213ec362a87fc7398d82628baf')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
