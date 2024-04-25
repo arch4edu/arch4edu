@@ -9,11 +9,11 @@ _pkgname=quantreg
 _pkgver=5.97
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Quantile Regression"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   blas
   lapack
@@ -35,11 +35,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('e36187123dc53900e967b3c466a902fc')
-sha256sums=('87e7de5776dee936ef0809dcc9ac2e0d51a7580368e6defa12ec21276a676da1')
+b2sums=('492b7d130064264cf8a71d290c202ac34cce0276f2240f8ede5253d0dab7cd670088efe64f77fce029016968cee3d430f8a0d6dc32299ec48b41e539fd0e6245')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
