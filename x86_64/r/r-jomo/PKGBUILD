@@ -3,12 +3,12 @@
 _pkgname=jomo
 _pkgver=2.7-6
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Multilevel Joint Modelling Multiple Imputation"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL2)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r-lme4
   r-ordinal
@@ -19,11 +19,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('473d277969676494a6df604b477809e9')
-sha256sums=('3ffa2a5521d4969fe77b23cd3ab201afdf8db3f8f708b1276c33083c01d7e2da')
+b2sums=('b0b4f6ec30a0178fc484ee71c052ec21606308e13bf9db5240917d004d3e212e41ff9656ea0124e2ebf4203e7808959c05c9fe6af078cf5ae065823cc22d820e')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
