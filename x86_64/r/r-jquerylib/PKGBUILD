@@ -5,12 +5,12 @@
 _pkgname=jquerylib
 _pkgver=0.1.4
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=7
+pkgver=${_pkgver//-/.}
+pkgrel=8
 pkgdesc="Obtain 'jQuery' as an HTML Dependency Object"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-htmltools
 )
@@ -22,11 +22,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('3607a34ac45ff420bc325d84eab4b0cb')
-sha256sums=('f0bcc11dcde3a6ff180277e45c24642d3da3c8690900e38f44495efbc9064411')
+b2sums=('0ba0d526302b5e2fb5aac5010fe6ad25e124aacc846068f8895d20cb794761542e74869ae1e11a5b7738e6ecb2a1d5b5ec9148ba69030c30cb7c679a5f0b508b')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
