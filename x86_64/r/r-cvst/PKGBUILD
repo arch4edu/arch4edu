@@ -5,21 +5,21 @@ _pkgname=CVST
 _pkgver=0.2-3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Fast Cross-Validation via Sequential Testing"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-kernlab
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('08032c05dcea2d5ac36e119dcadca240')
-sha256sums=('efa296230395f323c2a398a7b386e3a88e75a5b9b645307459d0b7c14d03f32d')
+b2sums=('b3363971e9284e080ac8cf3ae9e5e75945c7cd0cbafe323ce27c32ef6b5521e4e5159fbc9ece0478ca6c8cacb8b3d23e4a8b9fbffdf57979e04d254800589e4b')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
