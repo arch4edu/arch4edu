@@ -6,12 +6,12 @@
 _pkgname=testit
 _pkgver=0.13
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=4
 pkgdesc="A Simple Package for Testing R Packages"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r
 )
@@ -21,11 +21,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('ff82b0f377fc9d6fb769de1dcc2b887e')
-sha256sums=('90d47168ab6bdbd1274b600b457626ac07697ce09792c92b2043be5f5b678d80')
+b2sums=('c1375be2392f3acc15e66deff6d45b4f4d750c15d8f6254ca63062208baa9943d79c875fecd13c98fe5000bf572633aed7c98015305dfbf0fab59371f5f6fda4')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
