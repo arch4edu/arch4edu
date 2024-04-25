@@ -7,11 +7,11 @@ _pkgname=sys
 _pkgver=3.4.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Powerful and Reliable Tools for Running System Commands in R"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -26,11 +26,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('79b75f8ec16557df22600458b6044ebe')
-sha256sums=('b7bdce66f0fb681830ea6fb77b5a2c6babb43920abb1eddc733f95c0a63ce5b3')
+b2sums=('fa28a2c83f232904ef11e63b957d27f36abafb780f4fa415c3d40368718c98b8c39b838b9b1d08c8fbe2a32dc4a30eaa64f61be19c386daba2f1b3304fc13d98')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
