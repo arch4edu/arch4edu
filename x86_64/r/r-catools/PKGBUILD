@@ -8,21 +8,21 @@ _pkgname=caTools
 _pkgver=1.18.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=11
 pkgdesc="Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r-bitops
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('c95edd3f71a8fe1ad2cfd0ae274ad9ab')
-sha256sums=('75d61115afec754b053ed1732cc034f2aeb27b13e6e1932aa0f26bf590cf0293')
+b2sums=('08f22212ac7ee006d6ea39f7f8fb03ce3d8293f7a36800cb3c65ba577638495dfd2bf0e6a9a6dd7f19b873c42a6a8bb1f2b22c3ae07e4428c288278aebdf62e5')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
