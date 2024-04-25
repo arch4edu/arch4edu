@@ -6,11 +6,11 @@ _pkgname=RcppRoll
 _pkgver=0.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Efficient Rolling / Windowed Operations"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-rcpp
 )
@@ -24,11 +24,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('20b1dca034a1d18f63c07201736943c7')
-sha256sums=('cbff2096443a8a38a6f1dabf8c90b9e14a43d2196b412b5bfe5390393f743f6b')
+b2sums=('4d1c7aa588515ac5056ef335b2cb2735ad6efda58cc56b107dcc3e7a5333226ba84a628202067cc5751cac475b2958ce65cda8b99bb4f89a816a40c9278225d1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
