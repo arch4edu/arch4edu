@@ -7,11 +7,11 @@ _pkgname=BH
 _pkgver=1.84.0-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Boost C++ Header Files"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(Boost)
+license=('BSL-1.0')
 depends=(
   boost
   r
