@@ -10,11 +10,11 @@ _pkgname=xtable
 _pkgver=1.8-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=12
 pkgdesc="Export Tables to LaTeX or HTML"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -25,11 +25,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('0a7da6c3b34b2974110a7d00fe9afa79')
-sha256sums=('5abec0e8c27865ef0880f1d19c9f9ca7cc0fd24eadaa72bcd270c3fb4075fd1c')
+b2sums=('86573fa5e1e27fa93730eef771b9d998b2b93ab8b651a92e40f527969766af5f9bf7f4773d2aba17310551f960dd015398cf53e6f8f3518b67e046def21fdf61')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
