@@ -6,12 +6,12 @@
 _pkgname=iterators
 _pkgver=1.0.14
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=11
+pkgver=${_pkgver//-/.}
+pkgrel=12
 pkgdesc="Provides Iterator Construct"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(Apache)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('Apache-2.0')
 depends=(
   r
 )
@@ -24,11 +24,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('e1d875f0ddec6834dd33e56c4f04a706')
-sha256sums=('cef3075a0930e1408c764e4da56bbadd4f7d14315809df8f38dd51f80ccc677b')
+b2sums=('4ada877b4dd25d87a9221698f22c87bdd41a05c24b2c20e5983f63c2ed1bff715b440e8a547a54c88a2ddfa9048b6b69cc459f282f5ddfea66c8fc8e76832d49')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
