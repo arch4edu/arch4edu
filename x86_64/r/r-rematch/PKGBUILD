@@ -6,11 +6,11 @@ _pkgname=rematch
 _pkgver=2.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Match Regular Expressions with a Nicer 'API'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(MIT)
+license=('MIT')
 depends=(
   r
 )
