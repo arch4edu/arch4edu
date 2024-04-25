@@ -4,11 +4,11 @@ _pkgname=gsl
 _pkgver=2.1-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Wrapper for the Gnu Scientific Library"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL3)
+license=('GPL-3.0-only')
 depends=(
   gsl
   r
