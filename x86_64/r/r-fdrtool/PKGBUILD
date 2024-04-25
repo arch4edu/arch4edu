@@ -6,21 +6,21 @@ _pkgname=fdrtool
 _pkgver=1.2.17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Estimation of (Local) False Discovery Rates and Higher Criticism"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('7e4ee6e67266b8828cc9d893a171545e')
-sha256sums=('3452601adbead9be4820794e3af2666f710fdf9b801186df565b80b43629c5dd')
+b2sums=('0ea74bed7a0feb8b712aafcdbdf9ca1a6fc9590896fd61a8531c8dfc18c921db34fa99abcb1047edf9c665d18d92ac7e1f47bc5a216926f51e5788dc7a3b7e53')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
