@@ -9,11 +9,11 @@ _pkgname=jsonlite
 _pkgver=1.8.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A Simple and Robust JSON Parser and Generator for R"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -28,11 +28,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('d1ec8467abf43d41aabeec24d5a9096a')
-sha256sums=('7de21316984c3ba3d7423d12f43d1c30c716007c5e39bf07e11885e0ceb0caa4')
+b2sums=('c1417c2dffd62518c11dfaed1ca3151d3fe1ba6edc2757e2dda031e5976dc68cd025ff5640e2ad5e94601eadca6fc1dd5da4bb497177943518b236d63c21ec53')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
