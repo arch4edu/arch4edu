@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=xopen
-_pkgver=1.0.0
+_pkgver=1.0.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.0
-pkgrel=7
+pkgver=1.0.1
+pkgrel=1
 pkgdesc="Open System Files, 'URLs', Anything"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e207603844d69c226142be95281ba2f4a056b9d8cbfae7791ba60535637b3bef')
+sha256sums=('e3b278b8c324a1aa2650141dd89d01253eea5c2555007422c797915689b29aec')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
