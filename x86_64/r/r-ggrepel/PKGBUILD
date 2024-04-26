@@ -6,11 +6,11 @@ _pkgname=ggrepel
 _pkgver=0.9.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Automatically Position Non-Overlapping Text Labels with 'ggplot2'"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL3)
+license=('GPL-3.0-only')
 depends=(
   r-ggplot2
   r-rcpp
