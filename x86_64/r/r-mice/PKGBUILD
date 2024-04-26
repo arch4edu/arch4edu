@@ -5,11 +5,11 @@ _pkgname=mice
 _pkgver=3.16.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Multivariate Imputation by Chained Equations"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-broom
   r-dplyr
@@ -45,11 +45,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('0e44a4e8e2f690d7393e90568b5b6e08')
-sha256sums=('29f0285185a540337e9dde2357690c82d174f115be701ee2f0a7083173a44040')
+b2sums=('e4083abf5adcedb3a096a8df0cc870852653f492aaa67eb4b2c50e17ece067f1e0bcd132e2d50aed8a959d6c4d1c192b973ffc585b8e60283e456e35efa8eed0')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
