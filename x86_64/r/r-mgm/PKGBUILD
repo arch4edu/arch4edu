@@ -5,11 +5,11 @@ _pkgname=mgm
 _pkgver=1.2-14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Estimating Time-Varying k-Order Mixed Graphical Models"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-glmnet
   r-gtools
@@ -25,11 +25,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('153028b85da8ceafb4bfaaf3c7fa410f')
-sha256sums=('fcdf895a6d782217e8705394a21f5803cbaccaefb94c5618b4ea6f6482dbb0c8')
+b2sums=('12ceb3f68807475b174fade5ef6b58cefe8c43c7a25b196a820cb5def7809cf450014bee15acc390178434e7babad11b20757c816e88c24348ca51c87dcb2417')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
