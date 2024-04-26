@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=StanHeaders
-_pkgver=2.32.6
+_pkgver=2.32.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,9 +28,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-flags.patch")
-md5sums=('6186e76365d883342e98effa1176b3f3'
+md5sums=('c71af22c52802af07d46b506b23bfe54'
          '0d0c50619b42dc9d75209fc43320c71b')
-b2sums=('5864e8df45e52056264ac607166234fabf20a97ee6e4bf423d2c51e3faeec8d0b91b7758a79c846275ce70a211b72b98c65fa0f784a7b2ba6011b43a720bda7f'
+b2sums=('776518ce514fd07c53427751b8d52d8fc483255ae5c79fd8d4261308e72f8c7645b6c052577629cba1e9479cb5e1768e64fb027db54a8b838a63da1c779e0aa8'
         '11ef9d240340ee8aaee7d0786dfbd8b412c90b22289a4fc1b9787907b78c6fd75a401078f1be796833fbc87f18095a0960c1b132efc2481e339a10bccf8782aa')
 
 prepare() {
