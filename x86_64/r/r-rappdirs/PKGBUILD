@@ -5,12 +5,12 @@
 _pkgname=rappdirs
 _pkgver=0.3.3
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=12
+pkgver=${_pkgver//-/.}
+pkgrel=13
 pkgdesc="Application Directories: Determine Where to Save Data, Caches, and Logs"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -24,18 +24,21 @@ optdepends=(
   r-testthat
   r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cafdd5478c4a6094a9f3d7335fb4f889')
-sha256sums=('49959f65b45b0b189a2792d6c1339bef59674ecae92f8c2ed9f26ff9e488c184')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "fix-tests.patch")
+md5sums=('cafdd5478c4a6094a9f3d7335fb4f889'
+         '86106366bdf6586bb505dcc53dcc1ba2')
+b2sums=('2dd360804783d56269f4f9c96cfe057ba431ee9d71e69227f2338feec06cbff555d1707e01a2830647a7d7421d7dbc56452b88b985971cf1feb5d21bc1452cea'
+        'a8b98e83b9cafdf1117627c99c13ec5fb2b05176d8c031e07eb888230e23d3a280308d8012c0dbf0312b22f83eca522f249155dfef0d8dd4855b4a7512e6d3e5')
 
 prepare() {
-  # fix test snapshot that is incompatible with r-testthat>=3.0.2
-  sed -i '5d' "$_pkgname/tests/testthat/_snaps/appdir.md"
+  # fix outdated snapshot tests
+  patch -Np1 -i fix-tests.patch
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {

@@ -1,0 +1,26 @@
+diff --git a/rappdirs/tests/testthat/_snaps/appdir.md b/rappdirs/tests/testthat/_snaps/appdir.md
+index fee84b4..31bb6cf 100644
+--- a/rappdirs/tests/testthat/_snaps/appdir.md
++++ b/rappdirs/tests/testthat/_snaps/appdir.md
+@@ -2,7 +2,6 @@
+ 
+     Code
+       app <- app_dir("ggplot2", "hadley", os = "mac")
+-    Code
+       app$cache()
+     Output
+       [1] "~/Library/Caches/ggplot2"
+diff --git a/rappdirs/tests/testthat/_snaps/utils.md b/rappdirs/tests/testthat/_snaps/utils.md
+index 1322202..608bcfd 100644
+--- a/rappdirs/tests/testthat/_snaps/utils.md
++++ b/rappdirs/tests/testthat/_snaps/utils.md
+@@ -2,7 +2,8 @@
+ 
+     Code
+       expect_equal(check_version("1", NULL), NULL)
+-    Warning <simpleWarning>
++    Condition
++      Warning:
+       version is ignored when appname is null
+     Code
+       expect_equal(check_version("1", "R"), "1")
