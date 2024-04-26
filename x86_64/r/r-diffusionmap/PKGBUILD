@@ -4,22 +4,22 @@ _pkgname=diffusionMap
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Diffusion Map"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r-igraph
   r-scatterplot3d
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('9f9f0fa8861d315c9bedacac394831b6')
-sha256sums=('523847592fbc3a29252bc92b5821e17564ce6b188c483c930e95e6950c3873e7')
+b2sums=('6c0193db73bf2d5f2a21bb72d486c3888ad988936b066c3ea69c424db8b74027a37f480b71a3e2d8db1ba14f77eecf9c3e7f2fedba27bd26c1c6ba1637ec92bc')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
