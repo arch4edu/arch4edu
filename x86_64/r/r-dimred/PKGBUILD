@@ -5,11 +5,11 @@ _pkgname=dimRed
 _pkgver=0.2.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=5
 pkgdesc="A Framework for Dimensionality Reduction"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
   r-drr
   r-magrittr
@@ -63,7 +63,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('1cef3b06c7f0eea422fedbbf04a28e63')
-sha256sums=('9a7eb14781f01a12e26e7b26a91c8edaca7d824b9c1ffe74c81837098d9bf417')
+b2sums=('e68bf03cae0c60703b7952a3354ea29fbd28a6594903c2fc0188f9aefe619b142dcde29a7eaa44c003dbf701fd0f302a49f13392781e73a3ca50d78379f48a81')
 
 prepare() {
   # fix import in test
@@ -71,8 +71,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
