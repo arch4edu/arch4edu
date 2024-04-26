@@ -5,11 +5,11 @@ _pkgname=RcppProgress
 _pkgver=0.4.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="An Interruptible Progress Bar with OpenMP Support for C++ in R Packages"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
@@ -26,11 +26,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('29ecb32d5c739805ced912e4bedf26f2')
-sha256sums=('b1624b21b7aeb1dafb30f092b2a4bef4c3504efd2d6b00b2cdf55dc9df194b48')
+b2sums=('660dfd820fd4d2f32957c8540f4169ecd4736549092d5e0cf4e7f70b0e1661361ee7f710f5a0d3a8479715580915b815a959d06a20fcb55e2e6bfea37fda1c56')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
