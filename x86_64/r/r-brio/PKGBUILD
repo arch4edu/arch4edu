@@ -4,10 +4,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=brio
-_pkgver=1.1.4
+_pkgver=1.1.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Basic R Input Output"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,8 +20,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e18151323dcddd193fac454f70f138f1')
-b2sums=('24bda987df92575dddc0f127a60ef596f80104ceec4c1e777af129a742702b96027c5d1cfb68fd168279c7a6ec71e3e8221b53df00625b38dcf27bae136f3e1d')
+md5sums=('01e1a782f87242f9ca9c80acf9deeeff')
+b2sums=('4c2aafe4dd25693d615b09719e82c816831766fa13af1fa99f51001da92310553bb752e2d6f4a6b521b5b74383d77572bafde3ce73596e6418e553f2c90550a3')
 
 build() {
   mkdir build
