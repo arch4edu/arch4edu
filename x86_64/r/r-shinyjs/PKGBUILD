@@ -5,11 +5,11 @@ _pkgname=shinyjs
 _pkgver=2.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Easily Improve the User Experience of Your Shiny Apps in Seconds"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-digest
   r-jsonlite
@@ -28,11 +28,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('23479086c139ba2d7d00c557f1e8895d')
-sha256sums=('7ec20cbf1b1fd7a32d85a56dfc0df8b5f67c828d241da400a21d893cb37ea9c5')
+b2sums=('28df9b7c0e4b0b8f958703fabedb99feaccda72302e8fe5250f588cd9a64b48efbb5b77abcd62424d519fff033d01a82d82c03801f0d9ad1cd4be62864af090a')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
