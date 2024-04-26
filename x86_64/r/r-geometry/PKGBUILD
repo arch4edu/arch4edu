@@ -6,11 +6,11 @@ _pkgname=geometry
 _pkgver=0.4.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=5
 pkgdesc="Mesh Generation and Surface Tessellation"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL3)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   qhull
   r-linprog
@@ -33,7 +33,7 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('3c072c129e57358977b9a59445206b36')
-sha256sums=('96204205f51b4d63c2e7a7b00365def27d131f3c9ec66db56b510046e5d2013b')
+b2sums=('6185f018755f36fca96b6b5de37420f142bd4e65e011b91c2e88c129c4a1bda0100ea8fe5b9b4aa02c3ba223afc71567f37d01676578342d81468b3eb34c0be1')
 
 prepare() {
   cd "$_pkgname/src"
@@ -49,8 +49,8 @@ prepare() {
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
