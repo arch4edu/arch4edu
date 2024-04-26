@@ -9,11 +9,11 @@ _pkgname=car
 _pkgver=3.1-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=5
 pkgdesc="Companion to Applied Regression"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-abind
   r-cardata
@@ -39,11 +39,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('f8be85a665aa367951aacf80d89eb5e9')
-sha256sums=('89263491977ac8e9406b2f4b1638bf06c7ddd1b0e0e3ecda4be61420474674c8')
+b2sums=('ca69e00f22fdb395300b5347cde253ced59930f6def8163f4afa0849c8c7ee95aa97a0a04f53c1398ec40eebae51623c95c05968120ab7bfd840da903d3b5e25')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
