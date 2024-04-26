@@ -7,7 +7,7 @@ _pkgname=tidyr
 _pkgver=1.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Tidy Messy Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -41,9 +41,17 @@ optdepends=(
   r-rmarkdown
   r-testthat
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0491d9d3359af7baf8ad9003ce44aa1d')
-b2sums=('43ec7fca79d137205847ae837a20f6ed2be8d4440cde29f6ff11cac0df35a1fbdb6d55d1365303819d25f5333819c9541a4e0a006e39e22cfa665c0f9d8fbf76')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "fix-tests.patch")
+md5sums=('0491d9d3359af7baf8ad9003ce44aa1d'
+         'c59cb36104f4ba2550cadc60b9af427e')
+b2sums=('43ec7fca79d137205847ae837a20f6ed2be8d4440cde29f6ff11cac0df35a1fbdb6d55d1365303819d25f5333819c9541a4e0a006e39e22cfa665c0f9d8fbf76'
+        '7567abe193a23f244e760e8eefc45af2438d3754fd4f628d2b5ddb9113a8f67bdd870acb8232a13504e97b807bd210195b4516d3e3c76e1a396496f8b1edf01c')
+
+prepare() {
+  # fix outdated snapshot tests
+  patch -Np1 -i fix-tests.patch
+}
 
 build() {
   mkdir build

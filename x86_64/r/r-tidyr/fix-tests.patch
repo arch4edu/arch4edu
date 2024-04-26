@@ -1,0 +1,78 @@
+diff --git a/tidyr/tests/testthat/_snaps/drop-na.md b/tidyr/tests/testthat/_snaps/drop-na.md
+index abf9c67..3b5302b 100644
+--- a/tidyr/tests/testthat/_snaps/drop-na.md
++++ b/tidyr/tests/testthat/_snaps/drop-na.md
+@@ -5,7 +5,7 @@
+     Output
+       <error/vctrs_error_subscript_type>
+       Error in `drop_na()`:
+-      ! Can't subset columns with `list()`.
++      ! Can't select columns with `list()`.
+       x `list()` must be numeric or character, not an empty list.
+ 
+ ---
+@@ -15,6 +15,6 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `drop_na()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `z` doesn't exist.
+ 
+diff --git a/tidyr/tests/testthat/_snaps/pivot-wide.md b/tidyr/tests/testthat/_snaps/pivot-wide.md
+index ebee7b2..222f39a 100644
+--- a/tidyr/tests/testthat/_snaps/pivot-wide.md
++++ b/tidyr/tests/testthat/_snaps/pivot-wide.md
+@@ -26,7 +26,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `pivot_wider()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `name` doesn't exist.
+ 
+ # `values_from` must be supplied if `value` isn't in `data` (#1240)
+@@ -36,7 +36,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `pivot_wider()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `value` doesn't exist.
+ 
+ # `names_from` must identify at least 1 column (#1240)
+@@ -165,7 +165,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `pivot_wider()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `foo` doesn't exist.
+ 
+ # named `id_cols` gives clear error (#1104)
+diff --git a/tidyr/tests/testthat/_snaps/separate-longer.md b/tidyr/tests/testthat/_snaps/separate-longer.md
+index a4723ad..53911b2 100644
+--- a/tidyr/tests/testthat/_snaps/separate-longer.md
++++ b/tidyr/tests/testthat/_snaps/separate-longer.md
+@@ -22,7 +22,7 @@
+       df %>% separate_longer_position(y, width = 1)
+     Condition
+       Error in `separate_longer_position()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `y` doesn't exist.
+     Code
+       df %>% separate_longer_position(x, width = 1.5)
+diff --git a/tidyr/tests/testthat/_snaps/separate-wider.md b/tidyr/tests/testthat/_snaps/separate-wider.md
+index 904dfad..bf9dcf5 100644
+--- a/tidyr/tests/testthat/_snaps/separate-wider.md
++++ b/tidyr/tests/testthat/_snaps/separate-wider.md
+@@ -184,7 +184,7 @@
+       df %>% separate_wider_regex(y, patterns = c(x = "-"))
+     Condition
+       Error in `separate_wider_regex()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `y` doesn't exist.
+     Code
+       df %>% separate_wider_regex(x, patterns = ".")
