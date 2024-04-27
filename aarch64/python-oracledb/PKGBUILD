@@ -8,7 +8,7 @@
 _name=oracledb
 pkgname=python-oracledb
 pkgver=2.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Python extension module that allows access to Oracle databases"
 arch=('i686' 'x86_64')
 url='https://oracle.github.io/python-oracledb/'
