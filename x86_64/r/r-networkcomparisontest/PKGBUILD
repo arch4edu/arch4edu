@@ -5,11 +5,11 @@ _pkgname=NetworkComparisonTest
 _pkgver=2.2.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Statistical Comparison of Two Networks Based on Several Invariance Measures"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL2)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r-isingfit
   r-networktools
@@ -28,11 +28,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('c699e7be5bafd726a02a5721f625b4cc')
-sha256sums=('11f61db9031c54ed28dce0310f51270b0bbd60bbdbf0ec565beb79a80f4e6223')
+b2sums=('9fbcb67264f5b61e5a569aae248ffe3b1ed9f30b704d9b9d4a38458a476e6d761dbe6d17b39faf57fe461cfc0fbacac7bca10ee84cbd59de36af28bb6219e1c4')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
