@@ -3,7 +3,7 @@
 pkgname=nanobind
 pkgdesc="tiny and efficient C++/Python bindings"
 pkgver=1.9.2
-pkgrel=3
+pkgrel=4
 arch=(any)
 url="https://${pkgname}.readthedocs.io"
 license=(BSD-3-Clause)
