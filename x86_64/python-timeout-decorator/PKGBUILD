@@ -3,7 +3,7 @@
 _name=timeout-decorator
 pkgname=python-${_name}
 pkgver=0.5.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Timeout decorator for Python"
 arch=('any')
 depends=('python')
