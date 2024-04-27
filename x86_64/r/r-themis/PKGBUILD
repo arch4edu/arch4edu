@@ -4,11 +4,11 @@ _pkgname=themis
 _pkgver=1.0.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Extra Recipes Steps for Dealing with Unbalanced Data"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-dplyr
   r-generics
@@ -37,13 +37,26 @@ optdepends=(
   r-modeldata
   r-testthat
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8f13545a8a8d475f3323e75dd40a66d3')
-sha256sums=('f1350109904c302b1d5ec8ab9d692172a4334a60e252f93241da18d4559fe1e1')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "$_pkgname-update-snapshots-1.patch::https://github.com/tidymodels/themis/commit/c9bdc843f3c299e668f1b41dee1d1f11deceb4ba.patch"
+        "$_pkgname-update-snapshots-2.patch::https://github.com/tidymodels/themis/pull/147.patch")
+md5sums=('8f13545a8a8d475f3323e75dd40a66d3'
+         '20778cbb20ffa0fd16e18b24e0471915'
+         'c23888ea75a5b79aedee4fc2993569e4')
+b2sums=('10e3a4edea7c0d48af8d133c5f6cc435782daeb16b4978c835884d9ed4126baa9a12aeabba0f3f9986598c14df2151ed907a4095478ab192990bc018d05fab7a'
+        '127214d54c11d26fba58f0f6e66fd0bf9cb876533a38aaf5d332a75baea9b4b4f1ff3924460c883a6303eb241bcbeee95d762df938101c879b696be5d806f347'
+        '63d251544560c1d67e5dd2b39d9e25fc8bc05e6db84c2609fa75850e9e5148d949986fd1afb2065f5ccfc9f9b782a3d0ae82460eaa9bf106bd96a04765dde0a8')
+
+prepare() {
+  cd "$_pkgname"
+  # fix test snapshots
+  patch -Np1 -i "../$_pkgname-update-snapshots-1.patch"
+  patch -Np1 -i "../$_pkgname-update-snapshots-2.patch"
+}
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
