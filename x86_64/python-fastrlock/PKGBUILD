@@ -2,7 +2,7 @@
 pkgname=python-fastrlock
 _pkgname=fastrlock
 pkgver=0.8.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A fast RLock implementation for CPython"
 _github="scoder/fastrlock"
 url="https://github.com/scoder/fastrlock"
