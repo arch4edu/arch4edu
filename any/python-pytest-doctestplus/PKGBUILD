@@ -5,7 +5,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=1.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('any')
 url="https://github.com/astropy/pytest-doctestplus"
