@@ -2,7 +2,7 @@
 
 pkgname=python-yamlloader
 pkgver=0.5.5
-pkgrel=2
+pkgrel=3
 pkgdesc='An ordered YAML loader and dumper'
 arch=('any')
 url=https://github.com/Phynix/yamlloader
