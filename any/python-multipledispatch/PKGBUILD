@@ -2,7 +2,7 @@
 # Contributor: Gaël Donval <gdonval+aur at google mail>
 pkgname=python-multipledispatch
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Multiple dispatch implementation in Python'
 arch=('any')
 url='https://github.com/mrocklin/multipledispatch'
