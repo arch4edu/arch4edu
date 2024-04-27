@@ -2,17 +2,23 @@
 _base=basix
 pkgname=python-fenics-${_base}
 pkgdesc="Basix Python interface"
-pkgver=0.7.0.post0
-pkgrel=1
+pkgver=0.8.0
+pkgrel=2
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
 license=(MIT)
 depends=(basix python-numpy)
-makedepends=(python-build python-installer python-setuptools python-wheel cmake pybind11)
+makedepends=(python-build python-installer python-scikit-build-core python-wheel nanobind)
 checkdepends=(python-pytest python-sympy python-fenics-ufl) # python-numba
 optdepends=('python-numba: for Numba helper function support')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('39e13ed43be0429ed0193832bd31d1db30d81cdb62215cd2d82f17c4a847a34b2b80ebeae1ce6b324c9840e95ff5abcfa6fa17a570b56bae2c365942131308fe')
+sha512sums=('4f259173e97da9141b79f66e76baddab9e0d00f672feedde18742ac95d6d31668b80e319b939a67a4558bc7dd8e7479d9c75f3a1c2bf5abdf077ed3202ea4f99')
+
+prepare() {
+  # https://github.com/FEniCS/basix/issues/811
+  sed -i 's/^wheel.license-files/#wheel.license-files/' ${_base}-${pkgver}/python/pyproject.toml
+  sed -i 's/^license/#license/' ${_base}-${pkgver}/python/pyproject.toml
+}
 
 build() {
   cd ${_base}-${pkgver}/python
