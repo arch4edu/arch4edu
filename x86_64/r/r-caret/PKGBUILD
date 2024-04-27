@@ -9,11 +9,11 @@ _pkgname=caret
 _pkgver=6.0-94
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=5
 pkgdesc="Classification and Regression Training"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-e1071
   r-foreach
@@ -67,11 +67,11 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('5f4c1945b20e632187f5534a59a12c8c')
-sha256sums=('2715e83ca260bb739cd926a55b0d2da1e3f6308b17b56862466e738d930d29a8')
+b2sums=('d3b4baa5d6234f9c1c71b62ef0d5d7cccd50e3e71f4ae54638bb6af67331a20ff689a857568a4e1280d68b18b50808d570b080a3564c1cc59c0bf1625a71bab1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
