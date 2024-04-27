@@ -1,7 +1,7 @@
 # Maintainer: Martin Diehl <aur@martin-diehl.net>
 
 pkgver=0.43.5
-pkgrel=1
+pkgrel=2
 pkgname=python-pyvista
 _name=${pkgname#python-}
 pkgdesc='3D plotting and mesh analysis through a streamlined interface for the Visualization Toolkit (VTK)'
