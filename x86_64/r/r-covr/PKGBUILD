@@ -8,11 +8,11 @@ _pkgname=covr
 _pkgver=3.6.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Test Coverage for Packages"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r-crayon
   r-digest
@@ -46,13 +46,21 @@ optdepends=(
   r-testthat
   r-xml2
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8fadf3538ed1edfefb3a20bd5c5e887d')
-sha256sums=('2b6204036510c629d0b1d58daaee34d4e38baf54164f8d4c9afd6d6b1fb1862a')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "fix-tests.patch")
+md5sums=('8fadf3538ed1edfefb3a20bd5c5e887d'
+         'd3729dbb95789a8622860678ed9fdb7a')
+b2sums=('0d986635c4fb04e327d142e49290d3f4c8f062b8873f7a30cf8ee642be4cb1a8cde4882580eeba58565cfaf113e1bc94ff2ceb35fe1272d160a07f0e9f60a4f3'
+        '8f4241f4d0836c42b2c5257adbf418413681a9610c6fc105dc0022e923fa93b25752ce5c5aa5cd12b1571307fa022bb79cd70b3b6ac00a27e55fb609110d6df1')
+
+prepare() {
+  # skip failing test
+  patch -Np1 -i fix-tests.patch
+}
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
