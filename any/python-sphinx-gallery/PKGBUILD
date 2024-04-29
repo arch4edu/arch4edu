@@ -1,15 +1,16 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 pkgbase=python-sphinx-gallery
-_pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}")
+_pname=${pkgbase#python-}
+_pyname=${_pname//-/_}
+pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=0.15.0
-pkgrel=2
+pkgver=0.16.0
+pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
 url="http://sphinx-gallery.github.io"
-license=('BSD')
-makedepends=('python-setuptools'
+license=('BSD-3-Clause')
+makedepends=('python-setuptools-scm'
              'python-wheel'
              'python-build'
              'python-installer')
@@ -21,19 +22,20 @@ checkdepends=('python-pytest-cov'
               'python-matplotlib'
               'python-pillow'
               'python-sphinx'
+              'python-lxml'
               'python-absl')
 #              'python-exceptiongroup'
 ##              'python-joblib'
 ##             'mayavi'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('f3cd552e0556c818ade28ab36f5743bb')
+md5sums=('5468a23a277e6f1716c7899a39cfa758')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
     python -m build --wheel --no-isolation
 
 #   msg "Building Docs"
-#   PYTHONPATH="../build/lib" make html
+#   PYTHONPATH="../build/lib" make -C doc html
 }
 
 check() {
@@ -41,8 +43,8 @@ check() {
 
     # require jupyterlite_sphinx, from Gentoo's ebuild. Some also cost lots of time
     pytest \
-        --deselect=sphinx_gallery/tests/test_full.py \
-        --deselect=sphinx_gallery/tests/test_full_noexec.py \
+        --ignore=sphinx_gallery/tests/test_full.py \
+        --ignore=sphinx_gallery/tests/test_full_noexec.py \
         --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents \
         --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_non_default_contents \
         --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_with_jupyterlite_disabled_via_config || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count \
@@ -51,7 +53,7 @@ check() {
 }
 
 package_python-sphinx-gallery() {
-    depends=('python-sphinx>=4' 'python-pillow' 'python-matplotlib')
+    depends=('python-sphinx>=4' 'python-pillow')
     optdepends=('python-seaborn'
 #               'mayavi'
                 'python-pypandoc')
