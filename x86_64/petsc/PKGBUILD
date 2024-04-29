@@ -2,8 +2,8 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.21.0
-pkgrel=2
+pkgver=3.21.1
+pkgrel=1
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
 arch=('i686' 'x86_64')
@@ -13,7 +13,7 @@ options=(staticlibs)
 # note: zlib is not really needed by PETSc, but netcdf requires an HDF5 version with zlib
 depends=('openmpi' 'lapack' 'hdf5-openmpi' 'fftw-openmpi' 'superlu' 'suitesparse' 'libyaml' 'gsl' 'libjpeg-turbo' 'netcdf-openmpi' 'zfp' 'zlib'
          'python-numpy' 'python-mpi4py')
-makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython')
+makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython' 'python-setuptools')
 provides=('petsc4py')
 optdepends=(
   'hypre: support for HYPRE'
@@ -32,7 +32,7 @@ optdepends=(
 install=petsc.install
 source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('3a72f2b82c4509b047c9fbb924b89da0d90859688d2ebbb00e4c48bcad36f362305b1970aecd366a81e961a574e8439800dd62a1df3606c9c1f8485f7a187027'
+sha512sums=('ae65afd9cff1eb33a4c7688b53d83427edf1b6866eca4879ea0fd1e7f03167906664f4b250901f37406e88e1ba43f1f7a38651c27dd367fc42e5e80a66ae8469'
             'aef377e84e6bf5aea114f97b1bac8301203e3a6e736cacb49f01a2e95a29022062fc0d9e85fe8ba1ae9bdc1ffa6c007a031327c185e4966d3393adf038fc0993')
 
 PETSC_ARCH=linux-c-opt
