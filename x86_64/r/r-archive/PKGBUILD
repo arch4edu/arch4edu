@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=archive
-_pkgver=1.1.7
+_pkgver=1.1.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Multi-Format Archive and Compression Support"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,9 +16,6 @@ depends=(
   r-rlang
   r-tibble
 )
-makedepends=(
-  r-cpp11
-)
 checkdepends=(
   r-testthat
 )
@@ -27,8 +24,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f3504e5b4704312ce00d704d1e186083')
-b2sums=('fb1f724126b14fd39a0df05a05538894343f7411c872769f9fdfed34ce2d4b8f42300c3121ad54e5867f59f9828a558b7e0851e75bed64c1abec53d669f7afde')
+md5sums=('2ccf2ae7f5f07242dd71e879b46cc3e1')
+b2sums=('2db6395d4b8a6fb442eb88c0c73852a7c2b60667600703d3df93a8f0d4eb957e4257238ce5253f05b86361ea57ad600f1dfac03db3c0fb84806912ddb59f619c')
 
 build() {
   mkdir build
