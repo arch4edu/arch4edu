@@ -4,7 +4,7 @@ _pkgname=parsnip
 _pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A Common API to Modeling and Analysis Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -29,7 +29,6 @@ depends=(
   r-withr
 )
 checkdepends=(
-  python-tensorflow
   r-bench
   r-c50
   r-dials
@@ -42,7 +41,6 @@ checkdepends=(
   r-modeldata
   r-partykit
   r-ranger
-  r-tensorflow
   r-testthat
   r-xgboost
 )
