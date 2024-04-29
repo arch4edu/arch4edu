@@ -4,11 +4,11 @@ _pkgname=DALEX
 _pkgver=2.4.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="moDel Agnostic Language for Exploration and eXplanation"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=(GPL)
+license=('GPL-2.0-or-later')
 depends=(
   r-ggplot2
   r-ibreakdown
