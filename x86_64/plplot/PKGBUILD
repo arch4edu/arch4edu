@@ -5,11 +5,15 @@
 # Contributor: Eric Belanger <eric@archlinux.org>
 pkgname=plplot
 pkgver=5.15.0
-pkgrel=8
+pkgrel=9
 pkgdesc="A cross-platform software package for creating scientific plots"
 arch=("i686" "x86_64")
 url="http://plplot.sourceforge.net/"
-license=("LGPL" "custom")
+license=(
+    "LGPL-2.0-or-later"
+    "GPL-2.0-or-later"
+    "LicenseRef-custom"
+)
 depends=(
     "cairo"
     "gcc-libs"
@@ -32,7 +36,13 @@ depends=(
     "wxwidgets-common"
     "wxwidgets-gtk3"
 )
-makedepends=("cmake" "jdk-openjdk" "pkg-config" "swig")
+makedepends=(
+    "cmake"
+    "jdk-openjdk"
+    "pkg-config"
+    "python-setuptools"
+    "swig"
+)
 optdepends=("bash")
 options=("!libtool")
 source=(
@@ -56,26 +66,11 @@ build() {
     fi
     mkdir build
     cd build
-    cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DENABLE_ada=OFF \
-        -DENABLE_c=ON \
-        -DENABLE_cxx=ON \
-        -DENABLE_d=OFF \
-        -DENABLE_fortran=OFF \
-        -DENABLE_itcl=OFF \
-        -DENABLE_itk=OFF \
-        -DENABLE_java=ON \
-        -DENABLE_lua=ON \
-        -DENABLE_ocaml=OFF \
-        -DENABLE_octave=OFF \
-        -DENABLE_pyqt5=OFF \
-        -DENABLE_python=ON \
-        -DENABLE_qt=ON \
-        -DENABLE_tcl=ON \
-        -DENABLE_tk=ON \
-        -DENABLE_wxwidgets=ON \
-        -DPLD_wxwidgets=ON  ..
+    cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ada=OFF -DENABLE_c=ON -DENABLE_cxx=ON -DENABLE_d=OFF \
+        -DENABLE_fortran=OFF -DENABLE_itcl=OFF -DENABLE_itk=OFF -DENABLE_java=ON -DENABLE_lua=ON \
+        -DENABLE_ocaml=OFF -DENABLE_octave=OFF -DENABLE_pyqt5=OFF -DENABLE_python=ON -DENABLE_qt=ON \
+        -DENABLE_tcl=ON -DENABLE_tk=ON -DENABLE_wxwidgets=ON -DPLD_wxwidgets=ON  ..
+
     make
 }
 
