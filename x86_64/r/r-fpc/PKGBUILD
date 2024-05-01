@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fpc
-_pkgver=2.2-11
+_pkgver=2.2-12
 pkgname=r-${_pkgname,,}
-pkgver=2.2.11
+pkgver=2.2.12
 pkgrel=1
 pkgdesc='Flexible Procedures for Clustering'
 arch=('any')
@@ -24,7 +24,7 @@ optdepends=(
   r-tclust
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('825590b90813c04c26d2507602fcbcb7f19a1354b154f470540c9be4e86f411a')
+sha256sums=('555996b4c7e78a28067df25ac657b5065ec79b6b2cd76080382c2d5b43104787')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
