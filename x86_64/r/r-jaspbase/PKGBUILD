@@ -3,7 +3,7 @@ _pkgname=jaspBase
 _pkgver=0.18.3
 pkgname=r-${_pkgname,,}
 pkgver=0.18.3
-pkgrel=1
+pkgrel=4
 pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
 arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -42,14 +42,21 @@ optdepends=()
 source=(
 "${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
 "jaspColumnEncoder-${_pkgver}.tar.gz::https://github.com/jasp-stats/jaspColumnEncoder/archive/refs/tags/v0.18.0.tar.gz"
+"001-format-security.patch::https://patch-diff.githubusercontent.com/raw/jasp-stats/jaspBase/pull/147.patch"
 )
 sha256sums=('183defcd7a89cc3b133799358b51396cbfd1862ef227b0c29b278dd273978cfc'
-            'da345bb73e365bb345935fd7263575ef0be1af79490105713cca06de258096ad')
+            'da345bb73e365bb345935fd7263575ef0be1af79490105713cca06de258096ad'
+            'ad66bf2d5db9019891bd9eb6649860d734483be59fdf6aeef28a60487ae4de60')
 
+prepare(){
+  cd ${_pkgname}-${_pkgver}
+  patch --strip=1 < ../001-format-security.patch
+  cd $srcdir
+  tar -cvzf ${pkgname}_${_pkgver}.tar.gz ${_pkgname}-${_pkgver}
+}
 build() {
   export INCLUDE_DIR=${srcdir}/jaspColumnEncoder-0.18.0
-
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL ${pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
