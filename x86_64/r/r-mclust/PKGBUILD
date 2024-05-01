@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mclust
-_pkgver=6.1
+_pkgver=6.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,8 +24,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e07e481162d30f29d2c815050264ddd4')
-b2sums=('1fadd39cbeb77d8ef3a698ff8bfc69379fb7f6e61bff59b6c02d5c011c52431f1d854e0c850c405fd83f7006e9bea746672491ef2970daea9ac43305c2678965')
+md5sums=('b8feb881391b91082fe3ef2b5a436c4d')
+b2sums=('6512b5b3bff9b2ae95efdc5e2251f8519b89868ac98df35f50841f677fd8fff87af71bec326a05856f2930799f9d1a3e273a9dcbde71df262c52567d3eebda99')
 
 build() {
   mkdir build
