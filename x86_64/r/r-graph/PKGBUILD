@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=graph
-_pkgver=1.80.0
+_pkgver=1.82.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="A package to handle graph data structures"
 arch=(x86_64)
 url="https://bioconductor.org/packages/$_pkgname"
@@ -21,8 +21,8 @@ optdepends=(
   r-xml
 )
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('735b96df0f7c955806148170220b75b2')
-b2sums=('67c60fe3b3160bbe16db9e5e31e7d85d8fa4bd812a39dce1ac7c57bb8dbe5789abd2e983b595e0d68a87087effc34550060ddd9d6e95dcb4a3f46154a3c7a77b')
+md5sums=('02ccc725b2d36dfe26bb5630eece2572')
+b2sums=('a0f6f5e1bb2e22fd366853de0194ec36fe7d4332c8e92fe02542d9064b8f8c4abf317690314173b58f22e68329e0842d9b7d481e9d834b8fe20c324c9aeab7f6')
 
 build() {
   mkdir build
