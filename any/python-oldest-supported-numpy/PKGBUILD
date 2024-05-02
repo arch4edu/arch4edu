@@ -2,7 +2,7 @@
 pkgname=python-oldest-supported-numpy
 _pyname=${pkgname#python-}
 pkgver=2023.12.21
-pkgrel=1
+pkgrel=2
 pkgdesc="Meta-package providing oldest supported Numpy for given Python version"
 arch=('any')
 url="https://github.com/scipy/oldest-supported-numpy"
