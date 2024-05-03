@@ -1,0 +1,102 @@
+diff --unified --recursive --text package.orig/cupy_backends/cuda/api/runtime.pyx package.new/cupy_backends/cuda/api/runtime.pyx
+--- package.orig/cupy_backends/cuda/api/runtime.pyx	2024-05-02 23:20:39.773793830 +0800
++++ package.new/cupy_backends/cuda/api/runtime.pyx	2024-05-03 00:16:35.243360102 +0800
+@@ -318,7 +318,6 @@
+         properties['clockInstructionRate'] = props.clockInstructionRate
+         properties['maxSharedMemoryPerMultiProcessor'] = (
+             props.maxSharedMemoryPerMultiProcessor)
+-        properties['gcnArch'] = props.gcnArch
+         properties['hdpMemFlushCntl'] = <intptr_t>(props.hdpMemFlushCntl)
+         properties['hdpRegFlushCntl'] = <intptr_t>(props.hdpRegFlushCntl)
+         properties['memPitch'] = props.memPitch
+@@ -351,6 +350,8 @@
+         arch['has3dGrid'] = props.arch.has3dGrid
+         arch['hasDynamicParallelism'] = props.arch.hasDynamicParallelism
+         properties['arch'] = arch
++    IF CUPY_HIP_VERSION < 600: # removed in HIP 6.0.0
++        properties['gcnArch'] = props.gcnArch
+     IF CUPY_HIP_VERSION >= 310:
+         properties['gcnArchName'] = props.gcnArchName
+         properties['asicRevision'] = props.asicRevision
+@@ -720,12 +721,18 @@
+             <intptr_t>attrs.devicePointer,
+             <intptr_t>attrs.hostPointer,
+             attrs.type)
+-    ELIF CUPY_HIP_VERSION > 0:
++    ELIF 0 < CUPY_HIP_VERSION < 600:
+         return PointerAttributes(
+             attrs.device,
+             <intptr_t>attrs.devicePointer,
+             <intptr_t>attrs.hostPointer,
+             attrs.memoryType)
++    ELIF CUPY_HIP_VERSION >= 600:
++        return PointerAttributes(
++            attrs.device,
++            <intptr_t>attrs.devicePointer,
++            <intptr_t>attrs.hostPointer,
++            attrs.type)
+     ELSE:  # for RTD
+         return None
+ 
+diff --unified --recursive --text package.orig/cupy_backends/cuda/api/_runtime_typedef.pxi package.new/cupy_backends/cuda/api/_runtime_typedef.pxi
+--- package.orig/cupy_backends/cuda/api/_runtime_typedef.pxi	2024-05-02 23:20:39.773793830 +0800
++++ package.new/cupy_backends/cuda/api/_runtime_typedef.pxi	2024-05-03 00:26:49.673385676 +0800
+@@ -138,12 +138,18 @@
+             int device
+             void* devicePointer
+             void* hostPointer
+-    ELIF CUPY_HIP_VERSION > 0:
++    ELIF 0 < CUPY_HIP_VERSION < 600:
+         ctypedef struct _PointerAttributes 'cudaPointerAttributes':
+             int memoryType
+             int device
+             void* devicePointer
+             void* hostPointer
++    ELIF CUPY_HIP_VERSION >= 600:
++        ctypedef struct _PointerAttributes 'cudaPointerAttributes':
++            int type
++            int device
++            void* devicePointer
++            void* hostPointer
+     ELSE:
+         ctypedef struct _PointerAttributes 'cudaPointerAttributes':
+             pass  # for RTD
+diff --unified --recursive --text package.orig/cupy_backends/hip/cupy_hip_runtime.h package.new/cupy_backends/hip/cupy_hip_runtime.h
+--- package.orig/cupy_backends/hip/cupy_hip_runtime.h	2024-05-02 23:20:39.773793830 +0800
++++ package.new/cupy_backends/hip/cupy_hip_runtime.h	2024-05-03 00:02:25.332289853 +0800
+@@ -270,12 +270,12 @@
+                                      const void* ptr) {
+     cudaError_t status = hipPointerGetAttributes(attributes, ptr);
+     if (status == cudaSuccess) {
+-        switch (attributes->memoryType) {
++        switch (attributes->type) {
+             case 0 /* hipMemoryTypeHost */:
+-                attributes->memoryType = (hipMemoryType)1; /* cudaMemoryTypeHost */
++                attributes->type = (hipMemoryType)1; /* cudaMemoryTypeHost */
+                 return status;
+             case 1 /* hipMemoryTypeDevice */:
+-                attributes->memoryType = (hipMemoryType)2; /* cudaMemoryTypeDevice */
++                attributes->type = (hipMemoryType)2; /* cudaMemoryTypeDevice */
+                 return status;
+             default:
+                 /* we don't care the rest of possibilities */
+diff --unified --recursive --text package.orig/install/cupy_builder/install_build.py package.new/install/cupy_builder/install_build.py
+--- package.orig/install/cupy_builder/install_build.py	2024-05-02 23:22:00.040573929 +0800
++++ package.new/install/cupy_builder/install_build.py	2024-05-03 00:32:40.774954968 +0800
+@@ -155,10 +155,15 @@
+         include_dirs.append(os.path.join(rocm_path, 'include', 'rocrand'))
+         include_dirs.append(os.path.join(rocm_path, 'include', 'hiprand'))
+         include_dirs.append(os.path.join(rocm_path, 'include', 'roctracer'))
++        include_dirs.append(os.path.join(rocm_path, 'include', 'hipblas'))
++        include_dirs.append(os.path.join(rocm_path, 'include', 'hipsparse'))
++        include_dirs.append(os.path.join(rocm_path, 'include', 'hipfft'))
++        include_dirs.append(os.path.join(rocm_path, 'include', 'rocsolver'))
++        include_dirs.append(os.path.join(rocm_path, 'include', 'rccl'))
+         library_dirs.append(os.path.join(rocm_path, 'lib'))
+ 
+     if use_hip:
+-        extra_compile_args.append('-std=c++11')
++        extra_compile_args.append('-std=c++14')
+ 
+     if PLATFORM_WIN32:
+         nvtx_path = _environment.get_nvtx_path()
