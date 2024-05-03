@@ -1,9 +1,10 @@
-# Maintainer: Hugo Osvaldo Barrera <hugo@barrera.io>
-# Contributors: PastLeo <chgu82837@gmail.com>
-# Contributors: koba1t <kobdotsh at gmail dot com>
+# Maintainer: Ľubomír 'the-k' Kučera <lubomir.kucera.jr at gmail.com>
+# Contributor: Hugo Osvaldo Barrera <hugo@barrera.io>
+# Contributor: PastLeo <chgu82837@gmail.com>
+# Contributor: koba1t <kobdotsh at gmail dot com>
 
 pkgname=docker-rootless-extras
-pkgver=25.0.3
+pkgver=26.1.1
 pkgrel=1
 pkgdesc="Extras to run docker as non-root."
 arch=('x86_64' 'aarch64')
@@ -20,8 +21,8 @@ source=(
         "docker.socket"
         "99-docker-rootless.conf")
 
-sha256sums=('935d017538ed780371f547f836abb57d8cd811225e40c3002326aa35b6b8f697'
-            '9e9268003f4f168ff499a870b58b58e922f57c42fbd8f10cc50acf462927d4b8'
+sha256sums=('f2e515d1e635a110c95d939a9ef115725317ea2c3e752469ea4ca0e3dcc12ea1'
+            '66609532b1da7b37f89e7fb60b129b33b7ec10b1822bc670957e0a4b386613e2'
             'd8695293e5d4a814763f13e1d36ed37273040666b4b91363d6c33171df8934c7'
             'd0d790d4c3d887b10b2b155b83a58a44980b9fa638f8c0f1faec0739dc0ef473')
 
