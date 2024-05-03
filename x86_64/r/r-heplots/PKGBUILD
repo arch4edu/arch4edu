@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=heplots
-_pkgver=1.6.2
+_pkgver=1.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -20,6 +20,7 @@ depends=(
 )
 optdepends=(
   r-animation
+  r-archdata
   r-bookdown
   r-candisc
   r-cardata
@@ -27,17 +28,24 @@ optdepends=(
   r-dplyr
   r-effects
   r-ggplot2
+  r-glue
   r-gplots
+  r-here
   r-knitr
   r-mvinfluence
+  r-patchwork
+  r-qqtest
   r-reshape
   r-reshape2
   r-rmarkdown
+  r-rrcov
+  r-sleuth2
   r-tidyr
+  r-tinytable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8e6ec4d6adbe95bccccaa81aedb4315c')
-b2sums=('56694ec405321a5a06237da5a045538d4bd53c05dfed4ccaa6ae30e5967bab2aee26cbd98122ec32e683b70756f3f2d2ca8c13b7b7024cf928453b972a374cbd')
+md5sums=('68b160b063d5e2090ad89903e460631a')
+b2sums=('0be958d9c5e0e1de88fcf4f47f6b9fca73bcc8a9f35a1e761ab5e02547237c16694b302ac2d6a62e1d97ee2479cd78186926080165de5fd8493f2e9738431363')
 
 build() {
   mkdir build
