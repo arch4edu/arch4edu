@@ -9,7 +9,7 @@
 # Contributor: ZiXiS
 
 pkgname=pcl
-pkgver=1.14.0
+pkgver=1.14.1
 pkgrel=1
 pkgdesc="A comprehensive open source library for n-D Point Clouds and 3D geometry processing"
 arch=('x86_64' 'i686')
@@ -19,20 +19,26 @@ depends=('boost' 'eigen' 'flann' 'vtk' 'libpcap' 'libpng' 'libusb' 'libx11')
 optdepends=('cuda' 'openmp' 'openni2' 'qhull')
 makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fmt' 'glew' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
              'netcdf' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp' 'verdict')
+checkdepends=('gtest')
 source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('de297b929eafcb93747f12f98a196efddf3d55e4edf1b6729018b436d5be594d')
+sha256sums=('5dc5e09509644f703de9a3fb76d99ab2cc67ef53eaf5637db2c6c8b933b28af6')
 
 build() {
   cmake -B build -S "${srcdir}/pcl-pcl-${pkgver}" \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_CXX_STANDARD=14 \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CUDA_STANDARD=17 \
     -DCMAKE_INSTALL_PREFIX='/usr' \
     -DWITH_QT='QT5' \
     -DBUILD_surface_on_nurbs=ON \
-    -DCUDA_HOST_COMPILER='/usr/bin/gcc' \
+    -DBUILD_global_tests=ON \
     -Wno-dev
-
   cmake --build build
+}
+
+check() {
+  cd build/test
+  ctest --output-on-failure
 }
 
 package() {
