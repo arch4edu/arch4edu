@@ -2,7 +2,7 @@
 _pkgname=qiskit-ibm-runtime
 pkgname=python-${_pkgname}
 pkgver=0.22.0
-pkgrel=1
+pkgrel=2
 pkgdesc="IBM Client for Qiskit Runtime"
 arch=('any')
 url="https://github.com/Qiskit/qiskit-ibm-runtime"
