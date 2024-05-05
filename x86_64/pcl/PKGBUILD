@@ -10,14 +10,14 @@
 
 pkgname=pcl
 pkgver=1.14.1
-pkgrel=1
-pkgdesc="A comprehensive open source library for n-D Point Clouds and 3D geometry processing"
+pkgrel=2
+pkgdesc="A standalone, large scale, open project for 2D/3D image and point cloud processing"
 arch=('x86_64' 'i686')
 url='https://www.pointclouds.org'
 license=('BSD')
-depends=('boost' 'eigen' 'flann' 'vtk' 'libpcap' 'libpng' 'libusb' 'libx11')
+depends=('boost' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libpng' 'libusb')
 optdepends=('cuda' 'openmp' 'openni2' 'qhull')
-makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fmt' 'glew' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
+makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
              'netcdf' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp' 'verdict')
 checkdepends=('gtest')
 source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz")
@@ -31,6 +31,8 @@ build() {
     -DCMAKE_INSTALL_PREFIX='/usr' \
     -DWITH_QT='QT5' \
     -DBUILD_surface_on_nurbs=ON \
+    -DBUILD_outofcore=OFF \
+    -DBUILD_simulation=ON \
     -DBUILD_global_tests=ON \
     -Wno-dev
   cmake --build build
