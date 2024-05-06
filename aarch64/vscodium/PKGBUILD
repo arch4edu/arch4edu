@@ -3,13 +3,13 @@
 
 pkgname=vscodium
 # Make sure the pkgver matches the git tags in vscodium and vscode git repo's!
-pkgver=1.88.1.24104
+pkgver=1.89.0.24126
 pkgrel=1
 pkgdesc="Free/Libre Open Source Software Binaries of VSCode (git build from latest release)."
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://github.com/VSCodium/vscodium.git'
 license=('MIT')
-
+options=(!strip !debug)
 depends=(
     'fontconfig'
     'libxtst'
@@ -47,7 +47,7 @@ source=(
 sha256sums=('f76eb3ecf7fa531e0f711938e4e10f82145b5a7bf8b24bda218acb2d47466d60'
             '1841d08fdb512f32433eefa21132bf7ad13e106cb45ca3218d0da7b7be9cfc81'
             '6eef345b65bf2679c928c763529540435ab9c6e1836917319810a7a2d484ae1b'
-            '252bd016b05a17fd9151eaf5b85cf9fbe2c63ce255a960c73cacdf5baae67d38')
+            'fedb7b3e17acb1990c6c9d71d0e58f06792b73882f4b125b75aa5231474d225a')
 provides=(
     'codium'
     'vscodium'
@@ -124,6 +124,8 @@ build() {
 
     # Disabling this patch, since it is for win32 and does not apply here
     rm -rf patches/cleanup-archive.patch
+    # Same for ppc64le-support.patch since that is not a supported architecture
+    rm -rf patches/ppc64le-support.patch
     . get_repo.sh
     . build.sh
 }
