@@ -3,7 +3,7 @@
 
 pkgname=wiringpi
 _pkgname=WiringPi
-pkgver=251.61126f0
+pkgver=285.8960cc9
 pkgrel=1
 pkgdesc='GPIO Interface library for the Raspberry Pi'
 arch=('armv7h' 'aarch64')
