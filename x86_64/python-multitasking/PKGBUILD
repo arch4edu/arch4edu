@@ -2,27 +2,27 @@
 _pkgname=multitasking
 pkgname=python-multitasking
 pkgver=0.0.11
-pkgrel=5
+pkgrel=6
 pkgdesc="Non-blocking Python methods using decorators"
-arch=('any')
-url="https://github.com/ranaroussi/multitasking"
-license=('Apache')
-depends=('python')
+arch=(any)
+url=https://github.com/ranaroussi/multitasking
+license=(Apache-2.0)
+depends=(python)
 makedepends=(
-    'python-build'
-    'python-installer'
-    'python-setuptools'
-    'python-wheel'
+    python-build
+    python-installer
+    python-setuptools
+    python-wheel
 )
-source=("${_pkgname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
-b2sums=('eab1376111fb5b4d9b77079842a02aeee6804ab75bbbdd2bebe7ad3bd2a9eb8e12d59701be37d26195bd61dbc6c9928599693e735c32168d95486d8ffcdc889b')
+source=($_pkgname-$pkgver.tar.gz::https://github.com/ranaroussi/$_pkgname/archive/refs/tags/$pkgver.tar.gz)
+b2sums=('7c6c5e7270c3edb9535406399d9c8a2fbc45d3a57854c77b27af6375ec4c3cea32fe9c57252916da453b2c47ae23f4f9faf186f54fa651dece130eb31abbb7f3')
 
 build() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
+    cd $_pkgname-$pkgver
     python -m build --wheel --no-isolation
 }
 
 package() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
+    cd $_pkgname-$pkgver
     python -m installer --destdir="$pkgdir" dist/*.whl
 }
