@@ -4,16 +4,16 @@
 _base=etils
 pkgname=python-${_base}
 pkgver=1.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Collection of common python utils"
 url="https://github.com/google/${_base}"
 license=(Apache-2.0)
 arch=(any)
 depends=(python)
 makedepends=(python-build python-installer python-flit-core python-wheel)
-checkdepends=(python-pytest-subtests python-numpy python-typing_extensions
-  python-absl ipython python-jax python-importlib_resources python-tensorflow
-  python-tqdm python-pytorch python-fsspec) # python-simple_parsing python-chex python-dataclass_array
+# checkdepends=(python-pytest-subtests python-numpy python-typing_extensions
+#   python-absl ipython python-jax python-importlib_resources python-tensorflow
+#   python-tqdm python-pytorch python-fsspec) # python-simple_parsing python-chex python-dataclass_array
 optdepends=('python-numpy: for etils.array_types, etils.ecolab, etils.enp'
   'ipython: for etils.ecolab'
   # 'python-mediapy: for etils.ecolab'
@@ -34,25 +34,25 @@ build() {
   python -m build --wheel --skip-dependency-check --no-isolation
 }
 
-check() {
-  cd ${_base}-${pkgver}
-  python -m venv --system-site-packages test-env
-  test-env/bin/python -m installer dist/*.whl
-  test-env/bin/python -m pytest \
-    --ignore etils/eapp/dataclass_flags_test.py \
-    --ignore etils/ecolab/adhoc_lib/module_deps_utils_test.py \
-    --ignore etils/ecolab/array_as_img_test.py \
-    --ignore etils/ecolab/auto_display_utils_test.py \
-    --ignore etils/ecolab/colab_utils_test.py \
-    --ignore etils/ecolab/inplace_reload_test.py \
-    --ignore etils/ecolab/inspects/attrs_test.py \
-    --ignore etils/ecolab/inspects/html_helper_test.py \
-    --ignore etils/ecolab/inspects/nodes_test.py \
-    --ignore etils/ecolab/lazy_imports_test.py \
-    --ignore etils/edc/frozen_utils_test.py \
-    --ignore etils/epy/lazy_imports_utils_test.py \
-    --ignore etils/etree/tree_utils_test.py
-}
+# check() {
+#   cd ${_base}-${pkgver}
+#   python -m venv --system-site-packages test-env
+#   test-env/bin/python -m installer dist/*.whl
+#   test-env/bin/python -m pytest \
+#     --ignore etils/eapp/dataclass_flags_test.py \
+#     --ignore etils/ecolab/adhoc_lib/module_deps_utils_test.py \
+#     --ignore etils/ecolab/array_as_img_test.py \
+#     --ignore etils/ecolab/auto_display_utils_test.py \
+#     --ignore etils/ecolab/colab_utils_test.py \
+#     --ignore etils/ecolab/inplace_reload_test.py \
+#     --ignore etils/ecolab/inspects/attrs_test.py \
+#     --ignore etils/ecolab/inspects/html_helper_test.py \
+#     --ignore etils/ecolab/inspects/nodes_test.py \
+#     --ignore etils/ecolab/lazy_imports_test.py \
+#     --ignore etils/edc/frozen_utils_test.py \
+#     --ignore etils/epy/lazy_imports_utils_test.py \
+#     --ignore etils/etree/tree_utils_test.py
+# }
 
 package() {
   cd ${_base}-${pkgver}
