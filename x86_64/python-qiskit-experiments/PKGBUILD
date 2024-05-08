@@ -2,7 +2,7 @@
 _pkgname=qiskit-experiments
 pkgname=python-${_pkgname}
 pkgver=0.6.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=(any)
 url=https://github.com/Qiskit-Extensions/qiskit-experiments
@@ -30,6 +30,14 @@ optdepends=(
     'python-qiskit-aer'
     'python-qiskit-dynamics: for the PulseBackend'
 )
+#checkdepends=(
+#    python-ddt
+#    python-fixtures
+#    python-multimethod
+#    python-pytest
+#    python-qiskit-aer
+#    python-testtools
+#)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit-Extensions/$_pkgname/archive/refs/tags/$pkgver.tar.gz)
 b2sums=('862a45541d7b45f0adfe913c547afa8041dbaa66b747a18aa6944ddf43fbf1ef7a55b454969c5459e7d64d9c1da5eec435de7180e14a22cfa5a0d47a7a8fd60d')
 
@@ -37,6 +45,13 @@ build() {
     cd $_pkgname-$pkgver
     python -m build --wheel --no-isolation
 }
+
+#check() {
+#    cd $_pkgname-$pkgver
+#    local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+#    python -m installer --destdir=../test_dir dist/*.whl
+#    PYTHONPATH=../test_dir/$_site_packages pytest
+#}
 
 package() {
     cd $_pkgname-$pkgver
