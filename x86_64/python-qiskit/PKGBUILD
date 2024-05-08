@@ -1,25 +1,24 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit
 pkgname=python-${_pkgname}
-pkgver=1.0.2
-pkgrel=2
+pkgver=1.1.0rc1
+pkgrel=1
 epoch=1
 pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
-arch=('x86_64')
-url="https://github.com/Qiskit/qiskit"
-license=('Apache-2.0')
-provides=('python-qiskit-terra')
-conflicts=('python-qiskit-terra')
+arch=(x86_64)
+url=https://github.com/Qiskit/qiskit
+license=(Apache-2.0)
+conflicts=(python-qiskit-terra)
 depends=(
-    'cython'
-    'python-dateutil'
-    'python-dill'
-    'python-numpy'
-    'python-rustworkx'
-    'python-scipy'
-    'python-stevedore'
-    'python-symengine'
-    'python-sympy'
+    cython
+    python-dateutil
+    python-dill
+    python-numpy
+    python-rustworkx
+    python-scipy
+    python-stevedore
+    python-symengine
+    python-sympy
 )
 optdepends=(
     'ipython: interactivity'
@@ -28,7 +27,7 @@ optdepends=(
     'python-matplotlib: plotting support'
     'python-pillow: image support'
     "python-pydot: Graphviz's Dot support"
-    "python-pylatexenc: LaTeX support'emoji selector"
+    'python-pylatexenc: LaTeX support emoji selector'
     'python-qiskit-aer: high performance simulator for quantum circuits'
     'python-qiskit-experiments: tools for building, running, and analysis of experiments on noisy quantum computers'
     'python-qiskit-finance: stock/securities problems, portfolio optimizations and finance experiments'
@@ -41,39 +40,45 @@ optdepends=(
     'python-z3-solver: theorem prover'
 )
 makedepends=(
-    'python-build'
-    'python-installer'
-    'python-setuptools'
-    'python-setuptools-rust'
-    'python-wheel'
+    python-build
+    python-installer
+    python-setuptools
+    python-setuptools-rust
+    python-wheel
 )
 #checkdepends=(
-#    'python-anyio'
-#    'python-ddt'
-#    'python-hypothesis'
-#    'python-pytest'
-#    'python-pytest-benchmark'
-#    'python-pytest-xdist'
+#    python-anyio
+#    python-ddt
+#    python-hypothesis
+#    python-pytest
+#    python-pytest-benchmark
+#    python-pytest-xdist
 #)
-source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/Qiskit/${_pkgname}/archive/${pkgver}.tar.gz")
-b2sums=('bb92e2d093df181e948cd23da06e130b368a79fec51a6897936df36197d1681f10802e35752f7fad00072f437e472925f3e161651831d4c40a83213422d8551e')
+source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
+b2sums=('c4a8faf17106df4088b80ab533ef8e2c5c862854c3b4d045e545ec81ac45dee0fb8c8a078517c26c0d803990174de4bb770b8a676e42f819e2b90f6cc24ee951')
+
+prepare() {
+    cd $_pkgname-$pkgver
+    sed -i '1 s/$/ import symengine/' test/python/circuit/test_circuit_load_from_qpy.py
+}
 
 build() {
-    cd "${_pkgname}-${pkgver}"
+    cd $_pkgname-$pkgver
     python -m build --wheel --no-isolation
 }
 
+# There are some issues with symengine crashing while running some of the tests
 #check() {
-#    local python_version=$(python -c 'import sys; print("".join(map(str, sys.version_info[:2])))')
-#    cd "${_pkgname}-${pkgver}"
-#    python -m installer --destdir=test_dir dist/*.whl
-#    # Delete qiskit folder so that the installed package is loaded and not the src
-#    rm -rf qiskit
-#    PYTHONPATH="$PWD/build/lib.linux-$CARCH-cpython-${python_version}" pytest -v -k 'not test_examples' test/python
+#    cd $_pkgname-$pkgver
+#    local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+#    python -m installer --destdir=../test_dir dist/*.whl
+#    # Delete qiskit folder in src to be sure we test with installed package
+#    rm -r qiskit
+#    PYTHONPATH=../test_dir/$_site_packages pytest test/python
 #}
 
 package() {
-    cd "${_pkgname}-${pkgver}"
+    cd $_pkgname-$pkgver
     python -m installer --destdir="$pkgdir" dist/*.whl
-    install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -D -m644 LICENSE.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
