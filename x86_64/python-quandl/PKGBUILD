@@ -4,7 +4,7 @@
 _pkgname=quandl
 pkgname=python-$_pkgname
 pkgver=3.7.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Quandl's Python Package"
 arch=('any')
 url="https://github.com/quandl/quandl-python"
@@ -24,3 +24,4 @@ package() {
   install -Dm755 LICENSE.txt -t \
     "$pkgdir/usr/share/licenses/$pkgname/LICENSE.txt"
 }
+makedepends+=("python-setuptools")
