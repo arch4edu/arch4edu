@@ -6,7 +6,7 @@
 pkgname='libsearpc'
 epoch=2
 pkgver=3.3.0
-pkgrel=4
+pkgrel=5
 pkgdesc="A simple C language RPC framework (including both server side & client side)"
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
 url="https://github.com/haiwen/libsearpc"
@@ -17,28 +17,24 @@ depends=(
     'python-gobject'
     'python-simplejson'
 )
-_pkgver="${pkgver%.*}-latest"
-source=("libsearpc-$_pkgver.tar.gz::$url/archive/v$_pkgver.tar.gz")
-sha256sums=('143ada255ea852a58577a833df0462af98376a3fd2886dc43ead621d656c317d')
-
-prepare () {
-    cd "$srcdir/$pkgname-$_pkgver"
-    sed -i 's|(DESTDIR)@prefix@|@prefix@|' './libsearpc.pc.in'
-}
+makedepends=('git')
+_commit='4ccd1988d8abbacc4bda7a14b5a244010b565d9e'
+source=("$pkgname::git+$url#commit=$_commit")
+sha256sums=('SKIP')
 
 build () {
-    cd "$srcdir/$pkgname-$_pkgver"
+    cd "$srcdir/$pkgname"
     ./autogen.sh
     ./configure --prefix=/usr PYTHON='/usr/bin/python'
     make
 }
 
 check () {
-    cd "$srcdir/$pkgname-$_pkgver"
+    cd "$srcdir/$pkgname"
     make check
 }
 
 package () {
-    cd "$srcdir/$pkgname-$_pkgver"
+    cd "$srcdir/$pkgname"
     make DESTDIR="$pkgdir" install
 }
