@@ -1,25 +1,34 @@
-# $Id: PKGBUILD 164237 2012-07-28 03:14:33Z stephane $
-# Maintainer: Vladimir Khodygo <khodygo == at == gmail.com>
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: Auto update bot <auto-update-bot@arch4edu.org>
+# Contributor: davidalb97 <davidalb97@hotmail.com>
+# Contributor: Xuanrui Qi <me@xuanruiqi.com>
+# Contributor: Monson Shao <holymonson@gmail.com>
+# Contributor: Vladimir Khodygo <khodygo == at == gmail.com>
 # Contributor: Ilya Elenskiy <elenskiy.ilya@gmail.com>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Jan de Groot <jgc@archlinux.org>
 # Contributor: Douglas Soares de Andrade <dsa@aur.archlinux.org>
 # Contributor: Angel 'angvp' Velasquez <angvp[at]archlinux.com.ve>
 # Adapted to mkl by Simone Riva
-
 pkgname=python-numpy-mkl
 pkgver=1.26.4
-pkgrel=1
+pkgrel=3
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
-arch=('x86_64')
-license=('custom')
-url="http://www.numpy.org/"
+arch=(x86_64)
+license=(BSD-3-Clause)
+url="https://numpy.org"
 provides=("python-numpy=$pkgver")
-conflicts=('python-numpy')
-depends=('python' 'intel-oneapi-mkl')
-makedepends=('cython' 'meson-python' 'procps-ng' 'python-build' 'python-installer')
-checkdepends=('python-pytest' 'python-hypothesis')
+conflicts=(python-numpy)
+depends=(python intel-oneapi-mkl)
+makedepends=(python-build python-installer meson-python python-setuptools cython gcc-fortran procps-ng)
+checkdepends=(python-pytest python-hypothesis)
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-sha256sums=('2a02aba9ed12e4ac4eb3ea9421c420301a0c6460d9830d74a9df87efa4912010')
+sha512sums=('f7121ab4099fa0686f9c095d456baa4a5869d651d7b7a06385f885f329cf08f11024b5df5e7b4ee705970062a8102ec4f709512eabbfd5c9fccce4ef83b9c208')
+
+prepare() {
+  sed -i 's/meson-python>=0.15.0,<0.16.0/meson-python>=0.15.0/' numpy-$pkgver/pyproject.toml
+}
 
 build() {
   source /opt/intel/oneapi/setvars.sh
