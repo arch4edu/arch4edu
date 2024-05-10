@@ -1,28 +1,30 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 pkgbase=python-accessible-pygments
-_pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}")
+_pname=${pkgbase#python-}
+_pyname=${_pname//-/_}
+pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=0.0.4
-pkgrel=2
+pkgver=0.0.5
+pkgrel=1
 pkgdesc="A collection of accessible pygments styles"
 arch=('any')
 url="https://quansight-labs.github.io/accessible-pygments"
-license=('BSD')
-makedepends=('python-setuptools'
-             'python-pygments')
+license=('BSD-3-Clause')
+makedepends=('python-hatchling'
+             'python-hatch-fancy-pypi-readme'
+             'python-hatch-vcs'
+             'python-build'
+             'python-installer')
+#            'python-pygments'
 #            'python-wheel'
-#            'python-build'
-#            'python-installer'
 #            'python-sphinx')
 checkdepends=('python-nose')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('ecacd117d7258a285ccc282a33abd906')
+md5sums=('3b3ce27e8340fad9f60cb3a633265566')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
-    python setup.py build
-#   python -m build --wheel --no-isolation
+    python -m build --wheel --no-isolation
 
 #   msg "Building Docs"
 #   PYTHONPATH="../build/lib" make -C docs html
@@ -42,8 +44,7 @@ package_python-accessible-pygments() {
 
     install -D -m644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
     install -D -m644 README.md -t "${pkgdir}/usr/share/doc/${pkgname}"
-    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
-#   python -m installer --destdir="${pkgdir}" dist/*.whl
+    python -m installer --destdir="${pkgdir}" dist/*.whl
 }
 
 #package_python-accessible-pygments-doc() {
