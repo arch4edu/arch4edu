@@ -4,11 +4,11 @@ _pname=${pkgbase#python-}
 _pyname=Theano-PyMC
 pkgname=("python-${_pname}" "python-${_pname}-doc")
 pkgver=1.1.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs"
 arch=('any')
 url="https://pypi.org/project/Theano-PyMC"
-license=('BSD')
+license=('BSD-3-Clause')
 makedepends=('python-setuptools')
 #            'python-wheel'
 #            'python-build'
@@ -23,11 +23,17 @@ get_pyver() {
     python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))'
 }
 
-#prepare() {
-#    cd ${srcdir}/${_pyname}-${pkgver}
-#
-#    ln -s ${srcdir}/Makefile doc
-#}
+prepare() {
+    cd ${srcdir}/${_pyname}-${pkgver}
+
+#   ln -s ${srcdir}/Makefile doc
+    sed -i -e 's/SafeConfigParser/ConfigParser/' -e 's/readfp/read_file/' versioneer.py
+    sed -e '/import numpy.distutils/d' -e '/^import theano/a import numpy' \
+        -e 's/numpy.distutils.misc_util.get_numpy_include_dirs()/[numpy.get_include()]/' \
+        -e '/^\    except KeyError/s/KeyError/Exception/' -i theano/link/c/cmodule.py
+    sed -e '/^import numpy.distutils/d' -i theano/tensor/blas.py
+    sed -e '/CASTING/a np.bool = np.bool_' -i theano/scalar/basic.py
+}
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -43,7 +49,7 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed"
+    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 }
 
 package_python-theano-pymc() {
