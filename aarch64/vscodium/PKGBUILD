@@ -4,7 +4,7 @@
 pkgname=vscodium
 # Make sure the pkgver matches the git tags in vscodium and vscode git repo's!
 pkgver=1.89.0.24127
-pkgrel=1
+pkgrel=2
 pkgdesc="Free/Libre Open Source Software Binaries of VSCode (git build from latest release)."
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://github.com/VSCodium/vscodium.git'
@@ -35,7 +35,7 @@ makedepends=(
     'git'
     'git-lfs'
     'patch'
-    'python'
+    'python<3.12'
     'pkg-config'
 )
 source=(
@@ -44,8 +44,8 @@ source=(
     "${pkgname}-uri-handler.desktop"
     "https://github.com/VSCodium/vscodium/releases/download/${pkgver}/VSCodium-${pkgver}-src.tar.gz"
 )
-sha256sums=('f76eb3ecf7fa531e0f711938e4e10f82145b5a7bf8b24bda218acb2d47466d60'
-            '1841d08fdb512f32433eefa21132bf7ad13e106cb45ca3218d0da7b7be9cfc81'
+sha256sums=('3a5bc109974fcf408855c13965f6d6be0997655c5b359de0bfd19a678c00844e'
+            'ef5759114cb0bada639bf89b778679bc7cf4d829151dc5fbf95eb33df4addcd6'
             '6eef345b65bf2679c928c763529540435ab9c6e1836917319810a7a2d484ae1b'
             '49d77e346235b315b83a7dad18c03188a97a66ed2c39e0824c482c5dff693e4e')
 provides=(
