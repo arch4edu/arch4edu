@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2024.5.3
+pkgver=2024.5.10
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -18,7 +18,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('44521508ecc51ebaf0e47e9748913e9c7331a4e32fb571ff4dfc05cb8f4d8896')
+sha256sums=('aa1e1b12be952ab20717d6848bd6d4a5ee88d2aa319f1152bff4354ad728ec86')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -35,20 +35,21 @@ check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
     # From Gentoo's ebuild
-    PYTHONPATH="build/lib" pytest \
-        --deselect=tests/test_tifffile.py::test_class_omexml \
-        --deselect=tests/test_tifffile.py::test_class_omexml_fail \
-        --deselect=tests/test_tifffile.py::test_class_omexml_modulo \
-        --deselect=tests/test_tifffile.py::test_class_omexml_attributes \
-        --deselect=tests/test_tifffile.py::test_class_omexml_multiimage \
-        --deselect=tests/test_tifffile.py::test_write_ome \
-        --deselect=tests/test_tifffile.py::test_write_ome_manual \
-        --deselect=tests/test_tifffile.py::test_write_3gb \
-        --deselect=tests/test_tifffile.py::test_write_5GB_bigtiff \
-        --deselect=tests/test_tifffile.py::test_write_5GB_fails \
-        --deselect=tests/test_tifffile.py::test_write_6gb \
-        --deselect=tests/test_tifffile.py::test_write_bigtiff \
-        --deselect=tests/test_tifffile.py::test_write_imagej_raw || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+    SKIP_LARGE=1 SKIP_HTTP=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+        PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+#       --deselect=tests/test_tifffile.py::test_class_omexml \
+#       --deselect=tests/test_tifffile.py::test_class_omexml_fail \
+#       --deselect=tests/test_tifffile.py::test_class_omexml_modulo \
+#       --deselect=tests/test_tifffile.py::test_class_omexml_attributes \
+#       --deselect=tests/test_tifffile.py::test_class_omexml_multiimage \
+#       --deselect=tests/test_tifffile.py::test_write_ome \
+#       --deselect=tests/test_tifffile.py::test_write_ome_manual \
+#       --deselect=tests/test_tifffile.py::test_write_3gb \
+#       --deselect=tests/test_tifffile.py::test_write_5GB_bigtiff \
+#       --deselect=tests/test_tifffile.py::test_write_5GB_fails \
+#       --deselect=tests/test_tifffile.py::test_write_6gb \
+#       --deselect=tests/test_tifffile.py::test_write_bigtiff \
+#       --deselect=tests/test_tifffile.py::test_write_imagej_raw || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 #       --deselect=tests/test_tifffile.py::test_issue_imagej_hyperstack_arg \
 #       --deselect=tests/test_tifffile.py::test_issue_description_overwrite \
 #       --deselect=tests/test_tifffile.py::test_issue_invalid_predictor \
