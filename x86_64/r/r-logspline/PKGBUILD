@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=logspline
-_pkgver=2.1.21
+_pkgver=2.1.22
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Routines for Logspline Density Estimation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,8 +17,8 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('58281b79aef9dfb57e8e6a36effeb71a')
-b2sums=('96235b760a5885d1d963a23a6a05bf97a60be7ca2d20f483295480cd63b8b928877a7478e857019c85df8f259155a9bacb4e14958a49db812c0e9aafa6fa60a0')
+md5sums=('bd7d9f2674785722cb89ab2c5894694c')
+b2sums=('af6c77d4af12ba77585610762d208303a609797504ae4df9cb7555e4d62fbf0b9033ee4b6617bf6d26f8e90f1e3c64abcebb0a0a0e57a5065b8db52e6980008a')
 
 build() {
   mkdir build
