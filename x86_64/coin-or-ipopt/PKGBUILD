@@ -1,6 +1,6 @@
 pkgname=coin-or-ipopt
 pkgver=3.14.16
-pkgrel=1
+pkgrel=2
 pkgdesc="Interior Point OPTimizer"
 arch=('x86_64')
 url="https://github.com/coin-or/Ipopt"
