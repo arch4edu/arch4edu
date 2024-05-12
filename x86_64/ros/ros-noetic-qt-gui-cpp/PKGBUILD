@@ -4,7 +4,7 @@ url='https://wiki.ros.org/qt_gui_cpp'
 pkgname='ros-noetic-qt-gui-cpp'
 pkgver='0.4.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=8
+pkgrel=9
 license=('BSD')
 
 ros_makedepends=(
@@ -37,8 +37,16 @@ depends=(
 )
 
 _dir="qt_gui_core-${pkgver}/qt_gui_cpp"
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-visualization/qt_gui_core/archive/${pkgver}.tar.gz")
-sha256sums=('fbc5a7b0a4da43f80e9216845aec2e247fac0a63512053c03a9f89024d026aad')
+source=(
+    "${pkgname}-${pkgver}.tar.gz"::"https://github.com/ros-visualization/qt_gui_core/archive/${pkgver}.tar.gz"
+    "upstream.patch"::"https://github.com/ros-visualization/qt_gui_core/compare/0.4.2...melodic-devel.patch"
+)
+sha256sums=('fbc5a7b0a4da43f80e9216845aec2e247fac0a63512053c03a9f89024d026aad' 'SKIP')
+
+prepare() {
+    cd ${srcdir}/qt_gui_core-${pkgver}
+    patch -Np1 -i ${srcdir}/upstream.patch
+}
 
 build() {
     # Use ROS environment variables.
