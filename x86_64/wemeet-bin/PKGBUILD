@@ -4,11 +4,11 @@
 _pkgname=wemeet
 pkgname=$_pkgname-bin
 provides=('wemeet' 'tencent-meeting')
-pkgver=3.19.0.401
+pkgver=3.19.1.400
 _pkgver_arm=${pkgver} # 两个版本有时候不一样
-_x86_md5=bb4001c715553579a8b3e496233331d4
-_arm_md5=0f96a97b0aaea9b9d5d2c2b912ede656
-pkgrel=3
+_x86_md5=fcdc2a010a25561a4d23e168b677b493
+_arm_md5=73805834f20680c804310bd0e80f269d
+pkgrel=1
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -18,6 +18,7 @@ source_x86_64=("${_pkgname}-${pkgver}-x86_64.deb::https://updatecdn.meeting.qq.c
 source_aarch64=("${_pkgname}-${_pkgver_arm}-aarch64.deb::https://updatecdn.meeting.qq.com/cos/${_arm_md5}/TencentMeeting_0300000000_${_pkgver_arm}_arm64_default.publish.deb")
 source=("${_pkgname}".sh 'wrap.c')
 depends=(
+    # most deps are not used, but kept for a
     bash
     qt5-webengine qt5-x11extras libxinerama
     libpulse # 无 pulseaudio 无法连接到系统音频
@@ -31,10 +32,10 @@ optdepends=(
     'bubblewrap: Fix abnormal text color in dark mode and prevent messing files.'
 )
 makedepends=('patchelf')
-sha512sums=('86fad230304c9d12fc3c34635e4afb4eed5419298f1e357192ebd36953c273aae78f1c89587200e6ebeb374fec23f0486222a2ea86a73f9b72cf06d4628b587f'
+sha512sums=('6c4b8c37f1454b72a0aea2abc141d404c229749a44f4deee72bb5030d0509a721fac456db0888d1583dde1823036dc980e491b752d199aedfaa17264ed282ce1'
             'f98e9ae5842c05a19ad4f883c8f9d88ef3b64e04b034e7fd8b23ddca81510f0bd38688ad7c63ddf8badaa727a7b599ceede87419e9694c06d7a4b06138b94c15')
-sha512sums_x86_64=('2814febb1596cb8e6db75a7d71915771a9d6750cf162c3cb9b70379130da41d7fca7b3df1567a8de1d2967d97add4d2fc08764fbf4155a79852c75ea8fed754b')
-sha512sums_aarch64=('6099ec383e74dc776a9864743c9a2c624a5bea34e2ffb32b3fb57b66016a60dc1356ad3b58c6142ed2f3d9db83fc38ffd9c9661b282bf895e20d837277a07c76')
+sha512sums_x86_64=('5b75fd92a9b3f477cebd791f43d2329e899befca790cc7f3c0970d7c07ad7390a835be91af710f19b5db5a65ab2763e51d1f4f36e222ce6889d7a68d64dce092')
+sha512sums_aarch64=('b37963ab911270a1630c1af5cda5a949f01f661f9b8133c3c5f6e241e7037ab7914b3ac69901b05d95edf742332d72494c3c211624622091460b3bbdcfb2b2f9')
 
 prepare() {
     cd "$srcdir"
@@ -58,13 +59,14 @@ prepare() {
         echo 'icons directory not found'
     fi
 
-    rm bin/qt.conf
-    patchelf --set-rpath /usr/lib/$_pkgname bin/wemeetapp
+    # rm bin/qt.conf
+    sed -i "s|^Prefix.*|Prefix = /usr/lib/wemeet|" bin/qt.conf
+    patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' bin/wemeetapp
     popd
 
     pushd opt/$_pkgname/bin
-    rm Qt*
-    find modules/ -type f -name '*.so'|xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
+
+    find modules/ -type f -name '*.so' | xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
     popd
 }
 
@@ -93,10 +95,11 @@ package() {
     else
         echo 'lib/libcrbase.so not found'
     fi
+    # copy Qt
+    cp -r plugins resources "$pkgdir/usr/lib/$_pkgname"
+    cp -a lib/* "$pkgdir/usr/lib/$_pkgname"
 
-    for lib in "$pkgdir/usr/lib/$_pkgname"/*; do
-        patchelf --set-rpath '$ORIGIN' "$lib"
-    done
+    find "$pkgdir/usr/lib/$_pkgname" -type f -name '*.so.*' | xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
 
     install -dm755 "$pkgdir/opt/$_pkgname"
     cp -r bin "$pkgdir/opt/$_pkgname"
