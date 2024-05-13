@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=estimability
-_pkgver=1.5
+_pkgver=1.5.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,8 +17,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('36a7cd52f48a9421d8152cc2e814f603')
-b2sums=('681d81d3d931b575401dae6f3fb427d44c266c7dcabaa0c5de7db319e499f27b12a5fdbb415c14fd7abad17779b07c18dad8c897ffa4a4509978dbb09dc5746a')
+md5sums=('90c2834919962894b19fa023eed3072e')
+b2sums=('650c48287112b71922f603653b3f77107a8e1be1f5a671f7ad1cc80440096885be7f58eb3a3484a5668718ce8fd327bffc0eba7082850aecb611b9e3f24d76c2')
 
 build() {
   mkdir build
