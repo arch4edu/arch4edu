@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=vegan
-_pkgver=2.6-4
+_pkgver=2.6-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Community Ecology Package"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -21,8 +21,8 @@ optdepends=(
   r-markdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3e8bff267537730be8ec6dd3970a2b4a')
-b2sums=('9b576cb953ad8bb1e4e659495881a1a60aaeae63c154a197e409d0da0a288e0965c441d398c77238fcf76525bf4b32bed0495d2af9c7abb91da5f46f15d1704b')
+md5sums=('b2d094ff5dbba88479f323459f5d5b63')
+b2sums=('d2310988ca8aa3101e4fef936b7242d884ce045342c8fe3106f8eb59cbf2446d7cef24801b5060ec4973d3d035ed7043facfe73dd094d62b98e787776c5a3e16')
 
 build() {
   mkdir build
