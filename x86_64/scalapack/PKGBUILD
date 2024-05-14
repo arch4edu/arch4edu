@@ -4,9 +4,9 @@
 
 pkgname=scalapack
 pkgver=2.2.0
-pkgrel=3
+pkgrel=4
 arch=('i686' 'x86_64')
-pkgdesc="subset of scalable LAPACK routines redesigned for distributed memory MIMD parallel computers."
+pkgdesc="Subset of scalable LAPACK routines redesigned for distributed memory computers."
 url="http://www.netlib.org/scalapack/"
 license=('custom')
 depends=('glibc' 'openmpi' 'blas' 'lapack') # 'atlas-lapack' 'blacs-openmpi' )
@@ -27,7 +27,8 @@ build() {
         -D BUILD_SHARED_LIBS:BOOL=ON \
         -D SCALAPACK_BUILD_TESTS:BOOL=OFF \
         -D CMAKE_BUILD_TYPE:STRING=Release \
-        -D CMAKE_Fortran_FLAGS:STRING="$FCFLAGS -fallow-argument-mismatch"
+        -D CMAKE_Fortran_FLAGS:STRING="$FCFLAGS -fallow-argument-mismatch" \
+        -D CMAKE_C_FLAGS:STRING="$CFLAGS -Wno-implicit-function-declaration"
   make -C build
 }
 
