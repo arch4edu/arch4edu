@@ -1,7 +1,7 @@
 # Maintainer: Martin Diehl <aur@martin-diehl.net>
 
 pkgver=0.10.0
-pkgrel=1
+pkgrel=2
 pkgname=python-scooby
 _name=${pkgname#python-}
 pkgdesc='A Great Dane turned Python environment detective'
@@ -21,5 +21,4 @@ build() {
 package() {
     cd "$_name-$pkgver"
     python -m installer --destdir="$pkgdir" dist/*.whl
-    install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
