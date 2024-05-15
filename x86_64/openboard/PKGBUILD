@@ -1,4 +1,5 @@
 # Maintainer: Frank Siegert <frank.siegert@googlemail.com>
+# Maintainer: Vekhir <vekhir at yahoo dot com>
 # Contributor: bartus <arch-user-repoᘓbartus.33mail.com>
 
 ## Configuration env vars:
@@ -8,7 +9,7 @@ qt="qt${QT_VER}"
 pkgname=openboard
 pkgver=1.7.1
 _src_folder="OpenBoard-${pkgver}"
-pkgrel=1
+pkgrel=2
 pkgdesc="Interactive whiteboard software for schools and universities"
 arch=('x86_64' 'i686')
 url="http://openboard.ch/index.en.html"
@@ -21,14 +22,27 @@ depends+=('openssl' 'ffmpeg')
 depends+=(quazip-${qt})  #drop internal quazip and use system one.
 depends+=(poppler) #replace internal xpdf with poppler and drop freetype/xpdf from deps
 makedepends=('cmake' ${qt}-tools)
-source=("https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz")
-sha256sums=('5c9fcb54bc1598b4b7026e6ecca07137660dd3d45bda472a5710acf600a2a22f')
+source=("https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz"
+        "openboard-c++20-support.patch::https://github.com/OpenBoard-org/OpenBoard/commit/6a0be1b4607da3c3eb9b7d8b547e7b489bc2d219.patch"
+        "openboard-use-c++20.patch::https://github.com/OpenBoard-org/OpenBoard/commit/ffeea1b662b012bd25a025f2130fa2c2044919f9.patch")
+sha256sums=('5c9fcb54bc1598b4b7026e6ecca07137660dd3d45bda472a5710acf600a2a22f'
+            'ac8b4a37192454781216cf38b2fa702d3548a61b5e1c5ce419aa98bcdea77312'
+            '8a0765cbc45f3e0e1c78f82d6c627afbb85bf17fbe1e256fec6e1c9ea2fd9313')
+
+prepare() {
+  cd "$srcdir"/$_src_folder
+  echo "Add support for C++20"
+  patch -p1 < "$srcdir"/openboard-c++20-support.patch
+  echo "Enable use of C++20"
+  patch -p1 < "$srcdir"/openboard-use-c++20.patch
+}
 
 build() {
   cmake -B build -S "$srcdir"/$_src_folder \
     -DCMAKE_BUILD_TYPE=None \
     -DQT_VERSION=${QT_VER} \
     -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DCMAKE_CXX_STANDARD=20 \
     -Wno-dev
   cmake --build build
 }
