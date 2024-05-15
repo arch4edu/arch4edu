@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=VGAM
-_pkgver=1.1-10
+_pkgver=1.1-11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -19,8 +19,8 @@ optdepends=(
   r-vgamextra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4775c04874f72d7920d38462f321cdf9')
-b2sums=('2666fd04c1a7303dd0d03c6f9de22e963b019ed9217b0f027f64d36b6f111af8763f9bb2821518fbd4035eb293b8747cbb47623abb1ef93e43a1a9e0c9b0709a')
+md5sums=('84317deb01d6ca4a5f88014200850bf1')
+b2sums=('0fc6b65b86ec34fb620a7087b6f5bb0576c0627b8523816e0d43a19cfefb7195b5307983bd8331440c6f8ff576af3d67d8e64445f0cbb80b366b4f996b4c08b1')
 
 build() {
   mkdir build
