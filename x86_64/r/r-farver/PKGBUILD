@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=farver
-_cranver=2.1.1
+_cranver=2.1.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=3
@@ -38,7 +38,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("8aae9b293163faaefa87227286e8c49fc7432689338120a07ec00f6337828eaf5bcee2ef1ab2ceadfe1846546fe1397647d324c69a43735f3e595d3361bcc3b5")
+b2sums=("a596176653bb794c182035f5596f75d332ff6a48b014cc9b08ff7dcff70f1ed775e7328396c8b9d79d96e58487bf2723330a15bc8b0adc2d28c94575c4e60675")
 
 build() {
     mkdir -p "${srcdir}/build/"
