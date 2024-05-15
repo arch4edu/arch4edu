@@ -1,25 +1,26 @@
-# Maintainer: Theo Ouzhinski <touzhinski at gmail dot com>
-
+# Maintainer: Jeremy Gust <jeremy AT plasticsoup DOT net>
+# Contributor: Theo Ouzhinski <touzhinski at gmail dot com>
 pkgname=python-yamlloader
-pkgver=0.5.5
-pkgrel=3
-pkgdesc='An ordered YAML loader and dumper'
+pkgver=1.4.1
+pkgrel=1
+pkgdesc='Loaders and dumpers for PyYAML'
 arch=('any')
 url=https://github.com/Phynix/yamlloader
 license=('MIT')
-depends=('python' 'python-pyaml')
-source=("https://files.pythonhosted.org/packages/source/y/yamlloader/yamlloader-$pkgver.tar.gz")
-sha512sums=("5f2e3fc6b9e3c3219dfd4e91595b9c47328e4a12c1f1c8c8c5dd54c290d74dffb2e9b8ba1a55db2e408035effdcc50ec153ff91b891d66a51a0cefde0231d295")
+depends=('python' 'python-pyaml' 'python-yaml')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+source=("${pkgname#python-}-$pkgver::${url}/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=("c4b9f6c7ab62202aee9ef30814953c8d35ea8984018b98c7f064d536e197c1bf")
 
 build() {
-  cd "yamlloader-$pkgver"
-  python setup.py build
+	cd "${pkgname#python-}-$pkgver"
+	python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "yamlloader-$pkgver"
-  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+	cd "${pkgname#python-}-$pkgver"
+	python -m installer --destdir="$pkgdir" dist/*.whl
+	install -Dm644 README.rst "${pkgdir}/usr/share/doc/$pkgname/README.rst"
+	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/$pkgname/LICENSE"
 }
-
-# vim:set ts=2 sw=2 et:
 makedepends+=("python-setuptools")
