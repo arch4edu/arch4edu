@@ -3,7 +3,7 @@
 
 pkgname=python-librosa
 _pkgname=librosa
-pkgver=0.10.2
+pkgver=0.10.2.post1
 pkgrel=1
 pkgdesc="Python library for music and audio analysis"
 arch=('any')
@@ -27,7 +27,7 @@ depends=(
 )
 makedepends=('python-setuptools')
 source=("https://github.com/librosa/librosa/archive/${pkgver}.tar.gz")
-md5sums=('dfd6cd2aa29050c61cb73c942dee768f')
+md5sums=('1a2887782ce0db1468b9a2b51d409e81')
 
 build() {
   cd "$srcdir/${_pkgname}-${pkgver}"
