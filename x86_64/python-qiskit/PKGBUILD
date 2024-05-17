@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit
 pkgname=python-${_pkgname}
-pkgver=1.1.0rc1
+pkgver=1.1.0
 pkgrel=1
 epoch=1
 pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
@@ -47,34 +47,31 @@ makedepends=(
     python-wheel
 )
 #checkdepends=(
+#    ipython
 #    python-anyio
 #    python-ddt
 #    python-hypothesis
 #    python-pytest
 #    python-pytest-benchmark
+#    python-pytest-mock
 #    python-pytest-xdist
 #)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
-b2sums=('c4a8faf17106df4088b80ab533ef8e2c5c862854c3b4d045e545ec81ac45dee0fb8c8a078517c26c0d803990174de4bb770b8a676e42f819e2b90f6cc24ee951')
+b2sums=('b188fe116ff5d0fa498e2b5c829b61950043163528ff39a51701d4f497a9dc0e1ffa27c518833dec84198682477c3398e8edb737d74b4f321b70fb3971b25a57')
 
-prepare() {
-    cd $_pkgname-$pkgver
-    sed -i '1 s/$/ import symengine/' test/python/circuit/test_circuit_load_from_qpy.py
-}
 
 build() {
     cd $_pkgname-$pkgver
     python -m build --wheel --no-isolation
 }
 
-# There are some issues with symengine crashing while running some of the tests
 #check() {
 #    cd $_pkgname-$pkgver
 #    local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
 #    python -m installer --destdir=../test_dir dist/*.whl
 #    # Delete qiskit folder in src to be sure we test with installed package
 #    rm -r qiskit
-#    PYTHONPATH=../test_dir/$_site_packages pytest test/python
+#    PYTHONPATH=../test_dir/$_site_packages pytest -v test/python
 #}
 
 package() {
