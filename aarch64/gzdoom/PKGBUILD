@@ -2,8 +2,8 @@
 # Contributor: Christoph Zeiler <rabyte*gmail>
 
 pkgname=gzdoom
-pkgver=4.11.3
-pkgrel=2
+pkgver=4.12.2
+pkgrel=1
 pkgdesc='Feature centric port for all Doom engine games'
 arch=('i686' 'x86_64' 'aarch64')
 url='http://www.zdoom.org/'
@@ -12,7 +12,6 @@ depends=('gtk3'
          'hicolor-icon-theme'
          'libgl'
          'libvpx>=1.14'
-         'libwebp'
          'openal'
          'sdl2'
          'zmusic>=1.1.8')
@@ -39,7 +38,7 @@ options=(!lto)
 source=("gzdoom::git+https://github.com/coelckers/gzdoom.git#tag=g${pkgver}"
         'gzdoom.desktop'
         '0001-Fix-file-paths.patch')
-sha256sums=('SKIP'
+sha256sums=('03de9f427e2f8d5889861643e8d53d64756538df015d3201c4a9b272bcadf9b6'
             '59122e670f72aa2531aff370e7aaab2d886a7642e79e91f27a533d3b4cad4f6d'
             'a37dde8274e1a9fd511af951da2e362d503ab4be72e79d4843e1ca3a0129549f')
 
