@@ -4,7 +4,7 @@
 # Contributor: koba1t <kobdotsh at gmail dot com>
 
 pkgname=docker-rootless-extras
-pkgver=26.1.2
+pkgver=26.1.3
 pkgrel=1
 pkgdesc="Extras to run docker as non-root."
 arch=('x86_64' 'aarch64')
