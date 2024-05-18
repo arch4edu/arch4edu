@@ -4,7 +4,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=broom
-_cranver=1.0.5
+_cranver=1.0.6
 pkgname=r-${_cranname,,}
 pkgdesc="Convert Statistical Objects into Tidy Tibbles"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -17,7 +17,6 @@ depends=(
     "r>=3.5"
     "r-backports"
     "r-dplyr>=1.0.0"
-    "r-ellipsis"
     "r-generics>=0.0.2"
     "r-glue"
     "r-lifecycle"
@@ -57,8 +56,8 @@ optdepends=(
     "r-glmnetutils"
     "r-gmm"
     "r-hmisc"
-    "r-irlba"
     "r-interp"
+    "r-irlba"
     "r-joinerml"
     "r-kendall"
     "r-knitr"
@@ -73,8 +72,6 @@ optdepends=(
     "r-lmtest>=0.9.38"
     "r-lsmeans"
     "r-maps"
-    "r-maps"
-    "r-margins"
     "r-mass"
     "r-mclust"
     "r-mediation"
@@ -83,7 +80,7 @@ optdepends=(
     "r-mgcv"
     "r-mlogit"
     "r-modeldata"
-    "r-modeltests"
+    "r-modeltests>=0.1.6"
     "r-muhaz"
     "r-multcomp"
     "r-network"
@@ -99,21 +96,21 @@ optdepends=(
     "r-robustbase"
     "r-rsample"
     "r-sandwich"
-    "r-sp"
-    "r-spdep>=1.1"
     "r-spatialreg"
+    "r-spdep>=1.1"
     "r-speedglm"
     "r-spelling"
     "r-survey"
-    "r-survival"
+    "r-survival>=3.6.4"
     "r-systemfit"
+    "r-testthat>=2.1.0"
     "r-tseries"
     "r-vars"
     "r-zoo"
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("e2652bcb99c50a4a97107939bfbdbc55739355d4239a43c2c49a2b5db6c46dabfc6971c74dd8723576131831fed01f9ac3a22c0a6b18c7a86c156f1df9feab11")
+b2sums=("2dbf8e26f79f7c92ae7c953e4a8a7de1494cea85c680982d075be5eed26a4a43c08558941bbbc96fc31c9bc6549dcd254466a66c7f1e72502d61f187b48d38bc")
 
 build() {
     mkdir -p "${srcdir}/build/"
