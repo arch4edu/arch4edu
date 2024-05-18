@@ -7,7 +7,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=rmarkdown
-_pkgver=2.26
+_pkgver=2.27
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -32,6 +32,7 @@ checkdepends=(
   r-curl
   r-shiny
   r-testthat
+  r-xml2
   texlive-basic
   texlive-fontsrecommended
   texlive-latexextra
@@ -50,10 +51,11 @@ optdepends=(
   r-tibble
   r-vctrs
   r-withr
+  r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d4f5e42ce1e7d2ab04fb1beff82c4ff5')
-b2sums=('787c2e0505c07345cc1e20826ca1a85d8fabc58a0468f76d7fb0e5d2a555168913afa0fca38fad5d7359c1fb6f0bcb44fdddbd9f2686a828c0e7d8f3818f829f')
+md5sums=('8eba2269baef8019b571ec136c579f83')
+b2sums=('d140882cae4ded188615e6c21b77e763db61bb52e1617b2ec599d088b12dc1015e86f0a143a9796159722749ad3c5d88e5015f3a8661dacb38253f3bd1112f92')
 
 prepare() {
   # Skip a test that might fail depending on environment
