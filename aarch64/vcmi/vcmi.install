@@ -1,7 +1,4 @@
 post_install() {
-  update-desktop-database -q
-  gtk-update-icon-cache -q -t -f usr/share/icons/hicolor
-
   echo ">>>"
   echo ">>> Vcmi is a game engine and it doesn't contain data files. Therefore you have to have"
   echo ">>> an original copy of Heroes of Might and Magic 3 Shadow of Death or Complete edition."
@@ -41,15 +38,7 @@ post_install() {
   echo ">>>"
 }
 
-post_upgrade() {
-  update-desktop-database -q
-  gtk-update-icon-cache -q -t -f usr/share/icons/hicolor
-}
-
 post_remove() {
-  update-desktop-database -q
-  gtk-update-icon-cache -q -t -f usr/share/icons/hicolor
-
   echo ">>>"
   echo ">>> In order to completely remove vcmi you will need to manually remove"
   echo ">>> ~/.local/share/vcmi, ~/.cache/vcmi and ~/.config/vcmi directories."
