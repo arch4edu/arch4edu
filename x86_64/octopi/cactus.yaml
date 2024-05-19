@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/alpm_octopi_utils
+  - x86_64/qt-sudo
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
