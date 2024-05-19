@@ -2,6 +2,8 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-lifecycle
+makedepends:
   - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
