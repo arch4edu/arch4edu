@@ -2,7 +2,7 @@
 # Contributor: Excitable Snowball <excitablesnowball@gmail.com>
 
 pkgname=python-bokeh
-pkgver=3.4.0
+pkgver=3.4.1
 pkgrel=2
 pkgdesc='Interactive Web Plotting for Python'
 arch=('any')
@@ -12,7 +12,7 @@ source=(
   "https://pypi.io/packages/source/b/bokeh/bokeh-$pkgver.tar.gz"
 )
 sha256sums=(
-  '9ea6bc407b5e7d04ba7a2f07d8f00e8b6ffe02c2368e707f41bb362a9928569a'
+  'd824961e4265367b0750ce58b07e564ad0b83ca64b335521cd3421e9b9f10d89'
 )
 depends=('python-jinja'
          'python-contourpy'
@@ -30,11 +30,15 @@ optdepends=('python-selenium: svg export'
             'python-psutil: detailed memory logging'
             'python-networkx: plot directly from NetworkX data'
             'python-sphinx: support sphinx documentation')
-makedepends=('python-build' 'python-installer')
+makedepends=('python-build'
+             'python-installer'
+             'python-wheel'
+             'python-setuptools-git-versioning'
+             'python-colorama')
 
 build() {
   cd "$srcdir/bokeh-$pkgver"
-  python -m build --wheel
+  python -m build --no-isolation --wheel
 } 
 
 package() {
