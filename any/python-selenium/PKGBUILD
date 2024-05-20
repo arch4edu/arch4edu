@@ -1,47 +1,58 @@
-# Maintainer:  Carl Smedstad <carl.smedstad at protonmail dot com>
+# Maintainer: Carl Smedstad <carsme@archlinux.org>
 # Maintainer:  Anton Kudelin <kudelin at proton dot me>
 # Contributor: Jelle van der Waa <jelle@vdwaa.nl>
 # Contributor: Aaron DeVore <aaron.devore@gmail.com>
 
-_pyname=selenium
-_suffix=-python
-pkgname=python-$_pyname
-pkgver=4.20.0
+pkgname=python-selenium
+_pkgname=${pkgname#python-}
+pkgver=4.21.0
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=(any)
 url="https://github.com/SeleniumHQ/selenium"
 license=(Apache-2.0)
-depends=(python python-urllib3 python-certifi python-trio
-         python-trio-websocket python-typing_extensions)
-makedepends=(python-build python-installer python-setuptools python-wheel)
+depends=(
+  python
+  python-certifi
+  python-trio
+  python-trio-websocket
+  python-typing_extensions
+  python-urllib3
+)
+makedepends=(
+  python-build
+  python-installer
+  python-setuptools
+  python-wheel
+)
 checkdepends=(python-pytest)
-source=("$url/archive/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('8e06c1dc0de53cbd13edd613579542ae8d66d907befcda8b8025421dc914212e')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/selenium-$pkgver.tar.gz")
+sha256sums=('994b73642f0ce762b5dc1ae2805ce82bf4ff3e0370b7c37380514ca6ec55031f')
+
+_archive="$_pkgname-selenium-$pkgver/py"
 
 prepare() {
-  cd "${_pyname}-${_pyname}-${pkgver}/py"
-  cp ../rb/lib/$_pyname/webdriver/atoms/* $_pyname/webdriver/remote
+  cd "$_archive"
+
+  cp ../rb/lib/selenium/webdriver/atoms/* selenium/webdriver/remote
   echo '{"frozen":{},"mutable":{}}' > \
-    $_pyname/webdriver/firefox/webdriver_prefs.json
+    selenium/webdriver/firefox/webdriver_prefs.json
 }
 
 build() {
-  cd "${_pyname}-${_pyname}-${pkgver}/py"
-  python -m build \
-    --wheel \
-    --no-isolation
+  cd "$_archive"
+
+  python -m build --wheel --no-isolation
 }
 
 check() {
-  cd "${_pyname}-${_pyname}-${pkgver}/py"
+  cd "$_archive"
 
   pytest
 }
 
 package() {
-  cd "${_pyname}-${_pyname}-${pkgver}/py"
-  python -m installer \
-    --destdir="$pkgdir" \
-    dist/*.whl
+  cd "$_archive"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
