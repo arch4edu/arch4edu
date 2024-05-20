@@ -4,9 +4,9 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=minqa
-_pkgver=1.2.6
+_pkgver=1.2.7
 pkgname=r-${_pkgname,,}
-pkgver=1.2.6
+pkgver=1.2.7
 pkgrel=1
 pkgdesc='Derivative-free optimization algorithms by quadratic approximation'
 arch=('x86_64')
@@ -21,7 +21,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('51a7b8850e5f2fee79e8f460b9d9eca4221d9702087cca5fab5851ad3d594110')
+sha256sums=('76f3459d1ed860d5095b1d89d41628fc7187e72506cf48f073e15724d9e52fe2')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
