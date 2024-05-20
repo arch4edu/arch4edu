@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=emmeans
-_pkgver=1.10.1
+_pkgver=1.10.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Estimated Marginal Means, aka Least-Squares Means"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -37,11 +37,12 @@ optdepends=(
   r-sandwich
   r-scales
   r-testthat
+  r-tibble
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('add807ebe4314fd923b13a7c667c0191')
-b2sums=('723410c3bbb7f63686b9095bf3a2d8b254b99071f2822a5be14d6663c374e53632c6eb793c9f51eb3dc21f707a343c62c8f004203e57c9b5db9d7a0372552b2c')
+md5sums=('f20fa0573b5ff6aa1dac45cda67f2979')
+b2sums=('69a7a598bf7558c84cd59ad30acc04cdbba77f39eb0995a5c0464c1ce0cf05157ba60867a2c3512e8649711c68ae7533300c59f6c6fb668559d3dbb12b3ceee5')
 
 build() {
   mkdir build
