@@ -1,0 +1,24 @@
+_name=setuptools-git-versioning
+pkgname=python-${_name}
+pkgver=2.0.0
+pkgrel=2
+pkgdesc='Use Git repo data for building a version number according to PEP 440.'
+url='https://github.com/dolfinus/setuptools-git-versioning'
+arch=('any')
+license=('MIT')
+depends=('python' 'python-setuptools' 'python-toml')
+makedepends=('python-build' 'python-installer' 'python-wheel')
+provides=("$pkgname")
+conflicts=("$pkgname")
+source=("https://pypi.io/packages/source/s/$_name/$_name-$pkgver.tar.gz")
+sha256sums=('85b5fbe7bda8e9c24bbd9e587a9d4b91129417f4dd3e11e3c0d5f3f835fc4d4d')
+
+build() {
+  cd "$srcdir/$_name-$pkgver"
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$srcdir/$_name-$pkgver"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
