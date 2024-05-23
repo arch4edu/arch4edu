@@ -4,7 +4,7 @@
 
 pkgname=flite1
 pkgver=1.4
-pkgrel=6
+pkgrel=7
 pkgdesc='A lighweight speech synthesis engine (version 1.x)'
 arch=('x86_64')
 url='http://www.speech.cs.cmu.edu/flite/'
@@ -49,6 +49,7 @@ prepare() {
 
 build() {
     cd "flite-${pkgver}-release"
+    CFLAGS+=' -Wno-incompatible-pointer-types' \
     ./configure \
         --prefix='/usr' \
         --enable-shared \
