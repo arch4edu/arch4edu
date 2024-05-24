@@ -4,7 +4,7 @@
 # Contributor: Aaron Lindsay <aaron@aclindsay.com>
 
 pkgname=seafile
-pkgver=9.0.5
+pkgver=9.0.6
 pkgrel=1
 pkgdesc='An online file storage and collaboration tool'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -25,16 +25,19 @@ makedepends=(
 conflicts=('seafile-server')
 source=(
     "seafile-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
+    'fix_build.diff'
     "seaf-cli@.service"
 )
 sha256sums=(
-    '9a1743784fda646cd7713b5d7eb8a685372ca46c61db1f484037bf5a1f01b7ce'
+    'e0a1260ac995ad21a183cf73e647fe18e4fc06045f601ab5abcc4b62d07c2280'
+    '291a7e67a54dcd1d7b60301339feb1dc4048e301f5b4054e3e1084dfcff3ac0f'
     'c37510109c1de64c774896df39aece240c056b54414d2119fca01860211156ba'
 )
 provides=('seafile-client-cli')
 
 prepare() {
     cd "$srcdir/seafile-$pkgver"
+    patch -p1 -i "$srcdir/fix_build.diff"
     sed -i 's|(DESTDIR)@prefix@|@prefix@|' './lib/libseafile.pc.in'
 }
 
