@@ -4,7 +4,7 @@
 
 pkgname=dlib-cuda
 pkgver=19.24.3
-pkgrel=1
+pkgrel=2
 pkgdesc="A general purpose cross-platform C++ library designed using contract programming and modern C++ techniques"
 arch=('x86_64')
 url="http://dlib.net"
@@ -48,3 +48,7 @@ package() {
     # remove redundant external libraries
     rm -r "${pkgdir}/usr/include/dlib/external"
 }
+options+=("!lto")
+makedepends+=("gcc13" "gcc13-libs" "ffmpeg" "libjxl")
+export CC=/usr/bin/gcc-13
+export CXX=/usr/bin/g++-13
