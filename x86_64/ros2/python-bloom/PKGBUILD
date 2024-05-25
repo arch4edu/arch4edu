@@ -2,12 +2,12 @@
 pkgname=python-bloom
 _name=${pkgname#python-}
 pkgver=0.12.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Bloom is a release automation tool."
 arch=('any')
 url="http://www.ros.org/wiki/bloom"
 license=('BSD')
-depends=('python' 'python-empy' 'python-rosdep' 'python-vcstool')
+depends=('python' 'python-empy3' 'python-rosdep' 'python-vcstool')
 makedepends=('python-build' 'python-installer' 'python-wheel')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
 sha256sums=('cc5a1f964ae27907d0ee0380a2a45a71c69eaa066f853e43d704cb1c096c0a89')
