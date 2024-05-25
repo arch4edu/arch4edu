@@ -3,6 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
+  - x86_64/ros2/python-empy3
   - x86_64/ros2/python-rosdep
   - x86_64/ros2/python-vcstool
 build_prefix: extra-x86_64
