@@ -2,21 +2,37 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-devtools
 _name=${pkgname:7}
-pkgver=0.2.5
-pkgrel=2
+pkgver=0.3.0
+pkgrel=1
 pkgdesc="An extension for colcon-core to provide information about the plugin system."
 arch=(any)
 url="https://pypi.org/project/colcon-devtools/"
 license=('Apache')
 depends=('python-colcon-core')
-makedepends=('python-setuptools')
-source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('27f2464dc51d43e011bdfbc65ed3bb38c2cdce6aaf917d99b850a6d0eb66f77f')
+makedepends=('python-setuptools' 'flake8')
+source=(
+    https://github.com/colcon/colcon-devtools/archive/refs/tags/${pkgver}.tar.gz
+    https://github.com/myint/scspell/archive/refs/tags/v2.2.tar.gz
+)
+sha256sums=(
+    '8363080c03e41c1fe4c884955e32a5dbc2be34269d838a97146042b3af91a53d'
+    '04c6a795a9e0ef4571678eb9fc503bcf39106a975691336af778f31a01027082')
 
+build() {
+    cd ${srcdir}/${_name}-${pkgver}
+    python -m build --wheel --no-isolation
+}
+
+check() {
+    cd ${srcdir}/${_name}-${pkgver}/test
+    pytest test_flake8.py
+    pytest test_copyright_license.py
+    PYTHONPATH=${srcdir}/scspell-2.2 pytest test_spell_check.py
+}
 
 package() {
     cd ${srcdir}/${_name}-${pkgver}
-
-    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1 
+    python -m installer --destdir="${pkgdir}" dist/*.whl
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")
