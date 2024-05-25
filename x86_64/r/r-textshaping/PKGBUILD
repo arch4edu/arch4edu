@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=textshaping
-_pkgver=0.3.7
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Bindings to the 'HarfBuzz' and 'Fribidi' Libraries for Text Shaping"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,6 +14,7 @@ depends=(
   freetype2
   fribidi
   harfbuzz
+  r-lifecycle
   r-systemfonts
 )
 makedepends=(
@@ -25,8 +26,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('75e150aec896dd1807e84538456d22e3')
-b2sums=('d6f9c061e9ffcc8e58e423cf4e1b8e07ca9873122d682fbddb03bb73b068770cc2aa750dc871948f25d0af0a28a6fcdf643c3974d1c5ca3c70b09eb28814c45b')
+md5sums=('fac64803fa2677b0a346851d7b076e11')
+b2sums=('23d09aaaa56d1fa0f6a8f6bb79ef3b76dadd348fd0306af24b6658beef28d602aaa48524f49d473443d2eb237a2ab2b3e8f4db633179fdb49e12a4c8cea457e4')
 
 build() {
   mkdir build
