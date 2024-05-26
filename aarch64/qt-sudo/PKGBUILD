@@ -2,7 +2,7 @@
 # Contributor: MatMoul <matmoul at the google email domain which is .com>
 
 pkgname=qt-sudo
-pkgver=1.4.0
+pkgver=2.0.1
 pkgrel=1
 pkgdesc='A clone of LXQt sudo tool, without LXQt libs'
 arch=('x86_64')
@@ -18,18 +18,18 @@ makedepends=(
   'git'
   'qt6-tools'
 )
-source=("git+https://github.com/aarnt/qt-sudo.git#commit=4eaad52ba5473141d5ac39f9be9636e1cdd393f4")
+source=("git+https://github.com/aarnt/qt-sudo.git#tag=v${pkgver}")
 sha256sums=('SKIP')
-
-pkgver() {
-  cd qt-sudo
-  echo "$(cat sudo.cpp | grep -m1 'const QString app_version' | grep -o "[[:digit:]]*" | paste -sd'.')"
-}
 
 build() {
   cd qt-sudo
   echo "Starting build..."
-  qmake6 PREFIX="${pkgdir}/usr" QMAKE_CFLAGS="${CFLAGS}" QMAKE_CXXFLAGS="${CXXFLAGS}" QMAKE_LFLAGS="${LDFLAGS}"
+  qmake6 \
+    PREFIX="${pkgdir}/usr" \
+    QMAKE_CFLAGS="${CFLAGS}" \
+    QMAKE_CXXFLAGS="${CXXFLAGS}" \
+    QMAKE_LFLAGS="${LDFLAGS}"
+
   make
 }
 
