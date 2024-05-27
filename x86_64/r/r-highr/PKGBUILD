@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=highr
-_pkgver=0.10
+_pkgver=0.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Syntax Highlighting for R Source Code"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -25,8 +25,8 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('75ac8d38e8c9b56e40220daebb00c4ea')
-b2sums=('bcfdbde2d2b0fd0878d220c06d826cc02a10243605cddf2ccad0e297972ae42329c377627b1a1a3ebf979e28867f630be980a96cb453443c1686f917496ded17')
+md5sums=('6d32bee4188607bcc5d3676c5cd55197')
+b2sums=('5634ac9ecc714480ae858f45f9978b6b2d93f6c0885a95e8ee41c09443b3a0e0cd7f15225f6141f781d0bd1dcf22881db9b1da62fbf45ec809884de9d4ab3b4b')
 
 build() {
   mkdir build
