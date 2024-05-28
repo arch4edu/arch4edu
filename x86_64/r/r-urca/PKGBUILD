@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=urca
-_pkgver=1.3-3
+_pkgver=1.3-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Unit Root and Cointegration Tests for Time Series Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cd705f0c6b3599b496af5faca812a879')
-b2sums=('dd353ff98ba851377357a012b33a04baec18b7d30151b6320ab39b4dd03ce48c017142ff8fb4e3f4a5abc541608cb0bd16b58802c476f5d552e36259c069c545')
+md5sums=('9bcc2ab304c406a66f494f34a02ed1d7')
+b2sums=('fe39787862791fcf8ba048b399fc28374af7d371c51f9bf851b01f08b01060f74c20f7d8f1acff74ce66616bce291ac8839ff47d389da5fb3a9c66fba175c524')
 
 build() {
   mkdir build
