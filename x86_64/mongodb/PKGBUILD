@@ -1,8 +1,8 @@
 # shellcheck disable=SC2034,SC2154,SC2164
 
 # Maintainer: JustKidding <jk@vin.ovh>
-# Maintainer: James P. Harvey <jamespharvey20 at gmail dot com>
-# Maintainer: Christoph Bayer <chrbayer@criby.de>
+# Contributor: James P. Harvey <jamespharvey20 at gmail dot com>
+# Contributor: Christoph Bayer <chrbayer@criby.de>
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
 # Contributor: Thomas Dziedzic < gostrc at gmail >
@@ -13,7 +13,7 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=7.0.8
+pkgver=7.0.11
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
@@ -28,18 +28,20 @@ optdepends=('mongodb-tools: mongoimport, mongodump, mongotop, etc'
 backup=("etc/mongodb.conf")
 provides=(mongodb="$pkgver")
 options=(!debug)
-source=("https://fastdl.mongodb.org/src/mongodb-src-r$pkgver.tar.gz"
+source=("https://github.com/mongodb/mongo/archive/refs/tags/r$pkgver.tar.gz"
         mongodb.sysusers
         mongodb.tmpfiles
         mongodb-5.0.2-skip-reqs-check.patch
         mongodb-5.0.2-no-compass.patch
-        mongodb-7.0.2-sconstruct.patch)
-sha256sums=('9bfb291379bde902a9c35ee30455a335381fec4836f59f3ef399eeef07501412'
+        mongodb-7.0.2-sconstruct.patch
+        mongodb-4.4.29-no-enterprise.patch)
+sha256sums=('3138a4cfae5efdf5f36daeeb51c54d988f3e633834fcbf1f672803896203640b'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             '4ff40320e04bf8c3e05cbc662f8ea549a6b8494d1fda64b1de190c88587bfafd'
             '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
-            '078d94d712c3bb86a77d13bf2021299f4db2332c9d5346dba1ceb0cce1ba8492')
+            '078d94d712c3bb86a77d13bf2021299f4db2332c9d5346dba1ceb0cce1ba8492'
+            '7cd27b2ce15cc6efdce07ef934ed3d9356025ebade4856a9d0a75a80f7c08905')
 sha256sums_aarch64=('6dd9f20e153ff2a3e185d9411e9d9ec54ba8ed29a0a1489828ccb047205cceac')
 source_aarch64=(extrapatch-sconstruct.patch)
 
@@ -48,6 +50,7 @@ _scons_args=(
   CXX="${CXX:-g++}"
   AR="${AR:-ar}"
   MONGO_DISTMOD=arch
+  MONGO_VERSION="$pkgver"
 
   --use-system-boost
   --use-system-pcre2
@@ -94,7 +97,7 @@ filter-flags() {
 }
 
 prepare() {
-  cd "${srcdir}/${_pkgname}-src-r${pkgver}"
+  cd "${srcdir}/mongo-r${pkgver}"
 
   # Keep historical Arch dbPath
   sed -i 's|dbPath: /var/lib/mongo|dbPath: /var/lib/mongodb|' rpm/mongod.conf
@@ -131,7 +134,7 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/${_pkgname}-src-r${pkgver}"
+  cd "${srcdir}/mongo-r${pkgver}"
 
   if check_option debug n; then
     filter-flags '-m*'
@@ -143,7 +146,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${_pkgname}-src-r${pkgver}"
+  cd "${srcdir}/mongo-r${pkgver}"
 
   # Install binaries
   install -D build/install/bin/mongo "$pkgdir/usr/bin/mongo"
