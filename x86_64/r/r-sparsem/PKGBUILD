@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=SparseM
-_pkgver=1.81
+_pkgver=1.82
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=1
 pkgdesc="Sparse Linear Algebra"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,9 +20,12 @@ depends=(
 makedepends=(
   gcc-fortran
 )
+optdepends=(
+  r-r.rsp
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('482572eed65ae53bb988a2753ce09718')
-b2sums=('5aace65663c6f627bfe18524b24bdf106107443361fce2ca2fae022c6b2cb3e0b4951e66973444df70ad335ff1622dffbbc888213ec362a87fc7398d82628baf')
+md5sums=('df7b53d8648b9439eb16af248eee19de')
+b2sums=('fee669ee40bf448d0ef5acc7704d955fa0e60922183ee1d7ebb377f4ba6b164ecd301d66c66d686f8f2f645fe1a13a48590bc84f2fd0fc11c6940c5606f85454')
 
 build() {
   mkdir build
