@@ -4,24 +4,32 @@
 
 pkgname=vcmi
 pkgver=1.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Open-source engine for Heroes of Might and Magic III"
 arch=('i686' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
 url="http://vcmi.eu"
 license=('GPL-2.0-or-later AND CC-BY-SA-4.0')
 depends=('boost-libs' 'ffmpeg' 'sdl2_image' 'sdl2_mixer' 'sdl2_ttf' 'qt5-base' 'libxkbcommon-x11'
          'hicolor-icon-theme' 'onetbb' 'fuzzylite' 'luajit')
-makedepends=('boost' 'cmake' 'git' 'ccache' 'qt5-tools')
+makedepends=('boost' 'cmake' 'git' 'ccache' 'qt5-tools' 'minizip')
 optdepends=('innoextract: required by vcmibuilder' 'unshield: required by vcmibuilder' 'unzip: required by vcmibuilder')
 provides=('vcmi')
 conflicts=('vcmi')
 install="${pkgname}.install"
-source=("https://github.com/vcmi/${pkgname}/archive/${pkgver}.tar.gz")
-sha256sums=('3f9f120204e7676a41641970f5b1a9f9c6f8c2967ed8da9c98dc8e3fec01c249')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/releases/download/${pkgver}/VCMI-Sources.tar.gz")
+sha256sums=('359fdb066516a355ee62a4cc5b10c5f75971909e2000312fa03e2396514c108d')
 
+# workaround
 prepare() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  # VCMI-Sources.tar.gz contains sources, not folder like GitHub releases
+  # so we first need to move it to a proper folder
+  if [ ! -d "$srcdir/$pkgname-$pkgver" ]; then
+    mkdir -p "${startdir}/${pkgname}-${pkgver}"
+    mv "$srcdir"/* "${startdir}/${pkgname}-${pkgver}/"
+    mv "${startdir}/${pkgname}-${pkgver}/" "${srcdir}/${pkgname}-${pkgver}/"
+  fi
 }
+
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   mkdir -p build && cd build
@@ -32,10 +40,10 @@ build() {
     -DCMAKE_SKIP_RPATH='FALSE' \
     -DENABLE_TEST=OFF \
     -DFORCE_BUNDLED_FL=OFF \
+    -DENABLE_INNOEXTRACT=OFF \
     -DCMAKE_BUILD_TYPE='Release' \
     -DCMAKE_CXX_COMPILER_LAUNCHER='ccache' \
     -DCMAKE_C_COMPILER_LAUNCHER='ccache' \
-    -DENABLE_INNOEXTRACT='FALSE' \
     -Wno-dev
   make
 }
