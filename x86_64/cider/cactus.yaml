@@ -6,7 +6,7 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  download-pacman-package nodejs-lts-gallium
+  download-pacman-package nodejs-lts-hydrogen
   sed 's/pkgver()/_pkgver()/' -i PKGBUILD
   add makedepends git
 post_build: aur-post-build
