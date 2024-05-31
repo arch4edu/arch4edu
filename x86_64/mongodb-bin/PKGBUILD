@@ -2,7 +2,7 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="7.0.9"
+pkgver="7.0.11"
 _basever="7.0"
 _basedist="focal"
 pkgrel=1
@@ -19,29 +19,29 @@ backup=("etc/mongodb.conf")
 
 _repo_url=https://repo.mongodb.org/apt/ubuntu/dists/${_basedist}/mongodb-org/${_basever}/multiverse
 source=(
-		"mongodb.sysusers"
-		"mongodb.tmpfiles"
-		"LICENSE"
+	"mongodb.sysusers"
+	"mongodb.tmpfiles"
+	"LICENSE"
 )
 source_x86_64=(
-		mongodb-org-server_${pkgver}_x86_64.deb::"${_repo_url}/binary-amd64/mongodb-org-server_${pkgver}_amd64.deb"
-		mongodb-org-mongos_${pkgver}_x86_64.deb::"${_repo_url}/binary-amd64/mongodb-org-mongos_${pkgver}_amd64.deb"
+	mongodb-org-server_${pkgver}_x86_64.deb::"${_repo_url}/binary-amd64/mongodb-org-server_${pkgver}_amd64.deb"
+	mongodb-org-mongos_${pkgver}_x86_64.deb::"${_repo_url}/binary-amd64/mongodb-org-mongos_${pkgver}_amd64.deb"
 )
 source_aarch64=(
-		mongodb-org-server_${pkgver}_aarch64.deb::"${_repo_url}/binary-arm64/mongodb-org-server_${pkgver}_arm64.deb"
-		mongodb-org-mongos_${pkgver}_aarch64.deb::"${_repo_url}/binary-arm64/mongodb-org-mongos_${pkgver}_arm64.deb"
+	mongodb-org-server_${pkgver}_aarch64.deb::"${_repo_url}/binary-arm64/mongodb-org-server_${pkgver}_arm64.deb"
+	mongodb-org-mongos_${pkgver}_aarch64.deb::"${_repo_url}/binary-arm64/mongodb-org-mongos_${pkgver}_arm64.deb"
 )
 noextract=(
-		mongodb-org-server_${pkgver}_${CARCH}.deb
-		mongodb-org-mongos_${pkgver}_${CARCH}.deb
+	mongodb-org-server_${pkgver}_${CARCH}.deb
+	mongodb-org-mongos_${pkgver}_${CARCH}.deb
 )
 sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
-						'51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
-						'09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('c7c682de49da35ba9d7d2d496589dd6e4cb631dc7aa8db17a1426eef574af579'
-									 '3d795ae0435955c849e47b4cbfb99e951e48116c37c33d810c40b790c6e7ac31')
-sha256sums_aarch64=('c488ce1c931d014c264e4e3211f860a06fad746fdeaf2c38c16f451fb3751a10'
-										'939064b75d0bb116b88c11dba7361f94e4d2124c79effae410640e3251d184e4')
+			'51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
+			'09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
+sha256sums_x86_64=('7eac4d52ca54fbbcc561edb95376cca14aa7ab8777cdd02d2026c22550f2e40d'
+					'53760e9ea7e4b018eac0fdf0bab85a713db588b49a6236247402bd2dcf58e741')
+sha256sums_aarch64=('521099b2f868b04a5c0a777f8ee547b2d70ecd5241af94fe5f2d7b9c45843af8'
+					'd4e8cccb288ac431a74cb7bac499d1b6a23aab393219b9cd3d3bef72c5135c72')
 
 prepare() {
 	mkdir -p output
