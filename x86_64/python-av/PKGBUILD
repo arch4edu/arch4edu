@@ -4,16 +4,16 @@ pkgname=python-av
 _name=${pkgname#python-}
 _upstream_name="PyAV"
 pkgdesc="Pythonic bindings for FFmpeg"
-url="https://docs.mikeboers.com/pyav/"
+url="https://pyav.basswood-io.com"
 
-pkgver=12.0.0
-pkgrel=3
+pkgver=12.1.0
+pkgrel=2
 
 arch=("x86_64" "i686")
-license=("BSD")
+license=("BSD-3-Clause")
 
 depends=(
-  "ffmpeg"
+  "ffmpeg<=2:7"
   "python"
   "python-numpy"
   "python-pillow"
@@ -34,14 +34,19 @@ checkdepends=(
   "python-sphinx"
 )
 
-# source=( "https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-# upload failed upstream: https://github.com/PyAV-Org/PyAV/actions/runs/6747799842/job/18350415863
 source=(
   "$_name-$pkgver.tar.gz::https://github.com/${_upstream_name}-Org/${_upstream_name}/archive/refs/tags/v${pkgver}.tar.gz"
+  "python-av-bitstream-const.patch"  # https://github.com/PyAV-Org/PyAV/issues/1412#issuecomment-2141407404
 )
 b2sums=(
-  "8f4f3e8d2df21aaa52adf045d94e856f72afb574a0cbd58079da4fed572ebcc1053468f97ea533d073d8e9f47e9612d584aad92b830966a346e1f1e90d321c64"
+  "d83794a6d5f0137141ffcc1787b407285c98faa83598751171cf5013005d540adf65653d5b79d5ea7ce925523a1956b605339bc99f866d634c28e47794aa5782"
+  "aa2e67f007494b424efb51534967c522ecd84eb66ae90428e8d5199fbb256e47a48930657d96fc31b11ec6863f8c9611ec6cb603d41ffb7f232abd9eda5ee067"
 )
+
+prepare() {
+  cd "${srcdir}"/${_upstream_name}-${pkgver}
+  patch --forward --strip=1 --input "${srcdir}/python-av-bitstream-const.patch"
+}
 
 build() {
   cd "${srcdir}"/${_upstream_name}-${pkgver}
