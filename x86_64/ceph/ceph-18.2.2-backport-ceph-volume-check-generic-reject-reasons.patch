@@ -1,0 +1,178 @@
+From a78e660728c6c0442cdbfa65db776b5856aee933 Mon Sep 17 00:00:00 2001
+From: Kim Minjong <make.dirty.code@gmail.com>
+Date: Fri, 3 Feb 2023 11:47:47 +0900
+Subject: [PATCH 1/2] ceph-volume: fix a bug in _check_generic_reject_reasons
+
+The types of removable and ro are wrong. Here, both filters are not
+working at all. Changed this from integer to string and corrected the test
+data.
+
+Delete redundant logic in get_block_devs_sysfs. Given the name of the
+function, I think it is correct to judge from _check_generic_reject_reasons,
+and in fact it was before v17.2.4.
+
+Fixes: https://tracker.ceph.com/issues/58591
+Signed-off-by: Kim Minjong <make.dirty.code@gmail.com>
+---
+ .../ceph_volume/tests/util/test_device.py     | 22 +++++++++----------
+ src/ceph-volume/ceph_volume/util/device.py    |  4 ++--
+ src/ceph-volume/ceph_volume/util/disk.py      |  2 --
+ 3 files changed, 13 insertions(+), 15 deletions(-)
+
+diff --git a/src/ceph-volume/ceph_volume/tests/util/test_device.py b/src/ceph-volume/ceph_volume/tests/util/test_device.py
+index e382981d9232e..e2ea026286f91 100644
+--- a/src/ceph-volume/ceph_volume/tests/util/test_device.py
++++ b/src/ceph-volume/ceph_volume/tests/util/test_device.py
+@@ -241,7 +241,7 @@ def test_is_ceph_disk_member_not_available_blkid(self, fake_call, monkeypatch, p
+ 
+     @patch("ceph_volume.util.disk.has_bluestore_label", lambda x: False)
+     def test_reject_removable_device(self, fake_call, device_info):
+-        data = {"/dev/sdb": {"removable": 1}}
++        data = {"/dev/sdb": {"removable": "1"}}
+         lsblk = {"TYPE": "disk", "NAME": "sdb"}
+         device_info(devices=data,lsblk=lsblk)
+         disk = device.Device("/dev/sdb")
+@@ -249,7 +249,7 @@ def test_reject_removable_device(self, fake_call, device_info):
+ 
+     @patch("ceph_volume.util.disk.has_bluestore_label", lambda x: False)
+     def test_reject_device_with_gpt_headers(self, fake_call, device_info):
+-        data = {"/dev/sdb": {"removable": 0, "size": 5368709120}}
++        data = {"/dev/sdb": {"removable": "0", "size": 5368709120}}
+         lsblk = {"TYPE": "disk", "NAME": "sdb"}
+         blkid= {"PTTYPE": "gpt"}
+         device_info(
+@@ -262,7 +262,7 @@ def test_reject_device_with_gpt_headers(self, fake_call, device_info):
+ 
+     @patch("ceph_volume.util.disk.has_bluestore_label", lambda x: False)
+     def test_accept_non_removable_device(self, fake_call, device_info):
+-        data = {"/dev/sdb": {"removable": 0, "size": 5368709120}}
++        data = {"/dev/sdb": {"removable": "0", "size": 5368709120}}
+         lsblk = {"TYPE": "disk", "NAME": "sdb"}
+         device_info(devices=data,lsblk=lsblk)
+         disk = device.Device("/dev/sdb")
+@@ -286,7 +286,7 @@ def test_accept_symlink_to_device(self,
+                                       fake_call):
+         m_os_path_islink.return_value = True
+         m_os_path_realpath.return_value = '/dev/sdb'
+-        data = {"/dev/sdb": {"ro": 0, "size": 5368709120}}
++        data = {"/dev/sdb": {"ro": "0", "size": 5368709120}}
+         lsblk = {"TYPE": "disk"}
+         device_info(devices=data,lsblk=lsblk)
+         disk = device.Device("/dev/test_symlink")
+@@ -304,7 +304,7 @@ def test_reject_symlink_to_device_mapper(self,
+                                              fake_call):
+         m_os_path_islink.return_value = True
+         m_os_readlink.return_value = '/dev/dm-0'
+-        data = {"/dev/mapper/mpatha": {"ro": 0, "size": 5368709120}}
++        data = {"/dev/mapper/mpatha": {"ro": "0", "size": 5368709120}}
+         lsblk = {"TYPE": "disk"}
+         device_info(devices=data,lsblk=lsblk)
+         disk = device.Device("/dev/mapper/mpatha")
+@@ -312,7 +312,7 @@ def test_reject_symlink_to_device_mapper(self,
+ 
+     @patch("ceph_volume.util.disk.has_bluestore_label", lambda x: False)
+     def test_reject_readonly_device(self, fake_call, device_info):
+-        data = {"/dev/cdrom": {"ro": 1}}
++        data = {"/dev/cdrom": {"ro": "1"}}
+         lsblk = {"TYPE": "disk", "NAME": "cdrom"}
+         device_info(devices=data,lsblk=lsblk)
+         disk = device.Device("/dev/cdrom")
+@@ -328,7 +328,7 @@ def test_reject_smaller_than_5gb(self, fake_call, device_info):
+ 
+     @patch("ceph_volume.util.disk.has_bluestore_label", lambda x: False)
+     def test_accept_non_readonly_device(self, fake_call, device_info):
+-        data = {"/dev/sda": {"ro": 0, "size": 5368709120}}
++        data = {"/dev/sda": {"ro": "0", "size": 5368709120}}
+         lsblk = {"TYPE": "disk", "NAME": "sda"}
+         device_info(devices=data,lsblk=lsblk)
+         disk = device.Device("/dev/sda")
+@@ -594,10 +594,10 @@ class TestDeviceOrdering(object):
+ 
+     def setup_method(self):
+         self.data = {
+-                "/dev/sda": {"removable": 0},
+-                "/dev/sdb": {"removable": 1}, # invalid
+-                "/dev/sdc": {"removable": 0},
+-                "/dev/sdd": {"removable": 1}, # invalid
++                "/dev/sda": {"removable": "0"},
++                "/dev/sdb": {"removable": "1"}, # invalid
++                "/dev/sdc": {"removable": "0"},
++                "/dev/sdd": {"removable": "1"}, # invalid
+         }
+ 
+     @patch("ceph_volume.util.disk.has_bluestore_label", lambda x: False)
+diff --git a/src/ceph-volume/ceph_volume/util/device.py b/src/ceph-volume/ceph_volume/util/device.py
+index d61222afe0a0b..d01d395339d4a 100644
+--- a/src/ceph-volume/ceph_volume/util/device.py
++++ b/src/ceph-volume/ceph_volume/util/device.py
+@@ -594,8 +594,8 @@ def has_partitions(self):
+ 
+     def _check_generic_reject_reasons(self):
+         reasons = [
+-            ('removable', 1, 'removable'),
+-            ('ro', 1, 'read-only'),
++            ('removable', '1', 'removable'),
++            ('ro', '1', 'read-only'),
+         ]
+         rejected = [reason for (k, v, reason) in reasons if
+                     self.sys_api.get(k, '') == v]
+diff --git a/src/ceph-volume/ceph_volume/util/disk.py b/src/ceph-volume/ceph_volume/util/disk.py
+index a96b0f0a7f84a..fa900e5da0f3a 100644
+--- a/src/ceph-volume/ceph_volume/util/disk.py
++++ b/src/ceph-volume/ceph_volume/util/disk.py
+@@ -779,8 +779,6 @@ def holder_inner_loop():
+             continue
+         type_ = 'disk'
+         holders = os.listdir(os.path.join(_sys_block_path, dev, 'holders'))
+-        if get_file_contents(os.path.join(_sys_block_path, dev, 'removable')) == "1":
+-            continue
+         if holder_inner_loop():
+             continue
+         dm_dir_path = os.path.join(_sys_block_path, dev, 'dm')
+
+From bd5e1a83495e31e457827f564c56fba23f4da8c9 Mon Sep 17 00:00:00 2001
+From: Kim Minjong <make.dirty.code@gmail.com>
+Date: Fri, 3 Feb 2023 13:57:05 +0900
+Subject: [PATCH 2/2] ceph-volume: allow removable devices but exclude USB
+
+Changed the logic to exclude USB devices to pass hot swap devices that were
+passed through before the bug.
+
+Fixes: https://tracker.ceph.com/issues/57907
+Fixes: https://tracker.ceph.com/issues/58189
+Fixes: https://tracker.ceph.com/issues/58306
+Fixes: https://tracker.ceph.com/issues/58591
+Signed-off-by: Kim Minjong <make.dirty.code@gmail.com>
+---
+ src/ceph-volume/ceph_volume/util/device.py | 2 +-
+ src/ceph-volume/ceph_volume/util/disk.py   | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/ceph-volume/ceph_volume/util/device.py b/src/ceph-volume/ceph_volume/util/device.py
+index d01d395339d4a..bb806292f2c48 100644
+--- a/src/ceph-volume/ceph_volume/util/device.py
++++ b/src/ceph-volume/ceph_volume/util/device.py
+@@ -594,7 +594,7 @@ def has_partitions(self):
+ 
+     def _check_generic_reject_reasons(self):
+         reasons = [
+-            ('removable', '1', 'removable'),
++            ('id_bus', 'usb', 'id_bus'),
+             ('ro', '1', 'read-only'),
+         ]
+         rejected = [reason for (k, v, reason) in reasons if
+diff --git a/src/ceph-volume/ceph_volume/util/disk.py b/src/ceph-volume/ceph_volume/util/disk.py
+index fa900e5da0f3a..dc1d9b1b79205 100644
+--- a/src/ceph-volume/ceph_volume/util/disk.py
++++ b/src/ceph-volume/ceph_volume/util/disk.py
+@@ -916,6 +916,10 @@ def get_devices(_sys_block_path='/sys/block', device=''):
+         metadata['path'] = diskname
+         metadata['type'] = block[2]
+ 
++        # some facts from udevadm
++        p = udevadm_property(sysdir)
++        metadata['id_bus'] = p.get('ID_BUS', '')
++
+         device_facts[diskname] = metadata
+     return device_facts
+ 

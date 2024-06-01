@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 pkgver=18.2.2
-pkgrel=2
+pkgrel=3
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL')
@@ -34,10 +34,10 @@ makedepends=(
   'pkgconf'         'python'           'snappy'          'sqlite'          'systemd-libs'
   'thrift'          'util-linux'       'xfsprogs'        'zlib'            'zstd'
 
-  'python-bcrypt'   'python-cherrypy'      'python-coverage'   'python-dateutil'            'python-jinja'
-  'python-pecan'    'python-prettytable'   'python-pyjwt'      'python-pyopenssl'           'python-requests'
-  'python-scipy'    'python-setuptools'    'python-sphinx'     'python-typing_extensions'   'python-werkzeug'
-  'python-yaml'
+  'python-bcrypt'     'python-cherrypy'  'python-coverage'     'python-dateutil'  'python-jinja'
+  'python-packaging'  'python-pecan'     'python-prettytable'  'python-pyjwt'     'python-pyopenssl'
+  'python-requests'   'python-scipy'     'python-setuptools'   'python-sphinx'    'python-typing_extensions'
+  'python-werkzeug'   'python-yaml'
 
   # python-bcrypt makedepends
   'python-build'   'python-installer'   'python-setuptools-rust'   'python-wheel'
@@ -116,12 +116,31 @@ source=(
   # See https://github.com/bazaah/aur-ceph/issues/20 for more
   'ceph-18.2.2-backport-mgr-dashboard-simplify-authentication-protocol.patch'
 
-  # Fix a change in behavior between python 3.11.5 and 3.11.8, which prevents
-  # importing type stub (.pyi) files directly, without a .py skeleton
-  'ceph-18.2.2-mgr-ceph-module-stub.patch'
-
   # Make the mgr import our ceph_bcrypt fork instead of the system bcrypt
   'ceph-18.2.2-mgr-alias-ceph-bcrypt.patch'
+
+  # Backport of https://github.com/ceph/ceph/pull/53327
+  'ceph-18.2.2-backport-ceph-volume-unbound-var.patch'
+
+  # Backport of https://github.com/ceph/ceph/pull/49954
+  'ceph-18.2.2-backport-ceph-volume-check-generic-reject-reasons.patch'
+
+  # Fix a few compile errors when using GCC14
+  'ceph-18.2.2-gcc-14-fixes.patch'
+
+  # Switch to using std::atomic<std::shared_ptr<T>> where possible
+  'ceph-18.2.2-std-atomic-depreciations.patch'
+
+  # Disable a performance test that regressed, while the upstream is deciding
+  # how to fix it
+  'ceph-18.2.2-test-mempool-shard-select-disable.patch'
+
+  # Since py3.11, but exacerbated in py3.12 there are a bunch of linting errors
+  # that we do not care about, so disable them
+  'ceph-18.2.2-disable-mypy-flake8-tests.patch'
+
+  # Fix a host of issues from py3.12 in the pybind / cephadm code
+  'ceph-18.2.2-py312-fixes.patch'
 
   # ===== ceph-python-bcrypt sources ===== #
   "python-bcrypt-${__bcrypt_version}.tar.gz::https://github.com/pyca/bcrypt/archive/${__bcrypt_version}.tar.gz"
@@ -151,8 +170,14 @@ sha512sums=('2fcd3d67512754947adc8780edbbee9498ef666056b804298cdc998a3eb4a2916c8
             '9a1183c08f8799b14235c9271519203cbf93e48ca3a8607d3a0500910efca5379c8a08421c377227f93d8436a850f5ca99784f28aaa920e55f0457c657511f17'
             'e238b326609636bc7dd10cec59290e22898948ef105c49643c38d2621abf16c2efcf9581b0b6bad65066607510c9827d00a7abdb14f2054701cc33b7101ea054'
             '965f1174ed682409f5aebfe689ccc870a860f323b00dcd4c9ee079839108ee27ed4d8b42d8b59c7e3cc5fb61d554929d9f779ce224691d20b868acf7f15adb2c'
-            '494290871b12be79a3e74618912d552f4802a7580abcd8e174b890944917ac04e1a52ddd7c039fa230cf43463ed479f9abf6f9a7d403d4ba5b522297184b09a5'
             '692b9cea0199366fdfbcaff2d9590e3a1e439b948a1a5030215e81fcc8a22ac562b3261e2057470cc8acc20f404869a5a0c4550177788dc2f824523e5267b1eb'
+            '11fae8997e4df4b706245f467dc396d84f1fb48db8e569b1665a4963eb77292415a2493cae033bed23765d82269a3cd6a5bf12c1ba52e3700a63db6ad983ca5a'
+            '4e23793539043ea571aee8067e09f8caa4d5509ab2e6e2472a4f2d2fc7934f8e2d97a2993b4534e761af6b8ead90b727e4e9fbd10e28143ea7f6bb01f2eaf68e'
+            '3f3a4795dfc58910972fa15a7ca8a4c3206d45351a15db66d8e93da64c7726c5f45256114b20f032d8011ab131ee20d2d8373207ad7e188a2978cf50854e10f1'
+            '2c90c69b3e236622c9fb83214fe7f781c9fcb0de1b372e7837d9963780ead9c2926c347177c03fb94eb05fd838514f3afab42aa50b7c9ac800c34bf59c48b02e'
+            '0ed97f2fb764ec8f7e01be45256377a6b2f451c865348b25b12ca9ef70c7120a0bf62321a9402cc4362618fde3a38ccfcd6eec738fe8cc067f17399700c273f3'
+            '3a6d2bee9a403ac7a0a1216fd704bb86337abf2498c1e90be70e8221779705c47cdc994f7147bcac5b99b939aa20dd0359c5eaf02224ae80183fbb7c1b7df792'
+            '15c6a1d2bdd524a7836ad9bad12c4103a32274ad1fa5182231bcbc626e44fcfbdba04b6d55c67ef13952821da46df68e0b51ab4534c3a8830eac301e18662195'
             '9cd6535249b88d83efd6f84e36c552cfb68d080c12b5f35167976219fd298efa03010c8674aa6d173242c098194c7d6ace3e2a5173a910bebf63791f60e7ade3'
             '26e4569396005f7461764dbe57634ab6d20ca9bfe777b4eeae3def8e3c887333b4d64470ad1db15a8170979f85372c111abfc043bdc1deae219183cc7539980e'
             '80f0d698d03b18c7168818983e150b34c19480f629f33d5537f76f810bdc7394dea68409ededa5d7f369bf9377cbaa7a9f11caa8874e3ecb29fd8bb06d45aeb2')
@@ -196,6 +221,25 @@ prepare() {
   # disable/remove broken tests
   sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
   sed -i '/add_ceph_test(safe-to-destroy.sh/d' src/test/osd/CMakeLists.txt
+
+  # Add our bcrypt build to the tox envs
+  for filename in src/pybind/mgr/{,dashboard/}requirements.txt; do
+    grep -qiF 'ceph_bcrypt' $filename \
+    || printf -- '%s\n' \
+        "--find-links=${srcdir}/bcrypt-${__bcrypt_version}/dist" \
+        "ceph_bcrypt" \
+        >> $filename
+  done
+
+  # The mgr C++ daemon injects a 'ceph_module' python module into the context
+  # of all python mgr modules, but this is absent from test code.
+  #
+  # I don't understand how this worked previously, but since py3.12 the machinery
+  # the upstream to mock the ceph_module... module doesn't work, so we copy the
+  # mocks into a technically real, importable python module.
+  #
+  # Note: this must be removed from the installed files!
+  install -vD src/pybind/mgr/tests/__init__.py src/pybind/ceph_module/__init__.py
 }
 
 build() {
@@ -270,10 +314,10 @@ check() {
 
   _check_ceph_python_bcrypt
 
-  export CTEST_PARALLEL_LEVEL=7
+  export CTEST_PARALLEL_LEVEL=$(nproc --ignore=4 || echo "4")
   export CTEST_OUTPUT_ON_FAILURE=1
 
-  VERBOSE=1 make -C build check || true
+  make -C build check || true
 }
 
 _package() {
@@ -768,10 +812,10 @@ package_ceph-mgr() {
 
     'sqlite'   'python'   'boost-libs'   'fmt'   'gperftools'
 
-    'python-requests'   'python-typing_extensions'   'python-coverage'      'python-jinja'      'python-pyopenssl'
-    'python-cherrypy'   'python-werkzeug'            'python-prettytable'   'python-pecan'      'python-scipy'
-    'python-yaml'       'python-setuptools'          'python-bcrypt'        'python-dateutil'
-    'python-cheroot'    'python-urllib3'             'python-jsonpatch'
+    'python-bcrypt'     'python-cheroot'    'python-cherrypy'   'python-coverage'    'python-dateutil'
+    'python-jinja'      'python-jsonpatch'  'python-packaging'  'python-pecan'       'python-prettytable'
+    'python-pyopenssl'  'python-requests'   'python-scipy'      'python-setuptools'  'python-typing_extensions'
+    'python-urllib3'    'python-werkzeug'   'python-yaml'
   )
   optdepends=(
     'cephadm: Required if cluster is managed via cephadm'

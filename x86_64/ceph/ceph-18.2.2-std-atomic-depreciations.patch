@@ -1,0 +1,39 @@
+diff --git a/src/common/ceph_context.h b/src/common/ceph_context.h
+index f1877647877..5b9d460e114 100644
+--- a/src/common/ceph_context.h
++++ b/src/common/ceph_context.h
+@@ -306,7 +306,7 @@ private:
+ 
+   int _crypto_inited;
+ 
+-  std::shared_ptr<std::vector<entity_addrvec_t>> _mon_addrs;
++  std::atomic<std::shared_ptr<std::vector<entity_addrvec_t>>> _mon_addrs;
+ 
+   /* libcommon service thread.
+    * SIGHUP wakes this thread, which then reopens logfiles */
+diff --git a/src/librbd/ImageCtx.h b/src/librbd/ImageCtx.h
+index 9a432c764d5..bbe1e6bf2e7 100644
+--- a/src/librbd/ImageCtx.h
++++ b/src/librbd/ImageCtx.h
+@@ -361,7 +361,7 @@ namespace librbd {
+                                    ceph::mutex **timer_lock);
+ 
+   private:
+-    std::shared_ptr<neorados::IOContext> data_io_context;
++    std::atomic<std::shared_ptr<neorados::IOContext>> data_io_context;
+   };
+ }
+ 
+diff --git a/src/osd/OSD.h b/src/osd/OSD.h
+index 00fab7ec83e..aeeaf262e03 100644
+--- a/src/osd/OSD.h
++++ b/src/osd/OSD.h
+@@ -1682,7 +1682,7 @@ protected:
+ 
+   // -- osd map --
+   // TODO: switch to std::atomic<OSDMapRef> when C++20 will be available.
+-  OSDMapRef       _osdmap;
++  std::atomic<OSDMapRef> _osdmap;
+   void set_osdmap(OSDMapRef osdmap) {
+     std::atomic_store(&_osdmap, osdmap);
+   }
