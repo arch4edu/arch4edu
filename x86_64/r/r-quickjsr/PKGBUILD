@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=QuickJSR
-_pkgver=1.1.3
+_pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,19 +10,17 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  r-jsonlite
-  r-r6
-  r-rcpp
+  r
 )
 checkdepends=(
-  r-testthat
+  r-tinytest
 )
 optdepends=(
-  r-testthat
+  r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7b343c86102813ebad21d4733928361e')
-b2sums=('9d26054a2f85d9c4e9643509a965c46b3b647fa03c3d19559f422e74201ff913e4e95b2297f08b8a76c5bdaffd8ccce8a4d225f892a8d6a2059ce61f188fa50b')
+md5sums=('a9be7dd1725773d51b2927a2bc05fab3')
+b2sums=('94b0bbc99f5f856a982c6ff75c34de49a9432f0e1f04643670cedc2e7c8962dc670ab6416dc4eb2cf80d79fa8e5757465a1898c650269bf2b50f40bf65dc4609')
 
 build() {
   mkdir build
@@ -31,7 +29,7 @@ build() {
 
 check() {
   cd "$_pkgname/tests"
-  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+  R_LIBS="$srcdir/build" Rscript --vanilla tinytest.R
 }
 
 package() {
