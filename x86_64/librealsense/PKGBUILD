@@ -1,20 +1,20 @@
 # Maintainer: pingplug < aur at pingplug dot me >
 # Contributr: Patrick José Pereira < positivcheg94 at gmail dot com >
 
-_RS4XX_VER=5.15.1.0
+_RS4XX_VER=5.16.0.1
 _SR300_VER=3.26.1.0
 _TM2_VER=0.2.0.951
 _L51X_VER=1.5.8.1
 _L53X_VER=3.5.5.1
 
 pkgname=librealsense
-pkgver=2.54.2
+pkgver=2.55.1
 pkgrel=1
 pkgdesc="Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras (D400 & L500 series and the SR300)."
 arch=('x86_64')
 url="https://github.com/IntelRealSense/librealsense"
 license=('Apache')
-makedepends=('cmake' 'git')
+makedepends=('cmake')
 depends=('glfw' 'glu' 'gtk3' 'libusb')
 source=("https://github.com/IntelRealSense/librealsense/archive/refs/tags/v${pkgver}.tar.gz"
     "https://librealsense.intel.com/Releases/RS4xx/FW/D4XX_FW_Image-${_RS4XX_VER}.bin"
@@ -22,16 +22,14 @@ source=("https://github.com/IntelRealSense/librealsense/archive/refs/tags/v${pkg
     "https://librealsense.intel.com/Releases/TM2/FW/target/${_TM2_VER}/target-${_TM2_VER}.mvcmd"
     "https://librealsense.intel.com/Releases/L5xx/FW/L51X_FW_Image-${_L51X_VER}.bin"
     "https://librealsense.intel.com/Releases/L5xx/FW/L53X_FW_Image-${_L53X_VER}.bin"
-    "realsense-viewer.desktop"
-    "fix-compile-error.patch")
-sha256sums=('e3a767337ff40ae41000049a490ab84bd70b00cbfef65e8cdbadf17fd2e1e5a8'
-            '29bd3181dcf467019e9775f4466d68380a54dc8f46ed1ca933320d6b45b87028'
+    "realsense-viewer.desktop")
+sha256sums=('54546d834ff5d8b35d9955319ad2e428f6d9ae4c61b932d1bd716ed81ad135f7'
+            'a481376ac2d072de1d057fe73d74fcc00ab5da17aa63fa92c18bb8f65adf909c'
             'c4ac2144df13c3a64fca9d16c175595c903e6e45f02f0f238630a223b07c14d1'
             '0265fd111611908b822cdaf4a3fe5b631c50539b2805d2f364c498aa71c007c0'
             '87a9a91b613d9d807b2bfc424abe9cac63cad75dfc04718592c44777cb0b4452'
             'b837b2cff2b270b89eed3c0b212ab4108389a20b6e07c19dd5957918ff9ce7e0'
-            '59281f91e7d471a7dde1cf7207eddd8624e05218cc4301ee52e4c453a0c8ab21'
-            'a9e026c053655730a5d4c275a00136df12538ffc8f830c290d8157f2215e3d0b')
+            '59281f91e7d471a7dde1cf7207eddd8624e05218cc4301ee52e4c453a0c8ab21')
 
 prepare(){
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -44,8 +42,6 @@ prepare(){
   cp "../target-${_TM2_VER}.mvcmd" build/common/fw/
   cp "../L51X_FW_Image-${_L51X_VER}.bin" build/common/fw/
   cp "../L53X_FW_Image-${_L53X_VER}.bin" build/common/fw/
-
-  patch -p0 -i ../fix-compile-error.patch
 }
 
 build() {
