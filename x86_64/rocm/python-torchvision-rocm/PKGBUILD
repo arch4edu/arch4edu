@@ -11,11 +11,11 @@
 # Contributor: Stephen Zhang <zsrkmyn at gmail dot com>
 
 _pkgname='vision'
-# if not set, populate build architecture list from arch:python-pytorch@2.2.2-3
+# if not set, populate build architecture list from arch:python-pytorch@2.3.0-2
 _PYTORCH_ROCM_ARCH="gfx906;gfx908;gfx90a;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102"
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.17.2
+pkgver=0.18.0
 pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
@@ -48,7 +48,7 @@ source=(
   "torchvision-0_17_1-fix-build.patch"
 )
 sha256sums=(
-  '0f9304acd77aafb7cfaf3fd5e318b2986ecc73547394b971d710eacd59f3e78e'
+  '3e61cbac33986a862a59cd733fd65da8b2c2a6160a66556cfa0e850f62fd43c7'
   'SKIP'
   'SKIP'
   'SKIP'
@@ -58,7 +58,7 @@ prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
 
   # Fix build with ffmpeg 6.0
-  patch -Np1 -i "${srcdir}/pytorch-vision-8096.patch"
+  # patch -Np1 -i "${srcdir}/pytorch-vision-8096.patch"
 
   # Fix import torchvision after https://github.com/pytorch/pytorch/pull/113182
   # patch -Np1 -i "${srcdir}/pytorch-vision-8112.patch"
@@ -79,7 +79,7 @@ build() {
   export PYTORCH_ROCM_ARCH="${_PYTORCH_ROCM_ARCH}"
   echo "building for PYTORCH_ROCM_ARCH=$PYTORCH_ROCM_ARCH"
 
-  # hardcode ROCM_PATH, HIP_ROOT_DIR, ROCM_HOME to /opt/rocm, fixes bin/hipcc a.o.
+  # if not set, hardcode ROCM_PATH, HIP_ROOT_DIR, ROCM_HOME to /opt/rocm, fixes bin/hipcc a.o.
   export ROCM_HOME="${ROCM_HOME:-/opt/rocm}"
   export ROCM_PATH="$ROCM_HOME"
   export HIP_ROOT_DIR="$ROCM_HOME"
