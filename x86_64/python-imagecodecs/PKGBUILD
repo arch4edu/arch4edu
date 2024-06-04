@@ -3,7 +3,7 @@
 _name=imagecodecs
 pkgname=python-imagecodecs
 pkgver=2024.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
@@ -13,6 +13,7 @@ depends=(
   blosc2
   brotli
   brunsli
+  bzip2
   charls
   giflib
   glibc
@@ -26,13 +27,11 @@ depends=(
   libjpeg-turbo
   libjxl
   libpng
-  libspng
   libtiff
   libwebp
   lz4
   lzfse
   openjpeg2
-  postgresql-libs
   python-numpy
   snappy
   xz
