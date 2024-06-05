@@ -1,11 +1,11 @@
 # Maintainer:  Jason Kercher <jkercher 43 at gmail dot com>
 
 pkgname=linuxcnc-git
-pkgver=2.9.2.r1941.gb76e34a35d
+pkgver=2.9.2.r1947.g1d5b8ceee5
 pkgrel=1
 pkgdesc="Controls CNC machines. It can drive milling machines, lathes, 3d printers, laser cutters, plasma cutters, robot arms, hexapods, and more (formerly EMC2)"
 arch=('i686' 'x86_64')
-license=('GPL2')
+license=('GPL-2.0-only')
 url="http://linuxcnc.org"
 depends=(bc
     boost
@@ -22,7 +22,7 @@ depends=(bc
     python-gobject
     python-pillow
     python-yapps2
-    tkimg
+#     tkimg
 #    python-gtkglext
     tclx
     xorg-server
@@ -37,7 +37,7 @@ makedepends=(
     man-db)
 provides=('linuxcnc')
 conflicts=('linuxcnc' 'linuxcnc-bin')
-options=('!strip')
+options=(!emptydirs)
 source=("${pkgname}::git+https://github.com/LinuxCNC/linuxcnc"
         'libtirpc.patch')
 sha256sums=('SKIP'
@@ -67,10 +67,12 @@ prepare() {
   sed -i 's|/usr/local/etc/emc2/configs|/etc/emc2/configs|g' Makefile.inc.in
   sed -i 's|$(DESTDIR)$(sysconfdir)/linuxcnc|$(DESTDIR)/etc/linuxcnc|g' Makefile.orig
   ./autogen.sh
-  ./configure --with-realtime=uspace \
-   --without-libmodbus --prefix=/usr \
+  ./configure --prefix=/usr \
+   --enable-non-distributable=yes \
+   --with-realtime=uspace \
+   --without-libmodbus \
    --with-python=/usr/bin/python3 \
-   --enable-non-distributable=yes
+   --disable-gtk2
 
   sed -i 's|$(DESTDIR)$(sysconfdir)/linuxcnc|$(DESTDIR)/etc/linuxcnc|g' Makefile
 }
