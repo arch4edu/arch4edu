@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=rlang
-_cranver=1.1.3
+_cranver=1.1.4
 pkgname=r-${_cranname,,}
 pkgdesc="Functions for Base Types and Core R and ‘Tidyverse’ Features"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -51,7 +51,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("c4641ee54942c6621f0b7b744da3197f582302222dad8f89eec4e7f4e4439deebd641a8292d6aad840690a7f24e43b9af316b353b72d5efbce712b8c9ea15648")
+b2sums=("970519ce46e1f52bc206acbda5467324c04ba60d36d0eff833e88caadf9c3d960cd904f480c7fd3df84c56ac338540d2b3c4b8bfea0b9fb9ccd6a3ef6ac45acf")
 
 build() {
     mkdir -p "${srcdir}/build/"
