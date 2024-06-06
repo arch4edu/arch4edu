@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-experiments
-pkgname=python-${_pkgname}
-pkgver=0.6.1
-pkgrel=3
+pkgname=python-$_pkgname
+pkgver=0.7.0
+pkgrel=1
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=(any)
 url=https://github.com/Qiskit-Extensions/qiskit-experiments
@@ -11,6 +11,7 @@ depends=(
     python-lmfit
     python-matplotlib
     python-numpy
+    python-packaging
     python-pandas
     python-qiskit
     python-qiskit-ibm-experiment
@@ -39,7 +40,7 @@ optdepends=(
 #    python-testtools
 #)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit-Extensions/$_pkgname/archive/refs/tags/$pkgver.tar.gz)
-b2sums=('862a45541d7b45f0adfe913c547afa8041dbaa66b747a18aa6944ddf43fbf1ef7a55b454969c5459e7d64d9c1da5eec435de7180e14a22cfa5a0d47a7a8fd60d')
+b2sums=('5ff725064884dddce5280d75b701fd79e4bf0c7c06d4c87e0840fe5039865c5b124b111e4c20f79ba73139d34b8d937c1f153aa8b75b6f61a9e1e24a4d7a2614')
 
 build() {
     cd $_pkgname-$pkgver
