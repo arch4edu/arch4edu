@@ -1,7 +1,7 @@
 # Maintainer: Core_UK <dev@coredev.uk>
 
 pkgname=cider
-pkgver=1.6.2
+pkgver=1.6.3
 pkgrel=8
 pkgdesc="Project Cider. An open-source Apple Music client built from the ground up with Vue.js and Electron. Build from tar file on GitHub releases."
 arch=(x86_64)
@@ -9,48 +9,48 @@ url="https://github.com/ciderapp/${pkgname}.git"
 license=(AGPL3)
 depends=(gtk3 nss alsa-lib libxcrypt-compat)
 optdepends=('libnotify: Playback notifications')
-makedepends=(nvm fontconfig)
+makedepends=(nvm fontconfig git rpm-tools)
 provides=(${pkgname})
 conflicts=(${pkgname})
 source_x86_64=("https://github.com/ciderapp/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums_x86_64=('9c99efa8a81d1ece626a5879822d7900910b36112beaf2c8703477c4050593c8')
+sha256sums_x86_64=('f9c778c0f2a0f9e21fa7c67cbc252b959d7261457752fd8f7f08ba2685005688')
 
 _ensure_local_nvm() {
-  # lets be sure we are starting clean
-  which nvm >/dev/null 2>&1 && nvm deactivate && nvm unload
+	# lets be sure we are starting clean
+	which nvm >/dev/null 2>&1 && nvm deactivate && nvm unload
 
-  export NVM_DIR="${srcdir}/${pkgname}-core-${pkgver}/.nvm"
-  # The init script returns 3 if version
-  #   specified in ./.nvrc is not (yet) installed in $NVM_DIR
-  #   but nvm itself still gets loaded ok
-  source /usr/share/nvm/init-nvm.sh || [[ $? != 1 ]]
+	export NVM_DIR="${srcdir}/${pkgname}-core-${pkgver}/.nvm"
+	# The init script returns 3 if version
+	#   specified in ./.nvrc is not (yet) installed in $NVM_DIR
+	#   but nvm itself still gets loaded ok
+	source /usr/share/nvm/init-nvm.sh || [[ $? != 1 ]]
 }
 
 prepare() {
-  cd "${srcdir}/${pkgname^}-${pkgver}"
-  _ensure_local_nvm
-  nvm install
-  corepack enable
-  corepack prepare yarn@stable --activate
+	cd "${srcdir}/${pkgname^}-${pkgver}"
+	_ensure_local_nvm
+	nvm install
+	corepack enable
+	corepack prepare yarn@stable --activate
 }
 
 build() {
-  cd "${srcdir}/${pkgname^}-${pkgver}"
-  _ensure_local_nvm
-  npx -y check-engine && yarn install && yarn dist && mv dist/*.deb "${srcdir}/" && cd "${srcdir}"
-  ar x ${pkgname}_${pkgver}_amd64.deb data.tar.xz
+	cd "${srcdir}/${pkgname^}-${pkgver}"
+	_ensure_local_nvm
+	npx -y check-engine && yarn install && yarn dist && mv dist/*.deb "${srcdir}/" && cd "${srcdir}"
+	ar x ${pkgname}_${pkgver}_amd64.deb data.tar.xz
 }
 
 package() {
-  # Extract package data
-  bsdtar -xf ${srcdir}/data.tar.xz -C ${pkgdir}/
-  # mv "${pkgdir}/opt/${pkgname^}" "${pkgdir}/opt/${pkgname}" # Disabled as breaks desktop file
+	# Extract package data
+	bsdtar -xf ${srcdir}/data.tar.xz -C ${pkgdir}/
+	# mv "${pkgdir}/opt/${pkgname^}" "${pkgdir}/opt/${pkgname}" # Disabled as breaks desktop file
 
-  # Symlink the binary
-  install -d "$pkgdir/usr/bin/"
-  ln -sf "/opt/${pkgname^}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+	# Symlink the binary
+	install -d "$pkgdir/usr/bin/"
+	ln -sf "/opt/${pkgname^}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
 
-  # Echo documentation to user
-  echo "To change the port that Cider uses, CIDER_PORT environment variable can be set."
+	# Echo documentation to user
+	echo "To change the port that Cider uses, CIDER_PORT environment variable can be set."
 }
 makedepends+=("git")
