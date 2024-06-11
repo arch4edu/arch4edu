@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=evaluate
-_pkgver=0.23
+_pkgver=0.24.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Parsing and Evaluation Tools that Provide More Details than the Default"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -25,8 +25,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f95f31851168165421c128109668a213')
-b2sums=('c84b36bbc37f8fa0799d2e68eb55b393d520121c00960a80e4e77b7ff805dc96c33e003e8e0531287e3f821a35e0424685b31510825caa6807878b57e7333e38')
+md5sums=('b0334c46aa126a22105882ae559bcba8')
+b2sums=('a031f7e04180d4fbcd0a317b73d99a47034be0b887622d53bf12adb7949eb5d180dc2a1416751f0916733a29eea4bb13fd88a546495fd80b489b827c86108cda')
 
 build() {
   mkdir build
