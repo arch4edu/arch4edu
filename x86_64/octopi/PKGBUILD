@@ -1,7 +1,7 @@
 # Maintainer: Mark Wagie <mark dot wagie at proton dot me>
 # Contributor: MatMoul <matmoul at the google email domain which is .com>
 pkgname=octopi
-pkgver=0.16.0
+pkgver=0.16.1
 pkgrel=1
 pkgdesc="A powerful Pacman frontend using Qt libs"
 arch=('x86_64')
@@ -31,15 +31,15 @@ optdepends=(
   'yay: for AUR support'
 )
 provides=(
+  'octopi-cachecleaner'
   'octopi-notifier'
   'octopi-repoeditor'
-  'octopi-cachecleaner'
 )
 conflicts=(
   'octopi-notifier'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/aarnt/octopi/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('12438b73009e80fb86b6c126b406624f7df7cd8ebaf006853b2e6c258a79aec8')
+sha256sums=('51908be24f04edb58c17570617082f8ff982ebf6670a8e618dc43ac063c25c80')
 
 prepare() {
   cd "$pkgname-$pkgver"
