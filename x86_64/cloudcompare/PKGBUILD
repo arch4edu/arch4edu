@@ -6,10 +6,10 @@
 # shellcheck disable=SC2034,SC2154 # allow unused/uninitialized variables.
 
 name=cloudcompare
-_fragment="#tag=v2.13"
+_fragment="#tag=v2.13.1"
 pkgname=${name}
-pkgver="${_fragment###tag=v}.0"
-pkgrel=3
+pkgver="${_fragment###tag=v}"
+pkgrel=1
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
@@ -25,7 +25,7 @@ source=("${name}::git+https://github.com/CloudCompare/CloudCompare.git${_fragmen
         CloudCompare.desktop
         ccViewer.desktop
         vtk_jsoncpp.patch)
-sha256sums=('df02d30895845ce67cf1736edfb1b9e4e87f480d14781dd63eea7b6f59d15835'
+sha256sums=('f395d53d994e78171d0967b5ffc39f168709b552e657c84df06ea57bef03aea9'
             'SKIP'
             '14096df9cf7aca3099d5df1585d1cf669544e9b10754dce3d2507100dd7034fe'
             '821ac2540e1196774e26f8033946ce7b36223dae7a2a7c78f4a901b4177f68cc'
