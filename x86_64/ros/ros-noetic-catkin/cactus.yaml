@@ -4,6 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/ros2/python-catkin_pkg
+  - x86_64/ros2/python-empy3
   - x86_64/ros/ros-build-tools
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
