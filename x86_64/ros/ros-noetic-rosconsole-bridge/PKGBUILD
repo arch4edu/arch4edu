@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rosconsole_bridge'
 pkgname='ros-noetic-rosconsole-bridge'
 pkgver='0.5.4'
 arch=('any')
-pkgrel=3
+pkgrel=4
 license=('BSD')
 
 ros_makedepends=(
