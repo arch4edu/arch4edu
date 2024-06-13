@@ -4,7 +4,7 @@ url='https://wiki.ros.org/rosconsole'
 pkgname='ros-noetic-rosconsole'
 pkgver='1.14.3'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=12
+pkgrel=13
 license=('BSD')
 
 ros_makedepends=(
@@ -48,7 +48,7 @@ build() {
     cd ${srcdir}/build
 
     # Build the project.
-    cmake ${srcdir}/${_dir} \
+    cmake ${srcdir}/${_dir} -DCMAKE_CXX_FLAGS="-DGLOG_USE_GLOG_EXPORT" \
         -DCATKIN_BUILD_BINARY_PACKAGE=ON \
         -DCMAKE_INSTALL_PREFIX=/opt/ros/noetic \
         -DPYTHON_EXECUTABLE=/usr/bin/python \
