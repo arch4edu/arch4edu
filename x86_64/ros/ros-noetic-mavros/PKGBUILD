@@ -7,7 +7,7 @@ url='https://wiki.ros.org/mavros'
 pkgname='ros-noetic-mavros'
 pkgver=1.17.0
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=1
+pkgrel=2
 license=('GPLv3, LGPLv3, BSD')
 
 ros_makedepends=(
