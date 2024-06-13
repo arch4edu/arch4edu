@@ -4,7 +4,7 @@ url='https://wiki.ros.org/rqt_topic'
 pkgname='ros-noetic-rqt-topic'
 pkgver='0.4.13'
 arch=('any')
-pkgrel=3
+pkgrel=4
 license=('BSD')
 
 ros_makedepends=(
