@@ -1,25 +1,25 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname=python-jaxlib-cuda
-pkgver=0.4.28
+pkgver=0.4.29
 pkgrel=1
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/google/jax/'
 license=('Apache')
 depends=('cuda' 'cudnn' 'nccl' 'openssl' 'python-absl' 'python-flatbuffers'
-         'python-ml-dtypes' 'python-numpy' 'python-scipy')
-makedepends=('gcc12' 'pybind11' 'python-build' 'python-installer'
+         'python-ml-dtypes>=0.4.0' 'python-numpy' 'python-scipy')
+makedepends=('gcc13' 'pybind11' 'python-build' 'python-installer'
              'python-setuptools' 'python-wheel')
 conflicts=('python-jaxlib')
 provides=("python-jaxlib=$pkgver")
 xla_commit=12eee889e1f2ad41e27d7b0e970cb92d282d3ec5
 source=("jaxlib-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jaxlib-v${pkgver}.tar.gz"
         'bazelrc.user'
-        'https://github.com/bazelbuild/bazel/releases/download/6.1.2/bazel-6.1.2-linux-x86_64')
-sha256sums=('4dd11577d4ba5a095fbc35258ddd4e4c020829ed6e6afd498c9e38ccbcdfe20b'
-            '07da4c3594dad382ee02748b860c629ffa083ba37ad22a892291bdc72efbac5e'
-            'e89747d63443e225b140d7d37ded952dacea73aaed896bca01ccd745827c6289')
+        'https://github.com/bazelbuild/bazel/releases/download/6.5.0/bazel-6.5.0-linux-x86_64')
+sha256sums=('3a8005f4f62d35a5aad7e3dbd596890b47c81cc6e34fcfe3dcb93b3ca7cb1246'
+            '4cf662402cfa79eada5db60041b1a3dee550e2d1132e97e8fdf26be38f9ee848'
+            'a40ac69263440761199fcb8da47ad4e3f328cbe79ffbf4ecc14e5ba252857307')
 
 prepare() {
     # Allow any bazel version
@@ -29,7 +29,7 @@ prepare() {
     cp bazelrc.user jax-jaxlib-v${pkgver}/.bazelrc.user
 
     # TODO(@daskol): Prepare spcific bazel version ad hoc.
-    chmod +x bazel-6.1.2-linux-x86_64
+    chmod +x bazel-6.5.0-linux-x86_64
 }
 
 build() {
@@ -68,7 +68,7 @@ build() {
     export JAXLIB_RELEASE=$pkgver
 
     cd $srcdir/jax-jaxlib-v$pkgver
-    ../bazel-6.1.2-linux-x86_64 --output_user_root=$srcdir/bazel \
+    ../bazel-6.5.0-linux-x86_64 --output_user_root=$srcdir/bazel \
         run --action_env=JAXLIB_RELEASE --verbose_failures=true \
         //jaxlib/tools:build_wheel -- \
         --cpu x86_64 --output_path=$PWD/dist --jaxlib_git_hash ''
