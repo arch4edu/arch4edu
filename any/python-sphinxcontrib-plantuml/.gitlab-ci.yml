@@ -5,6 +5,7 @@ build:
     entrypoint: [""]
   before_script:
     - sudo pacman -Sy --noconfirm archlinux-keyring
+    - yay -Syu --noconfirm
   script:
     - |
       depends=()
@@ -26,8 +27,8 @@ test:
     name: countstarlight/makepkg:latest
     entrypoint: [""]
   script:
-    - yay -Sy --noconfirm
-    - yay -S --noconfirm archlinux-keyring
+    - sudo pacman -Sy --noconfirm archlinux-keyring
+    - yay -Syu --noconfirm
     - yay --noconfirm -U *.pkg.tar.zst
     - python -c "import sphinxcontrib.plantuml"
 
