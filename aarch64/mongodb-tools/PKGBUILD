@@ -5,17 +5,17 @@
 # Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=mongodb-tools
-pkgver=100.9.4
+pkgver=100.9.5
 pkgrel=1
 epoch=1
 pkgdesc="Import, export, and diagnostic tools for MongoDB"
 arch=('x86_64')
 url="https://github.com/mongodb/mongo-tools"
-license=('Apache')
+license=('Apache-2.0' 'BSD-2-Clause' 'BSD-3-Clause' 'ISC' 'MIT' 'MPL-2.0')
 depends=('glibc' 'krb5')
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/mongodb/mongo-tools/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('513c8471f7a733f0582b521330ccada326cc01f47da489bda7b5b42959564385')
+sha256sums=('3e68a88d14324b516f90c341a7fbabcf6af2f92c8fe5ef1b0dd951c148b91c06')
 
 prepare() {
   sed "/ubuntu1804/{n;s/ArchArm64/ArchAarch64/}" -i mongo-tools-$pkgver/release/platform/platform.go
@@ -40,4 +40,5 @@ build() {
 
 package() {
   install -Dm755 mongo-tools-$pkgver/bin/* -t "$pkgdir/usr/bin/"
+  install -Dm644 mongo-tools-$pkgver/THIRD-PARTY-NOTICES -t "$pkgdir/usr/share/licenses/$pkgname"
 }
