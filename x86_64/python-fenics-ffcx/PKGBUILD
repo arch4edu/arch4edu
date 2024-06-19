@@ -3,12 +3,12 @@ _base=ffcx
 pkgname=python-fenics-${_base}
 pkgdesc="The FEniCSx Form Compiler"
 pkgver=0.8.0
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
 license=(LGPL-3.0-or-later GPL-3.0-or-later Unlicense)
-depends=(python-cffi python-fenics-basix python-fenics-ufl)
-makedepends=(python-build python-installer python-setuptools python-wheel)
+depends=(python-cffi python-fenics-basix python-fenics-ufl python-setuptools)
+makedepends=(python-build python-installer python-wheel)
 checkdepends=(python-pytest python-sympy python-pygraphviz)
 optdepends=('python-pygraphviz: utility to draw graph'
   'python-numba: for Numba C signature for the UFCx support')
