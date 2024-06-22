@@ -2,8 +2,6 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_clang_version:=14}
-
 : ${_build_git:=false}
 
 unset _pkgtype
@@ -12,45 +10,44 @@ unset _pkgtype
 # basic info
 _pkgname=sourcetrail
 pkgname="$_pkgname${_pkgtype:-}"
-pkgver=2023.11
-pkgrel=3
+pkgver=2024.6.1
+pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
-url='https://github.com/petermost/Sourcetrail'
+url='https://github.com/xiota/sourcetrail'
 license=('GPL-3.0-only')
 arch=('x86_64')
 
 # main package
 _main_package() {
   depends=(
-    "clang${_clang_version:-}"
-    "llvm${_clang_version:-}-libs"
+    "clang"
+    "llvm-libs"
 
     'boost-libs'
     'java-runtime'
-    'qt5-svg'
+    'qt6-5compat'
+    'qt6-svg'
     'sqlite'
     'tinyxml'
   )
   makedepends=(
-    "llvm${_clang_version:-}"
+    "llvm"
     "lld"
 
     'boost'
-    'catch2'
     'cmake'
+    'git'
     'jdk-openjdk'
     'maven'
     'ninja'
-    'qt5-base'
+    'qt6-base'
 
     'gendesk'
     'imagemagick'
-
-    # AUR
-    #'vcpkg'
+    'patchelf'
   )
 
-  if [ "${_build_git::1}" != "t" ] ; then
+  if [ "${_build_git::1}" != "t" ]; then
     _main_stable
   else
     _main_git
@@ -59,28 +56,11 @@ _main_package() {
 
 # stable package
 _main_stable() {
-  _pkgsrc="Sourcetrail-${pkgver%%.r*}"
-  _pkgext="tar.gz"
-  source+=(
-    "$_pkgname-${pkgver%%.r*}.$_pkgext"::"$url/archive/refs/tags/${pkgver%%r.*}.tar.gz"
-  )
-  sha256sums+=(
-    '73c783ed6bffd8be0a706e9417ba03937687fd368992e22c5f7a2e72e2ece806'
-  )
+  _commit='6a9036068d79175cafe3ba35a647a40fc3aefb4e'
 
-  _prepare() {
-    cd "$_pkgsrc"
-    local src
-    for src in "${source[@]}"; do
-      src="${src%%::*}"
-      src="${src##*/}"
-      src="${src%.zst}"
-      [[ $src = *.patch ]] || continue
-      echo
-      echo "Applying patch $src..."
-      filterdiff -p1 -x 'vcpkg' "../$src" | patch -Np1 -F100
-    done
-  }
+  _pkgsrc="$_pkgname"
+  source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
+  sha256sums=('SKIP')
 
   pkgver() {
     local _pkgver="${pkgver%%.r*}"
@@ -90,18 +70,12 @@ _main_stable() {
 
 # git package
 _main_git() {
-  makedepends+=('git')
-
   provides=("$_pkgname=${pkgver%%.r*}")
   conflicts=("$_pkgname")
 
   _pkgsrc="$_pkgname"
-  source+=("$_pkgsrc"::"git+$url.git")
-  sha256sums+=('SKIP')
-
-  _prepare() {
-    :
-  }
+  source=("$_pkgsrc"::"git+$url.git")
+  sha256sums=('SKIP')
 
   pkgver() (
     cd "$_pkgsrc"
@@ -125,27 +99,16 @@ prepare() {
 
   gendesk "${_gendesk_options[@]}"
 
-  convert "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
-
-  _prepare
+  magick "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
 }
 
 build() {
-  if [ -n "${_clang_version}" ] ; then
-    export CC="/usr/lib/llvm${_clang_version:-}/bin/clang"
-    export CXX="/usr/lib/llvm${_clang_version:-}/bin/clang++"
-    export LDFLAGS+=" -fuse-ld=lld"
+  export CC=clang
+  export CXX=clang++
+  export LDFLAGS+=" -fuse-ld=lld"
 
-    export Clang_DIR="/usr/lib/llvm${_clang_version:-}/lib/cmake/clang"
-    export LLVM_DIR="/usr/lib/llvm${_clang_version:-}/lib/cmake/llvm"
-  else
-    export CC=clang
-    export CXX=clang++
-    export LDFLAGS+=" -fuse-ld=lld"
-
-    #export Clang_DIR="/usr/lib/cmake/clang"
-    #export LLVM_DIR="/usr/lib/cmake/llvm"
-  fi
+  #export Clang_DIR="/usr/lib/cmake/clang"
+  #export LLVM_DIR="/usr/lib/cmake/llvm"
 
   local _cmake_options=(
     -B build
@@ -158,7 +121,6 @@ build() {
     -DBUILD_JAVA_LANGUAGE_PACKAGE=ON
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     -DCMAKE_VERBOSE_MAKEFILE=OFF
-
     -Wno-dev
   )
 
@@ -168,16 +130,22 @@ build() {
 
 package() {
   # binaries
-  install -Dm755 "build/app/Sourcetrail" "$pkgdir/opt/$_pkgname/bin/$_pkgname"
-  install -Dm755 "build/app/sourcetrail_indexer" -t "$pkgdir/opt/$_pkgname/bin/"
+  install -Dm755 "build/app/sourcetrail_indexer" -t "$pkgdir/opt/$_pkgname/"
+  install -Dm755 "build/app/Sourcetrail" "$pkgdir/opt/$_pkgname/$_pkgname"
+  patchelf --add-rpath '/opt/sourcetrail' "$pkgdir/opt/$_pkgname/$_pkgname"
 
-  # scripts
-  install -Dm755 "$_pkgsrc/setup/Linux/data/package/resetPreferences.sh" -t "$pkgdir/opt/$_pkgname/"
-  install -Dm755 "$_pkgsrc/setup/Linux/data/package/Sourcetrail.sh" -t "$pkgdir/opt/$_pkgname/"
+  # script
+  install -Dm755 /dev/stdin "$pkgdir/usr/bin/$_pkgname" << END
+#!/usr/bin/env sh
+SOURCETRAIL_PATH=/opt/$_pkgname
 
-  # symlink
-  install -dm755 "$pkgdir/usr/bin"
-  ln -s "/opt/$_pkgname/Sourcetrail.sh" "$pkgdir/usr/bin/$_pkgname"
+export QT_XKB_CONFIG_ROOT="/usr/share/X11/xkb:\$QT_XKB_CONFIG_ROOT"
+export QT_QPA_FONTDIR="\$SOURCETRAIL_PATH/data/fonts:\$QT_QPA_FONTDIR"
+export SOURCETRAIL_VIA_SCRIPT=1
+export OPENSSL_CONF=/etc/ssl/
+
+exec \$SOURCETRAIL_PATH/$_pkgname "\$@"
+END
 
   # icon
   install -Dm644 "$_pkgname.png" "$pkgdir/usr/share/pixmaps/$_pkgname.png"
@@ -185,17 +153,24 @@ package() {
   # desktop file
   install -Dm644 "$srcdir/$_pkgname.desktop" -t "$pkgdir/usr/share/applications/"
 
-  # share/data
-  install -dm755 "$pkgdir/opt/$_pkgname/share/data"
-  cp -r "$_pkgsrc/bin/app/data/color_schemes" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/cxx" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/fallback" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/fonts" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/gui" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/install" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/java" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/license" "$pkgdir/opt/$_pkgname/share/data/"
-  cp -r "$_pkgsrc/bin/app/data/syntax_highlighting_rules" "$pkgdir/opt/$_pkgname/share/data/"
+  # data
+  install -dm755 "$pkgdir/opt/$_pkgname/data"
+  cp -a "$_pkgsrc/bin/app/data/color_schemes" "$pkgdir/opt/$_pkgname/data/"
+  cp -a "$_pkgsrc/bin/app/data/fallback" "$pkgdir/opt/$_pkgname/data/"
+  cp -a "$_pkgsrc/bin/app/data/fonts" "$pkgdir/opt/$_pkgname/data/"
+  cp -a "$_pkgsrc/bin/app/data/gui" "$pkgdir/opt/$_pkgname/data/"
+  cp -a "$_pkgsrc/bin/app/data/java" "$pkgdir/opt/$_pkgname/data/"
+  cp -a "$_pkgsrc/bin/app/data/license" "$pkgdir/opt/$_pkgname/data/"
+  cp -a "$_pkgsrc/bin/app/data/syntax_highlighting_rules" "$pkgdir/opt/$_pkgname/data/"
+
+  cp -a "build/app/data/cxx" "$pkgdir/opt/$_pkgname/data/"
+
+  # user
+  install -dm755 "$pkgdir/opt/$_pkgname/user"
+  cp -a "$_pkgsrc"/bin/app/user/* "$pkgdir/opt/$_pkgname/user/"
+
+  # fix permissions
+  chmod -R u+rwX,go+rX,go-w "$pkgdir/"
 }
 
 # execute
