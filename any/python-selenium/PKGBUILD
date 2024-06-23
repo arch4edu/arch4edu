@@ -5,7 +5,7 @@
 
 pkgname=python-selenium
 _pkgname=${pkgname#python-}
-pkgver=4.21.0
+pkgver=4.22.0
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=(any)
@@ -18,6 +18,7 @@ depends=(
   python-trio-websocket
   python-typing_extensions
   python-urllib3
+  python-websocket-client
 )
 makedepends=(
   python-build
@@ -27,7 +28,7 @@ makedepends=(
 )
 checkdepends=(python-pytest)
 source=("$pkgname-$pkgver.tar.gz::$url/archive/selenium-$pkgver.tar.gz")
-sha256sums=('994b73642f0ce762b5dc1ae2805ce82bf4ff3e0370b7c37380514ca6ec55031f')
+sha256sums=('196c7080449c48a46fab64dce0fb0085f7c2276d359d49ef1fad51203c853152')
 
 _archive="$_pkgname-selenium-$pkgver/py"
 
