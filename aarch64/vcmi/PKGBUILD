@@ -3,7 +3,7 @@
 # Contributor: Sandy Carter <bwrsandman@gmail.com>
 
 pkgname=vcmi
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="Open-source engine for Heroes of Might and Magic III"
 arch=('i686' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
@@ -17,7 +17,7 @@ provides=('vcmi')
 conflicts=('vcmi')
 install="${pkgname}.install"
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/releases/download/${pkgver}/VCMI-Sources.tar.gz")
-sha256sums=('26489cb8a966c6735641eb4068a57a42f0319e37589c2894afd52757b0b137ef')
+sha256sums=('3ab205829b44f622a23f55fe3716bec062e8ebabe33706c0dde31b0717501f09')
 
 # workaround
 prepare() {
@@ -32,6 +32,8 @@ prepare() {
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  # force qt5
+  sed -i 's/find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)/find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Network)/' CMakeLists.txt
   mkdir -p build && cd build
   cmake -B. -H.. \
     -DCMAKE_INSTALL_PREFIX='/usr' \
