@@ -1,14 +1,15 @@
 # Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Contributor: Marcel Korpel <marcel[dot]korpel[at]gmail>
 # Contributor: Olaf Bauer <hydro@freenet.de>
 
 pkgname=makemkv
 pkgver=1.17.7
-pkgrel=1
+pkgrel=3
 pkgdesc="DVD and Blu-ray to MKV converter"
 arch=(x86_64 i686 aarch64)
 url="https://www.makemkv.com"
-license=('custom: GuinpinSoft Inc EULA' LGPL MPL)
+license=('LicenseRef-GuinpinSoft-inc-EULA' LGPL-2.1-or-later)
 depends=(qt5-base ffmpeg)
 optdepends=(java-runtime)
 optdepends_x86_64=('lib32-glibc: dts support')
@@ -26,7 +27,6 @@ sha256sums=('8c5bc831bc952b1f873cc8450c64e392db0b2479b626d180f0ffc965668951d0'
 
 build() {
   cd "${srcdir}/${pkgname}-oss-${pkgver}"
-  #CFLAGS="$CFLAGS -std=c++11" CC=gcc CXX=g++ ./configure --prefix=/usr
   #CFLAGS="$CFLAGS -std=c++11" CC=gcc CXX=g++ ./configure --prefix=/usr
   ./configure --prefix=/usr
   make
