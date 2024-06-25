@@ -3,9 +3,9 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=nloptr
-_pkgver=2.1.0
+_pkgver=2.1.1
 pkgname=r-${_pkgname,,}
-pkgver=2.1.0
+pkgver=2.1.1
 pkgrel=1
 pkgdesc='R Interface to NLopt'
 arch=('x86_64')
@@ -27,7 +27,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5ead4257c9ec20045644c1d80a2bbbfef1aa9bfb8c2bbba189c56a7747eb6fac')
+sha256sums=('4cdaf55dfdeb090119f2c2ca77f617962524654da4511bacd650f62bb6dad8ea')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
