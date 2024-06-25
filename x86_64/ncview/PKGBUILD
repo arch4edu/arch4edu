@@ -1,15 +1,15 @@
 # Contributor: Graziano Giuliani <giuliani@lamma.rete.toscana.it>
 
 pkgname=ncview
-pkgver=2.1.8
+pkgver=2.1.10
 pkgrel=1
 pkgdesc="A visual browser for netCDF format files"
 arch=(i686 x86_64)
-url="http://meteora.ucsd.edu/~pierce/ncview_home_page.html"
+url="https://cirrus.ucsd.edu/ncview/"
 license=('GPL3')
-depends=(netcdf udunits netpbm libxaw)
-source=("ftp://cirrus.ucsd.edu/pub/ncview/${pkgname}-${pkgver}.tar.gz")
-md5sums=('510df57cd0b5fdae385d34c06b962b29')
+depends=(netcdf udunits netpbm libxaw xorg-fonts-misc)
+source=("https://cirrus.ucsd.edu/~pierce/ncview/${pkgname}-${pkgver}.tar.gz")
+md5sums=('1792cc259791356a6e29334547f4945f')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -18,7 +18,7 @@ prepare() {
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-  CC="$(nc-config --cc)" CPPFLAGS="$CFLAGS" ./configure \
+  CFLAGS="$CFLAGS -Wno-incompatible-pointer-types" CC="$(nc-config --cc)" CPPFLAGS="$CFLAGS" ./configure \
     --prefix=/usr \
     --with-ppm_incdir=/usr/include/netpbm \
     --with-ppm_libdir=/usr/lib
