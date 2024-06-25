@@ -3,9 +3,9 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=prodlim
-_pkgver=2023.08.28
+_pkgver=2024.06.25
 pkgname=r-${_pkgname,,}
-pkgver=2023.08.28
+pkgver=2024.06.25
 pkgrel=1
 pkgdesc='Product-Limit Estimation for Censored Event History Analysis'
 arch=('x86_64')
@@ -19,7 +19,7 @@ depends=(
   r-rcpp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8002229f38bbe42e26b88ac542d9c028a9dbe8fd3b80af7552060bec3a555de8')
+sha256sums=('46961f654171aa7ef0ff94b23508ed59f6a438c3a3ba0d338cc3730224406764')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
