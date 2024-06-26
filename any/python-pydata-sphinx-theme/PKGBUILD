@@ -4,12 +4,12 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
-pkgver=0.15.3
+pkgver=0.15.4
 pkgrel=1
 pkgdesc="Bootstrap-based Sphinx theme from the PyData community"
 arch=('any')
 url="https://pydata-sphinx-theme.readthedocs.io"
-license=('BSD')
+license=('BSD-3-Clause')
 makedepends=('python-installer')
 #makedepends=('python-sphinx-theme-builder'
 #             'python-flit-core'
@@ -35,7 +35,7 @@ checkdepends=('python-nose'
 #source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
 #        'Makefile')
 source=("https://files.pythonhosted.org/packages/py3/${_pyname:0:1}/${_pyname}/${_pyname//-/_}-${pkgver}-py3-none-any.whl")
-md5sums=('4f3084b443477f6645fdb5404011fa70')
+md5sums=('f2c366a2a4b92c2aae0ba4aacaa29631')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
