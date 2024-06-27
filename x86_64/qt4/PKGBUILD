@@ -1,14 +1,15 @@
-# Maintainer: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Maintainer: Echo J. <aidas957 at gmail dot com>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 # Contributor: Pierre Schmitz <pierre@archlinux.de>
 
 pkgname=qt4
 pkgver=4.8.7
-pkgrel=35
+pkgrel=36
 arch=(i686 x86_64)
 url="https://www.qt.io"
-license=(GPL3 LGPL FDL custom)
+license=(GPL-3.0-only LGPL-3.0-only GFDL-1.3-only)
 pkgdesc="A cross-platform application and UI framework"
 depends=(sqlite ca-certificates fontconfig libgl libxrandr libxv libxi alsa-lib xdg-utils hicolor-icon-theme desktop-file-utils libmng dbus)
 makedepends=(patch postgresql-libs mariadb-libs unixodbc cups gtk2 libfbclient mesa)
@@ -23,6 +24,7 @@ optdepends=('postgresql-libs: PostgreSQL driver'
             'sni-qt: StatusNotifierItem (AppIndicators) support')
 replaces=('qt<=4.8.4')
 conflicts=(qt)
+options=('!lto') # Avoid static library issues
 _pkgfqn="qt-everywhere-opensource-src-${pkgver}"
 source=("https://src.fedoraproject.org/repo/pkgs/qt/${_pkgfqn}.tar.gz/d990ee66bf7ab0c785589776f35ba6ad/${_pkgfqn}.tar.gz"
         "qtconfig-qt4.desktop"
@@ -79,6 +81,10 @@ prepare() {
   patch -p1 -i "${srcdir}"/moc-boost-workaround.patch
 
   # http://blog.martin-graesslin.com/blog/2014/06/where-are-my-systray-icons/
+  rm -f src/gui/util/qabstractsystemtrayiconsys.cpp \
+    src/gui/util/qabstractsystemtrayiconsys_p.h \
+    src/gui/util/qxembedsystemtrayicon_x11.cpp \
+    src/gui/util/qxembedsystemtrayicon_x11_p.h || true
   patch -p1 -i "${srcdir}"/kubuntu_14_systemtrayicon.diff
 
   # FS#45106
@@ -102,6 +108,10 @@ prepare() {
   cp mkspecs/common/linux{,32}.conf
   sed -i "/^QMAKE_LIBDIR\s/s|=|= /usr/lib32|g" mkspecs/common/linux32.conf
   sed -i "s|common/linux.conf|common/linux32.conf|" mkspecs/linux-g++-32/qmake.conf
+
+  # Reduce warning verbosity
+  sed -i "s|-Wall -W||" mkspecs/common/gcc-base.conf
+  sed -i "s|-Wall -W||" mkspecs/linux-lsb-g++/qmake.conf
 
   # Fix building with GCC6 (Fedora)
   patch -p1 -i "${srcdir}"/qt4-gcc6.patch
@@ -132,12 +142,13 @@ prepare() {
 }
 
 build() {
-  export QT4DIR="${srcdir}"/${_pkgfqn}
-  export LD_LIBRARY_PATH=${QT4DIR}/lib:${LD_LIBRARY_PATH}
+  export QT4DIR="${srcdir}"/build
+  export LD_LIBRARY_PATH="${QT4DIR}/lib:${LD_LIBRARY_PATH}"
 
-  cd ${_pkgfqn}
+  mkdir build || true
+  cd build
 
-  ./configure -confirm-license -opensource \
+  ../${_pkgfqn}/configure -confirm-license -opensource \
     -prefix /usr \
     -bindir /usr/lib/qt4/bin \
     -headerdir /usr/include/qt4 \
@@ -172,9 +183,9 @@ build() {
 }
 
 package() {
-  cd ${_pkgfqn}
+  make -C build INSTALL_ROOT="${pkgdir}" install
 
-  make INSTALL_ROOT="${pkgdir}" install
+  cd ${_pkgfqn}
 
   # install missing icons and desktop files
   install -D -m644 src/gui/dialogs/images/qtlogo-64.png "${pkgdir}"/usr/share/icons/hicolor/64x64/apps/qt4logo.png
@@ -200,8 +211,10 @@ package() {
     ln -s /usr/lib/qt4/bin/$(basename $b) "${pkgdir}"/usr/bin/$(basename $b)-qt4
   done
 
-  # install license addition
-  install -D -m644 LGPL_EXCEPTION.txt ${pkgdir}/usr/share/licenses/${pkgname}/LGPL_EXCEPTION.txt
+  # Install the licenses
+  install -D -m644 LICENSE.GPL3 "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.GPL3
+  install -D -m644 LICENSE.LGPLv3 "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.LGPLv3
+  install -D -m644 LICENSE.FDL "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.FDL
 
   # Fix wrong libs path in pkgconfig files
   find "${pkgdir}/usr/lib/pkgconfig" -type f -name '*.pc' -exec perl -pi -e "s, -L${srcdir}/?\S+,,g" {} \;
