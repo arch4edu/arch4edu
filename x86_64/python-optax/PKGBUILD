@@ -3,7 +3,7 @@
 pkgname='python-optax'
 _pkgname=${pkgname#python-}
 pkgver=0.2.2
-pkgrel=2
+pkgrel=3
 pkgdesc='A gradient processing and optimization library for JAX'
 arch=('any')
 url='https://github.com/google-deepmind/optax'
