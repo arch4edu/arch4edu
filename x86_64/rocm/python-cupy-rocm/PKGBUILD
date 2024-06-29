@@ -2,11 +2,11 @@
 
 pkgname=python-cupy-rocm
 _pkgname=cupy
-pkgver=13.1.0
+pkgver=13.2.0
 _cccl_commit=3ef9dd9642da2d4e0b3ff77e445e73d7aabd4687
 _dlpack_commit=365b823cedb281cd0240ca601aba9b78771f91a3
 _jitify_commit=1a0ca0e837405506f3b8f7883bacb71c20d86d96
-pkgrel=2
+pkgrel=1
 pkgdesc="NumPy-like API accelerated with ROCm"
 url="https://cupy.dev"
 arch=('x86_64')
@@ -18,7 +18,7 @@ source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
         "https://github.com/dmlc/dlpack/archive/$_dlpack_commit.tar.gz"
         "https://github.com/NVIDIA/jitify/archive/$_jitify_commit.tar.gz"
         "rocm-6.0.patch")
-md5sums=('9cca9a13ab502647848200b8d4d491f1'
+md5sums=('8e178493f30ed3ee427ac75c2af8ce58'
          '17c7f9635569aac243be498275ba71ba'
          '4fbb2aeba1e0ef8d7e094deb811630df'
          '0fb2589c81179e752d9bc45be72ed992'
