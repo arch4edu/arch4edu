@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=Cubist
-_pkgver=0.4.2.1
+_pkgver=0.4.4
 pkgname=r-${_pkgname,,}
-pkgver=0.4.2.1
+pkgver=0.4.4
 pkgrel=1
 pkgdesc='Rule- And Instance-Based Regression Modeling'
 arch=('x86_64')
@@ -25,7 +25,7 @@ optdepends=(
   r-tidyrules
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f07afed59019a3febc04acc3e58728e42b42910940a1d529f9fc482931d09157')
+sha256sums=('51d5fff104b69de75e08a3e14eaf67ff13ffda5be4b60f79236793475c241590')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
