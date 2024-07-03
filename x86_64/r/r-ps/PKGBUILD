@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ps
-_pkgver=1.7.6
+_pkgver=1.7.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=2
@@ -28,8 +28,8 @@ optdepends=(
   r-webfakes
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9a1d826feaafb2150f5c35bec3ff7255')
-b2sums=('9d35e2790406a0b33c836afe2834ec03fd513e58dac5941ef2622b2b34a4886498ef5a413f09b7467f8643f88b4cc12034f7fc71f73230caf1279a4df3281e74')
+md5sums=('8c0dd99a89635cb7a8f837f7f0ab6e93')
+b2sums=('49e61deccac77a8fd3018eed95530239176f41bfffeb0d9c9ca482dd7b53af1c18d9136cfe9127474c74da1204943fcf0b564d7469dc5b75bbe5d88c1a9fc383')
 
 build() {
   mkdir build
