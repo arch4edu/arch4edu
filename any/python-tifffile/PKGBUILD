@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2024.6.18
+pkgver=2024.7.2
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -15,10 +15,11 @@ makedepends=('python-setuptools'
              'python-numpy')
 #makedepends=('python-setuptools' 'python-wheel' 'python-build' 'python-installer')
 checkdepends=('python-pytest'
+#             'python-pytest-xdist'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('57e0d2a034bcb6287ea3155d8716508dfac86443a257f6502b57ee7f8a33b3b6')
+sha256sums=('02e52e8872c0e9943add686d2fd8bcfb18f0a824760882cf5e35fcbc2c80e32c')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -36,7 +37,7 @@ check() {
 
     # From Gentoo's ebuild
     SKIP_LARGE=1 SKIP_HTTP=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
-        PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+        PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4
 #       --deselect=tests/test_tifffile.py::test_class_omexml \
 #       --deselect=tests/test_tifffile.py::test_class_omexml_fail \
 #       --deselect=tests/test_tifffile.py::test_class_omexml_modulo \
@@ -57,12 +58,12 @@ check() {
 }
 
 package_python-tifffile() {
-    depends=('python-numpy>=1.26.4')
-    optdepends=('python-matplotlib>=3.8.3: required for plotting'
+    depends=('python-numpy>=2.0.0')
+    optdepends=('python-matplotlib>=3.8.4: required for plotting'
                 'python-imagecodecs>=2024.1.1: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=5.2.2: required only for validating and printing XML'
                 'python-zarr>=2.18.2: required for opening Zarr stores'
-                'python-fsspec>=2024.3.1: required only for opening ReferenceFileSystem files'
+                'python-fsspec>=2024.6.0: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
 
