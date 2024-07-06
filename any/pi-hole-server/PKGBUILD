@@ -4,7 +4,7 @@
 
 pkgname=pi-hole-server
 _pkgname=pi-hole
-pkgver=5.18.2
+pkgver=5.18.3
 pkgrel=1
 _wwwpkgname=web
 _wwwpkgver=5.21
@@ -42,10 +42,10 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	    piholeDebug.sh
 )
 
-sha256sums=('43bb1bea958535dcb2dab4b0dbda432859c6fa83a5d1f94eb5239d77f1e32605'
+sha256sums=('871b47b41813342484df8f10981801eba25f27c9cdbeafd6e71f0edbae6818e5'
             'd8b5f8dd3842dd8b0f3f02a4422182740fd26c3db5ceba1dde9fcd122a36c7f0'
-            '9a3ea1fb5a8a6c7cf4e593c917380058f20f7ff9443bb9b128fa3902797e830f'
-            'e88487776ba8c28fcd4e40725f77d8eac57cbc2df02e10289f44e47d5c655a42'
+            '8c4ad50db851431455f0937cccb6044b973b2476134f666fcec4c1358c1c1bc7'
+            'beeb08d8e7225100e37cc789a48f1bea64cd07111c880d3fb43a9cee7bb15fae'
             '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
             '3a3baa92a635d602824f184d901e947a0e14650c950e89325dda6f7d71b39db9'
             'f5906ed845e030ee18baeb8767295e1a76848a10ffd6fe60d34501ae45e2b6a8'
