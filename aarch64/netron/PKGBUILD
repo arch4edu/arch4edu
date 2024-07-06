@@ -9,7 +9,7 @@ pkgbase=netron
 pkgname=(netron)
 ##pkgname+=(netron-cli)
 pkgdesc='Visualizer for neural network, deep learning, and machine learning models'
-pkgver=7.7.6
+pkgver=7.7.7
 pkgrel=1
 url='https://netron.app/'
 arch=(x86_64)
@@ -21,7 +21,7 @@ optdepends=(
   'python-pytorch: serializing PyTorch models'
 )
 source=("https://github.com/lutzroeder/netron/archive/v${pkgver}/netron-${pkgver}.tar.gz")
-sha256sums=('f326f465f5fff56f3c5c5880f16f6c8741c0d1efd2fb8681fce6f44330896c8a')
+sha256sums=('60d81717c9881834b1d1db7de3c9e36af11f6bef19975d7004985586626f7842')
 
 prepare() {
   cd "${pkgbase}-${pkgver}"
