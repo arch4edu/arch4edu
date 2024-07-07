@@ -2,103 +2,54 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_build_git:=false}
+: ${_commit:=929d9dc65a5a62dc77486db6b52ae47cef6f7602} # 2024.7.3.r23
 
-unset _pkgtype
-[[ "${_build_git::1}" == "t" ]] && _pkgtype+="-git"
+: ${_install_path:=usr/lib}
 
 # basic info
-_pkgname=sourcetrail
-pkgname="$_pkgname${_pkgtype:-}"
-pkgver=2024.6.1
-pkgrel=1
+_pkgname="sourcetrail"
+pkgname="$_pkgname"
+pkgver=2024.7.3
+pkgrel=2
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url='https://github.com/xiota/sourcetrail'
 license=('GPL-3.0-only')
 arch=('x86_64')
 
-# main package
-_main_package() {
-  depends=(
-    "clang"
-    "llvm-libs"
+depends=(
+  "clang"
+  "llvm-libs"
+  'boost-libs'
+  'qt6-5compat'
+  'qt6-base'
+  'qt6-svg'
+  'sqlite'
+  'tinyxml'
+)
+makedepends=(
+  "llvm"
+  "lld"
 
-    'boost-libs'
-    'java-runtime'
-    'qt6-5compat'
-    'qt6-svg'
-    'sqlite'
-    'tinyxml'
-  )
-  makedepends=(
-    "llvm"
-    "lld"
+  'boost'
+  'cmake'
+  'git'
+  'jdk-openjdk'
+  'maven'
+  'ninja'
 
-    'boost'
-    'cmake'
-    'git'
-    'jdk-openjdk'
-    'maven'
-    'ninja'
-    'qt6-base'
+  'imagemagick'
+  'patchelf'
+)
+optdepends=(
+  'java-runtime'
+  'python'
+)
 
-    'gendesk'
-    'imagemagick'
-    'patchelf'
-  )
+_pkgsrc="$_pkgname"
+source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
+sha256sums=('SKIP')
 
-  if [ "${_build_git::1}" != "t" ]; then
-    _main_stable
-  else
-    _main_git
-  fi
-}
-
-# stable package
-_main_stable() {
-  _commit='6a9036068d79175cafe3ba35a647a40fc3aefb4e'
-
-  _pkgsrc="$_pkgname"
-  source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
-  sha256sums=('SKIP')
-
-  pkgver() {
-    local _pkgver="${pkgver%%.r*}"
-    echo "${_pkgver:?}"
-  }
-}
-
-# git package
-_main_git() {
-  provides=("$_pkgname=${pkgver%%.r*}")
-  conflicts=("$_pkgname")
-
-  _pkgsrc="$_pkgname"
-  source=("$_pkgsrc"::"git+$url.git")
-  sha256sums=('SKIP')
-
-  pkgver() (
-    cd "$_pkgsrc"
-    git describe --long --tags --abbrev=7 --exclude='*[a-zA-Z][a-zA-Z]*' \
-      | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
-  )
-}
-
-# common functions
 prepare() {
-  local _gendesk_options=(
-    -q -f -n
-    --pkgname="${_pkgname}"
-    --pkgdesc="$pkgdesc"
-    --name="Sourcetrail"
-    --exec="${_pkgname}"
-    --categories="Development"
-    --startupnotify=true
-    --mimetypes="application/x-sourcetrail"
-  )
-
-  gendesk "${_gendesk_options[@]}"
-
   magick "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
 }
 
@@ -119,6 +70,7 @@ build() {
 
     -DBUILD_CXX_LANGUAGE_PACKAGE=ON
     -DBUILD_JAVA_LANGUAGE_PACKAGE=ON
+    -DBUILD_PYTHON_LANGUAGE_PACKAGE=ON
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     -DCMAKE_VERBOSE_MAKEFILE=OFF
     -Wno-dev
@@ -130,14 +82,54 @@ build() {
 
 package() {
   # binaries
-  install -Dm755 "build/app/sourcetrail_indexer" -t "$pkgdir/opt/$_pkgname/"
-  install -Dm755 "build/app/Sourcetrail" "$pkgdir/opt/$_pkgname/$_pkgname"
-  patchelf --add-rpath '/opt/sourcetrail' "$pkgdir/opt/$_pkgname/$_pkgname"
+  install -Dm755 "build/app/sourcetrail_indexer" -t "$pkgdir/$_install_path/$_pkgname/"
+  install -Dm755 "build/app/Sourcetrail" "$pkgdir/$_install_path/$_pkgname/$_pkgname"
+  patchelf --add-rpath "/$_install_path/sourcetrail" "$pkgdir/$_install_path/$_pkgname/$_pkgname"
+
+  # data
+  local _data_path="$pkgdir/$_install_path/$_pkgname/data"
+  install -dm755 "$_data_path"
+  for i in color_schemes fallback fonts gui java license syntax_highlighting_rules; do
+    cp -a "$_pkgsrc/bin/app/data/$i" "$_data_path/"
+  done
+
+  # languages
+  for i in cxx java python; do
+    cp -a "build/app/data/$i" "$_data_path/"
+  done
+
+  # examples
+  cp -a "$_pkgsrc"/bin/app/user/projects "$_data_path/fallback/"
+
+  # icon
+  install -Dm644 "$_pkgname.png" "$pkgdir/usr/share/pixmaps/$_pkgname.png"
+
+  # desktop file
+  install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$_pkgname.desktop" << END
+[Desktop Entry]
+Type=Application
+Name=${_pkgname^}
+Comment=$pkgdesc
+Exec=$_pkgname
+Icon=$_pkgname
+Terminal=false
+StartupNotify=true
+Categories=Development;
+MimeType=application/x-sourcetrail;
+END
 
   # script
   install -Dm755 /dev/stdin "$pkgdir/usr/bin/$_pkgname" << END
-#!/usr/bin/env sh
-SOURCETRAIL_PATH=/opt/$_pkgname
+#!/usr/bin/env bash
+: \${XDG_CONFIG_HOME:=\$HOME/.config}
+
+SOURCETRAIL_PATH=/$_install_path/$_pkgname
+CONFIG_PATH="\$XDG_CONFIG_HOME/Sourcetrail"
+
+if [ ! -e "\$CONFIG_PATH" ]; then
+  mkdir -p "\$CONFIG_PATH"
+  cp --reflink=auto -r "\$SOURCETRAIL_PATH/data/fallback"/* "\$CONFIG_PATH/"
+fi
 
 export QT_XKB_CONFIG_ROOT="/usr/share/X11/xkb:\$QT_XKB_CONFIG_ROOT"
 export QT_QPA_FONTDIR="\$SOURCETRAIL_PATH/data/fonts:\$QT_QPA_FONTDIR"
@@ -147,31 +139,6 @@ export OPENSSL_CONF=/etc/ssl/
 exec \$SOURCETRAIL_PATH/$_pkgname "\$@"
 END
 
-  # icon
-  install -Dm644 "$_pkgname.png" "$pkgdir/usr/share/pixmaps/$_pkgname.png"
-
-  # desktop file
-  install -Dm644 "$srcdir/$_pkgname.desktop" -t "$pkgdir/usr/share/applications/"
-
-  # data
-  install -dm755 "$pkgdir/opt/$_pkgname/data"
-  cp -a "$_pkgsrc/bin/app/data/color_schemes" "$pkgdir/opt/$_pkgname/data/"
-  cp -a "$_pkgsrc/bin/app/data/fallback" "$pkgdir/opt/$_pkgname/data/"
-  cp -a "$_pkgsrc/bin/app/data/fonts" "$pkgdir/opt/$_pkgname/data/"
-  cp -a "$_pkgsrc/bin/app/data/gui" "$pkgdir/opt/$_pkgname/data/"
-  cp -a "$_pkgsrc/bin/app/data/java" "$pkgdir/opt/$_pkgname/data/"
-  cp -a "$_pkgsrc/bin/app/data/license" "$pkgdir/opt/$_pkgname/data/"
-  cp -a "$_pkgsrc/bin/app/data/syntax_highlighting_rules" "$pkgdir/opt/$_pkgname/data/"
-
-  cp -a "build/app/data/cxx" "$pkgdir/opt/$_pkgname/data/"
-
-  # user
-  install -dm755 "$pkgdir/opt/$_pkgname/user"
-  cp -a "$_pkgsrc"/bin/app/user/* "$pkgdir/opt/$_pkgname/user/"
-
   # fix permissions
   chmod -R u+rwX,go+rX,go-w "$pkgdir/"
 }
-
-# execute
-_main_package
