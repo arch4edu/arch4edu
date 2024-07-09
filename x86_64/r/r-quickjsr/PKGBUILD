@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=QuickJSR
-_pkgver=1.2.2
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,8 +21,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('83762f3b1fa1807ab94610e40ac92aa0')
-b2sums=('362b20004d6e2ebaabb1f710f70833c31a669d0f6002cdb8dfa20e44f2854bbc4e3d076e12ad2cff8e924b78ef1b53bb12204b9d443584c21dbcd93bc78ac7bb')
+md5sums=('d2716cef983259c5463acb23cdc7cbaf')
+b2sums=('0abdede6fd59769ec1d1dddb2bc9ba94ab0ce8b0494d025444e4477f42c9ec67c543df90047c8122a9627c11606d6ae97f9b68a634333c6e4c88b0c403026579')
 
 build() {
   mkdir build
