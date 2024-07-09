@@ -7,22 +7,21 @@
 # Contributor: Jakub Schmidtke
 
 pkgname=android-platform
-_apilevel=34
-_extension=7
-_rev=r03
+_apilevel=35
+_rev=r01
 pkgver=${_apilevel}_${_rev}
 pkgrel=1
 pkgdesc="Android SDK Platform, latest API"
 arch=('any')
 url="http://developer.android.com/sdk/index.html"
-license=('custom')
+license=('LicenseRef-custom')
 provides=("${pkgname}-${_apilevel}")
 conflicts=("${pkgname}-${_apilevel}")
-options=('!strip')
-source=("https://dl.google.com/android/repository/platform-${_apilevel}-ext${_extension}_${_rev}.zip"
+options=('!strip' '!debug')
+source=("https://dl.google.com/android/repository/platform-${_apilevel}_${_rev}.zip"
          "package.xml")
-sha256sums=('16fdb74c55e59ae3ef52def135aec713508467bd56d7dabcd8c9be31fa8b20f3'
-            'ca0589a9b89c09d678b48a9b041decd486106e309da98186a58b2e7e30fef3fd')
+sha256sums=('ec20a0a65704e1b2554f8e3eebf588ef260569673c848c01aff2e29c28734cf4'
+            '5223a68d40f1b4b5656d9c3d03af6afa2e1a40356728e0395bb914217e5acf80')
 
 package() {
   depends=('android-sdk' 'android-sdk-platform-tools')
