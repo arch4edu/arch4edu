@@ -6,12 +6,12 @@
 # This PKGBUILD is maintained on github:
 # https://github.com/michaellass/AUR
 
-_abbrv=8fbad5a1285926b177803087b35b0eb6b0fd0142
-_locales=cf4b49404fc15cf9a37372e4707ce710b0935ccc
-_styles=fe9db541ea06c31c8ff91c7c989fc8d4ef987b92
+_abbrv=b69f1d607a57488276f3402bbf610d9129e7f6fb
+_locales=e631a52dcea396be20d031b6456e91dba7772224
+_styles=b2be5aeeee7f00fd2032ac1daad995bbe95398cf
 
 pkgname=jabref
-pkgver=5.13
+pkgver=5.14
 pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
@@ -27,10 +27,10 @@ source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v$
         styles-${_styles}.tar.gz::https://github.com/citation-style-language/styles/archive/${_styles}.tar.gz
         jabref.sh
         jabref.desktop)
-sha256sums=('35b4415acb3b8892d3d4e86d8a6f46095ba5e0f285f2daa53a19abaca0a76bca'
-            '7be22f96eaea7a901f17830f7fccb72f46191b2fa9ec97e85ba9eabb9c4e7099'
-            'ebb01bff2fdb76f88800badce3499adbae4d9cdf6d6cefc20cc4278df44a3829'
-            'c593638e5be4cf93c0dd17d1c22865ecc8d91e31e8a1ab218e96204b44b00206'
+sha256sums=('307294ec6d0be7a37fae117f17cbbaa596255886726981ca2747bfebc226a070'
+            '902c30710bdd46bcafa954b174dc3e080d9902d8dc43f40602c357155e894312'
+            '5b1a86d2d9eb2ffd40e62d72d06ec9fce9b1b048961529f1e596dfedd6322b17'
+            '667513b7df0763a2c971f9c0017f88e6e4c7d5b44328516c53c5bfdbe8adb167'
             'f466d2cbf88d4d37c0e39cb3aa3fb5bb2f0ac486d617591b2b47817c762317b0'
             'aebafd8955b35d440c233f6e9d7cfa68bec17f58418320920b52c334e965db3a')
 
