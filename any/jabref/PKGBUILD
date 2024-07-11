@@ -11,7 +11,7 @@ _locales=e631a52dcea396be20d031b6456e91dba7772224
 _styles=b2be5aeeee7f00fd2032ac1daad995bbe95398cf
 
 pkgname=jabref
-pkgver=5.14
+pkgver=5.15
 pkgrel=1
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
@@ -27,7 +27,7 @@ source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v$
         styles-${_styles}.tar.gz::https://github.com/citation-style-language/styles/archive/${_styles}.tar.gz
         jabref.sh
         jabref.desktop)
-sha256sums=('307294ec6d0be7a37fae117f17cbbaa596255886726981ca2747bfebc226a070'
+sha256sums=('2bf75d7f96aa1f5c74b675e3e0b4dda703027b3c3d8ede0616dd2218f5a74259'
             '902c30710bdd46bcafa954b174dc3e080d9902d8dc43f40602c357155e894312'
             '5b1a86d2d9eb2ffd40e62d72d06ec9fce9b1b048961529f1e596dfedd6322b17'
             '667513b7df0763a2c971f9c0017f88e6e4c7d5b44328516c53c5bfdbe8adb167'
