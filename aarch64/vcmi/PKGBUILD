@@ -3,21 +3,21 @@
 # Contributor: Sandy Carter <bwrsandman@gmail.com>
 
 pkgname=vcmi
-pkgver=1.5.3
+pkgver=1.5.4
 pkgrel=1
 pkgdesc="Open-source engine for Heroes of Might and Magic III"
 arch=('i686' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
 url="http://vcmi.eu"
 license=('GPL-2.0-or-later AND CC-BY-SA-4.0')
-depends=('boost-libs' 'ffmpeg' 'sdl2_image' 'sdl2_mixer' 'sdl2_ttf' 'qt5-base' 'libxkbcommon-x11'
+depends=('boost-libs' 'ffmpeg' 'sdl2_image' 'sdl2_mixer' 'sdl2_ttf' 'qt6-base' 'libxkbcommon-x11'
          'hicolor-icon-theme' 'onetbb' 'fuzzylite' 'luajit')
-makedepends=('boost' 'cmake' 'git' 'ccache' 'qt5-tools' 'minizip')
+makedepends=('boost' 'cmake' 'git' 'ccache' 'qt6-tools' 'minizip')
 optdepends=('innoextract: required by vcmibuilder' 'unshield: required by vcmibuilder' 'unzip: required by vcmibuilder')
 provides=('vcmi')
 conflicts=('vcmi')
 install="${pkgname}.install"
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/releases/download/${pkgver}/VCMI-Sources.tar.gz")
-sha256sums=('3ab205829b44f622a23f55fe3716bec062e8ebabe33706c0dde31b0717501f09')
+sha256sums=('0e819fe3650fe6f85b05b95a14319e2b5611cde2a64d6f87d89d07a15ec2d62d')
 
 # workaround
 prepare() {
@@ -32,8 +32,8 @@ prepare() {
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  # force qt5
-  sed -i 's/find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)/find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Network)/' CMakeLists.txt
+  # force qt6
+  sed -i 's/find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)/find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Network)/' CMakeLists.txt
   mkdir -p build && cd build
   cmake -B. -H.. \
     -DCMAKE_INSTALL_PREFIX='/usr' \
