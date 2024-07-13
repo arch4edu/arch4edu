@@ -1,14 +1,14 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dumux
 _dunever=2.9.0
-_tarver=3.8.0
+_tarver=3.9.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=3
+pkgrel=1
 pkgdesc="An open-source simulator and research code in modern C++"
 arch=(x86_64)
 url="https://${pkgname}.org"
-license=(GPL3)
+license=(GPL-3.0-or-later)
 depends=("dune-grid>=${_dunever}" "dune-istl>=${_dunever}" "dune-localfunctions>=${_dunever}")
 makedepends=(doxygen graphviz python-scikit-build)
 optdepends=('dune-alugrid: for grid manager ALUGrid support'
@@ -19,7 +19,7 @@ optdepends=('dune-alugrid: for grid manager ALUGrid support'
   'dune-spgrid: for grid manager SPGrid support'
   'dune-mmesh: for grid manager MMesh support')
 source=(https://git.iws.uni-stuttgart.de/${pkgname}-repositories/${pkgname}/-/archive/${_tar})
-sha512sums=('f276afaf636832db649bf4519388f4eb392d865d5f3b9fb622f326a8f59c0be7bc85f168711501302a7ec130375106d97bd1593e935cff7ca99ffd03348290d4')
+sha512sums=('35f66dd898568deb0bed8e6a4a455b0233146970ae6eb6f2528ecb613405f331a9614615580ba464455fb96fb45bd93d0a44c7c37c6dca812fc7f4a0f0dc12af')
 
 prepare() {
   cd ${pkgname}-${pkgver}
