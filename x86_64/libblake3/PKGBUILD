@@ -1,12 +1,12 @@
 # Maintainer: rpkak <rpkak@users.noreply.github.com>
 pkgname='libblake3'
-pkgver=1.5.1
+pkgver=1.5.2
 pkgrel=1
 epoch=
 pkgdesc="the C implementations of the BLAKE3 cryptographic hash function"
 arch=('x86_64')
 url="https://blake3.io/"
-license=('Apache-2.0')
+license=('CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception')
 depends=(glibc)
 makedepends=(cmake)
 checkdepends=()
@@ -19,7 +19,7 @@ options=()
 install=
 changelog=
 source=("$pkgname-$pkgver.tar.gz::https://github.com/BLAKE3-team/BLAKE3/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('822cd37f70152e5985433d2c50c8f6b2ec83aaf11aa31be9fe71486a91744f37')
+sha256sums=('1bc38cd3cc501458054c3bb473e5e00338d6175121424040079025ea305ddef3')
 validpgpkeys=()
 
 build() {
@@ -29,5 +29,7 @@ build() {
 
 package() {
     DESTDIR="$pkgdir" cmake --install "BLAKE3-$pkgver/c/build"
-    install -Dvm644 "BLAKE3-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dvm644 "BLAKE3-$pkgver/LICENSE_A2" "$pkgdir/usr/share/licenses/$pkgname/LICENSE_A2"
+    install -Dvm644 "BLAKE3-$pkgver/LICENSE_A2LLVM" "$pkgdir/usr/share/licenses/$pkgname/LICENSE_A2LLVM"
+    install -Dvm644 "BLAKE3-$pkgver/LICENSE_CC0" "$pkgdir/usr/share/licenses/$pkgname/LICENSE_CC0"
 }
