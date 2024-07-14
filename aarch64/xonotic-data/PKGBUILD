@@ -3,7 +3,7 @@
 
 pkgname=xonotic-data
 pkgver=0.8.6
-pkgrel=2
+pkgrel=3
 pkgdesc="A free, fast-paced cross-platform first person shooter (data files)"
 arch=('any')
 url="https://xonotic.org"
