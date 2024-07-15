@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=cubature
-_pkgver=2.1.0
+_pkgver=2.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Adaptive Multivariate Integration over Hypercubes"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -24,8 +24,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2ba4be5bef4581b51748b04105ec4c8b')
-b2sums=('bd8e563e5613733ef170daf9ece2c8b4231bbefd0776c3ce74baaa8502e35ee6681b4bd924b4dc141df829f75d85dc4267fe8eb0e8b4982d41b9fa4ef18b0a6f')
+md5sums=('4c22bdad3bdcadfb5d26a3ac330a9f1e')
+b2sums=('8ae18fe8cbe0cd971aa83aca1ddfd0833d0b228226a2c6315aa5f6b0dbe2096c461c57cde3b355434010450acce12dbe379417048441de185cbbc3820db3ba8e')
 
 build() {
   mkdir build
