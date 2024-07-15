@@ -1,0 +1,56 @@
+diff --git a/bindings/python/Pltk_init.i b/bindings/python/Pltk_init.i
+index 2daae4d80..fcaee5b8b 100644
+--- a/bindings/python/Pltk_init.i
++++ b/bindings/python/Pltk_init.i
+@@ -24,7 +24,7 @@
+ %{
+ #define NPY_NO_DEPRECATED_API    NPY_1_7_API_VERSION
+ #include <Python.h>
+-#include <arrayobject.h>
++#include <numpy/arrayobject.h>
+ #include "plplot.h"
+ #include "plplotP.h"
+ 
+diff --git a/bindings/python/plplotc.i b/bindings/python/plplotc.i
+index d2f9568bb..7bc10335d 100644
+--- a/bindings/python/plplotc.i
++++ b/bindings/python/plplotc.i
+@@ -46,7 +46,7 @@
+ 
+ %{
+ #define NPY_NO_DEPRECATED_API    NPY_1_7_API_VERSION
+-#include <arrayobject.h>
++#include <numpy/arrayobject.h>
+ #include "plplot.h"
+ #include "plplotP.h"
+ 
+diff --git a/cmake/modules/python.cmake b/cmake/modules/python.cmake
+index d9af7865d..044440220 100644
+--- a/cmake/modules/python.cmake
++++ b/cmake/modules/python.cmake
+@@ -107,20 +107,18 @@ if(ENABLE_python)
+     execute_process(
+       COMMAND
+       ${PYTHON_EXECUTABLE} -c "import numpy; print(numpy.get_include())"
+-      OUTPUT_VARIABLE NUMPY_INCLUDE_PATH_PARENT
++      OUTPUT_VARIABLE NUMPY_GET_INCLUDE
+       RESULT_VARIABLE NUMPY_ERR
+       OUTPUT_STRIP_TRAILING_WHITESPACE
+       )
+     if(NUMPY_ERR)
+       set(NUMPY_INCLUDE_PATH)
+     else(NUMPY_ERR)
+-      # We use the full path name (including numpy on the end), but
+-      # Double-check that all is well with that choice.
+       find_path(
+-	NUMPY_INCLUDE_PATH
+-	arrayobject.h
+-	${NUMPY_INCLUDE_PATH_PARENT}/numpy
+-	)
++	    NUMPY_INCLUDE_PATH
++        numpy/arrayobject.h
++	    ${NUMPY_GET_INCLUDE}
++	  )
+     endif(NUMPY_ERR)
+ 
+   endif(NOT NUMPY_INCLUDE_PATH)
