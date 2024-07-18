@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=SparseM
-_pkgver=1.84
+_pkgver=1.84-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,8 +24,8 @@ optdepends=(
   r-knitr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d16d0e5e93cf29a846d3357df05a76d3')
-b2sums=('1141d05831c82beeddf23dd0748734cc4cdc2f0562111c5cf6a97eb09cbc6d5f87b18c80d89538966079cba36be0c6ccb8ca90744f0821570196479808fdd021')
+md5sums=('60d64c3f007a57f293abf261e3e6aa58')
+b2sums=('60b1ff352f6b24990c701ca899c3d2404176a4c540223a70ee063c20bb9520dfc01f83d74fabb2277ee6494b6cddd963d5161cd3cabe1b267f204ae61c945079')
 
 build() {
   mkdir build
