@@ -2,7 +2,7 @@
 _pkgname=qiskit
 pkgname=python-${_pkgname}
 pkgver=1.1.1
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="An open-source SDK for working with quantum computers at the level of extended quantum circuits, operators, and primitives"
 arch=(x86_64)
@@ -59,9 +59,9 @@ makedepends=(
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
 b2sums=('ffacc2ca98fe9e5de995e44e45f5bdc463accd9a2f42d045c37dbe3571b0cd71ef78a5a89e2661cfade40bb1cc2fcdbae37733853f690c7c31b649760de30cb2')
 
-
 build() {
     cd $_pkgname-$pkgver
+    export CARGO_TARGET_DIR=target
     python -m build --wheel --no-isolation
 }
 
