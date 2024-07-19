@@ -4,10 +4,10 @@
 # Contributor: Matt Frichtl <frichtlm@gmail.com>
 
 _pkgname=Rcpp
-_pkgver=1.0.12
+_pkgver=1.0.13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Seamless R and C++ Integration"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -24,17 +24,9 @@ optdepends=(
   r-rbenchmark
   r-tinytest
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "fix-version.patch")
-md5sums=('85d8f0c330b934bc8f498be40185a315'
-         '50440aea988c07da6fbcfc6ad945679e')
-b2sums=('511f3071d81531cdbb6de9b633e1406bb865a462587ea1e0e36c9d760cd9ea80a4ae67b44f2e2b7b5861fde727c0324bf9c3ea2b3cb9085f829fb1cb8dcd88c5'
-        'a11024a357cfda063cd3599290ba58f749b8107d888407ec333f1cd2558ba6cdd07a24e7d61aff74d176e31b9470b475e5e86c682b71637e2bea9776b714835d')
-
-prepare() {
-  # fix version definition https://github.com/RcppCore/Rcpp/issues/1294
-  patch -Np1 -i fix-version.patch
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('fc222f94a58a26bf57864433d36c884a')
+b2sums=('db45ea6f199faea35a583f8ce2c17425a53620a5aa8c8c2e702dead5df4eb1b7ce1b5f59101150fe67f3470e15488ac3d642b6ccbbcd9d6feca3d823f5da22fa')
 
 build() {
   mkdir build
