@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=RSpectra
-_pkgver=0.16-1
+_pkgver=0.16-2
 pkgname=r-${_pkgname,,}
-pkgver=0.16.1
+pkgver=0.16.2
 pkgrel=1
 pkgdesc='Solvers for Large-Scale Eigenvalue and SVD Problems'
 arch=('x86_64')
@@ -20,7 +20,7 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('cba5d3403d6a7d0e27abf6279fbfea6e0d0fe36b28c688bbadb8eafb3841329a')
+sha256sums=('a2f149d79519fee79dabe1b174dfb847a916045315d5927a93cc6b005522aa7e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
