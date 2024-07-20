@@ -5,7 +5,7 @@ pkgname=orocos-kdl-python
 _dir=orocos_kinematics_dynamics
 _pkgname=python_orocos_kdl
 pkgver=1.5.1
-pkgrel=2
+pkgrel=3
 pkgdesc="The Kinematics and Dynamics Library is a framework for modelling and computation of kinematic chains (Python binding)"
 arch=('i686' 'x86_64')
 url="https://www.orocos.org/kdl"
@@ -28,6 +28,9 @@ prepare() {
   # Copy in the pybind11 source
   rm -rf "${srcdir}/${_dir}-${pkgver}/${_pkgname}/pybind11"
   cp -R "${srcdir}/${pybinddir}" "${srcdir}/${_dir}-${pkgver}/${_pkgname}/pybind11"
+
+  # Install to site-packages instead of dist-packages
+  sed -i "s|dist-packages|site-packages|" ${srcdir}/${_dir}-${pkgver}/${_pkgname}/CMakeLists.txt
 }
 
 build() {
