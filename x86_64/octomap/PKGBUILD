@@ -4,7 +4,7 @@
 # Contributor: Soo-Hyun Yoo <yoos117 at gmail dot com>
 
 pkgname=octomap
-pkgver=1.9.8
+pkgver=1.10.0
 pkgrel=1
 pkgdesc="Efficient probabilistic 3D mapping framework based on octrees"
 arch=('i686' 'x86_64')
@@ -15,15 +15,8 @@ makedepends=('cmake')
 provides=('octomap')
 conflicts=('octomap-git')
 options=('staticlibs')
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/OctoMap/octomap/archive/v${pkgver}.tar.gz"
-        "iterator.patch::https://patch-diff.githubusercontent.com/raw/OctoMap/octomap/pull/373.patch")
-sha256sums=('417af6da4e855e9a83b93458aa98b01a2c88f880088baad2b59d323ce162586e'
-            'SKIP')
-
-prepare() {
-    cd "$srcdir/octomap-$pkgver"
-    patch -Np1 -i "$srcdir/iterator.patch"
-}
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/OctoMap/octomap/archive/v${pkgver}.tar.gz")
+sha256sums=('8da2576ec6a0993e8900db7f91083be8682d8397a7be0752c85d1b7dd1b8e992')
 
 build() {
     cd "$srcdir/octomap-$pkgver/octomap"
