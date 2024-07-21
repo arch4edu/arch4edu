@@ -4,7 +4,7 @@
 # Contributor: Alessandro "jakedust" Andrioni <jakedust@gmail.com>
 pkgname=mpir
 pkgver=3.0.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Library for multiple precision integers and rationals"
 arch=('i686' 'x86_64' 'aarch64')
 url="https://www.mpir.org/"
@@ -23,6 +23,10 @@ prepare() {
 }
 
 build() {
+
+  # Disable checking for some errors so that tests pass
+  export CPPFLAGS="-Wno-implicit-int -Wno-implicit-function-declaration $CPPFLAGS"
+
   cd "$srcdir/mpir-mpir-$pkgver"
   [[ "$CARCH" == "i686" ]] && export ABI=32
   ./autogen.sh
