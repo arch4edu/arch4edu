@@ -1,10 +1,10 @@
 # curl -H 'Snap-Device-Series: 16' 'https://api.snapcraft.io/v2/snaps/info/skype'
 _snap_id='QRDEfjn4WJYnm0FzDKwqqRZZI77awQEV'
-_snap_rev_x86_64=348
+_snap_rev_x86_64=351
 
 _name=skypeforlinux
 pkgname=${_name}-bin
-pkgver=8.119.0.201
+pkgver=8.124.0.204
 pkgrel=1
 pkgdesc='Skype for Linux'
 arch=('x86_64')
@@ -16,6 +16,7 @@ options=('!strip' '!emptydirs')
 
 depends=(
     'alsa-lib'
+    'bash'
     'glibc'
     'gtk3'
     'libsecret'
@@ -42,7 +43,7 @@ source=('flags.sh')
 source_x86_64=("$(_get_source 'x86_64')")
 
 sha256sums=('d83693ffd8034c21030262ac00ce529c8da7b0196ea4b4eb2168861fc2657a2a')
-sha256sums_x86_64=('ff0a4206582da57371e1a56a2b43a08cc8b6c6eb73a82550ee2944968fabf871')
+sha256sums_x86_64=('9ab4a45484ff2f35d545acd175b4387e476daaeb0c5a86da355b5cf5cfa88c61')
 
 package() {
     local sname="source_${CARCH}"
@@ -54,19 +55,18 @@ package() {
         'usr/share/skypeforlinux'
     )
 
-    unsquashfs -d "${pkgdir}" "${!sname[0]%::*}" "${extract[@]}"
+    unsquashfs -no-xattrs -d "${pkgdir}" "${!sname[0]%::*}" "${extract[@]}"
 
     local pkg_opt="${pkgdir}/opt"
     install -dm755 "${pkg_opt}"
     mv "${pkgdir}/usr/share/skypeforlinux" -t "${pkg_opt}"
 
-    local pkg_bin="${pkgdir}/usr/bin"
-    local exec="${pkg_bin}/${_name}"
-    install -dm755 "${pkg_bin}"
-    sed -e 's|@NAME@|skypeforlinux|;s|@EXEC@|/opt/skypeforlinux/skypeforlinux|' "${source[0]}" > "${exec}"
-    chmod 755 "${exec}"
+    sed -e 's|@NAME@|skypeforlinux|;s|@EXEC@|/opt/skypeforlinux/skypeforlinux|' "${source[0]}" |
+        install -Dm755 '/dev/stdin' -T "${pkgdir}/usr/bin/${_name}"
 
     local pkg_app="${pkgdir}/usr/share/applications"
     mv "${pkgdir}/snap/gui" -T "${pkg_app}"
-    sed -e 's/Exec=skype/Exec=skypeforlinux/;s/Icon=.*/Icon=skypeforlinux/' -i "${pkg_app}/"*
+    sed -e 's/^Exec=skype/Exec=skypeforlinux/;s/^Icon=.*/Icon=skypeforlinux/' -i "${pkg_app}/"*
+
+    chmod -R go-w "${pkgdir}"
 }
