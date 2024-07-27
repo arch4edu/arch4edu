@@ -1,6 +1,6 @@
 # Maintainer: Martin Diehl <aur@martin-diehl.net>
 
-pkgver=0.43.8
+pkgver=0.44.1
 pkgrel=1
 pkgname=python-pyvista
 _name=${pkgname#python-}
@@ -12,7 +12,7 @@ depends=('python-numpy' 'python-pillow' 'python-pooch' 'python-scooby' 'vtk' 'py
 makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
 optdepends=('python-meshio' 'xorg-server-xvfb' 'python-imageio')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha512sums=('636ddfe46b8bfce8a29f1fb74912de55524feef5511d08942bc5019fafbff63fb5aabb26c69b4d09b78f80e68cf9d8f60058778e241dc2e032eced643a78b07d')
+sha512sums=('b2478f24410b46e9f794e41abc12d5d6d14b21f68400de920b68d9b0c210c5ea8aefba792e52252681b1d0f661c69e791c4d5bfe1262c348fd5ff79a3b1e9e94')
 
 build() {
     cd "$_name-$pkgver"
