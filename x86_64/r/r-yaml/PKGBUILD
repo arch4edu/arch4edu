@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=yaml
-_pkgver=2.3.9
+_pkgver=2.3.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,8 +26,8 @@ optdepends=(
   r-runit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('83d5766c6d82fe37e19e10953081d70d')
-b2sums=('0c7af342a6d7654f380b392fcde0b35341ceda8194971b5e302b38ba07702a110093fcd847d2e4b011993adc0ca4a6b04cdb88b387f9d218fe928eaed7576925')
+md5sums=('f5fad2fbfe3dd8ccb29125fa6361150d')
+b2sums=('cfe0cfbf8dacc241551a89828cfbe4e5cce415bac03773244169182024e64acc86796a8d43ffec0b8df7e3e72b6cb946bd97d55688822b9f53b09c676074a96e')
 
 build() {
   # generate implicit tag discovery code
