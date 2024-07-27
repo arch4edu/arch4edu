@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=parallelly
-_pkgver=1.37.1
+_pkgver=1.38.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,8 +15,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d9f4f8ef7f775f0b3c40ee606a482917')
-b2sums=('d317caf5ec33a81808a8344d40620e11bc88ba6322b83d1b8c801ebfb78beb1b70f1850e0213b46a4586127db928891f79bd1e04ebc880d0c9fc9d310f9a7d2a')
+md5sums=('bb5b579b1f3865dcff2d7f3a50a00f9c')
+b2sums=('8fa705f25c1ee179715afe50fc1670bf937c8cf6f23b61abb48ad3977ba9eec8acacdbdb1a42f2a0deccaf9cef4ee89037838b64a1e0065186a567b233250047')
 
 build() {
   mkdir build
