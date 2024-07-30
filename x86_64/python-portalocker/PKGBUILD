@@ -2,7 +2,7 @@
 # Contributor: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=('python-portalocker')
 _pkgname=portalocker
-pkgver=2.10.0
+pkgver=2.10.1
 pkgrel=1
 pkgdesc='Easy, portable file locking API.'
 arch=('any')
@@ -13,7 +13,7 @@ makedepends=('python-build' 'python-installer' 'python-pygments' 'python-setupto
 checkdepends=('python-pytest' 'python-pytest-cov' 'python-pytest-timeout' 'python-redis')
 optdepends=('python-redis: redis lock support')
 source=("https://pypi.python.org/packages/source/p/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
-sha256sums=('49de8bc0a2f68ca98bf9e219c81a3e6b27097c7bf505a87c5a112ce1aaeb9b81')
+sha256sums=('ef1bf844e878ab08aee7e40184156e1151f228f103aa5c6bd0724cc330960f8f')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
