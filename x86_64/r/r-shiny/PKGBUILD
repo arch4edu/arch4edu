@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.8.1.1
+_pkgver=1.9.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -56,8 +56,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2182afb0dbd8e756437edfc3cc454a79')
-b2sums=('b3e9c00335bf39562ce4b9a33df88def67198c05b401fe67a1ee2e2926f60dfed15a7d197eabb32a126aa0908b4c8f05dd49e8ddb87dff5e54920eb5f0bea115')
+md5sums=('ceb4670478885240de0e867218ed250a')
+b2sums=('d3efd4b16520a7ba2f81b51c29e49fbe56d16b974c55c6ec25b7e32c7b65a7bd4b89cbad31e747e04ea7342d963d8916e3b1dff58aedeffa1cabe24290a15053')
 
 build() {
   mkdir build
