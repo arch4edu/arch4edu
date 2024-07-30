@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=checkmate
-_pkgver=2.3.1
+_pkgver=2.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Fast and Versatile Argument Checks"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -29,8 +29,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('187badb003e010483a10dd43a084592d')
-b2sums=('ad44ab0c585bb5c8247bf24bfb38fcdf2ffa1a8e5e7777bccde625b5b7510372b2c2b4ffd02133c829c4f5a23964ff29865ae9def250ec1949bb618bd8275ec0')
+md5sums=('95849df2e80c38e37528a7dbbbbf31cc')
+b2sums=('53d396c7ffa49db9edc37c71907a083b24e502758db86c8fb5de490853e66b5096d7ed78d50d5df98d8b6fe7eec0aa11b018e714881df0cbdd86aee349f75892')
 
 build() {
   mkdir build
