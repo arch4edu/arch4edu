@@ -2,7 +2,7 @@
 # Contributor: Pranav K Anupam <pranavanupam@yahoo.com>
 
 _cranname=uuid
-_cranver=1.2-0
+_cranver=1.2-1
 _pkgtar=${_cranname}_${_cranver}.tar.gz
 pkgname=r-uuid
 pkgver=${_cranver//[:-]/.}
@@ -15,7 +15,7 @@ depends=('r>=2.9.0')
 optdepends=('r-bigReg')
 
 source=("https://cran.r-project.org/src/contrib/${_pkgtar}")
-sha256sums=('73710a14f812e34e891795b8945ea213f15ebcaf00b464b0e4b3fa09cf222afd')
+sha256sums=('f90e49733d7d6ea7cf91abdc07b7d0e9a34a4b993e6914d754f0621281fc4b96')
 
 build() {
 	cd "${srcdir}"
