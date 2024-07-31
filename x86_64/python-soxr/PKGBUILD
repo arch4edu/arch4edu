@@ -1,8 +1,8 @@
 # Maintainer: Claudia Pellegrino <aur ät cpellegrino.de>
 
 pkgname=python-soxr
-pkgver=0.3.7
-pkgrel=3
+pkgver=0.4.0
+pkgrel=1
 pkgdesc='High quality, one-dimensional sample-rate conversion library for Python'
 arch=('x86_64')
 url='https://github.com/dofuuz/python-soxr'
@@ -28,9 +28,7 @@ source=(
   "${pkgname}-${pkgver}.tar.gz::https://github.com/dofuuz/python-soxr/archive/v${pkgver}.tar.gz"
 )
 
-sha512sums=(
-  'da9cc246d20c904e18fa01dfc94b0af8b430bb3d9235ab42a042ef120ec789e960a63f8e15dd79f80e9a3107ea20ebbad22f4861011ddca77ec6179fa3e6d363'
-)
+sha512sums=('759831f7ff6f5966cdb54c756c4f544913504cdf2c115da8770f1c9781508b01b39195d6ee93867af7581a0e64a6046d6941a87de8801f1d59c36639420593da')
 
 prepare() {
   cd "${srcdir}/${pkgname}-${pkgver}"
