@@ -5,8 +5,8 @@
 # Contributor: Fredy García <frealgagu at gmail dot com>
 
 pkgname=mongodb-tools
-pkgver=100.9.5
-pkgrel=2
+pkgver=100.10.0
+pkgrel=1
 epoch=1
 pkgdesc="Import, export, and diagnostic tools for MongoDB"
 arch=('x86_64')
@@ -15,7 +15,7 @@ license=('Apache-2.0' 'BSD-2-Clause' 'BSD-3-Clause' 'ISC' 'MIT' 'MPL-2.0')
 depends=('glibc' 'krb5')
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/mongodb/mongo-tools/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('9489a873009d8244af5382b98969ab34f871a2f6b9ba618a672518aa2ab7259c')
+sha256sums=('215febf00ef78c9368ca42b262eda9a2a245b15c571eebc7a00bba54e61dd39c')
 
 prepare() {
   sed "/ubuntu1804/{n;s/ArchArm64/ArchAarch64/}" -i mongo-tools-$pkgver/release/platform/platform.go
