@@ -2,35 +2,36 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgload
-_cranver=1.3.4
+_cranver=1.4.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
 pkgdesc="Simulate Package Installation and Attach"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
-license=(GPL3)
+license=("GPL-3.0-only")
 depends=(
     "r>=3.4.0"
     "r-cli>=3.3.0"
-    "r-crayon"
     "r-desc"
     "r-fs"
     "r-glue"
+    "r-lifecycle"
     "r-pkgbuild"
+    "r-processx"
     "r-rlang>=1.0.3"
     "r-rprojroot"
     "r-withr>=2.4.3"
 )
 optdepends=(
     "r-bitops"
-    "r-covr"
+    "r-jsonlite"
     "r-mathjaxr"
-    "r-mockr"
     "r-pak"
     "r-rcpp"
     "r-remotes"
     "r-rstudioapi"
+    "r-usethis"
 )
 
 # The unittests for `r-pkgload` have multiple circular
@@ -49,11 +50,11 @@ optdepends=(
 
 # checkdepends=(
 #     "${optdepends[@]}"
-#     "r-testthat>=3.1.0"
+#     "r-testthat>=3.2.1.1"
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ac2fdc0d429ef5be97b24b984646acad2dc9def5447713ee9689070f2a54228dd3f353a24a307d24c12ec72021e91db0bc033ca1ee8c15b0d5ef7c1fa4aa8900")
+b2sums=("620aaefc9dd10573d941d78a8fcb93b87c3e455c9e58a86a492ca5e56bc5adb4f4cf65ac0311891fb564d433ae4dd776d38ef3d98050ae33f7dc56fc9547aada")
 
 build() {
     mkdir -p "${srcdir}/build/"
