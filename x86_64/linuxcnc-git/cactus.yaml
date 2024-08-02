@@ -6,6 +6,7 @@ nvchecker:
   - alias: python
 depends:
   - any/bwidget
+  - any/linkchecker
   - any/python-yapps2
   - x86_64/tclx
   - x86_64/tkimg
