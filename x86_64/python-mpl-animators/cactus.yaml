@@ -3,12 +3,11 @@ nvchecker:
     aur:
   - alias: python
 makedepends:
-  - any/python-sphinx-astropy
-  - any/python-pytest-astropy-header
+  - any/python-sphinx-automodapi
+  - any/python-sphinx-gallery
+  - x86_64/python-sunpy-sphinx-theme
+  - x86_64/python-sunpy
   - any/python-pytest-doctestplus
-  - any/python-pytest-remotedata
-  - x86_64/python-dust-extinction
-  - x86_64/python-specutils
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

@@ -6,9 +6,6 @@ makedepends:
   - any/python-sphinx-astropy
   - any/python-pytest-astropy-header
   - any/python-pytest-doctestplus
-  - any/python-pytest-remotedata
-  - x86_64/python-dust-extinction
-  - x86_64/python-specutils
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
