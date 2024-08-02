@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=clock
-_pkgver=0.7.0
+_pkgver=0.7.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Date-Time Types and Tools"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -34,8 +34,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d28202660aa1adbc17c996def84ad6d8')
-b2sums=('ab976631c8a6210d82b8532695292e9939852a48945bbf07711d5eb84cebda062ec317895d8a98be9dfaeac6010c0d7a78833d3a81da035c6fb201245ba3dd20')
+md5sums=('1d18204eb746247d7dde0cc1353300b8')
+b2sums=('0488c741f9fe7780bc086ab37b09e85e923abe4b6bf95d7de595d078b694cf9d2049c7ef32f107f8e55452ac1c6cf9970d14cfbe162fc4b9fcc5ac5cb3f5701e')
 
 build() {
   mkdir build
