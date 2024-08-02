@@ -2,8 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-gparotation
-  - x86_64/r/r-mnormt
+  - x86_64/r/r-rcpp
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

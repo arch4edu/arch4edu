@@ -3,11 +3,12 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-cli
-  - x86_64/r/r-crayon
   - x86_64/r/r-desc
   - x86_64/r/r-fs
   - x86_64/r/r-glue
+  - x86_64/r/r-lifecycle
   - x86_64/r/r-pkgbuild
+  - x86_64/r/r-processx
   - x86_64/r/r-rlang
   - x86_64/r/r-rprojroot
   - x86_64/r/r-withr
