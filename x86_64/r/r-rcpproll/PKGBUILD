@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=RcppRoll
-_pkgver=0.3.0
+_pkgver=0.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=1
 pkgdesc="Efficient Rolling / Windowed Operations"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -23,8 +23,8 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('20b1dca034a1d18f63c07201736943c7')
-b2sums=('4d1c7aa588515ac5056ef335b2cb2735ad6efda58cc56b107dcc3e7a5333226ba84a628202067cc5751cac475b2958ce65cda8b99bb4f89a816a40c9278225d1')
+md5sums=('c6fccb2c91dd012c5169a0fe2dcb02ea')
+b2sums=('83c2f5dced8c47d94d5fd0cd3fe6cd6a2afb49e2c07bfdff4585f3ba696c13b61b27f3e50d3bf50e4055e9334608090212aa62d3437c34e1d041e053d0c1d488')
 
 build() {
   mkdir build
