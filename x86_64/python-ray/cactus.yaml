@@ -2,11 +2,6 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-makedepends:
-  - x86_64/bazel5
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  add makedepends git libxcrypt-compat gcc12
-  echo 'export CC=gcc-12 CXX=g++-12' >> PKGBUILD
+pre_build: aur-pre-build
 post_build: aur-post-build
