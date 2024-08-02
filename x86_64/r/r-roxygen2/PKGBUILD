@@ -5,9 +5,9 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=roxygen2
-_pkgver=7.3.1
+_pkgver=7.3.2
 pkgname=r-${_pkgname,,}
-pkgver=7.3.1
+pkgver=7.3.2
 pkgrel=1
 pkgdesc='In-Line Documentation for R'
 arch=('x86_64')
@@ -39,7 +39,7 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('215e9fa9c0e73cb33f9870854c97b25c1a6386f519f69f397123f1a66656e2c8')
+sha256sums=('b788879f9132b7e2e656f442a6c592314676a9bf32d6a0a56e156cfa1ada011c')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
