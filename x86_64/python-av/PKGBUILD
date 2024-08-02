@@ -6,14 +6,15 @@ _upstream_name="PyAV"
 pkgdesc="Pythonic bindings for FFmpeg"
 url="https://pyav.basswood-io.com"
 
-pkgver=12.1.0
-pkgrel=2
+pkgver=12.3.0
+pkgrel=1
 
 arch=("x86_64" "i686")
 license=("BSD-3-Clause")
 
 depends=(
-  "ffmpeg<=2:7"
+  # "ffmpeg<=2:7"
+  "ffmpeg6.1"
   "python"
   "python-numpy"
   "python-pillow"
@@ -36,20 +37,14 @@ checkdepends=(
 
 source=(
   "$_name-$pkgver.tar.gz::https://github.com/${_upstream_name}-Org/${_upstream_name}/archive/refs/tags/v${pkgver}.tar.gz"
-  "python-av-bitstream-const.patch"  # https://github.com/PyAV-Org/PyAV/issues/1412#issuecomment-2141407404
 )
-b2sums=(
-  "d83794a6d5f0137141ffcc1787b407285c98faa83598751171cf5013005d540adf65653d5b79d5ea7ce925523a1956b605339bc99f866d634c28e47794aa5782"
-  "aa2e67f007494b424efb51534967c522ecd84eb66ae90428e8d5199fbb256e47a48930657d96fc31b11ec6863f8c9611ec6cb603d41ffb7f232abd9eda5ee067"
-)
-
-prepare() {
-  cd "${srcdir}"/${_upstream_name}-${pkgver}
-  patch --forward --strip=1 --input "${srcdir}/python-av-bitstream-const.patch"
-}
+b2sums=("d80f642fddb4112a89540d7b443ae5df0989b61507f18009a651fa311925d5041e2e9bd7f6c68d34abaca9fd33609692dc289e025dc7855c497517da8a92f3f0")
 
 build() {
   cd "${srcdir}"/${_upstream_name}-${pkgver}
+
+  export PKG_CONFIG_PATH="/usr/lib/ffmpeg6.1/pkgconfig/"
+
   python setup.py build_ext --inplace
   python setup.py build
 }
