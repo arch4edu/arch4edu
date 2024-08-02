@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=restriktor
-_pkgver=0.5-60
+_pkgver=0.5-80
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,12 +13,14 @@ license=('GPL-2.0-or-later')
 depends=(
   r-ggplot2
   r-glue
+  r-gridextra
   r-ic.infer
   r-lavaan
   r-mvtnorm
   r-norm
   r-pbapply
   r-quadprog
+  r-scales
   r-tmvtnorm
 )
 optdepends=(
@@ -28,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9e62e5f2e9b11712c9baf8d37bead2c5')
-b2sums=('5c6f084082e27ab518584d7769c85147278e10d3be1e977cc9f29ff31d7badf9841e3e609c0b44fb6bf4cac001a9a9c2252c825b2043eedf97ba8bfd6d9b1038')
+md5sums=('bcf4e810f04352d2f393c00cf2df421d')
+b2sums=('e8066d3683fdbcacf164423e409444cad20021408afebe001247da334bdf35cc0b00856da7011f6f4e9f740fa59bb07fa27a3e2735912995f601ab799bdd3f3d')
 
 build() {
   mkdir build
