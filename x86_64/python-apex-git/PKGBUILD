@@ -2,8 +2,8 @@
 
 pkgname=python-apex-git
 _pkgname=apex
-pkgver=22.03.r240.ga7de60e5
-pkgrel=2
+pkgver=22.03.r245.g59b80ee8
+pkgrel=1
 pkgdesc="A PyTorch Extension: Tools for easy mixed precision and distributed training in Pytorch"
 arch=('x86_64')
 url="https://github.com/NVIDIA/apex"
@@ -29,7 +29,6 @@ prepare() {
 
 build() {
   cd "$srcdir/${_pkgname}"
-  CC=/opt/cuda/bin/gcc CXX=/opt/cuda/bin/g++ \
   python setup.py build --cuda_ext --cpp_ext
 }
 
