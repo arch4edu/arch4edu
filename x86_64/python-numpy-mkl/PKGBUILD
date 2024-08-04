@@ -13,14 +13,14 @@
 # Adapted to mkl by Simone Riva
 pkgname=python-numpy-mkl
 pkgver=2.0.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=(x86_64)
 license=(BSD-3-Clause)
 url="https://numpy.org"
 provides=("python-numpy=$pkgver")
 conflicts=(python-numpy)
-depends=(python intel-oneapi-basekit)
+depends=(python intel-oneapi-mkl)
 makedepends=(python-build python-installer meson-python python-setuptools cython gcc-fortran procps-ng)
 checkdepends=(python-pytest python-hypothesis)
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
