@@ -1,20 +1,24 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=TruncatedNormal
-_pkgver=2.2.2
+_pkgver=2.3
 pkgname=r-${_pkgname,,}
-pkgver=2.2.2
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Truncated Multivariate Normal and Student Distributions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgdesc="Truncated Multivariate Normal and Student Distributions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
 depends=(
-  r
+  blas
+  lapack
   r-alabama
   r-nleqslv
-  r-randtoolbox
+  r-qrng
   r-rcpp
+  r-spacefillr
+)
+makedepends=(
   r-rcpparmadillo
 )
 optdepends=(
@@ -22,17 +26,18 @@ optdepends=(
   r-knitr
   r-mvtnorm
   r-rmarkdown
-  r-testthat
+  r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('aef567e8962a64d1afbdfd98ab8f385f32966c3c42acb54ee20f02dceab18e15')
+md5sums=('c19c441146bd9cf9b4732fc42a26816a')
+b2sums=('1313a2add6ed3540ba72ffb6e06491b3e2fccb1a3cafbfe8b6abbba388ec1233c59b3eddf732cfdfd4d39a69a22a9598125edc7a55931363112b603870251210')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
