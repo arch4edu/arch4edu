@@ -1,0 +1,13 @@
+--- a/examples/creating_ndcube_from_fitsfile.py	2023-03-02 03:43:04.000000000 +0800
++++ b/examples/creating_ndcube_from_fitsfile.py	2023-03-03 12:03:56.485618059 +0800
+@@ -19,7 +19,9 @@
+ # `~ndcube.NDCube` from data stored in a FITS file.
+ # Here we are using an example file from ``astropy``.
+ 
+-image_file = get_pkg_data_filename('tutorials/FITS-images/HorseHead.fits')
++# use local fits if no network while doc building
++try: image_file = get_pkg_data_filename('tutorials/FITS-images/HorseHead.fits')
++except Exception: image_file = 'HorseHead.fits'
+ 
+ ###########################################################################
+ # Lets extract the image data and the header information from the FITS file.
