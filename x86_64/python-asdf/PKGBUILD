@@ -3,7 +3,7 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=3.3.0
+pkgver=3.4.0
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
@@ -15,6 +15,7 @@ makedepends=('python-setuptools-scm'
              'python-installer')
 #            'python-sphinx-asdf>=0.2.2'
 #            'python-sphinx-inline-tabs'
+#            'python-matplotlib'
 #            'graphviz'
 ##           'python-mistune>=3'
 ##           'python-numpy'
@@ -26,18 +27,19 @@ makedepends=('python-setuptools-scm'
 ##           'python-sphinx-astropy'
 ##           'python-astropy>=5.0.4'
 ##           'python-toml')
+#checkdepends=('python-pytest'
 #checkdepends=('python-pytest-doctestplus'
 checkdepends=('python-pytest-remotedata'
 #             'python-pytest-xdist'
               'python-numpy'
               'python-psutil'
               'python-yaml'
-              'python-importlib-metadata'
+#             'python-importlib-metadata'
               'python-semantic-version'
-#              'python-astropy'
+#             'python-astropy'
               'python-asdf-standard'
               'python-jmespath'
-#              'python-asdf_transform_schemas'
+#             'python-asdf_transform_schemas'
               'python-lz4'
               'python-fsspec'
               'python-aiohttp'
@@ -45,7 +47,7 @@ checkdepends=('python-pytest-remotedata'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('5fe1f63a6f85553e145bb05b90bae175')
+md5sums=('5f503f47418d2b6b13261d0304fb20a9')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -66,24 +68,25 @@ build() {
     cd ${srcdir}/${_pyname}-${pkgver}
     python -m build --wheel --no-isolation
 
-#   msg "Building Docs"
-#   ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
-#       build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver).egg-info
-#   PYTHONPATH="../build/lib" make -C docs html
+#    msg "Building Docs"
+##   ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
+##       build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver).egg-info
+#    PYTHONPATH="../build/lib" make -C docs html
 }
 
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
     # Segmentation fault
-    PYTHONPATH="build/lib:${PYTHONPATH}" pytest --remote-data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data -p xdist -n 4
+#   PYTHONPATH="build/lib:${PYTHONPATH}" pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #--remote-data #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data -p xdist -n 4
+    pytest --remote-data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count-p xdist -n 4
 }
 
 package_python-asdf() {
     depends=('python>=3.9'
              'python-numpy>=1.22'
              'python-jmespath>=0.6.2'
-             'python-attrs>=20.1.0'
+             'python-attrs>=22.2.0'
              'python-packaging>=19'
              'python-importlib-metadata>=4.11.4'
              'python-yaml>=5.4.1'
