@@ -3,12 +3,12 @@
 # Contributor: Michael Schubert <mschu.dev at gmail>
 
 pkgname=python-numba-git
-pkgver=0.61.0dev0.r133.gd2af79a79
+pkgver=0.61.0dev0.r184.gafb3d168e
 pkgrel=1
 pkgdesc='NumPy aware dynamic Python compiler using LLVM (Git version)'
 url='https://github.com/numba/numba'
 arch=('x86_64')
-license=('BSD')
+license=('BSD-2-Clause')
 depends=('python-llvmlite>=0.44.0dev0' 'python-numpy' 'python-setuptools')
 optdepends=(
   'openmp: OpenMP threading backend'
@@ -31,6 +31,13 @@ pkgver() {
   printf "%s" "$(git describe --long origin/HEAD | sed 's/\([^-]*-g\)/r\1/;s/-/./g')"
 }
 
+prepare() {
+  cd numba
+
+  # Fix compilation with NumPy 2.0.1; see https://github.com/numba/numba/issues/9687
+  sed -i -e's/+ I /+ _Complex_I /g' numba/_helperlib.c
+}
+
 build() {
   cd numba
   python -m build --no-isolation --wheel
@@ -40,5 +47,10 @@ package() {
   cd numba
   python -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE LICENSES.third-party
+
+  # Remove tests from final package.
+  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+  rm -r "$pkgdir/$site_packages/numba/tests"
+  rm -r "$pkgdir/$site_packages/numba/cuda/tests"
 }
 makedepends+=("cython")
