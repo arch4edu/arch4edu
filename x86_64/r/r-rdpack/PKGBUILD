@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=Rdpack
-_pkgver=2.6
+_pkgver=2.6.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Update and Manipulate Rd Documentation Objects"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -21,8 +21,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('212a5f9ba8330ae43f266d3d598fbc3a')
-b2sums=('27f19b12886e752d6c7b06c682233ee288cbbadf708480c7abaf5c6c24587e200ee9f98c329dbfdb7176ee2319327b069f4a30f1a180680c841b8a903a93b35a')
+md5sums=('dc339517b9fec6144c4a05ee38f3dfce')
+b2sums=('770edecd14bb90079704690c2125bdfbee8347a72984359a3b77a794310506db3d34da8051edc0bb3897a44b36e8c1d8830b9abd7734984e0d61d982ec394ce2')
 
 build() {
   mkdir build
