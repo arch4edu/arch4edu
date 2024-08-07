@@ -4,6 +4,7 @@
 pkgname="protoc-gen-go-grpc"
 pkgver=1.5.1
 pkgrel=1
+epoch=1
 pkgdesc="gRPC bindings generator for Go language"
 arch=('any')
 url="https://github.com/grpc/grpc-go"
