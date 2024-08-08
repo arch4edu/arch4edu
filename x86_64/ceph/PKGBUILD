@@ -4,13 +4,13 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=18.2.2
-pkgrel=4
+pkgver=18.2.4
+pkgrel=1
 url='https://ceph.com/'
 arch=('x86_64')
-license=('GPL')
+license=('GPL-2.0-or-later OR LGPL-2.1-or-later OR LGPL-3.0-or-later')
 pkgname=(
-  ceph-{common,compressor,crypto,erasure,tools,test,volume,cephadm}
+  ceph-{common,compressor,crypto,erasure,tools,test,volume,cephadm,node-proxy}
   ceph-{rados,base,mon,mgr,osd,mds,rbd,cephfs,rgw}
   lib{rados,cephfs,rbd,rgw,cephsqlite}
   python-{ceph-common,rados,rbd,cephfs,rgw}
@@ -70,10 +70,6 @@ source=(
   # git repo
   'ceph-17.2.4-tox-flake8-git-ls-files.patch'
 
-  # A problem with mypy versions <= 0.981 causes a false postive around numpy imports.
-  # See: https://github.com/python/mypy/issues/13627
-  'ceph-17.2.4-tox-mypy-false-postive.patch'
-
   # Split up a very IO heavy test suite, as otherwise test is liable to timeout
   # NOTE: this is a very large patchset and will guarrented break if/when the upstream
   # touches anything in src/test/objectstore
@@ -111,19 +107,11 @@ source=(
   # pattern
   'ceph-18.2.0-backport-log-runway-expansion.patch'
 
-  # Backport https://github.com/ceph/ceph/pull/55689, removing the mgr dependency on
-  # python-pyjwt -> python-cryptography (-> pyo3)
-  # See https://github.com/bazaah/aur-ceph/issues/20 for more
-  'ceph-18.2.2-backport-mgr-dashboard-simplify-authentication-protocol.patch'
-
   # Make the mgr import our ceph_bcrypt fork instead of the system bcrypt
   'ceph-18.2.2-mgr-alias-ceph-bcrypt.patch'
 
   # Backport of https://github.com/ceph/ceph/pull/53327
   'ceph-18.2.2-backport-ceph-volume-unbound-var.patch'
-
-  # Backport of https://github.com/ceph/ceph/pull/49954
-  'ceph-18.2.2-backport-ceph-volume-check-generic-reject-reasons.patch'
 
   # Fix a few compile errors when using GCC14
   'ceph-18.2.2-gcc-14-fixes.patch'
@@ -151,14 +139,13 @@ source=(
   # Use our fork of pyo3, reenabling subinterpreter support
   'python-bcrypt-allow-subinterpreters.patch'
 )
-sha512sums=('2fcd3d67512754947adc8780edbbee9498ef666056b804298cdc998a3eb4a2916c8eb7f2635fd19b78a8b98bd74cce30f969fa2ccb6860257880245c6df703fa'
+sha512sums=('a4ebb4e14032e6ab8e1fd8836f39234b771cb0a4b655166e9c69493a2c0d687064af4bb35523d0501629605521854e49f5c53a56279f72810d108c76f4f88c5b'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
             '31e578b240ceaaf1216b56cdce654661eed6529ef642ecad164a02669e850100a49a85dc70f3d744671e2c5dad10aee64be7d091fa33007cb8fc6788a4336799'
-            'f1f549c5da829db787ee6ee3cf47912d5b48efb2533de05fd9735736e9218a78cf79c5958e1409a2c8adcca51460eb3ae7e73b5c1ec6cf73d4f07670c9934c3b'
             '5b43ba48dde8b7371d4b3976aa3a27ab3ad3a10e110479a101b8f222590bbd6aca318f3ac117f851596fc23daafb53aaa566e055dc9694ab16ab1170e8f77763'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '612faebfb5eec3651832f349ea3c23b50d2386889ff77592b0acff653049efdc5c2254f63c30d88b9a730813bf1f1945dda0d0beab0db7db3e0708ba8d057a40'
@@ -169,10 +156,8 @@ sha512sums=('2fcd3d67512754947adc8780edbbee9498ef666056b804298cdc998a3eb4a2916c8
             '4613232e5a0003c08d233e40fe3ac1cd00e1195d29bdd9892188587b4a782d6979004232927c0a1bff554eabf2fb9b18eb751682b7ad90762292b63891f3b301'
             '9a1183c08f8799b14235c9271519203cbf93e48ca3a8607d3a0500910efca5379c8a08421c377227f93d8436a850f5ca99784f28aaa920e55f0457c657511f17'
             'e238b326609636bc7dd10cec59290e22898948ef105c49643c38d2621abf16c2efcf9581b0b6bad65066607510c9827d00a7abdb14f2054701cc33b7101ea054'
-            '965f1174ed682409f5aebfe689ccc870a860f323b00dcd4c9ee079839108ee27ed4d8b42d8b59c7e3cc5fb61d554929d9f779ce224691d20b868acf7f15adb2c'
             '692b9cea0199366fdfbcaff2d9590e3a1e439b948a1a5030215e81fcc8a22ac562b3261e2057470cc8acc20f404869a5a0c4550177788dc2f824523e5267b1eb'
             '11fae8997e4df4b706245f467dc396d84f1fb48db8e569b1665a4963eb77292415a2493cae033bed23765d82269a3cd6a5bf12c1ba52e3700a63db6ad983ca5a'
-            '4e23793539043ea571aee8067e09f8caa4d5509ab2e6e2472a4f2d2fc7934f8e2d97a2993b4534e761af6b8ead90b727e4e9fbd10e28143ea7f6bb01f2eaf68e'
             '3f3a4795dfc58910972fa15a7ca8a4c3206d45351a15db66d8e93da64c7726c5f45256114b20f032d8011ab131ee20d2d8373207ad7e188a2978cf50854e10f1'
             '2c90c69b3e236622c9fb83214fe7f781c9fcb0de1b372e7837d9963780ead9c2926c347177c03fb94eb05fd838514f3afab42aa50b7c9ac800c34bf59c48b02e'
             '0ed97f2fb764ec8f7e01be45256377a6b2f451c865348b25b12ca9ef70c7120a0bf62321a9402cc4362618fde3a38ccfcd6eec738fe8cc067f17399700c273f3'
@@ -485,6 +470,7 @@ _make_ceph_packages() {
       $bin/ceph-mgr \
       $bin/ceph-exporter \
       $systemd/ceph-mgr{.target,@.service} \
+      $systemd/ceph-exporter.service \
       $share/ceph/mgr/*
 
     _package ceph-osd \
@@ -571,6 +557,11 @@ _make_ceph_packages() {
     _package cephfs-top \
       $bin/cephfs-top \
       $python/cephfs_top-*
+
+    _package ceph-node-proxy \
+      $bin/ceph-node-proxy \
+      $python/ceph_node_proxy \
+      $python/ceph_node_proxy-*egg-info*
 
     ###############################################
     #         Ceph misc. utils                    #
@@ -842,6 +833,7 @@ package_ceph-osd() {
   )
   optdepends=(
     'ceph-volume: For preparing block devices for OSD daemons'
+    'ceph-node-proxy: For RedFishAPI hardware metrics'
     'smartmontools: disk monitoring via S.M.A.R.T'
     'nvme-cli: disk monitoring for NVMe drives'
   )
@@ -1018,6 +1010,16 @@ package_cephfs-top() {
   depends=(
     "python-ceph-common=${__version}" "python-cephfs=${__version}"
 
+    'python'
+  )
+
+  mv __pkg__/$pkgname/* "$pkgdir"
+  _print
+}
+
+package_ceph-node-proxy() {
+  pkgdesc='Ceph Storage daemon for cephadm deployments to collect RedFishAPI hardware metrics'
+  depends=(
     'python'
   )
 
