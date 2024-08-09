@@ -2,7 +2,7 @@
 pkgbase=python-specutils
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.15.0
+pkgver=1.16.0
 pkgrel=1
 pkgdesc="Astropy Affiliated package for 1D spectral operations"
 arch=('any')
@@ -20,13 +20,14 @@ makedepends=('python-setuptools-scm'
              'graphviz')
 checkdepends=('python-pytest-astropy-header'
               'python-pytest-doctestplus'
+#             'python-pytest-xdist'
               'python-pytest-remotedata') # matplotlib, gwcs, ndcube already in makedepends; header in conftest.py
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
         "https://stsci.box.com/shared/static/28a88k1qfipo4yxc4p4d40v4axtlal8y.fits"
         "https://data.sdss.org/sas/dr16/sdss/spectro/redux/26/spectra/1323/spec-1323-52797-0012.fits"
         'use_local_doc_fits_offline.patch')
 #https://dr15.sdss.org/sas/dr15/manga/spectro/redux/v2_4_3/8485/stack/manga-8485-1901-LOGRSS.fits.gz
-md5sums=('34fa83a354910c543b2a94ab1d45d3b6'
+md5sums=('ea4def26426860fbac7e81d771c44f11'
          '6de4c8ee5659e87a302e3de595074ba5'
          '3586c5d0810108a182ba9146908dc180'
          '49c57591fdc60365a3e31a0f10e4e57d')
@@ -78,7 +79,7 @@ check() {
         --deselect=specutils/tests/test_loaders.py::test_iraf_multispec_legendre \
         --deselect=specutils/tests/test_loaders.py::test_muscles_loader \
         --deselect=specutils/tests/test_loaders.py::test_subaru_pfs_loader \
-        --deselect=specutils/tests/test_spectral_axis.py::test_create_spectral_axis || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+        --deselect=specutils/tests/test_spectral_axis.py::test_create_spectral_axis || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4
 }
 
 package_python-specutils() {
