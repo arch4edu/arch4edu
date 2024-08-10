@@ -3,7 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any
+  - any/python-emcee
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
