@@ -9,7 +9,7 @@
 # Contributor: Dave Pretty <david dot pretty at gmail dot com>
 
 pkgname=anki-git
-pkgver=r11176.872ecf481
+pkgver=r11183.5f80ddf27
 pkgrel=1
 pkgdesc="Helps you remember facts (like words/phrases in a foreign language) efficiently"
 url="hhttps://apps.ankiweb.net/"
