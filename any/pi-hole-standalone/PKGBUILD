@@ -3,7 +3,7 @@
 pkgname=pi-hole-standalone
 _pkgname=pi-hole
 pkgver=5.18.2
-pkgrel=1
+pkgrel=2
 _now=`date +%N`
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch alteration for standalone PC.'
 arch=('any')
@@ -13,11 +13,11 @@ depends=('pi-hole-ftl' 'netcat' 'inetutils' 'iproute2' 'bind-tools' 'sudo' 'lsof
 makedepends=('git')
 conflicts=('pi-hole-server')
 install=$pkgname.install
-backup=('etc/dnsmasq.d/01-pihole.conf')
+backup=()
 
 source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/v$pkgver.tar.gz
 		"https://raw.githubusercontent.com/max72bra/pi-hole-standalone-archlinux-customization/master/arch-server-core-$pkgver-$pkgrel.patch"
-	dnsmasq.include
+	01-pihole.conf
 	$_pkgname.tmpfile
 	$_pkgname-gravity.service
 	$_pkgname-gravity.timer
@@ -28,15 +28,15 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 	piholeDebug.sh)
 
 sha256sums=('43bb1bea958535dcb2dab4b0dbda432859c6fa83a5d1f94eb5239d77f1e32605'
-            'ec2df204c6096cbf0b66b7b1d1f5225045aa4ba02572ff636a5fcbfb3db827c8'
-            '96c1fb8b15e1d0e99c18dc768f5dc3d4991184fb2631af84c5e2111028bc5287'
+            '5679513828fd98d726b2c9f5dac463f27ead2f1bc4fa9acfd3efb62100afbb8b'
+            '4e92687a1c34bcc7f5aaf76ab3cdff73228d2acafefd99c7aad89046c570136a'
             '6da6bba6cfac4e87a1f1e8e1488b71858ac6feb0a2e327470a58d8f1e9ad8cbf'
             '9b72d7769036f8f4bb7121968d2ae4bdba427e4b16787ce340205a5f62b45c7c'
             '5228b4f923eab7784952a0fd6da895e7bff2f80a7f91c4a7c6350491dfdbb2e8'
             '88e3c78bbeaf5dc1100df65202ded8207877954a96bdf1b0ab3d9990d9fa759f'
             'ff507ce58c9492cce57e947696e1b814469fc2d856a1e303c6e68f98c62ebf46'
-            'b1c38a0cc6fda8b44d55f7270f26bb48b486a93cee1a68f6331af5ad137ec9dd'
-            '2424abae1061700ae57629dd6abdb6bc526c22a545d3135b4661d393c468123d'
+            '851dc423a08e289163bdd3c05675513ab3deff5dbe8dfcbd523cc3fac11f939d'
+            '85fe4178b12445767c7ab090cfad70d8faed9d5a28218e9425d27c2d42d6e106'
             '73a8362f7a3eac91c77efbbcb4910ff079203bb5f829e32ecf3391d017117bb8')
 
 prepare() {
@@ -74,7 +74,7 @@ package() {
   cp -dpr --no-preserve=ownership $_pkgname-$pkgver/advanced/Scripts/database_migration "$pkgdir"/opt/pihole/
 
   install -Dm644 $_pkgname-$pkgver/advanced/dnsmasq.conf.original "$pkgdir"/etc/dnsmasq.conf
-  install -Dm644 dnsmasq.include "$pkgdir"/etc/dnsmasq.d/01-pihole.conf
+  install -Dm644 01-pihole.conf "$pkgdir"/etc/dnsmasq.d/01-pihole.conf
   install -Dm644 $_pkgname-$pkgver/advanced/06-rfc6761.conf "$pkgdir"/etc/dnsmasq.d/06-rfc6761.conf
 
   install -Dm644 pi-hole.tmpfile "$pkgdir"/usr/lib/tmpfiles.d/pi-hole.conf

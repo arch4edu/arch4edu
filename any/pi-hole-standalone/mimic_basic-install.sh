@@ -43,3 +43,44 @@ valid_ip6() {
     stat=$?
     return "${stat}"
 }
+
+# from official utils.sh
+addOrEditKeyValPair() {
+  local file="${1}"
+  local key="${2}"
+  local value="${3}"
+
+  # touch file to prevent grep error if file does not exist yet
+  touch "${file}"
+
+  if grep -q "^${key}=" "${file}"; then
+    # Key already exists in file, modify the value
+    sed -i "/^${key}=/c\\${key}=${value}" "${file}"
+  else
+    # Key does not already exist, add it and it's value
+    echo "${key}=${value}" >> "${file}"
+  fi
+}
+
+addKey(){
+  local file="${1}"
+  local key="${2}"
+
+  # touch file to prevent grep error if file does not exist yet
+  touch "${file}"
+
+  # Match key against entire line, using both anchors. We assume
+  # that the file's keys never have bounding whitespace. Anchors
+  # are necessary to ensure the key is considered absent when it
+  # is a substring of another key present in the file.
+  if ! grep -q "^${key}$" "${file}"; then
+    # Key does not exist, add it.
+    echo "${key}" >> "${file}"
+  fi
+}
+
+removeKey() {
+  local file="${1}"
+  local key="${2}"
+  sed -i "/^${key}/d" "${file}"
+}
