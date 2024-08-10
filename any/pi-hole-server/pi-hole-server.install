@@ -19,9 +19,13 @@ post_install() {
   # update lists on first run
   pihole -g > /dev/null
 
-  # setup dns server which by definition modifies /etc/dnsmasq.d/01-pihole.conf
-  # and thus protects it from getting overwritten by package updates
-  /usr/bin/pihole -a setdns 8.8.8.8,8.8.4.4 > /dev/null
+  # populate /etc/dnsmasq.d/01-pihole.conf
+  echo -e "\e[1;33m==>\e[0m Populating initial dnsmasq files...\e[0m"
+  source /opt/pihole/basic-install.sh
+  dnsmasq_pihole_01_target="/etc/dnsmasq.d/01-pihole.conf"
+  addOrEditKeyValPair "${dnsmasq_pihole_01_target}" "interface" "$PIHOLE_INTERFACE"
+  addOrEditKeyValPair "${dnsmasq_pihole_01_target}" "server" "$PIHOLE_DNS_1"
+  addKey "${dnsmasq_pihole_01_target}" "server=$PIHOLE_DNS_2"
   
   # /etc/pihole/versions file generation
   echo -e "\e[1;33m==>\e[0m Creating 'versions' file...\e[0m"

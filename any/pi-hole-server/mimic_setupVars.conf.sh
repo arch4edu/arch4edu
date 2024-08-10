@@ -55,6 +55,8 @@ finalExports() {
     echo "IPV6_ADDRESS=${IPV6_ADDRESS}"
     echo "INSTALL_WEB_INTERFACE=true"
     echo "QUERY_LOGGING=true"
+	echo "PIHOLE_DNS_1=1.1.1.1"
+	echo "PIHOLE_DNS_2=8.8.8.8"
     }>> "${setupVars}"
 }
 

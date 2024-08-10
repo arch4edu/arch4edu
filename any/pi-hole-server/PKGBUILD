@@ -5,7 +5,7 @@
 pkgname=pi-hole-server
 _pkgname=pi-hole
 pkgver=5.18.3
-pkgrel=3
+pkgrel=4
 _wwwpkgname=web
 _wwwpkgver=5.21
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
@@ -23,15 +23,13 @@ optdepends=(
 )
 conflicts=('pi-hole-standalone')
 install=$pkgname.install
-backup=('etc/dnsmasq.d/01-pihole.conf' 'etc/pihole/adlists.list' 'etc/dnsmasq.conf' 'etc/sudoers.d/pihole')
+backup=('etc/pihole/adlists.list' 'etc/dnsmasq.conf' 'etc/sudoers.d/pihole')
 
 source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/refs/tags/v$pkgver.tar.gz
 	    $pkgname-admin-$_wwwpkgver.tar.gz::https://github.com/$_pkgname/$_wwwpkgname/archive/refs/tags/v$_wwwpkgver.tar.gz
-      #  "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-core-$pkgver-$pkgrel.patch"
-      #  "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-admin-$_wwwpkgver-$pkgrel.patch"
-      "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-core-$pkgver-1.patch"
-      "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-admin-$_wwwpkgver-1.patch"
-	    dnsmasq.include
+      "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-core-$pkgver-$pkgrel.patch"
+      "https://raw.githubusercontent.com/max72bra/pi-hole-server-archlinux-customization/master/arch-server-admin-$_wwwpkgver-$pkgrel.patch"
+	    01-pihole.conf
 	    lighttpd.pi-hole.conf
 	    nginx.pi-hole.conf
 	    $_pkgname.tmpfile
@@ -46,9 +44,9 @@ source=($pkgname-core-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/arc
 
 sha256sums=('871b47b41813342484df8f10981801eba25f27c9cdbeafd6e71f0edbae6818e5'
             'd8b5f8dd3842dd8b0f3f02a4422182740fd26c3db5ceba1dde9fcd122a36c7f0'
-            '8c4ad50db851431455f0937cccb6044b973b2476134f666fcec4c1358c1c1bc7'
-            'beeb08d8e7225100e37cc789a48f1bea64cd07111c880d3fb43a9cee7bb15fae'
-            'b8aefb2686cc005f7c46b53cb681dfe65e8f11dd3bc5b827b597e19c870bdd24'
+            '2331a67bf316f467fe5763e3a56e0692e7025eb6913525380fbe3ffc0b110a48'
+            '904057054fb6c52247645b37bee1e774a793c3b6b023fd1728533dd6d666da07'
+            '4e92687a1c34bcc7f5aaf76ab3cdff73228d2acafefd99c7aad89046c570136a'
             '3a3baa92a635d602824f184d901e947a0e14650c950e89325dda6f7d71b39db9'
             'f5906ed845e030ee18baeb8767295e1a76848a10ffd6fe60d34501ae45e2b6a8'
             '6da6bba6cfac4e87a1f1e8e1488b71858ac6feb0a2e327470a58d8f1e9ad8cbf'
@@ -56,17 +54,15 @@ sha256sums=('871b47b41813342484df8f10981801eba25f27c9cdbeafd6e71f0edbae6818e5'
             '5228b4f923eab7784952a0fd6da895e7bff2f80a7f91c4a7c6350491dfdbb2e8'
             '88e3c78bbeaf5dc1100df65202ded8207877954a96bdf1b0ab3d9990d9fa759f'
             'ff507ce58c9492cce57e947696e1b814469fc2d856a1e303c6e68f98c62ebf46'
-            '6d9dd12ab22a5708f382e7c3033fe15ef6bc7789928b1e2e044580c3e8d87ef6'
-            '2424abae1061700ae57629dd6abdb6bc526c22a545d3135b4661d393c468123d'
+            'f80e3a460ea3ee04339a967a4805ce5c2a8f2f97aa474cdf76b1dd30535df865'
+            '85fe4178b12445767c7ab090cfad70d8faed9d5a28218e9425d27c2d42d6e106'
             '69a71c29dbe42ef0cbd3655fd7ce5cf04e8a77e27a5b2c3a1fcce0b544223309')
 
 prepare() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
-  #patch -Np1 -i "$srcdir"/arch-server-core-$pkgver-$pkgrel.patch
-  patch -Np1 -i "$srcdir"/arch-server-core-$pkgver-1.patch
+  patch -Np1 -i "$srcdir"/arch-server-core-$pkgver-$pkgrel.patch
   cd "$srcdir"/"$_wwwpkgname"-"$_wwwpkgver"
-  #patch -Np1 -i "$srcdir"/arch-server-admin-$_wwwpkgver-$pkgrel.patch
-  patch -Np1 -i "$srcdir"/arch-server-admin-$_wwwpkgver-1.patch
+  patch -Np1 -i "$srcdir"/arch-server-admin-$_wwwpkgver-$pkgrel.patch
 }
 
 package() {
@@ -101,7 +97,7 @@ package() {
   install -dm750 "$pkgdir"/etc/sudoers.d
   install -Dm440 $_pkgname-$pkgver/advanced/Templates/pihole.sudo "$pkgdir"/etc/sudoers.d/pihole
   install -Dm644 $_pkgname-$pkgver/advanced/dnsmasq.conf.original "$pkgdir"/etc/dnsmasq.conf
-  install -Dm644 dnsmasq.include "$pkgdir"/etc/dnsmasq.d/01-pihole.conf
+  install -Dm644 01-pihole.conf "$pkgdir"/etc/dnsmasq.d/01-pihole.conf
   install -Dm644 $_pkgname-$pkgver/advanced/06-rfc6761.conf "$pkgdir"/etc/dnsmasq.d/06-rfc6761.conf
 
   install -Dm644 pi-hole.tmpfile "$pkgdir"/usr/lib/tmpfiles.d/pi-hole.conf
