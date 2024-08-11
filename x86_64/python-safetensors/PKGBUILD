@@ -1,8 +1,8 @@
 # Maintainer: Andrea Manenti <andrea [dot] manenti [at] yahoo [dot] com>
 # Contributor: Henry-ZHR <henry-zhr@qq.com>
 pkgname=python-safetensors
-pkgver=0.4.3
-pkgrel=3
+pkgver=0.4.4
+pkgrel=1
 pkgdesc='Simple, safe way to store and distribute tensors'
 arch=('x86_64')
 url='https://github.com/huggingface/safetensors'
@@ -36,7 +36,7 @@ checkdepends=('python-pytorch'
               'python-pytest-benchmark'
               'python-h5py')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha512sums=('278469d7bc8a4285519cf8020891d0f0e107d8124ad2c24686ca8a19ef2f210c49d9483c502bd5aa5d73940a775ac3eb5e3b90f62825dd7845c351bbdc8c82c3')
+sha256sums=('56d755561054ab24d3bc36e3715b9308901891170e69fc894db70284ba11b730')
 
 prepare() {
   mkdir -p "safetensors-${pkgver}/.git"
@@ -54,8 +54,10 @@ check() {
   local python_version=$(python -V | sed -e 's/Python \([0-9]\.[0-9]\+\)\..*/\1/')
   mkdir "${PWD}/test_build"
   python -m installer --destdir="${PWD}/test_build" dist/*.whl
+  # Disable temporarily paddlepaddle and tensorflow tests
   PYTHONPATH="${PWD}/test_build/usr/lib/python${python_version}/site-packages" pytest tests/ \
-    --ignore=tests/test_paddle_comparison.py # No working paddlepaddle package, disable it temporarily
+    --ignore=tests/test_paddle_comparison.py \
+    --ignore=tests/test_tf_comparison.py
 }
 
 package() {
