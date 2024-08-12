@@ -5,7 +5,6 @@ nvchecker:
 depends:
   - any/bwidget
   - any/python-yapps2
-  - x86_64/libgpiod-1.6.4
 makedepends:
   - x86_64/tclx
 build_prefix: extra-x86_64
