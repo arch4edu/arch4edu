@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspRobustTTests
-_pkgver=0.18.3
+_pkgver=0.19.0
 pkgname=r-${_pkgname,,}
-pkgver=0.18.3
+pkgver=0.19.0
 pkgrel=1
 pkgdesc="A robust T-Test module for JASP"
 arch=('any')
@@ -16,7 +16,7 @@ depends=(
   r-jaspgraphs
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('cb16d0209b040bca672165dae6a3714568aa24898d3fd888c026ec42acc1016c')
+sha256sums=('76691c5651dca7b1ab02cccd0ad83bcd8c94e52df174abe1e89c51903746d038')
 
 
 build() {
