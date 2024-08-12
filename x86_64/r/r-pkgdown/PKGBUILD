@@ -2,10 +2,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=pkgdown
-_pkgver=2.0.9
+_pkgver=2.1.0
 pkgname=r-${_pkgname,,}
-pkgver=2.0.9
-pkgrel=1
+pkgver=2.1.0
+pkgrel=4
 pkgdesc='Make Static HTML Documentation for a Package'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,11 +18,11 @@ depends=(
   r-desc
   r-digest
   r-downlit
+  r-fontawesome
   r-fs
-  r-httr
+  r-httr2
   r-jsonlite
-  r-magrittr
-  r-memoise
+  r-openssl
   r-purrr
   r-ragg
   r-rlang
@@ -37,13 +37,16 @@ optdepends=(
   r-covr
   r-diffviewer
   r-evaluate
+  r-gert
+  r-gt
   r-htmltools
   r-htmlwidgets
   r-knitr
   r-lifecycle
+  r-magick
   r-methods
-  r-openssl
   r-pkgload
+  r-quarto
   r-rsconnect
   r-rstudioapi
   r-rticles
@@ -52,7 +55,7 @@ optdepends=(
   r-tools
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6e542216c03b5286cb9901175d1a7937a664db2572bc28bb51e9000269fcdda0')
+sha256sums=('c4d1df3b738d66e60db71e57c01c86c46f2fe58f972c9e2403c07a1436279fb4')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
