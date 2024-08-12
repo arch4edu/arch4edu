@@ -8,11 +8,11 @@ depends:
   - x86_64/r/r-desc
   - x86_64/r/r-digest
   - x86_64/r/r-downlit
+  - x86_64/r/r-fontawesome
   - x86_64/r/r-fs
-  - x86_64/r/r-httr
+  - x86_64/r/r-httr2
   - x86_64/r/r-jsonlite
-  - x86_64/r/r-magrittr
-  - x86_64/r/r-memoise
+  - x86_64/r/r-openssl
   - x86_64/r/r-purrr
   - x86_64/r/r-ragg
   - x86_64/r/r-rlang
