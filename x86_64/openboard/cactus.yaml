@@ -1,6 +1,8 @@
 nvchecker:
   - source: aur
     aur:
+  - source: archpkg
+    archpkg: poppler
 depends:
   - x86_64/qt5-webkit
 build_prefix: extra-x86_64
