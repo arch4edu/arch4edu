@@ -2,25 +2,23 @@
 
 pkgname='python-ibm-cloud-sdk-core'
 _name='ibm-cloud-sdk-core'
-pkgver=3.20.3
+pkgver=3.20.6
 pkgrel=2
 pkgdesc="Core python functionality required by the IBM Cloud OpenAPI SDK Generator"
 url="https://github.com/IBM/python-sdk-core"
 depends=('python-requests' 'python-dateutil' 'python-pyjwt')
-makedepends=('python-setuptools')
+makedepends=(python-build python-installer python-wheel python-setuptools)
 license=('Apache-2.0')
 arch=('any')
 source=("https://github.com/IBM/python-sdk-core/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('2132574a94c0b2022244fe1194ff3e917ad527703dba4d7bf9ae06942a45b61e')
+sha256sums=('72d8d2b6ca23fd365007d292974891b38637d1ffdc0168fbb55581ff2ba8acd9')
 
 build() {
   cd "python-sdk-core-$pkgver"
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "python-sdk-core-$pkgver"
-  python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
-  rm -rd "${pkgdir}/usr/lib/python3.12/site-packages/test"
-  rm -rd "${pkgdir}/usr/lib/python3.12/site-packages/test_integration"
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
