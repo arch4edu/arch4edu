@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-broom
+  - x86_64/r/r-cowplot
+  - x86_64/r/r-deriv
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-microbenchmark
+  - x86_64/r/r-modelr
+  - x86_64/r/r-rlang
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
