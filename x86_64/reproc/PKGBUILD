@@ -1,0 +1,40 @@
+# Maintainer: Javier Tia <javier dot tia at gmail dot com>
+# Contributor: Daan De Meyer <daan.j.demeyer@gmail.com>
+
+pkgname=reproc
+pkgver=14.2.5
+pkgrel=2
+pkgdesc='Cross-platform library that simplifies working with external CLI applications from C and C++'
+arch=('x86_64')
+url='https://github.com/DaanDeMeyer/reproc'
+license=('MIT')
+depends=('gcc-libs' 'glibc')
+makedepends=('cmake')
+source=("${url}/archive/v${pkgver}.tar.gz")
+sha256sums=('69467be0cfc80734b821c54ada263c8f1439f964314063f76b7cf256c3dc7ee8')
+
+build() {
+  cmake \
+    -S "${pkgname}-${pkgver}" \
+    -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DBUILD_SHARED_LIBS=ON \
+    -DREPROC++=ON \
+    -DREPROC_TEST=ON \
+    ../
+  cmake --build build
+}
+
+check() {
+  cmake --build build --target test
+}
+
+package() {
+  DESTDIR="${pkgdir}" cmake --install build
+  install -D --mode=644 "${srcdir}/${pkgname}-${pkgver}"/LICENSE \
+    "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE
+}
+
+# vim:set ts=2 sw=2 et:
