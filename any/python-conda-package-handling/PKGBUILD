@@ -2,38 +2,41 @@
 # Co-Maintainer: Ke Liu <specter119@gmail.com>
 
 pkgname=python-conda-package-handling
-_name=${pkgname#python-}
-pkgver=1.8.1
+pkgver=2.3.0
+_srcname="conda-package-handling-${pkgver}"
 pkgrel=3
 pkgdesc="Create and extract conda package of various formats"
 arch=('any')
 url="https://github.com/conda/conda-package-handling"
-license=('BSD')
+license=('BSD-3-Clause')
 depends=(
-  'python'
-  'python-six'
-  'python-tqdm'
-  'libarchive'
-  'python-libarchive-c'
+  python
+  python-conda-package-streaming
 )
 makedepends=(
-  'python-setuptools'
-  'cython'
+  python-build
+  python-installer
+  python-setuptools
+  cython
 )
 options=(!emptydirs)
 install=
-source=($_name-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz)
-sha512sums=('97e74d39ccc7dc1cd38c71c874a1fbf8ea49ac14d5628e5114748578b48d602a9a9d9af6f566857823e00767c96c66d6960c7748322645c37ef0d02e43250201')
+source=(
+  "${_srcname}.tar.gz::$url/archive/$pkgver.tar.gz"
+)
+sha512sums=(
+  'f4e16c1e8a33fe92c70fd48e42d77247fd705eaea1ee8a9e95c52bdcf942a5334bb0b4f3f6492fd0e5defd3f724854b353999350b30bc507d77cc611af6f4c41'
+)
 
 build() {
-  cd "$srcdir/${_name}-$pkgver"
+  cd "$srcdir/${_srcname}"
   sed -i 's/archive_and_deps/archive/' setup.py
   python setup.py clean --all
   python setup.py build
 }
 
 package() {
-  cd "$srcdir/${_name}-$pkgver"
+  cd "$srcdir/${_srcname}"
   python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
   install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
 }
