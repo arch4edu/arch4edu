@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=recipes
-_pkgver=1.0.10
+_pkgver=1.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Preprocessing and Feature Engineering Steps for Modeling"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,7 +16,6 @@ depends=(
   r-cli
   r-clock
   r-dplyr
-  r-ellipsis
   r-generics
   r-glue
   r-gower
@@ -72,17 +71,9 @@ optdepends=(
   r-workflows
   r-xml2
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "$_pkgname-fix-tests.patch::https://github.com/tidymodels/recipes/pull/1295.patch")
-md5sums=('678b530e6c97ca93445dc99cf69fe7b5'
-         '7f2498feadaf09737476d7d0c9f70ee2')
-b2sums=('5f82026c0e7473ed8bb8bb132b96674dfe29d1e5fb15ecd6edaae43d62c3bef8a9cab9241dad4cf54546dbffcba32d5d10e67097520f908ea2777dde8d6fedf1'
-        '334c71fa1407e6762e98d5f643ac465318b9bb3374428dc2b813600eb46ad75ebf391b302a6b99e79ab64aa031859e477c717dc05a4060410a424a5235b4254a')
-
-prepare() {
-  # update snapshot tests
-  patch -Np1 -d "$_pkgname" < "$_pkgname-fix-tests.patch"
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('ee911057a93ba41dd3054d9ff2cb671c')
+b2sums=('8bb1d62416a810a0d04f77f73483abc1d0e04a257cfbf2886f431e8f170d2b27d9f0a4a59336bc5c8c5928853274a405189522ec8344dd9eb8481f3051d1c49e')
 
 build() {
   mkdir build
