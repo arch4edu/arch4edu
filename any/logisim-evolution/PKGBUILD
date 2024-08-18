@@ -9,19 +9,19 @@
 # Contributor: Renan Birck <renan.ee.ufsm at gmail.com>
 
 pkgname=logisim-evolution
-pkgver=3.8.0
+pkgver=3.9.0
 pkgrel=1
 pkgdesc='An educational tool for designing and simulating digital logic circuits'
 conflicts=("${pkgname}-git" "${pkgname}-bin")
 arch=('any')
 url="https://github.com/reds-heig/logisim-evolution"
 license=('GPL3')
-depends=('java-runtime>=16' 'hicolor-icon-theme')
-makedepends=('java-environment>=16')
+depends=('java-runtime>=21' 'hicolor-icon-theme')
+makedepends=('java-environment>=21')
 
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz"
         "${pkgname}.sh")
-sha256sums=('7a49558a490a0df886b3ea488f12e4ea887a2ec8c278872dca39b2bebfaed3ee'
+sha256sums=('def2aa2f76545c1580d473b7a7f9259507bb2d2aae91a8d30ec903550780ecfc'
             'd5975cc0025905ab8a8a451ce4362ba876bed88008d3a5b2c0a7f664a85da1ba')
 
 install=$pkgname.install
@@ -33,7 +33,8 @@ build() {
 
 prepare() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  sed -i 's/https/http/' "support/Flatpak/com.github.reds.LogisimEvolution.xml"
+  # Probably a one-off mistake, remove this line for the next release
+  sed -i 's/-dev//' "gradle.properties"
 }
 
 package() {
