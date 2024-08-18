@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=OpenMx
-_pkgver=2.21.11
+_pkgver=2.21.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Extended Structural Equation Modelling"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -46,8 +46,8 @@ optdepends=(
   r-umx
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('01c7dafc8a54ab6da5ff7ba5d0c0f14a')
-b2sums=('5ffb72ac38eeb578b09aa6a153c5cb2384d3242a3157ac37acb532cbc126536a09c967761ad160bb25e353fc28f7e86e63151df28f954a315f9a3ed6d1b1d73f')
+md5sums=('d0802ee9a9d1ecce02d0e2bd7c8a6948')
+b2sums=('cef22428cd9e87882aa463b2ede368365ce637a4e54a4142659a5f23697cc947898280370d1c610593cdad09947a1f779ccfa864fb95f7f8609151cee4cfca76')
 
 build() {
   mkdir build
