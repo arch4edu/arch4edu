@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=kernlab
-_pkgver=0.9-32
+_pkgver=0.9-33
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Kernel-Based Machine Learning Lab"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,8 +17,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('024ddb451bb525a61e5d17d43c52f400')
-b2sums=('ffe623badfe522182492dc5c8bc90872018a6c5d6744cc89e4ba7856c2e7981658788a4ba537d087cf9ef544192a3b2438c8eb51a0abff74e46266cbb6bb66ab')
+md5sums=('551766c2c79a6d722593fffaeed4ea17')
+b2sums=('b827b45f1fa649a6394997742ca241076f6190fe68962c4398e3bf13199813797012da1921ab81dada916c74382a124aa294919afbc53dc7fdfed22c54e3068f')
 
 build() {
   mkdir build
