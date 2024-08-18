@@ -4,7 +4,7 @@ pkgbase=python-dust-extinction
 _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=1.4.1
+pkgver=1.5
 pkgrel=1
 pkgdesc="Interstellar Dust Extinction Models"
 arch=('any')
@@ -20,9 +20,9 @@ makedepends=('python-setuptools-scm'
              'python-scipy'
              'graphviz')
 checkdepends=('python-pytest-astropy-header'
-              'python-pytest-doctestplus')   # astropy, scipy already in makedepends
+              'python-pytest-doctestplus')   # astropy, scipy already in makedepends; header in conftest.py
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('24c7fe40e6be8117933d70a00a64f566')
+md5sums=('d922f26772392161a559852f10241898')
 
 prepare() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -35,7 +35,7 @@ build() {
     python -m build --wheel --no-isolation
 
     msg "Building Docs"
-    PYTHONPATH="../build/lib" make -C docs html
+    PYTHONPATH="../build/lib" make SPHINXOPTS="-D disable_intersphinx=1" -C docs html
 }
 
 check() {
