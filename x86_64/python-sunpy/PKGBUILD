@@ -5,7 +5,7 @@ pkgbase=python-sunpy
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=6.0.0
+pkgver=6.0.1
 pkgrel=1
 pkgdesc="Python library for solar physics"
 arch=('i686' 'x86_64')
@@ -80,7 +80,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #        "http://data.sunpy.org/sunpy/v1/aiacalibim5.fits.gz"
 #        "http://data.sunpy.org/sunpy/v1/glg_cspec_n5_110607_v00.pha")
 ##       "http://netdrms01.nispdc.nso.edu/VSO/WSDL/VSOi_rpc_literal.wsdl")
-md5sums=('f560b2577cbb65da89c29a7db59187b5')
+md5sums=('175538b47485992f35a96323737b8bdd')
 #        'bde3bd7a691b38e2e4c4e1d17b143b24'
 #        '01efaf052d81efc32a92050a249aa557'
 #        'ead6d3ce4c183c471d76bf1bc3be44a3'
@@ -111,8 +111,8 @@ md5sums=('f560b2577cbb65da89c29a7db59187b5')
 #        '09e93384ceff4aecfef1ad4b0ca89290')
 
 get_pyinfo() {
-     [[ $1 == "site" ]] && python -c "import site; print(site.getsitepackages()[0])" || \
-             python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
+    [[ $1 == "site" ]] && python -c "import site; print(site.getsitepackages()[0])" || \
+        python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
 }
 
 #prepare() {
@@ -145,16 +145,20 @@ build() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
 #
 #    ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname}*egg-info \
-#        build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}-${pkgver}-py$(get_pyver .).egg-info
+#        build/lib.linux-${CARCH}-cpython-$(get_pyinfo)/${_pyname}-${pkgver}-py$(get_pyinfo .).egg-info
 ##   mkdir -p ${HOME}/.local/share/${_pyname}
 ##   ln -rs ${srcdir}/*.fit* ${HOME}/.local/share/${_pyname}
 ##   ln -rs ${srcdir}/*.txt ${HOME}/.local/share/${_pyname}
 ##   ln -rs ${srcdir}/*.pha ${HOME}/.local/share/${_pyname}
 ##   PYTHONPATH="build/lib.linux-${CARCH}-$(get_pyver)" pytest "build/lib.linux-${CARCH}-$(get_pyver)" -vv -l -ra --color=yes -o console_output_style=count #|| warning "Tests failed" -vv -l -ra --color=yes -o console_output_style=count --remote-data=any -p xdist -n 4
 #    # From NixOS, remove tests needs hvpy, spicepy
-#    PYTHONPATH="build/lib.linux-${CARCH}-cpython-$(get_pyver)" pytest -vv -l -ra --color=yes -o console_output_style=count "build/lib.linux-${CARCH}-cpython-$(get_pyver)" docs -Wdefault --remote-data -p xdist -n 4 \
-#        --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyver)/sunpy/net/tests/test_fido.py \
-#        --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyver)/sunpy/coordinates/tests/test_spice.py #\
+#    PYTHONPATH="build/lib.linux-${CARCH}-cpython-$(get_pyinfo)" pytest -vv -l -ra --color=yes -o console_output_style=count "build/lib.linux-${CARCH}-cpython-$(get_pyinfo)" docs -Wdefault --remote-data -p xdist -n 4 \
+#        --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyinfo)/sunpy/net/tests/test_fido.py \
+#        --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyinfo)/sunpy/coordinates/tests/test_spice.py \
+#        --deselect=build/lib.linux-x86_64-cpython-312/sunpy/net/hek2vso/tests/test_hek2vso.py::test_full_query \
+#        --deselect=build/lib.linux-x86_64-cpython-312/docs/whatsnew/5.0.rst::5.0.rst \
+#        --deselect=build/lib.linux-x86_64-cpython-312/docs/tutorial/acquiring_data/index.rst::index.rst \
+#        --deselect=docs/tutorial/acquiring_data/hek.rst::hek.rst
 #    #|| warning "Tests failed" -vv -l -ra --color=yes -o console_output_style=count
 #}
 
