@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=flexsurv
-_pkgver=2.3
+_pkgver=2.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -52,8 +52,8 @@ optdepends=(
   r-th.data
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3c075b4b560da1f6092d0311f44ad3c6')
-b2sums=('adee84ffe15d37bdbd6aeb7099f827711c6faa3832d387eff99355a27c99f49ef99824f22a7033883624bb974a74a7aafca61ca8704d79943b396d5353733a7d')
+md5sums=('b46668f4d46554e6dc90fd6a0bb54f7f')
+b2sums=('637ec54e4f0fbc249c9e355b59f86782a831a4d7603aa25af8ab460fca26a82f2b2efa45ebf34e85108901f419275a698aee6c22355f20012b8565c1ad8fb7b9')
 
 build() {
   mkdir build
