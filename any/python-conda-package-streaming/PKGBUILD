@@ -1,0 +1,55 @@
+# Maintainer: Brian Thompson <brianrobt@pm.me>
+
+pkgname='python-conda-package-streaming'
+pkgver='0.10.0'
+pkgrel=4
+pkgdesc='An efficient library to read from new and old format .conda and .tar.bz2 conda packages'
+_srcname="conda-package-streaming-${pkgver}"
+arch=('x86_64')
+url='https://github.com/conda/conda-package-streaming'
+license=('BSD-3-Clause')
+depends=(
+  'python'
+  'python-requests'
+  'python-zstandard'
+)
+makedepends=(
+  'python-build'
+  'python-installer'
+  'python-flit-core'
+  'python-setuptools'
+  'python-wheel'
+)
+checkdepends=(
+  'python-pytest'
+  'python-pytest-cov'
+  'python-pytest-mock'
+  'python-boto3'
+  'python-bottle'
+)
+source=(
+  "${_srcname}.tar.gz::https://github.com/conda/conda-package-streaming/archive/refs/tags/v${pkgver}.tar.gz"
+)
+sha512sums=(
+  'f4f1efb609a77a4c28e230e1c23b0ee65f682228643dc93bb4055edd3111e31f853f5af672bd551d09e219374589d110f349c3f4899c5f881cae25600ba0eceb'
+)
+
+build() {
+  cd "$srcdir/$_srcname"
+  python -m build --wheel --no-isolation
+}
+
+# TODO: Get unit tests working
+# check() {
+#   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+#   cd "$srcdir/$_srcname"
+#   python -m installer --destdir="test_dir" dist/*.whl
+#   export PYTHONPATH="$PWD/test_dir/$site_packages:$PYTHONPATH"
+#   pytest -vv
+# }
+
+package() {
+  cd "$srcdir/$_srcname"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
+}
