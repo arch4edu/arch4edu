@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname='python-jax'
-pkgver=0.4.30
+pkgver=0.4.31
 pkgrel=1
 pkgdesc='Composable transformations of Python+NumPy programs'
 arch=('any')
@@ -19,7 +19,7 @@ optdepends=(
 )
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 source=("jax-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jax-v${pkgver}.tar.gz")
-sha256sums=('55bec6a738d115c0cfd56be3a80a2c3e98cd8618ec4c9b63afa1880ee9f06180')
+sha256sums=('0d32a073f217a7412c57d531a526bf4fa5744c7f4f70694ecf00ca8114ee1dc9')
 
 build() {
     JAX_RELEASE=$pkgver python -m build -nw jax-jax-v$pkgver
