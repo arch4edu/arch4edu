@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xfun
-_pkgver=0.46
+_pkgver=0.47
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -40,8 +40,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1c29048028b875c0820035b5c2e61dcf')
-b2sums=('282ef0c6e72190c11f213d9795494d5677a3947e1fe99b6021a9187744ddabe22647831a20b14d18445797188594c1045236eb56fa84c13a38700382d8b2049a')
+md5sums=('b40291b526a6d4c991e8d224007f15cd')
+b2sums=('c7844aba58a8fa25ae66380707c26a11e2f39ed428ee479131010e50976e4cbc1c48201d6ec6946c18ea82c3a93e57666f81200622173bad26041b7111fcbeb1')
 
 build() {
   mkdir build
