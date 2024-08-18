@@ -7,7 +7,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=rmarkdown
-_pkgver=2.27
+_pkgver=2.28
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -54,8 +54,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8eba2269baef8019b571ec136c579f83')
-b2sums=('d140882cae4ded188615e6c21b77e763db61bb52e1617b2ec599d088b12dc1015e86f0a143a9796159722749ad3c5d88e5015f3a8661dacb38253f3bd1112f92')
+md5sums=('2489af7ed75bc241c8e17cc3ac28ea54')
+b2sums=('c29338e0e89fb51522aeb560b9ba01d3265ed93958fc4965a67929ee9e466248e50f0b42ba7f731acae034977e465a042bacd9cb61be2287a4e345e94ad20b6c')
 
 prepare() {
   # Skip a test that might fail depending on environment
