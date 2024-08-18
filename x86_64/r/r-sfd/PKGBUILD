@@ -1,0 +1,45 @@
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+
+_pkgname=sfd
+_pkgver=0.1.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Space-Filling Design Library"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
+depends=(
+  r-cli
+  r-rlang
+  r-tibble
+)
+checkdepends=(
+  r-testthat
+)
+optdepends=(
+  r-ggplot2
+  r-spelling
+  r-testthat
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('d78672808db82a9013f40bc11237cc3e')
+b2sums=('1529f497b400267ea73a9f49c0ac3cee45eab46c5fb5505f5ab10e81944774ae8dacccad44beebeec26328c86e9a4db90cc852284bf22d4fc8fd9c2f66fdca6a')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
+}
