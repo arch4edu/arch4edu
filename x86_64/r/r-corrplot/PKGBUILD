@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=corrplot
-_pkgver=0.92
+_pkgver=0.94
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=1
 pkgdesc="Visualization of a Correlation Matrix"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -23,8 +23,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('487452ee9efd5cfbf710e379321f42f8')
-b2sums=('d3b55562f7844e565400166847ceecf05cb4a5e23a4ff4c0994164bca494e5e1deb7f99327a6e0ef91d999df73fd7dce7948a27aa7ecbb77f480a19d6039131f')
+md5sums=('b5a6a0a312fd39a5e5f85025f538cad7')
+b2sums=('95b4d32c14497a755299d4fa8c285f14f600654455bf8247ce846a0395d8ce4eea452a4d2ca7b6ad1804bc3bf23b9e00f186d820756fa87d638e717c651976fd')
 
 build() {
   mkdir build
