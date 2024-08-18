@@ -3,7 +3,7 @@ _base=trame
 pkgname=python-${_base}
 pkgdesc="Framework to build applications in plain Python"
 pkgver=3.6.3
-pkgrel=1
+pkgrel=2
 arch=(any)
 url="https://github.com/Kitware/${_base}"
 license=(Apache-2.0)
@@ -32,6 +32,8 @@ check() {
 package() {
   cd ${_base}-${pkgver}
   PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
+  install -d ${pkgdir}/usr/share/doc/${pkgname}
+  mv examples "${pkgdir}/usr/share/doc/${pkgname}"
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
