@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=openssl
-_cranver=2.2.0
+_cranver=2.2.1
 pkgname=r-${_cranname,,}
 pkgdesc="Encryption, Signatures and Certificates Based on OpenSSLi"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -46,7 +46,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("838ad88fda197869881da7bed0d46208b842cf8a91526593c6dc364cc750e48af293dc91c4966482d740972672f7e03067f8d9298364f9625eccb6bddead3325")
+b2sums=("b453fdc17765493bad97fd46f21fc9efe53e334a122248251340c949fd03774760558f505d4176027d605b8c00df4522c55dccc35e9b80d1fc85b43aec70171c")
 
 build() {
     mkdir -p "${srcdir}/build/"
