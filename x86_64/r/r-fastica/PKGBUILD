@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fastICA
-_pkgver=1.2-4
+_pkgver=1.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="FastICA Algorithms to Perform ICA and Projection Pursuit"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,8 +15,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0cc1a6b1e7c27d7c410cdfb0f0cb9e5a')
-b2sums=('3a85ea80ab8cc44764996bb17b6f1a72e7671f9700b70f9152d2b69ee76181f00d27ea3d491a7d2ffd3ff65a73fe344a0da2a33785f6d7e5566deac459ce2d92')
+md5sums=('1b1d258097003be78917f9d8aa448fd6')
+b2sums=('d28d11120c239b738ad09ad8cf5cf0c7619800d960ea2c88b74b4b8af660f103f62624a299106108a98e2be73164232bf4b44f14d8e5d1489b524f79c0c13781')
 
 build() {
   mkdir build
