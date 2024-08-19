@@ -12,8 +12,8 @@
 # Contributor: Angel 'angvp' Velasquez <angvp[at]archlinux.com.ve>
 # Adapted to mkl by Simone Riva
 pkgname=python-numpy-mkl
-pkgver=2.0.1
-pkgrel=3
+pkgver=2.1.0
+pkgrel=1
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=(x86_64)
 license=(BSD-3-Clause)
@@ -24,7 +24,7 @@ depends=(python intel-oneapi-mkl)
 makedepends=(python-build python-installer meson-python python-setuptools cython gcc-fortran procps-ng)
 checkdepends=(python-pytest python-hypothesis)
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-sha512sums=('4f638c17b44317b0000000b729726a5a4e9519af11d254b0e2daf32c6ff0cfdd56723a9cbee67c9145088f429f1f0cce79240f968211c2fb5ac08378e86dccfe')
+sha512sums=('d0948aa8bb7406b91d79cdd1d5019632e00c60aefbbf5c0884dd91ec8dda6a5369538ab20ef6a201595eeba98bf3a19a407e58a3d4e4e2f412420e65400d7bdd')
 
 build() {
   source /opt/intel/oneapi/setvars.sh
