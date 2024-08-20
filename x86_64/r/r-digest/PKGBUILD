@@ -8,7 +8,7 @@
 # Contributor: Francois Garillot <francois[@]garillot.net>
 
 _pkgname=digest
-_pkgver=0.6.36
+_pkgver=0.6.37
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -31,8 +31,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c7cf622332bd8f3a5c967d05bc962598')
-b2sums=('c54ae640d8e1771cddd37d1c4b6a6b6322fc85c574a6359e85ad474ab79ceae654b3b93dd83fff7ad39c1c71da6f876a2c7f38f83009dce35d8327ac81cc1d29')
+md5sums=('f1772a9a1587e99f25f6d640b1a9e1fd')
+b2sums=('670b1f4366071d7dfa4c8bd427ab045e60520cf520a4f5936d9a183f5e5e83a9ae14f55c917224a8edc33d9e596d5163bdcba544bc0bb7e286629a47154d6490')
 
 prepare() {
   cd "$_pkgname/src"
