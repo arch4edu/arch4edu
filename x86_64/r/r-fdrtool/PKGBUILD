@@ -3,10 +3,10 @@
 # Contributor: Phil Schaf <flying-sheep@web.de>
 
 _pkgname=fdrtool
-_pkgver=1.2.17
+_pkgver=1.2.18
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=1
 pkgdesc="Estimation of (Local) False Discovery Rates and Higher Criticism"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,8 +15,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7e4ee6e67266b8828cc9d893a171545e')
-b2sums=('0ea74bed7a0feb8b712aafcdbdf9ca1a6fc9590896fd61a8531c8dfc18c921db34fa99abcb1047edf9c665d18d92ac7e1f47bc5a216926f51e5788dc7a3b7e53')
+md5sums=('abf828d9e46b2c7a512950635a1441a9')
+b2sums=('50ac969c0a1e8026132cb533e629360573311cbd510652fd583edbf60ba084823a61a31ac8871c8c76d70626d2305820a20e81701e7ed5bc0606fe9c770923a6')
 
 build() {
   mkdir build
