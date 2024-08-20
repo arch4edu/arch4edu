@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=RcppParallel
-_cranver=5.1.7
+_cranver=5.1.9
 pkgname=r-${_cranname,,}
 pkgdesc="Parallel Programming Tools for Rcpp"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -25,7 +25,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("3fc0b3ad01d1124c01f832e57bcafe984285a75203548edecc7aa9a33a6346b67f2351b60686fab43308694f26d67cd909ce5b9ec38e0e946c169b3af8aa5cae")
+b2sums=("bb926b01de896d8f78511444a57767aeef3ecd29bc1c8a59f4adfaf26e1e6a023389bd1bccded23d95df2962a6b48527dc119b35bd91bd3395a464a97873f506")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
