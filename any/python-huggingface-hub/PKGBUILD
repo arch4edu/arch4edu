@@ -3,12 +3,12 @@
 _pkgname=huggingface_hub
 pkgname=python-huggingface-hub
 pkgver=0.24.6
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='All the open source things related to the Hugging Face Hub'
 arch=('any')
 url='https://github.com/huggingface/huggingface_hub'
-license=('Apache')
+license=('Apache-2.0')
 depends=(
   python-aiohttp
   python-fastapi
@@ -19,7 +19,6 @@ depends=(
   python-pydantic
   python-requests
   python-tqdm
-  python-typing_extensions
   python-yaml
 )
 makedepends=(
@@ -29,7 +28,13 @@ makedepends=(
   python-wheel
 )
 optdepends=(
+  python-graphviz
+  python-hf-transfer
+  python-inquirerpy
+  python-minijinja
+  python-pydot
   python-pytorch
+  python-safetensors
   python-tensorflow
 )
 source=("${_pkgname}-${pkgver}.tar.gz::https://github.com/huggingface/huggingface_hub/archive/refs/tags/v${pkgver}.tar.gz")
