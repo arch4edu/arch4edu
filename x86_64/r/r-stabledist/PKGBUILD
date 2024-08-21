@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=stabledist
-_pkgver=0.7-1
+_pkgver=0.7-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=1
 pkgdesc="Stable Distribution Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,13 +15,14 @@ depends=(
 optdepends=(
   r-fbasics
   r-fmstable
+  r-libstable4u
   r-rmpfr
   r-runit
   r-sfsmisc
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0f6159d8f129e4c367a1adc5860079b0')
-b2sums=('90166fde731946283e688c632cc013e288bb2a0ab9b58e86cbf0445a0e77a174411fb9683f1c546839cc87e965a16f6880b7ea8642f825d5da084ef475820c83')
+md5sums=('15153e639dd4358143f069cceacef6d3')
+b2sums=('439c087a8d454d9bebb8a0a83ef60fba098ca828312f890fe921a5485a29c956fda6a51a1bbbd11319951ddb03e2eee070c0952925418578e58451af95f3e9c4')
 
 build() {
   mkdir build
