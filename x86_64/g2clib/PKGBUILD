@@ -1,17 +1,17 @@
 # Contributor: Graziano Giuliani
 # Maintainer : Austin Cross <austincross@gmail.com>
 pkgname=g2clib
-pkgver=1.7.0
-pkgrel=2
+pkgver=1.9.0
+pkgrel=1
 pkgdesc="GRIB2 encoder/decoder (C version)"
 url="https://github.com/NOAA-EMC/NCEPLIBS-g2c"
-license=("LGPL3")
+license=('LGPL-3.0-only')
 arch=('i686' 'x86_64')
 provides=(g2clib)
 depends=(cmake jasper libpng)
 options=('staticlibs')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/NOAA-EMC/NCEPLIBS-g2c/archive/refs/tags/v${pkgver}.tar.gz")
-md5sums=('8bfdce4e3494d6502b14d6abd599e8d8')
+md5sums=('2e5c82a6ff9c619db682d7115a57db62')
 
 build() {
   cmake -B build -S "NCEPLIBS-g2c-${pkgver}" \
