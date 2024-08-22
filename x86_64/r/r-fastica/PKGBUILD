@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fastICA
-_pkgver=1.2-5
+_pkgver=1.2-5.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,8 +15,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1b1d258097003be78917f9d8aa448fd6')
-b2sums=('d28d11120c239b738ad09ad8cf5cf0c7619800d960ea2c88b74b4b8af660f103f62624a299106108a98e2be73164232bf4b44f14d8e5d1489b524f79c0c13781')
+md5sums=('e060f2089436d51d53c7fbc8e480bb97')
+b2sums=('c98b44556c544d3e5f0357f54c9851cc4e01d4002d9b8d5eea5b584d0d9262a3a92a4163d938b6a5d1eaa1a57b9e74d9b1aa8d18eb158d9e7957b8217ddae67f')
 
 build() {
   mkdir build
