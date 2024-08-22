@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=broom.helpers
-_pkgver=1.15.0
+_pkgver=1.16.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,7 +24,6 @@ depends=(
 optdepends=(
   r-betareg
   r-biglm
-  r-biglmm
   r-brms
   r-broom.mixed
   r-cmprsk
@@ -69,8 +68,8 @@ optdepends=(
   r-vgam
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('19e5599a0d7734b4264d658e18f8f6d2')
-b2sums=('18ce303ac7a4906f772fcc32fcfe0aea1d9962129875c48ea46ffe476df514f543d24b72a928fef4114ec867b044cc856973aea32986ba589d1e3b6cd4914358')
+md5sums=('b723f96d34c9155ed7fc97b134608c99')
+b2sums=('83fd12afa572346dc2af0444f957a6c3d86d4d5649e8a1254723d233b378934d19734d6f71298e627301b91f8db6472a5e0741d88c2acd632a2543e578db87f7')
 
 build() {
   mkdir build
