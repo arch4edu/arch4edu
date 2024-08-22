@@ -2,15 +2,15 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_commit:=929d9dc65a5a62dc77486db6b52ae47cef6f7602} # 2024.7.3.r23
+: ${_commit:=2d111f2f346b974cf86dcd9de0738e81e017c07f} # 2024.8.2.r4
 
 : ${_install_path:=usr/lib}
 
 # basic info
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2024.7.3
-pkgrel=2
+pkgver=2024.8.2
+pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url='https://github.com/xiota/sourcetrail'
 license=('GPL-3.0-only')
