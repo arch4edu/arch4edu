@@ -1,6 +1,6 @@
 pkgname=python-lmfit
-pkgver=1.3.1
-pkgrel=2
+pkgver=1.3.2
+pkgrel=1
 pkgdesc="Non-Linear Least Squares Minimization, based on scipy.optimize"
 arch=(any)
 url=http:/lmfit.github.io/lmfit-py/
@@ -29,7 +29,7 @@ python-flaky
 python-coverage
 )
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/lmfit/lmfit-py/archive/${pkgver}.tar.gz")
-sha256sums=('2453b4f655a4a8c10292e0fb1a89c38d66dd65b330aa82e7690b2abbb7215925')
+sha256sums=('68f00e729112202c751d2adc0cdeddc91fc24a29844c625de3de0a7ea649b7ab')
 
 prepare() {
   cd lmfit-py-${pkgver}
