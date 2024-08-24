@@ -5,9 +5,9 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=RcppEigen
-_pkgver=0.3.4.0.1
+_pkgver=0.3.4.0.2
 pkgname=r-${_pkgname,,}
-pkgver=0.3.4.0.1
+pkgver=0.3.4.0.2
 pkgrel=1
 pkgdesc="'Rcpp' Integration for the 'Eigen' Templated Linear Algebra Library"
 arch=('x86_64')
@@ -24,7 +24,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('25ed48f148b50aaadd92752d73e3eefe00ab4ecd4ae5662ae91a9ff3f72a4e26')
+sha256sums=('ecad7ba2129fd48b7ebb825558d38492ed1f3a8934959e27fcd6688175e542bb')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
