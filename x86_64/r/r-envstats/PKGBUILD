@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=EnvStats
-_pkgver=2.8.1
+_pkgver=3.0.0
 pkgname=r-${_pkgname,,}
-pkgver=2.8.1
+pkgver=3.0.0
 pkgrel=1
 pkgdesc='Package for Environmental Statistics, Including US EPA Guidance'
 arch=('any')
@@ -24,7 +24,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('12952b9eaa64b7bdbaaa5c6b7acb3aa1028ddfa4e5de7ddfea54f900c452d6a6')
+sha256sums=('0413ec3d44b3251549a254b4afd76f520aaacd5374b463a5813e23e1fa8cd248')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
