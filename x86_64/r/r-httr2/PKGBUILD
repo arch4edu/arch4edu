@@ -1,7 +1,7 @@
 # Maintainer: Alexander Bocken <alexander@bocken.org>
 
 _cranname=httr2
-_cranver=1.0.1
+_cranver=1.0.3
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,7 +12,7 @@ license=(MIT)
 depends=('r>=3.4' 'r-cli>=3.0.0' 'r-curl>=5.1.0' 'r-glue' 'r-magrittr' 'r-openssl' 'r-r6' 'r-rappdirs' 'r-rlang>=1.1.0' 'r-vctrs>=0.6.3' 'r-withr')
 optdepends=('r-askpass' 'r-bench' 'r-clipr' 'r-covr' 'r-docopt' 'r-httpuv' 'r-jose' 'r-jsonlite' 'r-knitr' 'r-purrr' 'r-rmarkdown' 'r-testthat>=3.1.8' 'r-tibble' 'r-webfakes' 'r-xml2')
 source=(https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz)
-sha256sums=(33e92d830981b33cd5e55068b500c57dbfb72329c2fce54be3163c63b217f1b2)
+sha256sums=(4bef34bf878edf7aa972926a80e2fdd742fff8196301871ff82fc1597d2e4cc2)
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
