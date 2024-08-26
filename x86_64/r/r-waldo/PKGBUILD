@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=waldo
-_cranver=0.5.2
+_cranver=0.5.3
 pkgname=r-${_cranname,,}
 pkgdesc="Anything to ‘POSIXct’ or ‘Date’ Converter"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -16,7 +16,6 @@ depends=(
     "r"
     "r-cli"
     "r-diffobj>=0.3.4"
-    "r-fansi"
     "r-glue"
     "r-rematch2"
     "r-rlang>=1.0.0"
@@ -49,7 +48,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('ac0cddc9eadedbc94834bb72fbb5745c8d66fb425c75b2fb7ef103e0443b39c4c7efafca63a57053434305cf65b3926d674211c047a72bda7394e2d8644a08ec')
+b2sums=("b4d8afffd1847183c3afaaa84655a7368adad584a84b3f2e9f2e112604d87b4bf3293f2100990058fbbdc1e2125b444823dd137181221ad36a7b686f0cc32999")
 
 build() {
     mkdir -p "${srcdir}/build/"
