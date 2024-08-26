@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=RANN
-_pkgver=2.6.1
+_pkgver=2.6.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=1
 pkgdesc="Fast Nearest Neighbour Search (Wraps ANN Library) Using L2 Metric"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9f6b6a8150984b2ae7134d8b0218e35f')
-b2sums=('bb3bda1f861f3682a7ad7bfce13001e5f658dbb101dad356ae337fec6ab93cd846c4a1f97c03a2d1c085be47b19bd098691a6cc08cd0c36e8c40dce34c618087')
+md5sums=('d5a42d1f730a34f7298318996eae7c63')
+b2sums=('c71a5b041c6ee378e7452b3e63c308d768b6280f93a001387daad8bf14db2a78832b3114eabcc98d3278fccde2334c7f21403b2de2f2cf7986c305194f51e830')
 
 build() {
   mkdir build
