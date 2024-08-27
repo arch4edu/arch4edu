@@ -8,11 +8,20 @@ Type=Application
 StartupNotify=false
 StartupWMClass=Code
 Categories=TextEditor;Development;IDE;
-MimeType=text/plain;inode/directory;application/x-code-workspace;
+MimeType=application/x-code-workspace;
 Actions=new-empty-window;
 Keywords=vscode;
 
 [Desktop Action new-empty-window]
 Name=New Empty Window
+Name[de]=Neues leeres Fenster
+Name[es]=Nueva ventana vacía
+Name[fr]=Nouvelle fenêtre vide
+Name[it]=Nuova finestra vuota
+Name[ja]=新しい空のウィンドウ
+Name[ko]=새 빈 창
+Name[ru]=Новое пустое окно
+Name[zh_CN]=新建空窗口
+Name[zh_TW]=開新空視窗
 Exec=/usr/bin/code --new-window %F
 Icon=visual-studio-code
