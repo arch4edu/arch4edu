@@ -2,9 +2,9 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="7.0.12"
+pkgver="7.0.14"
 _basever="7.0"
-_basedist="focal"
+_basedist="jammy"
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
@@ -35,17 +35,19 @@ noextract=(
 	mongodb-org-server_${pkgver}_${CARCH}.deb
 	mongodb-org-mongos_${pkgver}_${CARCH}.deb
 )
+
 sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
-			'51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
-			'09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('08eb19e2af172cd586742e8059407e91b060abcd2f587d50bc2921b308d37f5a'
-                   '8e9ff0abd168c37c1c573bee17540cff0e93ce90776a64085cbe9f3ea0639d5e')
-sha256sums_aarch64=('be43aa5446cf6edb0ff55d01f5780e09489e65911ceb2a78bdaabb212b4199a9'
-                    '5c7e69af9c73094dc90cb736ffb959e35de2eaed8ed5585582096e122a572362')
+            '51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
+            '09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
+sha256sums_x86_64=('2a28d0dbe15fcfdaea92ad1fc428a270f44ba77a510957de95b771d450cb30ba'
+                   '9d4f6de2e70431f13656cc7aa9c1401314674ef6c2643921dcb30f0b420ffcae')
+sha256sums_aarch64=('fd9721b71d7a995b7d1cdd9c63fe668f5071f10b6f538a9aa4dc144d2e1dbccb'
+                    '7eb1ba8ed5063384234b1e8822ae6aecd24f826b31bd70f8b3c2cafa6eb7d9de')
+
 prepare() {
 	mkdir -p output
-	bsdtar -O -xf mongodb-org-server_${pkgver}_${CARCH}.deb data.tar.xz | bsdtar -C output -xJf - #server extracted
-	bsdtar -O -xf mongodb-org-mongos_${pkgver}_${CARCH}.deb data.tar.xz | bsdtar -C output -xJf - #mongos extracted
+	bsdtar -O -xf mongodb-org-server_${pkgver}_${CARCH}.deb data.tar.zst | bsdtar -C output -xJf - #server extracted
+	bsdtar -O -xf mongodb-org-mongos_${pkgver}_${CARCH}.deb data.tar.zst | bsdtar -C output -xJf - #mongos extracted
 
 	# Remove insecure RUNPATH '$ORIGIN/../lib' as reported by namcap
 	chrpath -d output/usr/bin/mongos
