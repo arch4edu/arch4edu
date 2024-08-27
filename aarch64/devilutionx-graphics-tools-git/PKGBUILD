@@ -1,8 +1,8 @@
 # Maintainer: robertfoster
 
 pkgname=devilutionx-graphics-tools-git
-pkgver=1
-pkgrel=3
+pkgver=1.2.0.r1.64c0629
+pkgrel=1
 pkgdesc="DevilutionX graphics format conversion tools (git version)"
 arch=('armv6h' 'armv7h' 'arm' 'aarch64' 'i686' 'x86_64')
 url="https://github.com/diasurgical/devilutionx-graphics-tools"
@@ -13,6 +13,11 @@ conflicts=("${pkgname%-git}")
 provides=("${pkgname%-git}")
 source=("${pkgname%-git}::git+${url}")
 sha256sums=('SKIP')
+
+pkgver() {
+  cd "${pkgbase%-git}"
+  printf "%s" "$(git describe --tags | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
+}
 
 build() {
   cd "${pkgname%-git}"
