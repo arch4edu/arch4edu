@@ -1,6 +1,6 @@
 # Maintainer: Gilbert Gilb's <gilbsgilbert@gmail.com>
 pkgname=riscv64-gnu-toolchain-elf-bin
-pkgver=2024.08.06
+pkgver=2024.08.28
 pkgrel=1
 pkgdesc="GNU toolchain for riscv64 ELF, including GCC."
 arch=('x86_64')
@@ -15,10 +15,10 @@ optdepends=()
 makedepends=()
 options=(!strip)
 source=(
-  "https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.08.06/riscv64-elf-ubuntu-22.04-gcc-nightly-2024.08.06-nightly.tar.gz"
+  "https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.08.28/riscv64-elf-ubuntu-22.04-gcc-nightly-2024.08.28-nightly.tar.gz"
 )
 sha512sums=(
-  "048627884871190f63ff070ab2a1538f82d2d8de8e7827d0a9818701525b505855244bd4df75b72cefbf49edc0b055cc988f7021dbbf1ff417a5876950d4cb49"
+  "c3bdb988b7eabe2e97bc348b032f4cab3f5d5cae79207cbd19f3c5407098f05352b6c8dd85b2a15be9fd3a0c6943e9a80fff80398f9cad88d46fb283c1f0fd93"
 )
 
 package() {
