@@ -1,9 +1,10 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgbase=python-sphinx-changelog
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=1
 pkgdesc="A changelog renderer for sphinx"
 arch=('any')
@@ -18,7 +19,7 @@ makedepends=('python-setuptools-scm'
 checkdepends=('python-nose')    # sphinx, towncrier already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
         "https://raw.githubusercontent.com/OpenAstronomy/sphinx-changelog/main/changelog/template.rst")
-md5sums=('f91356131c4b0aa5e6a135b01cd70811'
+md5sums=('983f1d809936e1319730216d73f7ad51'
          'SKIP')
 
 prepare() {
