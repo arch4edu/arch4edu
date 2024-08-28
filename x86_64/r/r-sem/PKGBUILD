@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=sem
-_pkgver=3.1-15
+_pkgver=3.1-16
 pkgname=r-${_pkgname,,}
-pkgver=3.1.15
-pkgrel=4
+pkgver=3.1.16
+pkgrel=1
 pkgdesc='Structural Equation Models'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -18,7 +18,7 @@ optdepends=(
   r-polycor
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ad023b00e6e8eb20d107039caf1008c4b05104c7c69709e59c66fbddbf381316')
+sha256sums=('a39f3ebf9dd7b08e3142ad1d1fcddfd79f7f260e08255e3d8b960e5ed085c94b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
