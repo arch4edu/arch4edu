@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=circular
-_pkgver=0.5-0
+_pkgver=0.5-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Circular Statistics"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('30ab87f09139540dec4dfdd933c5aff9')
-b2sums=('18c59f2ee190111e8aed21f1b95158c94eb2644bbe1cf343aa2a14c90f890090795434f57c875103c105698cb2eb0904f3be2719661598f0b4e184d7b99ebc67')
+md5sums=('f75fc34ace079f28f6ed1e5fec6f978f')
+b2sums=('c4999c4b9e090a6326fcb615e4fb0dc089aeaa2b29ca3e46cbfb1eebc01ab0de5e7cfcdb80011621e11f579e460323af05c0bccd026335f21499f52ed69fb491')
 
 build() {
   mkdir build
