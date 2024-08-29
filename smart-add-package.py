@@ -5,7 +5,6 @@ import logging
 import requests
 import shutil
 import subprocess
-import yaml
 from pathlib import Path
 
 def run(command, **kwargs):
