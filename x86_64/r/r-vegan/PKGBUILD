@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=vegan
-_pkgver=2.6-6.1
+_pkgver=2.6-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,8 +21,8 @@ optdepends=(
   r-markdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('acd593d013bb8f8e5ac057ec70d9cd4b')
-b2sums=('09be57a31c25619f37bc2a9b991962637dd0d206db0f2ca703226f3cc0f3c884a6c1589c31e6a646d34dd92cde4f4d7d4b8ebd56f208a1ba21a9db2f5c7de024')
+md5sums=('37242afddc710d26bd7934072c1e100a')
+b2sums=('4e8a4253bf32b1954351a3d4954d3a9f838a11e31e46a73d3c5742de1679aa4574a89cff502c282618248262a1e1954dd3c347436e1a5f0d68b25482b54dde30')
 
 build() {
   mkdir build
