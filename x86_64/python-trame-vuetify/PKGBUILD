@@ -4,9 +4,9 @@ _npm_base=vuetify
 _npm_font_base=@mdi/font
 pkgname=python-${_base}
 pkgdesc="Vuetify widgets for trame"
-pkgver=2.6.2
-_npm_pkgver=3.6.8
-_npm_font_pkgver=7.2.96
+pkgver=2.7.0
+_npm_pkgver=3.7.1
+_npm_font_pkgver=7.4.47
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
@@ -17,9 +17,9 @@ checkdepends=(python-pytest python-trame-server)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz
   https://registry.npmjs.org/${_npm_base}/-/${_npm_base}-${_npm_pkgver}.tgz
   https://registry.npmjs.org/${_npm_font_base}/-/${_npm_font_base:5:4}-${_npm_font_pkgver}.tgz)
-sha512sums=('eb08ca11fe6c728f02b7e4fc6c71d37dd878e4fae763e70cfd4ef2086c47a6e6b92b24a670028bc91fa4e59f959bcae9304b60b8dbf763c8fb02d0945902285b'
-            '8f4bf48937925518f664433d43c1f17a31f19b1ad02d84126a5847f3685f72b68e45a883a2a7f55d5d393773f91115e42a226325cfcb7f1140514bd84a57717a'
-            '7bffe59a49a91543192a198263dcdd8d17b8ccd5df6ce2099e7eb1bde1db695da44b0e5a27974b5d4c5c46dd46c5f8bb658a452d45a5906d8c1921408aa02eef')
+sha512sums=('57a0fa110221c9cc33d68e4971baff5df1d6848c23c12c602352d2cbc49425b0471f560937e6f846a63a8d26b625d2d3a15f28582eb3e4a689c42305e3271e4b'
+            '3755e57336e0786b7f3be25493bd903eba9c0da4485d4769b5472226a1b24ef67d71f3284a5116b3a4d93be74e39f5db2af9883053327188387604870e908f86'
+            'e3732d1a9779f3948dcc764f718a30bbff38573d9ada0df54ef3cc4e6f6e4e20925b36a1790c9251c4b2507ff8e9f3e7b8f416a1fdb2774a4606dcde7bf2105b')
 
 prepare() {
   sed -i 's/^include/#include/' ${_base}-${pkgver}/MANIFEST.in
