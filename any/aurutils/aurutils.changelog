@@ -1,3 +1,29 @@
+## 20
+
+* `aur-chroot`
+  + run `--status` if no modes are specified
+
+* `aur-sync`
+  + move git `orderFile` to `XDG_CONFIG_HOME/aurutils/view/orderfile` (#1167)
+
+* `aur-view`
+  + define missing `XDG_CONFIG_HOME` (#1177)
+
+* `perl`
+  + move `AUR::Repo` to `aur-repo-parse`
+  + move `AUR::Depends::get` to `aur-depends::solve`
+  + move `AUR::Depends::vercmp` to `AUR::Vercmp`
+
+## 19.9
+
+* `aur-repo`
+  + warn if a local repository is not configured in pacman.conf (instead of exiting)
+
+## 19.8
+
+* `aur-graph`
+  + fix for "add `-REVERSE`" in 19.6
+
 ## 19.7
 
 * `perl`
