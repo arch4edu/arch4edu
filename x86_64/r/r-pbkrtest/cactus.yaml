@@ -2,12 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-lme4
   - x86_64/r/r-broom
+  - x86_64/r/r-doby
   - x86_64/r/r-dplyr
-  - x86_64/r/r-magrittr
+  - x86_64/r/r-lme4
   - x86_64/r/r-numderiv
-  - x86_64/r/r-knitr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
