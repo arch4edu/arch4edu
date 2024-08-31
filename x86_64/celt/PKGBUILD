@@ -2,11 +2,11 @@
 
 pkgname=celt
 pkgver=0.11.3
-pkgrel=6
+pkgrel=7
 pkgdesc='Low-latency audio communication codec'
 arch=('x86_64')
 url='https://gitlab.xiph.org/xiph/celt/'
-license=('BSD')
+license=('BSD-2-Clause')
 depends=('libogg')
 source=("https://gitlab.xiph.org/xiph/celt/-/archive/v${pkgver}/celt-v${pkgver}.tar.bz2"
         '010-celt-fix-tandem-test.patch')
@@ -19,12 +19,18 @@ prepare() {
 }
 
 build() {
+    # fix for tandem-test
+    export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
+    
     cd "${pkgname}-v${pkgver}"
     ./configure --prefix='/usr' --enable-custom-modes
     make
 }
 
 check() {
+    # fix for tandem-test
+    export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
+    
     make -C "${pkgname}-v${pkgver}" check
 }
 
