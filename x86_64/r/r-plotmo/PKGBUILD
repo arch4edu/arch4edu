@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=plotmo
-_pkgver=3.6.3
+_pkgver=3.6.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Plot a Model's Residuals, Response, and Partial Dependence Plots"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -26,8 +26,8 @@ optdepends=(
   r-rpart.plot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('92a109886fbf544f525c22390171e30c')
-b2sums=('db9b095c4f2e5eb177bb3bcf9fdcdedc2d5422dbe230d8d1e6e5b18d632c399d137c25284dc34a76160ca271cbfb1480853b91abe00343f0e0736e82a01e348b')
+md5sums=('b81972271013a38144b292271edc312d')
+b2sums=('ceaebeb3853adb45831c12023c8bf0034d931870f97102f1898fdea848b312f01b66ec4e0f4406b01bafe94ec38b50d73e2cab04e2096402278910a48796fb72')
 
 build() {
   mkdir build
