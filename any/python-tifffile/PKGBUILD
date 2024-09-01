@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2024.8.28
+pkgver=2024.8.30
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -19,7 +19,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('a84056c02865d20090235816cddabc99a34493e870effcd119499548583f3204')
+sha256sums=('2c9508fe768962e30f87def61819183fb07692c258cb175b3c114828368485a4')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
