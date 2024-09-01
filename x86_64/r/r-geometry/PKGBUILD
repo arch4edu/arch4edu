@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=geometry
-_pkgver=0.4.7
+_pkgver=0.5.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Mesh Generation and Surface Tessellation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -32,8 +32,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3c072c129e57358977b9a59445206b36')
-b2sums=('6185f018755f36fca96b6b5de37420f142bd4e65e011b91c2e88c129c4a1bda0100ea8fe5b9b4aa02c3ba223afc71567f37d01676578342d81468b3eb34c0be1')
+md5sums=('8cbb74a9472e5c0b41bb19338300c979')
+b2sums=('0afad4554dd553be4bffacbc061c4eb7ac807dd2104da027ef76ec1e3e2cfc8be054765df1f97e2fefcb518a896d0ef020e02e7679972b01fcc5303fa73d57b3')
 
 prepare() {
   cd "$_pkgname/src"
