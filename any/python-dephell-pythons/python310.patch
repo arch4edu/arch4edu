@@ -1,0 +1,14 @@
+diff -upr dephell_pythons-0.1.15.orig/dephell_pythons/_constants.py dephell_pythons-0.1.15/dephell_pythons/_constants.py
+--- dephell_pythons-0.1.15.orig/dephell_pythons/_constants.py	2019-12-18 16:15:47.000000000 +0200
++++ dephell_pythons-0.1.15/dephell_pythons/_constants.py	2020-11-12 09:11:15.299174412 +0200
+@@ -6,8 +6,8 @@ import platform
+ IS_WINDOWS = (os.name == 'nt' or platform.system() == 'Windows')
+ 
+ PYTHONS_DEPRECATED = ('2.6', '2.7', '3.0', '3.1', '3.2', '3.3', '3.4')
+-PYTHONS_POPULAR = ('3.5', '3.6', '3.7')
+-PYTHONS_UNRELEASED = ('3.8', '4.0')
++PYTHONS_POPULAR = ('3.5', '3.6', '3.7', '3.8', '3.9', '3.10')
++PYTHONS_UNRELEASED = ('4.0',)
+ PYTHONS = PYTHONS_POPULAR + tuple(reversed(PYTHONS_DEPRECATED)) + PYTHONS_UNRELEASED
+ 
+ PYTHON_IMPLEMENTATIONS = (
