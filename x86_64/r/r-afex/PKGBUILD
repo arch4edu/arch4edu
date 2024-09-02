@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=afex
-_pkgver=1.3-1
+_pkgver=1.4-1
 pkgname=r-${_pkgname,,}
-pkgver=1.3.1
+pkgver=1.4.1
 pkgrel=1
 pkgdesc='Analysis of Factorial Experiments'
 arch=('any')
@@ -61,7 +61,7 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4a64fb7e86e3d081e576c0d744d1613f391656082962c5799cf3fc5e2ca631a8')
+sha256sums=('ba7a35d97170fcfd4101f30630ba9cfa52fdac5b277cb345db67248a4455289e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
