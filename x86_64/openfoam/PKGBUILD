@@ -9,7 +9,7 @@ pkgver=11.20240704
 _pkgver="${pkgver%.*}"
 _subver="${pkgver#*.}"
 [[ "$pkgver" = "$_subver" ]] && _subver="version-$pkgver"
-pkgrel=1
+pkgrel=2
 pkgdesc="The open source CFD toolbox (www.openfoam.org)"
 _distpkgbase=OpenFOAM
 _gitname=$_distpkgbase-$_pkgver
