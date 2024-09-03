@@ -2,7 +2,7 @@
 _base=tomli
 pkgname=pypy3-${_base}
 pkgver=2.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A lil' TOML parser"
 arch=(any)
 url="https://github.com/hukkin/${_base}"
