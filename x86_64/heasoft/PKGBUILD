@@ -1,8 +1,8 @@
 # Maintainer:  Yigit Dallilar <yigit.dallilar@gmail.com>
 
 pkgname=heasoft
-pkgver=6.33.2
-pkgrel=2
+pkgver=6.34
+pkgrel=1
 # _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
 _mod=''
 pkgdesc='NASA high energy astrophysics library'
@@ -19,7 +19,7 @@ source=("https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/h
 
 # You could use below to get offical md5
 # curl -s ${source}.md5  | awk '{print "md5sums=(", $1, ")"}'
-md5sums=('4994a46514c30ae3fadb3cff3068f055')
+md5sums=('0e73951dd285dfd401e918c4cefcad6f')
 
 install="$pkgname.install"
 
