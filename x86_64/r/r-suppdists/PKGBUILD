@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=SuppDists
-_pkgver=1.1-9.7
+_pkgver=1.1-9.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=1
 pkgdesc="Supplementary Distributions"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-rcppziggurat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2d385b616b980e5187cf5bd8efdbaa4a')
-b2sums=('1784969cb99caddddb81142efc401ce50db7be39074ed6b0179b2ef1f51d6d39d8362e96050cbaa37ab66ce2f1f14a06b39c4bdda279a58328688ad9fae96f2c')
+md5sums=('7204ad1a691b0db2d43ce7ded0d40f99')
+b2sums=('84558f78e3f69c01fac244cb4e728c13f85c5994d00032b53b43617447703a4d3469568ace392158c4671fa2b27c8492a6dc07ce69d175b5899671228ad7a202')
 
 build() {
   mkdir build
