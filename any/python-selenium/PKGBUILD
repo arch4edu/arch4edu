@@ -4,14 +4,16 @@
 # Contributor: Aaron DeVore <aaron.devore@gmail.com>
 
 pkgname=python-selenium
-_pkgname=${pkgname#python-}
-pkgver=4.22.0
+pkgver=4.24.0
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
-arch=(any)
+arch=(x86_64)
 url="https://github.com/SeleniumHQ/selenium"
 license=(Apache-2.0)
 depends=(
+  bzip2
+  gcc-libs
+  glibc
   python
   python-certifi
   python-trio
@@ -19,41 +21,48 @@ depends=(
   python-typing_extensions
   python-urllib3
   python-websocket-client
+  zlib
 )
 makedepends=(
   python-build
   python-installer
   python-setuptools
+  python-setuptools-rust
   python-wheel
 )
 checkdepends=(python-pytest)
-source=("$pkgname-$pkgver.tar.gz::$url/archive/selenium-$pkgver.tar.gz")
-sha256sums=('196c7080449c48a46fab64dce0fb0085f7c2276d359d49ef1fad51203c853152')
+options=(!lto)
+source=(
+  "$pkgname-$pkgver.tar.gz::$url/archive/selenium-$pkgver.tar.gz"
+  "fix-selenium-manager-build.patch"
+)
+sha256sums=(
+  '981015b21a120072c20f87f2a0bd8a677d65cf98464657cb0cf96094b1dd44a4'
+  'af031d7fd32bb4b8216d8b16957e2102b4f319ae22d94460636db90947d2d6ba'
+)
 
-_archive="$_pkgname-selenium-$pkgver/py"
+_archive="selenium-selenium-$pkgver"
 
 prepare() {
-  cd "$_archive"
+  cd "$srcdir/$_archive"
+  patch -Np1 -i "$srcdir/fix-selenium-manager-build.patch"
 
-  cp ../rb/lib/selenium/webdriver/atoms/* selenium/webdriver/remote
-  echo '{"frozen":{},"mutable":{}}' > \
-    selenium/webdriver/firefox/webdriver_prefs.json
+  cd "$srcdir/$_archive/rust"
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 build() {
-  cd "$_archive"
-
+  cd "$srcdir/$_archive/py"
+  export RUSTUP_TOOLCHAIN=stable
   python -m build --wheel --no-isolation
 }
 
 check() {
-  cd "$_archive"
-
+  cd "$srcdir/$_archive/py"
   pytest
 }
 
 package() {
-  cd "$_archive"
-
+  cd "$srcdir/$_archive/py"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }

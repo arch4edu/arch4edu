@@ -1,0 +1,12 @@
+diff --git a/py/setup.py b/py/setup.py
+index ba78a9a66c..fc7c6cc2fd 100755
+--- a/py/setup.py
++++ b/py/setup.py
+@@ -87,6 +87,7 @@ setup_args = {
+     'rust_extensions': [
+         RustExtension(
+             {"selenium-manager": "selenium.webdriver.common.selenium-manager"},
++            "../rust/Cargo.toml",
+             binding=Binding.Exec
+         )
+     ],
