@@ -1,6 +1,6 @@
 nvchecker:
   - source: aur
-    aur:
+    aur: pypy3-packaging
 depends:
   - any/pypy-pyparsing: pypy3-pyparsing
   - any/pypy-six: pypy3-six
