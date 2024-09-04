@@ -1,13 +1,105 @@
-cloudflare-warp (2023.3.470) unstable; urgency=medium
-  * Migrated package repository to new infrastructure
+cloudflare-warp (2024.6.497) unstable; urgency=medium
+  New Features
+  * The WARP client now supports operation on Ubuntu 24.04.
+  * Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, see https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol. This feature will be rolled out to customers in stages over approximately the next month.
+  * The Device Posture client certificate check has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = 123456.mycompany, where 123456 is the device serial number). Additional details can be found here:  https://developers.cloudflare.com/cloudflare-one/identity/devices/warp-client-checks/client-certificate/
+  * TCP MSS clamping is now used where necessary to meet the MTU requirements of the tunnel interface. This will be especially helpful in docker use cases.
 
- -- Logan Praneis <lpraneis@cloudflare.com> Tue, 13 Jun 2023 012:53:00 -0500
+  Warnings
+  * Ubuntu 16.04 and 18.04 are not supported by this version of the client.
+  * This is the last GA release that will be supporting older, deprecated warp-cli commands. There are two methods to identify these commands. One, when used in this release, the command will work but will also return a deprecation warning. And two, the deprecated commands do not appear in the output of `warp-cli -h`.
+
+  Known issues
+  * There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
+    * A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+    * Your account has Regional Services enabled.
+  * The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
+  * ZT Org name not visible in GUI when upgrading from previous GA while under mdm control.
+  * Sometimes the Icon will remain gray (disconnected state) while in dark mode.
+
+ -- Shrey Amin <samin@cloudflare.com>  Thu, 15 Aug 2024 12:01:00 -0400
+
+cloudflare-warp (2024.4.133) unstable; urgency=medium
+  * Linux client downloads will now contain version numbers in the file name to allow easy identification.
+  * Improved the re-connection logic to minimize impact to existing tunneled TCP sessions.
+  * Increased the data collected by warp-diag to improve debugging capabilities.
+
+  Known issues
+  * The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
+  * ZT Org name not visible in GUI when upgrading from previous GA while under mdm control.
+  * Sometimes the Icon will remain gray (disconnected state) while in dark mode.
+
+ -- Tochukwu Nkemdilim <tochukwu@cloudflare.com>  Thu, 11 Apr 2024 14:53:48 -0400
+
+cloudflare-warp (2024.2.62) unstable; urgency=medium
+  * Added support for the arm64 architecture.
+  * Added the ability for administrators to allow their end users to temporarily obtain access to local network resources in the event their home IP space overlaps with traffic normally routed through the WARP tunnel. Users on Linux interact with this feature via the warp-cli.
+  * Added the ability for administrators to specify multiple configurations in MDM files that users can toggle between. This allows users to more easily switch between production and test environments or for China users to switch between their override endpoints within the UI. Users on Linux interact with this feature via the warp-cli. Refer to the help text from "warp-cli mdm --help". GUI integration of this feature will be released in the future.
+  * Added the collection of firewall log information and other data to warp-diag to provide additional information for troubleshooting.
+  * Added support to run a DHCP server on the same machine as the client (useful in virtual machine scenarios).
+  * Added support for os_version_extra on Linux to enhance the OS device posture check.
+  * Fixed an issue with sleep notifications making the client more reactive to sleep/wake-up scenarios.
+  * Fixed an issue to ensure DEX tests only run when the client is connected.
+  * Fixed an issue where IPv6 being disabled at boot time was not detected, leading to errors when the client attempts to set IPv6 addresses.
+
+  Known issues
+  * The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
+  * ZT Org name not visible in GUI when upgrading from previous GA while under mdm control
+  * Sometimes the Icon will remain gray (disconnected state) while in dark
+
+ -- Keehun Nam <Keehun@cloudflare.com>  Wed, 14 Feb 2024 09:12:57 -0600
+
+cloudflare-warp (2023.9.301) unstable; urgency=medium
+  * Added initial implementation of Linux UI for Ubuntu with things like toggle switch, status, ability to switch vnets and better support for joining a Zero Trust organization
+  * Added new posture type: Client certificate
+  * Added support for IPv6 DEX Traceroute tests (previously only IPv4 addresses could be used)
+  * Improved reliability and efficiency in configurating split tunnel rules. Most "error petting the dog" errors should now be gone and organizations with large split tunnel configuration should see reliability improvements
+  * Fixed an issue with DEX traceroutes tests where not all hops were correctly reported
+  * Fixed an issue where DEX tests would not properly run immediately after a device came out of sleep
+  * Fixed an issue where DEX tests would execute simultaneously causing performance issues for accounts with a large number of tests configured
+  * Fixed an issue where DoH requests could take too long to timeout causes DNS reliability issues
+  * Fixed an issue where DNS could temporarily fail when DHCP updates were processed
+  * Fixed an issue on initial device registration that could sometimes cause it to fail and try again
+  * Fixed an issue where short DNS timeouts were causing issues with some captive portals (United in particular)
+  * Fixed an issue where managed network detection could fail when our firewall rules were not correctly removed under certain disconnect scenarios
+  * Fixed an issue with Managed Networks where if the managed endpoint overlapped with your exclude split tunnel configuration, the split tunnel would only be open for IP traffic destined to the same port as your managed TLS endpoint
+  * Fixed an issue where IPv6 traffic could be incorrectly sent down the tunnel in exclude mode
+  * Fixed an issue where root CA would not be installed if enabled by admin because we were missing ca-certificates dependency
+  * Fixed an issue where the client could be stuck on connecting
+
+  Known issues
+  * Not all UI features are in place yet, more will be coming in future releases
+  * ZT Org name not visible in GUI when upgrading from previous GA while under mdm control
+  * Sometimes the Icon will remain gray (disconnected state) while in dark
+
+ -- Naga Tripirineni <naga@cloudflare.com>  Fri, 29 Sep 2023 16:35:29 -0500
+
+cloudflare-warp (2023.7.40) unstable; urgency=medium
+  * Added support for "SWG without DNS Filtering" mode. All DNS functionality
+    from the WARP client is disabled while in this service mode
+  * Added support for distribution name and version to be used in OS Version device posture checks
+  * Improved performance of the client when in "Proxy Only" service mode
+  * Improved performance of domain-based split tunneling when the IP was already
+    split tunneled (seen frequently with Zoom domains and IPs being used)
+  * Modified warp-cli settings to show if the applied settings came from local (mdm)
+    or network (warp settings profile) policy to make debugging profile issues easier
+  * Fixed an issue that could result in increased latency when resolving queries
+  * Optimized the performance of DNS queries to prevent minor memory leaks
+  * Fixed an issue when service token information was removed from an mdm.xml file
+    the client would not prompt for user authentication as expected
+  * Fixed an issue where localhost DNS proxy could not be set properly in certain VPN and VM configuration
+  * Fixed an issue where the client would attempt to connect even when the "AUTO CONNECT" setting
+    was Disabled in WARP Settings or not specified either in an MDM file
+  * Fixed an issue where the client would not correctly detect and apply alternate network configuration between network changes
+
+ -- Logan Praneis <lpraneis@cloudflare.com>  Thu, 13 Jul 2023 08:55:29 -0500
 
 cloudflare-warp (2023.3.398) unstable; urgency=medium
   * Added support for millisecond timestamps for use in Digital Experience Monitoring
   * Fixed an issue with Root CA installation feature
 
   -- Jeff Hiner <jhiner@cloudflare.com> Thu, 7 Apr 2023 09:51:00 -0700
+
 
 cloudflare-warp (2023.3.258) unstable; urgency=medium
   * Improve timeouts with broken CNAME records that could result in very long load times for certain apps
@@ -31,6 +123,7 @@ cloudflare-warp (2023.3.258) unstable; urgency=medium
   * Modified initial connectivity check behavior to retry on errors
 
  -- Logan Praneis <lpraneis@cloudflare.com>  Wed, 22 Mar 2023 12:33:12 -0500
+
 
 cloudflare-warp (2023.1.133) unstable; urgency=medium
   * Fixed an issue where clients could lose IPv4 connectivity
