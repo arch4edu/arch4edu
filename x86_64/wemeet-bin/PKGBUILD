@@ -8,7 +8,7 @@ pkgver=3.19.2.400
 _pkgver_arm=3.19.1.401 # 两个版本有时候不一样
 _x86_md5=fb7464ffb18b94a06868265bed984007
 _arm_md5=206c30da5545dba38a29ccbc752dec94
-pkgrel=1
+pkgrel=2
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -97,9 +97,9 @@ package() {
     fi
     # copy Qt
     cp -r plugins resources "$pkgdir/usr/lib/$_pkgname"
-    cp -a lib/* "$pkgdir/usr/lib/$_pkgname"
+    cp -a lib/lib{Qt,icu}* "$pkgdir/usr/lib/$_pkgname"
 
-    find "$pkgdir/usr/lib/$_pkgname" -type f -name '*.so.*' | xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
+    find "$pkgdir/usr/lib/$_pkgname" -type f -name '*.so*' | xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
 
     install -dm755 "$pkgdir/opt/$_pkgname"
     cp -r bin "$pkgdir/opt/$_pkgname"
