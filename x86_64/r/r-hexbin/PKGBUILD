@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=hexbin
-_pkgver=1.28.3
+_pkgver=1.28.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Hexagonal Binning Routines"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -24,8 +24,8 @@ optdepends=(
   r-marray
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d0035d06e66b9229586590b03d258288')
-b2sums=('a0c72648bf35e32407dd5d09bb2a43d274e4984a0bfa10145829fd56b20e224ff56787e9712b1c727d6dd17fb6cabcb212b1dce633656983c0eb1222b16e4006')
+md5sums=('dd179358197dc4a2ecb18cf419391580')
+b2sums=('ee694ad192881b608e88a0d18f6163ede083aaacae3c35859f6eb771f9afc42140d099cf59a522ec0706e23089fd61e28c158d43fd764f521b7d72f51191ea2d')
 
 build() {
   mkdir build
