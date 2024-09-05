@@ -5,10 +5,10 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=caTools
-_pkgver=1.18.2
+_pkgver=1.18.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=1
 pkgdesc="Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,8 +17,8 @@ depends=(
   r-bitops
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c95edd3f71a8fe1ad2cfd0ae274ad9ab')
-b2sums=('08f22212ac7ee006d6ea39f7f8fb03ce3d8293f7a36800cb3c65ba577638495dfd2bf0e6a9a6dd7f19b873c42a6a8bb1f2b22c3ae07e4428c288278aebdf62e5')
+md5sums=('cf1ba4c24b336db45c98084ad282a25f')
+b2sums=('ff6a66c48b11d51dee0877bf49f577b3724c029fc336bbf08d836dc6ebf1522f458890d7da1e688b66505020f33d138ff242c400bd9a2e827f9aa668dc1cdb89')
 
 build() {
   mkdir build
