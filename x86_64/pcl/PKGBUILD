@@ -10,37 +10,43 @@
 
 pkgname=pcl
 pkgver=1.14.1
-pkgrel=2
+pkgrel=4
 pkgdesc="A standalone, large scale, open project for 2D/3D image and point cloud processing"
 arch=('x86_64' 'i686')
 url='https://www.pointclouds.org'
-license=('BSD')
-depends=('boost' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libpng' 'libusb')
+license=("BSD-3-Clause")
+depends=('boost' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libpng' 'libusb' 'suitesparse' 'zlib')
 optdepends=('cuda' 'openmp' 'openni2' 'qhull')
-makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
+makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fast_float' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
              'netcdf' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp' 'verdict')
 checkdepends=('gtest')
-source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('5dc5e09509644f703de9a3fb76d99ab2cc67ef53eaf5637db2c6c8b933b28af6')
+source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz"
+        "https://github.com/PointCloudLibrary/pcl/pull/6053.patch")
+sha256sums=('5dc5e09509644f703de9a3fb76d99ab2cc67ef53eaf5637db2c6c8b933b28af6'
+            '38eb905d3dc362e0986235751f6c2686618efc6815217be465d6572adb373138')
+
+prepare() {
+  cd "${srcdir}/pcl-pcl-${pkgver}"
+  patch -Np1 < ${srcdir}/6053.patch
+}
 
 build() {
   cmake -B build -S "${srcdir}/pcl-pcl-${pkgver}" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_CXX_STANDARD=17 \
-    -DCMAKE_CUDA_STANDARD=17 \
-    -DCMAKE_INSTALL_PREFIX='/usr' \
-    -DWITH_QT='QT5' \
-    -DBUILD_surface_on_nurbs=ON \
-    -DBUILD_outofcore=OFF \
-    -DBUILD_simulation=ON \
-    -DBUILD_global_tests=ON \
-    -Wno-dev
+        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CUDA_STANDARD=17 \
+        -DBUILD_outofcore=OFF \
+        -DBUILD_simulation=ON \
+        -DBUILD_surface_on_nurbs=ON -DUSE_UMFPACK=ON \
+        -DBUILD_global_tests=ON \
+        -DWITH_QT='QT5' \
+        -Wno-dev
   cmake --build build
 }
 
 check() {
-  cd build/test
-  ctest --output-on-failure
+  ctest --test-dir build/test --output-on-failure
 }
 
 package() {
