@@ -7,14 +7,14 @@
 
 _pkgname=instantclient-basic
 pkgname=oracle-${_pkgname}
-pkgver=21.13.0.0.0
-_pkgver_vendor_suffix=dbru
-_urlver=2113000
-_unzippath=instantclient_21_13
+pkgver=23.4.0.24.05
+_pkgver_vendor_suffix=
+_urlver=2340000
+_unzippath=instantclient_23_4
 pkgrel=1
 pkgdesc="Light replacement for the Oracle client (files to run OCI, OCCI and JDBC-OCI programs)"
 arch=('x86_64')
-url="http://www.oracle.com/technetwork/database/features/instant-client/"
+url="https://www.oracle.com/at/database/technologies/instant-client/downloads.html"
 license=('custom:OTN')
 depends=('gcc-libs' 'libaio')
 replaces=('instantclient-basic' 'instantclient-basiclite')
@@ -26,10 +26,10 @@ source=(LICENSE
         "https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
 md5sums=('2d62e22e4f2d7e6d220fafde0f692a7d'
          '784005aa31cb56bb2303179d98fccd8e'
-         'c49f0c45bbb4fb03f55a899de9e29cf8')
+         '5c8b704dc4c2991f8116672cebed8b0b')
 sha256sums=('f904a30b07ddf7806a33620f93b94c3d315154d26a371ece48695bb3555064a2'
             '36b5ab97950f1667403dd9b59c3cad25d8f9e457702feaece835d1bff7c971c9'
-            '7511dd416ac99240429aee5b3ed53c0b1e37cde32ee58c705c9c8df52f89f2c8')
+            '63835bf433b6b3e212082dfbd55662830d2104d71cc7e750cecda039726fe956')
 
 package() {
 	cd "$srcdir/${_unzippath}/"
