@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/pypy3-packaging
+  - any/pypy-packaging: pypy3-packaging
   - any/pypy3-pep517
 makedepends:
   - any/pypy-setuptools: pypy3-setuptools
