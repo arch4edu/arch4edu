@@ -1,11 +1,12 @@
-# Maintainer: Daniel Maslowski <info@orangecms.org>
-# Co-Maintainer: Ke Liu <specter119@gmail.com>
+# Maintainer: Brian Thompson <brianrobt@pm.me>
+# Contributor: Daniel Maslowski <info@orangecms.org>
+# Contributor: Ke Liu <specter119@gmail.com>
 
 pkgname=python-libmamba
-pkgver=1.5.8
-_srcver=2024.03.25
+pkgver=1.5.9
+_srcver=2024.08.31
 _name=mamba-$_srcver
-pkgrel=3
+pkgrel=1
 pkgdesc="The fast cross-platform package manager"
 arch=('x86_64')
 url="https://github.com/mamba-org/mamba"
@@ -42,7 +43,7 @@ provides=('libmamba')
 source=(
   $_name-$pkgver.tar.gz::$url/archive/refs/tags/$_srcver.tar.gz
 )
-sha512sums=('93263defae3a5ef0cd4ea16b1a9ac2bcdc63e0091043d6975fb2d4d9b5430eed224a33dcf4336e7967646b80204ce17f1190be31c2ca2b6725d424ee5f5c13bc')
+sha512sums=('7b3b8891acae69bd7fa62b304c8d91fcb02bc6c653e7d25d4cc73b97fa1ed4bf85aa21a71dbb5fd608b233eb9647665f5bd0c956fc430e769b151a7e424cedd2')
 
 prepare() {
   cd $srcdir/${_name}
