@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=ggrepel
-_pkgver=0.9.5
+_pkgver=0.9.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Automatically Position Non-Overlapping Text Labels with 'ggplot2'"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -41,8 +41,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('07e2c7cac82ce345ea35ca0522c72ea9')
-b2sums=('e99c226e6a269202ccd3ce78a12cf867afa435d7a1afa724e486492aaa74104011a6a7081c3f8ec8284de073d69b01e304318c512075be095ef47c994757d791')
+md5sums=('d84bbecfeb624fe1ec70f11712596b13')
+b2sums=('1dfc8e152a02e55fe176996707cf08fa063921346179d7a42ed0d3f370f3f941af8478a9bace48f29a34bd87bd67584a3831eb5cdd4c1aab0e8c2d0d8fbddb3f')
 
 build() {
   mkdir build
