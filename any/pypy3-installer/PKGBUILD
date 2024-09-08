@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 _base=installer
 pkgname=pypy3-${_base}
-pkgver=0.4.0
+pkgver=0.5.0
 pkgrel=1
 pkgdesc="A low-level library for installing from a Python wheel distribution"
 arch=(any)
@@ -10,7 +10,7 @@ license=(MIT)
 depends=(pypy3)
 makedepends=(pypy3-setuptools python-dephell)
 source=(${_base}-${pkgver}.tar.gz::https://github.com/pypa/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('13537c479bc8ead8f8b45c8e5c5182e8b1b32c2889df8015be7f517f390a9efbea6fa167e0886dfade6621a8a2d822bfd662ee0238d3d86689619ca4d5483b26')
+sha512sums=('8731bbf8a51b1094dc87f84575eec07a650988bdeddf205d04cf80a5088eac0d8b2927022864f4011a9562fcaae9f511747e5672f94ec3cce1dccdfa833c4fce')
 
 prepare() {
   # https://gitlab.archlinux.org/archlinux/packaging/packages/python-installer/-/blob/0.2.3-2/PKGBUILD#L21
