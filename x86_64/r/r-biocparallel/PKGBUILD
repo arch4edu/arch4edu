@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _bcname=BiocParallel
-_bcver=1.36.0
+_bcver=1.38.0
 pkgname=r-${_bcname,,}
 pkgdesc="Bioconductor facilities for parallel evaluation"
 url="https://bioconductor.org/packages/release/bioc/html/${_bcname}.html"
@@ -41,7 +41,7 @@ optdepends=(
 )
 
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_bcname}_${_bcver}.tar.gz")
-b2sums=('40c18ff52c75ff0626b3d6a7ed39a495c907b76d10833a7f4b84c3f6d0a0a7eee507741c609fd9be8d5c3e4c6dc92008a96c90184884840786462b8f2e60bb49')
+b2sums=("1a1d2dc9a8769156e16001ff3a353d007a3c0b6e0e4d5c64424ff7920735611dcafbb9f4fa1d7014655ca007afbf9742d7b0d90cce483d4b309b8e3b7aca6a3c")
 
 build() {
   R CMD INSTALL ${_bcname}_${_bcver}.tar.gz -l "${srcdir}"
