@@ -3,9 +3,10 @@ nvchecker:
     aur:
 depends:
   - any/pypy-packaging: pypy3-packaging
-  - any/pypy3-pep517
+  - any/pypy3-pyproject-hooks
 makedepends:
-  - any/pypy3-setuptools70
+  - any/pypy3-flit-core
+  - any/pypy3-installer
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
