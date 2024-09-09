@@ -2,7 +2,7 @@
 # Contributor: Frederik “Freso” S. Olesen <archlinux@freso.dk>
 _base=CalcMySky
 pkgname=${_base,,}
-pkgver=0.3.2
+pkgver=0.3.3
 pkgrel=1
 pkgdesc="Simulator of light scattering by planetary atmospheres"
 arch=(x86_64)
@@ -11,7 +11,7 @@ license=(GPL-3.0-or-later)
 depends=(eigen glm qt6-base)
 makedepends=(cmake ninja)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('a7f69b25c54be86ce179a118ca8a6d606e2c0fe7dc238b46620237e311dc5198a2aeb70e4885cc6553a26f7c38b78b5a338115a4606161fa249a806e891f88b6')
+sha512sums=('186281ad2aafac7006117cfb65d91c8053ab3caa9d4f67e5463471538bae40fd8fcc954c3fe9b9d2ca7bba4e6a1fdf8de33980469930cc23b1c21ee4b333917e')
 
 build() {
   cmake \
