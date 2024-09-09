@@ -1,7 +1,7 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=sf
-_cranver=1.0-16
+_cranver=1.0-17
 pkgname=r-${_cranname,,}
 pkgdesc="Simple Features for R"
 url="https://cran.r-project.org/package=sf"
@@ -18,7 +18,6 @@ depends=(
     "r-classint>=0.4.1"
     "r-dbi>=0.8"
     "r-magrittr"
-    "r-rcpp>=0.12.18"
     "r-s2>=1.1.0"
     "r-units>=0.7.0"
     "sqlite"
@@ -80,7 +79,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("07601b1235b5cc2c7f9fcb0785d8388a2bc6acf1abc95de05a31d6c59b14863d28579936a06a6b80ccda1ca8bcbf90b10541e52c6d087f094a69821fdf4f1333")
+b2sums=("5deb617f5e4ecdc75c360ccdfce583f1154f8476e32844472d8e256e47a98a922f07b167190b65422afd30364c8fdae836486f111b8b024f4c299ff702527488")
 
 build() {
     mkdir -p "${srcdir}/build/"
