@@ -1,8 +1,10 @@
 nvchecker:
   - source: aur
     aur: pypy3-packaging
-depends:
-  - any/pypy-pyparsing: pypy3-pyparsing
+makedepends:
+  - any/pypy3-build
+  - any/pypy3-flit-core
+  - any/pypy3-installer
 makedepends:
   - any/pypy3-setuptools70
 build_prefix: extra-x86_64
