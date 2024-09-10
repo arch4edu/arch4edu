@@ -5,8 +5,6 @@ makedepends:
   - any/pypy3-build
   - any/pypy3-flit-core
   - any/pypy3-installer
-makedepends:
-  - any/pypy3-setuptools70
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
