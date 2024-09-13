@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=Deriv
-_pkgver=4.1.3
+_pkgver=4.1.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=1
 pkgdesc="Symbolic Differentiation"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e4405e9b07cda190696378cf7fb77e71')
-b2sums=('bf04f06718243431f2436cca424de285ead05051f2f8ca6a586b4f5ec1e946f630172cdd4bcfd88da6eedb455e52a5649270fd2a5818dbc87e7d056fb4c40aa5')
+md5sums=('dcea8e11813976cd37a32a7b91781f52')
+b2sums=('f34ae9b154d505d3d63dcb0516e341663ef3b029a5181c52b5421f1f14216e72853c94582aa0d67a46b46b4752b34a36713d1a53aa78c98942676e85145135b6')
 
 build() {
   mkdir build
