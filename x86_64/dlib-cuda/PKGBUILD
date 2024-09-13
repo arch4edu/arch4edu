@@ -3,8 +3,8 @@
 # Contributor: perlawk
 
 pkgname=dlib-cuda
-pkgver=19.24.3
-pkgrel=2
+pkgver=19.24.6
+pkgrel=1
 pkgdesc="A general purpose cross-platform C++ library designed using contract programming and modern C++ techniques"
 arch=('x86_64')
 url="http://dlib.net"
@@ -25,7 +25,7 @@ optdepends=('giflib: for GIF support'
             'sqlite: for sqlite support')
 makedepends=('cmake' 'ninja')
 source=("https://codeload.github.com/davisking/dlib/tar.gz/refs/tags/v${pkgver}")
-sha256sums=('4b1f28e76020775334e67cc348ceb26a4f5161df6659848be0d3b300406400a3')
+sha256sums=('22513c353ec9c153300c394050c96ca9d088e02966ac0f639e989e50318c82d6')
 
 build() {
     cd "${srcdir}"
