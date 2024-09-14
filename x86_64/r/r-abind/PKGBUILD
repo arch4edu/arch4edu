@@ -5,20 +5,20 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=abind
-_pkgver=1.4-5
+_pkgver=1.4-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=1
 pkgdesc="Combine Multidimensional Arrays"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('LGPL-2.0-or-later')
+license=('MIT')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('136f981e1c4f618b64a87faaa7797c97')
-b2sums=('64228df7f46f0fce03d8c33c8655bb7d239a5d25db5c93cfe56942a2db8917698a5b4fb6e6a8a40c0f6bec9ed2d8a5923473a5813d6a9d8f5901a2f8fdcb260f')
+md5sums=('7a440111cd1e24356d558ac55a65dc98')
+b2sums=('254a06847c110c6cdeb27eb62f02f32a72e273e1299aba9a1837119b493631d221e2453ab152549ec063d191f9a3fda0b5d1e229917c55779d0ed71ca7680595')
 
 build() {
   mkdir build
@@ -28,4 +28,7 @@ build() {
 package() {
   install -d "$pkgdir/usr/lib/R/library"
   cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
