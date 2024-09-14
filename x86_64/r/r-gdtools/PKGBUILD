@@ -5,7 +5,7 @@
 # Contributor: portaloffreedom
 
 _pkgname=gdtools
-_pkgver=0.3.7
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,22 +16,23 @@ license=('GPL-3.0-only')
 depends=(
   cairo
   freetype2
-  r-curl
   r-fontquiver
-  r-gfonts
   r-htmltools
   r-rcpp
   r-systemfonts
 )
 checkdepends=(
+  r-gfonts
   r-testthat
 )
 optdepends=(
+  r-curl
+  r-gfonts
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9df853df8a9b0255f01610d6133d5350')
-b2sums=('a7a073e1e2fddafe457d304120778f99db226cf8aeeb9e170b2a8c888b1b6b11b57a2052b83cdf153ffdf2c29f7aff619069c1d4265b827b057880f4bd493490')
+md5sums=('d9e462e719cf700afa2ef8489030648a')
+b2sums=('4550254fa2bd703a0d64bc59015e3a39a3d4eb2052320f05e7152f2dd2be79497b35ae8d77eccf1a8820684c6481c5a683fbde97762eafbf09eda718a4872ed1')
 
 build() {
   mkdir build
