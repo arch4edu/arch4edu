@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=sandwich
-_pkgver=3.1-0
+_pkgver=3.1-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Robust Covariance Matrix Estimators"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -28,8 +28,8 @@ optdepends=(
   r-strucchange
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a5abc91469c1f1ae604dba272268b10b')
-b2sums=('6d4ae6329c77573e4b1c7404746c3e1a8014b725fac58fd4bd84ebfa1f884b30e6a11056e318b28886dc504457200569ac77667a50b0a20cd1a51ffb4ae9198f')
+md5sums=('fe33d8ee7c66fddae484817ca295f405')
+b2sums=('510fc6c4acae4abc6701bb0af782696cc91e9ffea98f571f3da96e6305d2e58e7bebde88dd2cb3a0a20b840812d7429dac704034834fe0f0915f513ea2e074e3')
 
 build() {
   mkdir build
