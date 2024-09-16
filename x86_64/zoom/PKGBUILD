@@ -1,8 +1,8 @@
 # Maintainer: Gordian Edenhofer <gordian.edenhofer@gmail.com>
 
 pkgname=zoom
-pkgver=6.1.11
-_subver=1545
+pkgver=6.2.0
+_subver=1855
 pkgrel=1
 pkgdesc="Video Conferencing and Web Conferencing Service"
 arch=('x86_64')
@@ -18,7 +18,7 @@ optdepends=('pulseaudio-alsa: audio via PulseAudio'
 	'xcompmgr: extra compositor needed by some window managers for screen sharing')
 options=(!strip)
 source=("${pkgname}-${pkgver}.${_subver}_orig_x86_64.pkg.tar.xz"::"https://zoom.us/client/${pkgver}.${_subver}/zoom_x86_64.pkg.tar.xz")
-sha512sums=('fa8988e0e4d28c21f20f6316573759ad0732a53dd15badb5dd9bfb2a00407a4e52087dd906af86e2548f5e28b457fe04031fcb7de67999a9b4b5daa222c15b83')
+sha512sums=('e89315695d4c72b088d0ad4611cb943ef99e0f2ca6133d663ec69f08a77eb6fb49f582422968e7ac30e1533579c35b758620af416e5ff66b3557d7994bae4cee')
 
 prepare() {
 	sed -i 's/Zoom\.png/Zoom/g' "${srcdir}/usr/share/applications/Zoom.desktop"
