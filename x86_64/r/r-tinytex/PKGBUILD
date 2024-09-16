@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=tinytex
-_pkgver=0.52
+_pkgver=0.53
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,8 +25,8 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e8e4aa4730bb92b11afca0e6094dbe5f')
-b2sums=('37f954b7efff10349a63c4f19fd91a130da6e21c5858c1f745ae0e62fb6c80947163741e77e5b03dcfac8bc5ff4afcb5f372ec2028989dc5785e0457e6e971c3')
+md5sums=('34b92300a3da22b58c349c22c4b29210')
+b2sums=('bb5a0694ffa023f0215e4d28a642a51fd16f74978a7a4d542d22ea459abe6fa16a301138c37c97021d0dd503eedd7450c5a785c5aeb2afefb2a4eedfe7ff8971')
 
 build() {
   mkdir build
