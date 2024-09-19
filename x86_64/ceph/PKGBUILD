@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 pkgver=18.2.4
-pkgrel=2
+pkgrel=3
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL-2.0-or-later OR LGPL-2.1-or-later OR LGPL-3.0-or-later')
@@ -136,6 +136,10 @@ source=(
   # - undef of Boost.MPL header before including <boost/python/*> headers
   'ceph-18.2.4-boost-1.86-fixes.patch'
 
+  # Since fmt 11 we are seeing widespread compile errors because
+  # various custom type fmt:formatter::format defintions are not const.
+  'ceph-18.2.4-fmt-formatter-const.patch'
+
   # ===== ceph-python-bcrypt sources ===== #
   "python-bcrypt-${__bcrypt_version}.tar.gz::https://github.com/pyca/bcrypt/archive/${__bcrypt_version}.tar.gz"
 
@@ -159,7 +163,7 @@ sha512sums=('a4ebb4e14032e6ab8e1fd8836f39234b771cb0a4b655166e9c69493a2c0d687064a
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
             'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782'
             '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1'
-            '4613232e5a0003c08d233e40fe3ac1cd00e1195d29bdd9892188587b4a782d6979004232927c0a1bff554eabf2fb9b18eb751682b7ad90762292b63891f3b301'
+            '24f0a0e543cb9ee4006340362b43c9927861b3f0403aa929a0713a5a51220b5186f2a8c36d74a36970eeb230bace5239bf471d2f5b463ed3d9c311ad3da5a26c'
             '9a1183c08f8799b14235c9271519203cbf93e48ca3a8607d3a0500910efca5379c8a08421c377227f93d8436a850f5ca99784f28aaa920e55f0457c657511f17'
             'e238b326609636bc7dd10cec59290e22898948ef105c49643c38d2621abf16c2efcf9581b0b6bad65066607510c9827d00a7abdb14f2054701cc33b7101ea054'
             '692b9cea0199366fdfbcaff2d9590e3a1e439b948a1a5030215e81fcc8a22ac562b3261e2057470cc8acc20f404869a5a0c4550177788dc2f824523e5267b1eb'
@@ -170,6 +174,7 @@ sha512sums=('a4ebb4e14032e6ab8e1fd8836f39234b771cb0a4b655166e9c69493a2c0d687064a
             '3a6d2bee9a403ac7a0a1216fd704bb86337abf2498c1e90be70e8221779705c47cdc994f7147bcac5b99b939aa20dd0359c5eaf02224ae80183fbb7c1b7df792'
             '15c6a1d2bdd524a7836ad9bad12c4103a32274ad1fa5182231bcbc626e44fcfbdba04b6d55c67ef13952821da46df68e0b51ab4534c3a8830eac301e18662195'
             '73f72759a3d628575447b7607b7e27b0bab4a70b206c91daa717d461ada5fd9985c16f5782d9cb4406bd314ae9cf683cca43ab426505ab21f99141518e32533d'
+            'a053c2e0abf91528fa39723784f274daeec4ca078464a7e4ebe50c1f2f2264130bf746be59d3899e114c08cf43e5e6af2b84023254a0329670e50a2bca4c51a7'
             '59a5aafc729a6e7ac61121469bbca73809d87cafc1b16dcb0701c33fccc6298eff1071680c364042c46f91d701830a414e6ecf0bff4bee9500e4ce146dcad974'
             '26e4569396005f7461764dbe57634ab6d20ca9bfe777b4eeae3def8e3c887333b4d64470ad1db15a8170979f85372c111abfc043bdc1deae219183cc7539980e'
             '477e9f70c985da94c25bcac21f0f4f148623563a4c97b7249524cd82867ec2042488f37f966e75de636e6f835f9be6a8f9ea435374d714ca7d0d0cd71340b0b8')
@@ -205,6 +210,14 @@ prepare() {
     -e 's|Boost::|boost_|g' \
     -e 's|Boost_|boost_|g' \
     -e 's|[Bb]oost_boost|boost_system|g' -i || exit 1
+
+  # fmt 11 moved the FMT_VERSION #define to fmt/base.h
+  # there's little point in creating a patch for this,
+  # as ceph 19 no longer uses Findfmt.cmake at all
+  sed \
+    -i \
+    -e 's|set(_fmt_version_file "${fmt_INCLUDE_DIR}/fmt/core.h")|set(_fmt_version_file "${fmt_INCLUDE_DIR}/fmt/base.h")|' \
+    cmake/modules/Findfmt.cmake
 
   # remove tests that require root privileges
   rm src/test/cli/ceph-authtool/cap*.t
