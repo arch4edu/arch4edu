@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=profvis
-_pkgver=0.3.8
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
-pkgver=0.3.8
+pkgver=0.4.0
 pkgrel=1
 pkgdesc='Interactive Visualizations for Profiling R Code'
 arch=('x86_64')
@@ -27,7 +27,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ec02c75bc9907a73564e691adfa8e06651ca0bd73b7915412960231cd265b4b2')
+sha256sums=('d2fdeb0e6021f4dfc7c0634bec818cd82a6baf8042b80a1818aae0caa6bf4cf4')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
