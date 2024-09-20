@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/pypy-packaging: pypy3-packaging
+  - any/pypy3-packaging
   - any/pypy3-pyproject-hooks
 makedepends:
   - any/pypy3-flit-core
