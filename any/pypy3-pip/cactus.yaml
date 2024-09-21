@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 makedepends:
-  - any/pypy-setuptools: pypy3-setuptools
+  - any/pypy3-setuptools
   - any/pypy3-build
   - any/pypy3-installer
 build_prefix: extra-x86_64
