@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=evd
-_pkgver=2.3-7
+_pkgver=2.3-7.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,8 +16,8 @@ optdepends=(
   r-interp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8a5fe3fb5097036c69422cd0848ea841')
-b2sums=('6e762331d6bfa6b911a17ed58e9f44c05d6d92899720b9dbf3912b5c8b11266246bb4fcf9e2ea7fef91939f73bcc26ba5bbfea407bb583275fcf3b5b8d9547ff')
+md5sums=('95f8e58d5126ccb82f8e458430a3ead2')
+b2sums=('d0667c09455d4c728355637d87223c7970744b8c87b9d83889d08be7a455af43829736ce03275ec81e279b01ecffa26e7e8f237f8e6657f37377e7a6714dc28b')
 
 build() {
   mkdir build
