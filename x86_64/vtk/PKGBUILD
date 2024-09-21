@@ -9,7 +9,7 @@
 pkgname=vtk
 # May need bootstrapping on upgrades due to circular vtk <-> opencascade dependency
 pkgver=9.3.1
-pkgrel=6
+pkgrel=7
 pkgdesc="Software system for 3D computer graphics, image processing, and visualization"
 arch=(x86_64)
 url="https://www.vtk.org"
@@ -44,7 +44,7 @@ makedepends=(
   java-environment=11
   jsoncpp
   libharu
-  libjpeg
+  libjpeg-turbo
   liblas
   libogg
   libpng
