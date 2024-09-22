@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=timeDate
-_pkgver=4032.109
+_pkgver=4041.110
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Rmetrics - Chronological and Calendar Objects"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-runit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('96ed5f3e9a0bd034dfb65dc2a4aff33f')
-b2sums=('edd0d2c9f0ef8c30ee149e01b2650ad4d01a34f91a33bf26af02ae1c13626348c5f42f907eb4ac4a7ff5228a45786f66a2da6cc77de2f7cf6951546507bfe798')
+md5sums=('cf80d711592025e00fea0f7d3bd7c1f8')
+b2sums=('90fa5e6e408bea3b0f6585e372f13702e3371e4a06d95b5cc95f243de21ef06ff72b087552df4ab3b217118b6930655d2d806bbeb83a1bfe47e6d976c3681526')
 
 build() {
   mkdir build
