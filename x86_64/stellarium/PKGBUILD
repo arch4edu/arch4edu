@@ -3,7 +3,7 @@
 # Contributor: Ronald van Haren <ronald.archlinux.org>
 # Contributor: Damir Perisa <damir.perisa@bluewin.ch>
 pkgname=stellarium
-pkgver=24.2
+pkgver=24.3
 pkgrel=1
 pkgdesc="Software which renders realistic skies in real time with OpenGL"
 arch=(x86_64)
@@ -15,10 +15,10 @@ makedepends=(cmake ninja mesa qt6-tools)                  # doxygen graphviz
 optdepends=('man-db: manual pages for stellarium')
 source=(https://github.com/Stellarium/${pkgname}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz{,.asc})
 validpgpkeys=('79151C2E6351E7278DA1A730BF38D4D02A328DFF') # Alexander Wolf <alex.v.wolf@gmail.com>
-md5sums=('27a7cd3ab9421cb73790db6022f7c5aa'
-  'SKIP')
-sha256sums=('e6d8ee0792b7f77486b700d4669d0dd0c349319f379758ad643d76165d1d56d2'
-  'SKIP')
+md5sums=('375367ffdfbbe3e4d4443ecebacf97ae'
+         'SKIP')
+sha256sums=('c3ffb56a049061c7754bafab176146a2c4474ecede108d650f3c7551e1eae50a'
+            'SKIP')
 
 build() {
   PATH="/usr/bin/core_perl/:$PATH"
