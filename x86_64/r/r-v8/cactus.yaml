@@ -2,10 +2,10 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/libnode
   - x86_64/r/r-curl
   - x86_64/r/r-jsonlite
   - x86_64/r/r-rcpp
-  - x86_64/nodejs-shared: libnode
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
