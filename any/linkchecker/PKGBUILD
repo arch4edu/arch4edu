@@ -4,8 +4,8 @@
 
 _name=LinkChecker
 pkgname=linkchecker
-pkgver=10.4.0
-pkgrel=3
+pkgver=10.5.0
+pkgrel=1
 pkgdesc="check links in web documents or full websites"
 arch=('any')
 url="https://github.com/linkcheck/linkchecker"
@@ -15,7 +15,7 @@ makedepends=('python-hatch-vcs' 'python-hatchling>=1.8.0' 'python-installer' 'py
 optdepends=('python-argcomplete>=1.8.1: For command-line completion'
             'python-pdfminer>=20181108: For reading PDF files')
 source=("$url/archive/v$pkgver.tar.gz")
-b2sums=('9aa5c50c5221cd82b9f28b5533d3bcb29f0917cb842f6b96ce42fc751dcbf8629f86bf6587224828c95097ef106f6d63beda5fc7a3f1e12e9854e6820aae6ff0')
+b2sums=('f3ae96c8c067a6d0281811a118612e330e3fa0b59ac05402dd4b55bb6d3b87c2e9d8c9c21b6df04c938d59261e93d1e737762067145265603d16a2ae00ae6753')
 
 build() {
     cd $pkgname-$pkgver
