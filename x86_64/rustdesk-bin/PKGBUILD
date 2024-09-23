@@ -1,19 +1,18 @@
 # Maintainer: KUHTOXO https://aur.archlinux.org/account/kuhtoxo
-# Co-Maintainer: taotieren <admin@taotieren.com>
-# Co-Maintainer: Leon Möller <jkhsjdhjs at totally dot rip>
+# Contributor: Zoddo <archlinux+aur@zoddo.fr>
+# Contributor: taotieren <admin@taotieren.com>
+# Contributor: Leon Möller <jkhsjdhjs at totally dot rip>
 
 pkgbase=rustdesk-bin
 pkgname=(rustdesk-bin)
 pkgver=1.3.1
-pkgrel=0
+pkgrel=2
 pkgdesc="Yet another remote desktop software, written in Rust. Works out of the box, no configuration required."
 url="https://github.com/rustdesk/rustdesk"
 license=('AGPL-3.0')
 arch=('x86_64')
 provides=("${pkgname%-bin}")
-conflicts=(
-    'rustdesk'
-)
+conflicts=("${pkgname%-bin}")
 depends=(
     'gtk3'
     'xdotool'
@@ -37,10 +36,17 @@ sha256sums=('ff95175843e3594dc3bc62924ea03782beff4d977529ca5db66d4c1c26477731')
 install=$pkgname.install
 
 package() {
-    cp -r "$srcdir/usr/" "$pkgdir/usr/"
-    mkdir -p $pkgdir/usr/lib/systemd/system/
-    cp $srcdir/usr/share/rustdesk/files/rustdesk.service $pkgdir/usr/lib/systemd/system/rustdesk.service
-    mkdir -p $pkgdir/usr/share/applications/
-    cp $srcdir/usr/share/rustdesk/files/rustdesk.desktop $pkgdir/usr/share/applications/
-    cp $srcdir/usr/share/rustdesk/files/rustdesk-link.desktop $pkgdir/usr/share/applications/
+    install -d "${pkgdir}/usr/lib/" "${pkgdir}/usr/share/" "${pkgdir}/usr/bin/"
+    cp -r "${srcdir}/usr/lib/rustdesk/" "${pkgdir}/usr/lib/"
+    cp -r "${srcdir}/usr/share/icons/" "${pkgdir}/usr/share/"
+
+    ln -s "/usr/lib/rustdesk/rustdesk" "${pkgdir}/usr/bin/rustdesk"
+
+    install -Dm 644 "${srcdir}/usr/share/rustdesk/files/rustdesk.service" "${pkgdir}/usr/lib/systemd/system/rustdesk.service"
+
+    # Desktop files are renamed to prevent conflict with manually installed (non pacman-tracked) files between 1.3.0-2 and 1.3.1-0.
+    # Old files will be cleaned by the .INSTALL pre_upgrade() script. I believe we can revert to normal file names when some time will have passed.
+    # -- Zoddo, 2024-09-23
+    install -Dm 644 "${srcdir}/usr/share/rustdesk/files/rustdesk.desktop" "${pkgdir}/usr/share/applications/rustdesk-bin.desktop"
+    install -Dm 644 "${srcdir}/usr/share/rustdesk/files/rustdesk-link.desktop" "${pkgdir}/usr/share/applications/rustdesk-bin-link.desktop"
 }

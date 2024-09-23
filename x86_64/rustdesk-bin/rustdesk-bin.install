@@ -1,40 +1,49 @@
-# arg 1:  the new package version
-#pre_install() {
-#}
+# Colored makepkg-like functions
+_all_off="$(tput sgr0)"
+_bold="${_all_off}$(tput bold)"
+_blue="${_bold}$(tput setaf 4)"
+_yellow="${_bold}$(tput setaf 3)"
+note() {
+	printf "${_blue}==>${_yellow} NOTE:${_bold} %s${_all_off}\n" "$1"
+}
 
-# arg 1:  the new package version
+post_install_notes() {
+	note "The RustDesk daemon must be started for RustDesk to work."
+	note "To start it automatically on boot, run 'sudo systemctl enable --now rustdesk' in a terminal."
+}
+
 post_install() {
-#    cp /usr/share/rustdesk/files/rustdesk.service /etc/systemd/system/rustdesk.service
-#    cp /usr/share/rustdesk/files/rustdesk.desktop /usr/share/applications/
-#    cp /usr/share/rustdesk/files/rustdesk-link.desktop /usr/share/applications/
-    update-desktop-database
+	update-desktop-database
+	post_install_notes
 }
 
 # arg 1:  the new package version
 # arg 2:  the old package version
-#pre_upgrade() {
-#    systemctl stop rustdesk || true
-#}
+pre_upgrade() {
+	# Starting in version 1.3.0-2 and until version 1.3.1-1, some files were erroneously installed
+	# using this .INSTALL file. These files aren't tracked by pacman and generate a conflict during upgrade.
+	# The code below delete these files when upgrading from an impacted version.
+	if (( $(vercmp $2 '1.3.0-2') >= 0 && $(vercmp $2 '1.3.1-1') < 0 )); then
+		rm -f /usr/share/applications/rustdesk-link.desktop
+		rm -f /usr/share/applications/rustdesk.desktop
+		rm -f /etc/systemd/system/rustdesk.service
+	fi
+}
 
-# arg 1:  the new package version
-# arg 2:  the old package version
 post_upgrade() {
-#    cp /usr/share/rustdesk/files/rustdesk.service /etc/systemd/system/rustdesk.service
-#    cp /usr/share/rustdesk/files/rustdesk.desktop /usr/share/applications/
-#    cp /usr/share/rustdesk/files/rustdesk-link.desktop /usr/share/applications/
-    update-desktop-database
+	update-desktop-database
+	# Display instructions to enable the RustDesk service if it's not enabled
+	systemctl -q is-enabled rustdesk.service || post_install_notes
 }
 
-# arg 1:  the old package version
 pre_remove() {
-    systemctl stop rustdesk || true
-    systemctl disable rustdesk || true
-    rm /etc/systemd/system/rustdesk.service || true
+	if systemctl -q is-active rustdesk.service; then
+		note "The RustDesk service may still be running after removing the package, allowing remote access to this system."
+		note "To ensure that RustDesk isn't running anymore on your system, run 'sudo systemctl stop rustdesk' in a terminal."
+	fi
 }
 
-# arg 1:  the old package version
 post_remove() {
-    rm /usr/share/applications/rustdesk.desktop || true
-    rm /usr/share/applications/rustdesk-link.desktop || true
-    update-desktop-database
+	update-desktop-database
 }
+
