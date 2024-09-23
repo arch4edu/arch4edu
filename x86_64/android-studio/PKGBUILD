@@ -10,7 +10,7 @@
 # Maintainer: Kordian Bruck <k@bruck.me>
 
 pkgname=android-studio
-pkgver=2024.1.2.12
+pkgver=2024.1.2.13
 pkgrel=1
 pkgdesc="The official Android IDE (Stable branch)"
 arch=('i686' 'x86_64')
@@ -25,7 +25,7 @@ options=('!strip')
 source=("https://dl.google.com/dl/android/studio/ide-zips/$pkgver/android-studio-$pkgver-linux.tar.gz"
         "$pkgname.desktop"
         "license.html")
-sha256sums=('745168820e989a9085ff842d47ce541407db09df7b8ab20770f6ea89e41a6e92'
+sha256sums=('688c655c230f29867a12ae382cc26ec6706bf7f30bd4d97f2f15c8f960cb1b9b'
             '73cd2dde1d0f99aaba5baad1e2b91c834edd5db3c817f6fb78868d102360d3c4'
             '9a7563f7fb88c9a83df6cee9731660dc73a039ab594747e9e774916275b2e23e')
 
