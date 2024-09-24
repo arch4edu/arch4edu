@@ -12,7 +12,7 @@ _styles=b2be5aeeee7f00fd2032ac1daad995bbe95398cf
 
 pkgname=jabref
 pkgver=5.15
-pkgrel=1
+pkgrel=2
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
@@ -26,13 +26,15 @@ source=(${pkgname}-${pkgver}.tar.gz::https://github.com/JabRef/jabref/archive/v$
         locales-${_locales}.tar.gz::https://github.com/citation-style-language/locales/archive/${_locales}.tar.gz
         styles-${_styles}.tar.gz::https://github.com/citation-style-language/styles/archive/${_styles}.tar.gz
         jabref.sh
-        jabref.desktop)
+        jabref.desktop
+        https://patch-diff.githubusercontent.com/raw/JabRef/jabref/pull/11517.patch)
 sha256sums=('2bf75d7f96aa1f5c74b675e3e0b4dda703027b3c3d8ede0616dd2218f5a74259'
             '902c30710bdd46bcafa954b174dc3e080d9902d8dc43f40602c357155e894312'
             '5b1a86d2d9eb2ffd40e62d72d06ec9fce9b1b048961529f1e596dfedd6322b17'
             '667513b7df0763a2c971f9c0017f88e6e4c7d5b44328516c53c5bfdbe8adb167'
             'f466d2cbf88d4d37c0e39cb3aa3fb5bb2f0ac486d617591b2b47817c762317b0'
-            'aebafd8955b35d440c233f6e9d7cfa68bec17f58418320920b52c334e965db3a')
+            'aebafd8955b35d440c233f6e9d7cfa68bec17f58418320920b52c334e965db3a'
+            'ecf10a20e009f0801cd885f7c32842d14320957446d07d3f69300a85a1dfb8d0')
 
 # Note on supported Java versions:
 # The file build.gradle contains the version of Java that is required and tested.
@@ -46,6 +48,8 @@ prepare() {
   cp -a "${srcdir}"/abbrv.jabref.org-${_abbrv}/* buildres/abbrv.jabref.org/
   cp -a "${srcdir}"/locales-${_locales}/* src/main/resources/csl-locales/
   cp -a "${srcdir}"/styles-${_styles}/* src/main/resources/csl-styles/
+
+  patch -p1 < "${srcdir}"/11517.patch
 }
 
 build() {
