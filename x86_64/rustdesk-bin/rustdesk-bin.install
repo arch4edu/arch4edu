@@ -7,14 +7,9 @@ note() {
 	printf "${_blue}==>${_yellow} NOTE:${_bold} %s${_all_off}\n" "$1"
 }
 
-post_install_notes() {
+post_install() {
 	note "The RustDesk daemon must be started for RustDesk to work."
 	note "To start it automatically on boot, run 'sudo systemctl enable --now rustdesk' in a terminal."
-}
-
-post_install() {
-	update-desktop-database
-	post_install_notes
 }
 
 # arg 1:  the new package version
@@ -31,9 +26,8 @@ pre_upgrade() {
 }
 
 post_upgrade() {
-	update-desktop-database
 	# Display instructions to enable the RustDesk service if it's not enabled
-	systemctl -q is-enabled rustdesk.service || post_install_notes
+	systemctl -q is-enabled rustdesk.service || post_install
 }
 
 pre_remove() {
@@ -41,9 +35,5 @@ pre_remove() {
 		note "The RustDesk service may still be running after removing the package, allowing remote access to this system."
 		note "To ensure that RustDesk isn't running anymore on your system, run 'sudo systemctl stop rustdesk' in a terminal."
 	fi
-}
-
-post_remove() {
-	update-desktop-database
 }
 

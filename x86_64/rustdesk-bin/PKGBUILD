@@ -6,7 +6,7 @@
 pkgbase=rustdesk-bin
 pkgname=(rustdesk-bin)
 pkgver=1.3.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Yet another remote desktop software, written in Rust. Works out of the box, no configuration required."
 url="https://github.com/rustdesk/rustdesk"
 license=('AGPL-3.0')
@@ -49,4 +49,6 @@ package() {
     # -- Zoddo, 2024-09-23
     install -Dm 644 "${srcdir}/usr/share/rustdesk/files/rustdesk.desktop" "${pkgdir}/usr/share/applications/rustdesk-bin.desktop"
     install -Dm 644 "${srcdir}/usr/share/rustdesk/files/rustdesk-link.desktop" "${pkgdir}/usr/share/applications/rustdesk-bin-link.desktop"
+    sed -i '/StartupNotify=true/a StartupWMClass=rustdesk' "${pkgdir}/usr/share/applications/rustdesk-bin.desktop" # Temporarily needed while the filename doesn't match the WM_CLASS
 }
+
