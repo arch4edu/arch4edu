@@ -2,15 +2,15 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="7.0.14"
-_basever="7.0"
-_basedist="jammy"
+pkgver="8.0.0"
+_basever="8.0"
+_basedist="noble"
 pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
 license=("SSPL-1.0")
-depends=(mongosh-bin curl openssl-1.1)
+depends=(mongosh-bin curl openssl)
 makedepends=(chrpath)
 optdepends=("mongodb-tools: The MongoDB tools provide import, export, and diagnostic capabilities.")
 provides=("mongodb=$pkgver")
@@ -39,11 +39,10 @@ noextract=(
 sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
             '51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
             '09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('2a28d0dbe15fcfdaea92ad1fc428a270f44ba77a510957de95b771d450cb30ba'
-                   '9d4f6de2e70431f13656cc7aa9c1401314674ef6c2643921dcb30f0b420ffcae')
-sha256sums_aarch64=('fd9721b71d7a995b7d1cdd9c63fe668f5071f10b6f538a9aa4dc144d2e1dbccb'
-                    '7eb1ba8ed5063384234b1e8822ae6aecd24f826b31bd70f8b3c2cafa6eb7d9de')
-
+sha256sums_x86_64=('c9893983be2dcde1eaedb74ec0f4cfa0692135f90028a31d92fcb76f63663631'
+                   'd9eedc6f7df01b728b89e6a3c621925f218435f7cf44ccaca20acd0e9d4a1636')
+sha256sums_aarch64=('4239c9115c46a990c8cba445b6550ac6a68f33669b1092c6724a989351a66300'
+                    '9e34dd492734c3d56b351feee01a80918d31b9976894ce06ff24b13ccbc7da5e')
 prepare() {
 	mkdir -p output
 	bsdtar -O -xf mongodb-org-server_${pkgver}_${CARCH}.deb data.tar.zst | bsdtar -C output -xJf - #server extracted
@@ -56,27 +55,27 @@ prepare() {
 	sed -i 's|dbPath: /var/lib/mongo$|dbPath: /var/lib/mongodb|' output/etc/mongod.conf
 
 	# Keep historical Arch conf file name
-	sed -i 's|/etc/mongod.conf|/etc/mongodb.conf|' output/lib/systemd/system/mongod.service
+	sed -i 's|/etc/mongod.conf|/etc/mongodb.conf|' output/usr/lib/systemd/system/mongod.service
 
 	# Keep historical Arch user name (no need for separate daemon group name)
-	sed -i 's/User=mongod$/User=mongodb/' output/lib/systemd/system/mongod.service
-	sed -i 's/Group=mongod$/Group=mongodb/' output/lib/systemd/system/mongod.service
+	sed -i 's/User=mongod$/User=mongodb/' output/usr/lib/systemd/system/mongod.service
+	sed -i 's/Group=mongod$/Group=mongodb/' output/usr/lib/systemd/system/mongod.service
 
 	# Avoid legacy PID filepath
-	sed -i 's|/var/run/|/var/|' output/lib/systemd/system/mongod.service
+	sed -i 's|/var/run/|/var/|' output/usr/lib/systemd/system/mongod.service
 
 	# Remove sysconfig file, used by upstream's init.d script not used on Arch
-	sed -i '/^EnvironmentFile=/d' output/lib/systemd/system/mongod.service
+	sed -i '/^EnvironmentFile=/d' output/usr/lib/systemd/system/mongod.service
 
 	# Make systemd wait as long as it takes for MongoDB to start
 	# If MongoDB needs a long time to start, prevent systemd from restarting it every 90 seconds
 	# See: https://jira.mongodb.org/browse/SERVER-38086
-	sed -i 's/\[Service]/[Service]\nTimeoutStartSec=infinity/' output/lib/systemd/system/mongod.service
+	sed -i 's/\[Service]/[Service]\nTimeoutStartSec=infinity/' output/usr/lib/systemd/system/mongod.service
 }
 
 package() {
 	install -Dm644 output/etc/mongod.conf "$pkgdir/etc/mongodb.conf"
-	install -Dm644 output/lib/systemd/system/mongod.service "$pkgdir/usr/lib/systemd/system/mongodb.service"
+	install -Dm644 output/usr/lib/systemd/system/mongod.service "$pkgdir/usr/lib/systemd/system/mongodb.service"
 	install -Dm755 output/usr/bin/* -t "$pkgdir/usr/bin"
 	install -Dm644 output/usr/share/man/man1/* -t "$pkgdir/usr/share/man/man1"
 	install -Dm644 mongodb.sysusers "$pkgdir/usr/lib/sysusers.d/mongodb.conf"
