@@ -5,14 +5,14 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=bit
-_pkgver=4.0.5
+_pkgver=4.5.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Classes and Methods for Fast Memory-Efficient Boolean Selections"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
@@ -23,18 +23,19 @@ optdepends=(
   r-bit64
   r-ff
   r-knitr
+  r-markdown
   r-microbenchmark
   r-rmarkdown
   r-roxygen2
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('df4e6215d31058ea2860fadc7a7c80f4')
-sha256sums=('f0f2536a8874b6a30b80baefbc68cb21f0ffbf51f3877bda8038c3f9f354bfbc')
+md5sums=('933b9d99ed4d52bb76070ae7cd857fa0')
+b2sums=('47605338c0aa3c208a71aff9073240d43c93483ffcca69c2db95856df6e541fc74e34fb8c0e386f4ee2c07190f6f1b1d41c7b4f6821bd14ae43ab44924321e1a')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
