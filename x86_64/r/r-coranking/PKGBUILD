@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=coRanking
-_pkgver=0.2.4
+_pkgver=0.2.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Co-Ranking Matrix"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -23,8 +23,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('73f07ed26db31ef7d0e67f4174de1b66')
-b2sums=('685c912ef4e86aeddd34e140be3c2fcf451797df906158aaebfedd3e5c653e14cd3f85787ac2ce087b16acb6edac4b73a69e1df41c7b7ed9352a931bed097d50')
+md5sums=('e786683ac8e81c0f2c6896f3e24a70a6')
+b2sums=('66613bfee1d1aa21939f0e8820c83a8034aae56ad3a2137b687b4fa9ffd4e2851a5b9e3ba45204839289d8d0070504c2584f76c11a7fc0f1008214e2ae9a612a')
 
 build() {
   mkdir build
