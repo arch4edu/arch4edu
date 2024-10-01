@@ -4,10 +4,10 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=glue
-_pkgver=1.7.0
+_pkgver=1.8.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Interpreted String Literals"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -30,8 +30,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e4e7b07da0c02b008d9a9759b2acbc99')
-b2sums=('24dfe8da1b1c6aa2f2696919adc37388464b6467bfdaaeacfaf93f13a06259c126e8bd94f5bac6fd9d4a5a6403fd342911b43e2593a60ff34e360cd62acfe0c1')
+md5sums=('283bba07f61d89e32f9895021bf5099c')
+b2sums=('788e7ad6d58a598b0c5bc42d50bee7c931190972c8475b53a124dd81d1c9b3fad7e023c460d80c26d4cf51dfc2059453dcb27699bf40e9947de453c0ee7b8a3c')
 
 build() {
   mkdir build
