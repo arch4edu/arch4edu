@@ -4,7 +4,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=broom
-_cranver=1.0.6
+_cranver=1.0.7
 pkgname=r-${_cranname,,}
 pkgdesc="Convert Statistical Objects into Tidy Tibbles"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -30,12 +30,12 @@ optdepends=(
     "r-aer"
     "r-auc"
     "r-bbmle"
-    "r-betareg"
+    "r-betareg>=3.2.1"
     "r-biglm"
     "r-bingroup"
     "r-boot"
     "r-btergm>=1.10.6"
-    "r-car"
+    "r-car>=3.1.2"
     "r-cardata"
     "r-caret"
     "r-cluster"
@@ -63,7 +63,7 @@ optdepends=(
     "r-knitr"
     "r-ks"
     "r-lahman"
-    "r-lavaan"
+    "r-lavaan>=0.6.8"
     "r-leaps"
     "r-lfe"
     "r-lm.beta"
@@ -72,6 +72,7 @@ optdepends=(
     "r-lmtest>=0.9.38"
     "r-lsmeans"
     "r-maps"
+    "r-margins"
     "r-mass"
     "r-mclust"
     "r-mediation"
@@ -110,7 +111,7 @@ optdepends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("2dbf8e26f79f7c92ae7c953e4a8a7de1494cea85c680982d075be5eed26a4a43c08558941bbbc96fc31c9bc6549dcd254466a66c7f1e72502d61f187b48d38bc")
+b2sums=("141c14cb1bbde194eaf0f0846e98c2a453b824bd65283273dae3927ab9577aaa63a8c3792069eac3330ea5b9c5080ca9d5e4d1bae4d920392d83293c1c80ea23")
 
 build() {
     mkdir -p "${srcdir}/build/"
