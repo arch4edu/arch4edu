@@ -2,10 +2,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ddalpha
-_pkgver=1.3.15
+_pkgver=1.3.16
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Depth-Based Classification and Calculation of Data Depth"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -21,8 +21,8 @@ makedepends=(
   r-bh
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('eee5e25fb1559d4aebf0c4343c1214c7')
-b2sums=('5e25e4a2cbedbbd82f822a76502862811b2ca2612cc4cff74bf12b0d9972db7b2b4001cd3f3c35aa2063af547d808c23fc4362226a5f0cf31becadde32e029e8')
+md5sums=('a533869dcd5a23ae29af063de13200af')
+b2sums=('c8c4fc4d5a32f29a644274b0964bb14e85d4e1c35ee6750e16370098650ad2c98cebb8673ce817ab873aec131c874ac373c6807b7997c6a1d38b9baad0d9b2be')
 
 build() {
   mkdir build
