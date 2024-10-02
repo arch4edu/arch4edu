@@ -5,20 +5,20 @@
 
 pkgname=tkimg
 _pkgname=Img
-pkgver=1.4.16
+pkgver=2.0.0
 pkgrel=1
 pkgdesc='Provides the handling of several image formats beyond the standard formats in Tk'
 url='https://wiki.tcl-lang.org/page/Img'
 arch=('x86_64')
-license=('custom')
+license=('TCL')
 depends=('zlib' 'libjpeg' 'libpng' 'libtiff' 'tcl' 'tk' 'tcllib')
-source=("https://downloads.sourceforge.net/${pkgname}/${_pkgname}-${pkgver}-Source.tar.gz")
-sha256sums=('d99af4835fe3e20960817c7a1b5235dcfaa97c642593cce50bdb64c5827cd321')
+source=("https://downloads.sourceforge.net/${pkgname}/${_pkgname}-${pkgver}.tar.gz")
+sha256sums=('1f3a2ac1f1fa61dad0efbefadeb5a3669e7a62196104bd85c5d7a2a853be3831')
 
 build() {
   cd "${_pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr --enable-64bit --enable-threads
+  CFLAGS+=" -ffat-lto-objects" ./configure --prefix=/usr --enable-64bit --enable-threads
   make all
 }
 
