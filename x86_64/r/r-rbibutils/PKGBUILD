@@ -3,10 +3,10 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=rbibutils
-_pkgver=2.2.16
+_pkgver=2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Read 'Bibtex' Files and Convert Between Bibliography Formats"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -18,8 +18,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('950c341d2b81351a3e194e460bd6870f')
-b2sums=('91485ea7ff90921e546dc82d4879fdfed6e35b1f455fb2d7cb613172618a4ec49e5f5a352333f4ce5f45c98e3e5921e75edce47a379ad4e38b504c042ac10164')
+md5sums=('2dfcf4f24b5409b826bd3ec8125fed4b')
+b2sums=('fa9f1177ed696da5ef568da3a5d2ab390814458de47aa142eb451b6535c4fbf30a20e7abc158b4e8584600472d085fe1f007fe4ee9e7a5da40279c32b295fb2d')
 
 build() {
   mkdir build
