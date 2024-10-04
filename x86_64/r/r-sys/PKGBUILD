@@ -4,10 +4,10 @@
 # Contributor: Kibouo <csonka.mihaly@hotmail.com>
 
 _pkgname=sys
-_pkgver=3.4.2
+_pkgver=3.4.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Powerful and Reliable Tools for Running System Commands in R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -25,8 +25,8 @@ optdepends=(
   r-unix
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('79b75f8ec16557df22600458b6044ebe')
-b2sums=('fa28a2c83f232904ef11e63b957d27f36abafb780f4fa415c3d40368718c98b8c39b838b9b1d08c8fbe2a32dc4a30eaa64f61be19c386daba2f1b3304fc13d98')
+md5sums=('ffb4244c6d4cacdd4ac8ef187699707c')
+b2sums=('4d02d656d5e5a6632de0f3bb4f1ea75d106ccc339f8175c0286211f0e6245e903b3e46651ba4671e6b24d726d2b82644b4100d169b2bedc618803a3133cc232a')
 
 build() {
   mkdir build
