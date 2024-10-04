@@ -4,10 +4,10 @@
 # Contributor: Kibouo <csonka.mihaly@hotmail.com>
 
 _pkgname=askpass
-_pkgver=1.2.0
+_pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Password Entry Utilities for R, Git, and SSH"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -22,8 +22,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('59d2bbfe6bd3a7bf05d56006f1cb1d6a')
-b2sums=('3a2ecd6b3e199216dad2d09aefcc291fa23195a6b348ff0bb364c4122fd6adcbe133bdb0bfc0c0e39fa56f948c5496559df243e2901ca59f9d0f4ca7bcc6fc92')
+md5sums=('fc2c6a61b6a354707586b01950366f37')
+b2sums=('84e1cdbe52a061babc405f0bb7cbe818ccc8f7c6da4d129f0956ccc6748d36c2c11a52b9ffb994cddd34c7967a0ffd2aef84bdfd57c2b5f48e2320d4341e683b')
 
 build() {
   mkdir build
