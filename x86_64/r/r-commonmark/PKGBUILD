@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=commonmark
-_pkgver=1.9.1
+_pkgver=1.9.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,9 +28,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-cmark-gfm.patch")
-md5sums=('c95e6412ef2937d110128f35fd85be78'
+md5sums=('02c2b4ba170610b672092708a39fa479'
          '31357c9e94c77a617485e752ead93868')
-b2sums=('0e419756209153ce68a7a24d3c71230238f803b92396464324e83bbddbd90f354b220afd9e33ebe2e1fee9dcb4c860084b96a523e68d6ae9e4062d73501eb0ee'
+b2sums=('b9ffda0e5413cc60b66be37a547dba956b1c2883b4cb99ae4dc03b99f881fe4535568dd052322c97983784fd3cf0ae669e43e501c429d5156c84dc92206f3b6e'
         '02fda554b3d786bab69b214e1281da56968dc943cd1ebda829576b6858e2c6167b2415f878c66bb7f6091d3581636d0135e8cd2f5afba99f9141c07aacbba686')
 
 prepare() {
