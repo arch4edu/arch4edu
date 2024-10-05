@@ -2,7 +2,7 @@
 pkgbase=python-specutils
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.16.0
+pkgver=1.17.0
 pkgrel=1
 pkgdesc="Astropy Affiliated package for 1D spectral operations"
 arch=('any')
@@ -27,7 +27,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
         "https://data.sdss.org/sas/dr16/sdss/spectro/redux/26/spectra/1323/spec-1323-52797-0012.fits"
         'use_local_doc_fits_offline.patch')
 #https://dr15.sdss.org/sas/dr15/manga/spectro/redux/v2_4_3/8485/stack/manga-8485-1901-LOGRSS.fits.gz
-md5sums=('ea4def26426860fbac7e81d771c44f11'
+md5sums=('c17dc53e9b8b9187433cda2226b9e5f3'
          '6de4c8ee5659e87a302e3de595074ba5'
          '3586c5d0810108a182ba9146908dc180'
          '49c57591fdc60365a3e31a0f10e4e57d')
@@ -83,7 +83,7 @@ check() {
 }
 
 package_python-specutils() {
-    depends=('python>=3.8' 'python-scipy' 'python-gwcs>=0.18' 'python-ndcube>=2.0') # astropy asdf asdf-astropy required by gwcs
+    depends=('python>=3.10' 'python-scipy' 'python-gwcs>=0.18' 'python-ndcube>=2.0') # astropy asdf asdf-astropy required by gwcs
     optdepends=('python-specutils-doc: Documentation for Specutils')
     cd ${srcdir}/${_pyname}-${pkgver}
 
