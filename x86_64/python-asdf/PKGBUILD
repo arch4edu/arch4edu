@@ -3,7 +3,7 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=3.4.0
+pkgver=3.5.0
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
@@ -47,7 +47,7 @@ checkdepends=('python-pytest-remotedata'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('5f503f47418d2b6b13261d0304fb20a9')
+md5sums=('e306ea158a9ddb2dd1ed1a5740427053')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -79,7 +79,7 @@ check() {
 
     # Segmentation fault
 #   PYTHONPATH="build/lib:${PYTHONPATH}" pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #--remote-data #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data -p xdist -n 4
-    pytest --remote-data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count-p xdist -n 4
+    pytest --remote-data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4
 }
 
 package_python-asdf() {
