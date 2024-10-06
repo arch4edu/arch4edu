@@ -8,12 +8,12 @@
 
 _pack=signal
 pkgname=octave-$_pack
-pkgver=1.4.5
+pkgver=1.4.6
 pkgrel=1
 pkgdesc="Signal processing tools, including filtering, windowing and display functions."
 arch=(any)
 url="https://gnu-octave.github.io/packages/$_pack/"
-license=('custom')
+license=('GPL-3.0-or-later and public domain')
 depends=('octave>=3.8.0' 'octave-control>=2.4.0')
 makedepends=()
 optdepends=()
@@ -23,7 +23,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("https://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-sha256sums=('555ade2ff80f7118909395c33405f0a17a4fbcd22bc6d2fb9c3f7f45fef648e7')
+b2sums=('67b3a208195a89c561de6a176664c1284cf27d3e2a93015c407489904323436e26ccd4dafa1b1d789dc666390f1487ea4074fb233b68a90655db7e269241fc64')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
