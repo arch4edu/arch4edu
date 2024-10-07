@@ -1,7 +1,7 @@
 # Maintainer: sukanka <su975853527 at gmail.com>
 # Contributor: HRKo <ootaharuki99 at gmail.com>
 pkgname=mathpix-snipping-tool
-pkgver=03.00.0118
+pkgver=03.00.0127
 pkgrel=1
 pkgdesc="Mathpix Snipping Tool"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('qt5-x11extras' 'qt5-webengine' 'qt5-svg' 'qt5-imageformats' 'quazip-qt
 options=(!strip)
 optdepends=('wayland: Wayland support.')
 source=("${pkgname}-${pkgver}-${arch}.AppImage::https://download.mathpix.com/linux/Mathpix_Snipping_Tool-${arch}.v${pkgver}.AppImage")
-sha512sums=('fcca342990fcc1563cb301993420987fd209a80a5128fe45996089e9f025bc7c333639872d26df618677054507355851dd404a59b77cd1cdf9b22d8519c39864')
+sha512sums=('d6df68fc3dab10db0dcd7661156312500d3a0c8e511c56ee8b66483dda7ea29e04232e5f8f1484c65283aa60294cfd7b85d085d5ca1f9dd30ebcedcf414bdab5')
 
 
 prepare() {
