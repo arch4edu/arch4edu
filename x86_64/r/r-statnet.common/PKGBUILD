@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=statnet.common
-_pkgver=4.9.0
+_pkgver=4.10.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Common R Scripts and Utilities Used by the Statnet Project Software"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,8 +17,8 @@ optdepends=(
   r-rlang
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('85503e6c3fdaae2040a8c872fcbd8ad6')
-b2sums=('6ddfd61a6ec633dff4ddb554eb10e46237a0ae893d078746c56ed6e99353d96b037f76edbb2bacc0229c59663dc544897c9f214b55051d439b780dcbcbcdaf0e')
+md5sums=('debc899fef50b20c86c995966244ad30')
+b2sums=('20b013b408c79fe31e85be8877319ad6e622455187e60b2692f2e8319dd40ed10b46f6d89883bbfd3d61ca4fa048386fd1e3c522cd979018a98379f42598d3fb')
 
 build() {
   mkdir build
