@@ -1,7 +1,7 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=bitops
-_cranver=1.0-8
+_cranver=1.0-9
 pkgname=r-${_cranname,,}
 pkgdesc="Bitwise Operations"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -15,7 +15,7 @@ depends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("19dcd4a33880d6c2628e41cadcd541e99fb10ea0a2a7ac296b355181cd757aa4632c418e8a6af3d4487e6b05d51b0f32d71a33aeb0b31ffe27f8bb55b9e77f50")
+b2sums=("6fd3b6768c2a814b59b1288e3b1db669e05e01ac3aaf1e0f5fb3471e826d2055f21a8980c1342c954fe2ca1f5ec513f2b5ff67e0fee3354cd24f13e95da0dc81")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
