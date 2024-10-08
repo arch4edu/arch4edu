@@ -3,10 +3,10 @@
 
 pkgname="protoc-gen-go-grpc"
 pkgver=1.5.1
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="gRPC bindings generator for Go language"
-arch=('any')
+arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/grpc/grpc-go"
 license=('Apache-2.0')
 depends=('glibc' 'protoc-gen-go')
@@ -18,7 +18,6 @@ sha256sums=('54cb438abe590c9366e08251f811810fa004b1193154fe6e6a7d7c782a37332e')
 prepare() {
   cd "${srcdir}/${_pkgsrc}"
   mkdir -p "build"
-  go mod download
 }
 
 build() {
@@ -31,16 +30,16 @@ build() {
   go build -o "${srcdir}/${_pkgsrc}/build/${pkgname}" .
 }
 
-check() {
-  cd "${srcdir}/${_pkgsrc}"
-  # ./"cmd/${pkgname}/${pkgname}_test.sh"
-}
+# check() {
+#   cd "${srcdir}/${_pkgsrc}"
+#   ./"cmd/${pkgname}/${pkgname}_test.sh"
+# }
 
 package() {
   cd "${srcdir}/${_pkgsrc}"
   install -Dm755 "build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
-  install -Dm644 "README.md"        "${pkgdir}/usr/share/doc/${pkgname}/README.md"
-  install -Dm644 "LICENSE"          "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  install -Dm644 "AUTHORS"          "${pkgdir}/usr/share/licenses/${pkgname}/AUTHORS"
-  install -Dm644 "NOTICE.txt"       "${pkgdir}/usr/share/licenses/${pkgname}/NOTICE"
+  install -Dm644 "README.md"  "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+  install -Dm644 "AUTHORS"    "${pkgdir}/usr/share/doc/${pkgname}/AUTHORS"
+  install -Dm644 "LICENSE"    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -Dm644 "NOTICE.txt" "${pkgdir}/usr/share/licenses/${pkgname}/NOTICE"
 }
