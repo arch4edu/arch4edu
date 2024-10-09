@@ -4,7 +4,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=0.17.1
+pkgver=0.18.0
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
@@ -19,6 +19,7 @@ makedepends=('python-setuptools-scm'
 #            'python-scipy'
 #            'python-seaborn'
 checkdepends=('python-pytest-cov'
+#             'python-pytest-xdist'
               'python-matplotlib'
               'python-pillow'
               'python-sphinx'
@@ -27,7 +28,7 @@ checkdepends=('python-pytest-cov'
 ##              'python-joblib'
 ##             'mayavi'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('a550ce4ca03f67a7e386d6579092c3e0')
+md5sums=('e8f7296b958fd8e015996a99893aa691')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -46,7 +47,7 @@ check() {
         --ignore=sphinx_gallery/tests/test_full_noexec.py \
         --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents \
         --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_non_default_contents \
-        --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_with_jupyterlite_disabled_via_config || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count \
+        --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_with_jupyterlite_disabled_via_config #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 \
 #        --deselect=sphinx_gallery/tests/test_docs_resolv.py::test_embed_code_links_get_data #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
 #       --deselect=sphinx_gallery/tests/test_scrapers.py::test_save_mayavi_figures || warning "Tests failed"
 }
