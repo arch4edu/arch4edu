@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=officer
-_pkgver=0.6.6
+_pkgver=0.6.7
 pkgname=r-${_pkgname,,}
-pkgver=0.6.6
+pkgver=0.6.7
 pkgrel=1
 pkgdesc='Manipulation of Microsoft Word and PowerPoint Documents'
 arch=('any')
@@ -29,7 +29,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f1fc3f7a9299da1fd09864da4ae6b8c47c6491f0119da86863b1c9470caeb412')
+sha256sums=('f02fafff3adad784fb7f8d3f1ef7555a78e754179f5e531c4171479f71d92ba9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
