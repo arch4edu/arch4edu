@@ -3,17 +3,16 @@
 # Contributor: James Spencer <james.s.spencer@gmail.com>
 # Contributor: Anton Kudelin <kudelin at protonmail dot com>
 pkgname=libxc
-pkgver=6.2.2
+pkgver=7.0.0
 pkgrel=1
 pkgdesc="A library of exchange-correlation functionals for density-functional theory"
-arch=('i686' 'x86_64' 'aarch64')
-url="https://www.tddft.org/programs/${pkgname}"
-license=('MPL2')
+arch=(i686 x86_64 aarch64)
+url="https://${pkgname}.gitlab.io"
+license=(MPL-2.0)
 depends=(python-numpy)
 makedepends=(gcc-fortran cmake)
-#source=(${url}/down.php?file=${pkgver}/${pkgname}-${pkgver}.tar.gz)
 source=(https://gitlab.com/${pkgname}/${pkgname}/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz)
-sha512sums=('45333424a4569576ab1553128ea2b113df6e6a70740e941bbbca95aa5918d19723e8371c02b60ff7b17d0b7fa2d5cea6cb69cedd58a4700a6a4d42ed93487472')
+sha512sums=('ae50760cb4afb37af26cbc5cf819d1bfaa2fa1fc01509b73a4e2533ca772cff5750493974f63f573cf5748ed1007e21c7611d3840b3fa50a3e77e74f7a027988')
 options=(staticlibs)
 
 build() {
