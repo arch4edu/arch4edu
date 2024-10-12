@@ -9,12 +9,12 @@ name=cloudcompare
 _fragment="#tag=v2.13.1"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=1
+pkgrel=2
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
 url="http://www.danielgm.net/cc/"
 license=('GPL2')
-depends=('cgal' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pcl' 'pdal' 'laszip' 'qt5-base' 'qt5-tools' 'qt5-svg' 'qt5-websockets' 'shapelib' 'tbb' 'opencascade' 'opencv' 'gdal')
+depends=('cgal' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pcl' 'pdal' 'laszip' 'qt5-base' 'qt5-tools' 'qt5-svg' 'qt5-websockets' 'shapelib' 'tbb' 'opencv' 'gdal')
 #fix pcl:>vtk:>vtkm:>openmp missing deps
 depends+=(openmpi)
 depends+=(nlohmann-json fmt jsoncpp)
@@ -78,7 +78,7 @@ build() {
         -DPLUGIN_IO_QLAS:BOOL=ON
         -DPLUGIN_IO_QPHOTOSCAN:BOOL=ON
         -DPLUGIN_IO_QRDB:BOOL=OFF # requires rdblib (package for AUR from http://www.riegl.com/products/software-packages/rdblib/)
-        -DPLUGIN_IO_QSTEP=ON # requires opencascade
+        -DPLUGIN_IO_QSTEP=OFF # requires opencascade:7.7, need patch for version:7.8
         -DOPENCASCADE_INC_DIR="/usr/include/opencascade"
         -DOPENCASCADE_LIB_DIR="/usr/lib"
         -DPLUGIN_STANDARD_QCANUPO:BOOL=ON 
