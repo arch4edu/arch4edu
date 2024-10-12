@@ -2,7 +2,7 @@
 # Contributor: kalenz <https://aur.archlinux.org/account/kalenz>
 # Contributor: Vojtech Horky <vojta . horky at-symbol seznam . cz>
 pkgname=opengrok
-pkgver=1.13.22
+pkgver=1.13.23
 pkgrel=1
 pkgdesc="A fast and usable source code search and cross reference engine, written in Java"
 url="https://oracle.github.io/opengrok/"
@@ -12,7 +12,7 @@ depends=('tomcat10' 'sh' 'java-runtime>=11' 'ctags' 'unzip')
 makedepends=('apache-ant' 'java-runtime-openjdk' 'git' 'maven' 'python')
 source=(git+"https://github.com/oracle/${pkgname}.git#tag=${pkgver}")
 install=opengrok.install
-sha1sums=('6a076990579278e4fb532dcf8f5e902c1fe0702a')
+sha1sums=('44922677c1cab578664cd306085c786ed01a4c72')
 
 prepare() {
   # Supress deprecated warnings (issue reported at https://github.com/oracle/opengrok/issues/4312 )
