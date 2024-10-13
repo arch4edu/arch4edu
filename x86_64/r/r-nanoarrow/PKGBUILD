@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=nanoarrow
-_pkgver=0.5.0.1
+_pkgver=0.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -31,8 +31,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b38e95b7558e866fb8dbb968148c89fe')
-b2sums=('b02737dba64fc440c23e2c8ee9b560b08f3f0013fe369c9fb859bcfbc0f520ebd508c72d9d7667c6384c06b69e08318fab8b64cb776f40fbb33398aa9938aefe')
+md5sums=('60863f348efb6f876a139da5adec52ab')
+b2sums=('db2629689ff96406a51619a0c13a6c8875697c7657edf4ada28ea6cb9e3d43259547d3f1d8a110c70ddbbf7f07996d0860d9b5c675409d6f3207a612d9fc2ef4')
 
 build() {
   mkdir build
