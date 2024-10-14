@@ -1,3 +1,26 @@
+cloudflare-warp (2024.9.346) unstable; urgency=medium
+  Changes and improvements
+  * Added list targets to the warp-cli to enhance the user experience with the Access for Infrastructure SSH solution.
+  * Added the ability to customize PCAP options in the warp-cli.
+  * Added a list of installed applications in warp-diag.
+  * Added a tunnel reset mtu subcommand to the warp-cli.
+  * Added the ability for warp-cli to use the team provided in the MDM file for initial registration.
+  * Added a JSON output option to the warp-cli.
+  * Added the ability to execute a pcap on multiple interfaces with warp-cli.
+  * Added MASQUE tunnel protocol support for Consumer WARP.
+  * Improved the performance of firewall operations when enforcing split tunnel configuration.
+  * Fixed an issue where device posture certificate checks were unexpectedly failing.
+  * Fixed an issue where the Linux GUI fails to open the browser login window when registering a new ZT organization.
+  * Fixed an issue where clients using service tokens failed to retry after a network change.
+  * Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+  * Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+  * Deprecated warp-cli commands have been removed. If you have any workflows that use the deprecated commands, please update to the new commands where necessary.
+
+  Known issues
+  * Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services enabled.
+
+ -- Tochukwu Nkemdilim <tochukwu@cloudflare.com>  Thu, 3 Oct 2024 16:55:48 -0400
+
 cloudflare-warp (2024.6.497) unstable; urgency=medium
   New Features
   * The WARP client now supports operation on Ubuntu 24.04.

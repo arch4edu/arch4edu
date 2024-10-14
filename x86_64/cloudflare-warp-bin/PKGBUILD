@@ -5,9 +5,10 @@
 # Maintainer: Jongsik Kim <jjong84@gmail.com>
 # Maintainer: <memoryshadow@outlook.com>
 # Maintainer: Daffa Haj Tsaqif <narutohaj00@gmail.com>
+# Maintainer: Riichi Rusdiana <contact@riichi.my.id>
 
 pkgname=cloudflare-warp-bin
-pkgver=2024.6.497
+pkgver=2024.9.346
 pkgrel=2
 pkgdesc="Cloudflare Warp Client"
 url="https://1.1.1.1"
@@ -35,7 +36,7 @@ if [[ "$pkgver" != "$latest_version" ]]; then
 fi
 
 source=(
-    "${pkgname}-${pkgver}-x86_64.deb::https://pkg.cloudflareclient.com/pool/jammy/main/c/cloudflare-warp/cloudflare-warp_${pkgver//-/_}-1_amd64.deb"
+    "${pkgname}-${pkgver}-x86_64.deb::https://pkg.cloudflareclient.com/pool/jammy/main/c/cloudflare-warp/cloudflare-warp_${pkgver//-/_}.0_amd64.deb"
     "${pkgname}-${pkgver}-${pkgrel}-Release::https://pkg.cloudflareclient.com/dists/jammy/Release"
     "${pkgname}-${pkgver}-${pkgrel}-x86_64-Packages::https://pkg.cloudflareclient.com/dists/jammy/main/binary-amd64/Packages"
 )
