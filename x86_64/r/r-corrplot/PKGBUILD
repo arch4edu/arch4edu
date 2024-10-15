@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=corrplot
-_pkgver=0.94
+_pkgver=0.95
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,8 +23,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b5a6a0a312fd39a5e5f85025f538cad7')
-b2sums=('95b4d32c14497a755299d4fa8c285f14f600654455bf8247ce846a0395d8ce4eea452a4d2ca7b6ad1804bc3bf23b9e00f186d820756fa87d638e717c651976fd')
+md5sums=('3c286cc324af904bf06124270848a1c3')
+b2sums=('503e66bb2c5a648912650b30535368004eaa742f1c99092d1ba3efd105405f807d1c89f1d38884db211c030b0fe82c05c5992eb626909519633eb4b9897d1a06')
 
 build() {
   mkdir build
