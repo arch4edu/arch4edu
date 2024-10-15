@@ -1,7 +1,7 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=sf
-_cranver=1.0-17
+_cranver=1.0-18
 pkgname=r-${_cranname,,}
 pkgdesc="Simple Features for R"
 url="https://cran.r-project.org/package=sf"
@@ -76,10 +76,25 @@ optdepends=(
 # checkdepends=(
 #     "${optdepends[@]}"
 #     "r-testthat>=3.0.0"
+#
+#     # optional dependencies of GDAL/OGR, so that expect_silent() tests pass
+#     "arrow"
+#     "cfitsio"
+#     "hdf5"
+#     "libheif"
+#     "libjxl"
+#     "libwebp"
+#     "mariadb-libs"
+#     "netcdf"
+#     "openexr"
+#     "openjpeg2"
+#     "podofo"
+#     "poppler"
+#     "postgresql-libs"
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("5deb617f5e4ecdc75c360ccdfce583f1154f8476e32844472d8e256e47a98a922f07b167190b65422afd30364c8fdae836486f111b8b024f4c299ff702527488")
+b2sums=('f7a8d4f56bbc5706bd1d3ad941dd23c14d3b19e5adc1e71fef5ec1eeb9c608011cb0bda74ef41b764e13b5af310ef7aa324dbaa8c614d99b97afbe4f743479b3')
 
 build() {
     mkdir -p "${srcdir}/build/"
