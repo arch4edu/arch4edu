@@ -10,7 +10,7 @@
 # Maintainer: Kordian Bruck <k@bruck.me>
 
 pkgname=android-studio
-pkgver=2024.2.1.9
+pkgver=2024.2.1.10
 pkgrel=1
 pkgdesc="The official Android IDE (Stable branch)"
 arch=('i686' 'x86_64')
@@ -25,7 +25,7 @@ options=('!strip')
 source=("https://dl.google.com/dl/android/studio/ide-zips/$pkgver/android-studio-$pkgver-linux.tar.gz"
         "$pkgname.desktop"
         "license.html")
-sha256sums=('d7ca6955e02fc71ea43413a348a7198db10c36df2484a9a884cab7244ad7ee96'
+sha256sums=('aec225c19e50d7a254a2cf772613607984f73521982773cfdaf98c5a72253e3f'
             '73cd2dde1d0f99aaba5baad1e2b91c834edd5db3c817f6fb78868d102360d3c4'
             '9a7563f7fb88c9a83df6cee9731660dc73a039ab594747e9e774916275b2e23e')
 
@@ -39,7 +39,7 @@ package() {
   # Install the application
   install -d $pkgdir/{opt/$pkgname,usr/bin}
   cp -a bin lib jbr plugins license LICENSE.txt build.txt product-info.json $pkgdir/opt/$pkgname
-  ln -s /opt/android-studio/bin/studio.sh $pkgdir/usr/bin/$pkgname
+  ln -s /opt/android-studio/bin/studio $pkgdir/usr/bin/$pkgname
 
   # Copy licenses
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt"
