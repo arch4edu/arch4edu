@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
+  - alias: python
 depends:
   - x86_64/ros/ros-noetic-roswtf
   - x86_64/ros/ros-noetic-message-runtime
