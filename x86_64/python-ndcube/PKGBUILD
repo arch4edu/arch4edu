@@ -3,7 +3,7 @@
 pkgbase=python-ndcube
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2.2.2
+pkgver=2.2.3
 pkgrel=1
 pkgdesc="Package for multi-dimensional contiguious and non-contiguious coordinate aware arrays"
 arch=('any')
@@ -33,7 +33,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       'doc-use-local-fits.patch'
 #       "https://www.astropy.org/astropy-data/tutorials/FITS-images/HorseHead.fits"
 #       "https://github.com/sunpy/ndcube/raw/main/changelog/README.rst")
-md5sums=('f49984f1e808e3007e5cb3d89f326476')
+md5sums=('5c46353e812aec2b99fcd5f6cc12d9d4')
 #        'b50513a0bb73290d65317d0d44ae9fb9'
 #        'SKIP'
 #        'SKIP')
