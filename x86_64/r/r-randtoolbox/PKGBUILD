@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=randtoolbox
-_pkgver=2.0.4
+_pkgver=2.0.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Toolbox for Pseudo and Quasi Random Number Generation and Random Generator Tests"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,8 +13,8 @@ depends=(
   r-rngwell
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a17ceb0e2e5062191249235e50e832f6')
-b2sums=('e2b0b762355e56c03c9312395651a8cb8616243596b16740cf3695e8f5c6bfc842abcf3097c9eba78ade616f6c829c8b631b8c3c484c43314f332bf0d8221cc7')
+md5sums=('95a10075ea0c91f485545c876356d78b')
+b2sums=('243d541b5f084d23a36844a55b1e8b97d4e342a5542fc673e758464121687ea8d9cf764d4b2c5539c81058e6154ba9fb79a78f658904db6396ed05a5f9cd06d0')
 
 build() {
   mkdir build
