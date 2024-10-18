@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=rngWELL
-_pkgver=0.10-9
+_pkgver=0.10-10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Toolbox for WELL Random Number Generators"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('30a683f8002c1aa17ca20be5ab1dcdb6')
-b2sums=('62a5ef936a325fad9e8618880fbc8a0ab4e4860431d5e50c18d7538657a4de61492deab4f18c1eb8f070fb92a9305fc85325c7919f9210f5def86cafba34051c')
+md5sums=('5344e2d874138556d0a3b0981b6a613e')
+b2sums=('75d35a577627dbd6107d32f8551a498d7c81815436e5f939a02323b3d5e08a6fe56a24e9e9da84effc3b433047359c67cea454c6d2933a04b7356c489550aeb9')
 
 build() {
   mkdir build
