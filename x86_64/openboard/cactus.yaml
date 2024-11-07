@@ -3,10 +3,6 @@ nvchecker:
     aur:
   - source: archpkg
     archpkg: poppler
-depends:
-  - x86_64/qt5-webkit
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  add makedepends icu
+pre_build: aur-pre-build
 post_build: aur-post-build
