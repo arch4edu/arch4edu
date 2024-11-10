@@ -1,8 +1,7 @@
 nvchecker:
   - source: aur
     aur:
-  - source: archpkg
-    archpkg: boost
+  - alias: boost
 depends:
   - x86_64/kahip
   - x86_64/parmetis-git
