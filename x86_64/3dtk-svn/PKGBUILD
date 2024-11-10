@@ -1,17 +1,18 @@
-# Maintainer: Sir-Photch <sir-photch@posteo.me>
+# Maintainer: Christoph Liebender <christoph@liebender.dev>
 
 _pkgname=3dtk
 pkgname="$_pkgname-svn"
-pkgver=r2402
-pkgrel=1
+pkgver=r2403
+pkgrel=2
 pkgdesc='3D Toolkit with algorithms and methods to process 3D point clouds'
 url='https://slam6d.sourceforge.io'
-license=(GPL3)
+license=(GPL-3.0-only)
 arch=(x86_64)
 provides=("$_pkgname")
 makedepends=(subversion 
 	     cmake)
-depends=(boost 
+depends=(findutils
+	 boost 
 	 opencv 
 	 cgal 
 	 eigen 
@@ -30,9 +31,11 @@ optdepends=(ann
 	    cuda 
 	    python)
 source=("$pkgname::svn+https://svn.code.sf.net/p/slam6d/code/trunk"
-	cv4-8.patch)
+	update.patch
+	3dtk.sh)
 sha512sums=('SKIP'
-            'b98dcbb72fe5fc53483ba267c77c82151f8e089f4da590d9f9e34e6bd99a22b6412689f8bccd4173c16964db3ca4b28e44689c8d9e94c735401c0e46f2bb94e6')
+            '8d25cc2c0e75b78ac42dfb2b7a7ef70840d2fbd335fb87e481edf38f739281857a28180566ba916f0830f82f399cdf7fd6fcb74d27821eff54b833802d0c43da'
+            'e352631c55938430af765948ef73a16c855f2147b5cab9ec33cbdc438ee0f28bb32cd96f4f2ff96f773de153de72d3b8ff0f51f5076227e181db9eac653b9e36')
 
 pkgver() {
 	cd "$pkgname"
@@ -43,7 +46,7 @@ pkgver() {
 prepare() {
 	cd "$pkgname"
 	
-	svn patch "$srcdir/cv4-8.patch"
+	svn patch "$srcdir/update.patch"
 	
 	# set package binary paths to /opt/3dtk in every included script
 	sed -i 's,\([^/]\)bin/,\1/opt/3dtk/,g' bin/*.sh
@@ -69,22 +72,21 @@ package() {
 	
 	# toolkit ships many binaries with generic names. 
 	# thus putting them into /opt
-	install -dm755 "$pkgdir/opt/$_pkgname"
-	cp -r bin/* "$pkgdir/opt/$_pkgname"
-	
-	install -dm755 "$pkgdir/usr/share/doc/$_pkgname"
-	cp -r README.* doc/* "$pkgdir/usr/share/doc/$_pkgname"
+	rm bin/test_*
+	install -Dm 755 bin/* -t "$pkgdir/opt/$_pkgname"
 
-	install -dm755 "$pkgdir/usr/share/licenses/$_pkgname"
-	cp LICENSING "$pkgdir/usr/share/licenses/$_pkgname"
+	install -Dm 644 README.* -t "$pkgdir/usr/share/doc/$_pkgname"
+	cp -r doc/* "$pkgdir/usr/share/doc/$_pkgname"
 
-	install -dm755 "$pkgdir/usr/include/$_pkgname"
+	install -Dm 644 LICENSING -t "$pkgdir/usr/share/licenses/$_pkgname"
+	install -dm 755 "$pkgdir/usr/include/$_pkgname"
 	cp -r include/* "$pkgdir/usr/include/$_pkgname"
 
-	install -dm755 "$pkgdir/usr/lib"
-	cp -r lib/* "$pkgdir/usr/lib"
+	install -Dm 644 lib/* -t "$pkgdir/usr/lib"
 
-	install -dm755 "$pkgdir/usr/share/$_pkgname"
+	install -dm 755 "$pkgdir/usr/share/$_pkgname"
 	cp -r dat "$pkgdir/usr/share/$_pkgname"
+
+	install -Dm 755 "$srcdir/3dtk.sh" "$pkgdir/usr/bin/$_pkgname"
 }
 
