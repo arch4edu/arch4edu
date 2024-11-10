@@ -3,8 +3,8 @@ nvchecker:
   #   aur:
   - source: github
     github: arch4edu/devtools-arch4edu-extra
-  - source: archpkg
-    archpkg: devtools
+  # - source: archpkg
+  #   archpkg: devtools
 depends:
   - any/devtools-arch4edu
 build_prefix: extra-x86_64
