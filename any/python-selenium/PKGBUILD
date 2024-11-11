@@ -1,10 +1,11 @@
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
 # Maintainer: Carl Smedstad <carsme@archlinux.org>
-# Maintainer:  Anton Kudelin <kudelin at proton dot me>
+# Contributor: Anton Kudelin <kudelin at proton dot me>
 # Contributor: Jelle van der Waa <jelle@vdwaa.nl>
 # Contributor: Aaron DeVore <aaron.devore@gmail.com>
 
 pkgname=python-selenium
-pkgver=4.24.0
+pkgver=4.26.1
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=(x86_64)
@@ -33,36 +34,35 @@ makedepends=(
 checkdepends=(python-pytest)
 options=(!lto)
 source=(
-  "$pkgname-$pkgver.tar.gz::$url/archive/selenium-$pkgver.tar.gz"
-  "fix-selenium-manager-build.patch"
+  "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/selenium-${pkgver}-python.tar.gz"
+  "0001-fix-selenium-manager-build.patch"
 )
-sha256sums=(
-  '981015b21a120072c20f87f2a0bd8a677d65cf98464657cb0cf96094b1dd44a4'
-  'af031d7fd32bb4b8216d8b16957e2102b4f319ae22d94460636db90947d2d6ba'
-)
+sha256sums=('0e1ee5e523825a19e440b8bf91509139586767c1723af37b89685c121656fedb'
+            'af031d7fd32bb4b8216d8b16957e2102b4f319ae22d94460636db90947d2d6ba')
 
-_archive="selenium-selenium-$pkgver"
+_archive="selenium-selenium-${pkgver}-python"
 
 prepare() {
-  cd "$srcdir/$_archive"
-  patch -Np1 -i "$srcdir/fix-selenium-manager-build.patch"
+  cd "${_archive}"
+  patch -Np1 -i "${srcdir}/0001-fix-selenium-manager-build.patch"
 
-  cd "$srcdir/$_archive/rust"
+  cd "../${_archive}/rust"
+  export RUSTUP_TOOLCHAIN=stable
   cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 build() {
-  cd "$srcdir/$_archive/py"
+  cd "${_archive}/py"
   export RUSTUP_TOOLCHAIN=stable
   python -m build --wheel --no-isolation
 }
 
 check() {
-  cd "$srcdir/$_archive/py"
+  cd "${_archive}/py"
   pytest
 }
 
 package() {
-  cd "$srcdir/$_archive/py"
-  python -m installer --destdir="$pkgdir" dist/*.whl
+  cd "${_archive}/py"
+  python -m installer --destdir="${pkgdir}" dist/*.whl
 }
