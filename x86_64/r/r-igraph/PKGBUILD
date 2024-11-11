@@ -5,7 +5,7 @@
 # Contributor: Oleg Smirnov <oleg.smirnov@gmail.com>
 
 _pkgname=igraph
-_pkgver=2.0.3
+_pkgver=2.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,13 +14,11 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
-  arpack
   blas
   glpk
   gmp
   lapack
   libxml2
-  plfit
   r-cli
   r-lifecycle
   r-magrittr
@@ -30,6 +28,7 @@ depends=(
   util-linux-libs
 )
 makedepends=(
+  gcc-fortran
   r-cpp11
 )
 checkdepends=(
@@ -43,7 +42,6 @@ optdepends=(
   r-callr
   r-decor
   r-digest
-  r-graph
   r-igraphdata
   r-knitr
   r-rgl
@@ -55,10 +53,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "igraph-system-libs.patch")
-md5sums=('36b28af2a8910060551629b306165f75'
-         '5a958a08aa13c94de5820924a5e964ad')
-b2sums=('3cc8510e01db17a4f5dffd43b9dbbe2e01d9e631289efcadcacecd8a577555cca2848eebb68299147e22618bd0e96691b2fc0a5eb0a59c549af66dc5c0d7ef25'
-        'd2bd23dc816abfc33908b5583ee1129981fdccb8cd8b067cfb46e41f89d346135353ed6525467f14333064b601ae8544d0fa14931c34594bfdbcbcf45edf7c4b')
+md5sums=('63450fc24783ac275bdc256662622241'
+         '0d690683d6e9713001bc552e94a14eb9')
+b2sums=('fc4977d81aed2085338cb4c2222a0cdc81f934c5bca2114755a2354532485237f166317c68235e42e38c231d1faad77ced14098e1e6610a6402c62a1c9fcbab5'
+        'b67f6c8e465afed8eacec72b0319ab4f69504aed8cfcdb494d44d74b79639d03abbda3be9c215fbb82d706ab8e448ae0d4a6666e829cef1ee59a8d227c8b4fdf')
 
 prepare() {
   # Build using system libraries
