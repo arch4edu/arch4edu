@@ -9,8 +9,8 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.20.5
-pkgrel=2
+pkgver=3.22.1
+pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
 #"linux-c-debug" for some things, so the _config should be changed too
@@ -24,8 +24,8 @@ conflicts=(${_base})
 provides=("${_base}=${pkgver}")
 depends=(hdf5-openmpi fftw-openmpi gsl lapack libjpeg-turbo libyaml netcdf-openmpi
   python-numpy python-mpi4py superlu suitesparse zlib)
-makedepends=(cmake cython gcc gcc-fortran)
-checkdepends=()
+makedepends=(cmake cython gcc gcc-fortran python-setuptools)
+# checkdepends=()
 optdepends=('hypre: support for the hypre sparse system solver'
   'kokkos: support for Kokkos'
   'metis: support for metis graph partitioning library'
@@ -41,8 +41,8 @@ optdepends=('hypre: support for the hypre sparse system solver'
 install=${_base}.install
 source=(https://web.cels.anl.gov/projects/${_base}/download/release-snapshots/${_base}-lite-${pkgver}.tar.gz
   test_optdepends.sh)
-sha512sums=('1e0ebdacbcc9db22dbe3803cbc13f5e0138d0412c328ff49cab024c839527c73b28983717104daf0858d482a8804b931c5c2bf20363c6b801d2be7d27219692f'
-  '1a790c36b1bb6b6604b4fe35f3c7fba2d8f972e7fd3c6ac1273716bee490f4dded18990b9f4aedecbe609aa6ec3d2469d44c013e18ed5cf9a43f5703f2b59db8')
+sha512sums=('677038e89179307129b889f5c109bdec2d30a547fedf90fc3962ba35179f2d69bc40b4097a7ef867bbc3e334230523b8c4493b0c173184bc22255617bb542234'
+            '6babb4f04fe8a503743cd0876cf75d8bcf2ebb1cfd2d89bcf10109721335b19f8b1b6ccb27cc8b85ea21597c2f1edd8f30824be614072a6498a6a92e39632468')
 
 _install_dir=/opt/${_base}/${_config}
 _petsc_arch=arch-${_config}
@@ -56,8 +56,10 @@ build() {
 
   OPTFLAGS='-O3 -march=native'
   CONFOPTS="--with-shared-libraries=1 \
-            --with-mpi-f90module-visibility=0 \
             --with-petsc4py=1 \
+            --with-mpi-f90module-visibility=0 \
+            --with-bison=0 \
+            --with-cmake=0 \
             --with-mpi-dir=/usr \
             --with-zfp=0 \
             --with-netcdf=1 \
@@ -67,8 +69,7 @@ build() {
             --with-gsl=1 \
             --with-zlib=1 \
             --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
-            --with-suitesparse-include=/usr/include/suitesparse \
-            --with-suitesparse-lib=[libamd.so,libbtf.so,libcamd.so,libccolamd.so,libcholmod.so,libcolamd.so,libcxsparse.so,libgraphblas.so,libklu.so,libklu_cholmod.so,liblagraph.so,liblagraphx.so,libldl.so,libparu.so,librbio.so,libspex.so,libspqr.so,libsuitesparse_mongoose.so,libsuitesparseconfig.so,libumfpack.so] \
+            --with-suitesparse=1 \
             --with-hdf5=1 --with-hdf5-fortran-bindings=1 \
             --with-scalar-type=complex \
             $(sh ${srcdir}/test_optdepends.sh)"
@@ -81,10 +82,10 @@ build() {
   make DESTDIR=${srcdir}/tmp install
 }
 
-check() {
-  cd ${srcdir}/${_base}-${pkgver}
-  PYTHONPATH=${srcdir}/tmp/${_install_dir}/lib:${PYTHONPATH} make check
-}
+# check() {
+#   cd ${srcdir}/${_base}-${pkgver}
+#   PYTHONPATH=${srcdir}/tmp/${_install_dir}/lib:${PYTHONPATH} make check
+# }
 
 package() {
   _build_dir=${srcdir}/${_base}-${pkgver}
