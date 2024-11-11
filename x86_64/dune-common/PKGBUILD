@@ -1,15 +1,15 @@
-# Maintainer: Josh Hoffer < hoffer dot joshua at gmail dot com >
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: Josh Hoffer < hoffer dot joshua at gmail dot com >
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=dune-common
-_tarver=2.9.1
+_tarver=2.10.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=2
+pkgrel=1
 pkgdesc="Infrastructure and foundation classes"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
-license=('custom:GPL2 with runtime exception')
+license=(LicenseRef-GPL-2.0-only-with-DUNE-exception)
 depends=(cmake git lapack python-setuptools python-portalocker python-numpy python-mpi4py python-jinja)
 makedepends=(python-scikit-build doxygen graphviz python-sphinx texlive-latexextra biber)
 optdepends=('vc: C++ Vectorization library'
@@ -22,18 +22,20 @@ optdepends=('vc: C++ Vectorization library'
   'scotch: Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering'
   'onetbb: High level abstract threading library'
   'man-db: manual pages for dune'
-  'python-matplotlib: for Matplotlib rendering') # 'python-mayavi: for 3D plotting'
-provides=('dunecontrol' 'dune-ctest' 'dune-git-whitespace-hook' 'dunepackaging.py' 'duneproject' 'rmgenerated.py')
+  'python-matplotlib: for Matplotlib rendering'
+  'python-scikit-build: for dunepackaging.py') # 'python-mayavi: for 3D plotting'
+provides=('dune-add-spdx' 'dune-ctest' 'dune-git-whitespace-hook' 'dunecontrol' 'dunepackaging.py' 'duneproject')
+options=(!emptydirs)
 source=(https://dune-project.org/download/${_tar}{,.asc})
-sha512sums=('554d9f5dde66930d8966b99832728d17bb7670aa055c071e00260c6f90e739818672e3b9fb3f292bcb96f128f9e82679c921d8603bb993eb768f89a7b3951ac1'
+sha512sums=('f29f78b8ac4dd9a7d6439f65b280391ff393d9f2e344416f934c541c025de2b4da6ab638a8a8f45013d15f7ab8cccea45cf27a5b980df1240f9dae1c9c9db480'
   'SKIP')
-validpgpkeys=('2AA99AA4E2D6214E6EA01C9A4AF42916F6E5B1CF') # Christoph Grüninger <pgp@grueninger.de>
+validpgpkeys=('703607A1FD9AF4205E735522B95BE0EFB19724A1') # Simon Praetorius <simon.praetorius@tu-dresden.de>
 
 prepare() {
   cd ${pkgname}-${pkgver}
-  local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
   # https://salsa.debian.org/science-team/dune-common/-/blob/master/debian/patches/skip-dirs-starting-with-dot.patch
   sed -i 's/^        $(find -H "$dir" -name $CONTROL | $GREP -v '\''dune-\[-_a-zA-Z\]\/dune-\[-a-zA-Z_\]\*-\[0-9\]\\{1,\\}.\[0-9\]\\{1,\\}\/'\'')/        $(find -H "$dir" -name '\''.?\*'\'' -prune -o -name $CONTROL -print | $GREP -v '\''dune-\[-_a-zA-Z\]\/dune-\[-a-zA-Z_\]\*-\[0-9\]\\{1,\\}.\[0-9\]\\{1,\\}\/'\'')/' lib/dunemodules.lib
+  local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
 
@@ -44,13 +46,12 @@ build() {
     --build-type=None \
     -G 'Unix Makefiles' \
     -DBUILD_SHARED_LIBS=TRUE \
-    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_STANDARD=20 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
     -DCMAKE_C_FLAGS='-Wall -fdiagnostics-color=always' \
     -DCMAKE_CXX_FLAGS='-O2 -Wall -fdiagnostics-color=always -mavx' \
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
-    -DALLOW_CXXFLAGS_OVERWRITE=ON \
     -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=FALSE \
     -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE \
     -DENABLE_HEADERCHECK=ON \
@@ -70,5 +71,4 @@ package() {
   local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
   mv _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/doc/buildsystem/html/* "${pkgdir}"/usr/share/doc/${pkgname}/buildsystem
   install -Dm 644 COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  find "${pkgdir}" -type d -empty -delete
 }
