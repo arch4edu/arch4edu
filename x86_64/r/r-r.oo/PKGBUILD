@@ -4,10 +4,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=R.oo
-_pkgver=1.26.0
+_pkgver=1.27.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="R Object-Oriented Programming with or without References"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ depends=(
   r-r.methodss3
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7575e8599deb1b6387dd50a85364c3b7')
-b2sums=('db68a274bed872d2f1540eba3bb466561dd5311aafe1412e3b1651f131789209bfc6d37063534029d6b43999e8279bc4c9d270b81b5d442ac288869f6592f50c')
+md5sums=('92aade73892f5344eb8d974aa5df2170')
+b2sums=('87392225649096e6c1c06241993974b414c971cefb2302b390a69205bd301fdbf07e85ff23cf98e4a8af77bb0779751f006f6dfc0b04f969fb1d3e0c2c01405f')
 
 build() {
   mkdir build
