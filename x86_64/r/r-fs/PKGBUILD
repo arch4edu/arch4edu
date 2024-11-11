@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=fs
-_pkgver=1.6.4
+_pkgver=1.6.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,9 +30,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libuv.patch")
-md5sums=('ee7f7d9c49c0084e18764db238cac915'
+md5sums=('92e1204fc8d567e5fedc06e0ac9e8c1d'
          'e9cd06be1a987fd1cdab9b577736bfe0')
-b2sums=('de3451876c1416b4c3425a7a684558f67cbdd906f67225479e24c0cb19835aa5106afe75f7c0e0a9d7158e5ce5ac074fb8401d0d04071973fcb89067755193f5'
+b2sums=('da106a009c7768572702bdc92ffd8ddd6ed7d877ab99cda4e3f0358de3f427a6b29195a329b2a8586f0c2f901b708582499ad833ac6e66d19239a11b70030d28'
         'bb5f52cc3b73def81bc7688817dcfcf79b69d9cf2522521d389a78e55002ea22409b9f159a9d7e2a682d59148f3138245bc9e92971ceaa0246727f3fbb7b1bc1')
 
 prepare() {
