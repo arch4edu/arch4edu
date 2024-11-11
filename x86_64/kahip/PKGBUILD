@@ -2,7 +2,7 @@
 _base=KaHIP
 pkgname=${_base,,}
 pkgver=3.16
-pkgrel=4
+pkgrel=5
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=(x86_64)
 url="https://github.com/${_base}/${_base}"
