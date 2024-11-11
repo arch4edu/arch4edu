@@ -8,7 +8,7 @@
 _module="tokenizers"
 _pkgname="python-$_module"
 pkgname="$_pkgname"
-pkgver=0.20.1
+pkgver=0.20.3
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 url="https://github.com/huggingface/tokenizers"
@@ -34,7 +34,7 @@ options=('!lto')
 _pkgsrc="$_module-$pkgver"
 _pkgext="tar.gz"
 source=("$_pkgsrc.$_pkgext"::"$url/archive/refs/tags/v$pkgver.$_pkgext")
-sha256sums=('1ac66047e780dae3feb9c6f85dbb95e8861e99d86590969383f871589a3f1ef0')
+sha256sums=('21e9a235c72e49cafb7ed29829650f6a49f0a951194e1f0168b3b2f547362569')
 
 _rust_env() {
   export CARGO_HOME CARGO_TARGET_DIR RUSTUP_TOOLCHAIN
@@ -49,7 +49,7 @@ prepare() (
   sed -E -e 's@defaut@default@' -i Cargo.toml
 
   cargo update
-  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 )
 
 build() (
