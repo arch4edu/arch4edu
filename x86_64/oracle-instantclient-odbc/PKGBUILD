@@ -6,10 +6,10 @@
 
 _pkgname=instantclient-odbc
 pkgname=oracle-${_pkgname}
-pkgver=23.4.0.24.05
+pkgver=23.5.0.24.07
 _pkgver_vendor_suffix=
-_urlver=2340000
-_unzippath=instantclient_23_4
+_urlver=2350000
+_unzippath=instantclient_23_5
 pkgrel=1
 pkgdesc="Additional libraries for enabling ODBC applications with Instant Client"
 arch=('x86_64')
@@ -20,8 +20,8 @@ replaces=('instantclient-odbc')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('3805d5d4343c9f5b0c10bff10facbd6c')
-sha256sums=('c294e938e0ac2822170faecba991480bd232e1d2b21221ac108a66b11f3baab9')
+md5sums=('5df518c213dc6756170bd939254010db')
+sha256sums=('0f07e149c1badf882380e45f18814860002c041f1912a31be9b4bebca833b7eb')
 
 package() {
 	local basedir="$srcdir/${_unzippath}"
@@ -35,6 +35,8 @@ package() {
 
 	install -d "$pkgdir/usr/share/doc/oracle"
 	install -m 644 -t "$pkgdir/usr/share/doc/oracle" "$basedir/"*README*
+
+	install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" "$basedir/"*LICENSE
 
 	# create required symlinks
 	cd "$pkgdir/usr/lib" || return 1
