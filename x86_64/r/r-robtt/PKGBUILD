@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=RoBTT
-_pkgver=1.3.0
+_pkgver=1.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -38,8 +38,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('aa8b805fa470d5bb0845eec1cf08ddf8')
-b2sums=('0e79d62fc434d8f42860e68f7da2783b28c6cfc46efc3a112fa5d2687332d340f76b66f63155d276715ac857b5941b05d916b65e80212e439da17ddaac982250')
+md5sums=('cf5a7ebd9eabf9b2c1e754dc901991be')
+b2sums=('92e684d87027aa735bbf2d150bf9acd1c6bcf9152d7cd26b23ba355c4be34cee8099a274dbe891267047a9106e7ef5fdb7e3ceabdc5aacedde5ecf7cb4b83e6b')
 
 prepare() {
   # skip test that requires external files
