@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ranger
-_pkgver=0.16.0
+_pkgver=0.17.0
 pkgname=r-${_pkgname,,}
-pkgver=0.16.0
+pkgver=0.17.0
 pkgrel=1
 pkgdesc='A Fast Implementation of Random Forests'
 arch=('x86_64')
@@ -19,7 +19,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0395f93afdb807a7882c1fa8f183a26a871c5168ea0903566951298ef1138589')
+sha256sums=('d48cdf4ce4917af93d9fe221c25d11089f5139ed765bbbff43e7b4fe58a09d36')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
