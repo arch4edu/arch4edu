@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=pkgbuild
-_cranver=1.4.4
+_cranver=1.4.5
 pkgname=r-${_cranname,,}
 pkgdesc="Find Tools Needed to Build R Packages"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -23,7 +23,6 @@ optdepends=(
     "r-covr"
     "r-cpp11"
     "r-knitr"
-    "r-mockery"
     "r-rcpp"
     "r-rmarkdown"
     "r-withr>=2.3.0"
@@ -45,11 +44,11 @@ optdepends=(
 
 # checkdepends=(
 #     "${optdepends[@]}"
-#     "r-testthat>=3.0.0"
+#     "r-testthat>=3.2.0"
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("aff689582b5f1a3a4ea0fade29a1c0d442abc2c3935f5b84e56bfac3df5aac3dbac41ee025c98a7d94af33c9b69746121a1ad237d75ed37744a73252ddcc4afb")
+b2sums=("1835d6e58a47fcb23f687dac1ddad797d40ac2ba4a9d227c183c2f2e09f7970d6f5bd487b1250195d5858d1096a8ba44e7910ae2837bf71f20feadd338cde3e5")
 
 build() {
     mkdir -p "${srcdir}/build/"
