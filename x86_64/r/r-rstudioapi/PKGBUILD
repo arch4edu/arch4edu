@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=rstudioapi
-_cranver=0.17.0
+_cranver=0.17.1
 pkgname=r-${_cranname,,}
 pkgdesc="Safely Access the RStudio API"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -42,7 +42,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("02ed35eb9cc46cfe8b737a4328205537360a537f3443d0b150e2ebd4b7e175bc9fe6120fe14591dbfcbd828ecd18065086bcf1f06b7a2022e812662ecb3e4b12")
+b2sums=("bc270f0c14a859f117119ec4c866cddfce8026702ba59db635b1decee71dd6b2fa0017f5322466157bf5668f09d452041c2c5c525481d8906a079b48786f5fd0")
 
 build() {
     mkdir -p "${srcdir}/build/"
