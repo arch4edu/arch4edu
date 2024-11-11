@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=gtable
-_cranver=0.3.5
+_cranver=0.3.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -12,7 +12,7 @@ arch=("any")
 url="https://cran.r-project.org/package=${_cranname}"
 license=(MIT)
 depends=(
-    "r>=3.5"
+    "r>=4.0"
     "r-cli"
     "r-glue"
     "r-lifecycle"
@@ -46,7 +46,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("4fbc57d8bcf2c2a0abe32cab3e1226ba6471df883439f2e9fa222615181067be0faa1423091a0341dbab0e5eb48ad297328bd0e9da598b00d92438450edbbbf5")
+b2sums=("24f9fb50fd39d4a254f22c7124fcf8693de5f0d490e7dbb6f0710fae1304101517302a94bd91f0f71d4d35c4b232ac5aef0e87f3bcd111c61c84cefea2728e44")
 
 build() {
     mkdir -p "${srcdir}/build/"
