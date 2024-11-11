@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=Hmisc
-_pkgver=5.1-3
+_pkgver=5.2-0
 pkgname=r-${_pkgname,,}
-pkgver=5.1.3
+pkgver=5.2.0
 pkgrel=1
 pkgdesc='Harrell Miscellaneous'
 arch=('x86_64')
@@ -60,7 +60,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('3c61772ff7a78ca5855189faa810c74117dc5df240103adc6e90eb94e9c605eb')
+sha256sums=('117135255a36908ed9abb7da37e38b1dd2e507147eb3032d42cef9167be4fce9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
