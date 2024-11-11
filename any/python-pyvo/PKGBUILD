@@ -2,7 +2,7 @@
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.5.3
+pkgver=1.6
 pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
@@ -22,7 +22,7 @@ checkdepends=('python-pytest-astropy-header'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('421ecf4970604f9a0429a66c3c677ea7')
+md5sums=('db15b558555e7597609963677e76070e')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
@@ -41,12 +41,13 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data
+    PYTHONPATH="${PWD}" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data #
 }
 
 package_python-pyvo() {
     depends=('python-astropy>=4.1' 'python-requests')
     optdepends=('python-pillow: all functions'
+                'python-defusedxml: all functions'
                 'python-pyvo-doc: Documentation for PyVO')
     cd ${srcdir}/${_pyname}-${pkgver}
 
