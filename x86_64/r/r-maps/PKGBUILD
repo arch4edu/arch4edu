@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=maps
-_pkgver=3.4.2
+_pkgver=3.4.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Draw Geographical Maps"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -21,8 +21,8 @@ optdepends=(
   r-sp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('78e2f51ccf17274313305b0916edee7b')
-b2sums=('d2716b0f9a2ca7d7ef30fc88f00e724ca0a5bf08ac10c26a42a866699709fec7aafb9637a84a6f3c8bae23f7f81078b1017b0743279fee66d92d380d971c61e0')
+md5sums=('286906ed93b0c7ca2933744d3063f1c2')
+b2sums=('098e1ca6108bb17b148a9c77193b4ded4f39a65e2153d4fc40c05d9fdd4d4660e00fc4a4c4b61a0cda793915710e30a38731d53c305e7f0e0b70c4ff10c07103')
 
 build() {
   mkdir build
