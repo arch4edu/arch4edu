@@ -2,12 +2,13 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-cardata
   - x86_64/r/r-abind
+  - x86_64/r/r-cardata
+  - x86_64/r/r-formula
+  - x86_64/r/r-lme4
   - x86_64/r/r-pbkrtest
   - x86_64/r/r-quantreg
-  - x86_64/r/r-maptools
-  - x86_64/r/r-lme4
+  - x86_64/r/r-scales
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
