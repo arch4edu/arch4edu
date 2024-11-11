@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=nnls
-_pkgver=1.5
+_pkgver=1.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="The Lawson-Hanson Algorithm for Non-Negative Least Squares (NNLS)"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,8 +20,8 @@ optdepends=(
   r-quadprog
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f1aaeef79fbbd3aee167b19b3f512e27')
-b2sums=('6696f86729404e9187923a6b6ce2e2e26103024ffa289d84a0162113b6994746a5d7f0d9cbbc4ce6971b596753b07b20eb6d21bd4bad5ef4bf0e216b5e3be855')
+md5sums=('1fb723bf426b89950c74c64abba34199')
+b2sums=('1a76731c7508d96e7c3c13e66e7a932d3e368d4ceceae8b849056d451a8e5f6a644ed1ddb72f6a7bdbcfb5ea2441ccd65946e03e90d03880f0406b90e2552421')
 
 build() {
   mkdir build
