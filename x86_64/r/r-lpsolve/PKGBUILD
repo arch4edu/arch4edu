@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=lpSolve
-_pkgver=5.6.21
+_pkgver=5.6.22
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,9 +16,9 @@ depends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-lpsolve.patch")
-md5sums=('57d3e1be9f6e26555a2d77444a0ec79b'
+md5sums=('ca541c5fcfe1369cae20eca23a58b98f'
          'cd8dd2b63a8ba9697c3c4a5569c7c9c5')
-b2sums=('63e0665da09c978014695879c60ad5b7380c54e3267227309faedc47e290a8d206372ccbd98ba4727ba9bf32102f5cc7352b823b53ad8a8202bedf6a3ebae8bc'
+b2sums=('7f42110180869d8cb6e312ec9219d251f5c6989232f4584dba4133887f6f708569f582b9fc2167d164482df22d774645c5c715809b09a216c66488da0e3eb11b'
         '769a1dd7a495e778484785980b19c4558c9c82ec9b812ff13e40a0745f631af109a143e7613aad53dbaf70936fb02a2401e4f50675bb48d5b1155c391cedabc4')
 
 prepare() {
