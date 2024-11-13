@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-broom
+  - x86_64/r/r-cards
   - x86_64/r/r-cli
   - x86_64/r/r-dplyr
   - x86_64/r/r-labelled
