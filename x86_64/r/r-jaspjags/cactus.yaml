@@ -9,6 +9,7 @@ depends:
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-rjags
+  - x86_64/r/r-runjags
   - x86_64/r/r-stringr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
