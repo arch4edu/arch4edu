@@ -6,10 +6,10 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=car
-_pkgver=3.1-2
+_pkgver=3.1-3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Companion to Applied Regression"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,6 +17,7 @@ license=('GPL-2.0-or-later')
 depends=(
   r-abind
   r-cardata
+  r-formula
   r-lme4
   r-pbkrtest
   r-quantreg
@@ -31,6 +32,8 @@ optdepends=(
   r-lmtest
   r-matrixmodels
   r-mvtnorm
+  r-ordinal
+  r-plotrix
   r-rgl
   r-rio
   r-sandwich
@@ -38,8 +41,8 @@ optdepends=(
   r-survey
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f8be85a665aa367951aacf80d89eb5e9')
-b2sums=('ca69e00f22fdb395300b5347cde253ced59930f6def8163f4afa0849c8c7ee95aa97a0a04f53c1398ec40eebae51623c95c05968120ab7bfd840da903d3b5e25')
+md5sums=('9103307ef76967da60b98da4f26f9ee9')
+b2sums=('7419e1734d04cbb26bf693e6e88f84cdd233966d0c301b5b249a5121d2d1c4dc9c3ad2f7b4bd6332010a15fcafd38b05221b95f833661b0afa04b2caa4029f74')
 
 build() {
   mkdir build
