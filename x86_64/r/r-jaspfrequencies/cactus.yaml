@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-abtest
   - x86_64/r/r-bayesfactor
+  - x86_64/r/r-bridgesampling
   - x86_64/r/r-conting
   - x86_64/r/r-ggplot2
   - x86_64/r/r-jaspbase
