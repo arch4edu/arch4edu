@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-flexplot
   - x86_64/r/r-jaspbase
+  - x86_64/r/r-jaspdescriptives
   - x86_64/r/r-jaspgraphs
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
