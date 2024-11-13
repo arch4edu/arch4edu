@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=survminer
-_pkgver=0.4.9
+_pkgver=0.5.0
 pkgname=r-${_pkgname,,}
-pkgver=0.4.9
-pkgrel=3
+pkgver=0.5.0
+pkgrel=1
 pkgdesc="Drawing Survival Curves using 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -35,7 +35,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('df1e597fd90d4dade9f1ddfd393790d4cc682bed6463ab7f6edcc9d53a07d02f')
+sha256sums=('d2c7117d1ebce79b1e2b5512f35f53c2aa0702bbb4d5761c145e0d2e4893f58b')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
