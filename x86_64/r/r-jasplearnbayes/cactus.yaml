@@ -3,19 +3,20 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-extradistr
+  - x86_64/r/r-ggalluvial
+  - x86_64/r/r-ggdist
   - x86_64/r/r-ggplot2
   - x86_64/r/r-hdinterval
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-mcmcpack
   - x86_64/r/r-mglm
-  - x86_64/r/r-scales
-  - x86_64/r/r-ggalluvial
-  - x86_64/r/r-ragg
-  - x86_64/r/r-runjags
-  - x86_64/r/r-posterior
-  - x86_64/r/r-ggdist
   - x86_64/r/r-png
+  - x86_64/r/r-posterior
+  - x86_64/r/r-ragg
+  - x86_64/r/r-rjags
+  - x86_64/r/r-runjags
+  - x86_64/r/r-scales
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
