@@ -2,14 +2,14 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-future
+  - x86_64/r/r-future.apply
   - x86_64/r/r-ggplot2
-  - x86_64/r/r-glue
   - x86_64/r/r-gridextra
-  - x86_64/r/r-ic.infer
   - x86_64/r/r-lavaan
   - x86_64/r/r-mvtnorm
   - x86_64/r/r-norm
-  - x86_64/r/r-pbapply
+  - x86_64/r/r-progressr
   - x86_64/r/r-quadprog
   - x86_64/r/r-scales
   - x86_64/r/r-tmvtnorm
