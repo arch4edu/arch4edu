@@ -3,11 +3,11 @@
 pkgname=('python-portalocker')
 _pkgname=portalocker
 pkgver=2.10.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Easy, portable file locking API.'
 arch=('any')
 url="https://github.com/WoLpH/${_pkgname}"
-license=('PSF')
+license=('BSD-3-Clause')
 depends=('python')
 makedepends=('python-build' 'python-installer' 'python-pygments' 'python-setuptools' 'python-setuptools-scm' 'python-wheel')
 checkdepends=('python-pytest' 'python-pytest-cov' 'python-pytest-timeout' 'python-redis')
