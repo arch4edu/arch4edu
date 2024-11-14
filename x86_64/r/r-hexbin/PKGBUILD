@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=hexbin
-_pkgver=1.28.4
+_pkgver=1.28.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,8 +24,8 @@ optdepends=(
   r-marray
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('dd179358197dc4a2ecb18cf419391580')
-b2sums=('ee694ad192881b608e88a0d18f6163ede083aaacae3c35859f6eb771f9afc42140d099cf59a522ec0706e23089fd61e28c158d43fd764f521b7d72f51191ea2d')
+md5sums=('fb006a74ba94bccdc610baf1e182a918')
+b2sums=('81b75141896217fccb3b70b69dddfab03497affd6ab264651f902cf74e65a51ede0c2aacd99d041b0243fa140208754f03a14618fd07c53165de77f845021407')
 
 build() {
   mkdir build
