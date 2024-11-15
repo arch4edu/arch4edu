@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspFrequencies
-_pkgver=0.18.3
+_pkgver=0.19.0
 pkgname=r-${_pkgname,,}
-pkgver=0.18.3
-pkgrel=1
+pkgver=0.19.0
+pkgrel=2
 pkgdesc="Frequencies Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -11,6 +11,7 @@ license=('GPL')
 depends=(r
   r-abtest
   r-bayesfactor
+  r-bridgesampling
   r-conting
   r-ggplot2
   r-jaspbase
@@ -22,7 +23,7 @@ depends=(r
   r-vcdextra
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('aeae8db084036eb8e76cc557f11c777c67a4cad3c2b9df36e1b08e5d38543e17')
+sha256sums=('91474f39dca31900d240163028dfeae294d79b2c5bb7bc38504f2d7dbc0bb87c')
 
 
 build() {
