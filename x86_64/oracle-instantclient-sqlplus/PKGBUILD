@@ -6,10 +6,10 @@
 
 _pkgname=instantclient-sqlplus
 pkgname=oracle-${_pkgname}
-pkgver=23.5.0.24.07
+pkgver=23.6.0.24.10
 _pkgver_vendor_suffix=
-_urlver=2350000
-_unzippath=instantclient_23_5
+_urlver=2360000
+_unzippath=instantclient_23_6
 pkgrel=1
 pkgdesc="SQL*Plus for Oracle Instant Client"
 arch=('x86_64')
@@ -20,8 +20,8 @@ replaces=('instantclient-sqlplus')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('f164658cf40f5c912c8c5cf1141fe864')
-sha256sums=('9ffb7c65209cdfdf3601e70e7b8e3bf6e0cb52a995922f88cc8fd326c55796a9')
+md5sums=('08c8c6a4e41a1299eeeccb20e853e0b9')
+sha256sums=('20fcc3a1df794a0b4032c2ae9562e191872d033aabf0dcd2e673b28c4a93ccef')
 
 package() {
 	cd "$srcdir/${_unzippath}"
