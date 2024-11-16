@@ -4,7 +4,7 @@
 _name=soundfile
 pkgname=python-soundfile
 pkgver=0.12.1
-pkgrel=5
+pkgrel=6
 pkgdesc='A Python library to read and write audio files using libsndfile, CFFI and NumPy'
 url='https://github.com/bastibe/python-soundfile'
 arch=(any)
@@ -22,7 +22,7 @@ build() {
 
 check() {
   cd $_name-$pkgver
-  python setup.py test
+  PYTHONPATH="$PWD/build/lib" pytest -v tests
 }
 
 package() {
