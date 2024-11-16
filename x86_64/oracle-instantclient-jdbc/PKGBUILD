@@ -6,11 +6,11 @@
 
 _pkgname=instantclient-jdbc
 pkgname=oracle-${_pkgname}
-pkgver=23.5.0.24.07
+pkgver=23.6.0.24.10
 _pkgver_vendor_suffix=
-_urlver=2350000
-_unzippath=instantclient_23_5
-pkgrel=2
+_urlver=2360000
+_unzippath=instantclient_23_6
+pkgrel=1
 pkgdesc="Additional support for XA, Internationalization, and RowSet operations under JDBC"
 arch=('x86_64')
 url="https://www.oracle.com/at/database/technologies/instant-client/downloads.html"
@@ -20,8 +20,8 @@ replaces=('instantclient-jdbc')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('aee2639b45799e1061233de7e022df43')
-sha256sums=('8e7b97fbddda86ccdb122a4690001ba10eddfc746fab34ae19d4944d3cb298d9')
+md5sums=('aaae817e05677679f16cb128707f51c7')
+sha256sums=('c1060996d5ec8e823bc67bd35eefe6c07d2f926fe183ef8ee037716d82e54b81')
 
 package() {
 	cd "$srcdir/${_unzippath}"
