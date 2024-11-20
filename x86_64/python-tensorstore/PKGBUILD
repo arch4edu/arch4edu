@@ -1,7 +1,7 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 pkgname=python-tensorstore
 _pkgname=${pkgname#python-}
-pkgver=0.1.67
+pkgver=0.1.68
 pkgrel=1
 pkgdesc='Library for reading and writing large multi-dimensional arrays.'
 arch=('x86_64')
@@ -36,7 +36,7 @@ makedepends=(
     'python-wheel'
 )
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/google/$_pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('0ded12c8bbe72677ed48dec131174fe31692c4a049b50a475b766b2815b4f558')
+sha256sums=('7038f1104a3ea8d89c9e8af3d680db88dd8620af4861ad7088323df53c861c2c')
 
 build() {
     cd "$_pkgname-$pkgver"
