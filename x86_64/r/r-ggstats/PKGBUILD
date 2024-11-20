@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ggstats
-_pkgver=0.6.0
+_pkgver=0.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,13 +10,11 @@ arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-3.0-or-later')
 depends=(
-  r-broom.helpers
   r-cli
   r-dplyr
   r-forcats
   r-ggplot2
   r-lifecycle
-  r-magrittr
   r-patchwork
   r-purrr
   r-rlang
@@ -26,6 +24,8 @@ depends=(
 )
 checkdepends=(
   r-betareg
+  r-broom
+  r-broom.helpers
   r-emmeans
   r-parameters
   r-pscl
@@ -37,8 +37,10 @@ checkdepends=(
 optdepends=(
   r-betareg
   r-broom
+  r-broom.helpers
   r-emmeans
   r-glue
+  r-gtsummary
   r-knitr
   r-labelled
   r-parameters
@@ -51,8 +53,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6e82ffaa172a83d3063bb7e30c40da41')
-b2sums=('fe087398fcae03ac7fefb2b04dd3ab1eb7a4df34b7b84b21fc4e35209da6408bc54e5c8c2ec6ae8dc726aff93e952d8ebc5d10844da1636dc4caa88643fbea0d')
+md5sums=('e76fa807019923764e4732f239a9f18b')
+b2sums=('b6673d3e0b23ac9cfc1128c61584a00cf051d88ac34445067754b89937dc1c336f2e2666695a55b741024ecfd23c7fe0cc56a999cad69563a15d26873596e539')
 
 build() {
   mkdir build
