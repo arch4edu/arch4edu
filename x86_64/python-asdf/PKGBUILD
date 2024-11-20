@@ -1,16 +1,16 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=3.5.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
 url="https://asdf.readthedocs.io"
 license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm'
-             'python-wheel'
              'python-build'
              'python-installer')
 #            'python-sphinx-asdf>=0.2.2'
@@ -26,7 +26,8 @@ makedepends=('python-setuptools-scm'
 ##           'python-asdf_transform_schemas>=0.3.0'
 ##           'python-sphinx-astropy'
 ##           'python-astropy>=5.0.4'
-##           'python-toml')
+##           'python-toml'
+#            )  # wheel required by new setuptools
 #checkdepends=('python-pytest'
 #checkdepends=('python-pytest-doctestplus'
 checkdepends=('python-pytest-remotedata'
@@ -47,7 +48,7 @@ checkdepends=('python-pytest-remotedata'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('e306ea158a9ddb2dd1ed1a5740427053')
+md5sums=('3b4515e26ac2d6a7a0095b88fed90165')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -79,7 +80,7 @@ check() {
 
     # Segmentation fault
 #   PYTHONPATH="build/lib:${PYTHONPATH}" pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #--remote-data #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data -p xdist -n 4
-    pytest --remote-data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4
+    pytest --remote-data || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-asdf() {
