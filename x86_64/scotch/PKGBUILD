@@ -2,7 +2,7 @@
 # Contributor: Samuel Williams <samuel.williams@oriontransfer.co.nz>
 pkgname=scotch
 pkgver=7.0.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering"
 url="https://gitlab.inria.fr/scotch/scotch"
 license=('CECILL-C')
@@ -30,7 +30,9 @@ build() {
         -D COMMON_PTHREAD_FILE:BOOL=ON \
         -D SCOTCH_PTHREAD:BOOL=ON \
         -D SCOTCH_PTHREAD_MPI:BOOL=ON \
-        -D COMMON_PTHREAD_AFFINITY_LINUX:BOOL=ON
+        -D COMMON_PTHREAD_AFFINITY_LINUX:BOOL=ON \
+        -D CMAKE_C_FLAGS:STRING="${CFLAGS} -Wp,-D_FORTIFY_SOURCE=2" \
+        -D CMAKE_CXX_FLAGS:STRING="${CXXFLAGS} -Wp,-D_FORTIFY_SOURCE=2"
   make -C build
 }
 
