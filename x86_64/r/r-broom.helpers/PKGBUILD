@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=broom.helpers
-_pkgver=1.16.0
+_pkgver=1.17.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -11,6 +11,7 @@ url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-3.0-or-later')
 depends=(
   r-broom
+  r-cards
   r-cli
   r-dplyr
   r-labelled
@@ -68,8 +69,8 @@ optdepends=(
   r-vgam
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b723f96d34c9155ed7fc97b134608c99')
-b2sums=('83fd12afa572346dc2af0444f957a6c3d86d4d5649e8a1254723d233b378934d19734d6f71298e627301b91f8db6472a5e0741d88c2acd632a2543e578db87f7')
+md5sums=('8a845058b6d93685dad4c41e506661fe')
+b2sums=('5b142bb02f228d44f419e314659e77968554f4776bf19d96f54619d4dfc4e85ad82a415f6d73654ec2008aa9c9c4ae6a5ce041596c33f90ebdb129f222583ee3')
 
 build() {
   mkdir build
