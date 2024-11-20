@@ -5,11 +5,11 @@ nvchecker:
     github: LinuxCNC/linuxcnc
   - alias: python
 depends:
+  - x86_64/libmodbus
+makedepends:
   - any/bwidget
   - any/linkchecker
   - any/python-yapps2
-  - x86_64/tclx
-  - x86_64/tkimg
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
