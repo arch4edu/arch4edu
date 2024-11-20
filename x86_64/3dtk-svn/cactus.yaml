@@ -4,6 +4,8 @@ nvchecker:
   - source: regex
     regex: 'Revision (\d+): /trunk'
     url: http://svn.code.sf.net/p/slam6d/code/trunk/
+depends:
+  - x86_64/apriltag
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
