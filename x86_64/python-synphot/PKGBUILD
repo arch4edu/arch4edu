@@ -4,29 +4,29 @@
 pkgbase=python-synphot
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.4.0
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="Synthetic Photometry using Astropy"
 arch=('i686' 'x86_64')
 url="https://synphot.readthedocs.io"
 license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm'
-             'python-wheel'
              'python-build'
              'python-installer'
-             'python-numpy'
+             'python-numpy>=2.0.0'
              'python-sphinx-astropy'
              'python-matplotlib'
              'python-astropy'
              'python-scipy'
-             'graphviz')
+             'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-astropy-header'
               'python-pytest-doctestplus'
               'python-pytest-remotedata'
+#             'python-pytest-xdist'
               'python-dust-extinction'
               'python-specutils')   # astropy scipy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('c6ce9f25d94fcec45d87f0678b64604c')
+md5sums=('135ad5dc55cbc4754180aefcf95caf3a')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -46,7 +46,7 @@ check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
     mv {,_}${_pyname}
-    pytest "build/lib.linux-${CARCH}-cpython-$(get_pyver)" docs || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data=any
+    pytest "build/lib.linux-${CARCH}-cpython-$(get_pyver)" docs || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data=any
 }
 
 package_python-synphot() {
