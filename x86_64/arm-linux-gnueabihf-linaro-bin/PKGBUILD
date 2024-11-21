@@ -1,0 +1,49 @@
+# Maintainer: curlywei <dewei0724@gmail.com>
+# Contributer: 1st submitter coolerfall <coolingfall@gmail.com>
+
+_target=arm-linux-gnueabihf
+_pkgdate=2023.06
+_pkgrev=1
+_compiler_name=gcc
+_compiler_supplier=linaro
+_compiler_version_major=14
+_compiler_version_minor=0
+_compiler_version_rel=0
+
+pkgname=${_target}-${_compiler_supplier}-bin
+pkgver=${_compiler_version_major}.${_compiler_version_minor}
+pkgrel=${_compiler_version_rel}
+epoch=
+pkgdesc="The GNU Compiler Collection- cross compiler and binutils for ARMv7 EABI hard float target (Linaro)"
+arch=('x86_64')
+url="https://snapshots.linaro.org/gnu-toolchain"
+license=('GPL' 'LGPL')
+depends=()
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=("${_target}-gcc" "${_target}-binutils")
+conflicts=("${_target}-gcc" "${_target}-binutils")
+replaces=("${_target}-gcc" "${_target}-binutils")
+backup=()
+options=(!emptydirs !strip staticlibs)
+install=
+changelog=
+source=(${url}/${pkgver}-${_pkgdate}-${_pkgrev}/${_target}/${_compiler_name}-${_compiler_supplier}-${pkgver}.${pkgrel}-${_pkgdate}-${arch}_${_target}.tar.xz)
+sha512sums=('01da0d432c71298fb822515337ede72238644760fd0a414c2a22aa365ebcce9db87b85b503440bbbdb48a53705a4d9d62cf837aca626a02660dbd0118f60e0d3')
+
+
+package() {
+	mkdir -p ${pkgdir}/usr
+	cp -a ${srcdir}/${_compiler_name}-${_compiler_supplier}-${pkgver}.${pkgrel}-${_pkgdate}-${arch}_${_target}/* ${pkgdir}/usr
+
+	rm -f 	${pkgdir}/usr/*-manifest.txt
+	rm -f 	${pkgdir}/usr/bin/runtest
+	rm -f 	${pkgdir}/usr/lib/lib*
+	rm -f   ${pkgdir}/usr/lib/bfd-plugins/libdep.a
+	rm -rf  ${pkgdir}/usr/libexec
+	rm -rf 	${pkgdir}/usr/include
+	rm -rf 	${pkgdir}/usr/share/{dejagnu,doc,gcc-*,gdb,info,locale}
+	rm -rf 	${pkgdir}/usr/share/man/{man1/runtest.1,man5,man7}
+}
+
