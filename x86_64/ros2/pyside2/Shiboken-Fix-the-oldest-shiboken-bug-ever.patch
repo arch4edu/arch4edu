@@ -1,0 +1,44 @@
+From: Christian Tismer <tismer@stackless.com>
+Date: Tue, 21 Jun 2022 10:22:04 +0200
+Subject: Shiboken: Fix the oldest shiboken bug ever which shows up on Python
+ 3.11
+
+b7df2f1c0 "Fix signal initializer.", 18. May 2010 at 00:55
+
+There was a `PySequence_Check` in the evaluation of some signature
+function parameter processing, which should have been `PyTuple_Check`.
+
+Since the new PyEnums are also sequences, the new optimization in
+Python 3.11 changed the parameter handling in a correct way and
+replaced the argument tuple by a direct single argument of an enum
+type. And that is also a sequence ...
+
+There are probably still dormant issues like this in the codebase
+which gives reason to submit a task that checks all Python interface
+functions for correctness.
+
+Change-Id: I45996a0458c3e60795d2eb802eb98f7dd3678d92
+Pick-to: 6.3
+Task-number: PYSIDE-1735
+Task-number: PYSIDE-1987
+Fixes: PYSIDE-1988
+Reviewed-by: Cristian Maureira-Fredes <cristian.maureira-fredes@qt.io>
+Reviewed-by: Shyamnath Premnadh <Shyamnath.Premnadh@qt.io>
+(cherry picked from commit 2720e01f21f3771cb755ef183b8160f691bdb575)
+---
+ sources/pyside2/libpyside/pysidesignal.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sources/pyside2/libpyside/pysidesignal.cpp b/sources/pyside2/libpyside/pysidesignal.cpp
+index 607ce16..6824a71 100644
+--- a/sources/pyside2/libpyside/pysidesignal.cpp
++++ b/sources/pyside2/libpyside/pysidesignal.cpp
+@@ -726,7 +726,7 @@ static QByteArray buildSignature(const QByteArray &name, const QByteArray &signa
+ 
+ static QByteArray parseSignature(PyObject *args)
+ {
+-    if (args && (Shiboken::String::check(args) || !PySequence_Check(args)))
++    if (args && (Shiboken::String::check(args) || !PyTuple_Check(args)))
+         return getTypeName(args);
+ 
+     QByteArray signature;

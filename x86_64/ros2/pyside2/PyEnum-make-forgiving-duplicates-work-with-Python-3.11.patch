@@ -1,0 +1,63 @@
+From: Christian Tismer <tismer@stackless.com>
+Date: Tue, 21 Jun 2022 10:22:04 +0200
+Subject: PyEnum: make forgiving duplicates work with Python 3.11
+
+There was a silent change in PyEnums that turns Enum attributes
+into properties. This does not harm the Python interface but
+needed some change in the duplication emulation.
+
+Furthermore, new internal enums are created with an underscore name.
+
+The meta class was changed from EnumMeta to EnumType.
+
+[ChangeLog][shiboken6] The new Python Enums are now compatible with Python 3.11
+
+Change-Id: I3b1ab63dc5eed15a75ebd0f42dddf4001f640c00
+Pick-to: 6.3
+Task-number: PYSIDE-1735
+Fixes: PYSIDE-1960
+Reviewed-by: Qt CI Bot <qt_ci_bot@qt-project.org>
+Reviewed-by: Cristian Maureira-Fredes <cristian.maureira-fredes@qt.io>
+(cherry picked from commit da2cf031521815a9559ca784beadb70c7a2852d9)
+---
+ sources/pyside2/tests/QtCore/qenum_test.py                          | 6 ++++--
+ .../files.dir/shibokensupport/signature/lib/enum_sig.py             | 3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/sources/pyside2/tests/QtCore/qenum_test.py b/sources/pyside2/tests/QtCore/qenum_test.py
+index f99a893..0981c26 100644
+--- a/sources/pyside2/tests/QtCore/qenum_test.py
++++ b/sources/pyside2/tests/QtCore/qenum_test.py
+@@ -197,14 +197,16 @@ class SomeClass(QObject):
+ 
+ @unittest.skipUnless(HAVE_ENUM, "requires 'enum' module (use 'pip install enum34' for Python 2)")
+ class TestQEnumMacro(unittest.TestCase):
++    meta_name = "EnumType" if sys.version_info[:2] >= (3, 11) else "EnumMeta"
++
+     def testTopLevel(self):
+         self.assertEqual(type(OuterEnum).__module__, "enum")
+-        self.assertEqual(type(OuterEnum).__name__, "EnumMeta")
++        self.assertEqual(type(OuterEnum).__name__, self.meta_name)
+         self.assertEqual(len(OuterEnum.__members__), 2)
+ 
+     def testSomeClass(self):
+         self.assertEqual(type(SomeClass.SomeEnum).__module__, "enum")
+-        self.assertEqual(type(SomeClass.SomeEnum).__name__, "EnumMeta")
++        self.assertEqual(type(SomeClass.SomeEnum).__name__, self.meta_name)
+         self.assertEqual(len(SomeClass.SomeEnum.__members__), 3)
+         with self.assertRaises(TypeError):
+             int(SomeClass.SomeEnum.C) == 6
+diff --git a/sources/shiboken2/shibokenmodule/files.dir/shibokensupport/signature/lib/enum_sig.py b/sources/shiboken2/shibokenmodule/files.dir/shibokensupport/signature/lib/enum_sig.py
+index 088a93a..2f78718 100644
+--- a/sources/shiboken2/shibokenmodule/files.dir/shibokensupport/signature/lib/enum_sig.py
++++ b/sources/shiboken2/shibokenmodule/files.dir/shibokensupport/signature/lib/enum_sig.py
+@@ -139,7 +139,8 @@ class ExactEnumerator(object):
+                     functions.append((func_name, thing))
+             elif type(type(thing)) is EnumMeta:
+                 # take the real enum name, not what is in the dict
+-                enums.append((thing_name, type(thing).__qualname__, thing))
++                if not thing_name.startswith("_"):
++                    enums.append((thing_name, type(thing).__qualname__, thing))
+         init_signature = getattr(klass, "__signature__", None)
+         enums.sort(key=lambda tup: tup[1 : 3])  # sort by class then enum value
+         self.fmt.have_body = bool(subclasses or functions or enums or init_signature)

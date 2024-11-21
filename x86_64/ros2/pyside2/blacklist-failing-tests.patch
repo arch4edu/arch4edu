@@ -1,0 +1,55 @@
+From: Sophie Brun <sophie@freexian.com>
+Date: Fri, 22 Nov 2019 13:24:54 +0100
+Subject: Blacklist failing tests
+
+Forwarded:
+https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1146?filter=allopenissues
+---
+ build_history/blacklist.txt | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/build_history/blacklist.txt b/build_history/blacklist.txt
+index 827191a..5565cda 100644
+--- a/build_history/blacklist.txt
++++ b/build_history/blacklist.txt
+@@ -22,6 +22,9 @@
+     linux
+     darwin
+     win32
++# crash on s390x Debian build, https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1146
++[QtCore::qbytearray_test]
++    linux
+ [QtGui::qmatrix_test]
+     win32
+ [QtWidgets::bug_576]
+@@ -64,8 +67,9 @@
+     py2 win32
+ [QtQml::qquickitem_grabToImage]
+     darwin
++# Fails on armel, not reproducible on a porter box.
+ [smart::smart_pointer]
+-    py2
++    linux
+ # PYSIDE-474
+ [QtWebEngineWidgets::pyside-474-qtwebengineview]
+     py2
+@@ -83,6 +87,9 @@
+     win32
+     linux
+     darwin
++# crash on s390x Debian build, https://bugreports.qt.io/projects/PYSIDE/issues/PYSIDE-1146
++[QtQml::qquickitem_grabToImage]
++    linux
+ # In addition to a pre-existing windows failure,
+ # qtlocation/ac899dcc40bb3ad09307583fb7e6befd45a77b33 / QTBUG-66304 introduced
+ # a failure in 5.14
+@@ -91,7 +98,9 @@
+     linux
+     darwin
+ # Open GL functions failures on macOS (2/2020)
++# Python 3.12 considers it a failure when no tests are run
+ [registry::existence_test]
++    linux
+     darwin
+ # Incomplehensible effect with feature switching on 3.6, qApp.process_events()
+ [QtCore::feature_with_uic_test]

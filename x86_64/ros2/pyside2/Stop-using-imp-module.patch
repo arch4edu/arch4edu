@@ -1,0 +1,32 @@
+From: Friedemann Kleint <Friedemann.Kleint@qt.io>
+Date: Thu, 3 Sep 2020 11:14:55 +0200
+Subject: Stop using imp module
+
+Part of commit e796600c9663a26ccf1929aca8336eb0cb23fe5d.
+---
+ sources/shiboken2/tests/otherbinding/module_reload_test.py | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/sources/shiboken2/tests/otherbinding/module_reload_test.py b/sources/shiboken2/tests/otherbinding/module_reload_test.py
+index 368425c..c63af18 100644
+--- a/sources/shiboken2/tests/otherbinding/module_reload_test.py
++++ b/sources/shiboken2/tests/otherbinding/module_reload_test.py
+@@ -29,6 +29,7 @@
+ ##
+ #############################################################################
+ 
++from importlib import reload
+ import os
+ import shutil
+ import sys
+@@ -38,10 +39,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ from shiboken_paths import init_paths
+ init_paths()
+ 
+-from py3kcompat import IS_PY3K
+-
+-if IS_PY3K:
+-    from imp import reload
+ 
+ orig_path = os.path.join(os.path.dirname(__file__))
+ workdir = os.getcwd()
