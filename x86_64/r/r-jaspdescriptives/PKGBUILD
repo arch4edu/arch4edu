@@ -1,22 +1,29 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspDescriptives
-_pkgver=0.18.3
+_pkgver=0.19.0
 pkgname=r-${_pkgname,,}
-pkgver=0.18.3
-pkgrel=1
+pkgver=0.19.0
+pkgrel=2
 pkgdesc="Descriptives Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
 license=('GPL')
 depends=(r
+'r-dplyr'
+'r-forecast'
+'r-flexplot'
+'r-ggpp'
 'r-ggplot2'
+'r-ggrain'
 'r-ggrepel'
+'r-ggtext'
 'r-stringr'
 'r-jaspbase'
 'r-jaspgraphs'
+'r-jaspttests'
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('1d7ff39d4acd51819d985b43cd917b401466c003e0eafe6204b6b355cb057571')
+sha256sums=('5916f8c6ced179819ffdd85dbc2de27f61317c54da66d1be013329604ae35157')
 
 
 build() {
