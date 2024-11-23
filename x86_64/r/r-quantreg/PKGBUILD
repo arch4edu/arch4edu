@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=quantreg
-_pkgver=5.99
+_pkgver=5.99.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,8 +34,8 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8c159a3db80c6a2b1934ba5e3108b576')
-b2sums=('d5966adba800e42c74062a3dce90545d5435cf54513590b5fa8df00ace0338ad130ddc30ec4b8957bfe1cef38980cb8afc88eb842afd8f13194862c8e825bb89')
+md5sums=('76c95a94aa589ef54e6f2c5e0b8a301c')
+b2sums=('729289b026d8230839efa8719772b36ba2120820577abae87148b327df515e1dfeda422004bae8633b83cacd191745aa14e1f04bb181f1e6a6473616248f81c8')
 
 build() {
   mkdir build
