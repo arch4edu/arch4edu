@@ -63,12 +63,6 @@ if [ -f "/usr/lib/libtriangle.so" ]; then
   CONFOPTS="${CONFOPTS} --with-triangle=1"
 fi
 
-# ML (Trilinos)
-if [ -f "/usr/lib/libml.so" ]; then
-  CONFOPTS="${CONFOPTS} --with-ml=1"
-  CONFOPTS="${CONFOPTS} --with-boost=1" # Add boost support (ML requires it)
-fi
-
 # Zoltan
 if [ -f "/usr/lib/libzoltan.so" ]; then
   CONFOPTS="${CONFOPTS} --with-zoltan=1"
