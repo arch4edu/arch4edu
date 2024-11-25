@@ -1,34 +1,51 @@
-# Maintainer: Atakku <atakkudev@gmail.com>
-pkgname=apriltag
-pkgver=3.2.0
-pkgrel=3
-pkgdesc="AprilTag is a visual fiducial system popular for robotics research."
+# Maintainer: shtrophic <aur at shtrophic dot net>
+# Contributor: Atakku <atakkudev@gmail.com>
+
+pkgname=(apriltag python-apriltag)
+pkgver=3.4.2
+pkgrel=1
+pkgdesc="AprilTag is a visual fiducial system popular for robotics research"
 arch=('x86_64')
 url="https://april.eecs.umich.edu/software/apriltag"
 license=('BSD')
-makedepends=('cmake')
-source=("https://github.com/AprilRobotics/apriltag/archive/v${pkgver}.tar.gz"
-        "cmake.patch")
-sha512sums=('0b09b530ed03dce0bdc3c4e08b17d98f1303ab1d45870843354bf1a5bdf6c7efc6089e2bdf40a370d17a8191b7ce2c46fefa2dd2d49a959591351e00e186f33e'
-            '0851483ebaadab808349927a0ff308c649902a10f4067fd193dfa7f4ec6c7cc11850ac2905a6bdcf7a1287924a0e9c9752f6ec52e732c2158fcf58ec4763ea7f')
-
-prepare() {
-  mkdir -p "$srcdir/build"
-
-  cd "$srcdir/${pkgname}-${pkgver}"
-  #patch -Np1 -i "$srcdir/cmake.patch"
-}
-
+makedepends=('cmake'
+             'python-numpy')
+source=("https://github.com/AprilRobotics/apriltag/archive/v${pkgver}.tar.gz")
+sha512sums=('2e7edda62e1f196ac954cb999d11a43e81e4e8a5de296b7ce28744a0ec3a4a3209b413e2328aaebce61b2eef782209855ca1112c489bbcb5437387ab6379a849')
 
 build() {
-  cd "$srcdir/build"
-  cmake \
+  cd "$srcdir"
+  cmake -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -Wno-dev \
+    -DBUILD_EXAMPLES=OFF \
+    -DBUILD_TESTING=ON \
     "$srcdir/${pkgname}-${pkgver}"
+  cmake --build build
 }
 
-package() {
-  cd "$srcdir/build"
-  make VERBOSE=1 DESTDIR="$pkgdir" install
+check() {
+  cd "$srcdir"
+  datadir="apriltag-$pkgver/test/data"
+  for img in $(find $datadir -name '*.jpg')
+  do
+    build/test/test_detection "$datadir"/$(basename -s .jpg $img) > /dev/null
+  done
+}
+
+package_apriltag() {
+  cd "$srcdir"
+  DESTDIR="$pkgdir" cmake --install build
+  mkdir -p "$pkgdir/usr/lib/cmake/$pkgname"
+  mv "$pkgdir/usr/share/$pkgname/cmake"/* "$pkgdir/usr/lib/cmake/$pkgname"
+  mv "$pkgdir/usr/lib/cmake/$pkgname/apriltagConfig"{Version,-version}.cmake
+  rm -rf "$pkgdir/usr/share"
+  rm -rf "$pkgdir/usr/lib/python3.12"
+}
+
+package_python-apriltag() {
+  pkgdesc="$pkgdesc"' (python bindings)'
+  depends=('apriltag' 'python-numpy')
+  install -Dm 644 "build/apriltag.cpython-312-x86_64-linux-gnu.so" -t "$pkgdir"/usr/lib/python3.12/site-packages
 }
