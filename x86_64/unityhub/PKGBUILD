@@ -4,25 +4,22 @@
 # Contributor: Marius Glo <marius@mgl.dev>
 
 pkgname=unityhub
-pkgver=3.9.1
+pkgver=3.10.0
 pkgrel=1
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
 arch=('x86_64')
 license=('custom')
-depends=('nss' 'gtk3' 'cpio' 'openssl-1.1')
+depends=('gtk3' 'libnotify' 'nss' 'libxss' 'libxtst' 'xdg-utils' 'at-spi2-core' 'util-linux-libs' 'libsecret')
 optdepends=(
   'libappindicator-gtk3: The official deb says this an optional dependency'
-  'gconf: Required by Unity 2019.4 or older'
-  'libicu50: May fix issues related to empty compiler errors'
-  'icu70: : May fix issues related to empty compiler errors'
 )
 source=(
   "$pkgname-$pkgver.deb::https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/unityhub-amd64-${pkgver}.deb"
   'license.txt'
 )
 sha256sums=(
-  '64db1588b4f4b059c7795dc5bc914f41b27df668290f6ac7f9b64e3863e02210'
+  'f5d9bab554399ec0c2f17d9c96b4f870097c8e0e302f0722844e1b9c581d53e0'
   'f0eb3a4bb148bb7f426e4f5b97e891265ac487710cbcba9282518537c7b5d833'
 )
 conflicts=('unityhub-beta')
