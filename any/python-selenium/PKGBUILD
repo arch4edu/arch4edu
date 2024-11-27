@@ -5,7 +5,8 @@
 # Contributor: Aaron DeVore <aaron.devore@gmail.com>
 
 pkgname=python-selenium
-pkgver=4.26.1
+_pkgname="${pkgname#python-}"
+pkgver=4.27.1
 pkgrel=1
 pkgdesc="Python language bindings for Selenium WebDriver"
 arch=(x86_64)
@@ -31,38 +32,25 @@ makedepends=(
   python-setuptools-rust
   python-wheel
 )
-checkdepends=(python-pytest)
 options=(!lto)
-source=(
-  "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/selenium-${pkgver}-python.tar.gz"
-  "0001-fix-selenium-manager-build.patch"
-)
-sha256sums=('0e1ee5e523825a19e440b8bf91509139586767c1723af37b89685c121656fedb'
-            'af031d7fd32bb4b8216d8b16957e2102b4f319ae22d94460636db90947d2d6ba')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
+sha256sums=('5296c425a75ff1b44d0d5199042b36a6d1ef76c04fb775b97b40be739a9caae2')
 
-_archive="selenium-selenium-${pkgver}-python"
+_archive="${_pkgname}-${pkgver}"
 
 prepare() {
-  cd "${_archive}"
-  patch -Np1 -i "${srcdir}/0001-fix-selenium-manager-build.patch"
-
-  cd "../${_archive}/rust"
+  cd "${_archive}/src"
   export RUSTUP_TOOLCHAIN=stable
   cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 build() {
-  cd "${_archive}/py"
+  cd "${_archive}"
   export RUSTUP_TOOLCHAIN=stable
   python -m build --wheel --no-isolation
 }
 
-check() {
-  cd "${_archive}/py"
-  pytest
-}
-
 package() {
-  cd "${_archive}/py"
+  cd "${_archive}"
   python -m installer --destdir="${pkgdir}" dist/*.whl
 }
