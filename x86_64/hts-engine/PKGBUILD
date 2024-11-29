@@ -1,12 +1,13 @@
-# Maintainer: Moritz Maxeiner <moritz@ucworks.org>
-# Maintainer: Alexandros Theodotou <alex@zrythm.org>
+# Maintainer: Yuki Ibe <yibe\100yibe\056org>
+# Contributor: Moritz Maxeiner <moritz@ucworks.org>
+# Contributor: Alexandros Theodotou <alex@zrythm.org>
 _tarball=hts_engine_API
 pkgname=hts-engine
 pkgver=1.10
-pkgrel=3
+pkgrel=4
 pkgdesc="Engine to synthesize speech waveform from HMMs trained by hts."
 arch=('i686' 'x86_64' 'armv7h')
-url="http://hts-engine.sourceforge.net/"
+url="https://hts-engine.sourceforge.net/"
 license=('BSD')
 depends=('glibc')
 options=('staticlibs')
@@ -17,7 +18,7 @@ sha256sums=('e2132be5860d8fb4a460be766454cfd7c3e21cf67b509c48e1804feab14968f7')
 build()
 {
   cd "$srcdir/$_tarball-$pkgver"
-  ./configure --prefix=/usr
+  CFLAGS+=" -ffat-lto-objects" ./configure --prefix=/usr
   make
 }
 
