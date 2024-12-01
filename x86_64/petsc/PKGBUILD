@@ -2,7 +2,7 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.22.1
+pkgver=3.22.2
 pkgrel=1
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
@@ -25,14 +25,13 @@ optdepends=(
   'scotch: support for Scotch'
   'superlu_dist: support for SuperLU_DIST'
   'triangle: support for Triangle'
-  'trilinos-ml: support for ML (part of Trilinos)'
   'zoltan: support for zoltan'
   )
 
 install=petsc.install
 source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('677038e89179307129b889f5c109bdec2d30a547fedf90fc3962ba35179f2d69bc40b4097a7ef867bbc3e334230523b8c4493b0c173184bc22255617bb542234'
+sha512sums=('77f4f51aea56fc254dcc0df254bc69ee2cf91a598834108bfc652b0c21dbb515e7b1000e8771fec8d2b5e4c0f56c50762aa77d0e8b36c417c0eafe6fffb213af'
             '36bac50422756b2955d696fe21c2f91a2b0f0f5d1e2ef6d4a5c99a8c94f3f43c948ad38143386640fa3d2ecf0fe2f3bf788a8e9c7c815c2c5dad18849ef83a00')
 
 PETSC_ARCH=linux-c-opt
