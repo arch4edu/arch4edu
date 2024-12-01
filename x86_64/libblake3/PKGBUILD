@@ -1,6 +1,6 @@
 # Maintainer: rpkak <rpkak@users.noreply.github.com>
 pkgname='libblake3'
-pkgver=1.5.4
+pkgver=1.5.5
 pkgrel=1
 epoch=
 pkgdesc="the C implementations of the BLAKE3 cryptographic hash function"
@@ -19,7 +19,7 @@ options=()
 install=
 changelog=
 source=("$pkgname-$pkgver.tar.gz::https://github.com/BLAKE3-team/BLAKE3/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('ddd24f26a31d23373e63d9be2e723263ac46c8b6d49902ab08024b573fd2a416')
+sha512sums=('7b4bdf5b29ec645cb79b13aa79515fbc1569602c64ba00c580c7d696c24202a5f728022f5297bfff0b0fd3e8c10f46f76903351b9292e1db86e7e7763aac6642')
 validpgpkeys=()
 
 build() {
