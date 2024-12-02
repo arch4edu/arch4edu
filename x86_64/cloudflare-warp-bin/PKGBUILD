@@ -10,7 +10,7 @@
 
 pkgname=cloudflare-warp-bin
 pkgver=2024.11.309
-pkgrel=1
+pkgrel=2
 pkgdesc="Cloudflare Warp Client"
 arch=('x86_64')
 url="https://1.1.1.1"
@@ -23,6 +23,7 @@ depends=('cairo'
          'glibc'
          'gtk3'
          'hicolor-icon-theme'
+         'nftables'
          'nspr'
          'nss'
          'pango')
