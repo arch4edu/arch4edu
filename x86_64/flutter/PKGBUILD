@@ -4,13 +4,13 @@
 
 pkgbase=flutter
 _group=flutter
-pkgver=3.24.3
+pkgver=3.24.5
 _dartver=(3.5.0 3.6.0)
-_enginever=36335019a8eab588c3c2ea783c618d90505be233
+_enginever=a18df97ca57a249df5d8d68cd0820600223ce262
 _materialfontsver=3012db47f3130e62f7cc0beabff968a33cbec8d8
 _gradlewver=fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
 _flutterarch=$(echo "$CARCH" | sed s/aarch64/arm64/ | sed s/x86_64/x64/)
-pkgrel=2
+pkgrel=1
 pkgdesc="A new mobile app SDK to help developers and designers build modern mobile apps for iOS and Android."
 _pkgdesc="Flutter SDK component"
 arch=("x86_64" "aarch64")
@@ -39,7 +39,7 @@ source=(
   "opt-in-analytics.patch"
 )
 
-sha256sums=('da685843117f42ca2dd4ce64d65810a79353cd574c308df567efdf929075e03b'
+sha256sums=('28dfe9785d1cf6f514583394dd4eb680182f3d2b12a47d00961eabc0461a9f9a'
             'f0fb98748a911a546fb8211e4ff4b9ed5c8d4631042445e9829caa67b0380aaf'
             'ae41d1ee4b6819bf9747a7ff1c02cf98ca554e88f9c0d78dd9aeaf9865cc5eb1'
             'b4c104129eb57e7e3edca2e23376b8b034de2d466189bdc1c3e2a304506889a3'
