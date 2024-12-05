@@ -6,11 +6,11 @@
 
 pkgbase=rustdesk-bin
 pkgname=(rustdesk-bin)
-pkgver=1.3.3
+pkgver=1.3.4
 pkgrel=1
 pkgdesc="Yet another remote desktop software, written in Rust. Works out of the box, no configuration required."
 url="https://github.com/rustdesk/rustdesk"
-license=('AGPL-3.0-or-later')
+license=('AGPL-3.0-only')
 arch=('x86_64' 'aarch64')
 provides=("${pkgname%-bin}")
 conflicts=("${pkgname%-bin}")
@@ -33,8 +33,8 @@ optdepends=(
 options=('!strip' '!lto' '!debug')
 source_x86_64=("${pkgbase%-bin}-${pkgver}-x86_64.pkg.tar.zst::$url/releases/download/${pkgver/_/-}/rustdesk-${pkgver/_/-}-0-x86_64.pkg.tar.zst")
 source_aarch64=("${pkgbase%-bin}-${pkgver}-aarch64.rpm::$url/releases/download/${pkgver/_/-}/rustdesk-${pkgver/_/-}-0.aarch64.rpm")
-sha256sums_x86_64=('b877cbccdde3d435d3924e55ab9f4882582b0ff07ad1c0ac6fdce57f7e6b1002')
-sha256sums_aarch64=('17aabf3178afcf138254505ab9c66aff82d67b103fc430a71cc40bf77b77a354')
+sha256sums_x86_64=('5ab10917242b9fe2f1c8d304c32d10231788bb72cce98621d0f80464adf530cc')
+sha256sums_aarch64=('2fd75f53011a85dbbdddd6e7bff3ff73573a86f21ae1c4220ff8a5bc70ddabc1')
 
 install=$pkgname.install
 
