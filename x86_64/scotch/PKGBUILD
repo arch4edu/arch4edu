@@ -1,8 +1,8 @@
 # Maintainer: Martin Diehl <aur@martin-diehl.net>
 # Contributor: Samuel Williams <samuel.williams@oriontransfer.co.nz>
 pkgname=scotch
-pkgver=7.0.5
-pkgrel=2
+pkgver=7.0.6
+pkgrel=1
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering"
 url="https://gitlab.inria.fr/scotch/scotch"
 license=('CECILL-C')
@@ -12,7 +12,7 @@ provides=('ptscotch' 'ptscotch-openmpi' 'scotch_esmumps' 'scotch_ptesmumps')
 conflicts=('ptscotch-openmpi' 'scotch_esmumps' 'scotch_esmumps5')
 arch=('i686' 'x86_64')
 source=("https://gitlab.inria.fr/scotch/scotch/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz")
-sha512sums=('9566ca800fd47df63844df6ff8b0fbbe8efbdea549914dfe9bf00d3d104a8c5631cfbef69e2677de68dcdb93addaeed158e6f6a373b5afe8cec82ac358946b65')
+sha512sums=('781d906f8084c9e27a4179c888e8c24d4e4807e18608cdc20cfeef7990c687b5957a6866382f23a9ad995351ba2f30c182f3198c3cbe7c2eed8ff701719eebca')
 
 options=(!emptydirs)
 
