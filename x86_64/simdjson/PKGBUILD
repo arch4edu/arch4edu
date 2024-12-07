@@ -1,7 +1,7 @@
 # Maintainer: Bert Peters <bert@bertptrs.nl>
 pkgname=simdjson
 epoch=1
-pkgver=3.10.1
+pkgver=3.11.0
 pkgrel=1
 pkgdesc="A C++ library to see how fast we can parse JSON with complete validation."
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('Apache-2.0')
 depends=(gcc-libs)
 makedepends=(cmake)
 source=("$pkgname-$pkgver.tar.gz::https://github.com/simdjson/simdjson/archive/v$pkgver.tar.gz")
-sha256sums=('1e8f881cb2c0f626c56cd3665832f1e97b9d4ffc648ad9e1067c134862bba060')
+sha256sums=('f3469e776ca704cfda47f0a43331690c882f82c9c0c6f185452387c1e222a63e')
 
 build() {
     cmake -B build -S "$pkgname-$pkgver" \
