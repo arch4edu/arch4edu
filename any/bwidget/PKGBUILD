@@ -4,15 +4,15 @@
 # Contributor: Alessio 'mOLOk' Bolognino <themolok@gmail.com>
 
 pkgname=bwidget
-pkgver=1.9.16
-pkgrel=2
+pkgver=1.10.1
+pkgrel=1
 pkgdesc="A suite of megawidgets for Tk"
 arch=('any')
 url="https://wiki.tcl.tk/2251"
 license=('GPL')
 depends=('bash' 'tcl')
 source=("http://downloads.sourceforge.net/project/tcllib/BWidget/$pkgver/$pkgname-$pkgver.tar.gz")
-sha256sums=('bfe0036374b84293d23620a7f6dda86571813d0c7adfed983c1f337e5ce81ae0')
+sha256sums=('4aea02f38cf92fa4aa44732d4ed98648df839e6537d6f0417c3fe18e1a34f880')
 
 package() {
   cd "${srcdir}"
