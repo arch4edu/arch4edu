@@ -1,117 +1,178 @@
-# Maintainer: Antonio Rojas <arojas@archlinux.org>
-# Maintainer: Felix Yan <felixonmars@archlinux.org>
-
+# Maintainer: envolution
+# Contributor: Antonio Rojas <arojas@archlinux.org>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
+#
+pkgname=(
+  pyside2
+  pyside2-tools
+  shiboken2
+  python-shiboken2
+)
 pkgbase=pyside2
-pkgname=(shiboken2 python-shiboken2 pyside2 pyside2-tools)
-_qtver=5.15.13
-_clangver=17.0.6
-pkgver=${_qtver/-/}
-pkgrel=2
+pkgver=5.15.16
+pkgrel=1
+pkgdesc="CPython bindings generator for C++ libraries - with Debian backport patches"
 arch=(x86_64)
-url='https://www.qt.io'
-license=(LGPL)
-makedepends=(cmake python-setuptools python-wheel llvm clang=$_clangver
-             qt5-multimedia qt5-tools qt5-sensors qt5-charts qt5-webengine qt5-datavis3d
-             qt5-websockets qt5-speech qt5-3d qt5-svg qt5-script qt5-scxml qt5-x11extras
-             qt5-quickcontrols2 qt5-serialport qt5-remoteobjects qt5-xmlpatterns)
-optdepends=('qt5-svg: QtSvg bindings'
-            'qt5-script: QtScript bindings'
-            'qt5-speech: QtTextToSpeech bindings'
-            'qt5-websockets: QtWebSockets bindings'
-            'qt5-webengine: QtWebEngine bindings'
-            'qt5-datavis3d: QtDataVisualization bindings'
-            'qt5-scxml: QtScxml bindings'
-            'qt5-sensors: QtSensors bindings'
-            'qt5-3d: Qt3D bindings'
-            'qt5-x11extras: QtX11Extras bindings'
-            'qt5-charts: QtCharts bindings'
-            'qt5-tools: QtHelp bindings'
-            'qt5-remoteobjects: QtRemoteObjects bindings'
-            'qt5-serialport: QtSerialPort bindings'
-            'qt5-quickcontrols2: QtQuickControls2 bindings')
-_pkgfqn=pyside-setup-opensource-src-$_qtver
-source=(https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-$pkgver-src/${_pkgfqn}.tar.xz)
-sha256sums=('7a57797b20268d6ebcb39deba48c754a69abf9221aee03e1f3dca6f6565b7da9')
+url="https://wiki.qt.io/Qt_for_Python"
+license=('LGPL-3.0-or-later')
+depends=(cmake python-setuptools python-wheel llvm clang
+  qt5-multimedia qt5-tools qt5-sensors qt5-charts qt5-webengine qt5-datavis3d
+  qt5-websockets qt5-speech qt5-3d qt5-svg qt5-script qt5-scxml qt5-x11extras
+  qt5-quickcontrols2 qt5-serialport qt5-remoteobjects qt5-xmlpatterns)
 
-prepare(){
-  cd "$srcdir/$_pkgfqn"
+source=(
+  "https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${pkgver}-src/pyside-setup-opensource-src-${pkgver}.tar.xz"
+  update-sip-import.patch
+  fix-spelling-errors.patch
+  blacklist-failing-tests.patch
+  test-with-current-interpreter.patch
+  Shiboken-Fix-the-oldest-shiboken-bug-ever.patch
+  PyEnum-make-forgiving-duplicates-work-with-Python-3.11.patch
+  Python-3.12-Fix-the-structure-of-class-property.patch
+  Support-running-PySide-on-Python-3.12.patch
+  Final-details-to-enable-3.12-wheel-compatibility.patch
+  Stop-using-imp-module.patch
+  Do-not-change-RPATH.patch
+  shiboken2-clang-Fix-clashes-between-type-name-and-enumera.patch
+  shiboken2-clang-Fix-and-simplify-resolveType-helper.patch
+  shiboken2-clang-Remove-typedef-expansion.patch
+  shiboken2-clang-Fix-build-with-clang-16.patch
+  shiboken2-clang-Record-scope-resolution-of-arguments-func.patch
+  shiboken2-clang-Suppress-class-scope-look-up-for-paramete.patch
+  shiboken2-clang-Write-scope-resolution-for-all-parameters.patch
+  Modify-sendCommand-signatures.patch)
 
-  # https://github.com/python/cpython/issues/118777
-  sed '/PyObject \*dict = type->tp_dict;/a\    if (dict == NULL) dict = PyType_GetDict(type);' -i sources/shiboken2/libshiboken/signature/signature_helper.cpp
+sha256sums=('6d3ed6fd17275ea74829ab56df9c2e7641bfca6b5b201cf244998fa81cf07360'
+            'ff03c7cf0c6c8307d9b175b85a9a8b98fcc846a79f845763f79cd3956b03379f'
+            '8ae7bdbb575d644a6f07ffa78a8ced9e571772da21bcd5ccb022bb822b564861'
+            'e4e06395e683849cba1190bcbe5feb7bb702b0b1cfe24e319ada171bd697023d'
+            'a2c11b208034a58ad8818bdec77d31702e38bdf3d5a8200721d952ae5c8891f7'
+            '80d7bfb8e8a8af49ccf64fe260b31d1679dcb4d7523894ce2d2e31df7d823fb6'
+            'b1542af1b11d0e2aa8aa6bfc0735293f023c28d31f6261e202333ea76810c17f'
+            '77a851ed10997bd4e4990fd9d30f1a727efe4b0b0eb8c86eac9a7d712f88ec96'
+            'b47d8709ecfe7347bb0f4e55ede8d756270ccce6daf5ef18fe503237f60be1bc'
+            '6a904d070d1f25217a0ec58ce903a193369a12a5e6997ed11ccceb497aee7e66'
+            '661613cdff966b165ff6693fc605d4ded3d1d2c57cf1e972fe6e0bcfae2a691b'
+            'bd4cd0a0f09f70e817ddf29561c2a790337a9006fc1c9f9659bfdf6ec984befe'
+            '9690af1315db5be414cb1b87eae81b841d63e5e6a123a54f9428a800c7003436'
+            '6c609e7444994ae44f9ba3362357af2fef08d4875de17dd55175206f2f8059e0'
+            '1bbbf26d8934ecba818787ceadec012c52d442de80029b16e6f621b73d368c65'
+            'c65fb8e2f434eb7459794b36456489b7b870751ae5ec7d22ba9bc1722e88b289'
+            'fd3777ba00af221b73dffc545fd0eb2400d47372ff65f221d082f7bb75330732'
+            '02ad885d12e9169c071974dc72218d0f3fd52c5cdad361c6d2a841fadf4d57ad'
+            'ca24294040f1443415bcf49e90dcdfa31a523abade4b7ee44f32195be43ffdbd'
+            '2f39461136a718a9f75bd94c1e71fc358764af25f68c650fd503c777e32ff302')
 
-  # https://github.com/arch4edu/arch4edu/issues/268
-  sed '/typing.TypeVar.__repr__ = _typevar__repr__/d' -i sources/pyside2/PySide2/support/generate_pyi.py
+_pkgdir="pyside-setup-opensource-src-${pkgver}"
+_pythonpath=$(python -c "from sysconfig import get_path; print(get_path('platlib'))")
 
-  sed '/check_allowed_python_version()/d' -i setup.py
+prepare() {
+  cd $_pkgdir
+  patch -Np1 -i ../update-sip-import.patch
+  patch -Np1 -i ../fix-spelling-errors.patch
+  patch -Np1 -i ../blacklist-failing-tests.patch
+  patch -Np1 -i ../test-with-current-interpreter.patch
+  patch -Np1 -i ../Shiboken-Fix-the-oldest-shiboken-bug-ever.patch
+  patch -Np1 -i ../PyEnum-make-forgiving-duplicates-work-with-Python-3.11.patch
+  patch -Np1 -i ../Python-3.12-Fix-the-structure-of-class-property.patch
+  patch -Np1 -i ../Support-running-PySide-on-Python-3.12.patch
+  patch -Np1 -i ../Final-details-to-enable-3.12-wheel-compatibility.patch
+  patch -Np1 -i ../Stop-using-imp-module.patch
+  patch -Np1 -i ../Do-not-change-RPATH.patch
+  patch -Np1 -i ../shiboken2-clang-Fix-clashes-between-type-name-and-enumera.patch
+  patch -Np1 -i ../shiboken2-clang-Fix-and-simplify-resolveType-helper.patch
+  patch -Np1 -i ../shiboken2-clang-Remove-typedef-expansion.patch
+  patch -Np1 -i ../shiboken2-clang-Fix-build-with-clang-16.patch
+  patch -Np1 -i ../shiboken2-clang-Record-scope-resolution-of-arguments-func.patch
+  patch -Np1 -i ../shiboken2-clang-Suppress-class-scope-look-up-for-paramete.patch
+  patch -Np1 -i ../shiboken2-clang-Write-scope-resolution-for-all-parameters.patch
+  patch -Np1 -i ../Modify-sendCommand-signatures.patch
 }
 
 build() {
-  cmake -B build -S $_pkgfqn \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=None \
-    -DBUILD_TESTS=OFF \
-    -DPYTHON_EXECUTABLE=/usr/bin/python
-  cmake --build build
+  cd $_pkgdir
+  CFLAGS="-I/usr/lib/python3.12/site-packages/numpy/_core/include $CFLAGS"
+  CXXFLAGS="-I/usr/lib/python3.12/site-packages/numpy/_core/include $CXXFLAGS"
+  if [ ! -f "./.build-complete" ]; then
+    cmake -B build -S "./" \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=None \
+      -DBUILD_TESTS=OFF \
+      -DPYTHON_EXECUTABLE=/usr/bin/python
+
+    cmake --build build --parallel 4
+  else
+    note2 'Pyside2 build cache found, skipping configuration and compilation.  Remove ${pkgdir}/.build-complete to build again'
+  fi
+  touch .build-complete
 }
 
 package_shiboken2() {
   pkgdesc='Generates bindings for C++ libraries using CPython source code'
-  depends=(clang=$_clangver llvm libxslt qt5-xmlpatterns)
+  depends=('clang' 'llvm' 'libxslt' 'qt5-xmlpatterns')
 
-  DESTDIR="$pkgdir" cmake --install build/sources/shiboken2
-# Provided in python-shiboken2
-  rm -r "$pkgdir"/usr/lib/{python*,libshiboken*}
-# Conflicts with shiboken6 and doesn't work anyway
-  rm "$pkgdir"/usr/bin/shiboken_tool.py
+  cd $_pkgdir
+  DESTDIR="${pkgdir}" cmake --install build/sources/shiboken2
+
+  # Remove files conflicting with other packages
+  rm -r "${pkgdir}"/usr/lib/{python*,libshiboken*}
+  rm "${pkgdir}/usr/bin/shiboken_tool.py"
 }
 
 package_python-shiboken2() {
   pkgdesc='Python bindings for shiboken2'
-  depends=(python)
+  depends=('python')
 
-  DESTDIR="$pkgdir" cmake --install build/sources/shiboken2
-# Provided in shiboken2
-  rm -r "$pkgdir"/usr/{bin,include,lib/{cmake,pkgconfig}}
+  cd $_pkgdir
+  DESTDIR="${pkgdir}" cmake --install build/sources/shiboken2
 
-# Install egg-info
-  cd $_pkgfqn
+  # Remove unnecessary files
+  rm -r "${pkgdir}"/usr/{bin,include,lib/{cmake,pkgconfig}}
+
+  # Install egg-info
   python setup.py egg_info --build-type=shiboken2
-  _pythonpath=`python -c "from sysconfig import get_path; print(get_path('platlib'))"`
-  cp -r shiboken2.egg-info "$pkgdir"/$_pythonpath
+  install -dm755 "${pkgdir}${_pythonpath}/shiboken2.egg-info"
+  mv shiboken2.egg-info "${pkgdir}${_pythonpath}/shiboken2.egg-info"
 }
 
 package_pyside2() {
   pkgdesc='Enables the use of Qt5 APIs in Python applications'
-  depends=(python-shiboken2 qt5-declarative)
-  optdepends=('qt5-svg: QtSvg bindings'
-              'qt5-script: QtScript bindings'
-              'qt5-speech: QtTextToSpeech bindings'
-              'qt5-websockets: QtWebSockets bindings'
-              'qt5-webengine: QtWebEngine bindings'
-              'qt5-datavis3d: QtDataVisualization bindings'
-              'qt5-scxml: QtScxml bindings'
-              'qt5-sensors: QtSensors bindings'
-              'qt5-3d: Qt3D bindings'
-              'qt5-x11extras: QtX11Extras bindings'
-              'qt5-charts: QtCharts bindings'
-              'qt5-tools: QtHelp bindings'
-              'qt5-remoteobjects: QtRemoteObjects bindings'
-              'qt5-serialport: QtSerialPort bindings'
-              'qt5-quickcontrols2: QtQuickControls2 bindings')
-  provides=(qt5-python-bindings)
+  depends=('python-shiboken2' 'qt5-declarative')
+  optdepends=(
+    'qt5-svg: QtSvg bindings'
+    'qt5-script: QtScript bindings'
+    'qt5-speech: QtTextToSpeech bindings'
+    'qt5-websockets: QtWebSockets bindings'
+    'qt5-webengine: QtWebEngine bindings'
+    'qt5-datavis3d: QtDataVisualization bindings'
+    'qt5-scxml: QtScxml bindings'
+    'qt5-sensors: QtSensors bindings'
+    'qt5-3d: Qt3D bindings'
+    'qt5-x11extras: QtX11Extras bindings'
+    'qt5-charts: QtCharts bindings'
+    'qt5-tools: QtHelp bindings'
+    'qt5-remoteobjects: QtRemoteObjects bindings'
+    'qt5-serialport: QtSerialPort bindings'
+    'qt5-quickcontrols2: QtQuickControls2 bindings'
+  )
+  provides=('qt5-python-bindings')
 
-  DESTDIR="$pkgdir" cmake --install build/sources/pyside2
-# Install egg-info
-  cd $_pkgfqn
+  cd $_pkgdir
+  DESTDIR="${pkgdir}" cmake --install build/sources/pyside2
+
+  # Install egg-info
   python setup.py egg_info --build-type=pyside2
-  _pythonpath=`python -c "from sysconfig import get_path; print(get_path('platlib'))"`
-  cp -r PySide2.egg-info "$pkgdir"/$_pythonpath
+  install -dm755 "${pkgdir}${_pythonpath}/PySide2.egg-info"
+  mv PySide2.egg-info "${pkgdir}${_pythonpath}/PySide2.egg-info"
 }
 
 package_pyside2-tools() {
   pkgdesc='Tools for PySide2'
-  depends=(pyside2)
+  depends=('pyside2')
 
-  DESTDIR="$pkgdir" cmake --install build/sources/pyside2-tools
-  rm "$pkgdir"/usr/bin/{rcc,uic,designer,pyside_tool.py} # provided by qt5-base
+  cd $_pkgdir
+  DESTDIR="${pkgdir}" cmake --install build/sources/pyside2-tools
+
+  # Remove files provided by qt5-base
+  rm "${pkgdir}/usr/bin/"{rcc,uic,designer,pyside_tool.py}
 }

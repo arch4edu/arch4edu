@@ -1,0 +1,27 @@
+From: Dmitry Shachnev <mitya57@debian.org>
+Date: Sun, 14 Nov 2021 21:08:50 +0300
+Subject: Find the build directory matching the current interpreter
+
+This is needed to allow us to run tests with all supported Python versions.
+Without this patch, the latest build directory will be always picked, no
+matter what the current interpreter is.
+---
+ testing/buildlog.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/testing/buildlog.py b/testing/buildlog.py
+index 216282b..5d3aa1f 100644
+--- a/testing/buildlog.py
++++ b/testing/buildlog.py
+@@ -94,6 +94,11 @@ class BuildLog(object):
+                     """.format(fpath)))
+                     sys.exit(1)
+ 
++                # We need to find the build directory for the current interpreter
++                py_version = "{}.{}".format(sys.version_info[0], sys.version_info[1])
++                if py_version not in build_classifiers:
++                    continue
++
+                 if not os.path.exists(build_dir):
+                     rel_dir, low_part = os.path.split(build_dir)
+                     rel_dir, two_part = os.path.split(rel_dir)

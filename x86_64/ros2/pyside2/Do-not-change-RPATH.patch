@@ -1,0 +1,37 @@
+From: Dmitry Shachnev <mitya57@debian.org>
+Date: Thu, 25 Jan 2024 14:21:09 +0300
+Subject: Do not change RPATH
+
+Forwarded: not-needed
+---
+ build_scripts/main.py           | 3 ---
+ build_scripts/platforms/unix.py | 5 -----
+ 2 files changed, 8 deletions(-)
+
+diff --git a/build_scripts/main.py b/build_scripts/main.py
+index 23b37c5..25c0cf3 100644
+--- a/build_scripts/main.py
++++ b/build_scripts/main.py
+@@ -631,9 +631,6 @@ class PysideBuild(_build, DistUtilsCommandMixin):
+                 log.info("Created {}".format(build_history))
+ 
+         if not OPTION["SKIP_PACKAGING"]:
+-            # Build patchelf if needed
+-            self.build_patchelf()
+-
+             # Prepare packages
+             self.prepare_packages()
+ 
+diff --git a/build_scripts/platforms/unix.py b/build_scripts/platforms/unix.py
+index b842510..8df0e73 100644
+--- a/build_scripts/platforms/unix.py
++++ b/build_scripts/platforms/unix.py
+@@ -220,8 +220,3 @@ def prepare_packages_posix(self, vars):
+         if config.is_internal_shiboken_generator_build():
+             # Copy over clang before rpath patching.
+             self.prepare_standalone_clang(is_win=False)
+-
+-    # Update rpath to $ORIGIN
+-    if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+-        rpath_path = "{st_build_dir}/{st_package_name}".format(**vars)
+-        self.update_rpath(rpath_path, executables)
