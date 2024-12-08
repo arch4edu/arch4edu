@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=DBItest
-_pkgver=1.8.1
+_pkgver=1.8.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,8 +35,8 @@ optdepends=(
   r-rsqlite
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4c364d7e113a1ed755412a9601c4be00')
-b2sums=('634b480e4a697b64b572e6957909845d279332a7fa0d8dd4c72bba81a29867dd2a798227a73623f8ed0aaedac0f69bd27cd66bafa7b1570b28c7b61ac426ff9c')
+md5sums=('6420d02b91f87dbb5e668ffba011488f')
+b2sums=('b47c83a6291bd2d2ce0db5edf420cbc7ee1e0041d0ebc582b92911775d41f8612fa9868b3b2a23fcf417180e98a465f22c2920b58a30667e0d5f715b3667d422')
 
 build() {
   mkdir build
