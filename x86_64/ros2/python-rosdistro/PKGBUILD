@@ -1,7 +1,7 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 
 pkgname=('python-rosdistro')
-pkgver='0.9.1'
+pkgver='1.0.1'
 pkgrel=1
 pkgdesc='A tool to work with rosdistro files'
 arch=('any')
@@ -12,7 +12,7 @@ makedepends=('python-setuptools')
 
 conflicts=('python2-rosdistro')
 source=("https://github.com/ros-infrastructure/rosdistro/archive/${pkgver}.tar.gz")
-sha256sums=('1ab7ce5e09432b0d4c00ffd2405101bb9b168e13181b4779f5d0c6935806e904')
+sha256sums=('aeb1b2f5c065b79840df979f2c4e11ee05328eb6e86e8df9111019a4f0e42260')
 
 _module='rosdistro'
 
