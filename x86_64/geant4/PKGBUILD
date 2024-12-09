@@ -1,12 +1,13 @@
 # Maintainer: Luis Sarmiento < Luis.Sarmiento-ala-nuclear.lu.se >
 pkgname='geant4'
-pkgver=11.2.2
+pkgver=11.3.0
 _pkgver=v${pkgver}
 pkgrel=1
 pkgdesc="A simulation toolkit for particle physics interactions."
 # https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/gettingstarted.html
-depends=('clhep'
-         'cmake>=3.16'
+depends=('cmake>=3.16'
+         'clhep>=2.4.6.0'
+         'expat>=2.0.1'
          'xerces-c>=3'
          'qt6-base' # soqt depends on qt6-base
          'glu'
@@ -20,18 +21,21 @@ conflicts=('geant4_devel')
 optdepends=('java-environment: for histogram visualizations and analysis'
   'tcsh: for C Shell support'
   'python: for G4Python support'
-  'geant4-abladata: Data files for nuclear shell effects in INCL/ABLA hadronic mode'
-  'geant4-ensdfstatedata: Nuclei properties from the Evaluated Nuclear Structure Data Files'
-  'geant4-incldata: Data files for proton and neutron density profiles'
+  'geant4-neutronhpdata: Experimental neutron data files with thermal cross sections'
   'geant4-ledata: Data files for low energy electromagnetic processes'
   'geant4-levelgammadata: Data files for photon evaporation'
-  'geant4-neutronhpdata: Experimental neutron data files with thermal cross sections'
-  'geant4-particlehpdata: Data files from the TALYS nuclear model code'
+  'geant4-radioactivedata: Data files for radioactive decay hadronic processes'
   'geant4-particlexsdata: Data files for evaluated p, d, t, He3, He4 and gamma cross sections, replaces geant4-neutronxsdata'
   'geant4-piidata: Data files for shell ionisation cross sections'
-  'geant4-radioactivedata: Data files for radioactive decay hadronic processes'
   'geant4-realsurfacedata: Data files for measured optical surface reflectance'
   'geant4-saiddata: Data files from evaluated cross-sections in SAID data-base'
+  'geant4-abladata: Data files for nuclear shell effects in INCL/ABLA hadronic mode'
+  'geant4-incldata: Data files for proton and neutron density profiles'
+  'geant4-ensdfstatedata: Nuclei properties from the Evaluated Nuclear Structure Data Files'
+  'geant4-channelingdata: Data files for the simulations of channeling trajectories'
+  'geant4-particlehpdata: Data files from the TALYS nuclear model code'
+  'geant4-nudexlibdata: Nuclear De-excitation data library for (n,gamma) reactions'
+  'geant4-urrptdata: Particle Tables for the treatment of low-energy neutrons in the Unresolved Resonance Region (URR)'
 )
 url="http://geant4.cern.ch/"
 arch=('x86_64')
@@ -40,7 +44,7 @@ options=('!emptydirs')
 install="${pkgname}.install"
 source=("http://geant4-data.web.cern.ch/releases/${pkgname}-${_pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('d24f65735b8a0a039c00f9434991e99ef119b86c510d0f2ab21155db82a3491d'
+sha256sums=('1da4318b3f96f87f4d47558a32dab269b8f3fc956708038c28e72a180b0efba6'
             '0eae153900d995603b0b465c9f17225ba76dd8118377507916fc709360482058')
 
 ## Remove this if you want to keep an even smaller package
@@ -100,7 +104,7 @@ echo ""
 : <<'EOF'
 
  From: https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/installguide.html#geant4-build-options
- Last revisited: Dec 11, 2023. (11.2)
+ Last revisited: Dec 8, 2024. (11.3)
 
  |----------------------------------+------------------------------------------------------+----------------|
  | option                           | default                                              | set to         |
@@ -118,7 +122,7 @@ echo ""
  | GEANT4_USE_OPENGL_X11            | OFF, Unix Only                                       | ON             |
  | GEANT4_USE_QT                    | OFF                                                  | ON             |
  | GEANT4_USE_RAYTRACER_X11         | OFF, Unix only                                       | ON             |
- | GEANT4_USE_SYSTEM_CLHEP          | OFF                                                  |                |
+ | GEANT4_USE_SYSTEM_CLHEP          | OFF                                                  | ON             |
  | GEANT4_USE_SYSTEM_EXPAT          | ON                                                   |                |
  | GEANT4_USE_SYSTEM_ZLIB           | OFF                                                  | ON             |
  | GEANT4_USE_VTK                   | OFF                                                  |                |
@@ -135,8 +139,10 @@ echo ""
  | GEANT4_INSTALL_EXAMPLES          | ON                                                   |                |
  | GEANT4_INSTALL_PACKAGE_CACHE     | ON                                                   | OFF            |
  | GEANT4_INSTALL_DATASETS_TENDL    | OFF                                                  |                |
+ | GEANT4_INSTALL_DATASETS_NUDEXLIB | OFF                                                  |                |
+ | GEANT4_INSTALL_DATASETS_URRPT    | OFF                                                  |                |
  | GEANT4_BUILD_MSVC_MP             | OFF, Windows Only                                    |                |
- | GEANT4_BUILD_TLS_MODEL           | initial-exec                                         | global-dynamic |
+ | GEANT4_BUILD_TLS_MODEL           | initial-exec, Unix only                              | global-dynamic |
  | GEANT4_BUILD_STORE_TRAJECTORY    | ON                                                   |                |
  | GEANT4_BUILD_VERBOSE_CODE        | ON                                                   |                |
  | GEANT4_BUILD_BUILTIN_BACKTRACE   | OFF                                                  |                |
@@ -149,8 +155,7 @@ echo ""
  | GEANT4_USE_FREETYPE              | OFF                                                  |                |
  | GEANT4_USE_HDF5                  | OFF                                                  |                |
  | GEANT4_USE_USOLIDS               | OFF                                                  |                |
- | GEANT4_USE_TIMEMORY              | OFF                                                  |                |
- | CMAKE_PREFIX_PATH                |                                                      |                |
+ | CMAKE_PREFIX_PATH                |                                                      | /usr           |
  |----------------------------------+------------------------------------------------------+----------------|
 
  |--------------------------------+-----------------------------------------------------------------------------------------|
