@@ -4,9 +4,6 @@ nvchecker:
   - source: github
     github: numba/llvmlite
   - alias: python
-depends:
-  - x86_64/llvm15
-  - x86_64/llvm15: llvm15-libs
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
