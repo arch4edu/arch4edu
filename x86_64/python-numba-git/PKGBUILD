@@ -3,13 +3,13 @@
 # Contributor: Michael Schubert <mschu.dev at gmail>
 
 pkgname=python-numba-git
-pkgver=0.62.0dev0.r2.g46cdc048d
+pkgver=0.62.0dev0.r10.g38f489090
 pkgrel=1
 pkgdesc='NumPy aware dynamic Python compiler using LLVM (Git version)'
 url='https://github.com/numba/numba'
 arch=('x86_64')
 license=('BSD-2-Clause')
-depends=('python-llvmlite>=0.44.0dev0' 'python-numpy' 'python-setuptools')
+depends=('python-llvmlite>=0.45.0dev0' 'python-numpy' 'python-setuptools')
 optdepends=(
   'openmp: OpenMP threading backend'
   'tbb: TBB threading backend'
