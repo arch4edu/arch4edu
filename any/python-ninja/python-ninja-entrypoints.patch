@@ -1,0 +1,16 @@
+diff --unified --recursive --text a/setup.py b/setup.py
+--- a/setup.py	2023-10-09 18:30:49.000000000 +0200
++++ b/setup.py	2024-05-20 10:04:35.261548613 +0200
+@@ -39,12 +39,6 @@
+     packages=['ninja'],
+     package_data={"ninja": ["py.typed"]},
+ 
+-    entry_points={
+-        'console_scripts': [
+-            'ninja=ninja:ninja'
+-        ]
+-    },
+-
+     url=r'http://ninja-build.org/',
+     download_url=r'https://github.com/ninja-build/ninja/releases',
+     project_urls={
