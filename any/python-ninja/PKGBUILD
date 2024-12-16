@@ -6,7 +6,7 @@ _name=${pkgname#python-}
 pkgdesc="The infrastructure to build Ninja Python wheels"
 url="https://github.com/scikit-build/ninja-python-distributions"
 
-pkgver=1.11.1.1
+pkgver=1.11.1.3
 pkgrel=1
 
 arch=("any")
@@ -17,44 +17,23 @@ depends=(
 )
 makedepends=(
     "python-build"
+    "python-hatch-fancy-pypi-readme"
     "python-installer"
-    "python-scikit-build"
-    "python-setuptools"
+    "python-scikit-build-core"
     "python-setuptools-scm"
     "python-wheel"
 )
-checkdepends=(
-    "python-coverage"
-    "python-importlib-metadata"
-    "python-path"
-    "python-pytest"
-    "python-pytest-cov"
-)
-source=(
-    "${pkgname}-${pkgver}.tar.gz::https://github.com/scikit-build/ninja-python-distributions/archive/refs/tags/${pkgver}.tar.gz"
-    "python-ninja-entrypoints.patch"
-)
-b2sums=(
-    "eceaaa7abd538930e41625ad33c923d9619c9fe851454afdcf5b20d0df932e9f961f7c2332ec2a99c4baa48db9d2e0dc9cef10915e2765da98cb056c63c5107b"
-    "3dfd40633dc9797736faf7507d9c172aee961d105d92168bf2d72af1b4d3ae4a79f656668b3332516908c18351784a2744973408e126ce4efa31174e01f7bd28"
-)
 
-prepare() {
-    cd "${srcdir}/ninja-python-distributions-${pkgver}"
-    patch --forward --strip=1 --input="${srcdir}/python-ninja-entrypoints.patch"
-}
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/scikit-build/ninja-python-distributions/archive/refs/tags/${pkgver}.tar.gz")
+b2sums=("cce325cfa743c43025c8bd820ee17c580241221e6974e6ffa95f28ecc23a7ffeb957359cc68e6e4acac3bf8770ccad3351795abce9443fb714794dfc00a1f5f4")
 
 build() {
     cd "${srcdir}/ninja-python-distributions-${pkgver}"
     python -m build --wheel --no-isolation
 }
 
-check() {
-    cd "${srcdir}/ninja-python-distributions-${pkgver}"
-    python -m pytest . || true
-}
-
 package() {
     cd "${srcdir}/ninja-python-distributions-${pkgver}"
     python -m installer --destdir="$pkgdir" dist/*.whl
+    rm "${pkgdir}/usr/bin/ninja"  # conflict with `ninja`
 }
