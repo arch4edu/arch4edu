@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=parallelly
-_pkgver=1.39.0
+_pkgver=1.40.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,9 +14,13 @@ license=('LGPL-2.1-or-later')
 depends=(
   r
 )
+optdepends=(
+  r-base64enc
+  r-commonmark
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cb4215d0253d0531ee7dc46d2c5ff600')
-b2sums=('9a99816e96891f82cc1928501ead68dbf704998135990b017022bbc47761a230cb0c27d712176d97def2419a1b9e8c9002b3a6cdd24386d026b5eb2e5b1c210b')
+md5sums=('2af7edeed59019a8e28f82b0a60d7194')
+b2sums=('176dcb74ccfcdfea1295fdfd5fee4f9b4cb2a6efb7ff73d499621d160a609f88ab769d579a54e5c63e7e059f8a2379f6916035338a07c5a9d686a40a4b0cab46')
 
 build() {
   mkdir build
