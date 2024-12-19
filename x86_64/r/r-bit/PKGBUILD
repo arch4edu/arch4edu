@@ -5,7 +5,7 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=bit
-_pkgver=4.5.0
+_pkgver=4.5.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('933b9d99ed4d52bb76070ae7cd857fa0')
-b2sums=('47605338c0aa3c208a71aff9073240d43c93483ffcca69c2db95856df6e541fc74e34fb8c0e386f4ee2c07190f6f1b1d41c7b4f6821bd14ae43ab44924321e1a')
+md5sums=('36794143b3cfc96be9829b5fe95a0d74')
+b2sums=('17e354f69102e60aa4af5ff1ea7fb73f9cf89f6cdd26e3d00d5c6c2fd5cf5939ef555437fbf99233e3255c16aac056edb02a1c73f9f3fe8ce6000d7f7f84f8e7')
 
 build() {
   mkdir build
