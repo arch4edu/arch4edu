@@ -1,40 +1,43 @@
-# Maintainer: Andrea Manenti <andrea [dot] manenti [at] yahoo [dot] com>
+# Maintainer: envolution
+# Contributor: Andrea Manenti <andrea [dot] manenti [at] yahoo [dot] com>
 # Contributor: Henry-ZHR <henry-zhr@qq.com>
+# shellcheck shell=bash disable=SC2034,SC2154
 pkgname=python-safetensors
 pkgver=0.4.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Simple, safe way to store and distribute tensors'
 arch=('x86_64')
 url='https://github.com/huggingface/safetensors'
-license=('Apache')
+license=('Apache-2.0')
 depends=('python')
 makedepends=('python-build'
-             'python-installer'
-             'python-maturin'
-             'python-wheel'
-             'python-setuptools-rust')
+  'python-installer'
+  'python-maturin'
+  'python-wheel'
+  'python-setuptools-rust')
 optdepends=('python-jax'
-            'python-flax'
-            'python-jaxlib'
-            'python-numpy'
-            'python-paddlepaddle'
-            'python-tensorflow'
-            'python-pytorch')
+  'python-flax'
+  'python-jaxlib'
+  'python-numpy'
+  'python-paddlepaddle'
+  'python-tensorflow'
+  'python-pytorch')
 checkdepends=('python-pytorch'
-              'python-numpy'
-              'python-tensorflow'
-              'python-jax'
-              'python-flax'
-              'python-jaxlib'
-              # 'python-paddlepaddle'
-              'python-black'
-              'python-isort'
-              'flake8'
-              'python-click'
-              'python-huggingface-hub'
-              'python-pytest'
-              'python-pytest-benchmark'
-              'python-h5py')
+  'python-numpy'
+  'python-tensorflow'
+  'python-jax'
+  'python-flax'
+  'python-jaxlib'
+  # 'python-paddlepaddle'
+  'python-black'
+  'python-isort'
+  'flake8'
+  'python-click'
+  'python-huggingface-hub'
+  'python-pytest'
+  'python-pytest-benchmark'
+  'python-hypothesis'
+  'python-h5py')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=('31066e251e7aaf75decdc7bae7a819d7648de648972fc7b3aee1e181ab1ca9e8')
 
@@ -64,3 +67,4 @@ package() {
   cd "safetensors-${pkgver}/bindings/python"
   python -m installer --destdir="${pkgdir}" dist/*.whl
 }
+# vim:set ts=2 sw=2 et:
