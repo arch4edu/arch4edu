@@ -1,14 +1,14 @@
 # Maintainer: robertfoster
 
 pkgname=devilutionx-graphics-tools-git
-pkgver=1.2.0.r1.64c0629
+pkgver=1.2.0.r4.ae39773
 pkgrel=1
 pkgdesc="DevilutionX graphics format conversion tools (git version)"
 arch=('armv6h' 'armv7h' 'arm' 'aarch64' 'i686' 'x86_64')
 url="https://github.com/diasurgical/devilutionx-graphics-tools"
 license=('custom:unlicense')
 depends=('fmt')
-makedepends=('git' 'cmake')
+makedepends=('git' 'cmake' 'ninja')
 conflicts=("${pkgname%-git}")
 provides=("${pkgname%-git}")
 source=("${pkgname%-git}::git+${url}")
