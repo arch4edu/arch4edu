@@ -2,7 +2,7 @@
 
 pkgname='python-jax'
 pkgver=0.4.35
-pkgrel=1
+pkgrel=2
 pkgdesc='Composable transformations of Python+NumPy programs'
 arch=('any')
 url='https://github.com/jax-ml/jax/'
