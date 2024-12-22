@@ -3,7 +3,7 @@
 _base=m2r2
 pkgname=python-${_base}
 pkgver=0.3.3.post2
-pkgrel=1
+pkgrel=2
 pkgdesc="Markdown and reStructuredText in a single file"
 arch=(any)
 url="https://github.com/crossnox/${_base}"
