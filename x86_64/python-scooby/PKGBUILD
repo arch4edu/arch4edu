@@ -1,7 +1,7 @@
 # Maintainer: Martin Diehl <aur@martin-diehl.net>
 
 pkgver=0.10.0
-pkgrel=2
+pkgrel=3
 pkgname=python-scooby
 _name=${pkgname#python-}
 pkgdesc='A Great Dane turned Python environment detective'
