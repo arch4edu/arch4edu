@@ -3,7 +3,7 @@
 
 pkgname=python-grip
 pkgver=4.6.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Preview GitHub Markdown files like Readme locally before committing them"
 arch=('any')
 license=('MIT')
