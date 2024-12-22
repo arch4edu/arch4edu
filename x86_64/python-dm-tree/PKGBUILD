@@ -2,7 +2,7 @@
 
 pkgname=python-dm-tree
 pkgver=0.1.8
-pkgrel=3
+pkgrel=4
 pkgdesc='tree is a library for working with nested data structures'
 arch=('x86_64')
 url='https://tree.readthedocs.io'
