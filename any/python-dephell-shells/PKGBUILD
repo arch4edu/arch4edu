@@ -4,7 +4,7 @@
 _pkgname=dephell_shells
 pkgname=python-dephell-shells
 pkgver=0.1.5
-pkgrel=3
+pkgrel=4
 pkgdesc="Activate virtual environment for current shell"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
