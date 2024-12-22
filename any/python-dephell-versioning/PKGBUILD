@@ -4,7 +4,7 @@
 _pkgname=dephell_versioning
 pkgname=python-dephell-versioning
 pkgver=0.1.2
-pkgrel=5
+pkgrel=6
 pkgdesc="Bump project version like a pro"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
