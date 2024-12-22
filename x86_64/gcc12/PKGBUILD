@@ -1,4 +1,5 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
+# Maintainer: Karl Ludwig Brennan <karlludwigbrennan@outlook.com>
+# Contributer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: Giancarlo Razzolini <grazzolini@archlinux.org>
 # Contributor: Frederik Schwan <freswa at archlinux dot org>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
@@ -9,10 +10,10 @@
 # NOTE: libtool requires rebuilt with each new gcc version
 
 pkgname=(gcc12 gcc12-libs gcc12-fortran)
-pkgver=12.3.0
+pkgver=12.4.0
 _majorver=${pkgver%%.*}
-_commit=8fc1a49c9312b05d925b7d21f1d2145d70818151
-pkgrel=6
+_commit=2bada4bc59bed4be34fab463bdb3c3ebfd2b41bb
+pkgrel=1
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
