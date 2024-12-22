@@ -2,7 +2,7 @@
 pkgname=python-sphinx-astropy
 _pyname=${pkgname#python-}
 pkgver=1.9.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Sphinx extensions and configuration specific to the Astropy project"
 arch=('any')
 url="https://github.com/astropy/sphinx-astropy"
