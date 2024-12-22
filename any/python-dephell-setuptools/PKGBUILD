@@ -4,7 +4,7 @@
 pkgname=python-dephell-setuptools
 _pyname=dephell_setuptools
 pkgver=0.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Extract meta information from setup.py'
 arch=(any)
 url="https://github.com/dephell/$_pyname"
