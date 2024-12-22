@@ -5,7 +5,7 @@ _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
 pkgver=0.16.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Bootstrap-based Sphinx theme from the PyData community"
 arch=('any')
 url="https://pydata-sphinx-theme.readthedocs.io"
