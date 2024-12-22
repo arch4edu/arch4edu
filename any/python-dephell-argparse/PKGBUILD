@@ -5,7 +5,7 @@
 _pkgname=dephell_argparse
 pkgname=python-dephell-argparse
 pkgver=0.1.3
-pkgrel=5
+pkgrel=6
 pkgdesc='Argparse with groups, commands, colors, and fuzzy matching'
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
