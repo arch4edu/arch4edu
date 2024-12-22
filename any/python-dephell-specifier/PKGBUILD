@@ -4,7 +4,7 @@
 _pkgname=dephell_specifier
 pkgname=python-dephell-specifier
 pkgver=0.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Work with version specifiers"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
