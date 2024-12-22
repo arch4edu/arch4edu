@@ -5,7 +5,7 @@ _name=${pkgname:7}
 pkgname=python-colcon-recursive-crawl
 _name=${pkgname:7}
 pkgver=0.2.3
-pkgrel=2
+pkgrel=3
 pkgdesc="An extension for colcon-core to recursively crawl for packages."
 arch=(any)
 url="https://pypi.org/project/$_name"
@@ -22,3 +22,4 @@ package() {
     python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")
