@@ -4,7 +4,7 @@
 _pkgname=dephell_discover
 pkgname=python-dephell-discover
 pkgver=0.2.10
-pkgrel=6
+pkgrel=7
 pkgdesc="Find project modules and data files (packages and package_data for setup.py)"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
