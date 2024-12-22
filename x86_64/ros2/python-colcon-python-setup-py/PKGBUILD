@@ -3,7 +3,7 @@
 pkgname=python-colcon-python-setup-py
 _name=${pkgname:7}
 pkgver=0.2.8
-pkgrel=5
+pkgrel=6
 pkgdesc="An extension for colcon-core to identify packages with a setup.py file by introspecting the arguments to the setup() function call of setuptools."
 arch=(any)
 url="https://pypi.org/project/colcon-python-setup-py"
@@ -21,3 +21,4 @@ package() {
     python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")
