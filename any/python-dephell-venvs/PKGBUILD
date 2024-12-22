@@ -4,7 +4,7 @@
 _pkgname=dephell_venvs
 pkgname=python-dephell-venvs
 pkgver=0.1.18
-pkgrel=2
+pkgrel=3
 pkgdesc="Manage Python virtual environments"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
