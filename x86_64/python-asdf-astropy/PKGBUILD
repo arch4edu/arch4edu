@@ -7,7 +7,7 @@ _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
 pkgver=0.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc="ASDF serialization support for astropy"
 arch=('any')
 url="https://asdf-astropy.readthedocs.io"
