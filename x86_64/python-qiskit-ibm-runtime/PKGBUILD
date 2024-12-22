@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-ibm-runtime
 pkgname=python-${_pkgname}
-pkgver=0.33.2
-pkgrel=1
+pkgver=0.34.0
+pkgrel=2
 pkgdesc="IBM Client for Qiskit Runtime"
 arch=(any)
 url=https://github.com/Qiskit/qiskit-ibm-runtime
@@ -15,18 +15,18 @@ depends=(
     python-qiskit
     python-requests
     python-requests-ntlm
-    python-scipy
-    python-typing_extensions
     python-urllib3
     python-websocket-client
 )
 optdepends=(
     'python-plotly: interactive plots'
+    'python-scipy: support for sparse matrices'
 )
 makedepends=(
     python-build
     python-installer
     python-setuptools
+    python-setuptools-scm
     python-wheel
 )
 #checkdepends=(
@@ -36,10 +36,11 @@ makedepends=(
 #    python-websockets
 #)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
-b2sums=('e876192a12d052d0a15502380eae7d7f803314f59ef2148491be904f66002d3e10970b75b1dc84771b94586207554f56e595c032d21d8749fe73161dfac5b7d7')
+b2sums=('50b4ccd82f7daa90a9cf179ae5be88003cf365a1c0865227881f579ae3fdc723a0c2cfd379ea322c33b07638e2f74b567529c429b83afe96c52a7f5eb0a83f1b')
 
 build() {
     cd $_pkgname-$pkgver
+    export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
     python -m build --wheel --no-isolation
 }
 
