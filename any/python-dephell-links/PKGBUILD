@@ -4,7 +4,7 @@
 _pkgname=dephell_links
 pkgname=python-dephell-links
 pkgver=0.1.5
-pkgrel=2
+pkgrel=3
 pkgdesc="Parse dependency links"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
