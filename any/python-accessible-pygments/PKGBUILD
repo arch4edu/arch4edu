@@ -5,7 +5,7 @@ _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
 pkgver=0.0.5
-pkgrel=1
+pkgrel=2
 pkgdesc="A collection of accessible pygments styles"
 arch=('any')
 url="https://quansight-labs.github.io/accessible-pygments"
