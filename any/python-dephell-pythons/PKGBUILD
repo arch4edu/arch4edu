@@ -4,7 +4,7 @@
 _pkgname=dephell_pythons
 pkgname=python-dephell-pythons
 pkgver=0.1.15
-pkgrel=4
+pkgrel=5
 pkgdesc="Work with python versions"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
