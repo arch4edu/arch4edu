@@ -4,7 +4,7 @@
 _pkgname=dephell_markers
 pkgname=python-dephell-markers
 pkgver=1.0.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Work with environment markers (PEP-496)"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"
