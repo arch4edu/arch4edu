@@ -3,7 +3,7 @@
 _name=cmake
 pkgname=python-$_name-bin
 pkgver=3.30.5
-pkgrel=2
+pkgrel=3
 pkgdesc='Infrastructure for building CMake Python wheels'
 arch=(x86_64 aarch64)
 url="https://github.com/scikit-build/cmake-python-distributions"
