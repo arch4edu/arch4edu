@@ -4,7 +4,7 @@
 _pkgname=dephell-licenses
 pkgname=python-dephell-licenses
 pkgver=0.1.7
-pkgrel=6
+pkgrel=7
 pkgdesc="Manage OSS licenses: retrieve information, generate"
 arch=('any')
 url="https://github.com/dephell/${_pkgname/-/_}"
