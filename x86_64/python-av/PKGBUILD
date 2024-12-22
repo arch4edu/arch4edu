@@ -7,7 +7,7 @@ pkgdesc="Pythonic bindings for FFmpeg"
 url="https://pyav.basswood-io.com"
 
 pkgver=14.0.1
-pkgrel=1
+pkgrel=2
 
 arch=("x86_64" "i686")
 license=("BSD-3-Clause")
