@@ -1,7 +1,7 @@
 # Maintainer: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-library-path
 pkgver=0.2.1
-pkgrel=3
+pkgrel=4
 pkgdesc="An extension for colcon-core to set an environment variable to find shared libraries at runtime."
 arch=(any)
 url="https://pypi.org/project/colcon-library-path/"
@@ -18,3 +18,4 @@ package() {
     python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1 || echo "Not A Problem"
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")
