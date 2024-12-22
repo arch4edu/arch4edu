@@ -1,11 +1,12 @@
-# Maintainer: Carl Smedstad <carl.smedstad at protonmail dot com>
+# Maintainer: envolution
+# Contributor: Carl Smedstad <carl.smedstad at protonmail dot com>
 # Contributor: Eli Schwartz <eschwartz@archlinux.org>
 # Contributor: Guillaume Brogi <gui-gui at netcourrier dot com>
 
 pkgname=python-progress
 _name=${pkgname#python-}
 pkgver=1.6
-pkgrel=10
+pkgrel=11
 pkgdesc="Easy to use progress bars for Python"
 arch=(any)
 url="https://github.com/verigak/progress"
@@ -42,3 +43,4 @@ package() {
 
   install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
+# vim: ts=2 sw=2 et:
