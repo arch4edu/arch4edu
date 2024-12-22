@@ -4,7 +4,7 @@
 _pyname=dephell
 pkgname=python-dephell
 pkgver=0.8.3
-pkgrel=8
+pkgrel=9
 pkgdesc="universal Python project management: convert between formats, build, manage venvs"
 arch=(any)
 url="https://github.com/dephell/$_pyname"
