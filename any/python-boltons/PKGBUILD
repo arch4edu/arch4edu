@@ -3,7 +3,7 @@
 pkgname=python-boltons
 pkgver=24.1.0
 _commit=5aed99eb066f563fbad2231498492df8403a643d
-pkgrel=1
+pkgrel=2
 pkgdesc="Functionality that should be in the standard library. Like builtins, but Boltons."
 url="https://github.com/mahmoud/boltons"
 license=('BSD')
