@@ -2,7 +2,7 @@
 _pkgname=qiskit-algorithms
 pkgname=python-$_pkgname
 pkgver=0.3.1
-pkgrel=3
+pkgrel=4
 pkgdesc="A library of quantum algorithms for Qiskit"
 arch=(any)
 url="https://github.com/qiskit-community/qiskit-algorithms"
