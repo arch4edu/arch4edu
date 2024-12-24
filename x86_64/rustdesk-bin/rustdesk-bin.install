@@ -12,19 +12,6 @@ post_install() {
 	note "To start it automatically on boot, run 'sudo systemctl enable --now rustdesk' in a terminal."
 }
 
-# arg 1:  the new package version
-# arg 2:  the old package version
-pre_upgrade() {
-	# Starting in version 1.3.0-2 and until version 1.3.1-1, some files were erroneously installed
-	# using this .INSTALL file. These files aren't tracked by pacman and generate a conflict during upgrade.
-	# The code below delete these files when upgrading from an impacted version.
-	if (( $(vercmp $2 '1.3.0-2') >= 0 && $(vercmp $2 '1.3.1-1') < 0 )); then
-		rm -f /usr/share/applications/rustdesk-link.desktop
-		rm -f /usr/share/applications/rustdesk.desktop
-		rm -f /etc/systemd/system/rustdesk.service
-	fi
-}
-
 post_upgrade() {
 	# Display instructions to enable the RustDesk service if it's not enabled
 	systemctl -q is-enabled rustdesk.service || post_install
