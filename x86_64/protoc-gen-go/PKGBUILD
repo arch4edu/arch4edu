@@ -2,7 +2,7 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go"
-pkgver=1.36.0
+pkgver=1.36.1
 pkgrel=1
 pkgdesc="Go support for Google's protocol buffers"
 arch=('x86_64' 'aarch64' 'i686')
@@ -13,7 +13,7 @@ makedepends=('go')
 optdepends=('protobuf: protoc generator')
 _pkgsrc="protobuf-go-${pkgver}"
 source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('722b740046aa6711403edb5349503ca19d77a587b1192f3781821379a2335938')
+sha256sums=('28a6c9eb62a06e65e866bcdb2005c63f9ee7b57c271617ed761f309c7ece17fb')
 
 prepare() {
   cd "${srcdir}/${_pkgsrc}"
