@@ -10,7 +10,7 @@ pkgname=(
 )
 pkgbase=pyside2
 pkgver=5.15.16
-pkgrel=1
+pkgrel=3
 pkgdesc="CPython bindings generator for C++ libraries - with Debian backport patches"
 arch=(x86_64)
 url="https://wiki.qt.io/Qt_for_Python"
@@ -40,7 +40,10 @@ source=(
   shiboken2-clang-Record-scope-resolution-of-arguments-func.patch
   shiboken2-clang-Suppress-class-scope-look-up-for-paramete.patch
   shiboken2-clang-Write-scope-resolution-for-all-parameters.patch
-  Modify-sendCommand-signatures.patch)
+  Modify-sendCommand-signatures.patch
+  fix-for-python-3-13.patch
+  bump-supported-version-3-13.patch
+)
 
 sha256sums=('6d3ed6fd17275ea74829ab56df9c2e7641bfca6b5b201cf244998fa81cf07360'
             'ff03c7cf0c6c8307d9b175b85a9a8b98fcc846a79f845763f79cd3956b03379f'
@@ -61,7 +64,9 @@ sha256sums=('6d3ed6fd17275ea74829ab56df9c2e7641bfca6b5b201cf244998fa81cf07360'
             'fd3777ba00af221b73dffc545fd0eb2400d47372ff65f221d082f7bb75330732'
             '02ad885d12e9169c071974dc72218d0f3fd52c5cdad361c6d2a841fadf4d57ad'
             'ca24294040f1443415bcf49e90dcdfa31a523abade4b7ee44f32195be43ffdbd'
-            '2f39461136a718a9f75bd94c1e71fc358764af25f68c650fd503c777e32ff302')
+            '2f39461136a718a9f75bd94c1e71fc358764af25f68c650fd503c777e32ff302'
+            '4b3419f59bc787c8ccab179065eed6c1f67a6fb3ebdc3e9d6813d682a257be4a'
+            'e6e9652da36526b5ba3a058c0870a3456e87f51db895d517ab8936cee6802dc3')
 
 _pkgdir="pyside-setup-opensource-src-${pkgver}"
 _pythonpath=$(python -c "from sysconfig import get_path; print(get_path('platlib'))")
@@ -87,12 +92,14 @@ prepare() {
   patch -Np1 -i ../shiboken2-clang-Suppress-class-scope-look-up-for-paramete.patch
   patch -Np1 -i ../shiboken2-clang-Write-scope-resolution-for-all-parameters.patch
   patch -Np1 -i ../Modify-sendCommand-signatures.patch
+  patch -Np1 -i ../fix-for-python-3-13.patch
+  patch -Np1 -i ../bump-supported-version-3-13.patch
 }
 
 build() {
   cd $_pkgdir
-  CFLAGS="-I/usr/lib/python3.12/site-packages/numpy/_core/include $CFLAGS"
-  CXXFLAGS="-I/usr/lib/python3.12/site-packages/numpy/_core/include $CXXFLAGS"
+  CFLAGS="-I${_pythonpath}/numpy/_core/include $CFLAGS"
+  CXXFLAGS="-I${_pythonpath}/numpy/_core/include $CXXFLAGS"
   if [ ! -f "./.build-complete" ]; then
     cmake -B build -S "./" \
       -DCMAKE_INSTALL_PREFIX=/usr \
@@ -102,7 +109,7 @@ build() {
 
     cmake --build build --parallel 4
   else
-    note2 'Pyside2 build cache found, skipping configuration and compilation.  Remove ${pkgdir}/.build-complete to build again'
+    msg2 'Pyside2 build cache found, skipping configuration and compilation.  Remove ${pkgdir}/.build-complete to build again'
   fi
   touch .build-complete
 }

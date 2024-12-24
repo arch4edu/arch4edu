@@ -1,0 +1,10 @@
+--- a/build_scripts/config.py	2024-12-23 00:55:45.290109212 -0500
++++ b/build_scripts/config.py_patched	2024-12-23 00:56:30.282706611 -0500
+@@ -96,6 +96,7 @@
+             'Programming Language :: Python :: 3.10',
+             'Programming Language :: Python :: 3.11',
+             'Programming Language :: Python :: 3.12',
++            'Programming Language :: Python :: 3.13',
+         ]
+ 
+         self.setup_script_dir = None

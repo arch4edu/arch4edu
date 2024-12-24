@@ -1,0 +1,45 @@
+diff -ruN src/pyside-setup-opensource-src-5.15.16/sources/shiboken2/libshiboken/pep384impl.h src_patched/pyside-setup-opensource-src-5.15.16/sources/shiboken2/libshiboken/pep384impl.h
+--- a/sources/shiboken2/libshiboken/pep384impl.h	2024-12-22 23:52:09.407776754 -0500
++++ b/sources/shiboken2/libshiboken/pep384impl.h	2024-12-23 00:00:14.536221094 -0500
+@@ -187,6 +187,13 @@
+ #define _PepLong_AsInt _PyLong_AsInt
+ #endif
+ 
++
++#ifdef Py_LIMITED_API
++    #define PepLong_AsInt(obj) pyLongToInt<int>(obj)
++#else
++    #define PepLong_AsInt PyLong_AsLong
++#endif
++
+ /*****************************************************************************
+  *
+  * RESOLVED: pydebug.h
+diff -ruN src/pyside-setup-opensource-src-5.15.16/sources/shiboken2/libshiboken/sbkarrayconverter.cpp src_patched/pyside-setup-opensource-src-5.15.16/sources/shiboken2/libshiboken/sbkarrayconverter.cpp
+--- a/sources/shiboken2/libshiboken/sbkarrayconverter.cpp	2024-11-11 08:14:27.000000000 -0500
++++ b/sources/shiboken2/libshiboken/sbkarrayconverter.cpp	2024-12-23 00:01:29.404955305 -0500
+@@ -80,6 +80,15 @@
+     }
+ }
+ 
++// Updated version using PyLong_AsLong
++template<typename T>
++T pyLongToInt(PyObject* pyLong) {
++    long value = PyLong_AsLong(pyLong);
++    if (value == -1 && PyErr_Occurred())
++        return 0; // Or handle error as appropriate
++    return static_cast<T>(value);
++}
++
+ // Internal, for usage by numpy
+ SbkArrayConverter *createArrayConverter(IsArrayConvertibleToCppFunc toCppCheckFunc)
+ {
+@@ -161,7 +170,7 @@
+ {
+     auto *handle = reinterpret_cast<ArrayHandle<int> *>(cppOut);
+     handle->allocate(PySequence_Size(pyIn));
+-    convertPySequence(pyIn, _PepLong_AsInt, handle->data());
++    convertPySequence(pyIn, pyLongToInt<int>, handle->data());
+ }
+ 
+ static PythonToCppFunc sequenceToCppIntArrayCheck(PyObject *pyIn, int dim1, int /* dim2 */)
