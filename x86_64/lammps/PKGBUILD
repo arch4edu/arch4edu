@@ -1,95 +1,86 @@
 # Maintainer: fromtheeast710 <theeast710@proton.me>
 # Contributor: physkets <physkets // at // tutanota dot com>
 # Contributor: xpt <user.xpt@gmail.com>
-
-### BUILD OPTIONS
-# Set these variables to '1' to enable them
-# Doing so will add the requisite build commands,
-# as well as add the needed dependencies
-
-# HTML documentation
-_BUILD_DOC=0
-# Copy 'examples' to /usr/share/examples/lammps
-_INSTALL_EXAMPLES=0
-# Use Intel compilers
-_ENABLE_INTEL_COMPILER=0
-# USER-INTEL package
-_ENABLE_INTEL=0
-# USER-OMP package
-_ENABLE_OMP=0
-# KIM package
-_ENABLE_KIM=0
+# Contributor: yuhldr <yuhldr@qq.com>
 
 pkgname=lammps
-pkgver=20230802
-_pkgver="2Aug2023"
-#_pkgver=$(date -d ${pkgver} +%-d%b%Y)
-pkgrel=1
-pkgdesc="Large-scale Atomic/Molecular Massively Parallel Simulator"
-url="https://lammps.sandia.gov/"
+pkgver=20240829
+_pkgver="stable_29Aug2024_update1"
+pkgrel=3
+pkgdesc="Public development project of the LAMMPS MD software package"
+url="https://lammps.org"
 arch=('x86_64')
 license=('GPL')
-depends=('fftw' 'openmpi')
-makedepends=('cmake')
-source=("${pkgname}-${_pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/stable_${_pkgver}.tar.gz")
-sha512sums=('dab76fdfbeb7dd0069de6c4474e2e97fc423afdd8b407915c9ad9f8e6016a24cfbf981b315f7908e5a7768c50b030b5498c161ba26d507b2cfeff5333b81455a')
+depends=('fftw' 'openmpi' 'ffmpeg' 'libpng' 'python' 'intel-oneapi-mkl')
+makedepends=('cmake>=3.1' 'python-pip' 'python-build')
+conflicts=('lammps-git')
+provides=('lammps')
+source=("https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
+sha256sums=('3aea41869aa2fb8120fc4814cab645686f969e2eb7c66aa5587e500597d482dc')
+optdepends=('clang' 'python' 'python-mpi4py')
 
-# process the build settings from above
-if (( $_ENABLE_INTEL_COMPILER )); then
-    depends+=('intel-mkl')
-    optdepends=('intel-parallel-studio-xe')
-    _feature_args+=('-DCMAKE_C_COMPILER=icc')
-    _feature_args+=('-DCMAKE_C_FLAGS=-xHost -O3 -no-prec-div -qoverride-limits -qopt-zmm-usage=high')
-    _feature_args+=('-DCMAKE_CXX_COMPILER=icpc')
-    _feature_args+=('-DCMAKE_CXX_FLAGS=-no-prec-div -qoverride-limits -qopt-zmm-usage=high -qno-offload -fno-alias -ansi-alias -O3 -std=c++11 -DLMP_INTEL_USELRT -DLMP_USE_MKL_RNG')
-    _feature_args+=('-DCMAKE_Fortran_COMPILER=ifort')
-    _feature_args+=('-DMPI_C_COMPILER=mpiicc')
-    _feature_args+=('-DMPI_CXX_COMPILER=mpiicpc')
-fi
-if (( $_BUILD_DOC )); then
-    makedepends+=('python-virtualenv' 'doxygen')
-fi
-if (( $_ENABLE_KIM )); then
-    depends+=('kim-api>=2.0.2')
-    _feature_args+=('-DPKG_KIM=yes')
-fi
-if (( $_ENABLE_INTEL )); then
-    _feature_args+=('-DINTEL_ARCH=cpu')
-    _feature_args+=('-DPKG_USER-INTEL=yes')
-fi
-if (( $_ENABLE_OMP )); then
-    _feature_args+=('-DBUILD_OMP=yes')
-    _feature_args+=('-DPKG_USER-OMP=yes')
-fi
+prepare() {
+    cd "${pkgname}-${_pkgver}"
 
-prepare(){
-  cd "${pkgname}-stable_${_pkgver}"
-  mkdir -p build
+    rm -rf build
+    mkdir -p build
 }
 
 build() {
-  cd "${pkgname}-stable_${_pkgver}/build"
-  cmake ../cmake \
-        -DCMAKE_INSTALL_PREFIX="/usr" \
-        -DCMAKE_INSTALL_LIBDIR="lib" \
-        -DCMAKE_INSTALL_LIBEXECDIR="/usr/lib" \
-        -DBUILD_SHARED_LIBS=ON \
-        -DLAMMPS_EXCEPTIONS=ON \
-        "${_feature_args[@]}" #\
-        # Add options for additional packages (above this line)
-        #-DPKG_<NAME>=yes
+    cd ${pkgname}-${_pkgver}/build
 
-  make
+    cmake \
+        -D PKG_MOLECULE=on \
+        -D PKG_PYTHON=on \
+        -D PKG_PHONON=on \
+        -D PKG_KSPACE=on \
+        -D PKG_MANYBODY=on \
+        -D LAMMPS_EXCEPTIONS=on \
+        -D BUILD_LIB=on \
+        -D BUILD_SHARED_LIBS=on \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D CMAKE_INSTALL_PREFIX="/usr" \
+        -D CMAKE_INSTALL_LIBDIR="lib" \
+        -D CMAKE_INSTALL_LIBEXECDIR="/usr/lib" \
+    ../cmake
+
+    # -D BUILD_LAMMPS_GUI=on \
+
+    cmake --build . -j $(($(nproc) - 1))
+
+    cd ../tools/phonon/
+    cmake -S . -B build
+    cmake --build build
+
+    # python lib
+    cd ../../python/
+    rm -rf dist
+    python -m build
 }
 
 package() {
-  cd "${pkgname}-stable_${_pkgver}/build"
-  make DESTDIR="${pkgdir}" install
-  if (( $_INSTALL_EXAMPLES )) ; then
-    mkdir -p "${pkgdir}/usr/share/examples/lammps"
-    cp -r "../examples/." "${pkgdir}/usr/share/examples/lammps/"
-    find "${pkgdir}/usr/share/examples/lammps/" -type f -exec chmod 644 '{}' +
-  fi
-  install -Dm644 "../tools/vim/lammps.vim" "${pkgdir}/usr/share/vim/vimfiles/syntax/lammps.vim"
-  install -Dm644 "../tools/vim/filetype.vim" "${pkgdir}/usr/share/vim/vimfiles/ftdetect/lammps.vim"
+    cd ${pkgname}-${_pkgver}/build
+    make DESTDIR="${pkgdir}" install
+
+    # mkdir -p "${pkgdir}/usr/share/examples/lammps"
+    # cp -r "../examples/." "${pkgdir}/usr/share/examples/lammps/"
+    # cp -r "../python/examples" "${pkgdir}/usr/share/examples/lammps/python/more"
+    # find "${pkgdir}/usr/share/examples/lammps/" -type f -exec chmod 644 '{}' +
+
+    install -Dm644 "../tools/vim/lammps.vim" "${pkgdir}/usr/share/vim/vimfiles/syntax/lammps.vim"
+    install -Dm644 "../tools/vim/filetype.vim" "${pkgdir}/usr/share/vim/vimfiles/ftdetect/lammps.vim"
+
+    install -Dm755 "../tools/phonon/build/phana" "${pkgdir}/usr/bin/phana"
+
+    # python lib
+    PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-deps ../python/dist/*.whl
+
+    # 遍历以 lib 开头的文件
+    # for file in "${pkgdir}/usr/lib/lib"*; do
+    #     # 如果文件不是 liblammps，则删除
+    #     [[ "$(basename "$file")" == liblammps* ]] || rm -f "$file"
+    # done
+    # rm -f ${pkgdir}/usr/lib/ld-linux*
+
+
 }
