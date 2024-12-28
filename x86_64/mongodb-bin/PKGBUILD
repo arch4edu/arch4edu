@@ -2,7 +2,7 @@
 #Maintainer: Rafael Fontenelle <rafaelff at gnome dot org>
 
 pkgname="mongodb-bin"
-pkgver="8.0.3"
+pkgver="8.0.4"
 _basever="8.0"
 _basedist="noble"
 pkgrel=1
@@ -39,10 +39,10 @@ noextract=(
 sha256sums=('47b884569102f7c79017ee78ef2e98204a25aa834c0ee7d5d62c270ab05d4e2b'
             '51ee1e1f71598aad919db79a195778e6cb6cfce48267565e88a401ebc64497ac'
             '09d99ca61eb07873d5334077acba22c33e7f7d0a9fa08c92734e0ac8430d6e27')
-sha256sums_x86_64=('31b9db1f9ed311915e2bb51d7eae92efd69cf82bab8fdf3e8c9fabf8a76c7a35'
-                   '694b0ec98f7451db68a63872c8233a6bbc3ed9784cc1ae41fb4a92343cb41d61')
-sha256sums_aarch64=('680bd7c84fd5ce7a12930cbfe7a27bb3364129da05b1c5cc0323a10238c9d6c3'
-                    'ad0c3539c1a88861c8a9d19f9b1ae2f29efe225ff46970adac008373452c2878')
+sha256sums_x86_64=('a68666240b1ac2c685684ce819be15da6c918032e324d10df2c63e1e81f1c3d9'
+                   'bb574f88ed36cfadc80254344c1521859b86b197824410fe0b4ca669c52c8d38')
+sha256sums_aarch64=('9c14285626b478d9571a3f0a5a3df0938098fe207c960eddd8d94b424ca37694'
+                    'c93002d85fdeaf7f53088969c9316238f599ec02edb7d5c000c918589318c459')
 prepare() {
 	mkdir -p output
 	bsdtar -O -xf mongodb-org-server_${pkgver}_${CARCH}.deb data.tar.zst | bsdtar -C output -xJf - #server extracted
