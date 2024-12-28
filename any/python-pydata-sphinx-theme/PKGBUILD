@@ -4,8 +4,8 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
-pkgver=0.16.0
-pkgrel=2
+pkgver=0.16.1
+pkgrel=1
 pkgdesc="Bootstrap-based Sphinx theme from the PyData community"
 arch=('any')
 url="https://pydata-sphinx-theme.readthedocs.io"
@@ -35,7 +35,7 @@ checkdepends=('python-nose'
 #source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
 #        'Makefile')
 source=("https://files.pythonhosted.org/packages/py3/${_pyname:0:1}/${_pyname}/${_pyname//-/_}-${pkgver}-py3-none-any.whl")
-md5sums=('1eec278af31f4e5529cd14df9f06420f')
+md5sums=('54683f51ee62eb4edb1e21f13af7fdd4')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
@@ -67,7 +67,6 @@ package_python-pydata-sphinx-theme() {
     depends=('python-sphinx>=6.1'
              'python-beautifulsoup4'
              'python-docutils>0.17.0'
-             'python-packaging'
              'python-babel'
              'python-accessible-pygments'
              'python-typing_extensions')    # pygments required by accessible-pygments
