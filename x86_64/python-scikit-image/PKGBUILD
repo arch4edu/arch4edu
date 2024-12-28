@@ -6,23 +6,21 @@ pkgbase=python-scikit-image
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
-pkgver=0.24.0
+pkgver=0.25.0
 pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
 url="http://scikit-image.org"
 license=('BSD-3-Clause')
-makedepends=('cython>=3.0.4'
-             'python-setuptools>=67'
-             'python-numpy'
-             'meson-python>=0.15'
+makedepends=('cython>=3.0.8'
+             'python-setuptools>=68'
+             'python-numpy>=2.0'
+             'meson-python>=0.16'
 #            'ninja'
-             'python-wheel'
              'python-build'
              'python-installer'
-             'python-pythran'
-             'python-packaging>=21')
-depends=('python-numpy>=1.23' 'python-scipy>=1.9' 'python-networkx>=2.8' 'python-pillow>=9.1' 'python-imageio>=2.33' 'python-tifffile>=2022.8.12' 'python-packaging>=21' 'python-lazy-loader>=0.4')
+             'python-pythran>=0.16')  # wheel required by new setuptools
+depends=('python-numpy>=1.24' 'python-scipy>=1.11.2' 'python-networkx>=3.0' 'python-pillow>=10.1' 'python-imageio>2.35.0' 'python-tifffile>=2022.8.12' 'python-packaging>=21' 'python-lazy-loader>=0.4')
 #checkdepends=('python-pytest>=5.2.0'
 #              'python-pytest-xdist'
 #              'python-astropy>=5.0'
@@ -55,7 +53,7 @@ optdepends=('python-matplotlib>=3.6'
 #           'python-qtpy'
 options=('!emptydirs')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('5d16efe95da8edbeb363e0c4157b99becbd650a60b77f6e3af5768b66cf007ab')
+sha256sums=('58d94fea11b6b3306b3770417dc1cbca7fa9bcbd6a13945d7910399c88c2018c')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
