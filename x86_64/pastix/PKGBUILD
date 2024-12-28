@@ -3,7 +3,7 @@
 
 pkgname=pastix
 pkgver=6.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="High performance parallel solver for very large sparse linear systems based on direct methods"
 arch=(x86_64)
 url="https://gitlab.inria.fr/solverstack/pastix"
