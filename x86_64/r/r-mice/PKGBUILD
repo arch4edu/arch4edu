@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mice
-_pkgver=3.16.0
+_pkgver=3.17.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Multivariate Imputation by Chained Equations"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,11 +13,9 @@ license=('GPL-2.0-or-later')
 depends=(
   r-broom
   r-dplyr
-  r-generics
   r-glmnet
   r-mitml
   r-rcpp
-  r-rlang
   r-tidyr
 )
 makedepends=(
@@ -32,6 +30,7 @@ optdepends=(
   r-future
   r-haven
   r-knitr
+  r-literanger
   r-lme4
   r-miceadds
   r-pan
@@ -44,8 +43,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0e44a4e8e2f690d7393e90568b5b6e08')
-b2sums=('e4083abf5adcedb3a096a8df0cc870852653f492aaa67eb4b2c50e17ece067f1e0bcd132e2d50aed8a959d6c4d1c192b973ffc585b8e60283e456e35efa8eed0')
+md5sums=('240d70772d09ee62371d7a2ca57588f5')
+b2sums=('02cd3b233e0b5eedfcb0beae2b25fc8cec5af55c6cc07b375cc05a1d7881759346944118d2a34ccafc52badd55d91f74e273d7a0b57037712b9b79234df1f9e1')
 
 build() {
   mkdir build
