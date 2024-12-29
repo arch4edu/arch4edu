@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=restriktor
-_pkgver=0.5-90
+_pkgver=0.6-10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Restricted Statistical Estimation and Inference for Linear Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('421b35b95ef5549ed952143db5036846')
-b2sums=('b3cadbd8d1ce4d6a043d630bea2491ce2227f20060993ed28f008ac0af0f4efe936d83687b3fc43ce6e59ba7312b3ab0e84557855cb2076884d853a3b86da041')
+md5sums=('a24820deb75a3fc155709d54bd0ced81')
+b2sums=('a9fe3407a97b11c93696e6c550984eb343a31abcfd448d2d818f00d230243cf31b8226b38339e9f52a1ffd9f5dfde03f8487751ceea2c44c43cb10b6bdc977d9')
 
 build() {
   mkdir build
