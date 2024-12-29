@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspPower
-_pkgver=0.19.0
+_pkgver=0.19.2
 pkgname=r-${_pkgname,,}
-pkgver=0.19.0
+pkgver=0.19.2
 pkgrel=1
 pkgdesc="Power Module for JASP"
 arch=('any')
@@ -15,7 +15,7 @@ depends=(
   r-jaspgraphs
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('1d0e340d1674102dcd1f17cd1c3ca9536a11ea34536b3d50f45269997e07b7ad')
+sha256sums=('1072ed063f31fe1f8aabaad59e691b4695d2b8e59ad1cf6d04cb8f15824ea124')
 
 
 build() {
