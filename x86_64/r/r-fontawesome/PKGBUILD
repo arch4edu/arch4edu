@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=fontawesome
-_pkgver=0.5.2
+_pkgver=0.5.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Easily Work with 'Font Awesome' Icons"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -23,13 +23,14 @@ checkdepends=(
 optdepends=(
   r-covr
   r-dplyr
+  r-gt
   r-knitr
   r-rsvg
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d5e7d3d788f1145dd8cb5b74c85045b9')
-b2sums=('d8a2b16425bc6aaf767526f2372981243a524ff60cfa6527dc9ff930ee5d5f9a15a10935a19a4ea76105277af8d7b8e44f7a13e80ac041a8c702fe5309104e2b')
+md5sums=('95b072a27418b962792410dfb21c3d2b')
+b2sums=('e6feb424059b90a5a7cb2f40ea0fea123f9d3eda4e18626ef0a13cf716af720227d48d0dad912223317a2e0f2ca6d8a0f55f92bbd8171c6fcd590c867da2b173')
 
 build() {
   mkdir build
