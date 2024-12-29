@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=later
-_pkgver=1.3.2
+_pkgver=1.4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Utilities for Scheduling Functions to Execute Later with Event Loops"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,21 +20,14 @@ checkdepends=(
 )
 optdepends=(
   r-knitr
+  r-nanonext
+  r-r6
   r-rmarkdown
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d051b4ebe4f306287003877aae5ab95c')
-b2sums=('f30329988dce72d5c53a1bfe97ad97fd437e49387aa0f04ce74137368a660b0d10cc1f0fab7a6928d1faaa06622be89b21a465090601347171ba2180f5dd339e')
-
-prepare() {
-  # skip failing tests
-  cd "$_pkgname/tests/testthat"
-  sed -i '/"Interrupt while running in private loop won'\''t result in stuck loop"/a\ \ skip("not working")' \
-      test-private-loops.R
-  sed -i '/"interrupt and exception handling"/a\ \ skip("not working")' \
-      test-run_now.R
-}
+md5sums=('34689763fedb5bac8012cfc54de32813')
+b2sums=('aa8ae5350e0b5232ab409a9e1324765e0bfb54aebab285acd5477b24ea6e88cff454c6f276bf801a230b92174a4e6e374d792446497b19bf6e752503a71e8d89')
 
 build() {
   mkdir build
