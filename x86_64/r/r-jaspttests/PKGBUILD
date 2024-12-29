@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspTTests
-_pkgver=0.19.0
+_pkgver=0.19.2
 pkgname=r-${_pkgname,,}
-pkgver=0.19.0
+pkgver=0.19.2
 pkgrel=1
 pkgdesc="T-Tests Module for JASP"
 arch=('any')
@@ -19,7 +19,7 @@ depends=(r
   r-plyr
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('8bfaf2efb6258b155daaaefecaa6f30bec2b3709e882166bdfa4b2fa703cc8cb')
+sha256sums=('5f374e76f5b7c5cedf7e44bcdebcf7abfaaa5610a3a63dc6dee3c10466d14075')
 
 
 build() {
