@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=rstpm2
-_pkgver=1.6.6
+_pkgver=1.6.6.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -40,9 +40,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-tests.patch")
-md5sums=('73dbbc7872d1401f2c4455825c51c4b0'
+md5sums=('59c92b6d83b1fb6ef65810e797faca0c'
          '7e22eed527937e811f674953a465f9c8')
-b2sums=('f266565247a3a8b2ca3cdaca4758befe6375633f2f3e29fcfde67ad7885b79099ec0bb80833626a770a03a2e6b63204a78a9a0ed2a0ef0ab5f57f2da0c302694'
+b2sums=('61e7bc5a8ff42776943e888ffc7850b9fc2df1c15532c66c8b2745b7d53316dcdba7a2ed4940568165a1ac27113bf9081c77898547ec3149fbd97f4460e5039f'
         '61bb8ab4fff5514887b2fb678f461cc468c6f70388ddd1e21638fd73389a7d5481720a19f93f1ba55b40e59108efe3d92a8c14703ff9e984400ce50cbeec5d11')
 
 prepare() {
