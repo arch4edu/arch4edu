@@ -1,9 +1,9 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspTimeSeries
-_pkgver=0.19.0
+_pkgver=0.19.2
 pkgname=r-${_pkgname,,}
-pkgver=0.19.0
-pkgrel=2
+pkgver=0.19.2
+pkgrel=1
 pkgdesc="A Time Series module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -16,7 +16,7 @@ depends=(
   r-jaspgraphs
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('95ae8a95c54773956881414c285d028aa09e98df24fb40bf63056c2e68446652')
+sha256sums=('55973f48aef163f93f24b0646a73582c7db37ac21da21ae79a112cbab8b97d8f')
 
 
 build() {
