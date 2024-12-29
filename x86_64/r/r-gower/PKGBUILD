@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=gower
-_pkgver=1.0.1
+_pkgver=1.0.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Gower's Distance"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -22,8 +22,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e83037d172ecc81bf45b69dbd902d216')
-b2sums=('e2d82eda30b05b838fcea9d02f0ddea53ca89e81e6afac785342e6998ed5144e845fdfe523d050d75762718e304ea6bc8a794b7cc9fb03de55704d6506e55454')
+md5sums=('5144ebfeff1a92799431352cd9f4cc28')
+b2sums=('a26a7da17d9fcef875946b8c18b749adf50744e81291d51d28f0fa276f378d85a1c07e8e84c9879fcf72ebb172d114b3baa74e5749f3c2ed533a7388a514f775')
 
 build() {
   mkdir build
