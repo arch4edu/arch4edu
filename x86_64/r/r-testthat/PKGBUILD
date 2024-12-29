@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=testthat
-_cranver=3.2.1.1
+_cranver=3.2.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -21,7 +21,7 @@ depends=(
     "r-cli>=3.6.1"
     "r-desc>=1.4.2"
     "r-digest>=0.6.33"
-    "r-evaluate>=0.21"
+    "r-evaluate>=1.0.1"
     "r-jsonlite>=1.8.7"
     "r-lifecycle>=1.0.3"
     "r-magrittr>=2.0.3"
@@ -31,8 +31,8 @@ depends=(
     "r-ps>=1.7.5"
     "r-r6>=2.5.1"
     "r-rlang>=1.1.1"
-    "r-waldo>=0.5.1"
-    "r-withr>=2.5.0"
+    "r-waldo>=0.6.0"
+    "r-withr>=3.0.2"
 )
 optdepends=(
     "r-covr"
@@ -41,6 +41,7 @@ optdepends=(
     "r-knitr"
     "r-rmarkdown"
     "r-rstudioapi"
+    "r-s7"
     "r-shiny"
     "r-usethis"
     "r-vctrs>=0.1.0"
@@ -67,7 +68,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("c2fa93c7027ebcc56ab1f1d1322b151b46436c7f1533249843f4655053c5c0a413103b2a3e9752f6a973de5db2fd5208ae4e30d79799475483b119f82344fb45")
+b2sums=("10ec4de0db26f16aa99885b47ec27ca0bbc4535b073179e34c88388bbdeb261c167575b3792906239df116367dec2ec7cdd1a5c764f6f1c428653563e523fe3c")
 
 build() {
     mkdir -p "${srcdir}/build/"
