@@ -2,8 +2,8 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 
 pkgname=python-colcon-core
-pkgver=0.16.1
-pkgrel=2
+pkgver=0.18.4
+pkgrel=1
 pkgdesc="Command line tool to build sets of software packages."
 arch=(any)
 url="https://colcon.readthedocs.io/en/released/"
@@ -26,7 +26,7 @@ makedepends=(
     python-wheel
 )
 source=("$pkgname-$pkgver.tar.gz"::"https://github.com/colcon/colcon-core/archive/$pkgver.tar.gz")
-sha256sums=('c8fcde5ae7b29d1c639970fc00b16002fc0e4776bd296f116f8e0f93ae070670')
+sha256sums=('2d6aadbc1c6dbaabdc890bc66e0e1f272d8e192220b86730897df1e54cd5be70')
 
 _pkgname=colcon-core
 
