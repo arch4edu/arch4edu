@@ -2,8 +2,8 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-python-setup-py
 _name=${pkgname:7}
-pkgver=0.2.8
-pkgrel=6
+pkgver=0.2.9
+pkgrel=1
 pkgdesc="An extension for colcon-core to identify packages with a setup.py file by introspecting the arguments to the setup() function call of setuptools."
 arch=(any)
 url="https://pypi.org/project/colcon-python-setup-py"
@@ -13,7 +13,7 @@ makedepends=('python-setuptools')
 source=(
     "https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz"
 )
-sha256sums=('83f719f237bb852544de124635d4376a0ad861c14c752830fbdfffbd38cd95aa')
+sha256sums=('4d8bab2e05ba334e29eee3715fbde490281342ed8e000e252130e5c51915383a')
 
 package() {
     cd ${srcdir}/${_name}-${pkgver}
