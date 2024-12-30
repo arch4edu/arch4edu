@@ -4,7 +4,7 @@
 
 pkgname=lief
 pkgver=0.16.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
 url='https://github.com/lief-project/lief'
@@ -61,7 +61,7 @@ build() {
     -D LIEF_OPT_EXTERNAL_EXPECTED=ON \
     -D LIEF_RUST_API=ON \
     -D LIEF_DEX=ON \
-    -D LIEF_DOC=ON \
+    -D LIEF_DOC=OFF \
     -D LIEF_PE=ON \
     -D LIEF_TESTS=OFF
   cmake --build build
