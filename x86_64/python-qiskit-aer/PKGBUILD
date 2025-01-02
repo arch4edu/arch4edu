@@ -2,7 +2,7 @@
 _pkgname=qiskit-aer
 pkgname=python-$_pkgname
 pkgver=0.15.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=(x86_64)
 url="https://github.com/Qiskit/qiskit-aer"
