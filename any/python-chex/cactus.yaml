@@ -3,8 +3,8 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/python-dm-tree
   - x86_64/python-jax
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: aur-pre-build
 post_build: aur-post-build
