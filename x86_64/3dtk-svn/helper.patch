@@ -1,0 +1,12 @@
+Index: include/scanio/helper.h
+===================================================================
+--- include/scanio/helper.h	(Revision 2403)
++++ include/scanio/helper.h	(Arbeitskopie)
+@@ -5,6 +5,7 @@
+ #include <iostream>
+ #include <string>
+ #include <sstream>
++#include <list>
+ #include "slam6d/pointfilter.h"
+ #include "slam6d/io_types.h"
+ #include "slam6d/scan_settings.h"
