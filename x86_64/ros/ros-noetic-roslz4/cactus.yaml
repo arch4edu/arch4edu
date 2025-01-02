@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 makedepends:
   - x86_64/ros/ros-build-tools
   - x86_64/ros/ros-noetic-catkin
