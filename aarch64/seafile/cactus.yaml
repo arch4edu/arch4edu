@@ -1,8 +1,10 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - aarch64/libsearpc
+  - any/python-future
 build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: aur-pre-build
