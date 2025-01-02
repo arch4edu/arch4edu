@@ -2,7 +2,7 @@
 _pkgname=qiskit-finance
 pkgname=python-${_pkgname}
 pkgver=0.4.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Quantum Finance package for IBM qiskit framework"
 arch=(any)
 url=https://github.com/qiskit-community/qiskit-finance
@@ -43,7 +43,8 @@ check() {
     cd $_pkgname-$pkgver
     local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
     python -m installer --destdir=../test_dir dist/*.whl
-    PYTHONPATH=../test_dir/$_site_packages pytest
+    # The data providers tests fail due to missing API keys
+    PYTHONPATH=../test_dir/$_site_packages pytest --ignore=test/data_providers/test_data_providers.py
 }
 
 package() {
