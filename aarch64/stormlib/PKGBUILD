@@ -3,7 +3,7 @@
 
 _pkgname=StormLib
 pkgname=stormlib
-pkgver=9.26
+pkgver=9.30
 pkgrel=1
 pkgdesc="A C/C++ API to read and write MPQ files with support for merged archives, patch MPQs and more."
 arch=("i686" "x86_64")
@@ -29,4 +29,4 @@ package() {
   make DESTDIR="$pkgdir" install
 }
 
-sha256sums=('252efd25430aeba2fea4e0ffd99015c51b3ccedd16efa0c5ec73fd00550d8270')
+sha256sums=('a709a6b034d206404f5297d85e474371203ff5483639955195d99b737bbf7dfe')
