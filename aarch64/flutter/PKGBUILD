@@ -4,9 +4,9 @@
 
 pkgbase=flutter
 _group=flutter
-pkgver=3.24.1
-_dartver=(3.5.0 3.6.0)
-_enginever=c9b9d5780da342eb3f0f5e439a7db06f7d112575
+pkgver=3.27.0
+_dartver=(3.6.0 3.7.0)
+_enginever=83bacfc52569459a4a654727cad2546820cb0d6a
 _materialfontsver=3012db47f3130e62f7cc0beabff968a33cbec8d8
 _gradlewver=fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
 _flutterarch=$(echo "$CARCH" | sed s/aarch64/arm64/ | sed s/x86_64/x64/)
@@ -39,7 +39,7 @@ source=(
   "opt-in-analytics.patch"
 )
 
-sha256sums=('72b12afa1312f8e9e4851e5a2b54e3f62b6c91aee6eefa96d19c38f455363499'
+sha256sums=('38c8493f32f53522858ad4b43e197aa37cbdc8ee31cf082a272786a167fc4c48'
             'f0fb98748a911a546fb8211e4ff4b9ed5c8d4631042445e9829caa67b0380aaf'
             'ae41d1ee4b6819bf9747a7ff1c02cf98ca554e88f9c0d78dd9aeaf9865cc5eb1'
             'b4c104129eb57e7e3edca2e23376b8b034de2d466189bdc1c3e2a304506889a3'
@@ -51,8 +51,8 @@ sha256sums=('72b12afa1312f8e9e4851e5a2b54e3f62b6c91aee6eefa96d19c38f455363499'
 
 prepare() {
   # this is required in case people try to build with `aur/dart-sdk-dev` instead of `extra/dart`
-  DART_BINARY=$(readlink $(which dart))
-  DART_ROOT=${DART_ROOT:-${DART_BINARY/\/bin\/dart/}}
+  DART_BINARY=$(readlink $(command -v dart))
+  DART_ROOT=${DART_ROOT:-${DART_BINARY/\/bin\/dart*/}}
 
   if [ "${DART_ROOT}" != "/opt/dart-sdk" ]; then
     echo -e "\n\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n"
@@ -64,7 +64,7 @@ prepare() {
     echo -e "  Please consider using the original 'extra/dart' package"
     echo -e "  from the Arch Linux package repositories. We otherwise"
     echo -e "  cannot ensure the Flutter tool will work as expected.\n\n"
-    echo -e "  Dart executable:	$(which dart)"
+    echo -e "  Dart executable:	$(command -v dart)"
     echo -e "  Resolved Dart SDK:	${DART_ROOT}"
 
     echo -e "\n\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n"
@@ -320,8 +320,8 @@ _package-intellij-patch() {
   )
 
   # this is required in case people try to build with `aur/dart-sdk-dev` instead of `extra/dart`
-  DART_BINARY=$(readlink $(which dart))
-  DART_ROOT=${DART_ROOT:-${DART_BINARY/\/bin\/dart/}}
+  DART_BINARY=$(readlink $(command -v dart))
+  DART_ROOT=${DART_ROOT:-${DART_BINARY/\/bin\/dart*/}}
 
   install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache"
   
