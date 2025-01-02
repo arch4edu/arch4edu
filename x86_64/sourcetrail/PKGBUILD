@@ -2,14 +2,14 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_commit:=2d111f2f346b974cf86dcd9de0738e81e017c07f} # 2024.8.2.r4
+: ${_commit:=55557fd153429c72461231742dc9b7dc314cef4d} # 2024.12.0.r3
 
 : ${_install_path:=usr/lib}
 
 # basic info
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2024.8.2
+pkgver=2024.12.0
 pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url='https://github.com/xiota/sourcetrail'
@@ -67,10 +67,10 @@ build() {
     -G Ninja
     -DCMAKE_BUILD_TYPE="Release"
     -DCMAKE_INSTALL_PREFIX='/usr'
-
     -DBUILD_CXX_LANGUAGE_PACKAGE=ON
     -DBUILD_JAVA_LANGUAGE_PACKAGE=ON
     -DBUILD_PYTHON_LANGUAGE_PACKAGE=ON
+    -DBUILD_UNIT_TESTS_PACKAGE=OFF
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     -DCMAKE_VERBOSE_MAKEFILE=OFF
     -Wno-dev
