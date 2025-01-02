@@ -2,7 +2,7 @@
 _pkgname=qiskit-optimization
 pkgname=python-$_pkgname
 pkgver=0.6.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Quantum Optimization package for IBM qiskit framework"
 arch=(any)
 url=https://github.com/qiskit-community/qiskit-optimization
