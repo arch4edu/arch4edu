@@ -2,7 +2,6 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - aarch64/alpm_octopi_utils
   - aarch64/qt-sudo
 build_prefix: extra-aarch64
 makepkg_args: -A
