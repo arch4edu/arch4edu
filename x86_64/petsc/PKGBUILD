@@ -3,12 +3,12 @@
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 pkgver=3.22.2
-pkgrel=1
+pkgrel=2
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
 arch=('i686' 'x86_64')
 url="https://petsc.org"
-license=('BSD')
+license=('BSD-2-Clause')
 options=(staticlibs)
 # note: zlib is not really needed by PETSc, but netcdf requires an HDF5 version with zlib
 depends=('openmpi' 'lapack' 'hdf5-openmpi' 'fftw-openmpi' 'superlu' 'suitesparse' 'libyaml' 'gsl' 'libjpeg-turbo' 'netcdf-openmpi' 'zfp' 'zlib'
