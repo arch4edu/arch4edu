@@ -16,10 +16,14 @@ post_install() {
   echo "This alias has been introduced in order to avoid"
   echo "PATH clashes (e.g. other executables such as R from GNU R)"
   echo ""
+  echo "If this is the first time installing OpenFOAM, you will need"
+  echo "to log out and back in, or: \$ source /etc/profile.d/openfoam-12.sh"
+  echo ""
+  echo "Then type $ ofoam"
+  echo ""
+  echo "OpenFOAM installs to /opt/OpenFOAM/OpenFOAM-<version>"
 }
 
-# arg 1:  the new package version
-# arg 2:  the old package version
 post_upgrade() {
   post_install $1
 }
