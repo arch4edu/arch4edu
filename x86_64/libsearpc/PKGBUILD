@@ -6,7 +6,7 @@
 pkgname='libsearpc'
 epoch=2
 pkgver=3.3.0
-pkgrel=7
+pkgrel=8
 pkgdesc="A simple C language RPC framework (including both server side & client side)"
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
 url="https://github.com/haiwen/libsearpc"
@@ -18,7 +18,7 @@ depends=(
     'python-simplejson'
 )
 makedepends=('git')
-_commit='4ccd1988d8abbacc4bda7a14b5a244010b565d9e'
+_commit='d00c062d76d86b76c8c179bfb4babc9e2200b3f1'
 source=("$pkgname::git+$url#commit=$_commit")
 sha256sums=('SKIP')
 
