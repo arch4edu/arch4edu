@@ -2,7 +2,7 @@
 # Contributor: Samuel Williams <samuel.williams@oriontransfer.co.nz>
 pkgname=scotch
 pkgver=7.0.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Software package and libraries for graph, mesh and hypergraph partitioning, static mapping, and sparse matrix block ordering"
 url="https://gitlab.inria.fr/scotch/scotch"
 license=('CECILL-C')
@@ -43,5 +43,7 @@ check() {
 package() {
   # To avoid conflict with extra/gpart, maybe move the package to /opt/scotch ?
   DESTDIR=${pkgdir} cmake --install build
+  install -d ${pkgdir}/usr/share/licenses/scotch
+  install -Dm644 ${pkgname}-v${pkgver}/doc/CeCILL-C_V1-*.txt ${pkgdir}/usr/share/licenses/scotch
 }
 
