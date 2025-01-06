@@ -11,7 +11,7 @@ pkgver=12.20250102
 _pkgver="${pkgver%.*}"
 _subver="${pkgver#*.}"
 [[ "$pkgver" = "$_subver" ]] && _subver="version-$pkgver"
-pkgrel=3
+pkgrel=4
 pkgdesc="The open source CFD toolbox (www.openfoam.org)"
 _distpkgbase=OpenFOAM
 _gitname=$_distpkgbase-$_pkgver
@@ -61,6 +61,10 @@ prepare() {
     sed -i 's/export ZOLTAN_TYPE=.*/export ZOLTAN_TYPE=system/' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc
     cp ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc.prepared
     sed -i 's|^# export FOAM_INST_DIR=.*|export FOAM_INST_DIR=/opt/\$WM_PROJECT|' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc.prepared
+    #
+    # The following (2) lines are to fix https://bugs.openfoam.org/view.php?id=4126
+    sed -i 's|libpqCore-pv|libpqCore|' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/config.sh/paraview
+    sed -i 's|xargs dirname|xargs dirname \| xargs realpath|' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/config.sh/paraview
   fi
 }
 
@@ -75,6 +79,7 @@ build() {
 
   # Build and clean up OpenFOAM
   bash -c """
+  export PATH="/opt/paraview/bin:\$PATH"
   source ${foamDotFile}
   ./Allwmake
   wclean all
@@ -93,6 +98,7 @@ package() {
 
   # Add source file
   echo "export FOAM_INST_DIR=/opt/${_distpkgbase}" >${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh
+  echo "export PATH=/opt/paraview/bin:\$PATH" >>${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh
   echo "alias ofoam=\"source \${FOAM_INST_DIR}/${_distpkgbase}-${_pkgver}/etc/bashrc\"" >>${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh
   chmod 755 "${pkgdir}/etc/profile.d/openfoam-${_pkgver}.sh"
 
