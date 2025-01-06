@@ -11,7 +11,7 @@ pkgver=12.20250102
 _pkgver="${pkgver%.*}"
 _subver="${pkgver#*.}"
 [[ "$pkgver" = "$_subver" ]] && _subver="version-$pkgver"
-pkgrel=2
+pkgrel=3
 pkgdesc="The open source CFD toolbox (www.openfoam.org)"
 _distpkgbase=OpenFOAM
 _gitname=$_distpkgbase-$_pkgver
@@ -60,7 +60,7 @@ prepare() {
     sed -i 's/export PARMETIS_TYPE=.*/export PARMETIS_TYPE=system/' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc
     sed -i 's/export ZOLTAN_TYPE=.*/export ZOLTAN_TYPE=system/' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc
     cp ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc.prepared
-    sed -i 's|^# export FOAM_INST_DIR=/opt/\$WM_PROJECT|export FOAM_INST_DIR=/opt/\$WM_PROJECT-\$WM_PROJECT_VERSION|' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc.prepared
+    sed -i 's|^# export FOAM_INST_DIR=.*|export FOAM_INST_DIR=/opt/\$WM_PROJECT|' ${srcdir}/${_distpkgbase}-${_pkgver}/etc/bashrc.prepared
   fi
 }
 
