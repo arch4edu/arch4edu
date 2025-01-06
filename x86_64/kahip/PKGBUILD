@@ -1,8 +1,9 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Mohamed Amine Zghal (medaminezghal) <medaminezghal at outlook dot com>
 _base=KaHIP
 pkgname=${_base,,}
 pkgver=3.17
-pkgrel=2
+pkgrel=3
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=(x86_64)
 url="https://github.com/${_base}/${_base}"
@@ -17,16 +18,20 @@ build() {
   cmake \
     -S ${_base}-${pkgver} \
     -B build \
-    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=11 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_FLAGS="-O3 -DNDEBUG -fPIC" \
+    -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -fPIC -fpermissive" \
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,--as-needed -Wl,--no-as-needed" \
     -DCMAKE_VERBOSE_MAKEFILE=OFF \
     -DBUILDPYTHONMODULE=ON \
     -DUSE_TCMALLOC=OFF \
     -DUSE_ILP=OFF \
+    -D64BITMODE=OFF \
     -Wno-dev
   cmake --build build --target all
 }
