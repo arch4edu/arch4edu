@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBsts
-_pkgver=0.19.2
+_pkgver=0.19.3
 pkgname=r-${_pkgname,,}
-pkgver=0.19.2
+pkgver=0.19.3
 pkgrel=1
 pkgdesc="Bsts Module for JASP"
 arch=('any')
@@ -19,7 +19,7 @@ depends=(r
 )
 optdepends=(r-testthat)
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('bf9bd785d83f97941093dbd7c8081d162290e805f5aa40abd9beaffbcd4dc36d')
+sha256sums=('3417b80ca64d796762d71e5d3bff17816226c8b722e31a6ceb476604bf3829d8')
 
 
 build() {
