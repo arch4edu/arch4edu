@@ -8,7 +8,7 @@
 _module="tokenizers"
 _pkgname="python-$_module"
 pkgname="$_pkgname"
-pkgver=0.20.4
+pkgver=0.21.0
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 url="https://github.com/huggingface/tokenizers"
@@ -25,13 +25,31 @@ makedepends=(
   'python-setuptools-rust'
   'python-wheel'
 )
+checkdepends=(
+  'python-datasets' # AUR
+  #└─ 'python-huggingface-hub' # AUR
+  #└─ 'python-multiprocess' # AUR
+  'python-numpy'
+  'python-pyarrow'
+  'python-pytest'
+  'python-requests'
+  'python-setuptools-rust'
+)
 
 options=('!lto')
 
 _pkgsrc="$_module-$pkgver"
 _pkgext="tar.gz"
-source=("$_pkgsrc.$_pkgext"::"$url/archive/refs/tags/v$pkgver.$_pkgext")
-sha256sums=('c7dd77a63d95113add5f4c85a41f117cbf41d2cbc7f6609b72650e14c7f42f31')
+source=(
+  "$_pkgsrc.$_pkgext"::"$url/archive/refs/tags/v$pkgver.$_pkgext"
+  "norvig-big.txt"::"https://norvig.com/big.txt"
+  "roberta.json"::"https://huggingface.co/roberta-large/raw/main/tokenizer.json"
+)
+sha256sums=(
+  '841279ad797d575ed3cf31fc4f30e09e37acbd35028d30c51fc0879ef7ed4094'
+  'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
+  '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e'
+)
 
 _rust_env() {
   export CARGO_HOME CARGO_TARGET_DIR RUSTUP_TOOLCHAIN
@@ -55,6 +73,22 @@ build() (
   cargo build --frozen --release
   python -m build --no-isolation --wheel
 )
+
+check() {
+  cd "$_pkgsrc/bindings/python"
+
+  # data
+  install -Dm644 "$srcdir/roberta.json" "data/roberta.json"
+  install -Dm644 "$srcdir/norvig-big.txt" "data/big.txt"
+  head -100 data/big.txt > data/small.txt
+
+  # test in venv
+  python -m venv --system-site-packages test-env
+  test-env/bin/python -m installer dist/*.whl
+  test-env/bin/python -m pytest -s -v tests || :
+
+  cargo test --no-default-features || :
+}
 
 package() {
   cd "$_pkgsrc/bindings/python"
