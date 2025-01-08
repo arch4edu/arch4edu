@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspQualityControl
-_pkgver=0.19.2
+_pkgver=0.19.3
 pkgname=r-${_pkgname,,}
-pkgver=0.19.2
+pkgver=0.19.3
 pkgrel=1
 pkgdesc="Quality Control Module for JASP"
 arch=('any')
@@ -38,7 +38,7 @@ depends=(r
   r-car
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('3deaf63e27a09ed22f3502d8d34fceb16c1fff48e44f8c6c7a342dcd1d02e95b')
+sha256sums=('1466d07ddacbeef60b34682cf6641802d84d1acbda3f02f52319cf57630aad03')
 
 
 build() {
