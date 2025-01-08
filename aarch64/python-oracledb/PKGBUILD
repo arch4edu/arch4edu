@@ -7,7 +7,7 @@
 
 _name=oracledb
 pkgname=python-oracledb
-pkgver=2.3.0
+pkgver=2.5.1
 pkgrel=1
 pkgdesc="Python extension module that allows access to Oracle databases"
 arch=('i686' 'x86_64')
@@ -17,7 +17,7 @@ depends=('python' 'python-cryptography')
 optdepends=('oracle-instantclient-basic')
 makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools' 'cython')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-b2sums=('d721f0ee00f9bee6ec6e933b1616e3d5e5b533ac9d50008524b234c035ce897a38c08ea496d94e0a6941a72fe9373b0d1ac356380472f18f5de1849b52aacafd')
+b2sums=('a36b81a1286b9b062435d42b40c821226529c100afe37aeaa8f298c51fc20e7aceabc5b0c51c79dc816b63db05445d43dae841898dd97a207ac993d182919370')
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
