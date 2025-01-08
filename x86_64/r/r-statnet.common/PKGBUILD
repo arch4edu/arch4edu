@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=statnet.common
-_pkgver=4.10.0
+_pkgver=4.11.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,8 +17,8 @@ optdepends=(
   r-rlang
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('debc899fef50b20c86c995966244ad30')
-b2sums=('20b013b408c79fe31e85be8877319ad6e622455187e60b2692f2e8319dd40ed10b46f6d89883bbfd3d61ca4fa048386fd1e3c522cd979018a98379f42598d3fb')
+md5sums=('69d37cc27d33b8d3bc1c7d9b2672fce5')
+b2sums=('ed6a3c2f2653e34f0cf8223ba07527cfff7247fb85324ec1f39c6e28bfb723ff4dcb7fccd1ea906bc3ecfb580c72bc50062cfeb704860644867ff444d8fd76c3')
 
 build() {
   mkdir build
