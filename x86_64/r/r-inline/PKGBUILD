@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=inline
-_pkgver=0.3.20
+_pkgver=0.3.21
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -19,8 +19,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9d581b94b2987b8fd64edf82f9abbc04')
-b2sums=('f4791e482125e09e35ba8e7a80207c7f4e079f814abbbb2818ce620c21069ba3902dced09c33b91d3d7b0ed150ec153e6e293b986575d6a1de14c5519d464b4b')
+md5sums=('acc2b04335978bf903c952d2a5139cd5')
+b2sums=('98df8e21aa30be8af0d0b52d9b50595b0d1610aff7c4bf8f359a8abc59a55d11cca3a55ba3410bb91c3ab22722890798f4ee0e081bdcbf535fce1851ce59b9ae')
 
 build() {
   mkdir build
