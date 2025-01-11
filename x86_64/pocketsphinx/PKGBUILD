@@ -4,8 +4,8 @@
 # Contributor: Ben Duffield <bavardage AT archlinux.us>
 pkgbase=pocketsphinx
 pkgname=(pocketsphinx python-pocketsphinx)
-pkgver=5.0.3
-pkgrel=2
+pkgver=5.0.4
+pkgrel=1
 pkgdesc='A small speech recognizer'
 arch=('i686' 'x86_64')
 url='https://cmusphinx.github.io'
@@ -13,7 +13,7 @@ license=('BSD-2-Clause' 'BSD-3-Clause' 'MIT')
 depends=('glibc')
 makedepends=('cmake' 'cython' 'gst-plugins-base-libs' 'ninja' 'python-build' 'python-installer' 'python-scikit-build-core' 'python-sounddevice')
 source=("$pkgbase-$pkgver.tar.gz::https://github.com/cmusphinx/pocketsphinx/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('5d952cb1c22e0a51ed1fafc36871612df38f145df64fa017fdc8074532ec007f')
+sha256sums=('9acd63cfdc76bbc85b7b6c6610b7a9cf30c79d5b36a31de7dc2f969e962653d7')
 
 prepare() {
   cd $pkgbase-$pkgver
