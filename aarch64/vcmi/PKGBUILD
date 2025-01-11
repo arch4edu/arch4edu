@@ -4,7 +4,7 @@
 
 pkgname=vcmi
 pkgver=1.6.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Open-source engine for Heroes of Might and Magic III"
 arch=('i686' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
 url="http://vcmi.eu"
