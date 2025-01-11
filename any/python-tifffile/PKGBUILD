@@ -4,7 +4,7 @@
 pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2024.12.12
+pkgver=2025.1.10
 pkgrel=1
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
@@ -12,6 +12,7 @@ url="https://github.com/cgohlke/tifffile"
 license=('BSD-3-Clause')
 makedepends=('python-setuptools'
              'python-sphinx'
+#            'blas-openblas'
              'python-numpy')
 #makedepends=('python-setuptools' 'python-wheel' 'python-build' 'python-installer')
 checkdepends=('python-pytest'
@@ -19,7 +20,7 @@ checkdepends=('python-pytest'
               'python-imagecodecs') # numpy ? xarray
 #             'python-fsspec'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('c38e929bf74c04b6c8708d87f16b32c85c6d7c2514b99559ea3db8003ba4edda')
+sha256sums=('baaf0a3b87bf7ec375fa1537503353f70497eabe1bdde590f2e41cc0346e612f')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -37,7 +38,7 @@ check() {
 
     # From Gentoo's ebuild
     SKIP_LARGE=1 SKIP_HTTP=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
-        PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4
+        PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 #       --deselect=tests/test_tifffile.py::test_class_omexml \
 #       --deselect=tests/test_tifffile.py::test_class_omexml_fail \
 #       --deselect=tests/test_tifffile.py::test_class_omexml_modulo \
@@ -59,11 +60,11 @@ check() {
 
 package_python-tifffile() {
     depends=('python-numpy')
-    optdepends=('python-matplotlib>=3.9.3: required for plotting'
-                'python-imagecodecs>=2024.9.22: required for encoding or decoding LZW, JPEG, etc. compressed segments'
+    optdepends=('python-matplotlib>=3.10.0: required for plotting'
+                'python-imagecodecs>=2024.12.30: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=5.3.0: required only for validating and printing XML'
-                'python-zarr>=2.18.3: required for opening Zarr stores'
-                'python-fsspec>=2024.10.0: required only for opening ReferenceFileSystem files'
+                'python-zarr>=2.18.4: required for opening Zarr stores'
+                'python-fsspec>=2024.12.0: required only for opening ReferenceFileSystem files'
                 'python-tifffile-doc: Documentation for Python tifffile')
     cd ${srcdir}/${_pyname}-${pkgver}
 
