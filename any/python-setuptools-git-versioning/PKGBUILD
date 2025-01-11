@@ -1,24 +1,24 @@
-_name=setuptools-git-versioning
-pkgname=python-${_name}
-pkgver=2.0.0
-pkgrel=3
+_snake=setuptools_git_versioning
+pkgname=python-setuptools-git-versioning
+pkgver=2.1.0
+pkgrel=1
 pkgdesc='Use Git repo data for building a version number according to PEP 440.'
 url='https://github.com/dolfinus/setuptools-git-versioning'
 arch=('any')
 license=('MIT')
-depends=('python' 'python-setuptools' 'python-toml')
+depends=('python' 'python-setuptools')
 makedepends=('python-build' 'python-installer' 'python-wheel')
 provides=("$pkgname")
 conflicts=("$pkgname")
-source=("https://pypi.io/packages/source/s/$_name/$_name-$pkgver.tar.gz")
-sha256sums=('85b5fbe7bda8e9c24bbd9e587a9d4b91129417f4dd3e11e3c0d5f3f835fc4d4d')
+source=("https://pypi.io/packages/source/s/$_snake/$_snake-$pkgver.tar.gz")
+sha256sums=('6aef5b8bb1cfb953b6b343d27cbfc561d96cf2a2ee23c2e0dd3591042a059921')
 
 build() {
-  cd "$srcdir/$_name-$pkgver"
+  cd "$srcdir/$_snake-$pkgver"
   python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "$srcdir/$_name-$pkgver"
-  python -m installer --destdir="$pkgdir" dist/*.whl
+  cd "$srcdir/$_snake-$pkgver"
+  python -m installer "--destdir=$pkgdir" "./dist/"*".whl"
 }
