@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=lava
-_pkgver=1.8.0
+_pkgver=1.8.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -40,8 +40,8 @@ optdepends=(
   r-visnetwork
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3e67327f96b08caeac828871968a4f8b')
-b2sums=('3378f30b830846d7979cee57553746ad3735d318ffafe769fbf362df00ed8984e0164df30e06744292666c01bd15e6695638080ef491f4e1c6ced3a2c60918e8')
+md5sums=('d09dd78ac2364d14c2b8931bd6bdd574')
+b2sums=('ca05d1940685327de7d8055875705ab3d1d7991253a6d3ed869aeee4473bb89d86e762eca5ff62c44dfc283d6e356210b7c3b9f342ae9e15c3f08338cf32e263')
 
 build() {
   mkdir build
