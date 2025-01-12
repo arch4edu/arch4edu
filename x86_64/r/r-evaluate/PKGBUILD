@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=evaluate
-_pkgver=1.0.1
+_pkgver=1.0.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,10 +23,13 @@ optdepends=(
   r-rlang
   r-testthat
   r-withr
+  r-callr
+  r-pkgload
+  r-knitr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a57f0d289e7fda95bfaa4ebe8836af05')
-b2sums=('e35853ce5a3621e8dfe962a4dc4a5fe57338b3933786cad1ff895561b38da264b353b030d0a5ef75b16fed4d994648cddc18b1c0328373f42414746c357eb69a')
+md5sums=('bb6f78106640f1e1b35010385524ed21')
+b2sums=('2675ac01c700300f14743652724cea3d3158a18b3c78d294247cbd201796c43f1adac8b49eb24c534ea4d325c77910ca62ff7d251659a305254c51728d9c2f21')
 
 build() {
   mkdir build
