@@ -3,8 +3,8 @@
 # Contributor: Dobroslaw Kijowski [dobo] <dobo90_at_gmail.com>
 
 pkgname=lief
-pkgver=0.16.1
-pkgrel=2
+pkgver=0.16.2
+pkgrel=1
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
 url='https://github.com/lief-project/lief'
@@ -40,7 +40,7 @@ makedepends=(
 )
 provides=(libLIEF.so)
 source=("lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('9fb3d18bd2182170f65c63b577c680de53605e92d18a22d49b535ca61349c5db')
+sha256sums=('895ce0321b233a6d610ed89ccbe8dc4aa2cf0bb959919a1db0693ba264f3d29a')
 
 prepare() {
   cd "LIEF-$pkgver/api/python"
