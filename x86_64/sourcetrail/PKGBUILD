@@ -2,14 +2,14 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_commit:=55557fd153429c72461231742dc9b7dc314cef4d} # 2024.12.0.r3
-
+: ${_ver_clang=18}
 : ${_install_path:=usr/lib}
 
-# basic info
+: ${_commit:=d120fa7e03113e72584b54148c2772675805327d} # 2025.1.0.r3
+
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2024.12.0
+pkgver=2025.1.0
 pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url='https://github.com/xiota/sourcetrail'
@@ -17,8 +17,9 @@ license=('GPL-3.0-only')
 arch=('x86_64')
 
 depends=(
-  "clang"
-  "llvm-libs"
+  "clang${_ver_clang:-}"
+  "llvm${_ver_clang:-}-libs"
+
   'boost-libs'
   'qt6-5compat'
   'qt6-base'
@@ -27,8 +28,8 @@ depends=(
   'tinyxml'
 )
 makedepends=(
-  "llvm"
-  "lld"
+  "llvm${_ver_clang:-}"
+  "lld${_ver_clang:-}"
 
   'boost'
   'cmake'
@@ -53,13 +54,16 @@ prepare() {
   magick "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
 }
 
-build() {
+build() (
   export CC=clang
   export CXX=clang++
   export LDFLAGS+=" -fuse-ld=lld"
 
-  #export Clang_DIR="/usr/lib/cmake/clang"
-  #export LLVM_DIR="/usr/lib/cmake/llvm"
+  export PATH="/usr/lib/llvm${_ver_clang:-}/bin:$PATH"
+  export LD_LIBRARY_PATH="/usr/lib/llvm${_ver_clang:-}/lib"
+
+  export Clang_DIR="/usr/lib/llvm${_ver_clang:-}/cmake/clang"
+  export LLVM_DIR="/usr/lib/llvm${_ver_clang:-}/cmake/llvm"
 
   local _cmake_options=(
     -B build
@@ -78,7 +82,7 @@ build() {
 
   cmake "${_cmake_options[@]}"
   cmake --build build
-}
+)
 
 package() {
   # binaries
