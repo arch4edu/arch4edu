@@ -2,8 +2,8 @@
 # Contributor: Mohamed Amine Zghal (medaminezghal) <medaminezghal at outlook dot com>
 _base=KaHIP
 pkgname=${_base,,}
-pkgver=3.17
-pkgrel=3
+pkgver=3.18
+pkgrel=1
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=(x86_64)
 url="https://github.com/${_base}/${_base}"
@@ -12,7 +12,7 @@ depends=(openmp metis openmpi python)
 makedepends=(cmake pybind11)
 optdepends=('gurobi: for ILP solver in ilp_improve')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('5ef655cfa56c466a75739e071f237a8dc915b98f2d066a547691bdd1f871b9233b4d5433df253e78405be63c64a33a3e02feb1fdc17f87b21604a282204bef3d')
+sha512sums=('20be12754cae835fe76243f704e0e50c70620186c549de1b45a8a957e75317713925a0d00c9360fc5dd1e9f679f92f8d797ccf8d7005f7fbe740089890da7126')
 
 build() {
   cmake \
