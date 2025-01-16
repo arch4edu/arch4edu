@@ -6,22 +6,24 @@
 
 pkgname=qt4
 pkgver=4.8.7
-pkgrel=36
+pkgrel=37
 arch=(i686 x86_64)
 url="https://www.qt.io"
 license=(GPL-3.0-only LGPL-3.0-only GFDL-1.3-only)
 pkgdesc="A cross-platform application and UI framework"
-depends=(sqlite ca-certificates fontconfig libgl libxrandr libxv libxi alsa-lib xdg-utils hicolor-icon-theme desktop-file-utils libmng dbus)
-makedepends=(patch postgresql-libs mariadb-libs unixodbc cups gtk2 libfbclient mesa)
+depends=(sqlite fontconfig libgl libxrandr libxi alsa-lib xdg-utils hicolor-icon-theme libmng
+         dbus libx11 libxrender glib2 libice freetype2 libsm libxext libpng zlib openssl)
+makedepends=(patch postgresql-libs mariadb-libs unixodbc cups gtk2 mesa)
 optdepends=('postgresql-libs: PostgreSQL driver'
-            'mariadb-libs: MariaDB driver'
+            'mariadb-libs: MySQL/MariaDB driver'
             'unixodbc: ODBC driver'
-            'libfbclient: Firebird/iBase driver'
             'libxinerama: Xinerama support'
             'libxcursor: Xcursor support'
             'libxfixes: Xfixes support'
             'icu: Unicode support'
-            'sni-qt: StatusNotifierItem (AppIndicators) support')
+            'sni-qt: StatusNotifierItem (AppIndicators) support'
+            'libjpeg-turbo: JPEG plugin'
+            'libtiff: TIFF plugin')
 replaces=('qt<=4.8.4')
 conflicts=(qt)
 options=('!lto') # Avoid static library issues
@@ -160,7 +162,7 @@ build() {
     -sysconfdir /etc/xdg \
     -examplesdir /usr/share/doc/qt4/examples \
     -demosdir /usr/share/doc/qt4/demos \
-    -plugin-sql-{psql,mysql,sqlite,odbc,ibase} \
+    -plugin-sql-{psql,mysql,sqlite,odbc} \
     -system-sqlite \
     -no-phonon \
     -no-phonon-backend \
@@ -224,7 +226,4 @@ package() {
 
   # Fix wrong path in prl files
   find "${pkgdir}/usr/lib" -type f -name '*.prl' -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d;s/\(QMAKE_PRL_LIBS =\).*/\1/' {} \;
-
-  # The TGA plugin is broken (FS#33568)
-  rm "${pkgdir}"/usr/lib/qt4/plugins/imageformats/libqtga.so
 }
