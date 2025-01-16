@@ -2,9 +2,9 @@
 # Co-Maintainer: Ke Liu <specter119@gmail.com>
 
 pkgname=python-conda-package-handling
-pkgver=2.3.0
+pkgver=2.4.0
 _srcname="conda-package-handling-${pkgver}"
-pkgrel=4
+pkgrel=1
 pkgdesc="Create and extract conda package of various formats"
 arch=('any')
 url="https://github.com/conda/conda-package-handling"
@@ -25,7 +25,7 @@ source=(
   "${_srcname}.tar.gz::$url/archive/$pkgver.tar.gz"
 )
 sha512sums=(
-  'f4e16c1e8a33fe92c70fd48e42d77247fd705eaea1ee8a9e95c52bdcf942a5334bb0b4f3f6492fd0e5defd3f724854b353999350b30bc507d77cc611af6f4c41'
+  'da690b4ebd76aae8b4de86a443af7d9029c7c5c12c4e0a811f2a9a17481b8f9a1f37f3d7c3bf857171c529ec25b88814342afb023ed75b734c65ac08e33fe067'
 )
 
 build() {
