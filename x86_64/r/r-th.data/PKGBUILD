@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=TH.data
-_pkgver=1.1-2
+_pkgver=1.1-3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="TH's Data Archive"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -27,8 +27,8 @@ optdepends=(
   r-vcd
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4e6e59fee15e056be3721f7c0d4e017c')
-b2sums=('c091698b1761d54e8281b6fc74466ec5f000ccb71e143e9aeef50125154012d391cf93e4b71661301f896ce46d8fcd94459dff8a1596565c1ab705f9a98ddb7b')
+md5sums=('5b984967b15c3e2da7b3fa7534e64673')
+b2sums=('aca87b54b9e0e5f5aa20d62a29a9c32043195a00b4177d4e3b991cc01bafd9d0ac4c6ae37544499a7eaec286c98d008552271e696e6af15e34f49fa18d5bd005')
 
 build() {
   mkdir build
