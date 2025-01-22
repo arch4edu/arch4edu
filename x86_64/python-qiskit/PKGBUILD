@@ -2,7 +2,7 @@
 _pkgname=qiskit
 pkgname=python-${_pkgname}
 pkgver=1.3.2
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
 arch=(x86_64)
@@ -10,7 +10,6 @@ url=https://github.com/Qiskit/qiskit
 license=(Apache-2.0)
 conflicts=(python-qiskit-terra)
 depends=(
-    cython
     python-dateutil
     python-dill
     python-numpy
@@ -46,17 +45,11 @@ makedepends=(
     python-setuptools-rust
     python-wheel
 )
-# checkdepends=(
-#     ipython
-#     python-anyio
-#     python-ddt
-#     python-hypothesis
-#     python-pillow
-#     python-pytest
-#     #python-pytest-benchmark
-#     python-pytest-mock
-#     #python-pytest-xdist
-# )
+checkdepends=(
+    ipython
+    python-ddt
+    python-stestr
+)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
 b2sums=('e2f191f3231f858ded9c389f952a2207bfea4680be13db6207e9870fb08f2015c483e3fd891a298eaa531635cb7d1027bc10952b0c471dff9b89ed524e6228a3')
 
@@ -66,14 +59,15 @@ build() {
     python -m build --wheel --no-isolation
 }
 
-# check() {
-#     cd $_pkgname-$pkgver
-#     local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-#     python -m installer --destdir=../test_dir dist/*.whl
-#     rm -rf qiskit
-#     PYTHONPATH="$PWD/../test_dir/usr/lib/python$python_version/site-packages" \
-#     pytest test/python -W ignore::DeprecationWarning -W ignore::PendingDeprecationWarning
-# }
+check() {
+    cd $_pkgname-$pkgver
+    local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+    python -m installer --destdir=../test_dir dist/*.whl
+    rm -rf qiskit
+    PYTHONPATH="$PWD/../test_dir/usr/lib/python$python_version/site-packages" \
+    PYTHONWARNINGS="ignore::DeprecationWarning,ignore::PendingDeprecationWarning,ignore::RuntimeWarning" \
+    stestr run -d test/python -E "test_equivalence_draw"
+}
 
 package() {
     cd $_pkgname-$pkgver
