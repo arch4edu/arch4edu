@@ -4,13 +4,13 @@
 # Contributor: Marius Glo <marius@mgl.dev>
 
 pkgname=unityhub
-pkgver=3.10.0
+pkgver=3.11.0
 pkgrel=1
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
 arch=('x86_64')
 license=('custom')
-depends=('gtk3' 'libnotify' 'nss' 'libxss' 'libxtst' 'xdg-utils' 'at-spi2-core' 'util-linux-libs' 'libsecret')
+depends=('gtk3' 'libnotify' 'nss' 'libxss' 'libxtst' 'xdg-utils' 'at-spi2-core' 'util-linux-libs' 'libsecret' 'cpio')
 optdepends=(
   'libappindicator-gtk3: The official deb says this an optional dependency'
 )
@@ -19,7 +19,7 @@ source=(
   'license.txt'
 )
 sha256sums=(
-  'f5d9bab554399ec0c2f17d9c96b4f870097c8e0e302f0722844e1b9c581d53e0'
+  'd80f8407e10613fd6abb80ad49e5c8470e493d89c153f10a6e9413842ee80ae8'
   'f0eb3a4bb148bb7f426e4f5b97e891265ac487710cbcba9282518537c7b5d833'
 )
 conflicts=('unityhub-beta')
