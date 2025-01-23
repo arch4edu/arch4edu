@@ -5,7 +5,7 @@
 pkgname=python-conda
 _name=${pkgname#python-}
 pkgver=25.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
 url="https://github.com/conda/conda"
@@ -40,14 +40,14 @@ provides=('python-conda' 'python-conda-env')
 options=(!emptydirs)
 backup=(etc/conda/condarc)
 source=("$url/releases/download/$pkgver/$_name-$pkgver.tar.gz"
-        "py-3.13-logging.patch::$url/commit/62196c897df3d7aea7063d0c08d1bf6e6fd91600.patch")
+        "py-3.13-logging.patch")
 sha256sums=('91307b89f6e47f082be75dac0d335fdb15d2501a373f55c792218d7f00b250f7'
             'dcd0edb6cc59c67629ddfa6e9fb38f53eff293df92d8a0222ede051c8e66b149')
 
 prepare() {
   # cd "$srcdir"
   # tar xvf "$_name-$pkgver.tar.gz"
-  cd "$srcdir/$_name-$pkgver"
+  cd "$srcdir/$_name-$pkgver" || exit
 
   patch -p 1 -i "$srcdir/py-3.13-logging.patch"
   sed -i '3s/^/set _CONDA_EXE=\/usr\/bin\/conda\n/' conda/shell/etc/profile.d/conda.csh
@@ -57,13 +57,13 @@ prepare() {
 }
 
 build() {
-  cd "$srcdir/$_name-$pkgver"
+  cd "$srcdir/$_name-$pkgver" || exit
 
   python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "$srcdir/$_name-$pkgver"
+  cd "$srcdir/$_name-$pkgver" || exit
 
   # install package contents
   python -m installer --destdir "$pkgdir" "$srcdir/$_name-$pkgver/dist/$_name-$pkgver-"*.whl

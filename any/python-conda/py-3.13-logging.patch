@@ -1,0 +1,32 @@
+From 62196c897df3d7aea7063d0c08d1bf6e6fd91600 Mon Sep 17 00:00:00 2001
+From: "Benjamin A. Beasley" <code@musicinmybrain.net>
+Date: Fri, 2 Aug 2024 08:50:43 -0400
+Subject: [PATCH] Adapt for logging lock internal changes in Python 3.13
+
+---
+ conda/common/io.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/conda/common/io.py b/conda/common/io.py
+index 91f37e144d0..d3b655e47f4 100644
+--- a/conda/common/io.py
++++ b/conda/common/io.py
+@@ -269,11 +269,16 @@ def argv(args_list):
+ 
+ @contextmanager
+ def _logger_lock():
+-    logging._acquireLock()
++    try:
++        # Python 3.13+
++        acquire, release = logging._prepareFork, logging._afterFork
++    except AttributeError:
++        acquire, release = logging._acquireLock, logging._releaseLock
++    acquire()
+     try:
+         yield
+     finally:
+-        logging._releaseLock()
++        release()
+ 
+ 
+ @contextmanager
