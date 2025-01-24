@@ -7,3 +7,4 @@ Terminal=false
 Hidden=false
 Categories=Utility
 Comment=Ventoy2Disk GUI
+StartupWMClass=Ventoy2Disk.gtk3
