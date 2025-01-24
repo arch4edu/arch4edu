@@ -1,7 +1,7 @@
 # Contributor: Graziano Giuliani <giuliani@lamma.rete.toscana.it>
 
 pkgname=ncview
-pkgver=2.1.10
+pkgver=2.1.11
 pkgrel=1
 pkgdesc="A visual browser for netCDF format files"
 arch=(i686 x86_64)
@@ -9,7 +9,7 @@ url="https://cirrus.ucsd.edu/ncview/"
 license=('GPL3')
 depends=(netcdf udunits netpbm libxaw xorg-fonts-misc)
 source=("https://cirrus.ucsd.edu/~pierce/ncview/${pkgname}-${pkgver}.tar.gz")
-md5sums=('1792cc259791356a6e29334547f4945f')
+md5sums=('946e351ef6f50dab3d0a52092fe131d7')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
