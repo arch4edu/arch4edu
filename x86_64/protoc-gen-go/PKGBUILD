@@ -2,18 +2,20 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go"
-pkgver=1.36.3
+pkgver=1.36.4
 pkgrel=1
 pkgdesc="Go support for Google's protocol buffers"
-arch=('x86_64' 'aarch64' 'i686')
+arch=('aarch64' 'i686' 'x86_64')
 url="https://github.com/protocolbuffers/protobuf-go"
 license=('BSD-3-Clause')
 depends=('glibc' 'protobuf')
 makedepends=('go')
+provides=('protobuf-go')
+conflicts=('protobuf-go')
 replaces=('protobuf-go')
 _pkgsrc="protobuf-go-${pkgver}"
 source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('d15b5c42786fa47d716b1572e5ba21979dc3163121854ece5101f072d4fa95bb')
+sha256sums=('aba12e3abb045d9fc995aad578f0c0ab569325bedc277ffc9b5d159ccc78bbc5')
 
 prepare() {
   cd "${srcdir}/${_pkgsrc}"
