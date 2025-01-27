@@ -6,7 +6,7 @@ pkgbase=python-scikit-image
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
-pkgver=0.25.0
+pkgver=0.25.1
 pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
@@ -53,7 +53,7 @@ optdepends=('python-matplotlib>=3.6'
 #           'python-qtpy'
 options=('!emptydirs')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('58d94fea11b6b3306b3770417dc1cbca7fa9bcbd6a13945d7910399c88c2018c')
+sha256sums=('d4ab30540d114d37c35fe5c837f89b94aaba2a7643afae8354aa353319e9bbbb')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
