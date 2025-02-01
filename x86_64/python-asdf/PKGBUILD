@@ -4,17 +4,18 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=4.0.0
-pkgrel=2
+pkgver=4.1.0
+pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
 url="https://asdf.readthedocs.io"
 license=('BSD-3-Clause')
-makedepends=('python-setuptools-scm'
+makedepends=('python-setuptools-scm>=8'
              'python-build'
              'python-installer')
 #            'python-sphinx-asdf>=0.2.2'
 #            'python-sphinx-inline-tabs'
+#            'python-sphinx-furo'
 #            'python-matplotlib'
 #            'graphviz'
 ##           'python-mistune>=3'
@@ -48,7 +49,7 @@ checkdepends=('python-pytest-remotedata'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('3b4515e26ac2d6a7a0095b88fed90165')
+md5sums=('f2eb79ed1d1a8cf2f9f70fb78a44636c')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
