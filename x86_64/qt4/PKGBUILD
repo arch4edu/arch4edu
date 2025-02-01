@@ -6,7 +6,7 @@
 
 pkgname=qt4
 pkgver=4.8.7
-pkgrel=37
+pkgrel=38
 arch=(i686 x86_64)
 url="https://www.qt.io"
 license=(GPL-3.0-only LGPL-3.0-only GFDL-1.3-only)
@@ -139,13 +139,69 @@ prepare() {
   # Fix linking step for JIT (Gentoo)
   patch -Np0 -i "${srcdir}/fix_jit.patch"
 
-  echo "QMAKE_CXXFLAGS += -std=gnu++98" >> src/3rdparty/javascriptcore/JavaScriptCore/JavaScriptCore.pri
-  echo "QMAKE_CXXFLAGS += -std=gnu++98" >> src/plugins/accessible/qaccessiblebase.pri
+  ### JavaScriptCore mess (TODO: Turn these into patches) ###
+
+  # Replace obsolete TR1 functions
+  sed -i -e 's|tr1::has_trivial_constructor|is_trivially_constructible|' \
+    -e 's|tr1::has_trivial_destructor|is_trivially_destructible|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/TypeTraits.h
+
+  # Use rvalue of m_attributesInPrevious
+  # (https://bugs.webkit.org/show_bug.cgi?id=59261)
+  sed -i 's|, existingTransition->m_attributesInPrevious|, +existingTransition->m_attributesInPrevious|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/runtime/Structure.h
+  sed -i 's|, m_attributesInPrevious)|, +m_attributesInPrevious)|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/runtime/Structure.cpp
+
+  # Remove auto_ptr deprecation warnings
+  sed -i 's|auto_ptr|unique_ptr|g' \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/*.h \
+    src/3rdparty/javascriptcore/JavaScriptCore/parser/Nodes.h \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/unicode/Collator*
+  sed -i 's|(data)|(std::move(data))|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/parser/Nodes.h
+
+  # Remove invalid template usage in ctors (this is only currently a warning though)
+  sed -i 's|StringTypeAdapter<.*>(|StringTypeAdapter(|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/runtime/UString.h
+
+  # Use the ASSERT macro that masks unused variables
+  sed -i 's|ASSERT(differenceBetween(label|ASSERT_UNUSED(label, differenceBetween(label|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/assembler/MacroAssemblerX86_64.h
+
+  # Use a proper compile-time assert function
+  sed -i 's|COMPILE_ASSERT(exp, name) .*|COMPILE_ASSERT(exp, name) static_assert((exp), #name)|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/Assertions.h
+
+  # Correct the swap function name
+  sed -i -e 's|swap(from|hashTableSwap(from|' \
+    -e 's|inline void swap|inline void hashTableSwap|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/HashTable.h
+  sed -i 's|// swap pairs|template<typename T> inline void hashTableSwap(T\& a, T\& b) { swap(a, b); }\n\n&|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/HashTable.h
+
+  # Fixup obviously wrong return value
+  sed -i 's|return false|return nullptr|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/yarr/RegexCompiler.cpp
+
+  # Silence -Wclass-memaccess warnings
+  sed -i 's|memcpy(dst|memcpy(reinterpret_cast<char*>(dst)|' \
+    src/3rdparty/javascriptcore/JavaScriptCore/wtf/Vector.h
+  sed -i -e 's|memcpy(x.p|memcpy(reinterpret_cast<char*>(x.p)|' \
+    -e 's|memmove(i|memmove(reinterpret_cast<char*>(i)|' \
+    src/corelib/tools/qvector.h
+
+  # Do a SelectionFlags cast in accessible plugin
+  sed -i 's|QItemSelectionModel::Columns \& QItemSelectionModel::Deselect|QItemSelectionModel::SelectionFlags(&)|' \
+    src/plugins/accessible/widgets/itemviews.cpp
 }
 
 build() {
   export QT4DIR="${srcdir}"/build
   export LD_LIBRARY_PATH="${QT4DIR}/lib:${LD_LIBRARY_PATH}"
+
+  # Force the C++17 standard (this might suppress some deprecation warnings and keep the build working for longer)
+  export CXXFLAGS+=" -std=c++17"
 
   mkdir build || true
   cd build
