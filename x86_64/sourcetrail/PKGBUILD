@@ -2,14 +2,14 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_ver_clang=18}
+#: ${_ver_clang=}
 : ${_install_path:=usr/lib}
 
-: ${_commit:=d120fa7e03113e72584b54148c2772675805327d} # 2025.1.0.r3
+: ${_commit:=b6b825c687178d1a5ed49d78fb1bcac21f773414} # 2025.2.0.r2
 
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2025.1.0
+pkgver=2025.2.0
 pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url='https://github.com/xiota/sourcetrail'
@@ -44,6 +44,8 @@ makedepends=(
 optdepends=(
   'java-runtime'
   'python'
+  'python-jedi'
+  'python-parso'
 )
 
 _pkgsrc="$_pkgname"
@@ -118,8 +120,9 @@ Exec=$_pkgname
 Icon=$_pkgname
 Terminal=false
 StartupNotify=true
-Categories=Development;
+StartupWMClass=Sourcetrail
 MimeType=application/x-sourcetrail;
+Categories=Development;
 END
 
   # script
