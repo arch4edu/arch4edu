@@ -3,9 +3,9 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=purrr
-_pkgver=1.0.2
+_pkgver=1.0.4
 pkgname=r-${_pkgname,,}
-pkgver=1.0.2
+pkgver=1.0.4
 pkgrel=1
 pkgdesc='Functional Programming Tools'
 arch=('x86_64')
@@ -31,7 +31,7 @@ optdepends=(
   r-tidyselect
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2c1bc6bb88433dff0892b41136f2f5c23573b335ff35a4775c72aa57b48bbb63')
+sha256sums=('6c013724651c5daae56a7b8e126baef958d30d4c01dd0dda3d17fc43409b8e54')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
