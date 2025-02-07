@@ -7,7 +7,7 @@
 
 pkgbase=openfoam
 pkgname=openfoam-org
-pkgver=12.20250102
+pkgver=12.20250206
 _pkgver="${pkgver%.*}"
 _subver="${pkgver#*.}"
 [[ "$pkgver" = "$_subver" ]] && _subver="version-$pkgver"
@@ -32,7 +32,7 @@ makedepends=('bash')
 provides=('openfoam')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/OpenFOAM/$_gitname/archive/refs/tags/$_subver.tar.gz")
 install="${pkgbase}.install"
-md5sums=('91df55d65bb132a12fb709aeb37f4b00')
+md5sums=('3907dd4f5e2c5cb793ecf5666f89b917')
 
 prepare() {
   if [ ! -d $srcdir/$_distpkgbase-$_pkgver ]; then
