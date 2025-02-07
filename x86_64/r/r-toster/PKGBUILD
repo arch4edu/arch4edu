@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=TOSTER
-_pkgver=0.8.3
+_pkgver=0.8.4
 pkgname=r-${_pkgname,,}
-pkgver=0.8.3
+pkgver=0.8.4
 pkgrel=1
 pkgdesc='Two One-Sided Tests (TOST) Equivalence Testing'
 arch=('any')
@@ -30,7 +30,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0e81847a36fe609f2f1a0c820f22e3f70fcf43806942dc6ae2b8434b3a83e3f6')
+sha256sums=('996814cfa7475dc9cf6fc2f5be30e9f4fb2090fa94dab146b244bab248b9da48')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
