@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=qvcalc
-_pkgver=1.0.3
+_pkgver=1.0.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Quasi Variances for Factor Effects in Statistical Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,10 +14,11 @@ depends=(
 )
 optdepends=(
   r-relimp
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2494a818e5a13b2d8b4b7f6c7e3fe8bb')
-b2sums=('9f24b01e36aa0c4cbdcc6847a17082aba6ed84e52ce6b8f0290ce2bd5c28ffe4b613f99e3e15c1bf83eb698362d089586d1dc06921f51e5a3fd7c226c9c526be')
+md5sums=('7267885fb26131f10f8d32d58e8d37e6')
+b2sums=('33652ef75b70cab25cd841d1245d7f58cc10c68a5b90da7c6569b077ba7bb295cdb11a4080ca5a00c314229e7a21e439c520ab1dc7c840540ab1c7d81c84282c')
 
 build() {
   mkdir build
