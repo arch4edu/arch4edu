@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=metadat
-_pkgver=1.2-0
+_pkgver=1.4-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Meta-Analysis Datasets"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -28,10 +28,12 @@ optdepends=(
   r-numderiv
   r-rms
   r-testthat
+  r-bayesmeta
+  r-ellipse
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4303e4a28efd69147f6f95fc939ea5db')
-b2sums=('878d52d721e644c73da7692bae40463ca7d30b81a54bf9515a223f5d17b0f653da857077276f7dfffdf5a16e861a5373ab65ab15887be336917244f267746e8b')
+md5sums=('adaa29e04468cc4d8619dfa008fec3cb')
+b2sums=('841438693125131f394330030585464b9304ba5cc23a9f297c3fda4c321f0bdd0d569a4029fc544e374fbe4b97f4f992f2b3e6d2ea3339f565623bde5dd388fb')
 
 build() {
   mkdir build
