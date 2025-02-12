@@ -3,13 +3,13 @@
 pkgbase=python-ndcube
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2.3.0
+pkgver=2.3.1
 pkgrel=1
 pkgdesc="Package for multi-dimensional contiguious and non-contiguious coordinate aware arrays"
 arch=('any')
 url="https://docs.sunpy.org/projects/ndcube"
 license=('BSD-2-Clause')
-makedepends=('python-setuptools-scm>=6.2'
+makedepends=('python-setuptools-scm>=6.0.0'
              'python-build'
              'python-installer'
              'python-sphinx-automodapi'
@@ -24,6 +24,7 @@ makedepends=('python-setuptools-scm>=6.2'
 # circular deps
 #checkdepends=('python-pytest-doctestplus'
 #              'python-pytest-mpl'
+#              'python-pytest-xdist'
 #              'python-pytest-remotedata'
 #              'python-dask'
 #              'python-reproject'
@@ -42,23 +43,23 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063305_1600_lowres.fits"
 #       "https://github.com/sunpy/ndcube/raw/main/changelog/README.rst"
 #)
-md5sums=('d49b653e5250c542944ae19782fa41d6')
+md5sums=('24e8d571e5c703cc00d26517243af480')
 #        'SKIP')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
-
-#   install -Dm644 -t changelog ${srcdir}/README.rst # README not needed
-#   mkdir -p changelog
+#
+##   install -Dm644 -t changelog ${srcdir}/README.rst # README not needed
+##   mkdir -p changelog
 #    cp ${srcdir}/*.fits examples
 #    patch -Np1 -i "${srcdir}/doc-use-local-fits.patch"
-#   sed -e "/datfix/d" -e "/unitfix/d" -i setup.cfg
-#   sed -e '/ignore:FLIP/a \	ignore:pkg_resources is deprecated:DeprecationWarning' \
-#       -e '/ignore:FLIP/a \	ignore:jsonschema.exceptions.RefResolutionError is deprecated:DeprecationWarning' \
-#   sed -e '/ignore:distutils/a \	ignore:"order" was deprecated in version 0.9' \
-#       -e "/ignore:distutils/a \	ignore:The default kernel will change from 'Hann' to  'Gaussian'" \
-#       -e "/ignore:distutils/a \	ignore:The default boundary mode will change from 'ignore' to  'strict'" \
-#       -i setup.cfg
+##   sed -e "/datfix/d" -e "/unitfix/d" -i setup.cfg
+##   sed -e '/ignore:FLIP/a \	ignore:pkg_resources is deprecated:DeprecationWarning' \
+##       -e '/ignore:FLIP/a \	ignore:jsonschema.exceptions.RefResolutionError is deprecated:DeprecationWarning' \
+##   sed -e '/ignore:distutils/a \	ignore:"order" was deprecated in version 0.9' \
+##       -e "/ignore:distutils/a \	ignore:The default kernel will change from 'Hann' to  'Gaussian'" \
+##       -e "/ignore:distutils/a \	ignore:The default boundary mode will change from 'ignore' to  'strict'" \
+##       -i setup.cfg
 #}
 
 build() {
@@ -72,7 +73,7 @@ build() {
 #check() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
 #
-#    pytest -vv -l -ra --color=yes -o console_output_style=count #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count # -Wdefault
+#    pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count # -Wdefault
 #}
 
 package_python-ndcube() {
