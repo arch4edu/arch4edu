@@ -3,7 +3,7 @@
 
 pkgname=python-flax
 _pkgname=${pkgname#python-}
-pkgver=0.10.2
+pkgver=0.10.3
 pkgrel=1
 pkgdesc='A neural network library and ecosystem for JAX designed for flexibility'
 arch=('any')
@@ -26,15 +26,10 @@ optdepends=(
     'python-matplotlib: Export to TensorBoard.'
     'tensorboard: TensorBoard visualization and logging.'
 )
-source=("flax-$pkgver.tar.gz::https://github.com/google/flax/archive/refs/tags/v${pkgver}.tar.gz"
-        'python-flax.diff')
-sha256sums=('3332963edd00a822939ae4e0a2c885c816b1dda1c6a8e04cf204aee7f63f1a3f'
-            'SKIP')
-
-prepare() {
-    cd $_pkgname-$pkgver
-    patch -p 1 -i../python-flax.diff
-}
+# Maintainers change release tag. Yes, I know. ¯\_(ツ)_/¯
+# source=("flax-$pkgver.tar.gz::https://github.com/google/flax/archive/refs/tags/v${pkgver}.tar.gz")
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha256sums=('29cde8cf05ffbff39b7f7167f0fe9916694cce76ce4c14e8be3549c1fd1b7c81')
 
 build() {
     python -m build -nw $_pkgname-$pkgver
