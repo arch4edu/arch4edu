@@ -4,7 +4,7 @@
 
 pkgname=grass
 pkgver=8.4.0
-pkgrel=2
+pkgrel=3
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
 arch=('i686' 'x86_64')
@@ -16,10 +16,13 @@ depends=('bzip2' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos
 makedepends=('libxt' 'postgresql-libs')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
-source=("http://grass.osgeo.org/grass$_shortver/source/$pkgname-$pkgver.tar.gz")
-sha256sums=('337f603fc05578aa754d56f85a4c6c98deb0f01f0e816fedc1e0954949956137')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/OSGeo/grass/archive/refs/heads/releasebranch_8_4.tar.gz"
+#"$pkgname-$pkgver.tar.gz::https://github.com/OSGeo/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+)
+sha256sums=('SKIP')
 
 build() {
+  mv grass-releasebranch_8_4 $pkgname-$pkgver
   cd $pkgname-$pkgver
 
   # Ancient autoconf used upstream can't handle CPPFLAGS correctly, so set CPP to ignore warnings
