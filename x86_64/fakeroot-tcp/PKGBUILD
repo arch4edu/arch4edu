@@ -7,7 +7,7 @@
 
 pkgname=fakeroot-tcp
 _pkgname=fakeroot
-pkgver=1.36.2
+pkgver=1.37
 pkgrel=1
 pkgdesc='Tool for simulating superuser privileges,with tcp ipc'
 arch=('i686' 'x86_64' 'armv7h' 'aarch64')
@@ -19,7 +19,7 @@ makedepends=('po4a' 'automake' 'autoconf')
 provides=("${_pkgname}=${pkgver}-${pkgrel}")
 conflicts=("${_pkgname}")
 source=(http://ftp.debian.org/debian/pool/main/f/$_pkgname/${_pkgname}_${pkgver}.orig.tar.gz)
-sha256sums=('92ee28cd75ef17a178bb06d9b9f57fb54b068b6a72d4710cccfe8453701c734f')
+sha256sums=('9831cc912bc1da6dadac15699c5a07a82c00d6f0dd5c15ec02e20908dd527d3a')
 
 
 prepare() {
