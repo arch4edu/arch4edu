@@ -1,28 +1,29 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.6
-pkgrel=2
+pkgver=1.6.1
+pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
 url="https://pyvo.readthedocs.io"
 license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm'
-             'python-wheel'
              'python-build'
              'python-installer'
              'python-sphinx-astropy'
              'python-matplotlib'
              'python-astropy'
-             'graphviz')
+             'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-astropy-header'
+#             'python-pytest-xdist'
               'python-pytest-doctestplus'
               'python-pytest-remotedata'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('db15b558555e7597609963677e76070e')
+md5sums=('c7a345a3b863ed12813968f8185aabd6')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
@@ -41,7 +42,7 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    PYTHONPATH="${PWD}" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count --remote-data #
+    PYTHONPATH="${PWD}" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data #
 }
 
 package_python-pyvo() {
