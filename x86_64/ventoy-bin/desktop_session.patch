@@ -1,0 +1,51 @@
+diff --unified --recursive --text a/tool/distro_gui_type.json b/tool/distro_gui_type.json
+--- a/tool/distro_gui_type.json	2025-02-12 08:03:05.000000000 -0700
++++ b/tool/distro_gui_type.json	2025-02-13 10:05:36.269443551 -0700
+@@ -3,6 +3,13 @@
+         "type": "env",
+         "name": "DESKTOP_SESSION",
+         "condition": "equal",
++        "expression": "cinnamon",
++        "gui": "gtk3"
++    },
++    {
++        "type": "env",
++        "name": "DESKTOP_SESSION",
++        "condition": "equal",
+         "expression": "deepin",
+         "gui": "qt5"
+     },
+@@ -10,6 +17,20 @@
+         "type": "env",
+         "name": "DESKTOP_SESSION",
+         "condition": "equal",
++        "expression": "gnome",
++        "gui": "gtk3"
++    },
++    {
++        "type": "env",
++        "name": "DESKTOP_SESSION",
++        "condition": "equal",
++        "expression": "kde",
++        "gui": "qt5"
++    },
++    {
++        "type": "env",
++        "name": "DESKTOP_SESSION",
++        "condition": "equal",
+         "expression": "uos",
+         "gui": "qt5"
+     },
+@@ -19,5 +40,12 @@
+         "condition": "equal",
+         "expression": "ukui",
+         "gui": "gtk3"
++    },
++    {
++        "type": "env",
++        "name": "DESKTOP_SESSION",
++        "condition": "equal",
++        "expression": "xfce",
++        "gui": "gtk3"
+     }
+ ]

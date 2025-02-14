@@ -4,7 +4,7 @@
 
 pkgname=ventoy-bin
 pkgver=1.1.02
-pkgrel=1
+pkgrel=2
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -24,7 +24,8 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}-persistent"
         "${pkgname%-bin}-extend-persistent"
         "${pkgname%-bin}.desktop"
-        'sanitize.patch')
+        'sanitize.patch'
+        'desktop_session.patch')
 sha256sums=('0b47aeba910dd9a9d5faad26988c45bef5238c4eb19e3bf510545698ac5caece'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
@@ -33,7 +34,8 @@ sha256sums=('0b47aeba910dd9a9d5faad26988c45bef5238c4eb19e3bf510545698ac5caece'
             '51029745da197dded6e007aee3f30f7ea1aa6e898172a6ea176cc2f3a842d0ff'
             '00dec31721a052d5e6c928e3b38b870959bdb42188f34717898d99c0cef950df'
             'ea01c294b772818277a79b055e977550f99313506e874797ed9fe0e7ac7e7d98'
-            '993ffb6daa6b61efe81e9e2922b82a0588737406525c37e0eed682ed500914f6')
+            '993ffb6daa6b61efe81e9e2922b82a0588737406525c37e0eed682ed500914f6'
+            'c7bc2150f8f365aeaf69d647e1ea5ac0de00abd207a56ec9750fb2d88539cd19')
 
 prepare() {
   cd "${pkgname%-bin}-$pkgver"
@@ -51,6 +53,9 @@ prepare() {
 
   # Apply sanitize patch
   patch --verbose -p0 < "$srcdir/sanitize.patch"
+
+  # Add more distro GUI types
+  patch -Np1 -i "$srcdir/desktop_session.patch"
 
   # Log location
   sed -i 's|log\.txt|/var/log/ventoy.log|g' WebUI/static/js/languages.js tool/languages.json
