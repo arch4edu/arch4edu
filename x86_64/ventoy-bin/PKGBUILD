@@ -4,7 +4,7 @@
 
 pkgname=ventoy-bin
 pkgver=1.1.02
-pkgrel=2
+pkgrel=3
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -35,7 +35,7 @@ sha256sums=('0b47aeba910dd9a9d5faad26988c45bef5238c4eb19e3bf510545698ac5caece'
             '00dec31721a052d5e6c928e3b38b870959bdb42188f34717898d99c0cef950df'
             'ea01c294b772818277a79b055e977550f99313506e874797ed9fe0e7ac7e7d98'
             '993ffb6daa6b61efe81e9e2922b82a0588737406525c37e0eed682ed500914f6'
-            'c7bc2150f8f365aeaf69d647e1ea5ac0de00abd207a56ec9750fb2d88539cd19')
+            '792db90b5295a5dfc306d03a59fb74a169dce3518c58e2714e646bf1cab8f0fc')
 
 prepare() {
   cd "${pkgname%-bin}-$pkgver"

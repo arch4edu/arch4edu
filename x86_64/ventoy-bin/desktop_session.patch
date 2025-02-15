@@ -26,7 +26,7 @@ diff --unified --recursive --text a/tool/distro_gui_type.json b/tool/distro_gui_
 +        "type": "env",
 +        "name": "DESKTOP_SESSION",
 +        "condition": "equal",
-+        "expression": "kde",
++        "expression": "plasma",
 +        "gui": "qt5"
 +    },
 +    {
