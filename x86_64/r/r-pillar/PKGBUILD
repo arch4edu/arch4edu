@@ -1,9 +1,9 @@
-# Maintainer: <christoph+aur@christophfink.com>
+# Maintainer: Serene-Arc 
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=pillar
-_cranver=1.9.0
+_cranver=1.10.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -64,7 +64,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("c626c2618d5461053f3b66b7f230e0202c9b3f63b97da70f3c4d3c650347eef0a780111cc2f9bd97e48eaf641e155c80b9a601bf4b0ed6caaabc9e42233f5fd7")
+b2sums=('ba8bfa8dcc1f6ada84323fdf2bc48962129ca8795201600ec0b2d1d1295bb088812e98bd74965b380765c05e2a1e1bd9db9606e0e280752178780c75b8a9ea36')
 
 build() {
     mkdir -p "${srcdir}/build/"
