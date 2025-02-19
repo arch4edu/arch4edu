@@ -6,21 +6,20 @@ pkgbase=python-scikit-image
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
-pkgver=0.25.1
+pkgver=0.25.2
 pkgrel=1
 pkgdesc="Image processing routines for SciPy"
 arch=('i686' 'x86_64')
 url="http://scikit-image.org"
 license=('BSD-3-Clause')
 makedepends=('cython>=3.0.8'
-             'python-setuptools>=68'
-             'python-numpy>=2.0'
+             'python-numpy'
              'meson-python>=0.16'
 #            'ninja'
              'python-build'
              'python-installer'
-             'python-pythran>=0.16')  # wheel required by new setuptools
-depends=('python-numpy>=1.24' 'python-scipy>=1.11.2' 'python-networkx>=3.0' 'python-pillow>=10.1' 'python-imageio>2.35.0' 'python-tifffile>=2022.8.12' 'python-packaging>=21' 'python-lazy-loader>=0.4')
+             'python-pythran>=0.16')
+depends=('python-numpy>=1.24' 'python-scipy>=1.11.4' 'python-networkx>=3.0' 'python-pillow>=10.1' 'python-imageio>2.35.0' 'python-tifffile>=2022.8.12' 'python-packaging>=21' 'python-lazy-loader>=0.4')
 #checkdepends=('python-pytest>=5.2.0'
 #              'python-pytest-xdist'
 #              'python-astropy>=5.0'
@@ -37,23 +36,23 @@ depends=('python-numpy>=1.24' 'python-scipy>=1.11.2' 'python-networkx>=3.0' 'pyt
 #              'python-pooch>=1.6.0')
 ##             'python-pyqt5')
 ##             'python-pytest-faulthandler')
-optdepends=('python-matplotlib>=3.6'
+optdepends=('python-matplotlib>=3.7'
             'freeimage: for reading various types of image file formats'
-            'python-pyamg: fast cg_mg mode of random walker segmentation'
+            'python-pyamg>=5.2: fast cg_mg mode of random walker segmentation'
             'python-astropy>=5.0: Provides FITS I/O capability'
             'python-simpleitk: Optional I/O plugin providing a wide variety of formats. including specialized formats using in medical imaging'
-            'python-dask>2021.1.0: used to speed up certain functions'
-            'python-cloudpickle>=0.2.1: necessary to provide the 'processes' scheduler for dask'
+            'python-dask>2023.2.0: used to speed up certain functions'
+            'python-cloudpickle>=1.1.1: necessary to provide the 'processes' scheduler for dask'
             'python-pooch>=1.6.0'
-            'python-scikit-learn>=1.1'
-            'python-pywavelets>=1.1.1')
+            'python-scikit-learn>=1.2'
+            'python-pywavelets>=1.6')
 #           'python-imread: Optional I/O plugin providing most standard formats'
 #           'python-pyqt5: for imshow[x, fancy=True] and skivi'
 #           'pyside2: for imshow[x, fancy=True] and skivi'
 #           'python-qtpy'
 options=('!emptydirs')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('d4ab30540d114d37c35fe5c837f89b94aaba2a7643afae8354aa353319e9bbbb')
+sha256sums=('e5a37e6cd4d0c018a7a55b9d601357e3382826d3888c10d0213fc63bff977dde')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
