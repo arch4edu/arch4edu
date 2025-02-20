@@ -5,7 +5,7 @@
 
 pkgname=r-mkl
 pkgver=4.4.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Language and environment for statistical computing and graphics, linked to the Intel(R) MKL."
 arch=('x86_64')
 license=('GPL')
