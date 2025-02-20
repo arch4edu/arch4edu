@@ -4,7 +4,7 @@
 # Contributor: koba1t <kobdotsh at gmail dot com>
 
 pkgname=docker-rootless-extras
-pkgver=27.5.1
+pkgver=28.0.0
 pkgrel=1
 pkgdesc="Extras to run docker as non-root."
 arch=('x86_64' 'aarch64')
@@ -22,7 +22,7 @@ source=(
         "99-docker-rootless.conf")
 
 sha256sums=('5a4fcf228be8e5d2fd6c0676c858372a2afb95144675d02f215301272c344f65'
-            'd6ddae456cc5ecdd5285035d24ad3546898872e5c4d407718ced0d4fa19031ff'
+            '8e21ed3bb8d4147ec9ad239ea08f115c3fda086efb067262a3accb573440c0ec'
             'd8695293e5d4a814763f13e1d36ed37273040666b4b91363d6c33171df8934c7'
             'd0d790d4c3d887b10b2b155b83a58a44980b9fa638f8c0f1faec0739dc0ef473')
 
