@@ -1,33 +1,34 @@
-# Maintainer: Victor Dmitriyev <mrvvitek@gmail.com>
+# Maintainer: redponike <proton (dot) me>
+# Contributor: Victor Dmitriyev <mrvvitek@gmail.com>
 # Contributor: Alexander Rødseth <rodseth@gmail.com>
 # Contributor: Stefan Husmann <stefan-husmann@t-online.de>
 # Contributor: Simon Lipp <sloonz+aur@gmail.com>
 
 pkgname=jogl
-pkgver=2.3.2
-pkgrel=2
-pkgdesc='OpenGL bindings for Java'
-arch=('x86_64' 'i686')
-url="http://jogamp.org/"
+pkgver=2.5.0
+pkgrel=1
+pkgdesc="OpenGL bindings for Java"
+arch=(x86_64 aarch64)
+url="https://jogamp.org"
 license=('BSD')
 depends=('java-runtime' 'libgl')
 source=("jogl.LICENSE.txt"
   "gluegen.LICENSE.txt"
-	"jogl-all-v${pkgver}.jar::http://jogamp.org/deployment/v${pkgver}/jar/orig/jogl-all.jar"
-	"gluegen-rt-v${pkgver}.jar::http://jogamp.org/deployment/v${pkgver}/jar/orig/gluegen-rt.jar")
-source_i686=("jogl-all-natives-linux-i586-v${pkgver}.jar::http://jogamp.org/deployment/v${pkgver}/jar/orig/jogl-all-natives-linux-i586.jar"
-	"gluegen-rt-natives-linux-i586-v${pkgver}.jar::http://jogamp.org/deployment/v${pkgver}/jar/orig/gluegen-rt-natives-linux-i586.jar")
-source_x86_64=("jogl-all-natives-linux-amd64-v${pkgver}.jar::http://jogamp.org/deployment/v${pkgver}/jar/orig/jogl-all-natives-linux-amd64.jar"
-	"gluegen-rt-natives-linux-amd64-v${pkgver}.jar::http://jogamp.org/deployment/v${pkgver}/jar/orig/gluegen-rt-natives-linux-amd64.jar")
+  "jogl-all-v${pkgver}.jar::${url}/deployment/v${pkgver}/jar/jogl-all.jar"
+  "gluegen-rt-v${pkgver}.jar::${url}/deployment/v${pkgver}/jar/gluegen-rt.jar")
+source_aarch64=("jogl-all-natives-linux-aarch64-v${pkgver}.jar::${url}/deployment/v${pkgver}/jar/jogl-all-natives-linux-aarch64.jar"
+  "gluegen-rt-natives-linux-aarch64-v${pkgver}.jar::${url}/deployment/v${pkgver}/jar/gluegen-rt-natives-linux-aarch64.jar")
+source_x86_64=("jogl-all-natives-linux-amd64-v${pkgver}.jar::${url}/deployment/v${pkgver}/jar/jogl-all-natives-linux-amd64.jar"
+  "gluegen-rt-natives-linux-amd64-v${pkgver}.jar::${url}/deployment/v${pkgver}/jar/gluegen-rt-natives-linux-amd64.jar")
 
 md5sums=('e77015f08f0c8c3b39b9b7d379d57183'
          '3809542dae46666cb50b9cb7c6d5ac5f'
-         'ce831cf96129a663433861a7eda55595'
-         '14e746f9328bc33a9b01cf9e16427f4d')
-md5sums_x86_64=('0ff2870c4f8da227b05e79b352133c3e'
-                '5ea60ff86650e3fc3ed77a417ef2fb95')
-md5sums_i686=('79b946d0e6fff33a82a2e0d90133796a'
-              'd67501bb4c973ca06140c34e8fb97461')
+         '64c652f03e62a1cdb302cc1b948862ef'
+         'db0859c3d735b9e93bb96115173f6c76')
+md5sums_x86_64=('144bffd877fbf0f2f5333389b161a7e0'
+                'ea956143f451c68d22b833464615c36e')
+md5sums_aarch64=('1ecddb61541079e7e6c6cbc73f0412a9'
+                 '1e28ac2f2de5ba2d4765f3c60a68e0e3')
 
 noextract=("jogl-all-v${pkgver}.jar" "gluegen-rt-v${pkgver}.jar")
 
@@ -51,5 +52,3 @@ package() {
   ln -s "jogl" "gluegen2"
   ln -s "libgluegen-rt.so" "jogl/libgluegen2-rt.so"
 }
-
-# vim:set ts=2 sw=2 et:
