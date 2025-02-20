@@ -9,7 +9,7 @@
 # Contributor: Daffa Haj Tsaqif <narutohaj00@gmail.com>
 
 pkgname=cloudflare-warp-bin
-pkgver=2024.12.554
+pkgver=2025.1.861
 pkgrel=1
 pkgdesc="Cloudflare Warp Client"
 arch=('x86_64')
@@ -30,7 +30,7 @@ depends=('cairo'
 provides=('warp-cli' 'warp-diag' 'warp-svc')
 conflicts=("${pkgname%-bin}")
 source=("${pkgname}-${pkgver}.deb::https://pkg.cloudflareclient.com/pool/noble/main/c/cloudflare-warp/cloudflare-warp_${pkgver}.0_amd64.deb")
-sha256sums=('f05303554a006089d7549e66c293e953110200df2c69f8877ad334dc62539938')
+sha256sums=('f58d6604a4bbe31d45dce12eb2abe6ed6f11a099df0479d74edc1b1557e18dce')
 
 prepare() {
     mkdir -p "${srcdir}/build"
