@@ -7,7 +7,7 @@ pkgdesc="The infrastructure to build Ninja Python wheels"
 url="https://github.com/scikit-build/ninja-python-distributions"
 
 pkgver=1.11.1.3
-pkgrel=4
+pkgrel=5
 
 arch=("any")
 license=("Apache-2.0")
@@ -24,16 +24,16 @@ makedepends=(
     "python-wheel"
 )
 
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/scikit-build/ninja-python-distributions/archive/refs/tags/${pkgver}.tar.gz")
-b2sums=("d1f5af4e341544d7f23d7f80aae1804a6117a1d1ee28df734b3c9c9f2d1d6eddf1d50b5076836ef6026417e34b0a41846550ad33003cfbf7e81157d1bfb2ae0e")
+source=("${pkgname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/source/${_name::1}/${_name//-/_}/${_name//-/_}-$pkgver.tar.gz")
+b2sums=('aca27e9ef22c7fd0a7a39c07ec9e626dc65756a8718397a8af6cd03f6d4c570f57e260c901e97f6bdb373df9d9f1f472ad67f2342e49b1a844f6ae9132cdcbba')
 
 build() {
-    cd "${srcdir}/ninja-python-distributions-${pkgver}"
+    cd "${srcdir}/${_name}-${pkgver}"
     python -m build --wheel --no-isolation
 }
 
 package() {
-    cd "${srcdir}/ninja-python-distributions-${pkgver}"
+    cd "${srcdir}/${_name}-${pkgver}"
     python -m installer --destdir="$pkgdir" dist/*.whl
     rm "${pkgdir}/usr/bin/ninja"  # conflict with `ninja`
 }
