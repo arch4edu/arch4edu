@@ -3,8 +3,8 @@
 # Contributor: KokaKiwi <kokakiwi+aur@kokakiwi.net>
 
 pkgname=ventoy-bin
-pkgver=1.1.02
-pkgrel=3
+pkgver=1.1.03
+pkgrel=1
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -26,7 +26,7 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}.desktop"
         'sanitize.patch'
         'desktop_session.patch')
-sha256sums=('0b47aeba910dd9a9d5faad26988c45bef5238c4eb19e3bf510545698ac5caece'
+sha256sums=('0550196b1c80d3133eff6139f015463a1d01525ccb23c76619c1f7b6614670c1'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
             'c3d4463a878a89d96e5f0bc4e1a43e48f27af5965bd4c977567695d7cf91fe5f'
