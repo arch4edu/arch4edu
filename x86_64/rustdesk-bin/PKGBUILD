@@ -6,7 +6,7 @@
 
 pkgbase=rustdesk-bin
 pkgname=(rustdesk-bin)
-pkgver=1.3.7
+pkgver=1.3.8
 pkgrel=1
 pkgdesc="Yet another remote desktop software, written in Rust. Works out of the box, no configuration required."
 url="https://github.com/rustdesk/rustdesk"
@@ -33,8 +33,8 @@ optdepends=(
 options=('!strip' '!lto' '!debug')
 source_x86_64=("${pkgbase%-bin}-${pkgver}-x86_64.pkg.tar.zst::$url/releases/download/${pkgver/_/-}/rustdesk-${pkgver/_/-}-0-x86_64.pkg.tar.zst")
 source_aarch64=("${pkgbase%-bin}-${pkgver}-aarch64.rpm::$url/releases/download/${pkgver/_/-}/rustdesk-${pkgver/_/-}-0.aarch64.rpm")
-sha256sums_x86_64=('fff2defb0bd41c8bf546d5fb77355519be67ab38a410126aa9cf6e3dcc83c756')
-sha256sums_aarch64=('cbd98c7b748fda4739ef4fd3eaad33621de7909508787c03931a42e3dbce12d6')
+sha256sums_x86_64=('72d451d9985119be4c2249f96826b451ec0d0b79e669fa1835d7d7aeeab87007')
+sha256sums_aarch64=('ac96636ebd77ab15c5dd85579dcb09543e230cea60192b59590c4844628691c7')
 
 install=$pkgname.install
 
