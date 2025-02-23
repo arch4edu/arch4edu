@@ -1,7 +1,7 @@
 _snake=setuptools_git_versioning
 pkgname=python-setuptools-git-versioning
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Use Git repo data for building a version number according to PEP 440.'
 url='https://github.com/dolfinus/setuptools-git-versioning'
 arch=('any')
@@ -21,4 +21,5 @@ build() {
 package() {
   cd "$srcdir/$_snake-$pkgver"
   python -m installer "--destdir=$pkgdir" "./dist/"*".whl"
+  install -Dm644 "./LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
