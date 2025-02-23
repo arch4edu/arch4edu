@@ -9,26 +9,20 @@
 # Contributor: ZiXiS
 
 pkgname=pcl
-pkgver=1.14.1
-pkgrel=4
+pkgver=1.15.0
+pkgrel=1
 pkgdesc="A standalone, large scale, open project for 2D/3D image and point cloud processing"
-arch=('x86_64' 'i686')
+arch=('x86_64')
 url='https://www.pointclouds.org'
 license=("BSD-3-Clause")
-depends=('boost' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libpng' 'libusb' 'suitesparse' 'zlib')
+depends=('boost' 'cjson' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libpng' 'libusb' 'suitesparse' 'zlib')
 optdepends=('cuda' 'openmp' 'openni2' 'qhull')
-makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fast_float' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
-             'netcdf' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp' 'verdict')
+makedepends=('adios2' 'anari-sdk' 'cgns' 'cli11' 'cmake' 'fast_float' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
+             'netcdf' 'nlohmann-json' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp' 'verdict')
 checkdepends=('gtest')
-source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz"
-        "https://github.com/PointCloudLibrary/pcl/pull/6053.patch")
-sha256sums=('5dc5e09509644f703de9a3fb76d99ab2cc67ef53eaf5637db2c6c8b933b28af6'
-            '38eb905d3dc362e0986235751f6c2686618efc6815217be465d6572adb373138')
-
-prepare() {
-  cd "${srcdir}/pcl-pcl-${pkgver}"
-  patch -Np1 < ${srcdir}/6053.patch
-}
+source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz")
+sha512sums=('a1ab4858b8e5bde5b21bb3e04dcdcd9ca69204aa37a90dee336d4da452cb4be0a5b6a2b2b477668d4e82891955398825e97009fb5805df931af3c7d253e9100e')
+b2sums=('a6df3549e2aab90bdf1eea81c281ef79bf42410fe68dcb563be434a13913564f1756b0557b8638f9fddc74adfad233cba0b73fd43282f338e034a7d1681fa862')
 
 build() {
   cmake -B build -S "${srcdir}/pcl-pcl-${pkgver}" \
@@ -36,6 +30,12 @@ build() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_CUDA_STANDARD=17 \
+        -DBUILD_apps=ON \
+        -DBUILD_apps_3d_rec_framework=ON \
+        -DBUILD_apps_cloud_composer=ON \
+        -DBUILD_apps_in_hand_scanner=ON \
+        -DBUILD_apps_modeler=ON \
+        -DBUILD_apps_point_cloud_editor=ON \
         -DBUILD_outofcore=OFF \
         -DBUILD_simulation=ON \
         -DBUILD_surface_on_nurbs=ON -DUSE_UMFPACK=ON \
