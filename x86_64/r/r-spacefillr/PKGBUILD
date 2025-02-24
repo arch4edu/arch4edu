@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=spacefillr
-_pkgver=0.3.3
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,8 +13,8 @@ depends=(
   r-rcpp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('00ba85c2e07532c40537458098843297')
-b2sums=('fa703c6cf9c18c1182de5eec0a7972affc5d3bec06ef3295126aa6d7614d3fd952a0165b127a53334fa84c45646def536b7a44ad8cf3c52cb474c542aa398bf3')
+md5sums=('7a56b0a69abbc787013d4e77cbf4cad9')
+b2sums=('564acbc3292e9b5cd96d2697a61e0f51cbf8642ad83b867ddf8fea348405acfd9bb01f2d8fb51e561e8b253f16f87445e2182a585a56631c435d3d00175031af')
 
 build() {
   mkdir build
