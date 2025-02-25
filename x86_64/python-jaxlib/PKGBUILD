@@ -1,12 +1,12 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname=python-jaxlib
-pkgver=0.5.0
+pkgver=0.5.1
 pkgrel=1
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/jax-ml/jax/'
-license=('Apache')
+license=('Apache-2.0')
 depends=('python-absl'
          'python-flatbuffers'
          'python-ml-dtypes>=0.4.0'
@@ -14,7 +14,7 @@ depends=('python-absl'
          'python-scipy')
 makedepends=('clang18' 'python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 source=("jax-${pkgver}.tar.gz::$url/archive/refs/tags/jax-v${pkgver}.tar.gz")
-sha256sums=('04cc2eeb2e7ce1916674cea03a7d75a59d583ddb779d5104e103a2798a283ce9')
+sha256sums=('e74b1209517682075933f757d646b73040d09fe39ee3e9e4cd398407dd0902d2')
 
 build() {
     cd $srcdir/jax-jax-v$pkgver
@@ -27,9 +27,8 @@ build() {
 }
 
 package() {
-    cd $srcdir/jax-jax-v$pkgver
-    python -m installer \
-        --compile-bytecode 1 \
-        --destdir $pkgdir \
-        $srcdir/jax-jax-v$pkgver/dist/jaxlib-$pkgver-*.whl
+    cd jax-jax-v$pkgver
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
+        dist/jaxlib-$pkgver-*.whl
 }
