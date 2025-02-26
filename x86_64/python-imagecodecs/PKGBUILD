@@ -3,7 +3,7 @@
 _name=imagecodecs
 pkgname=python-imagecodecs
 pkgver=2024.12.30
-pkgrel=1
+pkgrel=2
 pkgdesc='Image transformation, compression, and decompression codecs'
 arch=('x86_64')
 url='https://github.com/cgohlke/imagecodecs'
@@ -33,6 +33,7 @@ depends=(
   lzfse
   openjpeg2
   python-numpy
+  python-pillow
   snappy
   xz
   zfp
