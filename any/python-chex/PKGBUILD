@@ -1,12 +1,12 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 pkgname=python-chex
 _pkgname=${pkgname#python-}
-pkgver=0.1.88
+pkgver=0.1.89
 pkgrel=1
 pkgdesc="A library of utilities for helping to write reliable JAX code"
 arch=('any')
 url="https://github.com/google-deepmind/chex"
-license=('Apache')
+license=('Apache-2.0')
 depends=('python-absl'
          'python-jax>=0.4.27'
          'python-numpy'
@@ -16,7 +16,7 @@ makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel
 checkdepends=('python-cloudpickle' 'python-dm-tree' 'python-pytest')
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/google-deepmind/$_pkgname/archive/refs/tags/v$pkgver.tar.gz"
         'chex.diff')
-sha256sums=('aa1e85724c0c45741f7ee14353539d3a3e355a0542f289ef61119d51bb621603'
+sha256sums=('66d87e476b4222a24d85b07941aa4097fa086460da9da08dadb6078f3b73aa87'
             'SKIP')
 
 prepare() {
@@ -39,8 +39,7 @@ check() {
 
 package() {
     cd "$_pkgname-$pkgver"
-    python -m installer \
-        --compile-bytecode 1 \
-        --destdir $pkgdir \
+    install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
         dist/$_pkgname-$pkgver-*.whl
 }
