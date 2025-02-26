@@ -6,7 +6,7 @@ _upstream_name="PyAV"
 pkgdesc="Pythonic bindings for FFmpeg"
 url="https://pyav.basswood-io.com"
 
-pkgver=14.1.0
+pkgver=14.2.0
 pkgrel=1
 
 arch=("x86_64" "i686")
@@ -20,32 +20,22 @@ depends=(
 )
 makedepends=(
   "cython"
-  "python-google-api-core"
+  "python-build"
+  "python-installer"
   "python-setuptools"
-  "python-wheel"
-  "pkgconf"
 )
 checkdepends=(
-  "autopep8"
-  "flake8"
-  "python-editorconfig"
-  "python-isort"
   "python-pytest"
-  "python-sphinx"
 )
 
 source=(
   "$_name-$pkgver.tar.gz::https://github.com/${_upstream_name}-Org/${_upstream_name}/archive/refs/tags/v${pkgver}.tar.gz"
 )
-b2sums=("c01bbd1d07c1d13ff2ba70410cabb55f19ec53bc97b52106135adf6a7e401e60e768d122dd2398bc033d59dce1f40b0b0e47538d56ef030b4d2f51e9558df8a5")
+b2sums=("1905ce65621a7f68bb403a767f1c9e6cc382cf47dd5d31d770bfbc531798ce22df4bad7d93301938991611a00ba9391d04f6147c316ade5e109e3b9aafc6a3d0")
 
 build() {
   cd "${srcdir}"/${_upstream_name}-${pkgver}
-
-  export PKG_CONFIG_PATH="/usr/lib/ffmpeg6.1/pkgconfig/"
-
-  python setup.py build_ext --inplace
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 check() {
@@ -53,12 +43,13 @@ check() {
 
   local python_version=$(python -c 'import sys; print("".join(map(str, sys.version_info[:2])))')
   export PYTHONPATH="${srcdir}/${_upstream_name}-${pkgver}/build/lib.linux-${CARCH}-cpython-${python_version}"
+  mv av _av  # so pytest does not attempt to import from source directory
 
   python -m pytest
 }
 
 package() {
   cd "${srcdir}/${_upstream_name}-${pkgver}"
-  python setup.py install --root="${pkgdir}" --optimize=1
+  python -m installer --destdir="${pkgdir}" dist/*
   install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/python-av/LICENSE"
 }
