@@ -6,10 +6,10 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=zoo
-_pkgver=1.8-12
+_pkgver=1.8-13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="S3 Infrastructure for Regular and Irregular Time Series (Z's Ordered Observations)"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -31,10 +31,11 @@ optdepends=(
   r-tis
   r-tseries
   r-xts
+  r-tinyplot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9bf826a22610f5a3f8ebd063404e7183')
-b2sums=('ba341e8084edee64d357c6cf6fe774ba7276c14cedc37ff41086ca8245d33991f6b5b238145755eabfc1666cde5ac93b7307c1c429feed90295bbe467a213d29')
+md5sums=('f5bebba0e71a9f15ba746ef6f25a36ae')
+b2sums=('01387be502f7fcb587fdb2a79cc18455cb53b2a75db87ddb37994b5a68920edbec71034a6a0cd78f2dbb292ecb67b2fa4905a5deee873dd014587045732f4943')
 
 build() {
   mkdir build
