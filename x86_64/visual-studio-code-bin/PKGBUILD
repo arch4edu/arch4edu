@@ -3,13 +3,16 @@
 pkgname=visual-studio-code-bin
 _pkgname=visual-studio-code
 pkgver=1.97.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)"
 arch=('x86_64' 'aarch64' 'armv7h')
 url="https://code.visualstudio.com/"
 license=('custom: commercial')
 provides=('code' 'vscode')
 conflicts=('code')
+# Upstream has signature verification for extensions and stripping breaks it
+# See https://github.com/microsoft/vscode/issues/223455#issuecomment-2610001754
+options=(!strip)
 install=$pkgname.install
 # lsof: needed for terminal splitting, see https://github.com/Microsoft/vscode/issues/62991
 # xdg-utils: needed for opening web links with xdg-open
