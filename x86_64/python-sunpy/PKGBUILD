@@ -5,13 +5,13 @@ pkgbase=python-sunpy
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=6.0.4
+pkgver=6.1.1
 pkgrel=1
 pkgdesc="Python library for solar physics"
 arch=('i686' 'x86_64')
 url="https://sunpy.org"
 license=('BSD-2-Clause')
-makedepends=('python-setuptools-scm>=6.2'
+makedepends=('python-setuptools-scm>=8.0.0'
              'python-build'
              'python-installer'
              'python-extension-helpers'
@@ -21,29 +21,30 @@ makedepends=('python-setuptools-scm>=6.2'
 #'python-scikit-image' 'python-h5netcdf' 'python-sqlalchemy' 'python-lxml' 'python-zeep' 'python-drms' 'python-aioftp' 'python-asdf' 'python-cdflib' 'python-mpl-animators' 'graphviz')
 #checkdepends=('python-pytest'
 #checkdepends=('python-pytest-xdist'
-#              'python-pytest-arraydiff'
-#              'python-pytest-doctestplus'
-#              'python-pytest-remotedata'
+##              'python-pytest-arraydiff'
+##              'python-pytest-doctestplus'
+##              'python-pytest-remotedata'
 #              'python-pytest-astropy'
 #               'python-astropy'
 #               'python-asdf'
+#               'python-fsspec'
 #               'python-requests'
-#               'python-dateutil'
+##               'python-dateutil'
 #               'python-matplotlib'
-#              'python-dask'
-#              'python-bokeh'
-#              'python-jinja'
+##              'python-dask'
+##              'python-bokeh'
+##              'python-jinja'
 #              'python-pytest-mpl'
-#              'python-pytest-mock'
+##              'python-pytest-mock'
 #              'python-reproject'
-#              'python-asdf-astropy'
+##              'python-asdf-astropy'
 #              'python-parfive'
 #              'python-scipy'
 #              'python-beautifulsoup4'
 #              'python-lxml'
 #              'python-zeep'
 #              'python-drms'
-#              'python-hypothesis'
+##              'python-hypothesis'
 #              'python-scikit-image'
 #              'python-h5netcdf'
 #              'python-cdflib'
@@ -51,9 +52,11 @@ makedepends=('python-setuptools-scm>=6.2'
 #              'python-glymur'
 #              'python-hvpy'
 #              'python-opencv'
-##              'python-astroquery'
+###              'python-astroquery'
 #              'python-aioftp'
+#              'python-aiobotocore'
 #              'python-jplephem'
+#              'python-s3fs'
 #)   # matplotlib <-mpl-animater, aiohttp <- parfive, asdf <- asdf-astropy, dateutil <- pandas <- drms
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
 #        "http://data.sunpy.org/sunpy/v1/AIA20110607_063301_0131_lowres.fits"
@@ -84,7 +87,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #        "http://data.sunpy.org/sunpy/v1/aiacalibim5.fits.gz"
 #        "http://data.sunpy.org/sunpy/v1/glg_cspec_n5_110607_v00.pha")
 ##       "http://netdrms01.nispdc.nso.edu/VSO/WSDL/VSOi_rpc_literal.wsdl")
-md5sums=('36e7d35020259e61c61cfb91bd9b9ce8')
+md5sums=('d192be2a455af4ec6fec0af6c41178bd')
 #        'bde3bd7a691b38e2e4c4e1d17b143b24'
 #        '01efaf052d81efc32a92050a249aa557'
 #        'ead6d3ce4c183c471d76bf1bc3be44a3'
@@ -156,38 +159,42 @@ build() {
 ##   ln -rs ${srcdir}/*.pha ${HOME}/.local/share/${_pyname}
 ##   PYTHONPATH="build/lib.linux-${CARCH}-$(get_pyver)" pytest "build/lib.linux-${CARCH}-$(get_pyver)" -vv -l -ra --color=yes -o console_output_style=count #|| warning "Tests failed" -vv -l -ra --color=yes -o console_output_style=count --remote-data=any -p xdist -n 4
 #    # From NixOS, remove tests needs hvpy, spicepy
-#    PYTHONPATH="build/lib.linux-${CARCH}-cpython-$(get_pyinfo)" pytest -vv -l -ra --color=yes -o console_output_style=count "build/lib.linux-${CARCH}-cpython-$(get_pyinfo)" docs -Wdefault --remote-data -p xdist -n 4 \
-#        --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyinfo)/sunpy/net/tests/test_fido.py \
+#    PYTHONPATH="build/lib.linux-${CARCH}-cpython-$(get_pyinfo)" pytest -vv -l -ra --color=yes -o console_output_style=count "build/lib.linux-${CARCH}-cpython-$(get_pyinfo)" docs -Wdefault --remote-data \
 #        --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyinfo)/sunpy/coordinates/tests/test_spice.py \
-#        --deselect=build/lib.linux-x86_64-cpython-312/sunpy/net/hek2vso/tests/test_hek2vso.py::test_full_query \
-#        --deselect=build/lib.linux-x86_64-cpython-312/docs/whatsnew/5.0.rst::5.0.rst \
-#        --deselect=build/lib.linux-x86_64-cpython-312/docs/tutorial/acquiring_data/index.rst::index.rst \
-#        --deselect=docs/tutorial/acquiring_data/hek.rst::hek.rst
-#    #|| warning "Tests failed" -vv -l -ra --color=yes -o console_output_style=count
+#        --deselect=build/lib.linux-x86_64-cpython-313/sunpy/timeseries/sources/noaa.py::sunpy.timeseries.sources.noaa.NOAAPredictIndicesTimeSeries
+##       --ignore=build/lib.linux-${CARCH}-cpython-$(get_pyinfo)/sunpy/net/tests/test_fido.py \
+##       --deselect=build/lib.linux-x86_64-cpython-312/sunpy/net/hek2vso/tests/test_hek2vso.py::test_full_query \
+##       --deselect=build/lib.linux-x86_64-cpython-312/docs/whatsnew/5.0.rst::5.0.rst \
+##       --deselect=build/lib.linux-x86_64-cpython-312/docs/tutorial/acquiring_data/index.rst::index.rst \
+##       --deselect=docs/tutorial/acquiring_data/hek.rst::hek.rst
+#    #|| warning "Tests failed" -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4
 #}
 
 package_python-sunpy() {
-    depends=('python>=3.10' 'python-astropy>=5.3.0' 'python-parfive>=2.0.0' 'python-aioftp' 'python-packaging>=23.0' 'python-requests>=2.28.0')
+    depends=('python>=3.11' 'python-astropy>=6.0.0' 'python-parfive>=2.0.0' 'python-aioftp' 'python-packaging>=23.0' 'python-requests>=2.28.0' 'python-fsspec>=2023.3.0')
     optdepends=('python-asdf>=2.13.0: asdf'
-                'python-asdf-astropy>=0.4.0: asdf'
+                'python-asdf-astropy>=0.5.0: asdf'
                 'python-dask>=2022.5.2: dask'
-                'python-scikit-image>=0.18.0: image'
-                'python-scipy>1.10.0: image, map'
-                'python-reproject>=0.9.0: map'
-                'python-matplotlib>=3.5.0: map, timeseries, visualization'
+                'python-scipy>=1.10.1: image, map'
+                'python-contourpy>=1.0.1: map'
+                'python-reproject>=0.10.0: map'
+                'python-matplotlib>=3.6.0: map, timeseries, visualization'
                 'python-mpl-animators>=1.0.0: map, visualization'
-                'python-glymur>0.11.0: jpeg2000'
+                'python-glymur>=0.11.0: jpeg2000'
                 'python-lxml>5.0.0: jpeg2000'
                 'python-beautifulsoup4>=4.11.0: net'
                 'python-drms>=0.7.1: net'
                 'python-dateutil>=2.8.1: net'
                 'python-tqdm>=4.64.0: net'
                 'python-zeep>=4.1.0: net'
-                'python-scikit-image>=0.19.0: scikit-image'
-                'python-cdflib>1.0.0: timeseries'
+                'python-scikit-image>=0.20.0: scikit-image'
+                'python-cdflib>=1.3.2: timeseries'
                 'python-h5netcdf>=1.0.0: timeseries'
-                'python-h5py>=3.7.0: timeseries'
-                'python-pandas>=1.4.0: timeseries')
+                'python-h5py>=3.8.0: timeseries'
+                'python-pandas>=1.5.0: timeseries'
+                'python-s3fs: s3'
+                'python-aiobotocore: s3'
+                'python-boto3: s3')
 #               'python-sunpy-doc: Documentation for SunPy')
     cd ${srcdir}/${_pyname}-${pkgver}
 
