@@ -3,10 +3,10 @@
 pkgname=python-boltons
 pkgver=25.0.0
 _commit=c23dbdadb6fecdf505eb4231559561913b84c13f
-pkgrel=1
+pkgrel=2
 pkgdesc="Functionality that should be in the standard library. Like builtins, but Boltons."
 url="https://github.com/mahmoud/boltons"
-license=('BSD')
+license=('BSD-3-Clause')
 arch=('any')
 depends=('python')
 makedepends=('git' 'python-flit' 'python-installer')
