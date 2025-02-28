@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=flexmix
-_pkgver=2.3-19
+_pkgver=2.3-20
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Flexible Mixture Modeling"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -26,8 +26,8 @@ optdepends=(
   r-suppdists
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f527d75cdb77e567d6e3b29c386f7a34')
-b2sums=('3f1bb6fb6805ef4d883122220f1d9734c572136685bde692c4bfa7feaffc6457e34e588f5871d91ac0734d6c9c4df5adf3a68aa30879cb617db96d360a27c4ea')
+md5sums=('981391fa78fc62d6fa2c1891c32fc6ce')
+b2sums=('d35f9f9a384568fc8ed4f9223cd7a6f88f2a86a7fea36e410ebde9ea61d27bfaacbb1be066441baf2e11e10fb2c10a012d9ba5a2047a2ed5d486a1e584ab4fa6')
 
 build() {
   mkdir build
