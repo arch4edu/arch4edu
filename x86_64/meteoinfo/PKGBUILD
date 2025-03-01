@@ -3,7 +3,7 @@
 # shellcheck shell=bash disable=SC2034,SC2154
 
 pkgname=meteoinfo
-pkgver=3.9.10
+pkgver=3.9.11
 pkgrel=1
 pkgdesc="MeteoInfo: GIS, scientific computation and visualization environment"
 arch=("any")
@@ -14,7 +14,7 @@ source=("http://meteothink.org/downloads/files/MeteoInfo_${pkgver}.zip"
   https://raw.githubusercontent.com/meteoinfo/MeteoInfo/refs/heads/master/LICENSE
   https://raw.githubusercontent.com/meteoinfo/MeteoInfo/refs/heads/master/README.md
 )
-sha256sums=('475dbe779f7fd3ab74e9aa6c7267863f8a184592464eabda51aae7dcec39e45c'
+sha256sums=('984f4844852f9a7f83aebd469d564467e8e145f453465709cc8d2a85c51cb960'
             '97628afebc60f026f5c2b25d7491c46a5c4ee61f693e7cfa07fbd2c03605979b'
             '3cf668325fdd689a49cf5aab59f2b53948d7df05248e121be6111e11969a128c')
 
