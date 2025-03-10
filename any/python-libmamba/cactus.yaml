@@ -4,7 +4,6 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/reproc
-  - x86_64/simdjson
 makedepends:
   - any/python-ninja
   - x86_64/python-cmake-bin
