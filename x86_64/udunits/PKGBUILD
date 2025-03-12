@@ -5,7 +5,7 @@
 
 pkgname=udunits
 pkgver=2.2.28
-pkgrel=3
+pkgrel=4
 pkgdesc="A tool for calculations of physical quantities"
 arch=('i686' 'x86_64')
 url="http://www.unidata.ucar.edu/software/udunits/"
@@ -13,7 +13,7 @@ license=('MIT')
 depends=('expat')
 options=('!libtool')
 install=udunits.install
-source=(https://artifacts.unidata.ucar.edu/repository/downloads-udunits/$pkgver/$pkgname-$pkgver.tar.gz)
+source=(https://downloads.unidata.ucar.edu/$pkgname/$pkgver/$pkgname-$pkgver.tar.gz)
 sha256sums=('590baec83161a3fd62c00efa66f6113cec8a7c461e3f61a5182167e0cc5d579e')
 
 build() {
