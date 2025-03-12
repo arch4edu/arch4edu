@@ -1,13 +1,13 @@
-# Maintainer: Laurent Tréguier <laurent@treguier.org>
+# Contributor: Laurent Tréguier <laurent@treguier.org>
 
 pkgname=lzfse
 pkgver=1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="The LZFSE compression library and command line tool"
 arch=("i686" "x86_64")
 url="https://github.com/lzfse/lzfse"
 license=("BSD")
-depends=()
+depends=('glibc')
 makedepends=()
 optdepends=()
 provides=("lzfse")
