@@ -3,9 +3,9 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=RcppTOML
-_pkgver=0.2.2
+_pkgver=0.2.3
 pkgname=r-${_pkgname,,}
-pkgver=0.2.2
+pkgver=0.2.3
 pkgrel=1
 pkgdesc="'Rcpp' Bindings to Parser for Tom's Obvious Markup Language"
 arch=('x86_64')
@@ -19,7 +19,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('371391f9ca82221e76a424082ea9ebc5ea2c50f14e8408469b09d7dc3e6f63aa')
+sha256sums=('2ed594253c562bef7065e67d791197f61b221e545206a1b3598d46868cf5926f')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
