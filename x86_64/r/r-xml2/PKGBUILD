@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xml2
-_pkgver=1.3.6
+_pkgver=1.3.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Parse XML"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -30,10 +30,11 @@ optdepends=(
   r-mockery
   r-rmarkdown
   r-testthat
+  r-xslt
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fc6679028dca1f3047c8c745fb724524')
-b2sums=('cb3553271c24a6304f77ebfe34f8baae3697623e608f4ea711e79fb68ebb998f3c8ec4d9d66ed00166fa73f4785580b82596380d459d3716f72519127adaf0cc')
+md5sums=('1acc89ad90d6f78331e1961e070ff785')
+b2sums=('29c198e282d6e0a6e36ca2e7794123205fa34152f28640aac838d50cbe854016fd525d7955a24fb24addc5d3f836ff113277909a0a86af590c4005c1164c9e8f')
 
 build() {
   mkdir build
