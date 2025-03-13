@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=rstan
-_pkgver=2.32.6
+_pkgver=2.32.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -47,9 +47,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-plugin.patch")
-md5sums=('93aecb7454d73942e9b0c719b2723505'
+md5sums=('265b3620edbabae8f09c871dbcbd5cca'
          '4bd2cd1d41029fb5d9b792b56d9cd524')
-b2sums=('9aec4dd17e08cc1e6e8ed5c047c9ce07e2489f2ba85445b1d1aaff9853993f21f71f00024715fd41d05833563a5c1efe155bfd691938caf6d7535879201e6263'
+b2sums=('5ca08821c28731b9ca302da2dca3ba5a0a0b9eb205cffc8d9d026693a11c605a59fe47e96235a4949db6c668e9919187335b38e3a3a8b4ce086b5a19a857e0e1'
         'b5cb53f8d2e3cc84ebbed12e8439f59f5b1b62b747a3e6f9212750b882ee2833319af69cd973734670fba7bdbd924bc5a2d63733c60ddf437623bc83d3f3e4a7')
 
 prepare() {
