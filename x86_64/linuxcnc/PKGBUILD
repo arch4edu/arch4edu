@@ -5,8 +5,8 @@
 # Contributor: Alec Ari <neotheuser@ymail.com>
 
 pkgname=linuxcnc
-pkgver=2.9.3
-pkgrel=3
+pkgver=2.9.4
+pkgrel=1
 pkgdesc="Controls CNC machines. It can drive milling machines, lathes, 3d printers, laser cutters, plasma cutters, robot arms, hexapods, and more (formerly EMC2)"
 arch=(x86_64)
 license=(GPL2 'custom: unredestributable')
@@ -20,7 +20,7 @@ options=(!emptydirs !strip)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/LinuxCNC/linuxcnc/archive/refs/tags/v${pkgver}.tar.gz"
         'unredestributable.txt'
         'libtirpc.patch')
-sha256sums=('061d78ad404492fe80fbc013dfd3138c9a31d0c8e38e0a4e4eaa36d40efce816'
+sha256sums=('93aca8d1c602331b17e7b2fefb82318f59c5faef9cacf60514b59cd6bb89be0e'
             '228a035c143ccbdd6056e1189267b034f046742cae034bff821eccc8dbc68ee3'
             'bc95bafd67fad1c1d3722261bc586cdc612ec9e1597fadb95fa825c10550ac2c')
 
