@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=semTools
-_pkgver=0.5-6
+_pkgver=0.5-7
 pkgname=r-${_pkgname,,}
-pkgver=0.5.6
-pkgrel=6
+pkgver=0.5.7
+pkgrel=1
 pkgdesc='Useful Tools for Structural Equation Modeling'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -27,7 +27,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f522ce3c02ac580ad49af7a7278141dae39fdfaeccc7d1379faf1266ce9fcaf2')
+sha256sums=('39cb5e04ee3f479bfdf57669b9c599ae4775412a4d8991a9855bc06e7753e6b0')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
