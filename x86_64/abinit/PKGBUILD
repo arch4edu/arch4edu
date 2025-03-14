@@ -3,7 +3,7 @@
 # Contributor: Xyne
 
 pkgname=abinit
-pkgver=10.2.5
+pkgver=10.2.7
 pkgrel=1
 pkgdesc="Full-featured atomic-scale first-principles simulation software."
 arch=('i686' 'x86_64')
@@ -12,7 +12,7 @@ license=('GPLv3')
 depends=('lapack' 'blas' 'openmpi' 'netcdf' 'netcdf-fortran' 'hdf5' 'libxc')
 makedepends=('gcc-fortran' 'perl')
 source=("https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('7185df9ebdc91c255044f4fdd9dac8bdd9ce3be67a582d6e24e85370e104d74c')
+sha256sums=('0cd5c5755d151ef6a95b107cdcf0ec496818e34356ae8d26b2b4842bf641aec4')
 
 prepare() {
   export FCFLAGS="-w -fallow-argument-mismatch -O2"
