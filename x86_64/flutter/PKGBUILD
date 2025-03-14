@@ -4,9 +4,9 @@
 
 pkgbase=flutter
 _group=flutter
-pkgver=3.29.0
+pkgver=3.29.2
 _dartver=(3.7.0 3.8.0)
-_enginever=f73bfc4522dd0bc87bbcdb4bb3088082755c5e87
+_enginever=18b71d647a292a980abb405ac7d16fe1f0b20434
 _materialfontsver=3012db47f3130e62f7cc0beabff968a33cbec8d8
 _gradlewver=fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
 _flutterarch=$(echo "$CARCH" | sed s/aarch64/arm64/ | sed s/x86_64/x64/)
@@ -39,7 +39,7 @@ source=(
   "opt-in-analytics.patch"
 )
 
-sha256sums=('cecad8bfb534d113f433b2950ba14ef292a1983c8d1e0bb66edbfe18ddae7752'
+sha256sums=('84905f2b8eb96ae68e45281243afd12a715809431409a38932dffff159f15fac'
             '6b413ea742f88ed1ef9ef2df2bbb93376a3f3508aa82bb9cc68fb1516234017f'
             'e41d25d8cba8b0bb51ee0b20cb6b730bfb2c491d67c669ab8e3550d60b37fb5c'
             'b4c104129eb57e7e3edca2e23376b8b034de2d466189bdc1c3e2a304506889a3'
@@ -228,6 +228,8 @@ _package-target-android() {
   install -dm755 "${pkgdir}/usr/lib/${_group}/bin/internal"
 
   cp -ra "${srcdir}/${_group}/packages/flutter_tools/gradle" "${pkgdir}/usr/lib/${_group}/packages/flutter_tools"
+  # TODO: get rid of this ugly hack
+  mkdir -m777 "${pkgdir}/usr/lib/${_group}/packages/flutter_tools/gradle/.kotlin"
 
   install -Dm644 "${srcdir}/${_group}/bin/internal/engine.version" "${pkgdir}/usr/lib/${_group}/bin/internal"
   install -Dm644 "${srcdir}/${_group}/bin/internal/engine.realm" "${pkgdir}/usr/lib/${_group}/bin/internal"
