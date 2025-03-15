@@ -4,7 +4,7 @@ url='https://wiki.ros.org/catkin'
 pkgname='ros-noetic-catkin'
 pkgver='0.8.10'
 arch=('any')
-pkgrel=6
+pkgrel=7
 license=('BSD')
 
 ros_makedepends=(
