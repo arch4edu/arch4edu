@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rostopic'
 pkgname='ros-noetic-rostopic'
 pkgver='1.16.0'
 arch=('any')
-pkgrel=3
+pkgrel=4
 license=('BSD')
 
 ros_makedepends=(
