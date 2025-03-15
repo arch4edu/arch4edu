@@ -7,7 +7,7 @@ pkgname='ros-noetic-rqt-action'
 pkgver='0.4.9'
 _pkgver_patch=0
 arch=('any')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
