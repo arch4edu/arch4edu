@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rosnode'
 pkgname='ros-noetic-rosnode'
 pkgver='1.16.0'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
