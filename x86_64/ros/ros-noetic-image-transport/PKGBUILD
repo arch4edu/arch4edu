@@ -6,7 +6,7 @@ url='https://wiki.ros.org/image_transport'
 pkgname='ros-noetic-image-transport'
 pkgver='1.12.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
