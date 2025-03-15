@@ -6,7 +6,7 @@ url='https://wiki.ros.org/bondcpp'
 pkgname='ros-noetic-bondcpp'
 pkgver='1.8.6'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
