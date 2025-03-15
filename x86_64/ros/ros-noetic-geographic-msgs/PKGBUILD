@@ -6,7 +6,7 @@ url='https://wiki.ros.org/geographic_msgs'
 pkgname='ros-noetic-geographic-msgs'
 pkgver='0.5.6'
 arch=('any')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(ros-noetic-catkin
