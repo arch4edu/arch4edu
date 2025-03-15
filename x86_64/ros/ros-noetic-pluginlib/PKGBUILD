@@ -6,7 +6,7 @@ url='http://www.ros.org/wiki/pluginlib'
 pkgname='ros-noetic-pluginlib'
 pkgver='1.13.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
