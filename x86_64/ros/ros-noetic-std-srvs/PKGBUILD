@@ -6,7 +6,7 @@ url='https://wiki.ros.org/std_srvs'
 pkgname='ros-noetic-std-srvs'
 pkgver='1.11.3'
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
