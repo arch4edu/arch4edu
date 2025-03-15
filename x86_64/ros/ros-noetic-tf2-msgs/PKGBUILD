@@ -6,7 +6,7 @@ url='https://wiki.ros.org/tf2_msgs'
 pkgname='ros-noetic-tf2-msgs'
 pkgver='0.7.6'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
