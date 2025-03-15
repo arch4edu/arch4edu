@@ -6,7 +6,7 @@ url='https://wiki.ros.org/genlisp'
 pkgname='ros-noetic-genlisp'
 pkgver='0.4.18'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
