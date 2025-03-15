@@ -4,7 +4,7 @@ url='https://wiki.ros.org/qt_gui_py_common'
 pkgname='ros-noetic-qt-gui-py-common'
 pkgver='0.4.2'
 arch=('any')
-pkgrel=5
+pkgrel=6
 license=('BSD')
 
 ros_makedepends=(
