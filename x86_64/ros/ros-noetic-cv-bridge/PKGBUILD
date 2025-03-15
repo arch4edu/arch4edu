@@ -6,7 +6,7 @@ url='https://wiki.ros.org/cv_bridge'
 pkgname='ros-noetic-cv-bridge'
 pkgver='1.16.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=10
+pkgrel=11
 license=('BSD')
 
 ros_makedepends=(
