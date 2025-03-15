@@ -6,7 +6,7 @@ url='https://wiki.ros.org/joint_state_publisher'
 pkgname='ros-noetic-joint-state-publisher'
 pkgver='1.15.1'
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
