@@ -6,7 +6,7 @@ url='https://github.com/ros-controls/ros_control/wiki'
 pkgname='ros-noetic-controller-manager-msgs'
 pkgver='0.19.6'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(ros-noetic-message-generation
