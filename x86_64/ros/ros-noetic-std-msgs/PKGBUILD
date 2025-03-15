@@ -6,7 +6,7 @@ url='https://wiki.ros.org/std_msgs'
 pkgname='ros-noetic-std-msgs'
 pkgver='0.5.13'
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
