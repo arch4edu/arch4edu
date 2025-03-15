@@ -6,7 +6,7 @@ url='https://wiki.ros.org/nodelet_topic_tools'
 pkgname='ros-noetic-nodelet-topic-tools'
 pkgver='1.10.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=7
+pkgrel=8
 license=('BSD')
 
 ros_makedepends=(
