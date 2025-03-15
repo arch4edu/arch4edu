@@ -6,7 +6,7 @@ url='https://wiki.ros.org/gencpp'
 pkgname='ros-noetic-gencpp'
 pkgver='0.7.0'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
