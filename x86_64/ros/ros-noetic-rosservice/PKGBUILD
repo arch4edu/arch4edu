@@ -6,7 +6,7 @@ url='https://wiki.ros.org/rosservice'
 pkgname='ros-noetic-rosservice'
 pkgver='1.16.0'
 arch=('any')
-pkgrel=2
+pkgrel=3
 license=('BSD')
 
 ros_makedepends=(
