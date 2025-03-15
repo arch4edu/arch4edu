@@ -6,7 +6,7 @@ url='https://wiki.ros.org/dynamic_reconfigure'
 pkgname='ros-noetic-dynamic-reconfigure'
 pkgver='1.7.3'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=7
+pkgrel=8
 license=('BSD')
 
 ros_makedepends=(
