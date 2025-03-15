@@ -7,7 +7,7 @@ pkgname='ros-noetic-gennodejs'
 pkgver='2.0.1'
 _pkgver_patch=0
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('Apache 2.0')
 
 ros_makedepends=(
