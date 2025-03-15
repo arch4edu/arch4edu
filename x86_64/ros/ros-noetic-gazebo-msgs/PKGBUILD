@@ -6,7 +6,7 @@ url='https://wiki.ros.org/gazebo_msgs'
 pkgname='ros-noetic-gazebo-msgs'
 pkgver='2.9.2'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(ros-noetic-std-msgs
