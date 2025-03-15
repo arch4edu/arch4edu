@@ -6,7 +6,7 @@ url='https://wiki.ros.org/bondpy'
 pkgname='ros-noetic-bondpy'
 pkgver='1.8.6'
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
