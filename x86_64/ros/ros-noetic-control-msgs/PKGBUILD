@@ -6,7 +6,7 @@ url='https://wiki.ros.org/control_msgs'
 pkgname='ros-noetic-control-msgs'
 pkgver='1.5.2'
 arch=('any')
-pkgrel=4
+pkgrel=5
 license=('BSD')
 
 ros_makedepends=(
