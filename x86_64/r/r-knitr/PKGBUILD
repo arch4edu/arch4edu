@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=knitr
-_pkgver=1.49
+_pkgver=1.50
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -54,8 +54,8 @@ optdepends=(
   r-webshot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fd195b5d3881af92282cd1b23d477923')
-b2sums=('0a3aeb13ffb49f7e18baa9aec09e4b6b98549564fda83fb30e899ab57d1ff913db19b5af8c832f97de32b13c9e22de82a9e75e18d2ab689801c738620d68b56a')
+md5sums=('b58c37c2d9123ba4a98b1e838da9ac75')
+b2sums=('28c461406c5b5a2e590e3417079ca9971382d88fd2d9d09e8d395723f89905e1d7be9678ac77c912eeed17ad69915d86c4ec382dfcf0d07837495fd83a7a18f8')
 
 build() {
   mkdir build
