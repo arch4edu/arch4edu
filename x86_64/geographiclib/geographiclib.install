@@ -6,7 +6,7 @@ _info() {
     echo "  geographiclib-get-gravity"
     echo "  geographiclib-get-magnetic"
     echo "For details see:"
-    echo "  https://geographiclib.sourceforge.io/doc/library.html#datasets"
+    echo "  https://geographiclib.sourceforge.io/C++/doc/index.html"
     echo "----------------------------------------------------------"
 }
 
