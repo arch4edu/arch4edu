@@ -3,20 +3,27 @@
 pkgname=python-colcon-test-result
 _name=${pkgname:7}
 pkgver=0.3.8
-pkgrel=3
+pkgrel=4
 pkgdesc="An extension for colcon-core to provide information about the test results."
 arch=(any)
 url="https://pypi.org/project/colcon-test-result"
 license=('Apache')
 depends=('python-colcon-core')
 makedepends=('python-setuptools')
-source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('aa5225716a5bdd9f1df721e7a04f1e02150def8c86dd070793cb62e747c36ed3')
+source=(
+    https://github.com/colcon/colcon-test-result/archive/refs/tags/${pkgver}.tar.gz
+    upstream.path::https://github.com/colcon/colcon-test-result/compare/0.3.8...master.patch)
+sha256sums=('b10643fd8de667e320843558aafbf7dd4f756b6addbbe7e03e08f5de6e375d06'
+            'SKIP')
 
+build() {
+    cd ${srcdir}/${_name}-${pkgver}
+    python -m build --wheel --no-isolation
+}
 
 package() {
     cd ${srcdir}/${_name}-${pkgver}
-
-    python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1
+    python -m installer --destdir="${pkgdir}" dist/*.whl
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")
