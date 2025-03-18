@@ -8,7 +8,7 @@
 _module="tokenizers"
 _pkgname="python-$_module"
 pkgname="$_pkgname"
-pkgver=0.21.0
+pkgver=0.21.1
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 url="https://github.com/huggingface/tokenizers"
@@ -26,7 +26,7 @@ makedepends=(
   'python-wheel'
 )
 checkdepends=(
-  'python-datasets' # AUR
+  'python-datasets'
   #└─ 'python-huggingface-hub' # AUR
   #└─ 'python-multiprocess' # AUR
   'python-numpy'
@@ -45,11 +45,9 @@ source=(
   "norvig-big.txt"::"https://norvig.com/big.txt"
   "roberta.json"::"https://huggingface.co/roberta-large/raw/main/tokenizer.json"
 )
-sha256sums=(
-  '841279ad797d575ed3cf31fc4f30e09e37acbd35028d30c51fc0879ef7ed4094'
-  'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
-  '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e'
-)
+sha256sums=('65dd1f079404161321ece0d1af4f678e5846e3e6056f004600bde776d489bddc'
+            'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
+            '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e')
 
 _rust_env() {
   export CARGO_HOME CARGO_TARGET_DIR RUSTUP_TOOLCHAIN
@@ -91,6 +89,8 @@ check() {
 }
 
 package() {
-  cd "$_pkgsrc/bindings/python"
+  cd "$_pkgsrc"
+  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  cd "bindings/python"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }
