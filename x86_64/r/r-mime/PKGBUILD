@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=mime
-_pkgver=0.12
+_pkgver=0.13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=14
+pkgrel=1
 pkgdesc="Map Filenames to MIME Types"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,8 +17,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7314f3b57f70474d9b4d2b831d6bb59d')
-b2sums=('62f88bc0f414216f062d93541f20ef650756a51ec88e27a29ecf1e4418182a5bedf855cbfd77dc63497f15a0e2a64c8b07d81eb91c4ef2f74e74a2c54ca4926f')
+md5sums=('45c3868fb2f5a7f3817d54d1c75799f9')
+b2sums=('9ae62dfb85948a72cf1e4dbf98d121471ea3b212c56e1d1cbf6e1248dd35af0d21406b790f73f14ce64cd2ac1818a1df153b36bdab4278d7cef7d5973a354ef5')
 
 build() {
   mkdir build
