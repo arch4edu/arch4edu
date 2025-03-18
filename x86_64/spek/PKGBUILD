@@ -1,7 +1,7 @@
 # Maintainer: Michał Przybyś <michal@przybys.eu>
 pkgname=spek
 pkgver=0.8.5
-pkgrel=2
+pkgrel=3
 pkgdesc='An acoustic spectrum analyser'
 arch=(x86_64)
 url='http://spek.cc/'
@@ -9,6 +9,12 @@ license=(GPL3)
 depends=(ffmpeg wxwidgets-gtk3)
 source=("https://github.com/alexkay/spek/archive/v${pkgver}.tar.gz")
 sha256sums=('9053d2dec452dcde421daa0f5f59a9dee47927540f41d9c0c66800cb6dbf6996')
+
+prepare() {
+    cd "spek-${pkgver}"
+    GETTEXT_VERSION=$(gettext --version | sed -En '/gettext/ s/^.*runtime\) //p')
+    sed -i "s/AM_GNU_GETTEXT_VERSION(\[[0-9]\+\.[0-9]\+\])/AM_GNU_GETTEXT_VERSION([$GETTEXT_VERSION])/" configure.ac
+}
 
 build() {
     cd "spek-${pkgver}"
