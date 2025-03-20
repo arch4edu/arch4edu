@@ -1,10 +1,10 @@
 # curl -H 'Snap-Device-Series: 16' 'https://api.snapcraft.io/v2/snaps/info/skype'
 _snap_id='QRDEfjn4WJYnm0FzDKwqqRZZI77awQEV'
-_snap_rev_x86_64=386
+_snap_rev_x86_64=390
 
 _name=skypeforlinux
 pkgname=${_name}-bin
-pkgver=8.138.0.203
+pkgver=8.138.0.209
 pkgrel=1
 pkgdesc='Skype for Linux'
 arch=('x86_64')
@@ -43,7 +43,7 @@ source=('flags.sh')
 source_x86_64=("$(_get_source 'x86_64')")
 
 sha256sums=('d83693ffd8034c21030262ac00ce529c8da7b0196ea4b4eb2168861fc2657a2a')
-sha256sums_x86_64=('f95a85e297f0573c0ee4c9f67d82cf755ebbb7e02932fe5bfc9d4b9e386509cb')
+sha256sums_x86_64=('6cf604fbd2bb4d439e0241362994bb33f4c9321fed589cfd2c90be1ec2ef087e')
 
 package() {
     local sname="source_${CARCH}"
