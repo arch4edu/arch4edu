@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=commonmark
-_pkgver=1.9.2
+_pkgver=1.9.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,21 +26,13 @@ optdepends=(
   r-testthat
   r-xml2
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "system-cmark-gfm.patch")
-md5sums=('02c2b4ba170610b672092708a39fa479'
-         '31357c9e94c77a617485e752ead93868')
-b2sums=('b9ffda0e5413cc60b66be37a547dba956b1c2883b4cb99ae4dc03b99f881fe4535568dd052322c97983784fd3cf0ae669e43e501c429d5156c84dc92206f3b6e'
-        '02fda554b3d786bab69b214e1281da56968dc943cd1ebda829576b6858e2c6167b2415f878c66bb7f6091d3581636d0135e8cd2f5afba99f9141c07aacbba686')
-
-prepare() {
-  # build against system cmark-gfm
-  patch -Np1 -i system-cmark-gfm.patch
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('2a3cb69608d0cd2644fd857555305c86')
+b2sums=('c5f389e30d1f35a224a85ba35671596ab86200c96d23faf329459bbe912584d988217caa79623820fef6ecf5a4162fa519071448118dfd77ae52aef5b37e7028')
 
 build() {
-  mkdir build
-  R CMD INSTALL -l build "$_pkgname"
+  mkdir -p build
+  PKG_LIBS='-lcmark-gfm -lcmark-gfm-extensions' R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
