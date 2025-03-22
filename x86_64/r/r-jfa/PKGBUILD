@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=jfa
-_pkgver=0.7.2
+_pkgver=0.7.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -48,8 +48,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3cb4f299a46a930a22d721b8c1bff571')
-b2sums=('ec8e09ed712892c9d1bf9e1f625d2a23ff890949937a564a012c1c7e318f387a3cb08133caea3f24a2ebfc88d405e14d86e6ada1f978b4c35c5707b5e0cbac24')
+md5sums=('c141fd3b12d9e67dd70181abc053a7a4')
+b2sums=('663bf69fdd86604580038c93c0cbde824530d5df8a55145e206e168af2058c29bd2083d14c2ad241d63f08ed2e7e26fa035a5a95a227b12c315a155180e1efcb')
 
 build() {
   mkdir build
