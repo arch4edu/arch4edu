@@ -4,7 +4,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=psych
-_pkgver=2.4.12
+_pkgver=2.5.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,8 +26,8 @@ optdepends=(
   r-rgraphviz
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cb692d1baa1fb35f50caea139619ad94')
-b2sums=('9f52ced1cf01add698dd804b4b5a87927241b7662267d6ccc9f9d1c2cb80bdf7d3cc386227adc9643171f9bbd559850b0ea1a89d9c7fd756ac377529cc5c6d1b')
+md5sums=('c4ace58a7192e5dd3a39868c8b670270')
+b2sums=('365b57abdf0ad2c7aa7d80a76d5cd6b309fcc7506e4edf338200f8a0f350810dba301e87bdcb99bc5b5c395dfe84b131666147181a79ecb2c5921a6dba508dfa')
 
 build() {
   mkdir build
