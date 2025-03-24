@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=SuppDists
-_pkgver=1.1-9.8
+_pkgver=1.1-9.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,8 +16,8 @@ optdepends=(
   r-rcppziggurat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7204ad1a691b0db2d43ce7ded0d40f99')
-b2sums=('84558f78e3f69c01fac244cb4e728c13f85c5994d00032b53b43617447703a4d3469568ace392158c4671fa2b27c8492a6dc07ce69d175b5899671228ad7a202')
+md5sums=('f1a8585c9511b9d93788cf38b8207c48')
+b2sums=('e1a3e57a1f7b26b7ce369e53a11d11a7b9935f6cb5affbca1cab74288729223245c3a6cecc7aa7a366b919b1cb228e38f3d35c31a25274651ba656f8cb80c26e')
 
 build() {
   mkdir build
