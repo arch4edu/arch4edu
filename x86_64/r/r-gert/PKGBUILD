@@ -4,7 +4,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=gert
-_pkgver=2.1.4
+_pkgver=2.1.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,8 +28,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a763a5db47146716a536ecb5d624c92b')
-b2sums=('04934d59be9229897adeae2fe74d859fd956bd0538cd4b6745e209323ae19d6eaeb6ab9acc8c70affa6cbbdc369b83d676cd1406a057c60a3e32b59edcf3aa35')
+md5sums=('0f72527e1e1a82abcc7b75877a3fa267')
+b2sums=('1f05914dc78ffee841a248e1d6213b0bebea802b20c73d66f2a76d6e183cd39f52e7e9b84d4fddbe220716a973b6b6955c7d7c813603ae009d3f88b80578d589')
 
 build() {
   mkdir build
