@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=hypergeo
-_pkgver=1.2-13
+_pkgver=1.2-14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=1
 pkgdesc="The Gauss Hypergeometric Function"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,8 +15,8 @@ depends=(
   r-elliptic
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fe7a150c10ab854fa5f6d70ee0f7549e')
-b2sums=('8fec028c73b04b531d294c247081ab707ae7c1df3f2638d2996fe4c5dfb776a8109900db0d5473fb04a5aa959b2fee7ed0f6832e0f298bb0c447de0af2847c1d')
+md5sums=('a4abecbbe6732d20d251ac9bc6d466ff')
+b2sums=('d18328c1c29c1a178b8d3682e45425a1b1fce22fcda3b81fef1d6d920c9a8c2a3802265186ace0b8105f389b5b1f3e2faa9281718f9d24c4cf4ebcc449b07669')
 
 build() {
   mkdir build
