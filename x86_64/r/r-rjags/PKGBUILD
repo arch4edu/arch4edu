@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rjags
-_pkgver=4-16
+_pkgver=4-17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,8 +14,8 @@ depends=(
   r-coda
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('71708547259b6d3112bc10d2288a42e4')
-b2sums=('087c06b94a51ff3fa652cc982534cc1233b113432892cb4264caa96883e64f4974d0b648306e075734b8d75ccaa5c50704b2a09af2cbd74015ba6a1918758129')
+md5sums=('d458011b5a31ed62fea02dbf60181018')
+b2sums=('4b853f4ae4797413ff69f686961f1ecdff02a127969f3db697be5500bf086e55f3c3e1d3f74466ade85ec3fab0a0c023e96bacd6f62e3b0edf5f8cd09be10521')
 
 build() {
   mkdir build
