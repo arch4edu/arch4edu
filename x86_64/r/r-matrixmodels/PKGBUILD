@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=MatrixModels
-_pkgver=0.5-3
+_pkgver=0.5-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Modelling with Sparse and Dense Matrices"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -18,8 +18,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5ad7c5222f8f8322a307de4445ab9985')
-b2sums=('f1f9c21c7a588a8448f3466ebfd78a90fb27c596a68d0518cb8012faa1aad18087b3008a1f8301ccb4f01a88087920d3ea869e420d96d7261954f437ecec10f1')
+md5sums=('b87060f8af9cd5a82e56c4d14c7624fe')
+b2sums=('bd6f6f29e4b6bfda9131a07c39ecb6b00917edaeb1d7b996a918158550388756917411e93eb89de4fd02522658833946f1a74bb290c6b2b262083121dd3c21ec')
 
 build() {
   mkdir build
