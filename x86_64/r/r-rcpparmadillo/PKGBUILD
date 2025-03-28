@@ -4,9 +4,9 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=RcppArmadillo
-_pkgver=14.4.0-1
+_pkgver=14.4.1-1
 pkgname=r-${_pkgname,,}
-pkgver=14.4.0.1
+pkgver=14.4.1.1
 pkgrel=1
 pkgdesc="'Rcpp' Integration for the 'Armadillo' Templated Linear Algebra Library"
 arch=('x86_64')
@@ -24,7 +24,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('cf80ad07cde7fd6066ea37a7e5afc8bb9224da80e7f39b034f109947413f0beb')
+sha256sums=('3c88231a2fb2975cb5c23221fbdee74849fd342789fca3b34db343aaf8b039bb')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
