@@ -3,7 +3,7 @@
 # Contributor: Anselmo L. S. Melo <anselmo.melo@intel.com>
 pkgname=qgroundcontrol
 pkgver=4.4.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Micro air vehicle ground control station."
 arch=('x86_64')
 url="https://github.com/mavlink/qgroundcontrol"
@@ -50,7 +50,7 @@ depends=('bzip2'
 
 makedepends=('git' 'qt5-base' 'patchelf')
 
-source=("${pkgname}-${pkgver}::git+https://github.com/mavlink/qgroundcontrol.git#tag=v${pkgver}"
+source=("${pkgname}::git+https://github.com/mavlink/qgroundcontrol.git#tag=v${pkgver}"
         "${pkgname}-GpsDrivers::git+https://github.com/PX4/GpsDrivers.git"
         "${pkgname}-c_library_v2::git+https://github.com/mavlink/c_library_v2.git"
         "${pkgname}-android_openssl::git+https://github.com/KDAB/android_openssl.git"
@@ -77,7 +77,7 @@ sha256sums=('SKIP'
 )
 
 prepare() {
-  cd "$srcdir/${pkgname}-${pkgver}"
+  cd "$srcdir/${pkgname}"
 
   git submodule init
 
@@ -96,17 +96,17 @@ prepare() {
 }
 
 build() {
-  mkdir -p "${srcdir}/${pkgname}-${pkgver}/build"
-  cd "$srcdir/${pkgname}-${pkgver}/build"
-  qmake ..
+  mkdir -p "${srcdir}/${pkgname}/build"
+  cd "$srcdir/${pkgname}/build"
+  qmake CONFIG+=StableBuild ..
   make
 }
 
 package() {
   mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/applications"
-  cp -r "${srcdir}/${pkgname}-${pkgver}/build/staging" "${pkgdir}/opt/${pkgname}"
-  cp "${srcdir}/${pkgname}-${pkgver}/resources/icons/qgroundcontrol.png" "${pkgdir}/opt/${pkgname}"
-  cp "${srcdir}/${pkgname}-${pkgver}/deploy/qgroundcontrol-start.sh" "${pkgdir}/opt/${pkgname}"
+  cp -r "${srcdir}/${pkgname}/build/staging" "${pkgdir}/opt/${pkgname}"
+  cp "${srcdir}/${pkgname}/resources/icons/qgroundcontrol.png" "${pkgdir}/opt/${pkgname}"
+  cp "${srcdir}/${pkgname}/deploy/qgroundcontrol-start.sh" "${pkgdir}/opt/${pkgname}"
 
   # Use our own desktop file and remove the default one
 
