@@ -3,7 +3,6 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - x86_64/cython0
   - x86_64/python-fastrlock
 group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
