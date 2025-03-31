@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=admisc
-_pkgver=0.37
+_pkgver=0.38
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,8 +16,8 @@ optdepends=(
   r-qca
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b0d44627580960ffa0586e45bc9079d8')
-b2sums=('d2950b2c9cadcd2fc5503598a638d7a6be20057c0a69cbb0fe11b4de180a9c3376443721ba791185c34c232141b2e36128cb27dbe9a71535932f981a24cff043')
+md5sums=('325d0b2272e3e57d6ad2ab27ce7bd6f2')
+b2sums=('e69df8d1f0568c9e3c280c2e5e6b5812fea0f5ba8c8fa397fbfcba18fdb2be0323f810b3834101e073591fc0e41144fa70f1f1622a10c5add6ed6a3f90814c42')
 
 build() {
   mkdir build
