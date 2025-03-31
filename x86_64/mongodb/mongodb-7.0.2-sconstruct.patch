@@ -151,8 +151,8 @@ index 92d557b..80ee9e8 100644
  
      mongoc_mode = get_option('use-system-mongo-c')
      conf.env['MONGO_HAVE_LIBMONGOC'] = False
-+    conf.env.ParseConfig('pkg-config libbson-1.0 libmongoc-1.0 --cflags')
-+    conf.env['LIBDEPS_LIBBSON_SYSLIBDEP'] = 'bson-1.0'
++    # conf.env.ParseConfig('pkg-config libbson-1.0 libmongoc-1.0 --cflags')
++    # conf.env['LIBDEPS_LIBBSON_SYSLIBDEP'] = 'bson-1.0'
 +
      if mongoc_mode != 'off':
          if conf.CheckLibWithHeader(

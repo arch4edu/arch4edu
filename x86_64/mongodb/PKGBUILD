@@ -13,16 +13,16 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=7.0.15
-pkgrel=1
+pkgver=7.0.16
+pkgrel=2
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64" "aarch64")
 url="https://www.mongodb.com/"
 license=("SSPL-1.0")
-depends=('libstemmer' 'snappy' 'boost-libs' 'pcre2' 'yaml-cpp' 'gperftools' 'libunwind' 'curl' 'zstd' 'zlib'
-         'libsasl' 'openssl' 'glibc' 'libldap' 'gcc-libs' 'krb5')
+depends=('libstemmer' 'snappy' 'yaml-cpp' 'libunwind' 'curl' 'zstd' 'zlib'
+         'libsasl' 'openssl' 'glibc' 'gcc-libs')
 makedepends=('python-psutil' 'python-setuptools' 'python-regex' 'python-cheetah3'
-             'python-yaml' 'python-requests' 'python-pymongo' 'boost' 'mongo-c-driver')
+             'python-yaml' 'python-requests' 'python-pymongo')
 optdepends=('mongodb-tools: mongoimport, mongodump, mongotop, etc'
             'mongosh: interactive shell to connect with MongoDB')
 backup=("etc/mongodb.conf")
@@ -34,16 +34,14 @@ source=("https://github.com/mongodb/mongo/archive/refs/tags/r$pkgver.tar.gz"
         mongodb-5.0.2-skip-reqs-check.patch
         mongodb-5.0.2-no-compass.patch
         mongodb-7.0.2-sconstruct.patch
-        mongodb-4.4.29-no-enterprise.patch
-        mongodb-7.0.14-system-boost.patch)
-sha256sums=('a79b63cbc4a4f44f1ba3c021dddb65e920bd4a35e1f6db9fa741cad8a0730c3f'
+        mongodb-4.4.29-no-enterprise.patch)
+sha256sums=('54bd8bee37ef413c3286bbda43fc719935547cd521dc2ac87051c9f136de016e'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             '4ff40320e04bf8c3e05cbc662f8ea549a6b8494d1fda64b1de190c88587bfafd'
             '41b75d19ed7c4671225f08589e317295b7abee934b876859c8777916272f3052'
-            '078d94d712c3bb86a77d13bf2021299f4db2332c9d5346dba1ceb0cce1ba8492'
-            '7cd27b2ce15cc6efdce07ef934ed3d9356025ebade4856a9d0a75a80f7c08905'
-            '18c8256fd41af2b8e769ff021e3526597a3c01f801053e5a51c73f958b24f285')
+            'd43f727f12bab10c7a67818f7206cdcdb3b43c289e5ad2c497267fc275bc8416'
+            '7cd27b2ce15cc6efdce07ef934ed3d9356025ebade4856a9d0a75a80f7c08905')
 sha256sums_aarch64=('6dd9f20e153ff2a3e185d9411e9d9ec54ba8ed29a0a1489828ccb047205cceac')
 source_aarch64=(extrapatch-sconstruct.patch)
 
@@ -54,17 +52,17 @@ _scons_args=(
   MONGO_DISTMOD=arch
   MONGO_VERSION="$pkgver"
 
-  --use-system-boost
-  --use-system-pcre2
+  #--use-system-boost
+  #--use-system-pcre2
   --use-system-snappy
   --use-system-stemmer
   --use-system-yaml
   --use-system-zlib
   --use-system-zstd
-  --use-system-tcmalloc
+  #--use-system-tcmalloc
   --use-system-libunwind
-  --use-system-libbson
-  --use-system-mongo-c
+  #--use-system-libbson
+  #--use-system-mongo-c
 
   --use-sasl-client
   --ssl
