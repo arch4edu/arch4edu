@@ -4,7 +4,7 @@
 # Contributor: Damir Perisa <damir.perisa@bluewin.ch>
 pkgname=stellarium
 pkgver=25.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Software which renders realistic skies in real time with OpenGL"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -39,6 +39,7 @@ build() {
     -DENABLE_TESTING=0 \
     -DENABLE_XLSX=1 \
     -DPREFER_SYSTEM_INDILIB=Yes \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -Wno-dev
   cmake --build build --target all
 }
