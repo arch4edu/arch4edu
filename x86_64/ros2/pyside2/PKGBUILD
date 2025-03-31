@@ -11,7 +11,7 @@ pkgname=(
 )
 pkgbase=pyside2
 pkgver=5.15.16+3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="CPython bindings generator for C++ libraries - Debian rel ${pkgver#*+}"
 arch=(x86_64)
 url="https://wiki.qt.io/Qt_for_Python"
@@ -28,11 +28,13 @@ source=(
   "https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${_pkgver}-src/pyside-setup-opensource-src-${_pkgver}.tar.xz"
   "http://deb.debian.org/debian/pool/main/p/pyside2/pyside2_${_debver}.debian.tar.xz"
   Modify-sendCommand-signatures.patch
+  cmake-findpython.patch
 )
 
 sha256sums=('6d3ed6fd17275ea74829ab56df9c2e7641bfca6b5b201cf244998fa81cf07360'
             '523d191e45b1a9720e8eb8ea66fd930f49ffad54df1295ca09efea8838257aa6'
-            '2f39461136a718a9f75bd94c1e71fc358764af25f68c650fd503c777e32ff302')
+            '2f39461136a718a9f75bd94c1e71fc358764af25f68c650fd503c777e32ff302'
+            '4d82961c7f978dadae6e82c73fb0a239dbb62db5f66106975f75dd25161843e9')
 
 _pkgdir="pyside-setup-opensource-src-${_pkgver}"
 
@@ -47,11 +49,13 @@ prepare() {
     patch -Np1 -i "../debian/patches/$_patch"
   done
   patch -Np1 -i ../Modify-sendCommand-signatures.patch
+  patch -Np1 -i ../cmake-findpython.patch
 }
 
 build() {
   local _pythonpath="$(_get_python_libdir)"
   cd $_pkgdir
+  export LLVM_INSTALL_DIR='/usr/bin'
   CFLAGS="-I${_pythonpath}/numpy/_core/include $CFLAGS"
   CXXFLAGS="-I${_pythonpath}/numpy/_core/include $CXXFLAGS"
   if [ ! -f "./.build-complete" ]; then
@@ -59,7 +63,9 @@ build() {
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=None \
       -DBUILD_TESTS=OFF \
-      -DPYTHON_EXECUTABLE=/usr/bin/python
+      -DPYTHON_EXECUTABLE=/usr/bin/python \
+      -DPYTHON_CONFIG_SUFFIX='python-config' \
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.30
 
     cmake --build build --parallel 4
   else
@@ -82,7 +88,7 @@ package_shiboken2() {
 
 package_python-shiboken2() {
   pkgdesc='Python bindings for shiboken2'
-  depends=('python' 'pyside2')
+  depends=('python' 'python-numpy' 'pyside2')
   local _pythonpath="$(_get_python_libdir)"
 
   cd $_pkgdir
@@ -131,7 +137,7 @@ package_pyside2() {
 
 package_pyside2-tools() {
   pkgdesc='Tools for PySide2'
-  depends=('pyside2')
+  depends=('pyside2' 'qt5-base' 'gcc-libs' 'glibc')
 
   cd $_pkgdir
   DESTDIR="${pkgdir}" cmake --install build/sources/pyside2-tools
