@@ -2,14 +2,16 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-#: ${_ver_clang=}
+: ${_ver_clang=}
+: ${_ver_jdk:=21}
+
 : ${_install_path:=usr/lib}
 
-: ${_commit:=b6b825c687178d1a5ed49d78fb1bcac21f773414} # 2025.2.0.r2
+: ${_commit:=59503c7449e9557fa43490f2fa8a0183d05480a2} # 2025.4.1
 
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2025.2.0
+pkgver=2025.4.1
 pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url='https://github.com/xiota/sourcetrail'
@@ -20,7 +22,10 @@ depends=(
   "clang${_ver_clang:-}"
   "llvm${_ver_clang:-}-libs"
 
-  'boost-libs'
+  'libboost_chrono.so'          # boost-libs
+  'libboost_filesystem.so'      # boost-libs
+  'libboost_program_options.so' # boost-libs
+  'libboost_thread.so'          # boost-libs
   'qt6-5compat'
   'qt6-base'
   'qt6-svg'
@@ -28,13 +33,13 @@ depends=(
   'tinyxml'
 )
 makedepends=(
-  "llvm${_ver_clang:-}"
+  "java-environment=${_ver_jdk:?}"
   "lld${_ver_clang:-}"
+  "llvm${_ver_clang:-}"
 
   'boost'
   'cmake'
   'git'
-  'jdk-openjdk'
   'maven'
   'ninja'
 
@@ -43,23 +48,29 @@ makedepends=(
 )
 optdepends=(
   'java-runtime'
-  'python'
-  'python-jedi'
-  'python-parso'
 )
 
-_pkgsrc="$_pkgname"
-source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
-sha256sums=('SKIP')
+_source_main() {
+  _pkgsrc="$_pkgname"
+  source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
+  sha256sums=('SKIP')
+}
+
+_source_main
 
 prepare() {
   magick "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
+
+  # prevent failure from checkVersionRange
+  sed 's/FATAL_ERROR/WARNING/' -i "$_pkgsrc"/cmake/Sourcetrail.cmake
 }
 
 build() (
   export CC=clang
   export CXX=clang++
-  export LDFLAGS+=" -fuse-ld=lld"
+
+  local _ldflags=($LDFLAGS)
+  export LDFLAGS="${_ldflags[@]//*fuse-ld*/} -fuse-ld=lld"
 
   export PATH="/usr/lib/llvm${_ver_clang:-}/bin:$PATH"
   export LD_LIBRARY_PATH="/usr/lib/llvm${_ver_clang:-}/lib"
@@ -67,12 +78,13 @@ build() (
   export Clang_DIR="/usr/lib/llvm${_ver_clang:-}/cmake/clang"
   export LLVM_DIR="/usr/lib/llvm${_ver_clang:-}/cmake/llvm"
 
+  export JAVA_HOME="/usr/lib/jvm/java-${_ver_jdk}-openjdk"
+
   local _cmake_options=(
     -B build
     -S "$_pkgsrc"
     -G Ninja
-    -DCMAKE_BUILD_TYPE="Release"
-    -DCMAKE_INSTALL_PREFIX='/usr'
+    -DCMAKE_BUILD_TYPE=None
     -DBUILD_CXX_LANGUAGE_PACKAGE=ON
     -DBUILD_JAVA_LANGUAGE_PACKAGE=ON
     -DBUILD_PYTHON_LANGUAGE_PACKAGE=ON
@@ -88,29 +100,22 @@ build() (
 
 package() {
   # binaries
-  install -Dm755 "build/app/sourcetrail_indexer" -t "$pkgdir/$_install_path/$_pkgname/"
   install -Dm755 "build/app/Sourcetrail" "$pkgdir/$_install_path/$_pkgname/$_pkgname"
-  patchelf --add-rpath "/$_install_path/sourcetrail" "$pkgdir/$_install_path/$_pkgname/$_pkgname"
+  patchelf --add-rpath '$ORIGIN' "$pkgdir/$_install_path/$_pkgname/$_pkgname"
+
+  install -Dm755 "build/app/sourcetrail_indexer" -t "$pkgdir/$_install_path/$_pkgname/"
+  patchelf --add-rpath '$ORIGIN' "$pkgdir/$_install_path/$_pkgname"/sourcetrail_indexer
 
   # data
-  local _data_path="$pkgdir/$_install_path/$_pkgname/data"
-  install -dm755 "$_data_path"
-  for i in color_schemes fallback fonts gui java license syntax_highlighting_rules; do
-    cp -a "$_pkgsrc/bin/app/data/$i" "$_data_path/"
-  done
-
-  # languages
-  for i in cxx java python; do
-    cp -a "build/app/data/$i" "$_data_path/"
-  done
-
-  # examples
-  cp -a "$_pkgsrc"/bin/app/user/projects "$_data_path/fallback/"
+  local _path="$pkgdir/$_install_path/$_pkgname"
+  install -dm755 "$_path"
+  cp --reflink=auto -a "$_pkgsrc/bin/app"/{data,user} "$_path/"
+  cp --reflink=auto -a "build/app/data"/{cxx,java} "$_path/data/"
 
   # icon
   install -Dm644 "$_pkgname.png" "$pkgdir/usr/share/pixmaps/$_pkgname.png"
 
-  # desktop file
+  # launcher
   install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$_pkgname.desktop" << END
 [Desktop Entry]
 Type=Application
@@ -128,15 +133,7 @@ END
   # script
   install -Dm755 /dev/stdin "$pkgdir/usr/bin/$_pkgname" << END
 #!/usr/bin/env bash
-: \${XDG_CONFIG_HOME:=\$HOME/.config}
-
 SOURCETRAIL_PATH=/$_install_path/$_pkgname
-CONFIG_PATH="\$XDG_CONFIG_HOME/Sourcetrail"
-
-if [ ! -e "\$CONFIG_PATH" ]; then
-  mkdir -p "\$CONFIG_PATH"
-  cp --reflink=auto -r "\$SOURCETRAIL_PATH/data/fallback"/* "\$CONFIG_PATH/"
-fi
 
 export QT_XKB_CONFIG_ROOT="/usr/share/X11/xkb:\$QT_XKB_CONFIG_ROOT"
 export QT_QPA_FONTDIR="\$SOURCETRAIL_PATH/data/fonts:\$QT_QPA_FONTDIR"
@@ -146,6 +143,6 @@ export OPENSSL_CONF=/etc/ssl/
 exec \$SOURCETRAIL_PATH/$_pkgname "\$@"
 END
 
-  # fix permissions
+  # permissions
   chmod -R u+rwX,go+rX,go-w "$pkgdir/"
 }
