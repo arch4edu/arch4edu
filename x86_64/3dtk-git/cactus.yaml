@@ -1,9 +1,8 @@
 nvchecker:
   - source: aur
     aur:
-  - source: regex
-    regex: 'Revision (\d+): /trunk'
-    url: http://svn.code.sf.net/p/slam6d/code/trunk/
+  - source: github
+    github: JMUWRobotics/3DTK
 depends:
   - x86_64/apriltag
   - x86_64/ann
