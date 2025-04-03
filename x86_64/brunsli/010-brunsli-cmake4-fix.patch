@@ -1,0 +1,71 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.1)
++cmake_minimum_required(VERSION 3.5)
+ 
+ project(BRUNSLI C CXX)
+ 
+--- a/third_party/brotli/CMakeLists.txt
++++ b/third_party/brotli/CMakeLists.txt
+@@ -2,7 +2,7 @@
+ # several CI services, such as Travis and Drone, use it.  Solaris 11
+ # has 2.8.6, and it's not difficult to support if you already have to
+ # support 2.8.7.
+-cmake_minimum_required(VERSION 2.8.6)
++cmake_minimum_required(VERSION 3.5.0)
+ 
+ project(brotli C)
+ 
+--- a/third_party/googletest/CMakeLists.txt
++++ b/third_party/googletest/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.8)
++cmake_minimum_required(VERSION 3.5.0)
+ 
+ if (POLICY CMP0048)
+   cmake_policy(SET CMP0048 NEW)
+--- a/third_party/googletest/googlemock/CMakeLists.txt
++++ b/third_party/googletest/googlemock/CMakeLists.txt
+@@ -39,7 +39,7 @@ else()
+   cmake_policy(SET CMP0048 NEW)
+   project(gmock VERSION ${GOOGLETEST_VERSION} LANGUAGES CXX C)
+ endif()
+-cmake_minimum_required(VERSION 2.6.4)
++cmake_minimum_required(VERSION 3.5.0)
+ 
+ if (COMMAND set_up_hermetic_build)
+   set_up_hermetic_build()
+--- a/third_party/googletest/googletest/CMakeLists.txt
++++ b/third_party/googletest/googletest/CMakeLists.txt
+@@ -46,7 +46,7 @@ else()
+   cmake_policy(SET CMP0048 NEW)
+   project(gtest VERSION ${GOOGLETEST_VERSION} LANGUAGES CXX C)
+ endif()
+-cmake_minimum_required(VERSION 2.6.4)
++cmake_minimum_required(VERSION 3.5.0)
+ 
+ if (POLICY CMP0063) # Visibility
+   cmake_policy(SET CMP0063 NEW)
+--- a/third_party/googletest/googletest/README.md
++++ b/third_party/googletest/googletest/README.md
+@@ -115,7 +115,7 @@ pulled into the main build with `add_subdirectory()`. For example:
+ 
+ New file `CMakeLists.txt.in`:
+ 
+-    cmake_minimum_required(VERSION 2.8.2)
++    cmake_minimum_required(VERSION 3.5.0)
+ 
+     project(googletest-download NONE)
+ 
+--- a/third_party/googletest/googletest/docs/Pkgconfig.md
++++ b/third_party/googletest/googletest/docs/Pkgconfig.md
+@@ -20,7 +20,7 @@ all examples here we assume you want to compile the sample
+ Using `pkg-config` in CMake is fairly easy:
+ 
+ ```
+-cmake_minimum_required(VERSION 3.0)
++cmake_minimum_required(VERSION 3.5)
+ 
+ cmake_policy(SET CMP0048 NEW)
+ project(my_gtest_pkgconfig VERSION 0.0.1 LANGUAGES CXX)
