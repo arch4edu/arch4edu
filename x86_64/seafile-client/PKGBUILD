@@ -4,7 +4,7 @@
 # Contributor: Edvinas Valatka <edacval@gmail.com>
 
 pkgname=seafile-client
-pkgver=9.0.12
+pkgver=9.0.13
 pkgrel=1
 pkgdesc='GUI client for synchronizing your local files with seafile server'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -23,7 +23,7 @@ source=(
     'fix_build_with_QT6.diff'
 )
 sha256sums=(
-    '915437949de513988b66f61926a734785f939fb107dc2e65a740c9c334419a51'
+    '55f7a2febd8e146409dcd20a3d34c5749429c7a4da16337855e62979b82c448d'
     '5fc54daff54d3ea4e263aea6c23b8c812fe5287e487a56bbf05cf935dd149229'
 )
 
@@ -34,6 +34,7 @@ prepare() {
 
 build() {
     cmake -B build -S "$srcdir/$pkgname-$pkgver" \
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX='/usr' \
         -DBUILD_SHIBBOLETH_SUPPORT=ON
