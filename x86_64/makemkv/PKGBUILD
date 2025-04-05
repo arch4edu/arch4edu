@@ -4,7 +4,7 @@
 # Contributor: Olaf Bauer <hydro@freenet.de>
 
 pkgname=makemkv
-pkgver=1.17.9
+pkgver=1.18.0
 pkgrel=1
 pkgdesc="DVD and Blu-ray to MKV converter"
 arch=(x86_64 i686 aarch64)
@@ -18,8 +18,8 @@ source=(${url}/download/${pkgname}-bin-${pkgver}.tar.gz
         makemkv.1
         makemkvcon.1
         )
-sha256sums=('abcedcbc7073510445e303bf640d3b91b1aba24d01923d411938bfe22d2cd47b'
-            '26b115e6ba4935181b5ea88a2cd51966d59b672478e0431377591229518b67aa'
+sha256sums=('55c086fb1227bb1844df0ea7026137481ce12fc66d01a14326bab32b05a6617b'
+            '269c27efb92d4a66d57d7ba9864c4ebad9e0c0af7209ccd5be61e03c5c896c24'
             '5573b2e4bade10d8cd258a7c235eb46f66ef8c8c97e5d5eb090c38fa0f94389b'
             'f12c0facf2f0071a9f728b138986f0a4c2b4ff6ace2dfb2e96364e215e9fda6f')
 
