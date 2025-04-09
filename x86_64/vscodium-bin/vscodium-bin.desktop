@@ -2,7 +2,7 @@
 Name=VSCodium
 Comment=Code Editing. Redefined.
 GenericName=Text Editor
-Exec=/usr/bin/codium %F
+Exec=/usr/bin/codium --ozone-platform-hint=auto %F
 Icon=vscodium
 Type=Application
 StartupNotify=false
@@ -14,5 +14,5 @@ Keywords=vscode;
 
 [Desktop Action new-empty-window]
 Name=New Empty Window
-Exec=/usr/bin/codium --new-window %F
+Exec=/usr/bin/codium --ozone-platform-hint=auto --new-window %F
 Icon=vscodium
