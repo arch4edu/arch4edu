@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=AsioHeaders
-_pkgver=1.22.1-2
+_pkgver=1.28.2-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="'Asio' C++ Header Files"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7e7f8f45115ba4e62334b225ee859cb0')
-b2sums=('50f22f2b5ac13b9240f3ef9bdf02717962bc53eaa447a4411d8cf88e1eb17bd3f75291d3bfb0de77f28aa9cc3c8f8416068ef82c3b20edb81aa9ffc13991c81a')
+md5sums=('beed8f564d27682a13b672b19e2f002c')
+b2sums=('57846e6296d8ed0070befe6d97d01a670aac26350e3aab58476cb1887b49102e27cef03705672bdd9fc25b496c967bf62236dced365ef92c5547ec1d4f1c3c68')
 
 build() {
   mkdir build
