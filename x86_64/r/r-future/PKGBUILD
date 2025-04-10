@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=future
-_pkgver=1.34.0
+_pkgver=1.40.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,8 +23,8 @@ optdepends=(
   r-rhpcblasctl
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4f6dcf593ea495d2df51db19342c91fb')
-b2sums=('e7b2d763b7ce9875b5430c55101d4a0a6ae5b2cf37618b0fd3fa1cd669e8a70831869c81a27a86cdb16286a7be1ee0469594a06d6c46cbadeb5e6cb14b8d933f')
+md5sums=('6cb81cb3b963e05f0686f9343c9ecaab')
+b2sums=('09fba2b19a33c0c763d7e6e9832c3c27d238eab93f6852d5933ac825f8ab8c46f54806bde45d23caf046c89f197ed6258c78c8573e2552df634e00e9c3e0e1ef')
 
 build() {
   mkdir build
