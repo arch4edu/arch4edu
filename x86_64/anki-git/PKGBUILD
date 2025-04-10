@@ -1,6 +1,6 @@
 # Maintainer:  Fabian Maurer<dark.shadow4@web.de>
 # Contributor: Martin Dünkelmann<nc-duenkekl3@netcologne.de>
-# Contributor: Shaoyu Tseng<zandimna@autistici.org>
+# Contributor: Shaoyu Tseng<dev@notyourcomputer.net>
 # Contributor: Daniel Egeberg <daniel.egeberg@gmail.com
 # Contributor: Sławomir Kowalski <suawekk+aur@gmail.com>
 # Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
@@ -9,7 +9,7 @@
 # Contributor: Dave Pretty <david dot pretty at gmail dot com>
 
 pkgname=anki-git
-pkgver=r11632.ccab18b7b
+pkgver=r11639.480e8f540
 pkgrel=1
 pkgdesc="Helps you remember facts (like words/phrases in a foreign language) efficiently"
 url="hhttps://apps.ankiweb.net/"
