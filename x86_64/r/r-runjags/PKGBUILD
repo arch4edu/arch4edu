@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=runjags
-_pkgver=2.2.2-4
+_pkgver=2.2.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Interface Utilities, Model Templates, Parallel Computing Methods and Additional Distributions for MCMC Models in JAGS"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -22,8 +22,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0c6bbf7794879f2a345929252d83041c')
-b2sums=('787baaf661a16f97f27f721db8a7c7bf040798d53411c09a037b815149906d5f627c5af8b857eeb80f24540c33d2008970b3f426e3bfd7d88b647cc65d98e05a')
+md5sums=('3bc563e2c68a78b6933a2a73acb62602')
+b2sums=('c18a7a8eada0a3668db9db2edb5f36307c0de644627eb62e52e3243c77c633fb22c125fdfb0000c1e5ffe82c929e44a540ee3e86fccd94685a747a312189dc37')
 
 build() {
   mkdir build
