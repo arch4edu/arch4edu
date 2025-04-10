@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=optimx
-_pkgver=2024-12.2
+_pkgver=2025-4.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -31,8 +31,8 @@ optdepends=(
   r-ucminf
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('657a8a621309a287fd94eb8d67d1a77d')
-b2sums=('54699da9cd4476bb5af9c62b75507d4af9b427fe7d581a11486b105aed193663b08448b83a189ab6ec6f4cbfa989a2d9f4480b5fd2b218ba48b926e92cdc10e6')
+md5sums=('8f224b177cc716ef40c907af54b55d7d')
+b2sums=('80b76805f920069a5bf336a7b8b6ba3cb188bb1de459dfcbf2d32f2652e9715d68965d94ebf2a7d96c2f55279febcb7c5db5cf29fc7b1d70152fb487430e265e')
 
 build() {
   mkdir build
