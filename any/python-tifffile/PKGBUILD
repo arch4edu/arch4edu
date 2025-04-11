@@ -5,7 +5,7 @@ pkgbase=python-tifffile
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
 pkgver=2025.3.30
-pkgrel=1
+pkgrel=2
 pkgdesc="Read and write image data from and to TIFF files"
 arch=('any')
 url="https://github.com/cgohlke/tifffile"
@@ -59,7 +59,7 @@ check() {
 }
 
 package_python-tifffile() {
-    depends=('python-numpy')
+    depends=('python-numpy' 'tk')
     optdepends=('python-matplotlib>=3.10.1: required for plotting'
                 'python-imagecodecs>=2025.3.30: required for encoding or decoding LZW, JPEG, etc. compressed segments'
                 'python-lxml>=5.3.1: required only for validating and printing XML'
