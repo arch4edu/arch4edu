@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=qgam
-_pkgver=1.3.4
+_pkgver=2.0.0
 pkgname=r-${_pkgname,,}
-pkgver=1.3.4
-pkgrel=4
+pkgver=2.0.0
+pkgrel=1
 pkgdesc='Smooth Additive Quantile Regression Models'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7633120a48a85ab73f7e1bc8b02c98319285c2abd05f9d13d25339d7aaaacacb')
+sha256sums=('4e1a4845dfbda675e32ae4f9a6dfc6f7b8f20f56036272951135642aa579ace8')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
