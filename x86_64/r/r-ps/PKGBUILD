@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ps
-_pkgver=1.9.0
+_pkgver=1.9.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -29,8 +29,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('960fce83780a896f636261289032c94c')
-b2sums=('0446dbec96b76f6635f119598f564d4c372bbc250072505837307a4f110bfd6e205078f112d209600e79de0140d22a7d56e6396f9c6f446b96a4213e944ac1de')
+md5sums=('100d984909361ef3b425bc34d71b4ac3')
+b2sums=('7b61e8fb3b116f146595dbedc545639099ac9d6d25b397f44d1d7e8457ce0a52d7e092e09bb964a9b29976567ba9d41ea5062bd2383318ea361315aaa80286ae')
 
 build() {
   mkdir build
