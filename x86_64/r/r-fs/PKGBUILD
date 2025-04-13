@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=fs
-_pkgver=1.6.5
+_pkgver=1.6.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,10 +30,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libuv.patch")
-md5sums=('92e1204fc8d567e5fedc06e0ac9e8c1d'
-         'e9cd06be1a987fd1cdab9b577736bfe0')
-b2sums=('da106a009c7768572702bdc92ffd8ddd6ed7d877ab99cda4e3f0358de3f427a6b29195a329b2a8586f0c2f901b708582499ad833ac6e66d19239a11b70030d28'
-        'bb5f52cc3b73def81bc7688817dcfcf79b69d9cf2522521d389a78e55002ea22409b9f159a9d7e2a682d59148f3138245bc9e92971ceaa0246727f3fbb7b1bc1')
+md5sums=('61b8a3ee43759ed4718659cf7f499cc1'
+         '312c9ec1662d8ebecd388a771ae1a903')
+b2sums=('575d044f1bbd4a49a3c61b7b2bc136e945e08b3a8aaf18cf9d10f15f3ed8dbb2b9d998e75c1210443226e8b098a58650a3a0c093a845a6c78a174cf57a5af7e0'
+        'ac55bda314e4a9c184b820a7194b421bcac65ff739cf14c5d9af9004ec717fc99db159e0c02ff7060f2ed2a8f0147bc8f0a29d0cb1d760af5c057feb08c9c33a')
 
 prepare() {
   # build against system libuv

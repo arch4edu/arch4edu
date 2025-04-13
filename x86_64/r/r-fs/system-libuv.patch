@@ -1,26 +1,27 @@
 diff --git a/fs/src/Makevars b/fs/src/Makevars
-index dd892c7..edd4374 100644
+index b7b99ed..4acf8b1 100644
 --- a/fs/src/Makevars
 +++ b/fs/src/Makevars
 @@ -2,7 +2,7 @@ UNAME := $(shell uname)
  
  LIBUV := libuv-1.44.2
  
--PKG_LIBS = ./$(LIBUV)/.libs/libuv.a -pthread
+-PKG_LIBS = ./$(LIBUV)/.libs/libuv.pa -pthread
 +PKG_LIBS = -luv -pthread
  
  SOURCES = $(wildcard *.cc unix/*.cc)
  OBJECTS = $(SOURCES:.cc=.o)
-@@ -21,11 +21,10 @@ ifneq ($(filter $(UNAME), Linux AIX OS400),)
+@@ -24,12 +24,10 @@ ifneq ($(filter $(UNAME), Linux AIX OS400),)
  OBJECTS +=  bsd/setmode.o bsd/strmode.o bsd/reallocarray.o
  endif
  
 -PKG_CPPFLAGS = -I./$(LIBUV)/include -I. -pthread
-+PKG_CPPFLAGS = -I. -pthread
++PKG_CPPFLAGS = -I. -I. -pthread
  
  all: $(SHLIB)
  
--$(SHLIB): $(LIBUV)/.libs/libuv.a
- 
+-$(SHLIB): $(LIBUV)/.libs/libuv.pa
+-
+ # Avoid re-running autoconf/automake/aclocal.
+ # Need the timestamps in the right order.
  $(LIBUV)/Makefile:
- 	(cd $(LIBUV) \
