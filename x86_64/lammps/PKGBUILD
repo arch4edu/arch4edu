@@ -5,8 +5,8 @@
 
 pkgname=lammps
 pkgver=20240829
-_pkgver="stable_29Aug2024_update1"
-pkgrel=3
+_pkgver="stable_29Aug2024_update2"
+pkgrel=4
 pkgdesc="Public development project of the LAMMPS MD software package"
 url="https://lammps.org"
 arch=('x86_64')
@@ -16,7 +16,7 @@ makedepends=('cmake>=3.1' 'python-pip' 'python-build')
 conflicts=('lammps-git')
 provides=('lammps')
 source=("https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
-sha256sums=('3aea41869aa2fb8120fc4814cab645686f969e2eb7c66aa5587e500597d482dc')
+sha256sums=('f8ca3f021a819ced8658055f7750e235c51b4937ddb621cf1bd7bee08e0b6266')
 optdepends=('clang' 'python' 'python-mpi4py')
 
 prepare() {
