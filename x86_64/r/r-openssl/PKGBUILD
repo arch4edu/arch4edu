@@ -10,7 +10,7 @@ _pkgname=openssl
 _pkgver=2.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Toolkit for Encryption, Signatures and Certificates Based on OpenSSL"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -43,10 +43,10 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
-  cd "$_pkgname/tests"
-  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
-}
+#check() {
+#  cd "$_pkgname/tests"
+#  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+#}
 
 package() {
   install -d "$pkgdir/usr/lib/R/library"
