@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=AsioHeaders
-_pkgver=1.28.2-1
+_pkgver=1.30.2-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,8 +14,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('beed8f564d27682a13b672b19e2f002c')
-b2sums=('57846e6296d8ed0070befe6d97d01a670aac26350e3aab58476cb1887b49102e27cef03705672bdd9fc25b496c967bf62236dced365ef92c5547ec1d4f1c3c68')
+md5sums=('5c4346bc1746a3b55e0fdf1608460b55')
+b2sums=('dd4ea05bcf769a0907a4296798466408db252dd94c0903d7f77af083356ac3ca8dde82c16530be7675ee34e22494e9c3f59af785d66c2616badfe03fff72b039')
 
 build() {
   mkdir build
