@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=graph
-_pkgver=1.84.1
+_pkgver=1.86.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,8 +21,8 @@ optdepends=(
   r-xml
 )
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7bc1f44620e332c21594a946d8990062')
-b2sums=('7d20a88ef5da27f622ca52345144c5605cf1efd3d356bbf9a7652a86336eba6bbc1ccfa776490214cffa5317497e5ff2bc096462a47cb0653dd614b7fe69373c')
+md5sums=('07396c4ddd5bb5138810ee8f2e8bd969')
+b2sums=('1b39eb9dfaae31a7eb0caa54f85d059bd6ee627a71a9da9a42239388debadfed7b0a90e2afea3c542d3138fa55a70d563c04b232a5b99c84d5a7bc22b7242a81')
 
 build() {
   mkdir build
