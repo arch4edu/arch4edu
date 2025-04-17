@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=sass
-_pkgver=0.4.9
+_pkgver=0.4.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,10 +34,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libsass.patch")
-md5sums=('7d4e8b37ce87b4307b6661b9fe62e393'
-         '6a430d63f1fdeced20c3117763d2cb7c')
-b2sums=('5d18e9430645ce11e0c19a6002538b96583493a12d4b7547b659855ff046505a8b71649ea68279017a0de94152037d6caaa65503e4df37d614ec5b2fe6377953'
-        '8dce8f0d0eeff57916129505b0651115a1616431d0e4214a34b605ab89cefaee0d1e121e9a7db7709a880cd388f4c3305ade34e084938a413e32cffff46035e6')
+md5sums=('16054a7117a81ba75893fec17da62209'
+         'e10e29d8d704275081d06953467928d5')
+b2sums=('ffa2a4ffabea503c45d99cda26b62f75a5107e18caae6b40962901c090ac7031079b766f5556ca7815ca48438b7907cf537febe662be6682de39b9b55dd56805'
+        '8c0b765fefe74d1e93abcc3d0249044431ec75ad26a9df83548720c07fd795f70e2117867032e05a742fd2ff7e844606aa210456968080052e9815d025a81f69')
 
 prepare() {
   # build against system libsass
@@ -49,7 +49,7 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }

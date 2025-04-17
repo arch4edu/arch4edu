@@ -1,14 +1,18 @@
 diff --git a/sass/src/Makevars b/sass/src/Makevars
-index c7e0475..6a4d991 100644
+index 98ef5ed..fd8fd0a 100644
 --- a/sass/src/Makevars
 +++ b/sass/src/Makevars
-@@ -1,7 +1,6 @@
+@@ -1,11 +1,10 @@
 -PKG_LIBS = ./libsass/lib/libsass.a
 -PKG_CPPFLAGS = -I./libsass/include
 +PKG_LIBS = -lsass
  
--$(SHLIB): libsass/lib/libsass.a
-+$(SHLIB):
+ STATLIB = libsass/lib/libsass.a
  
- libsass/lib/libsass.a:
- 	MAKEFLAGS= CC="$(CC)" CFLAGS="$(CFLAGS)" CXX="$(CXX)" AR="$(AR)" LDFLAGS="$(LDFLAGS)" $(MAKE) -C libsass
+ all: $(SHLIB) cleanup
+ 
+-$(SHLIB): $(STATLIB)
++$(SHLIB): 
+ 
+ $(STATLIB):
+        MAKEFLAGS= CC="$(CC)" CFLAGS="$(CFLAGS)" CXX="$(CXX)" AR="$(AR)" LDFLAGS="$(LDFLAGS)" $(MAKE) -C libsass
