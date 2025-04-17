@@ -7,7 +7,7 @@ _pkgname=dplyr
 _pkgver=1.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=4
 pkgdesc="A Grammar of Data Manipulation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -62,7 +62,7 @@ md5sums=('29bdf98592722336f0d07484baf2a959'
 b2sums=('3f16d1b818bae28f1cda84244378d9a4a1981cad6ee00ce1f905d5828b8dd4a29d2f4bfe161483300924784c3bdab2cc02a16571042776922dc4bfb845b351da'
         '304013a86b786a05f53a57c124c73af4941c3a91ee9d2ef8facfb4d15d6b864c2b75fc3ace66c532dfdfd6c81fe01bb22bd2e3ecbf65b31c0992cc34ec507647')
 
-prepare() {
+_prepare() {
   # fix test snapshots
   patch -Np1 -i fix-tests.patch
 }
@@ -72,7 +72,7 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
