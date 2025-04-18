@@ -4,24 +4,23 @@ pkgbase=python-sphinx-automodapi
 _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=0.18.0
-pkgrel=2
+pkgver=0.19.0
+pkgrel=1
 pkgdesc="Sphinx extension for generating API documentation."
 arch=('any')
 url="https://sphinx-automodapi.readthedocs.io"
 license=('BSD-3-Clause')
-makedepends=('python-setuptools-scm'
-             'python-wheel'
+makedepends=('python-setuptools-scm>=8.0.0'
              'python-build'
              'python-installer'
              'python-sphinx'
-             'python-sphinx_rtd_theme')
+             'python-sphinx_rtd_theme')  # wheel required by new setuptools
 checkdepends=('python-pytest'
 #             'python-pytest-xdist'
               'cython'
               'graphviz') # sphinx already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('7bf9d9a2cb67a5389c51071cfd86674ca3892ca5d5943f95de4553d6f35dddae')
+sha256sums=('c65d68269e276b440bfa5d0687b12413fd56685e9694ea266437f0f553c0413b')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -41,11 +40,12 @@ check() {
     #ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
     #    build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
     #PYTHONPATH="build/lib" pytest ${_pyname/-/_} || warning "Tests failed"
-    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p dist -n 4
+    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-sphinx-automodapi() {
-    depends=('python-sphinx>=4')
+    depends=('python-sphinx>=4'
+             'python-packaging')
     optdepends=('python-sphinx_rtd_theme: rtd'
                 'python-sphinx-automodapi-doc: Documentation for sphinx-automodapi')
     cd ${srcdir}/${_pyname}-${pkgver}
