@@ -4,7 +4,6 @@ nvchecker:
   - alias: python
 depends:
   - any/python-tifffile
-  - x86_64/python-imageio
   - x86_64/python-pywavelets
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
