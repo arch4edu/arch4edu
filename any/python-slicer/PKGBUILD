@@ -1,0 +1,33 @@
+# Maintainer: Rudy Matela <rudy@matela.com.br>
+# Contributor: Kashyap Chhatbar <kashyap.cc@gmail.com>
+
+pkgname=python-slicer
+pkgver=0.0.8
+pkgrel=1
+pkgdesc='Wraps tensor-like objects and provides a uniform slicing interface via __getitem__'
+arch=(any)
+url='https://github.com/interpretml/slicer'
+license=(BSD)
+depends=(
+  python
+  python-numpy
+  python-pandas
+  python-pytest
+  python-scipy
+)
+makedepends=(
+  python-setuptools
+  python-wheel
+)
+optdepends=(
+  python-pytorch
+)
+_archive="${pkgname#python-}-$pkgver"
+source=("${url}/archive/v${pkgver}/${_archive}.tar.gz")
+sha256sums=('518348c924ad2545f086cf0a112694aebcaffa759038b2e2a1ef4ca0abb5063b')
+
+package() {
+	cd $_archive
+	python setup.py install --root="$pkgdir" --optimize=1
+	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE
+}
