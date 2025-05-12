@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=maxstat
-_pkgver=0.7-25
+_pkgver=0.7-26
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=1
 pkgdesc="Maximally Selected Rank Statistics"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -17,8 +17,8 @@ optdepends=(
   r-th.data
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('35b234371e4321d98e7659d2f3a35546')
-b2sums=('b5e5e9dfd2ad959b3fc0acba1379ae27f004f6d7b2babcadec35cb730fcc278ba1ad032800c6f62e324ed1a478b8597334a96a730e905a513b5cb2c45227e4cb')
+md5sums=('b8c781c2eb9317bd03387012b79f5ca7')
+b2sums=('0869820cd646b18ea6e19d201998f142e7a8329172cf9a5b1b3a50c703bfdbe4c565fb0d3d598a3c9477629680f3e996eaa08dc90d0910292270bc45799b8d26')
 
 build() {
   mkdir build
