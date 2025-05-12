@@ -5,7 +5,7 @@
 # Contributor: frownlee <florez.brownlee@gmail.com>
 
 pkgname=android-ndk
-pkgver=r28
+pkgver=r28.b
 pkgrel=1
 pkgdesc='Android C/C++ developer kit'
 arch=('x86_64')
@@ -31,9 +31,9 @@ source=("$pkgname.sh")
 source_x86_64=("https://dl.google.com/android/repository/$pkgname-${pkgver/./}-linux.zip")
 # SHA1 sums is kept to follow upstream releases https://github.com/android-ndk/ndk/issues/673
 sha1sums=('38c46b7b1a1c54a0845d027a8eaf37ed0447d3b2')
-sha1sums_x86_64=('894f469c5192a116d21f412de27966140a530ebc')
+sha1sums_x86_64=('f574d3165405bd59ffc5edaadac02689075a729f')
 sha256sums=('2050ff500443f6cfa4567c02248cb3ec6ccbc67ce81b32d8dda79383c5103db2')
-sha256sums_x86_64=('a186b67e8810cb949514925e4f7a2255548fb55f5e9b0824a6430d012c1b695b')
+sha256sums_x86_64=('e9f2759862cecfd48c20bbb7d8cfedbb020f4d91b5f78d9a2fc106f7db3c27ed')
 
 package() {
   install -Ddm755 "$pkgdir/opt"
