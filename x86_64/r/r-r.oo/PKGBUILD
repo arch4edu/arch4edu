@@ -4,7 +4,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=R.oo
-_pkgver=1.27.0
+_pkgver=1.27.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,8 +16,8 @@ depends=(
   r-r.methodss3
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('92aade73892f5344eb8d974aa5df2170')
-b2sums=('87392225649096e6c1c06241993974b414c971cefb2302b390a69205bd301fdbf07e85ff23cf98e4a8af77bb0779751f006f6dfc0b04f969fb1d3e0c2c01405f')
+md5sums=('506bc62c712cba39afd29aeb305b7312')
+b2sums=('f681f5a013f61d82e74dbbf19259a34259af4d95f3efd697c120968da91ac9cc69be23e0e262c9d5544028b1789c524cb77a4e41c241859eaf67679f28f5f771')
 
 build() {
   mkdir build
