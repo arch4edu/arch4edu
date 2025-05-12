@@ -12,7 +12,7 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.40.5
+pkgver=3.40.6
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
@@ -29,7 +29,7 @@ optdepends=('fcgi: Map server'
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
 source=(https://qgis.org/downloads/$_pkgname-$pkgver.tar.bz2)
-sha256sums=('4a71ffb6374656e130f2c22e5e5e0d7302eb97659a7a34dcbf8ccf156edaa60e')
+sha256sums=('dd68d39a2a29326031195bed2125e8b0fa7112fe9ee74d5f9850d06b02cef6a8')
 # curl -s https://download.qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
 
 build() {
