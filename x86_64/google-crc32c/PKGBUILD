@@ -1,29 +1,33 @@
-# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Maintainer: envolution
+# Contributor: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 # Contributor: Morteza NourelahiAlamdari <m@0t1.me>
+# shellcheck shell=bash disable=SC2034,SC2154
 
 pkgname=google-crc32c
 pkgver=1.1.2
-pkgrel=4
+pkgrel=5
 pkgdesc="CRC32C implementation with support for CPU-specific acceleration instructions"
 arch=(x86_64)
 url="https://github.com/google/crc32c"
-license=(BSD)
+license=(BSD-3-Clause)
 depends=(
   gcc-libs
 )
 makedepends=(
   cmake
+  git
 )
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha256sums=('ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56')
 
-prepare() {
-  # fix version
-  sed -i "s/Crc32c VERSION 1.1.0 /Crc32c VERSION $pkgver /" "crc32c-$pkgver/CMakeLists.txt"
-}
+#cmake 4 patch
+#https://github.com/google/crc32c/commit/2bbb3be42e20a0e6c0f7b39dc07dc863d9ffbc07
+_tag='2bbb3be42e20a0e6c0f7b39dc07dc863d9ffbc07'
+
+source=("$pkgname-${pkgver%%+*}::git+https://github.com/google/crc32c.git#tag=${_tag}")
+sha256sums=('622e752bac7eb19110e53639b1c86ae9188a4882dca8796f81eb0bcb088262f1')
 
 build() {
-  cmake -B build -S "crc32c-$pkgver" \
+  cd "${pkgname}-${pkgver%%+*}"
+  cmake -B build -S . \
       -DCMAKE_BUILD_TYPE=None \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DBUILD_SHARED_LIBS=yes \
@@ -36,6 +40,8 @@ build() {
 }
 
 package() {
+  cd "${pkgname}-${pkgver%%+*}"
   DESTDIR="$pkgdir" cmake --install build
-  install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" "crc32c-$pkgver/LICENSE"
+  install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE
 }
+# vim:set ts=2 sw=2 et:
