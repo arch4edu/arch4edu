@@ -2,8 +2,6 @@ nvchecker:
   - source: aur
     aur:
   - alias: nlopt
-depends:
-  - x86_64/calcmysky
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
