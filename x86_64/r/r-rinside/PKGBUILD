@@ -2,9 +2,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=RInside
-_pkgver=0.2.18
+_pkgver=0.2.19
 pkgname=r-${_pkgname,,}
-pkgver=0.2.18
+pkgver=0.2.19
 pkgrel=1
 pkgdesc='C++ Classes to Embed R in C++ (and C) Applications'
 arch=('x86_64')
@@ -15,7 +15,7 @@ depends=(
   r-rcpp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('805014f0f0a364633e0e3c59100665a089bc455dec80b24f04aaec96466cb736')
+sha256sums=('0703843a3f1460c571650138e5846d96552d6541766c7df72c609cd3aaca1f24')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
