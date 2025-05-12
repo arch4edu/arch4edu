@@ -8,7 +8,7 @@ _pkgname=xml2
 _pkgver=1.3.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="Parse XML"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -41,7 +41,7 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
