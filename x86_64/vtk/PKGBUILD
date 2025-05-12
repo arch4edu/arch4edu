@@ -1,5 +1,6 @@
 # Maintainer: Bruno Pagani <archange at archlinux dot org>
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Maintainer: Jakub Klinkovský <lahwaacz at archlinux dot org>
 # Contributor: Evgeniy Alekseev <arcanis at archlinux dot org>
 # Contributor: Michael Migliore <mcmigliore+aur@gmail.com>
 # Contributor: Ray Rashif <schiv at archlinux dot org>
@@ -9,7 +10,7 @@
 pkgname=vtk
 # May need bootstrapping on upgrades due to circular vtk <-> opencascade dependency
 pkgver=9.4.2
-pkgrel=1
+pkgrel=3
 pkgdesc="Software system for 3D computer graphics, image processing, and visualization"
 arch=(x86_64)
 url="https://www.vtk.org"
@@ -142,23 +143,35 @@ optdepends=(
   'openmp: OpenMP support for downstream projects built with Clang'
 )
 options=(staticlibs)
-source=(${url}/files/release/${pkgver%.*}/VTK-${pkgver}.tar.gz
-        vtk-occt.patch
-        fmt-11.patch
-        netcdf-4.9.3.patch)
+source=(
+  $url/files/release/${pkgver%.*}/VTK-$pkgver.tar.gz
+  vtk-occt.patch
+  fmt-11.patch
+  netcdf-4.9.3.patch
+  fix-gcc-15.patch
+)
 sha256sums=('36c98e0da96bb12a30fe53708097aa9492e7b66d5c3b366e1c8dc251e2856a02'
             'df958eabc7dc4f5b33383ce0fb0f90a3ba202c1c2a24d3b5b9e7cfb1fb38b011'
             'c6345d09c219b5ca2efa6e7419f404a22715adb4d2ca1fd6ba34affd77cea23e'
-            '87535578bbb0023ede506fd64afae95cdf4fb698c543f9735e6267730634afbc')
+            '87535578bbb0023ede506fd64afae95cdf4fb698c543f9735e6267730634afbc'
+            '4af18628972510f8eee139d4dcc6be79223bfec707b3b0523712ce579c01820d')
 
 prepare() {
   cd ${pkgname^^}-${pkgver}
   _fast_float_version=$(pacman -Q fast_float | sed -e 's/.* //; s/-.*//g')
   sed -i "s|3.9.0|${_fast_float_version}|" ThirdParty/fast_float/CMakeLists.txt
+# Use cmake's FindHDF5
+  rm CMake/patches/99/FindHDF5.cmake
+  sed -e '/FindHDF5/d' -i CMake/vtkInstallCMakePackage.cmake
 
   patch -Np1 -i "$srcdir"/vtk-occt.patch
   patch -Np1 -i "$srcdir"/fmt-11.patch
   patch -Np1 -i "$srcdir"/netcdf-4.9.3.patch
+
+  # Fix build with GCC 15
+  # https://gitlab.kitware.com/vtk/vtk/-/issues/19422
+  # https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=8863f3f1551a8190e34e8b14797d96a1527249ce
+  patch -Np1 -i "$srcdir"/fix-gcc-15.patch
 }
 
 build() {
@@ -201,6 +214,9 @@ build() {
     -DVTK_MODULE_ENABLE_VTK_RenderingZSpace=NO \
     -DOpenGL_GL_PREFERENCE=LEGACY \
     -DVTK_IGNORE_CMAKE_CXX11_CHECKS=ON \
+    -DHDF5_NO_FIND_PACKAGE_CONFIG_FILE=ON \
+    -DHDF5_C_COMPILER_EXECUTABLE=h5hlcc \
+    -DHDF5_CXX_COMPILER_EXECUTABLE=h5hlc++ \
     -Wno-dev
 #    -DFIDES_USE_EXTERNAL_RAPIDJSON=ON \
   cmake --build build
