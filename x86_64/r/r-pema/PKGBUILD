@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=pema
-_pkgver=0.1.3
+_pkgver=0.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Penalized Meta-Analysis"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,6 +19,7 @@ depends=(
   r-rstantools
   r-shiny
   r-sn
+  r-cli
 )
 makedepends=(
   r-bh
@@ -34,10 +35,14 @@ optdepends=(
   r-mice
   r-rmarkdown
   r-testthat
+  r-webexercises
+  r-bain
+  r-metaforest
+  r-metafor
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d1fa3f8e2a111ba6676879539a07780a')
-b2sums=('f03d675e965efd177fe3781f7d42b8966e2a998713f807091bde887fc390cf0b72e96d32138be134e469f1c2c51e735dd0001934265e449e9ad5188cb3b342a9')
+md5sums=('699227662402fc34fdc7f508392db8c6')
+b2sums=('252fbcce69d310de74e9f79743b8c99fc3e6cc298485dafc86486e7b11529addce65868245403424f80d2f4f6fd5a5b5a4dbefae55a5c03911c27e1625baf798')
 
 build() {
   mkdir build
