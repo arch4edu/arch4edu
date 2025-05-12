@@ -4,10 +4,10 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=generics
-_pkgver=0.1.3
+_pkgver=0.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=1
 pkgdesc="Common S3 Generics not Provided by Base R Methods Related to Model Fitting"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -26,8 +26,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('655261e97ea23c9193b047a27eee5d0e')
-b2sums=('100745ecd8f979975e45852ffb41befc0ae8a34156d333b3e723743e2ecc93e882d31bae5f8dde192d21452edae119f4ed4f18eb9379203c67679b739450a374')
+md5sums=('dda54b65216fe3c53571d2adaddc7461')
+b2sums=('24ee3039a82f559c8f0c403056887f3230f3adcfde76a4a967fe2de5480b5a0f8ba8de6a8e6f613e9e65c40aa795464f4d6153bb1dd1ef990cb95234f2612496')
 
 build() {
   mkdir build
