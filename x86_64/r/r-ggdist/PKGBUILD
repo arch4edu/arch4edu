@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggdist
-_pkgver=3.3.2
+_pkgver=3.3.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -61,8 +61,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4272ed3112d6770ed3bea3697eea180e')
-b2sums=('efbf4e460afcfc5092a8b8eba4bbfdab1dd55da087a9124ac3093e19a1505a6debd0b218ba607e251f4c5aadf68223800f555518c2b556cd59703030bcffe386')
+md5sums=('a86ba0cdc1040b4a5f2331b38b9c27fb')
+b2sums=('2bc1fefe3f723d73c5555f3be57bd1c75b1d96a0dfd86e56b10fbaa4f1525cc2973b432bce82bbdc93f7057e2d63b52b3f1cc78e3a770feee13846ea70800b86')
 
 build() {
   mkdir build
