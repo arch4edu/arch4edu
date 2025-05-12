@@ -1,9 +1,9 @@
-# Maintainer: a821
+# Maintainer: a821 at mail de
 # Contributor: PumpkinCheshire <me at pumpkincheshire dot com>
 
 pkgname=python-xyzservices
 _name=xyzservices
-pkgver=2025.1.0
+pkgver=2025.4.0
 pkgrel=1
 pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles'
 arch=('any')
@@ -17,7 +17,7 @@ makedepends=(
   'python-installer'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/releases/download/$pkgver/$_name-$pkgver.tar.gz")
-b2sums=('44d31ed59e3c68db9022b27fad0c373f04d94937adf65d016acda474658c4e86aecee98b78d5663a56484d31df8c5025e6110bfffb7f1704c19417d19dec5b28')
+b2sums=('76579351033c792f585bbfaab69d334dcabf6b62e0242dac02b87fa6cdc9e4fcff8091ecd328e66b228b306ecca13404327b09ea13ec8450d61761558130f483')
 
 build() {
   cd "$_name-$pkgver"
