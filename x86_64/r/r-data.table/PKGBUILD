@@ -1,11 +1,12 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: Rafael Fontenelle <rafaelff@gnome.org>
+# Contributor: peippo <christoph+aur@christophfink.com>
 
 _cranname=data.table
-_cranver=1.16.4
+_cranver=1.17.0
 pkgname=r-${_cranname,,}
 pkgdesc="Extension of ‘data.frame’"
 url="https://cran.r-project.org/package=${_cranname}"
-license=("MPL2")
+license=("MPL-2.0")
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
 
@@ -27,7 +28,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("2f5c185e2ed9bc5abace376e5533d07a3b9732a6ff31d5ddb86f27365848127b12fe07ddbcd6d8c02998337363822bd422015a5cd780fc83776898ccc46b9375")
+b2sums=('8991e7db7c91bbbd280defea97bdabfff41207db73bca28fccfd92738957ed82332dcfdb92000502acd8a0828a700bd2ff1ac725e6e0f478120f0654c9171ba8')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
