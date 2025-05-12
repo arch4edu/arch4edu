@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=partitions
-_pkgver=1.10-7
+_pkgver=1.10-9
 pkgname=r-${_pkgname,,}
-pkgver=1.10.7
+pkgver=1.10.9
 pkgrel=1
 pkgdesc='Additive Partitions of Integers'
 arch=('x86_64')
@@ -21,7 +21,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0bfb8371446f8f9be4595a8a3c50b3530c7d4c83c98be7fc4c23b74379f0b1cf')
+sha256sums=('1a2dcded62592508932138d5233b6acd21fdde128dd55c907e07464a42ad1c21')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
