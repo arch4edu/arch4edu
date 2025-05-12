@@ -2,10 +2,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=dimRed
-_pkgver=0.2.6
+_pkgver=0.2.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="A Framework for Dimensionality Reduction"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -42,7 +42,6 @@ optdepends=(
   r-keras
   r-kernlab
   r-knitr
-  r-loe
   r-nmf
   r-optimx
   r-pcal1
@@ -62,8 +61,8 @@ optdepends=(
   r-vegan
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1cef3b06c7f0eea422fedbbf04a28e63')
-b2sums=('e68bf03cae0c60703b7952a3354ea29fbd28a6594903c2fc0188f9aefe619b142dcde29a7eaa44c003dbf701fd0f302a49f13392781e73a3ca50d78379f48a81')
+md5sums=('ef00e212ad67f957405aeae2735dba69')
+b2sums=('454e129ca15434123189e4e93b92da9dbbb8da8168f9329195d84de46820fab574a50c2e70b34110705687d06d3e0591ae3a8c2212000de0dbe77a127b612ac4')
 
 prepare() {
   # fix import in test
