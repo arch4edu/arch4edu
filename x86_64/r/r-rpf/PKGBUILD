@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=rpf
-_pkgver=1.0.14
+_pkgver=1.0.15
 pkgname=r-${_pkgname,,}
-pkgver=1.0.14
+pkgver=1.0.15
 pkgrel=1
 pkgdesc='Response Probability Functions'
 arch=('x86_64')
@@ -30,7 +30,7 @@ optdepends=(
 )
 makedepends=('make')
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e4bb090a810ec4e70a23547f95e1e07ce0229e38fbbbbe22abfad98e9b33f796')
+sha256sums=('5fc12eabfe0025dfe99eee1b694a5d4a25f6e70109d7cd3c40ba421a7efbbcde')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
