@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=mathjaxr
-_pkgver=1.6-0
+_pkgver=1.8-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=1
 pkgdesc="Using 'Mathjax' in Rd Files"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -18,8 +18,8 @@ optdepends=(
   r-js
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('aa2b8ff5e046b8681d3f0fdcdb046880')
-b2sums=('39577dcf01ed3cfb3a00b40cbd7fb3c7597ed180974afc1842cc56f82136fe62e3ead8f93f7c92b3755573aa24c6c224887c48bfe145a99566e0ca6588f1faf3')
+md5sums=('1f9bd62b589c3cec8a7530fd449e205b')
+b2sums=('f1ec3e4789778afaadc997e554f60c45ec59131b77d998f0b5c1da0024a64f18bd0f5f6d3c2713f0876f8b0b0386230511fc3f610f89552a25890f042e3f5751')
 
 build() {
   mkdir build
