@@ -1,5 +1,5 @@
-# Maintainer: Norbert Weber <norbert.weber_at_hzdr.de>
-# Contributor: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Norbert Weber <norbert.weber_at_hzdr.de>
 # Contributor: Marc Olesen
 # Contributor: Xwang <xwaang1976@gmail.com>
 # Contributor: George Eleftheriou <eleftg>
@@ -7,13 +7,13 @@
 # Contributor: <gucong43216@gmail.com>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2406
+# /opt/OpenFOAM/OpenFOAM-v2412
 
 _distname=OpenFOAM
 pkgname=${_distname,,}-com
-pkgver=v2406
+pkgver=v2412
 _dist=${_distname}-${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
 arch=(i686 x86_64)
 url="https://www.${pkgname//-/.}"
@@ -21,7 +21,7 @@ license=(GPL-3.0-or-later)
 install="${pkgname}.install"
 depends=(cgal fftw boost openmpi paraview scotch parmetis-git kahip) # petsc hypre
 source=(https://dl.${pkgname//-/.}/source/${pkgver}/${_dist}.tgz)
-md5sums=('0d01e49d7973978cd3dcaf766f1b782a')
+md5sums=('9c15c28b30ae86cc47837a8110d8e601')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]; then
