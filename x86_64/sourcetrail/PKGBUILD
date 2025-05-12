@@ -12,16 +12,15 @@
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
 pkgver=2025.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Interactive source explorer for C/C++ and Java'
-url='https://github.com/xiota/sourcetrail'
+url="https://github.com/petermost/Sourcetrail"
 license=('GPL-3.0-only')
 arch=('x86_64')
 
 depends=(
   "clang${_ver_clang:-}"
   "llvm${_ver_clang:-}-libs"
-
   'libboost_chrono.so'          # boost-libs
   'libboost_filesystem.so'      # boost-libs
   'libboost_program_options.so' # boost-libs
@@ -50,19 +49,40 @@ optdepends=(
   'java-runtime'
 )
 
-_source_main() {
-  _pkgsrc="$_pkgname"
-  source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
-  sha256sums=('SKIP')
-}
-
-_source_main
+_pkgsrc="petermost.sourcetrail"
+source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
+sha256sums=('SKIP')
 
 prepare() {
   magick "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
 
   # prevent failure from checkVersionRange
   sed 's/FATAL_ERROR/WARNING/' -i "$_pkgsrc"/cmake/Sourcetrail.cmake
+
+  # boost 1.88
+  local _line=$(grep -nm1 'boost/process/v1\.hpp' "$_pkgsrc"/src/lib_gui/utility/utilityApp.cpp | cut -d':' -f1)
+  sed -e "${_line}d" -i "$_pkgsrc"/src/lib_gui/utility/utilityApp.cpp
+  sed -e "${_line}i #define BOOST_PROCESS_VERSION 1" \
+    -e "${_line}i #include <boost/process/v1/args.hpp>" \
+    -e "${_line}i #include <boost/process/v1/async.hpp>" \
+    -e "${_line}i #include <boost/process/v1/async_system.hpp>" \
+    -e "${_line}i #include <boost/process/v1/group.hpp>" \
+    -e "${_line}i #include <boost/process/v1/child.hpp>" \
+    -e "${_line}i #include <boost/process/v1/cmd.hpp>" \
+    -e "${_line}i #include <boost/process/v1/env.hpp>" \
+    -e "${_line}i #include <boost/process/v1/environment.hpp>" \
+    -e "${_line}i #include <boost/process/v1/error.hpp>" \
+    -e "${_line}i #include <boost/process/v1/exe.hpp>" \
+    -e "${_line}i #include <boost/process/v1/group.hpp>" \
+    -e "${_line}i #include <boost/process/v1/handles.hpp>" \
+    -e "${_line}i #include <boost/process/v1/io.hpp>" \
+    -e "${_line}i #include <boost/process/v1/pipe.hpp>" \
+    -e "${_line}i #include <boost/process/v1/shell.hpp>" \
+    -e "${_line}i #include <boost/process/v1/search_path.hpp>" \
+    -e "${_line}i #include <boost/process/v1/spawn.hpp>" \
+    -e "${_line}i #include <boost/process/v1/system.hpp>" \
+    -e "${_line}i #include <boost/process/v1/start_dir.hpp>" \
+    -i "$_pkgsrc"/src/lib_gui/utility/utilityApp.cpp
 }
 
 build() (
@@ -87,7 +107,7 @@ build() (
     -DCMAKE_BUILD_TYPE=None
     -DBUILD_CXX_LANGUAGE_PACKAGE=ON
     -DBUILD_JAVA_LANGUAGE_PACKAGE=ON
-    -DBUILD_PYTHON_LANGUAGE_PACKAGE=ON
+    -DBUILD_PYTHON_LANGUAGE_PACKAGE=OFF # prebuilt modules don't work on Arch
     -DBUILD_UNIT_TESTS_PACKAGE=OFF
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     -DCMAKE_VERBOSE_MAKEFILE=OFF
@@ -109,8 +129,8 @@ package() {
   # data
   local _path="$pkgdir/$_install_path/$_pkgname"
   install -dm755 "$_path"
-  cp --reflink=auto -a "$_pkgsrc/bin/app"/{data,user} "$_path/"
-  cp --reflink=auto -a "build/app/data"/{cxx,java} "$_path/data/"
+  cp -a "$_pkgsrc/bin/app"/{data,user} "$_path/"
+  cp -a "build/app/data"/{cxx,java} "$_path/data/"
 
   # icon
   install -Dm644 "$_pkgname.png" "$pkgdir/usr/share/pixmaps/$_pkgname.png"
