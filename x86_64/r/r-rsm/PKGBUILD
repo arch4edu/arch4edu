@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rsm
-_pkgver=2.10.5
+_pkgver=2.10.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -19,11 +19,11 @@ optdepends=(
   r-frf2
   r-knitr
   r-rmarkdown
-  r-vdgraph
+  r-vdg
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c26179c5a99162725a61d331087ace45')
-b2sums=('08a976dcc3e535c842b13227d3c1e54162a5dbc32e336aadab530f64261c2d688fdf5e8e4a2b62fd835b54410234baa13c088a3d54e6ef297a03147e47c7c5ef')
+md5sums=('c5f99674b83826141adaebbefe9060e6')
+b2sums=('2b377aa1270f33c24fde54167e0e2378f6689140383f74f90a6d79e803cc581e3d13be6b452174d2205a849fced23febbfb6c5f32564a05cfc0bc72b89f618e0')
 
 build() {
   mkdir build
