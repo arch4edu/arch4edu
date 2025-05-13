@@ -1,9 +1,10 @@
-# Maintainer: Pellegrino Prevete <pellegrinoprevete at gmail dot com>
+# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
+# Contributor: Pellegrino Prevete <pellegrinoprevete at gmail dot com>
 # Contributor: elliotwutingfeng
 # Contributor: Frederik Schwan <freswa at archlinux dot org>
 # Contributor: Jonathon Fernyhough <jonathon+m2x+dev>
 # Contributor: Giancarlo Razzolini <grazzolini@archlinux.org>
-# Contributor:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Daniel Kozak <kozzi11@gmail.com>
 
@@ -12,7 +13,7 @@ pkgbase="${_pkgbase}11"
 pkgname=("${pkgbase}"
          "${pkgbase}-libs"
          "${pkgbase}-fortran")
-pkgver=11.4.0
+pkgver=11.5.0
 _majorver=${pkgver%%.*}
 _islver=0.24
 pkgrel=1
@@ -23,10 +24,10 @@ url='https://gcc.gnu.org'
 makedepends=(
   binutils
   doxygen
-  # git
   libmpc
   python
   # libisl.so
+  gcc13
 )
 checkdepends=(dejagnu inetutils)
 options=(!emptydirs !lto)
@@ -48,11 +49,13 @@ validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
               13975A70E63C361C73AE69EF6EEB81F8981C74C7  # richard.guenther@gmail.com
               D3A93CAD751C2AF4F8C7AD516C35B99309B5FA62) # Jakub Jelinek <jakub@redhat.com>
-b2sums=('6e3b095a5837d4b5512719f848f4b9c4b4a6d7dc40ba96b269023ea5ea84f632c42a13855c030e255f3265445a45e6d2648dfe0e2cc0ea47da87c4660b052e24'
+b2sums=('f4a61faad32aac9e9cb553c1a1a011df0a057f6e2cac92a13cc7e285d08191dd4a117f41a8faac2359c0e2a16f954c7fef354dda9df8c63bff1c5cefda82602c'
         'SKIP'
         '88a178dad5fe9c33be5ec5fe4ac9abc0e075a86cff9184f75cedb7c47de67ce3be273bd0db72286ba0382f4016e9d74855ead798ad7bccb015b853931731828e'
         '2c64090b879d6faea7f20095eff1b9bd6a09fe3b15b3890783d3715171678ab62d32c91af683b878746fb14441dbe09768474417840f96a561443415f76afb63'
         '3cf318835b9833ac7c5d3a6026fff8b4f18b098e18c9649d00e32273688ff06ec3af41f0d0aee9d2261725e0ff08f47a224ccfe5ebb06646aaf318ff8ac9a0d1')
+
+export CC=/usr/bin/gcc-13 CXX=/usr/bin/g++-13
 
 prepare() {
   echo "${_libdir}"
@@ -186,12 +189,11 @@ package_gcc11-libs() {
   pkgdesc="Runtime libraries shipped by GCC (11.x.x)"
   depends=('glibc>=2.27')
   options=(!emptydirs !strip)
-  provides=("${_pkgbase}-libs"
-            "libgfortran.so"
-            "libubsan.so"
-            "libasan.so"
-            "libtsan.so"
-            "liblsan.so")
+  #provides=("libgfortran.so"
+  #          "libubsan.so"
+  #          "libasan.so"
+  #          "libtsan.so"
+  #          "liblsan.so")
 
   cd gcc-build
   make -C $CHOST/libgcc DESTDIR="$pkgdir" install-shared
@@ -232,7 +234,6 @@ package_gcc11() {
     zstd
   )
   options=(!emptydirs staticlibs)
-  provides=("${_pkgbase}")
 
   cd gcc-build
 
@@ -295,7 +296,6 @@ package_gcc11-fortran() {
     "${pkgbase}=$pkgver-$pkgrel"
     # libisl.so
   )
-  provides=("${_pkgbase}-fortran")
 
   cd gcc-build
   make -C $CHOST/libgfortran DESTDIR="$pkgdir" install-cafexeclibLTLIBRARIES \
