@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=IsingSampler
-_pkgver=0.2.3
+_pkgver=0.2.4
 pkgname=r-${_pkgname,,}
-pkgver=0.2.3
+pkgver=0.2.4
 pkgrel=1
 pkgdesc='Sampling Methods and Distribution Functions for the Ising Model'
 arch=('x86_64')
@@ -17,7 +17,7 @@ depends=(
   r-rcpp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7d6f146d79e6b1b36338df03e13547efd14146946cf490045df8c2b663a2bda4')
+sha256sums=('3042ef7f707716505462bc835af9615c37d5fbd34d3262757c775176ff660179')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
