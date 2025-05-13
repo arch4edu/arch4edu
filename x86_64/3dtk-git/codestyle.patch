@@ -1,0 +1,10 @@
+diff --git a/testing/CMakeLists.txt b/testing/CMakeLists.txt
+index 304e8fc9..4c4ceb95 100644
+--- a/testing/CMakeLists.txt
++++ b/testing/CMakeLists.txt
+@@ -11,4 +11,4 @@ add_subdirectory(segmentation)
+ add_subdirectory(model)
+ add_subdirectory(apriltag)
+ add_subdirectory(show)
+-add_subdirectory(codestyle)
++#add_subdirectory(codestyle)

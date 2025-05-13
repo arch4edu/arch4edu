@@ -1,0 +1,22 @@
+diff --git a/src/scanserver/cache/cacheManager.cc b/src/scanserver/cache/cacheManager.cc
+index e17db726..60ccc2e9 100644
+--- a/src/scanserver/cache/cacheManager.cc
++++ b/src/scanserver/cache/cacheManager.cc
+@@ -96,7 +96,7 @@ unsigned char* CacheManager::allocateCacheObject(CacheObject* obj, unsigned int
+       return reinterpret_cast<unsigned char*>(m_msm->get_address_from_handle(obj->m_handle));
+     } else {
+       // reset CO
+-      m_msm->destroy_ptr(m_msm->get_address_from_handle(obj->m_handle));
++      m_msm->destroy_ptr(reinterpret_cast<unsigned char*>(m_msm->get_address_from_handle(obj->m_handle)));
+       obj->m_size = 0;
+       obj->m_handle = 0;
+     }
+@@ -136,7 +136,7 @@ void CacheManager::invalidateCacheObject(CacheObject* obj)
+   // remove its data
+   if(obj->m_handle != 0) {
+     // reset CO
+-    m_msm->destroy_ptr(m_msm->get_address_from_handle(obj->m_handle));
++    m_msm->destroy_ptr(reinterpret_cast<unsigned char *>(m_msm->get_address_from_handle(obj->m_handle)));
+     obj->m_size = 0;
+     obj->m_handle = 0;
+   }
