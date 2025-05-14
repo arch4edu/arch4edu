@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=zip
-_pkgver=2.3.2
+_pkgver=2.3.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,9 +28,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "libr-zip.patch")
-md5sums=('b7c2762f008fd17f11436abd988dd7b0'
+md5sums=('81352ca51860d1dbd0ce801d0d697bb0'
          '54567d238fb1409ea2a6fcd82034b15b')
-b2sums=('3b6e78e834df432a480264506be7804656168256e0276b2f2b76e75ba0456be35df80c63573c84d0b2cc301a853bf5208cb4dd862ce1d313a206bd9e97f1d579'
+b2sums=('69ba4e57c21e6bff29b2b33f46af3cc31fc7f9aecec4f985c3b9feca0853e976dcd03deafb3a4eddf220bbfb51f5aa002b4dd1a42308d340b0d49ee81f1ef2b6'
         '9f00d0cae1521ffc8831e0c2261e8a88f9a255d01fedb5d0f0f2f6e82c6c30834d0c21130e51d131c9414c058f35d640ac50affdb312a7c3255e40c85b85b181')
 
 prepare() {
