@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=xgboost
-_pkgver=1.7.10.1
+_pkgver=1.7.11.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -31,8 +31,8 @@ optdepends=(
   r-caret
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6830eed1c87743a14e44a8aac9b13685')
-b2sums=('bd36dcbe2035c71a1e103810d269399b8056d05d7f5a347cf9aaab02e17c93ce7051f327ac87aaf2523429f2a11ebf0638c77596dbe20d50da99530f69c26599')
+md5sums=('fcb32ea43b53faf9625515a4f5197750')
+b2sums=('a16d23bb8d16d488ed6a2d129b6e14dd09730be735d733ccfb4fbe188e1b138e5c62dcb3c8daa52f26197fd52110870a53372abcdf7bf734a83d307d9ab2c585')
 
 build() {
   mkdir build
