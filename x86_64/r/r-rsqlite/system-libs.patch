@@ -1,15 +1,15 @@
 diff --git a/src/Makevars b/src/Makevars
-index b642458..f495d91 100644
+index 30c0d3a..bb2b1e4 100644
 --- a/src/Makevars
 +++ b/src/Makevars
 @@ -1,5 +1,5 @@
  # BOOST_NO_AUTO_PTR: https://github.com/eddelbuettel/bh/issues/57#issuecomment-406261595
--PKG_CPPFLAGS=-I. -Ivendor -Ivendor/extensions -Ivendor/sqlite3 \
+-PKG_CPPFLAGS=-Ivendor \
 +PKG_CPPFLAGS=-I. \
               -DRSQLITE_USE_BUNDLED_SQLITE \
               -DSQLITE_ENABLE_RTREE \
               -DSQLITE_ENABLE_FTS3 \
-@@ -15,7 +15,7 @@ PKG_CPPFLAGS=-I. -Ivendor -Ivendor/extensions -Ivendor/sqlite3 \
+@@ -15,7 +15,7 @@ PKG_CPPFLAGS=-Ivendor \
  PKG_CXXFLAGS=$(CXX_VISIBILITY)
  PKG_CFLAGS=$(C_VISIBILITY)
  
@@ -19,7 +19,7 @@ index b642458..f495d91 100644
  .PHONY: all
  
 diff --git a/src/import-file.c b/src/import-file.c
-index e26cbf5..efe230b 100644
+index c2bb19f..6dc4311 100644
 --- a/src/import-file.c
 +++ b/src/import-file.c
 @@ -18,7 +18,7 @@
@@ -30,28 +30,4 @@ index e26cbf5..efe230b 100644
 +#include <sqlite3.h>
  
  char* RS_sqlite_getline(FILE* in, const char* eol);
- 
-diff --git a/src/sqlite3-cpp.h b/src/sqlite3-cpp.h
-index 4aaa34f..ce31a17 100644
---- a/src/sqlite3-cpp.h
-+++ b/src/sqlite3-cpp.h
-@@ -11,6 +11,6 @@
- #define SQLITE_INT64_TYPE int64_t
- #define SQLITE_UINT64_TYPE uint64_t
- 
--#include "vendor/sqlite3/sqlite3.h"
-+#include <sqlite3.h>
- 
- #endif // #ifndef __RSQLITE_SQLITE_H
-diff --git a/tests/testthat/test-blob.R b/tests/testthat/test-blob.R
-index 4cedcc8..ab48b55 100644
---- a/tests/testthat/test-blob.R
-+++ b/tests/testthat/test-blob.R
-@@ -17,6 +17,7 @@ test_that("adding large blob to table survives valgrind check (#192)", {
- })
- 
- test_that("can read more than standard limit (#314)", {
-+  skip("Does not work with system sqlite")
-   # Requires 64-bit system
-   skip_on_appveyor()
  

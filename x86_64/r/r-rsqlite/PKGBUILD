@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=RSQLite
-_pkgver=2.3.9
+_pkgver=2.3.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=3
 pkgdesc="SQLite Interface for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -24,7 +24,7 @@ makedepends=(
   r-cpp11
   r-plogr
 )
-checkdepends=(
+_checkdepends=(
   r-dbitest
   r-testthat
 )
@@ -46,10 +46,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libs.patch")
-md5sums=('b9666ee04a39ebfd8b0d7492855c7d76'
-         '29102318ffe7e673c7106be0041c7811')
-b2sums=('a9226dcb4270d869d01d29cee3d4c1fb7b59295e69330034dc2456f04f2290b9a99fab1ccbbf7b661f7667152761c99f7ecd99231853984eff511ccd262782ed'
-        '8a6c00d199a0a7940c4bca7cd4d162badbdb290c8754552f3a888fd1a6eeabfd2bf8a065d952bae11034071b0a7eb72e39f0786af820ab19908aa9b67bdbfa4f')
+md5sums=('957a787cb20226a5fe52894794e3b294'
+         'a4e9a6c34e49e6e36edcf7d46e4841af')
+b2sums=('91c2fd93bc3285a3c19d6badc7e13086e4ed9a57d410d40ba5cf35f07ae8059d7b2e8d9f92f1c9b7ae238785db9dd8d7da80beafe38e4eea830b2f61bce182e6'
+        '76af4e4ba5f59cd12b616357df87aec8a1906b673b086aac5155a3c0486fddbf8bb7c591f099ce05bbce05e905901d46372a81b01ecd03600fb71df8da0674cd')
 
 prepare() {
   cd "$_pkgname"
@@ -67,7 +67,7 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
