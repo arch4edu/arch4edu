@@ -2,7 +2,7 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.22.3
+pkgver=3.23.2
 pkgrel=1
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
@@ -31,8 +31,8 @@ optdepends=(
 install=petsc.install
 source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('92f45790463cd5a16a3ea57f042a21f3b53c1ee40d48c015c586fc7b90cd0db0e3900352d75c7821c67e40d7eeeab8c345557b16a510f9dc7187cdcabefe6293'
-            '36bac50422756b2955d696fe21c2f91a2b0f0f5d1e2ef6d4a5c99a8c94f3f43c948ad38143386640fa3d2ecf0fe2f3bf788a8e9c7c815c2c5dad18849ef83a00')
+sha512sums=('172833ec424614935bb745a57c9daec696d61a7d2ab586ec647d66ad897e9d8f0c91abd651b5390020ab692498addeb93c69574aa938ae92a8dedaa07535729b'
+            '809e956a60be3604db08d523faba0de26f97d63e9ceb174e06202ca6f742df917670821246349974662d8e98f7a166c107d2f1627a6aa256a4b69efd1576b891')
 
 PETSC_ARCH=linux-c-opt
 _install_dir=/opt/petsc/${PETSC_ARCH}
@@ -42,10 +42,10 @@ build() {
   export PETSC_DIR=${PWD}
   export PETSC_ARCH=${PETSC_ARCH}
 
-  CONFOPTS="--with-shared-libraries=1 \
+  CONFOPTS="--enable-cxx=1 \
+            --with-shared-libraries=1 \
             --with-petsc4py=1 \
             --with-mpi-f90module-visibility=0 \
-            --with-bison=0 \
             --with-cmake=0 \
             --with-mpi-dir=/usr \
             --with-zfp=1 \
