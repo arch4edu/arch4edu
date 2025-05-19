@@ -1,4 +1,5 @@
-# Maintainer:  Fabian Maurer<dark.shadow4@web.de>
+# Maintainer:  Shane Blackthorne <arch@blackthorne.dev>
+# Contributor: Fabian Maurer<dark.shadow4@web.de>
 # Contributor: Martin Dünkelmann<nc-duenkekl3@netcologne.de>
 # Contributor: Shaoyu Tseng<dev@notyourcomputer.net>
 # Contributor: Daniel Egeberg <daniel.egeberg@gmail.com
@@ -8,92 +9,86 @@
 # Contributor: Michael 'manveru' Fellinger <m.fellinger@gmail.com>
 # Contributor: Dave Pretty <david dot pretty at gmail dot com>
 
-pkgname=anki-git
-pkgver=r11655.a74fd7463
+_pkgname="anki"
+pkgname="anki-git"
+pkgver=r11730.a402670c4
 pkgrel=1
 pkgdesc="Helps you remember facts (like words/phrases in a foreign language) efficiently"
-url="hhttps://apps.ankiweb.net/"
-license=('AGPL3')
+url="https://github.com/ankitects/anki"
+license=('AGPL-3.0-or-later')
 arch=('any')
 provides=('anki')
-conflicts=('anki' 'anki20' 'anki-official-binary-bundle')
+conflicts=('anki' 'anki20' 'anki-official-binary-bundle' 'anki-bin')
 depends=(
-    # anki and aqt
-    'python-beautifulsoup4'
-    'python-requests'
-    'python-wheel'
+	# anki and aqt
+	'python'
+	'python-beautifulsoup4'
+	'python-requests'
+	'python-wheel'
 
-    # anki
-    'python-pysocks' # requests[socks]
-    'python-decorator'
-    'python-protobuf'
-    'python-orjson'
-    'python-distro'
-    'python-pip-system-certs'
+	# anki
+	'python-pysocks' # requests[socks]
+	'python-decorator'
+	'python-protobuf'
+	'python-orjson'
+	'python-distro'
+	#'python-pip-system-certs'
 
-    # aqt
-    'python-send2trash'
-    'python-markdown'
-    'python-jsonschema'
-    'python-pyaudio'
-    'python-pyqtwebengine'
-    'python-flask'
-    'python-flask-cors'
-    'python-waitress'
-    'python-pyqt6'
-    'python-pyqt6-webengine'
+	# aqt
+	'python-send2trash'
+	'python-markdown'
+	'python-jsonschema'
+	'python-pyaudio'
+	'python-pyqtwebengine'
+	'python-flask'
+	'python-flask-cors'
+	'python-waitress'
+	'python-pyqt6'
+	'python-pyqt6-webengine'
 )
-makedepends=(
-    'git'
-    'rsync'
-
-    'ninja'
-    'clang'
-
-    'rust'
-    'libxcrypt-compat'
-
-    'python-pip'
-    'npm'
-)
+makedepends=('git' 'rsync' 'ninja' 'clang' 'cargo' 'libxcrypt-compat' 'python-pip' 'npm' 'lld')
 optdepends=(
-    'lame: record sound'
-    'mpv: play sound. prefered over mplayer'
-    'mplayer: play sound'
+	'lame: record sound'
+	'mpv: play sound. prefered over mplayer'
+	'mplayer: play sound'
 )
-source=('git+https://github.com/ankitects/anki.git')
-sha512sums=('SKIP')
+source=("git+$url.git" "strip-python-pip-system-certs.patch")
+sha512sums=('SKIP' 'SKIP')
+#options(!lto)
 
 pkgver() {
-    cd anki
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	cd $_pkgname
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
-    cd anki
-
-    # Put translations in place.
-    #ln -sf "$srcdir"/ankitects-anki-core-i18n-*/ rslib/ftl/repo
-    #ln -sf "$srcdir"/ankitects-anki-desktop-ftl-*/ qt/ftl/repo
-    #ln -sf "$srcdir"/ankitects-anki-desktop-i18n-*/ qt/po/repo
+	cd $_pkgname 
+	    patch -p1 < "$srcdir/strip-python-pip-system-certs.patch"
+	# Put translations in place.
+	#ln -sf "$srcdir"/ankitects-anki-core-i18n-*/ rslib/ftl/repo
+	#ln -sf "$srcdir"/ankitects-anki-desktop-ftl-*/ qt/ftl/repo
+	#ln -sf "$srcdir"/ankitects-anki-desktop-i18n-*/ qt/po/repo
 }
 
 build() {
-    cd anki
+	cd $_pkgname
 
-    export CC=/usr/bin/clang
-    export CXX=/usr/bin/clang++
-    export PROTOC_BINARY=$(which protoc)
-    ./tools/build
+	export CC=/usr/bin/clang
+	export CXX=/usr/bin/clang++
+	export PROTOC_BINARY=$(which protoc)
+	export RUSTFLAGS="-Clink-args=-fuse-ld=lld -Ctarget-cpu=native"
+
+	./tools/build
 }
 
 package() {
-    cd anki
-    PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-warn-script-location --root-user-action=ignore --no-deps out/wheels/*.whl
+	cd $_pkgname
 
-    install -Dm755 qt/runanki.py "$pkgdir"/usr/bin/anki
-    install -Dm644 qt/bundle/lin/anki.desktop "$pkgdir"/usr/share/applications/anki.desktop
-    install -Dm644 qt/bundle/lin/anki.png "$pkgdir"/usr/share/pixmaps/anki.png
+	PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-warn-script-location --root-user-action=ignore --no-deps out/wheels/*.whl
+
+	install -Dm755 qt/runanki.py "$pkgdir"/usr/bin/anki
+	install -Dm644 qt/bundle/lin/anki.desktop "$pkgdir"/usr/share/applications/anki.desktop
+	install -Dm644 qt/bundle/lin/anki.png "$pkgdir"/usr/share/pixmaps/anki.png
 }
 options+=("!lto")
 arch=(x86_64)
