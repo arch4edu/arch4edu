@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=OpenMx
-_pkgver=2.21.13
+_pkgver=2.22.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -46,8 +46,8 @@ optdepends=(
   r-umx
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ac9af2077337e2bbb26356e0facea2e3')
-b2sums=('9707b21081d700992bc1db918bb197bff2d7f0a98d25e101ed7966de00091a61fec404be85f52db9c54734e9f5a399fd69546473d50742a247c347f9a2386886')
+md5sums=('2ecaf87ba764429f785cc25454672fcf')
+b2sums=('81e52904a9e411fc46b02b7f3de70d671cea6eb83a1c8c21a2c7db21a84de04d1b81bb16f2175d5234b35f3f8e72df13e777216fd06d8edbbeef78dba8c14b43')
 
 build() {
   mkdir build
