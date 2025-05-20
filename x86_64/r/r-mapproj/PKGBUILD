@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mapproj
-_pkgver=1.2.11
+_pkgver=1.2.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Map Projections"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r-maps
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('df2ac0dd6e0cb2331f089c36041580f7')
-b2sums=('bedcf9f5071a5052eb0184b63fdf55956c3e6601eb6fea3698a0af3f013914ae1def4f69a82d88880065f50a138029fdd968226897d3f2d86bdc844df94a6b23')
+md5sums=('65f7a0098621af68e6fcd954d382a2f6')
+b2sums=('d99c9432b88737beee35d44205cd02c8ad28254ab9aee0227deb32e950bcc4cb68db8a78d3d1845310b8dcb403f6a26577bc724ca930f693c8efa32658a69dd2')
 
 build() {
   mkdir build
