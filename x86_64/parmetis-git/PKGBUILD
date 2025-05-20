@@ -2,7 +2,7 @@
 _base=ParMETIS
 pkgname=${_base,,}-git
 pkgver=r45.8ee6a37
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 pkgdesc="Parallel Graph Partitioning and Fill-reducing Matrix Ordering (git version)"
 url="https://github.com/KarypisLab/${_base}"
@@ -18,6 +18,11 @@ conflicts=(${_base,,})
 pkgver() {
   cd ${_base}
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short=7 HEAD)"
+}
+
+prepare() {
+  cd ${_base}
+  sed -i 's|^CONFIG_FLAGS = .*|CONFIG_FLAGS = -DCMAKE_VERBOSE_MAKEFILE=1 -DCMAKE_POLICY_VERSION_MINIMUM=3.5|' Makefile
 }
 
 build() {
