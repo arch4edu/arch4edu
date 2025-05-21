@@ -1,8 +1,8 @@
 # Maintainer: Gordian Edenhofer <gordian.edenhofer@gmail.com>
 
 pkgname=zoom
-pkgver=6.4.6
-_subver=1370
+pkgver=6.4.10
+_subver=2027
 pkgrel=1
 pkgdesc="Video Conferencing and Web Conferencing Service"
 arch=('x86_64')
@@ -18,7 +18,7 @@ optdepends=('pulseaudio-alsa: audio via PulseAudio'
 	'xcompmgr: extra compositor needed by some window managers for screen sharing')
 options=(!strip)
 source=("${pkgname}-${pkgver}.${_subver}_orig_x86_64.pkg.tar.xz"::"https://zoom.us/client/${pkgver}.${_subver}/zoom_x86_64.pkg.tar.xz")
-sha512sums=('d3e555e85a87d63b4c1c0990bf543b7cadb2106defc195c37a4b08df7db3e968fb2d1e09f533fce267695ffcbf104eb83ad8d7f7c4ec890caa845af643e79de4')
+sha512sums=('298990800cb242b14c1e83db73c21a34b95c58df21bce86f0b58b7d6ad07fb895da7778664449382fbdb805ac5824b4d9370254e4097a90e0c7fb27c6adcde28')
 
 package() {
 	cp -dpr --no-preserve=ownership opt usr "${pkgdir}"
