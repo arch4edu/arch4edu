@@ -1,25 +1,59 @@
 # Maintainer: envolution
-# Contributor: David Garfias <dgarfiasme@gmail.com> 
+# Contributor: David Garfias <dgarfiasme@gmail.com>
 # Contributor: ffcc <ffercc at gmail dot com>
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Marcel Hasler <mahasler at gmail dot com>
+# shellcheck shell=bash disable=SC2034,SC2154
 
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
-pkgver=2025.0.0
-pkgrel=2
-pkgdesc="A software package for numerical computation, providing a powerful computing environment for engineering and scientific applications."
+pkgver=2025.1.0
+pkgrel=1
+pkgdesc="a powerful computing environment for engineering and scientific applications."
 arch=("x86_64")
-license=("GPL")
+license=("GPL-2.0-or-later")
 url="https://www.scilab.org"
 # Standalone package
-depends=('ncurses5-compat-libs')
-conflicts=('scilab' 'scilab-git')
-provides=('scilab')
+depends=(
+  ncurses5-compat-libs
+  hicolor-icon-theme
+  freetype2
+  zlib
+  ruby
+  alsa-lib
+  cairo
+  pango
+  dbus
+  libxrandr
+  libx11
+  libxi
+  libxext
+  nss
+  libdrm
+  java-runtime
+  python
+  libxtst
+  nspr
+  libxkbcommon
+  libxxf86vm
+  libcups
+  glib2
+  libxdamage
+  libxcursor
+  libxrender
+  libxcb
+  libxcomposite
+  expat
+  mesa
+  perl
+  libxfixes
+  at-spi2-core)
+conflicts=(scilab)
+provides=(scilab)
 options=(!strip)
 # From Scilab downloads page (https://www.scilab.org/download/)
 source=("https://www.scilab.org/download/${pkgver}/${_pkgname}-${pkgver}.bin.${CARCH}-linux-gnu.tar.xz")
-sha256sums=('f74e47a63a4d5a7ba927bfdf9745e3ede3c3a5e3158b4d8e9c4c8879ac0d771c')
+sha256sums=('9c9c391e0d8e391621855394c05916b8e313ad08d2db3036189222d5c7aa2d8c')
 
 package() {
   install -d "${pkgdir}/opt"
@@ -38,3 +72,4 @@ package() {
 }
 
 # vim: ts=2 sw=2 et:
+# vim:set ts=2 sw=2 et:
