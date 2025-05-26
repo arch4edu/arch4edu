@@ -3,15 +3,15 @@
 
 pkgname=python-transformers
 _pkgname=${pkgname#python-}
-pkgver=4.48.0
+pkgver=4.52.3
 pkgrel=1
 pkgdesc="State-of-the-art Natural Language Processing for Jax, PyTorch and TensorFlow"
 arch=('any')
 url='https://github.com/huggingface/transformers'
-license=('Apache')
+license=('Apache-2.0')
 depends=(
   'python-filelock'
-  'python-huggingface-hub>=0.24.0'
+  'python-huggingface-hub>=1:0.30.0'
   'python-numpy'
   'python-packaging'
   'python-regex'
@@ -25,15 +25,18 @@ makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel
 optdepends=(
   'python-bitsandbytes: 8-bit support for PyTorch'
   'python-flax: JAX support'
+  'python-keras: Support for models in Keras 3'
   'python-onnxconverter-common: TensorFlow support'
   'python-pytorch: PyTorch support'
   'python-tensorflow: TensorFlow support'
+  'python-tf-keras: Support for models in Keras 2 (e.g. BART)'
   'python-tf2onnx: TensorFlow support'
+  'python-hf-xet: xethub support'
 )
 source=(
   "python-transformers-$pkgver.tar.gz"::"https://github.com/huggingface/transformers/archive/refs/tags/v$pkgver.tar.gz"
 )
-sha256sums=('451956262179f782a3fb3aff8335862748603af81632c3a0147c19e969ff6a91')
+sha256sums=('c3c6abe62f870c9af9edc545b3b4393bf285cc09a8968a9b76b67db20f628fde')
 
 prepare() {
   cd "transformers-$pkgver"
@@ -52,8 +55,7 @@ check() {
 
 package() {
   cd "transformers-$pkgver"
-  python -m installer \
-    --compile-bytecode 1 \
-    --destdir $pkgdir \
+  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  python -m installer --compile-bytecode=1 --destdir=$pkgdir \
     $srcdir/$_pkgname-$pkgver/dist/transformers-$pkgver-*-*.whl
 }
