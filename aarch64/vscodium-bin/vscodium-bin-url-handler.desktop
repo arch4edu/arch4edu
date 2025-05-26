@@ -8,5 +8,5 @@ Type=Application
 NoDisplay=true
 StartupNotify=false
 Categories=Utility;TextEditor;Development;IDE;
-MimeType=x-scheme-handler/vscode;
+MimeType=x-scheme-handler/vscode;x-scheme-handler/vscodium;
 Keywords=vscode;
