@@ -5,7 +5,7 @@
 # Contributor: Lazaros Koromilas <koromilaz@gmail.com>
 _base=Saxon-HE
 pkgname=${_base,,}
-pkgver=12.6
+pkgver=12.7
 pkgrel=1
 arch=(any)
 pkgdesc="XSLT 3.0, XQuery 3.1, and XPath 3.1 processor for Java - Home Edition"
@@ -17,7 +17,7 @@ conflicts=(java-saxon)
 source=(${url}/releases/download/${_base/-/}${pkgver//./-}/${_base/-/}${pkgver//./-}J.zip
   saxon-xslt.sh
   saxon-xquery.sh)
-sha512sums=('36f619c3e88610218ef3e5985b721fae2327a40d05f0c4e1997fbc3a775012b46007fb901fd31ed0eb380b8e3abf223fda82b6cb8554ff04cd7d2857aa48c144'
+sha512sums=('487e5e4ccfd70eaae1b458798e96670bf9ae836d09ac50d70ee75e6d9d8cd2e85c19ab36d12d2d0e0d9ff84662df45f705174b0556a53e70d8fccb171c13e915'
             '365eba91dc83600231b1c54c427eca9e076003ed9204c37fe5da777443d190afb22bdc45c305e16181f2738254f6e016a136d9688ddb2d47a6de873245f64f21'
             'b44d1ea24ae6f1e0d34cf86ecc3c83642e2ed3c89230683cc04c7c8992e3a2fc9f191bb565437700a2dcbb56980bbb3c0540e628ad28df43095688da344a9429')
 
