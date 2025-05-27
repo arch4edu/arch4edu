@@ -4,6 +4,7 @@ nvchecker:
   - alias: python
 makedepends:
   - any/python-sphinx-automodapi
+  - x86_64/python-sphinx-changelog
   - any/python-sphinx-gallery
   - x86_64/python-sunpy-sphinx-theme
   - x86_64/python-sunpy
