@@ -3,7 +3,7 @@
 pkgname=mavproxy
 _pkgname=MAVProxy
 pkgver=1.8.67
-pkgrel=2
+pkgrel=3
 pkgdesc='MAVLink proxy and command line ground station.'
 arch=('any')
 url='https://ardupilot.org/mavproxy'
