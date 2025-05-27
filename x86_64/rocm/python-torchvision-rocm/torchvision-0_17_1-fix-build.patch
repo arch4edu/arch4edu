@@ -1,22 +1,15 @@
---- setup.py.old	2024-03-20 13:32:00.146891902 +0100
-+++ setup.py	2024-03-20 13:32:26.983812475 +0100
-@@ -189,6 +189,7 @@
-     extension = CppExtension
+--- setup.py.old	2024-11-03 16:51:21.891305430 +0100
++++ setup.py	2024-11-03 16:52:16.875113504 +0100
+@@ -116,7 +116,7 @@
  
-     define_macros = []
-+    define_macros += [("GLOG_USE_GLOG_EXPORT", None)]
  
+ def get_macros_and_flags():
+-    define_macros = []
++    define_macros = [("GLOG_USE_GLOG_EXPORT", None)]
      extra_compile_args = {"cxx": []}
-     if (torch.cuda.is_available() and ((CUDA_HOME is not None) or is_rocm_pytorch)) or force_cuda:
-@@ -250,6 +251,7 @@
- 
-     # Image reading extension
-     image_macros = []
-+    image_macros += [("GLOG_USE_GLOG_EXPORT", None)]
-     image_include = [extensions_dir]
-     image_library = []
-     image_link_flags = []
-@@ -449,6 +451,7 @@
+     if BUILD_CUDA_SOURCES:
+         if IS_ROCM:
+@@ -488,6 +488,7 @@
                  ],
                  extra_compile_args=["-std=c++17"] if os.name != "nt" else ["/std:c++17", "/MP"],
                  extra_link_args=["-std=c++17" if os.name != "nt" else "/std:c++17"],
@@ -24,11 +17,11 @@
              )
          )
  
-@@ -497,6 +500,7 @@
+@@ -536,6 +537,7 @@
                      "nppicc",
                  ],
                  extra_compile_args=extra_compile_args,
 +                define_macros=[("GLOG_USE_GLOG_EXPORT", None)],
              )
          )
-     else:
+ 

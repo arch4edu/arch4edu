@@ -1,16 +1,12 @@
 # Arch-Linux - AUR Package python-torchvision-rocm
 
-Either build from source, or add
+Either build from source,
 
-https://github.com/arch4edu/arch4edu
+or add https://github.com/arch4edu/arch4edu to your package sources
 
-to your package sources, they have (upon other packages)
-
-a prebuild python-torchvision-rocm binary build from this source available.
-
-- This **usually** works for manjaro too
-    - but will most likely **break** after every major update to the pytorch underlying libraries until updated in manjaro
-    - please refrain from creating issues related to this, thank you!
+- they have (upon other packages) a prebuild python-torchvision-rocm binary build from this source available.
+- This **usually** works for manjaro too but will most likely **break** after every major update to the pytorch underlying libraries until updated in manjaro
+- please refrain from creating issues related to this, thank you!
 
 ### Issue Template
 
@@ -18,8 +14,8 @@ Please paste the output of
 
 ```sh
 /opt/rocm/bin/rocminfo | grep -E "(Name|ID):"
-export | grep -E \
-  "(GPU_TARGETS|AMDGPU_TARGETS|PYTORCH_ROCM_ARCH|HSA_OVERRIDE_GFX_VERSION|ROCR_VISIBLE_DEVICES)"
+export | grep -E "(GPU_TARGETS|AMDGPU_TARGETS|\
+PYTORCH_ROCM_ARCH|HSA_OVERRIDE_GFX_VERSION|ROCR_VISIBLE_DEVICES)"
 python -c 'import torch.version as v; \
   print("torch: {}\nrocm: {}\n".format(v.git_version, v.hip))'
 ```

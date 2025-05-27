@@ -11,11 +11,11 @@
 # Contributor: Stephen Zhang <zsrkmyn at gmail dot com>
 
 _pkgname='vision'
-# if not set, populate build architecture list from arch:python-pytorch@2.3.1-4
-_PYTORCH_ROCM_ARCH="gfx906;gfx908;gfx90a;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102"
+# if not set, populate build architecture list taken from pkg arch:python-pytorch@2.6.0-9
+_PYTORCH_ROCM_ARCH="gfx900;gfx906;gfx908;gfx90a;gfx1030;gfx1100;gfx1101;gfx942;gfx1102"
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.18.1
+pkgver=0.22.0
 pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
@@ -46,17 +46,12 @@ source=(
   "pytorch-vision-8408.patch"
   "torchvision-0_17_1-fix-build.patch"
 )
-sha256sums=(
-  '347d472a9ceecc44e0bee1eda140d63cfaffc74a54ec07d4b98da7698ce75516'
-  'SKIP'
-  'SKIP'
-)
+sha256sums=('83ed8855cdfb138aba6f116f8fd8da8b83463170dad67a70f60327915ed12014'
+            'd14ce08f7d1929fff746d7fc7b80b3065a5d7111ab08b5a5e73b44e77bf1b56f'
+            'ed715ca202d2b010c50414e370ebc0492f0f42b298a8e6e03f9fe80b7ce60331')
 
 prepare() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
-
-  # Fix build with ffmpeg 7.0
-  patch -Np1 -i "${srcdir}/pytorch-vision-8408.patch"
 
   # https://github.com/pytorch/vision/issues/8307
   patch -N -i "${srcdir}"/torchvision-0_17_1-fix-build.patch
@@ -74,10 +69,15 @@ build() {
   export PYTORCH_ROCM_ARCH="${_PYTORCH_ROCM_ARCH}"
   echo "building for PYTORCH_ROCM_ARCH=$PYTORCH_ROCM_ARCH"
 
-  # if not set, hardcode ROCM_PATH, HIP_ROOT_DIR, ROCM_HOME to /opt/rocm, fixes bin/hipcc a.o.
+  # if ROCM_HOME is not set, hardcode ROCM_HOME, ROCM_PATH, HIP_ROOT_DIR to /opt/rocm
+  # fixes bin/hipcc a.o.
   export ROCM_HOME="${ROCM_HOME:-/opt/rocm}"
   export ROCM_PATH="$ROCM_HOME"
   export HIP_ROOT_DIR="$ROCM_HOME"
+
+  # XXX we need to exclude this in favor of the hipified source, setup.py, make_C_extension
+  # add after: shutil.copy(str(header), str(CSRS_DIR / "ops/hip"))
+  # cuda_sources.remove(CSRS_DIR / "vision.cpp")
 
   cmake \
     -G Ninja \
@@ -88,7 +88,8 @@ build() {
     -DCMAKE_CXX_FLAGS="${CXXFLAGS} -O3" \
     -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS}" \
     -DWITH_PNG=ON \
-    -DWITH_JPEG=ON
+    -DWITH_JPEG=ON \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
   cmake --build build
 
@@ -98,16 +99,6 @@ build() {
     TORCHVISION_USE_VIDEO_CODEC=0 \
     TORCHVISION_USE_FFMPEG=1 \
     python setup.py build
-}
-
-check() {
-  # local python_version=$(python -c 'import sys; print("".join(map(str, sys.version_info[:2])))')
-  # # check if VideoReader is build
-  # # VideoReader depends on ffmpeg
-  # cd "${srcdir}/${_pkgname}-${pkgver}"
-  # PYTHONPATH="${PWD}/build/lib.linux-${CARCH}-cpython-${python_version}" \
-  #   python -c "from torchvision.io import VideoReader"
-  true
 }
 
 package_torchvision-rocm() {
