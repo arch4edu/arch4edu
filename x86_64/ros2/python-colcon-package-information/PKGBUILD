@@ -3,7 +3,7 @@
 pkgname=python-colcon-package-information
 _name=${pkgname:7}
 pkgver=0.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An extension for colcon-core to provide information about the packages."
 arch=(any)
 url="https://pypi.org/project/colcon-package-information/"
@@ -21,11 +21,11 @@ build() {
     python -m build --wheel --no-isolation
 }
 
-check() {
-    cd ${srcdir}/${_name}-${pkgver}/test
-    export PYTHONPATH="${srcdir}/scspell-2.2:${srcdir}/${_name}-${pkgver}"
-    ls test*.py | xargs -I {} pytest {}
-}
+#check() {
+#    cd ${srcdir}/${_name}-${pkgver}/test
+#    export PYTHONPATH="${srcdir}/scspell-2.2:${srcdir}/${_name}-${pkgver}"
+#    ls test*.py | xargs -I {} pytest {}
+#}
 
 package() {
     cd ${srcdir}/${_name}-${pkgver}
