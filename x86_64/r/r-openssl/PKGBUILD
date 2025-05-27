@@ -7,10 +7,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=openssl
-_pkgver=2.3.2
+_pkgver=2.3.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Toolkit for Encryption, Signatures and Certificates Based on OpenSSL"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -35,8 +35,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e6a7f51472d3db9444b47d4936fc6338')
-b2sums=('c9179f79ac59f08bb45436a20fd2380cab1402d7dd8b8601c318b59e95dab96140ce6e225f1922085b05cae444e137eca18b78ea733ad47d307201d6054b4dd6')
+md5sums=('8b535bc727359f5aa72fe8b95566b1cf')
+b2sums=('a686b22ee5c42c6f34755f406277e0b937415e58e19ff88516fe547c861f8130e0769659161c1d8eac41bea2f32571df1f1fd0cf9e373e372134ac13b7576e70')
 
 build() {
   mkdir build
