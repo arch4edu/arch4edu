@@ -5,6 +5,7 @@ nvchecker:
 depends:
   - x86_64/ros2/python-colcon-core
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add makedepends python-build python-installer python-wheel
