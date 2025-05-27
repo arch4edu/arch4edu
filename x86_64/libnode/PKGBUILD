@@ -8,7 +8,7 @@
 # Contributor: TIanyi Cui <tianyicui@gmail.com>
 
 pkgname=libnode
-pkgver=22.6.0
+pkgver=23.11.1
 pkgrel=1
 pkgdesc='libnode.so from nodejs-shared'
 arch=('x86_64')
@@ -18,7 +18,7 @@ options=(!lto)
 depends=('icu' 'libuv' 'libnghttp2' 'libnghttp3' 'libngtcp2' 'openssl' 'zlib' 'brotli' 'c-ares') # 'http-parser' 'v8')
 makedepends=('python' 'procps-ng')
 source=("nodejs-${pkgver}.tar.gz::https://github.com/nodejs/node/archive/refs/tags/v${pkgver}.tar.gz")
-sha512sums=('de04d1d2dec6668c06143b0a4d6bb4cc51b61b80a6030120d099ba7b6c8d83804ae097f8c9a057724414be24616db5e0f65c75fbaf91e047dc792ce5429e9bd5')
+sha512sums=('9003d38c888d23224c5d238bc59fcb5f3afa586bee3de00196a196e7db14c243b16cee47a09d669e32aa07144250af48e5aa4d00762015fe1049fba907eb685f')
 
 build() {
   cd node-${pkgver}
