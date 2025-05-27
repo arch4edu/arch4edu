@@ -1,12 +1,13 @@
 diff --git a/src/pybind/mgr/tox.ini b/src/pybind/mgr/tox.ini
-index 3426ae28735..d7756445a6b 100644
+index 17b7e64d63a..1ae2f7be0f1 100644
 --- a/src/pybind/mgr/tox.ini
 +++ b/src/pybind/mgr/tox.ini
-@@ -184,7 +184,6 @@ modules =
+@@ -179,8 +179,6 @@ modules =
  commands =
      flake8 --config=tox.ini {posargs} \
        {posargs:{[testenv:flake8]modules}}
--    bash -c 'test $(git ls-files cephadm | grep ".py$" | grep -v tests | xargs grep "docker.io" | wc -l) == 13'
+-    bash -c 'test $(git ls-files cephadm | grep ".py$" | grep -v tests | xargs grep "docker.io" | wc -l) == 3'
+-    bash -c 'test $(git ls-files cephadm | grep ".py$" | grep -v tests | xargs grep "quay.io" | wc -l) == 23'
  
  [testenv:jinjalint]
  basepython = python3

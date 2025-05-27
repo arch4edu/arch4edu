@@ -1,16 +1,3 @@
-diff --git a/src/common/hobject_fmt.h b/src/common/hobject_fmt.h
-index 622611121ae..c69495d1fa1 100644
---- a/src/common/hobject_fmt.h
-+++ b/src/common/hobject_fmt.h
-@@ -30,7 +30,7 @@ template <> struct fmt::formatter<hobject_t> {
- 
-   constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
- 
--  template <typename FormatContext> auto format(const hobject_t& ho, FormatContext& ctx)
-+  template <typename FormatContext> auto format(const hobject_t& ho, FormatContext& ctx) const
-   {
-     if (ho == hobject_t{}) {
-       return fmt::format_to(ctx.out(), "MIN");
 diff --git a/src/crimson/common/formatter.cc b/src/crimson/common/formatter.cc
 index ab371ddbfce..9ced61d9848 100644
 --- a/src/crimson/common/formatter.cc
@@ -25,10 +12,10 @@ index ab371ddbfce..9ced61d9848 100644
        t.time_since_epoch()).count();
      auto milliseconds = (t.time_since_epoch() %
 diff --git a/src/crimson/net/io_handler.h b/src/crimson/net/io_handler.h
-index f53c2ba6468..02b0edd5bca 100644
+index 8b88e2f5a25..80dd953c65f 100644
 --- a/src/crimson/net/io_handler.h
 +++ b/src/crimson/net/io_handler.h
-@@ -580,7 +580,7 @@ struct fmt::formatter<crimson::net::io_handler_state> {
+@@ -541,7 +541,7 @@ struct fmt::formatter<crimson::net::io_handler_state> {
    }
  
    template <typename FormatContext>
@@ -37,7 +24,7 @@ index f53c2ba6468..02b0edd5bca 100644
      return fmt::format_to(
          ctx.out(),
          "io(in_seq={}, is_out_queued={}, has_out_sent={})",
-@@ -594,7 +594,7 @@ template <>
+@@ -555,7 +555,7 @@ template <>
  struct fmt::formatter<crimson::net::IOHandler::io_state_t>
    : fmt::formatter<std::string_view> {
    template <typename FormatContext>
@@ -60,12 +47,12 @@ index 22c140b5993..6acb1df0077 100644
      switch (op) {
      case node_delta_op_t::INSERT:
 diff --git a/src/crimson/os/seastore/onode_manager/staged-fltree/stages/stage.h b/src/crimson/os/seastore/onode_manager/staged-fltree/stages/stage.h
-index 7185b15eedc..a1dd202bf85 100644
+index 2cf67c90cbf..cc4c39d5027 100644
 --- a/src/crimson/os/seastore/onode_manager/staged-fltree/stages/stage.h
 +++ b/src/crimson/os/seastore/onode_manager/staged-fltree/stages/stage.h
-@@ -2482,7 +2482,7 @@ concept HasDoFormatTo = requires(T x, std::back_insert_iterator<fmt::memory_buff
- };
- template <HasDoFormatTo T> struct fmt::formatter<T> : fmt::formatter<std::string_view> {
+@@ -2485,7 +2485,7 @@ namespace fmt {
+ // (https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92944).
+ template <HasDoFormatTo T> struct formatter<T> : formatter<std::string_view> {
    template <typename FormatContext>
 -  auto format(const T& staged_iterator, FormatContext& ctx) {
 +  auto format(const T& staged_iterator, FormatContext& ctx) const {
@@ -73,7 +60,7 @@ index 7185b15eedc..a1dd202bf85 100644
    }
  };
 diff --git a/src/crimson/os/seastore/seastore.cc b/src/crimson/os/seastore/seastore.cc
-index 897a063e0fe..15e90ff6a5b 100644
+index 974b256342b..de328aad410 100644
 --- a/src/crimson/os/seastore/seastore.cc
 +++ b/src/crimson/os/seastore/seastore.cc
 @@ -39,7 +39,7 @@ template <> struct fmt::formatter<crimson::os::seastore::op_type_t>
@@ -138,7 +125,7 @@ index 41c4c6af89d..4c6c7d23026 100644
      if (addr.is_new() || addr.num() < 0) {
        return fmt::format_to(ctx.out(), "{}.?", addr.type_str());
 diff --git a/src/osd/PeeringState.h b/src/osd/PeeringState.h
-index 6901ab5062b..8b41aa25f9c 100644
+index 89ef702e0fe..5cbf5904b37 100644
 --- a/src/osd/PeeringState.h
 +++ b/src/osd/PeeringState.h
 @@ -64,7 +64,7 @@ struct fmt::formatter<PGPool> {
@@ -150,77 +137,6 @@ index 6901ab5062b..8b41aa25f9c 100644
    {
      return fmt::format_to(ctx.out(),
                            "{}/{}({})",
-diff --git a/src/osd/osd_types_fmt.h b/src/osd/osd_types_fmt.h
-index 8d48134106e..65a751469f7 100644
---- a/src/osd/osd_types_fmt.h
-+++ b/src/osd/osd_types_fmt.h
-@@ -57,7 +57,7 @@ struct fmt::formatter<chunk_info_t> {
-   constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
- 
-   template <typename FormatContext>
--  auto format(const chunk_info_t& ci, FormatContext& ctx)
-+  auto format(const chunk_info_t& ci, FormatContext& ctx) const
-   {
-     return fmt::format_to(ctx.out(), "(len: {} oid: {} offset: {} flags: {})",
- 			  ci.length, ci.oid, ci.offset,
-@@ -169,7 +169,7 @@ struct fmt::formatter<pg_info_t> {
-   constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
- 
-   template <typename FormatContext>
--  auto format(const pg_info_t& pgi, FormatContext& ctx)
-+  auto format(const pg_info_t& pgi, FormatContext& ctx) const
-   {
-     fmt::format_to(ctx.out(), "{}({}", pgi.pgid, (pgi.dne() ? " DNE" : ""));
-     if (pgi.is_empty()) {
-@@ -211,7 +211,7 @@ struct fmt::formatter<SnapSet> {
-   }
- 
-   template <typename FormatContext>
--  auto format(const SnapSet& snps, FormatContext& ctx)
-+  auto format(const SnapSet& snps, FormatContext& ctx) const
-   {
-     if (verbose) {
-       // similar to SnapSet::dump()
-@@ -265,7 +265,7 @@ struct fmt::formatter<ScrubMap::object> {
- 
-   ///\todo: consider passing the 'D" flag to control snapset dump
-   template <typename FormatContext>
--  auto format(const ScrubMap::object& so, FormatContext& ctx)
-+  auto format(const ScrubMap::object& so, FormatContext& ctx) const
-   {
-     fmt::format_to(ctx.out(),
- 		   "so{{ sz:{} dd:{} od:{} ",
-@@ -308,7 +308,7 @@ struct fmt::formatter<ScrubMap> {
-   }
- 
-   template <typename FormatContext>
--  auto format(const ScrubMap& smap, FormatContext& ctx)
-+  auto format(const ScrubMap& smap, FormatContext& ctx) const
-   {
-     fmt::format_to(ctx.out(),
- 		   "smap{{ valid:{} incr-since:{} #:{}",
-diff --git a/src/osd/scrubber/osd_scrub_sched.h b/src/osd/scrubber/osd_scrub_sched.h
-index 17cd0e49377..aa3c55c6c99 100644
---- a/src/osd/scrubber/osd_scrub_sched.h
-+++ b/src/osd/scrubber/osd_scrub_sched.h
-@@ -526,7 +526,7 @@ template <>
- struct fmt::formatter<ScrubQueue::qu_state_t>
-     : fmt::formatter<std::string_view> {
-   template <typename FormatContext>
--  auto format(const ScrubQueue::qu_state_t& s, FormatContext& ctx)
-+  auto format(const ScrubQueue::qu_state_t& s, FormatContext& ctx) const
-   {
-     auto out = ctx.out();
-     out = fmt::formatter<string_view>::format(
-@@ -540,7 +540,7 @@ struct fmt::formatter<ScrubQueue::ScrubJob> {
-   constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
- 
-   template <typename FormatContext>
--  auto format(const ScrubQueue::ScrubJob& sjob, FormatContext& ctx)
-+  auto format(const ScrubQueue::ScrubJob& sjob, FormatContext& ctx) const
-   {
-     return fmt::format_to(
-       ctx.out(),
 diff --git a/src/osd/scrubber/scrub_backend.h b/src/osd/scrubber/scrub_backend.h
 index ffb41c27e37..8d4e8182116 100644
 --- a/src/osd/scrubber/scrub_backend.h
@@ -253,10 +169,10 @@ index ffb41c27e37..8d4e8182116 100644
      // can't use value_or() due to different output types
      if (std::get<0>(dg).has_value()) {
 diff --git a/src/osd/scrubber_common.h b/src/osd/scrubber_common.h
-index a15ea65969f..7efc8e24f74 100644
+index 66e61d856cd..22325234ffb 100644
 --- a/src/osd/scrubber_common.h
 +++ b/src/osd/scrubber_common.h
-@@ -166,7 +166,7 @@ struct fmt::formatter<requested_scrub_t> {
+@@ -277,7 +277,7 @@ struct fmt::formatter<requested_scrub_t> {
    constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
  
    template <typename FormatContext>

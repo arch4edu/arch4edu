@@ -4,18 +4,17 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=18.2.4
-pkgrel=3
+pkgver=19.2.2
+pkgrel=2
 url='https://ceph.com/'
 arch=('x86_64')
-license=('GPL-2.0-or-later OR LGPL-2.1-or-later OR LGPL-3.0-or-later')
+license=('GPL-2.0-or-later' 'LGPL-2.1-or-later' 'LGPL-3.0-or-later')
 pkgname=(
   ceph-{common,compressor,crypto,erasure,tools,test,volume,cephadm,node-proxy}
   ceph-{rados,base,mon,mgr,osd,mds,rbd,cephfs,rgw}
   lib{rados,cephfs,rbd,rgw,cephsqlite}
   python-{ceph-common,rados,rbd,cephfs,rgw}
   cephfs-{top,shell}
-  java-cephfs
 
   ceph
   ceph-libs
@@ -23,16 +22,16 @@ pkgname=(
   ceph-cli
 )
 makedepends=(
-  'bash'            'boost'            'boost-libs'      'cmake'           'coreutils'
-  'cryptsetup'      'curl'             'cython'          'expat'           'fmt'
-  'fuse3'           'gawk'             'gcc-libs'        'git'             'glibc'
-  'gperf'           'gperftools'       'java-runtime'    'jq'              'jre11-openjdk-headless'
-  'junit'           'keyutils'         'libaio'          'libatomic_ops'   'libcap'
-  'libcap-ng'       'libcurl-compat'   'libedit'         'libgudev'        'libnl'
-  'librabbitmq-c'   'librdkafka'       'libutil-linux'   'libuv'           'libxcrypt'
-  'lua'             'lz4'              'nss'             'oath-toolkit'    'openssl'
-  'pkgconf'         'python'           'snappy'          'sqlite'          'systemd-libs'
-  'thrift'          'util-linux'       'xfsprogs'        'zlib'            'zstd'
+  'bash'            'boost'           'boost-libs'     'cmake'           'coreutils'
+  'cryptsetup'      'curl'            'cython'         'expat'           'fmt'
+  'fuse3'           'gawk'            'gcc-libs'       'git'             'glibc'
+  'gperf'           'gperftools'      'jq'             'junit'           'keyutils'
+  'libaio'          'libatomic_ops'   'libcap'         'libcap-ng'       'libcurl-compat'
+  'libedit'         'libgudev'        'libnl'          'librabbitmq-c'   'librdkafka'
+  'libutil-linux'   'libuv'           'libxcrypt'      'lua'             'lz4'
+  'nasm'            'ninja'           'nss'            'oath-toolkit'    'openssl'
+  'pkgconf'         'python'          'snappy'         'sqlite'          'systemd-libs'
+  'thrift'          'util-linux'      'xfsprogs'       'zlib'            'zstd'
 
   'python-bcrypt'     'python-cherrypy'  'python-coverage'     'python-dateutil'  'python-jinja'
   'python-packaging'  'python-pecan'     'python-prettytable'  'python-pyjwt'     'python-pyopenssl'
@@ -46,8 +45,9 @@ checkdepends=(
   'inetutils'     'xmlstarlet'
 
   'python-nose'   'python-pycodestyle'   'python-pylint'   'python-pytest'   'python-pytest-cov'
+  'python-saml'   'python-xmlsec'
 )
-__bcrypt_version='4.1.3'
+__bcrypt_version='4.2.1'
 
 # Despite the upstream suggesting that LTO is now possible, I still am unable
 # to set this. I get SEGVs in tests, and repeated mentions of C++ One Definition Rule
@@ -83,10 +83,6 @@ source=(
   # a lot of _GLIBCXX17_DEPRECATED line noise during builds
   'ceph-17.2.5-fix-iterator-depreciations.patch'
 
-  # Fixes API changes to boost::beast string_view type def in 1.81
-  # https://github.com/boostorg/beast/issues/2594
-  'ceph-17.2.5-rgw-client-boost-string-view.patch'
-
   # Fixes inspect.getargspec errors due to removal in py3.11
   'ceph-17.2.6-mgr-dashboard-cherrypy-18.patch'
 
@@ -102,19 +98,8 @@ source=(
   # Fix undefined behavior in unit test for erasure coding (SHEC)
   'ceph-18.2.0-fix-ecode-shec-test.patch'
 
-  # Backport https://github.com/ceph/ceph/pull/50216 to fix an assertion failure in
-  # test_concurrent_dir_link_and_compact_log_56210 due to the strange mount/umount/mount
-  # pattern
-  'ceph-18.2.0-backport-log-runway-expansion.patch'
-
   # Make the mgr import our ceph_bcrypt fork instead of the system bcrypt
   'ceph-18.2.2-mgr-alias-ceph-bcrypt.patch'
-
-  # Backport of https://github.com/ceph/ceph/pull/53327
-  'ceph-18.2.2-backport-ceph-volume-unbound-var.patch'
-
-  # Fix a few compile errors when using GCC14
-  'ceph-18.2.2-gcc-14-fixes.patch'
 
   # Switch to using std::atomic<std::shared_ptr<T>> where possible
   'ceph-18.2.2-std-atomic-depreciations.patch'
@@ -140,6 +125,54 @@ source=(
   # various custom type fmt:formatter::format defintions are not const.
   'ceph-18.2.4-fmt-formatter-const.patch'
 
+  # Work around removed PySys_* API usage in src/mgr this is largely
+  # a rebased backport of https://github.com/ceph/ceph/pull/58199
+  'ceph-18.2.4-avoid-cpython-pysys-api.patch'
+
+  # Fix more random broken stuff from py3.13 this time; pip's build of
+  # python-xmlsec (from python-saml) is completely broken so we use sitepackages
+  'ceph-18.2.4-py313-fixes.patch'
+
+  # Don't use the now-unsupported header only version of Boost.Url
+  # Partially backported from https://github.com/ceph/ceph/pull/57581
+  'ceph-19.2.0-backport-mds-link-boost-urls.patch'
+
+  # Restore access to the ceph-exporter systemd service file, seemingly missed
+  # from v19.2.0
+  'ceph-19.2.0-backport-ceph-exporter.patch'
+
+  # Fixes missed include for std::for_each usage in src/common/cohort_lru.h
+  'ceph-19.2.0-fix-cohort-lru-include.patch'
+
+  # Make a spurious gcc warning be quiet (next line ensures str is NULL terminated, gcc!)
+  'ceph-19.2.1-quiet-stringop-truncation.patch'
+
+  # fixes for a bunch of boost::asio deprecated stuff that was removed in 1.87
+  'ceph-19.2.1-boost-1.87-fixes.patch'
+
+  # re-add IPv6 support in osd health checks, backport of:
+  # -> https://github.com/ceph/ceph/pull/61323
+  # -> https://github.com/ceph/ceph/pull/60881
+  'ceph-19.2.1-fix-ipv6-support-in-is-addr-in-subnet.patch'
+
+  # fix ceph-volume issues in py3.13 (again)
+  # backport of: https://github.com/ceph/ceph/pull/59739
+  'ceph-19.2.1-backport-fix-importlib-metadata-compat.patch'
+
+  # Bundled rocksdb and gcc >=15.1 don't agree on imports, so appease gcc
+  'ceph-19.2.2-rocksdb-cstdint.patch'
+
+  # boost::process =1.88 removed the previous compatibility layer between v1 and v2 of
+  # the library, so we have to do it the hard way
+  # https://github.com/boostorg/process/issues/480
+  'ceph-19.2.2-rgw-lua-boost-process-v1.patch'
+
+  # Backport of three commits from main to get this working with gcc 15
+  # -> https://github.com/ceph/ceph/pull/57430
+  # -> https://github.com/ceph/ceph/pull/59051
+  # -> https://github.com/ceph/ceph/pull/61559
+  'ceph-19.2.2-gcc15-zpp-bits.patch'
+
   # ===== ceph-python-bcrypt sources ===== #
   "python-bcrypt-${__bcrypt_version}.tar.gz::https://github.com/pyca/bcrypt/archive/${__bcrypt_version}.tar.gz"
 
@@ -149,35 +182,43 @@ source=(
   # Use our fork of pyo3, reenabling subinterpreter support
   'python-bcrypt-allow-subinterpreters.patch'
 )
-sha512sums=('a4ebb4e14032e6ab8e1fd8836f39234b771cb0a4b655166e9c69493a2c0d687064af4bb35523d0501629605521854e49f5c53a56279f72810d108c76f4f88c5b'
+sha512sums=('ee47c1cb7cb5084b87bcc5a35b3df88fb49683524bba8f2e1ced9d2f8891af53e4b5fb5aa153ed6bce31683625d9bf5176bab9f55bc71671f0e34667948f7285'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
-            '31e578b240ceaaf1216b56cdce654661eed6529ef642ecad164a02669e850100a49a85dc70f3d744671e2c5dad10aee64be7d091fa33007cb8fc6788a4336799'
-            '5b43ba48dde8b7371d4b3976aa3a27ab3ad3a10e110479a101b8f222590bbd6aca318f3ac117f851596fc23daafb53aaa566e055dc9694ab16ab1170e8f77763'
+            'd4335733eb7af8359ba02b615d565a1cadbb4e318a53ceb3452e110ce7d9936a45510f30114c2d87cdf226875c1e92de52c7622d66b2d3870f09924e3ad8e11e'
+            '107b096a3fc145ef62f3dd6e1e3de708bf72bc891c9081611d8f0cb451bfa1db492a063df4914fbb557abab74b10e16109596a7c4cd3eed3bbababb503a0185f'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '612faebfb5eec3651832f349ea3c23b50d2386889ff77592b0acff653049efdc5c2254f63c30d88b9a730813bf1f1945dda0d0beab0db7db3e0708ba8d057a40'
-            '02ca1a9bf15f9cd6f474f264ba2bf66ae725bac990a7cac315dabe377c66935a7afd8117f18a1f82c78bdf9ab2c3e5a2a227f2ffc166974dd7bb99b290f1f233'
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
             'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782'
             '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1'
-            '24f0a0e543cb9ee4006340362b43c9927861b3f0403aa929a0713a5a51220b5186f2a8c36d74a36970eeb230bace5239bf471d2f5b463ed3d9c311ad3da5a26c'
+            '30a8c06e8ed4204da62b6a0d52e51e2654eaa2fc91aa85bd09c8374885b2d0daed3a6f97f2853144d1d65b9dc01d3099181b3717a3b61efb5e3001d2ff70fb06'
             '9a1183c08f8799b14235c9271519203cbf93e48ca3a8607d3a0500910efca5379c8a08421c377227f93d8436a850f5ca99784f28aaa920e55f0457c657511f17'
-            'e238b326609636bc7dd10cec59290e22898948ef105c49643c38d2621abf16c2efcf9581b0b6bad65066607510c9827d00a7abdb14f2054701cc33b7101ea054'
             '692b9cea0199366fdfbcaff2d9590e3a1e439b948a1a5030215e81fcc8a22ac562b3261e2057470cc8acc20f404869a5a0c4550177788dc2f824523e5267b1eb'
-            '11fae8997e4df4b706245f467dc396d84f1fb48db8e569b1665a4963eb77292415a2493cae033bed23765d82269a3cd6a5bf12c1ba52e3700a63db6ad983ca5a'
-            '3f3a4795dfc58910972fa15a7ca8a4c3206d45351a15db66d8e93da64c7726c5f45256114b20f032d8011ab131ee20d2d8373207ad7e188a2978cf50854e10f1'
             '2c90c69b3e236622c9fb83214fe7f781c9fcb0de1b372e7837d9963780ead9c2926c347177c03fb94eb05fd838514f3afab42aa50b7c9ac800c34bf59c48b02e'
             '0ed97f2fb764ec8f7e01be45256377a6b2f451c865348b25b12ca9ef70c7120a0bf62321a9402cc4362618fde3a38ccfcd6eec738fe8cc067f17399700c273f3'
-            '3a6d2bee9a403ac7a0a1216fd704bb86337abf2498c1e90be70e8221779705c47cdc994f7147bcac5b99b939aa20dd0359c5eaf02224ae80183fbb7c1b7df792'
-            '15c6a1d2bdd524a7836ad9bad12c4103a32274ad1fa5182231bcbc626e44fcfbdba04b6d55c67ef13952821da46df68e0b51ab4534c3a8830eac301e18662195'
-            '73f72759a3d628575447b7607b7e27b0bab4a70b206c91daa717d461ada5fd9985c16f5782d9cb4406bd314ae9cf683cca43ab426505ab21f99141518e32533d'
-            'a053c2e0abf91528fa39723784f274daeec4ca078464a7e4ebe50c1f2f2264130bf746be59d3899e114c08cf43e5e6af2b84023254a0329670e50a2bca4c51a7'
-            '59a5aafc729a6e7ac61121469bbca73809d87cafc1b16dcb0701c33fccc6298eff1071680c364042c46f91d701830a414e6ecf0bff4bee9500e4ce146dcad974'
-            '26e4569396005f7461764dbe57634ab6d20ca9bfe777b4eeae3def8e3c887333b4d64470ad1db15a8170979f85372c111abfc043bdc1deae219183cc7539980e'
-            '477e9f70c985da94c25bcac21f0f4f148623563a4c97b7249524cd82867ec2042488f37f966e75de636e6f835f9be6a8f9ea435374d714ca7d0d0cd71340b0b8')
+            'b68bc568a27876975dc1fad55cbd1a6890b940edd174aed3f8deaff9635a2462126fc8958d352bf5a8da7c6cd295f5ad20addda22f966606267e3c45afab0c7a'
+            '2c9ae183579a15c9756bb89b9ee646596e30ee1d7617ef51e34bbb168bbfb3a335dd7ba402866d52c2192211ada46190fa5e044fbabfdcb3c52fe060093fbc7d'
+            'e52225b881c78dfd44773a42415f1babafc8c3842cfc7a8c88be7469d3e9b46d9a6a0f289bf10b5a790e6c5b2984b9ae5e42bbb2e411abc67f4c764383c747a0'
+            '76324e5a592994bc4712481ad7e21d91dbc1b6774b3f8579e8cb869cd2c6939eab3f646d99f4cd8865052ac4dc5cb90146caa7f8cef4b3dc46b6b2d71fde61bc'
+            '76ddf7dd71355e0b1953d215dbe5a9ce536d4866e604567bc9060f8e02bef6951be8eacd4f8896d97fe05a595aa041ab59dc65653c8fdad88e754d81f6f6b760'
+            'b8b3758a496780014821aa442c6fc2ee4797618ef4873d87ef376ad56313f871739d95366d52dec6cbb54c9ca87c4fe4b4473ff79f7800dd339fef31d6569b48'
+            '5b03d967b77fbb90e9ec43226cc9e929ee153abae1e6ab6d11b66a9f9eb8261461e724203e84e36c4f2bcbd9450734c994e41bd7daec28230393aa2ded06de3e'
+            '3e60855d156d7ea3e74569f13a9cb14c75b4abb679c81d1e3b38dac10d17a6930a2116f750e45cda8e1b90e34088e8fc9555d1d996464255b92fb13cc9d06c09'
+            '00cb26f5697212e8205f4306c030934cba944dbdbea112e277cc4eedb794f144a679f1b5b4a58a6c6627924b24388166502744e5c9937b77def788b3c408fede'
+            'd282f5bba40b2e6d30117466f24174e3ea7fe9358f4a51de7bb6af4e9b3beaf6044fad07bab491dd4c4c1e60d20fdbf672b90dfb3c608da70b35be8c227d89c4'
+            'f522b4e736a3405429d8c8d8160526c648a044c79613cd64c020c5b4e0b3e1e045be74ff59b6d8766ccc54aac73b4f043546e34477efc40205e8bdcd9407e60c'
+            '697cda8b11f7bd533b6aa73a71c827cd22a452e002d5f09b9ae70a1cb19fb16dca07a6f6783cb1ea198a36c3bbe2e7d6f76b417c7da86f5c54ae4bf631675244'
+            '608b4255fbc7092247fe0ca2ab51c42fce96dc6b58db9fb7fa65e805fcffaa7acad59131ddd3cb6e219147ffedcf3b1ff026097387923b075483fff32bfbf84d'
+            '286db9845a005fac92fafd749959419ec7ceca78e50880c31415f3e0477e18d732c763964e743e0e954c0e7b08c25c16793e5caf83d44cfa16033c40f76106b4'
+            'e5e2e30da3618407b753af75d5cbfd2898d33e62871c4c7c92d775e63ffbbe23a6b09894ac1a6e30996218388ebfe5f50d903910eafad20648511c92e6f2133d'
+            '11dc750efc49c43bb945b79504260785453c65fba915ae24beff43f19e541a3dbeb320624c8a3649b04ceabccf7e7f4216776e82ecd54719351d1757ddf2c6c8'
+            '1a8af20bffa321c4e88c60b9e22ac1139de85033f11014cf1cbfcd261069bf62f7830432715561f3919c14408e408b05b0774a48d1ea954b600adc635fe7cf57'
+            '8df2c6028694600b3e1634eaff74d4e789a58463dcf2be86a60be61024e25143f3a44b4deee39a54cf9d93909f9c949f13ea8d4d83b718f37b790fee5aaeba71'
+            '14281fbaafff08d59d354ed9a0bb785e6453e45470c31afe193b5489e479cca663afade7a2fcd53b2d9f34380d90046e3729371a90f6abeae00617f52abd5a86')
 __version="${pkgver}-${pkgrel}"
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
@@ -210,14 +251,6 @@ prepare() {
     -e 's|Boost::|boost_|g' \
     -e 's|Boost_|boost_|g' \
     -e 's|[Bb]oost_boost|boost_system|g' -i || exit 1
-
-  # fmt 11 moved the FMT_VERSION #define to fmt/base.h
-  # there's little point in creating a patch for this,
-  # as ceph 19 no longer uses Findfmt.cmake at all
-  sed \
-    -i \
-    -e 's|set(_fmt_version_file "${fmt_INCLUDE_DIR}/fmt/core.h")|set(_fmt_version_file "${fmt_INCLUDE_DIR}/fmt/base.h")|' \
-    cmake/modules/Findfmt.cmake
 
   # remove tests that require root privileges
   rm src/test/cli/ceph-authtool/cap*.t
@@ -258,6 +291,7 @@ build() {
   export CMAKE_WARN_UNUSED_CLI=no
 
   cmake \
+    -G Ninja \
     -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
@@ -265,6 +299,7 @@ build() {
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DCEPH_SYSTEMD_ENV_DIR=/etc/default \
     -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.13 \
     -DENABLE_GIT_VERSION=ON \
     -DWITH_BABELTRACE=OFF \
     -DWITH_LTTNG=OFF \
@@ -276,14 +311,15 @@ build() {
     -DWITH_OCF=OFF \
     -DWITH_DPDK=OFF \
     -DWITH_SPDK=OFF \
-    -DWITH_QAT=OFF \
+    -DWITH_QATDRV=OFF \
+    -DWITH_QATLIB=OFF \
     -DWITH_QATZIP=OFF \
     -DWITH_RBD=ON \
     -DWITH_RBD_RWL=ON \
     -DWITH_RBD_SSD_CACHE=ON \
     -DWITH_RBD_MIRROR=ON \
     -DWITH_CEPHFS=ON \
-    -DWITH_CEPHFS_JAVA=ON \
+    -DWITH_CEPHFS_JAVA=OFF \
     -DWITH_CEPHFS_SHELL=ON \
     -DWITH_FUSE=ON \
     -DWITH_LZ4=ON \
@@ -310,19 +346,20 @@ build() {
     -DWITH_TESTS=ON \
     -Wno-dev
 
-  make -C build legacy-option-headers
-  make -C build all
+  ninja -C build legacy-option-headers
+  ninja -C build all
 }
 
 check() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
-  _check_ceph_python_bcrypt
+  _check_ceph_python_bcrypt || true
 
   export CTEST_PARALLEL_LEVEL=$(nproc --ignore=4 || echo "4")
   export CTEST_OUTPUT_ON_FAILURE=1
+  export CTEST_PROGRESS_OUTPUT=1
 
-  make -C build check || true
+  ninja -C build check || true
 }
 
 _package() {
@@ -354,7 +391,7 @@ _make_ceph_packages() {
 
   # Main install
   local install="${pkgdir}/staging" ; mkdir "${install}"
-  make DESTDIR="${install}" -C "${srcdir}/${pkgbase}-${pkgver}/build" install
+  DESTDIR="${install}" ninja -C "${srcdir}/${pkgbase}-${pkgver}/build" install
 
   # Clear _package cache
   rm -rf "${srcdir}/__pkg__" || :
@@ -519,7 +556,8 @@ _make_ceph_packages() {
       $man/man8/radosgw{,-admin}.8 \
       $man/man8/rgw-orphan-list.8 \
       $man/man8/ceph-diff-sorted.8 \
-      $man/man8/rgw-policy-check.8
+      $man/man8/rgw-policy-check.8 \
+      $man/man8/rgw-restore-bucket-index.8
 
     ###############################################
     #         Ceph clients / applications         #
@@ -527,7 +565,7 @@ _make_ceph_packages() {
 
     _package librbd \
       $inc/rbd/* \
-      $lib/librbd.so{,.1,.1.18.0} \
+      $lib/librbd.so{,.1,.1.19.0} \
       $lib/ceph/librbd/*
 
     _package ceph-rbd \
@@ -608,10 +646,6 @@ _make_ceph_packages() {
       $bin/ceph_omapbench \
       $bin/ceph-syn \
       $man/man8/ceph-syn.8
-
-    _package java-cephfs \
-      $lib/libcephfs_jni.so{,.1,.1.0.0} \
-      $share/java/libcephfs.jar
 
     ###############################################
     #         Ceph python packages                #
@@ -1083,18 +1117,6 @@ package_ceph-test() {
 
     'libcap'   'libaio'   'boost-libs'   'fmt'   'gperftools'
     'snappy'
-  )
-
-  mv __pkg__/$pkgname/* "$pkgdir"
-  _print
-}
-
-package_java-cephfs() {
-  pkgdesc='Ceph Storage JNI bindings for CephFS'
-  depends=(
-    "libcephfs=${__version}"
-
-    'java-runtime'
   )
 
   mv __pkg__/$pkgname/* "$pkgdir"

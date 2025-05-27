@@ -11,6 +11,161 @@ index f6ef9878dae..352af8a2034 100644
    }
  
    void encode(::ceph::buffer::list::contiguous_appender& p) const {
+diff --git a/src/librbd/migration/HttpClient.cc b/src/librbd/migration/HttpClient.cc
+index 09fe91da02a..d212981a917 100644
+--- a/src/librbd/migration/HttpClient.cc
++++ b/src/librbd/migration/HttpClient.cc
+@@ -193,7 +193,7 @@ protected:
+     ldout(cct, 15) << dendl;
+ 
+     boost::system::error_code ec;
+-    boost::beast::get_lowest_layer(derived().stream()).socket().close(ec);
++    derived().stream().lowest_layer().close(ec);
+   }
+ 
+ private:
+@@ -357,8 +357,7 @@ private:
+   }
+ 
+   int shutdown_socket() {
+-    if (!boost::beast::get_lowest_layer(
+-          derived().stream()).socket().is_open()) {
++    if (!derived().stream().lowest_layer().is_open()) {
+       return 0;
+     }
+ 
+@@ -366,7 +365,7 @@ private:
+     ldout(cct, 15) << dendl;
+ 
+     boost::system::error_code ec;
+-    boost::beast::get_lowest_layer(derived().stream()).socket().shutdown(
++    derived().stream().lowest_layer().shutdown(
+       boost::asio::ip::tcp::socket::shutdown_both, ec);
+ 
+     if (ec && ec != boost::beast::errc::not_connected) {
+@@ -595,7 +594,7 @@ public:
+     this->close_socket();
+   }
+ 
+-  inline boost::beast::tcp_stream&
++  inline boost::asio::ip::tcp::socket&
+   stream() {
+     return m_stream;
+   }
+@@ -607,12 +606,13 @@ protected:
+     auto cct = http_client->m_cct;
+     ldout(cct, 15) << dendl;
+ 
+-    ceph_assert(!m_stream.socket().is_open());
+-    m_stream.async_connect(
+-      results,
+-      [on_finish](boost::system::error_code ec, const auto& endpoint) {
+-        on_finish->complete(-ec.value());
+-      });
++    ceph_assert(!m_stream.is_open());
++    boost::asio::async_connect(m_stream,
++			       results,
++			       [on_finish](boost::system::error_code ec,
++					   const auto& endpoint) {
++				 on_finish->complete(-ec.value());
++			       });
+   }
+ 
+   void disconnect(Context* on_finish) override {
+@@ -624,7 +624,7 @@ protected:
+   }
+ 
+ private:
+-  boost::beast::tcp_stream m_stream;
++  boost::asio::ip::tcp::socket m_stream;
+ };
+ 
+ #undef dout_prefix
+@@ -643,7 +643,7 @@ public:
+     this->close_socket();
+   }
+ 
+-  inline boost::beast::ssl_stream<boost::beast::tcp_stream>&
++  inline boost::asio::ssl::stream<boost::asio::ip::tcp::socket>&
+   stream() {
+     return m_stream;
+   }
+@@ -655,8 +655,9 @@ protected:
+     auto cct = http_client->m_cct;
+     ldout(cct, 15) << dendl;
+ 
+-    ceph_assert(!boost::beast::get_lowest_layer(m_stream).socket().is_open());
+-    boost::beast::get_lowest_layer(m_stream).async_connect(
++    ceph_assert(!m_stream.lowest_layer().is_open());
++    async_connect(
++      m_stream.lowest_layer(),
+       results,
+       [this, on_finish](boost::system::error_code ec, const auto& endpoint) {
+         handle_connect(-ec.value(), on_finish);
+@@ -681,12 +682,12 @@ protected:
+ 
+     // ssl_stream object can't be reused after shut down -- move-in
+     // a freshly constructed instance
+-    m_stream = boost::beast::ssl_stream<boost::beast::tcp_stream>(
++    m_stream = boost::asio::ssl::stream<boost::asio::ip::tcp::socket>(
+       http_client->m_strand, http_client->m_ssl_context);
+   }
+ 
+ private:
+-  boost::beast::ssl_stream<boost::beast::tcp_stream> m_stream;
++  boost::asio::ssl::stream<boost::asio::ip::tcp::socket> m_stream;
+ 
+   void handle_connect(int r, Context* on_finish) {
+     auto http_client = this->m_http_client;
+diff --git a/src/librbd/migration/HttpClient.h b/src/librbd/migration/HttpClient.h
+index 3997e6159e7..5844f918693 100644
+--- a/src/librbd/migration/HttpClient.h
++++ b/src/librbd/migration/HttpClient.h
+@@ -13,13 +13,12 @@
+ #include <boost/asio/strand.hpp>
+ #include <boost/asio/ip/tcp.hpp>
+ #include <boost/asio/ssl/context.hpp>
++#include <boost/asio/ssl/stream.hpp>
+ #include <boost/beast/version.hpp>
+-#include <boost/beast/core/tcp_stream.hpp>
+ #include <boost/beast/http/empty_body.hpp>
+ #include <boost/beast/http/message.hpp>
+ #include <boost/beast/http/string_body.hpp>
+ #include <boost/beast/http/write.hpp>
+-#include <boost/beast/ssl/ssl_stream.hpp>
+ #include <functional>
+ #include <memory>
+ #include <string>
+@@ -97,7 +96,7 @@ public:
+         completion(r, std::move(response));
+       }
+ 
+-      void operator()(boost::beast::tcp_stream& stream) override {
++      void operator()(boost::asio::ip::tcp::socket& stream) override {
+         preprocess_request();
+ 
+         boost::beast::http::async_write(
+@@ -110,7 +109,7 @@ public:
+       }
+ 
+       void operator()(
+-          boost::beast::ssl_stream<boost::beast::tcp_stream>& stream) override {
++	  boost::asio::ssl::stream<boost::asio::ip::tcp::socket>& stream) override {
+         preprocess_request();
+ 
+         boost::beast::http::async_write(
+@@ -152,9 +151,9 @@ private:
+     virtual bool need_eof() const = 0;
+     virtual bool header_only() const = 0;
+     virtual void complete(int r, Response&&) = 0;
+-    virtual void operator()(boost::beast::tcp_stream& stream) = 0;
++    virtual void operator()(boost::asio::ip::tcp::socket& stream) = 0;
+     virtual void operator()(
+-        boost::beast::ssl_stream<boost::beast::tcp_stream>& stream) = 0;
++        boost::asio::ssl::stream<boost::asio::ip::tcp::socket>& stream) = 0;
+   };
+ 
+   template <typename D> struct HttpSession;
 diff --git a/src/mgr/PyModule.cc b/src/mgr/PyModule.cc
 index 084cf3ffc1e..010a1177a88 100644
 --- a/src/mgr/PyModule.cc
@@ -27,6 +182,28 @@ index 084cf3ffc1e..010a1177a88 100644
  // Boost apparently can't be bothered to fix its own usage of its own
  // deprecated features.
  #include <boost/python/extract.hpp>
+diff --git a/src/test/librbd/migration/test_mock_HttpClient.cc b/src/test/librbd/migration/test_mock_HttpClient.cc
+index f3888755c79..901c4231dd0 100644
+--- a/src/test/librbd/migration/test_mock_HttpClient.cc
++++ b/src/test/librbd/migration/test_mock_HttpClient.cc
+@@ -307,7 +307,7 @@ TEST_F(TestMockMigrationHttpClient, OpenCloseHttps) {
+ 
+   boost::asio::ssl::context ssl_context{boost::asio::ssl::context::tlsv12};
+   load_server_certificate(ssl_context);
+-  boost::beast::ssl_stream<boost::beast::tcp_stream> ssl_stream{
++  boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_stream{
+     std::move(socket), ssl_context};
+ 
+   C_SaferCond on_ssl_handshake_ctx;
+@@ -341,7 +341,7 @@ TEST_F(TestMockMigrationHttpClient, OpenHttpsHandshakeFail) {
+ 
+   boost::asio::ssl::context ssl_context{boost::asio::ssl::context::tlsv12};
+   load_server_certificate(ssl_context);
+-  boost::beast::ssl_stream<boost::beast::tcp_stream> ssl_stream{
++  boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_stream{
+     std::move(socket), ssl_context};
+ 
+   C_SaferCond on_ssl_handshake_ctx;
 diff --git a/src/test/objectstore/Allocator_aging_fragmentation.cc b/src/test/objectstore/Allocator_aging_fragmentation.cc
 index 220f8841b8e..6ddfb02b1dd 100755
 --- a/src/test/objectstore/Allocator_aging_fragmentation.cc
@@ -40,7 +217,7 @@ index 220f8841b8e..6ddfb02b1dd 100755
  typedef boost::mt11213b gen_type;
  
 diff --git a/src/test/objectstore/Allocator_bench.cc b/src/test/objectstore/Allocator_bench.cc
-index 0d04a854e9a..5218207d2c2 100644
+index 76598d2a1b2..c765dbc3958 100644
 --- a/src/test/objectstore/Allocator_bench.cc
 +++ b/src/test/objectstore/Allocator_bench.cc
 @@ -15,6 +15,7 @@
@@ -52,7 +229,7 @@ index 0d04a854e9a..5218207d2c2 100644
  
  #include "common/debug.h"
 diff --git a/src/test/objectstore/Allocator_test.cc b/src/test/objectstore/Allocator_test.cc
-index b006500153c..0edea1d4ac1 100644
+index 1325e89b0da..254de40bd04 100644
 --- a/src/test/objectstore/Allocator_test.cc
 +++ b/src/test/objectstore/Allocator_test.cc
 @@ -14,6 +14,8 @@
@@ -64,3 +241,15 @@ index b006500153c..0edea1d4ac1 100644
  using namespace std;
  
  typedef boost::mt11213b gen_type;
+diff --git a/src/test/objectstore/Fragmentation_simulator.cc b/src/test/objectstore/Fragmentation_simulator.cc
+index 02a2991cd0c..c6b856b51f8 100644
+--- a/src/test/objectstore/Fragmentation_simulator.cc
++++ b/src/test/objectstore/Fragmentation_simulator.cc
+@@ -19,6 +19,7 @@
+ #include "test/objectstore/ObjectStoreImitator.h"
+ #include <fstream>
+ #include <boost/random/uniform_int.hpp>
++#include <boost/random/mersenne_twister.hpp>
+ #include <fmt/core.h>
+ #include <mutex>
+ #include <string>

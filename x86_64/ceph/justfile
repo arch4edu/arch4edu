@@ -14,7 +14,7 @@ _default:
 # Build the package in a clean chroot
 build:
   @$Say Building @{{PkgBuild}} via chroot
-  makechrootpkg -c -r {{ChrootPath}} -d "/tmp:/tmp" -C -n -l {{PkgVer}}_{{PkgRel}}
+  makechrootpkg -r {{ChrootPath}} -l {{PkgVer}}_{{PkgRel}} -c -C -n
 
 # Repackage without rebuilding
 repackage:

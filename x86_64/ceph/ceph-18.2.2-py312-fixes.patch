@@ -1,8 +1,8 @@
 diff --git a/src/cephadm/tests/test_agent.py b/src/cephadm/tests/test_agent.py
-index f9cf201e275..60af9a809ba 100644
+index 52cce74e1fb..8e453e3ac3c 100644
 --- a/src/cephadm/tests/test_agent.py
 +++ b/src/cephadm/tests/test_agent.py
-@@ -664,7 +664,7 @@ def test_mgr_listener_run(_load_cert_chain, _load_verify_locations, _handle_json
+@@ -668,7 +668,7 @@ def test_mgr_listener_run(_load_cert_chain, _load_verify_locations, _handle_json
          agent.mgr_listener.run()
  
          # verify payload was correctly extracted
@@ -12,7 +12,7 @@ index f9cf201e275..60af9a809ba 100644
  
          # second run, with bad json data received
 diff --git a/src/cephadm/tests/test_ingress.py b/src/cephadm/tests/test_ingress.py
-index 798c7370868..b5ddd606714 100644
+index 7f23f64f51f..c380df7f838 100644
 --- a/src/cephadm/tests/test_ingress.py
 +++ b/src/cephadm/tests/test_ingress.py
 @@ -153,7 +153,7 @@ def test_haproxy_create_daemon_dirs(_logger, cephadm_fs):
@@ -25,10 +25,10 @@ index 798c7370868..b5ddd606714 100644
  
  
 diff --git a/src/pybind/mgr/cephadm/tests/test_cephadm.py b/src/pybind/mgr/cephadm/tests/test_cephadm.py
-index 24fcb028094..267ca4dc141 100644
+index 82f10d35db7..e9a3ce35863 100644
 --- a/src/pybind/mgr/cephadm/tests/test_cephadm.py
 +++ b/src/pybind/mgr/cephadm/tests/test_cephadm.py
-@@ -424,7 +424,7 @@ class TestCephadm(object):
+@@ -469,7 +469,7 @@ class TestCephadm(object):
  
                  CephadmServe(cephadm_module)._check_daemons()
  
@@ -37,7 +37,7 @@ index 24fcb028094..267ca4dc141 100644
                  assert cephadm_module.cache.get_scheduled_daemon_action('test', daemon_name) is None
  
      @mock.patch("cephadm.serve.CephadmServe._run_cephadm")
-@@ -2546,10 +2546,10 @@ Traceback (most recent call last):
+@@ -2872,10 +2872,10 @@ Traceback (most recent call last):
      def test_host_drain_zap(self, _rm_osds, cephadm_module):
          # pass force=true in these tests to bypass _admin label check
          cephadm_module.drain_host('host1', force=True, zap_osd_devices=False)
@@ -51,48 +51,30 @@ index 24fcb028094..267ca4dc141 100644
      def test_process_ls_output(self, cephadm_module):
          sample_ls_output = """[
 diff --git a/src/pybind/mgr/dashboard/requirements-lint.txt b/src/pybind/mgr/dashboard/requirements-lint.txt
-index d82fa1ace1d..4c282ebf743 100644
+index 571c92a4ebf..aa5ed7c817a 100644
 --- a/src/pybind/mgr/dashboard/requirements-lint.txt
 +++ b/src/pybind/mgr/dashboard/requirements-lint.txt
-@@ -6,6 +6,6 @@ flake8-colors==0.1.6
+@@ -6,7 +6,7 @@ flake8-colors==0.1.6
  #pep8-naming
  rstcheck==3.3.1
  autopep8==1.5.7
 -pyfakefs==4.5.0
 +pyfakefs==5.5.0
  isort==5.5.3
- jsonschema==4.16.0
+ jsonschema~=4.0
+ PyJWT~=2.0
 diff --git a/src/pybind/mgr/dashboard/requirements-test.txt b/src/pybind/mgr/dashboard/requirements-test.txt
-index d2566bab59f..63d3944cdc8 100644
+index b7229144c75..15277b3be79 100644
 --- a/src/pybind/mgr/dashboard/requirements-test.txt
 +++ b/src/pybind/mgr/dashboard/requirements-test.txt
-@@ -1,4 +1,4 @@
+@@ -1,6 +1,6 @@
  pytest-cov
  pytest-instafail
 -pyfakefs==4.5.0
 +pyfakefs==5.5.0
- jsonschema
-diff --git a/src/pybind/mgr/prometheus/module.py b/src/pybind/mgr/prometheus/module.py
-index b92d8dc184f..eb0f49eb417 100644
---- a/src/pybind/mgr/prometheus/module.py
-+++ b/src/pybind/mgr/prometheus/module.py
-@@ -1,7 +1,7 @@
- import cherrypy
- import yaml
- from collections import defaultdict
--from pkg_resources import packaging  # type: ignore
-+from packaging.version import Version # type: ignore
- import json
- import math
- import os
-@@ -34,7 +34,6 @@ DEFAULT_PORT = 9283
- # ipv6 isn't yet configured / supported and CherryPy throws an uncaught
- # exception.
- if cherrypy is not None:
--    Version = packaging.version.Version
-     v = Version(cherrypy.__version__)
-     # the issue was fixed in 3.2.3. it's present in 3.2.2 (current version on
-     # centos:7) and back to at least 3.0.0.
+ jsonschema~=4.0
+ PyJWT~=2.0
+ xmlsec==1.3.13 # Pinning because of https://github.com/xmlsec/python-xmlsec/issues/314
 diff --git a/src/pybind/mgr/requirements-required.txt b/src/pybind/mgr/requirements-required.txt
 index 76fef65dbe4..308e1d48f2e 100644
 --- a/src/pybind/mgr/requirements-required.txt
@@ -116,10 +98,10 @@ index 8a94ac400b5..3dde94656d5 100644
      Address('10.7.5', False, 'Invalid partial IPv4 address'),
      Address('10.7', False, 'Invalid partial IPv4 address'),
 diff --git a/src/test/pybind/test_ceph_argparse.py b/src/test/pybind/test_ceph_argparse.py
-index 6fe56bf9810..b7185ed17b8 100755
+index 3039223abdf..dd51362846a 100755
 --- a/src/test/pybind/test_ceph_argparse.py
 +++ b/src/test/pybind/test_ceph_argparse.py
-@@ -215,7 +215,7 @@ class TestPG(TestArgparse):
+@@ -217,7 +217,7 @@ class TestPG(TestArgparse):
      def test_pg_missing_args_output(self):
          ret, _, stderr = self._capture_output(['pg'], stderr=True)
          self.assertEqual({}, ret)

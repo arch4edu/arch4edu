@@ -1,50 +1,26 @@
 diff --git a/src/common/LogEntry.h b/src/common/LogEntry.h
-index 3ddebbd3043..b9096e2850a 100644
+index 5de0b71efba..4804a66be46 100644
 --- a/src/common/LogEntry.h
 +++ b/src/common/LogEntry.h
-@@ -15,7 +15,11 @@
- #ifndef CEPH_LOGENTRY_H
- #define CEPH_LOGENTRY_H
+@@ -213,14 +213,14 @@ inline std::ostream& operator<<(std::ostream& out, const LogEntry& e)
  
-+#include <fmt/core.h>
- #include <fmt/format.h>
-+#if FMT_VERSION >= 90000
-+#include <fmt/ostream.h>
-+#endif
- 
- #include "include/utime.h"
- #include "msg/msg_fmt.h"
-@@ -194,19 +198,17 @@ inline std::ostream& operator<<(std::ostream& out, const LogEntry& e)
-              << e.channel << " " << e.prio << " " << e.msg;
- }
- 
--template <> struct fmt::formatter<EntityName> : fmt::formatter<std::string_view> {
--  template <typename FormatContext>
+ template <> struct fmt::formatter<EntityName> : fmt::formatter<std::string_view> {
+   template <typename FormatContext>
 -  auto format(const EntityName& e, FormatContext& ctx) {
--    return formatter<std::string_view>::format(e.to_str(), ctx);
--  }
--};
-+template <>
-+struct fmt::formatter<clog_type>: fmt::ostream_formatter {};
- 
--template <> struct fmt::formatter<LogEntry> : fmt::formatter<std::string_view> {
--  template <typename FormatContext>
--  auto format(const LogEntry& e, FormatContext& ctx) {
--    return fmt::format_to(ctx.out(), "{} {} ({}) {} : {} {} {}",
--			  e.stamp, e.name, e.rank, e.seq, e.channel, e.prio, e.msg);
-+template <>
-+struct fmt::formatter<EntityName> : fmt::formatter<std::string_view> {
-+  auto format(const EntityName& e, format_context& ctx) const {
-+    return fmt::formatter<std::string_view>::format(e.to_str(), ctx);
++  auto format(const EntityName& e, FormatContext& ctx) const {
+     return formatter<std::string_view>::format(e.to_str(), ctx);
    }
  };
  
-+template <>
-+struct fmt::formatter<LogEntry> : fmt::ostream_formatter {};
-+
- #endif
+ template <> struct fmt::formatter<LogEntry> : fmt::formatter<std::string_view> {
+   template <typename FormatContext>
+-  auto format(const LogEntry& e, FormatContext& ctx) {
++  auto format(const LogEntry& e, FormatContext& ctx) const {
+     return fmt::format_to(ctx.out(), "{} {} ({}) {} : {} [{}] {}",
+                           e.stamp, e.name, e.rank, e.seq, e.channel,
+                           LogEntry::level_to_str(e.prio), e.msg);
 diff --git a/src/include/byteorder.h b/src/include/byteorder.h
-index eb6d5e102b4..9a4d0be877a 100644
+index 25b06db982d..e378ac8f618 100644
 --- a/src/include/byteorder.h
 +++ b/src/include/byteorder.h
 @@ -53,3 +53,8 @@ inline ceph_les16 init_les16(__s16 x) {
@@ -56,28 +32,6 @@ index eb6d5e102b4..9a4d0be877a 100644
 +auto format_as(ceph_le<T> c) {
 +  return (T)c;
 +}
-diff --git a/src/include/neorados/RADOS_fmt.hpp b/src/include/neorados/RADOS_fmt.hpp
-new file mode 100644
-index 00000000000..1512ec965fe
---- /dev/null
-+++ b/src/include/neorados/RADOS_fmt.hpp
-@@ -0,0 +1,16 @@
-+// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
-+// vim: ts=8 sw=2 smarttab
-+#pragma once
-+/**
-+ * \file fmtlib formatters for some neorados types
-+ */
-+
-+#include <fmt/core.h>
-+#if FMT_VERSION >= 90000
-+#include <fmt/ostream.h>
-+#endif
-+
-+#include <include/neorados/RADOS.hpp>
-+
-+template <>
-+struct fmt::formatter<neorados::Object> : fmt::ostream_formatter {};
 diff --git a/src/include/types_fmt.h b/src/include/types_fmt.h
 new file mode 100644
 index 00000000000..3d40085f0b2
@@ -101,7 +55,7 @@ index 00000000000..3d40085f0b2
 +template <>
 +struct fmt::formatter<shard_id_t> : fmt::ostream_formatter {};
 diff --git a/src/osd/SnapMapper.cc b/src/osd/SnapMapper.cc
-index 7893bc08fdc..e8d34cd25bc 100644
+index aff77ca2409..7eaf09bde42 100644
 --- a/src/osd/SnapMapper.cc
 +++ b/src/osd/SnapMapper.cc
 @@ -211,7 +211,7 @@ string SnapMapper::get_prefix(int64_t pool, snapid_t snap)
@@ -113,7 +67,7 @@ index 7893bc08fdc..e8d34cd25bc 100644
  }
  
  string SnapMapper::to_raw_key(
-@@ -650,7 +650,7 @@ string SnapMapper::make_purged_snap_key(int64_t pool, snapid_t last)
+@@ -726,7 +726,7 @@ string SnapMapper::make_purged_snap_key(int64_t pool, snapid_t last)
    return fmt::sprintf("%s_%lld_%016llx",
  		      PURGED_SNAP_PREFIX,
  		      pool,
@@ -122,7 +76,7 @@ index 7893bc08fdc..e8d34cd25bc 100644
  }
  
  void SnapMapper::make_purged_snap_key_value(
-@@ -866,7 +866,7 @@ string SnapMapper::get_legacy_prefix(snapid_t snap)
+@@ -946,7 +946,7 @@ string SnapMapper::get_legacy_prefix(snapid_t snap)
  {
    return fmt::sprintf("%s%.16X_",
  		      LEGACY_MAPPING_PREFIX,
@@ -132,10 +86,10 @@ index 7893bc08fdc..e8d34cd25bc 100644
  
  string SnapMapper::to_legacy_raw_key(
 diff --git a/src/osd/osd_types.h b/src/osd/osd_types.h
-index afed5fa8351..e374369e8ba 100644
+index 4ea254dc871..5e146289e1d 100644
 --- a/src/osd/osd_types.h
 +++ b/src/osd/osd_types.h
-@@ -35,6 +35,7 @@
+@@ -36,6 +36,7 @@
  #include "msg/msg_types.h"
  #include "include/compat.h"
  #include "include/types.h"
@@ -143,15 +97,3 @@ index afed5fa8351..e374369e8ba 100644
  #include "include/utime.h"
  #include "include/CompatSet.h"
  #include "common/ceph_context.h"
-diff --git a/src/tools/neorados.cc b/src/tools/neorados.cc
-index 24966d2aee5..44ee1cf199c 100644
---- a/src/tools/neorados.cc
-+++ b/src/tools/neorados.cc
-@@ -36,6 +36,7 @@
- #include "include/buffer.h" // :(
- 
- #include "include/neorados/RADOS.hpp"
-+#include "include/neorados/RADOS_fmt.hpp"
- 
- using namespace std::literals;
- 

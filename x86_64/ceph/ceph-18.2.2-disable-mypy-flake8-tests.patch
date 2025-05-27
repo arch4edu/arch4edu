@@ -10,7 +10,7 @@ index 80e35439f8d..71c39e394a5 100644
  [travis]
  python =
 diff --git a/src/ceph-volume/tox.ini b/src/ceph-volume/tox.ini
-index 696d6dcc837..c91d3ed3bfd 100644
+index f7d294a9aad..2b684fab8ea 100644
 --- a/src/ceph-volume/tox.ini
 +++ b/src/ceph-volume/tox.ini
 @@ -1,5 +1,5 @@
@@ -20,18 +20,6 @@ index 696d6dcc837..c91d3ed3bfd 100644
  skip_missing_interpreters = true
  
  [testenv]
-diff --git a/src/cephadm/CMakeLists.txt b/src/cephadm/CMakeLists.txt
-index 8b969bc33e7..ed3dfc7566e 100644
---- a/src/cephadm/CMakeLists.txt
-+++ b/src/cephadm/CMakeLists.txt
-@@ -1,6 +1,6 @@
- if(WITH_TESTS)
-   include(AddCephTest)
--  add_tox_test(cephadm TOX_ENVS py3 mypy flake8)
-+  add_tox_test(cephadm TOX_ENVS py3)
- endif()
- 
- set(bin_target_file ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/cephadm)
 diff --git a/src/pybind/mgr/CMakeLists.txt b/src/pybind/mgr/CMakeLists.txt
 index e8c06c9e2e9..bf7f9218b9c 100644
 --- a/src/pybind/mgr/CMakeLists.txt
@@ -46,7 +34,7 @@ index e8c06c9e2e9..bf7f9218b9c 100644
  
  # Location needs to match default setting for mgr_module_path, currently:
 diff --git a/src/pybind/mgr/dashboard/CMakeLists.txt b/src/pybind/mgr/dashboard/CMakeLists.txt
-index 81bb9dd1bb2..4986a768b26 100644
+index 741c1cffd1d..a69c07f6b1a 100644
 --- a/src/pybind/mgr/dashboard/CMakeLists.txt
 +++ b/src/pybind/mgr/dashboard/CMakeLists.txt
 @@ -10,8 +10,6 @@ if(WITH_MGR_DASHBOARD_FRONTEND)
@@ -59,7 +47,7 @@ index 81bb9dd1bb2..4986a768b26 100644
    endif()
  else()
 diff --git a/src/pybind/mgr/dashboard/tox.ini b/src/pybind/mgr/dashboard/tox.ini
-index 47756e946e1..12e6bf400fa 100644
+index fdb2dd75809..5a3d21e59d9 100644
 --- a/src/pybind/mgr/dashboard/tox.ini
 +++ b/src/pybind/mgr/dashboard/tox.ini
 @@ -1,9 +1,7 @@
@@ -85,14 +73,14 @@ index a887590eed8..b2210da54ea 100644
  
  [testenv]
 diff --git a/src/pybind/mgr/tox.ini b/src/pybind/mgr/tox.ini
-index 6270dbdca51..994e9d899a5 100644
+index 082d0dbd53c..14ef440b48d 100644
 --- a/src/pybind/mgr/tox.ini
 +++ b/src/pybind/mgr/tox.ini
 @@ -1,9 +1,7 @@
  [tox]
  envlist =
-     py3,
--    mypy,
+     py3
+-    mypy
      fix
 -    flake8
      jinjalint
@@ -122,7 +110,7 @@ index e89bbe2feef..a4d31e73fef 100644
 +  add_tox_test(python-common TOX_ENVS py3)
  endif()
 diff --git a/src/python-common/tox.ini b/src/python-common/tox.ini
-index 2737a87e820..db5ed9ad230 100644
+index 313a4334d51..db5ed9ad230 100644
 --- a/src/python-common/tox.ini
 +++ b/src/python-common/tox.ini
 @@ -1,5 +1,5 @@
@@ -132,14 +120,6 @@ index 2737a87e820..db5ed9ad230 100644
  skip_missing_interpreters = true
  
  [testenv:py3]
-@@ -9,7 +9,6 @@ deps=
- commands=
-     pytest --doctest-modules ceph/deployment/service_spec.py ceph/utils.py
-     pytest {posargs}
--    mypy --config-file=../mypy.ini -p ceph
- 
- [testenv:mypy]
- deps=
 diff --git a/src/test/behave_tests/tox.ini b/src/test/behave_tests/tox.ini
 index 24e4e3c3738..521c2145499 100644
 --- a/src/test/behave_tests/tox.ini

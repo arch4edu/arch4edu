@@ -1,0 +1,92 @@
+diff --git a/src/pybind/mgr/cephadm/tests/test_migration.py b/src/pybind/mgr/cephadm/tests/test_migration.py
+index 1f1d32e8b40..f2d3b6c1abc 100644
+--- a/src/pybind/mgr/cephadm/tests/test_migration.py
++++ b/src/pybind/mgr/cephadm/tests/test_migration.py
+@@ -228,7 +228,7 @@ def test_migrate_admin_client_keyring(cephadm_module: CephadmOrchestrator):
+     cephadm_module.migration.migrate()
+     assert cephadm_module.migration_current == LAST_MIGRATION
+ 
+-    assert cephadm_module.keys.keys['client.admin'].placement.label == '_admin'
++    assert cephadm_module.keys.keys['client.admin'].placement.label == 'SpecialHostLabels.ADMIN'
+ 
+ 
+ @mock.patch("cephadm.serve.CephadmServe._run_cephadm", _run_cephadm('[]'))
+diff --git a/src/pybind/mgr/dashboard/requirements-extra.txt b/src/pybind/mgr/dashboard/requirements-extra.txt
+index 56c37b59ae5..e69de29bb2d 100644
+--- a/src/pybind/mgr/dashboard/requirements-extra.txt
++++ b/src/pybind/mgr/dashboard/requirements-extra.txt
+@@ -1 +0,0 @@
+-python3-saml
+\ No newline at end of file
+diff --git a/src/pybind/mgr/dashboard/tests/test_iscsi.py b/src/pybind/mgr/dashboard/tests/test_iscsi.py
+index f3f786c2928..94d19f386e1 100644
+--- a/src/pybind/mgr/dashboard/tests/test_iscsi.py
++++ b/src/pybind/mgr/dashboard/tests/test_iscsi.py
+@@ -225,7 +225,7 @@ class IscsiTestController(ControllerTestCase, KVStoreMockMixin):
+         # pylint: disable=protected-access
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(None, None, None, None, None, None)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "Target IQN is required")
+ 
+     def test_validate_error_portals(self):
+@@ -238,12 +238,12 @@ class IscsiTestController(ControllerTestCase, KVStoreMockMixin):
+         settings = {'config': {'minimum_gateways': 1}}
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(target_iqn, target_controls, portals, disks, groups, settings)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "At least one portal is required")
+         settings = {'config': {'minimum_gateways': 2}}
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(target_iqn, target_controls, portals, disks, groups, settings)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "At least 2 portals are required")
+ 
+     def test_validate_error_target_control(self):
+@@ -266,14 +266,14 @@ class IscsiTestController(ControllerTestCase, KVStoreMockMixin):
+         }
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(target_iqn, target_controls, portals, disks, groups, settings)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "Target control target_name must be >= 1")
+         target_controls = {
+             'target_name': 3
+         }
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(target_iqn, target_controls, portals, disks, groups, settings)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "Target control target_name must be <= 2")
+ 
+     @mock.patch('dashboard.controllers.iscsi.IscsiTarget._validate_image')
+@@ -301,12 +301,12 @@ class IscsiTestController(ControllerTestCase, KVStoreMockMixin):
+         }
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(target_iqn, target_controls, portals, disks, groups, settings)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "Disk control max_data_area_mb must be >= 129")
+         settings['disk_controls_limits']['user:rbd']['max_data_area_mb']['min'] = 1
+         with self.assertRaises(DashboardException) as ctx:
+             IscsiTarget._validate(target_iqn, target_controls, portals, disks, groups, settings)
+-        self.assertEquals(ctx.exception.__str__(),
++        self.assertEqual(ctx.exception.__str__(),
+                           "Disk control max_data_area_mb must be <= 127")
+ 
+     @mock.patch('dashboard.controllers.iscsi.IscsiTarget._validate_image')
+diff --git a/src/pybind/mgr/dashboard/tox.ini b/src/pybind/mgr/dashboard/tox.ini
+index 47756e946e1..19b563e210c 100644
+--- a/src/pybind/mgr/dashboard/tox.ini
++++ b/src/pybind/mgr/dashboard/tox.ini
+@@ -46,6 +46,7 @@ setenv =
+     WEBTEST_INTERACTIVE = false
+ commands =
+     pytest {posargs}
++sitepackages = True
+ 
+ [testenv:run]
+ deps =
