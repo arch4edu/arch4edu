@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-base64enc
+  - x86_64/r/r-colorspace
   - x86_64/r/r-data.table
   - x86_64/r/r-formula
   - x86_64/r/r-ggplot2
@@ -10,9 +11,9 @@ depends:
   - x86_64/r/r-gtable
   - x86_64/r/r-htmltable
   - x86_64/r/r-htmltools
-  - x86_64/r/r-latticeextra
+  - x86_64/r/r-knitr
+  - x86_64/r/r-rmarkdown
   - x86_64/r/r-viridis
-  - x86_64/r/r-stringi
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
