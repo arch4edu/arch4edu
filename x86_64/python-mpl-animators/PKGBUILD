@@ -1,35 +1,49 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgbase=python-mpl-animators
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=1.2.0
-pkgrel=2
+pkgver=1.2.1
+pkgrel=1
 pkgdesc="An interative animation framework for matplotlib"
 arch=('any')
 url="https://sunpy.org"
 license=('BSD-3-Clause')
-makedepends=('python-setuptools-scm'
-             'python-wheel'
+makedepends=('python-setuptools-scm>=8.0.0'
              'python-build'
              'python-installer'
              'python-sphinx-automodapi'
+             'python-sphinx-changelog'
              'python-sphinx-gallery'
              'python-sunpy-sphinx-theme'
              'python-matplotlib'
-             'python-astropy'
              'python-sunpy'
              'python-scipy'
-             'graphviz')
+             'ipython'
+             'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-doctestplus'
+#             'python-pytest-xdist'
               'python-pytest-mpl')  # matplotlib, astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('6a64eaec408fd228465ec9a4172e645d')
+#       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063302_0171_lowres.fits"
+#       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063307_0193_lowres.fits"
+#       'examples-use-local-fits.patch'
+#   )
+md5sums=('f7ef0ed3383245481b395637dae58052')
 
 get_pyinfo() {
-     [[ $1 == "site" ]] && python -c "import site; print(site.getsitepackages()[0])" || \
-             python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
+    [[ $1 == "site" ]] && python -c "import site; print(site.getsitepackages()[0])" || \
+        python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
 }
+
+
+#prepare() {
+#    cd ${srcdir}/${_pyname}-${pkgver}
+#
+#    cp ${srcdir}/*.fits examples
+#    patch -Np1 -i "${srcdir}/examples-use-local-fits.patch"
+#}
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -42,7 +56,7 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count
+    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-mpl-animators() {
@@ -53,7 +67,7 @@ package_python-mpl-animators() {
     install -D -m644 LICENSE.rst -t "${pkgdir}/usr/share/licenses/${pkgname}"
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
     python -m installer --destdir="${pkgdir}" dist/*.whl
-    rm -r ${pkgdir}/$(get_pyinfo site)/{docs,examples,licenses}
+#   rm -r ${pkgdir}/$(get_pyinfo site)/{docs,examples,licenses}
 }
 
 package_python-mpl-animators-doc() {
