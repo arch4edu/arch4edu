@@ -3,7 +3,7 @@
 # Contributor: perlawk
 
 pkgname=dlib
-pkgver=19.24.9
+pkgver=20.0
 pkgrel=1
 pkgdesc="A general purpose cross-platform C++ library designed using contract programming and modern C++ techniques"
 arch=('x86_64')
@@ -22,11 +22,10 @@ optdepends=('ffmpeg: for FFmpeg support'
             'sqlite: for sqlite support')
 makedepends=('cmake' 'ninja')
 source=("https://codeload.github.com/davisking/dlib/tar.gz/refs/tags/v${pkgver}")
-sha256sums=('65ff8debc3ffea84430bdd4992982082caf505404e16d986b7493c00f96f44e9')
+sha256sums=('705749801c7896f5c19c253b6be639f4cef2c1831a9606955f01b600b3d86d80')
 
 build() {
-    cd "${srcdir}"
-    mkdir -p build && cd build
+    cd "${srcdir}/${pkgbase}-${pkgver}"
     cmake -GNinja \
         -DCMAKE_INSTALL_PREFIX:PATH=/usr \
         -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib \
@@ -34,14 +33,14 @@ build() {
         -DCMAKE_BUILD_TYPE=Release \
         -DUSE_AVX_INSTRUCTIONS=OFF \
         -DDLIB_USE_CUDA=OFF \
-        "../${pkgbase}-${pkgver}"
-    ninja ${MAKEFLAGS:--j1}
+        -B build .
+    ninja -C build ${MAKEFLAGS:--j1}
 }
 
 package() {
-    cd "${srcdir}/build"
+    cd "${srcdir}/${pkgbase}-${pkgver}/build"
     DESTDIR=${pkgdir} ninja install
-    install -Dm644 "../${pkgbase}-${pkgver}/dlib/LICENSE.txt" "${pkgdir}/usr/share/licenses/${pkgbase}/LICENSE"
+    install -Dm644 "../dlib/LICENSE.txt" "${pkgdir}/usr/share/licenses/${pkgbase}/LICENSE"
     # remove redundant external libraries
     rm -r "${pkgdir}/usr/include/dlib/external"
 }
