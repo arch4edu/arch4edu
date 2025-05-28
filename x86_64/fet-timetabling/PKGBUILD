@@ -2,18 +2,18 @@
 pkgname='fet-timetabling'
 _module='fet'
 pkgver=7.2.3
-pkgrel=1
+pkgrel=2
 pkgdesc="A software for automatically scheduling the timetable of a school, high-school or university."
 arch=('x86_64' 'i686')
 url="http://lalescu.ro/liviu/fet/"
 license=('AGPL3')
-depends=('qt5-base' 'hicolor-icon-theme')
+depends=('qt6-base' 'hicolor-icon-theme')
 source=("https://lalescu.ro/liviu/fet/download/fet-${pkgver}.tar.bz2")
 sha256sums=('03671430df54871f51a2b0a6eb4d75bae0d5088c3a8cb40d388f74748231d740')
 
 build() {
 	cd "$srcdir/$_module-$pkgver"
-	qmake-qt5 fet.pro "DEFINES+=USE_SYSTEM_LOCALE"
+	/usr/lib/qt6/bin/qmake fet.pro "DEFINES+=USE_SYSTEM_LOCALE"
 	make
 }
 
