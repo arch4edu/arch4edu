@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 418b670..e6ed523 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,6 +17,7 @@ find_package(SymEngine 0.8.1 REQUIRED CONFIG
+              PATH_SUFFIXES lib/cmake/symengine cmake/symengine CMake/)
+ message("SymEngine_DIR : " ${SymEngine_DIR})
+ message("SymEngine Version : " ${SymEngine_VERSION})
++LIST(REMOVE_ITEM SYMENGINE_LIBRARIES /usr/lib/libtcmalloc.so )
+ set(CMAKE_BUILD_TYPE ${SYMENGINE_BUILD_TYPE})
+ set(CMAKE_CXX_FLAGS_RELEASE ${SYMENGINE_CXX_FLAGS_RELEASE})
+ set(CMAKE_CXX_FLAGS_DEBUG ${SYMENGINE_CXX_FLAGS_DEBUG})
