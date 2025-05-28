@@ -1,9 +1,9 @@
 # Maintainer: Rudy Matela <rudy@matela.com.br>
-# Contributor: Kashyap Chhatbar <kashyap.cc@gmail.com>
+# Contributor: Rudy Matela <rudy@matela.com.br>
 
 pkgname=python-slicer
 pkgver=0.0.8
-pkgrel=1
+pkgrel=2
 pkgdesc='Wraps tensor-like objects and provides a uniform slicing interface via __getitem__'
 arch=(any)
 url='https://github.com/interpretml/slicer'
