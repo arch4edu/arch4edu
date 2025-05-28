@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=bayesplot
-_pkgver=1.11.1
+_pkgver=1.12.0
 pkgname=r-${_pkgname,,}
-pkgver=1.11.1
+pkgver=1.12.0
 pkgrel=1
 pkgdesc='Plotting for Bayesian Models'
 arch=('any')
@@ -21,6 +21,7 @@ depends=(
   r-rlang
   r-tibble
   r-tidyselect
+  r-tidyr
   pandoc
 )
 optdepends=(
@@ -41,7 +42,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('4f71e67391e0135acd3e890989b87025f3f8160242f532a8e1a0ed74ed0f3830')
+sha256sums=('b163e5a92e53fb62557500ad8595309fb17f95235206f0b535d7f41b0e8d5be9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
