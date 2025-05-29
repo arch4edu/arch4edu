@@ -1,27 +1,33 @@
-# Maintainer: Ward Segers <w@rdsegers.be>
-# Contributor: Alex Branham <alex.branham@gmail.com>
+# Maintainer: Serene-Arc <https://aur.archlinux.org/account/serene-arc>
 
-_cranver=0.999-7
-pkgname=r-expm
+_cranname=expm
+_cranver=1.0-0
+pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
-pkgdesc='Matrix Exponential, Log, etc'
-arch=('x86_64')
-url='https://cran.r-project.org/package=expm'
-license=('GPL')
-depends=('r' )
-optdepends=('r-rcolorbrewer' 'r-sfsmisc' 'r-rmpfr')
-makedepends=('gcc-fortran')
-replaces=('r-cran-expm')
-source=("https://cran.r-project.org/src/contrib/expm_"$_cranver".tar.gz")
-sha512sums=('0cdc5adc0e2f29c87435f8d9c676341558379a8d5ea49431fc5f8aa60a8b6ddb89b8768938f00f4ebaa2655dfb1bcf2a0baed2f17bdb96090062c8f94f216042')
+pkgrel=1
+pkgdesc="Computation of the matrix exponential, logarithm, sqrt, and related quantities, using traditional and modern methods."
+arch=('any')
+url="https://cran.r-project.org/package=${_cranname}"
+license=('GPL-3')
+depends=(
+    r
+)
+makedepends=(gcc)
+optdepends=(
+    r-rcolorbrewer
+    r-sfsmisc
+    r-rmpfr
+    )
+source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+sha256sums=('02c536f8f6af55b132210a50b1e9694a3549806bf97c49e0fe03595945aab254')
 
-build(){
-    R CMD INSTALL expm_"$_cranver".tar.gz -l "$srcdir"
+build() {
+  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
 }
 
 package() {
-    install -dm0755 "$pkgdir"/usr/lib/R/library
-    cp -a --no-preserve=ownership expm "$pkgdir"/usr/lib/R/library
-}
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
 
+  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+}
+makedepends+=("gcc-fortran")
