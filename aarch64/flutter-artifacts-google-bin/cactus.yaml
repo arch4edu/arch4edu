@@ -1,0 +1,7 @@
+nvchecker:
+  - source: aur
+    aur: flutter-engine-common-google-bin
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
