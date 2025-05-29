@@ -3,7 +3,7 @@
 
 pkgname='python-sparse'
 _pkgname=sparse
-pkgver=0.16.0
+pkgver=0.17.0
 pkgrel=1
 pkgdesc="Sparse n-dimensional arrays for the PyData ecosystem"
 arch=('any')
@@ -13,7 +13,7 @@ depends=('python>=3.8' 'python-numpy>=1.17' 'python-scipy>=0.19' 'python-numba>=
 optdepends=()
 makedepends=('python-setuptools' 'python-setuptools-scm' 'python-build' 'python-installer')
 source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
-sha256sums=(26973e5dc80d54a37dfc2622ec554c5a3aa8396c4bafe7e9da59d2101b133588)
+sha256sums=(6b1ad51a810c5be40b6f95e28513ec810fe1c785923bd83b2e4839a751df4bf7)
 
 build(){
   cd "$_pkgname-$pkgver"
