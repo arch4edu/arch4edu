@@ -1,7 +1,0 @@
-post_install() {
-    echo Please see https://wiki.archlinux.org/index.php/KiwiIRC and set up the web server to use KiwiIRC!
-}
-
-post_upgrade() {
-    post_install
-}
