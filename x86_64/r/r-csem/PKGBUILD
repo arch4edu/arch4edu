@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=cSEM
-_pkgver=0.5.0
+_pkgver=0.6.1
 pkgname=r-${_pkgname,,}
-pkgver=0.5.0
+pkgver=0.6.1
 pkgrel=1
 pkgdesc='Composite-Based Structural Equation Modeling'
 arch=('any')
@@ -47,7 +47,7 @@ optdepends=(
   r-tidyr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('25ae115520aab7d916da9ded1f87b8519c4e15101c4adef2284c51eb03d81728')
+sha256sums=('f660989fbfabe5fc07e29c20a5f8366e99c547825df1ac16daa1836bbbc4765a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
