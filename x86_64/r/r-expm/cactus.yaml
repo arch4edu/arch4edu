@@ -1,1 +1,9 @@
-../../../template/x86_64-nocheck.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  add makedepends gcc-fortran
+post_build: aur-post-build
