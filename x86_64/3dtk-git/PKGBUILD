@@ -2,7 +2,7 @@
 
 _pkgname=3dtk
 pkgname="$_pkgname-git"
-pkgver=r2372.1a357e0
+pkgver=r2382.696d0f4
 pkgrel=1
 pkgdesc='3D Toolkit with algorithms and methods to process 3D point clouds'
 url='https://slam6d.sourceforge.io'
@@ -31,9 +31,11 @@ depends=(findutils
 	 ann)
 source=("$pkgname::git+https://github.com/JMUWRobotics/3DTK.git"
 	"git+https://github.com/JMUWRobotics/CCTag.git"
+	"git+https://github.com/JMUWRobotics/PArUco.git"
 	"codestyle.patch"
 	3dtk.sh)
 b2sums=('SKIP'
+        'SKIP'
         'SKIP'
         '7bdf0d94f312034a324a4746055917f1399c51a375c0e7f3359fb1a603ace0192760f49f871a902b0aaee3139eef2e9d2e82910cdbcc3f128fbbd3952b1186bd'
         '154398fe7e96f63c54f7371c2f3419b4e2932c09e07f6e60c2cb83a48f1c824d568e1bdadf6e0eb9614a34ec03253968c62b7c50a6575cfa5910f65a558c6eb7')
@@ -50,6 +52,7 @@ prepare() {
 	cd "$pkgname"
 	git submodule init
 	git config submodule.libs/cctag.url "$srcdir/CCTag"
+	git config submodule.libs/paruco.url "$srcdir/PArUco"
 	git -c protocol.file.allow=always submodule update
 	
 	# set package binary paths to /opt/3dtk in every included script
@@ -93,8 +96,6 @@ package() {
 	cp -r doc/* "$pkgdir/usr/share/doc/$_pkgname"
 
 	install -Dm 644 LICENSING -t "$pkgdir/usr/share/licenses/$_pkgname"
-	install -dm 755 "$pkgdir/usr/include/$_pkgname"
-	cp -r include/* "$pkgdir/usr/include/$_pkgname"
 
 	install -Dm 644 lib/* -t "$pkgdir/usr/lib"
 
