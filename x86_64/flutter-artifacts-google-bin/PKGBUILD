@@ -1,0 +1,425 @@
+# Maintainer: The one with the braid <info@braid.business>
+
+pkgbase=flutter-artifacts-google-bin
+_group=flutter
+pkgver=3.32.0
+# in order to update these version hashes, consult the PKGBUILD and update-artifact-versions.sh
+# script of https://aur.archlinux.org/pkgbase/flutter
+_enginever=18818009497c581ede5d8a3b8b833b81d00cebb7
+_materialfontsver=3012db47f3130e62f7cc0beabff968a33cbec8d8
+_gradlewver=fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
+_flutterarch=$(echo "$CARCH" | sed s/aarch64/arm64/ | sed s/x86_64/x64/)
+_dartver="3.8.0"
+_dartmin="3.8.0"
+_dartmax="3.9.0"
+# this host is blocked in China, according to Flutter docs, the FLUTTER_STORAGE_BASE_URL environment variable
+# should be used to provide an alternative mirror
+_storagebase="${FLUTTER_STORAGE_BASE_URL:-"https://storage.googleapis.com"}"
+pkgrel=1
+_pkgdesc="Flutter SDK artifacts (binary from Google)"
+pkgdesc="${_pkgdesc}"
+arch=("x86_64" "aarch64")
+url="https://${_group}.dev"
+license=("custom" "BSD" "CCPL")
+makedepends=(
+	"unzip"
+	"tar"
+)
+options=("!emptydirs")
+source=(
+  # material_fonts
+  "material_fonts-${_materialfontsver}.zip::${_storagebase}/flutter_infra_release/flutter/fonts/${_materialfontsver}/fonts.zip"
+  # gradle_wrapper
+  "gradle_wrapper-${_gradlewver}.tar.gz::${_storagebase}/flutter_infra_release/gradle-wrapper/${_gradlewver}/gradle-wrapper.tgz"
+
+  # engine/android-x86
+  "android-x86-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-x86/artifacts.zip"
+  # engine/android-x64
+  "android-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-x64/artifacts.zip"
+  # engine/android-arm
+  "android-arm-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm/artifacts.zip"
+  # engine/android-arm-profile
+  "android-arm-profile-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm-profile/artifacts.zip"
+  # engine/android-arm-release
+  "android-arm-release-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm-release/artifacts.zip"
+  # engine/android-arm64
+  "android-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm64/artifacts.zip"
+  # engine/android-arm64-profile
+  "android-arm64-profile-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm64-profile/artifacts.zip"
+  # engine/android-arm64-release
+  "android-arm64-release-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm64-release/artifacts.zip"
+
+  # engine/android-x64-profile
+  "android-x64-profile-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-x64-profile/artifacts.zip"
+  # engine/android-x64-release
+  "android-x64-release-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-x64-release/artifacts.zip"
+
+  # flutter_web_sdk
+  "flutter_web_sdk-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/flutter-web-sdk.zip"
+  # pkg
+  "sky_engine-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/sky_engine.zip"
+
+  # engine/common
+  "flutter_patched_sdk-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/flutter_patched_sdk.zip"
+  # engine/common
+  "flutter_patched_sdk_product-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/flutter_patched_sdk_product.zip"
+)
+source_x86_64=(
+  # dart-sdk
+  "dart-sdk-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/dart-sdk-linux-x64.zip"
+  # engine/android-arm-profile/linux-x64
+  "android-arm-profile-linux-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm-profile/linux-x64.zip"
+  # engine/android-arm-release/linux-x64
+  "android-arm-release-linux-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm-release/linux-x64.zip"
+  # engine/android-arm64-profile/linux-x64
+  "android-arm64-profile-linux-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm64-profile/linux-x64.zip"
+  # engine/android-arm64-release/linux-x64
+  "android-arm64-release-linux-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-arm64-release/linux-x64.zip"
+  # engine/android-x64-profile/linux-x64
+  "android-x64-profile-linux-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-x64-profile/linux-x64.zip"
+  # engine/android-x64-release/linux-x64
+  "android-x64-release-linux-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/android-x64-release/linux-x64.zip"
+
+  # engine/linux-$ARCH
+  "engine-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-x64/artifacts.zip"
+  # engine/linux-$ARCH
+  "gtk-debug-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-x64-debug/linux-x64-flutter-gtk.zip"
+  # engine/linux-$ARCH-profile
+  "gtk-profile-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-x64-profile/linux-x64-flutter-gtk.zip"
+  # engine/linux-$ARCH-release
+  "gtk-release-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-x64-release/linux-x64-flutter-gtk.zip"
+  # engine/linux-$ARCH
+  "font-subset-x64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-x64/font-subset.zip"
+)
+source_aarch64=(
+  # dart-sdk
+  "dart-sdk-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/dart-sdk-linux-arm64.zip"
+  # engine/linux-$ARCH
+  "engine-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-arm64/artifacts.zip"
+  # engine/linux-$ARCH
+  "gtk-debug-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-arm64-debug/linux-arm64-flutter-gtk.zip"
+  # engine/linux-$ARCH-profile
+  "gtk-profile-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-arm64-profile/linux-arm64-flutter-gtk.zip"
+  # engine/linux-$ARCH-release
+  "gtk-release-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-arm64-release/linux-arm64-flutter-gtk.zip"
+  # engine/linux-$ARCH
+  "font-subset-arm64-${_enginever}.zip::${_storagebase}/flutter_infra_release/flutter/${_enginever}/linux-arm64/font-subset.zip"
+)
+noextract=(
+  "material_fonts-${_materialfontsver}.zip"
+  "gradle_wrapper-${_gradlewver}.tar.gz"
+
+  "android-x86-${_enginever}.zip"
+  "android-x64-${_enginever}.zip"
+  "android-arm-${_enginever}.zip"
+  "android-arm-profile-${_enginever}.zip"
+  "android-arm-release-${_enginever}.zip"
+  "android-arm64-${_enginever}.zip"
+  "android-arm64-profile-${_enginever}.zip"
+  "android-arm64-release-${_enginever}.zip"
+
+  "android-x64-profile-${_enginever}.zip"
+  "android-x64-release-${_enginever}.zip"
+
+  "flutter_web_sdk-${_enginever}.zip"
+  "sky_engine-${_enginever}.zip"
+  "flutter_patched_sdk-${_enginever}.zip"
+  "flutter_patched_sdk_product-${_enginever}.zip"
+
+  # x64
+  "android-arm-profile-linux-x64-${_enginever}.zip"
+  "android-arm-release-linux-x64-${_enginever}.zip"
+  "android-arm64-profile-linux-x64-${_enginever}.zip"
+  "android-arm64-release-linux-x64-${_enginever}.zip"
+  "android-x64-profile-linux-x64-${_enginever}.zip"
+  "android-x64-release-linux-x64-${_enginever}.zip"
+
+  "engine-x64-${_enginever}.zip"
+  "gtk-debug-x64-${_enginever}.zip"
+  "gtk-profile-x64-${_enginever}.zip"
+  "gtk-release-x64-${_enginever}.zip"
+  "font-subset-x64-${_enginever}.zip"
+
+  # arm64
+  "engine-arm64-${_enginever}.zip"
+  "gtk-debug-arm64-${_enginever}.zip"
+  "gtk-profile-arm64-${_enginever}.zip"
+  "gtk-release-arm64-${_enginever}.zip"
+  "font-subset-arm64-${_enginever}.zip"
+
+  # dart
+  "dart-sdk-x64-${_enginever}.zip"
+  "dart-sdk-arm64-${_enginever}.zip"
+)
+
+
+
+sha256sums=('e56fa8e9bb4589fde964be3de451f3e5b251e4a1eafb1dc98d94add034dd5a86'
+            '31e9428baf1a2b2f485f1110c5899f852649b33d46a2e9b07f9d17752d50190a'
+            '2dd11c0ef9749fed142d48ce1a015632a7e5e8fa7d7242ce75a222e1fdf901aa'
+            'f1d922aaa8a3d6b91f73f60bcb2799dfc052a35e29755263bf2272134b994ab1'
+            '4553f477273c94b35b3ca17fa3513c3fbb7a4718196570ec90ced435caa59189'
+            '4b56869f5c45265d0a35959a8567423ae1a4f37dbfdf40bbd521bf3d3895cfdf'
+            'cc9fe5711c108f76ca98840bdb3dcb965976821b072c5fdb086b0c87a7e819b0'
+            'aed16b73570b1f9fef36a1390cd73c642c18c4a1ec7c36b7e48cd765de047d5e'
+            'c9703c3000780412fbaff02f62a9b67e48232b9a38dab701ccff94d34cb23057'
+            '56c7aff192171ffb1644893df46eff284126c07e785f79dd0e116f6e0406fcda'
+            '47648e68869823d40856908c2bc5c1a81eca7599ba03e26f6eb3b26756350e4f'
+            '815a231ec0071e94dd6172ff4501e6cb604fb29c424618f7e60afc3924efefb7'
+            '16bd5f27ff7c8684cd3cdf25f8976aa225771b21a2629ff98e6614996ea41c36'
+            'b8a528a37b9d9897186836fb7e48e54db11ab749f2f876eedeb2d5ece1898a8a'
+            '0e771784b5092b6046775e395b4a38aac86f488a7884f979a875afbb66a777d3'
+            'ea6e9f7098d30f24446b870844d31e46977dd1a3b51e7f8a17d869a5647dfbf6')
+sha256sums_x86_64=('e0b2ccff141d1c9099bc057601203e448ffcce9d42fa26feeee5d220c8709e4b'
+                   '37281eb0993262b8661a4205802f53276fa8d0adda46fa1d3de4b78474cbf7a0'
+                   '318aef8504f3b16e0a61c124f4ac838c5bfbaf612c24f4eacdd04e80da0ec46a'
+                   '6482825ce1d23fb239a6365d460c18af704560ff6a81630e28cffb61c16a7d04'
+                   'a6ef30d981bf5a11c3a98a47eabeea0e4ae7766eee50338e929ce8c90760f3c2'
+                   'afd96e8f4447a7dea980a760ef6d2bf93715a8ea85ec071bcdd0d921855151cf'
+                   'da910b9b889a2a537efa7b8dcb16f5d656f605211da209ecad4995acb9c2ab21'
+                   'ea0e3ecd8151f784a73aaa4ff9b0cad14dd194dc944795a1add6198218483c7f'
+                   '0f80ac5b2d0c0ee09da08b1b954c2517d8047f53ee120c4a7915d50c6b04effa'
+                   '4edfcc69229fd6548b0b409d8e49a423cbd0df51d78d063416610261f09a6099'
+                   'c2d14c15263feeb98c085bff7579b1037c3e7a24bf4c111e5dd314341f89b497'
+                   'f5cae8bb2dabb254ebb2b95b2f61b499d40e7caff1570eafc6d9ff5b1a4960f0')
+sha256sums_aarch64=('68d6a82b38879a501b7081dc04f994273799bde5afbf05a1b563db9260d70e35'
+                    '11614df2c551a4dd83c3af95782dfb2c14ece996baffdc1a322b4fca9f99e994'
+                    '6dbe32736a7d2f3fa070a2bd699c6df1de4cfcee783326c9586a8c2949065786'
+                    'f295f5848a17b70b38963ac83303d230c694e684be814699ed3a0c3841ff993e'
+                    '3183ed31f440a0b8ccebf51b0e5ccabed79c7f94d8ecf02477f1f24542db59f2'
+                    '5aa6d67f22c2254acccf29771718fcd40483fa36960bbe8a8c42bd7abf6ff2b4')
+
+prepare() {
+  unzip -o -q "${srcdir}/dart-sdk-${_flutterarch}-${_enginever}.zip" -d dart
+
+  mkdir -p "${srcdir}/${_group}/bin/cache/artifacts"
+
+  cd "${srcdir}/${_group}/bin/cache"
+
+  unzip -o -q "${srcdir}/flutter_web_sdk-${_enginever}.zip" -d flutter_web_sdk
+  unzip -o -q "${srcdir}/sky_engine-${_enginever}.zip" -d pkg
+
+  cd "${srcdir}/${_group}/bin/cache/artifacts"
+
+  mkdir -p "gradle_wrapper"
+  tar -xzf "${srcdir}/gradle_wrapper-${_gradlewver}.tar.gz" -C "gradle_wrapper"
+  unzip -o -q "${srcdir}/material_fonts-${_materialfontsver}.zip" -d "material_fonts"
+
+  mkdir -p engine/android-arm-profile
+  mkdir -p engine/android-arm64-profile
+  mkdir -p engine/android-x64-profile
+  mkdir -p engine/android-arm-release
+  mkdir -p engine/android-arm64-release
+  mkdir -p engine/android-x64-release
+
+  if [ "$(uname -m)" == "x86_64" ]; then
+
+  unzip -o -q "${srcdir}/android-arm-profile-linux-x64-${_enginever}.zip" -d engine/android-arm-profile/linux-x64
+  unzip -o -q "${srcdir}/android-arm-release-linux-x64-${_enginever}.zip" -d engine/android-arm-release/linux-x64
+  unzip -o -q "${srcdir}/android-arm64-profile-linux-x64-${_enginever}.zip" -d engine/android-arm64-profile/linux-x64
+  unzip -o -q "${srcdir}/android-arm64-release-linux-x64-${_enginever}.zip" -d engine/android-arm64-release/linux-x64
+  unzip -o -q "${srcdir}/android-x64-profile-linux-x64-${_enginever}.zip" -d engine/android-x64-profile/linux-x64
+  unzip -o -q "${srcdir}/android-x64-release-linux-x64-${_enginever}.zip" -d engine/android-x64-release/linux-x64
+
+  fi
+
+  unzip -o -q "${srcdir}/android-x86-${_enginever}.zip" -d engine/android-x86
+  unzip -o -q "${srcdir}/android-x64-${_enginever}.zip" -d engine/android-x64
+  unzip -o -q "${srcdir}/android-arm-${_enginever}.zip" -d engine/android-arm
+  unzip -o -q "${srcdir}/android-arm-profile-${_enginever}.zip" -d engine/android-arm-profile
+  unzip -o -q "${srcdir}/android-arm-release-${_enginever}.zip" -d engine/android-arm-release
+  unzip -o -q "${srcdir}/android-arm64-${_enginever}.zip" -d engine/android-arm64
+  unzip -o -q "${srcdir}/android-arm64-profile-${_enginever}.zip" -d engine/android-arm64-profile
+  unzip -o -q "${srcdir}/android-arm64-release-${_enginever}.zip" -d engine/android-arm64-release
+
+  unzip -o -q "${srcdir}/android-x64-profile-${_enginever}.zip" -d engine/android-x64-profile
+  unzip -o -q "${srcdir}/android-x64-release-${_enginever}.zip" -d engine/android-x64-release
+
+  unzip -o -q "${srcdir}/flutter_patched_sdk-${_enginever}.zip" -d engine/common
+  unzip -o -q "${srcdir}/flutter_patched_sdk_product-${_enginever}.zip" -d engine/common
+
+  unzip -o -q "${srcdir}/engine-${_flutterarch}-${_enginever}.zip" -d engine/linux-${_flutterarch}
+  unzip -o -q "${srcdir}/gtk-debug-${_flutterarch}-${_enginever}.zip" -d engine/linux-${_flutterarch}
+  unzip -o -q "${srcdir}/gtk-profile-${_flutterarch}-${_enginever}.zip" -d engine/linux-${_flutterarch}-profile
+  unzip -o -q "${srcdir}/gtk-release-${_flutterarch}-${_enginever}.zip" -d engine/linux-${_flutterarch}-release
+  unzip -o -q "${srcdir}/font-subset-${_flutterarch}-${_enginever}.zip" -d engine/linux-${_flutterarch}
+}
+
+build() {
+    true
+}
+
+_package-engine-common-google-bin() {
+  pkgdesc="${_pkgdesc} - common engine files"
+  depends=(
+	"${_group}-common=${pkgver}"
+	"${_group}-sky-engine=${pkgver}"
+	"${_group}-material-fonts=${pkgver}"
+	"dart>=${_dartmin}"
+	"dart<${_dartmax}"
+  )
+  provides=(
+	"${_group}-engine-common=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-engine-common"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/common" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine/common"
+}
+
+_package-sky-engine-google-bin() {
+  pkgdesc="${_pkgdesc} - sky-engine"
+  provides=(
+	"${_group}-sky-engine=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-sky-engine"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/pkg" "${pkgdir}/usr/lib/${_group}/bin/cache/pkg"
+}
+
+_package-material-fonts-google-bin() {
+  pkgdesc="${_pkgdesc} - material fonts"
+  provides=(
+	"${_group}-material-fonts=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-material-fonts"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/material_fonts" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/material_fonts"
+}
+
+_package-engine-linux-google-bin() {
+  pkgdesc="${_pkgdesc} - linux engine"
+  depends=(
+	"${_group}-engine-common=${pkgver}"
+  )
+  provides=(
+	"${_group}-engine-linux=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-engine-linux"
+	"${_group}-target-linux<${pkgver}"
+	"${_group}-engine-android<${pkgver}"
+	"${_group}-engine-web<${pkgver}"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/linux-${_flutterarch}" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/linux-${_flutterarch}-profile" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/linux-${_flutterarch}-release" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+}
+
+_package-engine-web-google-bin() {
+  pkgdesc="${_pkgdesc} - web engine"
+  depends=(
+	"${_group}-engine-common=${pkgver}"
+  )
+  provides=(
+	"${_group}-engine-web=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-engine-web"
+	"${_group}-target-web<${pkgver}"
+	"${_group}-engine-android<${pkgver}"
+	"${_group}-engine-linux<${pkgver}"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/flutter_web_sdk" "${pkgdir}/usr/lib/${_group}/bin/cache"
+}
+
+_package-gradle-google-bin() {
+  pkgdesc="${_pkgdesc} - gradle wrapper"
+  depends=(
+	"${_group}-common=${pkgver}"
+  )
+  provides=(
+	"${_group}-gradle=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-gradle"
+	"${_group}-target-android<${pkgver}"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/gradle_wrapper" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts"
+}
+
+_package-engine-android-google-bin() {
+  pkgdesc="${_pkgdesc} - android engine"
+  depends=(
+	"${_group}-engine-common=${pkgver}"
+  )
+  provides=(
+	"${_group}-engine-android=${pkgver}"
+  )
+  conflicts=(
+	"${_group}-engine-android"
+	"${_group}-target-android<${pkgver}"
+	"${_group}-engine-linux<${pkgver}"
+	"${_group}-engine-web<${pkgver}"
+  )
+
+  install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-arm" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-arm-release" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-arm-profile" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-arm64" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-arm64-release" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-arm64-profile" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-x64" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-x64-release" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-x64-profile" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+
+  cp -ra "${srcdir}/${_group}/bin/cache/artifacts/engine/android-x86" "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
+}
+
+_package-dart-google-bin() {
+  pkgdesc="${_pkgdesc} - Dart SDK"
+  depends=(
+	"glibc"
+  )
+  provides=(
+	"dart=${_dartver}"
+  )
+  conflicts=(
+	"dart"
+  )
+
+  install -dm755 "${pkgdir}/opt"
+  install -dm755 "${pkgdir}/usr/bin"
+  install -Dm755 "${srcdir}/dart/LICENSE.dart_sdk_archive.md" "${pkgdir}/usr/share/licenses/dart/LICENSE"
+
+  cp -ra "${srcdir}/dart/dart-sdk" "${pkgdir}/opt/dart-sdk"
+
+  chmod -R ugo+rX "${pkgdir}/opt"
+
+  ln -sf "/opt/dart-sdk/bin/dart" "${pkgdir}/usr/bin/dart"
+  ln -sf "/opt/dart-sdk/bin/dartaotruntime" "${pkgdir}/usr/bin/dartaotruntime"
+}
+
+pkgname=("${_group}-engine-common-google-bin" "${_group}-engine-linux-google-bin" "${_group}-engine-web-google-bin" "${_group}-engine-android-google-bin" "${_group}-sky-engine-google-bin" "${_group}-material-fonts-google-bin" "${_group}-gradle-google-bin" "${_group}-dart-google-bin")
+
+for _p in "${pkgname[@]}"; do
+  eval "package_$_p() {
+    $(declare -f "_package${_p#$_group}")
+    _package${_p#$_group}
+  }"
+done
+
