@@ -6,6 +6,7 @@ depends:
   - x86_64/ros2/python-pyqt5-sip4
   - x86_64/ros2/ros2-arch-deps
   - x86_64/sip4
+  - x86_64/cmake3
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
