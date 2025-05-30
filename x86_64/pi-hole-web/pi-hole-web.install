@@ -1,0 +1,15 @@
+post_install() {
+  /bin/true
+}
+
+post_upgrade() {
+  # /etc/pihole/versions file generation
+  [ -f /opt/pihole/updatecheck.sh ] && sudo -u pihole bash /opt/pihole/updatecheck.sh;
+
+  # keep pacman from throwing errors should none them be on the filesystem
+  return 0
+}
+
+post_remove() {
+  /bin/true
+}
