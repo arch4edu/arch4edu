@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=kknn
-_pkgver=1.4.0
+_pkgver=1.4.1
 pkgname=r-${_pkgname,,}
-pkgver=1.4.0
+pkgver=1.4.1
 pkgrel=1
 pkgdesc='Weighted k-Nearest Neighbors'
 arch=('x86_64')
@@ -14,7 +14,7 @@ depends=(
   r-igraph
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('953da321a81faf34a38526a4bd8f468dc3e1856b2f2a20306c560cdb3f58ad79')
+sha256sums=('5232ddc268c0f9d691b613c8767a9ce079dade75ee22051a3b928024ada46f34')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
