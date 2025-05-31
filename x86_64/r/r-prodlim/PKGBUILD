@@ -3,30 +3,32 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=prodlim
-_pkgver=2024.06.25
+_pkgver=2025.04.28
 pkgname=r-${_pkgname,,}
-pkgver=2024.06.25
+pkgver=2025.04.28
 pkgrel=1
 pkgdesc='Product-Limit Estimation for Censored Event History Analysis'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-data.table
   r-diagram
   r-lava
   r-rcpp
+  r-rlang
+  r-ggplot2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('46961f654171aa7ef0ff94b23508ed59f6a438c3a3ba0d338cc3730224406764')
+md5sums=('eca7064bb5d9fc2a36a792ab99b4ec69')
+b2sums=('bf2125a47a1827cd77dea7a409a87fb2f44fda6ff1419a61d59dd10d5c444cf1e5d7fecd9646476e84a231fe9561f24879b250571acadcd2449edeadac0d1505')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:
