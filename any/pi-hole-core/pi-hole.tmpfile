@@ -1,0 +1,2 @@
+d /run/log/pihole 0755 pihole pihole - -
+f /run/log/pihole/pihole.log 0644 pihole pihole - -
