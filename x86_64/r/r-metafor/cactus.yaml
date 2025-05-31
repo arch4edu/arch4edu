@@ -2,10 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-digest
   - x86_64/r/r-mathjaxr
-  - x86_64/r/r-pbapply
   - x86_64/r/r-metadat
   - x86_64/r/r-numderiv
+  - x86_64/r/r-pbapply
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
