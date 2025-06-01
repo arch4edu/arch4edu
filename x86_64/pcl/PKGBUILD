@@ -10,7 +10,7 @@
 
 pkgname=pcl
 pkgver=1.15.0
-pkgrel=1
+pkgrel=3
 pkgdesc="A standalone, large scale, open project for 2D/3D image and point cloud processing"
 arch=('x86_64')
 url='https://www.pointclouds.org'
@@ -19,7 +19,7 @@ depends=('boost' 'cjson' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libp
 optdepends=('cuda' 'openmp' 'openni2' 'qhull')
 makedepends=('adios2' 'anari-sdk' 'cgns' 'cli11' 'cmake' 'fast_float' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
              'netcdf' 'nlohmann-json' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp' 'verdict')
-checkdepends=('gtest')
+checkdepends=('gtest-src')
 source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz")
 sha512sums=('a1ab4858b8e5bde5b21bb3e04dcdcd9ca69204aa37a90dee336d4da452cb4be0a5b6a2b2b477668d4e82891955398825e97009fb5805df931af3c7d253e9100e')
 b2sums=('a6df3549e2aab90bdf1eea81c281ef79bf42410fe68dcb563be434a13913564f1756b0557b8638f9fddc74adfad233cba0b73fd43282f338e034a7d1681fa862')
@@ -36,10 +36,11 @@ build() {
         -DBUILD_apps_in_hand_scanner=ON \
         -DBUILD_apps_modeler=ON \
         -DBUILD_apps_point_cloud_editor=ON \
+        -DBUILD_global_tests=ON \
         -DBUILD_outofcore=OFF \
         -DBUILD_simulation=ON \
         -DBUILD_surface_on_nurbs=ON -DUSE_UMFPACK=ON \
-        -DBUILD_global_tests=ON \
+        -DBoost_USE_DEBUG_RUNTIME=OFF \
         -DWITH_QT='QT5' \
         -Wno-dev
   cmake --build build
