@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=RSQLite
-_pkgver=2.3.11
+_pkgver=2.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="SQLite Interface for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -46,9 +46,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libs.patch")
-md5sums=('957a787cb20226a5fe52894794e3b294'
+md5sums=('8b119a6e5a323bba7eafe67700b643c4'
          'a4e9a6c34e49e6e36edcf7d46e4841af')
-b2sums=('91c2fd93bc3285a3c19d6badc7e13086e4ed9a57d410d40ba5cf35f07ae8059d7b2e8d9f92f1c9b7ae238785db9dd8d7da80beafe38e4eea830b2f61bce182e6'
+b2sums=('ebd4fd638bda24cb993eef99baaf5049267595a3391cdadaa15f2e9d6906137667592c6b73dec98334cd824aaee21fc17c35a286ddd0c2bb2d25fe1f58c39deb'
         '76af4e4ba5f59cd12b616357df87aec8a1906b673b086aac5155a3c0486fddbf8bb7c591f099ce05bbce05e905901d46372a81b01ecd03600fb71df8da0674cd')
 
 prepare() {
