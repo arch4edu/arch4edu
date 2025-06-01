@@ -2,6 +2,8 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
+makedepends:
+  - x86_64/cmake3
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
