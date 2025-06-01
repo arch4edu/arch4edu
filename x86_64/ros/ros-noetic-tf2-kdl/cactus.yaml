@@ -5,7 +5,7 @@ nvchecker:
 depends:
   - x86_64/ros/ros-noetic-tf2
   - x86_64/ros/ros-noetic-tf2-ros
-  - x86_64/ros/orocos-kdl
+  - x86_64/ros/orocos-kdl-git
 makedepends:
   - x86_64/ros/ros-build-tools
   - x86_64/ros/ros-noetic-cmake-modules

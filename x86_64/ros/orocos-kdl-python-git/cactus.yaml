@@ -1,8 +1,10 @@
 nvchecker:
   - source: aur
     aur:
+  - source: github
+    github: orocos/orocos_kinematics_dynamics
 depends:
-  - x86_64/ros/orocos-kdl
+  - x86_64/ros/orocos-kdl-git
   - x86_64/sip4: python-sip4
 makedepends:
   - x86_64/sip4

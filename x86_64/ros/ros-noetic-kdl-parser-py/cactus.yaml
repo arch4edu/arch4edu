@@ -4,7 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/ros/ros-noetic-urdfdom-py
-  - x86_64/ros/orocos-kdl-python
+  - x86_64/ros/orocos-kdl-python-git
 makedepends:
   - x86_64/ros/ros-build-tools
   - x86_64/ros/ros-noetic-catkin

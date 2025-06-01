@@ -6,8 +6,8 @@ depends:
   - x86_64/ros/ros-noetic-tf2
   - x86_64/ros/ros-noetic-tf2-ros
   - x86_64/ros/ros-noetic-geometry-msgs
-  - x86_64/ros/orocos-kdl
-  - x86_64/ros/orocos-kdl-python
+  - x86_64/ros/orocos-kdl-git
+  - x86_64/ros/orocos-kdl-python-git
 makedepends:
   - x86_64/ros/ros-build-tools
   - x86_64/ros/ros-noetic-catkin
