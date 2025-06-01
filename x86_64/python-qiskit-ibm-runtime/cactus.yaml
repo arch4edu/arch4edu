@@ -5,6 +5,7 @@ nvchecker:
 depends:
   - x86_64/python-ibm-platform-services
   - x86_64/python-qiskit
+  - x86_64/python-qiskit-aer
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
