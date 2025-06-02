@@ -1,6 +1,9 @@
 nvchecker:
   - source: aur
     aur:
+makedepends:
+  - x86_64/gcc12
+  - x86_64/gcc12: gcc12-libs
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
