@@ -2,28 +2,29 @@
 # Contributor: Víctor Martínez Romanos <vmromanos@gmail.com>
 
 pkgname=qucs
-pkgver=0.0.20_rc2
-_pkgver=0.0.20
-pkgrel=2
+pkgver=0.0.20
+pkgrel=1
 pkgdesc="An integrated circuit simulator with a graphical user interface"
 arch=('x86_64')
-url="http://qucs.sourceforge.net"
+url="https://github.com/Qucs/qucs"
 license=('GPL')
-depends=('gcc-libs' 'qt4' 'adms')
-makedepends=('gperf')
+depends=('gcc-libs' 'qt4')
+makedepends=('cmake')
 optdepends=('freehdl: to permit digital circuit simulation'
 #	    'asco: to enable circuit optimization'
 	    'perl')
-source=("http://downloads.sourceforge.net/project/qucs/qucs/${pkgver%_*}/qucs-${pkgver//_/-}.tar.gz")
-sha256sums=('66cfa0b9f8baa8468feb81b3a15f165e1946511893fa9cfee7009167daa04d19')
+source=("https://github.com/Qucs/qucs/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('a860269540e5e646951ca4aafb732ac91680c48467ede5130683c4e30075b656')
 
 build() {
-  cd "$srcdir"/$pkgname-${_pkgver}
-  ./configure --prefix=/usr --disable-doc
-  make RCC=/usr/bin/rcc-qt4
+    cd "$srcdir"
+    cmake -B build -S "$pkgname-$pkgver" -DCMAKE_BUILD_TYPE='Release' -DCMAKE_INSTALL_PREFIX='/usr'
+    cmake --build build -j`nproc`
 }
 
 package() {
-  cd "$srcdir"/$pkgname-${_pkgver}
-  make DESTDIR="$pkgdir" install
+    cd "$srcdir"
+    DESTDIR="$pkgdir" cmake --install build
 }
+
+epoch=1
