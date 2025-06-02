@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/cminpack
   - x86_64/code-eli-git
   - x86_64/cpptest
 makedepends:
