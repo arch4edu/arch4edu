@@ -1,69 +1,92 @@
-# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Maintainer: rpx <rpx at clearlight dot systems>
+# Contributor: acxz <akashpatel2008 at yahoo dot com>
+# 
+# !! version 3.43.0 currently experiencing crashes with VSPAERO. 
+# You might prefer to use the official binaries, packaged as openvsp-bin in the AUR:
+# https://aur.archlinux.org/packages/openvsp-bin
+# 
+# VSPAERO crashes on a simple wing in vortex lattice mode after ~4 seconds of computation, and crashes immediately in panel mode.
+# Any help finding the problem greatly appreciated.
+
+
+# must use cmake 3.x; will not compile with cmake 4
+# must use gcc 14.2; compile of STEPCODE fails w gcc 15
+
 pkgname=openvsp
-pkgver=3.32.2
+pkgdesc='A parametric aircraft geometry tool'
+pkgver=3.43.0
 pkgrel=1
-pkgdesc='OpenVSP allows the user to create a 3D model of an aircraft defined by
-         common engineering parameters.'
 arch=('i686' 'x86_64')
-url='http://www.openvsp.org'
+url='https://openvsp.org'
 license=('NASA OPEN SOURCE AGREEMENT VERSION 1.3')
-depends=('cblas'
-         'code-eli'
-         'cpptest'
-         'eigen'
-         'fltk'
-         'freeglut'
-         'gcc'
-         'glew'
-         'glm'
-         'libxml2')
-optdepends=('doxygen: generate documentation'
-            'graphviz: generate documentation'
-            'python: python API module'
-            'swig: build interface to APIs')
-makedepends=('cmake' 'unzip')
+depends=(
+  'cblas'
+  'cmake3'
+  'cminpack'
+  'freeglut'
+  'gcc14'
+  'git'
+  'glew'
+  'libxml2'
+  'pandoc'
+  'python'
+  'swig')
+optdepends=(
+  'doxygen: generate documentation'
+  'graphviz: generate documentation')
+makedepends=('cmake3' 'unzip')
+
+#_name=OpenVSP-main
 _name=OpenVSP-OpenVSP_${pkgver}
-source=("${pkgname}-${pkgver}"::"https://github.com/OpenVSP/OpenVSP/archive/OpenVSP_${pkgver}.tar.gz"
-        "format.patch"::"https://patch-diff.githubusercontent.com/raw/OpenVSP/OpenVSP/pull/221.patch")
-sha256sums=('94f2be50d33d792251ee0b1cb455a3ad21bc71c4410aa72d6c3d4b3ba16c8c2d'
-            'SKIP')
+
+source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/OpenVSP/OpenVSP/archive/OpenVSP_${pkgver}.tar.gz")
+sha256sums=('4e3ff1349c858bd6866706024f8ce5578e5165e9019858f30fe5ba4e5b38b09c')
 
 prepare() {
   cd "${srcdir}/${_name}"
-  patch --strip=1 < "${srcdir}/format.patch"
 }
 
 build() {
-
   # Create a build directory
   mkdir -p "${srcdir}/build"
   mkdir -p "${srcdir}/buildlibs"
 
   cd "${srcdir}/buildlibs"
 
+  export CC=/usr/bin/gcc-14
+  export CXX=/usr/bin/g++-14
   cmake ../${_name}/Libraries \
         -DCMAKE_PREFIX_PATH='/usr' \
-        -DVSP_USE_SYSTEM_CPPTEST=true \
-        -DVSP_USE_SYSTEM_LIBXML2=true \
-        -DVSP_USE_SYSTEM_EIGEN=true \
-        -DVSP_USE_SYSTEM_CODEELI=false \
-        -DVSP_USE_SYSTEM_FLTK=true \
-        -DVSP_USE_SYSTEM_GLM=true \
-        -DVSP_USE_SYSTEM_GLEW=true \
+        -DVSP_USE_SYSTEM_ADEPT2=false \
+        -DVSP_USE_SYSTEM_CLIPPER2=false \
         -DVSP_USE_SYSTEM_CMINPACK=false \
-        -DVSP_USE_SYSTEM_LIBIGES=false \
-        -DVSP_USE_SYSTEM_STEPCODE=false \
+        -DVSP_USE_SYSTEM_CODEELI=false \
+        -DVSP_USE_SYSTEM_CPPTEST=false \
+        -DVSP_USE_SYSTEM_DELABELLA=false \
+        -DVSP_USE_SYSTEM_EIGEN=false \
         -DVSP_USE_SYSTEM_EXPRPARSE=false \
-        -DVSP_USE_SYSTEM_TRIANGLE=false
+        -DVSP_USE_SYSTEM_FLTK=false \
+        -DVSP_USE_SYSTEM_GLEW=true \
+        -DVSP_USE_SYSTEM_GLM=false \
+        -DVSP_USE_SYSTEM_LIBIGES=false \
+        -DVSP_USE_SYSTEM_LIBXML2=true \
+        -DVSP_USE_SYSTEM_OPENABF=false \
+        -DVSP_USE_SYSTEM_PINOCCHIO=false \
+        -DVSP_USE_SYSTEM_STEPCODE=false \
+        -DVSP_USE_SYSTEM_TRIANGLE=false \
+        -DCMAKE_BUILD_TYPE=Release
 
-  make
+  make -j8
 
   cd "${srcdir}/build"
 
+  export CC=/usr/bin/gcc-14
+  export CXX=/usr/bin/g++-14
   cmake ../${_name}/src \
-      -DVSP_LIBRARY_PATH="${srcdir}/buildlibs"
+      -DVSP_LIBRARY_PATH="${srcdir}/buildlibs" \
+      -DCMAKE_BUILD_TYPE=Release
 
-  make
+  make -j8
 
   make package
 }
@@ -73,20 +96,29 @@ package() {
   unzip "OpenVSP-${pkgver}-Linux.zip"
   cd "OpenVSP-${pkgver}-Linux"
 
-  # binary
-  mkdir -p ${pkgdir}/usr/bin
-  cp vsp vspaero vspscript vspaero_adjoint vspaero_complex vspaero_opt \
-  vspviewer ${pkgdir}/usr/bin/
-
-  # misc
   mkdir -p ${pkgdir}/usr/share/${pkgname}
+
+  # binaries
+  cp vsp vspaero vspscript vsploads vspaero_adjoint vspaero_complex vspaero_opt vspviewer \
+    ${pkgdir}/usr/share/${pkgname}
+ 
+  # misc
   cp README.md ${pkgdir}/usr/share/${pkgname}
   cp LICENSE ${pkgdir}/usr/share/${pkgname}
-  cp -r CustomScripts ${pkgdir}/usr/share/${pkgname}
+  cp vspIcon.png ${pkgdir}/usr/share/${pkgname}
   cp -r airfoil ${pkgdir}/usr/share/${pkgname}
+  cp -r CustomScripts ${pkgdir}/usr/share/${pkgname}
+  cp -r help ${pkgdir}/usr/share/${pkgname}
   cp -r matlab ${pkgdir}/usr/share/${pkgname}
+  test -d python && cp -r python ${pkgdir}/usr/share/${pkgname}
   cp -r scripts ${pkgdir}/usr/share/${pkgname}
   cp -r textures ${pkgdir}/usr/share/${pkgname}
   cp -r vspaero_ex ${pkgdir}/usr/share/${pkgname}
+
+  # binary symlinks, relative
+  mkdir -p ${pkgdir}/usr/bin
+  cd ${pkgdir}/usr/share/${pkgname}
+  ln -sr vsp vspaero vspscript vsploads vspaero_adjoint vspaero_complex vspaero_opt vspviewer \
+    ${pkgdir}/usr/bin/
 }
 makedepends+=("doxygen" "graphviz" "python" "swig")
