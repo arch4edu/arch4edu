@@ -1,30 +1,47 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
-pkgname='python-rtslib-fb'
+pkgname=python-rtslib-fb
 _pkgname=rtslib-fb
-pkgver=2.1.76
-pkgrel=3
+pkgver=2.2.2
+pkgrel=1
 pkgdesc="free branch version of the LIO target API"
 arch=('any')
-url="https://github.com/open-iscsi/$_pkgname"
+url="https://github.com/open-iscsi/${_pkgname}"
 license=('Apache')
-depends=('python' 'python-six' 'python-pyudev')
-conflicts=('python2-rtslib' 'targetcli-fb<=2.1.fb31')
-makedepends=('python-setuptools' 'python-pyudev')
-source=(
-  "https://github.com/open-iscsi/$_pkgname/archive/v${pkgver}.tar.gz"
-  target.service
-)
-sha512sums=('50bc9f4ebff71cc87fd62036ff9d929fb1e5989be6251b1111904e76a7c026215692dc8930b90552a4ff850c6252338e420fe710993b8c8a0c737b65590a520d'
-            '3c634f1c466d0a8c3dd2b57a230438aaeeb0e66324863a2ded57dd69a2ca5946f83c4ab511766f510f3e63b43aedcf7e368bcf5bc325ee69c016bb0bb2612de5')
+options=()
+depends=('python' 'python-pyudev')
+makedepends=('python' 'python-build' 'python-pip' 'python-pyudev')
+provides=('python-rtslib')
+conflicts=('python-rtslib')
+source=("git+${url}.git#tag=v${pkgver}")
+sha512sums=('996cd5444ccce83697f21c0bbb7c12f1e1950845742b2686157ce6e2c8fb35378403094ff68d0945cff03c2d9f020afc6543539ac8c59bd021828e48c6c20f08')
+
+_pydep1() {
+  if which python >/dev/null 2>&1; then
+    python -c 'import sys; major, minor = sys.version.split(".")[:2]; print(f"python>={major}.{minor}")'
+  else
+    echo "python"
+  fi
+}
+
+_pydep2() {
+  if which python >/dev/null 2>&1; then
+    python -c 'import sys; major, minor = sys.version.split(".")[:2]; print(f"python<{major}.{int(minor)+1}")'
+  else
+    echo "python"
+  fi
+}
+
+build() {
+  cd "$srcdir/$_pkgname"
+
+  python -m build
+}
 
 package() {
-  cd "$srcdir/$_pkgname-$pkgver"
-  python setup.py install --root="$pkgdir/" --optimize=1
-  install -Dm644 doc/targetctl.8 "$pkgdir/usr/share/man/man8/targetctl.8"
-  install -Dm644 doc/saveconfig.json.5 "$pkgdir/usr/share/man/man5/saveconfig.json.5"
-
-  install -dm755 "$pkgdir/etc/target/backup"
-  install -Dm644 "$srcdir/target.service" "$pkgdir/usr/lib/systemd/system/target.service"
+  depends=("$(_pydep1)" "$(_pydep2)" "${depends[@]:1}")
+  cd "$srcdir/$_pkgname"
+  python -m pip install --no-deps --ignore-installed --root="$pkgdir/" dist/${_pkgname/-fb/_fb}-${pkgver}-py3-none-any.whl
 }
 
 # vim:set ts=2 sw=2 et:
+makedepends+=("git")
