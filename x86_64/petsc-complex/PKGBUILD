@@ -9,7 +9,7 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.23.2
+pkgver=3.23.3
 pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
@@ -41,7 +41,7 @@ optdepends=('hypre: support for the hypre sparse system solver'
 install=${_base}.install
 source=(https://web.cels.anl.gov/projects/${_base}/download/release-snapshots/${_base}-lite-${pkgver}.tar.gz
   test_optdepends.sh)
-sha512sums=('172833ec424614935bb745a57c9daec696d61a7d2ab586ec647d66ad897e9d8f0c91abd651b5390020ab692498addeb93c69574aa938ae92a8dedaa07535729b'
+sha512sums=('f05fa640803b999b485a915430d712d0f6838b4570c2c8c11c209cc0fb181c618fb44be3dcb98655fd62039fa6c026f036d408cf4d2c5ae78e60d71abdf29aad'
             '6babb4f04fe8a503743cd0876cf75d8bcf2ebb1cfd2d89bcf10109721335b19f8b1b6ccb27cc8b85ea21597c2f1edd8f30824be614072a6498a6a92e39632468')
 
 _install_dir=/opt/${_base}/${_config}
@@ -108,4 +108,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${_build_dir}/${_petsc_arch}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-makedepends+=("hypre" "mumps" "parmetis-git" "pastix" "triangle")
+makedepends+=("mumps" "parmetis-git" "pastix" "triangle")
