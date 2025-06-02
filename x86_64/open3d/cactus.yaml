@@ -5,6 +5,7 @@ nvchecker:
 depends:
   - x86_64/python-dash
   - x86_64/nanoflann
+group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
