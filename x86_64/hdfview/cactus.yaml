@@ -4,5 +4,7 @@ nvchecker:
 depends:
   - x86_64/hdf4
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  echo 'export HDFLIBS=/opt/hdf4' >> PKGBUILD
 post_build: aur-post-build
