@@ -4,6 +4,8 @@ nvchecker:
 depends:
   - x86_64/code-eli-git
   - x86_64/cpptest
+makedepends:
+  - x86_64/cmake3
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
