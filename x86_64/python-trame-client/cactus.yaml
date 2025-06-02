@@ -2,6 +2,8 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+depends:
+  - x86_64/python-trame-common
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
