@@ -2,7 +2,6 @@ nvchecker:
   - source: aur
     aur:
 makedepends:
-  - x86_64/hypre
   - x86_64/mumps
   - x86_64/parmetis-git
   - x86_64/pastix
