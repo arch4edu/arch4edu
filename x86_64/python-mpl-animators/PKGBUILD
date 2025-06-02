@@ -4,7 +4,7 @@ pkgbase=python-mpl-animators
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=1.2.1
+pkgver=1.2.2
 pkgrel=1
 pkgdesc="An interative animation framework for matplotlib"
 arch=('any')
@@ -20,7 +20,7 @@ makedepends=('python-setuptools-scm>=8.0.0'
              'python-matplotlib'
              'python-sunpy'
              'python-scipy'
-             'ipython'
+#            'ipython'
              'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-doctestplus'
 #             'python-pytest-xdist'
@@ -30,7 +30,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063307_0193_lowres.fits"
 #       'examples-use-local-fits.patch'
 #   )
-md5sums=('f7ef0ed3383245481b395637dae58052')
+md5sums=('735400c7210cc1c6e49da608b8eea302')
 
 get_pyinfo() {
     [[ $1 == "site" ]] && python -c "import site; print(site.getsitepackages()[0])" || \
@@ -60,8 +60,9 @@ check() {
 }
 
 package_python-mpl-animators() {
-    depends=('python-matplotlib>=3.5.0' 'python-astropy>=5.6.0')
-    optdepends=('python-mpl-animators-doc: Documentation for mpl-animators')
+    depends=('python-matplotlib>=3.5.0')
+    optdepends=('python-astropy>=5.3.0: make line or image plots for a numpy array and associated WCS object'
+                'python-mpl-animators-doc: Documentation for mpl-animators')
     cd ${srcdir}/${_pyname}-${pkgver}
 
     install -D -m644 LICENSE.rst -t "${pkgdir}/usr/share/licenses/${pkgname}"
