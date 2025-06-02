@@ -1,30 +1,25 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Jingbei Li <i@jingbei.li>
 _base=installer
 pkgname=pypy3-${_base}
-pkgver=0.5.0
-pkgrel=1
+pkgver=0.7.0
+pkgrel=2
 pkgdesc="A low-level library for installing from a Python wheel distribution"
 arch=(any)
 url="https://${_base}.pypa.io"
 license=(MIT)
 depends=(pypy3)
-makedepends=(pypy3-setuptools python-dephell)
+makedepends=(pypy3-flit-core)
 source=(${_base}-${pkgver}.tar.gz::https://github.com/pypa/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('8731bbf8a51b1094dc87f84575eec07a650988bdeddf205d04cf80a5088eac0d8b2927022864f4011a9562fcaae9f511747e5672f94ec3cce1dccdfa833c4fce')
-
-prepare() {
-  # https://gitlab.archlinux.org/archlinux/packaging/packages/python-installer/-/blob/0.2.3-2/PKGBUILD#L21
-  cd ${_base}-${pkgver}
-  dephell deps convert --from pyproject.toml --to setup.py
-}
+sha512sums=('a509c6ea9d88b8527cce0428ca6109077820cb9aa352967a389012bac40f8ec04039ab73710f4fb32b32ed20affd520ce0ba16ba18d9d380ce0af1f51fe8e2c6')
 
 build() {
   cd ${_base}-${pkgver}
-  pypy3 setup.py build
+  pypy3 -m flit_core.wheel
 }
 
 package() {
   cd ${_base}-${pkgver}
-  pypy3 setup.py install --prefix=/opt/pypy3 --root="$pkgdir" --optimize=1 --skip-build
+  PYTHONPATH=$(find dist -name 'installer-*.whl') pypy3 -m installer --destdir="$pkgdir" dist/${_base}-*.whl
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
