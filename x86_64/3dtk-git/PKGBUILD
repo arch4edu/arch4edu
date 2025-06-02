@@ -3,7 +3,7 @@
 _pkgname=3dtk
 pkgname="$_pkgname-git"
 pkgver=r2382.696d0f4
-pkgrel=1
+pkgrel=2
 pkgdesc='3D Toolkit with algorithms and methods to process 3D point clouds'
 url='https://slam6d.sourceforge.io'
 license=(GPL-3.0-only)
