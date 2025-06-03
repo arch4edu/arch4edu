@@ -1,8 +1,8 @@
 nvchecker:
   - source: aur
     aur:
-depends:
-  - x86_64/mongodb-tools
+makedepends:
+  - x86_64/python-retry
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
