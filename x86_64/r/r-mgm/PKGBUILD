@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=mgm
-_pkgver=1.2-14
+_pkgver=1.2-15
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Estimating Time-Varying k-Order Mixed Graphical Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -24,8 +24,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('153028b85da8ceafb4bfaaf3c7fa410f')
-b2sums=('12ceb3f68807475b174fade5ef6b58cefe8c43c7a25b196a820cb5def7809cf450014bee15acc390178434e7babad11b20757c816e88c24348ca51c87dcb2417')
+md5sums=('b7badca1f84126d6b11dd9f881c5abec')
+b2sums=('f25549c2717113815213afa9ab312ec0c192f5394de2ce65ed849d3f51ed58817617eaf8dd466d2271c09cd6e09e93495aa9be111d07d7013c26e89a0c2d7aef')
 
 build() {
   mkdir build
