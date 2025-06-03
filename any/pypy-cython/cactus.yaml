@@ -1,6 +1,6 @@
 nvchecker:
   - source: aur
-    aur:
+    aur: pypy3-cython
 makedepends:
   - any/pypy3-setuptools
 build_prefix: extra-x86_64
