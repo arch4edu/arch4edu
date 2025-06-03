@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=NetworkToolbox
-_pkgver=1.4.2
+_pkgver=1.4.4
 pkgname=r-${_pkgname,,}
-pkgver=1.4.2
+pkgver=1.4.4
 pkgrel=1
 pkgdesc='Methods and Measures for Brain, Cognitive, and Psychometric Network Analysis'
 arch=('any')
@@ -28,7 +28,7 @@ optdepends=(
   r-googledrive
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c70fab7c5d7f77d2801ab8783ef1da1b3a5abc88f869fdfea555f7a0eb8fcf08')
+sha256sums=('7493462e9269ce74a9c2d5aa853bf85b4160aca021906505bd509a0b51b7ccc7')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
