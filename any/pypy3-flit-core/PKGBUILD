@@ -3,7 +3,7 @@
 _base=flit_core
 pkgname=pypy3-${_base//_/-}
 pkgver=3.12.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A PEP 517 build backend for packages using Flit"
 arch=(any)
 url="https://github.com/pypa/${_base::4}/tree/main/${_base}"
