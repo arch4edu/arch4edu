@@ -4,13 +4,13 @@
 
 
 _cranname=stringi
-_cranver=1.8.4
+_cranver=1.8.7
 pkgname=r-${_cranname,,}
 pkgdesc="Fast and Portable Character String Processing Facilities"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("custom")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
@@ -21,7 +21,7 @@ optdepends=()
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("7c29c7a6fda45e5550dd8012f61cf7903b74bdb5103b95ac4b971741bfb86219d7344f77764da5fc3a4754fffebde99cf0cb59143a24d484679e69d2b1c670d7")
+b2sums=('b798c4589e47dd6d768ff34f0dc57388ad40002589c57f4547995b2a4970d41c035532673c0a17d92740547111be1976707e8e1b69e6a5a74cb9bc76f8172f31')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
