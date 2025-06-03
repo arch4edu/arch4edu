@@ -3,7 +3,7 @@
 _base=installer
 pkgname=pypy3-${_base}
 pkgver=0.7.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A low-level library for installing from a Python wheel distribution"
 arch=(any)
 url="https://${_base}.pypa.io"
