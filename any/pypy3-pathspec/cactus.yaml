@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+makedepends:
+  - any/pypy3-build
+  - any/pypy3-installer
+  - any/pypy3-flit-core
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - any/pypy3-packaging
+  - any/pypy3-pathspec
+  - any/pypy3-pluggy
+  - any/pypy3-trove-classifiers
+makedepends:
+  - any/pypy3-build
+  - any/pypy3-installer
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
