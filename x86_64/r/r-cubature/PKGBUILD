@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=cubature
-_pkgver=2.1.2
+_pkgver=2.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,8 +24,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('58b265fb1c1e55173ea6fbb05eecb11d')
-b2sums=('8d7e267e9fff005f48cd07bde4183d2b79427ba6c01feacf2d4404ef5b794ffd297cf200eddbb0bcae0f130b5a15eb54afbcb82e19a8dd08028add4fb293002c')
+md5sums=('fcb2f2dea08d5b71e3b770b901f15349')
+b2sums=('f4c4cdf7a8f6f2169c593c2c380e169b888570bd0d9a0dd36bf4906a7b869826fcde557304a19de7464907a1f51238a733a44acbbd5e8122e2d88ae541452f8f')
 
 build() {
   mkdir build
