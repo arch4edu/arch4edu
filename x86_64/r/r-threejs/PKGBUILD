@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=threejs
-_pkgver=0.3.3
+_pkgver=0.3.4
 pkgname=r-${_pkgname,,}
-pkgver=0.3.3
-pkgrel=4
+pkgver=0.3.4
+pkgrel=1
 pkgdesc='Interactive 3D Scatter Plots, Networks and Globes'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -22,7 +22,7 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('76c759c8b20fb34f4f7a01cbd1b961296e1f19f4df6dded69aae7f1bca80219c')
+sha256sums=('1c6ba5d78702051ee1dbbcff2866074ddc8ac49f2f3abd4418e608d7c86eb484')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
