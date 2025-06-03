@@ -4,8 +4,9 @@ nvchecker:
 depends:
   - any/pypy3-tomli
 makedepends:
-  - any/pypy3-setuptools
-  - any/python-dephell
+  - any/pypy3-build
+  - any/pypy3-flit-core
+  - any/pypy3-installer
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
