@@ -1,0 +1,40 @@
+# Maintainer: Maks Verver <maks@verver.ch>
+
+pkgname=meson-pypy3
+_name=meson-python
+pkgver=0.17.1
+pkgrel=1
+pkgdesc='Meson PEP 517 Python build backend'
+arch=(any)
+url='https://github.com/mesonbuild/meson-python'
+license=(MIT)
+depends=(meson
+         patchelf
+         pypy3
+         pypy3-packaging
+         pypy3-pyproject-metadata)
+makedepends=(git
+             ninja
+             pypy3-build
+             pypy3-installer)
+optdepends=('python-colorama: colored output')
+source=(git+https://github.com/mesonbuild/$_name#tag=$pkgver
+        remove-meson-dependency.patch)
+sha256sums=('aa4b6f8f90c6e5bdcb6991efdb4e1eed4b9bcc50583c9611375ee589696b5854'
+            'e1c472dcee29d131a8e4e2b5724f97a2ca3394cbac30a6ba864a34d1b759ef1b')
+
+prepare() {
+  cd "$_name"
+  patch -i ../remove-meson-dependency.patch
+}
+
+build() {
+  cd "$_name"
+  pypy3 -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_name"
+  pypy3 -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
+}
