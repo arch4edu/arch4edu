@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=networktools
-_pkgver=1.5.2
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
-pkgver=1.5.2
+pkgver=1.6.0
 pkgrel=1
 pkgdesc='Tools for Identifying Important Nodes in Networks'
 arch=('any')
@@ -29,7 +29,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('877045b0560007df40a476f60cb871e05d6264bf6bd49d1e3ddb9668992d5870')
+sha256sums=('759d35ca5489ee99d1dc8b9a110da0ba50a44e067c969f7c6f1e138c0a1f8916')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
