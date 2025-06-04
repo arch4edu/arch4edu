@@ -1,0 +1,46 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=bench
+_pkgver=1.1.4
+pkgname=r-${_pkgname,,}
+pkgver=1.1.4
+pkgrel=1
+pkgdesc='High Precision Timing of R Expressions'
+arch=('x86_64')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('MIT')
+depends=(
+  r
+  r-glue
+  r-pillar
+  r-profmem
+  r-rlang
+  r-tibble
+)
+optdepends=(
+  r-covr
+  r-dplyr
+  r-forcats
+  r-ggbeeswarm
+  r-ggplot2
+  r-ggridges
+  r-parallel
+  r-scales
+  r-testthat
+  r-tidyr
+  r-vctrs
+  r-withr
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('b822f5b7648deecc6b516dcca4e932ce92e65eb166b997b04355218aceb1d083')
+
+build() {
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -Dm644 "${_pkgname}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}
+# vim:set ts=2 sw=2 et:
