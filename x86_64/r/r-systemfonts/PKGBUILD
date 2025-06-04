@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=systemfonts
-_pkgver=1.1.0
+_pkgver=1.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,6 +14,7 @@ license=('MIT')
 depends=(
   fontconfig
   freetype2
+  r-jsonlite
   r-lifecycle
 )
 makedepends=(
@@ -25,13 +26,14 @@ checkdepends=(
 )
 optdepends=(
   r-covr
+  r-farver
   r-knitr
   r-rmarkdown
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4d61e295aec92fe75f388ad4b4c67736')
-b2sums=('8acce59de344ab51f3129457a0e67396fcb7259f64deb2288284a14a1a2871a0d8c8f3e86e1363ecccaef2b96d54018cf7086a8c31b118387a864cacd5e05b69')
+md5sums=('d106198eb1265eb1ab6114e080667e43')
+b2sums=('bb600545beaa6a5d0dcab780f91aea9e61575b8ee303551a5b3462afee1941f523f1050cc6e68f63a2d353e80e7dec7a61cc13a0b4b574624d21375ad6c3fe8c')
 
 build() {
   mkdir build
