@@ -3,7 +3,7 @@
 _base=build
 pkgname=pypy3-${_base}
 pkgver=1.2.2.post1
-pkgrel=3
+pkgrel=4
 pkgdesc="A simple, correct PEP 517 build frontend"
 arch=(any)
 url="https://${_base}.pypa.io"
@@ -21,7 +21,5 @@ build() {
 package() {
   cd ${_base}-${pkgver}
   pypy3 -m installer --destdir="$pkgdir" dist/*.whl
-  mkdir -p "$pkgdir/usr"
-  mv "${pkgdir}/opt/pypy3/bin" "$pkgdir/usr/bin"
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
