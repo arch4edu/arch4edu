@@ -2,7 +2,7 @@
 
 pkgname=meson-pypy3
 _name=meson-python
-pkgver=0.17.1
+pkgver=0.18.0
 pkgrel=1
 pkgdesc='Meson PEP 517 Python build backend'
 arch=(any)
@@ -20,8 +20,8 @@ makedepends=(git
 optdepends=('python-colorama: colored output')
 source=(git+https://github.com/mesonbuild/$_name#tag=$pkgver
         remove-meson-dependency.patch)
-sha256sums=('aa4b6f8f90c6e5bdcb6991efdb4e1eed4b9bcc50583c9611375ee589696b5854'
-            'e1c472dcee29d131a8e4e2b5724f97a2ca3394cbac30a6ba864a34d1b759ef1b')
+sha256sums=('8a63df1fc44d72efa737405eef4bf4e395252305cfc19c20974c3dd50e0fa9a2'
+            '2decf6c12ef1646bacd6bf733ff313cb4d43c8214a18ff68b0d66cc55685571e')
 
 prepare() {
   cd "$_name"
