@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=mvnormalTest
-_pkgver=1.0.0
+_pkgver=1.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Powerful Tests for Multivariate Normality"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -18,8 +18,8 @@ optdepends=(
   r-knitr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f3525fd9bd8d908ba0b2201a3f147039')
-b2sums=('66e8dd404ea7e16f42e286f5432ec9993f4fade45795823258e81087b7f2fe048b2b94ec650a61d7ee9453689f2fad916b412416d081ba07186ec042b884ac8b')
+md5sums=('18d1f16b8894d68709dbfc21946268d1')
+b2sums=('cf6f483da467fcffc092c7f4d2a3342a75bb41c1ada66b8a5084045122851a3825f3bc3a6aa2315e85e529d7ca3e67e57337991022263fc53422be0e9a92403a')
 
 build() {
   mkdir build
