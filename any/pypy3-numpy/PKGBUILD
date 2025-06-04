@@ -2,7 +2,7 @@
 
 pkgname=pypy3-numpy
 pkgver=2.2.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Scientific tools for Python"
 arch=('x86_64')
 license=('custom')
