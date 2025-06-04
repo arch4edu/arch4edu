@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=geometry
-_pkgver=0.5.1
+_pkgver=0.5.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -32,8 +32,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b6036e184b8506546f09f240d2039b22')
-b2sums=('82347a9706ed7acfccbcffa713ff40bcc94c475d13738516a720b2b1b27f989c7dd3f0bfbdf833027c9bf1604cb0e9fd0e0bfe4374aa337e27b628ba35d289e8')
+md5sums=('72cc9f62c17a6b4d8bfde82c8657bc0d')
+b2sums=('de2192a9f97ac81eddbcd9c352e7672e6372b622819decfa9c0cfee1cdeae3d20602b07c333ab2e61bda3931ef88c3e5d19889c70ae7589c90b9d3992be4ca51')
 
 prepare() {
   cd "$_pkgname/src"
