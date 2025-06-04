@@ -10,5 +10,7 @@ depends:
   - x86_64/r/r-zip
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace-pkgbuild _pkgver=0.6.8 _pkgver=0.6.10 && updpkgsums || :
 post_build: aur-post-build
