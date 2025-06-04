@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=clock
-_pkgver=0.7.2
+_pkgver=0.7.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,8 +34,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('762d8374cd6998be0c059861f4de8bcb')
-b2sums=('35cf1314f21553a3689e4104c43ba9edc78ad4d517082e9880eee99bd5599e87e93afadb684c2a2a8663279ae36e271eb560f2d6cccfab4da18882bf21cb0c38')
+md5sums=('b36cd42425d9726470c1ce71715ef746')
+b2sums=('c76511df132d9b247528acfee433668062feff16bbb927604a35ba729dfb14156502e7acafff1c5886d7a9ddb037475a66e34e8b63e92b9c2f7572135cbaf9e2')
 
 build() {
   mkdir build
