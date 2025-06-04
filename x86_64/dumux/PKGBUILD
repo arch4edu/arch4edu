@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dumux
-_dunever=2.9.0
-_tarver=3.9.0
+_dunever=2.10.0
+_tarver=3.10.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
 pkgrel=2
@@ -19,12 +19,13 @@ optdepends=('dune-alugrid: for grid manager ALUGrid support'
   'dune-spgrid: for grid manager SPGrid support'
   'dune-mmesh: for grid manager MMesh support')
 source=(https://git.iws.uni-stuttgart.de/${pkgname}-repositories/${pkgname}/-/archive/${_tar})
-sha512sums=('35f66dd898568deb0bed8e6a4a455b0233146970ae6eb6f2528ecb613405f331a9614615580ba464455fb96fb45bd93d0a44c7c37c6dca812fc7f4a0f0dc12af')
+sha512sums=('4f285e359fc999949ec347390bcc6feb5c291d10e974a720d1f1468a771177d231240da6094c2fa3941adb799ccd097fc58376c20fc7d0fd9518fa21ef0f6f01')
 
 prepare() {
   cd ${pkgname}-${pkgver}
   export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
   sed -i 's/^Version: '"${pkgver%%.0}"'/Version: '"${pkgver}"'/' dune.module
+  sed -i "s/'requests',/'requests', 'dune-geometry',/" pyproject.toml
   sed -i 's/"python"/"\/usr\/include\/dumux\/common\/"/' python/dumux/common/properties.py
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
