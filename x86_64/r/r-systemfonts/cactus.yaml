@@ -5,6 +5,7 @@ depends:
   - x86_64/r/r-jsonlite
   - x86_64/r/r-lifecycle
 makedepends:
+  - x86_64/r/r-base64enc
   - x86_64/r/r-cpp11
   - x86_64/r/r-testthat
 build_prefix: extra-x86_64
