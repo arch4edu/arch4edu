@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=rvg
-_pkgver=0.3.4
+_pkgver=0.3.5
 pkgname=r-${_pkgname,,}
-pkgver=0.3.4
+pkgver=0.3.5
 pkgrel=1
 pkgdesc='R Graphics Devices for Vector Graphics Output'
 arch=('x86_64')
@@ -22,7 +22,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a057c30f00e11592c1d65c892ec9c99131eddc2600793024d184c4be881e2768')
+sha256sums=('80917103dbdba98d46c052106d8ee0e97c093feb07fea25bda2a34d3e5c601f0')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
