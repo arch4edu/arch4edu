@@ -2,8 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-cpp11
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-stringi
   - x86_64/r/r-systemfonts
+makedepends:
+  - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
