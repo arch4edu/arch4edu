@@ -9,11 +9,13 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-ggrepel
   - x86_64/r/r-gridextra
+  - x86_64/r/r-gsignal
   - x86_64/r/r-igraph
   - x86_64/r/r-matrixstats
   - x86_64/r/r-rarpack
   - x86_64/r/r-rcolorbrewer
   - x86_64/r/r-reshape2
+  - x86_64/r/r-rgl
   - x86_64/r/r-tidyr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

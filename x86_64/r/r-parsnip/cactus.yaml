@@ -19,7 +19,9 @@ depends:
   - x86_64/r/r-tidyr
   - x86_64/r/r-vctrs
   - x86_64/r/r-withr
+  - x86_64/r/r-sparsevctrs
 makedepends:
+  - x86_64/r/r-bench
   - x86_64/r/r-c50
   - x86_64/r/r-dials
   - x86_64/r/r-earth
@@ -31,7 +33,6 @@ makedepends:
   - x86_64/r/r-modeldata
   - x86_64/r/r-partykit
   - x86_64/r/r-ranger
-  - x86_64/r/r-tensorflow
   - x86_64/r/r-testthat
   - x86_64/r/r-xgboost
 build_prefix: extra-x86_64
