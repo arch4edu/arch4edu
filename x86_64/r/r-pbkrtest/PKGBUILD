@@ -3,7 +3,7 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=pbkrtest
-_pkgver=0.5.3
+_pkgver=0.5.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,8 +23,8 @@ optdepends=(
   r-markdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d4501121ded98c6ced803b89c7abe4d9')
-b2sums=('1d88cd24b7e28cb06de11b7d74d36cd46aa3b474c19ce1e960e18eaa5bbe304fa5f89e2df95971faef797f60ff571878dfbf546f088cd032577cb84e0a8c50d5')
+md5sums=('db9c2cb28d888f5d6bf4c969dee705a6')
+b2sums=('145c5dd9d9673a3aaec13842ebbcb6cbc9539ee215843f63cd63123c711f176f1c6d8090a5ea86635a9e33448e31261f50458f6b0fddbb811e0d893f65076ac5')
 
 build() {
   mkdir build
