@@ -7,7 +7,7 @@ _base=cython
 pkgbase=pypy-${_base}
 pkgname=pypy3-cython
 pkgver=3.1.1
-pkgrel=2
+pkgrel=3
 pkgdesc="C-Extensions for PyPy"
 arch=(i686 x86_64)
 url="https://${_base}.org"
@@ -19,15 +19,7 @@ sha512sums=('5c64b5d280b234d93d02e91ab22567342350671c605df30a3ac7b41b64e0605eb0a
 package_pypy3-cython() {
   depends=(pypy3)
 
-  cd "${srcdir}/${_base}-${pkgver}"
+  cd "${srcdir}"/${_base}-${pkgver}
   pypy3 setup.py install --prefix=/opt/pypy3 --root="${pkgdir}" --optimize=1
-
-  mkdir -p "$pkgdir/usr"
-  mv "$pkgdir/opt/pypy3/bin" "$pkgdir/usr/bin"
-  cd "$pkgdir/usr/bin"
-
-  sed -i 's|#!.*python|#!/usr/bin/pypy3|' *
-  for i in cython cythonize cygdb; do
-    mv $i $i-pypy3
-  done
+  sed -i 's|#!.*python|#!/usr/bin/pypy3|' "${pkgdir}"/opt/pypy3/bin/*
 }
