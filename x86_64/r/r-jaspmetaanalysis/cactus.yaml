@@ -20,6 +20,12 @@ depends:
   - x86_64/r/r-robma
   - x86_64/r/r-metamisc
   - x86_64/r/r-ggmcmc
+  - x86_64/r/r-clubsandwich
+  - x86_64/r/r-compquadform
+  - x86_64/r/r-sp
+  - x86_64/r/r-dfoptim
+  - x86_64/r/r-nleqslv
+  - x86_64/r/r-patchwork
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -1,0 +1,22 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-sandwich
+makedepends:
+  - x86_64/r/r-aer
+  - x86_64/r/r-cardata
+  - x86_64/r/r-geepack
+  - x86_64/r/r-ivreg
+  - x86_64/r/r-lme4
+  - x86_64/r/r-metadat
+  - x86_64/r/r-metafor
+  - x86_64/r/r-mlmrev
+  - x86_64/r/r-plm
+  - x86_64/r/r-robumeta
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

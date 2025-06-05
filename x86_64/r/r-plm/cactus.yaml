@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bdsmatrix
+  - x86_64/r/r-collapse
+  - x86_64/r/r-formula
+  - x86_64/r/r-lmtest
+  - x86_64/r/r-maxlik
+  - x86_64/r/r-rdpack
+  - x86_64/r/r-sandwich
+  - x86_64/r/r-zoo
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

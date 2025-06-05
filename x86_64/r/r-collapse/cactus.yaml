@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-rcpp
+makedepends:
+  - x86_64/r/r-data.table
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-fixest
+  - x86_64/r/r-kit
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

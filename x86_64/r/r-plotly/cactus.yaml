@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-base64enc
+  - x86_64/r/r-crosstalk
+  - x86_64/r/r-data.table
+  - x86_64/r/r-digest
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-htmltools
+  - x86_64/r/r-htmlwidgets
+  - x86_64/r/r-httr
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-lazyeval
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-promises
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rcolorbrewer
+  - x86_64/r/r-rlang
+  - x86_64/r/r-scales
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-vctrs
+  - x86_64/r/r-viridislite
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

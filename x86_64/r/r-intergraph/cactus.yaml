@@ -2,10 +2,8 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-survminer
-  - x86_64/r/r-jaspbase
-  - x86_64/r/r-jaspgraphs
-  - x86_64/r/r-ggsurvfit
+  - x86_64/r/r-igraph
+  - x86_64/r/r-network
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

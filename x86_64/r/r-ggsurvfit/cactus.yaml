@@ -2,14 +2,14 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-blavaan
-  - x86_64/r/r-dagitty
+  - x86_64/r/r-broom
+  - x86_64/r/r-cli
+  - x86_64/r/r-dplyr
   - x86_64/r/r-ggplot2
-  - x86_64/r/r-ggraph
-  - x86_64/r/r-jaspbase
-  - x86_64/r/r-jaspgraphs
-  - x86_64/r/r-jaspjags
-  - x86_64/r/r-runjags
+  - x86_64/r/r-glue
+  - x86_64/r/r-gtable
+  - x86_64/r/r-patchwork
+  - x86_64/r/r-tidyr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

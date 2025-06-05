@@ -7,6 +7,7 @@ depends:
   - x86_64/r/r-car
   - x86_64/r/r-colorspace
   - x86_64/r/r-emmeans
+  - x86_64/r/r-effectsize
   - x86_64/r/r-ggplot2
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspdescriptives
@@ -14,6 +15,8 @@ depends:
   - x86_64/r/r-jaspttests
   - x86_64/r/r-matrixstats
   - x86_64/r/r-multcomp
+  - x86_64/r/r-multcompview
+  - x86_64/r/r-mvshapirotest
   - x86_64/r/r-onewaytests
   - x86_64/r/r-plyr
   - x86_64/r/r-stringi

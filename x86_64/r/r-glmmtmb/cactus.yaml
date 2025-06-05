@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-lme4
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-reformulas
+  - x86_64/r/r-tmb
+makedepends:
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-ade4
+  - x86_64/r/r-ape
+  - x86_64/r/r-car
+  - x86_64/r/r-effects
+  - x86_64/r/r-emmeans
+  - x86_64/r/r-pscl
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
