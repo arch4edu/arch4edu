@@ -1,1 +1,9 @@
-../../../template/x86_64-nocheck.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace-pkgbuild _pkgver=1.2.0 && updpkgsums || :
+post_build: aur-post-build
