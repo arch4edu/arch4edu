@@ -3,7 +3,7 @@
 _base=scipy
 pkgname=pypy3-${_base}
 pkgver=1.15.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Fundamental algorithms for scientific computing in Python"
 arch=(x86_64)
 url="https://${_base}.org"
