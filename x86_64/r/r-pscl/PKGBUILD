@@ -1,0 +1,37 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=pscl
+_pkgver=1.5.9
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Political Science Computational Laboratory"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
+depends=(
+  r
+)
+optdepends=(
+  r-car
+  r-coda
+  r-lmtest
+  r-mcmcpack
+  r-mvtnorm
+  r-sandwich
+  r-vcd
+  r-zoo
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('c1a5bf7879e59bdc0889ee599e6c1375')
+b2sums=('d1800ec57acf711d53ea903e8aff7d5ca2835f11db7004a3a4b25d34afe625fcdaff08052c1722ce1d8c71e80ba4f67b7a05d86fc5cac0979ba730446f967e8f')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+}
