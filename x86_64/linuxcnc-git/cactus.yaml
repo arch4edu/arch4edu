@@ -4,8 +4,6 @@ nvchecker:
   - source: github
     github: LinuxCNC/linuxcnc
   - alias: python
-depends:
-  - x86_64/libmodbus
 makedepends:
   - any/bwidget
   - any/linkchecker
