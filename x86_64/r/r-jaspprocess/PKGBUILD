@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspProcess
-_pkgver=0.18.3
+_pkgver=0.19.3
 pkgname=r-${_pkgname,,}
-pkgver=0.18.3
+pkgver=0.19.3
 pkgrel=1
 pkgdesc="Process Module required by JASP"
 arch=('any')
@@ -10,14 +10,17 @@ url="https://github.com/jasp-stats/${_pkgname}"
 license=('GPL')
 depends=(
   r
+  r-blavaan
   r-dagitty
   r-ggplot2
   r-ggraph
   r-jaspbase
   r-jaspgraphs
+  r-jaspjags
+  r-runjags
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('42f9b489a2b4588559505c6bcf5636a99cf0c82a57bc89f54c96dbac29bc0c1d')
+sha256sums=('38b4abedecc3d5816fbbb82d66b67d7bca54d1f1fa98b202239fbaacd271cf04')
 
 
 build() {
