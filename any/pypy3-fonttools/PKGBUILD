@@ -2,7 +2,7 @@
 _base=fonttools
 pkgname=pypy3-${_base}
 pkgdesc="Tools to manipulate font files"
-pkgver=4.58.1
+pkgver=4.58.2
 pkgrel=1
 arch=(any)
 url="https://github.com/${_base}/${_base}"
@@ -10,7 +10,7 @@ license=(MIT)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-setuptools pypy3-cython)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('f5b810668dca7ffca943fc362616784d1aecbd8f036925b2f8acb2d80997c26cf8c8127814f31f1a62bcf062d83c4a8b76ee022a146d5c2b8693cd1750732545')
+sha512sums=('f78026457be3d75be89ec6788309fc5cab9d9987b5c438bffe7059a78b5d688b6fb9a94dca9636f4c28d44a60f36cdd24bbdf1d32197d63e79b99f3108ce32a5')
 
 build() {
   cd ${_base}-${pkgver}
