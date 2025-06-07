@@ -1,7 +1,7 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
 pkgname=python-rtslib-fb
 _pkgname=rtslib-fb
-pkgver=2.2.2
+pkgver=2.2.3
 pkgrel=1
 pkgdesc="free branch version of the LIO target API"
 arch=('any')
@@ -13,7 +13,7 @@ makedepends=('python' 'python-build' 'python-pip' 'python-pyudev')
 provides=('python-rtslib')
 conflicts=('python-rtslib')
 source=("git+${url}.git#tag=v${pkgver}")
-sha512sums=('996cd5444ccce83697f21c0bbb7c12f1e1950845742b2686157ce6e2c8fb35378403094ff68d0945cff03c2d9f020afc6543539ac8c59bd021828e48c6c20f08')
+sha512sums=('c3d249d2b965d155860fbf77b57b99cb5f78fd325ae38ba65fbecb7853cf03a48e983e16ba23e4e8c5f33fac8fd29d58b11e3305e563d380c632bc96f32b17a7')
 
 _pydep1() {
   if which python >/dev/null 2>&1; then
