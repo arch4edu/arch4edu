@@ -4,10 +4,10 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=future.apply
-_pkgver=1.11.3
+_pkgver=1.20.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Apply Function to Elements in Parallel using Futures"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -22,8 +22,8 @@ optdepends=(
   r-r.rsp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('264da036546e5c295724d130c2be3ce9')
-b2sums=('da916f440caa59695b9abb348cfc1d0621e2014e1992e3ea13044ce8baa9ddd200a8da489fa6a319916b1e589231a317ba0b71cce317f54fde4473a1f3f78526')
+md5sums=('49fbb87784f16d304d136a4e469deaf0')
+b2sums=('cfc47bda8b14501e296e0d03f9ab9df54111f6f045fa3316e1207a66cdf7010dcbf89839b9f026d8aced98d407fa268058ed70a17acd03139ca6ef08e4a91522')
 
 build() {
   mkdir build
