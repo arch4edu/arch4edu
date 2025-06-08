@@ -1,9 +1,0 @@
---- a/include/LIEF/PE/ResourceNode.hpp
-+++ b/include/LIEF/PE/ResourceNode.hpp
-@@ -19,6 +19,7 @@
- #include <vector>
- #include <memory>
-+#include <cstdint>
-
- #include "LIEF/Object.hpp"
- #include "LIEF/visibility.h"

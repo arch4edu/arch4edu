@@ -1,9 +1,5 @@
-# Maintainer: Xeonacid <h.dwwwwww dot gmail.com>
-# Maintainer: Luis Martinez <luis dot martinez at disroot dot org>
-# Contributor: Dobroslaw Kijowski [dobo] <dobo90_at_gmail.com>
-
 pkgname=lief
-pkgver=0.16.5
+pkgver=0.16.6
 pkgrel=1
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
@@ -41,10 +37,8 @@ makedepends=(
 provides=(libLIEF.so)
 source=(
 	"lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz"
-	fix-missing-headers.patch
 )
-sha256sums=('10ef46bc958d7936feb155040c874504ab0bd40dc59b4678f807691ccd0d138f'
-            'eea63ef3250abcda3a684925c5db6bcd592e52f3af75ef97d488bcb7b5735a6e')
+sha256sums=('20bae0130c98d6b29a8a7853f6a0f270398b277f12c3673164b08563cbd18e0c')
 
 prepare() {
   cd "LIEF-$pkgver"
