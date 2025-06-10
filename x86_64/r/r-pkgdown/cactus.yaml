@@ -26,5 +26,5 @@ build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
-  replace-pkgbuild _pkgver=2.1.2 _pkgver=2.1.3 && updpkgsums || :
+  replace -u _pkgver=2.1.2 _pkgver=2.1.3
 post_build: aur-post-build
