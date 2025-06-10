@@ -4,7 +4,7 @@
 
 pkgname=scalapack
 pkgver=2.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Subset of scalable LAPACK routines redesigned for distributed memory computers'
 arch=(i686 x86_64 aarch64)
 url=http://www.netlib.org/scalapack
@@ -24,8 +24,13 @@ build() {
         -D SCALAPACK_BUILD_TESTS:BOOL=OFF \
         -D CMAKE_BUILD_TYPE:STRING=Release \
         -D CMAKE_Fortran_FLAGS:STRING="$FCFLAGS -fallow-argument-mismatch" \
-        -D CMAKE_C_FLAGS:STRING="$CFLAGS -Wno-implicit-function-declaration"
+        -D CMAKE_C_FLAGS:STRING="$CFLAGS -Wno-implicit-function-declaration" \
+        -D CMAKE_C_STANDARD:STRING="17"
   make -C build
+}
+
+prepare() {
+  sed -i 's/cmake_minimum_required(VERSION 2.8)/cmake_minimum_required(VERSION 3.6)/g' ${pkgname}-${pkgver}/BLACS/INSTALL/CMakeLists.txt
 }
 
 package(){
