@@ -7,5 +7,7 @@ depends:
   - x86_64/r/r-insight
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace -u _pkgver=0.24.2 _pkgver=0.26.0
 post_build: aur-post-build
