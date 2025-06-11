@@ -29,6 +29,7 @@ depends:
   - x86_64/r/r-rtsne
   - x86_64/r/r-signal
   - x86_64/r/r-kknn
+  - x86_64/r/r-vgam
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -37,5 +37,7 @@ makedepends:
   - x86_64/r/r-xgboost
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace -u _pkgver=1.3.1 _pkgver=1.3.2
 post_build: aur-post-build
