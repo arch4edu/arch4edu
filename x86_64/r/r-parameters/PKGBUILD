@@ -1,0 +1,153 @@
+# Maintainer: Hu Butui <hot123tea123@gmail.com>
+
+_pkgname=parameters
+_pkgver=0.26.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Processing of Model Parameters"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
+depends=(
+  r-bayestestr
+  r-datawizard
+  r-insight
+)
+optdepends=(
+  r-aer
+  r-afex
+  r-aod
+  r-bayesfactor
+  r-bayesfm
+  r-bbmle
+  r-betareg
+  r-bh
+  r-biglm
+  r-blme
+  r-brglm2
+  r-brms
+  r-broom
+  r-broom.mixed
+  r-caic4
+  r-car
+  r-cardata
+  r-cgam
+  r-classdiscovery
+  r-clubsandwich
+  r-cobalt
+  r-coda
+  r-coxme
+  r-cplm
+  r-dbscan
+  r-did
+  r-distributional
+  r-domir
+  r-drc
+  r-drr
+  r-effectsize
+  r-eganet
+  r-emmeans
+  r-epir
+  r-estimatr
+  r-factoextra
+  r-factominer
+  r-faraway
+  r-fastica
+  r-fixest
+  r-fpc
+  r-gam
+  r-gamlss
+  r-gee
+  r-geepack
+  r-ggeffects
+  r-ggplot2
+  r-glmmadaptive
+  r-glmmtmb
+  r-glmtoolbox
+  r-gparotation
+  r-gt
+  r-haven
+  r-hmisc
+  r-httr2
+  r-ivreg
+  r-knitr
+  r-lavaan
+  r-lfe
+  r-lm.beta
+  r-lme4
+  r-lmertest
+  r-lmtest
+  r-logistf
+  r-logspline
+  r-lqmm
+  r-m3c
+  r-marginaleffects
+  r-mclogit
+  r-mclust
+  r-mcmcglmm
+  r-mediation
+  r-merderiv
+  r-metabma
+  r-metafor
+  r-mfx
+  r-mice
+  r-mmrm
+  r-multcomp
+  r-mumin
+  r-nbclust
+  r-nestedlogit
+  r-nfactors
+  r-openxlsx
+  r-ordinal
+  r-panelr
+  r-pbkrtest
+  r-pcdimension
+  r-performance
+  r-plm
+  r-pmcmrplus
+  r-poorman
+  r-posterior
+  r-proreg
+  r-pscl
+  r-psych
+  r-pvclust
+  r-quantreg
+  r-randomforest
+  r-rcppeigen
+  r-rmarkdown
+  r-rms
+  r-rstan
+  r-rstanarm
+  r-sandwich
+  r-see
+  r-serp
+  r-sparsepca
+  r-survey
+  r-svylme
+  r-testthat
+  r-tidyselect
+  r-tinytable
+  r-tmb
+  r-truncreg
+  r-vdiffr
+  r-vgam
+  r-weightit
+  r-withr
+  r-wrs2
+  r-logitr
+  r-modelbased
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('7671f14af477a1ca40326530e1bcd344')
+b2sums=('88b6ddfaf8e28a3632840528184ae9b967d69a9f3fd446c6b4a147c5333b3982efbecb7d5e466180ad8b5abfba43c1dbe2af6078f6171e893e6d04c6eff14f3e')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+}
