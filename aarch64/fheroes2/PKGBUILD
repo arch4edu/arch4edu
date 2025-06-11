@@ -1,5 +1,5 @@
 pkgname=fheroes2
-pkgver=1.1.8
+pkgver=1.1.9
 pkgrel=1
 pkgdesc="Recreation of the Heroes of Might and Magic II game engine"
 arch=('i686' 'x86_64' 'armv7h')
@@ -24,7 +24,7 @@ optdepends=(
 source=(
   "$pkgname-$pkgver.tar.gz::https://github.com/ihhub/$pkgname/archive/$pkgver.tar.gz"
 )
-sha256sums=('a1a0fd0289f7a95a65ca15b967056ecfaec574621ad288f05fceb52d237e49d4')
+sha256sums=('b343f9737b9cf75846192db8defeda254b2184ff7dd83f674581fa10ce8f38ed')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -43,8 +43,6 @@ package() {
   cd "$pkgname-$pkgver"
 
   DESTDIR="$pkgdir" cmake --install build
-
-  install -dm755 "$pkgdir/usr/share/fheroes2/maps"
 
   install -Dm644 docs/fheroes2.6 "$pkgdir/usr/share/man/man6/fheroes2.6"
 }
