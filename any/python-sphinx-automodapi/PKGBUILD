@@ -4,7 +4,7 @@ pkgbase=python-sphinx-automodapi
 _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=0.19.0
+pkgver=0.20.0
 pkgrel=1
 pkgdesc="Sphinx extension for generating API documentation."
 arch=('any')
@@ -20,7 +20,7 @@ checkdepends=('python-pytest'
               'cython'
               'graphviz') # sphinx already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('c65d68269e276b440bfa5d0687b12413fd56685e9694ea266437f0f553c0413b')
+sha256sums=('24cc97323f163aeefcefb9bdae9cd0a8ea7b699ece34feab116a2557a44949ac')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
