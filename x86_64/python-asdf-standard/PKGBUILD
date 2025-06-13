@@ -5,7 +5,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
-pkgver=1.2.0
+pkgver=1.3.0
 pkgrel=1
 pkgdesc="Standards document describing ASDF, Advanced Scientific Data Format"
 arch=('any')
@@ -24,7 +24,7 @@ makedepends=('python-setuptools-scm'
 #              'python-asdf'
 #)
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('95520d24aa9c69fb26527cb6e5b1a682')
+md5sums=('fdf10fc5acc7f4de214a3082515c5f17')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
