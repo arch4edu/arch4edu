@@ -16,7 +16,7 @@
 +    ...         specdata = f[1].data  # doctest: +REMOTE_DATA
  
      Then we re-format this dataset into astropy quantities, and create a
-     `~specutils.Spectrum1D` object:
+     `~specutils.Spectrum` object:
 --- a/docs/manipulation.rst	2023-03-18 03:59:09.000000000 +0800
 +++ b/docs/manipulation.rst	2023-04-07 15:02:42.363989130 +0800
 @@ -181,9 +181,13 @@
@@ -35,7 +35,7 @@
 +    ...         specdata = f[1].data[1020:1250]  # doctest: +REMOTE_DATA
  
      Then we re-format this dataset into astropy quantities, and create a
-     `~specutils.Spectrum1D` object:
+     `~specutils.Spectrum` object:
 --- a/docs/spectral_cube.rst	2023-03-28 02:13:36.000000000 +0800
 +++ b/docs/spectral_cube.rst	2023-04-07 14:50:15.832279576 +0800
 @@ -180,7 +180,8 @@
@@ -45,6 +45,6 @@
 -    fn = download_file(filename, cache=True)
 +    try: fn = download_file(filename, cache=True)
 +    except Exception: fn = "28a88k1qfipo4yxc4p4d40v4axtlal8y.fits"  # use local fits if not network when doc building
-     spec1d = Spectrum1D.read(fn)
+     spec1d = Spectrum.read(fn)
  
      # Extract H-alpha sub-cube for moment maps using spectral_slab
