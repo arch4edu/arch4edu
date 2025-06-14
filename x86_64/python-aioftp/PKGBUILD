@@ -4,7 +4,7 @@ pkgbase=python-aioftp
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.25.1
+pkgver=0.25.2
 pkgrel=1
 pkgdesc="ftp client/server for asyncio"
 arch=('any')
@@ -22,7 +22,7 @@ checkdepends=('python-pytest-asyncio'
               'python-trustme'
               'python-siosocks')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('4d2fb0b77d3fda4282cffcd05ba70567d8940cd9fdeedf10bdf788a001208016')
+sha256sums=('8402efe0d4783b9c4d6787446d5e027abe79796951f227241bd2c5d8f3e09d0b')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -39,9 +39,10 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    ln -rs ${srcdir}/${_pyname}-${pkgver}/src/${_pyname/-/_}*egg-info \
-        build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
-    PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
+#   ln -rs ${srcdir}/${_pyname}-${pkgver}/src/${_pyname/-/_}*egg-info \
+#       build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
+#   PYTHONPATH="build/lib" pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 # || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
+    PYTHONPATH="src" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-aioftp() {
