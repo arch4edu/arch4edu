@@ -3,7 +3,7 @@
 pkgbase=python-ndcube
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2.3.1
+pkgver=2.3.2
 pkgrel=1
 pkgdesc="Package for multi-dimensional contiguious and non-contiguious coordinate aware arrays"
 arch=('any')
@@ -43,7 +43,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063305_1600_lowres.fits"
 #       "https://github.com/sunpy/ndcube/raw/main/changelog/README.rst"
 #)
-md5sums=('24e8d571e5c703cc00d26517243af480')
+md5sums=('7e7723faec8f5ab4bca08d5a2dee9296')
 #        'SKIP')
 
 #prepare() {
@@ -73,7 +73,7 @@ build() {
 #check() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
 #
-#    pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count # -Wdefault
+#    pytest -vv -l -ra --color=yes -o console_output_style=count -Wdefault -p xdist -n 4 #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count # -Wdefault
 #}
 
 package_python-ndcube() {
