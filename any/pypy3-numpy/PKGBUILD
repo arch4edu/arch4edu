@@ -1,8 +1,8 @@
 # Maintainer: Maks Verver <maks@verver.ch>
 
 pkgname=pypy3-numpy
-pkgver=2.2.6
-pkgrel=2
+pkgver=2.3.0
+pkgrel=1
 pkgdesc="Scientific tools for Python"
 arch=('x86_64')
 license=('custom')
@@ -11,12 +11,12 @@ depends=('cblas' 'lapack' 'pypy3')
 optdepends=('blas-openblas: faster linear algebra')
 makedepends=('pypy3-build' 'pypy3-cython' 'pypy3-installer' 'meson-pypy3' 'cmake' 'gcc-fortran')
 source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-md5sums=('63d66dc1db9d603df0a84c870e703cfc')
-sha256sums=('e29554e2bef54a90aa5cc07da6ce955accb83f21ab5de01a62c8478897b264fd')
+md5sums=('19a5470a37d066bd3e9385918d7760e7')
+sha256sums=('581f87f9e9e9db2cba2141400e160e9dd644ee248788d6f90636eeb8fd9260a6')
 
 build() {
   cd numpy-$pkgver
-  CYTHON=/usr/bin/cython-pypy3 \
+  CYTHON=/opt/pypy3/bin/cython \
   CFLAGS+=" -ffat-lto-objects" \
   CXXFLAGS+=" -ffat-lto-objects" \
   pypy3 -m build --wheel --no-isolation --skip-dependency-check \
