@@ -2,8 +2,8 @@
 # Contributor: Alfredo Luque <me@aluque.io>>
 
 pkgname=cctz
-pkgver=2.4
-pkgrel=2
+pkgver=2.5
+pkgrel=1
 pkgdesc="A C++ library for translating between absolute and civil times using the rules of a time zone"
 arch=(x86_64)
 url="https://github.com/google/cctz"
@@ -17,7 +17,7 @@ makedepends=(
   gtest
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('6d50fe5263b66f93bc3f9aee0da395352d0e95187e6a761afd1b82a461c127823fe93e06139e9d8989f24875b70de3058aab6e66639b408c7930f117e1815e5e')
+sha512sums=('e3eba96482b7745b145ecfd9b3b96b09d9120bde952dfdb66d625e642a463b87c74205b1813e3c4bd9b408410bb26fb095d034ca56a4953005bf0c988ccc741e')
 
 prepare() {
   cd "$pkgname-$pkgver"
