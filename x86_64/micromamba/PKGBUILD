@@ -4,8 +4,8 @@
 
 pkgname=micromamba
 _pkgname=${pkgname/micro/}
-pkgver=2.2.0
-pkgrel=2
+pkgver=2.3.0
+pkgrel=1
 pkgdesc="The fast cross-platform package manager"
 arch=(i686 x86_64)
 url="https://github.com/${_pkgname}-org/${_pkgname}"
@@ -32,11 +32,9 @@ source=(
   static-off.patch
   utils.cpp.patch
 )
-sha512sums=(
-  'e17f22ad0025fb802cf29830a3449e6b35bbca5bd319196904557993a825868007247fbf1651517864439de5224ebdb76d532bd1340a3021360ac93530526102'
-  'SKIP'
-  'SKIP'
-)
+sha512sums=('580afeddd18c7a3f41c2138d3a3ccdcd2b86faa126c7279f78036462b52fa205387d7421c197cb8ba19ad0117730be9077b07d5d62cd6cb6e55c68fa6da2261a'
+            'ee549a0bff94bff386a820cb54e38b0c51f7f563c9dd99ab017bc4ba46a117a11fe8e6c016a8e6eef1ae30cde8e0f57b04d6cda685ad8f1609e1f22c38bf9258'
+            '62deaeef709c6b03ed92cdf4890e4b8b8171ce72ddd83b3ff33ae8f9a2696a0ec1e1e6025b64ca654b3debb99654c9e36a404bc947b504becc452d6f39c168e6')
 provides=(
   "libmamba=${pkgver}"
   "libmambapy=${pkgver}"
