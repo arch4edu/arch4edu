@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit
 pkgname=python-${_pkgname}
-pkgver=2.0.0
+pkgver=2.1.0
 pkgrel=1
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
@@ -10,14 +10,11 @@ url=https://github.com/Qiskit/qiskit
 license=(Apache-2.0)
 conflicts=(python-qiskit-terra)
 depends=(
-    python-dateutil
     python-dill
     python-numpy
     python-rustworkx
     python-scipy
     python-stevedore
-    python-symengine-0.13
-    python-sympy
 )
 optdepends=(
     'ipython: interactivity'
@@ -50,17 +47,8 @@ checkdepends=(
     python-ddt
     python-stestr
 )
-source=(
-    $_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz
-    14174.patch::$url/pull/14174.patch
-)
-b2sums=('da36cfbaaef52fe3f8e03916de0fc12ffd7ef8c1ce264e3b4558563909ee44ee5a85a3a61b7def07ba38e2061e9e154a98dddf5d7f280bf6b70b793176a53a65'
-        'a963945c2bdace5c32c6dea4387b4567e6dd543174cc1d20539accdec3997edee47eb1149107e3f73e66745e371ddc62d9293881a3b5da8a0ab3d3d1410059c3')
-
-prepare() {
-    # Fix https://github.com/Qiskit/qiskit/issues/14169
-    patch -Np1 -d $_pkgname-$pkgver < 14174.patch
-}
+source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
+b2sums=('9168e31826e1fa83a4424eadbdd6af5e87c88f1828d0a4a70db00fc00e94056233c530b384ce4d17947feb4610aa238518f6f05393b5d644fb038d9cccf0827d')
 
 build() {
     cd $_pkgname-$pkgver
