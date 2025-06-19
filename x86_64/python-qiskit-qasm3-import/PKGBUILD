@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-qasm3-import
 pkgname=python-${_pkgname}
-pkgver=0.5.1
+pkgver=0.6.0
 pkgrel=1
 pkgdesc="Importer from OpenQASM 3 to Qiskit's QuantumCircuit"
 arch=(any)
@@ -19,7 +19,7 @@ makedepends=(
 )
 checkdepends=(python-pytest)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/refs/tags/v$pkgver.tar.gz)
-b2sums=('3ff57dac3bacdd15aeec72010252f811b99a42efd0243bfd28c2fcc9c481c34a67426065f6f0d1e981172c7ff8b203b8a42ccb46a8eec668c5c8d5dde3854d49')
+b2sums=('be426173c8e3641d4460bba88e37b4f32b04b10291c1fbc1347d013675eb80068204c9e1cbf86e9f7bcba08450c8be0125fcc97ab2c5b5ad0be00f3d4d126d08')
 
 build() {
     cd $_pkgname-$pkgver
