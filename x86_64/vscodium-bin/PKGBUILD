@@ -8,7 +8,7 @@
 pkgname=vscodium-bin
 _pkgname=VSCodium
 pkgver=1.101.03933
-pkgrel=1
+pkgrel=2
 pkgdesc="Binary releases of VS Code without MS branding/telemetry/licensing."
 arch=('x86_64' 'aarch64')
 url="https://github.com/VSCodium/vscodium"
@@ -30,6 +30,7 @@ sha256sums=('3a5bc109974fcf408855c13965f6d6be0997655c5b359de0bfd19a678c00844e'
             '01ba3d33e76804e2346d08f4eda256a29610c9eb59432e4b016d05ad93d901ba'
             '63b9f3e07dcfe92f59e851fdeeaed6ee986950672f75cc950489bce67e85d884'
             '07f0314b1869e3666f1ba52cd02dd40c841beef11a1ab9ae3246cafd01ef6caa')
+sha256sums+=('e622e6bdb70b0cfec57ad9df8717ea023b87e5e215003119b5a1a4d059fcd347')
 sha256sums_x86_64=('73fd3eebb9e8b0e0c6bcd15abfd240b1994e38be00aa57119ccd4abdc7d35e89')
 sha256sums_aarch64=('ff282dc4fbd7e1f286d6ce0a0fe24275cf8f4dd120e7b27d4585b41a670e7ffe')
 
@@ -38,6 +39,7 @@ source=('vscodium-bin.desktop'
         'vscodium-bin.install'
         'vscodium-bin.sh'
         'vscodium-bin-wayland.desktop')
+source+=("https://raw.githubusercontent.com/VSCodium/vscodium/refs/tags/${pkgver}/src/stable/resources/linux/code.svg")
 source_x86_64=("https://github.com/VSCodium/vscodium/releases/download/${pkgver}/${_pkgname}-linux-x64-${pkgver}.tar.gz")
 source_aarch64=("https://github.com/VSCodium/vscodium/releases/download/${pkgver}/${_pkgname}-linux-arm64-${pkgver}.tar.gz")
 
@@ -55,8 +57,10 @@ package() {
   install -D -m644 "${srcdir}/vscodium-bin-url-handler.desktop" "${pkgdir}/usr/share/applications/codium-url-handler.desktop"
   install -D -m644 "${srcdir}/resources/app/resources/linux/code.png" \
           "${pkgdir}/usr/share/pixmaps/vscodium.png"
-  install -D -m644 "${srcdir}/resources/app/resources/linux/code.png" \
-          "${pkgdir}/usr/share/icons/hicolor/1024x1024/apps/vscodium.png"
+  #install -D -m644 "${srcdir}/resources/app/resources/linux/code.png" \
+  #        "${pkgdir}/usr/share/icons/hicolor/1024x1024/apps/vscodium.png"
+  install -D -m644 "${srcdir}/code.svg" \
+          "${pkgdir}/usr/share/icons/hicolor/scalable/apps/vscodium.svg"
   install -m755 "${srcdir}/${pkgname}.sh" "${pkgdir}/usr/bin/codium"
 
   # Fix chrome-sandbox permissions
