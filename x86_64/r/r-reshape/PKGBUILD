@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=reshape
-_pkgver=0.8.9
+_pkgver=0.8.10
 pkgname=r-${_pkgname,,}
-pkgver=0.8.9
-pkgrel=3
+pkgver=0.8.10
+pkgrel=1
 pkgdesc='Flexibly Reshape Data'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -14,7 +14,7 @@ depends=(
   r-plyr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('791178b3b5f30c166ebf5910a5ab1c67b54e7023b10b6c2e2ddd1cc02a1e4048')
+sha256sums=('35ef6e8956520279f44d538c613ff9605bc594fed46133200d61937828fc6b64')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
