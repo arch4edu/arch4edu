@@ -4,7 +4,6 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-rustworkx
-  - x86_64/python-symengine-0.13
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
