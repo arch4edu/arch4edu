@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=Deriv
-_pkgver=4.1.6
+_pkgver=4.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,8 +16,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('dcea8e11813976cd37a32a7b91781f52')
-b2sums=('f34ae9b154d505d3d63dcb0516e341663ef3b029a5181c52b5421f1f14216e72853c94582aa0d67a46b46b4752b34a36713d1a53aa78c98942676e85145135b6')
+md5sums=('a6771b4d468d17d8faa0e516cd7427d9')
+b2sums=('528e66537282845ffb5e37673e2f7d5112b00169b0001d2553644a8a469a64be6420ef45b4d2f2e18a7de4b26aef581b2ef7c7ebb56f9fd0b32a8b65ce417791')
 
 build() {
   mkdir build
