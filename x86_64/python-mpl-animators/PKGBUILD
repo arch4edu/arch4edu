@@ -4,7 +4,7 @@ pkgbase=python-mpl-animators
 _pname=${pkgbase#python-}
 _pyname=${_pname/-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=1.2.3
+pkgver=1.2.4
 pkgrel=1
 pkgdesc="An interative animation framework for matplotlib"
 arch=('any')
@@ -30,7 +30,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063307_0193_lowres.fits"
 #       'examples-use-local-fits.patch'
 #   )
-md5sums=('339118b95be44deec640c767aef62473')
+md5sums=('5562c7e115ddbbac0ff013a0a25dd68f')
 
 get_pyinfo() {
     [[ $1 == "site" ]] && python -c "import site; print(site.getsitepackages()[0])" || \
