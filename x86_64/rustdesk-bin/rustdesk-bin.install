@@ -15,6 +15,9 @@ post_install() {
 post_upgrade() {
 	# Display instructions to enable the RustDesk service if it's not enabled
 	systemctl -q is-enabled rustdesk.service || post_install
+
+	# Marks the service for restart (the actual restart will be handled by the pacman hook "30-systemd-restart-marked.hook")
+	systemctl -q is-active rustdesk.service && systemctl set-property rustdesk.service Markers=needs-restart
 }
 
 pre_remove() {
