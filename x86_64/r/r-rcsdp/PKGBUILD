@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Rcsdp
-_pkgver=0.1.57.5
+_pkgver=0.1.57.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="R Interface to the CSDP Semidefinite Programming Library"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,8 +15,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('dec4357fda5865cfabd9f4ad7bf74d76')
-b2sums=('2ff445ed29b3f845bfc0d58bcaddaf2e2b1a314bdded2a137e59a0d920c23388a214f993af4592b4dee681bf0a86840d9fb36b648a88487d254e84187d76d7c8')
+md5sums=('aecd9329a335081841e2724252e29241')
+b2sums=('23ca53c23a1c754dbae142c4985da534e2a453ca4044e317009b43d38aaf2bf674f8752b199103574b4792aace2e028904978eaf84fb73a6a11bf75bbc4df592')
 
 build() {
   mkdir build
