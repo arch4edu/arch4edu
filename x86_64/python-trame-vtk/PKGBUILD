@@ -3,7 +3,7 @@ _base=trame-vtk
 _npm_base=vue-vtk-js
 pkgname=python-${_base}
 pkgdesc="VTK widgets for trame"
-pkgver=2.8.15
+pkgver=2.9.0
 _npm_pkgver=3.2.2
 pkgrel=1
 arch=(any)
@@ -12,14 +12,14 @@ license=(BSD-3-Clause)
 depends=(python-trame-client vtk openmpi fmt jsoncpp glew ospray openxr
   openvr ffmpeg hdf5-openmpi postgresql-libs netcdf pdal mariadb-libs
   liblas cgns adios2 libharu gl2ps verdict qt5-tools opencascade)
-makedepends=(python-build python-installer python-setuptools python-wheel)
+makedepends=(python-build python-installer python-hatchling python-wheel)
 checkdepends=(python-pytest-xprocess python-pixelmatch python-seleniumbase python-pyvista) # python-trame-vuetify
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz
   https://registry.npmjs.org/${_npm_base}/-/${_npm_base}-${_npm_pkgver}.tgz
   https://raw.githubusercontent.com/Kitware/vtk-js/2d8de2853a1e63c12f9682acb3531083b77c4e3d/examples/OfflineLocalView/OfflineLocalView.html)
-sha512sums=('a1d7e448606bc1d795417ac1b18443dcac6cfe234915cf66e1947b0b96eadef77891cff98e413642332807e5ddda1980ff8d6ebd5c69b2690712d477c4db8051'
-            'b00526ad3f3c1d2f2e05a287034100cbebb4ad931b642f590c6b273f01768aaa15766c3542031977716db7f138bba41eacbe7c7f8ea4fdf489772f35e9382009'
-            '6f09789d876b431370dc55b04ba327092af218d1abea52dd4ec4c9de5b4340cbac2218f438bb231e0cab108f7edcc54d2e15d0c0b262067afb7a515a451414f5')
+sha512sums=('f1fe6084dcfe90f81eea87567211477f4a7dba1008350b2b1b5fe6f586d9f956a6164dead51d1c5d1b80033d463c298711640897a8bfe835966d31c079146596'
+  'b00526ad3f3c1d2f2e05a287034100cbebb4ad931b642f590c6b273f01768aaa15766c3542031977716db7f138bba41eacbe7c7f8ea4fdf489772f35e9382009'
+  '6f09789d876b431370dc55b04ba327092af218d1abea52dd4ec4c9de5b4340cbac2218f438bb231e0cab108f7edcc54d2e15d0c0b262067afb7a515a451414f5')
 
 prepare() {
   sed -i 's/^include trame_vtk\/LICENSE/#include trame_vtk\/LICENSE/' ${_base}-${pkgver}/MANIFEST.in
@@ -46,7 +46,7 @@ package() {
 
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   # Install trame-vtk.js
-  mv ${srcdir}/package/dist/${_npm_base::-3}.umd.js ${pkgdir}${site_packages}/${_base/-/_}/modules/common/serve/trame-vtk.js
+  install -Dm 644 ${srcdir}/package/dist/${_npm_base::-3}.umd.js ${pkgdir}${site_packages}/${_base/-/_}/modules/common/serve/trame-vtk.js
   # Install static_viewer.html
   mv ${srcdir}/OfflineLocalView.html ${pkgdir}${site_packages}/${_base/-/_}/tools/static_viewer.html
 
