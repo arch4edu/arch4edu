@@ -12,7 +12,7 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.40.7
+pkgver=3.40.8
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
@@ -28,15 +28,9 @@ optdepends=('fcgi: Map server'
             'gpsbabel: GPS Tools plugin')
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
-source=("https://qgis.org/downloads/$_pkgname-$pkgver.tar.bz2"
-        fix_build_with_sip_6.11.patch)
-sha256sums=('871118ff1cd66f8d72810fff2e783848859f04d9fbb751a644f1882c883d81dd'
-            '8505e3dd107f4c00e84cf4b198254eefa297b73820ae9b02549b86273ed78ad9')
+source=("https://qgis.org/downloads/$_pkgname-$pkgver.tar.bz2")
+sha256sums=('17b9ad47e964b676c32f5228d3fad668338404c14fc991657363914e4317ed4f')
 # curl -s https://download.qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
-
-prepare() {
-  patch -d "$_pkgname-$pkgver" -p1 < fix_build_with_sip_6.11.patch # https://github.com/qgis/QGIS/pull/62142
-}
 
 build() {
   cmake -S $_pkgname-$pkgver -B build -G Ninja \
