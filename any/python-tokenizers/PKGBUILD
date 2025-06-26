@@ -8,7 +8,7 @@
 _module="tokenizers"
 _pkgname="python-$_module"
 pkgname="$_pkgname"
-pkgver=0.21.1
+pkgver=0.21.2
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 url="https://github.com/huggingface/tokenizers"
@@ -45,7 +45,7 @@ source=(
   "norvig-big.txt"::"https://norvig.com/big.txt"
   "roberta.json"::"https://huggingface.co/roberta-large/raw/main/tokenizer.json"
 )
-sha256sums=('65dd1f079404161321ece0d1af4f678e5846e3e6056f004600bde776d489bddc'
+sha256sums=('5b2140475bbaeb9dbbbbd72a39aff5f2490cdd66acc26d19b0c8310f51688872'
             'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
             '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e')
 
