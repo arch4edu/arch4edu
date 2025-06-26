@@ -2,7 +2,7 @@
 # Contributor: Jingbei Li <i@jingbei.li>
 _base=mkl_random
 pkgname=python-${_base/_/-}
-pkgver=1.2.10
+pkgver=1.2.11
 pkgrel=1
 pkgdesc="NumPy-based Python interface to Intel (R) MKL Random Number Generation functionality"
 arch=(x86_64)
@@ -11,7 +11,7 @@ license=(BSD-3-Clause)
 depends=(intel-oneapi-mkl python-numpy)
 makedepends=(python-build python-installer python-setuptools cython python-wheel intel-oneapi-mkl)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('187678ae12d81ed5a975d9e452adcdc167e99276e391d2171188e82276e620ecb0a6044457777e241e25aa9a5a91f5d388901372a0dadc8322a181bf34668130')
+sha512sums=('65e8c6b22dd5675c5279c785b43c675bac8e9a5b9336460b06b7643aa733909684ff732a0c08acdccb4fe841fce45613b1d36f67e7e13674e3a85986b95be786')
 
 build() {
   cd ${_base}-${pkgver}
