@@ -4,7 +4,7 @@ _pkgname=reformulas
 _pkgver=0.4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Machinery for Processing Random Effect Formulas"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,6 +15,7 @@ depends=(
 optdepends=(
   r-lme4
   r-tinytest
+  r-glmmtmb
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 md5sums=('e52208a6466ab7549378dd10cad2b689')
