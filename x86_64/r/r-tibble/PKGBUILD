@@ -5,16 +5,16 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=tibble
-_pkgver=3.2.1
+_pkgver=3.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=6
+pkgrel=1
 pkgdesc="Simple Data Frames"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  r-fansi
+  r-cli
   r-lifecycle
   r-magrittr
   r-pillar
@@ -28,9 +28,6 @@ optdepends=(
   r-blob
   r-brio
   r-callr
-  r-cli
-  r-covr
-  r-crayon
   r-diagrammer
   r-dplyr
   r-evaluate
@@ -41,9 +38,7 @@ optdepends=(
   r-htmltools
   r-knitr
   r-lubridate
-  r-mockr
   r-nycflights13
-  r-pkgbuild
   r-pkgload
   r-purrr
   r-rmarkdown
@@ -53,8 +48,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e4ccfbe28c84b11f86388379c8b43925')
-b2sums=('7368a112ee6729736610a44acdbdc651fb786635d7126c88fe0aa1ccac669feba014fce2b1de15e63faf6f34651885855bd659138a339661660012c8b3ef443c')
+md5sums=('d7ae660898db86c72a6996d150c19180')
+b2sums=('3fecc81e292a6948b7b650fb6d231427680ce72521509ccc7fb8dd181b83aff09ccd2a956ee4cbb280176901b37623687f23c412e9b32a49466c67a466f215a6')
 
 build() {
   mkdir build
