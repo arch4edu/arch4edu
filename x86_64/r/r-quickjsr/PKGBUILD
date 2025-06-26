@@ -1,11 +1,11 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=QuickJSR
-_pkgver=1.7.0
+_pkgver=1.8.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc="Interface for the 'QuickJS' Lightweight 'JavaScript' Engine"
+pkgdesc="Interface for the 'QuickJS-NG' Lightweight 'JavaScript' Engine"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
@@ -21,8 +21,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('eae8a134a5e71efdf3ed0225f6098f00')
-b2sums=('8171ed5eec4af748a2a18ab485e3141a9db566cba3c4baa6571a73057863b7c731075bc1146582349e9613a5057201f257654062601b869740cc3e270dd02c54')
+md5sums=('410397f95196c68f34c113148c6a79a6')
+b2sums=('18242abd875d17fa6596b15816b365d718dcc06147eebb209306e9dfb8ad8aea192880b882be1ecfc6afc728f03e624969a3733343690e98f9012cc055006c54')
 
 build() {
   mkdir build
