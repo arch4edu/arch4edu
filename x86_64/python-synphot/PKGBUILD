@@ -4,8 +4,8 @@
 pkgbase=python-synphot
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.5.0
-pkgrel=2
+pkgver=1.6.0
+pkgrel=1
 pkgdesc="Synthetic Photometry using Astropy"
 arch=('i686' 'x86_64')
 url="https://synphot.readthedocs.io"
@@ -26,10 +26,16 @@ checkdepends=('python-pytest-astropy-header'
               'python-dust-extinction'
               'python-specutils')   # astropy scipy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('135ad5dc55cbc4754180aefcf95caf3a')
+md5sums=('852419c081c9b9f230d23d613a17eb31')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
+}
+
+prepare() {
+    cd ${srcdir}/${_pyname}-${pkgver}
+
+    sed -i "/CCM89/a \	ignore:The Spectrum1D class is deprecated:astropy.utils.exceptions.AstropyDeprecationWarning" setup.cfg
 }
 
 build() {
@@ -54,7 +60,7 @@ package_python-synphot() {
              'python-astropy>=6'
              'python-scipy>=1.9')
     optdepends=('python-matplotlib: Plotting support'
-                'python-specutils>=0.7: Manipulating spectroscopic data'
+                'python-specutils>=1.10: Manipulating spectroscopic data'
                 'python-synphot-doc: Documentation for synphot')
     cd ${srcdir}/${_pyname}-${pkgver}
 
