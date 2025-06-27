@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mice
-_pkgver=3.17.0
+_pkgver=3.18.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -43,8 +43,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('240d70772d09ee62371d7a2ca57588f5')
-b2sums=('02cd3b233e0b5eedfcb0beae2b25fc8cec5af55c6cc07b375cc05a1d7881759346944118d2a34ccafc52badd55d91f74e273d7a0b57037712b9b79234df1f9e1')
+md5sums=('c0e4bea94ab7273d9ac6af01ffe6e25d')
+b2sums=('d79ee8fb9831e6a1b181faaf8c16f472552039ab05e21c251d141b383e6d5faa187fad60cd3501f494b068b65c1d70bb927b57690afbecb8b24bba439fdb31ac')
 
 build() {
   mkdir build
