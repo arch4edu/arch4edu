@@ -3,7 +3,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _base=mkl-service
 pkgname=python-mkl-service
-pkgver=2.5.0
+pkgver=2.5.1
 pkgrel=1
 pkgdesc="Python hooks for Intel(R) Math Kernel Library runtime control settings"
 arch=(x86_64)
@@ -13,7 +13,7 @@ depends=(intel-oneapi-mkl python)
 makedepends=(python-build python-installer python-setuptools python-wheel cython procps-ng)
 checkdepends=(python-pytest)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('f7a6671cb597a58a0948f55b9f87b5d79ce444e597be468f7f92af16e29fa5fc9e4a6a869da137371ffd09afbca12f3cb6b6adfa067b3adc2d3680f259ff5099')
+sha512sums=('43334b3ea0650347dd5c950958d3a33c3220eeccdc2d2d733243e3bd3a8e8cb3f4c27ab57099266054da1ef2e4fd99e105fb05dddddba5cef847bc20fac6ac8e')
 
 build() {
   source /opt/intel/oneapi/setvars.sh
