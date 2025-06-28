@@ -2,9 +2,9 @@
 # Maintainer: Robert Greener <me@r0bert.dev>
 # Contributor: Hyacinthe Cartiaux <hyacinthe.cartiaux@free.fr>
 _pkgname=ggpp
-_pkgver=0.5.8-1
+_pkgver=0.5.9
 pkgname=r-${_pkgname,,}
-pkgver=0.5.8.1
+pkgver=0.5.9
 pkgrel=1
 pkgdesc="Grammar Extensions to 'ggplot2'"
 arch=('any')
@@ -36,7 +36,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('05e607a8522da8134fe3fc5e980f90164c5d784a5131125c1c72ee9c8ee963ca')
+sha256sums=('0d3c700db82e764ca12304fa20ad874931c43fc5df59fb285a53d95996efa9c6')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
