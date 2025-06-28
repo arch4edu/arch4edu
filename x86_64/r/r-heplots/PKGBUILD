@@ -5,7 +5,7 @@ _pkgname=heplots
 _pkgver=1.7.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Visualizing Hypothesis Tests in Multivariate Linear Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
