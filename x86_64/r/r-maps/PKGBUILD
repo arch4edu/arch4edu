@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=maps
-_pkgver=3.4.2.1
+_pkgver=3.4.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -18,11 +18,11 @@ optdepends=(
   r-mapdata
   r-mapproj
   r-rnaturalearth
-  r-sp
+  r-sf
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('286906ed93b0c7ca2933744d3063f1c2')
-b2sums=('098e1ca6108bb17b148a9c77193b4ded4f39a65e2153d4fc40c05d9fdd4d4660e00fc4a4c4b61a0cda793915710e30a38731d53c305e7f0e0b70c4ff10c07103')
+md5sums=('63f7c0fdc3489726d253cdc09aaebda4')
+b2sums=('17b20ca0fe2989fa4299590d18b25f0c84d6c594d27fea1b9a8b622ee4ce4b1f07381eac0964706243ef7026a5c0b39e3e58fdd1d32a6c584cfb8233f639d48a')
 
 build() {
   mkdir build
