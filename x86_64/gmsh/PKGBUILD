@@ -3,7 +3,7 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=(gmsh gmsh-docs)
 pkgver=4.13.1
-pkgrel=5
+pkgrel=6
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities"
 arch=(x86_64)
 url="https://gmsh.info"
@@ -12,11 +12,13 @@ makedepends=(cmake desktop-file-utils sed swig texlive-meta voro++ fltk
   med-openmpi opencascade cairo metis alglib ann glu cgns lapack)
 options=(!emptydirs)
 source=("${url}/src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion
-  cgns.patch::https://gitlab.onelab.info/gmsh/gmsh/-/commit/20c318a4b945a3c7086a3a95b7bb4b56f2a5029e.patch)
+  cgns.patch::https://gitlab.onelab.info/gmsh/gmsh/-/commit/20c318a4b945a3c7086a3a95b7bb4b56f2a5029e.patch
+  local://gcc15.patch)
 sha256sums=('77972145f431726026d50596a6a44fb3c1c95c21255218d66955806b86edbe8d'
             '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
             '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef'
-            '07d808dcf61ccf157161543001128ec6f379e9daac07720181373db7229e6e97')
+            '07d808dcf61ccf157161543001128ec6f379e9daac07720181373db7229e6e97'
+            'ae966686095cb99e0149ef39bacf5b652e24ad97c34f682ad6497e2acb1d7ecf')
 
 prepare() {
   cd "${srcdir}/${pkgname}-${pkgver}-source"
@@ -29,6 +31,8 @@ prepare() {
   sed -e "s|https://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
     -i src/fltk/helpWindow.cpp
   patch -p1 -i ../cgns.patch
+  # https://gitlab.onelab.info/gmsh/gmsh/-/issues/3276
+  patch -p1 -i ../gcc15.patch
 }
 
 build() {
@@ -38,11 +42,22 @@ build() {
 
   cd build
 
-  cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_SHARED=ON \
-    -DENABLE_SYSTEM_CONTRIB=ON -DENABLE_BLAS_LAPACK=ON \
-    -DENABLE_CGNS=ON -DENABLE_ANN=ON -DENABLE_ALGLIB=ON \
-    -DENABLE_METIS=ON -DENABLE_OCC=ON -DENABLE_MED=ON \
-    -DENABLE_VOROPP=ON -DENABLE_EIGEN=OFF -DENABLE_PETSC=FALSE ..
+  # https://gitlab.onelab.info/gmsh/gmsh/-/issues/3297
+  cmake \
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DENABLE_BUILD_SHARED=ON \
+    -DENABLE_SYSTEM_CONTRIB=ON \
+    -DENABLE_BLAS_LAPACK=ON \
+    -DENABLE_CGNS=ON \
+    -DENABLE_ANN=ON \
+    -DENABLE_ALGLIB=ON \
+    -DENABLE_METIS=ON \
+    -DENABLE_OCC=ON \
+    -DENABLE_MED=ON \
+    -DENABLE_VOROPP=ON \
+    -DENABLE_EIGEN=OFF \
+    -DENABLE_PETSC=FALSE ..
 
   make
   LC_ALL=C make doc
