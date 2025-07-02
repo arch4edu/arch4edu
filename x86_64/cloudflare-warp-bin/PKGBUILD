@@ -9,7 +9,7 @@
 # Contributor: Daffa Haj Tsaqif <narutohaj00@gmail.com>
 
 pkgname=cloudflare-warp-bin
-pkgver=2025.4.943
+pkgver=2025.5.893
 pkgrel=1
 pkgdesc="Cloudflare Warp Client"
 arch=('x86_64')
@@ -30,7 +30,7 @@ depends=('cairo'
 provides=('warp-cli' 'warp-diag' 'warp-svc')
 conflicts=("${pkgname%-bin}")
 source=("${pkgname}-${pkgver}.deb::https://pkg.cloudflareclient.com/pool/noble/main/c/cloudflare-warp/cloudflare-warp_${pkgver}.0_amd64.deb")
-sha256sums=('4162de02ad5b848070d54cc6a7ad9c47b29a39c18e9878016491d1dcd801dc96')
+sha256sums=('a16a6de907464592418f1420ad42d64f377496210ea78ab48071f83a2ec610ab')
 
 prepare() {
     mkdir -p "${srcdir}/build"
@@ -44,5 +44,6 @@ package() {
     sed -e "s%ExecStart=/bin/warp-svc%ExecStart=/usr/bin/warp-svc%" \
         -i "${pkgdir}/usr/lib/systemd/system/warp-svc.service"
     sed -e "s%ExecStart=/bin/warp-taskbar%ExecStart=/usr/bin/warp-taskbar%" \
+        -e "s%BindsTo=graphical-session.target%PartOf=graphical-session.target%" \
         -i "${pkgdir}/usr/lib/systemd/user/warp-taskbar.service"
 }
