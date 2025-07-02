@@ -9,8 +9,8 @@
 
 pkgname=vtk
 # May need bootstrapping on upgrades due to circular vtk <-> opencascade dependency
-pkgver=9.4.2
-pkgrel=4
+pkgver=9.5.0
+pkgrel=2
 pkgdesc="Software system for 3D computer graphics, image processing, and visualization"
 arch=(x86_64)
 url="https://www.vtk.org"
@@ -40,6 +40,7 @@ depends=(
 makedepends=(
   # build system
   cmake
+  ninja
   # bindings
   java-environment=11
   python
@@ -58,6 +59,7 @@ makedepends=(
   hdf5                    # 16 direct libs, 39 total libs
   netcdf                  # libvtkIOParallelNetCDF.so, libvtkIONetCDF.so, libvtkexodusII.so, libvtkIOMINC.so, libvtkioss.so (5 direct libs, 14 total libs)
   sqlite                  # libvtkIOSQL.so (1 direct lib, 10 total libs)
+  viskores                # libvtkfides.so, libvtkIOFides.so, libvtkAcceleratorsVTKmFilters.so, libvtkAcceleratorsVTKmDataModel.so, libvtkAcceleratorsVTKmCore.so (5 direct libs, 8 total libs)
   adios2                  # libvtkfides.so, libvtkIOADIOS2.so (2 direct libs, 5 total libs)
   cgns                    # libvtkIOCGNSReader.so, libvtkioss.so (2 direct libs, 5 total libs)
   gdal                    # libvtkGeovisGDAL.so, libvtkIOGDAL.so (2 direct libs, 4 total libs)
@@ -117,6 +119,7 @@ optdepends=(
   'openimagedenoise: rendering with raytracing support'
   'ospray: rendering with raytracing support'
   'openmpi: OpenMPI support'
+  'viskores: accelerators support'
   'adios2: IO module'
   'alembic: IO module'
   'cgns: IO module'
@@ -145,33 +148,17 @@ optdepends=(
 options=(staticlibs)
 source=(
   $url/files/release/${pkgver%.*}/VTK-$pkgver.tar.gz
-  vtk-occt.patch
-  fmt-11.patch
-  netcdf-4.9.3.patch
-  fix-gcc-15.patch
 )
-sha256sums=('36c98e0da96bb12a30fe53708097aa9492e7b66d5c3b366e1c8dc251e2856a02'
-            'df958eabc7dc4f5b33383ce0fb0f90a3ba202c1c2a24d3b5b9e7cfb1fb38b011'
-            'c6345d09c219b5ca2efa6e7419f404a22715adb4d2ca1fd6ba34affd77cea23e'
-            '87535578bbb0023ede506fd64afae95cdf4fb698c543f9735e6267730634afbc'
-            '4af18628972510f8eee139d4dcc6be79223bfec707b3b0523712ce579c01820d')
+sha256sums=('04ae86246b9557c6b61afbc534a6df099244fbc8f3937f82e6bc0570953af87d')
+b2sums=('bac57522dac980d1f258ca41e40ea898cc2153b03a779f7a52285e5dc59780b6826f622ceba22e5ff80f046fc7a020acaa5c40128065bbb6af2d4f1bd004b930')
 
 prepare() {
   cd ${pkgname^^}-${pkgver}
   _fast_float_version=$(pacman -Q fast_float | sed -e 's/.* //; s/-.*//g')
-  sed -i "s|3.9.0|${_fast_float_version}|" ThirdParty/fast_float/CMakeLists.txt
+  sed -i "s|7.0.0|${_fast_float_version}|" ThirdParty/fast_float/CMakeLists.txt
 # Use cmake's FindHDF5
   rm CMake/patches/99/FindHDF5.cmake
   sed -e '/FindHDF5/d' -i CMake/vtkInstallCMakePackage.cmake
-
-  patch -Np1 -i "$srcdir"/vtk-occt.patch
-  patch -Np1 -i "$srcdir"/fmt-11.patch
-  patch -Np1 -i "$srcdir"/netcdf-4.9.3.patch
-
-  # Fix build with GCC 15
-  # https://gitlab.kitware.com/vtk/vtk/-/issues/19422
-  # https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=8863f3f1551a8190e34e8b14797d96a1527249ce
-  patch -Np1 -i "$srcdir"/fix-gcc-15.patch
 }
 
 build() {
@@ -179,14 +166,13 @@ build() {
   export JAVA_HOME=/usr/lib/jvm/default
   # To set tcl lib path
   local _tkver=$(echo 'puts $tcl_version' | tclsh)
-  cmake -B build -S ${pkgname^^}-${pkgver} \
+  cmake -B build -S ${pkgname^^}-${pkgver} -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_CXX_FLAGS="$CXXFLAGS -ffat-lto-objects" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LICENSEDIR=share/licenses/vtk \
     -DCMAKE_SKIP_RPATH=OFF \
     -DCMAKE_SKIP_INSTALL_RPATH=ON \
-    -DCMAKE_JAVA_COMPILE_FLAGS="-Xlint:-options" \
     -DBUILD_SHARED_LIBS=ON \
     -DVTK_BUILD_ALL_MODULES=ON \
     -DVTK_INSTALL_TCL_DIR=/usr/lib/tcl${_tkver}/vtk/ \
@@ -201,19 +187,14 @@ build() {
     -DVTK_WRAP_JAVA=ON \
     -DVTK_WRAP_PYTHON=ON \
     -DVTKOSPRAY_ENABLE_DENOISER=ON \
-    -DVTKm_ENABLE_HDF5_IO=ON \
-    -DVTKm_ENABLE_MPI=ON \
-    -DVTKm_ENABLE_OPENMP=ON \
     -DVTK_USE_EXTERNAL=ON \
     -DVTK_MODULE_USE_EXTERNAL_VTK_exprtk=OFF \
     -DVTK_MODULE_USE_EXTERNAL_VTK_ioss=OFF \
     -DVTK_MODULE_USE_EXTERNAL_VTK_pegtl=OFF \
+    -DVTK_MODULE_USE_EXTERNAL_VTK_scn=OFF \
     -DVTK_MODULE_USE_EXTERNAL_VTK_token=OFF \
     -DVTK_MODULE_ENABLE_VTK_DomainsMicroscopy=NO \
     -DVTK_MODULE_ENABLE_VTK_FiltersOpenTURNS=NO \
-    -DVTK_MODULE_ENABLE_VTK_RenderingZSpace=NO \
-    -DOpenGL_GL_PREFERENCE=LEGACY \
-    -DVTK_IGNORE_CMAKE_CXX11_CHECKS=ON \
     -DHDF5_NO_FIND_PACKAGE_CONFIG_FILE=ON \
     -DHDF5_C_COMPILER_EXECUTABLE=h5hlcc \
     -DHDF5_CXX_COMPILER_EXECUTABLE=h5hlc++ \
@@ -237,7 +218,5 @@ package() {
   python -m compileall -o 0 -o 1 -o 2 --hardlink-dupes -s "${pkgdir}" "${pkgdir}"${site_packages}
 
   # Remove third party CMake patching for older versions than ours
-  rm -rv "${pkgdir}"/usr/lib/cmake/vtk/patches/3.{1{3,6,9},20}
-  # … as well as duplicate copies
-  rm -rv "${pkgdir}"/usr/lib/cmake/vtk/vtkm/{Find*.cmake,cmake/{Find*.cmake,3.15}}
+  rm -rv "${pkgdir}"/usr/lib/cmake/vtk/patches/3.*
 }
