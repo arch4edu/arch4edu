@@ -2,7 +2,7 @@
 
 pkgname=python-cupy
 _pkgname=cupy
-pkgver=13.4.1
+pkgver=13.5.0
 _cccl_commit=3ef9dd9642da2d4e0b3ff77e445e73d7aabd4687
 _dlpack_commit=cd0d5e4ff888b388aef4f9b6bd5d9aa5737a020e
 _jitify_commit=1a0ca0e837405506f3b8f7883bacb71c20d86d96
@@ -18,7 +18,7 @@ source=("https://github.com/cupy/cupy/archive/v$pkgver.tar.gz"
         "https://github.com/NVIDIA/cccl/archive/$_cccl_commit.tar.gz"
         "https://github.com/dmlc/dlpack/archive/$_dlpack_commit.tar.gz"
         "https://github.com/NVIDIA/jitify/archive/$_jitify_commit.tar.gz")
-md5sums=('e2d5bc3741f04fad276b33772908ae39'
+md5sums=('9b7eb2c93a3f0813476fd5c73dff051b'
          '17c7f9635569aac243be498275ba71ba'
          '116c914e84c24ff66bf8f8c1b9fee4f7'
          '0fb2589c81179e752d9bc45be72ed992')
