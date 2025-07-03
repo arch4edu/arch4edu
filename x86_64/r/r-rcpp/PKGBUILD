@@ -4,7 +4,7 @@
 # Contributor: Matt Frichtl <frichtlm@gmail.com>
 
 _pkgname=Rcpp
-_pkgver=1.0.14
+_pkgver=1.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,8 +25,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('586ea2169464c4f35365bd1b8243428b')
-b2sums=('210bfccefbd41021906d25d2b259fa26e032a53f152d0327aaf6ef78235e57cbe0699112a88e41509e1292c739642c18f5117c3395d1ac6ac692f5aa0e29a1c0')
+md5sums=('e74fb4ad97234f11ccda370ce94951db')
+b2sums=('9a82077e4dd09a012a1fd5e35886d03f52a1dc5d2b76a3e926ff65021c07ee6670dba2e22ab380974ae3b04c36d41d459ff18abaa0684c382c2a3428c04857f5')
 
 build() {
   mkdir build
