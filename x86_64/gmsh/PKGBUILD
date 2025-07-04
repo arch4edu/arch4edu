@@ -2,27 +2,22 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=(gmsh gmsh-docs)
-pkgver=4.13.1
-pkgrel=6
+pkgver=4.14.0
+pkgrel=1
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities"
 arch=(x86_64)
 url="https://gmsh.info"
 license=(GPL-2.0-or-later)
-makedepends=(cmake desktop-file-utils sed swig texlive-meta voro++ fltk
-  med-openmpi opencascade cairo metis alglib ann glu cgns lapack)
+makedepends=(cmake desktop-file-utils alglib ann cairo cgns fltk
+  glu lapack med-openmpi metis opencascade swig texlive-meta voro++)
 options=(!emptydirs)
-source=("${url}/src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion
-  cgns.patch::https://gitlab.onelab.info/gmsh/gmsh/-/commit/20c318a4b945a3c7086a3a95b7bb4b56f2a5029e.patch
-  local://gcc15.patch)
-sha256sums=('77972145f431726026d50596a6a44fb3c1c95c21255218d66955806b86edbe8d'
-            '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
-            '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef'
-            '07d808dcf61ccf157161543001128ec6f379e9daac07720181373db7229e6e97'
-            'ae966686095cb99e0149ef39bacf5b652e24ad97c34f682ad6497e2acb1d7ecf')
+source=("${url}/src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
+sha256sums=('db4d7da2062e9a4356a820832138ab99f97af6388bfeb21599a2eadfb0b76a28'
+  '43a8ca33ac917ee7196fdae305ff2c8cb9ae1072569ee546c0ce8ff580c966ae'
+  '11605e97636a56cf51e445e65019526ee253bd2e0553fb71ba6d94488dcd34ef')
 
 prepare() {
   cd "${srcdir}/${pkgname}-${pkgver}-source"
-
   # Help links to local doc (package gmsh-docs)
   sed -e "s|https://gmsh.info/doc/texinfo/|file:///usr/share/doc/gmsh/|" \
     -i src/fltk/graphicWindow.cpp
@@ -30,64 +25,78 @@ prepare() {
     -i src/fltk/graphicWindow.cpp
   sed -e "s|https://gmsh.info/|file:///usr/share/licenses/gmsh/|" \
     -i src/fltk/helpWindow.cpp
-  patch -p1 -i ../cgns.patch
-  # https://gitlab.onelab.info/gmsh/gmsh/-/issues/3276
-  patch -p1 -i ../gcc15.patch
 }
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}-source"
-
-  mkdir -p build
-
-  cd build
-
-  # https://gitlab.onelab.info/gmsh/gmsh/-/issues/3297
   cmake \
-    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-    -DENABLE_BUILD_SHARED=ON \
+    -S ${srcdir}/${pkgname}-${pkgver}-source \
+    -B build \
+    -DBUILD_TESTING=OFF \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr \
     -DENABLE_SYSTEM_CONTRIB=ON \
-    -DENABLE_BLAS_LAPACK=ON \
-    -DENABLE_CGNS=ON \
-    -DENABLE_ANN=ON \
+    -DENABLE_3M=OFF \
     -DENABLE_ALGLIB=ON \
-    -DENABLE_METIS=ON \
-    -DENABLE_OCC=ON \
-    -DENABLE_MED=ON \
-    -DENABLE_VOROPP=ON \
+    -DENABLE_ANN=ON \
+    -DENABLE_BAMG=ON \
+    -DENABLE_BLAS_LAPACK=ON \
+    -DENABLE_BLOSSOM=ON \
+    -DENABLE_BUILD_SHARED=ON \
+    -DENABLE_CAIRO=ON \
+    -DENABLE_CGNS=ON \
+    -DENABLE_DINTEGRATION=ON \
+    -DENABLE_DOMHEX=ON \
     -DENABLE_EIGEN=OFF \
-    -DENABLE_PETSC=FALSE ..
+    -DENABLE_FLTK=ON \
+    -DENABLE_GEOMETRYCENTRAL=OFF \
+    -DENABLE_GETDP=OFF \
+    -DENABLE_GMM=ON \
+    -DENABLE_GMP=ON \
+    -DENABLE_GRAPHICS=OFF \
+    -DENABLE_HXT=ON \
+    -DENABLE_KBIPACK=ON \
+    -DENABLE_MATHEX=ON \
+    -DENABLE_MED=ON \
+    -DENABLE_MESH=ON \
+    -DENABLE_MESQUITE=ON \
+    -DENABLE_METIS=ON \
+    -DENABLE_MMG=ON \
+    -DENABLE_MPEG_ENCODE=ON \
+    -DENABLE_MPI=OFF \
+    -DENABLE_OCC=ON \
+    -DENABLE_PETSC=FALSE \
+    -DENABLE_VOROPP=ON
 
-  make
-  LC_ALL=C make doc
+  cmake --build build
+  LC_ALL=C cmake --build build --target doc
 }
 
 package_gmsh() {
-  depends=(fltk med-openmpi opencascade cairo metis alglib ann glu cgns lapack)
+  depends=(alglib ann cairo cgns fltk glu lapack med-openmpi metis opencascade)
   optdepends=('gmsh-docs: docs for gmsh'
+    'man-db: manual pages for gmsh'
     'python: for gmsh.py'
     'julia: for gmsh.jl')
 
-  cd "${srcdir}/${pkgname}-${pkgver}-source/build"
-  make DESTDIR=${pkgdir} install
-  install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/share/gmsh/api/python/gmsh.py"
+  DESTDIR="${pkgdir}" cmake --build build --target install
+  install -D -m644 "${pkgdir}/usr/include/gmsh.f90" "${pkgdir}/usr/share/gmsh/api/fortran/gmsh.f90"
   install -D -m644 "${pkgdir}/usr/lib/gmsh.jl" "${pkgdir}/usr/share/gmsh/api/julia/gmsh.jl"
-  rm -f "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/lib/gmsh.jl"
+  install -D -m644 "${pkgdir}/usr/lib/gmsh.py" "${pkgdir}/usr/share/gmsh/api/python/gmsh.py"
+  rm -f "${pkgdir}/usr/include/gmsh.f90" "${pkgdir}/usr/lib/gmsh.jl" "${pkgdir}/usr/lib/gmsh.py"
   install -d "$pkgdir/etc/profile.d"
   echo 'export JULIA_LOAD_PATH="/usr/share/gmsh/api/julia/:$JULIA_LOAD_PATH"' >"$pkgdir/etc/profile.d/gmsh.sh"
   echo 'setenv JULIA_LOAD_PATH "/usr/share/gmsh/api/julia/:$JULIA_LOAD_PATH"' >"$pkgdir/etc/profile.d/gmsh.csh"
 
   install -d "${pkgdir}/usr/share/pixmaps/${pkgname}"
-  install -m644 ../utils/icons/*.png "${pkgdir}/usr/share/pixmaps/${pkgname}"
-  install -D -m644 ../utils/icons/gmsh-no-text.png "${pkgdir}/usr/share/icons/${pkgname}.png"
+  install -m644 ${srcdir}/${pkgname}-${pkgver}-source/utils/icons/*.png "${pkgdir}/usr/share/pixmaps/${pkgname}"
+  install -D -m644 ${srcdir}/${pkgname}-${pkgver}-source/utils/icons/gmsh-no-text.png "${pkgdir}/usr/share/icons/${pkgname}.png"
 
   desktop-file-install --dir="${pkgdir}/usr/share/applications" \
     "${srcdir}/${pkgname}.desktop"
 
-  install -D -m 644 "../LICENSE.txt" "${pkgdir}/usr/share/licenses/$pkgname/LICENSE.txt"
-  install -D -m 644 "../CREDITS.txt" "${pkgdir}/usr/share/licenses/$pkgname/CREDITS.txt"
-  install -D -m644 $srcdir/gmsh.completion $pkgdir/etc/bash_completion.d/gmsh
+  install -D -m 644 ${srcdir}/${pkgname}-${pkgver}-source/LICENSE.txt "${pkgdir}/usr/share/licenses/$pkgname/LICENSE.txt"
+  install -D -m 644 ${srcdir}/${pkgname}-${pkgver}-source/CREDITS.txt "${pkgdir}/usr/share/licenses/$pkgname/CREDITS.txt"
+  install -D -m644 ${srcdir}/gmsh.completion ${pkgdir}/etc/bash_completion.d/gmsh
 
   rm -rf ${pkgdir}/usr/share/doc
 }
@@ -97,7 +106,7 @@ package_gmsh-docs() {
   arch=(any)
   license=(GPL-2.0-or-later)
 
-  cd "${srcdir}/${pkgbase}-${pkgver}-source/build"
+  cd "${srcdir}/build"
 
   bsdtar -xf ${pkgbase}-${pkgver}-*.tgz
 
