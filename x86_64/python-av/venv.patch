@@ -1,0 +1,20 @@
+diff --unified --recursive --text a/setup.py b/setup.py
+--- a/setup.py	2025-07-03 17:20:11.000000000 +0200
++++ b/setup.py	2025-07-04 15:11:52.709950316 +0200
+@@ -6,6 +6,7 @@
+ import shlex
+ import subprocess
+ import sys
++import warnings
+ 
+ if platform.system() == "Darwin":
+     major_version = int(platform.mac_ver()[0].split(".")[0])
+@@ -18,7 +19,7 @@
+ 
+ 
+ if not (os.getenv("GITHUB_ACTIONS") == "true" or is_virtualenv()):
+-    raise ValueError("You are not using a virtual environment")
++    warnings.warn("You are not using a virtual environment")
+ 
+ 
+ from Cython.Build import cythonize
