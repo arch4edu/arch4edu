@@ -4,30 +4,33 @@
 
 pkgname=python-conda
 _name=${pkgname#python-}
-pkgver=25.1.1
+pkgver=25.5.1
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
 url="https://github.com/conda/conda"
 license=('BSD-3-Clause')
 depends=(
+  'micromamba'
   'python>=3.7'
   'python-archspec'
   'python-boltons'
   'python-boto3'
   'python-botocore'
   'python-conda-package-handling'
-  'python-conda-libmamba-solver'
+  'python-frozendict'
+  'python-packaging'
   'python-platformdirs'
   'python-pluggy>=1.0.0'
   'python-pycosat>=0.6.3'
   'python-requests>=2.20.1'
   'python-ruamel-yaml>=0.11.14'
+  'python-setuptools-scm'
   'python-tqdm'
 )
-checkdepends=(
-  'python-pytest'
-  'python-pytest-mock'
+optdepends=(
+  'python-pytest: for running conda tests'
+  'python-pytest-mock: for running conda tests'
 )
 makedepends=(
   'python-build'
@@ -36,17 +39,24 @@ makedepends=(
   'python-hatch-vcs'
   'python-wheel'
 )
-provides=('python-conda' 'python-conda-env')
+provides=(
+  'python-conda-env'
+)
+conflicts=(
+  'python-conda-git'
+)
 options=(!emptydirs)
 backup=(etc/conda/condarc)
-source=("$url/releases/download/$pkgver/$_name-$pkgver.tar.gz"
-        "py-3.13-logging.patch")
-sha256sums=('12aeb248b3c1c598f3512425571de3a5aa8737fd8f1001a5ea32156ac4745f53'
-            'dcd0edb6cc59c67629ddfa6e9fb38f53eff293df92d8a0222ede051c8e66b149')
+source=(
+  "$url/releases/download/$pkgver/$_name-$pkgver.tar.gz"
+  "py-3.13-logging.patch"
+)
+sha256sums=(
+  'b3d91503d8f95f29bffd0d47c0f6f9aaa50443a250d5a201ba6866c79099a5c0'
+  'dcd0edb6cc59c67629ddfa6e9fb38f53eff293df92d8a0222ede051c8e66b149'
+)
 
 prepare() {
-  # cd "$srcdir"
-  # tar xvf "$_name-$pkgver.tar.gz"
   cd "$srcdir/$_name-$pkgver" || exit
 
   patch -p 1 -i "$srcdir/py-3.13-logging.patch"
