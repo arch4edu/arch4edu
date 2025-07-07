@@ -3,10 +3,10 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any/micromamba
   - any/python-archspec
   - any/python-boltons
   - any/python-conda-package-handling
+  - x86_64/micromamba
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
