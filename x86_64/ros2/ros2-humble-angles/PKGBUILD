@@ -1,8 +1,9 @@
-# Maintainer: Angelo Elias Dal Zotto <angelodalzotto97@gmail.com>
+# Maintainer: insmtr <insmtr@insmtr.cn>
+# Contributor: Angelo Elias Dal Zotto <angelodalzotto97@gmail.com>
 
 _pkgname=angles
 pkgname=ros2-humble-angles
-pkgver=1.15.0
+pkgver=1.16.0
 pkgrel=1
 pkgdesc="This package provides a set of simple math utilities to work with angles"
 url="https://index.ros.org/p/angles/"
@@ -10,7 +11,7 @@ arch=('any')
 makedepends=('cmake' 'python-setuptools')
 depends=('ros2-humble')
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/ros/angles/archive/${pkgver}.tar.gz")
-sha256sums=('3467a8f5bcc893104f036fad63f3fe44af3a13aae0592d4ae5b24c0dfa520293')
+sha256sums=('SKIP')
 
 build() {
     source /opt/ros/humble/setup.bash
