@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=commonmark
-_pkgver=1.9.5
+_pkgver=2.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -27,8 +27,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2a3cb69608d0cd2644fd857555305c86')
-b2sums=('c5f389e30d1f35a224a85ba35671596ab86200c96d23faf329459bbe912584d988217caa79623820fef6ecf5a4162fa519071448118dfd77ae52aef5b37e7028')
+md5sums=('ac18da7841af62e8c457dd4872cce1ba')
+b2sums=('d04362ac9167ccff5a4b3cb8274194d5eb6001cebb9837cf641ff9da7d34b5170f742d39f423e154d72d9a72bb0f4bf9329a409cc2513a77b897779a30f701e1')
 
 build() {
   mkdir -p build
