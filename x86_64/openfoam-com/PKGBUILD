@@ -7,11 +7,11 @@
 # Contributor: <gucong43216@gmail.com>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2412
+# /opt/OpenFOAM/OpenFOAM-v2506
 
 _distname=OpenFOAM
 pkgname=${_distname,,}-com
-pkgver=v2412
+pkgver=v2506
 _dist=${_distname}-${pkgver}
 pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
@@ -21,7 +21,7 @@ license=(GPL-3.0-or-later)
 install="${pkgname}.install"
 depends=(cgal fftw boost openmpi paraview scotch parmetis-git kahip) # petsc hypre
 source=(https://dl.${pkgname//-/.}/source/${pkgver}/${_dist}.tgz)
-md5sums=('9c15c28b30ae86cc47837a8110d8e601')
+md5sums=('6bd3f95ba28666a433569e545c7b768c')
 
 prepare() {
   if [ -n "$WM_PROJECT_DIR" ]; then
