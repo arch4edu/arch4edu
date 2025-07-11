@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=ggparty
-_pkgver=1.0.0
+_pkgver=1.0.0.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.0
-pkgrel=4
+pkgver=1.0.0.1
+pkgrel=1
 pkgdesc="'ggplot' Visualizations for the 'partykit' Package"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,7 +30,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0e7b29ee4519306c81f5c17f08131d6c466f3ee68f4b65e41d7482916ec9d068')
+sha256sums=('c0d1b31e0607c7698242602c22507a231a9c377d342071d774c33dbc28885c74')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
