@@ -2,10 +2,10 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=CompQuadForm
-_pkgver=1.4.3
+_pkgver=1.4.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=1
 pkgdesc="Distribution Function of Quadratic Forms in Normal Variables"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e4cb74a3022e0653b46881ac7bc024fd')
-b2sums=('48b46b02020032ca131b6f52a7555a6858ba30fb86c21842e3eda75757e8df886c0f88ca784bc53d50dbf4acfa581ac7618c1342d6fc10efba14122e80652eb9')
+md5sums=('44e119935fa15aa034de317d41e801d8')
+b2sums=('a52e7d20c609f1243aad46779b8e98eaa86a5f5d26afed6bb4355997bf354c722eb7d682c3bab532eadb13a6a7a08cca1962153c0092e2b34533e2d5a9438116')
 
 build() {
   mkdir build
