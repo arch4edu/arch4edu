@@ -9,9 +9,12 @@ depends:
   - x86_64/r/r-lifecycle
   - x86_64/r/r-modelenv
   - x86_64/r/r-parsnip
+  - x86_64/r/r-recipes
   - x86_64/r/r-rlang
+  - x86_64/r/r-sparsevctrs
   - x86_64/r/r-tidyselect
   - x86_64/r/r-vctrs
+  - x86_64/r/r-withr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
