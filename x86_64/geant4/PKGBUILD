@@ -1,6 +1,6 @@
 # Maintainer: Luis Sarmiento < Luis.Sarmiento-ala-nuclear.lu.se >
 pkgname='geant4'
-pkgver=11.3.1
+pkgver=11.3.2
 _pkgver=v${pkgver}
 pkgrel=1
 pkgdesc="A simulation toolkit for particle physics interactions."
@@ -44,7 +44,7 @@ options=('!emptydirs')
 install="${pkgname}.install"
 source=("http://geant4-data.web.cern.ch/releases/${pkgname}-${_pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('c93ca996f6f35aa43f948ffcaba9603468df01deeb62f61c33ba769227c319fe'
+sha256sums=('892aedd7425262a50ac3d3c7117d81c0c0da4b408c6880dbaf5478b9301e488c'
             '0eae153900d995603b0b465c9f17225ba76dd8118377507916fc709360482058')
 
 ## Remove this if you want to keep an even smaller package
@@ -59,6 +59,7 @@ build() {
       QT_SELECT=6 \
       PATH=/usr/bin \
       cmake \
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DGEANT4_USE_G3TOG4=ON \
       -DGEANT4_USE_GDML=ON \
