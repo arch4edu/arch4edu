@@ -2,10 +2,10 @@
 
 pkgbase=flutter-artifacts-google-bin
 _group=flutter
-pkgver=3.32.5
+pkgver=3.32.7
 # in order to update these version hashes, consult the PKGBUILD and update-artifact-versions.sh
 # script of https://aur.archlinux.org/pkgbase/flutter
-_enginever=dd93de6fb1776398bf586cbd477deade1391c7e4
+_enginever=39d6d6e699e51b2874210e14cddf1a22fb9524b2
 _materialfontsver=3012db47f3130e62f7cc0beabff968a33cbec8d8
 _gradlewver=fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
 _flutterarch=$(echo "$CARCH" | sed s/aarch64/arm64/ | sed s/x86_64/x64/)
@@ -156,38 +156,38 @@ noextract=(
 
 sha256sums=('e56fa8e9bb4589fde964be3de451f3e5b251e4a1eafb1dc98d94add034dd5a86'
             '31e9428baf1a2b2f485f1110c5899f852649b33d46a2e9b07f9d17752d50190a'
-            '2828b8a346f0363504a3fb1109313f847d0963388fb081d2582c2399b690a42d'
-            '4be9e8e9d4178a6cf1ef3b3c69ed5d77e3d67a7987aaa3c56c64bf4f826f9652'
-            '568f4837387be64813c8ed8546980ad9ef7de28dc4a57e0110af59c7e0079b31'
-            '6f2d46697d7788eb61ced5e5fc651fb3e13e0c05ddca46194e066411b8f6b271'
-            '62aec81a766514ada8703a3f5bf56e4186c04d97ef5d45d05e31cc1773691d8e'
-            'e6da713764d8075c088542f7e9f85b4db50c2f79f3bf8a98b1d691106d88900b'
-            '5e5ee4afbfd8fd9dd48cc7577a797d3e4e406ede5cd91b2676b39af006537dd1'
-            '0acf262a2e947ee4b84abce2e9442b56c9f92db6ee232b2a3bb7d8e4798e234b'
-            '40b37208033e6d93e02179a42cf340cc115e3d8ebe0eaef1712026ca453e935e'
-            'bf8dc685e47887d24f7bfa80f575d41772891ac59988ed4d5335ef7ef679cc5c'
-            '41daca7a13ea4d2f6ec1aae299af5c345955c57cf6ca9f749006ea168bab06c0'
-            '780eb588d0652a12fcc5140884064e8f00b0bd3e23d02d3a559bf5f12be9b1c3'
-            'c62fc1a6569a7dcf6d2dcc198774cbb06aed84ef18adb59757ba2e72690803f2'
-            'd6f89214a6dfd9305c88388962bb255e014b48e29a9c73df9911e7fc59840778')
-sha256sums_x86_64=('05aaf26e238a04521e86137c889759fd6472a388dfd5e905c3313fcf08da1932'
-                   '00de0da794afb182b7f368bede3f0d95efeaa0692804928eff7d380c2ab1bb87'
-                   '715fbf7a06be9e3d0e9aa8fc3c3006d0d2c20d77d20d2e146ff205167e5175f8'
-                   '4b2799def1ec9a13fdacfefb78f71ead4241b426f48cdc0bceb9a0fc5575989f'
-                   '3a2d6f0fadd4e86d1f709d8dac515b15a62b5b9b14f33f230eff641dce4c051a'
-                   '7d534bc2b78caca868bc99a9475747cc4495d00434ac25989a20a45cc93d86d7'
-                   '2ad76fcd8c5d400c7213f8a363d79e86c546e299fa88e4a9d9cc5c79397c4355'
-                   'f8796022c2de79b95a061cde97aaf22c461735c4f851b58be69e54817b5990da'
-                   '4bc55ecc66b6baf802028ebfab2debbd85c49a1d566129e14a46617c272b9738'
-                   'a14e1270d257fc828593939b31fb91f562365ef2939eb002da1e59aef4caafd1'
-                   '7413ecd23e00df84f0429a28c479fd8f3543eb9a1b60472a1be1c40816e59977'
-                   '46f42d51c1244f67abdada2b73114420d62d054431aff79dacffc47bd6c65ec7')
-sha256sums_aarch64=('cb978e7a925e69a7711f876ee3735205123146aa1f0bf8dfc46f2705d62fb424'
-                    '78f4f23ea821c40cb53402c78d449318905a381b12a1690d7ad1cb7eb1333eb4'
-                    'bdce63ae32906804a2264160709d1b95ec9709317274649883a98b8527868a65'
-                    '131901d3359e4f70a1668910d946ef521595252a3d76ff47f1f91ff6573ad433'
-                    'b6754b9f9de6dc83b1836e083957172f91306e96f47cf35408874aa3caefe033'
-                    'c7fc46830b3be19ffa66e2492e975a2dbf8d8c6af74d1ac154f4078e653cb0c6')
+            '7115bf7e02d7b1e6e351f190d1c89e851ab532d78083f0f417efd8e2b7fa3886'
+            '811612b52b65efe85ee8f0ec55f4e423c9c7133602d6f35a81808c6157da9d1e'
+            '509cea0fe066ea0322fc33c32b5adefda5b116df12e62e802a4989c2eb927a29'
+            '8f2308c2d7632c65ce689c61432a426e8dcf3643aa264229e3086bdec96ba89a'
+            '16a25353efd01d31758de29f0679472e92f20e1d4c3e5697106e235984d5f9e7'
+            'd009801a5fefc8c97cfcf7208d9bcb360517f98659ca197397a9e8f0ca391aa8'
+            '4df2a4baeede30786aa9e08e7aa59eec69e91dfeb82a5ee1f0c97983ae4cfb8c'
+            'fe4fc107ad0ab58dfefda449e3298cd36b2a89b0239a719fe56fdffdf2657905'
+            '0adaa27b3db9eda8cabc1a05cf6983fc14a9f54ac8a2036d38092bc556164065'
+            'd7c91ffda411e3f9503f2cfc08a537d58ce8f94bdf69ac257d8beaf6b19777f2'
+            '1c79ee7d48ed889453f04e6021685388d9900d49ff66829a0795330a16daf7ed'
+            '0e2f250fa7313f056ff925d3d785785425f75fb54b4213d10e1f929cb5a83e05'
+            '15e38929b0afb6be18db4798e1bd99c295914e8f13bc4c6bcbe9b74214b4e069'
+            '810e7b810f38c9b1ca232c4f550d26cc90cc9b481c037c048bb9d792b002bd74')
+sha256sums_x86_64=('55e095451c782069f3cabf39492d58dfa3c0dcad70da6f0dec2b8b4d1387e573'
+                   '5948bd1a49a0dba44c33d34f6288391388f396eafa197f7da633042f23a589e2'
+                   '153dda04a2dc936d85e854212f53791978aa90c189739ed9e406dffcbb363497'
+                   '4d431a4aa4f16200e1c4122848da5a6e2e2047060538d2334933b56c58705ce8'
+                   '1ca721d17775ae52a0f93da8df6e1a79a5bf5afdffe26f08d82bba06342e2f94'
+                   '61cbbb72ac40f9a19eb4ec8586e0a9ff21a85ec50af9a4d5128ebb539ddb58ae'
+                   '8e64225f9cb3fbfea3eab4d48e7fba03f386fb48270b090171bd9cb60753db66'
+                   'ac4af4113f6f18f244a0963fd4fd517afbf6c7a91e1869148ba2833398ec2a22'
+                   '40240640972b5441f379a3872707fc6ee8b76578e2a0f9601a1de29be8aeb9f5'
+                   '010dbb899f5f25caa6d6e3f4563518858f0b0050fa6e7d5a6d13dfcfdebd4758'
+                   '3a69da09168bc5c35dcf6368f416ba3b8d7c594ad3a630001ff5a5478fd95ae4'
+                   '8c6753b82cd779711914d42e89fa24fc695fb39c53382643b939bf4fbe75e838')
+sha256sums_aarch64=('c24f5cbc2be11258e2b2a8270c9180bb35b4a731c26b2b55951dd59e7344ee5f'
+                    '0d5c11f038fdb4000f9dfb31b549e3135002da7ff65bc29b3113d948b6fd8e11'
+                    '1eb5b14f6dce3bd6c6c9db9e6d95b344a5dfa3aea9976af167c422d8019aefd8'
+                    'c1ebe4da5c833f93f9a4d18f4c6c8b5c097cc2871cfe4b6ad16ce4d4793c527f'
+                    'b563cc6c4128e18e88159eaf1218da8866c369859a02fb5d2bcf994cfa1b778f'
+                    'b36445f2b486f21f9e3fc282d0ad67dc4157eaa55234bd365c2bc523af6e776a')
 
 prepare() {
   unzip -o -q "${srcdir}/dart-sdk-${_flutterarch}-${_enginever}.zip" -d dart
@@ -252,9 +252,9 @@ build() {
 _package-engine-common-google-bin() {
   pkgdesc="${_pkgdesc} - common engine files"
   depends=(
-	"${_group}-common=${pkgver}"
-	"${_group}-sky-engine=${pkgver}"
-	"${_group}-material-fonts=${pkgver}"
+	"${_group}-common"
+	"${_group}-sky-engine"
+	"${_group}-material-fonts"
 	"dart>=${_dartmin}"
 	"dart<${_dartmax}"
   )
@@ -301,16 +301,13 @@ _package-material-fonts-google-bin() {
 _package-engine-linux-google-bin() {
   pkgdesc="${_pkgdesc} - linux engine"
   depends=(
-	"${_group}-engine-common=${pkgver}"
+	"${_group}-engine-common"
   )
   provides=(
 	"${_group}-engine-linux=${pkgver}"
   )
   conflicts=(
 	"${_group}-engine-linux"
-	"${_group}-target-linux<${pkgver}"
-	"${_group}-engine-android<${pkgver}"
-	"${_group}-engine-web<${pkgver}"
   )
 
   install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
@@ -323,16 +320,13 @@ _package-engine-linux-google-bin() {
 _package-engine-web-google-bin() {
   pkgdesc="${_pkgdesc} - web engine"
   depends=(
-	"${_group}-engine-common=${pkgver}"
+	"${_group}-engine-common"
   )
   provides=(
 	"${_group}-engine-web=${pkgver}"
   )
   conflicts=(
 	"${_group}-engine-web"
-	"${_group}-target-web<${pkgver}"
-	"${_group}-engine-android<${pkgver}"
-	"${_group}-engine-linux<${pkgver}"
   )
 
   install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache"
@@ -343,14 +337,13 @@ _package-engine-web-google-bin() {
 _package-gradle-google-bin() {
   pkgdesc="${_pkgdesc} - gradle wrapper"
   depends=(
-	"${_group}-common=${pkgver}"
+	"${_group}-common"
   )
   provides=(
 	"${_group}-gradle=${pkgver}"
   )
   conflicts=(
 	"${_group}-gradle"
-	"${_group}-target-android<${pkgver}"
   )
 
   install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts"
@@ -361,16 +354,13 @@ _package-gradle-google-bin() {
 _package-engine-android-google-bin() {
   pkgdesc="${_pkgdesc} - android engine"
   depends=(
-	"${_group}-engine-common=${pkgver}"
+	"${_group}-engine-common"
   )
   provides=(
 	"${_group}-engine-android=${pkgver}"
   )
   conflicts=(
 	"${_group}-engine-android"
-	"${_group}-target-android<${pkgver}"
-	"${_group}-engine-linux<${pkgver}"
-	"${_group}-engine-web<${pkgver}"
   )
 
   install -dm755 "${pkgdir}/usr/lib/${_group}/bin/cache/artifacts/engine"
