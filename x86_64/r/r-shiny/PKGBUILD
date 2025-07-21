@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.10.0
+_pkgver=1.11.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Web Application Framework for R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,7 +15,6 @@ depends=(
   r-bslib
   r-cachem
   r-commonmark
-  r-crayon
   r-fastmap
   r-fontawesome
   r-glue
@@ -31,6 +30,7 @@ depends=(
   r-sourcetools
   r-withr
   r-xtable
+  r-cli
 )
 checkdepends=(
   r-coro
@@ -56,10 +56,12 @@ optdepends=(
   r-showtext
   r-testthat
   r-yaml
+  r-mirai
+  r-watcher
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b8a598f6d1289a4cbd338088f119ce75')
-b2sums=('7bcb8c77c3b74fdfae0f375e8102e58497e71baa52ab131c54eb24d3bf08986b4656b61a979f8a52b7a6db0a585893aece10e6308ef9b47eee4cb23263a035d0')
+md5sums=('57f4e39ae3b46a6ba66d328c121e62b9')
+b2sums=('bac64637d3a1606d564eb8496be4842926c328e2660d02b829964125ad66a2d1a8c6f32bb97ae57e458d2fa502716e0724457a5e00a2f24f56e42dbebffdcff8')
 
 build() {
   mkdir build
