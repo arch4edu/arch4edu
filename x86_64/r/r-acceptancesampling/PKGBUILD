@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=AcceptanceSampling
-_pkgver=1.0-10
+_pkgver=1.0.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Creation and Evaluation of Acceptance Sampling Plans"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cccf037fcede6abc4636d6d4cfe88d0f')
-b2sums=('ee6e7b5a2fd116c1cd0be0ec04ea009cf05677a1e1ec8bc70516b4da2732cdf32502a70b5d4f5df8fd59fa9dbbd1f941fa1b6011edd2cecdc5a53bc477529268')
+md5sums=('880e18eb33ee15fef2d77bedf4cc6087')
+b2sums=('a9236ce6568c4a088e7ac90ad6e17a7a1f786407402dd163ca12503100a0de659aea25db5e93b013970fd5a7687f4b29e529d63a090f882f965a5ecb1611ccc1')
 
 build() {
   mkdir build
