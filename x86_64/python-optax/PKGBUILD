@@ -2,7 +2,7 @@
 
 pkgname='python-optax'
 _pkgname=${pkgname#python-}
-pkgver=0.2.4
+pkgver=0.2.5
 pkgrel=1
 pkgdesc='A gradient processing and optimization library for JAX'
 arch=('any')
@@ -13,7 +13,7 @@ makedepends=('python-build' 'python-installer' 'python-flit-core' 'python-wheel'
 optdepends=('python-dm-haiku: Deep learning framework from DeepMind'
             'python-flax: Deep learning framework from Google')
 source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('5f1d94664b61d93841a0a36465d63e0ad939db9e638f8cbeb15d3a452c2b7542')
+sha256sums=('f9293d18e93dbcf78800fd19f1a9e49aad6bfb69c5ba80b454cb32948cf18b71')
 
 prepare() {
     cd "$_pkgname-$pkgver"
@@ -25,8 +25,8 @@ build() {
 }
 
 package() {
-    python -m installer \
-        --compile-bytecode 1 \
-        --destdir $pkgdir \
-        $_pkgname-$pkgver/dist/$_pkgname-$pkgver-*.whl
+    cd "${_pkgname}-${pkgver}"
+    install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
+        dist/$_pkgname-$pkgver-*.whl
 }
