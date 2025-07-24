@@ -3,7 +3,7 @@
 # Contributor: Michael Schubert <mschu.dev at gmail>
 
 pkgname=python-numba-git
-pkgver=0.62.0dev0.r437.g41282a684
+pkgver=0.62.0dev0.r440.g262b49a3e
 pkgrel=1
 pkgdesc='NumPy aware dynamic Python compiler using LLVM (Git version)'
 url='https://github.com/numba/numba'
