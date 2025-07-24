@@ -1,0 +1,45 @@
+commit 133300f60a9ace15da129deb79b830efb1b12fea
+Author: Daniel Bershatsky <daniel.bershatsky@gmail.com>
+Date:   Thu Jul 24 01:24:02 2025 +0300
+
+    [Mosaic GPU] Add missing namespace specified
+
+diff --git a/jaxlib/mlir/_mlir_libs/jax_mlir_ext.cc b/jaxlib/mlir/_mlir_libs/jax_mlir_ext.cc
+index 7a6b038f5..8e07a2f55 100644
+--- a/jaxlib/mlir/_mlir_libs/jax_mlir_ext.cc
++++ b/jaxlib/mlir/_mlir_libs/jax_mlir_ext.cc
+@@ -69,8 +69,9 @@ namespace {
+ // Returns true if a location is a NameLoc with a FileLineColLoc child. We
+ // assume the NameLoc names a function name in a frame in this case.
+ bool IsFrameNameLocation(mlir::Location location) {
+-  return isa<mlir::NameLoc>(location) &&
+-         isa<mlir::FileLineColLoc>(cast<mlir::NameLoc>(location).getChildLoc());
++  return mlir::isa<mlir::NameLoc>(location) &&
++         mlir::isa<mlir::FileLineColLoc>(
++             mlir::cast<mlir::NameLoc>(location).getChildLoc());
+ }
+ 
+ // Split a location into an operation type and an operation name, and a tail
+@@ -87,7 +88,7 @@ void ParseLocation(mlir::Location& location, llvm::StringRef& op_type,
+     } else {
+       op_name = name;
+     }
+-    location = cast<mlir::NameLoc>(location).getChildLoc();
++    location = mlir::cast<mlir::NameLoc>(location).getChildLoc();
+   }
+ }
+ 
+diff --git a/jaxlib/mosaic/dialect/gpu/mosaic_gpu.cc b/jaxlib/mosaic/dialect/gpu/mosaic_gpu.cc
+index d42768d2d..1ff84f3e2 100644
+--- a/jaxlib/mosaic/dialect/gpu/mosaic_gpu.cc
++++ b/jaxlib/mosaic/dialect/gpu/mosaic_gpu.cc
+@@ -522,7 +522,8 @@ llvm::LogicalResult BroadcastInDimOp::verify() {
+ }
+ 
+ llvm::LogicalResult ReturnOp::verify() {
+-  auto custom_primitive_op = cast<CustomPrimitiveOp>((*this)->getParentOp());
++  auto custom_primitive_op =
++      mlir::cast<CustomPrimitiveOp>((*this)->getParentOp());
+ 
+   // The operand number and types must match the custom primitive signature.
+   const auto& results = custom_primitive_op->getResultTypes();

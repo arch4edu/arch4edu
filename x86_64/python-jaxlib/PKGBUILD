@@ -1,26 +1,33 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname=python-jaxlib
-pkgver=0.5.3
-pkgrel=1
+pkgver=0.7.0
+pkgrel=3
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
 url='https://github.com/jax-ml/jax/'
 license=('Apache-2.0')
-depends=('python-absl'
-         'python-ml-dtypes>=0.4.0'
-         'python-numpy'
-         'python-scipy')
-makedepends=('clang18' 'python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+depends=(
+    'python-ml-dtypes'
+    'python-numpy'
+    'python-scipy'
+)
+makedepends=('gcc14' 'python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 _bazel_ver=7.4.1
 source=("jax-${pkgver}.tar.gz::$url/archive/refs/tags/jax-v${pkgver}.tar.gz"
-        "bazel-${_bazel_ver}-linux-x86_64::https://github.com/bazelbuild/bazel/releases/download/${_bazel_ver}/bazel-${_bazel_ver}-linux-x86_64")
-sha256sums=('1094581a30ec069965f4e3e67d60262570cc3dd016adc62073bc24347b14270c'
-            'c97f02133adce63f0c28678ac1f21d65fa8255c80429b588aeeba8a1fac6202b')
+        "bazel-${_bazel_ver}-linux-x86_64::https://github.com/bazelbuild/bazel/releases/download/${_bazel_ver}/bazel-${_bazel_ver}-linux-x86_64"
+        'jaxlib.diff')
+noextract=("bazel-${_bazel_ver}-linux-x86_64")
+sha256sums=('518966801e4402667e77915c2dc7cf1a178a80e22ff253204a837f207a87fcde'
+            'c97f02133adce63f0c28678ac1f21d65fa8255c80429b588aeeba8a1fac6202b'
+            'SKIP')
 
 prepare() {
     ln -sf $(readlink bazel-${_bazel_ver}-linux-x86_64) $srcdir/jax-jax-v${pkgver}/build
     chmod +x $srcdir/bazel-${_bazel_ver}-linux-x86_64
+
+    cd $srcdir/jax-jax-v$pkgver
+    patch -p 1 -i ../jaxlib.diff
 }
 
 build() {
@@ -33,8 +40,9 @@ build() {
         --bazel_path="$srcdir/bazel-${_bazel_ver}-linux-x86_64" \
         --bazel_startup_options="--output_user_root=$srcdir/bazel"\
         --bazel_options='--action_env=JAXLIB_RELEASE' \
-        --use_clang --clang_path='/usr/lib/llvm18/bin/clang' \
         --target_cpu_features=default \
+        --use_clang=false \
+        --gcc_path=/usr/bin/gcc-14 \
         --verbose
 }
 
