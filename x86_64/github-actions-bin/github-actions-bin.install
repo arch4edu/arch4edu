@@ -9,4 +9,3 @@ post_remove() {
        echo "Remove $_pkgname user and this HOME /var/lib/$_pkgname manually, if not needed anymore."
        echo
 }
-
