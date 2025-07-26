@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=pixmap
-_pkgver=0.4-13
+_pkgver=0.4-14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('908e41d62d4943388c6baf07aae1a71f')
-b2sums=('5e656748284b1f1b5e457c88cce7693005c490129f3c0870a41ff04d080b11ed0a9011c9506e974903e94a2ca1b8bfdea00bcd43c3690f8d9add38a0fcae0aa9')
+md5sums=('257d33ea7e5740e24f466ccee7860c3e')
+b2sums=('a993e445b3269328a27734d62e081504627f5be49ff356b8fd04a05eac5225c5766f2d465b1dfea33e8b91df299e2782b89a23b4508033a59379ab69801daefe')
 
 build() {
   mkdir build
