@@ -1,38 +1,8 @@
-diff --git a/SConstruct2 b/SConstruct
-index e9aa2ca..5814f4a 100644
---- a/SConstruct2
+diff --git a/SConstruct.orig b/SConstruct
+index 74a32f0..d9dba9f 100644
+--- a/SConstruct.orig
 +++ b/SConstruct
-@@ -25,7 +25,7 @@ from pkg_resources import parse_version
- 
- import SCons
- import SCons.Script
--from mongo_tooling_metrics.lib.top_level_metrics import SConsToolingMetrics
-+#from mongo_tooling_metrics.lib.top_level_metrics import SConsToolingMetrics
- from site_scons.mongo import build_profiles
- 
- # This must be first, even before EnsureSConsVersion, if
-@@ -1724,13 +1724,13 @@ env.AddMethod(lambda env, name, **kwargs: add_option(name, **kwargs), 'AddOption
- 
- # The placement of this is intentional. Here we setup an atexit method to store tooling metrics.
- # We should only register this function after env, env_vars and the parser have been properly initialized.
--SConsToolingMetrics.register_metrics(
--    utc_starttime=datetime.utcnow(),
--    artifact_dir=env.Dir('$BUILD_DIR').get_abspath(),
--    env_vars=env_vars,
--    env=env,
--    parser=_parser,
--)
-+#SConsToolingMetrics.register_metrics(
-+#    utc_starttime=datetime.utcnow(),
-+#    artifact_dir=env.Dir('$BUILD_DIR').get_abspath(),
-+#    env_vars=env_vars,
-+#    env=env,
-+#    parser=_parser,
-+#)
- 
- if get_option('build-metrics'):
-     env['BUILD_METRICS_ARTIFACTS_DIR'] = '$BUILD_ROOT/$VARIANT_DIR'
-@@ -3132,7 +3132,7 @@ if env.TargetOSIs('posix'):
+@@ -3123,7 +3123,7 @@ if env.TargetOSIs('posix'):
      env.Append(
          CCFLAGS=[
              "-fasynchronous-unwind-tables",
@@ -41,7 +11,7 @@ index e9aa2ca..5814f4a 100644
              "-Wall",
              "-Wsign-compare",
              "-Wno-unknown-pragmas",
-@@ -3200,6 +3200,8 @@ if env.TargetOSIs('posix'):
+@@ -3191,6 +3191,8 @@ if env.TargetOSIs('posix'):
  
      # env.Append( " -Wconversion" ) TODO: this doesn't really work yet
      env.Append(CXXFLAGS=["-Woverloaded-virtual"])
@@ -50,7 +20,7 @@ index e9aa2ca..5814f4a 100644
  
      # On OS X, clang doesn't want the pthread flag at link time, or it
      # issues warnings which make it impossible for us to declare link
-@@ -3250,7 +3252,7 @@ if env.TargetOSIs('posix'):
+@@ -3243,7 +3245,7 @@ if env.TargetOSIs('posix'):
          ], )
  
      #make scons colorgcc friendly
@@ -59,7 +29,7 @@ index e9aa2ca..5814f4a 100644
          try:
              env['ENV'][key] = os.environ[key]
          except KeyError:
-@@ -3644,35 +3646,35 @@ def doConfigure(myenv):
+@@ -3637,35 +3639,35 @@ def doConfigure(myenv):
          myenv.AddMethod(
              functools.partial(var_func, var=var, func=CheckFlag), f"Check{var}Supported")
  
@@ -124,7 +94,7 @@ index e9aa2ca..5814f4a 100644
  
      detectCompiler = Configure(
          myenv,
-@@ -4765,42 +4767,42 @@ def doConfigure(myenv):
+@@ -4763,42 +4765,42 @@ def doConfigure(myenv):
      if optBuild == "off" and myenv.ToolchainIs('clang') and env.TargetOSIs('darwin'):
          myenv.AddToLINKFLAGSIfSupported("-Wl,-no_deduplicate")
  
@@ -203,7 +173,7 @@ index e9aa2ca..5814f4a 100644
  
      if get_option('runtime-hardening') == "on" and optBuild != "off":
          # Older glibc doesn't work well with _FORTIFY_SOURCE=2. Selecting 2.11 as the minimum was an
-@@ -5263,16 +5265,17 @@ def doConfigure(myenv):
+@@ -5261,16 +5263,17 @@ def doConfigure(myenv):
          "BOOST_LOG_NO_SHORTHAND_NAMES",
          "BOOST_LOG_USE_NATIVE_SYSLOG",
          "BOOST_LOG_WITHOUT_THREAD_ATTR",
@@ -225,7 +195,7 @@ index e9aa2ca..5814f4a 100644
  
      if use_system_version_of_library("boost"):
          if not conf.CheckCXXHeader("boost/filesystem/operations.hpp"):
-@@ -5473,6 +5476,8 @@ def doConfigure(myenv):
+@@ -5471,6 +5474,8 @@ def doConfigure(myenv):
  
      mongoc_mode = get_option('use-system-mongo-c')
      conf.env['MONGO_HAVE_LIBMONGOC'] = False
