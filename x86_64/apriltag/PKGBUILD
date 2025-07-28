@@ -3,7 +3,7 @@
 
 pkgbase=apriltag
 pkgname=($pkgbase python-$pkgbase)
-pkgver=3.4.3
+pkgver=3.4.4
 pkgrel=1
 pkgdesc="visual fiducial system popular for robotics research"
 arch=('x86_64')
@@ -12,7 +12,7 @@ license=('BSD-2-Clause')
 makedepends=('cmake'
              'python-numpy')
 source=("https://github.com/AprilRobotics/apriltag/archive/v${pkgver}.tar.gz")
-b2sums=('e25dd2da60451daa45dfd45522ebbb18469b09f2376bf44880029fede25f3def4af2fa889b77f1aa8e21beb338ee39b849275420df599c96079c89e813ab2fac')
+b2sums=('862914783b73a159228406b4b22c786d1e0fdda53d35d2ec2e9ca77a254edd42f53affbd45e92f8104f0fae2e9bfdf26aad52ae3d2652057fbe9e01d8dbbbed7')
 
 build() {
   cd "$srcdir"
