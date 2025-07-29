@@ -4,8 +4,8 @@
 # Contributor: Marius Glo <marius@mgl.dev>
 
 pkgname=unityhub
-pkgver=3.12.1
-pkgrel=2
+pkgver=3.13.0
+pkgrel=1
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
 arch=('x86_64')
@@ -19,7 +19,7 @@ source=(
   'license.txt'
 )
 sha256sums=(
-  '669ce5dc7f1c81598faa94406a42f79b5d8e674e03773a66fb692b92e124c2b9'
+  '75b0fba8bfcd01a4c06d3ea951f79b7f940d256e546258b28b10e1d0ab001a58'
   'f0eb3a4bb148bb7f426e4f5b97e891265ac487710cbcba9282518537c7b5d833'
 )
 conflicts=('unityhub-beta')
