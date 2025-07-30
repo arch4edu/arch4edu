@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rsample
-_pkgver=1.3.0
+_pkgver=1.3.1
 pkgname=r-${_pkgname,,}
-pkgver=1.3.0
+pkgver=1.3.1
 pkgrel=1
 pkgdesc='General Resampling Infrastructure'
 arch=('any')
@@ -42,7 +42,7 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f3f4df79910f13231951ac3b68ffb57092e8a88a92ccc6c11f7948c004aac991')
+sha256sums=('6b31fbd90350a809c7ee673d406e19d720becb456ac5146e8b05171171f06430')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
