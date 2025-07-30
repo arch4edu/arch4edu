@@ -6,7 +6,7 @@ _pkgname=systemfonts
 _pkgver=1.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="System Native Font Finding"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,6 +16,7 @@ depends=(
   freetype2
   r-jsonlite
   r-lifecycle
+  r-base64enc
 )
 makedepends=(
   r-cpp11
