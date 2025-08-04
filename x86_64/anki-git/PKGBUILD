@@ -11,7 +11,7 @@
 
 _pkgname="anki"
 pkgname="anki-git"
-pkgver=r11974.d13c117e8
+pkgver=r11978.2b55882cc
 pkgrel=1
 pkgdesc="Helps you remember facts (like words/phrases in a foreign language) efficiently"
 url="https://github.com/ankitects/anki"
