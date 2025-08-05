@@ -1,0 +1,32 @@
+# Maintainer: Daniel Bershatsky <d.bershatsky2@skoltech.ru> (aur.archlinux.org/account/daskol)
+
+pkgname=python-treescope
+_pkgname=${pkgname#python-}
+pkgver=0.1.9
+pkgrel=1
+pkgdesc='A neural network library and ecosystem for JAX designed for flexibility'
+arch=('any')
+url='https://github.com/google-deepmind/treescope'
+license=('Apache-2.0')
+depends=('python-numpy')
+makedepends=('python-build' 'python-installer' 'python-flit-core'
+             'python-wheel')
+optdepends=()
+source=("$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('6427be603289b87116c931c22fff196ec3a180ca218da46cf974a5e590b4b2df')
+
+build() {
+    python -m build -nw $_pkgname-$pkgver
+}
+
+check() {
+    cd $_pkgname-$pkgver
+    PYTHONPATH=$PWD python -c 'import treescope'
+}
+
+package() {
+    cd $_pkgname-$pkgver
+    install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
+        dist/$_pkgname-$pkgver*.whl
+}
