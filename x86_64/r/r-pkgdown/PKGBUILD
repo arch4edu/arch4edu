@@ -4,7 +4,7 @@
 _pkgname=pkgdown
 _pkgver=2.1.3
 pkgname=r-${_pkgname,,}
-pkgver=2.1.2
+pkgver=2.1.3
 pkgrel=1
 pkgdesc='Make Static HTML Documentation for a Package'
 arch=('any')
