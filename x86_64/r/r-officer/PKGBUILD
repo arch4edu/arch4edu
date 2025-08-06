@@ -3,7 +3,7 @@
 _pkgname=officer
 _pkgver=0.6.10
 pkgname=r-${_pkgname,,}
-pkgver=0.6.8
+pkgver=0.6.10
 pkgrel=1
 pkgdesc='Manipulation of Microsoft Word and PowerPoint Documents'
 arch=('any')
