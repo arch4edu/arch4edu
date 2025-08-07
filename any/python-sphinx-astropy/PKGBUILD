@@ -1,26 +1,29 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgname=python-sphinx-astropy
-_pyname=${pkgname#python-}
-pkgver=1.9.1
-pkgrel=3
+_pname=${pkgname#python-}
+_pyname=${_pname//-/_}
+pkgver=1.10
+pkgrel=1
 pkgdesc="Sphinx extensions and configuration specific to the Astropy project"
 arch=('any')
 url="https://github.com/astropy/sphinx-astropy"
-license=('BSD')
+license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm'
              'python-wheel'
              'python-build'
              'python-installer')
 checkdepends=('python-pytest-doctestplus'
               'python-astropy-sphinx-theme'
-              'python-matplotlib'
+#             'python-pytest-xdist'
+###           'python-matplotlib'
               'python-numpydoc'
               'python-sphinxcontrib-jquery'
               'python-sphinx-automodapi'
               'python-pydata-sphinx-theme'
               'python-sphinx-copybutton')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('da84468f9a8395216a22f8bdf292d43b')
+md5sums=('61f702f3b73a165e3b74b5e36cda3ef9')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -33,12 +36,12 @@ check() {
 
     # skip tests that cost times through internet
     pytest || warning "Tests failed" #\
-#       --deselect=sphinx_astropy/tests/test_conf.py::test_conf #|| warning "Tests failed" # -vv --color=yes
+#       --deselect=sphinx_astropy/tests/test_conf.py::test_conf #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package() {
     depends=('python-packaging'
-             'python-sphinx>=3.0.0'
+             'python-sphinx>=4.0.0'
              'python-astropy-sphinx-theme'
              'python-sphinx-automodapi'
              'python-sphinx-gallery'
