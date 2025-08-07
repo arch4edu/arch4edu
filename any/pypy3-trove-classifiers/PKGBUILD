@@ -2,7 +2,7 @@
 _base=trove-classifiers
 pkgname=pypy3-${_base}
 pkgdesc="Canonical source for classifiers on PyPI"
-pkgver=2025.5.9.12
+pkgver=2025.8.6.13
 pkgrel=1
 arch=(any)
 url="https://github.com/pypa/${_base}"
@@ -10,7 +10,7 @@ license=(Apache-2.0)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-setuptools pypy3-calver)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('d734108aa62bb23b2d71558f0017bbf94bd086028124b3e016b9503a6d1a86ea28f1517c2d8535e9fbaf77ba68cb231305e4be8fd353079c93cd89495650c9ed')
+sha512sums=('6bad58ea3e07f4654b1fdb3a710913e67ecefc8e1a85b3c5cdd6eea0b4ca69d009bd252f642f465b6da64bd0c2077bd00521a4deda83cde76cc2da3c266cf33b')
 
 build() {
   cd ${_base}-${pkgver}
