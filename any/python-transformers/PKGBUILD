@@ -3,7 +3,7 @@
 
 pkgname=python-transformers
 _pkgname=${pkgname#python-}
-pkgver=4.54.1
+pkgver=4.55.0
 pkgrel=1
 pkgdesc="State-of-the-art Natural Language Processing for Jax, PyTorch and TensorFlow"
 arch=('any')
@@ -16,8 +16,8 @@ depends=(
   'python-packaging'
   'python-regex'
   'python-requests'
-  'python-safetensors>=0.4.1'
-  'python-tokenizers>=0.19'
+  'python-safetensors'
+  'python-tokenizers'
   'python-tqdm'
   'python-yaml'
 )
@@ -34,9 +34,9 @@ optdepends=(
   'python-hf-xet: xethub support'
 )
 source=(
-  "python-transformers-$pkgver.tar.gz"::"https://github.com/huggingface/transformers/archive/refs/tags/$pkgver.tar.gz"
+  "python-transformers-$pkgver.tar.gz"::"https://github.com/huggingface/transformers/archive/refs/tags/v$pkgver.tar.gz"
 )
-sha256sums=('1a13108dffbfde8e9a2186a14f2be8a20b015884554d59270cbf978e7c037998')
+sha256sums=('1aaacc53ce5db73521644ecec1b8368810800af766e38a7929331b7e26409b73')
 
 build() {
   python -m build -nw "transformers-$pkgver"
