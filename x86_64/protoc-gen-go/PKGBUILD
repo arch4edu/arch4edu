@@ -2,7 +2,7 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go"
-pkgver=1.36.6
+pkgver=1.36.7
 pkgrel=1
 pkgdesc="Go support for Google's protocol buffers"
 arch=('aarch64' 'i686' 'x86_64')
@@ -13,23 +13,31 @@ makedepends=('go')
 provides=('protobuf-go')
 conflicts=('protobuf-go')
 replaces=('protobuf-go')
-_pkgsrc="protobuf-go-${pkgver}"
+_pkgsrc="${url##*/}-${pkgver}"
 source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('afa2b0e8f86d6da9d09c51ab4270d93c2888327220316982be9db345f523a6a1')
+sha256sums=('f3be1721420f0524ed036e16b5b53f13d10052741a7061db9b13f0a4a469d817')
 
 prepare() {
+  export GOMODCACHE="${srcdir}/go-mod-cache"
+
   cd "${srcdir}/${_pkgsrc}"
+  go mod download -x
+  chmod -R ug+Xwr "${GOMODCACHE}"
+
   mkdir -p "build"
 }
 
 build() {
-  cd "${srcdir}/${_pkgsrc}"
   export CGO_CPPFLAGS="${CPPFLAGS}"
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
+  export GOCACHE="${srcdir}/go-cache"
+  export GOMODCACHE="${srcdir}/go-mod-cache"
   export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
-  go build -o "build/${pkgname}" ./"cmd/${pkgname}"
+
+  cd "${srcdir}/${_pkgsrc}"
+  go build -v -o "build/${pkgname}" ./"cmd/${pkgname}"
 }
 
 check() {
@@ -41,6 +49,5 @@ package() {
   cd "${srcdir}/${_pkgsrc}"
   install -vDm755 "build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
   install -vDm644 "README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
-  install -vDm644 "PATENTS"   "${pkgdir}/usr/share/doc/${pkgname}/PATENTS"
-  install -vDm644 "LICENSE"   "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -vDm644 "LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
