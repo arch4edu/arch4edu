@@ -6,11 +6,17 @@
 # Contributor: Ray Rashif <schiv at archlinux dot org>
 # Contributor: Andrzej Giniewicz <gginiu at gmail dot com>
 # Contributor: Thomas Dziedzic <gostrc at gmail>
+# Contributor: Christofer Bertonha <christoferbertonha at gmail dot com>
+# Contributor: leepesjee <lpeschier at xs4all dot nl>
+# Contributor: Olivier Medoc
+# Contributor: ignotus
+# Contributor: Fabian Moser
+# Contributor: djscholl
 
 pkgname=vtk
 # May need bootstrapping on upgrades due to circular vtk <-> opencascade dependency
 pkgver=9.5.0
-pkgrel=5
+pkgrel=6
 pkgdesc="Software system for 3D computer graphics, image processing, and visualization"
 arch=(x86_64)
 url="https://www.vtk.org"
