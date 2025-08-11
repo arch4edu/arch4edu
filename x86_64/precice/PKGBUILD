@@ -1,0 +1,55 @@
+# Maintainer: Valentina Schüller <valentina.schueller@mailbox.org>
+# Contributor: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Florian Lindner <florian.lindner@xgm.de>
+
+pkgname=precice
+pkgver=3.2.0
+pkgrel=1
+pkgdesc="A Coupling Library for Partitioned Multi-Physics Simulations on Massively Parallel Systems"
+arch=(x86_64)
+url="https://${pkgname}.org"
+license=(LGPL-3.0-or-later)
+depends=(boost libxml2 openmpi petsc python-numpy)
+conflicts=(petsc-complex)
+makedepends=(cmake eigen gcc-fortran)
+optdepends=('man-db: manual pages for precice-tools'
+  'git: for Git Revision Info support')
+source=(${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz)
+sha512sums=('cc78eb3043e8268bcadf3ceedf89d3c88ed3d93bc2767739163f8fc9b006e5aade174d37e8cf1dc670f996655ee4f34b4af184713f7c721b075123db0e5044b7')
+
+prepare() { 
+ sed -i "s/libxml\/SAX.h/libxml\/SAX2.h/" ${pkgname}-${pkgver}/src/xml/ConfigParser.cpp 
+}
+build() {
+  cmake \
+    -S ${pkgname}-${pkgver} \
+    -B build \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DBUILD_SHARED_LIBS=ON \
+    -DPRECICE_FEATURE_MPI_COMMUNICATION=ON \
+    -DPRECICE_FEATURE_PETSC_MAPPING=ON \
+    -DPRECICE_FEATURE_PYTHON_ACTIONS=ON \
+    -DPRECICE_CONFIGURE_PACKAGE_GENERATION=ON \
+    -DPRECICE_FEATURE_GINKGO_MAPPING=OFF \
+    -DPRECICE_BINDINGS_C=ON \
+    -DPRECICE_BINDINGS_FORTRAN=ON \
+    -DPRECICE_BUILD_TOOLS=ON \
+    -Wno-dev
+
+  cmake --build build
+}
+
+# check() {
+#   ctest --test-dir build
+# }
+
+package() {
+  DESTDIR="${pkgdir}" cmake --build build --target install
+  install -Dm 644 ${pkgname}-${pkgver}/LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}
+  install -Dm 644 ${pkgname}-${pkgver}/docs/man/man1/${pkgname}-tools.1 -t ${pkgdir}/usr/share/man/man1
+  cd "${pkgdir}"
+  rm -r usr/share/lintian
+}
+makedepends+=("hypre" "mumps" "pastix")
