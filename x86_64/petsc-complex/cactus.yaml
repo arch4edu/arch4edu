@@ -5,9 +5,8 @@ makedepends:
   - x86_64/mumps
   - x86_64/parmetis-git
   - x86_64/pastix
-  - x86_64/archimedes-tools: triangle
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add makedepends mumps parmetis-git pastix triangle
+  add makedepends mumps parmetis-git pastix
 post_build: aur-post-build
