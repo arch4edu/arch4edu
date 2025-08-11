@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/precice-config-visualizer
+  - x86_64/precice-config-format
+  - x86_64/precice-profiling
+  - x86_64/precice-config-check
+  - x86_64/precice-case-generate
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
