@@ -10,7 +10,7 @@
 _base=petsc
 pkgname=${_base}-complex
 pkgver=3.23.5
-pkgrel=2
+pkgrel=3
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
 #"linux-c-debug" for some things, so the _config should be changed too
@@ -108,4 +108,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${_build_dir}/${_petsc_arch}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-makedepends+=("mumps" "parmetis-git" "pastix")
+depends+=("mumps" "parmetis-git" "pastix")
