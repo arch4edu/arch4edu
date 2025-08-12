@@ -3,7 +3,7 @@
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 pkgver=3.23.5
-pkgrel=2
+pkgrel=3
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
 arch=('i686' 'x86_64')
@@ -98,4 +98,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${PETSC_ARCH}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-makedepends+=("hypre" "mumps" "parmetis-git" "pastix")
+depends+=("hypre" "mumps" "parmetis-git" "pastix")
