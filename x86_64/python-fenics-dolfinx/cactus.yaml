@@ -6,13 +6,7 @@ depends:
   - x86_64/dolfinx
 makedepends:
   - any/python-cppimport
-  - x86_64/hypre
-  - x86_64/mumps
-  - x86_64/parmetis-git
-  - x86_64/pastix
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: |
-  aur-pre-build
-  add makedepends hypre mumps parmetis-git pastix
+pre_build: aur-pre-build
 post_build: aur-post-build

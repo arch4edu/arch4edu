@@ -1,12 +1,12 @@
 nvchecker:
   - source: aur
     aur:
-makedepends:
+depends:
   - x86_64/mumps
   - x86_64/parmetis-git
   - x86_64/pastix
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add makedepends mumps parmetis-git pastix
+  add depends mumps parmetis-git pastix
 post_build: aur-post-build

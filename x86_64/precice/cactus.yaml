@@ -5,13 +5,8 @@ nvchecker:
   - alias: libxml2
 depends:
   - x86_64/petsc
-makedepends:
-  - x86_64/hypre
-  - x86_64/mumps
-  - x86_64/pastix
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   sed '19 a prepare() { \n sed -i "s/libxml\\/SAX.h/libxml\\/SAX2.h/" ${pkgname}-${pkgver}/src/xml/ConfigParser.cpp \n}' -i PKGBUILD
-  add makedepends hypre mumps pastix
 post_build: aur-post-build

@@ -8,13 +8,7 @@ depends:
   - x86_64/petsc
   - x86_64/python-fenics-ffcx
   - x86_64/scotch
-makedepends:
-  - x86_64/hypre
-  - x86_64/mumps
-  - x86_64/pastix
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: |
-  aur-pre-build
-  add makedepends hypre mumps pastix
+pre_build: aur-pre-build
 post_build: aur-post-build
