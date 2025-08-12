@@ -6,7 +6,7 @@ _name=${pkgname#python-}
 pkgdesc="The infrastructure to build Ninja Python wheels"
 url="https://github.com/scikit-build/ninja-python-distributions"
 
-pkgver=1.11.1.4
+pkgver=1.13.0
 pkgrel=1
 
 arch=("any")
@@ -25,7 +25,7 @@ makedepends=(
 )
 
 source=("${pkgname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/source/${_name::1}/${_name//-/_}/${_name//-/_}-$pkgver.tar.gz")
-b2sums=("c5b988c97a0bca3604534d2f22b2e255b5dbcd17e4b6386c5c31cd4d7389b4f8855a1874eb1c5951c7c6b80b701e840b0a8ddce93d737753f43b9c6cac2634be")
+b2sums=("7b330401c776fc3f510e130b52b1bc0cf1103598fc9996d93769cf6de5d72a6a9521e1c5502c63ab5dc8aa9860281ac1b21e5e0086046e26d55a7c76e25bf543")
 
 build() {
     cd "${srcdir}/${_name}-${pkgver}"
@@ -36,4 +36,5 @@ package() {
     cd "${srcdir}/${_name}-${pkgver}"
     python -m installer --destdir="$pkgdir" dist/*.whl
     rm "${pkgdir}/usr/bin/ninja"  # conflict with `ninja`
+    rm -R "${pkgdir}/usr/bin"  # now empty
 }
