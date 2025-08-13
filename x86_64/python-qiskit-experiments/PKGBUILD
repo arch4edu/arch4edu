@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-experiments
 pkgname=python-$_pkgname
-pkgver=0.11.0
+pkgver=0.12.0
 pkgrel=1
 pkgdesc="Qiskit Experiments package for IBM qiskit framework"
 arch=(any)
@@ -44,7 +44,7 @@ checkdepends=(
     python-testtools
 )
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit-Community/$_pkgname/archive/refs/tags/$pkgver.tar.gz)
-b2sums=('2ce8c8636afc832516bb5a53d08f46195e04d8c6d139c1c16ca572199c36f69ecb2ee9f1e0fa1afd931ad7dfa8ec2ee534b7ea68457708e82f7b251c9d5acbb7')
+b2sums=('a69b186dcaee7621e692bc72a2b1915be0f79165f85fc7362f02b27063575cdc55c6503958ce727fb4b752d9bdc14d96b9621a91cf6f976c3e992e3f6a22c816')
 
 build() {
     cd $_pkgname-$pkgver
