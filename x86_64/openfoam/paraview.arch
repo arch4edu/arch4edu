@@ -1,0 +1,29 @@
+# inject /usr/bin/paraview-wrapper (arch) env variables
+export PYTHONPATH=/opt/paraview/lib/python3.13/site-packages/:"${PYTHONPATH}"
+
+# Set hardcoded paths for Arch Linux system paraview
+export ParaView_DIR=/opt/paraview
+export ParaView_LIB_DIR=$ParaView_DIR/lib
+export ParaView_VERSION=$(pvserver --version | awk '{print $NF}')
+export ParaView_MAJOR=${ParaView_VERSION%.*}
+export ParaView_INCLUDE_DIR=$ParaView_DIR/include/paraview
+#export PV_PLUGIN_PATH_SYSTEM=/opt/paraview/lib/paraview/plugins
+export PV_PLUGIN_PATH=$FOAM_LIBBIN/paraview
+
+# Add to the path and the library path
+export PATH=$ParaView_DIR/bin:$PATH
+export LD_LIBRARY_PATH=$ParaView_LIB_DIR:$PV_PLUGIN_PATH_SYSTEM:$PV_PLUGIN_PATH:$LD_LIBRARY_PATH
+
+
+# Report
+if [ "$FOAM_VERBOSE" ] && [ -d "$ParaView_DIR" ]
+then
+    echo "Using paraview"
+    echo "    ParaView_DIR          : $ParaView_DIR"
+    echo "    ParaView_LIB_DIR      : $ParaView_LIB_DIR"
+    echo "    ParaView_INCLUDE_DIR  : $ParaView_INCLUDE_DIR"
+    echo "    PV_PLUGIN_PATH        : $PV_PLUGIN_PATH"
+    # echo "    PV_PLUGIN_PATH_SYSTEM : $PV_PLUGIN_PATH_SYSTEM"
+fi
+
+#------------------------------------------------------------------------------
