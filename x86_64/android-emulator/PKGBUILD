@@ -2,15 +2,14 @@
 
 pkgname=android-emulator
 pkgver=36.1.9
-pkgrel=1
+pkgrel=2
 pkgdesc='Google Android Emulator'
 arch=('x86_64')
 url='https://developer.android.com/studio/releases/emulator.html'
 license=('custom')
-depends=('alsa-lib' 'dbus' 'expat' 'gcc-libs' 'glibc' 'libpulse'
-         'libutil-linux' 'libx11' 'libxcb' 'libxcomposite' 'libxcursor'
-         'libxdamage' 'libxext' 'libxfixes' 'libxi' 'libxrender' 'libxtst'
-         'nspr' 'nss' 'zlib')
+depends=('dbus' 'expat' 'gcc-libs' 'glibc' 'libbsd' 'libice' 'libpng'
+         'libpulse' 'libsm' 'libtiff' 'libx11' 'libxcb' 'libxext'
+         'libxi' 'libxkbfile' 'nspr' 'nss' 'util-linux-libs' 'zlib')
 install="${pkgname}.install"
 source=('https://dl.google.com/android/repository/emulator-linux_x64-13823996.zip'
         "${pkgname}.sh"
