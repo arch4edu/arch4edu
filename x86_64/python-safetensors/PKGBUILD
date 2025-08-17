@@ -3,7 +3,7 @@
 # Contributor: Henry-ZHR <henry-zhr@qq.com>
 # shellcheck shell=bash disable=SC2034,SC2154
 pkgname=python-safetensors
-pkgver=0.6.0
+pkgver=0.6.2
 pkgrel=1
 pkgdesc='Simple, safe way to store and distribute tensors'
 arch=('x86_64')
@@ -25,7 +25,7 @@ optdepends=('python-jax'
   'python-tensorflow'
   'python-pytorch')
 
-: ' Checks are disabled until someone can confirm they work
+: " Checks are disabled until someone can confirm they work
 checkdepends=('python-pytorch'
   'python-numpy'
   'python-tensorflow'
@@ -42,10 +42,10 @@ checkdepends=('python-pytorch'
   'python-pytest-benchmark'
   'python-hypothesis'
   'python-h5py')
-'
+"
 
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('3707f6e048b256037410443e492b9546201a0746c4cd9d9253fca3ffdafff6d8')
+sha256sums=('2d086574269a17cdb02941839127a401bc66c97ed6ffd82e2d64339132792396')
 
 prepare() {
   mkdir -p "safetensors-${pkgver}/.git"
