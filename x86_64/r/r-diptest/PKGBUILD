@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=diptest
-_pkgver=0.77-1
+_pkgver=0.77-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('18b630a2c9c1987954031271aadbd97c')
-b2sums=('9dc6461c98d6d7571e5db1dde9946c51a227a6cf3ee853cfd97423d4ae0445d372635e42de515184cb9eacb3e0880f91aba59278354809c9d1d507833ba93f00')
+md5sums=('6f36cb0d4e21c6766d5b8fcb73d8c1da')
+b2sums=('1f65966aa3e7780ab3cc2636979bb63afab75f77b542b13a1dc168e0891cc0fe83f0cefeaf596ed867359909e0da2fbd7000e73d6967430e71169ed5f37a62bb')
 
 build() {
   mkdir build
