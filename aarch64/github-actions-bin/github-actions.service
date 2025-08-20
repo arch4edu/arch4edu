@@ -1,14 +1,33 @@
 [Unit]
 Description=GitHub Actions Listener Daemon
+After=network.target
 
 [Service]
 User=github-actions
-WorkingDirectory=~
+WorkingDirectory=/var/lib/github-actions
+Environment=HOME=/var/lib/github-actions
 Type=exec
-ExecStart=/var/lib/github-actions/externals/node20/bin/node bin/RunnerService.js
-KillMode=process
-KillSignal=SIGINT
-TimeoutStopSec=5min
+ExecStart=/var/lib/github-actions/run.sh
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/github-actions
+ProtectHome=yes
+InaccessiblePaths=/home /root /srv
+PrivateTmp=true
+
+# Devices — allow GPU if needed
+DevicePolicy=closed
+DeviceAllow=/dev/nvidiactl rwm
+DeviceAllow=/dev/nvidia0 rwm
+DeviceAllow=/dev/nvidia-uvm rwm
+DeviceAllow=/dev/dri/card0 rwm
+DeviceAllow=/dev/dri/renderD128 rwm
+
+# Capabilities
+CapabilityBoundingSet=
+AmbientCapabilities=
 
 [Install]
 WantedBy=multi-user.target
