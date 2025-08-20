@@ -2,10 +2,10 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=effects
-_pkgver=4.2-2
+_pkgver=4.2-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Effect Displays for Linear, Generalized Linear, and Other Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -30,8 +30,8 @@ optdepends=(
   r-robustlmm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cdcae07573da34746bfa4c246a6c4502')
-b2sums=('37520b6e13f68f1d9684e714695ef25b39ba241bfbec8f8956d0efbdc2a36536621095a65908b181a7e170a1869f483418d473b4ae215411e1273c2038163f82')
+md5sums=('e8eb6970e1ed9e52cd18a537de6bbd06')
+b2sums=('d04d879abca85f3553447c668c852399ed775fbe0b04ab7cd67048e914e5ba808610228147c9682188bbef040859fca649eae4187e542c43642dd0721451158d')
 
 build() {
   mkdir build
