@@ -2,9 +2,8 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
-depends:
+makedepends:
   - x86_64/gtest-src
-  - x86_64/vtk
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
