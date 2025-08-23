@@ -13,7 +13,7 @@ pkgname=(gcc12 gcc12-libs gcc12-fortran)
 pkgver=12.5.0
 _majorver=${pkgver%%.*}
 _commit=c17d40bb3778bca5e81595f033df9222b66658eb
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Compiler Collection'
 arch=(x86_64)
 license=(GPL3 LGPL FDL custom)
@@ -40,6 +40,8 @@ options=(!emptydirs !lto)
 _libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
 source=(git+https://sourceware.org/git/gcc.git#commit=${_commit}
         c89 c99
+        78_all-libsanitizer-Fix-build-with-glibc-2.42.patch
+        79_all-sanitizer_common-Remove-reference-to-obsolete-termio.patch
 )
 validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.org
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
@@ -47,7 +49,9 @@ validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.
               D3A93CAD751C2AF4F8C7AD516C35B99309B5FA62) # Jakub Jelinek <jakub@redhat.com>
 sha256sums=('SKIP'
             'de48736f6e4153f03d0a5d38ceb6c6fdb7f054e8f47ddd6af0a3dbf14f27b931'
-            '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a')
+            '2513c6d9984dd0a2058557bf00f06d8d5181734e41dcfe07be7ed86f2959622a'
+            '17d0dbcdd1772e88853d41575c79e448ddeb8a46ec07b7b15e82c23d75541f8b'
+            'b4459b314d33e4b6af1c77c6121dffee262c3ecf5436fc20c67fcab0446e059e')
 
 prepare() {
   [[ ! -d gcc ]] && ln -s gcc-${pkgver/+/-} gcc
@@ -58,6 +62,10 @@ prepare() {
 
   # Arch Linux installs x86_64 libraries /lib
   sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
+
+  # patch for glibc 2.42
+  patch -p1 -i "$srcdir/78_all-libsanitizer-Fix-build-with-glibc-2.42.patch"
+  patch -p1 -i "$srcdir/79_all-sanitizer_common-Remove-reference-to-obsolete-termio.patch"
 
   mkdir -p "$srcdir/gcc-build"
 }
