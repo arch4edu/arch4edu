@@ -3,7 +3,7 @@
 _base=profiling
 pkgname=precice-${_base}
 pkgdesc="A tool for post-processing and analyzing preCICE profiling data"
-pkgver=2.0.2
+pkgver=2.0.3
 pkgrel=1
 arch=(any)
 url="https://github.com/precice/${_base}"
@@ -12,7 +12,7 @@ depends=(python-typing_extensions python-orjson python-polars python-matplotlib 
 makedepends=(python-build python-installer python-setuptools-git-versioning git)
 checkdepends=(python-pytest)
 source=(git+${url}.git#tag=v${pkgver})
-sha512sums=('4a7882ac5a4e2ebba70d968a718721fdee63ecdb8590e78ff6296b17cca7f1958c79a7bbb20d37db2f8e160079ecd30e0dd80469d0cbfdd18299e1925a8f43ed')
+sha512sums=('1359891cea883d8071af758e37e0afff9da87cfe9d7f344c2af41979fe5ba32c148bbd4c7cc1240422d4f8a1104d015433028f55e03adf90be18d07f757e0b11')
 
 build() {
   cd ${_base}
