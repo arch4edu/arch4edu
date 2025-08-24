@@ -1,18 +1,18 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-optimization
 pkgname=python-$_pkgname
-pkgver=0.6.1
-pkgrel=4
+pkgver=0.7.0
+pkgrel=1
 pkgdesc="Quantum Optimization package for IBM qiskit framework"
 arch=(any)
 url=https://github.com/qiskit-community/qiskit-optimization
 license=(Apache-2.0)
 depends=(
+    blas-openblas
     python-docplex
     python-networkx
     python-numpy
     python-qiskit
-    python-qiskit-algorithms
     python-scipy
 )
 makedepends=(
@@ -27,7 +27,7 @@ checkdepends=(
     python-qiskit-aer
 )
 source=($_pkgname-$pkgver.tar.gz::https://github.com/qiskit-community/$_pkgname/archive/$pkgver.tar.gz)
-b2sums=('b0796d1e3822ea05753634bcc9ff9f0d203a30aa58ed79052e3316beb405d191126269cdf762ae99a45b3f09bd49519962c18c0d65f0660a93b2bd7db2a7e867')
+b2sums=('4f1116820f1baf360769ce24faeaf5ec6b33d847cdecfea019866bf0ebf727fc6d4e55fd77d10887e20e86d894e549776a17d703d1fc5b06bc7c156de444cec7')
 
 build() {
     cd $_pkgname-$pkgver
@@ -38,7 +38,8 @@ check() {
     cd $_pkgname-$pkgver
     local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
     python -m installer --destdir=../test_dir dist/*.whl
-    PYTHONPATH=../test_dir/$_site_packages pytest
+    # See https://github.com/qiskit-community/qiskit-optimization/issues/681
+    PYTHONPATH=../test_dir/$_site_packages pytest -k "not test_samples_and_raw_samples"
 }
 
 package() {
