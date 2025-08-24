@@ -1,0 +1,13 @@
+--- ffi/CMakeLists.txt
++++ ffi/CMakeLists.txt
+@@ -208,10 +208,6 @@  This check fails, but the actual build links correctly
+ 
+ 
+ if (LLVMLITE_SHARED)
+-    check_library_exists(LLVM LLVMGetVersion "" HAVE_LIBRARY_LLVM)
+-    if(NOT HAVE_LIBRARY_LLVM)
+-        message(FATAL_ERROR "Could not find libLLVM")
+-    endif()
+     set(llvm_libs LLVM)
+     message(STATUS
+     "LLVMLITE_SHARED is ON, using dynamic linkage against LLVM")

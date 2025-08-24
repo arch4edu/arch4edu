@@ -2,43 +2,66 @@
 # Contributor: Quan Guo <guotsuan at gmail dot com>
 
 pkgname=python-llvmlite-git
-_gitname=llvmlite
-pkgver=0.45.0dev0.r405.g49d99ca7
+pkgver=0.45.0dev0.r445.gbeab085b
 pkgrel=1
 pkgdesc="A lightweight LLVM Python binding for writing JIT compilers (Git version)"
 url="https://github.com/numba/llvmlite"
 arch=('i686' 'x86_64')
 license=('BSD-2-Clause')
-depends=('python' 'llvm15-libs')
+
+depends=(
+  'gcc-libs'
+  'glibc'
+  'python'
+  'llvm15-libs'
+)
 makedepends=(
-  'git' 'llvm15' 'python-build' 'python-installer'
-  'python-setuptools' 'python-wheel'
+  'cmake'
+  'git'
+  'llvm15'
+  'python-build'
+  'python-installer'
+  'python-setuptools'
 )
 optdepends=(
   'python-graphviz: visualising control-flow graphs'
 )
 provides=("python-llvmlite=$pkgver")
 conflicts=('python-llvmlite')
-source=(${_gitname}::git+https://github.com/numba/llvmlite.git)
-sha256sums=('SKIP')
+
+source=(
+  'llvmlite::git+https://github.com/numba/llvmlite.git'
+  'skip_check_library_exists.patch'
+)
+sha256sums=(
+  'SKIP'
+  'a2a2272ad08cea9ae2b1107e1728902410434348c83a68f8c0481d5ccdded2c7'
+)
 
 pkgver() {
-  cd "$_gitname"
+  cd llvmlite
   git describe --long | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
 }
 
+prepare() {
+  cd llvmlite
+  patch -p0 -i "$srcdir/skip_check_library_exists.patch"
+}
+
 build() {
-  cd "$srcdir/$_gitname"
-  LLVM_CONFIG=/usr/bin/llvm-config-15 python -m build --no-isolation --wheel
+  cd llvmlite
+  export CMAKE_PREFIX_PATH="/usr/lib/llvm15/lib/cmake"
+  export LLVMLITE_SHARED=1
+  python -m build --no-isolation --wheel
 }
 
 check() {
-  cd "$srcdir/$_gitname"
+  cd llvmlite
   python runtests.py
 }
 
 package() {
-  cd "${srcdir}/${_gitname}"
+  cd llvmlite
   python -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
