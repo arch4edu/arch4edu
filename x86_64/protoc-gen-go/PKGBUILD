@@ -2,7 +2,7 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go"
-pkgver=1.36.7
+pkgver=1.36.8
 pkgrel=1
 pkgdesc="Go support for Google's protocol buffers"
 arch=('aarch64' 'i686' 'x86_64')
@@ -15,7 +15,7 @@ conflicts=('protobuf-go')
 replaces=('protobuf-go')
 _pkgsrc="${url##*/}-${pkgver}"
 source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('f3be1721420f0524ed036e16b5b53f13d10052741a7061db9b13f0a4a469d817')
+sha256sums=('2f3dda9249a392089bb21271a7ae71c114373f18952e644c7fb92681c8dc0018')
 
 prepare() {
   export GOMODCACHE="${srcdir}/go-mod-cache"
