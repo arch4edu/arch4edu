@@ -98,15 +98,3 @@ index 8a94ac400b5..3dde94656d5 100644
      Address('10.7.5', False, 'Invalid partial IPv4 address'),
      Address('10.7', False, 'Invalid partial IPv4 address'),
 diff --git a/src/test/pybind/test_ceph_argparse.py b/src/test/pybind/test_ceph_argparse.py
-index 3039223abdf..dd51362846a 100755
---- a/src/test/pybind/test_ceph_argparse.py
-+++ b/src/test/pybind/test_ceph_argparse.py
-@@ -217,7 +217,7 @@ class TestPG(TestArgparse):
-     def test_pg_missing_args_output(self):
-         ret, _, stderr = self._capture_output(['pg'], stderr=True)
-         self.assertEqual({}, ret)
--        self.assertRegexpMatches(stderr, re.compile('no valid command found.* closest matches'))
-+        self.assertRegex(stderr, re.compile('no valid command found.* closest matches'))
- 
-     def test_pg_wrong_arg_output(self):
-         ret, _, stderr = self._capture_output(['pg', 'map', 'bad-pgid'],

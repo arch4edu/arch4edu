@@ -4,8 +4,8 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=19.2.2
-pkgrel=3
+pkgver=19.2.3
+pkgrel=1
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later' 'LGPL-3.0-or-later')
@@ -22,16 +22,17 @@ pkgname=(
   ceph-cli
 )
 makedepends=(
-  'bash'            'boost'           'boost-libs'     'cmake'           'coreutils'
-  'cryptsetup'      'curl'            'cython'         'expat'           'fmt'
-  'fuse3'           'gawk'            'gcc-libs'       'git'             'glibc'
-  'gperf'           'gperftools'      'jq'             'junit'           'keyutils'
-  'libaio'          'libatomic_ops'   'libcap'         'libcap-ng'       'libcurl-compat'
-  'libedit'         'libgudev'        'libnl'          'librabbitmq-c'   'librdkafka'
-  'libutil-linux'   'libuv'           'libxcrypt'      'lua'             'lz4'
-  'nasm'            'ninja'           'nss'            'oath-toolkit'    'openssl'
-  'pkgconf'         'python'          'snappy'         'sqlite'          'systemd-libs'
-  'thrift'          'util-linux'      'xfsprogs'       'zlib'            'zstd'
+  'bash'           'boost'           'boost-libs'   'cmake'           'coreutils'
+  'cryptsetup'     'curl'            'cython'       'expat'           'fmt'
+  'fuse3'          'gawk'            'gcc-libs'     'git'             'glibc'
+  'gperf'          'gperftools'      'jq'           'junit'           'keyutils'
+  'libaio'         'libatomic_ops'   'libcap'       'libcap-ng'       'libcurl-compat'
+  'libedit'        'libgudev'        'libnl'        'librabbitmq-c'   'librdkafka'
+  'libnbd'         'libutil-linux'   'libuv'        'libxcrypt'       'lua'
+  'lz4'            'nasm'            'ninja'        'nss'             'oath-toolkit'
+  'openssl'        'pkgconf'         'python'       'snappy'          'sqlite'
+  'systemd-libs'   'thrift'          'util-linux'   'xfsprogs'        'zlib'
+  'zstd'
 
   'python-bcrypt'     'python-cherrypy'  'python-coverage'     'python-dateutil'  'python-jinja'
   'python-packaging'  'python-pecan'     'python-prettytable'  'python-pyjwt'     'python-pyopenssl'
@@ -137,23 +138,11 @@ source=(
   # Partially backported from https://github.com/ceph/ceph/pull/57581
   'ceph-19.2.0-backport-mds-link-boost-urls.patch'
 
-  # Restore access to the ceph-exporter systemd service file, seemingly missed
-  # from v19.2.0
-  'ceph-19.2.0-backport-ceph-exporter.patch'
-
   # Fixes missed include for std::for_each usage in src/common/cohort_lru.h
   'ceph-19.2.0-fix-cohort-lru-include.patch'
 
-  # Make a spurious gcc warning be quiet (next line ensures str is NULL terminated, gcc!)
-  'ceph-19.2.1-quiet-stringop-truncation.patch'
-
   # fixes for a bunch of boost::asio deprecated stuff that was removed in 1.87
   'ceph-19.2.1-boost-1.87-fixes.patch'
-
-  # re-add IPv6 support in osd health checks, backport of:
-  # -> https://github.com/ceph/ceph/pull/61323
-  # -> https://github.com/ceph/ceph/pull/60881
-  'ceph-19.2.1-fix-ipv6-support-in-is-addr-in-subnet.patch'
 
   # fix ceph-volume issues in py3.13 (again)
   # backport of: https://github.com/ceph/ceph/pull/59739
@@ -182,14 +171,14 @@ source=(
   # Use our fork of pyo3, reenabling subinterpreter support
   'python-bcrypt-allow-subinterpreters.patch'
 )
-sha512sums=('ee47c1cb7cb5084b87bcc5a35b3df88fb49683524bba8f2e1ced9d2f8891af53e4b5fb5aa153ed6bce31683625d9bf5176bab9f55bc71671f0e34667948f7285'
+sha512sums=('278101d2df7bed5363b20c2b065d7a7b26252c8164511257e213ffaa58d509015558183de10bc9281bcbe4d9f85244bcac5bba4db9823e28df6a96d0b687d00a'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
             '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
             'd4335733eb7af8359ba02b615d565a1cadbb4e318a53ceb3452e110ce7d9936a45510f30114c2d87cdf226875c1e92de52c7622d66b2d3870f09924e3ad8e11e'
-            '107b096a3fc145ef62f3dd6e1e3de708bf72bc891c9081611d8f0cb451bfa1db492a063df4914fbb557abab74b10e16109596a7c4cd3eed3bbababb503a0185f'
+            'f41d9ce20c7ce472756351455c143c09877c07ab0930e9043f20d36ef500f00b2f6f1835308a2158480e439f548352cc95b37bb4cc17ed60810a8a48ee7470c6'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '612faebfb5eec3651832f349ea3c23b50d2386889ff77592b0acff653049efdc5c2254f63c30d88b9a730813bf1f1945dda0d0beab0db7db3e0708ba8d057a40'
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
@@ -201,17 +190,14 @@ sha512sums=('ee47c1cb7cb5084b87bcc5a35b3df88fb49683524bba8f2e1ced9d2f8891af53e4b
             '2c90c69b3e236622c9fb83214fe7f781c9fcb0de1b372e7837d9963780ead9c2926c347177c03fb94eb05fd838514f3afab42aa50b7c9ac800c34bf59c48b02e'
             '0ed97f2fb764ec8f7e01be45256377a6b2f451c865348b25b12ca9ef70c7120a0bf62321a9402cc4362618fde3a38ccfcd6eec738fe8cc067f17399700c273f3'
             'b68bc568a27876975dc1fad55cbd1a6890b940edd174aed3f8deaff9635a2462126fc8958d352bf5a8da7c6cd295f5ad20addda22f966606267e3c45afab0c7a'
-            '2c9ae183579a15c9756bb89b9ee646596e30ee1d7617ef51e34bbb168bbfb3a335dd7ba402866d52c2192211ada46190fa5e044fbabfdcb3c52fe060093fbc7d'
+            '03aa3e095240f485b2cdad57a53cd2fc52b196ce15d1c7ed230728315df27306b8bdd08e92f1875dfa4637789273f5f8cf36948f3492a849f824549e219f690c'
             'e52225b881c78dfd44773a42415f1babafc8c3842cfc7a8c88be7469d3e9b46d9a6a0f289bf10b5a790e6c5b2984b9ae5e42bbb2e411abc67f4c764383c747a0'
             '76324e5a592994bc4712481ad7e21d91dbc1b6774b3f8579e8cb869cd2c6939eab3f646d99f4cd8865052ac4dc5cb90146caa7f8cef4b3dc46b6b2d71fde61bc'
             '76ddf7dd71355e0b1953d215dbe5a9ce536d4866e604567bc9060f8e02bef6951be8eacd4f8896d97fe05a595aa041ab59dc65653c8fdad88e754d81f6f6b760'
             'b8b3758a496780014821aa442c6fc2ee4797618ef4873d87ef376ad56313f871739d95366d52dec6cbb54c9ca87c4fe4b4473ff79f7800dd339fef31d6569b48'
             '5b03d967b77fbb90e9ec43226cc9e929ee153abae1e6ab6d11b66a9f9eb8261461e724203e84e36c4f2bcbd9450734c994e41bd7daec28230393aa2ded06de3e'
-            '3e60855d156d7ea3e74569f13a9cb14c75b4abb679c81d1e3b38dac10d17a6930a2116f750e45cda8e1b90e34088e8fc9555d1d996464255b92fb13cc9d06c09'
             '00cb26f5697212e8205f4306c030934cba944dbdbea112e277cc4eedb794f144a679f1b5b4a58a6c6627924b24388166502744e5c9937b77def788b3c408fede'
-            'd282f5bba40b2e6d30117466f24174e3ea7fe9358f4a51de7bb6af4e9b3beaf6044fad07bab491dd4c4c1e60d20fdbf672b90dfb3c608da70b35be8c227d89c4'
             'f522b4e736a3405429d8c8d8160526c648a044c79613cd64c020c5b4e0b3e1e045be74ff59b6d8766ccc54aac73b4f043546e34477efc40205e8bdcd9407e60c'
-            '697cda8b11f7bd533b6aa73a71c827cd22a452e002d5f09b9ae70a1cb19fb16dca07a6f6783cb1ea198a36c3bbe2e7d6f76b417c7da86f5c54ae4bf631675244'
             '608b4255fbc7092247fe0ca2ab51c42fce96dc6b58db9fb7fa65e805fcffaa7acad59131ddd3cb6e219147ffedcf3b1ff026097387923b075483fff32bfbf84d'
             '286db9845a005fac92fafd749959419ec7ceca78e50880c31415f3e0477e18d732c763964e743e0e954c0e7b08c25c16793e5caf83d44cfa16033c40f76106b4'
             'e5e2e30da3618407b753af75d5cbfd2898d33e62871c4c7c92d775e63ffbbe23a6b09894ac1a6e30996218388ebfe5f50d903910eafad20648511c92e6f2133d'
@@ -288,6 +274,7 @@ build() {
   export CFLAGS+=" ${CPPFLAGS}"
   export CXXFLAGS+=" ${CPPFLAGS}"
   export CMAKE_BUILD_TYPE='RelWithDebInfo'
+  export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --ignore=4 || echo "4")
   export CMAKE_WARN_UNUSED_CLI=no
 
   cmake \
@@ -346,8 +333,7 @@ build() {
     -DWITH_TESTS=ON \
     -Wno-dev
 
-  ninja -C build legacy-option-headers
-  ninja -C build all
+  cmake --build build -t legacy-option-headers all
 }
 
 check() {
@@ -359,7 +345,7 @@ check() {
   export CTEST_OUTPUT_ON_FAILURE=1
   export CTEST_PROGRESS_OUTPUT=1
 
-  ninja -C build check || true
+  cmake --build build -j $CTEST_PARALLEL_LEVEL -t check || true
 }
 
 _package() {
@@ -554,10 +540,8 @@ _make_ceph_packages() {
       $systemd/ceph-radosgw{.target,@.service} \
       $share/bash-completion/completions/radosgw-admin \
       $man/man8/radosgw{,-admin}.8 \
-      $man/man8/rgw-orphan-list.8 \
       $man/man8/ceph-diff-sorted.8 \
-      $man/man8/rgw-policy-check.8 \
-      $man/man8/rgw-restore-bucket-index.8
+      $man/man8/rgw*.8
 
     ###############################################
     #         Ceph clients / applications         #
@@ -956,7 +940,7 @@ package_librbd() {
   depends=(
     "librados=${__version}"
 
-    'cryptsetup' 'fmt'
+    'cryptsetup' 'fmt' 'libnbd'
   )
   provides=(
     'librbd.so' 'libceph_librbd_parent_cache.so'

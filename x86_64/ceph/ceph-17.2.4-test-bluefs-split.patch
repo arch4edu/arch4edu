@@ -1,5 +1,5 @@
 diff --git a/src/test/objectstore/CMakeLists.txt b/src/test/objectstore/CMakeLists.txt
-index a24e627d8ea..2da973eaf82 100644
+index a24e627d8e..2da973eaf8 100644
 --- a/src/test/objectstore/CMakeLists.txt
 +++ b/src/test/objectstore/CMakeLists.txt
 @@ -95,6 +95,84 @@ if(WITH_BLUESTORE)
@@ -88,7 +88,7 @@ index a24e627d8ea..2da973eaf82 100644
    add_executable(unittest_bluestore_types
      test_bluestore_types.cc
 diff --git a/src/test/objectstore/test_bluefs.cc b/src/test/objectstore/test_bluefs.cc
-index 795b8b054c9..a91a6b9baff 100644
+index a14705f5c8..537c2ac5d9 100644
 --- a/src/test/objectstore/test_bluefs.cc
 +++ b/src/test/objectstore/test_bluefs.cc
 @@ -173,133 +173,6 @@ TEST(BlueFS, small_appends) {
@@ -225,10 +225,18 @@ index 795b8b054c9..a91a6b9baff 100644
  #define ALLOC_SIZE 4096
  
  void write_data(BlueFS &fs, uint64_t rationed_bytes)
-@@ -338,721 +211,79 @@ void write_data(BlueFS &fs, uint64_t rationed_bytes)
-     }
- }
- 
+@@ -330,729 +203,87 @@ void write_data(BlueFS &fs, uint64_t rationed_bytes)
+       if (r < 0) {
+          break;
+       }
+-      written_bytes += g_conf()->bluefs_alloc_size;
+-      j++;
+-      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
+-        break;
+-      }
+-    }
+-}
+-
 -void create_single_file(BlueFS &fs)
 -{
 -    BlueFS::FileWriter *h;
@@ -692,13 +700,33 @@ index 795b8b054c9..a91a6b9baff 100644
 -  ASSERT_EQ(0, fs.mount());
 -  ASSERT_EQ(0, fs.maybe_verify_layout({ BlueFS::BDEV_DB, false, false }));
 -  ASSERT_EQ(0, fs.mkdir("dir"));
--
++      written_bytes += g_conf()->bluefs_alloc_size;
++      j++;
++      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
++        break;
++      }
++    }
++}
+ 
 -  char data[2000] = {'x'};
 -  BlueFS::FileWriter *h;
 -  ASSERT_EQ(0, fs.open_for_write("dir", "file", &h, false));
 -  for (size_t i = 0; i < 10000; i++) {
 -    h->append(data, 2000);
--    fs.fsync(h);
++void create_single_file(BlueFS &fs)
++{
++    BlueFS::FileWriter *h;
++    stringstream ss;
++    string dir = "dir.test";
++    ASSERT_EQ(0, fs.mkdir(dir));
++    string file = "testfile";
++    ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
++    bufferlist bl;
++    std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
++    bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
++    bl.push_back(bp);
++    h->append(bl.c_str(), bl.length());
+     fs.fsync(h);
 -  }
 -  fs.close_writer(h);
 -  fs.umount(true); //do not compact on exit!
@@ -707,8 +735,9 @@ index 795b8b054c9..a91a6b9baff 100644
 -  ASSERT_EQ(0, fs.mount());
 -  ASSERT_EQ(0, fs.maybe_verify_layout({ BlueFS::BDEV_DB, false, false }));
 -  fs.umount();
--}
--
++    fs.close_writer(h);
+ }
+ 
 -TEST(BlueFS, test_tracker_50965) {
 -  uint64_t size_wal = 1048576 * 64;
 -  TempBdev bdev_wal{size_wal};
@@ -773,21 +802,32 @@ index 795b8b054c9..a91a6b9baff 100644
 -  fs.close_writer(h_db);
 -
 -  fs.umount();
-+void create_single_file(BlueFS &fs)
++void write_single_file(BlueFS &fs, uint64_t rationed_bytes)
 +{
-+    BlueFS::FileWriter *h;
 +    stringstream ss;
-+    string dir = "dir.test";
-+    ASSERT_EQ(0, fs.mkdir(dir));
-+    string file = "testfile";
-+    ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+    bufferlist bl;
-+    std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+    bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+    bl.push_back(bp);
-+    h->append(bl.c_str(), bl.length());
-+    fs.fsync(h);
-+    fs.close_writer(h);
++    const string dir = "dir.test";
++    const string file = "testfile";
++    uint64_t written_bytes = 0;
++    rationed_bytes -= ALLOC_SIZE;
++    while (1) {
++      BlueFS::FileWriter *h;
++      ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
++      ASSERT_NE(nullptr, h);
++      auto sg = make_scope_guard([&fs, h] { fs.close_writer(h); });
++      bufferlist bl;
++      std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
++      bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
++      bl.push_back(bp);
++      h->append(bl.c_str(), bl.length());
++      int r = fs.fsync(h);
++      if (r < 0) {
++         break;
++      }
++      written_bytes += g_conf()->bluefs_alloc_size;
++      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
++        break;
++      }
++    }
  }
  
 -TEST(BlueFS, test_truncate_stable_53129) {
@@ -871,33 +911,16 @@ index 795b8b054c9..a91a6b9baff 100644
 -  ASSERT_EQ(size, 60000);
 -  // check that dev_dirty was false (data stable on media)
 -  ASSERT_EQ(h_slow_dev_dirty, false);
--
++bool writes_done = false;
+ 
 -  fs.umount();
-+void write_single_file(BlueFS &fs, uint64_t rationed_bytes)
++void sync_fs(BlueFS &fs)
 +{
-+    stringstream ss;
-+    const string dir = "dir.test";
-+    const string file = "testfile";
-+    uint64_t written_bytes = 0;
-+    rationed_bytes -= ALLOC_SIZE;
 +    while (1) {
-+      BlueFS::FileWriter *h;
-+      ASSERT_EQ(0, fs.open_for_write(dir, file, &h, false));
-+      ASSERT_NE(nullptr, h);
-+      auto sg = make_scope_guard([&fs, h] { fs.close_writer(h); });
-+      bufferlist bl;
-+      std::unique_ptr<char[]> buf = gen_buffer(ALLOC_SIZE);
-+      bufferptr bp = buffer::claim_char(ALLOC_SIZE, buf.get());
-+      bl.push_back(bp);
-+      h->append(bl.c_str(), bl.length());
-+      int r = fs.fsync(h);
-+      if (r < 0) {
-+         break;
-+      }
-+      written_bytes += g_conf()->bluefs_alloc_size;
-+      if ((rationed_bytes - written_bytes) <= g_conf()->bluefs_alloc_size) {
++      if (writes_done == true)
 +        break;
-+      }
++      fs.sync_metadata(false);
++      sleep(1);
 +    }
  }
  
@@ -921,8 +944,7 @@ index 795b8b054c9..a91a6b9baff 100644
 -  ASSERT_EQ(0, fs.mount());
 -  ASSERT_EQ(0, fs.maybe_verify_layout({ BlueFS::BDEV_DB, false, false }));
 -  ASSERT_EQ(0, fs.mkdir("dir"));
-+bool writes_done = false;
- 
+-
 -  char data[2000] = {'a'};
 -  BlueFS::FileWriter *h;
 -  ASSERT_EQ(0, fs.open_for_write("dir", "file", &h, false));
@@ -932,16 +954,7 @@ index 795b8b054c9..a91a6b9baff 100644
 -  }
 -  fs.close_writer(h);
 -  fs.umount(true); //do not compact on exit!
-+void sync_fs(BlueFS &fs)
-+{
-+    while (1) {
-+      if (writes_done == true)
-+        break;
-+      fs.sync_metadata(false);
-+      sleep(1);
-+    }
-+}
- 
+-
 -  ASSERT_EQ(0, fs.mount());
 -  ASSERT_EQ(0, fs.open_for_write("dir", "file2", &h, false));
 -  for (size_t i = 0; i < 100; i++) {
@@ -1009,7 +1022,7 @@ index 795b8b054c9..a91a6b9baff 100644
  
  TEST(BlueFS, truncate_fsync) {
    uint64_t bdev_size = 128 * 1048576;
-@@ -1355,234 +586,6 @@ void create_files(BlueFS &fs,
+@@ -1355,52 +586,6 @@ void create_files(BlueFS &fs,
    }
  }
  
@@ -1058,6 +1071,16 @@ index 795b8b054c9..a91a6b9baff 100644
 -    }
 -  }
 -}
+-
+ TEST(BlueFS, truncate_drops_allocations) {
+   constexpr uint64_t K = 1024;
+   constexpr uint64_t M = 1024 * K;
+@@ -1479,191 +664,6 @@ TEST(BlueFS, truncate_drops_allocations) {
+   }
+ }
+ 
+-
+-
 -
 -TEST(BlueFS, test_log_runway) {
 -  uint64_t max_log_runway = 65536;
@@ -1241,12 +1264,12 @@ index 795b8b054c9..a91a6b9baff 100644
 -  fs.compact_log();
 -}
 -
- int main(int argc, char **argv) {
-   auto args = argv_to_vec(argc, argv);
-   map<string,string> defaults = {
+ TEST(BlueFS, test_69481_truncate_corrupts_log) {
+   uint64_t size = 1048576 * 128;
+   TempBdev bdev{size};
 diff --git a/src/test/objectstore/test_bluefs_compact_async.cc b/src/test/objectstore/test_bluefs_compact_async.cc
 new file mode 100644
-index 00000000000..55cc592fa33
+index 0000000000..55cc592fa3
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_compact_async.cc
 @@ -0,0 +1,339 @@
@@ -1591,7 +1614,7 @@ index 00000000000..55cc592fa33
 +}
 diff --git a/src/test/objectstore/test_bluefs_compact_sync.cc b/src/test/objectstore/test_bluefs_compact_sync.cc
 new file mode 100644
-index 00000000000..54914394976
+index 0000000000..5491439497
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_compact_sync.cc
 @@ -0,0 +1,339 @@
@@ -1936,7 +1959,7 @@ index 00000000000..54914394976
 +}
 diff --git a/src/test/objectstore/test_bluefs_flush_1.cc b/src/test/objectstore/test_bluefs_flush_1.cc
 new file mode 100644
-index 00000000000..454d0339091
+index 0000000000..454d033909
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_flush_1.cc
 @@ -0,0 +1,256 @@
@@ -2198,7 +2221,7 @@ index 00000000000..454d0339091
 +}
 diff --git a/src/test/objectstore/test_bluefs_flush_2.cc b/src/test/objectstore/test_bluefs_flush_2.cc
 new file mode 100644
-index 00000000000..9e1c9377eae
+index 0000000000..9e1c9377ea
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_flush_2.cc
 @@ -0,0 +1,249 @@
@@ -2453,7 +2476,7 @@ index 00000000000..9e1c9377eae
 +}
 diff --git a/src/test/objectstore/test_bluefs_flush_3.cc b/src/test/objectstore/test_bluefs_flush_3.cc
 new file mode 100644
-index 00000000000..44ad638c922
+index 0000000000..44ad638c92
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_flush_3.cc
 @@ -0,0 +1,256 @@
@@ -2715,7 +2738,7 @@ index 00000000000..44ad638c922
 +}
 diff --git a/src/test/objectstore/test_bluefs_large_write_1.cc b/src/test/objectstore/test_bluefs_large_write_1.cc
 new file mode 100644
-index 00000000000..9f40e3250f2
+index 0000000000..9f40e3250f
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_large_write_1.cc
 @@ -0,0 +1,184 @@
@@ -2905,7 +2928,7 @@ index 00000000000..9f40e3250f2
 +}
 diff --git a/src/test/objectstore/test_bluefs_large_write_2.cc b/src/test/objectstore/test_bluefs_large_write_2.cc
 new file mode 100644
-index 00000000000..78d055c9f1a
+index 0000000000..78d055c9f1
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_large_write_2.cc
 @@ -0,0 +1,163 @@
@@ -3074,7 +3097,7 @@ index 00000000000..78d055c9f1a
 +}
 diff --git a/src/test/objectstore/test_bluefs_log_runway.cc b/src/test/objectstore/test_bluefs_log_runway.cc
 new file mode 100644
-index 00000000000..a84e1cd6ec2
+index 0000000000..a84e1cd6ec
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_log_runway.cc
 @@ -0,0 +1,428 @@
@@ -3508,7 +3531,7 @@ index 00000000000..a84e1cd6ec2
 +}
 diff --git a/src/test/objectstore/test_bluefs_regression.cc b/src/test/objectstore/test_bluefs_regression.cc
 new file mode 100644
-index 00000000000..2609344be0a
+index 0000000000..2609344be0
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_regression.cc
 @@ -0,0 +1,527 @@
@@ -4041,7 +4064,7 @@ index 00000000000..2609344be0a
 +}
 diff --git a/src/test/objectstore/test_bluefs_replay.cc b/src/test/objectstore/test_bluefs_replay.cc
 new file mode 100644
-index 00000000000..00b218cc3bd
+index 0000000000..00b218cc3b
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_replay.cc
 @@ -0,0 +1,263 @@
@@ -4310,7 +4333,7 @@ index 00000000000..00b218cc3bd
 +}
 diff --git a/src/test/objectstore/test_bluefs_replay_growth.cc b/src/test/objectstore/test_bluefs_replay_growth.cc
 new file mode 100644
-index 00000000000..96b4547bada
+index 0000000000..96b4547bad
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_replay_growth.cc
 @@ -0,0 +1,261 @@
