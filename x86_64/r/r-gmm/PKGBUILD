@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gmm
-_pkgver=1.8
+_pkgver=1.9-1
 pkgname=r-${_pkgname,,}
-pkgver=1.8
+pkgver=1.9.1
 pkgrel=1
 pkgdesc='Generalized Method of Moments and Generalized Empirical Likelihood'
 arch=('x86_64')
@@ -26,7 +26,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7099fc5c6a9069924392995a726190e8d62f6e55375ef356084b0c73346d85d8')
+sha256sums=('9290674d09403f401718dd9c2131a425dba5727b9dcd6698d2f68a9f5ab83c1f')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
