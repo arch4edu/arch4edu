@@ -3,9 +3,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=usethis
-_pkgver=3.1.0
+_pkgver=3.2.0
 pkgname=r-${_pkgname,,}
-pkgver=3.1.0
+pkgver=3.2.0
 pkgrel=1
 pkgdesc='Automate Package and Project Setup'
 arch=('any')
@@ -45,7 +45,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('63afe81c1db19be1dbbf71313c93600306181a4051f84099469d338dbe6916d8')
+sha256sums=('536fcb53c40fe4c4bb1ba8ef79f595110e630a1c5ba83c634699c66d136ecd91')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
