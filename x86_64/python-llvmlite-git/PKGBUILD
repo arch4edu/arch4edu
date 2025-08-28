@@ -2,7 +2,7 @@
 # Contributor: Quan Guo <guotsuan at gmail dot com>
 
 pkgname=python-llvmlite-git
-pkgver=0.45.0dev0.r445.gbeab085b
+pkgver=0.45.0dev0.r497.gdee4d034
 pkgrel=1
 pkgdesc="A lightweight LLVM Python binding for writing JIT compilers (Git version)"
 url="https://github.com/numba/llvmlite"
@@ -13,12 +13,12 @@ depends=(
   'gcc-libs'
   'glibc'
   'python'
-  'llvm15-libs'
+  'llvm-libs'
 )
 makedepends=(
   'cmake'
   'git'
-  'llvm15'
+  'llvm'
   'python-build'
   'python-installer'
   'python-setuptools'
@@ -31,11 +31,9 @@ conflicts=('python-llvmlite')
 
 source=(
   'llvmlite::git+https://github.com/numba/llvmlite.git'
-  'skip_check_library_exists.patch'
 )
 sha256sums=(
   'SKIP'
-  'a2a2272ad08cea9ae2b1107e1728902410434348c83a68f8c0481d5ccdded2c7'
 )
 
 pkgver() {
@@ -43,14 +41,8 @@ pkgver() {
   git describe --long | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
 }
 
-prepare() {
-  cd llvmlite
-  patch -p0 -i "$srcdir/skip_check_library_exists.patch"
-}
-
 build() {
   cd llvmlite
-  export CMAKE_PREFIX_PATH="/usr/lib/llvm15/lib/cmake"
   export LLVMLITE_SHARED=1
   python -m build --no-isolation --wheel
 }
