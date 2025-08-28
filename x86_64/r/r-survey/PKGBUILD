@@ -2,7 +2,7 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=survey
-_pkgver=4.4-2
+_pkgver=4.4-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
   r-summer
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('565ca8d5fc141cbc6bcacdd8bc2e2f0f')
-b2sums=('88901e62b49e9a6f57c5e9761d9d5b6e44b21465c3e6fe21c53ccb1e50775861cbcac2c2d2d0f5c35635b4ee2ccb57d786eb95e392480e81f8bf1c05a392699c')
+md5sums=('0073d155ca38e08e4347f74f8b66b2af')
+b2sums=('9a2db93c4d882b84aa99f97dc45a586114bf05147b88e620611eb8ce90e457179bc54c7058afddbc57c65368848c9318117870ceb1ac0649954e3d93d67235f1')
 
 build() {
   mkdir build
