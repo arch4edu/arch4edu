@@ -6,7 +6,7 @@ _upstream_name="PyAV"
 pkgdesc="Pythonic bindings for FFmpeg"
 url="https://pyav.basswood-io.com"
 
-pkgver=15.0.0
+pkgver=15.1.0
 pkgrel=1
 
 arch=("x86_64" "i686")
@@ -28,20 +28,9 @@ checkdepends=(
   "python-pytest"
 )
 
-source=(
-  "${pkgname}-${pkgver}.tar.gz::https://github.com/${_upstream_name}-Org/${_upstream_name}/archive/refs/tags/v${pkgver}.tar.gz"
-  "venv.patch"
-)
-b2sums=(
-    "21a13a9d8b742f340ad763fb8bd27274727f6122d7e524a2e4fdb2ed61e31809b926a161ca73fb36b8d6564780dd2c34d21c3ec383c2c1c20486717702b587b5"
-    "e4b3ef842fad3125cda283ea4cb49aa0687f8ca8b516016dbdc978551793d8320e0ebe31d14ac5f46cb5eaca8e583ca19aa5304c2671b36c3a31872f495301ed"
-)
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${_upstream_name}-Org/${_upstream_name}/archive/refs/tags/v${pkgver}.tar.gz")
+b2sums=("68bab969105f21290da2f76658c153b971e209148bf7673de149eb037ee65149d84c900e0af69af58d344575bd8a820f0bff5de7f84635309155f2e5cb146071")
 
-prepare() {
-  cd "${srcdir}"/${_upstream_name}-${pkgver}
-  patch --forward --strip=1 --input "${srcdir}/venv.patch"
-    
-}
 
 build() {
   cd "${srcdir}"/${_upstream_name}-${pkgver}
