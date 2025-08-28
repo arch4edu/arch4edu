@@ -4,7 +4,7 @@
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=superlu_dist
 pkgver=9.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Distributed memory, MPI based SuperLU"
 arch=(x86_64)
 url="https://github.com/xiaoyeli/${pkgname}"
@@ -18,6 +18,12 @@ options=('staticlibs')
 # -DTPL_ENABLE_COMBBLASLIB=ON \
 # -DTPL_COMBBLAS_INCLUDE_DIRS="/usr/include/CombBLAS;/usr/include/CombBLAS/Applications/BipartiteMatchings" \
 # -DTPL_COMBBLAS_LIBRARIES="/usr/lib/libCombBLAS.so" \
+
+prepare() {
+  cd "${srcdir}"/${pkgname}-${pkgver}
+  # https://github.com/xiaoyeli/superlu_dist/pull/185
+  sed -i -e 's/\*fp, \*fopen()/\*fp/g' -e 's/\*fopen(), //g'  $(find -name '*.c')
+}
 
 build() {
   cmake \
