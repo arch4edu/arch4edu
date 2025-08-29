@@ -1,7 +1,7 @@
 # Maintainer: Martin Diehl <aur@martin-diehl.net>
 
 pkgname=python-pyvista
-pkgver=0.45.2
+pkgver=0.46.3
 pkgrel=1
 pkgdesc='3D plotting and mesh analysis through a streamlined interface for VTK'
 arch=(any)
@@ -12,7 +12,7 @@ optdepends=(python-meshio xorg-server-xvfb python-imageio)
 makedepends=(python-build python-installer python-wheel python-setuptools)
 _name=${pkgname#python-}
 source=(https://github.com/pyvista/${_name}/archive/v${pkgver}/${_name}-${pkgver}.tar.gz)
-sha512sums=('d5151a32967274eab4c9ca2ec0922118ec97eb2bc24e069d58e33f4cf81d574e18fa98550a2c0293a4519bc46957f6eb7c8a77109060b8fff83773c2396141fc')
+sha512sums=('5fb86516c267427e0124d273437ee019c0d70f14baacf615a682bd80efab2af96fd2aab7c31b33a3e26e54c818c64fcb33651390f42487ea9915b41f0d23ba81')
 
 build() {
     cd ${_name}-${pkgver}
