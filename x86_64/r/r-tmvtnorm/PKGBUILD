@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=tmvtnorm
-_pkgver=1.6
+_pkgver=1.7
 pkgname=r-${_pkgname,,}
-pkgver=1.6
+pkgver=1.7
 pkgrel=1
 pkgdesc='Truncated Multivariate Normal and Student t Distribution'
 arch=('x86_64')
@@ -21,7 +21,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2d9b2c5330d11a62384b4c0c1c012be34806b48683898045a4a40fdb9a8e1bba')
+sha256sums=('4b180b31e3bc4eb5009f5d7d83b7f2dd377989341ef27502113127d60f531bd8')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
