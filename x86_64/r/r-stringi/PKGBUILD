@@ -1,7 +1,7 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: T-1990 <address at domain dot>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
-
 
 _cranname=stringi
 _cranver=1.8.7
@@ -10,7 +10,7 @@ pkgdesc="Fast and Portable Character String Processing Facilities"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("custom")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
