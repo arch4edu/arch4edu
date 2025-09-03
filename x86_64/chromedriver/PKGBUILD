@@ -6,7 +6,7 @@
 # Contributor: James An <james@jamesan.ca>
 # Contributor: lybin
 pkgname=chromedriver
-pkgver=139.0.7258.154
+pkgver=140.0.7339.80
 pkgrel=1
 pkgdesc="Standalone server that implements the W3C WebDriver standard (for google-chrome)"
 arch=('x86_64')
@@ -16,7 +16,7 @@ depends=(alsa-lib gtk3 libcups libxss libxtst nss xdg-utils)
 optdepends=(google-chrome)
 conflicts=(chromium)
 source=("${pkgname}_${pkgver}_linux64.zip::https://storage.googleapis.com/chrome-for-testing-public/${pkgver}/linux64/${pkgname}-linux64.zip")
-sha512sums=('098e106a771171584e6437610b47fa1eabbaee1137857a8ff7655b689fefa8ac72636b6875e17a1fad3adfe20e7aafbb5354a506a3409c69af606ee7e5e2e4c3')
+sha512sums=('f12f33528aa93a5a9d85b0ec9acba41b1e783929762d2fad81800f6ad06e3f21c8ff045d32f4edd2c0d367a7fc94295d64e4cb603200f71a220d259fa136ba93')
 package() {
     install -Dm755 -t "$pkgdir/usr/bin/" "$srcdir/$pkgname-linux64/$pkgname"
 }
