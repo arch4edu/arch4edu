@@ -2,8 +2,8 @@
 # Contributor: Alexandre Petitjean <alpetitjean_gmail dot_com>
 
 pkgname=geographiclib
-pkgver=2.5
-pkgrel=2
+pkgver=2.5.2
+pkgrel=1
 pkgdesc="Set of C++ classes for conversions between geographic, UTM, UPS, MGRS, geocentric, and local cartesian coordinates, for gravity, geoid height, and geomagnetic field calculations and for solving geodesic problems. Geotrans replacement."
 arch=('i686' 'x86_64')
 url="https://github.com/geographiclib/geographiclib"
@@ -13,7 +13,7 @@ makedepends=('gcc' 'make' 'cmake')
 options=('staticlibs' '!debug')
 
 source=("$pkgname-$pkgver.tar.gz::https://github.com/geographiclib/geographiclib/archive/v${pkgver}.tar.gz")
-sha256sums=('347319e3dc5dd2d58116ff1ecb8c0ae11c9f095c655fe289992b3208bc7a32fc')
+sha256sums=('15485087b91722d1115229e983e0bce96869f5cea6049278381132d24865e919')
 
 install=geographiclib.install
 
