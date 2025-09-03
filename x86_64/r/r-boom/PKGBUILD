@@ -1,7 +1,7 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Boom
-_pkgver=0.9.15
+_pkgver=0.9.16
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,8 +16,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4a0c497336570708c98b611676359249')
-b2sums=('4bd6fd2b838dd36b2b11def25192e1ce01d64c91494436d6fddd58c1c25ed8a61d54197c5909838320d9d0542f1e02d732d10d8b611cae3eeeacee06b23f452f')
+md5sums=('d3a299c3c467a7075d762562028b3907')
+b2sums=('ecf95c302dbf32b316be59178db2db29e75692fc0ae5469325838ad2bafedec9a323827127869061407254b9d308fc417d19709b02f159a3cfb11fe13e872d23')
 
 build() {
   mkdir build
