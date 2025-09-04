@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=mockery
-_pkgver=0.4.4
+_pkgver=0.4.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Mocking Library for R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -18,8 +18,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('98297a49097c3c952c9321de4710df7f')
-b2sums=('9a19ce9ffe07413132945c2a9c9cb1760f9910712be7598ab5ba3d9267cf85cecd40e0b5578d2f5b274157a201c5b5d90f1795c8cdfdb4a989d3e454a5b0fa6c')
+md5sums=('cef9203fa34abb2ec5db83084d92b7d2')
+b2sums=('525503dfbaec96189df4913b0db50ed83d74cc4b8b0e1daf15ac2aeaaa977633fa17c9c8ad9a5b6fa2e9bff64f636099e1b9fc68e7b8cf396284e06e09fca662')
 
 build() {
   mkdir build
