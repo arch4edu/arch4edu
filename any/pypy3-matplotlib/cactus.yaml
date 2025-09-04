@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - any/pypy3-contourpy
   - any/pypy3-cycler
+  - any/pypy3-dateutil
   - any/pypy3-fonttools
   - any/pypy3-kiwisolver
   - any/pypy3-numpy
