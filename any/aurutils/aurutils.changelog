@@ -1,3 +1,34 @@
+## 21
+
+* `aur-fetch`
+  + support mixed url and pkgbase names (#1104)
+  + add trurl(1) as dependency
+
+## 20.5
+
+* `aur-build`
+  + do not define `LOGDEST` explicitly
+
+* `aur-chroot`
+  + preserve `LOGDEST` and `SRCDEST` by default (#1196)
+
+* `aur-sync`
+  + pre-process .SRCINFO with `pacini` (#1203)
+
+* `examples`
+  + `sync-rebuild`
+    - use `aur-fetch` instead of `aur-sync`
+    - allow handling multiple targets
+
+* `man1`
+  + documentation updates (#1206, #1207)
+  + add setfacl example (aur-build.1)
+
+## 20.4
+
+* `aur-build`
+  + do not skip build on partial results (#1186)
+
 ## 20.3
 
 * `perl`
@@ -758,7 +789,7 @@ retrieved with the `--path` option, e.g for use with `makepkg --config`.
 ## 7
 
 This release adds optional support for the `ninja` build system. If the
-`AUR_SYNC_USE_NINJA` environment variable is set to a positive value,
+`AUR_SYNC_USE_NINJA` environment variable is set to a positive integer value,
 `aur-sync` will generate `build.ninja` where each target has an `aur-build`
 command-line. This allows to continue building a series of packages when
 several failed, with the maximum of failed targets controlled by the `-k` /
