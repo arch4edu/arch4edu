@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=robustbase
-_pkgver=0.99-4-1
+_pkgver=0.99-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,8 +35,8 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cbf3692e133490d1681b09356fcc4396')
-b2sums=('58d49f5ebcc4e5d54cd8c98de932caa9fdeef46182ce3a6c1e51787dfea0718df254124f07fc8ca97122893c83afa20692c6895b0b719c25fe37b5a7dd966f02')
+md5sums=('d261c64ca13181bf5ed1024dfb2e77fc')
+b2sums=('68b7d8559a4859e9fdfadf1684b5b3fdacb5bc962c071a6979956ac3d94c5e0cc429e96317858c913a3edc0facfc9e6310ec97d3afd6ce6dd33e539e40ada47b')
 
 build() {
   mkdir build
