@@ -1,7 +1,7 @@
 # Maintainer: Joseph Ryan <josephryan3.14@gmail.com>
 pkgname=mms-git
 pkgver=1.1
-pkgrel=6
+pkgrel=7
 pkgdesc="Graphical Micromouse simulator"
 arch=('any')
 url="https://github.com/mackorone/mms"
