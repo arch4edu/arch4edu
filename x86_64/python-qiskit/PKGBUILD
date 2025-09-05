@@ -2,7 +2,7 @@
 _pkgname=qiskit
 pkgname=python-${_pkgname}
 pkgver=2.1.2
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
 arch=(x86_64)
@@ -36,6 +36,9 @@ optdepends=(
     'python-z3-solver: theorem prover'
 )
 makedepends=(
+    cargo
+    cbindgen
+    cmake
     python-build
     python-installer
     python-setuptools
@@ -47,26 +50,36 @@ checkdepends=(
     python-ddt
     python-stestr
 )
+provides=(libqiskit.so)
 source=($_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz)
 b2sums=('01f5789f20d1c73e73000ec87579981380d201b4d614dbfd7974d603c031de2a567e42c41f4552442805eb38b729784442a1e04e36054ba0c0a44a68b7410ad4')
 
 build() {
     cd $_pkgname-$pkgver
+    # Python wheel package
     export CARGO_TARGET_DIR=target
     python -m build --wheel --no-isolation
+    # C shared library
+    make c
 }
 
 check() {
     cd $_pkgname-$pkgver
+    # Python unit tests
     local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
     python -m installer --destdir=../test_dir dist/*.whl
     rm -rf qiskit
     PYTHONPATH="$PWD/../test_dir/usr/lib/python$python_version/site-packages" \
     stestr run -d test/python -E "test_equivalence_draw"
+    # Test C library
+    make ctest
 }
 
 package() {
     cd $_pkgname-$pkgver
     python -m installer --destdir="$pkgdir" dist/*.whl
-    install -D -m644 LICENSE.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+    install -Dm755 dist/c/lib/libqiskit.so "$pkgdir"/usr/lib/libqiskit.so
+    install -Dm644 dist/c/include/qiskit.h "$pkgdir"/usr/include/qiskit.h
+    install -Dm644 dist/c/include/qiskit/complex.h "$pkgdir"/usr/include/qiskit/complex.h
+    install -Dm644 LICENSE.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
