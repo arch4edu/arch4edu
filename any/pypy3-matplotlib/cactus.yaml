@@ -15,6 +15,7 @@ makedepends:
   - any/meson-pypy3
   - any/pypy3-build
   - any/pypy3-installer
+  - any/pypy3-pybind11
   - any/pypy3-setuptools-scm
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
