@@ -1,22 +1,22 @@
 pkgname=python-sphinxcontrib-plantuml
 _pyname=sphinxcontrib-plantuml
-pkgver=0.30
-pkgrel=2
+pkgver=0.31
+pkgrel=1
 arch=(any)
 pkgdesc="Sphinx 'plantuml' extension"
 url='https://pypi.python.org/pypi/sphinxcontrib-plantuml'
 license=('BSD')
-makedepends=(python-setuptools)
+makedepends=(python-build python-installer python-wheel python-setuptools)
 depends=('plantuml' 'python-sphinx')
-source=("https://files.pythonhosted.org/packages/source/s/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('2a1266ca43bddf44640ae44107003df4490de2b3c3154a0d627cfb63e9a169bf')
+source=("https://files.pythonhosted.org/packages/source/s/${_pyname//-/_}/${_pyname//-/_}-${pkgver}.tar.gz")
+sha256sums=('fd74752f8ea070e641c3f8a402fccfa1d4a4056e0967b56033d2a76282d9f956')
 
 build() {
-  cd $_pyname-$pkgver
-  python setup.py build
+  cd "${_pyname//-/_}-$pkgver"
+  python -m build --wheel --no-isolation
 }
 
 package() {
-  cd $_pyname-${pkgver}
-  python setup.py install --root="$pkgdir" --optimize=1
+  cd "${_pyname//-/_}-$pkgver"
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
