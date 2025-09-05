@@ -4,7 +4,7 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=4.4.0
+pkgver=4.5.0
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
@@ -49,7 +49,7 @@ checkdepends=('python-pytest-remotedata'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('a123db5ee1b4a1a9786cc3bc14182ffc')
+md5sums=('d073f6604939cb86fcbda168fb3e3984')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -96,6 +96,7 @@ package_python-asdf() {
              'python-asdf-standard>=1.1.0'
              'python-asdf_transform_schemas>=0.3')
     optdepends=('python-astropy: Support for units, time, transform, wcs, or running the tests'
+                'python-fsspec>=2022.8.2: for urls provided to asdf.open'
                 'python-lz4>=0.10: Support for lz4 compression'
                 'python-asdf-doc: Documentation for Python-ASDF'
                 'python-pytest-astropy: For testing')
