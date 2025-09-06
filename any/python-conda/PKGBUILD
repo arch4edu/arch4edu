@@ -5,7 +5,7 @@
 pkgname=python-conda
 _name=${pkgname#python-}
 pkgver=25.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
 url="https://github.com/conda/conda"
@@ -18,6 +18,7 @@ depends=(
   'python-boto3'
   'python-botocore'
   'python-conda-package-handling'
+  'python-conda-libmamba-solver'  # this is actually required, do not remove.
   'python-frozendict'
   'python-packaging'
   'python-platformdirs'
@@ -51,10 +52,8 @@ source=(
   "$url/releases/download/$pkgver/$_name-$pkgver.tar.gz"
   "py-3.13-logging.patch"
 )
-sha256sums=(
-  'b3d91503d8f95f29bffd0d47c0f6f9aaa50443a250d5a201ba6866c79099a5c0'
-  'dcd0edb6cc59c67629ddfa6e9fb38f53eff293df92d8a0222ede051c8e66b149'
-)
+sha256sums=('b3d91503d8f95f29bffd0d47c0f6f9aaa50443a250d5a201ba6866c79099a5c0'
+            'dcd0edb6cc59c67629ddfa6e9fb38f53eff293df92d8a0222ede051c8e66b149')
 
 prepare() {
   cd "$srcdir/$_name-$pkgver" || exit
