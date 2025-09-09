@@ -9,7 +9,7 @@
 # Contributor: Renan Birck <renan.ee.ufsm at gmail.com>
 
 pkgname=logisim-evolution
-pkgver=3.9.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc='An educational tool for designing and simulating digital logic circuits'
 conflicts=("${pkgname}-git" "${pkgname}-bin")
@@ -21,7 +21,7 @@ makedepends=('java-environment>=21')
 
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz"
         "${pkgname}.sh")
-sha256sums=('def2aa2f76545c1580d473b7a7f9259507bb2d2aae91a8d30ec903550780ecfc'
+sha256sums=('95bc9e67de7294ed3d09869edc692eff4c7308d86e3d7a9802328e03d77310f8'
             'd5975cc0025905ab8a8a451ce4362ba876bed88008d3a5b2c0a7f664a85da1ba')
 
 install=$pkgname.install
