@@ -12,11 +12,12 @@ KDE_ICON_CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/icon-cache.kcache"
 WEMEET_APP_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/wemeetapp"
 LD_PRELOAD_WRAP="${LD_PRELOAD:-}:/usr/lib/wemeet/libwemeetwrap.so" # 用于缓解传输文件崩溃问题
 
-export QT_QPA_PLATFORM=xcb
-export XDG_SESSION_TYPE=x11
-unset WAYLAND_DISPLAY
-export WEMEET_XWAYLAND=1
-
+if [ "$XDG_SESSION_TYPE" = 'wayland' ]; then
+    export QT_QPA_PLATFORM=xcb
+    export XDG_SESSION_TYPE=x11
+    unset WAYLAND_DISPLAY
+    export WEMEET_XWAYLAND=1
+fi
 if [ -f /usr/bin/bwrap ]; then
     mkdir -p "$WEMEET_APP_DIR"
     exec bwrap \
