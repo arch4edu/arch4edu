@@ -4,11 +4,11 @@
 _pkgname=wemeet
 pkgname=$_pkgname-bin
 provides=('wemeet' 'tencent-meeting')
-pkgver=3.19.2.400
-_pkgver_arm=3.19.1.401 # 两个版本有时候不一样
-_x86_md5=fb7464ffb18b94a06868265bed984007
-_arm_md5=206c30da5545dba38a29ccbc752dec94
-pkgrel=3
+pkgver=3.26.10.400
+_pkgver_arm=3.26.10.400 # 两个版本有时候不一样
+_x86_md5=9cfd93b10ee81b2fc3ad26357f27ed13
+_arm_md5=e5f447f30343e27c49438db8d035ae23
+pkgrel=1
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -33,18 +33,20 @@ optdepends=(
     'bubblewrap: Fix abnormal text color in dark mode and prevent messing files.'
 )
 makedepends=('patchelf')
-sha512sums=('6c4b8c37f1454b72a0aea2abc141d404c229749a44f4deee72bb5030d0509a721fac456db0888d1583dde1823036dc980e491b752d199aedfaa17264ed282ce1'
+sha512sums=('d5d56acc8488be58f982df5e63c0ba2375a22311b715e75f13c6087f3ab3f18e8361e224791395dd126c3ebdeae9f328bd526cb143a61daf9198a6571c7758a4'
             'f98e9ae5842c05a19ad4f883c8f9d88ef3b64e04b034e7fd8b23ddca81510f0bd38688ad7c63ddf8badaa727a7b599ceede87419e9694c06d7a4b06138b94c15')
-sha512sums_x86_64=('175a92d412ee3359f93ad84e9344d4317f04e396e40586cfa1f3a7798adbe69e3f2991a5af5163cd99fbb3ad1b3e6e7c5b016d17d022f86b7c3f54a1274b8238')
-sha512sums_aarch64=('d84bb40617edf1a97d0fd3b6674df050d62c7ce19e8aff1230a42d47d1887ca641aec20d732fc1bbdecc233781db0be0c9ce8a412fdb68d28eec59d09228f638')
+sha512sums_x86_64=('2be43847d67c434f0dd2625e614a74ec03200cdf6e1b4c8845023b62faee06c73a364c2155419275cb9d77f1f3df056ca009c0e415af4a2b35fa34323a159303')
+sha512sums_aarch64=('5679461dab9990c369e1a8f7678377d45df1db336a732c8a235130369506da9926bed123bd0cea22e044856b4e28b0f65ca87b82b8bb6b79ac8fb09b89e00885')
+
+# strip了反而变大
+options=(!strip)
 
 prepare() {
     cd "$srcdir"
     tar xpf data.tar.xz
 
     pushd usr/share/applications
-    # 暂时使用 x11, wayland 无法开启会议
-    sed -i 's|^Exec=.*|Exec=wemeet-x11 %u|g;s|^Icon=.*|Icon=wemeet|g' ${_pkgname}app.desktop
+    sed -i 's|^Exec=.*|Exec=wemeet %u|g;s|^Icon=.*|Icon=wemeet|g' ${_pkgname}app.desktop
     sed -i '$i Comment=Tencent Meeting Linux Client\nComment[zh_CN]=腾讯会议Linux客户端\nKeywords=wemeet;tencent;meeting;' \
         "$srcdir/usr/share/applications/wemeetapp.desktop"
     popd
@@ -85,11 +87,10 @@ package() {
     cd opt/$_pkgname
 
     install -Dm755 "$srcdir/$_pkgname.sh" "$pkgdir/usr/bin/$_pkgname"
-    ln -s "/usr/bin/$_pkgname" "$pkgdir/usr/bin/$_pkgname-x11"
     install -Dm644 $_pkgname.svg -t "$pkgdir/usr/share/icons/hicolor/scalable/apps"
 
     # libbugly is not likely to be necessary
-    install -Dm755 lib/lib{desktop_common,ImSDK,nxui*,qt_*,service*,tms_*,ui*,wemeet*,xcast*,xnn*}.so \
+    install -Dm755 lib/lib{desktop_common,crash_guard,ImSDK,nxui*,qt_*,ui*,wemeet*,xcast*,xnn*}.so \
         -t "$pkgdir/usr/lib/$_pkgname"
     if [ -f 'lib/libcrbase.so' ]; then
         install -Dm755 lib/libcrbase.so -t "$pkgdir/usr/lib/$_pkgname"
@@ -97,7 +98,7 @@ package() {
         echo 'lib/libcrbase.so not found'
     fi
     # copy Qt
-    cp -r plugins resources "$pkgdir/usr/lib/$_pkgname"
+    cp -r plugins resources translations "$pkgdir/usr/lib/$_pkgname"
     cp -a lib/lib{Qt,icu}* "$pkgdir/usr/lib/$_pkgname"
 
     find "$pkgdir/usr/lib/$_pkgname" -type f -name '*.so*' | xargs -I {} patchelf --set-rpath '$ORIGIN:/usr/lib/wemeet' {}
