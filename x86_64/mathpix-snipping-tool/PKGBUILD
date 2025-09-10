@@ -1,7 +1,7 @@
 # Maintainer: sukanka <su975853527 at gmail.com>
 # Contributor: HRKo <ootaharuki99 at gmail.com>
 pkgname=mathpix-snipping-tool
-pkgver=03.00.0130
+pkgver=03.00.0138
 pkgrel=1
 pkgdesc="Mathpix Snipping Tool"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('qt5-x11extras' 'qt5-webengine' 'qt5-svg' 'qt5-imageformats' 'quazip-qt
 options=(!strip)
 optdepends=('wayland: Wayland support.')
 source=("${pkgname}-${pkgver}-${arch}.AppImage::https://download.mathpix.com/linux/Mathpix_Snipping_Tool-${arch}.v${pkgver}.AppImage")
-sha512sums=('b1a07ac143dd18d524735b7ef39664c2d41c36e95d97a88df1552dfe58a8aacbc838d8a2b3a8cc303eeacc8273ff93b07d1f9c8f563296e32f739a7647cf5817')
+sha512sums=('7f11b4e5b7ea12c008a37857328cb9951327d31f33f01b154644018e4d05358a5a1b8ec9cc267d24fcff702bf894ac8aac9618f25621e54435b1a45561ed4dde')
 
 
 prepare() {
@@ -25,6 +25,7 @@ package() {
   cd $srcdir/squashfs-root
   install -Dm755 usr/bin/${pkgname}     ${pkgdir}/usr/bin/${pkgname}
   install -Dm755 usr/lib/libsentry.so   ${pkgdir}/usr/lib/libsentry.so
+  install -Dm755 usr/lib/libquazip1-qt5.so.1.4.0 ${pkgdir}/usr/lib/libquazip1-qt5.so.1.4.0
   cp -r usr/share         ${pkgdir}/usr
   chmod 0755 -R ${pkgdir}/usr/share
 
