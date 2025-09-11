@@ -4,7 +4,7 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=4.5.0
+pkgver=5.0.0
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
@@ -28,7 +28,7 @@ makedepends=('python-setuptools-scm>=8'
 ##           'python-sphinx-astropy'
 ##           'python-astropy>=5.0.4'
 ##           'python-toml'
-#            )  # wheel required by new setuptools
+#           )  # wheel required by new setuptools
 #checkdepends=('python-pytest'
 #checkdepends=('python-pytest-doctestplus'
 checkdepends=('python-pytest-remotedata'
@@ -49,7 +49,7 @@ checkdepends=('python-pytest-remotedata'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('d073f6604939cb86fcbda168fb3e3984')
+md5sums=('995ddbfc00e0a61fa9a160b0f57bad21')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
