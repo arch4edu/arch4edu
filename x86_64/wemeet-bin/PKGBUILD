@@ -8,7 +8,7 @@ pkgver=3.26.10.400
 _pkgver_arm=3.26.10.400 # 两个版本有时候不一样
 _x86_md5=9cfd93b10ee81b2fc3ad26357f27ed13
 _arm_md5=e5f447f30343e27c49438db8d035ae23
-pkgrel=2
+pkgrel=3
 pkgdesc="Tencent Video Conferencing, tencent meeting 腾讯会议"
 arch=('x86_64' 'aarch64')
 license=('unknown')
@@ -20,10 +20,10 @@ source=("${_pkgname}".sh 'wrap.c')
 depends=(
     # most deps are not used, but kept for a
     bash
-    qt5-webengine qt5-x11extras libxinerama
+    qt5-x11extras libxinerama
     libpulse # 无 pulseaudio 无法连接到系统音频
     # dependencies detected by namcap
-    gcc-libs qt5-declarative libglvnd libxfixes alsa-lib qt5-webchannel openssl
+    gcc-libs qt5-declarative libglvnd libxfixes alsa-lib openssl
     libxrandr libxext libx11 hicolor-icon-theme glibc zlib libxcomposite
     qt5-base systemd-libs libxdamage qt5-svg
     libyuv
@@ -81,11 +81,6 @@ build() {
     "${CC:-cc}" $CFLAGS -Wall -Wextra -fPIC -shared "${openssl_args[@]}" "${libpulse_args[@]}" -o libwemeetwrap.so wrap.c -D WRAP_FORCE_SINK_HARDWARE
 }
 
-remove_unused_libs() {
-    pushd "$pkgdir/usr/lib/$_pkgname"
-    rm -rf libQt5WebEngineCore*
-    popd
-}
 package() {
     cd "$srcdir"
     cp -r usr "$pkgdir"
@@ -113,5 +108,4 @@ package() {
     ln -s raw/xcast.conf "$pkgdir/opt/$_pkgname/bin/xcast.conf"
     install -Dm755 "$srcdir/libwemeetwrap.so" -t "$pkgdir/usr/lib/$_pkgname"
 
-    remove_unused_libs
 }
