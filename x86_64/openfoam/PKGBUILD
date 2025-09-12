@@ -7,12 +7,12 @@
 
 pkgbase=openfoam
 pkgname=openfoam-org
-pkgver=13.20250706+65eda17
+pkgver=13.20250911+cde978a
 _pkgver="${pkgver%%.*}"
 _subver_and_commit="${pkgver#*.}"
 _subver="${_subver_and_commit%+*}"
 _commit="${pkgver#*+}"
-pkgrel=2
+pkgrel=1
 pkgdesc="The open source CFD toolbox (www.openfoam.org)"
 _distpkgbase=OpenFOAM
 _gitname=$_distpkgbase-$_pkgver
@@ -61,7 +61,7 @@ source=(
   openfoam.install
 )
 install="${pkgbase}.install"
-sha256sums=('0819222f24fa6395181684058ccb2397579fdb015b60ae3a9cc992757f4c79db'
+sha256sums=('c7371730f61b12147e5ae85561b2d0d25747dd310ab0a11ef5f598ace0c61ab3'
             'bbec057b1153a616ea388dc80fdaeb6337edc6150e0601f140a1304f82a10ddb'
             'a94080d4e5bc4736868269d66f61f5430dec961c70bdcdaa1c9a402dba5203d2')
 
