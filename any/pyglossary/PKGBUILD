@@ -4,7 +4,7 @@
 # shellcheck shell=bash disable=SC2034,SC2154
 
 pkgname=pyglossary
-pkgver=5.1.0
+pkgver=5.1.1
 pkgrel=1
 pkgdesc="convert dictionary files/glossaries with various formats"
 arch=(any)
@@ -33,7 +33,7 @@ optdepends=(
 )
 makedepends=('python-installer' 'python-build' 'python-setuptools')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ilius/${pkgname}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('5e88570d7ecebf5c6058d55cea0d9fb75bf86db9d7b270d6e4e68d5411912c10')
+sha256sums=('aeb7f7dcab335f169c0ede5af93c4f0208d228ed288b0bae4a48696026bcc99e')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
