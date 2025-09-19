@@ -5,9 +5,9 @@
 pkgname=pacman-static
 pkgver=7.0.0.r6.gc685ae6
 _cares_ver=1.34.5
-_nghttp2_ver=1.65.0
-_curlver=8.14.1
-_sslver=3.5.0
+_nghttp2_ver=1.67.1
+_curlver=8.16.0
+_sslver=3.5.3
 _zlibver=1.3.1
 _xzver=5.8.1
 _bzipver=1.0.8
@@ -16,7 +16,7 @@ _libarchive_ver=3.8.1
 _gpgerrorver=1.55
 _libassuanver=3.0.0
 _gpgmever=2.0.0
-pkgrel=18
+pkgrel=19
 # use annotated tag and patch level commit from release branch (can be empty for no patches)
 _git_tag=7.0.0
 _git_patch_level_commit=c685ae6412af04cae1eaa5d6bda8c277c7ffb8c8
@@ -86,12 +86,12 @@ validpgpkeys+=('A5A45B12AD92D964B89EEE2DEC560C81CEC2276E'  # Martin Matuska <mm@
 
 sha512sums=('44e00c2bc259fe6a85de71f7fd8a43fcfd1b8fb7d920d2267bd5b347e02f1dab736b3d96e31faf7b535480398e2348f7c0b9914e51ca7e12bab2d5b8003926b4'
             '1a108c4384b6104e627652488659de0b1ac3330640fc3250f0a283af7c5884daab187c1efc024b2545262da1911d2b0b7b0d5e4e5b68bb98db25a760c9f1fb1a'
-            'e1ef685a425017474ea0412c8ad13a217a45a320322b3aee48e646be21457d9b1f374abb9f681f47595a0ad8feb07d076bd0aa3279d35c5c9b5b8c921d8dd39e'
+            'e1b50e963602c961dd839ba032216a6c6c22009c6be0aebecb3711cb6412e2a2caf96fe3fa2a6a1691134c12f8ce479c181825a3c8d2cf87a8e0b1aa40f0261a'
             '386709e9f405034cb16ba514f9792e89992be52b24a237e6c51f1032e4ca99a8c57b1c3038d6f0a205202a3bfb1246bb95ff0d5e6fc0ee2bba1cb17f6677f97f'
             'SKIP'
-            '22307bd41d5ded22e7e53e2412b3218763db9b7c32b1254df26172e6cf00d1650c66874dfc03037da89a5bd72ffbca1eeb83784be62a38d5779484376f3a53c7'
+            '7cf8378afbbbf2ace0d78342bf38fd8fe488170d9e758fd3aa1bade0a3c1f3841c2955d1434869e1ced078134436aa9a50d2fd9ac1e757dc97f9b2f465b55b50'
             'SKIP'
-            '39cc80e2843a2ee30f3f5de25cd9d0f759ad8de71b0b39f5a679afaaa74f4eb58d285ae50e29e4a27b139b49343ac91d1f05478f96fb0c6b150f16d7b634676f'
+            '58265c05d208a269418d4928d3127d22738e696d5d080ab8f1c0cbd2cd30e4e1e07e244a1d81c9b40f1a7f972fe835f4f122c098a7b2177ac48492881416aa78'
             'SKIP'
             'b1873dbb7a49460b007255689102062756972de5cc2d38b12cc9f389b6be412da6797579b1acd3717a8cd2ee118fd9801b94e55f063d4328f050f0876a5eb53c'
             'b5887ea77417fae49b6cb1e9fa782d3021f268d5219701d87a092235964f73fa72a31428b630445517f56f2bb69dcbbb24119ef9dbf8b4e40a753369a9f9a16f'
