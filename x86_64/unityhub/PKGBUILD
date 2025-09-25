@@ -4,7 +4,7 @@
 # Contributor: Marius Glo <marius@mgl.dev>
 
 pkgname=unityhub
-pkgver=3.14.0
+pkgver=3.14.1
 pkgrel=1
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
@@ -17,10 +17,12 @@ optdepends=(
 source=(
   "$pkgname-$pkgver.deb::https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/unityhub-amd64-${pkgver}.deb"
   'license.txt'
+  'services-config.json'
 )
 sha256sums=(
-  'a4eb5dbeeeec55efa7d85cc8b4ce92036b0584ec04e3c4e4e4bf9c6caed34eaf'
+  '417bada3a61d6edff04cd4890475acb6ffd2a26856978d046d54917d1d0df23d'
   'f0eb3a4bb148bb7f426e4f5b97e891265ac487710cbcba9282518537c7b5d833'
+  '557964a3528219723750a7eabeb2e31a2d3e1b2c4a4b2e201b32d4035200562e'
 )
 conflicts=('unityhub-beta')
 OPTIONS=(!strip)
@@ -32,4 +34,5 @@ package() {
   ln -sf '/opt/unityhub/unityhub' "$pkgdir/usr/bin/unityhub"
 
   install -Dm644 "$srcdir/license.txt" "$pkgdir/usr/share/licenses/$pkgname/license.txt"
+  install -Dm644 "$srcdir/services-config.json" "$pkgdir/usr/share/unity3d/config/services-config.json"
 }
