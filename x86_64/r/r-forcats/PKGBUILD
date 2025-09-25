@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: frichtlm <frichtlm@gmail.com>
 _pkgname=forcats
-_pkgver=1.0.0
+_pkgver=1.0.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.0
-pkgrel=3
+pkgver=1.0.1
+pkgrel=1
 pkgdesc='Tools for Working with Categorical Variables (Factors)'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -30,7 +30,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c5bb157909d92e1e1a427c0dc5cb358ea00a43a14918a9088fa4f6630962254e')
+sha256sums=('1de46b83b7038a293e612775197b7ffe47bd079cd2385aa7c65e98171bbd3605')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
