@@ -3,7 +3,7 @@
 _base=pyparsing
 pkgbase=pypy-${_base}
 pkgname=pypy3-${_base}
-pkgver=3.2.4
+pkgver=3.2.5
 pkgrel=1
 pkgdesc="General parsing module for Python"
 arch=(any)
@@ -11,7 +11,7 @@ url="https://github.com/${_base}/${_base}"
 makedepends=(pypy3-build pypy3-installer pypy3-flit-core)
 license=(MIT)
 source=(https://pypi.org/packages/source/${_base::1}/${_base}/${_base}-${pkgver}.tar.gz)
-sha512sums=('a7cd44fb37aba3b0fb92bf8f64ba192136c892c6bf41f9a5ebda694c2263a121b0123406e4e3e8ea203b01b0185e05a12f8937fc7a4f494d9be7ddaea43faf65')
+sha512sums=('e9c4e4c7a7e324331ced2214b5a406c538209fedd8b56ffa2a28b44b497be0d4a03b705e9ce9a449e8f126a8fa555e8c1572894b09dda0eda4e3da156ba7e3ff')
 
 # Rename the following function to check() to enable checking
 _check_pypy3-setuptools() {
