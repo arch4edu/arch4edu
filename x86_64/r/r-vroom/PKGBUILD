@@ -3,9 +3,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=vroom
-_pkgver=1.6.5
+_pkgver=1.6.6
 pkgname=r-${_pkgname,,}
-pkgver=1.6.5
+pkgver=1.6.6
 pkgrel=1
 pkgdesc='Read and Write Rectangular Text Data Quickly'
 arch=('x86_64')
@@ -52,7 +52,7 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7bdca21e58c9c5049d7445d182f59fd399193cb2f4318d083de0a559ec9b5761')
+sha256sums=('855b7ef11ba8b41624064d7b0327b4bd6a02024fb9c4801a09d38224a10980de')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
