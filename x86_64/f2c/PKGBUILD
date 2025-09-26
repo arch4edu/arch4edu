@@ -5,7 +5,7 @@
 # Contributor: Jesin <jesin00@gmail.com>
 # Contributor: Gabriele Lanaro <gabriele.lanaro@gmail.com>
 pkgname=f2c
-pkgver=20240504
+pkgver=20250921
 pkgrel=1
 pkgdesc="Fortran to C code translator"
 url="https://www.netlib.org/${pkgname}"
@@ -16,7 +16,7 @@ makedepends=(unzip)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/src.tgz
         lib${pkgname}-${pkgver}.zip::${url}/lib${pkgname}.zip)
 noextract=(lib${pkgname}.zip)
-sha512sums=('93b3c3fe0231d99e64df5fc067c60218854fd015b5f84f9e42ca12ef310b7b8448936f900f5d7c2ecd42737c8250dc45664a580ad67ce8289ffb5e2347a7793e'
+sha512sums=('184304f3bdc18e2d9a5ceb6a8abb51087490b33fd1b00e99b92cb7ea792d3c0a56587d7db7429e30896059782f4838d4bc1765d615d953d268694c7a3a5b990e'
             '596bd0017e0c4b61191200a0bc788777585049eb939c528625349404cc8d9bbd0957efecd79077c487fdff5fc7e435189574b2c495cafaa6006dd2585b13960a')
 
 prepare() {
