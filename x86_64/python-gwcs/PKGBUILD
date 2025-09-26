@@ -3,7 +3,7 @@
 pkgbase=python-gwcs
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
-pkgver=0.25.2
+pkgver=0.26.0
 pkgrel=1
 pkgdesc="A python package for managing the World Coordinate System (WCS) of astronomical data"
 arch=('any')
@@ -20,7 +20,7 @@ checkdepends=('python-pytest-doctestplus'
               'python-asdf_wcs_schemas')
 #             'python-typeguard'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('154ffb7782da132149943ad51fcf723b')
+md5sums=('4ef4873b4c400a4d817682cec829ee34')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -32,8 +32,8 @@ check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
     # deselect test needs downloading
-    pytest || warning "Tests failed"
-#       --deselect=gwcs/tests/test_wcs.py::test_spatial_spectral_stoke # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
+    pytest \
+        --deselect=gwcs/tests/test_wcs.py::test_spatial_spectral_stoke || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-gwcs() {
