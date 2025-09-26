@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-$_pkgname
-pkgver=0.17.1
+pkgver=0.17.2
 pkgver_nlohmann_json=3.10.2
 pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
@@ -45,7 +45,7 @@ source=(
     $_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz
     nlohmann-json-$pkgver_nlohmann_json.tar.gz::https://github.com/nlohmann/json/archive/refs/tags/v$pkgver_nlohmann_json.tar.gz
 )
-b2sums=('25f0a94c9a5f553285c5da0253485a437ff4d2ce4ba01efba19b59381a952149219edfebc76b0ec3f2245ad0f0470302ef19089b8f07ca7f140a5a307c55ef9e'
+b2sums=('49dafc4cba948b7e3d474b0b8c73075cc5135a7c8559eebc2c0d5578c19868b4dc0a1dd4e6ab199f67a3996eb35ea11c9e0d8da9d49835bd2d7119774f64d954'
         'e7da213fb75d528b1f5425822f5b598e882f232a67670aaae2d8f89c76e72ee23fa3344d1acfef2b0338a6a423d17b231b7e047ff064c984c2ec7783b721a22c')
 
 prepare() {
