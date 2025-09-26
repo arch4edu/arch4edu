@@ -7,12 +7,12 @@
 
 : ${_install_path:=usr/lib}
 
-: ${_commit:=59503c7449e9557fa43490f2fa8a0183d05480a2} # 2025.4.1
+: ${_commit:=a36e95b89b27121c7c1452e5cf1834b9577ad9a7} # 2025.9.9
 
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2025.4.1
-pkgrel=2
+pkgver=2025.9.9
+pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url="https://github.com/petermost/Sourcetrail"
 license=('GPL-3.0-only')
@@ -54,35 +54,10 @@ source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
 sha256sums=('SKIP')
 
 prepare() {
-  magick "$_pkgsrc/bin/app/data/gui/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
+  magick "$_pkgsrc/src/resources/icon/logo_1024_1024.png" -resize 256x256 "$_pkgname.png"
 
   # prevent failure from checkVersionRange
   sed 's/FATAL_ERROR/WARNING/' -i "$_pkgsrc"/cmake/Sourcetrail.cmake
-
-  # boost 1.88
-  local _line=$(grep -nm1 'boost/process/v1\.hpp' "$_pkgsrc"/src/lib_gui/utility/utilityApp.cpp | cut -d':' -f1)
-  sed -e "${_line}d" -i "$_pkgsrc"/src/lib_gui/utility/utilityApp.cpp
-  sed -e "${_line}i #define BOOST_PROCESS_VERSION 1" \
-    -e "${_line}i #include <boost/process/v1/args.hpp>" \
-    -e "${_line}i #include <boost/process/v1/async.hpp>" \
-    -e "${_line}i #include <boost/process/v1/async_system.hpp>" \
-    -e "${_line}i #include <boost/process/v1/group.hpp>" \
-    -e "${_line}i #include <boost/process/v1/child.hpp>" \
-    -e "${_line}i #include <boost/process/v1/cmd.hpp>" \
-    -e "${_line}i #include <boost/process/v1/env.hpp>" \
-    -e "${_line}i #include <boost/process/v1/environment.hpp>" \
-    -e "${_line}i #include <boost/process/v1/error.hpp>" \
-    -e "${_line}i #include <boost/process/v1/exe.hpp>" \
-    -e "${_line}i #include <boost/process/v1/group.hpp>" \
-    -e "${_line}i #include <boost/process/v1/handles.hpp>" \
-    -e "${_line}i #include <boost/process/v1/io.hpp>" \
-    -e "${_line}i #include <boost/process/v1/pipe.hpp>" \
-    -e "${_line}i #include <boost/process/v1/shell.hpp>" \
-    -e "${_line}i #include <boost/process/v1/search_path.hpp>" \
-    -e "${_line}i #include <boost/process/v1/spawn.hpp>" \
-    -e "${_line}i #include <boost/process/v1/system.hpp>" \
-    -e "${_line}i #include <boost/process/v1/start_dir.hpp>" \
-    -i "$_pkgsrc"/src/lib_gui/utility/utilityApp.cpp
 }
 
 build() (
