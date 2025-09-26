@@ -2,9 +2,11 @@
 # Contributor: Mark Wagie <mark dot wagie at proton dot me>
 # Contributor: MatMoul <matmoul at the google email domain which is .com>
 
+: ${_commit_alpm=789ba9acc52b7b0624fb08de9f4756b5d51c10f1}
+
 _pkgname="octopi"
 pkgname="$_pkgname"
-pkgver=0.17.0
+pkgver=0.18.0
 pkgrel=1
 pkgdesc="A powerful Pacman frontend using Qt libs"
 url="https://github.com/aarnt/octopi"
@@ -40,7 +42,7 @@ _source_octopi() {
   _pkgsrc_octopi="$_pkgname-$pkgver"
   local _pkgext="tar.gz"
   source+=("$_pkgsrc_octopi.$_pkgext"::"https://github.com/aarnt/octopi/archive/refs/tags/v$pkgver.$_pkgext")
-  sha256sums+=('3ae93389c0ee8ffcdd2bf0f2b28f25bcfbb73493036f210c24f5ee836c90fa5c')
+  sha256sums+=('e952c895c930f9f289626bb1ff480c0b5cc788b567cae7a776b38b3aa457dbef')
 
   _prepare_octopi() (
     # fix qt-sudo path
@@ -67,7 +69,7 @@ _source_alpm_utils() {
   conflicts+=('alpm_octopi_utils')
 
   _pkgsrc_alpm_utils="alpm_octopi_utils"
-  source+=("$_pkgsrc_alpm_utils"::"git+https://github.com/aarnt/alpm_octopi_utils.git")
+  source+=("$_pkgsrc_alpm_utils"::"git+https://github.com/aarnt/alpm_octopi_utils.git${_commit_alpm:+#commit=$_commit_alpm}")
   sha256sums+=('SKIP')
 
   _build_alpm_utils() (
