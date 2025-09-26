@@ -2,7 +2,7 @@
 # Contributor: MatMoul <matmoul at the google email domain which is .com>
 
 pkgname=qt-sudo
-pkgver=2.0.1
+pkgver=2.2.0
 pkgrel=1
 pkgdesc='A clone of LXQt sudo tool, without LXQt libs'
 arch=('x86_64')
