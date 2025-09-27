@@ -2,13 +2,14 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-digest
-  - x86_64/r/r-glue
+  - x86_64/r/r-cli
   - x86_64/r/r-gtable
   - x86_64/r/r-isoband
+  - x86_64/r/r-lifecycle
   - x86_64/r/r-rlang
+  - x86_64/r/r-s7
   - x86_64/r/r-scales
-  - x86_64/r/r-tibble
+  - x86_64/r/r-vctrs
   - x86_64/r/r-withr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
