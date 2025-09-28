@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=pillar
-_cranver=1.10.2
+_cranver=1.11.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -64,7 +64,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('194ecbca35699c3bfe7e1e1a4d98a081ab8a168b0ae5f53b7cf93c3826b2cde7ac13535c2f22302d441ad9dc9b1d5c041c45728340187cf8ff0276bb40bd073a')
+b2sums=('7dc0bded54ea089086fdcbb0a9e5d9ca11e6cb25171a7c604df9c1dcfa37f947c81c453a43fcd75386f3fbff747d2936dd93d6348bfa0b5d90f8701575554a2d')
 
 build() {
     mkdir -p "${srcdir}/build/"
