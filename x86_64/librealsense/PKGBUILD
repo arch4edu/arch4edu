@@ -1,14 +1,14 @@
 # Maintainer: pingplug < aur at pingplug dot me >
 # Contributr: Patrick José Pereira < positivcheg94 at gmail dot com >
 
-_RS4XX_VER=5.16.0.1
+_RS4XX_VER=5.17.0.10
 _SR300_VER=3.26.1.0
 _L51X_VER=1.5.8.1
 
 pkgname=librealsense
-pkgver=2.56.3
+pkgver=2.56.5
 pkgrel=1
-pkgdesc="Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras (D400 & L500 series and the SR300)."
+pkgdesc="Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras."
 arch=('x86_64')
 url="https://github.com/IntelRealSense/librealsense"
 license=('Apache')
@@ -19,8 +19,8 @@ source=("https://github.com/IntelRealSense/librealsense/archive/refs/tags/v${pkg
     "https://librealsense.intel.com/Releases/SR300/FW/SR3XX_FW_Image-${_SR300_VER}.bin"
     "https://librealsense.intel.com/Releases/L5xx/FW/L51X_FW_Image-${_L51X_VER}.bin"
     "realsense-viewer.desktop")
-sha256sums=('a18112df0dc0bf442b58fb754f719be1992ddbba154564db5321729ba340c8a9'
-            'a481376ac2d072de1d057fe73d74fcc00ab5da17aa63fa92c18bb8f65adf909c'
+sha256sums=('58b2029eb7179afc7ea893c25be38a65b42c5b6d27330c8c611bc0e0a4ac5a85'
+            'a7e10cf7b011929df2bfc6347d87471372621cc937c96cb529c3846f26b60f1c'
             'c4ac2144df13c3a64fca9d16c175595c903e6e45f02f0f238630a223b07c14d1'
             '87a9a91b613d9d807b2bfc424abe9cac63cad75dfc04718592c44777cb0b4452'
             '59281f91e7d471a7dde1cf7207eddd8624e05218cc4301ee52e4c453a0c8ab21')
