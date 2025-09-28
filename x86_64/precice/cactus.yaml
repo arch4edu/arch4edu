@@ -12,5 +12,5 @@ pre_build: |
   sed "s/^source=(/source=(eigen5.patch::https:\/\/github.com\/precice\/precice\/pull\/2366.patch /" -i PKGBUILD
   sed "s/^sha512sums=(/sha512sums=('SKIP' /" -i PKGBUILD
   sed '21 a cd ${pkgname}-${pkgver}' -i PKGBUILD
-  sed '22 a patch -p1 -i ../eigen5.patch.patch' -i PKGBUILD
+  sed '22 a patch -p1 -i ../eigen5.patch' -i PKGBUILD
 post_build: aur-post-build
