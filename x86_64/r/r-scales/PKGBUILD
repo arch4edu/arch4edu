@@ -1,28 +1,23 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
-
 _cranname="scales"
-_cranver=1.3.0
+_cranver=1.4.0
 pkgname="r-${_cranname,,}"
 pkgdesc="Scale Functions for Visualization"
 pkgver="${_cranver//[:-]/.}"
 pkgrel=1
-
-arch=("any")
-license=("MIT")
-
+arch=(any)
+license=(MIT)
 url="https://cran.r-project.org/package=${_cranname}"
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("99cffd41b85e2aaa15e7049c3c997fda47acfc7ea8a004955e3085b6e074f606be66deeea97a02dda0864b06eaa560944961743f0d37348ef3751011040957fb")
-
+b2sums=('54f80ee76dcc35e25e30e6d963cebb3e367f11785c8cf3d54ac4720011da3d49e266b4f1afd3d0b7f548125cec9e5b400c9ccfefd6d55bdc357ae23cc9c3ff24')
 depends=(
-    "r>=3.6"
+    "r>=4.1"
     "r-cli"
     "r-farver>=2.0.3"
     "r-glue"
     "r-labeling"
     "r-lifecycle"
-    "r-munsell>=0.5"
     "r-r6"
     "r-rcolorbrewer"
     "r-rlang>=1.0.0"
@@ -35,6 +30,7 @@ optdepends=(
     "r-ggplot2"
     "r-hms>=0.5.0"
     "r-stringi"
+    "r-testthat>=3.0.0"
 )
 
 # The unittests for `r-scales` have multiple circular
