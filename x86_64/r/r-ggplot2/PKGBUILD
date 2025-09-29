@@ -7,7 +7,7 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=ggplot2
-_pkgver=3.5.2
+_pkgver=4.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,13 +17,12 @@ url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
   r-cli
-  r-glue
   r-gtable
   r-isoband
   r-lifecycle
   r-rlang
+  r-s7
   r-scales
-  r-tibble
   r-vctrs
   r-withr
 )
@@ -39,6 +38,7 @@ checkdepends=(
   ttf-font
 )
 optdepends=(
+  r-broom
   r-covr
   r-dplyr
   r-ggplot2movies
@@ -54,17 +54,19 @@ optdepends=(
   r-ragg
   r-rcolorbrewer
   r-rmarkdown
+  r-roxygen2
   r-sf
   r-svglite
   r-testthat
+  r-tibble
   r-vdiffr
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "$_pkgname-fix-snapshots.patch::https://github.com/tidyverse/ggplot2/pull/5917/commits/7908e224e03fce65ce910cd85f3de3b2846970d6.patch")
-md5sums=('ab40856ae38edff7d63d123f98667bf2'
+md5sums=('22eb62f9579e90530b2841626c9ec8d6'
          'c1beb06c438ec674a22babfb6ca987a8')
-b2sums=('91908b1c94aa4196acabd94f0174e63e9301734966820c0d6ccb5789497977314109cc21a21ed4bfa69d1fe7062fa6c7a2872ec2f59d713ee60e9fe904173ce5'
+b2sums=('34d5961c7860e01f010318f46b5470b435ac06f23a78154b534746bd50691b5653b6b54abcab3f4103df6ac9b539e166b17a6b97f3f41f48269fd4173b56e9c3'
         'b01d6fd2c0d251fa64792fa22ccd7627f44d2cd9e1d11b3b4c085244fa14fcc074a07e9106d301e25cd51532f23e65536045e173a1c061d1d51732d0ee80a670')
 
 #prepare() {
