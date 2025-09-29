@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspTTests
-_pkgver=0.19.3
+_pkgver=0.95.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.95.0
 pkgrel=1
 pkgdesc="T-Tests Module for JASP"
 arch=('any')
@@ -19,7 +19,7 @@ depends=(r
   r-plyr
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('47dab9da7566e7ff35a81c61040b0c6db685f0a5faf2620d96b732b869f7cb02')
+sha256sums=('332033a7daabfa0155933346b3d87b93f6cb9c56ee8b775469ff0aae943bc5df')
 
 
 build() {
@@ -30,6 +30,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
