@@ -4,7 +4,7 @@
 
 pkgname=precice
 pkgver=3.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A Coupling Library for Partitioned Multi-Physics Simulations on Massively Parallel Systems"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -14,11 +14,13 @@ conflicts=(petsc-complex)
 makedepends=(cmake eigen gcc-fortran)
 optdepends=('man-db: manual pages for precice-tools'
   'git: for Git Revision Info support')
-source=(${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz)
-sha512sums=('cc78eb3043e8268bcadf3ceedf89d3c88ed3d93bc2767739163f8fc9b006e5aade174d37e8cf1dc670f996655ee4f34b4af184713f7c721b075123db0e5044b7')
+source=(eigen5.patch::https://github.com/precice/precice/pull/2366.patch ${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz)
+sha512sums=('SKIP' 'cc78eb3043e8268bcadf3ceedf89d3c88ed3d93bc2767739163f8fc9b006e5aade174d37e8cf1dc670f996655ee4f34b4af184713f7c721b075123db0e5044b7')
 
 prepare() { 
  sed -i "s/libxml\/SAX.h/libxml\/SAX2.h/" ${pkgname}-${pkgver}/src/xml/ConfigParser.cpp 
+cd ${pkgname}-${pkgver}
+patch -p1 -i ../eigen5.patch
 }
 build() {
   cmake \
@@ -52,4 +54,3 @@ package() {
   cd "${pkgdir}"
   rm -r usr/share/lintian
 }
-makedepends+=("hypre" "mumps" "pastix")
