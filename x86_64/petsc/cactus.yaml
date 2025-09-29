@@ -1,6 +1,8 @@
 nvchecker:
   - source: aur
     aur:
+  - source: aur
+    aur: hypre
 depends:
   - x86_64/hypre
   - x86_64/mumps
