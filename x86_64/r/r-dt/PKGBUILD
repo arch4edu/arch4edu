@@ -4,25 +4,25 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=DT
-_pkgver=0.33
+_pkgver=0.34.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="A Wrapper of the JavaScript Library 'DataTables'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('GPL-3.0-only AND MIT AND Apache-2.0')
+license=('MIT')
 depends=(
   r-crosstalk
   r-htmltools
   r-htmlwidgets
-  r-httpuv
   r-jquerylib
   r-jsonlite
   r-magrittr
   r-promises
 )
 checkdepends=(
+  r-httpuv
   r-testit
 )
 optdepends=(
@@ -33,10 +33,11 @@ optdepends=(
   r-shiny
   r-testit
   r-tibble
+  r-httpuv
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('360d1d38b0f28485d564bb246a27c1f2')
-b2sums=('b9fa2c7c3e6960ea4ba638ed5029397e428c53422eef9b6a17a5a20b184c26a1665fa9d973c4c31b050130189b2714a4aa0f72d55b6f874dbea022fa7555e452')
+md5sums=('7fd6d7882cf56aa422bced527468b8c4')
+b2sums=('d75f405bbe7206392dab4ee8eade18691ebd7daa87c677f7f874feec7ed61b5a40e0d94f38ea3af31cf60e5f7fed5ce660b517c8b6615e0bac1e50eca4cac810')
 
 build() {
   mkdir build
