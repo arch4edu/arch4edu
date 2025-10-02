@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspTools
-_pkgver=0.19.3
+_pkgver=0.95.3
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.95.3
 pkgrel=1
 epoch=1
 pkgdesc="Helps preview and debug JASP analyses"
@@ -26,7 +26,7 @@ depends=(r
 'r-archive'
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('6b2e6adcada8dad8ca191b0016a4d2e30ace426092476c63704454222f41b0f0')
+sha256sums=('5ea47bbff72c858ef5f94a60bf668e6f746a8eadce936e11962c94a14103ff87')
 
 
 build() {
@@ -38,6 +38,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
   # we may or may not need this link.
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
