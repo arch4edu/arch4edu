@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBase
-_pkgver=0.19.3
+_pkgver=0.95.3
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.95.3
 _ColumnEncoder_ver=0.19.0
 pkgrel=1
 pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
@@ -44,7 +44,7 @@ source=(
 "${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
 "jaspColumnEncoder-${_pkgver}.tar.gz::https://github.com/jasp-stats/jaspColumnEncoder/archive/refs/tags/v${_ColumnEncoder_ver}.tar.gz"
 )
-sha256sums=('327bc22a5d0ab1a12935bf00327c7075df266a51a1097e502c0b89bc395ba6da'
+sha256sums=('41a9b79b0fd9adbac01a7d11b1e79370820f9eb3ac2fba48713858baea6d6851'
             'd9e74e0ff2b7c6d15c109717c212480f9021f86fdd0c326088143476ba051033')
 
 build() {
@@ -56,6 +56,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
   # we may or may not need this link.
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
