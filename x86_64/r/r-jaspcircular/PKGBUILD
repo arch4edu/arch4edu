@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspCircular
-_pkgver=0.95.0
+_pkgver=0.95.3
 pkgname=r-${_pkgname,,}
-pkgver=0.95.0
+pkgver=0.95.3
 pkgrel=1
 pkgdesc="CircularStatistics Module for JASP"
 arch=('any')
@@ -15,7 +15,7 @@ depends=(r
   r-ggplot2
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('61fc218430121b6e84b8f7d07c1b918ba9de65488b43068ccae0bf7746d08768')
+sha256sums=('fb07e0ef9874c7c3989f2520eb2a623c78a4e7534c720f2e0e707e2f9e164f9c')
 
 
 build() {
