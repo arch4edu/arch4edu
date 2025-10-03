@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBain
-_pkgver=0.95.0
+_pkgver=0.95.3
 pkgname=r-${_pkgname,,}
-pkgver=0.95.0
+pkgver=0.95.3
 pkgrel=1
 pkgdesc="Bain Module for JASP"
 arch=('any')
@@ -20,7 +20,7 @@ depends=(r
   r-jaspsem
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('559083c4b49ee1433655cb8a042e3bb46d2b6bd66dd28ad8a2b32b42c9db9dbe')
+sha256sums=('58f610fcc20cf865f6e1802a1cc8a3738c923655b33a6d23b19bebc0c09fb53e')
 
 
 build() {
