@@ -10,8 +10,8 @@ pkgname=(
   python-shiboken2
 )
 pkgbase=pyside2
-pkgver=5.15.16+3.1
-pkgrel=3
+pkgver=5.15.16+4
+pkgrel=1
 pkgdesc="CPython bindings generator for C++ libraries - Debian rel ${pkgver#*+}"
 arch=(x86_64)
 url="https://wiki.qt.io/Qt_for_Python"
@@ -32,7 +32,7 @@ source=(
 )
 
 sha256sums=('6d3ed6fd17275ea74829ab56df9c2e7641bfca6b5b201cf244998fa81cf07360'
-            '523d191e45b1a9720e8eb8ea66fd930f49ffad54df1295ca09efea8838257aa6'
+            '883cb9c16dd69d0bca1a9b2efff571fff2fe73ae715c71c846fc82c5617b9efd'
             '2f39461136a718a9f75bd94c1e71fc358764af25f68c650fd503c777e32ff302'
             '4d82961c7f978dadae6e82c73fb0a239dbb62db5f66106975f75dd25161843e9')
 
