@@ -2,25 +2,26 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=GGally
-_pkgver=2.2.1
+_pkgver=2.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Extension to 'ggplot2'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
+  r-cli
   r-dplyr
   r-ggplot2
   r-ggstats
   r-gtable
   r-lifecycle
   r-magrittr
-  r-plyr
   r-progress
   r-rcolorbrewer
   r-rlang
+  r-s7
   r-scales
   r-tidyr
 )
@@ -39,6 +40,7 @@ checkdepends=(
   r-vdiffr
 )
 optdepends=(
+  r-airports
   r-broom
   r-broom.helpers
   r-chemometrics
@@ -55,7 +57,6 @@ optdepends=(
   r-maps
   r-network
   r-rmarkdown
-  r-roxygen2
   r-scagnostics
   r-sna
   r-spelling
@@ -63,8 +64,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9acff4b4e2fd3197ac98fada1266434a')
-b2sums=('20f2e5ff8a7c002e509641f7248a140a6a738bf11c68215bd38f04c701e195b98ac738607a42d9dbcc3ad55e3cf7565549d9b3e5a6d68166149c3f557db116f1')
+md5sums=('10e743f036dd7a85cc00e5d726c35df5')
+b2sums=('0ebbcf104689a5f965f05e2f252ffcc0c347894db53ff0c619ea13c9738a3bff11241ecf1dbb163452e58b3d2fbcf1536c80fcb727c33b1487643c83ab6c0da8')
 
 build() {
   mkdir build
