@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=clubSandwich
-_pkgver=0.6.0
+_pkgver=0.6.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,6 +30,8 @@ optdepends=(
   r-aer
   r-cardata
   r-covr
+  r-estimatr
+  r-fixest
   r-formula
   r-geepack
   r-ivreg
@@ -45,8 +47,8 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('735089f5126a48f6c0951c065f920e0b')
-b2sums=('9cf86d3b275afdb2db6140cbc0d2e7b473d71ffa4d5bcff65fb932cb267450be0c72534348857b507413f3c8814eef4d7b3541a44f8e9c3330955470d68fa790')
+md5sums=('2256f1a1bd3887bb397cd69ac80ebd84')
+b2sums=('ec0966fef8cd4a9078f2f12be02f0835169e1f5cc16c7dfc40e000820d683e1585c747e8c7a15fc9ecd5f72a61bbcb63225bd84e7ba39c20dad1c5da923070e1')
 
 build() {
   mkdir build
