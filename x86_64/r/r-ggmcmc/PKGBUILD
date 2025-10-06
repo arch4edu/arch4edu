@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggmcmc
-_pkgver=1.5.1.1
+_pkgver=1.5.1.2
 pkgname=r-${_pkgname,,}
-pkgver=1.5.1.1
-pkgrel=4
+pkgver=1.5.1.2
+pkgrel=1
 pkgdesc='Tools for Analyzing MCMC Simulations from Bayesian Inference'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,7 +26,7 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('41d883fe5341c4aa3f5653f10178cc12b164bbae702a827433105518b150def8')
+sha256sums=('a47bf2233d53017c59693ae0bd6c42d2f280c14d88746b350048400fa177b55e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
