@@ -1,0 +1,36 @@
+From 5f12119249c4339abf9ccd144b7e5e147a6517b6 Mon Sep 17 00:00:00 2001
+From: "dependabot[bot]" <49699333+dependabot[bot]@users.noreply.github.com>
+Date: Mon, 29 Jul 2024 14:17:28 +0000
+Subject: [PATCH 2/4] Bump com.github.koppor:gradle-modules-plugin (#11544)
+
+Bumps com.github.koppor:gradle-modules-plugin from jitpack-SNAPSHOT to 1.8.15-cmd-1.
+
+---
+updated-dependencies:
+- dependency-name: com.github.koppor:gradle-modules-plugin
+  dependency-type: direct:production
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+(cherry picked from commit e2ab9c016e41902d867da1d7e13ce0e5da44615f)
+---
+ settings.gradle | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/settings.gradle b/settings.gradle
+index 7908374f09..4483fd92d2 100644
+--- a/settings.gradle
++++ b/settings.gradle
+@@ -5,7 +5,7 @@ pluginManagement {
+             // Updated solution at https://github.com/foodiestudio/convention-plugins?tab=readme-ov-file#convention-plugins
+             if (requested.id.id.startsWith("com.github.koppor")) {
+                 // This is https://github.com/java9-modularity/gradle-modules-plugin/pull/282
+-                useModule("com.github.koppor:gradle-modules-plugin:jitpack-SNAPSHOT")
++                useModule("com.github.koppor:gradle-modules-plugin:1.8.15-cmd-1")
+             }
+         }
+     }
+-- 
+2.51.0
+

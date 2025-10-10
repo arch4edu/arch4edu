@@ -1,0 +1,26 @@
+From 84703e92c5abec5f23a5e0d88adb0786da65ae3f Mon Sep 17 00:00:00 2001
+From: Oliver Kopp <kopp.dev@gmail.com>
+Date: Fri, 19 Jul 2024 16:09:07 +0200
+Subject: [PATCH 1/4] Try to use "release" (made in fork) (#11517)
+
+(cherry picked from commit a64bb070259dd93de8cb88188e4c5bf892f2af2b)
+---
+ build.gradle | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build.gradle b/build.gradle
+index 48d72650e1..4fb779043a 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -11,7 +11,7 @@ plugins {
+     id 'me.champeau.jmh' version '0.7.2'
+ 
+     // This is https://github.com/java9-modularity/gradle-modules-plugin/pull/282
+-    id 'com.github.koppor.gradle-modules-plugin' version 'jitpack-SNAPSHOT'
++    id 'com.github.koppor.gradle-modules-plugin' version 'v1.8.15-cmd-1'
+ 
+     id 'org.openjfx.javafxplugin' version '0.1.0'
+ 
+-- 
+2.51.0
+
