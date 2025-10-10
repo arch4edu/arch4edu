@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=rversions
-_pkgver=2.1.2
+_pkgver=3.0.0
 pkgname=r-${_pkgname,,}
-pkgver=2.1.2
-pkgrel=5
+pkgver=3.0.0
+pkgrel=1
 pkgdesc="Query 'R' Versions, Including 'r-release' and 'r-oldrel'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,7 +21,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('de5818233e8271132fe8ea70145618950b35786e0d2f270e39bf3338f3b8b160')
+sha256sums=('da80259d5feb5701db24a8507b36f38ba9fd01e3b460e45edc378cb6930933e1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
