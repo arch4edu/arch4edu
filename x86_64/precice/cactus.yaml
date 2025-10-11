@@ -6,11 +6,5 @@ nvchecker:
 depends:
   - x86_64/petsc
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  sed '19 a prepare() { \n sed -i "s/libxml\\/SAX.h/libxml\\/SAX2.h/" ${pkgname}-${pkgver}/src/xml/ConfigParser.cpp \n}' -i PKGBUILD
-  sed "s/^source=(/source=(eigen5.patch::https:\/\/github.com\/precice\/precice\/pull\/2366.patch /" -i PKGBUILD
-  sed "s/^sha512sums=(/sha512sums=('SKIP' /" -i PKGBUILD
-  sed '21 a cd ${pkgname}-${pkgver}' -i PKGBUILD
-  sed '22 a patch -p1 -i ../eigen5.patch' -i PKGBUILD
+pre_build: aur-pre-build
 post_build: aur-post-build
