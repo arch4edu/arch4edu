@@ -3,8 +3,8 @@
 # Contributor: Florian Lindner <florian.lindner@xgm.de>
 
 pkgname=precice
-pkgver=3.2.0
-pkgrel=2
+pkgver=3.3.0
+pkgrel=1
 pkgdesc="A Coupling Library for Partitioned Multi-Physics Simulations on Massively Parallel Systems"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -14,14 +14,9 @@ conflicts=(petsc-complex)
 makedepends=(cmake eigen gcc-fortran)
 optdepends=('man-db: manual pages for precice-tools'
   'git: for Git Revision Info support')
-source=(eigen5.patch::https://github.com/precice/precice/pull/2366.patch ${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz)
-sha512sums=('SKIP' 'cc78eb3043e8268bcadf3ceedf89d3c88ed3d93bc2767739163f8fc9b006e5aade174d37e8cf1dc670f996655ee4f34b4af184713f7c721b075123db0e5044b7')
+source=(${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz)
+sha512sums=('eea9bfa340c84dfca1523eb1282f624c14abe46d788b416b88460a90fe12f605f92d7838c51d0d184f1d40e7997427af24a18b44c6be383d84a94df3ec826419')
 
-prepare() { 
- sed -i "s/libxml\/SAX.h/libxml\/SAX2.h/" ${pkgname}-${pkgver}/src/xml/ConfigParser.cpp 
-cd ${pkgname}-${pkgver}
-patch -p1 -i ../eigen5.patch
-}
 build() {
   cmake \
     -S ${pkgname}-${pkgver} \
