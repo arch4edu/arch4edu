@@ -1,14 +1,16 @@
 # Maintainer: <hurricanepootis@protonmail.com>
 # Contributor: bartus <arch-user-repoᘓbartus.33mail.com>
 # Contributor: Andrzej Giniewicz <gginiu@gmail.com>
+# Contributor: Gr3q <floyd0122@gmail.com>
+# Contributor: Rainbowu <wurongbo2012@hotmail.com>
 pkgname=('fbx-sdk' 'fbx-sdk-docs')
 pkgbase='fbx-sdk'
 pkgver=2020.3.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Platform and API toolkit to transfer existing content into the FBX format.'
 arch=('x86_64')
 url='http://www.autodesk.com/products/fbx/overview'
-depends=(gcc-libs libxml2 zlib glibc)
+depends=(gcc-libs libxml2-legacy zlib glibc)
 makedepends=(rsync)
 license=('LicenseRef-Autodesk-FBX-SDK-2020-License')
 install='fbx-sdk.install'
@@ -19,6 +21,9 @@ build() {
   mkdir -p "${srcdir}/fbx-sdk"
   chmod 755 "${srcdir}/fbx${pkgver//./}_fbxsdk_linux"
   printf "yes\nn\n" | "${srcdir}/fbx${pkgver//./}_fbxsdk_linux" "${srcdir}/fbx-sdk"
+
+  # fix typo in sdk file, replace mLefttChild with mLeftChild
+  sed -i 's/mLefttChild/mLeftChild/g' "${srcdir}/fbx-sdk/include/fbxsdk/core/base/fbxredblacktree.h"
 }
 
 package_fbx-sdk() {
@@ -28,6 +33,7 @@ package_fbx-sdk() {
   install -Dm644 "lib/release/libfbxsdk.so" "$pkgdir/usr/lib/libfbxsdk.so"
 
   rsync -a -r include "$pkgdir/usr"
+  chmod 755 "$pkgdir/usr/include"
 
   install -D "License.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
