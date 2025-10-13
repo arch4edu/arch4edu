@@ -1,5 +1,5 @@
 pkgname=lief
-pkgver=0.16.6
+pkgver=0.17.0
 pkgrel=1
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
@@ -38,11 +38,10 @@ provides=(libLIEF.so)
 source=(
 	"lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz"
 )
-sha256sums=('20bae0130c98d6b29a8a7853f6a0f270398b277f12c3673164b08563cbd18e0c')
+sha256sums=('bcc5f1e0dcfbf6de07d8a666bf742cda6467cd08d4b5a9679dfdbaafe08563e2')
 
 prepare() {
   cd "LIEF-$pkgver"
-  cat ../fix-missing-headers.patch | patch -p1
   sed 's/==.*//' --in-place api/python/build-requirements.txt
 }
 
