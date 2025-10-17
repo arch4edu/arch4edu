@@ -3,7 +3,7 @@
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.7
+pkgver=1.7.1
 pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
@@ -13,9 +13,10 @@ makedepends=('python-setuptools-scm'
              'python-build'
              'python-installer'
              'python-sphinx-astropy'
-             'python-matplotlib'
+#            'python-matplotlib'
              'python-astropy'
              'graphviz')  # wheel required by new setuptools
+# conftest.py
 checkdepends=('python-pytest-astropy-header'
 #             'python-pytest-xdist'
               'python-pytest-doctestplus'
@@ -23,7 +24,7 @@ checkdepends=('python-pytest-astropy-header'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('8fe245a5f754699680167c84fc10b7c9')
+md5sums=('6c8268f58a98707016eb13714c15f8ed')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
@@ -42,7 +43,7 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    PYTHONPATH="${PWD}" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data #
+    PYTHONPATH="." pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data #
 }
 
 package_python-pyvo() {
