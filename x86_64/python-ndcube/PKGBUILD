@@ -2,8 +2,9 @@
 
 pkgbase=python-ndcube
 _pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2.3.2
+pkgname=("python-${_pyname}")
+#"python-${_pyname}-doc")
+pkgver=2.3.4
 pkgrel=1
 pkgdesc="Package for multi-dimensional contiguious and non-contiguious coordinate aware arrays"
 arch=('any')
@@ -12,15 +13,16 @@ license=('BSD-2-Clause')
 makedepends=('python-setuptools-scm>=6.0.0'
              'python-build'
              'python-installer'
-             'python-sphinx-automodapi'
-             'python-sphinx-changelog'
-             'python-sphinx-gallery'
-             'python-sphinxext-opengraph'
-             'python-sunpy-sphinx-theme'
-             'python-gwcs'
-             'python-sunpy'
-             'python-mpl-animators'
-             'graphviz')  # wheel required by new setuptools, matplotlib <- mpl-animators
+#            'python-sphinx-automodapi'
+#            'python-sphinx-changelog'
+#            'python-sphinx-gallery'
+#            'python-sphinxext-opengraph'
+#            'python-sunpy-sphinx-theme'
+#            'python-gwcs'
+#            'python-sunpy'
+#            'python-mpl-animators'
+#            'graphviz'
+             )  # wheel required by new setuptools, matplotlib <- mpl-animators
 # circular deps
 #checkdepends=('python-pytest-doctestplus'
 #              'python-pytest-mpl'
@@ -29,6 +31,9 @@ makedepends=('python-setuptools-scm>=6.0.0'
 #              'python-dask'
 #              'python-reproject'
 #              'python-specutils'
+#              'python-gwcs'
+#              'python-mpl-animators'
+#              'python-sunpy'
 #             )  # pytest-doctestplus gwcs mpl-animators sunpy{,sphinx-theme} already in makedep
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
 #       'doc-use-local-fits.patch'
@@ -43,7 +48,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063305_1600_lowres.fits"
 #       "https://github.com/sunpy/ndcube/raw/main/changelog/README.rst"
 #)
-md5sums=('7e7723faec8f5ab4bca08d5a2dee9296')
+md5sums=('d0a78ce5eacd98216167e17eb98adb85')
 #        'SKIP')
 
 #prepare() {
@@ -66,8 +71,9 @@ build() {
     cd ${srcdir}/${_pyname}-${pkgver}
     python -m build --wheel --no-isolation
 
-    msg "Building Docs"
-    PYTHONPATH="../build/lib" make -C docs html
+    # need new opengraph
+#   msg "Building Docs"
+#   PYTHONPATH="../build/lib" make -C docs html
 }
 
 #check() {
@@ -77,7 +83,7 @@ build() {
 #}
 
 package_python-ndcube() {
-    depends=('python>=3.10' 'python-gwcs>=0.18' 'python-scipy>=1.8')
+    depends=('python>=3.10' 'python-gwcs>=0.18' 'python-scipy>=1.8.0')
     optdepends=('python-matplotlib>=3.5.0: plotting'
                 'python-mpl-animators>=1.0: plotting'
                 'python-reproject>=0.7.1: reproject'
@@ -89,11 +95,11 @@ package_python-ndcube() {
     python -m installer --destdir="${pkgdir}" dist/*.whl
 }
 
-package_python-ndcube-doc() {
-    pkgdesc="Documentation for Python ndcube module"
-    cd ${srcdir}/${_pyname}-${pkgver}/docs/_build
-
-    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../../licenses/*
-    install -d -m755 "${pkgdir}/usr/share/doc/${pkgbase}"
-    cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
-}
+#package_python-ndcube-doc() {
+#    pkgdesc="Documentation for Python ndcube module"
+#    cd ${srcdir}/${_pyname}-${pkgver}/docs/_build
+#
+#    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../../licenses/*
+#    install -d -m755 "${pkgdir}/usr/share/doc/${pkgbase}"
+#    cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
+#}
