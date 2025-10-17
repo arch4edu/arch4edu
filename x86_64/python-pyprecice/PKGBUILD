@@ -3,7 +3,7 @@
 _base=pyprecice
 pkgname=python-${_base}
 pkgdesc="Python language bindings for the preCICE coupling library"
-pkgver=3.3.0
+pkgver=3.3.1
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/${_base/py/}/python-bindings"
@@ -11,7 +11,7 @@ license=(LGPL-3.0-or-later)
 depends=(precice python-mpi4py)
 makedepends=(python-build python-installer cython python-pkgconfig python-setuptools-git-versioning python-wheel git)
 source=("git+${url}.git#tag=v${pkgver}")
-sha512sums=('a82dadde8cb4359c606e9cb99b4bf27ae72ed23b8326ed8618a08f5e9526ce03ff2626b1295a32fb68e3cf7917106c0bc61d775dd5921433b092a1194a756671')
+sha512sums=('470aae9420c39e5f9733858f04b94ba824da16886e9b74c9d694c9e77ffe910b2cd0287a2563eb89ffaf586c9a5ae66ea0d10213618162f6ea1645a127959fdd')
 
 build() {
   cd python-bindings
