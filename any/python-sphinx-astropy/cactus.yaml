@@ -7,8 +7,6 @@ depends:
   - any/python-pytest-doctestplus
   - any/python-sphinx-automodapi
   - any/python-sphinx-gallery
-makedepends:
-  - any/python-pydata-sphinx-theme
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
