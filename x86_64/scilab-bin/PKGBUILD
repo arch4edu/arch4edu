@@ -7,7 +7,7 @@
 
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
-pkgver=2025.1.0
+pkgver=2026.0.0
 pkgrel=1
 pkgdesc="a powerful computing environment for engineering and scientific applications."
 arch=("x86_64")
@@ -53,7 +53,7 @@ provides=(scilab)
 options=(!strip)
 # From Scilab downloads page (https://www.scilab.org/download/)
 source=("https://www.scilab.org/download/${pkgver}/${_pkgname}-${pkgver}.bin.${CARCH}-linux-gnu.tar.xz")
-sha256sums=('9c9c391e0d8e391621855394c05916b8e313ad08d2db3036189222d5c7aa2d8c')
+sha256sums=('800b5a8f5c1e4e1ced1618e245b7e6a9d420d1732ab94e8b5f913f05e1be8a57')
 
 package() {
   install -d "${pkgdir}/opt"
