@@ -3,7 +3,7 @@
 pkgbase=python-specutils
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2.1.0
+pkgver=2.2.0
 pkgrel=1
 pkgdesc="Astropy Affiliated package for 1D spectral operations"
 arch=('any')
@@ -18,6 +18,7 @@ makedepends=('python-setuptools-scm'
              'python-ndcube>=2.0'
              'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-astropy-header'
+              'python-pytest-asdf-plugin'
               'python-pytest-doctestplus'
 #             'python-pytest-xdist'
               'python-pytest-remotedata') # matplotlib, gwcs, ndcube already in makedepends; header in conftest.py
@@ -26,7 +27,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
         "https://data.sdss.org/sas/dr16/sdss/spectro/redux/26/spectra/1323/spec-1323-52797-0012.fits"
         'use_local_doc_fits_offline.patch')
 #https://dr15.sdss.org/sas/dr15/manga/spectro/redux/v2_4_3/8485/stack/manga-8485-1901-LOGRSS.fits.gz
-md5sums=('a3f0d17b43aae4b05756e26569ad7273'
+md5sums=('404e9b9699e621799fdaea23ec1e8059'
          '6de4c8ee5659e87a302e3de595074ba5'
          '3586c5d0810108a182ba9146908dc180'
          '1bda649a83a3d021e75dc09a0da395b3')
@@ -82,7 +83,7 @@ check() {
 }
 
 package_python-specutils() {
-    depends=('python>=3.10' 'python-scipy>=1.14' 'python-gwcs>=0.22' 'python-ndcube>=2.0') # astropy asdf asdf-astropy required by gwcs
+    depends=('python>=3.11' 'python-scipy>=1.14' 'python-gwcs>=0.22' 'python-ndcube>=2.0') # astropy asdf asdf-astropy required by gwcs
     optdepends=('python-specutils-doc: Documentation for Specutils')
     cd ${srcdir}/${_pyname}-${pkgver}
 
