@@ -1,6 +1,6 @@
 pkgname=python-lmfit
-pkgver=1.3.3
-pkgrel=2
+pkgver=1.3.4
+pkgrel=1
 pkgdesc="Non-Linear Least Squares Minimization, based on scipy.optimize"
 arch=(any)
 url=http:/lmfit.github.io/lmfit-py/
@@ -12,26 +12,25 @@ python-wheel
 python-setuptools-scm
 )
 depends=(
+python
 python-asteval
 python-dill
-ipython
+python-emcee
 python-matplotlib
+python-numdifftools
 python-numpy
 python-pandas
-python-pytest
 python-scipy
 python-uncertainties
-)
-optdepends=(
-'python-emcee: documentation generation'
 )
 checkdepends=(
 python-pytest-cov
 python-flaky
 python-coverage
+python-pytest
 )
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/lmfit/lmfit-py/archive/${pkgver}.tar.gz")
-sha256sums=('b1bb68df62a61f6dac9a3b8d920fd5323d8654a9af81fc0eaab11d052774b86c')
+sha256sums=('f40628814051140ac6a7a7c17ee075bb33fac0b00ccd32ff8bd73eebb35e0f40')
 
 prepare() {
   cd lmfit-py-${pkgver}
@@ -45,29 +44,14 @@ build() {
 
 check() {
   cd lmfit-py-${pkgver}
-  _these_fail=(
-  test_confidence_warnings
-  test_altered_params_json
-  test_independent_var_parsing
-  test_saveload_modelresult_roundtrip
-  test_save_load_modelresult
-  test_saveload_modelresult_attributes
-  test_saveload_modelresult_eval_uncertainty
-  test_saveload_modelresult_expression_model
-  test_saveload_usersyms
-  test_parameters_deepcopy
-  test_dumps_loads_parameters
-  test_dump_load_parameters
-  test_dumps_loads_parameters_usersyms
-  )
-  printf -v _joined '%s and not ' "${_these_fail[@]}"
-  python -m pytest tests -k "$(echo "not ${_joined% and not }")"  # skip the tests we know fail
+  python -m pytest
 }
 
 
 package() {
   cd lmfit-py-${pkgver}
   python -m installer --destdir="${pkgdir}" dist/*.whl
+  install -Dt "${pkgdir}/usr/share/licenses/${pkgname}" -m644 LICENSE
 }
 
 # vim:ts=2:sw=2:et:
