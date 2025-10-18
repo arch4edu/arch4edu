@@ -4,7 +4,7 @@
 _base=ray
 pkgname=python-${_base}
 pkgver=2.50.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A fast and simple framework for building and running distributed applications"
 arch=(x86_64)
 url="https://github.com/${_base}-project/${_base}"
