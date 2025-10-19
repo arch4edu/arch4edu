@@ -2,9 +2,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=rstatix
-_pkgver=0.7.2
+_pkgver=0.7.3
 pkgname=r-${_pkgname,,}
-pkgver=0.7.2
+pkgver=0.7.3
 pkgrel=1
 pkgdesc='Pipe-Friendly Framework for Basic Statistical Tests'
 arch=('any')
@@ -36,7 +36,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('e0c6f5ab1d9c5d84713defabc5d149aad3d55944cffdb903cc128b694e5221a1')
+sha256sums=('bca8906478582edb3eafa9e94f8f97df37178469bfedf163780489f99ec80e0f')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
