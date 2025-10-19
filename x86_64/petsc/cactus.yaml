@@ -2,7 +2,13 @@ nvchecker:
   - source: aur
     aur:
   - source: aur
+    aur: gklib
+  - source: aur
     aur: hypre
+  - source: aur
+    aur: mumps
+  - source: aur
+    aur: scotch
 depends:
   - x86_64/hypre
   - x86_64/mumps
