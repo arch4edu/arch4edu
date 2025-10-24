@@ -7,8 +7,8 @@ nvchecker:
     aur: hypre
   - source: aur
     aur: mumps
-  - source: aur
-    aur: scotch
+  - source: archpkg
+    archpkg: scotch
 depends:
   - x86_64/hypre
   - x86_64/mumps

@@ -4,7 +4,6 @@ nvchecker:
   - alias: boost
 depends:
   - x86_64/parmetis-git
-  - x86_64/scotch
   - x86_64/zoltan
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
