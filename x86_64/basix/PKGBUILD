@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=basix
 pkgdesc="FEniCS finite element basis evaluation library"
-pkgver=0.9.0
+pkgver=0.10.0
 pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
@@ -9,7 +9,7 @@ license=(MIT)
 depends=(gcc-libs lapack)
 makedepends=(cmake doxygen texlive-plaingeneric texlive-fontsrecommended texlive-latexextra)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('0ea49f7710265ef7d3d61607285c263b923265af8d1435ebeb557f26281bca593a1ee711c2c3f3bf97048cb5e226e574279f22fd2c6d3898e4f1e5b48251f806')
+sha512sums=('71bd73ec9335e918cd37d6369d8768f0639d43395cfcb3ee8d15fe956e8c92d077922fe4557187e97c004a2e2d2ca662748e771bcbd0e4cb4ef613059c399aae')
 
 build() {
   cmake \
