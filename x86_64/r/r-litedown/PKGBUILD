@@ -1,10 +1,10 @@
 # Maintainer: Guoyi <kuoi@bioarchlinux.org>
 
 _pkgname=litedown
-_pkgver=0.7
+_pkgver=0.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="A Lightweight Version of R Markdown"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,8 +19,8 @@ optdepends=(
   r-tinytex
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f236b5be57d891bd42d5dabd27a814de')
-b2sums=('da4b53442ee6aec14b37f44b0425892272aa42e88868c8a70d99ed4125937e9ee888fd17895200608b922898fa240aaabd67e9999cccb8ae6cb3e3c0456f6e37')
+md5sums=('48dbd5f56761f1737fc63aa5ef29038c')
+b2sums=('733ca05e2ef68bd68c3ccf7fc8286d1b5a2b74a93cff6a44eb63d0331bdf1f1df7285041ba6176134d34796629fe00a02a91b65123d4f702be1270dfc1f53c81')
 
 build() {
   mkdir build
