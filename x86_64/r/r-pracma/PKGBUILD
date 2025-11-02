@@ -3,10 +3,10 @@
 # Contributor: Thomas Ivesdal-Tronstad <thotro at lyse dot net>
 
 _pkgname=pracma
-_pkgver=2.4.4
+_pkgver=2.4.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Practical Numerical Math Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-quadprog
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f45e85a91a5e14b56a86191dd0bc9abd')
-b2sums=('b68f72b31f410dd8b59f19dec8a5246a1b3e7c40abe0ded0fe2de9baa720230edfcedfea7fa10881434114bffa5733530ab54ddb98485f4c2db361ac8166a594')
+md5sums=('cd38dfab15df0e2fe0d56ac40644ef29')
+b2sums=('3c22ee25e0a823c30b6f6a59b485559c69a02eaf3de86e19b65bdd6d2a520c7dd8c5aeeaf1f982d40b7efa455477bef963ba6f589784d381d8951b861785af07')
 
 build() {
   mkdir build
