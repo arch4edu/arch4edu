@@ -4,7 +4,7 @@
 
 pkgname=precice
 pkgver=3.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A Coupling Library for Partitioned Multi-Physics Simulations on Massively Parallel Systems"
 arch=(x86_64)
 url="https://${pkgname}.org"
