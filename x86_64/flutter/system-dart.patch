@@ -23,15 +23,24 @@
 -
 -exec "${dart_bin_dir}/dart" "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.dart" "${@:1}"
 +exec "${DART_ROOT:-"/opt/dart-sdk"}/bin/dart" "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.dart" "${@:1}"
---- ./packages/flutter_tools/gradle/src/main/groovy/flutter.groovy.orig
-+++ ./packages/flutter_tools/gradle/src/main/groovy/flutter.groovy
-@@ -324,7 +324,7 @@
+--- ./packages/flutter_tools/gradle/src/main/kotlin/FlutterPlugin.kt.orig
++++ ./packages/flutter_tools/gradle/src/main/kotlin/FlutterPlugin.kt
+@@ -50,7 +50,7 @@
+             addTaskForLockfileGeneration(rootProject)
          }
-
-         String flutterExecutableName = Os.isFamily(Os.FAMILY_WINDOWS) ? "flutter.bat" : "flutter"
--        flutterExecutable = Paths.get(flutterRoot.absolutePath, "bin", flutterExecutableName).toFile()
-+        flutterExecutable = Paths.get("/usr", "bin", flutterExecutableName).toFile()
-
+ 
+-        val flutterRootSystemVal: String? = System.getenv("FLUTTER_ROOT")
++        val flutterRootSystemVal: String? = System.getenv("FLUTTER_ROOT") ?: "/usr/bin/flutter"
+         val flutterRootPath: String =
+             resolveFlutterSdkProperty(flutterRootSystemVal)
+                 ?: throw GradleException(
+@@ -170,7 +170,7 @@
+ 
+         val flutterExecutableName = getExecutableNameForPlatform("flutter")
+         flutterExecutable =
+-            Paths.get(flutterRoot!!.absolutePath, "bin", flutterExecutableName).toFile()
++            Paths.get("/usr", "bin", flutterExecutableName).toFile()
+ 
          // Validate that the provided Gradle, Java, AGP, and KGP versions are all within our
          // supported range.
 --- ./packages/flutter_tools/lib/src/artifacts.dart.orig
@@ -45,9 +54,9 @@
  import 'package:file/memory.dart';
  import 'package:meta/meta.dart';
  import 'package:process/process.dart';
-@@ -1465,58 +1465,7 @@
+@@ -1308,24 +1308,7 @@
    }
-
+ 
    String _getDartSdkPath() {
 -    final String builtPath = _fileSystem.path.join(_hostEngineOutPath, 'dart-sdk');
 -    if (_fileSystem.isDirectorySync(_fileSystem.path.join(builtPath, 'bin'))) {
@@ -67,44 +76,10 @@
 -    throwToolExit(
 -      'Unable to find a built dart sdk at: "$builtPath" or a prebuilt dart sdk at: "$prebuiltPath"',
 -    );
--  }
--
--  String _getFlutterPrebuiltsPath() {
--    final String engineSrcPath = _fileSystem.path.dirname(
--      _fileSystem.path.dirname(_hostEngineOutPath),
--    );
--    return _fileSystem.path.join(engineSrcPath, 'flutter', 'prebuilts');
--  }
--
--  String _getPrebuiltTarget() {
--    final TargetPlatform hostPlatform = _currentHostPlatform(_platform, _operatingSystemUtils);
--    switch (hostPlatform) {
--      case TargetPlatform.darwin:
--        return 'macos-x64';
--      case TargetPlatform.linux_arm64:
--        return 'linux-arm64';
--      case TargetPlatform.linux_x64:
--        return 'linux-x64';
--      case TargetPlatform.windows_x64:
--        return 'windows-x64';
--      case TargetPlatform.windows_arm64:
--        return 'windows-arm64';
--      case TargetPlatform.ios:
--      case TargetPlatform.android:
--      case TargetPlatform.android_arm:
--      case TargetPlatform.android_arm64:
--      case TargetPlatform.android_x64:
--      case TargetPlatform.android_x86:
--      case TargetPlatform.fuchsia_arm64:
--      case TargetPlatform.fuchsia_x64:
--      case TargetPlatform.web_javascript:
--      case TargetPlatform.tester:
--        throwToolExit('Unsupported host platform: $hostPlatform');
--    }
 +    return io.Platform.environment['DART_ROOT'] ?? '/opt/dart-sdk';
    }
-
-   String _getFlutterWebSdkPath() {
+ 
+   String _getFlutterPrebuiltsPath() {
 @@ -1382,7 +1343,7 @@
 
  /// Locate the Dart SDK.
@@ -124,11 +99,11 @@
 
  import 'package:crypto/crypto.dart';
  import 'package:file/memory.dart';
-@@ -380,8 +381,8 @@
-
+@@ -421,8 +421,8 @@
+ 
    String get devToolsVersion {
      if (_devToolsVersion == null) {
--      const String devToolsDirPath = 'dart-sdk/bin/resources/devtools';
+-      const devToolsDirPath = 'dart-sdk/bin/resources/devtools';
 -      final Directory devToolsDir = getCacheDir(devToolsDirPath, shouldCreate: false);
 +      final String dartSdkRoot = io.Platform.environment['DART_ROOT'] ?? '/opt/dart-sdk';
 +      final Directory devToolsDir = _fileSystem.directory(dartSdkRoot + '/bin/resources/devtools');

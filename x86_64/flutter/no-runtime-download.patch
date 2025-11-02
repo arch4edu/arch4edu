@@ -5,9 +5,9 @@
  
    Future<bool> checkForArtifacts(String? engineVersion) async {
 -    engineVersion ??= version;
--    final String url = '${cache.storageBaseUrl}/flutter_infra_release/flutter/$engineVersion/';
+-    final url = '${cache.storageBaseUrl}/flutter_infra_release/flutter/$engineVersion/';
 -
--    bool exists = false;
+-    var exists = false;
 -    for (final String pkgName in getPackageDirs()) {
 -      exists = await cache.doesRemoteExist(
 -        'Checking package $pkgName is available...',
@@ -32,7 +32,7 @@
      return true;
    }
  
-@@ -1036,6 +1016,8 @@
+@@ -1135,6 +1110,8 @@
      Directory location,
      void Function(File, Directory) extractor,
    ) async {
@@ -41,3 +41,4 @@
      final String downloadPath = flattenNameSubdirs(url, _fileSystem);
      final File tempFile = _createDownloadFile(downloadPath);
      Status status;
+
