@@ -3,7 +3,7 @@
 
 pkgname=mongosh-bin
 _pkgname=mongosh
-pkgver=2.5.8
+pkgver=2.5.9
 pkgrel=1
 pkgdesc='An interactive shell to connect with MongoDB with syntax highlighting, autocomplete, contextual help and error messages.'
 arch=('x86_64' 'aarch64')
@@ -17,8 +17,8 @@ _mongosh_folder=mongosh-${pkgver}-linux
 source_x86_64=("https://github.com/mongodb-js/mongosh/releases/download/v${pkgver}/${_pkgname}-${pkgver}-linux-x64.tgz")
 source_aarch64=("https://github.com/mongodb-js/mongosh/releases/download/v${pkgver}/${_pkgname}-${pkgver}-linux-arm64.tgz")
 
-sha256sums_x86_64=('60981239363fc1650610e5cbb6edfd8a551abfb2cd894745ceccfdd382e2e19e')
-sha256sums_aarch64=('2aca3791f0a4fdefa2849824bc8c5512bf8394ee45b9f4eb1c6eb627f7d231d0')
+sha256sums_x86_64=('0644b6ac0b99dd52f46bdc4085aae19bb6d51226ef346c51418321769e76363e')
+sha256sums_aarch64=('01d6cb109e59769edfa5b44c93cc69bced8f39c216c3d4d1df471ecbc3f2d356')
 
 package() {
 	if [ $CARCH = 'x86_64' ]; then
