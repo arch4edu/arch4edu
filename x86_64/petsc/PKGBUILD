@@ -2,16 +2,16 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.24.0
-pkgrel=3
+pkgver=3.24.1
+pkgrel=1
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
 arch=('i686' 'x86_64')
 url="https://petsc.org"
 license=('BSD-2-Clause')
 options=(staticlibs)
-# note: zlib is not really needed by PETSc, but netcdf requires an HDF5 version with zlib
-depends=('openmpi' 'lapack' 'hdf5-openmpi' 'fftw-openmpi' 'superlu' 'suitesparse' 'libyaml' 'gsl' 'libjpeg-turbo' 'netcdf-openmpi' 'zfp' 'zlib'
+depends=('openmpi' 'lapack' 'bison' 'fftw-openmpi' 'gsl' 'hdf5-openmpi' 'hwloc' 'libjpeg-turbo' 'libyaml'
+         'netcdf-openmpi' 'pastix' 'scotch' 'suitesparse' 'superlu' 'zfp' 'zlib'
          'python-numpy' 'python-mpi4py')
 makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython' 'python-setuptools')
 provides=('petsc4py')
@@ -22,7 +22,6 @@ optdepends=(
   'mumps: support for MUMPS'
   'parmetis: support for ParMETIS'
   'scalapack: support for ScaLAPACK'
-  'scotch: support for Scotch'
   'superlu_dist: support for SuperLU_DIST'
   'triangle: support for Triangle'
   'zoltan: support for zoltan'
@@ -31,8 +30,8 @@ optdepends=(
 install=petsc.install
 source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('359df81bd502ffe2b508fd7e20e5279e85c095cb2c67fcce2b1f302c73f4b3a2ec419b625b57e13bd95e1453c9f17de47f6dbba0e2a10a34d41814c1abde5b6e'
-            '809e956a60be3604db08d523faba0de26f97d63e9ceb174e06202ca6f742df917670821246349974662d8e98f7a166c107d2f1627a6aa256a4b69efd1576b891')
+sha512sums=('c6bc69f85e5965f5492eb9a66e045967b6ba04bb894778e0c07f65adb516b78f0cda3754ee012b770f8ab0677b247d72cd67eb1e2952d2bbc89568b13e16763b'
+            'cf63f0e47ac547fdc7c485c3302a8a34cf6a028c25fb44fd0372f76096b4d33fbce4e3b061860f55ff5c9a9d691a7602e4e234e6d7b2dad5b6d94e6566b4e9d4')
 
 PETSC_ARCH=linux-c-opt
 _install_dir=/opt/petsc/${PETSC_ARCH}
@@ -47,16 +46,18 @@ build() {
             --with-mpi-f90module-visibility=0 \
             --with-cmake=0 \
             --with-mpi-dir=/usr \
-            --with-zfp=1 \
-            --with-netcdf=1 \
-            --with-libjpeg=1 \
-            --with-yaml=1 \
             --with-fftw=1 \
             --with-gsl=1 \
-            --with-zlib=1 \
-            --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
-            --with-suitesparse=1 \
             --with-hdf5=1 --with-hdf5-fortran-bindings=1 \
+            --with-hwloc=1 \
+            --with-libjpeg=1 \
+            --with-netcdf=1 --with-zlib=1 \
+            --with-pastix=1 \
+            --with-ptscotch=1 --with-bison=1 --with-ptscotch-lib=[libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so] --with-ptscotch-include=/usr/include \
+            --with-suitesparse=1 \
+            --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
+            --with-yaml=1 \
+            --with-zfp=1 \
             $(sh ${srcdir}/test_optdepends.sh)"
 
   echo './configure' ${CONFOPTS}
@@ -97,4 +98,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${PETSC_ARCH}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-depends+=("hypre" "mumps" "parmetis-git" "pastix")
+depends+=("hypre" "mumps" "parmetis-git")
