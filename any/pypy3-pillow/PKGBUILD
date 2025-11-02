@@ -1,21 +1,22 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 _base=Pillow
 pkgname=pypy3-${_base,,}
-pkgdesc="Python Imaging Library (Fork)"
-pkgver=11.3.0
+pkgdesc="Python Imaging Library (fork)"
+pkgver=12.0.0
 pkgrel=1
 arch=(any)
 url="https://github.com/python-${_base,,}/${_base}"
 license=(MIT-CMU)
 depends=(freetype2 glibc lcms2 libimagequant libjpeg-turbo libraqm
   libtiff libxcb openjpeg2 pypy3-packaging zlib)
-makedepends=(libwebp tk git pypy3-build pypy3-installer pypy3-setuptools)
+makedepends=(libwebp tk git pypy3-build pypy3-installer pypy3-setuptools pypy3-pybind11)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('7d97e623bd41da94dd89a66dc600cea016d0a4f33fbf036175768ea96b2031c1968acf4fc3d9b2835ce93f9533838a9ce68a6579a7397f4aeccafb6032adb3db')
+sha512sums=('816237bf65b65a8f7ec941db6ea07814af602efe6f214e2a253b1d0b6b9dbbe9895a9822c6de67af40bd507e658b8c088707440f689d5fd237985f4ee0f7bfc2')
 
 build() {
   cd ${_base}-${pkgver}
-  pypy3 -m build --wheel --skip-dependency-check --no-isolation
+  PKG_CONFIG_PATH=$(/opt/pypy3/bin/pybind11-config --pkgconfigdir) \
+	pypy3 -m build --wheel --skip-dependency-check --no-isolation
 }
 
 package() {
