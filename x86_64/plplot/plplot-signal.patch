@@ -1,0 +1,13 @@
+diff --git a/cmake/modules/TestSignalType.c b/cmake/modules/TestSignalType.c
+index aca0bf4ed..c70a2c088 100644
+--- a/cmake/modules/TestSignalType.c
++++ b/cmake/modules/TestSignalType.c
+@@ -6,7 +6,7 @@
+ #ifdef __cplusplus
+ extern "C" void (*signal (int, void (*)(int)))(int);
+ #else
+-void (*signal ()) ();
++void (*signal (int, void (*)(int)))(int);
+ #endif
+ 
+ int

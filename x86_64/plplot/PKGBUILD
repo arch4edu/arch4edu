@@ -5,7 +5,7 @@
 # Contributor: Eric Belanger <eric@archlinux.org>
 pkgname=plplot
 pkgver=5.15.0
-pkgrel=12
+pkgrel=13
 pkgdesc="A cross-platform software package for creating scientific plots"
 arch=("i686" "x86_64")
 url="http://plplot.sourceforge.net/"
@@ -47,17 +47,23 @@ options=("!libtool")
 source=(
     "http://downloads.sourceforge.net/sourceforge/plplot/${pkgname}-${pkgver}.tar.gz"
     "plplot-numpy.patch"
+    "plplot-numpy-init.patch"
+    "plplot-signal.patch"
     "plplot-swig.patch"
 )
 sha512sums=(
     "54533245569b724a7ef90392cc6e9ae65873e6cbab923df0f841c8b43def5e4307690894c7681802209bd3c8df97f54285310a706428f79b3340cce3207087c8"
     "f0ceba3f20f4dbccaf35a915e5b90718a61474f5e39dc8af69e735a77a2f2d6925fbb8e67c98a0db63a58f34ceac429550f89ae590ded31afa9cf353e1c486b6"
+    "872c53224de488a913ae80f7610b9541aec5a1c1c9f720b9512974938b7969a3e03eab89fae33456cb88e322026258f59ebe8c1bd52a4bcf69682661e95aecaf"
+    "39027a3980433728e660bf7eb26797fc3c0cb48873c1e387aa0f3475787b9fa163b573de13211fca047c5e0d72ed3e9a02b3895d50f6db24e5f93d70111bd2b1"
     "d5be4e4a32481f27ef5c867435ae59297550b15f6db158f96bf97d948a59e041b87a29fed8e18386debaddc9f2a5648c0cef861a1be5f754a31ae60d657ee3d8"
 )
 
 prepare() {
     cd "$pkgname-$pkgver"
     patch -N -p 1 -i "${srcdir}/plplot-numpy.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-numpy-init.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-signal.patch"
     patch -N -p 1 -i "${srcdir}/plplot-swig.patch"
 }
 
