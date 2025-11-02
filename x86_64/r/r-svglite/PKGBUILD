@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=svglite
-_pkgver=2.2.1
+_pkgver=2.2.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -38,8 +38,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9b56f603ee9f4b8ad7381ef7d4100a6a')
-b2sums=('1d08c1ae1bac89ab80fd603effc6ce7d629676fd6a656e88d4936a178171f7b293726fc1f5bf4c129a3f99b4c722197963867239e1c990d500a7286ce59a164a')
+md5sums=('c4e710e70a85b84907fbb80d94c30c16')
+b2sums=('d69f66c59f65410b62b8c15712ab5bf33b8ae625fc565352d9a026e6c6ebf7e186d1a3b5ed133c7d6b75cc6544046d0beb712ac0bb29511ffbc82f998fd461ea')
 
 build() {
   mkdir build
