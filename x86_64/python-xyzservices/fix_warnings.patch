@@ -1,0 +1,34 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 9cacb9f..569c9cc 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -11,4 +11,6 @@ markers = [
+ ]
+ 
+ [tool.coverage.run]
+-omit = ["xyzservices/tests/*"]
+\ No newline at end of file
++omit = ["xyzservices/tests/*"]
++
++[tool.setuptools_scm]
+diff --git a/setup.py b/setup.py
+index 51eccc3..558672a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -11,7 +11,7 @@ setuptools.setup(
+     url="https://github.com/geopandas/xyzservices",
+     author="Dani Arribas-Bel, Martin Fleischmann",
+     author_email="daniel.arribas.bel@gmail.com, martin@martinfleischmann.net",
+-    license="3-Clause BSD",
++    license="BSD-3-Clause",
+     packages=setuptools.find_packages(exclude=["tests"]),
+     python_requires=">=3.8",
+     include_package_data=True,
+@@ -19,7 +19,6 @@ setuptools.setup(
+         "xyzservices": ["data/providers.json"],
+     },
+     classifiers=[
+-        "License :: OSI Approved :: BSD License",
+         "Programming Language :: Python :: 3",
+         "Programming Language :: Python :: 3.8",
+         "Programming Language :: Python :: 3 :: Only",

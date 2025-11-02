@@ -3,7 +3,7 @@
 
 pkgname=python-xyzservices
 _name=xyzservices
-pkgver=2025.4.0
+pkgver=2025.10.0
 pkgrel=1
 pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles'
 arch=('any')
@@ -16,8 +16,15 @@ makedepends=(
   'python-build'
   'python-installer'
 )
-source=("$pkgname-$pkgver.tar.gz::$url/releases/download/$pkgver/$_name-$pkgver.tar.gz")
-b2sums=('76579351033c792f585bbfaab69d334dcabf6b62e0242dac02b87fa6cdc9e4fcff8091ecd328e66b228b306ecca13404327b09ea13ec8450d61761558130f483')
+source=("$pkgname-$pkgver.tar.gz::$url/releases/download/$pkgver/$_name-$pkgver.tar.gz"
+        "fix_warnings.patch")
+b2sums=('53f707b021e4c919ddcb783c95f287115dd0cb74d92b32945bc807f5a9773bd7a6b370560dbd28a9da4776d6a743d18b4cbe6bc3b8fd204ee25395ab330a804c'
+        'a19dfde31b1574c452ef4edc3abd441cb81ea9732f7ca6ef038a5b0ef9946325485e4ebd70d5a769f06e2a07bb5faea004f13cfb3a9b1c02945ba3679aec7afc')
+
+prepare() {
+  cd "$_name-$pkgver"
+  patch -p1 < ../fix_warnings.patch
+}
 
 build() {
   cd "$_name-$pkgver"
