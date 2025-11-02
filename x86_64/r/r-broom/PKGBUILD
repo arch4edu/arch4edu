@@ -1,10 +1,12 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
-# Maintainer: Alad Wenter <alad at archlinux dot org>
+# Maintainer: Serene-Arc <https://aur.archlinux.org/account/serene-arc>
+
+# Contributor: peippo <christoph+aur@christophfink.com>
+# Contributor: Alad Wenter <alad at archlinux dot org>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=broom
-_cranver=1.0.7
+_cranver=1.0.10
 pkgname=r-${_cranname,,}
 pkgdesc="Convert Statistical Objects into Tidy Tibbles"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -111,7 +113,7 @@ optdepends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("141c14cb1bbde194eaf0f0846e98c2a453b824bd65283273dae3927ab9577aaa63a8c3792069eac3330ea5b9c5080ca9d5e4d1bae4d920392d83293c1c80ea23")
+b2sums=('d9e128e30d9dce5f01578718c9984d154cfd97ae7505f725a4533dc955b52a87e3e9df01b6d2215a424673cf524298d2458cab2b64883d78ae438643ea83c3b8')
 
 build() {
     mkdir -p "${srcdir}/build/"
