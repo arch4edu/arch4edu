@@ -1,0 +1,12 @@
+diff --unified --recursive --text a/pyproject.toml b/pyproject.toml
+--- a/pyproject.toml	2025-10-13 13:34:03.000000000 +0200
++++ b/pyproject.toml	2025-11-03 12:06:21.346495355 +0100
+@@ -5,7 +5,7 @@
+ name = "av"
+ description = "Pythonic bindings for FFmpeg's libraries."
+ readme = "README.md"
+-license = "BSD-3-Clause"
++license = {text = "BSD-3-Clause"}
+ authors = [
+     {name = "WyattBlue", email = "wyattblue@auto-editor.com"},
+     {name = "Jeremy Lainé", email = "jeremy.laine@m4x.org"},
