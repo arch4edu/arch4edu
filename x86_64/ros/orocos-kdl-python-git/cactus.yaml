@@ -6,7 +6,6 @@ nvchecker:
 depends:
   - x86_64/ros/orocos-kdl-git
   - x86_64/sip4: python-sip4
-  - any/python-future
 makedepends:
   - x86_64/sip4
 build_prefix: extra-x86_64
