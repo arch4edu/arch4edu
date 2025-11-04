@@ -16,6 +16,8 @@ depends:
   - x86_64/r/r-tweenr
   - x86_64/r/r-vctrs
   - x86_64/r/r-withr
+makedepends:
+  - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
