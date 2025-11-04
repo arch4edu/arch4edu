@@ -2,17 +2,18 @@
 # Contributor: Mohamed Amine Zghal (medaminezghal) <medaminezghal at outlook dot com>
 _base=KaHIP
 pkgname=${_base,,}
-pkgver=3.19
+pkgver=3.21
 pkgrel=2
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=(x86_64)
 url="https://github.com/${_base}/${_base}"
 license=(MIT)
-depends=(openmp metis openmpi python)
-makedepends=(cmake pybind11)
+depends=(openmpi python)
+makedepends=(cmake pybind11) # python-build python-installer python-scikit-build-core python-setuptools-scm
 optdepends=('gurobi: for ILP solver in ilp_improve')
+options=(!emptydirs)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('76250281af47ae2c7fe6dd4e0388efadb06f2e96155c7c733651a29fdde756335859fb331ef85a0385942bed255a233a5bfca5614d525245c4544cf1e2d48eff')
+sha512sums=('3a29be7d4131d8c61cdf9cee1ad3cfbdfb06cbdbd8d60965269735e577991a71b6c08784245384d2884ba46ac9b7125dc47eb2d934ab5c2e32c031143ade9bfa')
 
 build() {
   cmake \
@@ -34,14 +35,20 @@ build() {
     -D64BITMODE=OFF \
     -Wno-dev
   cmake --build build --target all
+  # cd ${_base}-${pkgver}
+  # export SETUPTOOLS_SCM_PRETEND_VERSION=${pkgver}
+  # python -m build --wheel --skip-dependency-check --no-isolation
 }
 
 package() {
   DESTDIR="${pkgdir}" cmake --build build --target install
+  # cd ${_base}-${pkgver}
+  # PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
-  install -dm755 "${pkgdir}${site_packages}"
-  mv "build/${_base,,}.cpython-${_pyversion}-${CARCH}-linux-gnu.so" "${pkgdir}${site_packages}"
+  install -dm755 "${pkgdir}${site_packages}/${_base,,}"
+  mv "build/${_base,,}.cpython-${_pyversion}-${CARCH}-linux-gnu.so" "${pkgdir}${site_packages}/${_base,,}"
+  install -Dm 644 ${_base}-${pkgver}/python/${_base,,}/__init__.py -t "${pkgdir}${site_packages}/${_base,,}"
   install -Dm 644 ${_base}-${pkgver}/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  find "${pkgdir}" -type d -empty -delete
+  rm -r "${pkgdir}/${_base,,}"
 }
