@@ -6,12 +6,13 @@ depends:
   - x86_64/r/r-coda
   - x86_64/r/r-ggplot2
   - x86_64/r/r-ggridges
+  - x86_64/r/r-irr
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-laplacesdemon
-  - x86_64/r/r-psych
   - x86_64/r/r-lme4
-  - x86_64/r/r-irr
+  # - x86_64/r/r-mirt
+  - x86_64/r/r-psych
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
