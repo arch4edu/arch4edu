@@ -5,10 +5,11 @@ depends:
   - x86_64/r/r-car
   - x86_64/r/r-fitdistrplus
   - x86_64/r/r-ggplot2
-  - x86_64/r/r-goftest
   - x86_64/r/r-gnorm
+  - x86_64/r/r-goftest
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-nortest
   - x86_64/r/r-sgt
   - x86_64/r/r-sn
 build_prefix: extra-x86_64
