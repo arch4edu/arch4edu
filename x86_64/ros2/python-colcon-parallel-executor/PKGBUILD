@@ -1,6 +1,6 @@
 # Maintainer: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-parallel-executor
-pkgver=0.3.0
+pkgver=0.4.0
 pkgrel=1
 pkgdesc="An extension for colcon-core to process packages in parallel."
 arch=(any)
@@ -8,8 +8,8 @@ url="https://pypi.org/project/colcon-parallel-executor/"
 license=('Apache')
 depends=('python-colcon-core')
 makedepends=('python-setuptools')
-source=(https://files.pythonhosted.org/packages/9e/e8/5f259296441e3258ed9a7d2e5878570ebf154c74a4aaaacf7cc918f530e3/colcon-parallel-executor-0.3.0.tar.gz)
-sha256sums=('e7137fcaf4c61db792955fd641bfad7dbad4b41928c6b81ff87a78339e116644')
+source=(https://files.pythonhosted.org/packages/72/0a/de44d2c038540df26aaf4db1f418df78b828ebfd1f4ee21af3db731b4524/colcon-parallel-executor-0.4.0.tar.gz)
+sha256sums=('53094be24010a3bbc2503dc2939e38b5c9bfa0f2977c589693777a0933ec445d')
 
 
 package() {
