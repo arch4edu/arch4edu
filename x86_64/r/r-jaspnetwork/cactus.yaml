@@ -2,10 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-bootnet
   - x86_64/r/r-bdgraph
+  - x86_64/r/r-bootnet
   - x86_64/r/r-corpcor
   - x86_64/r/r-dplyr
+  # - x86_64/r/r-easybgm
   - x86_64/r/r-foreach
   - x86_64/r/r-ggplot2
   - x86_64/r/r-gtools
