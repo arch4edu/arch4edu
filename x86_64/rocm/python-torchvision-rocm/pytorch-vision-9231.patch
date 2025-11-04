@@ -1,0 +1,69 @@
+From 7a13ad0f89167089616b51f4fd07f978cf1f17e4 Mon Sep 17 00:00:00 2001
+From: Wes Castro <root670@gmail.com>
+Date: Fri, 26 Sep 2025 18:14:02 -0700
+Subject: [PATCH] [Torchvision] Fix FFmpeg 7.1+ support
+
+Differential Revision: D82494990
+
+Pull Request resolved: https://github.com/pytorch/vision/pull/9231
+---
+ torchvision/csrc/io/decoder/audio_sampler.cpp | 9 ++++++---
+ torchvision/csrc/io/decoder/decoder.cpp       | 3 ++-
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/torchvision/csrc/io/decoder/audio_sampler.cpp b/torchvision/csrc/io/decoder/audio_sampler.cpp
+index 648955c5845..b158d3438b8 100644
+--- a/torchvision/csrc/io/decoder/audio_sampler.cpp
++++ b/torchvision/csrc/io/decoder/audio_sampler.cpp
+@@ -49,12 +49,11 @@ bool AudioSampler::init(const SamplerParameters& params) {
+   }
+ 
+ #if LIBAVUTIL_VERSION_INT >= AV_VERSION_INT(57, 28, 100)
+-  SwrContext* swrContext_ = NULL;
+   AVChannelLayout channel_out;
+   AVChannelLayout channel_in;
+   av_channel_layout_default(&channel_out, params.out.audio.channels);
+   av_channel_layout_default(&channel_in, params.in.audio.channels);
+-  swr_alloc_set_opts2(
++  int ret = swr_alloc_set_opts2(
+       &swrContext_,
+       &channel_out,
+       (AVSampleFormat)params.out.audio.format,
+@@ -64,6 +63,10 @@ bool AudioSampler::init(const SamplerParameters& params) {
+       params.in.audio.samples,
+       0,
+       logCtx_);
++  if (ret < 0 || swrContext_ == nullptr) {
++    LOG(ERROR) << "Cannot allocate SwrContext";
++    return false;
++  }
+ #else
+   swrContext_ = swr_alloc_set_opts(
+       nullptr,
+@@ -75,11 +78,11 @@ bool AudioSampler::init(const SamplerParameters& params) {
+       params.in.audio.samples,
+       0,
+       logCtx_);
+-#endif
+   if (swrContext_ == nullptr) {
+     LOG(ERROR) << "Cannot allocate SwrContext";
+     return false;
+   }
++#endif
+ 
+   int result;
+   if ((result = swr_init(swrContext_)) < 0) {
+diff --git a/torchvision/csrc/io/decoder/decoder.cpp b/torchvision/csrc/io/decoder/decoder.cpp
+index cfe762bbc6e..7221445840e 100644
+--- a/torchvision/csrc/io/decoder/decoder.cpp
++++ b/torchvision/csrc/io/decoder/decoder.cpp
+@@ -154,7 +154,8 @@ int Decoder::readFunction(void* opaque, uint8_t* buf, int size) {
+   if (decoder == nullptr) {
+     return 0;
+   }
+-  return decoder->readCallback(buf, size);
++  int bytesRead = decoder->readCallback(buf, size);
++  return bytesRead == 0 ? AVERROR_EOF : bytesRead;
+ }
+ 
+ /* static */
