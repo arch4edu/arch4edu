@@ -1,14 +1,14 @@
-# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Contributor: acxz <akashpatel2008 at yahoo dot com>
 # Contributor: Sven Schneider <archlinux.sandmann@googlemail.com>
 
 pkgname=orocos-kdl-python-git
 pkgver=r1220.fb840b0
-pkgrel=1
+pkgrel=2
 pkgdesc="The Kinematics and Dynamics Library is a framework for modelling and computation of kinematic chains (Python binding)"
 arch=('i686' 'x86_64')
 url="https://www.orocos.org/kdl"
 license=('GPL')
-depends=(orocos-kdl python-psutil python-future pybind11)
+depends=(orocos-kdl python-psutil pybind11)
 makedepends=(cmake git)
 provides=(orocos-kdl-python)
 conflicts=(orocos-kdl-python)
