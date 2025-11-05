@@ -2,10 +2,10 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=here
-_pkgver=1.0.1
+_pkgver=1.0.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=1
 pkgdesc="A Simpler Way to Find Your Files"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -28,8 +28,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('67367162e286ae95c06abb6e7d70dd75')
-b2sums=('840269e8beaf58ef987bdb54fe51110e39d3e071da0623cb9b687d752b80714837a415fdf7618b1c6fa02fe8f5facd0aa700e82d34f6d2ca4579294af410ac71')
+md5sums=('d2ff22b1f33c99b75ab3597ef0f79506')
+b2sums=('7005d20fa70c415a26c626d410b6954ee28e707754401a5a4594d87385b53e50c6896d287a81e046a6ace3bbfabdc23941ea1842e4d9842d74f69763839dc0f2')
 
 build() {
   mkdir build
