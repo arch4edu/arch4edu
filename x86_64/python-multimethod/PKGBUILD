@@ -3,7 +3,7 @@
 
 _name=multimethod
 pkgname=python-multimethod
-pkgver=2.0
+pkgver=2.0.1
 pkgrel=1
 epoch=1
 pkgdesc='Multiple argument dispatching'
@@ -23,7 +23,7 @@ checkdepends=(
   python-pytest
 )
 source=($_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz)
-b2sums=('c9c732dab1e7fdf9c9da5d3049babbeac4b64f3b2b8a8587838d01769656bafb89852251fda3d7f4b4b6c588130b3c96efab156b5059ca7a740618273ee66318')
+b2sums=('21e2fca48329723d8f56e0978151e1f22760b0b4775a1c6a116017a450e5e645929cf07ebd28c58821473f5f59154d4793a161a63df21d2032aae16aad91cab1')
 
 build() {
   cd $_name-$pkgver
