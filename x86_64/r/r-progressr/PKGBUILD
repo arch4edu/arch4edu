@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=progressr
-_pkgver=0.17.0
+_pkgver=0.18.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,8 +35,8 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d214d86f22affc7f970b218b11dab681')
-b2sums=('76b7c2d25323ed947eaa9cb620b0c12591f2bec38cd59efc5fe5b7ecfcf0aad24586819903d52444acb3e55b654b597c3d2ca9859bfb2711f65fe80bb1a1d7e8')
+md5sums=('8d37ed5d4a585563ac06bc4b2f4a7fec')
+b2sums=('275a59032d8efef86e1d594657a2a9feb10175e91e6dfc37aeb88ba8e9564e99f2406fa0ae9cbc1d804889faac0d8a8a70d4aecf8b6b3ed1cfa279f6fe8a7134')
 
 build() {
   mkdir build
