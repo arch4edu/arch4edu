@@ -2,13 +2,13 @@
 
 pkgname=openctm-tools
 pkgver=1.0.3
-pkgrel=1
+pkgrel=2
 epoch=2
 pkgdesc="Open Compressed Triangle Mesh file format"
 arch=('x86_64' 'aarch64')
 url="https://sourceforge.net/projects/openctm"
 license=('zlib')
-depends=('gtk2' 'glu' 'glut')
+depends=('gtk2-compat' 'glu' 'glut')
 makedepends=()
 source=(
     "${pkgname}-${pkgver}::https://downloads.sourceforge.net/project/openctm/OpenCTM-${pkgver}/OpenCTM-${pkgver}-src.tar.bz2"
