@@ -21,16 +21,17 @@ _backports=(
 be26273c9 # add cmake minimum policy for nexus
 13de6ebbd # add cmake minimum policy for levmar
 61823b4b8 # update embree to 4.3.3
+#0e9aafb19 # update vcg submodule
 )
 
 pkgname=meshlab
 pkgver=2025.07
-pkgrel=1
+pkgrel=2
 pkgdesc="System for processing and editing of unstructured 3D models arising in 3D scanning (qt5 version)"
 arch=('i686' 'x86_64')
 url="https://www.meshlab.net"
 license=('GPL2')
-depends=('bzip2' 'cgal' 'glew' 'glu' 'openssl' 'qt5-base' 'qt5-declarative' 'qt5-script' 'qt5-xmlpatterns' 'xerces-c'
+depends=('bzip2' 'cgal' 'embree' 'glew' 'glu' 'openssl' 'qt5-base' 'qt5-declarative' 'qt5-script' 'qt5-xmlpatterns' 'xerces-c'
          'gmp' 'mpfr' 'mesa' 'qhull')
 makedepends=('boost' 'cmake' 'eigen' 'ninja' 'git' 'muparser' 'lib3ds' 'openctm-tools' 'patchelf')
 optdepends=('lib3ds: for Autodesk`s 3D-Studio r3 and r4 .3DS file support'
