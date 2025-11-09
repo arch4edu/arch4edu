@@ -4,23 +4,23 @@
 # Contributor: Marius Glo <marius@mgl.dev>
 
 pkgname=unityhub
-pkgver=3.14.1
+pkgver=3.15.2
 pkgrel=1
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
 arch=('x86_64')
 license=('custom')
-depends=('gtk3' 'libnotify' 'nss' 'libxss' 'libxtst' 'xdg-utils' 'at-spi2-core' 'util-linux-libs' 'libsecret' 'cpio' 'libxml2-legacy')
+depends=('gtk3' 'libnotify' 'nss' 'libxss' 'libxtst' 'xdg-utils' 'at-spi2-core' 'util-linux-libs' 'libsecret' 'cpio' 'libxml2-legacy' '7zip' 'zip' 'unzip' 'tar')
 optdepends=(
   'libappindicator-gtk3: The official deb says this an optional dependency'
 )
 source=(
-  "$pkgname-$pkgver.deb::https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/unityhub-amd64-${pkgver}.deb"
+  "$pkgname-$pkgver.deb::https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/UnityHubSetup-amd64.deb"
   'license.txt'
   'services-config.json'
 )
 sha256sums=(
-  '417bada3a61d6edff04cd4890475acb6ffd2a26856978d046d54917d1d0df23d'
+  '4557902db7d03a49f94b3a0f5ba6e3ae769135f94f7157f0fa0aeac4c5338206'
   'f0eb3a4bb148bb7f426e4f5b97e891265ac487710cbcba9282518537c7b5d833'
   '557964a3528219723750a7eabeb2e31a2d3e1b2c4a4b2e201b32d4035200562e'
 )
