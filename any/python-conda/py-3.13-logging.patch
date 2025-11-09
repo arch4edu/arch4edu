@@ -12,7 +12,7 @@ index 91f37e144d0..d3b655e47f4 100644
 --- a/conda/common/io.py
 +++ b/conda/common/io.py
 @@ -269,11 +269,16 @@ def argv(args_list):
- 
+
  @contextmanager
  def _logger_lock():
 -    logging._acquireLock()
@@ -27,6 +27,6 @@ index 91f37e144d0..d3b655e47f4 100644
      finally:
 -        logging._releaseLock()
 +        release()
- 
- 
+
+
  @contextmanager
