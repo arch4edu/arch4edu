@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gsl
-_pkgver=2.1-8
+_pkgver=2.1-9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=6
+pkgrel=1
 pkgdesc="Wrapper for the Gnu Scientific Library"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('357bceb886f42b70fb2056a401d5c401')
-b2sums=('6ed36abbe9f764b4157c2c0d0b0e3553770601a10858d2441af53de9a81277c0c35c81e1a3703784e83f7e7cbd71a3662716d3e8e519ca87bf937ae563547ecc')
+md5sums=('ba064d2fc03ed6116cd46e55fb11ac84')
+b2sums=('c957ee08a5876c4b94b3b18038c314660bf81f02633f6269b72d3f2efc7b364ef79aa4723d576a6f5c497345029465bc8b19d7f84de92b683f5ea01cc23efd8c')
 
 build() {
   mkdir build
