@@ -1,7 +1,7 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=elliptic
-_pkgver=1.5-0
+_pkgver=1.5-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -20,8 +20,8 @@ optdepends=(
   r-hypergeo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e8c90b9a661aa7f39a7d81a779286db7')
-b2sums=('7634eca3d64e165850bbd1488b9ea4d498d43aa59cabf3d4c233f3a2aa138fb0df99f5aab8e7f1e051d9cee4466f39ee751342367faa1cd8aa96cbf01fb933ec')
+md5sums=('d1b1380dc824401ef4daf83b413d9773')
+b2sums=('12e6bd9ad6bbfd6a318eb213ee4e243d17fb4a4b08f1903c8b10a98f927b3fe85490e45e7b037c642501793a1daee396626e608e64ddccfa5c9a4af8cf1a725e')
 
 build() {
   mkdir build
