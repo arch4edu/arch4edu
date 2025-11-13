@@ -4,7 +4,7 @@ pkgbase='python-archspec'
 pkgname=('python-archspec')
 _module='archspec'
 pkgver='0.2.5'
-pkgrel=3
+pkgrel=4
 pkgdesc="A library for detecting, labeling, and reasoning about microarchitectures"
 url="https://github.com/archspec/archspec"
 depends=('python')
@@ -27,5 +27,8 @@ build() {
 package() {
     cd "${srcdir}/${_module}-${pkgver}"
     python -m installer -d "$pkgdir" dist/*.whl
+
+    install -Dm644  LICENSE-MIT "$pkgdir/usr/share/licenses/$pkgname/LICENSE-MIT"
+    install -Dm644  LICENSE-APACHE "$pkgdir/usr/share/licenses/$pkgname/LICENSE-APACHE"
 }
 
