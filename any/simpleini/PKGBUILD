@@ -2,7 +2,7 @@
 # Maintainer: Tobias Borgert <tobias.borgert@gmail.com>
 
 pkgname=simpleini
-pkgver=4.22 # renovate: datasource=github-tags depName=brofield/simpleini
+pkgver=4.25 # renovate: datasource=github-tags depName=brofield/simpleini
 pkgrel=2
 pkgdesc="Cross-platform C++ library providing a simple API to read and write INI-style configuration files"
 arch=('x86_64' 'aarch64')
@@ -35,4 +35,4 @@ package() {
     "${pkgdir}"/usr/share/licenses/${pkgname}"/LICENSE.txt"
 }
 
-sha256sums=('b3a4b8f9e03aabd491aa55fd57457115857b9b9c7ecf4abf7ff035ca9d026eb8')
+sha256sums=('10001ee1486ae55259a5408786262bc0f72d699bc9637d536ebc62765d3ecd3b')
