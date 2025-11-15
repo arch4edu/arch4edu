@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=slider
-_pkgver=0.3.2
+_pkgver=0.3.3
 pkgname=r-${_pkgname,,}
-pkgver=0.3.2
+pkgver=0.3.3
 pkgrel=1
 pkgdesc='Sliding Window Functions'
 arch=('x86_64')
@@ -26,7 +26,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c9304db3f964475053c5795f160c1e278fa572b114f4e7ecf1686a5899dc3619')
+sha256sums=('7ad3a7c7ff56c472fcf55a5a9fc8f11879e0d232f8a7a5a736c38b0ecac6f0ac')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
