@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=plotrix
-_pkgver=3.8-4
+_pkgver=3.8-13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Various Plotting Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('553079f4dd3f183030b5157ae00cb5ae')
-b2sums=('e4f9da834540b389c3b4d279338163d1844dbb27067bf75b99a7316f9089eb9d9e62ff67edb69e4b6798a1d7a1a403f28d0567a03bcb04fba0b96e408901aac8')
+md5sums=('f2a82f8117c37fae0ee20e0039a0f5c1')
+b2sums=('4f45b2f8d5e389cc92b6de6616f661a93a8620cdcd42aa90f725dfbf4c1463e228f5ebadbebcaa71a582297ed4d63e49315b515cd854b4839a5da5576c8e982a')
 
 build() {
   mkdir build
