@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=warp
-_pkgver=0.2.1
+_pkgver=0.2.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Group Dates"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0e3d587557c124f3ffa93118677f962d')
-b2sums=('a16759732862e025b906b8543a4515cbf5e49baa431a621ab72840246be98d8cb39a33b27636a39fe660fa4f76f2c92dfb6a0e760385c65d530e4ac22e8170f2')
+md5sums=('08d0e42dd087393d819f45b63ea00b21')
+b2sums=('6bd6f6a336e1a13aeca10e856de95fe830bfe571c2fd18fd6349d074ddb20d76b5e3bc15c408a7ff053e5fe1f88ee88f6d713900fa94b0a9724aa9b8542c5276')
 
 build() {
   mkdir build
