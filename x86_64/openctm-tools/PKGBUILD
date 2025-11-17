@@ -2,7 +2,7 @@
 
 pkgname=openctm-tools
 pkgver=1.0.3
-pkgrel=2
+pkgrel=3
 epoch=2
 pkgdesc="Open Compressed Triangle Mesh file format"
 arch=('x86_64' 'aarch64')
