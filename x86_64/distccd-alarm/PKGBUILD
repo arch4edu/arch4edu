@@ -5,7 +5,7 @@
 pkgbase='distccd-alarm'
 _subarchs=(armv7h armv8)
 pkgname=("${_subarchs[@]/#/$pkgbase-}")
-_date=20251108
+_date=20251116
 pkgver=15.2.1.$_date
 pkgrel=1
 _URL="https://archlinuxarm.org/builder/xtools"
@@ -26,8 +26,8 @@ noextract=(
 "x-tools8-$_date.tar.xz"
 )
 #PKGEXT='.pkg.tar'
-md5sums=('23e5fb168e40d32fa37b0af767077390'
-         '0f1e226a0ad34c272803271c2277b165'
+md5sums=('6d0cf506c38dd41d55116f2800fd6715'
+         '8c1dcca091569ffe4487e4e5249cc2da'
          '6bd0313f391b8c21d9ba1eae88026bf7'
          '26741c886597e3fd8d8fc0a61aa8a49a'
          '9219b50ec9dce99aed3cca88a584c835')
