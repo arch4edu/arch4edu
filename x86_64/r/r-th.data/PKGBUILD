@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=TH.data
-_pkgver=1.1-4
+_pkgver=1.1-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
   r-vcd
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('14c93d658fe275e437416cff476bfa55')
-b2sums=('895772447c7594443e72754401dc4158b13e4313ff5865db618f30282c25b0a01b8fa80449fc0870ba8b7b70ea57e707d276338e39934d9a5a294c429d990c5f')
+md5sums=('399d57a67a697c40c74a86db3678ae8a')
+b2sums=('4e94a9c525cdcdbc2339edd6c91e08e6bb847f706ce562e9bd8269e4795bdf9d1d4fdd27d86e4cc0e8433c724a291a1fd88967a7f8b01dee0fc58a50a7e215df')
 
 build() {
   mkdir build
