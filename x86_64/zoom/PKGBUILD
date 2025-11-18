@@ -2,9 +2,9 @@
 # Maintainer: Christian Heusel <christian@heusel.eu>
 
 pkgname=zoom
-pkgver=6.6.6
-_subver=5306
-pkgrel=2
+pkgver=6.6.10
+_subver=5815
+pkgrel=1
 pkgdesc="Video Conferencing and Web Conferencing Service"
 arch=('x86_64')
 license=('LicenseRef-zoom')
@@ -23,7 +23,7 @@ optdepends=('pulseaudio-alsa: audio via PulseAudio'
 )
 options=(!strip)
 source=("${pkgname}-${pkgver}.${_subver}_orig_x86_64.pkg.tar.xz"::"https://zoom.us/client/${pkgver}.${_subver}/zoom_x86_64.pkg.tar.xz")
-sha512sums=('2673f7f7ab4494ab142dc02d33c8aa47fc751870979ea2ab4cf4fa9b3b2d70e3042ffdbf38f6fd1e31af1a573439002c3f59ae0c66eadc0ad367b70660a715be')
+sha512sums=('853b8703ef5aa434a26f03316f2ba155b09ddc68932c6e9217ac1e7a672893e86839cba29d3e5ac5bb4390570f1d495ef229119a619079f0500cee6819f5a2d5')
 
 package() {
 	cp -dpr --no-preserve=ownership opt usr "${pkgdir}"
