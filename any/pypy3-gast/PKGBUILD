@@ -3,7 +3,7 @@
 _base=gast
 pkgname=pypy3-${_base}
 pkgdesc="AST that abstracts the underlying Python version"
-pkgver=0.6.0
+pkgver=0.7.0
 pkgrel=1
 arch=(any)
 url="https://github.com/serge-sans-paille/${_base}"
@@ -11,7 +11,7 @@ license=(BSD-3-Clause)
 depends=(pypy3)
 makedepends=(pypy3-setuptools)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('ddbaba5c38c54956c0c5715a23d0855ececbc1c492d9306c3ac740fef003bd02f2ba004692d46c9bf4aeac98e864cd4418ad58150d98482b663f499c03ec2659')
+sha512sums=('94509257a15e896aeefb41bdf6a578bd5a58569fb68af874d66059acece4302d7aedddc4c204e9ba77a403f024becb90cf290595cbdb0939fe0106e22d68a752')
 
 build() {
   cd ${_base}-${pkgver}
