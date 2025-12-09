@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gplots
-_pkgver=3.2.0
+_pkgver=3.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -18,10 +18,13 @@ optdepends=(
   r-knitr
   r-r2d2
   r-rmarkdown
+  r-dendextend
+  r-heatmaply
+  r-rcolorbrewer
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d7ec5c312dafab19d2beddcf491fd965')
-b2sums=('2fc9868c75921ebcdcfe1e214c0facb41af006837d6e95bb7dcd5d5e23896c1bd17e4c99c6951c3c3aa5e2ac83ed2196b2b370555ba57c4f811655feb1c5d206')
+md5sums=('3271bbd55b49779d3d27ef542480e6ea')
+b2sums=('7abc40f659b401c315099682fdd3efbaf4d9cad8cdf9d5c61cfe54c749d00dec32e251139d853a611d87c72df974a8a6be75e27b258aa32cc2bfb4de69b9ef28')
 
 build() {
   mkdir build
