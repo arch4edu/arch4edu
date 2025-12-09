@@ -3,8 +3,8 @@
 # Contributor: Maciej Sieczka <msieczka at sieczka dot org>
 
 pkgname=grass
-pkgver=8.4.1
-pkgrel=3
+pkgver=8.4.2
+pkgrel=1
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
 arch=('i686' 'x86_64')
@@ -18,7 +18,7 @@ optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/OSGeo/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 )
-sha256sums=('611e82dd919cd0e5c1a511e7efbc5c769e22ac6c613c3c4a2633c5d4b07c7e31')
+sha256sums=('066d5a612da8b00b9d62ea9e91022b8082b9a65b18549b4719078fd0cb26e142')
 
 build() {
   cd $pkgname-$pkgver
@@ -40,7 +40,7 @@ build() {
     --with-zstd
 
   LC_ALL=C
-  make -j1
+  make
 }
 
 package() {
