@@ -2,7 +2,7 @@
 _base=urllib3
 pkgname=pypy3-${_base}
 pkgdesc="HTTP library with thread-safe connection pooling, file post, and more"
-pkgver=2.5.0
+pkgver=2.6.0
 pkgrel=1
 arch=(any)
 url="https://github.com/${_base}/${_base}"
@@ -10,7 +10,7 @@ license=(MIT)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-hatch-vcs)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('492ebb3e0481ee5433f45bef184ddb01714dedcbe2eb61665c781f3dcd0d9a226204052d64215c02e8972155560bc146395022723f79c076cb59abe1c0ef51ff')
+sha512sums=('83164518af31b6ca1a9dc81564622caf65613a7c28a2c4193fd14984b974d7d2120bdbe25d932061b285b39bcaf17f5839ba66d137a4608d7d2ee9df6e90a394')
 
 build() {
   cd ${_base}-${pkgver}
