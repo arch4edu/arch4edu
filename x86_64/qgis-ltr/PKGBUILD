@@ -12,15 +12,16 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.40.11
+pkgver=3.40.13
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
 url='https://qgis.org/'
 license=('GPL-2.0-or-later')
-depends=(ocl-icd proj geos gdal expat spatialindex qwt libzip sqlite3 protobuf
+depends=(ocl-icd proj geos gdal expat #libspatialindex
+         qwt libzip sqlite3 protobuf
          zlib exiv2 postgresql-libs libspatialite zstd pdal
-         qt5-base qt5-svg qt5-serialport qt5-location qt5-3d qt5-declarative qt5-multimedia qt5-webengine
+         qt5-base qt5-svg qt5-serialport qt5-location qt5-3d qt5-declarative qt5-multimedia
          qscintilla-qt5 qtkeychain-qt5 qca-qt5 gsl python-pyqt5 python-qscintilla-qt5
          hdf5 netcdf libxml2 draco) # laz-perf
 makedepends=(cmake ninja opencl-clhpp fcgi qt5-tools sip pyqt-builder)
@@ -29,7 +30,7 @@ optdepends=('fcgi: Map server'
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
 source=("https://qgis.org/downloads/$_pkgname-$pkgver.tar.bz2")
-sha256sums=('cdb9f916cab1a7b3a1d21f02174998f2752befec69e617a2d1fdd241a1a8b7c2')
+sha256sums=('2934325e873de4c3c9deba131c40eb3edf10f1f04d0016e2177ad2de90949ef0')
 # curl -s https://download.qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
 
 build() {
@@ -50,7 +51,8 @@ build() {
     -DWITH_PDAL=TRUE \
     -DHAS_KDE_QT5_PDF_TRANSFORM_FIX=TRUE \
     -DHAS_KDE_QT5_SMALL_CAPS_FIX=TRUE \
-    -DHAS_KDE_QT5_FONT_STRETCH_FIX=TRUE
+    -DHAS_KDE_QT5_FONT_STRETCH_FIX=TRUE \
+    -DWITH_INTERNAL_SPATIALINDEX=TRUE # https://github.com/libspatialindex/libspatialindex/issues/276
     # https://github.com/qgis/QGIS/issues/48374
     #-DWITH_INTERNAL_LAZPERF=FALSE \
     # https://github.com/qgis/QGIS/issues/35440
