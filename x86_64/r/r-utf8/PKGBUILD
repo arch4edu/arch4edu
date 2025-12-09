@@ -1,9 +1,10 @@
+# Maintainer: Elio <ancibrothers@gmail.com>
 # Maintainer: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=utf8
-_cranver=1.2.4
+_cranver=1.2.6
 pkgname=r-${_cranname,,}
 pkgdesc="Unicode Text Processing"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -21,13 +22,13 @@ optdepends=(
     "r-knitr"
     "r-rlang"
     "r-rmarkdown"
-    "r-testhat>=3.0.0"
+    "r-testthat>=3.0.0"
     "r-withr"
 )
 makedepends=()
 
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("5a2ba55901aebc5e22ecce51bc388d556207ec9ada521f6cddb03f58215de875cd5d9d767a28979b227c8fdfba22b473d5ed76a4113ed22bf46616fc5c15b7c8")
+source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+b2sums=("a25246c7881602d5543400fe0db17200a82e93dd19a30d6ff18e52790490915bfc30f5f490de0c6af139aaf8fbd5624e1fcbe4beab47c4fb99f6ca1db37a34bc")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
