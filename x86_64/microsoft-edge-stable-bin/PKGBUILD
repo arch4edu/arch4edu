@@ -8,8 +8,8 @@ pkgname=microsoft-edge-stable-bin
 _pkgname=microsoft-edge
 _pkgshortname=msedge
 _channel=stable
-pkgver=142.0.3595.53
-pkgrel=2
+pkgver=143.0.3650.66
+pkgrel=1
 pkgdesc="A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier"
 arch=('x86_64')
 url="https://www.microsoftedgeinsider.com/en-us/download"
@@ -17,7 +17,7 @@ license=('custom')
 
 provides=('microsoft-edge-stable' 'edge-stable')
 conflicts=('microsoft-edge-stable' 'edge-stable' 'edge-stable-bin' 'edge')
-depends=('gtk3' 'libcups' 'nss' 'alsa-lib' 'libxtst' 'libdrm' 'mesa' 'libxml2-legacy')
+depends=('gtk3' 'libcups' 'nss' 'alsa-lib' 'libxtst' 'libdrm' 'mesa' 'libxml2')
 makedepends=('imagemagick')
 optdepends=(
 	'libpipewire: WebRTC desktop sharing under Wayland'
@@ -32,7 +32,7 @@ options=(!strip !zipman)
 source=("https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/${_pkgname}-${_channel}_${pkgver}-1_amd64.deb"
 	"microsoft-edge-stable.sh"
 	"Microsoft Standard Application License Terms - Standalone (free) Use Terms.pdf")
-sha256sums=('71248a5b122441ef23aefee02f9957d82b3dae853c783d8c207b8b190327c9c3'
+sha256sums=('39a93bafbca438326cab375bf9c126ce452b71ecd351ef9797da28d6552babac'
 	'dc3765d2de6520b13f105b8001aa0e40291bc9457ac508160b23eea8811e26af'
 	'edf2ed596eb068f168287fc76aa713ad5e0afb59f0a0a47a4f29c0c124ade15e')
 
