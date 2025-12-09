@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=htmltools
-_pkgver=0.5.8.1
+_pkgver=0.5.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -33,8 +33,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f8035f661d3c6cc1c894dfd851ea00d1')
-b2sums=('e286235a6a1aa4476c3fede55d61062fbc271d5d9a3034f02475245f12e88719b88c60ce5337886d8dff3abd1f9ef78bf74b0712d714542ab5b98082ae0d4160')
+md5sums=('f4a0cac920fb54b5c5ea94e175e20067')
+b2sums=('8d6becdffc6174d8fa2bf3f51fd6ebbf37d53b975ac5904d221078eba12505aabe1df9d46fce7b2da298d37979445ddd7298f7e515bb7643416ec90d00aef890')
 
 build() {
   mkdir build
