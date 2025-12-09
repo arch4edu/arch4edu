@@ -1,9 +1,10 @@
+# Maintainer: Elio <ancibrothers@gmail.com>
 # Maintainer: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=R.utils
-_cranver=2.12.3
+_cranver=2.13.0
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -19,8 +20,8 @@ depends=(
 optdepends=(
     "r-digest>=0.6.0"
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("3c7ef95ce9d3f670793d6a34189915b680108972f73a22067494346b1822a3e847b88641f2ef6e4ac6f30019747c03ec48ec0de88cbabbe6e2cb9c7e85b2ff07")
+source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+b2sums=("12a212149b7dd30110fad18367aa272774815938243d6598bd6bb816215e46fbc9b45390e4df019ba69cbc1e5684069f43c0c55482e7c2b20849dfe7b8e3dfea")
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
