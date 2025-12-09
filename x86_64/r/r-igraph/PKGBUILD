@@ -5,10 +5,10 @@
 # Contributor: Oleg Smirnov <oleg.smirnov@gmail.com>
 
 _pkgname=igraph
-_pkgver=2.1.4
+_pkgver=2.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Network Analysis and Visualization"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -52,15 +52,15 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
-        "igraph-system-libs.patch")
-md5sums=('2ba38da12cf0fcd1ca4ecc95619298b6'
-         '0d690683d6e9713001bc552e94a14eb9')
-b2sums=('bf58d23d55c11abe880c8ccf7812cf1e92121be1044a2d68e5f0c303c8262f8c76debdb5c856fb08c951f579c0e80adcae1450b24ffe78b7253f8d6d5094ea16'
-        'b67f6c8e465afed8eacec72b0319ab4f69504aed8cfcdb494d44d74b79639d03abbda3be9c215fbb82d706ab8e448ae0d4a6666e829cef1ee59a8d227c8b4fdf')
+        "igraph-system-libs20251202.patch")
+md5sums=('09c2e2b0bd6b370e0b625b5a661afa39'
+         '4f7de12ace8af846bafcfe0358f00dd3')
+b2sums=('d63c12872675eaa729e6d058b163ddf7e557ee1ee22566f8b6221c7a52a0543decb37b8b2cc6dd4090b0f75214e0190c4bcf80fb8564ce8cc3f55d6879387b35'
+        '1570ec5fd587860871962d5bf7a2c718b52e6b904a41d084f0df911f289d743bca51d6acc3d7e75f4faebeeb812cf869b2fb2eec20651f6b4ebb854e0935cb36')
 
 prepare() {
   # Build using system libraries
-  patch -Np1 -i igraph-system-libs.patch
+  patch -Np1 -i igraph-system-libs20251202.patch
 }
 
 build() {
