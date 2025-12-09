@@ -1,1 +1,7 @@
-../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur: python-pyglet
+  - alias: python
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
