@@ -3,8 +3,8 @@
 
 _name=conda-libmamba-solver
 pkgname=python-$_name
-pkgver=25.4.0
-pkgrel=3
+pkgver=25.11.0
+pkgrel=1
 pkgdesc='The libmamba based solver for conda.'
 arch=(any)
 url="https://github.com/conda/$_name"
@@ -20,7 +20,7 @@ makedepends=(
 	python-wheel
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz")
-sha256sums=('a00bd98681607b1db5783f680e3375931ad990b7d19ae1ebf6987c20330bbfa9')
+sha256sums=('a187016471bc561405ea66266f26c0f81637f6e85b4d8663a6724717dc715f50')
 
 build() {
 	cd "$_name-$pkgver"
