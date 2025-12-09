@@ -1,9 +1,10 @@
+# Maintainer: Elio <ancibrothers@gmail.com>
 # Maintainer: peippo <christoph+aur@christophfink.com>
 # Maintainer: Grey Christoforo <first name at last name dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=waldo
-_cranver=0.6.1
+_cranver=0.6.2
 pkgname=r-${_cranname,,}
 pkgdesc="Anything to ‘POSIXct’ or ‘Date’ Converter"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -13,17 +14,17 @@ pkgrel=1
 
 arch=("any")
 depends=(
-    "r"
+    "r>=4.0"
     "r-cli"
     "r-diffobj>=0.3.4"
     "r-glue"
-    "r-rlang>=1.0.0"
-    "r-tibble"
+    "r-rlang>=1.1.0"
 )
 optdepends=(
     "r-bit64"
     "r-r6"
     "r-s7"
+    "r-testthat>=3.0.0"
     "r-withr"
     "r-xml2"
 )
@@ -47,8 +48,8 @@ optdepends=(
 #     "r-testthat"
 # )
 
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("2df4f61536d30336fef07b94219bf75319376f96a7fb283093a45eb2603d2a898e3e9acac0d95ae5af830fad3ea24c60fcb27e6e301376b947ea0cf32c87293d")
+source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+b2sums=("fe4bd4b98135cb652b57999e314f3af81fb515375dbae5457e6b3632887236a90329df7a46914ce572fcceddd745ec364df226c1863ea0d51d904ef0e4944410")
 
 build() {
     mkdir -p "${srcdir}/build/"
