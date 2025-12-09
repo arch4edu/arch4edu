@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=numbers
-_pkgver=0.8-5
+_pkgver=0.9-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Number-Theoretic Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-gmp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3f9d482326ca6c5360df4f49c0849c2f')
-b2sums=('8554d6f469f2a97ce250d46c131d15a986eee77c43878f4c8f3235b81a0b65118c0fdfbfe664e3614e415c0ef651e7f509eec757ce6dd9aa9f5bc9eda764ddd6')
+md5sums=('8cb779153e80fc808c3f04b3652e14ec')
+b2sums=('fc1ffdcea3ad00752ec1ae73fdef13351a8fc997e138b95eddb0b48c832774aeb1bb803db6546a6a17879223df9b1150cd82dd44ce6fb6c6ba9feb5c6408a6f1')
 
 build() {
   mkdir build
