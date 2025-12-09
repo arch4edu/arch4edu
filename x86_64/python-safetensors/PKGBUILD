@@ -3,7 +3,7 @@
 # Contributor: Henry-ZHR <henry-zhr@qq.com>
 # shellcheck shell=bash disable=SC2034,SC2154
 pkgname=python-safetensors
-pkgver=0.6.2
+pkgver=0.7.0
 pkgrel=1
 pkgdesc='Simple, safe way to store and distribute tensors'
 arch=('x86_64')
@@ -45,7 +45,7 @@ checkdepends=('python-pytorch'
 "
 
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('2d086574269a17cdb02941839127a401bc66c97ed6ffd82e2d64339132792396')
+sha256sums=('6e4968a6570ad038780d64d3088a6f32d377a30accfa0821c9c8642dbdaabab7')
 
 prepare() {
   mkdir -p "safetensors-${pkgver}/.git"
