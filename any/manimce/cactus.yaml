@@ -1,6 +1,6 @@
 nvchecker:
   - source: aur
-    aur:
+    aur: manim
   - alias: python
 depends:
   - any/python-cloup
