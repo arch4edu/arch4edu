@@ -1,15 +1,15 @@
 # Maintainer: Arturo Penen <apenen@gmail.com>
 _pkgname=wscat
 pkgname="$_pkgname"
-pkgver=5.2.0
-pkgrel=2
+pkgver=6.1.0
+pkgrel=1
 pkgdesc="Netcat-like utility for WebSockets"
 url="https://github.com/websockets/wscat"
 arch=("x86_64" "i686")
 license=("MIT")
 source=("https://registry.npmjs.org/$_pkgname/-/$_pkgname-$pkgver.tgz")
 noextract=("${_pkgname}-${pkgver}.tgz")
-sha256sums=('e8c4bb9bc66a2303c0e6a3f2cf2a0cc04ec29ccca8ae0371eda499e3811717a8')
+sha256sums=('4867c77c19469e63f02835f31d2321d1ff0a12b987bf5b0314bc69dff5e15e1e')
 depends=("nodejs")
 makedepends=("npm")
 
