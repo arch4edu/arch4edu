@@ -2,9 +2,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=multibridge
-_pkgver=1.2.0
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
-pkgver=1.2.0
+pkgver=1.3.0
 pkgrel=1
 pkgdesc='Evaluating Multinomial Order Restrictions with Bridge Sampling'
 arch=('x86_64')
@@ -29,7 +29,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6d334cfa81bef12aedaa8a12c606c38c202aa8d8ecdcb735bea03de8464c742a')
+sha256sums=('ac8f779961ce702d8a226c36e97d396685ac7eb890269c3e874253ac41216d89')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
