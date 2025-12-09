@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - any/python-cloup
+  - any/python-backports.cached_property
+  - any/python-glcontext
+  - any/python-isosurfaces
+  - any/python-manimpango
+  - any/python-mapbox-earcut
+  - any/python-moderngl
+  - any/python-moderngl-window
+  - any/python-screeninfo
+  - any/python-skia-pathops
+  - any/python-svgelements
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
