@@ -5,7 +5,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=0.19.0
+pkgver=0.20.0
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
@@ -27,7 +27,7 @@ checkdepends=('python-pytest-cov'
 ##              'python-joblib'
 ##             'mayavi'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('bef91dd3e20de28ab4358220d449ca1b')
+md5sums=('b1bb113c129e22496ee4f1d602b194ad')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
