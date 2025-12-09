@@ -3,12 +3,12 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=(gmsh gmsh-docs)
 pkgver=4.15.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities"
 arch=(x86_64)
 url="https://gmsh.info"
 license=(GPL-2.0-or-later)
-makedepends=(cmake desktop-file-utils alglib ann cairo cgns fltk
+makedepends=(cmake desktop-file-utils alglib ann cairo cgns fltk1.3
   glu lapack med-openmpi metis opencascade swig texlive-meta voro++)
 options=(!emptydirs)
 source=("${url}/src/${pkgname}-${pkgver}-source.tgz" gmsh.desktop gmsh.completion)
