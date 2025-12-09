@@ -4,7 +4,7 @@ pkgbase=python-sphinx-automodapi
 _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=0.20.0
+pkgver=0.21.0
 pkgrel=1
 pkgdesc="Sphinx extension for generating API documentation."
 arch=('any')
@@ -20,7 +20,7 @@ checkdepends=('python-pytest'
               'cython'
               'graphviz') # sphinx already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('24cc97323f163aeefcefb9bdae9cd0a8ea7b699ece34feab116a2557a44949ac')
+sha256sums=('7ad9d201ebe682b20da68b9eee338cf2203fb45b77588b339d4cec2f79968303')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -40,6 +40,7 @@ check() {
     #ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
     #    build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
     #PYTHONPATH="build/lib" pytest ${_pyname/-/_} || warning "Tests failed"
+    # need docutils<0.22
     pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
