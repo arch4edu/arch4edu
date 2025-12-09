@@ -1,16 +1,16 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+#
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: clintval <valentine.clint@gmail.com>
 # Contributor: Grey Christoforo <first name at last name dot net>
-
 _cranname=cli
-_cranver=3.6.3
+_cranver=3.6.5
 pkgname=r-${_cranname,,}
 pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
-
 arch=("i686" "x86_64")
 depends=(
     "r>=3.4"
@@ -24,7 +24,6 @@ optdepends=(
     "r-htmltools"
     "r-htmlwidgets"
     "r-knitr"
-    "r-mockery"
     "r-processx"
     "r-ps>=1.3.4.9000"
     "r-rlang>=1.0.2.9003"
@@ -56,7 +55,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("1a8fffcdb236b2c471b0d49383488717ccc50397237b01adfb470085c15f2e8f4ba92965ada4c7970d4824150bde5107ccd8e84f79bcbf6042dfa66bdbc942cf")
+b2sums=('bdc1ad647b3e33d8e39be07458e2f5b2858a2035cca8d76351486b13ff4593241c97ebb5d8125abb1afbb707c94d8f1e61277d7745d39b51d04517d0c95dd221')
 
 build() {
     mkdir -p "${srcdir}/build/"
