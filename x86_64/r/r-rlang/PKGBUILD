@@ -1,3 +1,4 @@
+# Maintainer: Elio <ancibrothers@gmail.com>
 # Maintainer: <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
@@ -9,7 +10,7 @@ pkgdesc="Functions for Base Types and Core R and ‘Tidyverse’ Features"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
@@ -19,12 +20,15 @@ optdepends=(
     "r-cli>=3.1.0"
     "r-covr"
     "r-crayon"
+    "r-desc"
     "r-fs"
     "r-glue"
     "r-knitr"
     "r-magrittr"
     "r-pillar"
+    "r-pkgload"
     "r-rmarkdown"
+    "r-testthat"
     "r-tibble"
     "r-usethis"
     "r-vctrs>=0.2.3"
@@ -50,8 +54,9 @@ optdepends=(
 #     "r-testthat>=3.0.0"
 # )
 
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('1bb41661fa0dc2407acac0aaf6862ae35f8c6e6b91200cdc67698212e3f1787d7cfb63636f511460b1b6303d1892ac7363f46ef689c7eb611b1ed6faa9c8f8f5')
+# It uses cloud.r-project.org instead of cran to make use of the CDN.
+source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+b2sums=("1bb41661fa0dc2407acac0aaf6862ae35f8c6e6b91200cdc67698212e3f1787d7cfb63636f511460b1b6303d1892ac7363f46ef689c7eb611b1ed6faa9c8f8f5")
 
 build() {
     mkdir -p "${srcdir}/build/"
