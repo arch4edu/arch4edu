@@ -1,7 +1,7 @@
 # Maintainer: Brian Thompson <brianrobt@pm.me>
 
 pkgname='python-conda-package-streaming'
-pkgver='0.11.0'
+pkgver='0.12.0'
 pkgrel=1
 pkgdesc='An efficient library to read from new and old format .conda and .tar.bz2 conda packages'
 _srcname="conda-package-streaming-${pkgver}"
@@ -31,7 +31,7 @@ source=(
   "${_srcname}.tar.gz::https://github.com/conda/conda-package-streaming/archive/refs/tags/v${pkgver}.tar.gz"
 )
 sha512sums=(
-  '9da8ce9c9115be6cc604d59e82d74bb8e54c2c494373f883d7defcde37a7b1f305ba8b2c5b00dc9bb056e0c3eb8192de227ce497185839b9d5db400a8553868a'
+   'a6448647e85fa15a5258fe22658525b1e7035d7ae0e81ccc1cc0b94b8225eeda9676a3e287a572a04d8da010b7963c123c70c1faca3450404724659341dc5040'
 )
 
 build() {
