@@ -1,8 +1,8 @@
 # Maintainer: XavierCLL <xavier.corredor.llano (a) gmail.com>
-
+# Maintainer: Michal Wojdyla < micwoj9292 at gmail dot com >
 pkgname=ncl
 pkgver=6.6.2
-pkgrel=4
+pkgrel=5
 pkgdesc='Ncar Command Language, is an interpreted language designed specifically for scientific data analysis and visualization'
 url='http://www.ncl.ucar.edu'
 license=('APACHE')
@@ -11,7 +11,7 @@ depends=('libxext' 'cairo' 'pixman' 'fontconfig' 'expat' 'bzip2' 'zlib' 'netcdf'
          'triangle' 'hdf4' 'netcdf-fortran' 'libxt' 'libxaw' 'libxext' 'libxpm' 'udunits'
          'libx11' 'imake' 'g2clib' 'gdal' 'lesstif' 'glibc' 'libjpeg' 'libpng' 'jasper' 'libaec'
          'libxaw' 'tcsh' 'flex' 'gsl')
-makedepends=('gcc' 'gcc-fortran' 'tcsh' 'byacc')
+makedepends=('gcc' 'gcc-fortran' 'tcsh' 'byacc' 'lapack')
 provides=('ncl')
 install=${pkgname}.install
 backup=(etc/profile.d/ncarg.sh)
@@ -25,7 +25,10 @@ source=(ncl-$pkgver.tar.gz::https://github.com/NCAR/ncl/archive/$pkgver.tar.gz
         ncl-gdal.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-gdal.patch
         ncl-proj8.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-proj8.patch
         ncl-format.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-format.patch
-        ncl-boz.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-boz.patch)
+        ncl-boz.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-boz.patch
+        ncl-hdf4.3.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-hdf4.3.patch
+        ncl-gcc15.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-gcc15.patch
+        ncl-nc-set-log-level.patch::https://src.fedoraproject.org/rpms/ncl/raw/main/f/ncl-nc-set-log-level.patch)
 optdepends=('ncl-highres: High-resolution coastlines (RANGS and GSHHS)')
 sha256sums=('cad4ee47fbb744269146e64298f9efa206bc03e7b86671e9729d8986bb4bc30e'
             '1766327add038495fa3499e9b7cc642179229750f7201b94f8e1b7bee76f8480'
@@ -41,8 +44,10 @@ sha256sums=('cad4ee47fbb744269146e64298f9efa206bc03e7b86671e9729d8986bb4bc30e'
             '0ae96df73ac8902b1cd4bab203c45c4bc58b2f645ed094768884f9149066849a'
             'f960b172438485f664a2ce72c47daf5ccd6f3ff81ecd5866ae746c2ae8300529'
             'adb5e0eaa5edcedf0276979431dff2fba3fe7850a5bace3a3071ca858bc8b3b5'
-            '64f3502c9deab48615a4cbc26073173081c0774faf75778b044d251e45d238f7')
-         
+            '64f3502c9deab48615a4cbc26073173081c0774faf75778b044d251e45d238f7'
+            'f93d79090cdd95a7d7642271a83adad0ea394e3d4f58c3e8f31cf2e4811700e2'
+            'e1861055e58695279fed24480216d7cb46b476af67cda2f4f6557fc239208b24'
+            '899b9bee42c35c3ee3329b6f7c3009382cdbc903d82f156316c62eb7a8dee987')
 build() {
     # copy triangle library
     cp triangle.c triangle.h ${pkgname}-$pkgver/ni/src/lib/hlu/
@@ -59,6 +64,9 @@ build() {
     patch -Np1 --ignore-whitespace -i ../ncl-proj8.patch
     patch -Np1 --ignore-whitespace -i ../ncl-format.patch
     patch -Np1 --ignore-whitespace -i ../ncl-boz.patch
+    patch -Np1 --ignore-whitespace -i ../ncl-hdf4.3.patch
+    patch -Np1 --ignore-whitespace -i ../ncl-gcc15.patch
+    patch -Np1 --ignore-whitespace -i ../ncl-nc-set-log-level.patch
     
     # Spurrious exec permissions
     find -name '*.[fh]' -exec chmod -x {} +
@@ -87,8 +95,8 @@ build() {
     ./config/ymkmf
 
     # build
-    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -lnetcdf -fcommon -DH5_USE_110_API" F77="gfortran" F77_LD="gfortran"\
-        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -fallow-argument-mismatch -fcommon -DH5_USE_110_API" >> log 2>&1 
+    make Build CCOPTIONS="-O2 -std=c99 -fPIC -fno-strict-aliasing -fopenmp -lnetcdf -fcommon -DH5_USE_110_API -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-conversion -Wno-incompatible-pointer-types" F77="gfortran" F77_LD="gfortran"\
+        CTOFLIBS="-lgfortran" FCOPTIONS="-fPIC -fno-second-underscore -fno-range-check -fopenmp -fallow-argument-mismatch -fcommon -DH5_USE_110_API" # >> log 2>&1
 }
 
 package() {
