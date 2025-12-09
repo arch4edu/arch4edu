@@ -3,16 +3,16 @@
 _base=config-graph
 pkgname=precice-${_base}
 pkgdesc="A Library that builds a graph from a preCICE configuration file for validation and visualization purposes"
-pkgver=1.0.0
+pkgver=2.0.1
 pkgrel=2
 arch=(any)
 url="https://github.com/precice/${_base}"
 license=(MIT)
 depends=(python-lxml python-elementpath python-matplotlib python-networkx)
 makedepends=(python-build python-installer python-setuptools-git-versioning git)
-checkdepends=(python-pytest)
+checkdepends=(python-pytest python-gitpython)
 source=(git+${url}.git#tag=v${pkgver})
-sha512sums=('f44e656e71b7b5e6c60205f1df4734c5a35f2ff87128cb7b004bf61fecb6dc6952de18827a0f4eb0fbf9470b741b349c2c73890e39709b8875a4171921a7f660')
+sha512sums=('ae6d7e68f9d228d8352250bd2b8c880565de44a7989bcda4ce9098df52cd853cf95a70f40fb61ea03a7b368d79bbf769da355aa3f0c99b09b64c81ad47ddd4b2')
 
 build() {
   cd ${_base}
