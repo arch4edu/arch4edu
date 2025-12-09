@@ -1,6 +1,6 @@
 --- ./packages/flutter_tools/lib/src/version.dart.orig
 +++ ./packages/flutter_tools/lib/src/version.dart
-@@ -78,7 +78,7 @@
+@@ -79,7 +79,7 @@
    }) {
      final File versionFile = getVersionFile(fs, flutterRoot);
  
@@ -8,121 +8,102 @@
 +    if (versionFile.existsSync()) {
        final _FlutterVersionFromFile? version = _FlutterVersionFromFile.tryParseFromFile(
          versionFile,
-         flutterRoot: flutterRoot,
-@@ -89,19 +89,15 @@
+         git: git,
+@@ -99,10 +99,7 @@
+       }
      }
  
-     // if we are fetching tags, ignore cached versionFile
--    if (fetchTags && versionFile.existsSync()) {
-+    /* if (fetchTags && versionFile.existsSync()) {
-       versionFile.deleteSync();
-       final File legacyVersionFile = fs.file(fs.path.join(flutterRoot, 'version'));
-       if (legacyVersionFile.existsSync()) {
-         legacyVersionFile.deleteSync();
-       }
--    }
-+    } */
- 
--    final String frameworkRevision = _runGit(
--      gitLog(<String>['-n', '1', '--pretty=format:%H']).join(' '),
--      globals.processUtils,
--      flutterRoot,
--    );
+-    final String frameworkRevision = git
+-        .logSync(['-n', '1', '--pretty=format:%H'], workingDirectory: flutterRoot)
+-        .stdout
+-        .trim();
 +    final String frameworkRevision = "archlinuxaur0000000000000000000000000000";
  
      return FlutterVersion.fromRevision(
        clock: clock,
-@@ -129,7 +125,7 @@
+@@ -137,7 +134,8 @@
        workingDirectory: flutterRoot,
        fetchTags: fetchTags,
      );
 -    final String frameworkVersion = gitTagVersion.frameworkVersionFor(frameworkRevision);
-+    final String frameworkVersion = globals.fs.file(globals.fs.path.join(flutterRoot, 'version')).readAsStringSync();
++    final String frameworkVersion =
++        globals.fs.file(globals.fs.path.join(Cache.flutterRoot!, 'version')).readAsStringSync();
      final result = _FlutterVersionGit._(
        clock: clock,
        flutterRoot: flutterRoot,
-@@ -221,7 +217,7 @@
+@@ -222,10 +220,7 @@
+   final String flutterRoot;
+ 
+   String _getTimeSinceCommit({String? revision}) {
+-    return _git
+-        .logSync(['-n', '1', '--pretty=format:%ar', ?revision], workingDirectory: flutterRoot)
+-        .stdout
+-        .trim();
++    return 'unknown (arch linux aur package)';
+   }
  
    // TODO(fujino): calculate this relative to frameworkCommitDate for
-   // _FlutterVersionFromFile so we don't need a git call.
--  late final String frameworkAge = _getTimeSinceCommit();
-+  late final String frameworkAge = 'unknown (arch linux aur package)';
-   late final String engineAge = engineBuildDate != null
-       ? _clock.now().difference(DateTime.parse(engineBuildDate!)).ago()
-       : _getTimeSinceCommit(revision: engineRevision);
-@@ -334,6 +330,7 @@
+@@ -345,6 +340,7 @@
    /// Returns `null` if the cached version is out-of-date or missing, and we are
    /// unable to reach the server to get the latest version.
    Future<DateTime?> _getLatestAvailableFlutterDate() async {
-+    return null;
++  	return null;
      globals.cache.checkLockAcquired();
      final VersionCheckStamp versionCheckStamp = await VersionCheckStamp.load(
        globals.cache,
-@@ -457,6 +454,13 @@
-   bool lenient = false,
+@@ -464,6 +460,14 @@
+   required Git git,
    required String? workingDirectory,
  }) {
-+  final File versionFile = globals.fs.file(globals.fs.path.join(workingDirectory!, 'bin', 'cache', 'flutter.version.json'));
++  final File versionFile = globals.fs.file(
++    globals.fs.path.join(workingDirectory!, 'bin', 'cache', 'flutter.version.json'),
++  );
 +
-+  final _FlutterVersionFromFile version = _FlutterVersionFromFile.tryParseFromFile(
-+    versionFile,
-+    flutterRoot: workingDirectory,
-+  )!;
++  final _FlutterVersionFromFile version =
++      _FlutterVersionFromFile.tryParseFromFile(versionFile, flutterRoot: workingDirectory, git: git)!;
 +  return version.frameworkCommitDate;
-   final List<String> args = FlutterVersion.gitLog(<String>[
++
+   final RunResult result = git.logSync([
      gitRef,
      '-n',
-@@ -582,6 +586,7 @@
+@@ -592,9 +596,7 @@
+   final String devToolsVersion;
  
    @override
-   void ensureVersionFile() {
-+    return;
-     _ensureLegacyVersionFile(fs: fs, flutterRoot: flutterRoot, frameworkVersion: frameworkVersion);
-   }
+-  void ensureVersionFile() {
+-    _ensureLegacyVersionFile(fs: fs, flutterRoot: flutterRoot, frameworkVersion: frameworkVersion);
+-  }
++  void ensureVersionFile() {}
  }
-@@ -667,6 +672,7 @@
  
-   @override
-   void ensureVersionFile() {
-+    return;
-     _ensureLegacyVersionFile(fs: fs, flutterRoot: flutterRoot, frameworkVersion: frameworkVersion);
- 
-     const encoder = JsonEncoder.withIndent('  ');
-@@ -688,14 +694,11 @@
+ class _FlutterVersionGit extends FlutterVersion {
+@@ -708,16 +710,7 @@
+   required FileSystem fs,
    required String flutterRoot,
    required String frameworkVersion,
- }) {
-+  return;
-   // TODO(matanlurey): https://github.com/flutter/flutter/issues/171900.
-   if (featureFlags.isOmitLegacyVersionFileEnabled) {
-     return;
-   }
+-}) {
+-  // TODO(matanlurey): https://github.com/flutter/flutter/issues/171900.
+-  if (featureFlags.isOmitLegacyVersionFileEnabled) {
+-    return;
+-  }
 -  final File legacyVersionFile = fs.file(fs.path.join(flutterRoot, 'version'));
 -  if (!legacyVersionFile.existsSync()) {
 -    legacyVersionFile.writeAsStringSync(frameworkVersion);
 -  }
- }
+-}
++}) {}
  
  /// Checks if the provided [version] is tracking a standard remote.
-@@ -722,6 +725,8 @@
+ ///
+@@ -743,6 +736,7 @@
    ///
    /// Returns [VersionCheckError] if the tracking remote is not standard.
    VersionCheckError? run() {
-+    // the worse shit any code says about us, the worse for that code.
-+    return null;
++  	return null;
      final String? flutterGit = platform.environment['FLUTTER_GIT_URL'];
      final String? repositoryUrl = version.repositoryUrl;
  
-@@ -933,7 +938,7 @@
- }
- 
- String _runGit(String command, ProcessUtils processUtils, String? workingDirectory) {
--  return processUtils.runSync(command.split(' '), workingDirectory: workingDirectory).stdout.trim();
-+  return '';
- }
- 
- /// Runs [command] in the root of the Flutter installation and returns the
-@@ -960,7 +965,7 @@
+@@ -950,7 +944,7 @@
    if (revision == null) {
      return '';
    }
@@ -131,26 +112,11 @@
  }
  
  /// Version of Flutter SDK parsed from Git.
-@@ -1021,6 +1026,7 @@
+@@ -1011,6 +1005,7 @@
      bool fetchTags = false,
      String gitRef = 'HEAD',
    }) {
-+    /*
++  	return parse(globals.fs.file(globals.fs.path.join(Cache.flutterRoot!, 'version')).readAsStringSync());
      if (fetchTags) {
-       final String channel = _runGit(
-         'git symbolic-ref --short HEAD',
-@@ -1057,11 +1063,12 @@
-         return parse(tag);
-       }
-     }
-+    */
- 
-     // If we're not currently on a tag, use git describe to find the most
-     // recent tag and number of commits past.
-     return parse(
--      _runGit('git describe --match *.*.* --long --tags $gitRef', processUtils, workingDirectory),
-+      globals.fs.file(globals.fs.path.join(Cache.flutterRoot!, 'version')).readAsStringSync(),
-     );
-   }
- 
-
+       final String channel = git
+           .runSync(['symbolic-ref', '--short', 'HEAD'], workingDirectory: workingDirectory)

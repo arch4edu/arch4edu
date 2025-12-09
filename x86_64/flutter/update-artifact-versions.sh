@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 makepkg -ofC
 
 readonly ENGINE_VERSION="$(cat src/flutter/bin/internal/engine.version)"
