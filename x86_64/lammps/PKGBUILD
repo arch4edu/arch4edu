@@ -5,8 +5,8 @@
 
 pkgname=lammps
 pkgver=20250722
-_pkgver="stable_22Jul2025_update1"
-pkgrel=2
+_pkgver="stable_22Jul2025_update2"
+pkgrel=3
 pkgdesc="Public development project of the LAMMPS MD software package"
 url="https://lammps.org"
 arch=('x86_64')
@@ -16,7 +16,7 @@ makedepends=('cmake>=3.1' 'python-pip' 'python-build')
 conflicts=('lammps-git')
 provides=('lammps')
 source=("https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
-sha256sums=('4ba3648fae360ea1d3106e08bce13e21f856318196f4965f2a09fd812d572928')
+sha256sums=('fede484269cdb22f1cb738b4cd118a9bf9cb4bd3c85667f1e6a73a9fa5c2de6b')
 optdepends=('clang' 'python-mpi4py')
 
 prepare() {
@@ -76,13 +76,5 @@ package() {
 
     # python lib
     PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-deps ../python/dist/*.whl
-
-    # 遍历以 lib 开头的文件
-    # for file in "${pkgdir}/usr/lib/lib"*; do
-    #     # 如果文件不是 liblammps，则删除
-    #     [[ "$(basename "$file")" == liblammps* ]] || rm -f "$file"
-    # done
-    # rm -f ${pkgdir}/usr/lib/ld-linux*
-
 
 }
