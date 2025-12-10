@@ -5,7 +5,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=1
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('any')
@@ -19,7 +19,7 @@ checkdepends=('python-pytest-remotedata>=0.3.2'
               'python-numpy'
               'git')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('d9f43e55c6e0ae56c040d8b7c90475b5')
+md5sums=('bf762c41110f23c57fcd46eb7c2bc21e')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
