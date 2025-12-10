@@ -9,7 +9,7 @@ qt="qt${QT_VER}"
 pkgname=openboard
 pkgver=1.7.3
 _src_folder="OpenBoard-${pkgver}"
-pkgrel=12
+pkgrel=13
 pkgdesc="Interactive whiteboard software for schools and universities"
 arch=('x86_64' 'i686')
 url="http://openboard.ch/index.en.html"
@@ -22,8 +22,15 @@ depends+=('openssl' 'ffmpeg')
 depends+=(quazip-${qt})  #drop internal quazip and use system one.
 depends+=(poppler) #replace internal xpdf with poppler and drop freetype/xpdf from deps
 makedepends=('cmake' ${qt}-tools)
-source=("https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz")
-sha256sums=('55532df042e3a5b36e1f6f1e29916d3bbd01796d920782fa1f8a03438dcddd9c')
+source=("https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz"
+        "openboard-support-poppler-25.12.patch::https://patch-diff.githubusercontent.com/raw/OpenBoard-org/OpenBoard/pull/1387.patch")
+sha256sums=('55532df042e3a5b36e1f6f1e29916d3bbd01796d920782fa1f8a03438dcddd9c'
+            '916c27c537478e95a9601e529136e5f150cde6a2c4d4e4e557081020e4e60319')
+
+prepare() {
+  cd "$srcdir"/$_src_folder
+  patch -p1 -i ../openboard-support-poppler-25.12.patch
+}
 
 build() {
   cmake -B build -S "$srcdir"/$_src_folder \
