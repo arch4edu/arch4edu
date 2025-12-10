@@ -6,7 +6,7 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=sfsmisc
-_pkgver=1.1-22
+_pkgver=1.1-23
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,8 +23,8 @@ optdepends=(
   r-rmpfr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ec66b204ccbef06ca00ecbfedb41355b')
-b2sums=('1f95502348fdda8ce9fede1d7930fa001b53236a26aa65840facfe78716ab314fee2b83c9c8b87cfe051e63cd3f1ab10e3311f901b857ec753fc63938f69a6b3')
+md5sums=('19fc5b37fdd720067f9f83b86e4183ad')
+b2sums=('2d5bfd8678e8fc09e57cd57eb7cfc9cf399590a8ea185a977d45d678febf7e1dfb11970dc5988f1a791da6651e109e321bc41fa8e77ac56feac5f27703fb1066')
 
 build() {
   mkdir build
