@@ -2,7 +2,7 @@
 _base=trame-common
 pkgname=python-${_base}
 pkgdesc="Dependency less classes and functions for trame"
-pkgver=1.0.1
+pkgver=1.1.0
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
@@ -11,7 +11,7 @@ depends=(python)
 makedepends=(python-build python-installer python-hatchling)
 checkdepends=(python-pytest)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('24738e0ff85d172e877036c6fbec951056af5830b72a357b6aabb597fbf934f73cf6da6b12cb5c3ec9ee0f13009d1fbbf1c0b4a32b70e7c355bf49a6c3ad5c8d')
+sha512sums=('560fcadfd8cda1a709b78c9fc563c91d4c4b1a3136677fe4b217787ebc7ac3cba8646a68159cabb67ee02df406668321e7efd6ad400ec550fb4ebe1881744afa')
 
 build() {
   cd ${srcdir}/${_base}-${pkgver}
