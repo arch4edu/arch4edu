@@ -6,7 +6,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=zoo
-_pkgver=1.8-14
+_pkgver=1.8-15
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,8 +34,8 @@ optdepends=(
   r-tinyplot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f3e2b2b808d833e5dc3f236f5e7cb36c')
-b2sums=('a3963f2d2a66df3ba180f5a96d83b4efa8b4cbc1cd37fea524babc8e05706a8fb2f9deee9d5339af0dd509a4c707264f4b2512885ff4562ed55e27bcd1ce1961')
+md5sums=('fcc3cf2d5eb4e94ecd89ac0fc985bc77')
+b2sums=('0dc761229ae8fba71f85c212447d03d60c9de6bbc6ddf7506bb09c2961bee74b78e8abba6cbf7dd862edb8052f29a88b6a3d902211ac370b01d5f9ef3ac7fefd')
 
 build() {
   mkdir build
