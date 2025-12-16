@@ -2,7 +2,7 @@
 # Contributor: Max Devaine <max@devaine.cz>
 
 pkgname=code-eli-git
-pkgver=r1001.715ab62
+pkgver=r1008.aecafc2
 pkgrel=1
 pkgdesc='Collection of C++ libraries that provide a variety of functionalities.'
 arch=('i686' 'x86_64')
