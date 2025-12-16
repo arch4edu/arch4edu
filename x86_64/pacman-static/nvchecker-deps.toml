@@ -50,3 +50,7 @@ archpkg = "libassuan"
 [gpgme]
 source = "archpkg"
 archpkg = "gpgme"
+
+[libseccomp]
+source = "archpkg"
+archpkg = "libseccomp"
