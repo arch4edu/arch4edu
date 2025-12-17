@@ -4,7 +4,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=BH
-_pkgver=1.87.0-1
+_pkgver=1.90.0-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,8 +17,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('55959f3c42d4229724aa73b450c881fe')
-b2sums=('5acb19b106933f72e8f90a4f006b477cbf47fb16f4ce1441817b66fba7839f3444134698ea635dd98501fc3596575d6c00cbbb1d9e01bafaf6b44151bd85757d')
+md5sums=('4b82aea7c6223ea0048c3edbe1a2caa0')
+b2sums=('88ecd04248d5e765efc5529b075c9a66c3c2c7530ebcc56ed6abaa687fd204c218945d588cf126dbcceeaaaa952e9a47f58e30c77fed1925e97d608aaec17d54')
 
 build() {
   mkdir build
