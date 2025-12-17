@@ -2,27 +2,46 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go"
-pkgver=1.36.10
+pkgver=1.36.11
 pkgrel=1
 pkgdesc="Go support for Google's protocol buffers"
-arch=('aarch64' 'i686' 'x86_64')
+arch=(
+  'aarch64'
+  'i686'
+  'x86_64'
+)
 url="https://github.com/protocolbuffers/protobuf-go"
-license=('BSD-3-Clause')
-depends=('glibc' 'protobuf')
-makedepends=('go')
-provides=('protobuf-go')
-conflicts=('protobuf-go')
-replaces=('protobuf-go')
+license=(
+  'BSD-3-Clause'
+)
+depends=(
+  'glibc'
+  'protobuf'
+)
+makedepends=(
+  'go'
+)
+provides=(
+  "protobuf-go=${pkgver}"
+)
+conflicts=(
+  'protobuf-go'
+)
+replaces=(
+  'protobuf-go'
+)
 _pkgsrc="${url##*/}-${pkgver}"
-source=("${_pkgsrc}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('41671a3121345fb6b9f98cf41609379ba379c0aaf86be9e862f87a1d69a40e89')
+source=(
+  "${_pkgsrc}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
+)
+sha256sums=('517b935001f3d43640489cd1aab531a3ed5927fb34379fa6cb1c1a514e9cb8e8')
 
 prepare() {
   export GOMODCACHE="${srcdir}/go-mod-cache"
 
   cd "${srcdir}/${_pkgsrc}"
-  go mod download -x
-  chmod -R ug+Xwr "${GOMODCACHE}"
+  go mod download -modcacherw -x
+  go mod verify
 
   mkdir -p "build"
 }
