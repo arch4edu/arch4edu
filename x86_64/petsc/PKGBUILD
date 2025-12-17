@@ -2,7 +2,7 @@
 # Contributor: Andreas Bilke <abilke at cosy dot sbg dot ac dot at>
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
-pkgver=3.24.1
+pkgver=3.24.2
 pkgrel=1
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
@@ -11,7 +11,7 @@ url="https://petsc.org"
 license=('BSD-2-Clause')
 options=(staticlibs)
 depends=('openmpi' 'lapack' 'bison' 'fftw-openmpi' 'gsl' 'hdf5-openmpi' 'hwloc' 'libjpeg-turbo' 'libyaml'
-         'netcdf-openmpi' 'pastix' 'scotch' 'suitesparse' 'superlu' 'zfp' 'zlib'
+         'pastix' 'scotch' 'suitesparse' 'superlu' 'superlu_dist' 'zfp' 'zlib'
          'python-numpy' 'python-mpi4py')
 makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython' 'python-setuptools')
 provides=('petsc4py')
@@ -22,7 +22,6 @@ optdepends=(
   'mumps: support for MUMPS'
   'parmetis: support for ParMETIS'
   'scalapack: support for ScaLAPACK'
-  'superlu_dist: support for SuperLU_DIST'
   'triangle: support for Triangle'
   'zoltan: support for zoltan'
   )
@@ -30,8 +29,8 @@ optdepends=(
 install=petsc.install
 source=(http://web.cels.anl.gov/projects/petsc/download/release-snapshots/${pkgname}-${pkgver}.tar.gz
         test_optdepends.sh)
-sha512sums=('c6bc69f85e5965f5492eb9a66e045967b6ba04bb894778e0c07f65adb516b78f0cda3754ee012b770f8ab0677b247d72cd67eb1e2952d2bbc89568b13e16763b'
-            'cf63f0e47ac547fdc7c485c3302a8a34cf6a028c25fb44fd0372f76096b4d33fbce4e3b061860f55ff5c9a9d691a7602e4e234e6d7b2dad5b6d94e6566b4e9d4')
+sha512sums=('03318e17f4f5a7bbd606213b4a7e8fd172179c146e954c23ff7e1d2b0527ac723071e50daf6db13f30e8580abe113c4e21755ae3f57c0c8be88fc71b08eb6cfd'
+            '4dc58de1393c2920de6ca08dcab71af0b13d21391d6b46f4a48aab122f087a3f4e4deae7b72b15fde5c7d344bcf12f5b766ff7c0ba4d816b074f94091a00cb97')
 
 PETSC_ARCH=linux-c-opt
 _install_dir=/opt/petsc/${PETSC_ARCH}
@@ -51,11 +50,11 @@ build() {
             --with-hdf5=1 --with-hdf5-fortran-bindings=1 \
             --with-hwloc=1 \
             --with-libjpeg=1 \
-            --with-netcdf=1 --with-zlib=1 \
             --with-pastix=1 \
             --with-ptscotch=1 --with-bison=1 --with-ptscotch-lib=[libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so] --with-ptscotch-include=/usr/include \
             --with-suitesparse=1 \
             --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
+            --with-superlu_dist-lib=-lsuperlu_dist --with-superlu_dist-include=/usr/include/superlu_dist \
             --with-yaml=1 \
             --with-zfp=1 \
             $(sh ${srcdir}/test_optdepends.sh)"

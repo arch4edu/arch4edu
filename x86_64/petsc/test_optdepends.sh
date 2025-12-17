@@ -37,11 +37,6 @@ if [ -f "/usr/lib/pkgconfig/scalapack.pc" ]; then
   CONFOPTS="${CONFOPTS} --with-scalapack=1"
 fi
 
-# SuperLU_DIST
-if [ -f "/usr/lib/pkgconfig/superlu_dist.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-superlu_dist-lib=-lsuperlu_dist --with-superlu_dist-include=/usr/include/superlu_dist"
-fi
-
 # Triangle
 if [ -f "/usr/lib/libtriangle.so" ]; then
   CONFOPTS="${CONFOPTS} --with-triangle=1"
