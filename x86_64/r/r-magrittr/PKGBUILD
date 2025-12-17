@@ -1,15 +1,16 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: T-1990 <address at domain dot>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=magrittr
-_cranver=2.0.3
+_cranver=2.0.4
 pkgname=r-${_cranname,,}
 pkgdesc="A Forward-Pipe Operator for R"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
@@ -20,6 +21,7 @@ optdepends=(
     "r-knitr"
     "r-rlang"
     "r-rmarkdown"
+    "r-testthat"
 )
 
 # The unittests for `r-magrittr` have multiple circular
@@ -42,7 +44,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("f4ebee352cc6e3de831d7a596d7f44b94bc77a19ad110fe53d6cb7d872bd71c0c83da7b6fad8063823fef6e42a12827b01cd2c5ce77b4e274a3abbcf68a0e772")
+b2sums=("3324d54f49929d4a8b20ebacbed04042e24bc5c7916bd09aa52257b826e333645c8df8f70fb3631d184993c486f0d67523c29412861208fbe42f3ebb9f6d909d")
 
 build() {
     mkdir -p "${srcdir}/build/"
