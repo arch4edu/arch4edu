@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=cards
-_pkgver=0.7.0
+_pkgver=0.7.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -27,8 +27,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3364c4f61981a493181be0fd7eb34753')
-b2sums=('3f1c3fb8786e4c7cb2a63519008687ff212ede3efc3ba313adde5220a0c00685c93dd1187a1797bbc66a262f3c2a59acd489af650bef24afe814b6a51b1fa17f')
+md5sums=('7bda2db624fedab815ba1f242ad6f833')
+b2sums=('9079f42a5d1edc7fa31efcce4fadf387c799423b45ed0234b911a9ca735cedd89620247159ece7e4f36e6cfa3ea0701f249c8e1d843e07ec6ad4e6aa43c61cd2')
 
 build() {
   mkdir build
