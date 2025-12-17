@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=polycor
-_pkgver=0.8-1
+_pkgver=0.8-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=6
+pkgrel=1
 pkgdesc="Polychoric and Polyserial Correlations"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r-mvtnorm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('bcf23e352787794c7e36875d6cd8d6f6')
-b2sums=('040a667cc6a0dceeac6fe85e011e54605c081259f998deb8aae3be4f6c57820aa34f63f1b27c2e7a40e9099b35c8e57ba6b1d76488e6389a7f8eb0c2f80ed57a')
+md5sums=('6d60686d03d2c73c663d37c0829a3d9d')
+b2sums=('9bf8c364fdbd6ccba5b1c5b0fee4abb74d30fabfc358e2f37aa86cc53dd8e95344e687aeaa96948e27240db3afb52da2d375a0226944c9c7bb3a03dcefac74ca')
 
 build() {
   mkdir build
