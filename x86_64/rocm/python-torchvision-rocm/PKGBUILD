@@ -14,7 +14,7 @@
 _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.24.0
+pkgver=0.24.1
 pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCM support)'
 arch=('x86_64')
@@ -47,12 +47,10 @@ source=(
     "torchvision-0_17_1-fix-build.patch"
     "ffmpeg-8.patch"
 )
-sha256sums=(
-    'f799cdd1d67a3edbcdc6af8fb416fe1b019b512fb426c0314302cd81518a0095'
-    'ac2b78100923115e7aa090c0e6f936d1580c0cdb7a19ecbfcce5c5c6fa3e5c14'
-    'ed715ca202d2b010c50414e370ebc0492f0f42b298a8e6e03f9fe80b7ce60331'
-    '1c466d4ae0874a8ab6518cb3b0c7747f43060fb6803352ac9e13f2b5ecae1931'
-)
+sha256sums=('071da2078600bfec4886efab77358c9329abfedcf1488b05879b556cb9b84ba7'
+            'ac2b78100923115e7aa090c0e6f936d1580c0cdb7a19ecbfcce5c5c6fa3e5c14'
+            'ed715ca202d2b010c50414e370ebc0492f0f42b298a8e6e03f9fe80b7ce60331'
+            '1c466d4ae0874a8ab6518cb3b0c7747f43060fb6803352ac9e13f2b5ecae1931')
 prepare() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
 
