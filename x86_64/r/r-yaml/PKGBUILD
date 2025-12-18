@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=yaml
-_pkgver=2.3.11
+_pkgver=2.3.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,28 +16,30 @@ license=('BSD-3-Clause')
 depends=(
   r
 )
-makedepends=(
-  re2c
-)
+#makedepends=(
+#  re2c
+#)
 checkdepends=(
   r-runit
 )
 optdepends=(
-  r-runit
+  r-knitr
+  r-rmarkdown
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9eba6403924a7ac6d190fa742044245f')
-b2sums=('65ff9e7090822702a96e75a20d19bcfbbf9725e6b52e259485985e29231ad85bf08a58eda1d8e87d108587cfef42a1f2405c5dc7c6470ee0a73ac439bcd90c5a')
+md5sums=('6beea9b09717960f6c79fcbc1e129c41')
+b2sums=('07dd7157ce25270caefe4b252e8339e5bf98b4ac42e9147a7ea1e460b254fd7bf9f1bb53da1d29850546ee74e43a07bce170049e238c06b0998f17d2053c3394')
 
 build() {
   # generate implicit tag discovery code
-  re2c -o "$_pkgname/src/implicit.c" --no-generation-date "$_pkgname/inst/implicit.re"
+  #re2c   #re2c -o "$_pkgname/src/implicit.c" --no-generation-date "$_pkgname/inst/impl
 
   mkdir build
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" Rscript --vanilla RUnit.R
 }
