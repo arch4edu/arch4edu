@@ -4,7 +4,7 @@
 # Contributor: Marius Glo <marius@mgl.dev>
 
 pkgname=unityhub
-pkgver=3.15.2
+pkgver=3.15.4
 pkgrel=1
 pkgdesc="The Unity Hub is a standalone application that streamlines the way you find, download, and manage your Unity Projects and installations."
 url="https://unity.com/"
@@ -15,17 +15,17 @@ optdepends=(
   'libappindicator-gtk3: The official deb says this an optional dependency'
 )
 source=(
-  "$pkgname-$pkgver.deb::https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/UnityHubSetup-amd64.deb"
+  "$pkgname-$pkgver.deb::https://hub.unity3d.com/linux/repos/deb/pool/main/u/unity/unityhub_amd64/UnityHubSetup-$pkgver-amd64.deb"
   'license.txt'
   'services-config.json'
 )
 sha256sums=(
-  '4557902db7d03a49f94b3a0f5ba6e3ae769135f94f7157f0fa0aeac4c5338206'
+  '3bcad1e202d3a098147bc12c4efb24d404a118002c814e1ccb5f942135e2566f'
   'f0eb3a4bb148bb7f426e4f5b97e891265ac487710cbcba9282518537c7b5d833'
   '557964a3528219723750a7eabeb2e31a2d3e1b2c4a4b2e201b32d4035200562e'
 )
 conflicts=('unityhub-beta')
-OPTIONS=(!strip)
+options=(!strip)
 install='unityhub.install'
 
 package() {
