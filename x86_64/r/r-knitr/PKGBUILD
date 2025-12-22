@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=knitr
-_pkgver=1.50
+_pkgver=1.51
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,6 +35,8 @@ optdepends=(
   r-litedown
   r-magick
   r-markdown
+  r-otel
+  r-otelsdk
   r-png
   r-ragg
   r-reticulate
@@ -54,8 +56,8 @@ optdepends=(
   r-webshot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b58c37c2d9123ba4a98b1e838da9ac75')
-b2sums=('28c461406c5b5a2e590e3417079ca9971382d88fd2d9d09e8d395723f89905e1d7be9678ac77c912eeed17ad69915d86c4ec382dfcf0d07837495fd83a7a18f8')
+md5sums=('79f32f24b572fe198baca8882d6aa87f')
+b2sums=('eb35a26242c198d8a0a280983258cef8be5252aa842918e003564db83f7f814f8bff12d3b6f322ba52026d7c2d46cb3ae648c8bccdcdf6e6860bccdb9d600ac1')
 
 build() {
   mkdir build
