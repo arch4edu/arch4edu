@@ -4,15 +4,15 @@
 # Contributor: Doug Newgard <scimmia at archlinux dot org>
 # Contributor: XavierCLL <xavier.corredor.llano (a) gmail.com>
 # Contributor: SaultDon <sault.don gmail>
-# Contributor: Lantald < lantald at gmx.com >
-# Contributor: Thomas Dziedzic < gostrc at gmail >
+# Contributor: Lantald <lantald at gmx.com>
+# Contributor: Thomas Dziedzic <gostrc at gmail>
 # Contributor: dibblethewrecker dibblethewrecker.at.jiwe.dot.org
 # Contributor: Gerardo Exequiel Pozzi <vmlinuz386@yahoo.com.ar>
-# Contributor: Eric Forgeot < http://esclinux.tk >
+# Contributor: Eric Forgeot <http://esclinux.tk>
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.40.13
+pkgver=3.40.14
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
@@ -30,8 +30,8 @@ optdepends=('fcgi: Map server'
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
 source=("https://qgis.org/downloads/$_pkgname-$pkgver.tar.bz2")
-sha256sums=('2934325e873de4c3c9deba131c40eb3edf10f1f04d0016e2177ad2de90949ef0')
-# curl -s https://download.qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
+sha256sums=('c9277ee2c49de38e70571b3e598d8d17f7c99de088e6f15d4f69c39c290ed1ca')
+# curl -sL https://qgis.org/downloads/qgis-latest-ltr.tar.bz2.sha256
 
 build() {
   cmake -S $_pkgname-$pkgver -B build -G Ninja \
