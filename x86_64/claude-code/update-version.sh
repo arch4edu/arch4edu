@@ -7,8 +7,8 @@ PKGBUILD="PKGBUILD"
 # Get current version from PKGBUILD
 current_version=$(grep -Po '^pkgver=\K.*' "$PKGBUILD")
 
-# Fetch stable version
-new_version=$(curl -fsSL "$GCS_BUCKET/stable")
+# Fetch latest version
+new_version=$(curl -fsSL "$GCS_BUCKET/latest")
 echo "Current version: $current_version"
 echo "New version: $new_version"
 
