@@ -4,8 +4,8 @@
 _name=mapbox_earcut_python
 
 pkgname=python-mapbox-earcut
-pkgver=1.0.3
-pkgrel=3
+pkgver=2.0.0
+pkgrel=1
 pkgdesc="Python bindings for the C++ implementation of the Mapbox Earcut library."
 
 arch=("x86_64")
@@ -13,7 +13,7 @@ license=("ISC")
 url="https://github.com/skogler/mapbox_earcut_python"
 
 source=("$url/archive/refs/tags/v$pkgver.tar.gz")
-sha512sums=('3700a25de44e73edd762b5cfa0c43fa73ebbf95f811694bfc8bb77f07dc9512c3fb814b409b5ea88c9e1a32cc5272f3ae33c1e4e323afe8b139cf8b96f1edc54')
+sha512sums=('e673b89e16a2007085e6e036b32867bdcdf984b3dec3bf93182ad352b36d6bf3ae4f750de136a9833b3328241fdf725b4f11c4981f9334a9a27e1b4077af1cea')
 
 depends=(
     "gcc-libs"
@@ -21,7 +21,7 @@ depends=(
     "python"
 )
 makedepends=(
-    "pybind11"
+    "nanobind"
     "python-build"
     "python-installer"
     "python-scikit-build-core"
@@ -34,22 +34,23 @@ checkdepends=(
     "python-virtualenv"
 )
 
-build () {
+build() {
     cd "$srcdir/$_name-$pkgver"
-    python -m build --wheel --no-isolation
+    python -m build --wheel
 }
 
-check () {
+check() {
     cd "$srcdir/$_name-$pkgver"
 
     python -m venv --system-site-packages venv
     source venv/bin/activate
     pip install ./dist/*.whl
-    python -m pytest
+
+    (cd tests; python -m pytest)
     rm -rf venv
 }
 
-package () {
+package() {
     cd "$srcdir/$_name-$pkgver"
     python -m installer --destdir="$pkgdir" dist/*.whl
     install -Dm644 LICENSE.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
