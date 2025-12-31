@@ -4,8 +4,7 @@ nvchecker:
   - source: github
     github: ankitects/anki
 depends:
-  - any/python-pip-system-certs
-  - any/python-stringcase
+  - any/python-pyqt5-webengine
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
