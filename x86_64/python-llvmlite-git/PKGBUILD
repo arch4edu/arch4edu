@@ -2,7 +2,7 @@
 # Contributor: Quan Guo <guotsuan at gmail dot com>
 
 pkgname=python-llvmlite-git
-pkgver=0.47.0dev0.r21.gdf86d08d
+pkgver=0.47.0dev0.r29.g6cb7d340
 pkgrel=1
 pkgdesc="A lightweight LLVM Python binding for writing JIT compilers (Git version)"
 url="https://github.com/numba/llvmlite"
