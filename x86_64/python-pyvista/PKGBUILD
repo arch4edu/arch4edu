@@ -2,7 +2,7 @@
 
 pkgname=python-pyvista
 pkgver=0.46.4
-pkgrel=1
+pkgrel=2
 pkgdesc='3D plotting and mesh analysis through a streamlined interface for VTK'
 arch=(any)
 url=https://www.pyvista.org
