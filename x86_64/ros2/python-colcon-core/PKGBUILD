@@ -3,7 +3,7 @@
 
 pkgname=python-colcon-core
 pkgver=0.20.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Command line tool to build sets of software packages."
 arch=(any)
 url="https://colcon.readthedocs.io/en/released/"
