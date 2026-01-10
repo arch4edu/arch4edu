@@ -4,7 +4,7 @@
 pkgname=qt5-webchannel
 _basever=5.15.18
 pkgver=5.15.18+kde+r3
-pkgrel=1
+pkgrel=2
 _commit=2a157921861e651f43456cb7941b250c89feb736
 arch=('x86_64')
 url='https://www.qt.io'
