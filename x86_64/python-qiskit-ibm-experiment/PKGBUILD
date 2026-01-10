@@ -2,7 +2,7 @@
 _pkgname=qiskit-ibm-experiment
 pkgname=python-${_pkgname}
 pkgver=0.4.8
-pkgrel=3
+pkgrel=4
 pkgdesc="Service that allows accessing the IBM Quantum experiment database."
 arch=(any)
 url=https://github.com/qiskit-community/qiskit-ibm-experiment
