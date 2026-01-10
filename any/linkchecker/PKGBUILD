@@ -5,7 +5,7 @@
 _name=LinkChecker
 pkgname=linkchecker
 pkgver=10.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="check links in web documents or full websites"
 arch=('any')
 url="https://github.com/linkcheck/linkchecker"
