@@ -3,7 +3,7 @@
 
 pkgname=python-slicer
 pkgver=0.0.8
-pkgrel=2
+pkgrel=3
 pkgdesc='Wraps tensor-like objects and provides a uniform slicing interface via __getitem__'
 arch=(any)
 url='https://github.com/interpretml/slicer'
