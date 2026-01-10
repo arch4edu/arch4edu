@@ -3,7 +3,7 @@
 pkgname=python-dash
 _pkgname=dash
 pkgver=3.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A python framework for building analytical web applications"
 arch=('any')
 url="https://plot.ly/products/dash/"
