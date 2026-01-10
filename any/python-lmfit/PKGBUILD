@@ -1,6 +1,6 @@
 pkgname=python-lmfit
 pkgver=1.3.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Non-Linear Least Squares Minimization, based on scipy.optimize"
 arch=(any)
 url=http:/lmfit.github.io/lmfit-py/
