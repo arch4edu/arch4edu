@@ -3,7 +3,7 @@
 _pkgname=empy
 pkgname=python-empy3
 pkgver=3.3.4
-pkgrel=2
+pkgrel=3
 pkgdesc="Powerful and robust templating system for Python"
 arch=('any')
 url="http://www.alcyone.com/software/empy/"
