@@ -2,7 +2,7 @@
 
 pkgname=('python-rosinstall_generator')
 pkgver='0.1.23'
-pkgrel=4
+pkgrel=5
 pkgdesc='A tool for generating rosinstall files'
 arch=('any')
 url='https://github.com/ros-infrastructure/rosinstall_generator'
