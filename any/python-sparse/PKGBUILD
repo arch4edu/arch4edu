@@ -4,7 +4,7 @@
 pkgname='python-sparse'
 _pkgname=sparse
 pkgver=0.17.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Sparse n-dimensional arrays for the PyData ecosystem"
 arch=('any')
 url="https://sparse.pydata.org"
