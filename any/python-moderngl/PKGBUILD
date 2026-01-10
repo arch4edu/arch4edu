@@ -3,7 +3,7 @@
 _name=moderngl
 pkgname=python-$_name
 pkgver=5.12.0
-pkgrel=1
+pkgrel=2
 pkgdesc='ModernGL: High performance rendering for Python 3'
 arch=(x86_64)
 url='https://github.com/moderngl/moderngl'
