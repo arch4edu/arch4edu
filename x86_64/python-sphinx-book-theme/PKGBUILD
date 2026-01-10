@@ -4,7 +4,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=1.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc="A lightweight book theme built off of the pydata sphinx theme"
 arch=('any')
 url="https://sphinx-book-theme.readthedocs.io"
