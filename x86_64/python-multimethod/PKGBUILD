@@ -4,7 +4,7 @@
 _name=multimethod
 pkgname=python-multimethod
 pkgver=2.0.2
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='Multiple argument dispatching'
 arch=(any)
