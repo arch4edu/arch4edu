@@ -2,7 +2,7 @@
 pkgname=python-pytest-astropy
 _pyname=${pkgname#python-}
 pkgver=0.11.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Metapackage for all the testing machinery used by the Astropy Project"
 arch=('any')
 url="https://github.com/astropy/pytest-astropy"
