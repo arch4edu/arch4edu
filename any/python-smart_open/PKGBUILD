@@ -4,7 +4,7 @@
 pkgname=python-smart_open
 _pkgname=smart_open
 pkgver=7.3.0.post1
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for efficient streaming of very large files from/to S3, HDFS, WebHDFS, HTTP, or local (compressed) files"
 arch=('any')
 license=('MIT')
