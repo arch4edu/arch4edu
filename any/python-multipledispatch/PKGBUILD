@@ -3,7 +3,7 @@
 pkgname=python-multipledispatch
 _name=${pkgname#python-}
 pkgver=1.0.0
-pkgrel=6
+pkgrel=7
 pkgdesc='Multiple dispatch implementation in Python'
 arch=('any')
 url='https://github.com/mrocklin/multipledispatch'
