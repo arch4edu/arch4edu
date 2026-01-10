@@ -2,7 +2,7 @@
 pkgname=python-tensorstore
 _pkgname=${pkgname#python-}
 pkgver=0.1.73
-pkgrel=1
+pkgrel=2
 pkgdesc='Library for reading and writing large multi-dimensional arrays.'
 arch=('x86_64')
 url='https://github.com/google/tensorstore'
