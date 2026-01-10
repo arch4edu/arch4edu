@@ -3,7 +3,7 @@
 pkgname=python-colcon-output
 _name=${pkgname:7}
 pkgver=0.2.13
-pkgrel=4
+pkgrel=5
 pkgdesc="An extension for colcon-core to customize the output in various ways."
 arch=(any)
 url="https://pypi.org/project/colcon-output/"
