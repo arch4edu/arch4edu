@@ -3,7 +3,7 @@
 pkgname=python-treescope
 _pkgname=${pkgname#python-}
 pkgver=0.1.9
-pkgrel=1
+pkgrel=2
 pkgdesc='A neural network library and ecosystem for JAX designed for flexibility'
 arch=('any')
 url='https://github.com/google-deepmind/treescope'
