@@ -5,7 +5,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=0.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="World Coordinate System (WCS) ASDF schemas "
 arch=('any')
 url="https://github.com/asdf-format/asdf-wcs-schemas"
