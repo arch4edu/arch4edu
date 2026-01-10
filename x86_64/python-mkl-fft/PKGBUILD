@@ -2,7 +2,7 @@
 pkgname=python-mkl-fft
 _pkgname=mkl_fft
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="NumPy-based Python interface to Intel (R) MKL FFT functionality"
 arch=('x86_64')
 url="https://github.com/IntelPython/mkl_fft"
