@@ -1,7 +1,7 @@
 pkgname=python-sphinxcontrib-plantuml
 _pyname=sphinxcontrib-plantuml
 pkgver=0.31
-pkgrel=1
+pkgrel=2
 arch=(any)
 pkgdesc="Sphinx 'plantuml' extension"
 url='https://pypi.python.org/pypi/sphinxcontrib-plantuml'
