@@ -7,7 +7,7 @@ pkgdesc="The infrastructure to build Ninja Python wheels"
 url="https://github.com/scikit-build/ninja-python-distributions"
 
 pkgver=1.13.0
-pkgrel=1
+pkgrel=2
 
 arch=("any")
 license=("Apache-2.0")
