@@ -3,7 +3,7 @@
 pkgname=python-colcon-common-extensions
 _name=${pkgname:7}
 pkgver=0.3.0
-pkgrel=4
+pkgrel=5
 pkgdesc="A meta package aggregating colcon-core as well as a set of common extensions."
 arch=(any)
 url="https://pypi.org/project/$_name"
