@@ -2,7 +2,7 @@
 pkgname=python-nasdaq-data-link
 _name=data-link-python
 pkgver=1.0.4
-pkgrel=5
+pkgrel=6
 pkgdesc="A Python library for Nasdaq Data Link's RESTful API"
 arch=(any)
 url=https://github.com/Nasdaq/data-link-python
