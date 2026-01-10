@@ -6,7 +6,7 @@
 _base=trimesh
 pkgname=python-${_base}
 pkgver=4.11.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Import, export, process, analyze and view triangular meshes"
 arch=(any)
 url="https://trimsh.org"
