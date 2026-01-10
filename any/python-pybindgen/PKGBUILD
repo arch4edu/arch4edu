@@ -5,7 +5,7 @@
 pkgname=python-pybindgen
 _pkgname='PyBindGen'
 pkgver=0.22.1
-pkgrel=4
+pkgrel=5
 pkgdesc="A tool to generate Python bindings for C/C++ code"
 url='https://github.com/gjcarneiro/pybindgen'
 arch=('i686' 'x86_64')
