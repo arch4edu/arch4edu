@@ -5,7 +5,7 @@
 
 pkgname=pyglossary
 pkgver=5.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="convert dictionary files/glossaries with various formats"
 arch=(any)
 url="https://github.com/ilius/pyglossary"
