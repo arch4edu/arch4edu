@@ -5,7 +5,7 @@ _name=mapbox_earcut_python
 
 pkgname=python-mapbox-earcut
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Python bindings for the C++ implementation of the Mapbox Earcut library."
 
 arch=("x86_64")
