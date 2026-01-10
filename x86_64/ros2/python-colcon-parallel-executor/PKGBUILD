@@ -1,7 +1,7 @@
 # Maintainer: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-parallel-executor
 pkgver=0.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An extension for colcon-core to process packages in parallel."
 arch=(any)
 url="https://pypi.org/project/colcon-parallel-executor/"
