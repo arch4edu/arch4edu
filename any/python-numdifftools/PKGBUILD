@@ -4,7 +4,7 @@
 _base=numdifftools
 pkgname=python-${_base}
 pkgver=0.9.42
-pkgrel=2
+pkgrel=3
 pkgdesc="Solve automatic numerical differentiation problems in one or more variables"
 url="https://github.com/pbrod/${_base}"
 license=(BSD-3-Clause)
