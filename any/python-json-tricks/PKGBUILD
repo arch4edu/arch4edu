@@ -3,7 +3,7 @@
 
 pkgname=python-json-tricks
 pkgver=3.17.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Extra features for Python's JSON"
 arch=('any')
 url='https://github.com/mverleg/pyjson_tricks'
