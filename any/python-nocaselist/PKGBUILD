@@ -4,7 +4,7 @@
 _name='nocaselist'
 pkgname="python-${_name}"
 pkgver='2.0.0'
-pkgrel=4
+pkgrel=5
 pkgdesc='A case-insensitive list for Python'
 arch=('any')
 url="https://github.com/pywbem/${_name}"
