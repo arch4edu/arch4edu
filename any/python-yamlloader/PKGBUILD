@@ -2,7 +2,7 @@
 # Contributor: Theo Ouzhinski <touzhinski at gmail dot com>
 pkgname=python-yamlloader
 pkgver=1.4.1
-pkgrel=2
+pkgrel=3
 pkgdesc='Loaders and dumpers for PyYAML'
 arch=('any')
 url=https://github.com/Phynix/yamlloader
