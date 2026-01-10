@@ -5,7 +5,7 @@ _name=cloup
 
 pkgname=python-cloup
 pkgver=3.0.8
-pkgrel=1
+pkgrel=2
 pkgdesc="Cloup (= Click + groups) contains a set of Click extensions for multiple purposes."
 
 arch=("any")
