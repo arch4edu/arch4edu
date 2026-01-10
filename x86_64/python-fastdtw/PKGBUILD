@@ -4,7 +4,7 @@
 pkgname=python-fastdtw
 _name=fastdtw
 pkgver=0.3.4
-pkgrel=7
+pkgrel=8
 pkgdesc="Python implementation of FastDTW"
 url=https://github.com/slaypni/fastdtw
 arch=(x86_64)
