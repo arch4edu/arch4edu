@@ -5,7 +5,7 @@ _name=Pyrr
 
 pkgname=python-pyrr
 pkgver=0.10.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Provides 3D mathematical functions using the power of NumPy."
 
 arch=("any")
