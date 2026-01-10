@@ -5,7 +5,7 @@ _gitname=path-and-address
 
 pkgver=2.0.1
 pkgname=python-$_gitname
-pkgrel=4
+pkgrel=5
 pkgdesc="Functions for server CLI applications used by humans."
 arch=('any')
 url="https://github.com/joeyespo/path-and-address"
