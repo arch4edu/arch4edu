@@ -2,7 +2,7 @@
 pkgname=python-sequitur-git
 _gitname=sequitur-g2p
 pkgver=76.7bd56d5
-pkgrel=1
+pkgrel=2
 pkgdesc="Sequitur G2P: A trainable Grapheme-to-Phoneme converter."
 arch=('x86_64')
 url="https://github.com/${_gitname}/${_gitname}"
