@@ -2,7 +2,7 @@
 pkgname=python-rtslib-fb
 _pkgname=rtslib-fb
 pkgver=2.2.3
-pkgrel=1
+pkgrel=2
 pkgdesc="free branch version of the LIO target API"
 arch=('any')
 url="https://github.com/open-iscsi/${_pkgname}"
