@@ -4,7 +4,7 @@
 _pkgname=quandl
 pkgname=python-$_pkgname
 pkgver=3.7.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Quandl's Python Package"
 arch=('any')
 url="https://github.com/quandl/quandl-python"
