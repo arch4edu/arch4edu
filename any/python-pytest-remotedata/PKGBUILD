@@ -2,7 +2,7 @@
 pkgname=python-pytest-remotedata
 _pyname=${pkgname#python-}
 pkgver=0.4.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Pytest plugin used for controlling access to data files hosted online"
 arch=('any')
 url="https://github.com/astropy/pytest-remotedata"
