@@ -2,7 +2,7 @@
 
 pkgname=('python-rospkg')
 pkgver='1.6.0'
-pkgrel=1
+pkgrel=2
 pkgdesc='Standalone Python library for the ROS package system'
 arch=('any')
 url='https://github.com/ros-infrastructure/rospkg'
