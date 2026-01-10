@@ -2,7 +2,7 @@
 pkgname=python-wrf
 _pkgname='wrf-python'
 pkgver=1.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A collection of diagnostic and interpolation routines for use with output from the Weather Research and Forecasting (WRF-ARW) Model."
 url="https://wrf-python.readthedocs.io/en/latest/"
 depends=('python' 'python-numpy')
