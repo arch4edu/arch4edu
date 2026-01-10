@@ -2,7 +2,7 @@
 _base=pathspec
 pkgname=pypy3-${_base}
 pkgdesc="Utility library for gitignore style pattern matching of file paths"
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=1
 arch=(any)
 url="https://github.com/cpburnz/python-${_base}"
@@ -10,7 +10,7 @@ license=(MPL2)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-flit-core)
 source=(python-${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('7913715c215052f5527575f23af6593bbf51fba33d88cb7dcb88cf16054ddeb29e9367b81fa1c8f9dd55c3daf8d022e44aad83bea16ba13aacd5e8ac14f97055')
+sha512sums=('daf461339da0b25ed37a5f788e5cdedb4b061249e71ba0c4abbe533a121337e0ed99b7217633b26ab319fb0b6bad2f7a34297d657f7febfdf8efb14b3448076d')
 
 build() {
   cd python-${_base}-${pkgver}
