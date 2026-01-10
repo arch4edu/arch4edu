@@ -2,7 +2,7 @@
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
 pkgname=targetcli-fb
 pkgver=3.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="free branch of the targetcli LIO administration shell (iSCSI + Co)"
 arch=('any')
 url="https://github.com/open-iscsi/targetcli-fb"
