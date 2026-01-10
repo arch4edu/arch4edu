@@ -6,7 +6,7 @@ _pyname=${_pname/-/_}
 pkgname=("python-${_pname}")
 #"python-${_pname}-doc")
 pkgver=1.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Standards document describing ASDF, Advanced Scientific Data Format"
 arch=('any')
 url="https://asdf-standard.readthedocs.io"
