@@ -3,7 +3,7 @@
 # Contributor: Heavysink <winstonwu91@gmail.com>
 pkgname=code_saturne
 pkgver=8.1.1
-pkgrel=2
+pkgrel=3
 pkgdesc="An open source CFD software which solves the Navier-Stokes equations under different circumstances."
 arch=(x86_64)
 url="http://code-saturne.org"
