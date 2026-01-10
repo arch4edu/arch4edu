@@ -5,7 +5,7 @@
 pkgbase=manimce
 pkgname=manim
 pkgver=0.19.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Animation engine for explanatory math videos (community edition)."
 
 arch=("any")
