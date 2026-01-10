@@ -6,7 +6,7 @@
 pkgname=python-gensim
 _pkgname=gensim
 pkgver=4.3.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Library for topic modelling, document indexing and similarity retrieval with large corpora"
 arch=('i686' 'x86_64')
 license=('LGPL2.1')
