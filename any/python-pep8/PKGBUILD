@@ -3,7 +3,7 @@
 _base=pep8
 pkgname=python-${_base}
 pkgver=1.7.1
-pkgrel=6
+pkgrel=7
 pkgdesc="The final release of the pep8 package"
 arch=('any')
 url="https://github.com/PyCQA/pycodestyle"
