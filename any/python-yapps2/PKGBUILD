@@ -7,7 +7,7 @@
 pkgname=python-yapps2
 pkgver=2.2.1
 _debver=3.1
-pkgrel=6
+pkgrel=7
 pkgdesc="Yet Another Python Parser System, Python3 fork by smurfix"
 arch=(any)
 url="https://github.com/smurfix/yapps"
