@@ -3,7 +3,7 @@
 pkgname=python-colcon-powershell
 _name=${pkgname:7}
 pkgver=0.4.0
-pkgrel=3
+pkgrel=4
 pkgdesc="An extension for colcon-core to provide PowerShell scripts."
 arch=(any)
 url="https://pypi.org/project/colcon-powershell/"
