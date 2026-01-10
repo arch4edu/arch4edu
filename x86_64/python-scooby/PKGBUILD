@@ -2,7 +2,7 @@
 
 pkgname=python-scooby
 pkgver=0.10.0
-pkgrel=5
+pkgrel=6
 pkgdesc='A Great Dane turned Python environment detective'
 arch=(any)
 url=https://github.com/banesullivan/scooby
