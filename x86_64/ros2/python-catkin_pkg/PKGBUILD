@@ -2,7 +2,7 @@
 
 pkgname=('python-catkin_pkg')
 pkgver='1.0.0'
-pkgrel=3
+pkgrel=4
 pkgdesc='Standalone Python library for the catkin package system'
 arch=('any')
 url='https://github.com/ros-infrastructure/catkin_pkg'
