@@ -1,6 +1,6 @@
 nvchecker:
   - source: aur
-    aur:
+    aur: python-pyqt5-webengine
   - alias: python
 depends:
   - any/qt5-webengine
