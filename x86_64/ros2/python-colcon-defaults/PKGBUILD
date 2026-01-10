@@ -3,7 +3,7 @@
 pkgname=python-colcon-defaults
 _name=${pkgname:7}
 pkgver=0.2.9
-pkgrel=1
+pkgrel=2
 pkgdesc="An extension for colcon-core to provide custom default values for the command line arguments from a configuration file."
 arch=(any)
 url="https://pypi.org/project/$_name"
