@@ -4,7 +4,7 @@
 pkgname=arxiv-latex-cleaner
 _pkgname=arxiv-latex-cleaner
 pkgver=1.0.8
-pkgrel=1
+pkgrel=2
 pkgdesc="Easily clean the LaTeX code of your paper to submit to arXiv"
 arch=('any')
 url='https://github.com/google-research/arxiv-latex-cleaner'
