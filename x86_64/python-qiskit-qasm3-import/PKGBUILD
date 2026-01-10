@@ -2,7 +2,7 @@
 _pkgname=qiskit-qasm3-import
 pkgname=python-${_pkgname}
 pkgver=0.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Importer from OpenQASM 3 to Qiskit's QuantumCircuit"
 arch=(any)
 url=https://github.com/Qiskit/qiskit-qasm3-import
