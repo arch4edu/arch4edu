@@ -1,7 +1,7 @@
 # Maintainer: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-pkg-config
 pkgver=0.1.0
-pkgrel=4
+pkgrel=5
 pkgdesc="An extension for colcon-core to set an environment variable to find pkg-config files."
 arch=(any)
 url="https://pypi.org/project/colcon-pkg-config/"
