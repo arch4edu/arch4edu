@@ -3,7 +3,7 @@
 pkgname=python-colcon-cmake
 _name=${pkgname:7}
 pkgver=0.2.29
-pkgrel=1
+pkgrel=2
 pkgdesc="An extension for colcon-core to support CMake projects."
 arch=(any)
 url="https://pypi.org/project/$_name"
