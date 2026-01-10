@@ -5,7 +5,7 @@ _name=backports.cached_property
 
 pkgname=python-backports.cached_property
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Python 3.8 functools.cached_property backport to python 3.6."
 
 arch=("any")
