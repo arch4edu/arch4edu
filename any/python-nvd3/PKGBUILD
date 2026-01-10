@@ -2,7 +2,7 @@
 
 pkgname=python-nvd3
 pkgver=0.15.0
-pkgrel=8
+pkgrel=9
 _commit='f9f811ebc5abd625d63da79e936d9015497b5f58'
 pkgdesc='Python wrapper for the NVD3 chart generator'
 arch=('any')
