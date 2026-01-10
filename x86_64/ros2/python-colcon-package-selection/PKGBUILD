@@ -3,7 +3,7 @@
 pkgname=python-colcon-package-selection
 _name=${pkgname:7}
 pkgver=0.2.10
-pkgrel=4
+pkgrel=5
 pkgdesc="An extension for colcon-core to select a subset of packages for processing."
 arch=(any)
 url="https://pypi.org/project/colcon-package-selection"
