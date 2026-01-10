@@ -2,7 +2,7 @@
 
 pkgname=('python-rosdep')
 pkgver='0.25.1'
-pkgrel=2
+pkgrel=3
 pkgdesc='rosdep package manager abstraction tool for ROS'
 arch=('any')
 url='https://github.com/ros-infrastructure/rosdep'
