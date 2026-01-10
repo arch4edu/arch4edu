@@ -2,7 +2,7 @@
 _name=rustworkx
 pkgname=python-$_name
 pkgver=0.17.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A high performance Python graph library implemented in Rust"
 arch=(x86_64)
 url=https://github.com/Qiskit/rustworkx
