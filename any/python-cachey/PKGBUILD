@@ -3,7 +3,7 @@
 pkgname='python-cachey'
 _pkgname=cachey
 pkgver=0.2.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Caching based on computation time and storage space"
 arch=('any')
 url="https://github.com/dask/cachey"
