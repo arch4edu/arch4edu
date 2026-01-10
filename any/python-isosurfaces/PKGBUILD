@@ -5,7 +5,7 @@ _name=isosurfaces
 
 pkgname=python-isosurfaces
 pkgver=0.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Construct isolines/isosurfaces of a 2D/3D scalar field defined by a function."
 
 arch=("any")
