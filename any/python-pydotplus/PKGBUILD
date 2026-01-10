@@ -3,7 +3,7 @@
 _base=pydotplus
 pkgname=python-${_base}
 pkgver=2.0.2
-pkgrel=5
+pkgrel=6
 pkgdesc="Interface to Graphviz’s Dot language"
 arch=(any)
 url="https://${_base}.readthedocs.io"
