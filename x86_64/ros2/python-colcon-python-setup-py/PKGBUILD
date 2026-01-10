@@ -3,7 +3,7 @@
 pkgname=python-colcon-python-setup-py
 _name=${pkgname:7}
 pkgver=0.2.9
-pkgrel=1
+pkgrel=2
 pkgdesc="An extension for colcon-core to identify packages with a setup.py file by introspecting the arguments to the setup() function call of setuptools."
 arch=(any)
 url="https://pypi.org/project/colcon-python-setup-py"
