@@ -5,7 +5,7 @@ pkgbase=mendeleydesktop
 pkgname=('mendeleydesktop'
          'mendeleydesktop-bundled')
 pkgver=1.19.8
-pkgrel=4
+pkgrel=5
 pkgdesc="Academic software for managing and sharing research papers."
 url=http://www.mendeley.com/release-notes/
 arch=(i686 x86_64)
