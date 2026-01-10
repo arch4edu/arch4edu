@@ -5,7 +5,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=0.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="ASDF schemas for coordinates"
 arch=('any')
 url="https://github.com/asdf-format/asdf-coordinates-schemas"
