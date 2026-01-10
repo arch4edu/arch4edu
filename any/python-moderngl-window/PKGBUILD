@@ -5,7 +5,7 @@ _name=moderngl-window
 
 pkgname=python-moderngl-window
 pkgver=3.1.1
-pkgrel=2
+pkgrel=3
 pkgdesc="A utility library for ModernGL making window creation and resource loading simple."
 
 arch=("any")
