@@ -3,7 +3,7 @@
 pkgname=python-colcon-zsh
 _name=${pkgname:7}
 pkgver=0.5.0
-pkgrel=3
+pkgrel=4
 pkgdesc="An extension for colcon-core to provide zsh scripts."
 arch=(any)
 url="https://pypi.org/project/colcon-zsh"
