@@ -4,7 +4,7 @@ _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
 pkgver=0.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="sans-io socks proxy client/server with couple io backends"
 arch=('any')
 url="https://github.com/pohmelie/siosocks"
