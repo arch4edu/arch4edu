@@ -13,7 +13,7 @@
 # Adapted to mkl by Simone Riva
 pkgname=python-numpy-mkl
 pkgver=2.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=(x86_64)
 license=(BSD-3-Clause)
