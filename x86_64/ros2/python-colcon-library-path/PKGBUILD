@@ -1,7 +1,7 @@
 # Maintainer: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-library-path
 pkgver=0.2.1
-pkgrel=4
+pkgrel=5
 pkgdesc="An extension for colcon-core to set an environment variable to find shared libraries at runtime."
 arch=(any)
 url="https://pypi.org/project/colcon-library-path/"
