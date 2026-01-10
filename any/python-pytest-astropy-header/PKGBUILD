@@ -2,7 +2,7 @@
 pkgname=python-pytest-astropy-header
 _pyname=${pkgname#python-}
 pkgver=0.2.2
-pkgrel=4
+pkgrel=5
 pkgdesc="Pytest plugin to add diagnostic information to the header of the test output"
 arch=('any')
 url="https://github.com/astropy/pytest-astropy-header"
