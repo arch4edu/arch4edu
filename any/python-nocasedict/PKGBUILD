@@ -4,7 +4,7 @@
 _name='nocasedict'
 pkgname="python-${_name}"
 pkgver='2.0.1'
-pkgrel=4
+pkgrel=5
 pkgdesc='A case-insensitive ordered dictionary for Python'
 arch=('any')
 url="https://github.com/pywbem/${_name}"
