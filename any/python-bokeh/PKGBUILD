@@ -3,7 +3,7 @@
 
 pkgname=python-bokeh
 pkgver=3.8.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Interactive Web Plotting for Python'
 arch=('any')
 url='http://bokeh.pydata.org/'
