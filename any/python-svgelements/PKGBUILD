@@ -3,7 +3,7 @@
 _name=svgelements
 pkgname=python-$_name
 pkgver=1.9.6
-pkgrel=2
+pkgrel=3
 pkgdesc='Svg Elements Parsing'
 arch=(any)
 url='https://github.com/meerk40t/svgelements'
