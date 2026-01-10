@@ -4,7 +4,7 @@
 pkgname=python-transformers
 _pkgname=${pkgname#python-}
 pkgver=4.57.1
-pkgrel=2
+pkgrel=3
 pkgdesc="State-of-the-art Natural Language Processing for Jax, PyTorch and TensorFlow"
 arch=('any')
 url='https://github.com/huggingface/transformers'
