@@ -5,7 +5,7 @@
 _pkgname="python-retry"
 pkgname="$_pkgname"
 pkgver=0.9.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Easy to use retry decorator"
 url="https://github.com/eSAMTrade/retry"
 license=('Apache-2.0')
