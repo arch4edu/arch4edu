@@ -3,7 +3,7 @@
 # Contributor: mickele <mimocciola@yahoo.com>
 pkgname=(gmsh gmsh-docs)
 pkgver=4.15.0
-pkgrel=2
+pkgrel=3
 pkgdesc="An automatic 3D finite element mesh generator with pre and post-processing facilities"
 arch=(x86_64)
 url="https://gmsh.info"
