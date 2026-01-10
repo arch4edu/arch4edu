@@ -3,7 +3,7 @@
 pkgname=('python-portalocker')
 _pkgname=portalocker
 pkgver=3.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Easy, portable file locking API.'
 arch=('any')
 url="https://github.com/WoLpH/${_pkgname}"
