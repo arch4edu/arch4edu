@@ -6,7 +6,7 @@ _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="The sphinx theme for the SunPy website and documentation"
 arch=('any')
 url="https://github.com/sunpy/sunpy-sphinx-theme"
