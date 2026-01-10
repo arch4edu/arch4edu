@@ -3,7 +3,7 @@
 pkgname=python-colcon-notification
 _name=${pkgname:7}
 pkgver=0.3.0
-pkgrel=2
+pkgrel=3
 pkgdesc="An extension for colcon-core to provide status notifications."
 arch=(any)
 url="https://pypi.org/project/colcon-notification"
