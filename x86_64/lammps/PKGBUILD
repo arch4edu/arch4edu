@@ -6,7 +6,7 @@
 pkgname=lammps
 pkgver=20250722
 _pkgver="stable_22Jul2025_update2"
-pkgrel=3
+pkgrel=4
 pkgdesc="Public development project of the LAMMPS MD software package"
 url="https://lammps.org"
 arch=('x86_64')
