@@ -5,7 +5,7 @@
 
 pkgname=cython0
 pkgver=0.29.37.1
-pkgrel=3
+pkgrel=4
 pkgdesc='C-Extensions for Python (legacy version)'
 arch=(x86_64)
 url='https://cython.org'
@@ -27,6 +27,7 @@ prepare() {
 build() {
   cd cython-$pkgver
 
+  export CFLAGS+=' -Wno-error=implicit-function-declaration'
   python -m build --wheel --no-isolation
 }
 
