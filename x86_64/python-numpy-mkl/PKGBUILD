@@ -11,25 +11,57 @@
 # Contributor: Douglas Soares de Andrade <dsa@aur.archlinux.org>
 # Contributor: Angel 'angvp' Velasquez <angvp[at]archlinux.com.ve>
 # Adapted to mkl by Simone Riva
-pkgname=python-numpy-mkl
-pkgver=2.4.0
-pkgrel=2
+_base=numpy
+pkgname=python-${_base}-mkl
+pkgver=2.4.1
+pkgrel=1
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=(x86_64)
 license=(BSD-3-Clause)
-url="https://numpy.org"
-provides=("python-numpy=$pkgver")
-conflicts=(python-numpy)
+url="https://${_base}.org"
+provides=(python-${_base}=${pkgver})
+conflicts=(python-${_base})
 depends=(python intel-oneapi-mkl)
-makedepends=(python-build python-installer meson-python python-setuptools cython gcc-fortran procps-ng)
+makedepends=(python-build python-installer meson-python python-setuptools cython gcc-fortran procps-ng git)
 checkdepends=(python-pytest python-hypothesis)
 optdepends=('python-threadpoolctl: for show_runtime() support')
-source=("https://github.com/numpy/numpy/releases/download/v$pkgver/numpy-$pkgver.tar.gz")
-sha512sums=('ff0c53866a7a7bdb255885ea0b9a9084538a15b8ff8e30f1ee9b75e8000432d755634fe07239ee4b6ec2b9e2e5f9535c231ad8f0b89dae54a545a4c136a20f55')
+source=(git+https://github.com/${_base}/${_base}.git?signed#tag=v${pkgver}
+        ${_base}-meson::git+https://github.com/${_base}/meson.git
+        ${_base}-highway::git+https://github.com/google/highway.git
+        ${_base}-x86-simd-sort::git+https://github.com/intel/x86-simd-sort
+        ${_base}-pocketfft::git+https://github.com/mreineck/pocketfft
+        ${_base}-svml::git+https://github.com/${_base}/SVML.git
+        ${_base}-pythoncapi-compat::git+https://github.com/python/pythoncapi-compat)
+validpgpkeys=('53A0E5283F05E29D7129149E679F228377C5247B') # Charles Harris (Logan) <charlesr.harris@gmail.com>
+sha512sums=('SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP')
+
+prepare() {
+  cd ${_base}
+  git submodule init
+  git submodule set-url vendored-meson/meson "$srcdir"/${_base}-meson
+  git submodule set-url ${_base}/_core/src/highway "$srcdir"/${_base}-highway
+  git submodule set-url ${_base}/_core/src/npysort/x86-simd-sort "$srcdir"/${_base}-x86-simd-sort
+  git submodule set-url ${_base}/fft/pocketfft "$srcdir"/${_base}-pocketfft
+  git submodule set-url ${_base}/_core/src/umath/svml "$srcdir"/${_base}-svml
+  git submodule set-url ${_base}/_core/src/common/pythoncapi-compat "$srcdir"/${_base}-pythoncapi-compat
+  git -c protocol.file.allow=always submodule update \
+      vendored-meson/meson \
+      ${_base}/_core/src/highway \
+      ${_base}/_core/src/npysort/x86-simd-sort \
+      ${_base}/fft/pocketfft \
+      ${_base}/_core/src/umath/svml \
+      ${_base}/_core/src/common/pythoncapi-compat
+}
 
 build() {
   source /opt/intel/oneapi/setvars.sh
-  cd numpy-$pkgver
+  cd ${_base}
   python -m build --wheel --no-isolation \
     -Csetup-args="-Dblas=mkl-dynamic-lp64-seq" \
     -Csetup-args="-Dlapack=mkl-dynamic-lp64-seq"
@@ -38,15 +70,14 @@ build() {
 check() {
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
 
-  cd numpy-$pkgver
+  cd ${_base}
   python -m installer --destdir="$PWD/tmp_install" dist/*.whl
   cd "$PWD/tmp_install"
   PATH="$PWD/usr/bin:$PATH" PYTHONPATH="$PWD/$site_packages:$PYTHONPATH" python -c 'import numpy; numpy.test()'
 }
 
 package() {
-  cd numpy-$pkgver
+  cd ${_base}
   python -m installer --destdir="$pkgdir" dist/*.whl
-
-  install -D -m644 LICENSE.txt -t "${pkgdir}/usr/share/licenses/python-numpy/"
+  install -Dm644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
