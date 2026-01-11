@@ -5,7 +5,7 @@
 pkgname=python-conda
 _name=${pkgname#python-}
 pkgver=25.11.0
-pkgrel=1
+pkgrel=2
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
 url="https://github.com/conda/conda"
