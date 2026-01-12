@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 _base=tomli
 pkgname=pypy3-${_base}
-pkgver=2.3.0
+pkgver=2.4.0
 pkgrel=1
 pkgdesc="A lil' TOML parser"
 arch=(any)
@@ -10,7 +10,7 @@ license=(MIT)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-flit-core)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('bd39f9ef09bf43dc48787541ef96781459f66899fab12f72b24e57ef13a8975e135b6a90b0ed7f44c0c3171a4b3afbe0c8a2a8ffeace4255771a0f331288835e')
+sha512sums=('8bd8c46d4e4337142fbd94a6a78b478db804bc7c535c11eb447a3613afdda3428b679dc06228b37ccaad73af334c204c38236b0b5287f7ff6d21387f1355d420')
 
 build() {
   cd ${_base}-${pkgver}
