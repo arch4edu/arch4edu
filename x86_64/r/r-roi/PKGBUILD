@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ROI
-_pkgver=1.0-1
+_pkgver=1.0-2
 pkgname=r-${_pkgname,,}
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=1
 pkgdesc='R Optimization Infrastructure'
 arch=('any')
@@ -19,7 +19,7 @@ optdepends=(
   r-numderiv
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d4ff143304f1422ecc455eb1a00896530193c1a227ed7f3e9da2baa95d921616')
+sha256sums=('3e884b711aa0519b6d416f924795b57ebb073ab6f9cfcc3410ed15d92f20197d')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
