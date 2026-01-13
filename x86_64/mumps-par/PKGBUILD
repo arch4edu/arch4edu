@@ -2,7 +2,7 @@
 # Contributor: Guillaume Dollé < dolle dot guillaume at gmail dot com >
 # Contributor: Lucas H. Gabrielli
 pkgname=mumps-par
-pkgver=5.8.1
+pkgver=5.8.2
 pkgrel=1
 pkgdesc="Sparse solver library using Gaussian elimination, with parmetis implementation"
 url="https://mumps-solver.org/index.php"
@@ -14,7 +14,7 @@ conflicts=('mumps')
 arch=('i686' 'x86_64')
 source=(https://mumps-solver.org/MUMPS_${pkgver}.tar.gz
         Makefile.inc)
-sha256sums=('e91b6dcd93597a34c0d433b862cf303835e1ea05f12af073b06c32f652f3edd8'
+sha256sums=('eb515aa688e6dbab414bb6e889ff4c8b23f1691a843c68da5230a33ac4db7039'
             'd3695d7c8f16aef345f293418bf222e5bf52968a79ea8ad44060c568d8126602')
 
 prepare() {
