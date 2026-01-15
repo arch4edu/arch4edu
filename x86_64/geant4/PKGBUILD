@@ -1,6 +1,6 @@
 # Maintainer: Luis Sarmiento < Luis.Sarmiento-ala-nuclear.lu.se >
 pkgname='geant4'
-pkgver=11.3.2
+pkgver=11.4.0
 _pkgver=v${pkgver}
 pkgrel=1
 pkgdesc="A simulation toolkit for particle physics interactions."
@@ -40,64 +40,63 @@ optdepends=('java-environment: for histogram visualizations and analysis'
 url="http://geant4.cern.ch/"
 arch=('x86_64')
 license=('custom: http://geant4.cern.ch/license/')
-options=('!emptydirs')
+options=('!emptydirs' '!debug')
 install="${pkgname}.install"
 source=("http://geant4-data.web.cern.ch/releases/${pkgname}-${_pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('892aedd7425262a50ac3d3c7117d81c0c0da4b408c6880dbaf5478b9301e488c'
+sha256sums=('ad64c96b8b3d7125e746bb97f5f55779ed594681a6a5d63c27025e7c9cef58fa'
             '0eae153900d995603b0b465c9f17225ba76dd8118377507916fc709360482058')
 
 ## Remove this if you want to keep an even smaller package
 ## No need to wait for compression when just installing it.
 
+prepare() {
+
+    cd ${srcdir}
+
+    local cmake_options=(
+        -B build
+        -S ${pkgname}-${_pkgver}
+        # Standard options
+        -D CMAKE_INSTALL_PREFIX=/usr
+        -D GEANT4_USE_G3TOG4=ON
+        -D GEANT4_USE_GDML=ON
+        -D GEANT4_USE_INVENTOR_QT=ON
+        -D GEANT4_USE_OPENGL_X11=ON
+        -D GEANT4_USE_QT=ON
+        -D GEANT4_USE_RAYTRACER_X11=ON
+        -D GEANT4_USE_SYSTEM_CLHEP=ON
+        -D GEANT4_USE_SYSTEM_ZLIB=ON
+        -D GEANT4_USE_XM=ON
+        # Advanced options
+        -D GEANT4_INSTALL_PACKAGE_CACHE=OFF
+        -D GEANT4_BUILD_TLS_MODEL=global-dynamic
+    )
+
+    env -i \
+        QT_SELECT=6 \
+        PATH=/usr/bin \
+        cmake "${cmake_options[@]}"
+}
+
 build() {
 
-  [ -d ${srcdir}/build ] || mkdir ${srcdir}/build
-  cd ${srcdir}/build
-
-  env -i \
-      QT_SELECT=6 \
-      PATH=/usr/bin \
-      cmake \
-      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-      -DCMAKE_INSTALL_PREFIX=/usr \
-      -DGEANT4_USE_G3TOG4=ON \
-      -DGEANT4_USE_GDML=ON \
-      -DGEANT4_USE_INVENTOR_QT=ON \
-      -DGEANT4_USE_OPENGL_X11=ON \
-      -DGEANT4_USE_QT=ON \
-      -DGEANT4_USE_RAYTRACER_X11=ON \
-      -DGEANT4_USE_XM=ON \
-      -DGEANT4_USE_SYSTEM_CLHEP=ON \
-      -DGEANT4_USE_SYSTEM_ZLIB=ON \
-      -DGEANT4_INSTALL_PACKAGE_CACHE=OFF \
-      -DGEANT4_BUILD_TLS_MODEL=global-dynamic \
-      -DGEANT4_USE_QT_QT6=ON \
-      ../${pkgname}-${_pkgver}
-
-  G4VERBOSE=1 make
-
+    cd ${srcdir}
+    G4VERBOSE=1 cmake --build build
 }
 
 package() {
 
-  # normally the geant4.[c]sh is meant to configure the
-  # LD_LIBRARY_PATH, PATH and the "G4DATASETS". Let's not source that
-  # script since
-  #
-  # - LD_LIBRARY_PATH can be set using ldconf
-  # - PATH is not really needed
-  # - the "G4DATASETS" are not installed by default in this package
+    # normally the geant4.[c]sh is meant to configure the
+    # LD_LIBRARY_PATH, PATH and the "G4DATASETS". Let's not source that
+    # script since
+    #
+    # - LD_LIBRARY_PATH can be set using ldconf
+    # - PATH is not really needed
+    # - the "G4DATASETS" are not installed by default in this package
 
-  cd ${srcdir}/build
-  make DESTDIR="${pkgdir}" install
-
-  ##
-  ## This is not needed as ldconfig automatically includes /usr/lib
-  ##
-  # use a file that pacman can track instead of adding directly to ld.so.conf
-  # install -d "${pkgdir}/etc/ld.so.conf.d"
-  # echo '/usr/lib' > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
+    cd ${srcdir}
+    DESTDIR="${pkgdir}" cmake --build build --target install
 }
 
 # All this is just a comment
@@ -105,7 +104,7 @@ echo ""
 : <<'EOF'
 
  From: https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/installguide.html#geant4-build-options
- Last revisited: Dec 8, 2024. (11.3)
+ Last revisited: Jan 14, 2026. (11.4)
 
  |----------------------------------+------------------------------------------------------+----------------|
  | option                           | default                                              | set to         |
@@ -148,7 +147,7 @@ echo ""
  | GEANT4_BUILD_VERBOSE_CODE        | ON                                                   |                |
  | GEANT4_BUILD_BUILTIN_BACKTRACE   | OFF                                                  |                |
  | GEANT4_BUILD_PHP_AS_HP           | OFF what's this?                                     |                |
- | GEANT4_USE_QT_QT6                | OFF                                                  | ON             |
+ | GEANT4_USE_QT_QT5                | OFF                                                  |                |
  | GEANT4_USE_SMARTSTACK            | OFF what's this                                      |                |
  | GEANT4_USE_SYSTEM_PTL            | OFF                                                  |                |
  | GEANT4_USE_TBB                   | OFF                                                  |                |
@@ -156,7 +155,7 @@ echo ""
  | GEANT4_USE_FREETYPE              | OFF                                                  |                |
  | GEANT4_USE_HDF5                  | OFF                                                  |                |
  | GEANT4_USE_USOLIDS               | OFF                                                  |                |
- | CMAKE_PREFIX_PATH                |                                                      | /usr           |
+ | CMAKE_PREFIX_PATH                |                                                      |                |
  |----------------------------------+------------------------------------------------------+----------------|
 
  |--------------------------------+-----------------------------------------------------------------------------------------|
