@@ -1,7 +1,7 @@
 # Maintainer: trap000d <trap000d at gmail dot com>
 
 _cranname=renv
-_cranver=1.1.5
+_cranver=1.1.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -13,7 +13,7 @@ depends=(
     "r>=3.1"
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('3ee996c65989bc5ea3914fbceb3794b00c7daab7eda49dce64048012ea0406b2')
+sha256sums=('0f748164357f5f3b639c465f68de8aa5b4dc317efac90bf49699230cc5859600')
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
