@@ -7,7 +7,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _cranname=testthat
-_cranver=3.3.1
+_cranver=3.3.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -70,7 +70,7 @@ optdepends=(
 # )
 
 source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("76c29a6bd6f4323871c21fab5498f2b3a0776cdd4211cf05ca304c0afc3be0f6fc4d3b845e5a7eaa874d39558cb7184c38cb03ca29f3f1dfa222dc4ece5fdda8")
+b2sums=("75642d496b63d538738a71defc7294f97d5bd1d59f44f93be638093630809abfa33519dd43d106930e2ddc509ccb5098bd340c5c8fd9454f3aa4023828ff6337")
 
 build() {
     mkdir -p "${srcdir}/build/"
