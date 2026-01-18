@@ -5,8 +5,8 @@
 
 _base=trimesh
 pkgname=python-${_base}
-pkgver=4.11.0
-pkgrel=2
+pkgver=4.11.1
+pkgrel=1
 pkgdesc="Import, export, process, analyze and view triangular meshes"
 arch=(any)
 url="https://trimsh.org"
@@ -41,7 +41,7 @@ optdepends=('python-scipy: convex hulls'
   'python-pytest: test runner'
   'python-pyinstrument: sampling based profiler') # python-xatlas python-glooey
 source=(${_base}-${pkgver}.tar.gz::https://github.com/mikedh/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('5783b6b4e57de23d5020b2b062ab97363aafc90fecc3fb34b405ffee0efd9c831193f6ca0f7be81eb85a4c0231ef7fb6faa5cd43ed078188d1e8c47f0735ab4e')
+sha512sums=('68d58a365ad7c3ee4e23b569a1594f13ef9e5ecaf3dd5f17a67c476909b31988fa4d3cf58ede5ea507f9e3e12e67260aed2e3511419f85f6c7ff87afb52baf07')
 
 build() {
   cd ${_base}-${pkgver}
