@@ -3,7 +3,7 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=rbibutils
-_pkgver=2.4
+_pkgver=2.4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -18,8 +18,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d064ba2075217b81293e88fad9b5da40')
-b2sums=('15263ca1733e310e2e56f4fd901dfbb4113788446123f06bbb1976db6f068f6253bdcd184fa81ab45bf9137c4536c6e94adfd21ac7acb414c711fd5490dc104c')
+md5sums=('dad8207e52a80a5a4a11b22339aae112')
+b2sums=('f6e9344bcc0ed2a64b8e1351eeb7964aaf2e57260418979ae3a4945dd61063fb032c21cd892f371b715a356f89d4210c27cc824ba4b9fe0fc87e20267efa7e82')
 
 build() {
   mkdir build
