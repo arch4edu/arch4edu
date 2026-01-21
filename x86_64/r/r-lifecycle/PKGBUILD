@@ -4,22 +4,20 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=lifecycle
-_pkgver=1.0.4
+_pkgver=1.0.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Manage the Life Cycle of your Package Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
   r-cli
-  r-glue
   r-rlang
 )
 optdepends=(
   r-covr
-  r-crayon
   r-knitr
   r-lintr
   r-rmarkdown
@@ -28,10 +26,11 @@ optdepends=(
   r-tidyverse
   r-vctrs
   r-withr
+  r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4490cb8f9777f1ff4bae184d51d24405')
-b2sums=('48eb74135c79eb06914d6451458a60c1890de97fde88a16c01bcf8c9367432f4c116d887b4d6f25675c1874770286cba1b65de928ba129966a991f3ccf6d4d84')
+md5sums=('bce35a7a89fe4108f262db3e441cccae')
+b2sums=('469b05f6af21fa0718075864d214f2f83102f070791465c1078f1572a16daf1cca0c0c43222940c2ed761f3264ffcc0325880cd21e7d11609ef76f7252c00d2f')
 
 build() {
   mkdir build
