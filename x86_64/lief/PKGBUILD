@@ -1,5 +1,5 @@
 pkgname=lief
-pkgver=0.17.0
+pkgver=0.17.2
 pkgrel=1
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
@@ -38,7 +38,7 @@ provides=(libLIEF.so)
 source=(
 	"lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz"
 )
-sha256sums=('bcc5f1e0dcfbf6de07d8a666bf742cda6467cd08d4b5a9679dfdbaafe08563e2')
+sha256sums=('bece1be25aa657b94d1c97ddf88c47e0b94faa1d971c42532c4eb59fbb507fc2')
 
 prepare() {
   cd "LIEF-$pkgver"
@@ -59,7 +59,6 @@ build() {
     -D LIEF_OPT_EXTERNAL_EXPECTED=ON \
     -D LIEF_RUST_API=ON \
     -D LIEF_DEX=ON \
-    -D LIEF_DOC=OFF \
     -D LIEF_PE=ON \
     -D LIEF_TESTS=OFF
   cmake --build build
