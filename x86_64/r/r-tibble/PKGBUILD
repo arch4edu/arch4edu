@@ -5,7 +5,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=tibble
-_pkgver=3.3.0
+_pkgver=3.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -48,8 +48,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d7ae660898db86c72a6996d150c19180')
-b2sums=('3fecc81e292a6948b7b650fb6d231427680ce72521509ccc7fb8dd181b83aff09ccd2a956ee4cbb280176901b37623687f23c412e9b32a49466c67a466f215a6')
+md5sums=('97ff25ebdd1460ec152d48e9bb54fa43')
+b2sums=('6e59dc555e0177085d34d3e1d876f7967dc47b9cb9fb11585c8c21ab13cf8ca1940d1172bf76d4b039a40d268718cfab86049299054ca1a82c803a42b6fcdf7c')
 
 build() {
   mkdir build
