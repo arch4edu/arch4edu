@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=Rdpack
-_pkgver=2.6.4
+_pkgver=2.6.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,8 +21,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e0124279e860c796d5b17bfdfea2a93a')
-b2sums=('0a7b04e92d4477fa0be6e78c2197339b18a86f23a2c0de180b2ee6b351b06c8b75cf89997a62a6507b7c894c885851f8564b65423cf2f7836aead2853393e31d')
+md5sums=('866e1adfb8171aac20c34e250976ae63')
+b2sums=('1c499193788f8fd3946e496827fed4e0eeb437ca30856b9cb86b1b995d68b385f25e9610ca256f1c15a1a6fcc867249fca6387d8588c27a940da9bfec1f4e080')
 
 build() {
   mkdir build
