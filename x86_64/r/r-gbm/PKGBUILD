@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gbm
-_pkgver=2.2.2
+_pkgver=2.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,8 +23,8 @@ optdepends=(
   r-viridis
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('bcfa6fac3d172a776322aa42042d83e7')
-b2sums=('6eb2e163c6f820c8585bb7e70423d21bd15e075957421b3a23c65ddedd66fc9d19c89db690916828cede35ad10e8b6209b85efb660cf7c3efaa76c2a9b297ce7')
+md5sums=('044b67e73e2d0231434b8ef9dbc9366f')
+b2sums=('5eaae8fb9292f0ed5c4ade4fcc1bdf8c8fda4bafce126a9bcf7c8594b6d27fa3125363c70c5766feb050debca6724de8e5e88ebd55d296b12b1c51f55c8b2ec0')
 
 build() {
   mkdir build
