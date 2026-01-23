@@ -1,3 +1,4 @@
+
 # Maintainer: Peter Jung <ptr1337@archlinux.org>
 # Contributor: Aakash Hemadri <aakashhemadri123@gmail.com>
 # Contributor: Nicolas Narvaez <nicomix1006@gmail.com>
@@ -9,13 +10,12 @@ pkgname=microsoft-edge-stable-bin
 _pkgname=microsoft-edge
 _pkgshortname=msedge
 _channel=stable
-pkgver=143.0.3650.139
+pkgver=144.0.3719.82
 pkgrel=1
 pkgdesc="A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier"
 arch=('x86_64')
 url="https://www.microsoftedgeinsider.com/en-us/download"
-license=('custom')
-
+license=('Licenseref-custom')
 provides=('microsoft-edge-stable' 'edge-stable')
 conflicts=('microsoft-edge-stable' 'edge-stable' 'edge-stable-bin' 'edge')
 depends=('gtk3' 'libcups' 'nss' 'alsa-lib' 'libxtst' 'libdrm' 'mesa' 'libxml2')
@@ -33,7 +33,7 @@ options=(!strip !zipman)
 source=("https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/${_pkgname}-${_channel}_${pkgver}-1_amd64.deb"
 	"microsoft-edge-stable.sh"
 	"Microsoft Standard Application License Terms - Standalone (free) Use Terms.pdf")
-sha256sums=('b0b9fc965c3cc1d2cb025d3019b0544f89f28d88997205d2ecb342c294dbfea4'
+sha256sums=('5bbc13fb568d17b66e8583d0d9502f56027ee465aca291270ccf4585da710488'
             'dc3765d2de6520b13f105b8001aa0e40291bc9457ac508160b23eea8811e26af'
             'edf2ed596eb068f168287fc76aa713ad5e0afb59f0a0a47a4f29c0c124ade15e')
 
