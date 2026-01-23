@@ -2,7 +2,7 @@
 
 pkgname=archlinuxarm-keyring
 pkgver=20240419
-pkgrel=1
+pkgrel=2
 pkgdesc='Arch Linux ARM PGP keyring'
 arch=('any')
 url='http://archlinuxarm.org'
