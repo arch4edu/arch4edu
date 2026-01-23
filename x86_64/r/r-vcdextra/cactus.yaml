@@ -9,6 +9,7 @@ depends:
   - x86_64/r/r-here
   - x86_64/r/r-purrr
   - x86_64/r/r-readxl
+  - x86_64/r/r-rgl
   - x86_64/r/r-stringr
   - x86_64/r/r-tidyr
   - x86_64/r/r-vcd
