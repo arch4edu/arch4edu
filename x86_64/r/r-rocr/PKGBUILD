@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ROCR
-_pkgver=1.0-11
+_pkgver=1.0-12
 pkgname=r-${_pkgname,,}
-pkgver=1.0.11
-pkgrel=4
+pkgver=1.0.12
+pkgrel=1
 pkgdesc='Visualizing the Performance of Scoring Classifiers'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -19,7 +19,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('57385a773220a3aaef5b221a68b2d9c2a94794d4f9e9fc3c1eb9521767debb2a')
+sha256sums=('21903bd977e2cf6382f016bbef3d14b5a77305b9d0dc2041b0f26a76938c95fb')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
