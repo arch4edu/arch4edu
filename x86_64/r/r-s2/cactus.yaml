@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-rcpp
   - x86_64/r/r-wk
+  - x86_64/r/r-bit64
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
