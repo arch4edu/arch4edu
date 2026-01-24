@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fitdistrplus
-_pkgver=1.2-5
+_pkgver=1.2-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,8 +25,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2cc7195f1d2d1eb5a302bbc737912892')
-b2sums=('22bdcc8c8b6a2728b2d0aeb2150a5a4b5eee03ddb6e25168a0d1e9633db213eaafde6f0b660bf410fbe75082b556e1990f6d21c500dc2271f5e7dbc2d370bd30')
+md5sums=('19e0d8a6c830d393101306373334bc42')
+b2sums=('bf85e0343aa4b018fbbc72484ec2d4360bbb3b31b43ae7f9c5dd6f46ee9951784e91a711dcce71b6974dc3b86ac1b6169c7f5478b10188dd7f2074eca09c4df6')
 
 build() {
   mkdir build
