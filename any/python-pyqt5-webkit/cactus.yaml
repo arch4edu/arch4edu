@@ -3,9 +3,12 @@ nvchecker:
     aur:
   - alias: python
 makedepends:
+  - x86_64/qt5-connectivity
+  - x86_64/qt5-quick3d
+  - x86_64/qt5-remoteobjects
+  - x86_64/qt5-webchannel
   - x86_64/qt5-webkit
+  - x86_64/qt5-websockets
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  add makedepends python-setuptools
+pre_build: aur-pre-build
 post_build: aur-post-build
