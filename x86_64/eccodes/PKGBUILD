@@ -1,7 +1,7 @@
 # Maintainer: "Jan Kohnert <bughunter@jan-kohnert.de"
 # Contributor: Graziano Giuliani <graziano.giuliani@poste.it>
 pkgname=eccodes
-pkgver=2.44.0
+pkgver=2.45.0
 _attnum=45757960
 pkgrel=1
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
@@ -17,34 +17,48 @@ source=(
     "${pkgname}-${pkgver}-test-data.tar.gz::https://get.ecmwf.int/repository/test-data/eccodes/eccodes_test_data.tar.gz"
 )
 sha512sums=(
-    "63f81db07103ab3c6c0497ca3d0bae5b8a0841ed83a2b88831ddce756489a84aa394af7673c1438e2ea7a55107970cf87b8222da31321ef70ecc55cc99a3ddf5"
+    "aa5f5c01ce9d551706ca8242ab6a4663b0c6bf114aa229e2aa01dba549fac1d3d57a06cf8907f18dcba4c9f1a446cbc253c3675ebf77f62ee5ac2c4fb8800dce"
     "8b4c7159dd7ed0e1e69068ec7dcabe94064f0d2abf9eac4fca2a9c730d500999e8edf1e7eeebba6fb12ae99b223c1b0843e31414538333c52f2508cb2d410151"
 )
-    
-prepare() {
-    mkdir -p "$srcdir/${pkgname}-${pkgver}-Source/build"
-    if [ -d "$srcdir/${pkgname}-${pkgver}-Source/build/data" ]; then
-        rm -r "$srcdir/${pkgname}-${pkgver}-Source/build/data"
-    fi
-    mv data "$srcdir/${pkgname}-${pkgver}-Source/build/"
-}
 
 build() {
-    cd "$srcdir/${pkgname}-${pkgver}-Source/build"
-    cmake -DCMAKE_BUILD_TYPE=production -DCMAKE_INSTALL_DATADIR=/usr/share \
-        -DCMAKE_INSTALL_DATAROOTDIR=/usr/share/$pkgname/definitions \
-        -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_AEC=ON \
-        -DENABLE_ECCODES_THREADS=ON -DENABLE_EXTRA_TESTS=ON -DENABLE_JPG=ON \
-        -DENABLE_JPG_LIBJASPER=OFF -DENABLE_JPG_LIBOPENJPEG=ON -DENABLE_PNG=ON ..
-    make
+  local cmake_options=(
+    -B build
+    -S "$pkgname-$pkgver-Source"
+    -W no-dev
+    #-D CMAKE_BUILD_TYPE=Production
+    -D CMAKE_BUILD_TYPE=None
+    -D CMAKE_INSTALL_PREFIX=/usr
+    -D CMAKE_INSTALL_DATADIR=/usr/share
+    -D CMAKE_INSTALL_DATAROOTDIR="/usr/share/$pkgname/definitions"
+    -D ENABLE_AEC=ON
+    -D ENABLE_ECCODES_THREADS=ON
+    -D ENABLE_EXTRA_TESTS=ON
+    -D ENABLE_JPG=ON
+    -D ENABLE_JPG_LIBJASPER=OFF
+    -D ENABLE_JPG_LIBOPENJPEG=ON
+    -D ENABLE_PNG=ON
+  )
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 check() {
-    cd "$srcdir/${pkgname}-${pkgver}-Source/build"
-    make test
+  # move extra test data
+  mv data ../build/
+  local excluded_tests=""
+  local ctest_flags=(
+    --test-dir build
+    # show the stdout and stderr when the test fails
+    --output-on-failure
+    # execute tests in parallel
+    --parallel $(nproc)
+    # exclude problematic tests
+    --exclude-regex "$excluded_tests"
+  )
+  ctest "${ctest_flags[@]}"
 }
 
 package() {
-    cd "$srcdir/${pkgname}-${pkgver}-Source/build"
-    make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" cmake --install build
 }
