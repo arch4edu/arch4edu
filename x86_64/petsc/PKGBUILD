@@ -3,7 +3,7 @@
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 pkgver=3.24.3
-pkgrel=1
+pkgrel=2
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
 arch=('i686' 'x86_64')
@@ -67,11 +67,11 @@ build() {
   echo 'MAKEFLAGS='${MAKEFLAGS}
 
   ./configure --prefix=${_install_dir} ${CONFOPTS} \
-              "CFLAGS+=$CFLAGS" \
-              "CXXFLAGS+=$CXXFLAGS" \
-              "FFLAGS+=$FFLAGS" \
-              "LDFLAGS+=$LDFLAGS -lstdc++" \
-              "MAKEFLAGS+=$MAKEFLAGS"
+              "CFLAGS=$CFLAGS" \
+              "CXXFLAGS=$CXXFLAGS" \
+              "FFLAGS=$FFLAGS" \
+              "LDFLAGS=$LDFLAGS -lstdc++" \
+              "MAKEFLAGS=$MAKEFLAGS"
 
   make all
 }
