@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=blob
-_pkgver=1.2.4
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="A Simple S3 Class for Representing Vectors of Binary Data ('BLOBS')"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -25,8 +25,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3133f827ee7c1e4ca99c16659984627e')
-b2sums=('2898e3dcc5f9e46f17a1e66f75399580165f8b07a400722808a1da4687fef4a44645cb9f3c11b0f2f2331e99c580651bdc23da0a116b4aa7f40c30c09bfa4fd1')
+md5sums=('8a43f72d9dff0b574606a9d8b191c33a')
+b2sums=('c2fd0941b0f145934d19d2a93c5df03538ec29e706c11125f0c75475cf15917538d32fc3dacae408aa29062aaf7573e87d358e9387839521c65229cd379adbd6')
 
 build() {
   mkdir build
