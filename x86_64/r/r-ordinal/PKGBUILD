@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ordinal
-_pkgver=2023.12-4.1
+_pkgver=2025.12-29
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,8 +22,8 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ca291ae99575bdcd05cf2f63ff732f54')
-b2sums=('4ead24264e3ae5ba4947415e49a55f62b070a02b70a5eda7bdc490f12453e99b43d84b77f1d4992924c2f96433f905beca6ac7423609e0461865e2589a22de60')
+md5sums=('3cde159a88b96ed9ac797dbe941e00ca')
+b2sums=('d6e03f200328ea86fa3d17ae2114ec11beacda62e2774a6d970b7253c018aee19a25cacf6feba64112e4cd9dc621676ac36873cbfd2fced9c744f2b5cd98a00a')
 
 build() {
   mkdir build
