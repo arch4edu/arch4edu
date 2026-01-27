@@ -3,19 +3,20 @@
 
 _name='nocasedict'
 pkgname="python-${_name}"
-pkgver='2.0.1'
-pkgrel=5
+pkgver='2.2.0'
+pkgrel='1'
 pkgdesc='A case-insensitive ordered dictionary for Python'
 arch=('any')
 url="https://github.com/pywbem/${_name}"
 depends=('python-six')
-makedepends=('python-build' 'python-installer' 'python-setuptools'  'python-wheel')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-setuptools-scm' 'python-wheel')
 license=('GPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('d2052d842ea59878cc6196faaac89cad7308d3a4cc21ec7318db9946397b13a6')
+sha256sums=('145342221eb83c13b7c302b2591c4747823f96f7ca6789b86bdcbc2482027e83')
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
+  export SETUPTOOLS_SCM_PRETEND_VERSION="${pkgver}"
   python -m build --wheel --no-isolation
 }
 
