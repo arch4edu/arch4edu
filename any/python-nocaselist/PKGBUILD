@@ -3,18 +3,19 @@
 
 _name='nocaselist'
 pkgname="python-${_name}"
-pkgver='2.0.0'
-pkgrel=5
+pkgver='2.2.0'
+pkgrel='1'
 pkgdesc='A case-insensitive list for Python'
 arch=('any')
 url="https://github.com/pywbem/${_name}"
-makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-setuptools-scm' 'python-wheel')
 license=('GPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('2e13029432b95d4890fb75c5d97d3d5a002940de14ac4ea0569e6a4d9fd81d71')
+sha256sums=('149cab2e853c397b88502bf9dbbb52620cb34148659f088a1ffc95d6633a6c17')
 
 build() {
   cd "${srcdir}/${_name}-${pkgver}"
+  export SETUPTOOLS_SCM_PRETEND_VERSION="${pkgver}"
   python -m build --wheel --no-isolation
 }
 
