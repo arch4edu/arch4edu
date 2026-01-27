@@ -1,14 +1,15 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgbase=python-parfive
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=2.2.0
-pkgrel=3
+pkgver=2.3.1
+pkgrel=2
 pkgdesc="A HTTP and FTP parallel file downloader"
 arch=('any')
 url="https://parfive.readthedocs.io"
 license=('MIT')
-makedepends=('python-setuptools-scm'
+makedepends=('python-setuptools-scm>=8.0.0'
              'python-build'
              'python-installer'
              'python-sphinx-automodapi'
@@ -19,20 +20,20 @@ makedepends=('python-setuptools-scm'
              'python-tqdm'
              'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-socket'
+#             'python-pytest-xdist'
               'python-pytest-localserver'
               'python-pytest-asyncio'
               'python-aioftp'
               'python-aiofiles')   #python-aiohttp tqdm
-source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
-        'fix-downloader-py3.14.patch')
-md5sums=('67c92f1b71ba2c919a0acdd65ee70570'
-         'ca9e4696a710b472e40cda929ba0eb02')
+source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
+#       'fix-downloader-py3.14.patch')
+md5sums=('9e20d421325bb9a827ca9405614f18df')
 
-prepare() {
-    cd ${srcdir}/${_pyname}-${pkgver}
-
-    patch -Np1 -i "${srcdir}/fix-downloader-py3.14.patch"
-}
+#prepare() {
+#    cd ${srcdir}/${_pyname}-${pkgver}
+#
+#    patch -Np1 -i "${srcdir}/fix-downloader-py3.14.patch"
+#}
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -51,7 +52,7 @@ check() {
 }
 
 package_python-parfive() {
-    depends=('python>=3.9' 'python-tqdm>=4.27.0' 'python-aiohttp')
+    depends=('python>=3.10' 'python-tqdm>=4.27.0' 'python-aiohttp')
     optdepends=('python-aioftp>=0.17.1: For downloads over FTP'
                 'python-parfive-doc: Documentation for Parfive')
     cd ${srcdir}/${_pyname}-${pkgver}
