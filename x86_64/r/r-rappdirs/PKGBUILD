@@ -3,10 +3,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=rappdirs
-_pkgver=0.3.3
+_pkgver=0.3.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=1
 pkgdesc="Application Directories: Determine Where to Save Data, Caches, and Logs"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -26,15 +26,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-tests.patch")
-md5sums=('cafdd5478c4a6094a9f3d7335fb4f889'
+md5sums=('a990a3ddcfa9eb422cd406f78084fbd8'
          '86106366bdf6586bb505dcc53dcc1ba2')
-b2sums=('2dd360804783d56269f4f9c96cfe057ba431ee9d71e69227f2338feec06cbff555d1707e01a2830647a7d7421d7dbc56452b88b985971cf1feb5d21bc1452cea'
+b2sums=('79c6b99127304654d1c3c1c5fd882c8170f22c5d9554c0ed6f38b1c633fbc22948204d8684d39de3e4ecd67f80af29b0fb2bc5e7b8bf78689ed0d9cc625654c6'
         'a8b98e83b9cafdf1117627c99c13ec5fb2b05176d8c031e07eb888230e23d3a280308d8012c0dbf0312b22f83eca522f249155dfef0d8dd4855b4a7512e6d3e5')
-
-prepare() {
-  # fix outdated snapshot tests
-  patch -Np1 -i fix-tests.patch
-}
 
 build() {
   mkdir build
