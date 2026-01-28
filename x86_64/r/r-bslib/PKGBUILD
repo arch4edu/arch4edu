@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=bslib
-_pkgver=0.9.0
+_pkgver=0.10.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,6 +25,7 @@ depends=(
   r-sass
 )
 optdepends=(
+  r-brand.yml
   r-bsicons
   r-curl
   r-fontawesome
@@ -41,8 +42,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b36702a77f5e310bd44f36d6604ed2c5')
-b2sums=('189f06b92b647d592bd285d65ab8683c9ebf0f66b1c1e3db26dc1b79de5489b0299fe30e3e7cd59269b7ef3b683e142b932f4b0aac3612c0096d2677bcae62fd')
+md5sums=('63fd55ca6856c3c55d65e2fe5ccd2cd2')
+b2sums=('591127b27f6ceba0aaefdd403533c1b206c2853fc2ebf9feeb50240a9189a1319dca93440ebbd7b538b9ca55b97a1faf3bde642c5d873e4d35d4543523eaaff9')
 
 build() {
   mkdir build
