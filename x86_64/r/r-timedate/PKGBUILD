@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=timeDate
-_pkgver=4051.111
+_pkgver=4052.112
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -19,8 +19,8 @@ optdepends=(
   r-runit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('18b5264944177271c01feeb830e32d3e')
-b2sums=('c5bd6f47e1f3bad7f17d33ec52072b2df0ada67388934ddc0ca673682f5c33c5063bf63a0e4be57cb657f85c434ba6a7cfce121000c1279590a8bd9ea4d71739')
+md5sums=('354e0ef7bec83cc6d14d3106529043cc')
+b2sums=('43fd93c703c99c2a72eefcc18374925412e5cb43150e2501a7a56896f0099edd60b090d4f086731dd7668723bce7ddeedd9582b37aef984fdf5cd8277f41f224')
 
 build() {
   mkdir build
