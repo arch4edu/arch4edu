@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=vcdExtra
-_pkgver=0.8-6
+_pkgver=0.9.0
 pkgname=r-${_pkgname,,}
-pkgver=0.8.6
+pkgver=0.9.0
 pkgrel=1
 pkgdesc="'vcd' Extensions and Additions"
 arch=('any')
@@ -18,6 +18,7 @@ depends=(
   r-here
   r-purrr
   r-readxl
+  r-rgl
   r-stringr
   r-tidyr
   r-vcd
@@ -44,7 +45,7 @@ optdepends=(
   r-vgam
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('51cca108752d9a944964531bfa68607f7ecc2183d9e4d5a0d0bd639bcf333a0c')
+sha256sums=('36352c311c8e56982a48e9ab5a928dec45442ca2884b131b870df2dcb5c093c1')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
