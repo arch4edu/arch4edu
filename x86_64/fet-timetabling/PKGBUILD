@@ -1,24 +1,31 @@
 # Maintainer: Thibaud Kehler <thibaud.kehler at gmx dot net>
 pkgname='fet-timetabling'
 _module='fet'
-pkgver=7.6.5
+pkgver=7.7.3
 pkgrel=1
 pkgdesc="A software for automatically scheduling the timetable of a school, high-school or university."
 arch=('x86_64' 'i686')
-url="http://lalescu.ro/liviu/fet/"
+url="https://lalescu.ro/liviu/fet/"
 license=('AGPL3')
 depends=('qt6-base' 'hicolor-icon-theme')
-source=("https://lalescu.ro/liviu/fet/download/fet-${pkgver}.tar.bz2")
-sha256sums=('b22e2beb4c419ad5b8624b7c24a396f3d48262fab673fcd140697a60baccb341')
+makedepends=('cmake')
+source=("https://lalescu.ro/liviu/fet/download/fet-${pkgver}.tar.xz")
+sha256sums=('0ea260efe90c4013329d0b962d8622eb227643c0046086653bfa99bd7187beac')
 
 build() {
 	cd "$srcdir/$_module-$pkgver"
-	/usr/lib/qt6/bin/qmake fet.pro "DEFINES+=USE_SYSTEM_LOCALE"
+	mkdir -p build
+	cd build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DUSE_SYSTEM_LOCALE=ON \
+		-DCMAKE_INSTALL_DATADIR=/usr/share
 	make
 }
 
 package() {
-	cd "$srcdir/$_module-$pkgver"
-	make INSTALL_ROOT="${pkgdir}/" install
+	cd "$srcdir/$_module-$pkgver/build"
+	make DESTDIR="${pkgdir}" install
 }
 options+=("!lto")
