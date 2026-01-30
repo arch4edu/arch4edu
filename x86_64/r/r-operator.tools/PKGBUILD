@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=operator.tools
-_pkgver=1.6.3
+_pkgver=1.6.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=1
 pkgdesc="Utilities for Working with R's Operators"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('16c236522901759bd83488e736e406aa')
-b2sums=('e2a0f691ac11e0e1a94f3b8ba2fd5da9c9c04fbd802c6c148628630ba86056bad4679ea0b4e6ae3acf08561d3c39872fa0e0ad41d4040d5349b9db25185a780b')
+md5sums=('d8096be52510c75ee09a3f50faeb0f83')
+b2sums=('db4f6815d406dd309cb3b73fdbb065f6f5304dd88d2fb90ad76ba417e0f63a921a224c40942a4db7a619034309cb163798586ec50762445928a3c430366a9220')
 
 build() {
   mkdir build
