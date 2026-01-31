@@ -4,10 +4,10 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=carData
-_pkgver=3.0-5
+_pkgver=3.0-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=1
 pkgdesc="Companion to Applied Regression Data Sets"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-car
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('88dc01e1d94d67652d4c4c38d33a8981')
-b2sums=('dee8f9b5e73cbb785f445b70b6ae88ca8c7303bc4b361943e937596bcc355374856b64c61b9d325484670c779a6ff6df5a8912ee8f65d3afdbf2b1546f68409a')
+md5sums=('041bf0f955637b1b1b6a44bde20605b5')
+b2sums=('770f738e82b34cf7669ac828369354c372c937887bd79c9966d45d9bf8cc2abaf121935f8cad21172407128f9f599bf319e7c347eb2b7d17b792e26b20682adf')
 
 build() {
   mkdir build
