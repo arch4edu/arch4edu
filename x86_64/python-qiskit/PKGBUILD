@@ -2,7 +2,7 @@
 _pkgname=qiskit
 pkgname=python-${_pkgname}
 pkgver=2.3.0
-pkgrel=3
+pkgrel=4
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
 arch=(x86_64)
@@ -58,8 +58,9 @@ b2sums=('d8b1a9e26b94be787b194796c68f18f9e0a4392be82995ba916fd9d67d48b1f076fb2dc
 prepare() {
     cd $_pkgname
     # Fix https://github.com/Qiskit/qiskit/issues/15579
-    git -c user.email="pkgbuild@localhost" -c user.name="pkgbuild" \
-        cherry-pick aedc6f0aaad5b4a51d972b276017c64a3f9c0a19
+    git -c user.email="pkgbuild@localhost" -c user.name="pkgbuild" cherry-pick \
+        aedc6f0aaad5b4a51d972b276017c64a3f9c0a19 \
+        a7864a2f9120723843b5530534fc48309b14ed45
 }
 
 build() {
