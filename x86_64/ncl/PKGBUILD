@@ -2,10 +2,10 @@
 # Maintainer: Michal Wojdyla < micwoj9292 at gmail dot com >
 pkgname=ncl
 pkgver=6.6.2
-pkgrel=5
+pkgrel=6
 pkgdesc='Ncar Command Language, is an interpreted language designed specifically for scientific data analysis and visualization'
 url='http://www.ncl.ucar.edu'
-license=('APACHE')
+license=('Apache-2.0')
 arch=('i686' 'x86_64')
 depends=('libxext' 'cairo' 'pixman' 'fontconfig' 'expat' 'bzip2' 'zlib' 'netcdf' 'hdf5' 
          'triangle' 'hdf4' 'netcdf-fortran' 'libxt' 'libxaw' 'libxext' 'libxpm' 'udunits'
