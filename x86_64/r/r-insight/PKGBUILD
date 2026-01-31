@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=insight
-_pkgver=1.4.4
+_pkgver=1.4.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -96,7 +96,6 @@ optdepends=(
   r-nestedlogit
   r-nonnest2
   r-ordinal
-  r-panelr
   r-parameters
   r-parsnip
   r-pbkrtest
@@ -109,6 +108,7 @@ optdepends=(
   r-quantreg
   r-rcpp
   r-rcppeigen
+  r-recipes
   r-rmarkdown
   r-rms
   r-robustbase
@@ -125,6 +125,7 @@ optdepends=(
   r-survey
   r-svylme
   r-testthat
+  r-tidymodels
   r-tinytable
   r-tmb
   r-truncreg
@@ -132,12 +133,13 @@ optdepends=(
   r-vgam
   r-weightit
   r-withr
+  r-workflows
   r-tune
   r-rwiener
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cb645ef9a7ffe2482d3a2bd580f4499b')
-b2sums=('731b7f50ea1b33f92c73679ac6f9b2c369030968731a4877b544232aa6941c2811a9b22c87cb0dee438742d16b3a5f3c2adb7db6bb036cb8110fd981691c6859')
+md5sums=('9ab3c366500a6b5af9ec6bbb4b4cf336')
+b2sums=('42b4f1cba7564376a51b31a55beab3db9c48111745b95bc234b068424ca29b59d04d354dbe5b8b97cbeb648013913e0cf84ff5b60256d2edc5a2e99d93279963')
 
 build() {
   mkdir build
