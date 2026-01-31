@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=qrng
-_pkgver=0.0-10
+_pkgver=0.0-11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,10 +16,11 @@ optdepends=(
   r-copula
   r-randtoolbox
   r-spacefillr
+  r-simsalapar
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('513e4f9ab2775a64941dd45b943deea5')
-b2sums=('282aeab39888dd61c9a42dd6a5429ad4f0364feb42b3a1b63134ab5844107e9fe9b1a1365e9d797603e4598dd1968162f8b2d0ecca34323ccb45f44dbf033e69')
+md5sums=('4f388d7dcceb3eed9a06a8904e898853')
+b2sums=('8f735735a07d6f325f00532e186067d8e705bc2e0fa0a9096a268e3ed1f72b1d6c49c50b68d9658de525fe854deaef09a5f516798b55f308c0e1ffcf54f4860a')
 
 build() {
   mkdir build
