@@ -3,7 +3,7 @@ _pkgname=qiskit-aer
 pkgname=python-$_pkgname
 pkgver=0.17.2
 pkgver_nlohmann_json=3.10.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=(x86_64)
 url="https://github.com/Qiskit/qiskit-aer"
@@ -83,14 +83,15 @@ build() {
 
 check() {
     cd $_pkgname-$pkgver
-    local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-    python -m installer --destdir=../test_dir dist/*.whl
+    python -m venv --system-site-packages test-env
+    test-env/bin/python -m installer dist/*.whl
     rm -rf qiskit_aer
-    # TODO: figure out why test_mps_options() started to fail recently...
+    # Tests that crash Python:
+    # - test_mps_options
+    # - test_pauli_noise_with_shot_branching
+    # See: https://github.com/Qiskit/qiskit-aer/issues/2354
     # WARNING: on modern CPUs some additional tests might fail
-    # See also: https://github.com/Qiskit/qiskit-aer/issues/2354
-    PYTHONPATH="$PWD/../test_dir/usr/lib/python$python_version/site-packages" \
-    pytest -v test -k "not test_mps_options and not test_switch_register_with_classical_expression and not test_pauli_noise_with_shot_branching"
+    test-env/bin/python -P -m pytest -o addopts="" -v test -k "not test_mps_options and not test_pauli_noise_with_shot_branching"
 }
 
 package() {
