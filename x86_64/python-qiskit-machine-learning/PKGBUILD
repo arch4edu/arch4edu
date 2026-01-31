@@ -2,7 +2,7 @@
 _pkgname=qiskit-machine-learning
 pkgname=python-${_pkgname}
 pkgver=0.9.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Quantum Machine Learning package for IBM qiskit framework"
 arch=(x86_64)
 url="https://github.com/qiskit-community/qiskit-machine-learning"
