@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=jpeg
-_cranver=0.1-10
+_cranver=0.1-11
 pkgname=r-${_cranname,,}
 pkgdesc="Read and write JPEG images"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -20,7 +20,7 @@ optdepends=()
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('8414ead6cfb51821fb129cf0d150bce257cde9dda3d3cc696ed2bbf17f0cf94a8b566619f171e3596b527d8f62378a323df026745c2ddf4c9b95b4391bdeb0e1')
+b2sums=('ffa9cad7da57db429fe0030a52cdd69162e30e8da2d18fc269c49773b39cfa4473bb4ea3039f3f07b2beeb112fa9061f41d52e4656eda464af366d3e11b0ccd9')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
