@@ -1,36 +1,40 @@
-# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
-# Contributor: Gonçalo Pereira
-# Contributor: Jason Kercher <jkercher43 a gmail>
-# Contributor: Peter Ivanov <ivanovp@gmail.com>
-# Contributor: Alec Ari <neotheuser@ymail.com>
+# Maintainer: Gonçalo Pereira <you@example.com>
+# Contributor: Fabio 'Lolix' Loli <fabio.loli@disroot.org>
 
 pkgname=linuxcnc
-pkgver=2.9.4
-pkgrel=2
-pkgdesc="Controls CNC machines. It can drive milling machines, lathes, 3d printers, laser cutters, plasma cutters, robot arms, hexapods, and more (formerly EMC2)"
+pkgver=2.9.8
+pkgrel=3
+pkgdesc="Controls CNC machines (mills, lathes, 3D printers, robots, etc.)"
 arch=(x86_64)
-license=(GPL2 'custom: unredestributable')
 url="https://linuxcnc.org/"
-depends=(glibc python gtk3 libusb libxss python-cairo gobject-introspection-runtime dbus-python python-pillow libxmu
-         python-gobject tk python-matplotlib boost-libs python-numpy gstreamer at-spi2-core libepoxy libtirpc libxft
-         harfbuzz gcc-libs fontconfig gdk-pixbuf2 libxext librsvg glib2 zlib cairo readline systemd-libs freetype2
-         libx11 libxinerama python-configobj libgpiod python-yapps2 tcl pango bwidget)
-makedepends=(intltool boost asciidoc glu procps-ng psmisc tclx)
-options=(!emptydirs !strip)
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/LinuxCNC/linuxcnc/archive/refs/tags/v${pkgver}.tar.gz"
-        'unredestributable.txt'
-        'libtirpc.patch')
-sha256sums=('93aca8d1c602331b17e7b2fefb82318f59c5faef9cacf60514b59cd6bb89be0e'
-            '228a035c143ccbdd6056e1189267b034f046742cae034bff821eccc8dbc68ee3'
-            'bc95bafd67fad1c1d3722261bc586cdc612ec9e1597fadb95fa825c10550ac2c')
+license=(GPL2 custom)
+depends=(
+  glibc python gtk3 libusb libxss python-cairo gobject-introspection-runtime
+  dbus-python python-pillow libxmu python-gobject tk python-matplotlib boost-libs
+  python-numpy gstreamer at-spi2-core libepoxy libtirpc libxft harfbuzz fontconfig
+  gdk-pixbuf2 libxext librsvg glib2 zlib cairo readline systemd-libs freetype2
+  libx11 libxinerama python-configobj libgpiod python-yapps2 tcl pango bwidget
+  python-opengl
+)
+makedepends=(intltool boost asciidoc glu procps-ng psmisc tclx libtirpc)
+options=(!strip)
+
+source=(
+  "$pkgname-$pkgver.tar.gz::https://github.com/LinuxCNC/linuxcnc/archive/refs/tags/v$pkgver.tar.gz"
+  "unredestributable.txt"
+)
+
+sha256sums=('e106b0c41b15bb93da7308861b4754ca647d6f4a4f298ed419bf3d192aa4a42f'
+            '228a035c143ccbdd6056e1189267b034f046742cae034bff821eccc8dbc68ee3')
 
 prepare() {
-  cd "${srcdir}/${pkgname}-${pkgver}/src"
-  echo "[[ ":\$TCLLIBPATH:" != *":/usr/lib/tcltk/linuxcnc:"* ]] && export TCLLIBPATH="/usr/lib/tcltk/linuxcnc:\$TCLLIBPATH"" > ${pkgname}.sh
-  find . -iname fixpaths.py -o -iname checkglade -o \
-   -iname update_ini | xargs perl -p -i -e "s/python/python2/"
-  patch -Np2 -i $srcdir/libtirpc.patch
+  cd "$srcdir/$pkgname-$pkgver/src"
 
+  # libtirpc (glibc no longer provides SunRPC)
+  export CPPFLAGS="-I/usr/include/tirpc"
+  export CFLAGS="-I/usr/include/tirpc"
+  export LDFLAGS="-ltirpc"
+  
   ./autogen.sh
 
   ./configure \
@@ -39,39 +43,54 @@ prepare() {
     --with-realtime=uspace \
     --without-libmodbus \
     --disable-gtk2
-
-  # Linking time errors fix
-  #sed -i "163s|FileName|FileNameArr|" hal/classicladder/files_project.c
-  #sed -i "174s|FileName|FileNameArr|g" hal/classicladder/files_project.c
-  #sed -i "175s|FileName|FileNameArr|" hal/classicladder/files_project.c
 }
 
-build () {
-  cd "${srcdir}/${pkgname}-${pkgver}/src"
+build() {
+  cd "$srcdir/$pkgname-$pkgver/src"
   make
 }
 
 package() {
-  install -Dm644 unredestributable.txt   -t "${pkgdir}"/usr/share/licenses/${pkgname}/
-  install -Dm644 "${pkgname}-${pkgver}/src/linuxcnc.sh" -t "${pkgdir}"/etc/profile.d/
+  cd "$srcdir/$pkgname-$pkgver/src"
+  DESTDIR="$pkgdir" make install
 
-  cd "${pkgname}-${pkgver}/src"
-  install -Dm644 ../share/menus/CNC.menu -t "${pkgdir}"/etc/xdg/menus/
+  # License
+  install -Dm644 "$srcdir/unredestributable.txt" \
+    "$pkgdir/usr/share/licenses/$pkgname/unredestributable.txt"
 
-  DESTDIR="${pkgdir}" make install
+  # Desktop menu
+  install -Dm644 ../share/menus/CNC.menu \
+    "$pkgdir/etc/xdg/menus/CNC.menu"
 
-  #sed -i "s|${srcdir}||" "${pkgdir}/usr/include/linuxcnc/config.h"
-  #sed -i "s|${srcdir}||" "${pkgdir}/usr/share/linuxcnc/Makefile.modinc"
+  # Tcl path fix (TCLLIBPATH is space-separated)
+  install -Dm644 /dev/stdin "$pkgdir/etc/profile.d/linuxcnc.sh" <<'EOF'
+[[ " $TCLLIBPATH " != *" /usr/lib/tcltk/linuxcnc "* ]] && \
+export TCLLIBPATH="/usr/lib/tcltk/linuxcnc $TCLLIBPATH"
+EOF
 
+  # Fix Python path (dist-packages → site-packages)
+  pyver=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+  if [[ -d "$pkgdir/usr/lib/python3/dist-packages" ]]; then
+    mkdir -p "$pkgdir/usr/lib/python$pyver/site-packages"
+    mv "$pkgdir/usr/lib/python3/dist-packages/"* "$pkgdir/usr/lib/python$pyver/site-packages/"
+    rmdir "$pkgdir/usr/lib/python3/dist-packages" || true
+  fi
 
-  #cd "${srcdir}/${pkgname}-${pkgver}/src"
-  #DESTDIR=${pkgdir} make install
-  #cp -PR "${srcdir}/${pkgname}-${pkgver}/share/applications" $pkgdir/usr/share
-  #mkdir -p "${pkgdir}/etc/xdg"
-  #cp -PR "${srcdir}/${pkgname}-${pkgver}/share/menus" "${pkgdir}/etc/xdg/"
-  #install -Dm755 "${srcdir}/${pkgname}-${pkgver}/src/${pkgname}.sh" "${pkgdir}/etc/profile.d/${pkgname}.sh"
-  #sed -i "s|${srcdir}||" "${pkgdir}/usr/include/linuxcnc/config.h"
-  #sed -i "s|${srcdir}||" "${pkgdir}/usr/share/linuxcnc/Makefile.modinc"
-  #install -Dm644 "${srcdir}/${pkgname}-${pkgver}/src/linuxcnc.sh" -t "${pkgdir}/etc/profile.d/"
-  #install -D -t "${pkgdir}/usr/share/licenses/${pkgname}" "${srcdir}/unredestributable.txt"
+  # Ensure hallib and modules are in /usr/lib/linuxcnc
+  mkdir -p "$pkgdir/usr/lib/linuxcnc/modules"
+  cp -a ../rtlib/*.so "$pkgdir/usr/lib/linuxcnc/modules/"
+
+  # Install manpages
+  install -Dm644 ../docs/man/man1/*.1 "$pkgdir/usr/share/man/man1"
+  install -Dm644 ../docs/man/man3/* "$pkgdir/usr/share/man/man3"
+  install -Dm644 ../docs/man/man9/* "$pkgdir/usr/share/man/man9"
+
+  # Fix: Remove /lib directory (Arch uses /usr/lib, /lib is a symlink)
+  # Move any contents to /usr/lib if they exist, then remove /lib
+  if [[ -d "$pkgdir/lib" ]]; then
+    if [[ -n "$(ls -A "$pkgdir/lib")" ]]; then
+      cp -a "$pkgdir/lib/"* "$pkgdir/usr/lib/"
+    fi
+    rm -rf "$pkgdir/lib"
+  fi
 }
