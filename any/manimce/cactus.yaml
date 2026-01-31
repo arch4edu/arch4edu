@@ -4,7 +4,6 @@ nvchecker:
   - alias: python
 depends:
   - any/python-cloup
-  - any/python-backports.cached_property
   - any/python-glcontext
   - any/python-isosurfaces
   - any/python-manimpango
