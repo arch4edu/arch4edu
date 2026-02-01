@@ -1,10 +1,12 @@
 # Maintainer: Rafael Dominiquini <rafaeldominiquini at gmail dot com>
 
+_npmmodule=@github/copilot
+
 pkgname=github-copilot-cli
 _pkgexec=copilot
 
 pkgver=0.0.400
-pkgrel=1
+pkgrel=2
 
 pkgdesc="GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal."
 
@@ -22,15 +24,11 @@ options=(!strip emptydirs staticlibs zipman)
 
 license=("LicenseRef-GitHub")
 
-source=("https://registry.npmjs.org/@github/copilot/-/copilot-${pkgver}.tgz"
-		"README-${pkgver}.md::${_urlraw}/README.md"
-		"LICENSE-${pkgver}::${_urlraw}/LICENSE.md")
+source=("https://registry.npmjs.org/${_npmmodule}/-/copilot-${pkgver}.tgz")
 noextract=("copilot-${pkgver}.tgz")
 changelog="changelog.md"
 
-b2sums=('269566b5c2def6e18ce83c906a5f23338b0837ef14c1b8aa3e8258b508fba91ab2d079041bbb01f0b2003493dc56baa50a2a587f899aa16314ad8c511e4e2500'
-        '326a3606b623a71c24e554883f929978f7458b8ebfb9a0834dbaf8e54250eae602d6053b6bc31993bf10ff693f7cb1bc58591b183c7356e1135e3bfd9d689634'
-        '94d35b65a3df51c6cd8d36dc085fefc5dcab1a817323f56c394c4ccacf5c876aa5c1caf65666594678968b49b9958334a43eef62d36f1a9c96878fe59556396d')
+b2sums=('269566b5c2def6e18ce83c906a5f23338b0837ef14c1b8aa3e8258b508fba91ab2d079041bbb01f0b2003493dc56baa50a2a587f899aa16314ad8c511e4e2500')
 
 # Document: https://wiki.archlinux.org/title/Node.js_package_guidelines
 package() {
@@ -49,7 +47,7 @@ package() {
 
 	msg2 "Fixing 'package.json'"
 	local tmppackage="$(mktemp)"
-	local pkgjson="${pkgdir}/usr/lib/node_modules/@github/copilot/package.json"
+	local pkgjson="${pkgdir}/usr/lib/node_modules/${_npmmodule}/package.json"
 	jq '.|=with_entries(select(.key|test("_.+")|not))' "${pkgjson}" > "${tmppackage}"
 	mv "${tmppackage}" "${pkgjson}"
 	chmod 644 "${pkgjson}"
@@ -62,9 +60,11 @@ package() {
 		chmod 644 "${pkgjson}"
 	done
 
-	msg2 "Installing README.md"
-	install -Dm644 "${pkgdir}/usr/lib/node_modules/@github/copilot/README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+	msg2 "Install README file"
+	install -dm755 "${pkgdir}/usr/share/doc/${pkgname}/"
+	ln -sf "/usr/lib/node_modules/${_npmmodule}/README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 
-	msg2 "Installing LICENSE"
-	install -Dm644 "LICENSE-${pkgver}" "${pkgdir}/usr/share/licenses/$pkgname/LICENSE"
+	msg2 "Install LICENSE file"
+	install -dm755 "${pkgdir}/usr/share/licenses/${pkgname}/"
+	ln -sf "/usr/lib/node_modules/${_npmmodule}/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
