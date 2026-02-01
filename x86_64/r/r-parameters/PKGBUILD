@@ -1,7 +1,7 @@
 # Maintainer: Hu Butui <hot123tea123@gmail.com>
 
 _pkgname=parameters
-_pkgver=0.28.2
+_pkgver=0.28.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -75,6 +75,7 @@ optdepends=(
   r-ivreg
   r-knitr
   r-lavaan
+  r-lcmm
   r-lfe
   r-lm.beta
   r-lme4
@@ -143,8 +144,8 @@ optdepends=(
   r-modelbased
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('dc48f360c97eee15cbbf48fb000e990a')
-b2sums=('838ab348585a97610cc59c5a807529f8e623802ba0f794ac002be31c7031dac540721de9a29620aea4331d9d8b35127b8e5c7c8ccbecba330427d41a2201d5c8')
+md5sums=('ee18bb59bfcfab6b6dd725fda5600e6d')
+b2sums=('c68ac65e7ccf27b0993204c986c582cfdda16ca233ce7ca41eccf47790814d82d6a560b89ea4986c872f227f58246472dddac9a5cc63e836902350ff15c2a011')
 
 build() {
   mkdir build
