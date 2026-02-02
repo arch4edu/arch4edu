@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=bigutilsr
-_pkgver=0.3.4
+_pkgver=0.3.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Utility Functions for Large-scale Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -23,6 +23,10 @@ checkdepends=(
   r-rrcov
   r-testthat
 )
+makedepends=(
+  r-rcpparmadillo
+  r-rcppeigen
+)
 optdepends=(
   r-covr
   r-gmedian
@@ -32,8 +36,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('49ad25ab76efaab30f5dbaed238f2b31')
-b2sums=('def3d1a5c1f5d69016d3569e694df90f531f5b869a0434b83cd7ad9aefc4998196ab9907847db75ed48a218a401f6fc9f241c11518908d928c607df84ec995f8')
+md5sums=('64eff2c8c490f17074c00d3c50101d94')
+b2sums=('5550070cbaacccb4c89dd9a99b82c78b7a1ea893c8e63e7a23d19aa5ed3e67d4dc80fb1e6509c513e4770586751f1ccb3da3cedba269ae8b0e33bb1518a7effb')
 
 build() {
   mkdir build
