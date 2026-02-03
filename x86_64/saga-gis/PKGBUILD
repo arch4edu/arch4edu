@@ -7,7 +7,7 @@
 
 pkgname=saga-gis
 _pkgname=saga
-pkgver=9.9.1
+pkgver=9.11.1
 pkgrel=1
 pkgdesc="A Geographic Information System (GIS) software with immense capabilities for geodata processing and analysis."
 url="http://www.saga-gis.org"
@@ -17,7 +17,7 @@ depends=('wxwidgets-gtk3' 'wxwidgets-common' 'hicolor-icon-theme' 'proj' 'gdal' 
 optdepends=('postgresql' 'vigra' 'liblas' 'libharu' 'libsvm' 'swig' 'python' 'exiv2')
 makedepends=('cmake')
 source=("https://download.sourceforge.net/saga-gis/saga-${pkgver}.tar.gz") 
-sha256sums=('227ca9c950a4d3cb6c07229a2014455a5770473d4090d0a0143dc32f8386f38c')
+sha256sums=('70d93afc8720a8b80eaf0d8b69e33dee9c9d1702e60cbe8caf5ebda6304d6031')
 
 build() {
   cd "${srcdir}/${_pkgname}-${pkgver}"
