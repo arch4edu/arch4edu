@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=checkmate
-_pkgver=2.3.3
+_pkgver=2.3.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -29,8 +29,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('12a890e8191574cd0975fae055371fa5')
-b2sums=('e924bb90f64d941fcd1e82941b57fecb48b9797addcc52c461a97493695845acea931c6a43543ca8c142fa56574af69c7d204d313fc957c703bb5f72edc4b0b2')
+md5sums=('64da20583ae2453fe1c86df562eb031b')
+b2sums=('cd592555a4574d04dbc7083b91ee0d37b05050d0e5a0cac1a5d405e07306f0c1beaaf58813f9f94ab77d22658f3b216d8e3abfba86a21925da9217b4ffa13f21')
 
 build() {
   mkdir build
