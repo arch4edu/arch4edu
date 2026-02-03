@@ -7,7 +7,7 @@
 qt="qt${QT_VER}"
 
 pkgname=openboard
-pkgver=1.7.4
+pkgver=1.7.5
 _src_folder="OpenBoard-${pkgver}"
 pkgrel=1
 pkgdesc="Interactive whiteboard software for schools and universities"
@@ -22,8 +22,8 @@ depends+=('openssl' 'ffmpeg')
 depends+=(quazip-${qt})  #drop internal quazip and use system one.
 depends+=(poppler) #replace internal xpdf with poppler and drop freetype/xpdf from deps
 makedepends=('cmake' ${qt}-tools)
-source=("https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz")
-sha256sums=('9948a2fec3920679087422d5c1c1b18839e2a95cee5b485d7584bb972b54a13c')
+source=("openboard-${pkgver}.tar.gz::https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz")
+sha256sums=('31cdb4049402b93a346637bda537d528ef53c84d70598f0861ad9d77ad3e37eb')
 
 build() {
   cmake -B build -S "$srcdir"/$_src_folder \
