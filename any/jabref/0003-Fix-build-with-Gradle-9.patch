@@ -1,7 +1,7 @@
 From 2f8bcc1559d1e861b37242a20c9169501d3dda13 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Michael=20La=C3=9F?= <bevan@bi-co.net>
 Date: Thu, 9 Oct 2025 20:02:44 +0200
-Subject: [PATCH 3/4] Fix build with Gradle 9
+Subject: [PATCH 3/5] Fix build with Gradle 9
 
 ---
  build.gradle | 2 +-
@@ -21,5 +21,5 @@ index 4fb779043a..70d35b7c64 100644
      // See https://docs.gradle.org/8.1/userguide/performance.html#execute_tests_in_parallel for details.
      if (!providers.environmentVariable("CI").isPresent()) {
 -- 
-2.51.0
+2.53.0
 

@@ -1,7 +1,7 @@
 From 5f12119249c4339abf9ccd144b7e5e147a6517b6 Mon Sep 17 00:00:00 2001
 From: "dependabot[bot]" <49699333+dependabot[bot]@users.noreply.github.com>
 Date: Mon, 29 Jul 2024 14:17:28 +0000
-Subject: [PATCH 2/4] Bump com.github.koppor:gradle-modules-plugin (#11544)
+Subject: [PATCH 2/5] Bump com.github.koppor:gradle-modules-plugin (#11544)
 
 Bumps com.github.koppor:gradle-modules-plugin from jitpack-SNAPSHOT to 1.8.15-cmd-1.
 
@@ -32,5 +32,5 @@ index 7908374f09..4483fd92d2 100644
          }
      }
 -- 
-2.51.0
+2.53.0
 

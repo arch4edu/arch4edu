@@ -1,0 +1,27 @@
+From 0b2eaa60bdf6af2d36a804f147045e712c6b1886 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Michael=20La=C3=9F?= <bevan@bi-co.net>
+Date: Tue, 3 Feb 2026 22:45:36 +0100
+Subject: [PATCH 5/5] Consolidate Maven repositories
+
+See: https://github.com/JabRef/jabref/pull/14315
+---
+ build.gradle | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/build.gradle b/build.gradle
+index c00ad16ed6..4159d6cf03 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -119,8 +119,7 @@ sourceSets {
+ 
+ repositories {
+     mavenCentral()
+-    maven { url 'https://oss.sonatype.org/content/groups/public' }
+-    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
++    maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
+     maven { url 'https://jitpack.io' }
+     maven { url 'https://sandec.jfrog.io/artifactory/repo' }
+ }
+-- 
+2.53.0
+
