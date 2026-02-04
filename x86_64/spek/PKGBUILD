@@ -1,25 +1,27 @@
 # Maintainer: Michał Przybyś <michal@przybys.eu>
 pkgname=spek
 pkgver=0.8.5
-pkgrel=3
+pkgrel=4
 pkgdesc='An acoustic spectrum analyser'
 arch=(x86_64)
 url='http://spek.cc/'
 license=(GPL3)
 depends=(ffmpeg wxwidgets-gtk3)
-source=("https://github.com/alexkay/spek/archive/v${pkgver}.tar.gz")
-sha256sums=('9053d2dec452dcde421daa0f5f59a9dee47927540f41d9c0c66800cb6dbf6996')
+source=("https://github.com/alexkay/spek/releases/download/v${pkgver}/spek-${pkgver}.tar.xz"
+        "https://github.com/alexkay/spek/commit/df8402575f1550d79c751051e9006fd3b7fa0fe0.patch")
+sha256sums=('1bccf85a14a01af8f2f30476cbad004e8bf6031f500e562bbe5bbd1e5eb16c59'
+            'caa031f430b5016ebb47d8e77c4311857dd5da431246ae76566da0cd95cb8816')
 
 prepare() {
     cd "spek-${pkgver}"
-    GETTEXT_VERSION=$(gettext --version | sed -En '/gettext/ s/^.*runtime\) //p')
-    sed -i "s/AM_GNU_GETTEXT_VERSION(\[[0-9]\+\.[0-9]\+\])/AM_GNU_GETTEXT_VERSION([$GETTEXT_VERSION])/" configure.ac
+    
+    # Apply upstream patch for FFmpeg 8 compatibility
+    patch -Np1 < ../df8402575f1550d79c751051e9006fd3b7fa0fe0.patch
 }
 
 build() {
     cd "spek-${pkgver}"
-    export CXXFLAGS="$(pkg-config --cflags-only-I libavutil)"
-    ./autogen.sh --with-wx-config=/usr/bin/wx-config --prefix=/usr
+    ./configure --prefix=/usr --mandir=/usr/share/man
     make
 }
 
