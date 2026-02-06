@@ -4,9 +4,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=rgl
-_pkgver=1.3.31
+_pkgver=1.3.34
 pkgname=r-${_pkgname,,}
-pkgver=1.3.31
+pkgver=1.3.34
 pkgrel=1
 pkgdesc='3D Visualization Using OpenGL'
 arch=('x86_64')
@@ -58,7 +58,7 @@ optdepends=(
   r-webshot2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('76f534358751390845ce1c89c6007cc146f95de5560fd7baaea2406fd95fc0d4')
+sha256sums=('fe40d17a9c6fa54e9a14bd458d7873b31df1a7427c12a46d49870842ccedc8db')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
