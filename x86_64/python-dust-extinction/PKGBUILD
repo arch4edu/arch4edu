@@ -4,13 +4,13 @@ pkgbase=python-dust-extinction
 _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=1.6
-pkgrel=2
+pkgver=1.7
+pkgrel=1
 pkgdesc="Interstellar Dust Extinction Models"
 arch=('any')
 url="https://dust-extinction.readthedocs.io"
 license=('BSD-3-Clause')
-makedepends=('python-setuptools-scm'
+makedepends=('python-setuptools-scm>=8.0.0'
              'python-build'
              'python-installer'
              'python-sphinx-automodapi'
@@ -20,9 +20,9 @@ makedepends=('python-setuptools-scm'
              'graphviz')  # wheel required by new setuptools
 checkdepends=('python-pytest-astropy-header'
 #             'python-pytest-xdist'
-              'python-pytest-doctestplus')   # astropy, scipy already in makedepends; header in conftest.py
+              'python-pytest-doctestplus')   # astropy, matplotlib, scipy already in makedepends; header in dust_extinction/conftest.py
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('592b8b2c8491a87ee3bdd18b50c51531')
+md5sums=('314dd8fef86316ea78d59d0898b7103d')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
