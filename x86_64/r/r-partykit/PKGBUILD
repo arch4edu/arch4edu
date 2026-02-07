@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=partykit
-_pkgver=1.2-24
+_pkgver=1.2-25
 pkgname=r-${_pkgname,,}
-pkgver=1.2.24
+pkgver=1.2.25
 pkgrel=1
 pkgdesc='A Toolkit for Recursive Partytioning'
 arch=('x86_64')
@@ -36,7 +36,7 @@ optdepends=(
   r-xml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('40c06b75458f100f3e203fb47f80d5be6f632628bfafa2704d27250a7914c9ff')
+sha256sums=('7abd05afd2c5d09a378ec5ec54366045357ceb22dddca501a1109cabc5da8820')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
