@@ -2,13 +2,13 @@
 # Contributor: haagch <christoph.haag@collabora.com>
 pkgname=perfetto
 pkgver=53.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Python APIs and bindings for Perfetto"
 arch=(x86_64)
 url="https://github.com/google/${pkgname}"
 license=(Apache-2.0)
-depends=(gcc-libs)
-makedepends=(git python clang)
+depends=(gcc-libs python-protobuf)
+makedepends=(git python-setuptools clang)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
 sha512sums=('2e8b3c2b5db7336732c288793f9d1be72df3f69152b3d13a62e130fe5d29640c8abcf6e93604a67af38d65d6bee5a40da364d2166ea8f3984e9d390aa422fe61')
 
@@ -18,6 +18,9 @@ build() {
   tools/gn gen --args='is_debug=false' out/linux
   tools/ninja -C out/linux tracebox traced traced_probes perfetto
   tools/gen_amalgamated --output sdk/perfetto
+  
+  cd python
+  python setup.py build
 }
 
 package() {
@@ -34,4 +37,9 @@ package() {
 
   install -d -D -m755 sdk "$pkgdir"/usr/share/perfetto/sdk
   install -D -m755 sdk/perfetto.* "$pkgdir"/usr/share/perfetto/sdk
+
+  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+
+  cd python
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
 }
