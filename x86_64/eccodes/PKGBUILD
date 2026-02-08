@@ -3,7 +3,7 @@
 pkgname=eccodes
 pkgver=2.45.0
 _attnum=45757960
-pkgrel=1
+pkgrel=2
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
 arch=("i686" "x86_64")
 url="https://confluence.ecmwf.int/display/ECC/ecCodes+Home"
@@ -22,6 +22,10 @@ sha512sums=(
 )
 
 build() {
+  # make sure we have a clean build environment
+  if [ -d build ]; then
+    rm -rf build
+  fi
   local cmake_options=(
     -B build
     -S "$pkgname-$pkgver-Source"
