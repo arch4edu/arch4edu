@@ -2,8 +2,8 @@
 
 _name=cmake
 pkgname=python-$_name-bin
-pkgver=4.0.3
-pkgrel=2
+pkgver=4.2.1
+pkgrel=1
 pkgdesc='Infrastructure for building CMake Python wheels'
 arch=(x86_64 aarch64)
 url="https://github.com/scikit-build/cmake-python-distributions"
@@ -13,10 +13,10 @@ depends=(python)
 makedepends=(python-installer)
 provides=("${pkgname%-bin}=$pkgver")
 conflicts=("${pkgname%-bin}")
-source_x86_64=("https://files.pythonhosted.org/packages/py3/${_name::1}/$_name/$_name-$pkgver-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl")
-source_aarch64=("https://files.pythonhosted.org/packages/py3/${_name::1}/$_name/$_name-$pkgver-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl")
-sha256sums_x86_64=('d840e780c48c5df1330879d50615176896e8e6eee554507d21ce8e2f1a5f0ff8')
-sha256sums_aarch64=('434f84fdf1e21578974876b8414dc47afeaea62027d9adc37a943a6bb08eb053')
+source_x86_64=("https://files.pythonhosted.org/packages/py3/${_name::1}/$_name/$_name-$pkgver-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl")
+source_aarch64=("https://files.pythonhosted.org/packages/py3/${_name::1}/$_name/$_name-$pkgver-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl")
+sha256sums_x86_64=('6333a2b16e1d55373419b9c1572a155b315bfb9d834fbdbba0f7d3428437c785')
+sha256sums_aarch64=('c8bdf88f8d50b64c88ffc75fb671f3ab017d803f36589f21c3f1e9f3a1b236a7')
 
 package() {
 	PYTHONPYCACHEPREFIX="$PWD/.cache/cpython/" python -m installer --destdir="$pkgdir" "$_name-$pkgver-"*.whl
