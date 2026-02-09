@@ -2,7 +2,7 @@
 
 pkgname=python-orbax-checkpoint
 _pkgname=${pkgname#python-}
-pkgver=0.11.14
+pkgver=0.11.32
 pkgrel=1
 pkgdesc='Common utility libraries for JAX users (checkpoint).'
 arch=('any')
@@ -10,13 +10,15 @@ url='https://github.com/google/orbax'
 license=('Apache-2.0')
 depends=(
     'python-absl'
+    'python-aiofiles'
     'python-etils'
     'python-humanize'
-    'python-jax>=0.5.0'
+    'python-jax>=0.6.0'
     'python-msgpack'
     'python-nest-asyncio'
     'python-numpy'
     'python-protobuf'
+    'python-psutil'
     'python-simplejson'
     'python-tensorstore'
     'python-typing_extensions'  # etils[epy]
@@ -29,7 +31,7 @@ optdepends=(
 conflicts=('python-orbax')
 replaces=('python-orbax')
 source=("$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('0196dcb4527de5aab1b3747390b6f889edbc9086e1d3d9f77df83bc936ddedfb')
+sha256sums=('bb47e3d116377fb9b38c105fad4786b5ec57a8177fdd235de089e31d501ce43e')
 
 build() {
     python -m build -nw orbax-$pkgver/checkpoint
