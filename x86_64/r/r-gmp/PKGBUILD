@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gmp
-_pkgver=0.7-5
+_pkgver=0.7-5.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -18,8 +18,8 @@ optdepends=(
   r-round
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('99f5956fe66ea32faa9fcc677ab0ab67')
-b2sums=('e14c1861efc73ab6b4511ac80d03a463bf9e4a907bbb3a14065206910158e30f0d29bc92130d2fffc427d7f5e66e1729ca6933ec26d0aaa97f70b77fa7c697d1')
+md5sums=('aefd8c2359c75cf1076be6439e5ad9fc')
+b2sums=('cee4b8f525d8369b494b9a879b1c8971f7ce66e005b930fb1d91e972eeadec3d9d4af17c1e6c898f411b2f88a7950229a17766ea3b4871c449c08591f1c0bcbf')
 
 build() {
   mkdir build
