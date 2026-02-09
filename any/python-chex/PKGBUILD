@@ -2,7 +2,7 @@
 pkgname=python-chex
 _pkgname=${pkgname#python-}
 pkgver=0.1.91
-pkgrel=2
+pkgrel=3
 pkgdesc="A library of utilities for helping to write reliable JAX code"
 arch=('any')
 url="https://github.com/google-deepmind/chex"
