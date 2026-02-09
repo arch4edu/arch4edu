@@ -1,14 +1,14 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname='python-jax'
-pkgver=0.7.0
+pkgver=0.9.0
 pkgrel=1
 pkgdesc='Composable transformations of Python+NumPy programs'
 arch=('any')
 url='https://github.com/jax-ml/jax/'
 license=('Apache-2.0')
 depends=(
-    'python-jaxlib>=0.7.0'
+    'python-jaxlib>=0.9.0'
     'python-ml-dtypes'
     'python-numpy'
     'python-opt_einsum'
@@ -17,10 +17,18 @@ depends=(
 optdepends=(
     'python-protobuf: Australis'
     'python-requests: Distributed computations'
+    'python-kubernetes: Distributed support in k8s clusters'
 )
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
-source=("jax-${pkgver}.tar.gz::$url/archive/refs/tags/jax-v${pkgver}.tar.gz")
-sha256sums=('518966801e4402667e77915c2dc7cf1a178a80e22ff253204a837f207a87fcde')
+source=("jax-${pkgver}.tar.gz::$url/archive/refs/tags/jax-v${pkgver}.tar.gz"
+        'python-jax.diff')
+sha256sums=('8525c72ac7ea01851297df5b25ca4622c65299c265c87dfe78420bb29e7b1bb3'
+            'SKIP')
+
+prepare() {
+    cd jax-jax-v$pkgver
+    patch -p 1 -i ../python-jax.diff
+}
 
 build() {
     JAX_RELEASE=$pkgver python -m build -nw jax-jax-v$pkgver
