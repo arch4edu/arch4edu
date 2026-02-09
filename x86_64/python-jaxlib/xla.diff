@@ -1,0 +1,18 @@
+--- a/third_party/llvm/setup.bzl	2026-02-07 21:50:02.940838334 +0300
++++ b/third_party/llvm/setup.bzl	2026-02-07 21:50:36.657067040 +0300
+@@ -4,15 +4,8 @@
+ 
+ # The subset of LLVM targets that TensorFlow cares about.
+ _LLVM_TARGETS = [
+-    "AArch64",
+-    "AMDGPU",
+-    "ARM",
+     "NVPTX",
+-    "PowerPC",
+-    "RISCV",
+-    "SystemZ",
+     "X86",
+-    "SPIRV",
+ ]
+ 
+ def llvm_setup(name):
