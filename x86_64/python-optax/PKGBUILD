@@ -2,18 +2,18 @@
 
 pkgname='python-optax'
 _pkgname=${pkgname#python-}
-pkgver=0.2.6
+pkgver=0.2.7
 pkgrel=1
 pkgdesc='A gradient processing and optimization library for JAX'
 arch=('any')
 url='https://github.com/google-deepmind/optax'
-license=('Apache')
-depends=('python-absl' 'python-chex' 'python-jax' 'python-numpy')
+license=('Apache-2.0')
+depends=('python-absl' 'python-jax' 'python-numpy')
 makedepends=('python-build' 'python-installer' 'python-flit-core' 'python-wheel')
 optdepends=('python-dm-haiku: Deep learning framework from DeepMind'
             'python-flax: Deep learning framework from Google')
 source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('f9bf8e7c59435ea3b2a932ee4c4d05a50adfe6bf0cd564a5d7cfff298931a84c')
+sha256sums=('7f40861598c3794be052908c15f8f9afc71c37a2ba2f411e1c3596ce66975fda')
 
 prepare() {
     cd "$_pkgname-$pkgver"
