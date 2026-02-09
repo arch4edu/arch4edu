@@ -4,7 +4,7 @@
 _base=etils
 pkgname=python-${_base}
 pkgver=1.13.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Collection of common python utils"
 url="https://github.com/google/${_base}"
 license=(Apache-2.0)
