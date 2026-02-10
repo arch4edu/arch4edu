@@ -8,7 +8,7 @@
 pkgname=vscodium-bin
 _pkgname=VSCodium
 pkgver=1.108.20787
-pkgrel=1
+pkgrel=2
 pkgdesc="Binary releases of VS Code without MS branding/telemetry/licensing."
 arch=('x86_64' 'aarch64')
 url="https://github.com/VSCodium/vscodium"
@@ -21,6 +21,7 @@ optdepends=(
         'gvfs: For move to trash functionality'
         'libdbusmenu-glib: For KDE global menu'
 )
+options=('!emptydirs' '!strip' '!debug')
 provides=('vscode' 'codium' 'vscodium')
 conflicts=('vscodium')
 install=$pkgname.install
@@ -29,7 +30,6 @@ sha256sums=('3a5bc109974fcf408855c13965f6d6be0997655c5b359de0bfd19a678c00844e'
             '121f2db8a65cfc74c10d3e7c3135b62b66297cf27f8f7f00c3ad29d412e968b7'
             '01ba3d33e76804e2346d08f4eda256a29610c9eb59432e4b016d05ad93d901ba'
             '63b9f3e07dcfe92f59e851fdeeaed6ee986950672f75cc950489bce67e85d884'
-            '07f0314b1869e3666f1ba52cd02dd40c841beef11a1ab9ae3246cafd01ef6caa'
             '2fa3f8948a0a17ea30b62845caf1ee8aae8b55b5417273920ca2df2642209e0e')
 sha256sums+=('e622e6bdb70b0cfec57ad9df8717ea023b87e5e215003119b5a1a4d059fcd347')
 sha256sums_x86_64=('9410b028d26ff62350cae12f83e1ede21685646fe5a339b62a00a0b8a608c182')
@@ -39,7 +39,6 @@ source=('vscodium-bin.desktop'
         'vscodium-bin-url-handler.desktop'
         'vscodium-bin.install'
         'vscodium-bin.sh'
-        'vscodium-bin-wayland.desktop'
         'LICENSE')
 source+=("https://raw.githubusercontent.com/VSCodium/vscodium/refs/tags/${pkgver}/src/stable/resources/linux/code.svg")
 source_x86_64=("https://github.com/VSCodium/vscodium/releases/download/${pkgver}/${_pkgname}-linux-x64-${pkgver}.tar.gz")
@@ -58,7 +57,6 @@ package() {
   ln -s "/opt/${pkgname}/bin/codium" "${pkgdir}/usr/bin/codium"
   ln -s "/opt/${pkgname}/bin/codium" "${pkgdir}/usr/bin/vscodium"
   install -D -m644 "vscodium-bin.desktop" "${pkgdir}/usr/share/applications/codium.desktop"
-  install -D -m644 "vscodium-bin-wayland.desktop" "${pkgdir}/usr/share/applications/codium-wayland.desktop"
   install -D -m644 "vscodium-bin-url-handler.desktop" "${pkgdir}/usr/share/applications/codium-url-handler.desktop"
   install -D -m644 "resources/app/resources/linux/code.png" \
           "${pkgdir}/usr/share/pixmaps/vscodium.png"
