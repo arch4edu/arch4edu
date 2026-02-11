@@ -1,31 +1,35 @@
 # Maintainer: Thibaud Kehler <thibaud.kehler at gmx dot net>
 pkgname='fet-timetabling'
 _module='fet'
-pkgver=7.7.4
+pkgver=7.7.5
 pkgrel=1
 pkgdesc="A software for automatically scheduling the timetable of a school, high-school or university."
-arch=('x86_64' 'i686')
+arch=('x86_64')
 url="https://lalescu.ro/liviu/fet/"
 license=('AGPL3')
 depends=('qt6-base' 'hicolor-icon-theme')
 makedepends=('cmake')
 source=("https://lalescu.ro/liviu/fet/download/fet-${pkgver}.tar.xz")
-sha256sums=('2f5737c6c240afad2ae1134143737c1a4fd7b94e18d786e0a31c47e82041f048')
+sha256sums=('a0e5ae63604e228da1561bd16b443bc099a42760354129eb985d72dd25be5b2a')
 
 build() {
 	cd "$srcdir/$_module-$pkgver"
+	# Use qt-cmake as recommended by the author
 	mkdir -p build
 	cd build
-	cmake .. \
+	/usr/lib/qt6/bin/qt-cmake .. \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DUSE_SYSTEM_LOCALE=ON \
 		-DCMAKE_INSTALL_DATADIR=/usr/share
-	make
+	cmake --build .
 }
 
 package() {
 	cd "$srcdir/$_module-$pkgver/build"
-	make DESTDIR="${pkgdir}" install
+	
+	find .qt/ -name "deploy_fet_*.cmake" -exec truncate -s 0 {} + 2>/dev/null || true
+
+	DESTDIR="${pkgdir}" cmake --install . --prefix /usr
 }
 options+=("!lto")
