@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=vdiffr
-_pkgver=1.0.8
+_pkgver=1.0.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,8 +34,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d59ebff7b87afbc6defa2af55660fed5')
-b2sums=('2dda8afb8f8256cf26c2ddd746de964b0d6c9ba2ca28b13d2d29c2b414a753cfe1e4129ef8ab4934dd7f7aa3924981263e08c9768beeafef69c0458cebe50029')
+md5sums=('9df7fa39cecf754417c06635fabcabf4')
+b2sums=('fd8c4d21a8867accdff7e87d7f5282a230e1f7d1ae680723c4282455fad85981aec072691774d2c08b1d9683874da55200446e75bdc116352fa02f6d3a6201ff')
 
 build() {
   mkdir build
