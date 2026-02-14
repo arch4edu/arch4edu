@@ -2,7 +2,7 @@
 # Contributor: peippo <christoph+aur@christophfink.com>
 
 _cranname=data.table
-_cranver=1.18.0
+_cranver=1.18.2.1
 pkgname=r-${_cranname,,}
 pkgdesc="Extension of ‘data.frame’"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -25,7 +25,7 @@ optdepends=(
     "r-zoo>=1.8.1"
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('dfcba124ef365da7f1edb74fe25a09c79ae5419b5d67198a966f08a54ae85f22f24d85c7f255ce12cecb04edbcd2333e66ea2db5f75f099605dc56357a79933c')
+b2sums=('cc8cb110752d699fea5d69ccbfccedc29dcae73e85801657f4a054bfc1d5dd9e5dae2291b38cfb6d370829cf0f559fb056871e2bf30bb4613643bf7937e9c221')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
