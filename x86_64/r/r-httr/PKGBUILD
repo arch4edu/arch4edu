@@ -7,10 +7,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=httr
-_pkgver=1.4.7
+_pkgver=1.4.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Tools for Working with URLs and HTTP"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -38,8 +38,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8965ffef86aea39922f435c019daf9fb')
-b2sums=('85b4e8ebb549d09d4637b1cd339d070879e44d0e6e6f5743129806b7be430dc13deea36af9c1c716b591ea93b4e6953de4bf0caa9b5ee3d0253c17282ae0c538')
+md5sums=('8756015b94a9cff6f410ca4de8557f12')
+b2sums=('e2f01d8c3ccee9a48cbc37c1331eed352573dd00faf0ae251ec87e81bb5c57afc7cf5182a29e2073d4208dc844aeec732b88eb35a6260461e978786e946caa2f')
 
 build() {
   mkdir build
