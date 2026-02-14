@@ -1,8 +1,8 @@
 pkgname=devtools-arch4edu-extra
-pkgver=25.8578d81
+pkgver=26.de0ef8a
 pkgrel=1
 pkgdesc='Extra tools for arch4edu package maintainers'
-arch=('x86_64' 'armv7h' 'aarch64')
+arch=('x86_64' 'aarch64')
 url='http://github.com/arch4edu/devtools-arch4edu-extra'
 license=('GPL')
 depends=('devtools')
@@ -17,22 +17,26 @@ pkgver() {
 
 package() {
 	cd "$srcdir/$pkgname"
-	mkdir -p $pkgdir/usr/bin
-	mkdir -p $pkgdir/usr/share/devtools
+	mkdir -p "$pkgdir/usr/bin"
+	mkdir -p "$pkgdir/usr/share/devtools/makepkg.conf.d"
+	mkdir -p "$pkgdir/usr/share/devtools/pacman.conf.d"
 
-	if [ "$CARCH" = 'x86_64' ]
-	then
-		mkdir -p $pkgdir/usr/share/devtools/makepkg.conf.d
-		mkdir -p $pkgdir/usr/share/devtools/pacman.conf.d
-		ln -sf /usr/bin/archbuild $pkgdir/usr/bin/arch4edu-x86_64-build
-		cat /usr/share/devtools/pacman.conf.d/extra.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman.conf.d/arch4edu.conf
-		cat /usr/share/devtools/pacman.conf.d/multilib.conf arch4edu.conf > $pkgdir/usr/share/devtools/pacman.conf.d/multilib-arch4edu.conf
-	else
-		for i in armv7h aarch64
-		do
-			cp $srcdir/$pkgname/pacman-extra-$i.conf $pkgdir/usr/share/devtools/
-			cp $srcdir/$pkgname/makepkg-$i.conf $pkgdir/usr/share/devtools/
-			ln -sf /usr/bin/archbuild $pkgdir/usr/bin/extra-$i-build
-		done
-	fi
+	case "$CARCH" in
+		x86_64)
+			cat /usr/share/devtools/pacman.conf.d/extra.conf arch4edu.conf > "$pkgdir/usr/share/devtools/pacman.conf.d/arch4edu.conf"
+			cat /usr/share/devtools/pacman.conf.d/multilib.conf arch4edu.conf > "$pkgdir/usr/share/devtools/pacman.conf.d/multilib-arch4edu.conf"
+			ln -sf /usr/bin/archbuild "$pkgdir/usr/bin/arch4edu-x86_64-build"
+			ln -sf /usr/bin/archbuild "$pkgdir/usr/bin/multilib-arch4edu-build"
+			;;
+		aarch64)
+			cp "$srcdir/$pkgname/pacman-extra-aarch64.conf" "$pkgdir/usr/share/devtools/pacman.conf.d/extra-aarch64.conf"
+			cp "$srcdir/$pkgname/makepkg-aarch64.conf" "$pkgdir/usr/share/devtools/makepkg.conf.d/aarch64.conf"
+			cat "$srcdir/$pkgname/pacman-extra-aarch64.conf" arch4edu.conf > "$pkgdir/usr/share/devtools/pacman.conf.d/arch4edu-aarch64.conf"
+			ln -sf /usr/bin/archbuild "$pkgdir/usr/bin/extra-aarch64-build"
+			ln -sf /usr/bin/archbuild "$pkgdir/usr/bin/arch4edu-aarch64-build"
+			;;
+		*)
+			error "Unsupported architecture: $CARCH"
+			exit 1
+	esac
 }
