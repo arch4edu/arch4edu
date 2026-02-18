@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=LaplacesDemon
-_pkgver=16.1.6
+_pkgver=16.1.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=1
 pkgdesc="Complete Environment for Bayesian Inference"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7b23b0c00987f6974aad4795ad7b6614')
-b2sums=('8140b1bc034bf8d8f1ea8544200abdd715396bd9d92e5a6b73228d9c94859c82b4ef0eb54cb87fef26993116973827ee3a81d94b58c242e2d249a3983917b179')
+md5sums=('f18ac0689624139efdb02e6a0c54ba53')
+b2sums=('4e509752f253e1abd228302945a4a3b8e160c2bee3f352b2da9df2ee5aa7a063baa0e13174482c259868209704d255fc4dd92fe85d116d758878fdcc8d3091a2')
 
 build() {
   mkdir build
