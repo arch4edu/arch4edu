@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
+  - alias: python
 depends:
   - x86_64/kahip
   - x86_64/parmetis-git
