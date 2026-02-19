@@ -6,7 +6,7 @@
 #       !buildflags is needed in order to compile the code
 
 pkgname=calculix-ccx
-pkgver=2.22
+pkgver=2.23
 pkgrel=1
 provides=('calculix')
 replaces=('calculix')
@@ -29,21 +29,22 @@ source=(
     "http://www.dhondt.de/ccx_${pkgver}.structest.tar.bz2"
 )
 
-sha256sums=('3a94dcc775a31f570229734b341d6b06301ebdc759863df901c8b9bf1854c0bc'
-            '804c1ab099f5694b67955ddd72ad4708061019298c5d1d1788bf404d900b86fc'
-            '1f2c71b826c9318403e9325d30e014e245274bfadc01263f86c10d105786387e'
-            '8c2bdeb8e433fe76778c3fb1161348cb04f034aad769ccf11f23d35271ee9b95')
+sha256sums=('9c88385c10fb04f5dc6c4e98027a51bebdd8aee3920e05190d6c1dd08357d6e7'
+            'be2259fd9a7b990d0453b30708e1b05f2cd4b6df4a90fa96f0e4abd1ae7beaa0'
+            'db8b1361b89e357266d1dcebc071b3fd9fd37b83b4b7bb6f4a0f99b1759fbe80'
+            '3407b2ce1366df62b1ab43a21ea76ff54386b8842e6cd8660fd9047526be5dec')
 #
 # NOTE: remove -Wno-implicit when code is fixed by upstream
+#       idem for -Wno-return-mismatch
 #
 build()
 {
     cd "${srcdir}/CalculiX/ccx_${pkgver}/src"
-    make CFLAGS="${CFLAGS} -Wall -Wno-implicit -O2 -fopenmp \
+    make CFLAGS="${CFLAGS} -Wno-return-mismatch -Wno-implicit -O2 -fopenmp \
                   -I /usr/include/spooles \
                   -DARCH=\"Linux\" -DSPOOLES -DARPACK -DMATRIXSTORAGE \
                   -DNETWORKOUT -DUSE_MT=1" \
-         FFLAGS='-Wall -O2 -fopenmp -fpic -fallow-argument-mismatch' \
+         FFLAGS='-Wall -O2 -cpp -fopenmp -fpic -fallow-argument-mismatch' \
          LIBS='-lpthread -lm -lc -lspooles -larpack -lblas -llapack -lgomp'
 }
 
