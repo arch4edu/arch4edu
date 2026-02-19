@@ -9,7 +9,7 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.24.0
+pkgver=3.24.4
 pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
@@ -23,7 +23,7 @@ options=(staticlibs)
 conflicts=(${_base})
 provides=("${_base}=${pkgver}")
 depends=(hdf5-openmpi fftw-openmpi gsl lapack libjpeg-turbo libyaml netcdf-openmpi
-  python-numpy python-mpi4py superlu suitesparse zlib)
+  python-numpy python-mpi4py pastix scotch superlu suitesparse zfp zlib hwloc)
 makedepends=(cmake cython gcc gcc-fortran python-setuptools)
 # checkdepends=()
 optdepends=('hypre: support for the hypre sparse system solver'
@@ -31,18 +31,18 @@ optdepends=('hypre: support for the hypre sparse system solver'
   'metis: support for metis graph partitioning library'
   'mumps: support for the mumps sparse solver'
   'parmetis: support for parmetis parallel graph partitioning library'
-  'pastix: support for the pastix solver'
   'scalapack: support for ScaLAPACK'
-  'scotch: support for Scotch'
   'superlu_dist: support for the superlu_dist sparse solver'
   'triangle: support for the two-dimensional quality mesh generator and Delaunay triangulator'
   'valgrind: support for valgrind to help find memory-management problems in programs'
   'zoltan: support for zoltan')
 install=${_base}.install
 source=(https://web.cels.anl.gov/projects/${_base}/download/release-snapshots/${_base}-lite-${pkgver}.tar.gz
-  test_optdepends.sh)
-sha512sums=('359df81bd502ffe2b508fd7e20e5279e85c095cb2c67fcce2b1f302c73f4b3a2ec419b625b57e13bd95e1453c9f17de47f6dbba0e2a10a34d41814c1abde5b6e'
-            '6babb4f04fe8a503743cd0876cf75d8bcf2ebb1cfd2d89bcf10109721335b19f8b1b6ccb27cc8b85ea21597c2f1edd8f30824be614072a6498a6a92e39632468')
+  test_optdepends.sh
+  fix-petsc4py-setuptools.patch)
+sha512sums=('6bc4bdfb4cbc70c7716caa5c363608eaa0ffbb94f93052f79e47928416c640a1f2ce2e1b345a93a0a494d2870f3e22a5deaabf2025922a4832202b39388f4b96'
+            'ecffd8038523be647d730d4148fc2edf68a7ac2681433ff1d8377ad65fc871c19b4de78e09796e3968d7589c506dd436c16a52927f8503bd6a44604c45ff30ce'
+            '08938fce62ff0175a8caf90ffe532024f17970c92e168ec0aeb3a53fdfe7efb572a5ee43b0399cc0a1ac959cdf2615811321d39adef323d909f02e4f240c5eec')
 
 _install_dir=/opt/${_base}/${_config}
 _petsc_arch=arch-${_config}
@@ -54,14 +54,17 @@ build() {
   export PETSC_ARCH=${_petsc_arch}
   export PETSC_DIR=${_build_dir}
 
+  # Apply patch to fix petsc4py build with setuptools 82+ (remove dry_run parameter)
+  patch -Np1 -i "${srcdir}/fix-petsc4py-setuptools.patch"
+
   OPTFLAGS='-O3 -march=native'
-  CONFOPTS="--with-shared-libraries=1 \
+  CONFOPTS="
             --with-petsc4py=1 \
+            --with-shared-libraries=1 \
             --with-mpi-f90module-visibility=0 \
-            --with-bison=0 \
+            --with-bison=1 \
             --with-cmake=0 \
             --with-mpi-dir=/usr \
-            --with-zfp=0 \
             --with-netcdf=1 \
             --with-libjpeg=1 \
             --with-yaml=1 \
@@ -71,7 +74,11 @@ build() {
             --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
             --with-suitesparse=1 \
             --with-hdf5=1 --with-hdf5-fortran-bindings=1 \
+            --with-hwloc=1 \
+            --with-pastix=1 \
+            --with-ptscotch=1 --with-bison=1 --with-ptscotch-lib=[libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so] --with-ptscotch-include=/usr/include \
             --with-scalar-type=complex \
+            --without-zfp \
             $(sh ${srcdir}/test_optdepends.sh)"
 
   echo ${CONFOPTS}
@@ -108,4 +115,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${_build_dir}/${_petsc_arch}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-depends+=("mumps" "parmetis-git" "pastix")
+depends+=("mumps" "parmetis-git")

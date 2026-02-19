@@ -9,29 +9,14 @@ CONFOPTS=""
 #CONFOPTS="${CONFOPTS} --download-${external_pkg}=1"
 #done
 
-# Kokkos
-if [ -f "/usr/lib/libkokkoscore.so" ]; then
-  CONFOPTS="${CONFOPTS} --with-kokkos=1"
-fi
-
 # HYPRE
 if [ -f "/usr/lib/libHYPRE.so" ]; then
   CONFOPTS="${CONFOPTS} --with-hypre-lib=/usr/lib/libHYPRE.so --with-hypre-include=/usr/include/hypre"
 fi
 
-# MUMPS
-if [ -f "/usr/lib/libmumps_common.so" ]; then
-  CONFOPTS="${CONFOPTS} --with-mumps=1"
-fi
-
-# triangle
-if [ -f "/usr/lib/libtriangle.so" ]; then
-  CONFOPTS="${CONFOPTS} --with-triangle=1"
-fi
-
-# ScaLAPACK
-if [ -f "/usr/lib/pkgconfig/scalapack.pc" ]; then
-  CONFOPTS="${CONFOPTS} --with-scalapack=1"
+# Kokkos
+if [ -f "/usr/lib/libkokkoscore.so" ]; then
+  CONFOPTS="${CONFOPTS} --with-kokkos=1"
 fi
 
 # METIS
@@ -43,16 +28,14 @@ if [ -f "/usr/include/metis.h" ]; then
   fi
 fi
 
-# Scotch
-SCOTCH_DIR="/usr/include"
-if [ -f "/usr/include/scotch.h" ]; then
-  SCOTCH_LIBS="libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so"
-  # Include bzip2 if scotch was build with bzip2 support
-  if [ -f /usr/include/bzlib.h ]; then
-    SCOTCH_LIBS="${SCOTCH_LIBS},libbz2.so"
-  fi
-  SCOTCH_LIBS="[${SCOTCH_LIBS}]"
-  CONFOPTS="${CONFOPTS} --with-ptscotch=1 --with-ptscotch-lib=${SCOTCH_LIBS} --with-ptscotch-include=${SCOTCH_DIR}"
+# MUMPS
+if [ -f "/usr/lib/libmumps_common.so" ]; then
+  CONFOPTS="${CONFOPTS} --with-mumps=1"
+fi
+
+# ScaLAPACK
+if [ -f "/usr/lib/pkgconfig/scalapack.pc" ]; then
+  CONFOPTS="${CONFOPTS} --with-scalapack=1"
 fi
 
 # SuperLU_DIST
@@ -61,16 +44,9 @@ if [ -d "${SUPERLU_DIST_DIR}" ]; then
   CONFOPTS="${CONFOPTS} --with-superlu_dist=1 --with-superlu_dist-lib=-lsuperlu_dist --with-superlu_dist-include=${SUPERLU_DIST_DIR}"
 fi
 
-# PaStiX
-PASTIX_CONF=$(which pastix-conf)
-if [ -f "${PASTIX_CONF}" ]; then
-  PASTIX_DIR="$($PASTIX_CONF --incs | sed 's/-I//')"
-  if [ ! -d ${PASTIX_DIR} ]; then
-    PASTIX_DIR="[]"
-  fi
-  #PASTIX_LIBS="$($PASTIX_CONF --libs)"
-  PASTIX_LIBS="[libpastix.a,librt.so,libhwloc.so,libpthread.a]"
-  CONFOPTS="${CONFOPTS} --with-pastix=1 --with-pastix-lib=${PASTIX_LIBS} --with-pastix-include=${PASTIX_DIR}"
+# triangle
+if [ -f "/usr/lib/libtriangle.so" ]; then
+  CONFOPTS="${CONFOPTS} --with-triangle=1"
 fi
 
 # Zoltan
