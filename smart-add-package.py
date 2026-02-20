@@ -5,6 +5,8 @@ import logging
 import requests
 import shutil
 import subprocess
+import gzip
+import tarfile
 from pathlib import Path
 
 def run(command, **kwargs):
@@ -21,21 +23,55 @@ def symlink(source, target):
         os.remove(target)
         os.symlink(source, target)
 
-def load_pacman_packages():
-    run(['sudo', 'pacman', '-Sy'])
-    results = set()
-    #for repository in ['core', 'extra', 'arch4edu']:
-    for repository in ['core', 'extra']:
-        packages = run(['sudo', 'pacman', '-Slq', repository], capture_output=True)
-        results.update(packages.stdout.decode('utf-8').split('\n')[:-1])
-    return results
-
 def load_pkgbases():
     pkgbases = {}
     for i in Path('.').rglob('cactus.yaml'):
         pkgbase = i.parent.name
         pkgbases[pkgbase] = str(i.parent)
     return pkgbases
+
+
+def load_pacman_and_provides():
+    run(['sudo', 'pacman', '-Sy'])
+    packages = set()
+    provides = {}
+    for repo in ['core', 'extra']:
+        db_file = Path(f'/var/lib/pacman/sync/{repo}.db')
+        if not db_file.is_file():
+            continue
+        try:
+            with tarfile.open(db_file, 'r:gz') as tar:
+                for member in tar.getmembers():
+                    if not member.name.endswith('/desc'):
+                        continue
+                    f = tar.extractfile(member)
+                    if not f:
+                        continue
+                    try:
+                        name = None
+                        in_provides = False
+                        for raw_line in f:
+                            line = raw_line.decode('utf-8', errors='ignore').strip()
+                            if line == '%NAME%':
+                                name_raw = f.readline()
+                                if name_raw:
+                                    name = name_raw.decode('utf-8', errors='ignore').strip()
+                                    packages.add(name)
+                            elif line == '%PROVIDES%':
+                                in_provides = True
+                            elif in_provides:
+                                if line.startswith('%'):
+                                    break
+                                if line:
+                                    pname = line.split('=')[0].split('<')[0].split('>')[0].strip()
+                                    if pname and name:
+                                        provides[pname] = name
+                    finally:
+                        f.close()
+        except Exception as e:
+            logger.debug(f'Failed to read {db_file}: {e}')
+    logger.info('Read %d packages and %d provides from sync db', len(packages), len(provides))
+    return packages, provides
 
 def read_aur_info(packages):
     logger.info('Reading AUR package information for %s', packages)
@@ -46,33 +82,6 @@ def read_aur_info(packages):
     data = res.json()
     results = {r['Name']: r for r in data['results']}
     return results
-
-def read_provides(package):
-    os.environ['LANG'] = 'C'
-    info = run(['sudo', 'pacman', '-Si', package], capture_output=True)
-    info = info.stdout.decode('utf-8').split('\n')
-    provides = [line for line in info if line.startswith('Provides')][0]
-    provides = provides.split(':')[-1].split(' ')
-    provides = [i.split('=')[0] for i in provides if len(i) > 0]
-    results = {}
-    for i in provides:
-        results[i] = package
-    return results
-
-def load_provides():
-    provides = {}
-    provides.update(read_provides('fuse2'))
-    provides.update(read_provides('libjpeg-turbo'))
-    provides.update(read_provides('ttf-dejavu'))
-    provides.update(read_provides('ruby-ronn-ng'))
-    provides.update(read_provides('libtool'))
-    provides.update(read_provides('util-linux-libs'))
-    provides.update(read_provides('pkgconf'))
-    provides.update(read_provides('gtest'))
-    provides.update(read_provides('python-dbus'))
-    provides.update(read_provides('jdk-openjdk'))
-    provides.update(read_provides('jre-openjdk'))
-    return provides
 
 if __name__ == '__main__':
     import argparse
@@ -96,20 +105,18 @@ if __name__ == '__main__':
     directory.mkdir(exist_ok=True)
     template = args.template
 
-    pacman_db = load_pacman_packages()
+    pacman_db, provides = load_pacman_and_provides()
     pkgbases = load_pkgbases()
-    provides = load_provides()
     if not args.provides is None:
         for i in args.provides:
             if ':' in i:
                 key, value = i.split(':')
                 provides[key] = value
             else:
-                provides.update(read_provides(i))
+                logger.warning('Invalid --provides: %s (use format virtual:real)', i)
 
     unresolved = [args.package]
     resolved = {}
-    reversed_depends = {}
     while len(unresolved) > 0:
         aur_info = read_aur_info(unresolved)
         _unresolved = set()
