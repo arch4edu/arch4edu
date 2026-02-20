@@ -1,3 +1,44 @@
+## 0.0.412 - 2026-02-19
+
+- Improve quick help accessibility: screen reader-friendly tab labels, reordered layout, and grouped `help commands` output
+- Hide custom agents with `user-invocable: false` from the `/agents` picker
+- Config file syntax errors now show a warning instead of silently crashing
+- Sign Windows native prebuilds with Authenticode to prevent antivirus quarantine of native modules
+- Allow `/reset-allowed-tools` to run during agent execution
+- MCP servers with invalid tool schemas no longer lose all tools
+- Alt-screen mode no longer consumes increasing memory over long sessions
+- Add `/mcp reload` command to reload MCP configuration
+- Skills support `disable-model-invocation` frontmatter field
+- /fleet orchestrator validates subagent work
+- Deprecate gpt-5 model
+- Windows slash flags (e.g., `xcopy /E /I`) are no longer treated as file paths
+- Show a warning in the timeline when skills fail to load at startup, with a prompt to run /skills for details
+- Eliminate banner character flash on startup when banner is disabled
+- Edit plan in terminal editor with ctrl+y
+- Terminal editor is now supported on Windows
+- Configure LSP server request timeouts in lsp.json
+- Add `/update` command to view changelog and update instructions
+- Add exit_plan_mode tool with plan approval dialog for reviewing and accepting plans
+- Support ~/.copilot/instructions/\*.instructions.md files for user-level instructions across all repositories
+- Add double-click word and triple-click line selection in alt-screen text selection
+- Edit the prompt in your preferred terminal editor with ctrl+x ctrl+e
+- Prevents spurious error messages from appearing in terminal on Windows
+- Typing `?` in an AskUser prompt no longer triggers the quick help overlay
+- Improve SQL tool timeline entries
+- Reduce memory usage in alt-screen mode during long sessions
+- /fleet mode dispatches more subagents in parallel for faster execution
+- Instructions picker opens as a full-screen alt-screen view when alt-screen mode is enabled
+- Skills picker opens as a full-screen alt-screen view when alt-screen mode is enabled
+- Command files no longer require YAML frontmatter — plain markdown files work with name and description derived automatically
+- Session picker opens instantly without a loading flash when multiple sessions exist
+- Mouse event coordinate fragments no longer appear in input field
+- Add cross-session memory: ask about past work, files, and PRs across sessions (experimental)
+- Add `--bash-env` flag to source BASH_ENV in shell sessions
+- Restore `ctrl+x /` as alternate shortcut to run commands while preserving input
+- /clear preserves agent mode (autopilot, plan, or interactive)
+- MCP error messages include the server name
+- Text selection in timeline no longer spills into prompt area when dragging
+
 ## 0.0.411 - 2026-02-17
 
 - Improve error messaging and guidance when access denied by policy
