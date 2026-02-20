@@ -4,7 +4,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=rlang
-_cranver=1.1.6
+_cranver=1.1.7
 pkgname=r-${_cranname,,}
 pkgdesc="Functions for Base Types and Core R and ‘Tidyverse’ Features"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -28,7 +28,7 @@ optdepends=(
     "r-pillar"
     "r-pkgload"
     "r-rmarkdown"
-    "r-testthat"
+    "r-testthat>=3.2.0"
     "r-tibble"
     "r-usethis"
     "r-vctrs>=0.2.3"
@@ -56,7 +56,7 @@ optdepends=(
 
 # It uses cloud.r-project.org instead of cran to make use of the CDN.
 source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("1bb41661fa0dc2407acac0aaf6862ae35f8c6e6b91200cdc67698212e3f1787d7cfb63636f511460b1b6303d1892ac7363f46ef689c7eb611b1ed6faa9c8f8f5")
+b2sums=("ea55e2c1d1fbe12e01c57fd2f8ba9c06980ba54c7d3353b05741deb47f44dabc123feee34d4a29017de816b0f4107b665a169909f8b4ba3080a47c4437d72579")
 
 build() {
     mkdir -p "${srcdir}/build/"
