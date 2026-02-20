@@ -1,9 +1,9 @@
-# Maintainer: Brian Bidulock <bidulock@openss7.org>
+# Contributor: Brian Bidulock <bidulock@openss7.org>
 # Contributor: Eric Bélanger <eric@archlinux.org>
 
 pkgname=lesstif
 pkgver=0.95.2
-pkgrel=8
+pkgrel=9
 pkgdesc="LGPL'd re-implementation of Motif"
 arch=('i686' 'x86_64')
 url="http://sourceforge.net/projects/lesstif/"
@@ -27,7 +27,7 @@ prepare() {
 
 build() {
   cd ${pkgname}-${pkgver}
-
+  export CFLAGS="$CFLAGS -Wno-incompatible-pointer-types -std=gnu17"
   ./configure --prefix=/usr \
     --enable-production \
     --enable-nonstandard-conversions \
