@@ -4,7 +4,7 @@
 
 pkgname=python-pytensor
 _pkgname=${pkgname#python-}
-pkgver=2.36.3
+pkgver=2.38.0
 pkgrel=1
 pkgdesc="Fork of Aesara -- Library for defining, optimizing, and efficiently evaluating mathematical expressions involving multi-dimensional arrays"
 arch=(x86_64)
@@ -45,7 +45,7 @@ optdepends=(
   'python-tensorflow-probability: for graph transpilation compilation via JAX'
 )
 source=("${url}/archive/refs/tags/rel-${pkgver}.tar.gz")
-sha256sums=('0ea323f262270e18876784e85de6abd2b6fff618c8a47073146398b99dbf5e6c')
+sha256sums=('535b8cb894bd00fc45120d8b6eb92946199e4f315ad536fa139b010e30fb5350')
 
 build() {
   cd "$srcdir/$_pkgname-rel-$pkgver"
@@ -116,3 +116,4 @@ package() {
 
   install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE.txt
 }
+options=(!debug !emptydirs)
