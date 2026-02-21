@@ -4,7 +4,7 @@
 # https://github.com/michaellass/AUR
 
 pkgname=archlinux-java-run
-pkgver=11
+pkgver=12
 pkgrel=1
 pkgdesc="Java Application Launcher for Arch Linux"
 arch=(any)
@@ -12,7 +12,7 @@ url="https://github.com/michaellass/archlinux-java-run"
 license=('MIT')
 depends=(bash java-runtime-common)
 source=(https://github.com/michaellass/${pkgname}/archive/v${pkgver}.tar.gz)
-sha256sums=('a6533fe22834891e7b401271281e7895438325ea6b030390d339d644e7d1096e')
+sha256sums=('de935ee8aaae3e59d619c96deab6d126a11e994e498634760952b83a1b9da2dc')
 
 package() {
   cd  "${srcdir}/${pkgname}-${pkgver}"
