@@ -1,5 +1,5 @@
 # Maintainer: w0rty <mawo97 at gmail.com>
-# Maintainer: Mr.Wizard <arch.aur-emailme at yahoo.com>
+# Maintainer: Mr.Wizard <process-pylon-62 at icloud.com>
 # Contributor: 4679 <admin@libnull.com>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Allan McRae <allan@archlinux.org>
@@ -7,7 +7,7 @@
 
 pkgname=fakeroot-tcp
 _pkgname=fakeroot
-pkgver=1.37.1.2
+pkgver=1.37.2
 pkgrel=1
 pkgdesc='Tool for simulating superuser privileges,with tcp ipc'
 arch=('i686' 'x86_64' 'armv7h' 'aarch64')
@@ -19,7 +19,7 @@ makedepends=('po4a' 'automake' 'autoconf')
 provides=("${_pkgname}=${pkgver}-${pkgrel}")
 conflicts=("${_pkgname}")
 source=(http://ftp.debian.org/debian/pool/main/f/$_pkgname/${_pkgname}_${pkgver}.orig.tar.gz)
-sha256sums=('959496928c8a676ec8377f665ff6a19a707bfad693325f9cc4a4126642f53224')
+sha256sums=('0eea60fbe89771b88fcf415c8f2f0a6ccfe9edebbcf3ba5dc0212718d98884db')
 
 
 prepare() {
