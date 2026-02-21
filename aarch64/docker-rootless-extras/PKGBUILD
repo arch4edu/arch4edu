@@ -4,25 +4,25 @@
 # Contributor: koba1t <kobdotsh at gmail dot com>
 
 pkgname=docker-rootless-extras
-pkgver=28.5.0
-pkgrel=1
+pkgver=29.2.1
+pkgrel=2
 pkgdesc="Extras to run docker as non-root."
-arch=('x86_64' 'aarch64')
+arch=('any')
 url="https://docs.docker.com/engine/security/rootless/"
-license=('Apache')
-depends=('docker' 'rootlesskit' 'slirp4netns')
+license=('Apache-2.0')
+depends=('bash' 'docker' 'rootlesskit' 'slirp4netns')
 optdepends=('fuse-overlayfs: overlayfs support')
 provides=('docker-rootless' 'docker-rootless-extras' 'docker-rootless-extras-bin')
 conflicts=('docker-rootless' 'docker-rootless-extras' 'docker-rootless-extras-bin')
 install=$pkgname.install
 source=(
-        "dockerd-rootless-${pkgver}.sh::https://raw.githubusercontent.com/moby/moby/v${pkgver}/contrib/dockerd-rootless.sh"
-        "dockerd-rootless-setuptool-${pkgver}.sh::https://raw.githubusercontent.com/moby/moby/v${pkgver}/contrib/dockerd-rootless-setuptool.sh"
+        "dockerd-rootless-${pkgver}.sh::https://raw.githubusercontent.com/moby/moby/docker-v${pkgver}/contrib/dockerd-rootless.sh"
+        "dockerd-rootless-setuptool-${pkgver}.sh::https://raw.githubusercontent.com/moby/moby/docker-v${pkgver}/contrib/dockerd-rootless-setuptool.sh"
         "docker.socket"
         "99-docker-rootless.conf")
 
-sha256sums=('5a4fcf228be8e5d2fd6c0676c858372a2afb95144675d02f215301272c344f65'
-            '0172d6f5c301b764a41bc37453d7bfd29c7681c02d3ece9ab109e7d04b52acc2'
+sha256sums=('b1cecc81b77291d4a6ad856792f4895807997e0bf0780553d54a4e0342600f1f'
+            'e68ef6550fea1b5c01b5cc7a400a6b44ee28159d7714758c3845759e03e079dc'
             'd8695293e5d4a814763f13e1d36ed37273040666b4b91363d6c33171df8934c7'
             'd0d790d4c3d887b10b2b155b83a58a44980b9fa638f8c0f1faec0739dc0ef473')
 
