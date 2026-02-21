@@ -31,7 +31,7 @@ def load_pkgbases():
     return pkgbases
 
 def load_pacman_and_provides(arch):
-    run(['fakeroot', 'pacman', '-Sy', '--config', f'.pacman/{arch}.conf', '--dbpath', f'.pacman/{arch}'])
+    run(['fakeroot', 'pacman', '-Sy', '--config', f'.pacman/{arch}.conf'])
     packages = set()
     provides = {}
     for repo in ['core', 'extra']:
