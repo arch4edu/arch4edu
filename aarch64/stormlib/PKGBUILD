@@ -3,7 +3,7 @@
 
 _pkgname=StormLib
 pkgname=stormlib
-pkgver=9.30
+pkgver=9.31 # renovate: datasource=github-tags depName=ladislav-zezula/StormLib
 pkgrel=1
 pkgdesc="A C/C++ API to read and write MPQ files with support for merged archives, patch MPQs and more."
 arch=("i686" "x86_64")
@@ -29,4 +29,4 @@ package() {
   make DESTDIR="$pkgdir" install
 }
 
-sha256sums=('a709a6b034d206404f5297d85e474371203ff5483639955195d99b737bbf7dfe')
+sha256sums=('c8d77e626cc907c8f2d00bb5c48f9d6c70344848d49cab4468f6234afaf815c1')
