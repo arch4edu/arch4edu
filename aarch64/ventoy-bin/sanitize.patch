@@ -5,9 +5,9 @@ Let me do some optimisations.
 
 If you are interested to improve this patch, welcome to mail me.
 
-diff -rup old/tool/ventoy_lib.sh new/tool/ventoy_lib.sh
---- tool/ventoy_lib.sh	2021-12-02 16:59:42.148650182 +0100
-+++ tool/ventoy_lib.sh	2021-12-02 17:01:17.214720518 +0100
+diff -rup a/tool/ventoy_lib.sh b/tool/ventoy_lib.sh
+--- a/tool/ventoy_lib.sh	2025-12-21 11:02:56.109581728 -0700
++++ b/tool/ventoy_lib.sh	2025-12-21 11:05:56.525888387 -0700
 @@ -29,7 +29,7 @@ vterr() {
  }
  
@@ -17,10 +17,11 @@ diff -rup old/tool/ventoy_lib.sh new/tool/ventoy_lib.sh
  }
  
  vtoy_gen_uuid() {
-@@ -52,30 +52,6 @@ vtoy_gen_uuid() {
+@@ -51,31 +51,6 @@ vtoy_gen_uuid() {
+ }
  
  check_tool_work_ok() {
-     
+-    
 -    if echo 1 | hexdump > /dev/null; then
 -        vtdebug "hexdump test ok ..."
 -    else
@@ -48,7 +49,7 @@ diff -rup old/tool/ventoy_lib.sh new/tool/ventoy_lib.sh
      vtdebug "tool check success ..."
      ventoy_true
  }
-@@ -311,7 +287,7 @@ format_ventoy_disk_mbr() {
+@@ -315,7 +290,7 @@ format_ventoy_disk_mbr() {
      else
      vtdebug "format disk by fdisk ..."
      
@@ -57,10 +58,10 @@ diff -rup old/tool/ventoy_lib.sh new/tool/ventoy_lib.sh
  o
  n
  p
-diff -rup old/tool/VentoyWorker.sh new/tool/VentoyWorker.sh
---- tool/VentoyWorker.sh	2021-12-02 16:59:31.485642239 +0100
-+++ tool/VentoyWorker.sh	2021-12-02 17:02:00.326752183 +0100
-@@ -105,7 +105,7 @@ vtdebug "MODE=$MODE FORCE=$FORCE RESERVE
+diff -rup a/tool/VentoyWorker.sh b/tool/VentoyWorker.sh
+--- a/tool/VentoyWorker.sh	2025-12-21 11:02:56.109851290 -0700
++++ b/tool/VentoyWorker.sh	2025-12-21 11:06:31.725421567 -0700
+@@ -106,7 +106,7 @@ vtdebug "MODE=$MODE FORCE=$FORCE RESERVE
  if check_tool_work_ok; then
      vtdebug "check tool work ok"
  else
@@ -69,14 +70,13 @@ diff -rup old/tool/VentoyWorker.sh new/tool/VentoyWorker.sh
      exit 1
  fi
  
-diff -rup old/Ventoy2Disk.sh new/Ventoy2Disk.sh
---- Ventoy2Disk.sh	2021-12-02 16:59:05.205622608 +0100
-+++ Ventoy2Disk.sh	2021-12-02 17:03:29.037816991 +0100
-@@ -32,48 +32,4 @@ echo "      https://www.ventoy.net"
- echo '**********************************************'
+diff -rup a/Ventoy2Disk.sh b/Ventoy2Disk.sh
+--- a/Ventoy2Disk.sh	2025-12-21 05:54:29.000000000 -0700
++++ b/Ventoy2Disk.sh	2025-12-21 11:07:39.576367151 -0700
+@@ -33,55 +33,4 @@ echo '**********************************
  echo ''
  
--
+ 
 -if ! [ -f ./boot/boot.img ]; then
 -    if [ -d ./grub ]; then
 -        echo "Don't run Ventoy2Disk.sh here, please download the released install package, and run the script in it."
@@ -105,6 +105,14 @@ diff -rup old/Ventoy2Disk.sh new/Ventoy2Disk.sh
 -    done
 -fi
 -
+-#use static linked mkexfatfs for musl-libc environment
+-if [ -f mkexfatfs_static ]; then
+-    if ldd --version 2>&1 | grep -qi musl; then
+-        mv mkexfatfs mkexfatfs_shared
+-        mv mkexfatfs_static mkexfatfs
+-    fi
+-fi
+-
 -cd ../../
 -chmod +x -R ./tool/$TOOLDIR
 -
@@ -122,9 +130,9 @@ diff -rup old/Ventoy2Disk.sh new/Ventoy2Disk.sh
 -    fi
 -fi
 +./tool/VentoyWorker.sh $*
-diff -rup old/VentoyPlugson.sh new/VentoyPlugson.sh
---- VentoyPlugson.sh	2022-12-24 06:00:51.000000000 -0700
-+++ VentoyPlugson.sh	2022-12-24 08:18:59.154268575 -0700
+diff -rup a/VentoyPlugson.sh b/VentoyPlugson.sh
+--- a/VentoyPlugson.sh	2025-12-21 05:54:29.000000000 -0700
++++ b/VentoyPlugson.sh	2025-12-21 11:08:25.127929572 -0700
 @@ -34,8 +34,6 @@ if echo $machine | grep -E -q 'aarch64|a
      TOOLDIR=aarch64
  elif echo $machine | grep -E -q 'x86_64|amd64'; then
@@ -134,9 +142,9 @@ diff -rup old/VentoyPlugson.sh new/VentoyPlugson.sh
  elif echo $machine | grep -E -q 'i[3-6]86'; then
      TOOLDIR=i386
  else
-diff -rup old/VentoyWeb.sh new/VentoyWeb.sh
---- VentoyWeb.sh	2021-12-02 16:58:51.885612627 +0100
-+++ VentoyWeb.sh	2021-12-02 17:04:43.437871014 +0100
+diff -rup a/VentoyWeb.sh b/VentoyWeb.sh
+--- a/VentoyWeb.sh	2025-12-21 05:54:29.000000000 -0700
++++ b/VentoyWeb.sh	2025-12-21 11:09:50.980810483 -0700
 @@ -15,12 +15,6 @@ print_err() {
      echo ""
  }
@@ -149,7 +157,7 @@ diff -rup old/VentoyWeb.sh new/VentoyWeb.sh
 -
  OLDDIR=$(pwd)
  
- if uname -m | egrep -q 'aarch64|arm64'; then
+ if uname -m | grep -E -q 'aarch64|arm64'; then
 @@ -85,8 +79,8 @@ if ps -ef | grep "V2DServer.*$HOST.*$POR
      exit 1
  fi
