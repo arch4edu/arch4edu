@@ -30,13 +30,12 @@ def load_pkgbases():
         pkgbases[pkgbase] = str(i.parent)
     return pkgbases
 
-
-def load_pacman_and_provides():
-    run(['sudo', 'pacman', '-Sy'])
+def load_pacman_and_provides(arch):
+    run(['fakeroot', 'pacman', '-Sy', '--config', f'pacman-configs/{arch}.conf', '--dbpath', f'.pacman/{arch}'])
     packages = set()
     provides = {}
     for repo in ['core', 'extra']:
-        db_file = Path(f'/var/lib/pacman/sync/{repo}.db')
+        db_file = Path(f'.pacman/{arch}/sync/{repo}.db')
         if not db_file.is_file():
             continue
         try:
@@ -90,7 +89,6 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--template', '-t', default='template/x86_64-simple.yaml', help='the template used to create cactus.yaml (default: template/x86_64-simple.yaml)')
-    #parser.add_argument('--repository', default='.', help='path to the repository (default: current directory)')
     parser.add_argument('--provides', '-p', action='append', help='read the provides of a package (eg. libjpeg-turbo) or specific a provide (eg. libjpeg:libjpeg-turbo)')
     parser.add_argument('--nocheck', action="store_true", help='disable check and ignore checkdepends (please remember to also use the nocheck template)')
     parser.add_argument('package', help='the package to add (eg: yay)')
@@ -105,7 +103,11 @@ if __name__ == '__main__':
     directory.mkdir(exist_ok=True)
     template = args.template
 
-    pacman_db, provides = load_pacman_and_provides()
+    arch = args.directory.split('/')[0]
+    if arch == 'any':
+        arch = 'x86_64'
+
+    pacman_db, provides = load_pacman_and_provides(arch)
     pkgbases = load_pkgbases()
     if not args.provides is None:
         for i in args.provides:
