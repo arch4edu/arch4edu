@@ -91,21 +91,32 @@ if __name__ == '__main__':
     parser.add_argument('--template', '-t', default='template/x86_64-simple.yaml', help='the template used to create cactus.yaml (default: template/x86_64-simple.yaml)')
     parser.add_argument('--provides', '-p', action='append', help='read the provides of a package (eg. libjpeg-turbo) or specific a provide (eg. libjpeg:libjpeg-turbo)')
     parser.add_argument('--nocheck', action="store_true", help='disable check and ignore checkdepends (please remember to also use the nocheck template)')
-    parser.add_argument('package', help='the package to add (eg: yay)')
-    parser.add_argument('directory', help='the output directory (eg: x86_64, x86_64/directory)')
+    parser.add_argument('target', help='target path with arch: arch[/subdir/]package (eg: x86_64/yay, aarch64/devtools/ytmdesktop)')
     args = parser.parse_args()
 
     options.logging = 'debug'
     logger = logging.getLogger()
     enable_pretty_logging(options=options, logger=logger)
 
-    directory = Path(args.directory)
-    directory.mkdir(exist_ok=True)
-    template = args.template
+    # Parse target: must be arch[/subdir/]package
+    parts = args.target.split('/')
+    if len(parts) < 2:
+        logger.error('Target must include architecture: arch[/subdir/]package')
+        sys.exit(1)
 
-    arch = args.directory.split('/')[0]
+    arch = parts[0]
     if arch == 'any':
         arch = 'x86_64'
+    elif arch not in ('x86_64', 'aarch64'):
+        logger.error('Unsupported architecture: %s (must be x86_64, aarch64, or any)', arch)
+        sys.exit(1)
+
+    package = parts[-1]
+    subdir = '/'.join(parts[1:-1]) if len(parts) > 2 else ''
+
+    directory = Path(arch) / subdir if subdir else Path(arch)
+    directory.mkdir(parents=True, exist_ok=True)
+    template = args.template
 
     pacman_db, provides = load_pacman_and_provides(arch)
     pkgbases = load_pkgbases()
@@ -117,7 +128,7 @@ if __name__ == '__main__':
             else:
                 logger.warning('Invalid --provides: %s (use format virtual:real)', i)
 
-    unresolved = [args.package]
+    unresolved = [package]
     resolved = {}
     while len(unresolved) > 0:
         aur_info = read_aur_info(unresolved)
@@ -154,7 +165,7 @@ if __name__ == '__main__':
     for package, info in reversed(resolved.items()):
         pkgbase = info['PackageBase']
 
-        if pkgbase in pkgbases and info['Name'] != args.package:
+        if pkgbase in pkgbases and info['Name'] != package:
             continue
 
         pkgbase = directory / pkgbase
