@@ -2,12 +2,12 @@
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
 pkgver=0.10.0.post5
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL-3.0-or-later GPL-3.0-or-later)
 depends=(adios2 boost kahip parmetis-git pugixml python-fenics-ffcx scotch petsc spdlog) # slepc
-makedepends=(cmake doxygen texlive-plaingeneric texlive-fontsrecommended texlive-latexextra)
+makedepends=(cmake doxygen texlive-plaingeneric texlive-fontsrecommended texlive-latexextra hdf5-openmpi)
 checkdepends=(catch2)
 # optdepends=('adios2: for use ADIOS2 writer'
 #   'kahip: for compute graph partition in parallel'
@@ -38,6 +38,7 @@ build() {
     -DDOLFINX_SKIP_BUILD_TESTS=OFF \
     -DDOLFINX_UFCX_PYTHON=ON \
     -DINSTALL_RUNTIME_DEPENDENCIES=OFF \
+    -DHDF5_IS_PARALLEL:BOOL=TRUE \
     -Wno-dev
   cmake --build build --target all
 
@@ -54,13 +55,15 @@ check() {
 
   CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
     -S ${pkgname}-${pkgver}/cpp/test \
-    -B build_test
+    -B build_test \
+    -DHDF5_IS_PARALLEL=TRUE
   cmake --build build_test
   ctest --test-dir build_test
 
   CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
     -S ${pkgname}-${pkgver}/cpp/demo \
-    -B build_demo
+    -B build_demo \
+    -DHDF5_IS_PARALLEL=TRUE
   cmake --build build_demo
   ctest -E "(demo_biharmonic_mpi_*|demo_poisson_mpi_*|demo_hyperelasticity_mpi_*|demo_codim_0_assembly_mpi_*|demo_custom_kernel_mpi_*|demo_poisson_matrix_free_mpi_*|demo_interpolation-io_mpi_*|demo_interpolation_different_meshes_mpi_*)" --test-dir build_demo
 }
