@@ -14,25 +14,48 @@ pkgver=6.5.0
 _ver=${pkgver%%.*}
 _islver=0.18
 _cloogver=0.18.4
-pkgrel=9
+pkgrel=10
 pkgdesc="The GNU Compiler Collection (6.x.x)"
 arch=(x86_64)
-license=(GPL LGPL FDL custom)
-url="https://gcc.gnu.org/gcc-6/"
-makedepends=(binutils libmpc doxygen subversion java-environment-common zip jdk8-openjdk gtk2 libart-lgpl libxtst zlib java-runtime)
-source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
-        "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2"
-        "http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz"
-        libsanitizer.patch
-        c89
-        c99
+license=(
+    GPL
+    LGPL
+    FDL
+    custom
 )
-sha512sums=('ce046f9a50050fd54b870aab764f7db187fe7ea92eb4aaffb7c3689ca623755604e231f2af97ef795f41c406bb80c797dd69957cfdd51dfa2ba60813f72b7eac'
-            '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94'
-            'd35d67b08ffe13c1a010b65bfe4dd02b0ae013d5b489e330dc950bd3514defca8f734bd37781856dcedf0491ff6122c34eecb4b0fe32a22d7e6bdadea98c8c23'
-            'e7861f77d54ac9bc12cfc6d3498a9bc284e72f728435c23866ac0763fb93e94e431d819c3def9f5aa03acbafc437141882e7b3746f4574ec6e5eb66b555cebb6'
-            'a02da589b23e4a76b5ca3b3e4e2261ef4cf69dadd9460703f14e34090d4e574025a52acef9f54e897679115e2122b0095d9d7eab556024bb0e9c695915951a58'
-            'd17176547a1ed2b7aa4743eb66a06308db182a993985a1905b418dfa46b74723631b17fd0d536adfefbdf4900d3b71cdf1e7d663ad379fa11b58b613dccb931c')
+url="https://gcc.gnu.org/gcc-6/"
+makedepends=(
+    binutils
+    libmpc
+    doxygen
+    subversion
+    java-environment-common
+    zip
+    jdk8-openjdk
+    gtk2
+    libart-lgpl
+    libxtst
+    zlib
+    java-runtime)
+options=(!buildflags)
+source=(
+    "https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+     "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2"
+     "http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz"
+     libsanitizer.patch
+     remove-termio.patch
+     c89
+     c99
+)
+sha512sums=(
+    'ce046f9a50050fd54b870aab764f7db187fe7ea92eb4aaffb7c3689ca623755604e231f2af97ef795f41c406bb80c797dd69957cfdd51dfa2ba60813f72b7eac'
+    '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94'
+    'd35d67b08ffe13c1a010b65bfe4dd02b0ae013d5b489e330dc950bd3514defca8f734bd37781856dcedf0491ff6122c34eecb4b0fe32a22d7e6bdadea98c8c23'
+    'e7861f77d54ac9bc12cfc6d3498a9bc284e72f728435c23866ac0763fb93e94e431d819c3def9f5aa03acbafc437141882e7b3746f4574ec6e5eb66b555cebb6'
+    'c1415ef208cf924fa72cf4cb5ab192e46d21ef608c8de89c76c25c42014967170e6915c8a6bb1a31cab20535fb146bfe413c2485b854132b7f723332257154c8'
+    'a02da589b23e4a76b5ca3b3e4e2261ef4cf69dadd9460703f14e34090d4e574025a52acef9f54e897679115e2122b0095d9d7eab556024bb0e9c695915951a58'
+    'd17176547a1ed2b7aa4743eb66a06308db182a993985a1905b418dfa46b74723631b17fd0d536adfefbdf4900d3b71cdf1e7d663ad379fa11b58b613dccb931c'
+)
 
 _libdir="/usr/lib/gcc/$CHOST/$pkgver"
 
@@ -42,6 +65,7 @@ prepare() {
   cd gcc
   # Apply patches.
   patch --forward --strip=2 --input="${srcdir}"/libsanitizer.patch
+  patch --forward --strip=2 --input="${srcdir}"/remove-termio.patch
 
   # Link isl/cloog for in-tree builds
   ln -sf "../isl-${_islver}" isl
@@ -112,7 +136,7 @@ build() {
     --enable-libgcj-multifile \
     --enable-version-specific-runtime-libs \
     --enable-build-warnings \
-    --program-suffix=-${_ver} \
+    --program-suffix=-"${_ver}" \
     --disable-nls
 
   make
@@ -216,14 +240,14 @@ package_gcc6() {
   #make -C "$CHOST"/libmpx DESTDIR="${pkgdir}" install-nodist_toolexeclibHEADERS
 
   make -C gcc DESTDIR="${pkgdir}" install-man install-info
-  rm "${pkgdir}"/usr/share/man/man1/gfortran-${_ver}.1
-  rm "${pkgdir}"/usr/share/info/gfortran.info
+  rm "${pkgdir}/usr/share/man/man1/gfortran-${_ver}.1"
+  rm "${pkgdir}/usr/share/info/gfortran.info"
 
   make -C libcpp DESTDIR="${pkgdir}" install
   make -C gcc DESTDIR="${pkgdir}" install-po
 
   # many packages expect this symlink
-  ln -s "gcc-${_ver}" "${pkgdir}"/usr/bin/cc-${_ver}
+  ln -s "gcc-${_ver}" "${pkgdir}/usr/bin/cc-${_ver}"
 
   # POSIX conformance launcher scripts for c89 and c99
   install -Dm755 "${srcdir}/c89" "${pkgdir}/usr/bin/c89-${_ver}"
@@ -234,7 +258,7 @@ package_gcc6() {
   rm -rf "${pkgdir}"/"${_libdir}"/libstdc++.{a,la}
 
   # Move potentially conflicting stuff to version specific subdirectory
-  mv "${pkgdir}"/usr/lib/bfd-plugins/liblto_plugin.so "${pkgdir}"/usr/lib/bfd-plugins/liblto_plugin-${_ver}.so
+  mv "${pkgdir}"/usr/lib/bfd-plugins/liblto_plugin.so "${pkgdir}/usr/lib/bfd-plugins/liblto_plugin-${_ver}.so"
   mv "${pkgdir}"/usr/lib/*.so* "${pkgdir}"/"${_libdir}"/
   install -Dm755 gcc/cc1 "${pkgdir}"/"${_libdir}"/cc1
   install -Dm755 gcc/cc1plus "${pkgdir}"/"${_libdir}"/cc1plus
@@ -253,7 +277,7 @@ package_gcc6-fortran() {
   make -C gcc DESTDIR="${pkgdir}" fortran.install-common
   install -Dm755 gcc/f951 "${pkgdir}/${_libdir}/f951"
 
-  ln -s gfortran-${_ver} "${pkgdir}"/usr/bin/f95-${_ver}
+  ln -s "gfortran-${_ver}" "${pkgdir}/usr/bin/f95-${_ver}"
 }
 
 package_gcc6-gcj() {
