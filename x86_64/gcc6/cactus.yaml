@@ -1,8 +1,9 @@
 nvchecker:
   - source: aur
     aur:
-depends:
+makedepends:
   - x86_64/libart-lgpl
+  - x86_64/gtk2
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
