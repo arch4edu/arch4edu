@@ -7,14 +7,13 @@ pkgname=(
   'aspnet-runtime-bin'
   'dotnet-runtime-bin'
   'dotnet-sdk-bin'
-  'netstandard-targeting-pack-bin'
   'dotnet-targeting-pack-bin'
   'aspnet-targeting-pack-bin'
  )
-pkgver=9.0.9.sdk305
-_runtimever=9.0.9
-_sdkver=9.0.305
-_short_ver=9.0
+pkgver=10.0.3.sdk103
+_runtimever=10.0.3
+_sdkver=10.0.103
+_short_ver=10.0
 pkgrel=1
 arch=('x86_64' 'armv7h' 'aarch64')
 url='https://www.microsoft.com/net/core'
@@ -25,23 +24,24 @@ source_armv7h=("https://builds.dotnet.microsoft.com/dotnet/Sdk/${_sdkver}/dotnet
 source_aarch64=("https://builds.dotnet.microsoft.com/dotnet/Sdk/${_sdkver}/dotnet-sdk-${_sdkver}-linux-arm64.tar.gz")
 source_x86_64=("https://builds.dotnet.microsoft.com/dotnet/Sdk/${_sdkver}/dotnet-sdk-${_sdkver}-linux-x64.tar.gz")
 sha512sums=('768151c7179fb6a126b3de9cae01e363e8894f6fab384b1e2c5066c2adca4578638983b1b62aea10dd18045e6d6e8f8ea13280481134de94f004a118919b2c06')
-sha512sums_armv7h=('771163ed363c51a1ab226ab142a1b0fdd09c675e2e0a979d02c6816cb542d09c26d353ef20121ba7a56d23534df96b0645cb94a061d7316a563e35bc3e73b0ba')
-sha512sums_aarch64=('bbda603d10a134e4fef4597203491937bb4fbaeee190f8b6dec79ee78292a1f528a842ed44b7a6b37b49517cf19c728551078cc6b21c0b2b2d6d811fc95f9c8e')
-sha512sums_x86_64=('f9140e141d731d37de9b6e1eab0b25726f0b9de24d2888a4200649880e9e43671ebb3897a249f4324c214d56eb3e7f0ef0cfa56b32850a9c03811b21e6377bca')
+sha512sums_armv7h=('c6eb59781abc7b27d723c735de867a7db7052df8e95739b42a7f4bfde7a97d16777cb2179a4922955f70fa3f6dfca05c11cd91babd76f6904f84967d9be0ff25')
+sha512sums_aarch64=('ab45b6baeae956e4465151787d8b8113b66679ed55da1e72c57e99aa5ab8f42471e80dc8a5fd22c31df74e60446a3b252d2900658cefc9506fcb0da7e2831e21')
+sha512sums_x86_64=('bab94f13c57b2ac821d4924fe66084be9b44c41761ff7ff64522c8f7aba345659d31258401dcec31cc3cf6ccae1d012623075aca1c9b9165bcfe5ba9abda1c0c')
 
 package_dotnet-host-bin() {
   pkgdesc='A generic driver for the .NET Core Command Line Interface (binary)'
   provides=("dotnet-host" "dotnet-host=${_runtimever}")
+  conflicts=('dotnet-host')
   depends=(
     'gcc-libs'
     'glibc'
   )
-  conflicts=('dotnet-host')
 
-  install -dm 755 "${pkgdir}"/usr/{bin,lib,share/{dotnet,licenses/dotnet-host}}
-  cp -dr --no-preserve='ownership' dotnet host "${pkgdir}"/usr/share/dotnet/
+  install -dm 755 "${pkgdir}"/usr/{bin,lib,share/{dotnet,dnx,licenses/dotnet-host}}
+  cp -dr --no-preserve='ownership' dotnet host dnx "${pkgdir}"/usr/share/dotnet/
   cp -dr --no-preserve='ownership' LICENSE.txt ThirdPartyNotices.txt "${pkgdir}"/usr/share/licenses/dotnet-host
   ln -sf /usr/share/dotnet/dotnet "${pkgdir}"/usr/bin/dotnet
+  ln -sf /usr/share/dotnet/dnx "${pkgdir}"/usr/bin/dnx
   ln -sf /usr/share/dotnet/host/fxr/"${_runtimever}"/libhostfxr.so "${pkgdir}"/usr/lib/libhostfxr.so
   install -Dm 644 "${srcdir}"/dotnet.sh -t "${pkgdir}"/etc/profile.d/
 }
@@ -57,7 +57,7 @@ package_dotnet-runtime-bin() {
     'zlib'
     'openssl'
   )
-  optdepends=('lttng-ust: CoreCLR tracing')
+  optdepends=('lttng-ust2.12: CoreCLR tracing')
   provides=("dotnet-runtime=${_runtimever}" "dotnet-runtime-${_short_ver}")
   conflicts=("dotnet-runtime=${_runtimever}" "dotnet-runtime-${_short_ver}")
 
@@ -84,7 +84,6 @@ package_dotnet-sdk-bin() {
     'gcc-libs'
     'dotnet-runtime-bin'
     'dotnet-targeting-pack-bin'
-    'netstandard-targeting-pack-bin'
     'aspnet-runtime-bin'
     'aspnet-targeting-pack-bin'
   )
@@ -96,19 +95,8 @@ package_dotnet-sdk-bin() {
   ln -s dotnet-host-bin "${pkgdir}"/usr/share/licenses/dotnet-sdk-bin
 }
 
-package_netstandard-targeting-pack-bin() {
-  pkgdesc='The .NET Standard targeting pack (binary)'
-  provides=('netstandard-targeting-pack-2.1' 'netstandard-targeting-pack')
-  conflicts=('netstandard-targeting-pack-2.1' 'netstandard-targeting-pack')
-
-  install -dm 755 "${pkgdir}"/usr/share/{dotnet,dotnet/packs,licenses}
-  cp -dr --no-preserve='ownership' packs/NETStandard.Library.Ref "${pkgdir}"/usr/share/dotnet/packs/
-  ln -s dotnet-host-bin "${pkgdir}"/usr/share/licenses/netstandard-targeting-pack
-}
-
 package_dotnet-targeting-pack-bin() {
   pkgdesc='The .NET Core targeting pack (binary)'
-  depends=(netstandard-targeting-pack-bin)
   provides=(dotnet-targeting-pack=${_runtimever} dotnet-targeting-pack-${_short_ver})
   conflicts=(dotnet-targeting-pack=${_runtimever} dotnet-targeting-pack-${_short_ver})
 
