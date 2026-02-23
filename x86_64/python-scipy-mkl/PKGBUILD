@@ -7,7 +7,7 @@
 # Contributor: Andrzej Giniewicz <gginiu@gmail.com>
 
 pkgname=python-scipy-mkl
-pkgver=1.17.0
+pkgver=1.17.1
 pkgrel=1
 pkgdesc="SciPy is open-source software for mathematics, science, and engineering."
 arch=('x86_64')
@@ -20,7 +20,7 @@ makedepends=('cython' 'gcc-fortran' 'meson-python' 'procps-ng' 'pybind11' 'pytho
 checkdepends=('python-pytest')
 optdepends=('python-pillow: for image saving module')
 source=("https://pypi.python.org/packages/source/s/scipy/scipy-$pkgver.tar.gz")
-sha256sums=('2591060c8e648d8b96439e111ac41fd8342fdeff1876be2e19dea3fe8930454e')
+sha256sums=('95d8e012d8cb8816c226aef832200b1d45109ed4464303e997c5b13122b297c0')
 
 build() {
 	source /opt/intel/oneapi/setvars.sh
