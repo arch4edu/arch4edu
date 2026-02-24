@@ -1,3 +1,17 @@
+## 0.0.415 - 2026-02-23
+
+- Skill files saved with a UTF-8 BOM (common on Windows editors) now load correctly instead of failing with a frontmatter parse error
+- Custom agents support the `model` field to specify which model to use, and unknown fields now warn instead of blocking agent load
+- Plan approval menu shows model-curated actions with a recommended option highlighted first, including autopilot+fleet for parallelizable work
+- Env loading indicator no longer hangs indefinitely on MCP startup error or session resume
+- Add show_file tool for presenting code and diffs to the user
+- Add env loading indicator showing skills, MCPs, plugins, ... being loaded
+- MCP tool results with giant single lines are truncated correctly
+- /plugin marketplace add and /plugin install support local paths containing spaces
+- `/mcp show` groups servers into User, Workspace, Plugins, and Built-in sections and makes all servers navigable
+- Agent now knows which model is powering it when asked
+- Ctrl+A/E cycle through visual lines in wrapped input; Home/End navigate within a visual line; Ctrl+Home/End jump to text boundaries
+
 ## 0.0.414 - 2026-02-21
 
 - Explore agent can now use GitHub MCP tools when available
