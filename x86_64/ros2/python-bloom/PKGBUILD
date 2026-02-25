@@ -1,23 +1,23 @@
 # Maintainer: Octopus118 <idlansdowne at gmail dot com>
 pkgname=python-bloom
-_name=${pkgname#python-}
-pkgver=0.12.0
-pkgrel=4
+pkgver=0.13.0
+pkgrel=1
 pkgdesc="Bloom is a release automation tool."
 arch=('any')
-url="http://www.ros.org/wiki/bloom"
+url="https://github.com/ros-infrastructure/bloom"
 license=('BSD')
 depends=('python' 'python-empy3' 'python-rosdep' 'python-vcstool')
 makedepends=('python-build' 'python-installer' 'python-wheel')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha256sums=('cc5a1f964ae27907d0ee0380a2a45a71c69eaa066f853e43d704cb1c096c0a89')
+source=("$pkgname::git+https://github.com/ros-infrastructure/bloom.git#tag=$pkgver")
+sha256sums=('177ca799d296b26e62efc51eb36b1da02f36b6200b45da43359979bb21a44c7b')
 
 build() {
-	cd "$_name-$pkgver"
+	cd "$pkgname"
 	python -m build --wheel --no-isolation
 }
 
 package() {
-	cd "$_name-$pkgver"
+	cd "$pkgname"
 	python -m installer --destdir="$pkgdir" dist/*.whl
 }
+makedepends+=("git")
