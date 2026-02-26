@@ -1,3 +1,27 @@
+## 0.0.418 - 2026-02-25
+
+🎉 Copilot CLI is now [generally available](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available) 🎉
+
+- Agent protected from accidentally killing itself
+- Remove --disable-parallel-tools-execution flag and parallel_tool_execution config option
+- Plugin agents specified as file paths in plugin.json load correctly
+
+## 0.0.417 - 2026-02-25
+
+- Add /research command for deep research with exportable reports
+- MCP servers no longer intermittently fail to load when opening a new session
+- Plugin agents and skills are available immediately after install without restarting
+- Plugin skills and commands load from custom paths declared in plugin.json
+- Alt+backspace correctly registers as backspace instead of delete
+
+## 0.0.416 - 2026-02-24
+
+- Expand `--help` content with descriptions, examples, and sorted flags
+- Block third-party MCP servers when the Copilot MCP policy does not allow them
+- Streaming response size counter updates continuously during tool calls and reasoning, and resets between requests
+- Status line automatically switches to a two-line layout on narrow terminals, keeping CWD, branch, and model info readable at any terminal width
+- Undo operations now always require confirmation
+
 ## 0.0.415 - 2026-02-23
 
 - Skill files saved with a UTF-8 BOM (common on Windows editors) now load correctly instead of failing with a frontmatter parse error
