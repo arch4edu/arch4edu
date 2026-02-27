@@ -1,3 +1,18 @@
+## 0.0.419 - 2026-02-27
+
+- Add /chronicle command with standup, tips, and improve subcommands powered by session history (experimental)
+- Scrolling left or right no longer triggers unintended mouse button presses
+- Add Ctrl+F/Ctrl+B as page down/up shortcuts for scrolling in alt-screen views
+- Add --mouse/--no-mouse flag and mouse config to disable mouse mode in alt screen
+- Home and End keys jump to the top and bottom of the alt-screen scroll buffer
+- Add Ctrl+G keyboard shortcut for editing prompts in external editor and dismissing UI elements
+- /mcp enable works for built-in servers that were auto-disabled before configuration
+- CLI spinner stops and final agent response is visible after agent finishes work
+- AUTO theme now uses the terminal's actual ANSI color palette for more accurate colors on any terminal theme
+- MCP server env vars referenced in command, args, or cwd fields are automatically included in the server environment
+- /diagnose shows a helpful message when no session has been started yet
+- MCP server names now support dots, slashes, and @ characters, enabling npm-style names like @modelcontextprotocol/server and io.github/server
+
 ## 0.0.418 - 2026-02-25
 
 🎉 Copilot CLI is now [generally available](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available) 🎉
