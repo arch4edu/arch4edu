@@ -1,3 +1,11 @@
+## 0.0.420 - 2026-02-27
+
+- Auto-update now also updates the binary executable, not just the JS package
+- Plugin and marketplace git repos update correctly after force-pushes and tag-based installs
+- 502 bad gateway errors are retried automatically and no longer crash the session with raw HTML output
+- Copy hint shows cmd+c in Ghostty on macOS and right-click as an alternative for all terminals
+- Type # to reference GitHub issues, pull requests and discussions
+
 ## 0.0.419 - 2026-02-27
 
 - Add /chronicle command with standup, tips, and improve subcommands powered by session history (experimental)
