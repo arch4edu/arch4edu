@@ -4,7 +4,7 @@
 
 pkgname=devtools-arch4edu
 epoch=1
-pkgver=1.5.0
+pkgver=1.5.0.5.gcf25586
 pkgrel=1
 pkgdesc='Tools for Arch Linux package maintainers'
 arch=('any')
