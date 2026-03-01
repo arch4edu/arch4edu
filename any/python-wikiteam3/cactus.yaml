@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-makedepends:
+depends:
   - any/python-file-read-backwards
   - any/python-mwclient
 build_prefix: extra-x86_64
