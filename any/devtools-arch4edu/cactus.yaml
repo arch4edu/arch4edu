@@ -1,6 +1,6 @@
 nvchecker:
   - source: github
-    github: arch4edu/devtools-arch4edu
+    github: arch4edu/devtools
 build_prefix: extra-x86_64
 pre_build: echo
 post_build: |
