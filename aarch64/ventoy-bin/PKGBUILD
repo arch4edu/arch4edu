@@ -4,7 +4,7 @@
 
 pkgname=ventoy-bin
 pkgver=1.1.10
-pkgrel=2
+pkgrel=3
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -12,13 +12,19 @@ license=('GPL-3.0-or-later')
 depends=(
   'bash'
   'dosfstools'
+  'exfat-utils'
   'util-linux'
+  'which'
   'xz'
 )
 optdepends=(
+  'e2fsprogs: EXT partition support'
   'gtk3: GTK3 GUI'
+  'ntfs-3g: NTFS partition support'
+  'parted: Primary partitioning tool'
   'qt5-base: Qt5 GUI'
   'polkit: run GUI from application menu'
+  'xfsprogs: XFS partition support'
 )
 provides=("${pkgname%-bin}")
 conflicts=("${pkgname%-bin}")

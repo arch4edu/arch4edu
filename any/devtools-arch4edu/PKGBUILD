@@ -1,27 +1,71 @@
+# Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
+# Maintainer: Christian Heusel <gromit@archlinux.org>
+# Contributor: Pierre Schmitz <pierre@archlinux.de>
+
 pkgname=devtools-arch4edu
-pkgver=20200407.72.gf233679
-pkgrel=2
-pkgdesc='Tools for arch4edu package maintainers'
+epoch=1
+pkgver=1.5.0
+pkgrel=1
+pkgdesc='Tools for Arch Linux package maintainers'
 arch=('any')
-url='http://github.com/arch4edu/devtools'
-license=('GPL')
-depends=('bash' 'openssh' 'subversion' 'rsync' 'arch-install-scripts'
-         'git' 'bzr' 'mercurial' 'diffutils' 'util-linux' 'awk')
-makedepends=('asciidoc')
-optdepends=('btrfs-progs: btrfs support')
+url='https://github.com/arch4edu/devtools'
+license=('GPL-3.0-or-later')
+depends=(
+  arch-install-scripts
+  awk
+  bash
+  binutils
+  coreutils
+  curl
+  diffutils
+  expac
+  fakeroot
+  findutils
+  glow
+  grep
+  gum
+  jq
+  openssh
+  parallel
+  reuse
+  rsync
+  sed
+  util-linux
+  sudo
+  breezy
+  git
+  mercurial
+  subversion
+)
+makedepends=(
+  asciidoctor
+)
+checkdepends=(
+  bats
+)
+optdepends=(
+  'btrfs-progs: btrfs support'
+  'bat: pretty printing for pkgctl search'
+  'nvchecker: pkgctl version subcommand'
+)
 conflicts=('devtools')
 provides=('devtools')
-source=("${pkgname}::git+${url}.git")
+source=("devtools-arch4edu::git+https://github.com/arch4edu/devtools.git")
 sha256sums=('SKIP')
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
-  git describe --always --tags | sed -e 's/-/./g' -e 's/v//g'
+  git describe --long --tags | sed 's/^v//;s/-/./g'
 }
 
 build() {
   cd "${srcdir}/${pkgname}"
-  make PREFIX=/usr
+  make BUILDTOOLVER="${epoch}:${pkgver}-${pkgrel}-${arch}" PREFIX=/usr
+}
+
+check() {
+  cd "${srcdir}/${pkgname}"
+  make PREFIX=/usr test
 }
 
 package() {

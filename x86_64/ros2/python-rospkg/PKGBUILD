@@ -1,8 +1,8 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 
 pkgname=('python-rospkg')
-pkgver='1.6.0'
-pkgrel=2
+pkgver='1.6.1'
+pkgrel=1
 pkgdesc='Standalone Python library for the ROS package system'
 arch=('any')
 url='https://github.com/ros-infrastructure/rospkg'
@@ -12,7 +12,7 @@ makedepends=('python-setuptools')
 
 conflicts=('python2-rospkg')
 source=("https://github.com/ros-infrastructure/rospkg/archive/${pkgver}.tar.gz")
-sha256sums=('9341c8af5f547888ab484ee61b53d8447b6a52081222d2d5257757ab374c657f')
+sha256sums=('2c4109a02367d56b1e4ceeb86c6faed4bb423643580b3274fcaa2a22a1a3380a')
 
 _module='rospkg'
 

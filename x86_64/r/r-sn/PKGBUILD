@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=sn
-_pkgver=2.1.2
+_pkgver=2.1.3
 pkgname=r-${_pkgname,,}
-pkgver=2.1.2
+pkgver=2.1.3
 pkgrel=1
 pkgdesc='The Skew-Normal and Related Distributions Such as the Skew-t and the SUN'
 arch=('any')
@@ -19,7 +19,7 @@ optdepends=(
   r-r.rsp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2e801e3f74d970dd84c62badb0cb19ee53798016a7dd0b9840c53334f2583e66')
+sha256sums=('144df1ad03d28acd06f1231dd6efa9638db930402818a380b5b0f08eee816218')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
