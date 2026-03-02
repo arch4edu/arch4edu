@@ -4,10 +4,10 @@
 # Contribitor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=reshape2
-_pkgver=1.4.4
+_pkgver=1.4.5
 pkgname=r-${_pkgname,,}
-pkgver=1.4.4
-pkgrel=7
+pkgver=1.4.5
+pkgrel=1
 pkgdesc='Flexibly Reshape Data: A Reboot of the Reshape Package'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('d88dcf9e2530fa9695fc57d0c78adfc5e361305fe8919fe09410b17da5ca12d8')
+sha256sums=('0ead5acd0153e5073b3c24e8e782982a4eab3aaa768ba17700d796fb13b68cef')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
