@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=bridgesampling
-_pkgver=1.1-2
+_pkgver=1.2-1
 pkgname=r-${_pkgname,,}
-pkgver=1.1.2
-pkgrel=4
+pkgver=1.2.1
+pkgrel=1
 pkgdesc='Bridge Sampling for Marginal Likelihoods and Bayes Factors'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -34,7 +34,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('54ecd39aa2e36d4d521d3d36425f9fe56a3f8547df6048c814c5931d790f3e6b')
+sha256sums=('e85f4fa1d1c226e485b5ffb71b83c6d80d7d6a1083795af3e526b9c87929e998')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
