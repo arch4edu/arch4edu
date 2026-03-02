@@ -9,7 +9,7 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.24.4
+pkgver=3.24.5
 pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
@@ -38,11 +38,9 @@ optdepends=('hypre: support for the hypre sparse system solver'
   'zoltan: support for zoltan')
 install=${_base}.install
 source=(https://web.cels.anl.gov/projects/${_base}/download/release-snapshots/${_base}-lite-${pkgver}.tar.gz
-  test_optdepends.sh
-  fix-petsc4py-setuptools.patch)
-sha512sums=('6bc4bdfb4cbc70c7716caa5c363608eaa0ffbb94f93052f79e47928416c640a1f2ce2e1b345a93a0a494d2870f3e22a5deaabf2025922a4832202b39388f4b96'
-            'ecffd8038523be647d730d4148fc2edf68a7ac2681433ff1d8377ad65fc871c19b4de78e09796e3968d7589c506dd436c16a52927f8503bd6a44604c45ff30ce'
-            '08938fce62ff0175a8caf90ffe532024f17970c92e168ec0aeb3a53fdfe7efb572a5ee43b0399cc0a1ac959cdf2615811321d39adef323d909f02e4f240c5eec')
+  test_optdepends.sh)
+sha512sums=('39441685e8f7df976c99d717d310e9072113f8505e7d54ff0dd871113cf695d2a763865f30e2bdb4316934984a1eed0b22c80114ac966e0a47de6a066df33c3a'
+            'ecffd8038523be647d730d4148fc2edf68a7ac2681433ff1d8377ad65fc871c19b4de78e09796e3968d7589c506dd436c16a52927f8503bd6a44604c45ff30ce')
 
 _install_dir=/opt/${_base}/${_config}
 _petsc_arch=arch-${_config}
@@ -53,9 +51,6 @@ build() {
 
   export PETSC_ARCH=${_petsc_arch}
   export PETSC_DIR=${_build_dir}
-
-  # Apply patch to fix petsc4py build with setuptools 82+ (remove dry_run parameter)
-  patch -Np1 -i "${srcdir}/fix-petsc4py-setuptools.patch"
 
   OPTFLAGS='-O3 -march=native'
   CONFOPTS="
@@ -76,7 +71,7 @@ build() {
             --with-hdf5=1 --with-hdf5-fortran-bindings=1 \
             --with-hwloc=1 \
             --with-pastix=1 \
-            --with-ptscotch=1 --with-bison=1 --with-ptscotch-lib=[libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so] --with-ptscotch-include=/usr/include \
+            --with-ptscotch=1 --with-bison=1 --with-ptscotch-lib=[libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so] --with-ptscotch-include=/usr/include/scotch \
             --with-scalar-type=complex \
             --without-zfp \
             $(sh ${srcdir}/test_optdepends.sh)"
