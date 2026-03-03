@@ -4,12 +4,12 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/ros2/ros2-arch-deps
+  - pacman:eigen3
 makedepends:
   - x86_64/cmake3
   - x86_64/gcc13
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add depends eigen3
   sed 's/D_FORTIFY_SOURCE=3/D_FORTIFY_SOURCE=[23]/g' -i PKGBUILD
 post_build: aur-post-build
