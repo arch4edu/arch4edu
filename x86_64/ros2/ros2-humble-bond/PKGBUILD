@@ -4,7 +4,7 @@ _pkgroot=bond_core
 _pkgname=bond
 pkgname=ros2-humble-bond
 pkgver=3.0.2
-pkgrel=4
+pkgrel=5
 pkgdesc="A bond allows two processes, A and B, to know when the other has terminated, either cleanly or by crashing."
 url="https://index.ros.org/p/bond/"
 arch=('any')
@@ -18,6 +18,9 @@ sha256sums=('16f0a741c238057146c50f4537d0e41c6c1842f7890a9fea1e782743ec9909f3')
 
 build() {
     source /opt/ros/humble/setup.bash
+
+    # Fix uint8_t undefined error in generated code
+    export CXXFLAGS="$CXXFLAGS -include cstdint"
 
     cmake -B build -S "$_pkgroot-$pkgver/$_pkgname" \
         -DCMAKE_BUILD_TYPE='None' \
