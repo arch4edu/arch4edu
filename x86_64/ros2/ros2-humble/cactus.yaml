@@ -4,7 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/ros2/ros2-arch-deps
-  - pacman:eigen3
+  - pacman: eigen3
 makedepends:
   - x86_64/cmake3
   - x86_64/gcc13
