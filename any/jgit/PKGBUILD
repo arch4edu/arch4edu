@@ -1,7 +1,7 @@
 # Maintainer: Kenneth Endfinger <kaendfinger@gmail.com>
 
 pkgname=jgit
-pkgver=7.6.0.202602242313_rc1
+pkgver=7.6.0.202603022253_r
 pkgrel=1
 pkgdesc="A 100% pure java implementation of git"
 arch=('any')
@@ -13,7 +13,7 @@ source=("jgit-${pkgver}.sh::https://repo.eclipse.org/content/groups/releases//or
 )
 noextract=("org.eclipse.${pkgname}.pgm-${pkgver//_/-}.sh")
 
-sha512sums=('7d3e24e42b58c8a01279a515d3851e24ea02910590a8a6a5ee0b2cee2a66d677584b7673adb738dcd6106276654cea05869ab85eb76d3e163843b1211047d79f'
+sha512sums=('d63824efed06ad23e868d7fe7e05a3dcbb4b4161eb1663b4bc5c61ea3c2cb3ba655c8cd19573c630d825ee1d366e4c8cc1b4125c826358b925914661a93545b5'
             '289185bead9328258444210c1bfc1867f54ebb3cd6112b7b8e05da8e1aee32ceab0a8da3c99aaf5615cb00fe0bd174a0dca43922baa53775688bbef0b86ceadb')
 
 package() {
