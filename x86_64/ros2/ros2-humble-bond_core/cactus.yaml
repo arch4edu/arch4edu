@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # Remove leading "##" from exclusion placeholders
+  sed -i 's/^##//' PKGBUILD
+post_build: aur-post-build
+
+depends_ros2-humble-bond:
+  - x86_64/ros2/ros2-humble
+depends_ros2-humble-smclib:
+  - x86_64/ros2/ros2-humble
+depends_ros2-humble-bondcpp:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-bond
+  - x86_64/ros2/ros2-humble-smclib
+depends_ros2-humble-bond_core:
+  - x86_64/ros2/ros2-humble-bond
+  - x86_64/ros2/ros2-humble-bondcpp
+  - x86_64/ros2/ros2-humble-bondpy
+  - x86_64/ros2/ros2-humble-smclib
+depends_ros2-humble-bondpy:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-bond
+  - x86_64/ros2/ros2-humble-smclib
