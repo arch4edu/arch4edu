@@ -1,0 +1,108 @@
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Multi-package PKGBUILD for bond_core - isolated staging per subpackage
+
+pkgbase='ros2-humble-bond_core'
+pkgname=(
+  'ros2-humble-bond_core'
+ 'ros2-humble-bond'
+ 'ros2-humble-smclib'
+ 'ros2-humble-bondcpp'
+  'ros2-humble-bondpy'
+)
+pkgver=4.1.2
+pkgrel=1
+url="https://index.ros.org/p/bond/"
+license=('BSD')
+arch=('x86_64')
+depends=('ros2-humble')
+makedepends=('cmake' 'python-setuptools' 'python-wheel')
+source=("https://github.com/ros/bond_core/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('e0580220510c918c9beb125bba5df1e78082a666552efc9a4cc22647155c62a2')
+
+build() {
+    local _src="$srcdir/bond_core-$pkgver"
+    _staging="$srcdir/_staging"
+    rm -rf "$_staging"
+    mkdir -p "$_staging"
+
+    # Build in dependency order
+    # 1. bond (no deps)
+    _build_install_isolated bond ""
+    # 2. smclib (needs bond)
+    _build_install_isolated smclib "$_staging/bond/opt/ros/humble"
+    # 3. bond_core (meta, needs bond and smclib)
+    _build_install_isolated bond_core "$_staging/bond/opt/ros/humble:$_staging/smclib/opt/ros/humble"
+    # 4. bondcpp (needs bond and smclib)
+    _build_install_isolated bondcpp "$_staging/bond/opt/ros/humble:$_staging/smclib/opt/ros/humble"
+    # 5. bondpy (Python-only, build only)
+    _build_bondpy
+}
+
+# Helper: build and install one subdirectory to its own staging location
+_build_install_isolated() {
+    local _subdir="$1"
+    local _extra_prefix="$2"
+    cd "$srcdir/bond_core-$pkgver/$_subdir"
+    source /opt/ros/humble/setup.bash
+    export CXXFLAGS="${CXXFLAGS} -include cstdint"
+    if [ -n "$_extra_prefix" ]; then
+        export CMAKE_PREFIX_PATH="${_extra_prefix}:${CMAKE_PREFIX_PATH}"
+    fi
+    cmake -B "build-$_subdir" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/ros/humble -Wno-dev
+    cmake --build "build-$_subdir"
+    local _pkg_staging="$_staging/$_subdir"
+    DESTDIR="$_pkg_staging" cmake --install "build-$_subdir"
+}
+
+# Helper: build bondpy only (no install)
+_build_bondpy() {
+    local _src="$srcdir/bond_core-$pkgver/bondpy"
+    cd "$_src"
+    source /opt/ros/humble/setup.bash
+    export CMAKE_PREFIX_PATH="$_staging/bond/opt/ros/humble:$_staging/smclib/opt/ros/humble"
+    python setup.py build
+}
+
+package_ros2-humble-bond_core() {
+    pkgdesc="Meta-package for bond_core runtime dependencies"
+    arch=('x86_64')
+    depends=('ros2-humble-bond' 'ros2-humble-bondcpp' 'ros2-humble-bondpy' 'ros2-humble-smclib')
+    :
+}
+
+package_ros2-humble-bond() {
+    pkgdesc="Python bindings for bond_core"
+    arch=('x86_64')
+    depends=('ros2-humble' 'python')
+    local _staging_pkg="$srcdir/_staging/bond"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+
+package_ros2-humble-smclib() {
+    pkgdesc="SMC library for bond_core"
+    arch=('x86_64')
+    depends=('ros2-humble')
+    local _staging_pkg="$srcdir/_staging/smclib"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+
+package_ros2-humble-bondcpp() {
+    pkgdesc="C++ implementation of bond_core"
+    arch=('x86_64')
+    depends=('ros2-humble' 'ros2-humble-bond' 'ros2-humble-smclib')
+    local _staging_pkg="$srcdir/_staging/bondcpp"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+
+package_ros2-humble-bondpy() {
+    pkgdesc="Python implementation of bond_core"
+    arch=('x86_64')
+    depends=('ros2-humble' 'ros2-humble-bond' 'ros2-humble-smclib' 'python')
+    local _src="$srcdir/bond_core-$pkgver/bondpy"
+    cd "$_src"
+    source /opt/ros/humble/setup.bash
+    python setup.py install --skip-build --root="$pkdir" --prefix="/opt/ros/humble"
+}
