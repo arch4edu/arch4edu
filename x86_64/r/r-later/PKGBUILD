@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=later
-_pkgver=1.4.5
+_pkgver=1.4.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,8 +26,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('620fffb4c07e524432f51ef39740197b')
-b2sums=('16a43b1189644d3cbe9ad574774a5605ae0f0c7c7ca65e4ca259009420b3d9bd4f8b45a4f13e9f67aaab965848fa45b98f958105ecbfeee044dfa426ab953ffd')
+md5sums=('7ebbfd8a26cd6341a6d9d03ba18d259c')
+b2sums=('c5b15f9d385e7030eb2daf214a2411446dc94f66c9398cf4742b6716148d89fd48cec2d69e65d53193b36cd0bfe615c5d9c2be0dc5f1de45fda0679bd3018d9d')
 
 build() {
   mkdir build
