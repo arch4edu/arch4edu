@@ -7,10 +7,10 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=xtable
-_pkgver=1.8-4
+_pkgver=1.8-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=12
+pkgrel=1
 pkgdesc="Export Tables to LaTeX or HTML"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,12 +20,13 @@ depends=(
 )
 optdepends=(
   r-knitr
-  r-plm
+  r-glue
+  r-tinytex
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0a7da6c3b34b2974110a7d00fe9afa79')
-b2sums=('86573fa5e1e27fa93730eef771b9d998b2b93ab8b651a92e40f527969766af5f9bf7f4773d2aba17310551f960dd015398cf53e6f8f3518b67e046def21fdf61')
+md5sums=('4d07e6f65181f7227fac2bd3e6122a0b')
+b2sums=('8ccf069f93e9b09a1ab75639328159ee6bb539c9a4e60e1329b519e891d20542ba92ad8ffa43ca63e80b460ffc72cd1d40b3c8e7c0d3b86d7ac545ce432bb020')
 
 build() {
   mkdir build
