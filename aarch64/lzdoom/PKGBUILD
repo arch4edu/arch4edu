@@ -3,15 +3,16 @@
 
 _name=gzdoom
 pkgname=lzdoom
-_pkgver=3.88b
-pkgver=3.88.b
-pkgrel=2
+_pkgver=l4.14.3a
+pkgver=4.14.3a
+pkgrel=1
 pkgdesc='Advanced Doom source port with OpenGL support (legacy version)'
 arch=('i686' 'x86_64')
 url='http://www.zdoom.org/'
-license=('BSD' 'custom:dumb' 'GPL3' 'LGPL3')
+license=('BSD-3-Clause AND GPL-3.0-or-later AND LGPL-3.0-or-later AND bzip2-1.0.6 AND LicenseRef-DUMB AND LicenseRef-Lucent')
 conflicts=('lzdoom-bin')
-depends=('hicolor-icon-theme' 'libjpeg' 'sdl2' 'alsa-lib')
+options=("!lto")
+depends=('hicolor-icon-theme' 'sdl2' 'zmusic' 'libvpx' 'bzip2' 'glibc' 'gcc-libs')
 makedepends=('cmake' 'fluidsynth>=2' 'gtk3')
 optdepends=('blasphemer-wad: Blasphemer (free Heretic) game data'
 			'chexquest3-wad: Chex Quest 3 game data'
@@ -38,14 +39,11 @@ optdepends=('blasphemer-wad: Blasphemer (free Heretic) game data'
 			'xorg-xmessage: crash dialog (other)')
 source=("${pkgname}-${_pkgver}.tar.gz::https://github.com/drfrag666/${_name}/archive/refs/tags/${_pkgver}.tar.gz"
 		"${pkgname}.desktop")
-sha256sums=('a9d0b425bc4ee39dc237e1e8f06e3504e13ccb6d6a5e6d44cb8ce6964a1ce43b'
+sha256sums=('dbb8dc288bba1f0b14764d76d84250bbdfdb85db25e82cbb2debd5185cb259e8'
             '7b3ffa8b74e5d6283206dd074b09e944aa07670ec7d7b1fe587350ffb91819b3')
 
 prepare() {
-	cd "$srcdir/${_name}-$_pkgver"
-
-	# Patches GCC 11 errors
-	sed -i '/^#include "types\.h"$/a \#include <limits>' src/scripting/types.cpp
+	cd "$srcdir/${pkgname}-$_pkgver"
 
 	# Patches soundfonts paths
 	sed -i -f - src/gameconfigfile.cpp <<- "EOF"
@@ -57,27 +55,30 @@ prepare() {
 }
 
 build() {
-	cd "$srcdir/${_name}-$_pkgver"
+	cd "$srcdir/${pkgname}-$_pkgver"
+	mkdir -p build
+	cd build
 
 	local _cflags="-ffile-prefix-map=\"$PWD\"=. \
 					-DSHARE_DIR=\\\"/usr/share/$pkgname\\\" \
 					-DFLUIDSYNTHLIB2=\\\"libfluidsynth.so.2\\\""
-	cmake -DCMAKE_BUILD_TYPE=Release \
-			-DCMAKE_C_FLAGS="${CFLAGS} ${_cflags}" \
-			-DCMAKE_CXX_FLAGS="${CXXFLAGS} ${_cflags}" \
-			-DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS} -Wl,-z,noexecstack" \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DINSTALL_PATH=bin \
-			-DINSTALL_PK3_PATH="share/$pkgname" \
-			.
+
+	cmake -DINSTALL_PK3_PATH="share/$pkgname" \
+		-DINSTALL_SOUNDFONT_PATH=share/lzdoom \
+		-DINSTALL_RPATH=/usr/lib \
+		-DSYSTEMINSTALL=ON \
+		-DCMAKE_CXX_FLAGS="$_cflags" \
+		-DCMAKE_INSTALL_PREFIX:PATH=/usr \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		..
 	make
 }
 
 package() {
-	cd "$srcdir/${_name}-$_pkgver"
+	cd "$srcdir/${pkgname}-$_pkgver"
 
-	make install DESTDIR="$pkgdir"
-	install -D -m644 "soundfonts/${pkgname}.sf2" \
+	make -C build install DESTDIR="$pkgdir"
+	install -D -m644 "soundfont/${pkgname}.sf2" \
 			"$pkgdir/usr/share/$pkgname/soundfonts/${pkgname}.sf2"
 	install -D -m644 fm_banks/GENMIDI.GS.wopl \
 			"$pkgdir/usr/share/$pkgname/fm_banks/GENMIDI.GS.wopl"

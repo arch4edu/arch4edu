@@ -1,0 +1,32 @@
+From 49e47fe81c5aaa5b57e5cb1fcba3c759eb113e48 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ricardo=20Lu=C3=ADs=20Vaz=20Silva?= <ricolvs123@gmail.com>
+Date: Sun, 9 Mar 2025 16:57:28 -0300
+Subject: [PATCH] fix non-void forward declarations as well
+
+---
+ tools/lemon/lemon.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/tools/lemon/lemon.c b/tools/lemon/lemon.c
+index e5fd16905a6..45f458d726f 100644
+--- a/tools/lemon/lemon.c
++++ b/tools/lemon/lemon.c
+@@ -72,12 +72,12 @@ static struct action *Action_new(void);
+ static struct action *Action_sort(struct action *);
+ 
+ /********** From the file "build.h" ************************************/
+-void FindRulePrecedences();
+-void FindFirstSets();
+-void FindStates();
+-void FindLinks();
+-void FindFollowSets();
+-void FindActions();
++void FindRulePrecedences(struct lemon *xp);
++void FindFirstSets(struct lemon *lemp);
++void FindStates(struct lemon *lemp);
++void FindLinks(struct lemon *lemp);
++void FindFollowSets(struct lemon *lemp);
++void FindActions(struct lemon *lemp);
+ 
+ /********* From the file "configlist.h" *********************************/
+ void Configlist_init(void);
