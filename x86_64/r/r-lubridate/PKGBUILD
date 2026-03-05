@@ -5,14 +5,14 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=lubridate
-_pkgver=1.9.4
+_pkgver=1.9.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Make Dealing with Dates a Little Easier"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('GPL-2.0-or-later')
+license=('MIT')
 depends=(
   r-generics
   r-timechange
@@ -28,8 +28,8 @@ optdepends=(
   r-vctrs
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ea3efcbcf373e986f6dfb851f720a1a1')
-b2sums=('14b92e20daadf64e8ed35432cb9ed42acb72c2f306d2622b73f5f9bd451f52883c81a1d3f9ba5996233c7199ec439e154ad4b939d9bca3d5a7aa96230e915de7')
+md5sums=('09977b7de6710ca05886412c6aa3a5a3')
+b2sums=('e85b8656eaf4b79f98d5fd6ca74e4c74446d26a68df257ae6f3914e1690b24c27f2f218a58da155cac25555d3d7fe1e738a860841244436fc635d26826329b3e')
 
 prepare() {
   cd "$_pkgname/tests/testthat"
