@@ -2,14 +2,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=multcompView
-_pkgver=0.1-10
+_pkgver=0.1-11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Visualizations of Paired Comparisons"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('GPL-2.0-or-later')
+license=('GPL-2.0-only')
 depends=(
   r
 )
@@ -18,8 +18,8 @@ optdepends=(
   r-pgirmess
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7c183f073461e938ceef476dd4f50c81')
-b2sums=('7fd2236518fcae13437d16d8446a5cfbff2421eb57cc57567ac5befcb4787d6b9d81211a47ffa0343c2568c4fd4ca9296e798e1eab0230084467b334c2ed2234')
+md5sums=('3c0a9b4cf2061837c0000f464f0dca8f')
+b2sums=('5f098010259920183799b91f61ce847e12b0e3cf82c037c6cdd0dc680fb9562dc98119f1d6f5b5bc93c63fc799e63299b2ec453e6dad46d5f24899d30669b360')
 
 build() {
   mkdir build
