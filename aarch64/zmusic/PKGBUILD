@@ -1,6 +1,6 @@
 # Maintainer: Jan Cholasta <grubber at grubber cz>
 pkgname=zmusic
-pkgver=1.1.14.r7.gf6facda
+pkgver=1.1.14
 pkgrel=1
 pkgdesc="GZDoom's music system as a standalone library"
 arch=('x86_64' 'aarch64')
@@ -9,15 +9,15 @@ license=('BSD' 'GPL3' 'LGPL2.1' 'LGPL3' 'custom:dumb')
 depends=('alsa-lib' 'libsndfile' 'mpg123')
 optdepends=('soundfont-fluid: default soundfont for FluidSynth')
 makedepends=('cmake' 'git')
-source=("${pkgname}::git+https://github.com/ZDoom/ZMusic"
+source=("${pkgname}::git+https://github.com/ZDoom/ZMusic#tag=${pkgver}"
         '0001-Use-correct-soundfont-path.patch')
 sha256sums=('SKIP'
             '6c1b5bf589e5c36186869276ade865d35fdf860241dcd2e0f557e5a82dfd066f')
 
-pkgver() {
-  cd "$pkgname"
-  git describe --long --tags --abbrev=7 | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
-}
+# pkgver() {
+#   cd "$pkgname"
+  #git describe --long --tags --abbrev=7 | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+#}
 
 prepare() {
     cd "$pkgname"
@@ -42,3 +42,4 @@ package() {
     make -C build install DESTDIR="$pkgdir"
     install licenses/{bsd,dumb,legal,zmusic}.txt -t "$pkgdir"/usr/share/licenses/$pkgname -D -m 644
 }
+epoch=1
