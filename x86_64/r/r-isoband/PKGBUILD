@@ -3,34 +3,38 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=isoband
-_pkgver=0.2.7
+_pkgver=0.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=2
 pkgdesc="Generate Isolines and Isobands from Regularly Spaced Elevation Grids"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  r
+  r-cli
+  r-rlang
+)
+makedepends=(
+  r-cpp11
 )
 checkdepends=(
   r-testthat
 )
 optdepends=(
+  r-bench
   r-covr
   r-ggplot2
   r-knitr
   r-magick
-  r-microbenchmark
   r-rmarkdown
   r-sf
   r-testthat
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7241f95bafb46b44aa380b9a71b10467')
-b2sums=('ba44409e12e7bed6349842e87cc3fbd71348e009e6db112dcb203cbb2834cc8e800b49c2e97ee948412deee220e9cbac7fe13f754ddff20ca2f3ff4403e20ba6')
+md5sums=('0b811a225740b6e4ae0afcdd64f11407')
+b2sums=('a0503fb609004646044a680849820602ac8388dcc70d7a77c610c3d43b150cd8e1d3948f24cb6bc2f8471bb562e0bda2325e8c6cbc01466cbd08d475680eb801')
 
 build() {
   mkdir build
