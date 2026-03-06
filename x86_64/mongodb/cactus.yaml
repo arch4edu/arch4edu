@@ -6,6 +6,7 @@ depends:
 makedepends:
   - x86_64/gcc14
   - x86_64/python-retry
+  - any/python-timeout-decorator
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
