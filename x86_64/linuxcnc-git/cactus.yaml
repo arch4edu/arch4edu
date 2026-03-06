@@ -4,6 +4,8 @@ nvchecker:
   - source: github
     github: LinuxCNC/linuxcnc
   - alias: python
+depends:
+  - x86_64/termcap
 makedepends:
   - any/bwidget
   - any/linkchecker
