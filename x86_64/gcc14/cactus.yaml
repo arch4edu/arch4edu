@@ -3,6 +3,8 @@ nvchecker:
     aur:
 depends_gcc14:
   - x86_64/gcc14: gcc14-libs
+depends_gcc14-fortran:
+  - x86_64/gcc14: gcc14
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
