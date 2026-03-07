@@ -2,7 +2,7 @@
 _base=charset_normalizer
 pkgname=pypy3-${_base/_/-}
 pkgdesc="The Real First Universal Charset Detector"
-pkgver=3.4.4
+pkgver=3.4.5
 pkgrel=1
 arch=(any)
 url="https://github.com/jawah/${_base}"
@@ -10,7 +10,7 @@ license=(MIT)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-setuptools-scm)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('825b57ddcb4410ee0c9caeb236d0b7973cd4af1f674806bdbf1bac52e170ec1462e698c5eca0f4a3988f9bb691e5f4b31f9f6a6a675b23411de7ce4d652d6ae5')
+sha512sums=('508880a9e40d9cc375dd9ab132bbe0efdc1549dc443717c870594621f4b72a5bf049d722011629802ec7ba46153355ea81ae8cbb44f32d0ba0dcdac9fe6be9e2')
 
 build() {
   cd ${_base}-${pkgver}
