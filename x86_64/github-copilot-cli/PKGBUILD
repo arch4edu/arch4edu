@@ -6,7 +6,7 @@ pkgname=github-copilot-cli
 _pkgexec=copilot
 
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 
 pkgdesc="GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal."
 
