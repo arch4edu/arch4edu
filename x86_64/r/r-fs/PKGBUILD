@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=fs
-_pkgver=1.6.6
+_pkgver=1.6.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,15 +30,15 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "system-libuv.patch")
-md5sums=('61b8a3ee43759ed4718659cf7f499cc1'
+md5sums=('55154826f970ab7c86dfaa9cf893e98c'
          '312c9ec1662d8ebecd388a771ae1a903')
-b2sums=('575d044f1bbd4a49a3c61b7b2bc136e945e08b3a8aaf18cf9d10f15f3ed8dbb2b9d998e75c1210443226e8b098a58650a3a0c093a845a6c78a174cf57a5af7e0'
+b2sums=('136786e1d7da7ae457a958dd288d24256072580c2410629075a725b0101e5a85c0cc75dac84f45b7ee78d5b1699c4eb71fad9399dbcbe81e12477b7281228b16'
         'ac55bda314e4a9c184b820a7194b421bcac65ff739cf14c5d9af9004ec717fc99db159e0c02ff7060f2ed2a8f0147bc8f0a29d0cb1d760af5c057feb08c9c33a')
 
-prepare() {
-  # build against system libuv
-  patch -Np1 -i system-libuv.patch
-}
+# prepare() {
+#   # build against system libuv
+#   patch -Np1 -i system-libuv.patch
+# }
 
 build() {
   mkdir build
