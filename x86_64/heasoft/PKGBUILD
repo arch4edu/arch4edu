@@ -1,13 +1,13 @@
 # Maintainer:  Yigit Dallilar <yigit.dallilar@gmail.com>
 
 pkgname=heasoft
-pkgver=6.35.1
-pkgrel=1
+pkgver=6.36
+pkgrel=2
 # _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
 _mod=''
 pkgdesc='NASA high energy astrophysics library'
 depends=('inetutils' 'libxpm' 'libidn' 'ncurses' 'readline')
-makedepends=('gcc13-fortran' 'glibc' 'gcc-fortran' 'perl' 'python-astropy' 'python-matplotlib' 'python-pip' 'python-scipy' 'python-setuptools')
+makedepends=('gcc14-fortran' 'glibc' 'perl' 'python-astropy' 'python-matplotlib' 'python-pip' 'python-scipy' 'python-setuptools')
 optdepends=(
   "python-astropy: python binding"
   "python-numpy: python binding"
@@ -19,14 +19,15 @@ source=("https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/h
 
 # You could use below to get offical md5
 # curl -s ${source}.md5  | awk '{print "md5sums=(", $1, ")"}'
-md5sums=('ffec2b5d85a66d7ddea2e69de9dac118')
+md5sums=('e7a6c03cc6877f7f82cf06746d0356de')
+sha256sums=('f509231f1c8fa8dc9aaac3d90d146ce68806513d55fe0f0e1d16508e9954be8b')
 
 install="$pkgname.install"
 
 build() {
   cd "heasoft-$pkgver/BUILD_DIR"
 
-  LDFLAGS='-lm' CC='gcc-13' CXX='g++-13' FC='gfortran-13' \
+  LDFLAGS='-lm' CC='gcc-14' CXX='g++-14' FC='gfortran-14' \
   CFLAGS="$CFLAGS -Wno-error=format-security" \
   ./configure --prefix="/opt/heasoft" --build="$CHOST"
 
