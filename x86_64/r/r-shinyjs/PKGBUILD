@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=shinyjs
-_pkgver=2.1.0
+_pkgver=2.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=1
 pkgdesc="Easily Improve the User Experience of Your Shiny Apps in Seconds"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -27,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('23479086c139ba2d7d00c557f1e8895d')
-b2sums=('28df9b7c0e4b0b8f958703fabedb99feaccda72302e8fe5250f588cd9a64b48efbb5b77abcd62424d519fff033d01a82d82c03801f0d9ad1cd4be62864af090a')
+md5sums=('e7e6dcd145801997c1340f9d0e5f98af')
+b2sums=('54524d77df47b7f9fa8dcdea71732a871aa91ccdd0d9c624cf7432dc7a60d7ff15eeadec32f97878774a36ec752b8c2fed9028b6b03662e91655cd2bfe360624')
 
 build() {
   mkdir build
