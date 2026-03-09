@@ -3,7 +3,7 @@
 
 pkgname=simpleini
 pkgver=4.25 # renovate: datasource=github-tags depName=brofield/simpleini
-pkgrel=2
+pkgrel=3
 pkgdesc="Cross-platform C++ library providing a simple API to read and write INI-style configuration files"
 arch=('x86_64' 'aarch64')
 url="https://github.com/brofield/simpleini"
