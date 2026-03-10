@@ -41,7 +41,7 @@
 #
 
 SCOTCHDIR  = /usr
-ISCOTCH    = -I$(SCOTCHDIR)/include
+ISCOTCH    = -I$(SCOTCHDIR)/include/scotch
 #
 # You have to choose one among the following two lines depending on
 # the type of analysis you want to perform. If you want to perform only
