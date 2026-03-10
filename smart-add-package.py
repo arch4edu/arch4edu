@@ -31,6 +31,10 @@ def load_pkgbases():
     return pkgbases
 
 def load_pacman_and_provides(arch):
+    pacman_dir = f'.pacman/{arch}'
+    if not os.path.exists(pacman_dir):
+        os.makedirs(pacman_dir, exist_ok=True)
+
     run(['fakeroot', 'pacman', '-Sy', '--config', f'.pacman/{arch}.conf'])
     packages = set()
     provides = {}
