@@ -4,7 +4,7 @@
 # Contributor: Yen Chi Hsuan <yan12125@gmail.com>
 _base=setuptools
 pkgname=pypy3-${_base}
-pkgver=82.0.0
+pkgver=82.0.1
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
@@ -13,7 +13,7 @@ url="https://${_base}.pypa.io"
 license=(MIT)
 makedepends=(pypy3)
 source=(https://pypi.org/packages/source/${_base::1}/${_base}/${_base}-${pkgver}.tar.gz)
-sha512sums=('52424f813bb8efa1d3aa8cb910338d29c36c6a641f7ded91d298c1abe7c1a24d572c60c14c028f3825af29b46d57a4ee454845b1d22b73b03278a9500d957dd9')
+sha512sums=('5d70e9efd818245fb8119a4eed64d776078469ed884facc188f141ea491efd9fde5c10c928d3236ea5e2e431b16616f18ed14870b867f95e6320251707332395')
 
 prepare() {
   cd "${srcdir}"/${_base}-${pkgver}
