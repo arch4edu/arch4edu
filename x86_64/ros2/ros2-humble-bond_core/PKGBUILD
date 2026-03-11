@@ -10,7 +10,7 @@ pkgname=(
   'ros2-humble-bondpy'
 )
 pkgver=4.1.2
-pkgrel=1
+pkgrel=2
 url="https://index.ros.org/p/bond/"
 license=('BSD')
 arch=('x86_64')
