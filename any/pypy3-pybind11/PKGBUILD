@@ -3,7 +3,7 @@
 _base=pybind11
 pkgname=pypy3-${_base}
 pkgver=3.0.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A lightweight header-only library that exposes C++ types in Python and vice versa"
 arch=(any)
 url="https://${_base}.readthedocs.org"
