@@ -3,7 +3,7 @@
 
 pkgname=linuxcnc
 pkgver=2.9.8
-pkgrel=3
+pkgrel=4
 pkgdesc="Controls CNC machines (mills, lathes, 3D printers, robots, etc.)"
 arch=(x86_64)
 url="https://linuxcnc.org/"
