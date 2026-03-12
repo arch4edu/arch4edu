@@ -9,7 +9,7 @@
 _pack=control
 pkgname=octave-$_pack
 pkgver=4.1.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the proven SLICOT Library"
 arch=(any)
 url="https://gnu-octave.github.io/packages/$_pack/"
