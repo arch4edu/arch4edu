@@ -1,13 +1,13 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: Alexander Suhoverhov <cy at ngs dot ru>
 
 pkgname=xonotic-data
 pkgver=0.8.6
-pkgrel=3
+pkgrel=4
 pkgdesc="A free, fast-paced cross-platform first person shooter (data files)"
 arch=('any')
 url="https://xonotic.org"
-license=('GPL')
+license=('GPL-3.0-or-later')
 depends=('bash' 'perl')
 options=('!debug' '!strip')
 source=("https://dl.xonotic.org/xonotic-${pkgver}.zip")
