@@ -6,7 +6,7 @@
 # Contributor: Gabriele Lanaro <gabriele.lanaro@gmail.com>
 pkgname=f2c
 pkgver=20250921
-pkgrel=1
+pkgrel=2
 pkgdesc="Fortran to C code translator"
 url="https://www.netlib.org/${pkgname}"
 license=(custom)
