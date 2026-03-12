@@ -5,7 +5,7 @@
 pkgname=guile2.0
 _pkgname=guile
 pkgver=2.0.14
-pkgrel=7
+pkgrel=8
 pkgdesc='Portable, embeddable Scheme implementation written in C'
 url='https://www.gnu.org/software/guile/'
 arch=(x86_64)
@@ -19,7 +19,9 @@ md5sums=('333b6eec83e779935a45c818f712484e'
 
 build() {
   cd $_pkgname-$pkgver
-  ./configure --prefix=/usr \
+  ./configure \
+    CFLAGS="-std=gnu89 -fpermissive -Wno-error=deprecated-non-prototype" \
+    --prefix=/usr \
     --disable-static  \
     --disable-error-on-warning \
     --program-suffix=2.0
