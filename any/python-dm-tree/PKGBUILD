@@ -4,7 +4,7 @@
 pkgname=python-dm-tree
 _pkgname='tree'
 pkgver=0.1.9
-pkgrel=2
+pkgrel=3
 pkgdesc='tree is a library for working with nested data structures'
 arch=('x86_64')
 url='https://github.com/google-deepmind/tree'
