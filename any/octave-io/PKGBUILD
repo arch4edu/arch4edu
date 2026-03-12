@@ -9,7 +9,7 @@
 _pack=io
 pkgname=octave-$_pack
 pkgver=2.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Input/Output in external formats."
 arch=('x86_64')
 url="https://gnu-octave.github.io/packages/$_pack/"
