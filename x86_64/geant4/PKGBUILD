@@ -2,7 +2,7 @@
 pkgname='geant4'
 pkgver=11.4.0
 _pkgver=v${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc="A simulation toolkit for particle physics interactions."
 # https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/gettingstarted.html
 depends=('cmake>=3.16'
