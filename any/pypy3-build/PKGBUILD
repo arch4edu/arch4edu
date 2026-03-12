@@ -3,7 +3,7 @@
 _base=build
 pkgname=pypy3-${_base}
 pkgver=1.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A simple, correct PEP 517 build frontend"
 arch=(any)
 url="https://${_base}.pypa.io"
