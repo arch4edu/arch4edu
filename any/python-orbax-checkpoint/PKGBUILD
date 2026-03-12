@@ -3,7 +3,7 @@
 pkgname=python-orbax-checkpoint
 _pkgname=${pkgname#python-}
 pkgver=0.11.32
-pkgrel=1
+pkgrel=2
 pkgdesc='Common utility libraries for JAX users (checkpoint).'
 arch=('any')
 url='https://github.com/google/orbax'
