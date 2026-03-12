@@ -26,7 +26,7 @@ be26273c9 # add cmake minimum policy for nexus
 
 pkgname=meshlab
 pkgver=2025.07
-pkgrel=2
+pkgrel=3
 pkgdesc="System for processing and editing of unstructured 3D models arising in 3D scanning (qt5 version)"
 arch=('i686' 'x86_64')
 url="https://www.meshlab.net"
