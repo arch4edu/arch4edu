@@ -3,7 +3,7 @@
 _base=packaging
 pkgname=pypy3-${_base}
 pkgver=26.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Core utilities for Python packages"
 arch=(any)
 url="https://${_base}.pypa.io"
