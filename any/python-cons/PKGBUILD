@@ -4,7 +4,7 @@
 pkgname=python-cons
 _pkgname=cons
 pkgver=0.4.6
-pkgrel=1
+pkgrel=2
 pkgdesc="An implementation of Lisp/Scheme-like cons in Python"
 arch=('any')
 url="https://github.com/pythological/python-cons/"
