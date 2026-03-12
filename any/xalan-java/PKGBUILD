@@ -3,7 +3,7 @@
 # Contributor: Hussam Al-Tayeb <ht990332@gmail.com>
 pkgname=xalan-java
 pkgver=2.7.3
-pkgrel=1
+pkgrel=2
 pkgdesc="XSLT processor for transforming XML documents into HTML, text, or other XML document types"
 arch=(any)
 license=(Apache-2.0)
