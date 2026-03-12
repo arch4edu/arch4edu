@@ -5,33 +5,41 @@
 # Contributor: Allan McRae <allan@archlinux.org>
 
 set -u
-_pkgver='5'
-pkgname="gcc${_pkgver//./}"
-pkgver="${_pkgver}.5.0"
+pkgver='5.5.0'
+_majorver="${pkgver: 0:1}"
+pkgname="gcc${_majorver//./}"
 _islver='0.18'
-pkgrel='3'
-pkgdesc="The GNU Compiler Collection (${_pkgver}.x)"
+pkgrel=4
+pkgdesc="The GNU Compiler Collection (${_majorver}.x)"
 arch=('x86_64')
 arch+=('i686')
 url='https://gcc.gnu.org/gcc-5/'
-license=('GPL' 'LGPL' 'FDL' 'custom')
-depends=('glibc' 'binutils' 'libmpc')
+license=('GPL-2.0-only' 'LGPL-2.1-only' 'GPL-3.0-only' 'LGPL-3.0-only' 'GFDL-1.3-only' 'custom')
+depends=('glibc' 'gcc-libs' 'bash' 'binutils' 'libmpc' 'zlib')
 options=('!emptydirs' '!strip' '!buildflags')
+options+=('!lto')
 source=(
-  "http://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+  "https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+  #"https://libisl.sourceforge.io/isl-${_islver}.tar.bz2"
   "https://libisl.sourceforge.io/isl-${_islver}.tar.bz2"
   # Fix build with glibc 2.28, which removes <sys/ustat.h>
   'glibc2.28-ustat.patch'
   'glibc2.30-ipc_perm.patch'
+  '78_all-libsanitizer-Fix-build-with-glibc-2.42.patch'
+  '79_all-sanitizer_common-Remove-reference-to-obsolete-termio.patch'
 )
 md5sums=('0f70424213b4a1113c04ba66ddda0c1f'
          '11436d6b205e516635b666090b94ab32'
-         '75b0fabc92d4e2735baa897f231e7d68'
-         '04e73dd6a55a90a4fee9999a915580d3')
+         'c0426ff7146e4fb5bf7f25d7b753afb9'
+         '24d6c1b1cc6e0cc59e9de9ebe7b843dc'
+         '448ca18637c7f91aaceb7ac8fef67943'
+         '529b03e5fb9fb4e4da85a9ee672d869a')
 sha256sums=('530cea139d82fe542b358961130c69cfde8b3d14556370b65823d2f91f0ced87'
             '6b8b0fd7f81d0a957beb3679c81bbb34ccc7568d5682844d8924424a0dadcb1b'
-            '335839750f0cf15ce0f6099673daf164db674c6442b00efcbc46c4f195cfa29d'
-            '95d619636a2bae64acc01fdbe18ad61b4b0483217ee00eac372f0b0bec073f32')
+            'c2abe9f166502120eabc8701160e52f06c24ef73673239a0532bc55a158cc550'
+            '66a0885262fe49dc318b58f629c3fe8324bd234f97f99316284aefb95fca555f'
+            '3dea145005227f24b3d357c7627e5848b9e575b2cc255175339970c601698709'
+            '4253e09721286bfb038b377f4dc98947657feb628b3c7c872a1991c1d78f46cf')
 
   _basedir="gcc-${pkgver}"
 
@@ -39,25 +47,28 @@ prepare() {
   set -u
   cd "${_basedir}"
 
-  # link isl for in-tree builds
+  # link isl for in-tree build
   ln -s "../isl-${_islver}" 'isl'
 
   # Do not run fixincludes
   sed -e 's@\./fixinc\.sh@-c true@' -i 'gcc/Makefile.in'
 
-  local _pt
-  for _pt in "${source[@]%%::*}"; do
-    _pt="${_pt##*/}"
-    if [[ "${_pt}" = *.patch ]]; then
-      set +u; msg2 "Patch ${_pt}"; set -u
-      patch -Nup0 -i "${srcdir}/${_pt}"
-    fi
-  done
-
   # Arch Linux installs x86_64 libraries /lib
   case "${CARCH}" in
   'x86_64') sed -e '/m64=/ s/lib64/lib/' -i 'gcc/config/i386/t-linux64' ;;
   esac
+
+  # Apply patches
+  local _pt
+  for _pt in "${source[@]%%::*}"; do
+    _pt="${_pt##*/}"
+    case "${_pt}" in
+    *.patch)
+      set +u; msg2 "*** Applying patch ${_pt}"; set -u
+      patch --no-backup-if-mismatch -Np1 -i "${srcdir}/${_pt}"
+      ;;
+    esac
+  done
 
   echo "${pkgver}" > 'gcc/BASE-VER'
 
@@ -83,7 +94,6 @@ build() {
       --enable-__cxa_atexit
       --enable-checking='release'
       --enable-clocale='gnu'
-      --with-isl
       --enable-gnu-indirect-function
       --enable-gnu-unique-object
       --enable-languages='c,c++,fortran,lto'
@@ -98,8 +108,9 @@ build() {
       --libdir='/usr/lib'
       --libexecdir='/usr/lib'
       --mandir='/usr/share/man'
-      --program-suffix="-${_pkgver}"
-      --with-bugurl='https://bugs.archlinux.org/'
+      --program-suffix="-${_majorver}"
+      --with-bugurl="https://aur.archlinux.org/packages/${pkgname}/"
+      --with-isl
       --with-linker-hash-style='gnu'
       --with-system-zlib
       --prefix='/usr'
@@ -114,7 +125,7 @@ build() {
   # without LD_PRELOAD, the build fails for some people with:
   #    [Makefile:605: libstdc++.la] Error 139
   LD_PRELOAD='/usr/lib/libstdc++.so' \
-  nice make -s
+  nice -n1 make -s
   set +u
 }
 
@@ -123,7 +134,7 @@ package() {
   cd "${_basedir}/gcc-build"
 
   LD_PRELOAD='/usr/lib/libstdc++.so' \
-  make -j1 DESTDIR="${pkgdir}" install
+  make -j1 -s DESTDIR="${pkgdir}" install
 
   ## Lazy way of dealing with conflicting man and info pages and locales...
   rm -rf "${pkgdir}/usr/share"/{info,locale,man}

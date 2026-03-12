@@ -1,5 +1,5 @@
---- libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h    2020-02-28 11:49:29.763277856 +0000
-+++ libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h    2020-02-28 11:49:45.092909823 +0000
+--- a/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h    2020-02-28 11:49:29.763277856 +0000
++++ b/libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.h    2020-02-28 11:49:45.092909823 +0000
 @@ -198,8 +198,7 @@
      unsigned long long __unused1;
      unsigned long long __unused2;
