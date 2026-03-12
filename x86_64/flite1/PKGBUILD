@@ -4,7 +4,7 @@
 
 pkgname=flite1
 pkgver=1.4
-pkgrel=7
+pkgrel=8
 pkgdesc='A lighweight speech synthesis engine (version 1.x)'
 arch=('x86_64')
 url='http://www.speech.cs.cmu.edu/flite/'
