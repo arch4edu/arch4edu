@@ -7,7 +7,7 @@
 
 pkgname=calculix-ccx
 pkgver=2.23
-pkgrel=1
+pkgrel=2
 provides=('calculix')
 replaces=('calculix')
 conflicts=('calculix')
