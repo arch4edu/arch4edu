@@ -4,7 +4,7 @@
 _pkgname="pigpio"
 pkgname="$_pkgname"
 pkgver=79
-pkgrel=4
+pkgrel=5
 pkgdesc="A library with system service to control GPIO on Raspberry Pi"
 url="https://github.com/joan2937/pigpio"
 license=('Unlicense')
