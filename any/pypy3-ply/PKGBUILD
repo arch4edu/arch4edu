@@ -3,7 +3,7 @@
 _base=ply
 pkgname=pypy3-${_base}
 pkgver=3.11
-pkgrel=2
+pkgrel=3
 pkgdesc="Implementation of lex and yacc parsing tools"
 arch=(any)
 url="https://www.dabeaz.com/${_base}"
