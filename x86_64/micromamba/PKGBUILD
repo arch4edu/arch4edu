@@ -6,7 +6,7 @@
 pkgname=micromamba
 _pkgname=${pkgname/micro/}
 pkgver=2.5.0
-pkgrel=2
+pkgrel=3
 pkgdesc="The fast cross-platform package manager"
 arch=(i686 x86_64)
 url="https://github.com/${_pkgname}-org/${_pkgname}"
