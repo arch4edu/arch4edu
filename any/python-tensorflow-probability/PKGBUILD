@@ -3,7 +3,7 @@
 pkgname=python-tensorflow-probability
 _name=tensorflow_probability
 pkgver=0.25.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Probabilistic reasoning and statistical analysis in TensorFlow"
 url="https://github.com/tensorflow/probability"
 arch=('any')
