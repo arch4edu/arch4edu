@@ -4,7 +4,7 @@
 pkgbase=apriltag
 pkgname=($pkgbase python-$pkgbase)
 pkgver=3.4.5
-pkgrel=1
+pkgrel=2
 pkgdesc="visual fiducial system popular for robotics research"
 arch=('x86_64')
 url="https://april.eecs.umich.edu/software/apriltag"
