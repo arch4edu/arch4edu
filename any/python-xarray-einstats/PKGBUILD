@@ -3,7 +3,7 @@
 _pyname=xarray-einstats
 pkgname=python-$_pyname
 pkgver=0.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Stats, linear algebra and einops for xarray'
 arch=(any)
 url='https://einstats.python.arviz.org'
