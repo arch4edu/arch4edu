@@ -4,7 +4,7 @@
 
 pkgname=ventoy-bin
 pkgver=1.1.10
-pkgrel=3
+pkgrel=4
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
