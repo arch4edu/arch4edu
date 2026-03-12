@@ -2,7 +2,7 @@
 pkgname=basix
 pkgdesc="FEniCS finite element basis evaluation library"
 pkgver=0.10.0.post0
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(MIT)
