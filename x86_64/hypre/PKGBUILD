@@ -7,7 +7,7 @@
 # Contributor: Wink Saville <wink at saville dot com>
 pkgname=hypre
 pkgver=3.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Parallel solvers for sparse linear systems featuring multigrid methods"
 arch=('x86_64')
 url="https://github.com/${pkgname}-space/${pkgname}"
