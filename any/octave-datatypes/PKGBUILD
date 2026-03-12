@@ -9,7 +9,7 @@
 _pack=datatypes
 pkgname=octave-$_pack
 pkgver=1.1.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Extra data types for GNU Octave"
 arch=(any)
 url="https://gnu-octave.github.io/packages/$_pack/"
