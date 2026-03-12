@@ -5,7 +5,7 @@
 
 pkgname=fuzzylite
 pkgver=6.0
-pkgrel=7
+pkgrel=8
 pkgdesc="C++ fuzzy logic control library"
 arch=(x86_64 aarch64 i686)
 url="https://github.com/fuzzylite/fuzzylite"
@@ -47,6 +47,7 @@ build() {
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -Wno-dev \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DFL_BUILD_STATIC=OFF \
     -DFL_BUILD_TESTS=ON
   cmake --build build
