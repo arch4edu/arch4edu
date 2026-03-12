@@ -4,7 +4,7 @@
 
 pkgname=sublime-text-dev
 pkgver=4.4199
-pkgrel=1
+pkgrel=2
 pkgdesc='Sophisticated text editor for code, html and prose - dev build'
 arch=('x86_64' 'aarch64')
 url='https://www.sublimetext.com/dev'
