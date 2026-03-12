@@ -3,7 +3,7 @@
 _name=cp2k
 pkgname=${_name}-bin
 pkgver=2026.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A quantum chemistry and solid state physics software package for atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems. (precompiled, OpenMP)"
 arch=("x86_64")
 url="https://www.cp2k.org"
