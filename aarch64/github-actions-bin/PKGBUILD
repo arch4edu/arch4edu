@@ -5,7 +5,7 @@
 _pkgname=github-actions
 pkgname=${_pkgname}-bin
 pkgver=2.332.0
-pkgrel=1
+pkgrel=2
 pkgdesc='GitHub Actions self-hosted runner tools.'
 arch=('x86_64' 'armv6h' 'armv7h' 'aarch64')
 url='https://github.com/actions/runner'
