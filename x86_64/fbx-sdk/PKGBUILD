@@ -6,7 +6,7 @@
 pkgname=('fbx-sdk' 'fbx-sdk-docs')
 pkgbase='fbx-sdk'
 pkgver=2020.3.7
-pkgrel=2
+pkgrel=3
 pkgdesc='Platform and API toolkit to transfer existing content into the FBX format.'
 arch=('x86_64')
 url='http://www.autodesk.com/products/fbx/overview'
