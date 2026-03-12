@@ -4,7 +4,7 @@
 pkgname=miniforge
 pkgver=26.1.0.0
 _pkgver=${pkgver%.*}-${pkgver##*.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Conda and Mamba package managers configured to use conda-forge"
 arch=(x86_64 aarch64 powerpc64le)
 url="https://github.com/conda-forge/miniforge"
