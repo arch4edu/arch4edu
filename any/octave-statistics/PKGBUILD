@@ -10,7 +10,7 @@
 _pack=statistics
 pkgname=octave-$_pack
 pkgver=1.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Additional statistics functions for Octave."
 arch=('x86_64')
 url="https://gnu-octave.github.io/packages/$_pack/"
