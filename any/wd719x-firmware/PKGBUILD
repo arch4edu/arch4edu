@@ -4,7 +4,7 @@
 
 pkgname=wd719x-firmware
 pkgver=1
-pkgrel=9
+pkgrel=10
 pkgdesc="Firmware for Western Digital WD7193, WD7197, and WD7296 SCSI cards"
 arch=('any')
 url="https://github.com/mijailr/wd719x-firmware"
