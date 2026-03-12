@@ -10,7 +10,7 @@
 pkgname=(gcc14 gcc14-libs gcc14-fortran)
 pkgver=14.3.1+r516+g5998566829ee
 _commit=5998566829eed9f39a316be877a7ce61c7e710ed
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Compiler Collection (14.x.x)'
 arch=(x86_64)
 license=(GPL-3.0-with-GCC-exception GFDL-1.3-or-later)
