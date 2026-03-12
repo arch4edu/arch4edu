@@ -3,12 +3,12 @@ _base=dolfinx
 pkgname=python-fenics-${_base}
 pkgdesc="Next generation FEniCS problem solving environment (python interface)"
 pkgver=0.10.0.post5
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
 license=(LGPL-3.0-or-later GPL-3.0-or-later)
 depends=(dolfinx python-mpi4py)
-makedepends=(python-build python-installer python-scikit-build-core python-wheel nanobind)
+makedepends=(python-build python-installer python-scikit-build-core python-wheel nanobind hdf5-openmpi)
 checkdepends=(python-pytest python-sympy python-scipy python-matplotlib python-numba)
 optdepends=('python-pyvista: for plotting'
   'python-numba: for jit support'
@@ -18,12 +18,16 @@ source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
 sha512sums=('2a473f51e701311421d8963a5e1b84e2d8625f299d55692b2c4c8b27be4f01d5f22916b2d8c37f512424c61e30c386775538ecea6a7a0bb68d049843e4823676')
 
 build() {
+  # Force CMake to find parallel HDF5
+  export CMAKE_ARGS="-DHDF5_IS_PARALLEL=TRUE -DHDF5_ROOT=/usr"
   cd ${_base}-${pkgver}/python
   source /etc/profile.d/petsc.sh
   python -m build --wheel --skip-dependency-check --no-isolation
 }
 
 check() {
+  # Force CMake to find parallel HDF5
+  export CMAKE_ARGS="-DHDF5_IS_PARALLEL=TRUE -DHDF5_ROOT=/usr"
   cd ${_base}-${pkgver}
   python -m venv --system-site-packages test-env
   test-env/bin/python -m installer python/dist/*.whl
