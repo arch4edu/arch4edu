@@ -4,7 +4,7 @@
 # Contributor: Alessandro "jakedust" Andrioni <jakedust@gmail.com>
 pkgname=mpir
 pkgver=3.0.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Library for multiple precision integers and rationals"
 arch=('i686' 'x86_64' 'aarch64')
 url="https://www.mpir.org/"
