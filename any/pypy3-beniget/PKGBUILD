@@ -3,7 +3,7 @@
 _base=beniget
 pkgname=pypy3-${_base}
 pkgver=0.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A static analyzer for Python code"
 arch=(any)
 url="https://github.com/serge-sans-paille/${_base}"
