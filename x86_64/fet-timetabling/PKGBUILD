@@ -2,7 +2,7 @@
 pkgname='fet-timetabling'
 _module='fet'
 pkgver=7.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A software for automatically scheduling the timetable of a school, high-school or university."
 arch=('x86_64')
 url="https://lalescu.ro/liviu/fet/"
