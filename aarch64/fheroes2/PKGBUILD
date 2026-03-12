@@ -1,6 +1,6 @@
 pkgname=fheroes2
 pkgver=1.1.14
-pkgrel=1
+pkgrel=2
 pkgdesc="Recreation of the Heroes of Might and Magic II game engine"
 arch=('i686' 'x86_64' 'armv7h')
 url="https://ihhub.github.io/fheroes2/"
