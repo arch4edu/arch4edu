@@ -4,7 +4,7 @@
 
 pkgname=javacc
 pkgver=7.0.13
-pkgrel=1
+pkgrel=2
 pkgdesc="Parser/scanner generator for Java"
 arch=('any')
 url="http://javacc.org/"
