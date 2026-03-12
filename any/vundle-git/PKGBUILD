@@ -3,7 +3,7 @@
 
 pkgname=vundle-git
 pkgver=0.10.2.639.5548a1a
-pkgrel=1
+pkgrel=2
 pkgdesc='Plug-in manager for Vim'
 url='https://github.com/VundleVim/Vundle.vim'
 arch=('any')
