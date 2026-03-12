@@ -11,7 +11,7 @@
 
 pkgname=vim-colorschemes
 pkgver=r215.fd8f122
-pkgrel=1
+pkgrel=2
 pkgdesc="A very large collection of color schemes from vim.org"
 url="https://github.com/flazz/vim-colorschemes/"
 arch=('any')
