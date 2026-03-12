@@ -7,7 +7,7 @@ _L51X_VER=1.5.8.1
 
 pkgname=librealsense
 pkgver=2.56.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras."
 arch=('x86_64')
 url="https://github.com/IntelRealSense/librealsense"
