@@ -3,7 +3,7 @@
 
 pkgname=ycm-generator-git
 pkgver=r128.b501516
-pkgrel=1
+pkgrel=2
 pkgdesc="Generates config files for YouCompleteMe (https://github.com/Valloric/YouCompleteMe)"
 arch=('any')
 url="https://github.com/PaulHaeger/YCM-Generator"
