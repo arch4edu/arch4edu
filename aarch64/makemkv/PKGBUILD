@@ -5,7 +5,7 @@
 
 pkgname=makemkv
 pkgver=1.18.3
-pkgrel=1
+pkgrel=2
 pkgdesc="DVD and Blu-ray to MKV converter"
 arch=(x86_64 i686 aarch64)
 url="https://www.makemkv.com"
