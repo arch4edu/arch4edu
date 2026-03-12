@@ -6,7 +6,7 @@
 _pkgname="xerces2-java"
 pkgname="$_pkgname"
 pkgver=2.12.2
-pkgrel=2
+pkgrel=3
 pkgdesc="High performance fully compliant Java XML parser"
 url="https://xml.apache.org/xerces2-j"
 license=('Apache-2.0')
