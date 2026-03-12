@@ -4,7 +4,7 @@
 pkgname=python-transformers
 _pkgname=${pkgname#python-}
 pkgver=5.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='State-of-the-art pretrained models for inference and training'
 arch=('any')
 url='https://github.com/huggingface/transformers'
