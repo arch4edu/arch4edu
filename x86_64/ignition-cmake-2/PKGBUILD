@@ -3,7 +3,7 @@
 
 pkgname=ignition-cmake-2
 pkgver=2.17.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of CMake modules that are used by the C++-based Gazebo projects."
 arch=('any')
 url="https://gazebosim.org/libs/cmake"
