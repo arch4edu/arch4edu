@@ -1,7 +1,7 @@
 pkgname='python-wikiteam3'
 pkgver='4.4.6'
 _src_folder=${pkgname#python-}-$pkgver
-pkgrel=1
+pkgrel=2
 pkgdesc="Tools for downloading and preserving MediaWikis. We archive MediaWikis, from Wikipedia to tiniest wikis."
 url="https://github.com/saveweb/wikiteam3"
 depends=(
