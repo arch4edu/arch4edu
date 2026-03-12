@@ -3,7 +3,7 @@
 
 pkgname=geographiclib
 pkgver=2.7
-pkgrel=1
+pkgrel=2
 pkgdesc="Set of C++ classes for conversions between geographic, UTM, UPS, MGRS, geocentric, and local cartesian coordinates, for gravity, geoid height, and geomagnetic field calculations and for solving geodesic problems. Geotrans replacement."
 arch=('i686' 'x86_64')
 url="https://github.com/geographiclib/geographiclib"
