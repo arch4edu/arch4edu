@@ -1,6 +1,6 @@
 pkgname=cminpack
 pkgver=1.3.11
-pkgrel=1
+pkgrel=2
 pkgdesc="A C/C++ rewrite of the MINPACK software"
 arch=('x86_64')
 url='http://devernay.free.fr/hacks/cminpack/index.html'
