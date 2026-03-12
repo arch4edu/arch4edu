@@ -2,7 +2,7 @@
 
 pkgname=heasoft
 pkgver=6.36
-pkgrel=2
+pkgrel=3
 # _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
 _mod=''
 pkgdesc='NASA high energy astrophysics library'
