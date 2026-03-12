@@ -9,7 +9,7 @@
 _base=pip
 pkgname=pypy3-${_base}
 pkgver=26.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="The PyPA recommended tool for installing Python packages"
 url="https://${_base}.pypa.io"
 arch=(any)
