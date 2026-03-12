@@ -5,7 +5,7 @@
 
 pkgname=hdf4
 pkgver=4.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="General purpose library and file format for storing scientific data"
 arch=('x86_64')
 url="https://portal.hdfgroup.org"
