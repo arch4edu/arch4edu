@@ -4,7 +4,7 @@
 _tarball=hts_engine_API
 pkgname=hts-engine
 pkgver=1.10
-pkgrel=4
+pkgrel=5
 pkgdesc="Engine to synthesize speech waveform from HMMs trained by hts."
 arch=('i686' 'x86_64' 'armv7h')
 url="https://hts-engine.sourceforge.net/"
