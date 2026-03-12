@@ -3,7 +3,7 @@
 
 pkgname=('python-astropy-helpers')
 pkgver=4.0.1
-pkgrel=11
+pkgrel=12
 pkgdesc="Utilities used for building the Astropy python library for astronomy"
 arch=('any')
 url="https://astropy-helpers.readthedocs.io/"
