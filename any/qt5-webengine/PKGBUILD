@@ -8,7 +8,7 @@
 pkgname=qt5-webengine
 _basever=5.15.18
 pkgver=5.15.19
-pkgrel=5
+pkgrel=6
 arch=('x86_64')
 #url='https://www.qt.io'
 url='https://wiki.qt.io/QtWebEngine/ChromiumVersions'
@@ -24,35 +24,40 @@ depends+=('qt5-base' 'qt5-tools' 'qt5-declarative' 'gcc-libs' 'glib2' 'glibc' 'a
 makedepends=('git' 'python' 'gperf' 'jsoncpp' 'ninja' 'poppler' 'pipewire' 'nodejs' 'python-html5lib')
 makedepends+=('perl' 'libxcursor' 'libxkbfile' 'libpulse' 'libxss')
 optdepends=('pipewire: WebRTC desktop sharing under Wayland')
-options=('!lto') # dreieck
+options=('!lto' '!debug') # dreieck
 _srcdir="kde-${pkgname/5-/}"
 _srcdir87='qtwebengine-chromium'
 source=(
   "${_srcdir}::git+https://code.qt.io/qt/qtwebengine.git#tag=v${pkgver}-lts"
   "git+https://code.qt.io/qt/${_srcdir87}.git"
-  'qt5-webengine-pipewire-0.3.patch'
-  'qt5-webengine-icu-75.patch'
-  'qt5-webengine-ninja-1.12.patch'
-  'qt5-webengine-gcc-15.patch'
-  'python3.12-six.patch'
-  'qt5-webengine-icu-78.patch'
+  '0000-qt5-webengine-pipewire-0.3@chromium.patch' # Port to pipewire 0.3
+  '0001-qt5-webengine-icu-75@chromium.patch'       # Fix build with ICU 75
+  '0002-qt5-webengine-ninja-1.12@chromium.patch'   # Fix build with ninja 1.12
+  #'0003-qt5-webengine-gcc-15@chromium.patch'       # Fix build with GCC 15 (Fedora)
+  '0003a-qt5-webengine-gcc-15@chromium.patch'      # Fix build with GCC 15 (Fedora)
+  #'0004-qt5-webengine-gcc-15@webengine.patch'      # Fix build with GCC 15 (Fedora)
+  '0005-python3.12-six@chromium.patch'             # Fix build with python 3.12 - patch from Debian
+  '0006-qt5-webengine-icu-78@chromium.patch'       # Fix build with ICU78
+  '0007-qt5-webengine-glibc-2.43-SYS_SECCOMP-as-enum@chromium.patch'
 )
 md5sums=('1d1c4743f5b9f6601681c81f0ed953d5'
          '5fbf73d6c48235a94620231755481628'
          'a21aa28d235877e7dcc35055d67d417d'
          'ce4f3cb4a30f88136b1d3d1bcef40448'
          'f1ed8795356458457a311d0e3101ba28'
-         'b00f3ceb46af3137c5015db99b3bd843'
-         'b97eff00920550c9c556914158c8338a'
-         '56a16a0d3c6dda56298fd4d97d49f9b8')
+         '37f21a98d8c06e4180b90da1d320cb7f'
+         '58145f2e58d3bce2b28c427cba7bad68'
+         'bdddda5a578704eb56f5ceeaab49bd2f'
+         '7c88da9ed56bd99eee3cdba5f197102c')
 sha256sums=('33cd20f4a87874f34ef3f9c8d767e006498acc3e6cff89a9c64a9e3387bbfaa5'
             'bef1d9d0ed81778b31cbb5f592a66007bd60d1919f836529f9cd057edd9aacc1'
             '5e3a3c4711d964d5152a04059a2b5c1d14bb13dd29bce370120f60e85b476b6f'
             '7cac28ba784d24b4abf6414079548ada165343af507ecd8e23cbe7e4f63ae52f'
             '6672741b64d896dc555c8ee42ca2329c4f20d5f406095a69fe72da44b3a142f4'
-            '813851a1c7de9947afab28b7f3cb26ca739254521f12c21f76a6a3ec164def24'
-            'ac87ec55ee5cbcf2d520e1ea433d041c0bf754271a17f859edbb9976f192ce3f'
-            'f5cf66e4006ca81def2625088e7dd2fc925a0a617b4b88d1a19f030b60b9ad96')
+            '54b3b1032e004d5829eade2c290df4c6793eb15f3f728a2e92828afbe0f7de43'
+            '3459c151665842ff15130354db50c8a7c6fadc6fec583b85e818c42215ccce91'
+            '7374653d1d6ee2289adce311d1cfc6b4d607dfd3cd593160e6ffab6e90eed559'
+            'fdb6653d92b897d7ea2d8fa669155a7cf9b6aa0500341ce4f67319a0052bcea2')
 
 if : ; then
   # I can't find any archive links on code.qt.io so we use the github mirror.
@@ -63,7 +68,44 @@ if : ; then
   _srcdir87='qtwebengine-chromium-87-based'
   _date87='20250423'
   source[1]="${_srcdir87}-${_date87}.tgz::https://github.com/qt/qtwebengine-chromium/archive/refs/heads/87-based.tar.gz"
+else
+  md5sums[0]='SKIP'
+  md5sums[1]='SKIP'
+  sha256sums[0]='SKIP'
+  sha256sums[1]='SKIP'
 fi
+
+_fn_patch() {
+  local -
+  local _pt _ptf=() _pts=() _ptd
+  for _pt in "${source[@]}"; do
+    set +u; msg2 "Patch ${_pt}"; set -u
+    if [[ "${_pt}" =~ ^[^@]+@([^.]+).patch$ ]]; then
+      _ptd=()
+      case "${BASH_REMATCH[1]}" in
+      'chromium') _ptd=(-d "${srcdir}/$2");;
+      'webengine') _ptd=(-d "${srcdir}/$1");;
+      esac
+      if patch "${_ptd[@]}" -Nup1 -i "${srcdir}/${_pt}"; then
+        _pts+=("${_pt}")
+      else
+        _ptf+=("${_pt}")
+      fi
+    fi
+  done
+  if [ "${#_ptf[@]}" -gt 0 ]; then
+     if [ "${#_pts[@]}" -gt 0 ]; then
+       printf 'Patch success %s\n' "${_pts[@]}"
+       printf 'Warning: Some old patches may need to be removed even if they are successful\n'
+     fi
+     printf 'Patch failed %s\n' "${_ptf[@]}"
+     set +x
+     false
+  fi
+  #cp -pr "${_srcdir}" 'a'; ln -s "${_srcdir}" 'b';  false
+  #cp -pr "${_srcdir87}" 'a'; ln -s "${_srcdir87}" 'b';  false
+  #diff -pNaru5 'a' 'b' > "0000-$RANDOM@domain.patch"
+}
 
 prepare() {
   mkdir -p build
@@ -74,14 +116,17 @@ prepare() {
     git submodule set-url 'src/3rdparty' "${srcdir}/${_srcdir87}"
     git submodule set-branch --branch '87-based' 'src/3rdparty'
     git -c protocol.file.allow='always' submodule update
+    _fn_patch "${_srcdir}" "${_srcdir}/src/3rdparty"
   else
-    cd "${srcdir}/${_srcdir87}"
+    _fn_patch "${_srcdir}" "${_srcdir87}"
+    pushd "${srcdir}/${_srcdir87}" > /dev/null
     local _d
     for _d in *; do
       rm -rf "${srcdir}/${_srcdir}/src/3rdparty/${_d}"
       mv "${_d}" "${srcdir}/${_srcdir}/src/3rdparty/" # Neither patch nor git-apply work with symlinks
+      #ln -srf "${_d}" "${srcdir}/${_srcdir}/src/3rdparty/"
     done
-    cd "${srcdir}/${_srcdir}"
+    popd > /dev/null
   fi
 
   # Why does the qtwebengine git download compile and the archive download doesn't?
@@ -104,15 +149,7 @@ prepare() {
   # The git download always includes this folder. The archive download doesn't.
   mkdir -p '.git'
 
-  set -x
-  patch -Np1 -d 'src/3rdparty' -i "${srcdir}/qt5-webengine-pipewire-0.3.patch"        # Port to pipewire 0.3
-  patch -Np2 -d 'src/3rdparty/chromium' -i "${srcdir}/qt5-webengine-icu-75.patch"     # Fix build with ICU 75
-  patch -Np2 -d 'src/3rdparty/chromium' -i "${srcdir}/qt5-webengine-ninja-1.12.patch" # Fix build with ninja 1.12
-  patch -Np1 -d 'src/3rdparty/chromium' -i "${srcdir}/python3.12-six.patch"           # Fix build with python 3.12 - patch from Debian
-  patch -Np1 -i "${srcdir}/qt5-webengine-gcc-15.patch" # Fix build with GCC 15 (Fedora)
-  patch -Np1 -i "${srcdir}/qt5-webengine-icu-78.patch" # Fix build with ICU78
-  set +x
-# Fix build with python 3.13
+  # Fix build with python 3.13
   sed -e '/import pipes/d' -i src/3rdparty/chromium/build/android/gyp/util/build_utils.py
   # Force building with the bundled re2 version (gwuensch, https://bugs.gentoo.org/913923#c3)
   sed -e 's/\(use_system_re2=\)true/\1false/' -i 'src/core/config/linux.pri'
