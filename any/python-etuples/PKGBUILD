@@ -4,7 +4,7 @@
 pkgname=python-etuples
 _pkgname=etuples
 pkgver=0.3.9
-pkgrel=1
+pkgrel=2
 pkgdesc="Python S-expression emulation using tuple-like objects."
 arch=('any')
 url="https://github.com/pythological/${_pkgname}/"
