@@ -4,7 +4,7 @@
 
 pkgname=vim-sensible-git
 pkgver=2.0.r2.g0ce2d84
-pkgrel=1
+pkgrel=2
 pkgdesc="vim defaults everyone can agree on"
 arch=('any')
 url="https://github.com/tpope/${pkgname%-git}"
