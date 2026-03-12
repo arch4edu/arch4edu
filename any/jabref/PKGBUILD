@@ -12,7 +12,7 @@ _styles=b2be5aeeee7f00fd2032ac1daad995bbe95398cf
 
 pkgname=jabref
 pkgver=5.15
-pkgrel=5
+pkgrel=6
 pkgdesc="Graphical Java application for managing BibTeX and biblatex (.bib) databases"
 arch=(any)
 url="https://www.jabref.org/"
