@@ -2,7 +2,7 @@
 _base=GKlib
 pkgname=${_base,,}
 pkgver=5.1.1
-pkgrel=6
+pkgrel=7
 pkgdesc="A library of various helper routines and frameworks used by many of the lab's software"
 arch=(x86_64)
 url="https://github.com/KarypisLab/${_base}"
