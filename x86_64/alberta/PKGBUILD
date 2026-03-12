@@ -2,7 +2,7 @@
 # Contributor: Lukas Böger <dev___AT___lboeger___DOT___de>
 pkgname=alberta
 pkgver=3.1.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Adaptive multi-Level finite element toolbox"
 url="https://www.${pkgname}-fem.de"
 license=(GPL-2.0-or-later)
