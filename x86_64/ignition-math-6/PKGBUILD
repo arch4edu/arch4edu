@@ -6,7 +6,7 @@
 
 pkgname=ignition-math-6
 pkgver=6.14.0
-pkgrel=1
+pkgrel=2
 pkgdesc="General purpose math library for robot applications."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/math"
