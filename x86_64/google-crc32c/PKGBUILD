@@ -5,7 +5,7 @@
 
 pkgname=google-crc32c
 pkgver=1.1.2
-pkgrel=5
+pkgrel=6
 pkgdesc="CRC32C implementation with support for CPU-specific acceleration instructions"
 arch=(x86_64)
 url="https://github.com/google/crc32c"
@@ -22,11 +22,11 @@ makedepends=(
 #https://github.com/google/crc32c/commit/2bbb3be42e20a0e6c0f7b39dc07dc863d9ffbc07
 _tag='2bbb3be42e20a0e6c0f7b39dc07dc863d9ffbc07'
 
-source=("$pkgname-${pkgver%%+*}::git+https://github.com/google/crc32c.git#tag=${_tag}")
+source=("${pkgname}::git+https://github.com/google/crc32c.git#tag=${_tag}")
 sha256sums=('622e752bac7eb19110e53639b1c86ae9188a4882dca8796f81eb0bcb088262f1')
 
 build() {
-  cd "${pkgname}-${pkgver%%+*}"
+  cd "${pkgname}"
   cmake -B build -S . \
       -DCMAKE_BUILD_TYPE=None \
       -DCMAKE_INSTALL_PREFIX=/usr \
@@ -40,7 +40,7 @@ build() {
 }
 
 package() {
-  cd "${pkgname}-${pkgver%%+*}"
+  cd "${pkgname}"
   DESTDIR="$pkgdir" cmake --install build
   install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE
 }
