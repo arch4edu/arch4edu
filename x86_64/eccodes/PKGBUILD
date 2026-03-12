@@ -3,7 +3,7 @@
 pkgname=eccodes
 pkgver=2.46.0
 _attnum=45757960
-pkgrel=3
+pkgrel=4
 pkgdesc="ECMWF decoding library for GRIB, BUFR and GTS"
 arch=("i686" "x86_64")
 url="https://confluence.ecmwf.int/display/ECC/ecCodes+Home"
