@@ -1,7 +1,7 @@
 # Maintainer:  Gerasimos Chourdakis <chourdak at in dot tum dot de>
 pkgname=openfoam-selector
 pkgver=1.0.6
-pkgrel=1
+pkgrel=2
 pkgdesc="A simple tool to help manage multiple installed OpenFOAM versions"
 arch=('any')
 url="https://develop.openfoam.com/Community/feature-scripts/"
