@@ -3,7 +3,7 @@
 # Author: Patrick Brisbin <pbrisbin@gmail.com>
 pkgname=downgrade
 pkgver=12.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Bash script for downgrading one or more packages to a version in your cache or the A.L.A."
 arch=('any')
 url="https://github.com/archlinux-downgrade/$pkgname"
