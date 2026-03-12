@@ -2,7 +2,7 @@
 _base=pyproject-hooks
 pkgname=pypy3-${_base}
 pkgver=1.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A low-level library for calling build-backends in pyproject.toml-based project"
 arch=(any)
 url="https://github.com/pypa/${_base}"
