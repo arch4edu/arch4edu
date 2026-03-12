@@ -2,7 +2,7 @@
 pkgname='python-mwclient'
 pkgdesc="A Python framework to interface with the MediaWiki API"
 pkgver=0.11.0
-pkgrel=1
+pkgrel=2
 arch=('any')
 url="https://github.com/mwclient/mwclient"
 license=('MIT')
