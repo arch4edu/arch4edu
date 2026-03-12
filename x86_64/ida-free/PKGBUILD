@@ -1,7 +1,7 @@
 # Maintainer: fatalis <fatalis@fatalis.pw>
 pkgname=ida-free
 pkgver=8.4.240527
-pkgrel=2
+pkgrel=3
 pkgdesc="Freeware version of the world's smartest and most feature-full disassembler"
 arch=('x86_64')
 url='https://www.hex-rays.com/products/ida/'
