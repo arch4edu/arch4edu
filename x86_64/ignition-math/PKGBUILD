@@ -4,7 +4,7 @@
 # Contributor: Ramdambo <https://github.com/Ramdambo>
 pkgname=ignition-math
 pkgver=7.3.0
-pkgrel=3
+pkgrel=4
 pkgdesc="General purpose math library for robot applications."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/math"
