@@ -1,7 +1,7 @@
 # Maintainer: Benoît Allard <benoit.allard@gnx.de>
 pkgname=python-file-read-backwards
 pkgver=3.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Memory efficient way of reading files line-by-line from the end of file"
 arch=('any')
 url="https://github.com/RobinNil/file_read_backwards"
