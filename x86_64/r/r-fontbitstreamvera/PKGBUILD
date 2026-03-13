@@ -4,7 +4,7 @@ _pkgname=fontBitstreamVera
 _pkgver=0.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=6
 pkgdesc="Fonts with 'Bitstream Vera Fonts' License"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
