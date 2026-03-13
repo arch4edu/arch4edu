@@ -4,7 +4,7 @@ _pkgname=norm
 _pkgver=1.0-11.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Analysis of Multivariate Normal Datasets with Missing Values"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
