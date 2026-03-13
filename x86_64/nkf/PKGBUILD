@@ -4,7 +4,7 @@
 
 pkgname=nkf
 pkgver=2.1.5
-pkgrel=3
+pkgrel=4
 pkgdesc="A yet another kanji code converter among networks, hosts and terminals"
 arch=('i686' 'x86_64')
 url="https://github.com/nurse/nkf"
