@@ -5,7 +5,7 @@ _pkgname=lpSolve
 _pkgver=5.6.23
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Interface to 'Lp_solve' v. 5.5 to Solve Linear/Integer Programs"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
