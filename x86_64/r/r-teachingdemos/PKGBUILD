@@ -4,7 +4,7 @@ _pkgname=TeachingDemos
 _pkgver=2.13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Demonstrations for Teaching and Learning"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
