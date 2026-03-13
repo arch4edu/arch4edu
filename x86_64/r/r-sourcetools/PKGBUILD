@@ -6,7 +6,7 @@ _pkgname=sourcetools
 _pkgver=0.1.7-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Tools for Reading, Tokenizing and Parsing R Code"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
