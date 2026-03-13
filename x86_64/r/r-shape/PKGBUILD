@@ -4,7 +4,7 @@ _pkgname=shape
 _pkgver=1.4.6.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Functions for Plotting Graphical Shapes, Colors"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
