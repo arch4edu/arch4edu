@@ -4,7 +4,7 @@
 pkgname=openni2
 pkgver=2.2.0
 _srcname=OpenNI2-${pkgver}-debian
-pkgrel=2
+pkgrel=3
 pkgdesc='Framework for sensor-based Natural Interaction'
 arch=('i686' 'x86_64')
 url='https://github.com/occipital/OpenNI2/'
