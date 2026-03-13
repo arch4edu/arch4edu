@@ -4,7 +4,7 @@ _pkgname=KMsurv
 _pkgver=0.1-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Datasets from Klein and Moeschberger (1997), Survival Analysis"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
