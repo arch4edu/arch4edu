@@ -4,7 +4,7 @@ _pkgname=tinytest
 _pkgver=1.4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Lightweight and Feature Complete Unit Testing Framework"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
