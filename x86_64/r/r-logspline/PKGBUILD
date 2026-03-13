@@ -4,7 +4,7 @@ _pkgname=logspline
 _pkgver=2.1.22
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Routines for Logspline Density Estimation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
