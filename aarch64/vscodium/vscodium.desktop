@@ -6,11 +6,11 @@ Exec=/usr/bin/codium %F
 Icon=vscodium
 Type=Application
 StartupNotify=false
-StartupWMClass=VSCodium
+StartupWMClass=codium
 Categories=Utility;Development;IDE;
 MimeType=text/plain;inode/directory;
 Actions=new-empty-window;
-Keywords=vscode;
+Keywords=vscodium;codium;vscode;
 
 [Desktop Action new-empty-window]
 Name=New Empty Window
