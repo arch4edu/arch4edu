@@ -4,7 +4,7 @@ _pkgname=ca
 _pkgver=0.71.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=12
+pkgrel=13
 pkgdesc="Simple, Multiple and Joint Correspondence Analysis"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
