@@ -3,7 +3,7 @@
 
 pkgname=spooles
 pkgver=2.2
-pkgrel=8
+pkgrel=9
 pkgdesc="SParse Object Oriented Linear Equations Solver"
 arch=('i686' 'x86_64')
 license=('custom')
