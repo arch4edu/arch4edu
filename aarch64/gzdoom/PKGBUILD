@@ -1,6 +1,6 @@
 pkgname=gzdoom
 pkgver=4.14.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Feature centric port for all Doom engine games'
 arch=('i686' 'x86_64' 'aarch64')
 url='http://www.zdoom.org/'
