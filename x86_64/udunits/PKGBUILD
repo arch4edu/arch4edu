@@ -5,7 +5,7 @@
 
 pkgname=udunits
 pkgver=2.2.28
-pkgrel=5
+pkgrel=6
 pkgdesc="A tool for calculations of physical quantities"
 arch=('i686' 'x86_64')
 url="http://www.unidata.ucar.edu/software/udunits/"
