@@ -9,7 +9,7 @@ pkgdesc="Simple Network of Workstations"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("GPL2" "GPL3")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("any")
 depends=(
