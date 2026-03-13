@@ -3,7 +3,7 @@
 
 pkgname=reproc
 pkgver=14.2.5
-pkgrel=2
+pkgrel=3
 pkgdesc='Cross-platform library that simplifies working with external CLI applications from C and C++'
 arch=('x86_64')
 url='https://github.com/DaanDeMeyer/reproc'
