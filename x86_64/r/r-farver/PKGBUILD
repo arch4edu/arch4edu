@@ -6,7 +6,7 @@ _cranname=farver
 _cranver=2.1.2
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="High Performance Colour Space Manipulation"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
