@@ -4,7 +4,7 @@ _pkgname=fontLiberation
 _pkgver=0.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=6
 pkgdesc="Liberation Fonts"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
