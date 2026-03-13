@@ -1,7 +1,7 @@
 # Maintainer: robertfoster
 pkgname=smpq
 pkgver=1.7
-pkgrel=1
+pkgrel=2
 pkgdesc="StormLib MPQ archiving utility. Designed for full manipulating with Blizzard MPQ archives"
 arch=('i686' 'x86_64')
 url="https://launchpad.net/smpq"
