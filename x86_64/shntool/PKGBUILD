@@ -5,7 +5,7 @@
 
 pkgname=shntool
 pkgver=3.0.10
-pkgrel=8
+pkgrel=9
 pkgdesc="A multi-purpose WAVE data processing and reporting utility"
 arch=('x86_64')
 url="http://shnutils.freeshell.org/shntool/"
