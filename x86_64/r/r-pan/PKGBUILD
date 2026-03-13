@@ -4,7 +4,7 @@ _pkgname=pan
 _pkgver=1.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Multiple Imputation for Multivariate Panel or Clustered Data"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
