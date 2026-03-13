@@ -3,7 +3,7 @@
 pkgname=pypy3
 _pyversion=3.11
 pkgver=7.3.20
-pkgrel=1
+pkgrel=2
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
 arch=('x86_64')
