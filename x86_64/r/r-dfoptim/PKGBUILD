@@ -4,7 +4,7 @@ _pkgname=dfoptim
 _pkgver=2023.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Derivative-Free Optimization"
 arch=('any')
 url="https://cran.r-project.org/package=$_pkgname"
