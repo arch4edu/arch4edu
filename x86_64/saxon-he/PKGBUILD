@@ -6,7 +6,7 @@
 _base=Saxon-HE
 pkgname=${_base,,}
 pkgver=12.9
-pkgrel=1
+pkgrel=2
 arch=(any)
 pkgdesc="XSLT 3.0, XQuery 3.1, and XPath 3.1 processor for Java - Home Edition"
 url="https://github.com/Saxonica/${_base}"
