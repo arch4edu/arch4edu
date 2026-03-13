@@ -4,7 +4,7 @@ _pkgname=vipor
 _pkgver=0.4.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Plot Categorical Data Using Quasirandom Noise and Density Estimates"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
