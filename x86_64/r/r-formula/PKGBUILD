@@ -5,7 +5,7 @@ _pkgname=Formula
 _pkgver=1.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Extended Model Formulas"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
