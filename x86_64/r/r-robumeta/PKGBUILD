@@ -4,7 +4,7 @@ _pkgname=robumeta
 _pkgver=2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Robust Variance Meta-Regression"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
