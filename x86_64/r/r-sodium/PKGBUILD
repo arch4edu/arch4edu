@@ -5,7 +5,7 @@ _pkgname=sodium
 _pkgver=1.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="A Modern and Easy-to-Use Crypto Library"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
