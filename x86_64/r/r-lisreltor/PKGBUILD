@@ -4,7 +4,7 @@ _pkgname=lisrelToR
 _pkgver=0.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Import Output from LISREL into R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
