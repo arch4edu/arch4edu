@@ -2,8 +2,8 @@
 # Contributor: Mohamed Amine Zghal (medaminezghal) <medaminezghal at outlook dot com>
 _base=KaHIP
 pkgname=${_base,,}
-pkgver=3.23
-pkgrel=2
+pkgver=3.25
+pkgrel=1
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=(x86_64)
 url="https://github.com/${_base}/${_base}"
@@ -13,7 +13,7 @@ makedepends=(cmake pybind11) # python-build python-installer python-scikit-build
 optdepends=('gurobi: for ILP solver in ilp_improve')
 options=(!emptydirs)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('a4739e78154c9210c542bbb93a375059ff7113885ddba885820e3bb2fd82b383f58467bca9a6d78f4d9cc2a0b1719c7c303ac40400b6e31c53828a9e41d17475')
+sha512sums=('f1c20844a65dd0dcd8cbdb98b60279d5c5fd7d39ea1f3650b120331e7c99ecd7608a79c1c784562ef32f65334eeb92725483ba03dc35368ef80483fdfcfcf303')
 
 build() {
   cmake \
