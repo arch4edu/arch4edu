@@ -4,7 +4,7 @@ _pkgname=rrcov
 _pkgver=1.7-7
 pkgname=r-${_pkgname,,}
 pkgver=1.7.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Scalable Robust Estimators with High Breakdown Point'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
