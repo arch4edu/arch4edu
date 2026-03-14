@@ -4,7 +4,7 @@ _pkgname=truncdist
 _pkgver=1.0-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Truncated Random Variables"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
