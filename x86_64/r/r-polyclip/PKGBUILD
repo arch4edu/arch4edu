@@ -4,7 +4,7 @@ _pkgname=polyclip
 _pkgver=1.10-7
 pkgname=r-${_pkgname,,}
 pkgver=1.10.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Polygon Clipping'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
