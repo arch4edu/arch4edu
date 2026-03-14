@@ -8,7 +8,7 @@ _pkgname=markdown
 _pkgver=2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Render Markdown with 'commonmark'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
