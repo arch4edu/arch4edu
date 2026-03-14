@@ -4,7 +4,7 @@ _pkgname=stabledist
 _pkgver=0.7-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Stable Distribution Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
