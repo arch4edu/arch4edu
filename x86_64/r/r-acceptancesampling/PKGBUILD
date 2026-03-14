@@ -4,7 +4,7 @@ _pkgname=AcceptanceSampling
 _pkgver=1.0.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Creation and Evaluation of Acceptance Sampling Plans"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
