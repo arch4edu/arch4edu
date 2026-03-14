@@ -4,7 +4,7 @@ _pkgname=quadprog
 _pkgver=1.5-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="Functions to Solve Quadratic Programming Problems"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
