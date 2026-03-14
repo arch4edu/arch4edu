@@ -4,7 +4,7 @@ _pkgname=contfrac
 _pkgver=1.1-12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Continued Fractions"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
