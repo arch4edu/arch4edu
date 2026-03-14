@@ -4,7 +4,7 @@ _pkgname=partitions
 _pkgver=1.10-9
 pkgname=r-${_pkgname,,}
 pkgver=1.10.9
-pkgrel=1
+pkgrel=2
 pkgdesc='Additive Partitions of Integers'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
