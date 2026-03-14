@@ -4,7 +4,7 @@ _pkgname=HSAUR3
 _pkgver=1.0-15
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A Handbook of Statistical Analyses Using R (3rd Edition)"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
