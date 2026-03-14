@@ -5,7 +5,7 @@ _pkgname=corrplot
 _pkgver=0.95
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Visualization of a Correlation Matrix"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
