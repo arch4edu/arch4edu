@@ -5,7 +5,7 @@ _pkgname=xopen
 _pkgver=1.0.1
 pkgname=r-${_pkgname,,}
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Open System Files, 'URLs', Anything"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
