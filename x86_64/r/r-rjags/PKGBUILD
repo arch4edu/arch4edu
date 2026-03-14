@@ -4,7 +4,7 @@ _pkgname=rjags
 _pkgver=4-17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Bayesian Graphical Models using MCMC"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
