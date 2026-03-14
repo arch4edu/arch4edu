@@ -4,7 +4,7 @@ _pkgname=diagram
 _pkgver=1.6.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=8
 pkgdesc="Functions for Visualising Simple Graphs (Networks), Plotting Flow Diagrams"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
