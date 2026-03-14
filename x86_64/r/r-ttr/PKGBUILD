@@ -4,7 +4,7 @@ _pkgname=TTR
 _pkgver=0.24.4
 pkgname=r-${_pkgname,,}
 pkgver=0.24.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Technical Trading Rules'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
