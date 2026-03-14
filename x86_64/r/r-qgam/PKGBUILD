@@ -4,7 +4,7 @@ _pkgname=qgam
 _pkgver=2.0.0
 pkgname=r-${_pkgname,,}
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Smooth Additive Quantile Regression Models'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
