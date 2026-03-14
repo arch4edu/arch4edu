@@ -4,7 +4,7 @@ _pkgname=wordcloud
 _pkgver=2.6
 pkgname=r-${_pkgname,,}
 pkgver=2.6
-pkgrel=4
+pkgrel=5
 pkgdesc='Word Clouds'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
