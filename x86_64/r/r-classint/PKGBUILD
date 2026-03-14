@@ -1,11 +1,12 @@
-# Maintainer: ikyope at outlook dot com
+# Maintainer: Serene-Arc <https://aur.archlinux.org/account/serene-arc>
+# Contributor: ikyope at outlook dot com
 # Contributor: peippo <christoph+aur@christophfink.com>
 
 _pkgname=classInt
 _pkgver=0.4-11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Choose Univariate Class Intervals"
 arch=("x86_64")
 url="https://CRAN.R-project.org/package=${_pkgname}"
