@@ -4,7 +4,7 @@ _pkgname=glasso
 _pkgver=1.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Graphical Lasso: Estimation of Gaussian Graphical Models"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
