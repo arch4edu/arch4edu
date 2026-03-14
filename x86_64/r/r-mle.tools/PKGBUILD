@@ -4,7 +4,7 @@ _pkgname=mle.tools
 _pkgver=1.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Expected/Observed Fisher Information and Bias-Corrected Maximum Likelihood Estimate(s)"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
