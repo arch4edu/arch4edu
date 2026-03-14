@@ -9,7 +9,7 @@ _pkgname=memoise
 _pkgver=2.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=10
 pkgdesc="'Memoisation' of Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
