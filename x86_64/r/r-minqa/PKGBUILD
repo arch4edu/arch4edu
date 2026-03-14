@@ -7,7 +7,7 @@ _pkgname=minqa
 _pkgver=1.2.8
 pkgname=r-${_pkgname,,}
 pkgver=1.2.8
-pkgrel=1
+pkgrel=2
 pkgdesc='Derivative-free optimization algorithms by quadratic approximation'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
