@@ -6,7 +6,7 @@ _pkgname=numDeriv
 _pkgver=2016.8-1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=14
+pkgrel=15
 pkgdesc="Accurate Numerical Derivatives"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
