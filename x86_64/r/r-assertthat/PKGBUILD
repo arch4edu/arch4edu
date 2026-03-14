@@ -10,7 +10,7 @@ pkgdesc="Easy Pre and Post Assertions"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("GPL3")
 pkgver=${_cranver//[:-]/.}
-pkgrel=4
+pkgrel=5
 
 arch=("any")
 depends=(
