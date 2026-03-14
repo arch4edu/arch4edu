@@ -5,7 +5,7 @@ _pkgname=doParallel
 _pkgver=1.0.17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=10
 pkgdesc="Foreach Parallel Adaptor for the 'parallel' Package"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
