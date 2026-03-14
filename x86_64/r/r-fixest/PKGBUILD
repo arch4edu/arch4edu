@@ -4,7 +4,7 @@ _pkgname=fixest
 _pkgver=0.13.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Fast Fixed-Effects Estimations"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
