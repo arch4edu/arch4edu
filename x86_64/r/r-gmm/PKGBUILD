@@ -4,7 +4,7 @@ _pkgname=gmm
 _pkgver=1.9-1
 pkgname=r-${_pkgname,,}
 pkgver=1.9.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Generalized Method of Moments and Generalized Empirical Likelihood'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
