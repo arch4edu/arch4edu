@@ -9,7 +9,7 @@ _pkgname=curl
 _pkgver=7.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A Modern and Flexible Web Client for R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
