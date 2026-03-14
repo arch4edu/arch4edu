@@ -4,7 +4,7 @@ _pkgname=modules
 _pkgver=0.13.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Self Contained Units of Source Code"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
