@@ -2,7 +2,7 @@
 _base=ParMETIS
 pkgname=${_base,,}-git
 pkgver=r45.8ee6a37
-pkgrel=2
+pkgrel=3
 arch=(x86_64)
 pkgdesc="Parallel Graph Partitioning and Fill-reducing Matrix Ordering (git version)"
 url="https://github.com/KarypisLab/${_base}"
