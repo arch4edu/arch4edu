@@ -6,7 +6,7 @@ _pkgname=rex
 _pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=1.2.1
-pkgrel=7
+pkgrel=8
 pkgdesc='Friendly Regular Expressions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
