@@ -6,7 +6,7 @@ _pkgname=jquerylib
 _pkgver=0.1.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Obtain 'jQuery' as an HTML Dependency Object"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
