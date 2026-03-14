@@ -9,7 +9,7 @@ _pkgname=coda
 _pkgver=0.19-4.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Output Analysis and Diagnostics for MCMC"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
