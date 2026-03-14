@@ -5,7 +5,7 @@ _pkgname=stargazer
 _pkgver=5.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Well-Formatted Regression and Summary Statistics Tables"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
