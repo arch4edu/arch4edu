@@ -4,7 +4,7 @@ _pkgname=sets
 _pkgver=1.0-25
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Generalized Sets, Customizable Sets and Intervals"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
