@@ -11,7 +11,7 @@ _pkgname=digest
 _pkgver=0.6.39
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Create Compact Hash Digests of R Objects"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
