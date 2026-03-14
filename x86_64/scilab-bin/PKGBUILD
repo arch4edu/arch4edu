@@ -8,7 +8,7 @@
 pkgname=scilab-bin
 _pkgname=${pkgname%-bin}
 pkgver=2026.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="a powerful computing environment for engineering and scientific applications."
 arch=("x86_64")
 license=("GPL-2.0-or-later")
