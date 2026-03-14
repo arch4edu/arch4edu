@@ -4,7 +4,7 @@ _pkgname=Gmedian
 _pkgver=1.2.7
 pkgname=r-${_pkgname,,}
 pkgver=1.2.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Geometric Median, k-Medians Clustering and Robust Median PCA'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
