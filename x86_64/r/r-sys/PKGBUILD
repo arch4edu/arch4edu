@@ -7,7 +7,7 @@ _pkgname=sys
 _pkgver=3.4.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Powerful and Reliable Tools for Running System Commands in R"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
