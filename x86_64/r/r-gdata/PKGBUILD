@@ -7,7 +7,7 @@ _pkgname=gdata
 _pkgver=3.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Various R Programming Tools for Data Manipulation"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
