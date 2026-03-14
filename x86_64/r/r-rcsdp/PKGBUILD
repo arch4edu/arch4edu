@@ -4,7 +4,7 @@ _pkgname=Rcsdp
 _pkgver=0.1.57.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="R Interface to the CSDP Semidefinite Programming Library"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
