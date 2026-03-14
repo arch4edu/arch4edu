@@ -4,7 +4,7 @@ _pkgname=hypergeo
 _pkgver=1.2-14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="The Gauss Hypergeometric Function"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
