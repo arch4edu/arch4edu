@@ -4,7 +4,7 @@ _pkgname=km.ci
 _pkgver=0.5-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Confidence Intervals for the Kaplan-Meier Estimator"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
