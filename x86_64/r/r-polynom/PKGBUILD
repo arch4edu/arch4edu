@@ -6,7 +6,7 @@ _pkgname=polynom
 _pkgver=1.4-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="A Collection of Functions to Implement a Class for Univariate Polynomial Manipulations"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
