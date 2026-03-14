@@ -4,7 +4,7 @@ _pkgname=TruncatedNormal
 _pkgver=2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Truncated Multivariate Normal and Student Distributions"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
