@@ -4,7 +4,7 @@ _pkgname=bayestestR
 _pkgver=0.17.0
 pkgname=r-${_pkgname,,}
 pkgver=0.17.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Understand and Describe Bayesian Models and Posterior Distributions'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
