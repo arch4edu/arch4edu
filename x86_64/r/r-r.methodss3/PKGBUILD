@@ -6,7 +6,7 @@ _pkgname=R.methodsS3
 _pkgver=1.8.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=11
+pkgrel=12
 pkgdesc="S3 Methods Simplified"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
