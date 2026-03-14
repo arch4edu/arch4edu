@@ -4,7 +4,7 @@ _pkgname=abtest
 _pkgver=1.0.1
 pkgname=r-${_pkgname,,}
 pkgver=1.0.1
-pkgrel=4
+pkgrel=5
 pkgdesc='Bayesian A/B Testing'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
