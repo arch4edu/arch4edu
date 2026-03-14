@@ -1,0 +1,42 @@
+version = 1
+
+[[annotations]]
+path = [
+    "PKGBUILD",
+    "README.md",
+    "keys/**",
+    ".SRCINFO",
+    ".gitignore",
+    ".nvchecker.toml",
+    "*.install",
+    "*.sysusers",
+    "*sysusers.conf",
+    "*.tmpfiles",
+    "*tmpfiles.conf",
+    "*.logrotate",
+    "*.pam",
+    "*.service",
+    "*.socket",
+    "*.timer",
+    "*.desktop",
+    "*.hook",
+]
+SPDX-FileCopyrightText = "Arch Linux contributors"
+SPDX-License-Identifier = "0BSD"
+
+[[annotations]]
+path = [
+    "panoply-script.patch",
+]
+SPDX-FileCopyrightText = "Arch Linux contributors"
+SPDX-License-Identifier = "0BSD"
+
+
+[[annotations]]
+path = [
+    "Panoply-5.9.1.sha1.txt",
+    "panoply-5.9.1-1-any.pkg.tar.zst",
+    "panoply-license.txt"
+]
+SPDX-FileCopyrightText = "NASA Goddard Institute for Space Studies"
+SPDX-License-Identifier = "LicenseRef-Proprietary"
