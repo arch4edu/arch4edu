@@ -10,7 +10,7 @@ pkgdesc="Encapsulated Classes with Reference Semantics"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=5
+pkgrel=6
 
 arch=("any")
 depends=(
