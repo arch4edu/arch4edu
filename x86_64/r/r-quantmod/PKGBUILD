@@ -4,7 +4,7 @@ _pkgname=quantmod
 _pkgver=0.4.28
 pkgname=r-${_pkgname,,}
 pkgver=0.4.28
-pkgrel=1
+pkgrel=2
 pkgdesc='Quantitative Financial Modelling Framework'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
