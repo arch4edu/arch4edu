@@ -4,7 +4,7 @@ _pkgname=digitTests
 _pkgver=0.1.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Tests for Detecting Irregular Digit Patterns"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
