@@ -7,7 +7,7 @@
 _pkgname="octopi"
 pkgname="$_pkgname"
 pkgver=0.18.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A powerful Pacman frontend using Qt libs"
 url="https://github.com/aarnt/octopi"
 license=('GPL-2.0-or-later')
