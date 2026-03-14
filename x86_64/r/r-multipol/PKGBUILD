@@ -4,7 +4,7 @@ _pkgname=multipol
 _pkgver=1.0-9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Multivariate Polynomials"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
