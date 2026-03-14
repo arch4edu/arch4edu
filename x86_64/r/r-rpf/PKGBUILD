@@ -5,7 +5,7 @@ _pkgname=rpf
 _pkgver=1.0.15
 pkgname=r-${_pkgname,,}
 pkgver=1.0.15
-pkgrel=1
+pkgrel=2
 pkgdesc='Response Probability Functions'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
