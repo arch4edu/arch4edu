@@ -3,7 +3,7 @@
 _cranname=SEMsens
 pkgname=r-semsens
 pkgver=1.5.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Bayesian Variable Selection and Model Averaging using Bayesian Adaptive Sampling"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
