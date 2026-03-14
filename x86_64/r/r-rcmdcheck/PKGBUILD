@@ -5,7 +5,7 @@ _pkgname=rcmdcheck
 _pkgver=1.4.0
 pkgname=r-${_pkgname,,}
 pkgver=1.4.0
-pkgrel=7
+pkgrel=8
 pkgdesc="Run 'R CMD check' from 'R' and Capture Results"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
