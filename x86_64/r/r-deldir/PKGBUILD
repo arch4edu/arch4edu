@@ -4,7 +4,7 @@ _pkgname=deldir
 _pkgver=2.0-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Delaunay Triangulation and Dirichlet (Voronoi) Tessellation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
