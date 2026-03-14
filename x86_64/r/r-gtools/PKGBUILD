@@ -8,7 +8,7 @@ _pkgname=gtools
 _pkgver=3.9.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Various R Programming Tools"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
