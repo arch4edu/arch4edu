@@ -4,7 +4,7 @@ _pkgname=desirability
 _pkgver=2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Function Optimization and Ranking via Desirability Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
