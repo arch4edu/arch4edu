@@ -6,7 +6,7 @@ _pkgname=fastmap
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Fast Data Structures"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
