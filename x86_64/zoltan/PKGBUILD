@@ -2,7 +2,7 @@
 # Contributor: Cong Gu <gucong43216@gmail.com>
 pkgname=zoltan
 pkgver=3.901
-pkgrel=1
+pkgrel=2
 pkgdesc="Parallel Partitioning, Load Balancing and Data-Management Services"
 arch=('x86_64')
 url="https://github.com/sandialabs/${pkgname}"
