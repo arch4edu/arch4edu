@@ -8,7 +8,7 @@ pkgdesc="Functions that Apply to Rows and Columns of Matrices (and to Vectors)"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("LGPL3")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=4
 
 arch=("any")
 depends=(
