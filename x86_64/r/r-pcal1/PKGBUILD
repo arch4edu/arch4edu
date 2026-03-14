@@ -4,7 +4,7 @@ _pkgname=pcaL1
 _pkgver=1.5.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="L1-Norm PCA Methods"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
