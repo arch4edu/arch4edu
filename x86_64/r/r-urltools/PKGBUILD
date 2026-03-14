@@ -4,7 +4,7 @@ _pkgname=urltools
 _pkgver=1.7.3.1
 pkgname=r-${_pkgname,,}
 pkgver=1.7.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Vectorised Tools for URL Handling and Parsing'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
