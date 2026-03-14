@@ -10,7 +10,7 @@ pkgdesc="Format R Code Automatically"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("GPL")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("any")
 depends=(
