@@ -4,7 +4,7 @@ _pkgname=randomForest
 _pkgver=4.7-1.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Breiman and Cutlers Random Forests for Classification and Regression"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
