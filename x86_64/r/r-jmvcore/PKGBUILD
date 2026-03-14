@@ -4,7 +4,7 @@ _pkgname=jmvcore
 _pkgver=2.7.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Dependencies for the 'jamovi' Framework"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
