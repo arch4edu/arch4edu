@@ -6,7 +6,7 @@
 pkgbase=archimedes-tools
 pkgname=(triangle showme)
 pkgver=1.6
-pkgrel=9
+pkgrel=10
 arch=(i686 x86_64)
 url="https://www.cs.cmu.edu/~quake/archimedes.html"
 pkgdesc="Archimedes is a set of tools, including mesh generators, for performing unstructured finite element simulations"
