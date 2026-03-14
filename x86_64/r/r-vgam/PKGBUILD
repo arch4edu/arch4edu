@@ -4,7 +4,7 @@ _pkgname=VGAM
 _pkgver=1.1-14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Vector Generalized Linear and Additive Models"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
