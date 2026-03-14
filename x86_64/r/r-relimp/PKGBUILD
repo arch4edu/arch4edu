@@ -4,7 +4,7 @@ _pkgname=relimp
 _pkgver=1.0-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=9
+pkgrel=10
 pkgdesc="Relative Contribution of Effects in a Regression Model"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
