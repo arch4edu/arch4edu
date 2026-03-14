@@ -4,7 +4,7 @@ _pkgname=triebeard
 _pkgver=0.4.1
 pkgname=r-${_pkgname,,}
 pkgver=0.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="'Radix' Trees in 'Rcpp'"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
