@@ -4,7 +4,7 @@ _pkgname=ade4
 _pkgver=1.7-23
 pkgname=r-${_pkgname,,}
 pkgver=1.7.23
-pkgrel=1
+pkgrel=2
 pkgdesc='Analysis of Ecological Data: Exploratory and Euclidean Methods in Environmental Sciences'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
