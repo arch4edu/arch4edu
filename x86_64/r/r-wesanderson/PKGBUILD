@@ -4,7 +4,7 @@ _pkgname=wesanderson
 _pkgver=0.3.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="A Wes Anderson Palette Generator"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
