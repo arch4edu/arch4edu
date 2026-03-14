@@ -5,7 +5,7 @@ _cranname=diffobj
 _cranver=0.3.6
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Diffs for R Objects"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
