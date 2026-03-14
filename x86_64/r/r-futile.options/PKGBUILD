@@ -4,7 +4,7 @@ _cranname=futile.options
 _cranver=1.0.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Futile Options Management"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
