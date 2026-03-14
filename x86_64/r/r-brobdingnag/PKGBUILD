@@ -4,7 +4,7 @@ _pkgname=Brobdingnag
 _pkgver=1.2-9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=6
+pkgrel=7
 pkgdesc="Very Large Numbers in R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
