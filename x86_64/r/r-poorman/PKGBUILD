@@ -4,7 +4,7 @@ _pkgname=poorman
 _pkgver=0.2.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="A Poor Man's Dependency Free Recreation of 'dplyr'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
