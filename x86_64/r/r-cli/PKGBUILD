@@ -10,7 +10,7 @@ pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 arch=("i686" "x86_64")
 depends=(
     "r>=3.4"
