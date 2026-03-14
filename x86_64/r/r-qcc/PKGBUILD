@@ -4,7 +4,7 @@ _pkgname=qcc
 _pkgver=2.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=10
+pkgrel=11
 pkgdesc="Quality Control Charts"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
