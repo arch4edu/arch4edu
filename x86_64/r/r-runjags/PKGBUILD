@@ -4,7 +4,7 @@ _pkgname=runjags
 _pkgver=2.2.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Interface Utilities, Model Templates, Parallel Computing Methods and Additional Distributions for MCMC Models in JAGS"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
