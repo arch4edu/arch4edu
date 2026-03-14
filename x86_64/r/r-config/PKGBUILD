@@ -4,7 +4,7 @@ _pkgname=config
 _pkgver=0.3.2
 pkgname=r-${_pkgname,,}
 pkgver=0.3.2
-pkgrel=3
+pkgrel=4
 pkgdesc='Manage Environment Specific Configuration Values'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
