@@ -1,6 +1,6 @@
 # Maintainer: Gilbert Gilb's <gilbsgilbert@gmail.com>
 pkgname=riscv-gnu-toolchain-bin
-pkgver=2026.02.13
+pkgver=2026.03.13
 pkgrel=1
 pkgdesc="Meta-package for a pre-compiled GNU toolchain for riscv32 and riscv64, linux and ELF."
 arch=('any')
