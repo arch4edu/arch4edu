@@ -4,7 +4,7 @@ _pkgname=Rspc
 _pkgver=1.2.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Nelson Rules for Control Charts"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
