@@ -4,7 +4,7 @@ _pkgname=gap.datasets
 _pkgver=0.0.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Datasets for 'gap'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
