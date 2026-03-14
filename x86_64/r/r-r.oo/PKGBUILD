@@ -7,7 +7,7 @@ _pkgname=R.oo
 _pkgver=1.27.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="R Object-Oriented Programming with or without References"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
