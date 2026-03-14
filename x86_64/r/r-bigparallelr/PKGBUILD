@@ -4,7 +4,7 @@ _pkgname=bigparallelr
 _pkgver=0.3.2
 pkgname=r-${_pkgname,,}
 pkgver=0.3.2
-pkgrel=4
+pkgrel=5
 pkgdesc='Easy Parallel Tools'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
