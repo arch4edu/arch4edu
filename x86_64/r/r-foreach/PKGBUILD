@@ -7,7 +7,7 @@ _pkgname=foreach
 _pkgver=1.5.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Provides Foreach Looping Construct"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
