@@ -7,7 +7,7 @@ _pkgname=brio
 _pkgver=1.1.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Basic R Input Output"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
