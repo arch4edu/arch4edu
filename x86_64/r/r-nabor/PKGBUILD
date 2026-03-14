@@ -4,7 +4,7 @@ _pkgname=nabor
 _pkgver=0.5.0
 pkgname=r-${_pkgname,,}
 pkgver=0.5.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Wraps 'libnabo', a Fast K Nearest Neighbour Library for Low Dimensions"
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
