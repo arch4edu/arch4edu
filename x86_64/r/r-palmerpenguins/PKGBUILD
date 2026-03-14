@@ -5,7 +5,7 @@ _pkgname=palmerpenguins
 _pkgver=0.1.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Palmer Archipelago (Antarctica) Penguin Data"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
