@@ -9,7 +9,7 @@ _pkgname=evaluate
 _pkgver=1.0.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Parsing and Evaluation Tools that Provide More Details than the Default"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
