@@ -4,7 +4,7 @@ _pkgname=neuralnet
 _pkgver=1.44.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=9
 pkgdesc="Training of Neural Networks"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
