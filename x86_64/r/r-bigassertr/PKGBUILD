@@ -4,7 +4,7 @@ _pkgname=bigassertr
 _pkgver=0.1.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Assertion and Message Functions"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
