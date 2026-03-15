@@ -1,6 +1,6 @@
 pkgname=lief
-pkgver=0.17.2
-pkgrel=2
+pkgver=0.17.5
+pkgrel=1
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
 url='https://github.com/lief-project/lief'
@@ -38,7 +38,7 @@ provides=(libLIEF.so)
 source=(
 	"lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz"
 )
-sha256sums=('bece1be25aa657b94d1c97ddf88c47e0b94faa1d971c42532c4eb59fbb507fc2')
+sha256sums=('9c15587967d92767573c829a8b5cfe0cd9732db0c07ae78d47dd5baa44f9ab6e')
 
 prepare() {
   cd "LIEF-$pkgver"
