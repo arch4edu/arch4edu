@@ -3,7 +3,7 @@ _pkgname=qiskit-aer
 pkgname=python-$_pkgname
 pkgver=0.17.2
 pkgver_nlohmann_json=3.10.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=(x86_64)
 url="https://github.com/Qiskit/qiskit-aer"
@@ -88,10 +88,8 @@ check() {
     rm -rf qiskit_aer
     # Tests that crash Python:
     # - test_mps_options
-    # - test_pauli_noise_with_shot_branching
-    # See: https://github.com/Qiskit/qiskit-aer/issues/2354
     # WARNING: on modern CPUs some additional tests might fail
-    test-env/bin/python -P -m pytest -o addopts="" -v test -k "not test_mps_options and not test_pauli_noise_with_shot_branching"
+    test-env/bin/python -P -m pytest -o addopts="" -v test -k "not test_mps_options"
 }
 
 package() {
