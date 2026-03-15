@@ -2,7 +2,6 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/dlib
   - x86_64/fbx-sdk
   - x86_64/mpir
 makedepends:
