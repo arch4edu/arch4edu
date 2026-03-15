@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # Remove leading "##" from exclusion placeholders
+  sed -i 's/^##//' PKGBUILD
+post_build: aur-post-build
+
+depends_ros2-humble-diagnostic-aggregator:
+  - x86_64/ros2/ros2-humble
+depends_ros2-humble-diagnostic-common-diagnostics:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-diagnostic-updater
+  - any/python-ntplib
+depends_ros2-humble-diagnostic-remote-logging:
+  - x86_64/ros2/ros2-humble
+depends_ros2-humble-self-test:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-diagnostic-updater
+depends_ros2-humble-diagnostics:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-diagnostic-updater
+  - x86_64/ros2/ros2-humble-diagnostic-aggregator
+  - x86_64/ros2/ros2-humble-diagnostic-common-diagnostics
+  - x86_64/ros2/ros2-humble-self-test
