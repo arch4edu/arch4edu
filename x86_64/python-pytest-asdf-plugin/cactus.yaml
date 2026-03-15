@@ -1,5 +1,6 @@
 nvchecker:
   - source: aur
+    aur:
 depends:
   - x86_64/python-asdf
 build_prefix: extra-x86_64
