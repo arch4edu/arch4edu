@@ -4,7 +4,7 @@ _pkgname=inum
 _pkgver=1.0-5
 pkgname=r-${_pkgname,,}
 pkgver=1.0.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Interval and Enum-Type Representation of Vectors'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
