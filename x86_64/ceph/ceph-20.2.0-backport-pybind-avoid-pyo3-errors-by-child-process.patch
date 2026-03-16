@@ -1,0 +1,978 @@
+commit 1de26f643ada5fd58e158c4b28a7c610b872c22b
+Author: Paul Stemmet <aur@luxolus.com>
+Date:   Thu Oct 2 22:38:46 2025 +0000
+
+    mgr:python: avoid pyo3 errors by running certain cryptographic functions in a child process
+    
+    This is a backport of ceph/ceph#62951, rebased onto v19.2.3.
+    All credit for this work goes to @phlogistonjohn.
+    
+    Upstream-ref: https://github.com/ceph/ceph/commit/7094a5a44d90e705141dbae9739e6c0835bf7ce3
+    References: https://github.com/ceph/ceph/pull/62951
+
+diff --git a/src/pybind/mgr/cephadm/module.py b/src/pybind/mgr/cephadm/module.py
+index a8b71a1081e..9ab23cbc59b 100644
+--- a/src/pybind/mgr/cephadm/module.py
++++ b/src/pybind/mgr/cephadm/module.py
+@@ -35,6 +35,7 @@ from ceph.deployment.service_spec import \
+     HostPlacementSpec, IngressSpec, \
+     TunedProfileSpec, IscsiServiceSpec
+ from ceph.utils import str_to_datetime, datetime_to_str, datetime_now
++from ceph.cryptotools.select import choose_crypto_caller
+ from cephadm.serve import CephadmServe
+ from cephadm.services.cephadmservice import CephadmDaemonDeploySpec
+ from cephadm.http_server import CephadmHttpServer
+@@ -545,6 +546,10 @@ class CephadmOrchestrator(orchestrator.Orchestrator, MgrModule,
+         super(CephadmOrchestrator, self).__init__(*args, **kwargs)
+         self._cluster_fsid: str = self.get('mon_map')['fsid']
+         self.last_monmap: Optional[datetime.datetime] = None
++        # cephadm module always needs access to the real cryptography module
++        # for asyncssh. It is always permitted to use the internal
++        # cryptocaller.
++        choose_crypto_caller('internal')
+ 
+         # for serve()
+         self.run = True
+diff --git a/src/pybind/mgr/cephadm/tests/test_cephadm.py b/src/pybind/mgr/cephadm/tests/test_cephadm.py
+index e38d8f9c10b..22e2936200c 100644
+--- a/src/pybind/mgr/cephadm/tests/test_cephadm.py
++++ b/src/pybind/mgr/cephadm/tests/test_cephadm.py
+@@ -2099,12 +2099,10 @@ class TestCephadm(object):
+             ), CephadmOrchestrator.apply_container),
+         ]
+     )
+-    @mock.patch("subprocess.run", None)
+     @mock.patch("cephadm.serve.CephadmServe._run_cephadm", _run_cephadm('{}'))
+     @mock.patch("cephadm.services.nfs.NFSService.run_grace_tool", mock.MagicMock())
+     @mock.patch("cephadm.services.nfs.NFSService.create_rados_config_obj", mock.MagicMock())
+     @mock.patch("cephadm.services.nfs.NFSService.purge", mock.MagicMock())
+-    @mock.patch("subprocess.run", mock.MagicMock())
+     def test_apply_save(self, spec: ServiceSpec, meth, cephadm_module: CephadmOrchestrator):
+         with with_host(cephadm_module, 'test'):
+             with with_service(cephadm_module, spec, meth, 'test'):
+diff --git a/src/pybind/mgr/dashboard/module.py b/src/pybind/mgr/dashboard/module.py
+index 677d88fb678..f7676c702aa 100644
+--- a/src/pybind/mgr/dashboard/module.py
++++ b/src/pybind/mgr/dashboard/module.py
+@@ -21,6 +21,7 @@ if TYPE_CHECKING:
+     else:
+         from typing_extensions import Literal
+ 
++from ceph.cryptotools.select import choose_crypto_caller
+ from mgr_module import CLIReadCommand, CLIWriteCommand, HandleCommandResult, \
+     MgrModule, MgrStandbyModule, NotifyType, Option, _get_localized_key
+ from mgr_util import ServerConfigException, build_url, \
+@@ -335,6 +336,7 @@ class Module(MgrModule, CherryPyConfig):
+                min=400, max=599),
+         Option(name='redirect_resolve_ip_addr', type='bool', default=False),
+         Option(name='cross_origin_url', type='str', default=''),
++        Option(name='crypto_caller', type='str', default=''),
+     ]
+     MODULE_OPTIONS.extend(options_schema_list())
+     for options in PLUGIN_MANAGER.hook.get_options() or []:
+@@ -348,6 +350,9 @@ class Module(MgrModule, CherryPyConfig):
+     def __init__(self, *args, **kwargs):
+         super(Module, self).__init__(*args, **kwargs)
+         CherryPyConfig.__init__(self)
++        # configure the dashboard's crypto caller. by default it will
++        # use the remote caller to avoid pyo3 conflicts
++        choose_crypto_caller(str(self.get_module_option('crypto_caller', '')))
+ 
+         mgr.init(self)
+ 
+@@ -565,6 +570,9 @@ class StandbyModule(MgrStandbyModule, CherryPyConfig):
+         super(StandbyModule, self).__init__(*args, **kwargs)
+         CherryPyConfig.__init__(self)
+         self.shutdown_event = threading.Event()
++        # configure the dashboard's crypto caller. by default it will
++        # use the remote caller to avoid pyo3 conflicts
++        choose_crypto_caller(str(self.get_module_option('crypto_caller', '')))
+ 
+         # We can set the global mgr instance to ourselves even though
+         # we're just a standby, because it's enough for logging.
+diff --git a/src/pybind/mgr/dashboard/services/access_control.py b/src/pybind/mgr/dashboard/services/access_control.py
+index 01d0557740b..89a7de5fbe4 100644
+--- a/src/pybind/mgr/dashboard/services/access_control.py
++++ b/src/pybind/mgr/dashboard/services/access_control.py
+@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
+ from string import ascii_lowercase, ascii_uppercase, digits, punctuation
+ from typing import List, Optional, Sequence
+ 
+-import bcrypt
++from ceph.cryptotools.select import get_crypto_caller
+ from mgr_module import CLICheckNonemptyFileInput, CLIReadCommand, CLIWriteCommand
+ from mgr_util import password_hash
+ 
+@@ -890,7 +890,10 @@ def ac_user_set_password_hash(_, username: str, inbuf: str):
+     hashed_password = inbuf
+     try:
+         # make sure the hashed_password is actually a bcrypt hash
+-        bcrypt.checkpw(b'', hashed_password.encode('utf-8'))
++        # catch a ValueError if hashed_password is not valid.
++        cc = get_crypto_caller()
++        cc.verify_password('', hashed_password)
++
+         user = mgr.ACCESS_CTRL_DB.get_user(username)
+         user.set_password_hash(hashed_password)
+ 
+diff --git a/src/pybind/mgr/mgr_util.py b/src/pybind/mgr/mgr_util.py
+index 8d71dd69128..9f0e9b398e3 100644
+--- a/src/pybind/mgr/mgr_util.py
++++ b/src/pybind/mgr/mgr_util.py
+@@ -3,7 +3,6 @@ import os
+ if 'UNITTEST' in os.environ:
+     import tests
+ 
+-import bcrypt
+ import cephfs
+ import contextlib
+ import datetime
+@@ -25,6 +24,7 @@ else:
+ from typing import Tuple, Any, Callable, Optional, Dict, TYPE_CHECKING, TypeVar, List, Iterable, Generator, Generic, Iterator
+ 
+ from ceph.deployment.utils import wrap_ipv6
++from ceph.cryptotools.select import get_crypto_caller
+ 
+ T = TypeVar('T')
+ 
+@@ -531,20 +531,9 @@ def create_self_signed_cert(organisation: str = 'Ceph',
+ 
+     """
+ 
+-    from OpenSSL import crypto
+-    from uuid import uuid4
+-
+     # RDN = Relative Distinguished Name
+     valid_RDN_list = ['C', 'ST', 'L', 'O', 'OU', 'CN', 'emailAddress']
+ 
+-    # create a key pair
+-    pkey = crypto.PKey()
+-    pkey.generate_key(crypto.TYPE_RSA, 2048)
+-
+-    # Create a "subject" object
+-    req = crypto.X509Req()
+-    subj = req.get_subject()
+-
+     if dname:
+         # dname received, so check it contains valid RDNs
+         if not all(field in valid_RDN_list for field in dname):
+@@ -552,43 +541,18 @@ def create_self_signed_cert(organisation: str = 'Ceph',
+     else:
+         dname = {"O": organisation, "CN": common_name}
+ 
+-    # populate the subject with the dname settings
+-    for k, v in dname.items():
+-        setattr(subj, k, v)
+-
+-    # create a self-signed cert
+-    cert = crypto.X509()
+-    cert.set_subject(req.get_subject())
+-    cert.set_serial_number(int(uuid4()))
+-    cert.gmtime_adj_notBefore(0)
+-    cert.gmtime_adj_notAfter(10 * 365 * 24 * 60 * 60)  # 10 years
+-    cert.set_issuer(cert.get_subject())
+-    cert.set_pubkey(pkey)
+-    cert.sign(pkey, 'sha512')
++    cc = get_crypto_caller()
++    pkey = cc.create_private_key()
++    cert = cc.create_self_signed_cert(dname, pkey)
++    return cert, pkey
+ 
+-    cert = crypto.dump_certificate(crypto.FILETYPE_PEM, cert)
+-    pkey = crypto.dump_privatekey(crypto.FILETYPE_PEM, pkey)
+ 
+-    return cert.decode('utf-8'), pkey.decode('utf-8')
+-
+-
+-def verify_cacrt_content(crt):
+-    # type: (str) -> None
+-    from OpenSSL import crypto
++def certificate_days_to_expire(crt: str) -> int:
+     try:
+-        crt_buffer = crt.encode("ascii") if isinstance(crt, str) else crt
+-        x509 = crypto.load_certificate(crypto.FILETYPE_PEM, crt_buffer)
+-        if x509.has_expired():
+-            org, cn = get_cert_issuer_info(crt)
+-            no_after = x509.get_notAfter()
+-            end_date = None
+-            if no_after is not None:
+-                end_date = datetime.datetime.strptime(no_after.decode('ascii'), '%Y%m%d%H%M%SZ')
+-            msg = f'Certificate issued by "{org}/{cn}" expired on {end_date}'
+-            logger.warning(msg)
+-            raise ServerConfigException(msg)
+-    except (ValueError, crypto.Error) as e:
+-        raise ServerConfigException(f'Invalid certificate: {e}')
++        cc = get_crypto_caller()
++        return cc.certificate_days_to_expire(crt)
++    except ValueError as err:
++        raise ServerConfigException(f'Invalid certificate: {err}')
+ 
+ 
+ def verify_cacrt(cert_fname):
+@@ -602,58 +566,28 @@ def verify_cacrt(cert_fname):
+ 
+     try:
+         with open(cert_fname) as f:
+-            verify_cacrt_content(f.read())
++            certificate_days_to_expire(f.read())
+     except ValueError as e:
+         raise ServerConfigException(
+             'Invalid certificate {}: {}'.format(cert_fname, str(e)))
+ 
+ def get_cert_issuer_info(crt: str) -> Tuple[Optional[str],Optional[str]]:
+     """Basic validation of a ca cert"""
+-
+-    from OpenSSL import crypto, SSL
++    cc = get_crypto_caller()
+     try:
+-        crt_buffer = crt.encode("ascii") if isinstance(crt, str) else crt
+-        (org_name, cn) = (None, None)
+-        cert = crypto.load_certificate(crypto.FILETYPE_PEM, crt_buffer)
+-        components = cert.get_issuer().get_components()
+-        for c in components:
+-            if c[0].decode() == 'O':  # org comp
+-                org_name = c[1].decode()
+-            elif c[0].decode() == 'CN':  # common name comp
+-                cn = c[1].decode()
+-        return (org_name, cn)
+-    except (ValueError, crypto.Error) as e:
+-        raise ServerConfigException(f'Invalid certificate key: {e}')
++        return cc.get_cert_issuer_info(crt)
++    except ValueError as err:
++        raise ServerConfigException(f'Invalid certificate key: {err}')
+ 
+ def verify_tls(crt, key):
+-    # type: (str, str) -> None
+-    verify_cacrt_content(crt)
+-
+-    from OpenSSL import crypto, SSL
++    # type: (str, str) -> int
++    cc = get_crypto_caller()
+     try:
+-        _key = crypto.load_privatekey(crypto.FILETYPE_PEM, key)
+-        _key.check()
+-    except (ValueError, crypto.Error) as e:
+-        raise ServerConfigException(
+-            'Invalid private key: {}'.format(str(e)))
+-    try:
+-        crt_buffer = crt.encode("ascii") if isinstance(crt, str) else crt
+-        _crt = crypto.load_certificate(crypto.FILETYPE_PEM, crt_buffer)
+-    except ValueError as e:
+-        raise ServerConfigException(
+-            'Invalid certificate key: {}'.format(str(e))
+-        )
+-
+-    try:
+-        context = SSL.Context(SSL.TLSv1_METHOD)
+-        context.use_certificate(_crt)
+-        context.use_privatekey(_key)
+-        context.check_privatekey()
+-    except crypto.Error as e:
+-        logger.warning('Private key and certificate do not match up: {}'.format(str(e)))
+-    except SSL.Error as e:
+-        raise ServerConfigException(f'Invalid cert/key pair: {e}')
+-
++        days_to_expiration = cc.certificate_days_to_expire(crt)
++        cc.verify_tls(crt, key)
++    except ValueError as err:
++        raise ServerConfigException(str(err))
++    return days_to_expiration
+ 
+ 
+ def verify_tls_files(cert_fname, pkey_fname):
+@@ -681,24 +615,14 @@ def verify_tls_files(cert_fname, pkey_fname):
+     if not os.path.isfile(pkey_fname):
+         raise ServerConfigException('private key %s does not exist' % pkey_fname)
+ 
+-    from OpenSSL import crypto, SSL
++    if not os.path.isfile(cert_fname):
++        raise ServerConfigException('certificate %s does not exist' % cert_fname)
+ 
+     try:
+-        with open(pkey_fname) as f:
+-            pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, f.read())
+-            pkey.check()
+-    except (ValueError, crypto.Error) as e:
+-        raise ServerConfigException(
+-            'Invalid private key {}: {}'.format(pkey_fname, str(e)))
+-    try:
+-        context = SSL.Context(SSL.TLSv1_METHOD)
+-        context.use_certificate_file(cert_fname, crypto.FILETYPE_PEM)
+-        context.use_privatekey_file(pkey_fname, crypto.FILETYPE_PEM)
+-        context.check_privatekey()
+-    except crypto.Error as e:
+-        logger.warning(
+-            'Private key {} and certificate {} do not match up: {}'.format(
+-                pkey_fname, cert_fname, str(e)))
++        with open(pkey_fname) as key_file, open(cert_fname) as cert_file:
++            verify_tls(cert_file.read(), key_file.read())
++    except (ServerConfigException) as e:
++        raise ServerConfigException({e})
+ 
+ 
+ def get_most_recent_rate(rates: Optional[List[Tuple[float, float]]]) -> float:
+@@ -876,11 +800,30 @@ def profile_method(skip_attribute: bool = False) -> Callable[[Callable[..., T]],
+     return outer
+ 
+ 
++def parse_combined_pem_file(pem_data: str) -> Tuple[Optional[str], Optional[str]]:
++
++    # Extract the certificate
++    cert_start = "-----BEGIN CERTIFICATE-----"
++    cert_end = "-----END CERTIFICATE-----"
++    cert = None
++    if cert_start in pem_data and cert_end in pem_data:
++        cert = pem_data[pem_data.index(cert_start):pem_data.index(cert_end) + len(cert_end)]
++
++    # Extract the private key
++    key_start = "-----BEGIN PRIVATE KEY-----"
++    key_end = "-----END PRIVATE KEY-----"
++    private_key = None
++    if key_start in pem_data and key_end in pem_data:
++        private_key = pem_data[pem_data.index(key_start):pem_data.index(key_end) + len(key_end)]
++
++    return cert, private_key
++
++
+ def password_hash(password: Optional[str], salt_password: Optional[str] = None) -> Optional[str]:
+     if not password:
+         return None
+     if not salt_password:
+-        salt = bcrypt.gensalt()
+-    else:
+-        salt = salt_password.encode('utf8')
+-    return bcrypt.hashpw(password.encode('utf8'), salt).decode('utf8')
++        salt_password = ''
++
++    cc = get_crypto_caller()
++    return cc.password_hash(password, salt_password)
+diff --git a/src/pybind/mgr/tests/test_tls.py b/src/pybind/mgr/tests/test_tls.py
+index 19ce46a93fd..bf006919e0c 100644
+--- a/src/pybind/mgr/tests/test_tls.py
++++ b/src/pybind/mgr/tests/test_tls.py
+@@ -1,4 +1,4 @@
+-from mgr_util import create_self_signed_cert, verify_tls, ServerConfigException, get_cert_issuer_info
++from mgr_util import create_self_signed_cert, verify_tls, ServerConfigException, get_cert_issuer_info, certificate_days_to_expire
+ from OpenSSL import crypto, SSL
+ 
+ import unittest
+@@ -10,6 +10,9 @@ valid_ceph_cert = """-----BEGIN CERTIFICATE-----\nMIICxjCCAa4CEQCpHIQuSYhCII1J0S
+ invalid_cert = """-----BEGIN CERTIFICATE-----\nMIICxjCCAa4CEQCpHIQuSYhCII1J0SVGYnT1MA0GCSqGSIb3DQEBDQUAMCExDTAL\nBgNVBAoMBENlcGgxEDAOBgNVBAMMB2NlcGhhZG0wHhcNMjIwNzA2MTE1MjUyWhcN\nMzIwNzAzMTE1MjUyWjAhMQ0wCwYDVQQKDARDZXBoMRAwDgYDVQQDDAdjZXBoYWRt\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEBn2ApFna2CVYE7RDtjJVk\ncJTcJQrjzDOlCoZtxb1QMCQZMXjx/7d6bseQP+dkkeA0hZxnjJZWeu6c/YnQ1JiT\n2aDuDpWoJAaiinHRJyZuY5tqG+ggn95RdToZVbeC+0uALzYi4UFacC3sfpkyIKBR\nic43+2fQNz0PZ+8INSTtm75Y53gbWuGF7Dv95200AmAN2/u8LKWZIvdhbRborxOF\nlK2T40qbj9eH3ewIN/6Eibxrvg4va3pIoOaq0XdJHAL/MjDGJAtahPIenwcjuega\n4PSlB0h3qiyFXz7BG8P0QsPP6slyD58ZJtCGtJiWPOhlq47DlnWlJzRGDEFLLryf\n8wIDAQABMA0GCSqGSIb3DQEBDQUAA4IBAQBixd7RZawlYiTZaCmv3Vy7X/hhabac\nE/YiuFt1YMe0C9+D8IcCQN/IRww/Bi7Af6tm+ncHT9GsOGWX6hahXDKTw3b9nSDi\nETvjkUTYOayZGfhYpRA6m6e/2ypcUYsiXRDY9zneDKCdPREIA1D6L2fROHetFX9r\nX9rSry01xrYwNlYA1e6GLMXm2NaGsLT3JJlRBtT3P7f1jtRGXcwkc7ns0AtW0uNj\nGqRLHfJazdgWJFsj8vBdMs7Ci0C/b5/f7J/DLpPCvUA3Fqwn9MzHl01UwlDsKy1a\nROi4cfQNOLbWX8g3PfIlqtdGYNA77UPxvy1SUimmtdopZa\n-----END CERTIFICATE-----\n
+ """
+ 
++expired_cert = """-----BEGIN CERTIFICATE-----\nMIICtjCCAZ4CAQAwDQYJKoZIhvcNAQENBQAwITEQMA4GA1UEAwwHY2VwaGFkbTEN\nMAsGA1UECgwEQ2VwaDAeFw0xNTAyMTYxOTQ4MTdaFw0yMDAyMTUxOTQ4MTdaMCEx\nEDAOBgNVBAMMB2NlcGhhZG0xDTALBgNVBAoMBENlcGgwggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQCxYHJ6RlPeuhZJyAMR1ru01BEGbwhI7vMga8pwyTX8\nNn1ow2asbj7lad+jO5j5Gon8GFwsrKM0S8vmITxd5QkshnHPQRQF8hz4aieNOQiL\nnVRBTHgLihEBJCpyuTmHLn1G374ZObuFqyHcnIrKNdeKb0JxNKbx26/2NrWwFGAe\nAj5KuizMHJMZYVLfYelP4g2hSRPe2JJWI4429LeLWuBQBL9t/IPY0IlmFDP4eL+S\nB2Py8Ig2XY5oyaaxpwI8H/cAY92lsoHPI3ldDn1JEiH5Gwzxf+9fF29cesp8BYcm\naav1jT8ONvsfn7AxKDKcfZIpRNKlOqFIC03gG5R3O1iHAgMBAAEwDQYJKoZIhvcN\nAQENBQADggEBADh9bAMR7RIK3M3u6LoTQQrcoxJ0pEXBrFQGQk2uz2krlDTKRS+2\nubwD8bLNd3dl5RzvVJ1hui8y9JMnqYwgMrjR9B0EDUM/ihYU2zO3ZN9nhhnTN2qT\n+UtFtyilg3U4nQdWGw2jFPu08JPoF/g+7iBH+/o5WOfzOovjLg4BsVlKUP4ND8Dv\nXr8gxZTlaoZvZlhMCdhiT2aKstCA9R3RYBbEo/FtcsHOkO0EFuxCLiVd/eo3F56C\njfVWnvqyz3r2f1G1VafvhhdlMJ4p35Hw1ms6nFTLx5dKwJW+Xve+qBU3Q5I5iV02\nAIXXBaqId/YqKXZd+Ge/XBmluXH929PtUOk=\n-----END CERTIFICATE-----\n
++"""
++
+ class TLSchecks(unittest.TestCase):
+ 
+     def test_defaults(self):
+@@ -28,7 +31,7 @@ class TLSchecks(unittest.TestCase):
+         crt, key = create_self_signed_cert()
+ 
+         # fudge the key, to force an error to be detected during verify_tls
+-        fudged = f"{key[:-35]}c0ffee==\n{key[-25:]}".encode('utf-8')
++        fudged = f"{key[:-35]}c0ffee==\n{key[-25:]}"
+         self.assertRaises(ServerConfigException, verify_tls, crt, fudged)
+ 
+     def test_mismatched_tls(self):
+@@ -38,7 +41,6 @@ class TLSchecks(unittest.TestCase):
+         new_key = crypto.PKey()
+         new_key.generate_key(crypto.TYPE_RSA, 2048)
+         new_key = crypto.dump_privatekey(crypto.FILETYPE_PEM, new_key).decode('utf-8')
+-
+         self.assertRaises(ServerConfigException, verify_tls, crt, new_key)
+ 
+     def test_get_cert_issuer_info(self):
+@@ -53,3 +55,8 @@ class TLSchecks(unittest.TestCase):
+ 
+         # invalid certificate
+         self.assertRaises(ServerConfigException, get_cert_issuer_info, invalid_cert)
++
++        # expired certificate
++        self.assertRaisesRegex(ServerConfigException,
++                               'Certificate issued by "Ceph/cephadm" expired',
++                               certificate_days_to_expire, expired_cert)
+diff --git a/src/python-common/ceph/cryptotools/__init__.py b/src/python-common/ceph/cryptotools/__init__.py
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/src/python-common/ceph/cryptotools/caller.py b/src/python-common/ceph/cryptotools/caller.py
+new file mode 100644
+index 00000000000..42147e5573b
+--- /dev/null
++++ b/src/python-common/ceph/cryptotools/caller.py
+@@ -0,0 +1,48 @@
++from typing import Dict, Tuple
++
++import abc
++
++
++class CryptoCallError(ValueError):
++    pass
++
++
++class CryptoCaller(abc.ABC):
++    """Abstract base class for `CryptoCaller`s - an interface that
++    encapsulates basic password and TLS cert related functions
++    needed by the Ceph MGR.
++    """
++
++    @abc.abstractmethod
++    def create_private_key(self) -> str:
++        """Create a new TLS private key, returning it as a string."""
++
++    @abc.abstractmethod
++    def create_self_signed_cert(
++        self, dname: Dict[str, str], pkey: str
++    ) -> str:
++        """Given TLS certificate subject parameters and a private key,
++        create a new self signed certificate - returned as a string.
++        """
++
++    @abc.abstractmethod
++    def verify_tls(self, crt: str, key: str) -> None:
++        """Given a TLS certificate and a private key raise an error
++        if the combination is not valid.
++        """
++
++    @abc.abstractmethod
++    def certificate_days_to_expire(self, crt: str) -> int:
++        """Return the number of days until the given TLS certificate expires."""
++
++    @abc.abstractmethod
++    def get_cert_issuer_info(self, crt: str) -> Tuple[str, str]:
++        """Basic validation of a ca cert"""
++
++    @abc.abstractmethod
++    def password_hash(self, password: str, salt_password: str) -> str:
++        """Hash a password. Returns the hashed password as a string."""
++
++    @abc.abstractmethod
++    def verify_password(self, password: str, hashed_password: str) -> bool:
++        """Return true if a password and hash match."""
+diff --git a/src/python-common/ceph/cryptotools/cryptotools.py b/src/python-common/ceph/cryptotools/cryptotools.py
+new file mode 100644
+index 00000000000..4aae0d8c933
+--- /dev/null
++++ b/src/python-common/ceph/cryptotools/cryptotools.py
+@@ -0,0 +1,135 @@
++"""
++This file has been isolated into a module so that it can be run
++in a subprocess therefore sidestepping the
++`PyO3 modules may only be initialized once per interpreter process` problem.
++"""
++
++from typing import Any, Dict
++
++import argparse
++import json
++import sys
++
++from argparse import Namespace
++
++from .internal import InternalCryptoCaller, InternalError
++
++
++def _read() -> str:
++    return sys.stdin.read()
++
++
++def _load() -> Dict[str, Any]:
++    return json.loads(_read())
++
++
++def _respond(data: Dict[str, Any]) -> None:
++    json.dump(data, sys.stdout)
++
++
++def _write(content: str) -> None:
++    sys.stdout.write(content)
++    sys.stdout.flush()
++
++
++def _fail(msg: str, code: int = 0) -> Any:
++    json.dump({'error': msg}, sys.stdout)
++    sys.exit(code)
++
++
++def password_hash(args: Namespace) -> None:
++    data = _load()
++    password = data['password']
++    salt_password = data['salt_password']
++    hash_str = args.crypto.password_hash(password, salt_password)
++    _respond({'hash': hash_str})
++
++
++def verify_password(args: Namespace) -> None:
++    data = _load()
++    password = data.get('password', '')
++    hashed_password = data.get('hashed_password', '')
++    try:
++        ok = args.crypto.verify_password(password, hashed_password)
++    except ValueError as err:
++        _fail(str(err))
++    _respond({'ok': ok})
++
++
++def create_private_key(args: Namespace) -> None:
++    _write(args.crypto.create_private_key())
++
++
++def create_self_signed_cert(args: Namespace) -> None:
++    data = _load()
++    dname = data['dname']
++    private_key = data['private_key']
++    _write(args.crypto.create_self_signed_cert(dname, private_key))
++
++
++def certificate_days_to_expire(args: Namespace) -> None:
++    crt = _read()
++    try:
++        days_until_exp = args.crypto.certificate_days_to_expire(crt)
++    except InternalError as err:
++        _fail(str(err))
++    _respond({'days_until_expiration': days_until_exp})
++
++
++def get_cert_issuer_info(args: Namespace) -> None:
++    crt = _read()
++    org_name, cn = args.crypto.get_cert_issuer_info(crt)
++    _respond({'org_name': org_name, 'cn': cn})
++
++
++def verify_tls(args: Namespace) -> None:
++    data = _load()
++    crt = data['crt']
++    key = data['key']
++    try:
++        args.crypto.verify_tls(crt, key)
++    except ValueError as err:
++        _fail(str(err))
++    _respond({'ok': True})  # need to emit something on success
++
++
++def main() -> None:
++    # create the top-level parser
++    parser = argparse.ArgumentParser(prog='cryptotools.py')
++    parser.set_defaults(crypto=InternalCryptoCaller())
++    subparsers = parser.add_subparsers(required=True)
++
++    # create the parser for the "password_hash" command
++    parser_password_hash = subparsers.add_parser('password_hash')
++    parser_password_hash.set_defaults(func=password_hash)
++
++    # create the parser for the "create_self_signed_cert" command
++    parser_cssc = subparsers.add_parser('create_self_signed_cert')
++    parser_cssc.set_defaults(func=create_self_signed_cert)
++
++    parser_cpk = subparsers.add_parser('create_private_key')
++    parser_cpk.set_defaults(func=create_private_key)
++
++    # create the parser for the "certificate_days_to_expire" command
++    parser_dte = subparsers.add_parser('certificate_days_to_expire')
++    parser_dte.set_defaults(func=certificate_days_to_expire)
++
++    # create the parser for the "get_cert_issuer_info" command
++    parser_gcii = subparsers.add_parser('get_cert_issuer_info')
++    parser_gcii.set_defaults(func=get_cert_issuer_info)
++
++    # create the parser for the "verify_tls" command
++    parser_verify_tls = subparsers.add_parser('verify_tls')
++    parser_verify_tls.set_defaults(func=verify_tls)
++
++    # password verification
++    parser_verify_password = subparsers.add_parser('verify_password')
++    parser_verify_password.set_defaults(func=verify_password)
++
++    # parse the args and call whatever function was selected
++    args = parser.parse_args()
++    args.func(args)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/src/python-common/ceph/cryptotools/internal.py b/src/python-common/ceph/cryptotools/internal.py
+new file mode 100644
+index 00000000000..7d6e0a487ec
+--- /dev/null
++++ b/src/python-common/ceph/cryptotools/internal.py
+@@ -0,0 +1,134 @@
++"""Internal execution of cryptographic functions for the ceph mgr
++"""
++
++from typing import Dict, Any, Tuple, Union
++
++from uuid import uuid4
++import datetime
++import warnings
++
++from OpenSSL import crypto, SSL
++import bcrypt
++
++
++from .caller import CryptoCaller, CryptoCallError
++
++
++class InternalError(CryptoCallError):
++    pass
++
++
++class InternalCryptoCaller(CryptoCaller):
++    def fail(self, msg: str) -> None:
++        raise InternalError(msg)
++
++    def password_hash(self, password: str, salt_password: str) -> str:
++        salt = salt_password.encode() if salt_password else bcrypt.gensalt()
++        return bcrypt.hashpw(password.encode(), salt).decode()
++
++    def verify_password(self, password: str, hashed_password: str) -> bool:
++        _password = password.encode()
++        _hashed_password = hashed_password.encode()
++        try:
++            ok = bcrypt.checkpw(_password, _hashed_password)
++        except ValueError as err:
++            self.fail(str(err))
++        return ok
++
++    def create_private_key(self) -> str:
++        pkey = crypto.PKey()
++        pkey.generate_key(crypto.TYPE_RSA, 2048)
++        return crypto.dump_privatekey(crypto.FILETYPE_PEM, pkey).decode()
++
++    def create_self_signed_cert(
++        self, dname: Dict[str, str], pkey: str
++    ) -> str:
++        _pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, pkey)
++
++        # Create a "subject" object
++        with warnings.catch_warnings():
++            warnings.simplefilter("ignore")
++            req = crypto.X509Req()
++        subj = req.get_subject()
++
++        # populate the subject with the dname settings
++        for k, v in dname.items():
++            setattr(subj, k, v)
++
++        # create a self-signed cert
++        cert = crypto.X509()
++        cert.set_subject(req.get_subject())
++        cert.set_serial_number(int(uuid4()))
++        cert.gmtime_adj_notBefore(0)
++        cert.gmtime_adj_notAfter(10 * 365 * 24 * 60 * 60)  # 10 years
++        cert.set_issuer(cert.get_subject())
++        cert.set_pubkey(_pkey)
++        cert.sign(_pkey, 'sha512')
++        return crypto.dump_certificate(crypto.FILETYPE_PEM, cert).decode()
++
++    def _load_cert(self, crt: Union[str, bytes]) -> Any:
++        crt_buffer = crt.encode() if isinstance(crt, str) else crt
++        try:
++            cert = crypto.load_certificate(crypto.FILETYPE_PEM, crt_buffer)
++        except (ValueError, crypto.Error) as e:
++            self.fail('Invalid certificate: %s' % str(e))
++        return cert
++
++    def _issuer_info(self, cert: Any) -> Tuple[str, str]:
++        components = cert.get_issuer().get_components()
++        org_name = cn = ''
++        for c in components:
++            if c[0].decode() == 'O':  # org comp
++                org_name = c[1].decode()
++            elif c[0].decode() == 'CN':  # common name comp
++                cn = c[1].decode()
++        return (org_name, cn)
++
++    def certificate_days_to_expire(self, crt: str) -> int:
++        x509 = self._load_cert(crt)
++        no_after = x509.get_notAfter()
++        if not no_after:
++            self.fail("Certificate does not have an expiration date.")
++
++        end_date = datetime.datetime.strptime(
++            no_after.decode(), '%Y%m%d%H%M%SZ'
++        )
++
++        if x509.has_expired():
++            org, cn = self._issuer_info(x509)
++            msg = 'Certificate issued by "%s/%s" expired on %s' % (
++                org,
++                cn,
++                end_date,
++            )
++            self.fail(msg)
++
++        # Certificate still valid, calculate and return days until expiration
++        with warnings.catch_warnings():
++            warnings.simplefilter("ignore")
++            days_until_exp = (end_date - datetime.datetime.utcnow()).days
++        return int(days_until_exp)
++
++    def get_cert_issuer_info(self, crt: str) -> Tuple[str, str]:
++        return self._issuer_info(self._load_cert(crt))
++
++    def verify_tls(self, crt: str, key: str) -> None:
++        try:
++            _key = crypto.load_privatekey(crypto.FILETYPE_PEM, key)
++            _key.check()
++        except (ValueError, crypto.Error) as e:
++            self.fail('Invalid private key: %s' % str(e))
++        _crt = self._load_cert(crt)
++        try:
++            context = SSL.Context(SSL.TLSv1_METHOD)
++            with warnings.catch_warnings():
++                warnings.simplefilter("ignore")
++                context.use_certificate(_crt)
++                context.use_privatekey(_key)
++            context.check_privatekey()
++        except crypto.Error as e:
++            self.fail(
++                'Private key and certificate do not match up: %s' % str(e)
++            )
++        except SSL.Error as e:
++            self.fail(f'Invalid cert/key pair: {e}')
+diff --git a/src/python-common/ceph/cryptotools/remote.py b/src/python-common/ceph/cryptotools/remote.py
+new file mode 100644
+index 00000000000..2574b4ecdac
+--- /dev/null
++++ b/src/python-common/ceph/cryptotools/remote.py
+@@ -0,0 +1,183 @@
++"""Remote execution of cryptographic functions for the ceph mgr
++"""
++
++# NB. This module exists to enapsulate the logic around running
++# the cryptotools module that are forked off of the parent process
++# to avoid the pyo3 subintepreters problem.
++#
++# The current implementation is simple using the command line and either raw
++# blobs or JSON as stdin inputs and raw blobs or JSON as outputs. It is important
++# that we avoid putting the sensitive data on the command line as that
++# is visible in /proc.
++#
++# This simple implementation incurs the cost of starting a python process
++# for every function call. CryptoCaller is written as a class so that if
++# we choose to we can have multiple implementations of the CryptoCaller
++# sharing the same protocol.
++# For instance we could have a persistent process listening on a unix
++# socket accepting the crypto functions as RPCs. For now, we keep it
++# simple though :-)
++
++from typing import List, Union, Dict, Any, Optional, Tuple
++
++import json
++import logging
++import subprocess
++
++from .caller import CryptoCaller, CryptoCallError
++
++
++_ctmodule = 'ceph.cryptotools.cryptotools'
++
++logger = logging.getLogger('ceph.cryptotools.remote')
++
++
++class ProcessCryptoCaller(CryptoCaller):
++    """ProcessCryptoCaller encapsulates cryptographic functions used by the
++    ceph mgr into a suite of functions that can be executed in a
++    different process.
++    Running the crypto functions in a separate process avoids conflicts
++    between the mgr's use of subintepreters and the cryptography module's
++    use of PyO3 rust bindings.
++
++    If you want to raise different error types set the json_error_cls
++    attribute and/or subclass and override the map_error method.
++    """
++
++    def __init__(
++        self, errors_from_json: bool = True, module: str = _ctmodule
++    ):
++        self._module = module
++        self.errors_from_json = errors_from_json
++        self.json_error_cls = ValueError
++
++    def _run(
++        self,
++        args: List[str],
++        input_data: Union[str, None] = None,
++        capture_output: bool = False,
++        check: bool = False,
++    ) -> subprocess.CompletedProcess:
++        if input_data is None:
++            _input = None
++        else:
++            _input = input_data.encode()
++        cmd = ['python3', '-m', _ctmodule] + list(args)
++        logger.warning('CryptoCaller will run: %r', cmd)
++        try:
++            return subprocess.run(
++                cmd, capture_output=capture_output, input=_input, check=check
++            )
++        except Exception as err:
++            mapped_err = self.map_error(err)
++            if mapped_err:
++                raise mapped_err from err
++            raise
++
++    def _result_json(self, result: subprocess.CompletedProcess) -> Any:
++        result_obj = json.loads(result.stdout)
++        if self.errors_from_json and 'error' in result_obj:
++            raise self.json_error_cls(str(result_obj['error']))
++        return result_obj
++
++    def _result_str(self, result: subprocess.CompletedProcess) -> str:
++        return result.stdout.decode()
++
++    def map_error(self, err: Exception) -> Optional[Exception]:
++        """Convert between error types raised by the subprocesses
++        running the crypto functions and what the mgr caller expects.
++        """
++        if isinstance(err, subprocess.CalledProcessError):
++            return CryptoCallError(
++                f'failed crypto call: {err.cmd}: {err.stderr}'
++            )
++        return None
++
++    def create_private_key(self) -> str:
++        """Create a new TLS private key, returning it as a string."""
++        result = self._run(
++            ['create_private_key'],
++            capture_output=True,
++            check=True,
++        )
++        return self._result_str(result).strip()
++
++    def create_self_signed_cert(
++        self, dname: Dict[str, str], pkey: str
++    ) -> str:
++        """Given TLS certificate subject parameters and a private key,
++        create a new self signed certificate - returned as a string.
++        """
++        result = self._run(
++            ['create_self_signed_cert'],
++            input_data=json.dumps({'dname': dname, 'private_key': pkey}),
++            capture_output=True,
++            check=True,
++        )
++        return self._result_str(result).strip()
++
++    def verify_tls(self, crt: str, key: str) -> None:
++        """Given a TLS certificate and a private key raise an error
++        if the combination is not valid.
++        """
++        result = self._run(
++            ['verify_tls'],
++            input_data=json.dumps({'crt': crt, 'key': key}),
++            capture_output=True,
++            check=True,
++        )
++        self._result_json(result)  # for errors only
++
++    def certificate_days_to_expire(self, crt: str) -> int:
++        """Verify a CA Certificate return the number of days until expiration."""
++        result = self._run(
++            ["certificate_days_to_expire"],
++            input_data=crt,
++            capture_output=True,
++            check=True,
++        )
++        result_obj = self._result_json(result)
++        return int(result_obj['days_until_expiration'])
++
++    def get_cert_issuer_info(self, crt: str) -> Tuple[str, str]:
++        """Basic validation of a ca cert"""
++        result = self._run(
++            ["get_cert_issuer_info"],
++            input_data=crt,
++            capture_output=True,
++            check=True,
++        )
++        result_obj = self._result_json(result)
++        org_name = str(result_obj.get('org_name', ''))
++        cn = str(result_obj.get('cn', ''))
++        return org_name, cn
++
++    def password_hash(self, password: str, salt_password: str) -> str:
++        """Hash a password. Returns the hashed password as a string."""
++        pwdata = {"password": password, "salt_password": salt_password}
++        result = self._run(
++            ["password_hash"],
++            input_data=json.dumps(pwdata),
++            capture_output=True,
++            check=True,
++        )
++        result_obj = self._result_json(result)
++        pw_hash = result_obj.get("hash")
++        if not pw_hash:
++            raise CryptoCallError('no password hash')
++        return pw_hash
++
++    def verify_password(self, password: str, hashed_password: str) -> bool:
++        """Verify a password matches the hashed password. Returns true if
++        password and hashed_password match.
++        """
++        pwdata = {"password": password, "hashed_password": hashed_password}
++        result = self._run(
++            ["verify_password"],
++            input_data=json.dumps(pwdata),
++            capture_output=True,
++            check=True,
++        )
++        result_obj = self._result_json(result)
++        ok = result_obj.get("ok", False)
++        return ok
+diff --git a/src/python-common/ceph/cryptotools/select.py b/src/python-common/ceph/cryptotools/select.py
+new file mode 100644
+index 00000000000..989382ce983
+--- /dev/null
++++ b/src/python-common/ceph/cryptotools/select.py
+@@ -0,0 +1,51 @@
++from typing import Dict
++
++import os
++
++from .caller import CryptoCaller
++
++
++_CC_ENV = 'CEPH_CRYPTOCALLER'
++_CC_KEY = 'crypto_caller'
++_CC_REMOTE = 'remote'
++_CC_INTERNAL = 'internal'
++
++_CACHE: Dict[str, CryptoCaller] = {}
++
++
++def _check_name(name: str) -> None:
++    if name and name not in (_CC_REMOTE, _CC_INTERNAL):
++        raise ValueError(f'unexpected crypto caller name: {name}')
++
++
++def choose_crypto_caller(name: str = '') -> None:
++    _check_name(name)
++    if not name:
++        name = os.environ.get(_CC_ENV, '')
++        _check_name(name)
++    if not name:
++        name = _CC_REMOTE
++
++    if name == _CC_REMOTE:
++        import ceph.cryptotools.remote
++
++        _CACHE[_CC_KEY] = ceph.cryptotools.remote.ProcessCryptoCaller()
++        return
++    if name == _CC_INTERNAL:
++        import ceph.cryptotools.internal
++
++        _CACHE[_CC_KEY] = ceph.cryptotools.internal.InternalCryptoCaller()
++        return
++    # should be unreachable
++    raise RuntimeError('failed to setup a valid crypto caller')
++
++
++def get_crypto_caller() -> CryptoCaller:
++    """Return the currently selected crypto caller object."""
++    caller = _CACHE.get(_CC_KEY)
++    if not caller:
++        choose_crypto_caller()
++        caller = _CACHE.get(_CC_KEY)
++        if caller is None:
++            raise RuntimeError('failed to select crypto caller')
++    return caller

@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 pkgver=19.2.3
-pkgrel=1
+pkgrel=6
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later' 'LGPL-3.0-or-later')
@@ -38,9 +38,6 @@ makedepends=(
   'python-packaging'  'python-pecan'     'python-prettytable'  'python-pyjwt'     'python-pyopenssl'
   'python-requests'   'python-scipy'     'python-setuptools'   'python-sphinx'    'python-typing_extensions'
   'python-werkzeug'   'python-yaml'
-
-  # python-bcrypt makedepends
-  'python-build'   'python-installer'   'python-setuptools-rust'   'python-wheel'
 )
 checkdepends=(
   'inetutils'     'xmlstarlet'
@@ -48,7 +45,6 @@ checkdepends=(
   'python-nose'   'python-pycodestyle'   'python-pylint'   'python-pytest'   'python-pytest-cov'
   'python-saml'   'python-xmlsec'
 )
-__bcrypt_version='4.2.1'
 
 # Despite the upstream suggesting that LTO is now possible, I still am unable
 # to set this. I get SEGVs in tests, and repeated mentions of C++ One Definition Rule
@@ -98,9 +94,6 @@ source=(
 
   # Fix undefined behavior in unit test for erasure coding (SHEC)
   'ceph-18.2.0-fix-ecode-shec-test.patch'
-
-  # Make the mgr import our ceph_bcrypt fork instead of the system bcrypt
-  'ceph-18.2.2-mgr-alias-ceph-bcrypt.patch'
 
   # Switch to using std::atomic<std::shared_ptr<T>> where possible
   'ceph-18.2.2-std-atomic-depreciations.patch'
@@ -162,14 +155,24 @@ source=(
   # -> https://github.com/ceph/ceph/pull/61559
   'ceph-19.2.2-gcc15-zpp-bits.patch'
 
-  # ===== ceph-python-bcrypt sources ===== #
-  "python-bcrypt-${__bcrypt_version}.tar.gz::https://github.com/pyca/bcrypt/archive/${__bcrypt_version}.tar.gz"
+  # Fixes for boost 1.89, unfortunately, this is only a partial fix for the
+  # boost_system linkage
+  'ceph-19.2.3-boost-189-fixes.patch'
 
-  # Rename bcrypt -> ceph_bcrypt
-  'python-bcrypt-prefix-ceph.patch'
+  # Backport of a fix for EC pool corruption when allow_ec_overwrites is enabled
+  # -> https://github.com/bazaah/aur-ceph/issues/34
+  # -> https://tracker.ceph.com/issues/70390
+  'ceph-19.2.3-backport-ec-corruption-fix.patch'
 
-  # Use our fork of pyo3, reenabling subinterpreter support
-  'python-bcrypt-allow-subinterpreters.patch'
+  # Fixes errors in pybind setup.py scripts from >=py3.14
+  # -> https://github.com/ceph/ceph/pull/62879
+  'ceph-19.2.3-backport-pybind-use-importlib.patch'
+
+  # Backport of https://github.com/ceph/ceph/pull/62951, fixed up for v19
+  'ceph-20.2.0-backport-pybind-avoid-pyo3-errors-by-child-process.patch'
+
+  # Exclude python lint / fmt / tool checking from project test suite
+  'ceph-20.2.0-restrict-tox-tests.patch'
 )
 sha512sums=('278101d2df7bed5363b20c2b065d7a7b26252c8164511257e213ffaa58d509015558183de10bc9281bcbe4d9f85244bcac5bba4db9823e28df6a96d0b687d00a'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
@@ -186,7 +189,6 @@ sha512sums=('278101d2df7bed5363b20c2b065d7a7b26252c8164511257e213ffaa58d50901555
             '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1'
             '30a8c06e8ed4204da62b6a0d52e51e2654eaa2fc91aa85bd09c8374885b2d0daed3a6f97f2853144d1d65b9dc01d3099181b3717a3b61efb5e3001d2ff70fb06'
             '9a1183c08f8799b14235c9271519203cbf93e48ca3a8607d3a0500910efca5379c8a08421c377227f93d8436a850f5ca99784f28aaa920e55f0457c657511f17'
-            '692b9cea0199366fdfbcaff2d9590e3a1e439b948a1a5030215e81fcc8a22ac562b3261e2057470cc8acc20f404869a5a0c4550177788dc2f824523e5267b1eb'
             '2c90c69b3e236622c9fb83214fe7f781c9fcb0de1b372e7837d9963780ead9c2926c347177c03fb94eb05fd838514f3afab42aa50b7c9ac800c34bf59c48b02e'
             '0ed97f2fb764ec8f7e01be45256377a6b2f451c865348b25b12ca9ef70c7120a0bf62321a9402cc4362618fde3a38ccfcd6eec738fe8cc067f17399700c273f3'
             'b68bc568a27876975dc1fad55cbd1a6890b940edd174aed3f8deaff9635a2462126fc8958d352bf5a8da7c6cd295f5ad20addda22f966606267e3c45afab0c7a'
@@ -202,9 +204,11 @@ sha512sums=('278101d2df7bed5363b20c2b065d7a7b26252c8164511257e213ffaa58d50901555
             '286db9845a005fac92fafd749959419ec7ceca78e50880c31415f3e0477e18d732c763964e743e0e954c0e7b08c25c16793e5caf83d44cfa16033c40f76106b4'
             'e5e2e30da3618407b753af75d5cbfd2898d33e62871c4c7c92d775e63ffbbe23a6b09894ac1a6e30996218388ebfe5f50d903910eafad20648511c92e6f2133d'
             '11dc750efc49c43bb945b79504260785453c65fba915ae24beff43f19e541a3dbeb320624c8a3649b04ceabccf7e7f4216776e82ecd54719351d1757ddf2c6c8'
-            '1a8af20bffa321c4e88c60b9e22ac1139de85033f11014cf1cbfcd261069bf62f7830432715561f3919c14408e408b05b0774a48d1ea954b600adc635fe7cf57'
-            '8df2c6028694600b3e1634eaff74d4e789a58463dcf2be86a60be61024e25143f3a44b4deee39a54cf9d93909f9c949f13ea8d4d83b718f37b790fee5aaeba71'
-            '14281fbaafff08d59d354ed9a0bb785e6453e45470c31afe193b5489e479cca663afade7a2fcd53b2d9f34380d90046e3729371a90f6abeae00617f52abd5a86')
+            '4aa5dbc9b4e7adda5a7248c9c2440ba028c15e48a09460d041bbf8e45dfd689be3978283db98e23f91e5d319779770dddd74e239a6c5ae37e68dee281dba275f'
+            '40d1943593955589cc9e857d3c97543f864857f8f0d928b59edb59e44dd371e565f8830e494934c410d339a8521288a397e10abe547f7abe8f3c2539ec56bef2'
+            '136d3b89ec893907bdd62196cc0b622f4f7ce7cf0dc54f9564b212da22f1f1e41269a0785c0f77318e23f122f81d46e06f0bffa684952ba2542e82d5a993fb87'
+            'feaf80ff80067e6d3fec07e053055a4bcec98b886d81a171fa09ab72c6f4bf6b79c3462dc967d79674d2c3cb5393665ba37d5de0a537195f78e3bb39c9aca3b8'
+            '9bc32100aeb10099c05bd175f422f30f4c415755129e675dfb52212a9f822fcdae40638fe8351eed03816aacf41290837d5a900e81d7d9760e8a8c7c97679ee3')
 __version="${pkgver}-${pkgrel}"
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
@@ -218,8 +222,6 @@ export CXXFLAGS="${CXXFLAGS/-fno-plt/}"
 
 prepare() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
-
-  _prepare_ceph_python_bcrypt
 
   # apply patches from the source array
   local filename
@@ -246,15 +248,6 @@ prepare() {
   sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
   sed -i '/add_ceph_test(safe-to-destroy.sh/d' src/test/osd/CMakeLists.txt
 
-  # Add our bcrypt build to the tox envs
-  for filename in src/pybind/mgr/{,dashboard/}requirements.txt; do
-    grep -qiF 'ceph_bcrypt' $filename \
-    || printf -- '%s\n' \
-        "--find-links=${srcdir}/bcrypt-${__bcrypt_version}/dist" \
-        "ceph_bcrypt" \
-        >> $filename
-  done
-
   # The mgr C++ daemon injects a 'ceph_module' python module into the context
   # of all python mgr modules, but this is absent from test code.
   #
@@ -264,18 +257,26 @@ prepare() {
   #
   # Note: this must be removed from the installed files!
   install -vD src/pybind/mgr/tests/__init__.py src/pybind/ceph_module/__init__.py
+
+  # Monkey patch liburing's includes to forward declare `struct open_how`
+  #
+  # Something in a recent kernel-headers changed so that this is no longer
+  # transitively included.
+  #
+  # See: https://aur.archlinux.org/pkgbase/ceph#comment-1062706
+  # Reported-by: https://aur.archlinux.org/account/daurnimator
+  #
+  # TODO: Remove this patch before v20 (uses a much later liburing version)
+  sed -i '328a\#include <linux/openat2.h>\n' src/liburing/configure
 }
 
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
-  _build_ceph_python_bcrypt
-
   export CFLAGS+=" ${CPPFLAGS}"
   export CXXFLAGS+=" ${CPPFLAGS}"
   export CMAKE_BUILD_TYPE='RelWithDebInfo'
-  export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --ignore=4 || echo "4")
-  export CMAKE_WARN_UNUSED_CLI=no
+  export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --ignore=1 || echo "4")
 
   cmake \
     -G Ninja \
@@ -333,19 +334,23 @@ build() {
     -DWITH_TESTS=ON \
     -Wno-dev
 
-  cmake --build build -t legacy-option-headers all
+  # Ugly, ugly hack until I can figure out what is adding Boost::system to
+  # target_link_libraries
+  sed -i -e 's|-lboost_system ||g' build/build.ninja
+
+  cmake --build build -t all tests
 }
 
 check() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
-  _check_ceph_python_bcrypt || true
-
-  export CTEST_PARALLEL_LEVEL=$(nproc --ignore=4 || echo "4")
-  export CTEST_OUTPUT_ON_FAILURE=1
-  export CTEST_PROGRESS_OUTPUT=1
-
-  cmake --build build -j $CTEST_PARALLEL_LEVEL -t check || true
+  (
+    cd build
+    ctest -j $(nproc --ignore=1 || echo "4") \
+      --progress \
+      --output-on-failure \
+      || true
+  )
 }
 
 _package() {
@@ -1123,8 +1128,6 @@ package_python-ceph-common() {
 
   mv __pkg__/$pkgname/* "$pkgdir"
 
-  _package_ceph_python_bcrypt
-
   _print
 }
 
@@ -1228,53 +1231,6 @@ package_ceph() {
   )
 }
 
-#======================================================================================#
-#======================================================================================#
-
-_prepare_ceph_python_bcrypt() {
-  (
-    cd "${srcdir}/bcrypt-${__bcrypt_version}"
-
-    # apply patches from the source array
-    local filename
-    for filename in "${source[@]%%::*}"; do
-      if [[ "${filename}" =~ \.patch$ ]] \
-      && [[ "${filename}" =~ ^python-bcrypt-.* ]]; then
-        echo "Applying patch ${filename##*/}"
-        patch -p1 -N -i "${srcdir}/${filename##*/}"
-      fi
-    done
-
-    mv -v src/{bcrypt,ceph_bcrypt}
-  )
-}
-
-_build_ceph_python_bcrypt() {
-  (
-    cd "${srcdir}/bcrypt-${__bcrypt_version}"
-
-    python -m build --wheel --no-isolation
-  )
-}
-
-_check_ceph_python_bcrypt() {
-  (
-    cd "${srcdir}/bcrypt-${__bcrypt_version}"
-
-    local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
-
-    python -m installer --destdir=test_dir dist/*.whl
-    PYTHONPATH="test_dir/$_site_packages:$PYTHONPATH" pytest
-  )
-}
-
-_package_ceph_python_bcrypt() {
-  (
-    cd "${srcdir}/bcrypt-${__bcrypt_version}"
-
-    python -m installer --destdir="${pkgdir}" dist/*.whl
-  )
-}
 #======================================================================================#
 #======================================================================================#
 

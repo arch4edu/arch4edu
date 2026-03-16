@@ -1,0 +1,122 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7da82eef6d6..d9a957c1e3b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -671,7 +671,7 @@ option(WITH_SYSTEM_BOOST "require and build with system Boost" OFF)
+ 
+ # Boost::thread depends on Boost::atomic, so list it explicitly.
+ set(BOOST_COMPONENTS
+-  atomic chrono thread system regex random program_options date_time
++  atomic chrono thread regex random program_options date_time
+   iostreams context coroutine url)
+ set(BOOST_HEADER_COMPONENTS container)
+ 
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index cbc5f55edf1..5cc1eaa1216 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -483,7 +483,6 @@ set(ceph_common_deps
+   json_spirit erasure_code extblkdev arch crc32
+   ${LIB_RESOLV}
+   Boost::thread
+-  Boost::system
+   Boost::random
+   Boost::program_options
+   Boost::date_time
+diff --git a/src/common/TrackedOp.h b/src/common/TrackedOp.h
+index 435e7edb028..c0476d9f726 100644
+--- a/src/common/TrackedOp.h
++++ b/src/common/TrackedOp.h
+@@ -27,6 +27,8 @@
+ 
+ class TrackedOp;
+ class OpHistory;
++void intrusive_ptr_add_ref(TrackedOp *o);
++void intrusive_ptr_release(TrackedOp *o);
+ 
+ typedef boost::intrusive_ptr<TrackedOp> TrackedOpRef;
+ 
+diff --git a/src/test/common/CMakeLists.txt b/src/test/common/CMakeLists.txt
+index 5fbd3be6ac4..93fb6bc73a4 100644
+--- a/src/test/common/CMakeLists.txt
++++ b/src/test/common/CMakeLists.txt
+@@ -361,15 +361,15 @@ add_ceph_unittest(unittest_hobject)
+ 
+ add_executable(unittest_async_completion test_async_completion.cc)
+ add_ceph_unittest(unittest_async_completion)
+-target_link_libraries(unittest_async_completion ceph-common Boost::system)
++target_link_libraries(unittest_async_completion ceph-common)
+ 
+ add_executable(unittest_async_shared_mutex test_async_shared_mutex.cc)
+ add_ceph_unittest(unittest_async_shared_mutex)
+-target_link_libraries(unittest_async_shared_mutex ceph-common Boost::system)
++target_link_libraries(unittest_async_shared_mutex ceph-common)
+ 
+ add_executable(unittest_async_yield_waiter test_async_yield_waiter.cc)
+ add_ceph_unittest(unittest_async_yield_waiter)
+-target_link_libraries(unittest_async_yield_waiter ceph-common Boost::system Boost::context)
++target_link_libraries(unittest_async_yield_waiter ceph-common Boost::context)
+ 
+ add_executable(unittest_cdc test_cdc.cc
+   $<TARGET_OBJECTS:unit-main>)
+@@ -391,7 +391,7 @@ add_ceph_unittest(unittest_fault_injector)
+ 
+ add_executable(unittest_blocked_completion test_blocked_completion.cc)
+ add_ceph_unittest(unittest_blocked_completion)
+-target_link_libraries(unittest_blocked_completion Boost::system GTest::GTest)
++target_link_libraries(unittest_blocked_completion GTest::GTest)
+ 
+ add_executable(unittest_allocate_unique test_allocate_unique.cc)
+ add_ceph_unittest(unittest_allocate_unique)
+diff --git a/src/test/lazy-omap-stats/CMakeLists.txt b/src/test/lazy-omap-stats/CMakeLists.txt
+index 2143a092f27..93ddc03a248 100644
+--- a/src/test/lazy-omap-stats/CMakeLists.txt
++++ b/src/test/lazy-omap-stats/CMakeLists.txt
+@@ -4,7 +4,7 @@ add_executable(ceph_test_lazy_omap_stats
+   main.cc
+   lazy_omap_stats_test.cc)
+ target_link_libraries(ceph_test_lazy_omap_stats
+-  librados Boost::system Boost::regex ceph-common ${UNITTEST_LIBS})
++  librados Boost::regex ceph-common ${UNITTEST_LIBS})
+ install(TARGETS
+   ceph_test_lazy_omap_stats
+   DESTINATION ${CMAKE_INSTALL_BINDIR})
+diff --git a/src/test/librados/CMakeLists.txt b/src/test/librados/CMakeLists.txt
+index e80f6460657..b3f7539dace 100644
+--- a/src/test/librados/CMakeLists.txt
++++ b/src/test/librados/CMakeLists.txt
+@@ -132,7 +132,7 @@ target_include_directories(ceph_test_rados_api_tier_pp
+   PUBLIC "${CMAKE_SOURCE_DIR}/src/rgw/driver/rados"
+   PUBLIC "${CMAKE_SOURCE_DIR}/src/rgw")
+ target_link_libraries(ceph_test_rados_api_tier_pp
+-  librados global ${UNITTEST_LIBS} Boost::system radostest-cxx cls_cas_internal
++  librados global ${UNITTEST_LIBS} radostest-cxx cls_cas_internal
+   cls_cas_client Boost::context)
+ 
+ add_executable(ceph_test_rados_api_snapshots
+diff --git a/src/test/mon/CMakeLists.txt b/src/test/mon/CMakeLists.txt
+index 8c271407e98..5035e4c124b 100644
+--- a/src/test/mon/CMakeLists.txt
++++ b/src/test/mon/CMakeLists.txt
+@@ -57,7 +57,7 @@ target_link_libraries(unittest_mon_montypes mon global)
+ # ceph_test_mon_memory_target
+ add_executable(ceph_test_mon_memory_target
+   test_mon_memory_target.cc)
+-target_link_libraries(ceph_test_mon_memory_target Boost::system Threads::Threads)
++target_link_libraries(ceph_test_mon_memory_target Threads::Threads)
+ set_target_properties(ceph_test_mon_memory_target PROPERTIES
+   SKIP_RPATH TRUE
+   INSTALL_RPATH "")
+diff --git a/src/test/neorados/CMakeLists.txt b/src/test/neorados/CMakeLists.txt
+index 968ef609cdc..f40efd80851 100644
+--- a/src/test/neorados/CMakeLists.txt
++++ b/src/test/neorados/CMakeLists.txt
+@@ -11,7 +11,7 @@ target_link_libraries(ceph_test_neorados_start_stop global libneorados
+   ${unittest_libs})
+ 
+ add_executable(ceph_test_neorados_completions completions.cc)
+-target_link_libraries(ceph_test_neorados_completions Boost::system pthread
++target_link_libraries(ceph_test_neorados_completions pthread
+   ${unittest_libs})
+ 
+ add_executable(ceph_test_neorados_op_speed op_speed.cc)

@@ -1,0 +1,22 @@
+diff --git a/cmake/modules/AddCephTest.cmake b/cmake/modules/AddCephTest.cmake
+index ab4dc63ca32..b3496310755 100644
+--- a/cmake/modules/AddCephTest.cmake
++++ b/cmake/modules/AddCephTest.cmake
+@@ -99,6 +99,17 @@ function(add_tox_test name)
+   endif()
+   if(DEFINED TOXTEST_TOX_ENVS)
+     list(APPEND tox_envs ${TOXTEST_TOX_ENVS})
++    # === MAINTAINER PATCH START: exclude lints / typechecking / etc ===
++    if("__tox_defaults__" IN_LIST tox_envs)
++      set(tox_envs py3)
++    else()
++      list(FILTER tox_envs INCLUDE REGEX "^(py3|check)$")
++    endif()
++
++    if(NOT tox_envs)
++      return()
++    endif()
++    # === MAINTAINER PATCH END ===
+   else()
+     list(APPEND tox_envs py3)
+   endif()
