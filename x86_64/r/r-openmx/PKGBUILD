@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=OpenMx
-_pkgver=2.22.10
+_pkgver=2.22.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -43,11 +43,10 @@ optdepends=(
   r-rpf
   r-snowfall
   r-testthat
-  r-umx
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f7c4d85e242772d63cfeca8b5d462fed')
-b2sums=('e3cca02fca62a9b19e283bcf86689aec293df145990126e72a8490a9a8b56aef1a5eddd40ab22df64812c5177eda12c842fd0035d62ae3db539ce1ccc69692d7')
+md5sums=('ded2835a9e7ed9aa49c02f05aeec7ef0')
+b2sums=('e52c11cc61ddde2ba5f8124d7e6744bfe4d2aee34d04e7c4200dd66ba45688bcf8455d65ff0dd815ca60d28bbf1f949467a462d7b88b9afe1a7ef6a1f711e21a')
 
 build() {
   mkdir build
