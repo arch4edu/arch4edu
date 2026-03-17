@@ -1,7 +1,7 @@
 # Maintainer: Christopher Cooper <christopher@cg505.com>
 # Maintainer: Jérôme Poulin <jeromepoulin@gmail.com>
 pkgname=claude-code
-pkgver=2.1.76
+pkgver=2.1.77
 pkgrel=1
 pkgdesc="An agentic coding tool that lives in your terminal"
 arch=('x86_64' 'aarch64')
@@ -16,6 +16,8 @@ optdepends=(
 	'glab: interact with GitLab'
 	'ripgrep: enhanced file search'
 	'tmux: agent team split panes'
+	'bubblewrap: sandboxing'
+	'socat: sandboxing'
 )
 
 # This bucket is used in the official install script at https://claude.ai/install.sh
@@ -27,8 +29,8 @@ source_x86_64=("claude-${pkgver}-x86_64::${_gcs_bucket}/${pkgver}/linux-x64/clau
 source_aarch64=("claude-${pkgver}-aarch64::${_gcs_bucket}/${pkgver}/linux-arm64/claude")
 
 sha256sums=('1e34536633a1b259f36724aa11bd73e6675c1fe3a5072ce57383558278611cba')
-sha256sums_x86_64=('801a085676c3d54392c42e8e43c44947df7c52132356575f7d9267c4f22d6992')
-sha256sums_aarch64=('40f753c07f070df34ca83e400f746a8279a3fd343967a453d9fbfab2f3ca7acd')
+sha256sums_x86_64=('34559c9cc9eeadc942d6731367aed3915b6b7351d98c61ebfebbd8fa59508ecd')
+sha256sums_aarch64=('f4303a1a3455b0ebbdd356c1337ae3076affc122fb79a78a2d1886e5c62f289c')
 
 package() {
 	install -Dm755 "${srcdir}/claude-${pkgver}-${CARCH}" "${pkgdir}/opt/claude-code/bin/claude"
