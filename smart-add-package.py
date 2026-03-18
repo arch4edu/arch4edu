@@ -108,8 +108,12 @@ if __name__ == '__main__':
         sys.exit(1)
 
     arch = parts[0]
+    # Determine which architecture to use for pacman database queries.
+    # For 'any' packages, we query the x86_64 database since dependencies
+    # are architecture-specific (e.g., gcc-libs, glibc) but the package itself is arch-independent.
+    query_arch = arch
     if arch == 'any':
-        arch = 'x86_64'
+        query_arch = 'x86_64'
     elif arch not in ('x86_64', 'aarch64'):
         logger.error('Unsupported architecture: %s (must be x86_64, aarch64, or any)', arch)
         sys.exit(1)
@@ -117,11 +121,12 @@ if __name__ == '__main__':
     package = parts[-1]
     subdir = '/'.join(parts[1:-1]) if len(parts) > 2 else ''
 
+    # Use the original arch for directory name to preserve 'any' path
     directory = Path(arch) / subdir if subdir else Path(arch)
     directory.mkdir(parents=True, exist_ok=True)
     template = args.template
 
-    pacman_db, provides = load_pacman_and_provides(arch)
+    pacman_db, provides = load_pacman_and_provides(query_arch)
     pkgbases = load_pkgbases()
     if not args.provides is None:
         for i in args.provides:
