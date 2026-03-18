@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=fixest
-_pkgver=0.13.2
+_pkgver=0.14.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Fast Fixed-Effects Estimations"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -34,8 +34,8 @@ optdepends=(
   r-tinytex
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('51669e0d09a29071a86b4937f7b98337')
-b2sums=('ced8b6908066af323bc30bc2ef27c26369ddb887bd91fbc5cf47868bf137a1ee4391d276a1ecd34015916c66c2c0a8277f87dba75abacc0afae0808a94ce6032')
+md5sums=('1b060230d38e4ec6df385a6be0ea1d6a')
+b2sums=('6e0607c0d43a3e3a5003850f651d82143823c47c1f94c39fa54d035cfbfa6f8661bb8859c5da13c3fdda34e7b7f46a19ec073a5a22403f70377cb7b79b905038')
 
 build() {
   mkdir build
