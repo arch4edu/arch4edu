@@ -5,7 +5,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=deSolve
-_pkgver=1.41
+_pkgver=1.42
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,8 +25,8 @@ optdepends=(
   r-scatterplot3d
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('301c0bc8370cc2e77e398ddec286bbfc')
-b2sums=('0a1c0564fdd5bfb4dbf55e17c7ccb4046606244caeac465d7fcd9c84466142f6415b8c75dd6b29329f4f3502079c93d6d4afd6bf5313ab6a8ba487f7ebb32c6c')
+md5sums=('fd172c984a74de2fd7a456ad7e58c4d3')
+b2sums=('565684542f4e3541912ef4388bda86eb07d8cbb6b4f73c7abc5d62053d49b3027b712708b095d98b2b2bb0d0a8e3e00144249ad266198d6db09cd8547c636c9e')
 
 build() {
   mkdir build
