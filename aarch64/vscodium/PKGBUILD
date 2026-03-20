@@ -3,8 +3,8 @@
 
 pkgname=vscodium
 # Make sure the pkgver matches the git tags in vscodium and vscode git repo's!
-pkgver=1.110.11631
-pkgrel=3
+pkgver=1.112.01907
+pkgrel=1
 pkgdesc="Free/Libre Open Source Software Binaries of VSCode (git build from latest release)."
 arch=('x86_64' 'aarch64' 'armv7h')
 url='https://github.com/VSCodium/vscodium.git'
@@ -46,12 +46,10 @@ source=(
     "${pkgname}-uri-handler.desktop"
     "https://github.com/VSCodium/vscodium/releases/download/${pkgver}/VSCodium-${pkgver}-src.tar.gz"
 )
-sha256sums=(
-    '7c6864be64a7cb698340c45b4cfc0091a1d9bb78b0e73d7e3a25d8a0b438beec'
-    '74509d8ccb685a6d55e8bba8f4231963b766e1e3e38443bc1e72238519dcdeac'
-    '3ad1e6bbd7cdc8833eff9afaa9f6ae39350d738678cafbe3437106f0cfe3d985'
-    '6f9b0faf38579ee0c7f331c0bc78e0a6a7cd8e0d17ce5a2e6ecc709475daf96e'
-)
+sha256sums=('7c6864be64a7cb698340c45b4cfc0091a1d9bb78b0e73d7e3a25d8a0b438beec'
+            '74509d8ccb685a6d55e8bba8f4231963b766e1e3e38443bc1e72238519dcdeac'
+            '3ad1e6bbd7cdc8833eff9afaa9f6ae39350d738678cafbe3437106f0cfe3d985'
+            '4d40a9b719e594d14d6b0f60ba08813b6c5e93894ea67c9ac1d1aa371105d484')
 provides=(
     'codium'
     'vscodium'
