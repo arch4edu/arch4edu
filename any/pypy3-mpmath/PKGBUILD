@@ -2,15 +2,15 @@
 _base=mpmath
 pkgname=pypy3-${_base}
 pkgdesc="Python library for arbitrary-precision floating-point arithmetic"
-pkgver=1.4.0
-pkgrel=2
+pkgver=1.4.1
+pkgrel=1
 arch=(any)
 url="https://github.com/${_base}/${_base}"
 license=(BSD-3-Clause)
 depends=(pypy3-gmpy2)
 makedepends=(pypy3-build pypy3-installer pypy3-setuptools)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('fe7c4164963915ad7561e4dfb7cba21dee19296b96ca7134cf49ce016502cb299f7a6f49a9d18ce39bebfc90eae2c4a86692cdb03f5bfd04e0ddfb63f91064f1')
+sha512sums=('16f431e98a33fa7764336c64794310901eb1a635468045ffe4a202a84a5e7a439cbae0f56bef47acf22f4181d8e0e73def4483728906d49edab709ce6663dc8d')
 
 build() {
   cd ${_base}-${pkgver}
