@@ -1,10 +1,9 @@
 nvchecker:
   - source: aur
     aur:
-  - alias: python
 depends:
+  - x86_64/ros2/python-pytest-runner
   - x86_64/ros2/python-empy3
-  - any/python-pytest-runner
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

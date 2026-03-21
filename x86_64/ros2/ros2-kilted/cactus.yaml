@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/python-colcon-common-extensions
+  - x86_64/ros2/sip4
+  - x86_64/ros2/sip4: python-sip4
+  - x86_64/ros2/lttng-tools
+makedepends:
+  - x86_64/ros2/python-rosinstall_generator
+  - x86_64/ros2/python-vcstool
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
