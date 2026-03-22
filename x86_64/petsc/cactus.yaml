@@ -4,17 +4,14 @@ nvchecker:
   - source: aur
     aur: gklib
   - source: aur
-    aur: hypre
-  - source: aur
     aur: mumps
   - source: archpkg
     archpkg: scotch
 depends:
-  - x86_64/hypre
   - x86_64/mumps
   - x86_64/parmetis-git
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add depends hypre mumps parmetis-git
+  add depends mumps parmetis-git
 post_build: aur-post-build
