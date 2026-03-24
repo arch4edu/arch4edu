@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=tinytest
-_pkgver=1.4.1
+_pkgver=1.4.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Lightweight and Feature Complete Unit Testing Framework"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e8d57668032bedd980cc9f1ad9c957d3')
-b2sums=('7ff48d2c8ea5c96ca52dfcc7c17c05b9fcc59b23afaf5dd8a79b8d04b747960481c1ecce26e26380756a0066ea799a29a9adb59f878013e862d8d74702e1f19a')
+md5sums=('a5cd391ceee1425a74e38945a4acc4fd')
+b2sums=('0e0c460c067407178e28d745d45834b1a29b439d7a5cb870dedf1c8d6ed7495c6ccc416743352eb798d46ed719d64965ecf4ff12690cacb2c31d8061b5b5d7d4')
 
 build() {
   mkdir build
