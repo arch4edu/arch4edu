@@ -1,0 +1,8 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/plutovg
+build_prefix: extra-aarch64
+pre_build: aur-pre-build
+post_build: aur-post-build
