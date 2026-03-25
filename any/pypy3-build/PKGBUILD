@@ -2,8 +2,8 @@
 # Contributor: Jingbei Li <i@jingbei.li>
 _base=build
 pkgname=pypy3-${_base}
-pkgver=1.4.0
-pkgrel=2
+pkgver=1.4.1
+pkgrel=1
 pkgdesc="A simple, correct PEP 517 build frontend"
 arch=(any)
 url="https://${_base}.pypa.io"
@@ -11,7 +11,7 @@ license=(MIT)
 depends=(pypy3-packaging pypy3-pyproject-hooks)
 makedepends=(pypy3-installer pypy3-flit-core)
 source=(${_base}-${pkgver}.tar.gz::https://github.com/pypa/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('aad08af8a163c914671c1b149306061ea93fc1fb5f066dda5a351ddec4b7b374160bf657d30b0eccc498c4f53950307646d792b58cb0efb91975b2541e111d88')
+sha512sums=('ed6e6329ee07c547a8cd7568d4f769b50e117a684c1d087380f896183db4bd6c4d921d75913525b301f994ff865d5acbe44290d8a1aa7c13c169979b942ceedc')
 
 build() {
   cd ${_base}-${pkgver}
