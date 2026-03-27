@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mlbench
-_pkgver=2.1-7
+_pkgver=2.1-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,8 +14,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e1f5bd20915a1c0fc71410264a242c5a')
-b2sums=('c2c2e97b31ac4fe4391b644cdef6175e8caf2ef857b2031f7b3b7cb9d0cbff2c40b8c67f2d9d9825c71ad86e0593d5afd57c2faa145a26bd9cb0f6f639102482')
+md5sums=('f674503f4b9e4b49752fd0d8f084c1b1')
+b2sums=('474858b6f202e12c5335bb1d9de6734bc283f627f6db70d2a8789e630725482cb87f539893e327ff70b5b9514942cd6b2cb860a1e3b4420b2441a657edfd9712')
 
 build() {
   mkdir build
