@@ -2,7 +2,7 @@
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
 pkgver=0.10.0.post5
-pkgrel=3
+pkgrel=4
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(LGPL-3.0-or-later GPL-3.0-or-later)
