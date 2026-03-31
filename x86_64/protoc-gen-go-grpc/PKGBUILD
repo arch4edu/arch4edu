@@ -2,8 +2,8 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go-grpc"
-pkgver=1.6.0
-pkgrel=2
+pkgver=1.6.1
+pkgrel=1
 epoch=1
 pkgdesc="gRPC bindings generator for Go language"
 arch=(
@@ -24,17 +24,14 @@ makedepends=(
 )
 _pkgsrc="${url##*/}-cmd-${pkgname}-v${pkgver}"
 source=(
-  "${_pkgsrc}.tar.gz::${url}/archive/cmd/${pkgname}/v${pkgver}.tar.gz"
+  "${url}/archive/refs/tags/cmd/${pkgname}/v${pkgver}/${_pkgsrc}.tar.gz"
 )
-sha256sums=('6e269733f8728b6583ce7e8ca4b2aafec286f4ac4e878a8d75477787ba8c389b')
+sha256sums=('9dae3e712ceda8f3740511632bdb18872387bc4642131d05d190e65483f4a422')
 
 prepare() {
   export GOMODCACHE="${srcdir}/go-mod-cache"
 
-  cd "${srcdir}/${_pkgsrc}"
-  mkdir -p "build"
-
-  cd "cmd/${pkgname}"
+  cd "${srcdir}/${_pkgsrc}/cmd/${pkgname}"
   go mod download -modcacherw -x
   go mod verify
 }
@@ -61,7 +58,6 @@ package() {
   cd "${srcdir}/${_pkgsrc}"
   install -vDm755 "build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
   install -vDm644 "README.md"  "${pkgdir}/usr/share/doc/${pkgname}/README.md"
-  install -vDm644 "AUTHORS"    "${pkgdir}/usr/share/doc/${pkgname}/AUTHORS"
   install -vDm644 "LICENSE"    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
   install -vDm644 "NOTICE.txt" "${pkgdir}/usr/share/licenses/${pkgname}/NOTICE"
 }
