@@ -13,7 +13,7 @@
 # Adapted to mkl by Simone Riva
 _base=numpy
 pkgname=python-${_base}-mkl
-pkgver=2.4.3
+pkgver=2.4.4
 pkgrel=1
 pkgdesc="Scientific tools for Python, compiled with Intel MKL"
 arch=(x86_64)
@@ -33,7 +33,7 @@ source=(git+https://github.com/${_base}/${_base}.git?signed#tag=v${pkgver}
         ${_base}-svml::git+https://github.com/${_base}/SVML.git
         ${_base}-pythoncapi-compat::git+https://github.com/python/pythoncapi-compat)
 validpgpkeys=('53A0E5283F05E29D7129149E679F228377C5247B') # Charles Harris (Logan) <charlesr.harris@gmail.com>
-sha512sums=('daefbc67b6b7aab3c17790a6f22594faf4b36d5c1967b223f6bd0701bdf61ab3c2dfc84492bb5849dd1ad61050589c2f2d410fa37bbda3f73315fcb4895c19e9'
+sha512sums=('941c7cc10b374257165b979b447c1f7f49595354ec64f40a9e682b34bc4a961b6949035c53ca42195375ccab9950e73622b68e05ea62c663e044b59e1d9703ad'
             'SKIP'
             'SKIP'
             'SKIP'
