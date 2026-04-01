@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ps
-_pkgver=1.9.1
+_pkgver=1.9.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="List, Query, Manipulate System Processes"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -29,8 +29,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('100d984909361ef3b425bc34d71b4ac3')
-b2sums=('7b61e8fb3b116f146595dbedc545639099ac9d6d25b397f44d1d7e8457ce0a52d7e092e09bb964a9b29976567ba9d41ea5062bd2383318ea361315aaa80286ae')
+md5sums=('e9f499cf6e7f0f6d83e46f545a013ec9')
+b2sums=('5ea9558036f411cfe62845ccae33dad6926516f1563ed148851b3bb4596e98458f0b1e6ebd29a2e8774e0cfd63aaa3a38ca8f28b2f57bd2b87d8e6fa79aa6f9b')
 
 build() {
   mkdir build
