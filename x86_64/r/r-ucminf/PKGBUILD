@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ucminf
-_pkgver=1.2.2
+_pkgver=1.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="General-Purpose Unconstrained Non-Linear Optimization"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,8 +20,8 @@ optdepends=(
   r-numderiv
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b13fe2db50c37b548ad7355267442540')
-b2sums=('9cce2dd1afc449a0b4ce8c5276662b23c3e623000fdc3d1024c9dbe27358f2c4e206ed761eb8ad0a964f38dbb83a63a94f019786879505b42a74e8db4f1b5281')
+md5sums=('fd18b6d10604083577a31da32b5e13f5')
+b2sums=('18d5f74d7bab27c9164d9a173855fd47ce112e98093518b695de90f17bbfd71a7fa456899d292bc60aa9fe9204faf2afb589aa995cc4cfed3f4f04d8966feb6b')
 
 build() {
   mkdir build
