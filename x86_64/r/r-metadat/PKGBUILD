@@ -4,7 +4,7 @@ _pkgname=metadat
 _pkgver=1.4-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Meta-Analysis Datasets"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -32,8 +32,8 @@ optdepends=(
   r-ellipse
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('adaa29e04468cc4d8619dfa008fec3cb')
-b2sums=('841438693125131f394330030585464b9304ba5cc23a9f297c3fda4c321f0bdd0d569a4029fc544e374fbe4b97f4f992f2b3e6d2ea3339f565623bde5dd388fb')
+md5sums=('dc78d17834617fbd29c1b5574532b157')
+b2sums=('2a6263df5f3e6c3830670315e839afdb5904767d8818641aebf2ad863adce04833d2130fa05ef8d83f18a0d7183c6fe50099f958f45e8f522606a7f8d2adcb0b')
 
 build() {
   mkdir build
