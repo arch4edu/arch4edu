@@ -3,8 +3,8 @@
 # Contributor: KokaKiwi <kokakiwi+aur@kokakiwi.net>
 
 pkgname=ventoy-bin
-pkgver=1.1.10
-pkgrel=3
+pkgver=1.1.11
+pkgrel=1
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -12,7 +12,6 @@ license=('GPL-3.0-or-later')
 depends=(
   'bash'
   'dosfstools'
-  'exfat-utils'
   'util-linux'
   'which'
   'xz'
@@ -38,7 +37,7 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}-extend-persistent"
         "${pkgname%-bin}.desktop"
         'sanitize.patch')
-sha256sums=('1113abe6e1bb712834fe574a966621a912858004f4fefd701666ec97c5beb208'
+sha256sums=('ddcbcbf3341225d0c5df43f1d7cc65de0b8b2131643184c1a3ea359107789faa'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
             'c3d4463a878a89d96e5f0bc4e1a43e48f27af5965bd4c977567695d7cf91fe5f'
@@ -46,7 +45,7 @@ sha256sums=('1113abe6e1bb712834fe574a966621a912858004f4fefd701666ec97c5beb208'
             '51029745da197dded6e007aee3f30f7ea1aa6e898172a6ea176cc2f3a842d0ff'
             '00dec31721a052d5e6c928e3b38b870959bdb42188f34717898d99c0cef950df'
             'ea01c294b772818277a79b055e977550f99313506e874797ed9fe0e7ac7e7d98'
-            '2e3a826911a535d8de32517efcbb3aa4ad8b43e2b160898dc254f7138c8cadc8')
+            'f494cab67b4a5d1a755d693d8de058898c3c0ad4a6c9fb7feb7ecfc0a7662226')
 
 prepare() {
   cd "${pkgname%-bin}-$pkgver"
@@ -66,10 +65,12 @@ prepare() {
   patch --verbose -Np1 -i "$srcdir/sanitize.patch"
 
   # Log location
-  sed -i 's|log\.txt|/var/log/ventoy.log|g' WebUI/static/js/languages.js tool/languages.json
+  sed -i 's|log\.txt|/var/log/ventoy.log|g' \
+    WebUI/static/js/languages.js tool/{languages.json,ventoy_lib.sh}
 
   # Non-POSIX compliant scripts
-  sed -i 's|bin/sh|usr/bin/env bash|g' tool/{ventoy_lib.sh,VentoyWorker.sh}
+  sed -i 's|bin/sh|usr/bin/env bash|g' \
+    {Ventoy2Disk,VentoyVlnk,tool/{create_ventoy_iso_part_dm,ventoy_lib,VentoyWorker}}.sh
 
   # Clean up unused binaries
   # Preserving mkexfatfs and mount.exfat-fuse because exfatprogs is incompatible
