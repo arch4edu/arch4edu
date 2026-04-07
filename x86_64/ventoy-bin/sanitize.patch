@@ -7,7 +7,7 @@ If you are interested to improve this patch, welcome to mail me.
 
 diff -Npur a/tool/ventoy_lib.sh b/tool/ventoy_lib.sh
 --- a/tool/ventoy_lib.sh	2026-04-05 09:27:04.000000000 -0600
-+++ b/tool/ventoy_lib.sh	2026-04-05 15:11:20.838274540 -0600
++++ b/tool/ventoy_lib.sh	2026-04-06 10:03:00.691008472 -0600
 @@ -51,31 +51,6 @@ vtoy_gen_uuid() {
  }
  
@@ -42,7 +42,7 @@ diff -Npur a/tool/ventoy_lib.sh b/tool/ventoy_lib.sh
  }
 diff -Npur a/Ventoy2Disk.sh b/Ventoy2Disk.sh
 --- a/Ventoy2Disk.sh	2026-04-05 09:27:04.000000000 -0600
-+++ b/Ventoy2Disk.sh	2026-04-05 15:07:54.984878762 -0600
++++ b/Ventoy2Disk.sh	2026-04-06 10:04:45.602349755 -0600
 @@ -33,34 +33,6 @@ echo '**********************************
  echo ''
  
@@ -78,9 +78,30 @@ diff -Npur a/Ventoy2Disk.sh b/Ventoy2Disk.sh
  #use static linked mkexfatfs for musl-libc environment
  if [ -f mkexfatfs_static ]; then
      if ldd --version 2>&1 | grep -qi musl; then
+@@ -79,19 +51,4 @@ if [ -f mkexfatfs_static ]; then
+     fi
+ fi
+ 
+-cd ../../
+-chmod +x -R ./tool/$TOOLDIR
+-
+-
+-if [ -f /bin/bash ]; then
+-    /bin/bash ./tool/VentoyWorker.sh $*
+-else
+-    ash ./tool/VentoyWorker.sh $*
+-fi
+-
+-if [ -n "$OLDDIR" ]; then 
+-    CURDIR=$(pwd)
+-    if [ "$CURDIR" != "$OLDDIR" ]; then
+-        cd "$OLDDIR"
+-    fi
+-fi
++./tool/VentoyWorker.sh $*
 diff -Npur a/VentoyPlugson.sh b/VentoyPlugson.sh
 --- a/VentoyPlugson.sh	2026-04-05 09:27:04.000000000 -0600
-+++ b/VentoyPlugson.sh	2026-04-05 15:19:54.589215270 -0600
++++ b/VentoyPlugson.sh	2026-04-06 10:03:00.692415370 -0600
 @@ -34,8 +34,6 @@ if echo $machine | grep -E -q 'aarch64|a
      TOOLDIR=aarch64
  elif echo $machine | grep -E -q 'x86_64|amd64'; then
@@ -92,7 +113,7 @@ diff -Npur a/VentoyPlugson.sh b/VentoyPlugson.sh
  else
 diff -Npur a/VentoyWeb.sh b/VentoyWeb.sh
 --- a/VentoyWeb.sh	2026-04-05 09:27:04.000000000 -0600
-+++ b/VentoyWeb.sh	2026-04-05 15:19:54.589425110 -0600
++++ b/VentoyWeb.sh	2026-04-06 10:03:00.692673550 -0600
 @@ -15,12 +15,6 @@ print_err() {
      echo ""
  }
