@@ -1,16 +1,18 @@
-# Maintainer: Elio <ancibrothers@gmail.com>
-# Maintainer: <christoph+aur@christophfink.com>
+# Maintainer: Christos Longros <chris.longros at gmail dot com>
+# Maintainer: a821 <a821 at mail dot de>
+# Contributor: Elio <ancibrothers@gmail.com>
+# Contributor: <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=rlang
-_cranver=1.1.7
+_cranver=1.2.0
 pkgname=r-${_cranname,,}
 pkgdesc="Functions for Base Types and Core R and ‘Tidyverse’ Features"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 
 arch=("i686" "x86_64")
 depends=(
@@ -28,7 +30,7 @@ optdepends=(
     "r-pillar"
     "r-pkgload"
     "r-rmarkdown"
-    "r-testthat>=3.2.0"
+    "r-testthat>=3.3.2"
     "r-tibble"
     "r-usethis"
     "r-vctrs>=0.2.3"
@@ -56,7 +58,7 @@ optdepends=(
 
 # It uses cloud.r-project.org instead of cran to make use of the CDN.
 source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ea55e2c1d1fbe12e01c57fd2f8ba9c06980ba54c7d3353b05741deb47f44dabc123feee34d4a29017de816b0f4107b665a169909f8b4ba3080a47c4437d72579")
+b2sums=('e6d583c81c5e0deadd02ddb11d20c258dd56fa254e9cf994c695eb1dde0ded22d3b4367bb9e4b5eacb9a1e7d6135adcebe9768d75e874d3728a6496dc2ade1b2')
 
 build() {
     mkdir -p "${srcdir}/build/"
