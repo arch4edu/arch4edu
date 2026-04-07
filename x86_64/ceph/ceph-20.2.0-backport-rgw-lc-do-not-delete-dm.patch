@@ -1,0 +1,40 @@
+From 874d2403f5eefb9b72d502e7a9f0ec4eb7389e58 Mon Sep 17 00:00:00 2001
+From: kchheda3 <kchheda3@bloomberg.net>
+Date: Tue, 14 Oct 2025 16:05:44 -0400
+Subject: [PATCH] rgw/lc: Do not delete DM if its at end of pagination list.
+
+fixes tracker https://tracker.ceph.com/issues/73539
+
+Signed-off-by: kchheda3 <kchheda3@bloomberg.net>
+(cherry picked from commit dadfa93bfac81d927cbd0fa88dd18b5fca8b796d)
+---
+ src/rgw/rgw_lc.cc | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/src/rgw/rgw_lc.cc b/src/rgw/rgw_lc.cc
+index 77cb89da3aab5..5d92d4eca94aa 100644
+--- a/src/rgw/rgw_lc.cc
++++ b/src/rgw/rgw_lc.cc
+@@ -432,10 +432,18 @@ class LCObjsLister {
+   }
+ 
+   boost::optional<std::string> next_key_name() {
+-    if (obj_iter == list_results.objs.end() ||
+-	(obj_iter + 1) == list_results.objs.end()) {
+-      /* this should have been called after get_obj() was called, so this should
+-       * only happen if is_truncated is false */
++    if (obj_iter == list_results.objs.end()) {
++      return boost::none;
++    }
++    if ((obj_iter + 1) == list_results.objs.end()) {
++      /* At the last object in the current page */
++      if (list_results.is_truncated) {
++        /* More pages exist. Cannot determine if next object has same name
++         * without fetching next page. Return current object name to indicate
++         * uncertainty and prevent incorrect DM deletion at page boundaries. */
++        return obj_iter->key.name;
++      }
++      /* No more pages, definitively no next object */
+       return boost::none;
+     }
+ 

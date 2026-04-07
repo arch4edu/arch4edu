@@ -1,0 +1,20 @@
+diff --git a/src/mgr/PyModule.cc b/src/mgr/PyModule.cc
+index 4f996489ba0..ecbf810661b 100644
+--- a/src/mgr/PyModule.cc
++++ b/src/mgr/PyModule.cc
+@@ -447,11 +447,13 @@ int PyModule::register_options(PyObject *cls)
+ 
+ int PyModule::load_notify_types()
+ {
+-  PyObject *ls = PyObject_GetAttrString(pClass, "NOTIFY_TYPES");
+-  if (ls == nullptr) {
++  if (!PyObject_HasAttrString(pClass, "NOTIFY_TYPES")) {
+     dout(10) << "Module " << get_name() << " has no NOTIFY_TYPES member" << dendl;
+     return 0;
+   }
++
++  PyObject *ls = PyObject_GetAttrString(pClass, "NOTIFY_TYPES");
++
+   if (!PyObject_TypeCheck(ls, &PyList_Type)) {
+     // Relatively easy mistake for human to make, e.g. defining COMMANDS
+     // as a {} instead of a []

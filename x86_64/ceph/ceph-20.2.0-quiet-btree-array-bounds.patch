@@ -1,0 +1,19 @@
+diff --git a/src/include/cpp-btree/btree.h b/src/include/cpp-btree/btree.h
+index 2eddc2abe80..587b50e5c81 100644
+--- a/src/include/cpp-btree/btree.h
++++ b/src/include/cpp-btree/btree.h
+@@ -43,6 +43,8 @@
+ // exists).
+ 
+ #pragma once
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Warray-bounds"
+ 
+ #include <algorithm>
+ #include <cassert>
+@@ -2569,3 +2571,5 @@ int btree<P>::internal_verify(
+ }
+ 
+ } // namespace btree::internal
++
++#pragma GCC diagnostic pop

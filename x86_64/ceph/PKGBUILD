@@ -4,8 +4,8 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=19.2.3
-pkgrel=6
+pkgver=20.2.1
+pkgrel=1
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later' 'LGPL-3.0-or-later')
@@ -28,7 +28,7 @@ makedepends=(
   'gperf'          'gperftools'      'jq'           'junit'           'keyutils'
   'libaio'         'libatomic_ops'   'libcap'       'libcap-ng'       'libcurl-compat'
   'libedit'        'libgudev'        'libnl'        'librabbitmq-c'   'librdkafka'
-  'libnbd'         'libutil-linux'   'libuv'        'libxcrypt'       'lua'
+  'libnbd'         'libutil-linux'   'libuv'        'libxcrypt'       'lua53'
   'lz4'            'nasm'            'ninja'        'nss'             'oath-toolkit'
   'openssl'        'pkgconf'         'python'       'snappy'          'sqlite'
   'systemd-libs'   'thrift'          'util-linux'   'xfsprogs'        'zlib'
@@ -56,16 +56,10 @@ source=(
   "https://download.ceph.com/tarballs/${pkgbase}-${pkgver}.tar.gz"
   'ceph.sysusers'
   'ceph.sudoers'
-  'ceph-13.2.2-dont-install-sysvinit-script.patch'
-  'ceph-disable-empty-readable.sh-test.patch'
 
   # Avoid spurious failures in logrotate when duplicate rule files exist,
   # typically around cephadm auto-generated rotate rules
   'ceph-17.2.5-logrotate-ignore-dups.patch'
-
-  # Test wants to use `git ls-files`, and is sad when it finds itself not running in a
-  # git repo
-  'ceph-17.2.4-tox-flake8-git-ls-files.patch'
 
   # Split up a very IO heavy test suite, as otherwise test is liable to timeout
   # NOTE: this is a very large patchset and will guarrented break if/when the upstream
@@ -76,139 +70,58 @@ source=(
   # cythonize calls in setup.py when 'egg_info' is a provided directive
   'ceph-17.2.4-pybind-unmock-cythonize.patch'
 
-  # fixes the few usages of std::iterator which has been deprecated in c++17, quieting
-  # a lot of _GLIBCXX17_DEPRECATED line noise during builds
-  'ceph-17.2.5-fix-iterator-depreciations.patch'
-
   # Fixes inspect.getargspec errors due to removal in py3.11
   'ceph-17.2.6-mgr-dashboard-cherrypy-18.patch'
 
-  # Fixes inspect.formatargspec errors in pylint2.6->wrapt due to removal in py3.11
-  'ceph-17.2.6-mgr-dashboard-pylint-217.patch'
-
   # Fixes a couple breaking changes from cython v3.0.0
   'ceph-17.2.6-cython-fixes.patch'
-
-  # Fixes fmtlib v10 issues found in v18.2.x
-  'ceph-18.2.0-fmt10-fixes.patch'
-
-  # Fix undefined behavior in unit test for erasure coding (SHEC)
-  'ceph-18.2.0-fix-ecode-shec-test.patch'
-
-  # Switch to using std::atomic<std::shared_ptr<T>> where possible
-  'ceph-18.2.2-std-atomic-depreciations.patch'
-
-  # Disable a performance test that regressed, while the upstream is deciding
-  # how to fix it
-  'ceph-18.2.2-test-mempool-shard-select-disable.patch'
-
-  # Since py3.11, but exacerbated in py3.12 there are a bunch of linting errors
-  # that we do not care about, so disable them
-  'ceph-18.2.2-disable-mypy-flake8-tests.patch'
-
-  # Fix a host of issues from py3.12 in the pybind / cephadm code
-  'ceph-18.2.2-py312-fixes.patch'
-
-  # Fixes for 3 problems found when using boost 1.86
-  # - casting uuid to *char
-  # - missing header for boost::mt11213b
-  # - undef of Boost.MPL header before including <boost/python/*> headers
-  'ceph-18.2.4-boost-1.86-fixes.patch'
 
   # Since fmt 11 we are seeing widespread compile errors because
   # various custom type fmt:formatter::format defintions are not const.
   'ceph-18.2.4-fmt-formatter-const.patch'
 
-  # Work around removed PySys_* API usage in src/mgr this is largely
-  # a rebased backport of https://github.com/ceph/ceph/pull/58199
-  'ceph-18.2.4-avoid-cpython-pysys-api.patch'
-
-  # Fix more random broken stuff from py3.13 this time; pip's build of
-  # python-xmlsec (from python-saml) is completely broken so we use sitepackages
-  'ceph-18.2.4-py313-fixes.patch'
-
-  # Don't use the now-unsupported header only version of Boost.Url
-  # Partially backported from https://github.com/ceph/ceph/pull/57581
-  'ceph-19.2.0-backport-mds-link-boost-urls.patch'
-
-  # Fixes missed include for std::for_each usage in src/common/cohort_lru.h
-  'ceph-19.2.0-fix-cohort-lru-include.patch'
-
-  # fixes for a bunch of boost::asio deprecated stuff that was removed in 1.87
-  'ceph-19.2.1-boost-1.87-fixes.patch'
-
-  # fix ceph-volume issues in py3.13 (again)
-  # backport of: https://github.com/ceph/ceph/pull/59739
-  'ceph-19.2.1-backport-fix-importlib-metadata-compat.patch'
-
   # Bundled rocksdb and gcc >=15.1 don't agree on imports, so appease gcc
   'ceph-19.2.2-rocksdb-cstdint.patch'
 
-  # boost::process =1.88 removed the previous compatibility layer between v1 and v2 of
-  # the library, so we have to do it the hard way
-  # https://github.com/boostorg/process/issues/480
-  'ceph-19.2.2-rgw-lua-boost-process-v1.patch'
-
-  # Backport of three commits from main to get this working with gcc 15
-  # -> https://github.com/ceph/ceph/pull/57430
-  # -> https://github.com/ceph/ceph/pull/59051
-  # -> https://github.com/ceph/ceph/pull/61559
-  'ceph-19.2.2-gcc15-zpp-bits.patch'
-
-  # Fixes for boost 1.89, unfortunately, this is only a partial fix for the
-  # boost_system linkage
-  'ceph-19.2.3-boost-189-fixes.patch'
-
-  # Backport of a fix for EC pool corruption when allow_ec_overwrites is enabled
-  # -> https://github.com/bazaah/aur-ceph/issues/34
-  # -> https://tracker.ceph.com/issues/70390
-  'ceph-19.2.3-backport-ec-corruption-fix.patch'
-
-  # Fixes errors in pybind setup.py scripts from >=py3.14
-  # -> https://github.com/ceph/ceph/pull/62879
-  'ceph-19.2.3-backport-pybind-use-importlib.patch'
-
-  # Backport of https://github.com/ceph/ceph/pull/62951, fixed up for v19
-  'ceph-20.2.0-backport-pybind-avoid-pyo3-errors-by-child-process.patch'
-
   # Exclude python lint / fmt / tool checking from project test suite
   'ceph-20.2.0-restrict-tox-tests.patch'
+
+  # Quiet the -Warray-bounds line noise from cpp-btree
+  'ceph-20.2.0-quiet-btree-array-bounds.patch'
+
+  # Quiet a bit of line noise in builds
+  'ceph-20.2.0-backport-buffer-overread-in-datagenerator.patch'
+
+  # Backport of https://github.com/ceph/ceph/pull/67573
+  'ceph-20.2.0-backport-rgw-lc-do-not-delete-dm.patch'
+
+  # Backport of three related fixes for boost 1.89 & 1.90
+  'ceph-20.2.0-backport-boost-190-fixes.patch'
+
+  # Quiet a bunch of spurious error logs on ceph-mgr startup
+  'ceph-20.2.0-mgr-module-optional-notify-types.patch'
+
+  # Fixes to a few non-configurable installation paths that do not match
+  # Archlinux conventions
+  'ceph-20.2.0-cmake-install-fixes.patch'
 )
-sha512sums=('278101d2df7bed5363b20c2b065d7a7b26252c8164511257e213ffaa58d509015558183de10bc9281bcbe4d9f85244bcac5bba4db9823e28df6a96d0b687d00a'
+sha512sums=('bd178ddd5efa532c90bc7633892452d49570da71cc9cb8a448048a51f4e1487a59dba05bea78cc2e6c9c75d112ed6a4f5613f5ce7f30b107682c2be620f5e1a5'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
-            'ea069b75b786c22166c609b127b512802cc5c6e9512d792d7b7b34d276f5b86d57c8c35cfc7b5c855a59c0ba87ba1aabe2ca26da72b26bff46b6ba8410ddb27e'
-            '2234d005df71b3b6013e6b76ad07a5791e3af7efec5f41c78eb1a9c92a22a67f0be9560be59b52534e90bfe251bcf32c33d5d40163f3f8f7e7420691f0f4a222'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
-            'd4335733eb7af8359ba02b615d565a1cadbb4e318a53ceb3452e110ce7d9936a45510f30114c2d87cdf226875c1e92de52c7622d66b2d3870f09924e3ad8e11e'
-            'f41d9ce20c7ce472756351455c143c09877c07ab0930e9043f20d36ef500f00b2f6f1835308a2158480e439f548352cc95b37bb4cc17ed60810a8a48ee7470c6'
+            'd12c19550c81be3068527a186602d8f1bb502e7fd5cdcd653c6ba9ade48ab45191fdc221e8214e1badbd992ef50c27696ee754761e91725804a55776457d9fb6'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
-            '612faebfb5eec3651832f349ea3c23b50d2386889ff77592b0acff653049efdc5c2254f63c30d88b9a730813bf1f1945dda0d0beab0db7db3e0708ba8d057a40'
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
-            'c767a8e6fd02ea2ab88e99b50b206d0f825acdf177136ded38d93594fc7663b7c9612af7195b85e0b2b501d8ee482af5e088e9abb5ebee7b8a69e0153ce89782'
             '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1'
-            '30a8c06e8ed4204da62b6a0d52e51e2654eaa2fc91aa85bd09c8374885b2d0daed3a6f97f2853144d1d65b9dc01d3099181b3717a3b61efb5e3001d2ff70fb06'
-            '9a1183c08f8799b14235c9271519203cbf93e48ca3a8607d3a0500910efca5379c8a08421c377227f93d8436a850f5ca99784f28aaa920e55f0457c657511f17'
-            '2c90c69b3e236622c9fb83214fe7f781c9fcb0de1b372e7837d9963780ead9c2926c347177c03fb94eb05fd838514f3afab42aa50b7c9ac800c34bf59c48b02e'
-            '0ed97f2fb764ec8f7e01be45256377a6b2f451c865348b25b12ca9ef70c7120a0bf62321a9402cc4362618fde3a38ccfcd6eec738fe8cc067f17399700c273f3'
-            'b68bc568a27876975dc1fad55cbd1a6890b940edd174aed3f8deaff9635a2462126fc8958d352bf5a8da7c6cd295f5ad20addda22f966606267e3c45afab0c7a'
-            '03aa3e095240f485b2cdad57a53cd2fc52b196ce15d1c7ed230728315df27306b8bdd08e92f1875dfa4637789273f5f8cf36948f3492a849f824549e219f690c'
-            'e52225b881c78dfd44773a42415f1babafc8c3842cfc7a8c88be7469d3e9b46d9a6a0f289bf10b5a790e6c5b2984b9ae5e42bbb2e411abc67f4c764383c747a0'
-            '76324e5a592994bc4712481ad7e21d91dbc1b6774b3f8579e8cb869cd2c6939eab3f646d99f4cd8865052ac4dc5cb90146caa7f8cef4b3dc46b6b2d71fde61bc'
-            '76ddf7dd71355e0b1953d215dbe5a9ce536d4866e604567bc9060f8e02bef6951be8eacd4f8896d97fe05a595aa041ab59dc65653c8fdad88e754d81f6f6b760'
-            'b8b3758a496780014821aa442c6fc2ee4797618ef4873d87ef376ad56313f871739d95366d52dec6cbb54c9ca87c4fe4b4473ff79f7800dd339fef31d6569b48'
-            '5b03d967b77fbb90e9ec43226cc9e929ee153abae1e6ab6d11b66a9f9eb8261461e724203e84e36c4f2bcbd9450734c994e41bd7daec28230393aa2ded06de3e'
-            '00cb26f5697212e8205f4306c030934cba944dbdbea112e277cc4eedb794f144a679f1b5b4a58a6c6627924b24388166502744e5c9937b77def788b3c408fede'
-            'f522b4e736a3405429d8c8d8160526c648a044c79613cd64c020c5b4e0b3e1e045be74ff59b6d8766ccc54aac73b4f043546e34477efc40205e8bdcd9407e60c'
-            '608b4255fbc7092247fe0ca2ab51c42fce96dc6b58db9fb7fa65e805fcffaa7acad59131ddd3cb6e219147ffedcf3b1ff026097387923b075483fff32bfbf84d'
+            '1547210e4b2a64d5fe3d45621d6f17fe91cb38592fc799a446aba6dc4e363b7e16f807e502cc739ce489f637bbfafadaee5657e86e7475edd67e39226e76fd2b'
             '286db9845a005fac92fafd749959419ec7ceca78e50880c31415f3e0477e18d732c763964e743e0e954c0e7b08c25c16793e5caf83d44cfa16033c40f76106b4'
-            'e5e2e30da3618407b753af75d5cbfd2898d33e62871c4c7c92d775e63ffbbe23a6b09894ac1a6e30996218388ebfe5f50d903910eafad20648511c92e6f2133d'
-            '11dc750efc49c43bb945b79504260785453c65fba915ae24beff43f19e541a3dbeb320624c8a3649b04ceabccf7e7f4216776e82ecd54719351d1757ddf2c6c8'
-            '4aa5dbc9b4e7adda5a7248c9c2440ba028c15e48a09460d041bbf8e45dfd689be3978283db98e23f91e5d319779770dddd74e239a6c5ae37e68dee281dba275f'
-            '40d1943593955589cc9e857d3c97543f864857f8f0d928b59edb59e44dd371e565f8830e494934c410d339a8521288a397e10abe547f7abe8f3c2539ec56bef2'
-            '136d3b89ec893907bdd62196cc0b622f4f7ce7cf0dc54f9564b212da22f1f1e41269a0785c0f77318e23f122f81d46e06f0bffa684952ba2542e82d5a993fb87'
-            'feaf80ff80067e6d3fec07e053055a4bcec98b886d81a171fa09ab72c6f4bf6b79c3462dc967d79674d2c3cb5393665ba37d5de0a537195f78e3bb39c9aca3b8'
-            '9bc32100aeb10099c05bd175f422f30f4c415755129e675dfb52212a9f822fcdae40638fe8351eed03816aacf41290837d5a900e81d7d9760e8a8c7c97679ee3')
+            '9bc32100aeb10099c05bd175f422f30f4c415755129e675dfb52212a9f822fcdae40638fe8351eed03816aacf41290837d5a900e81d7d9760e8a8c7c97679ee3'
+            '24ed165a1ea73a6ed7cf840a0d0ef8082e93ff9822ea9c3c4256d7de67deb485c7ca77f9f42f64e857a6f84fc137a73cf2458b08a50dd73caa4a42c7cf4a8f6f'
+            'e07f77097b1ba49cdcbad432225f3b11b8df5dad003624f13bd5c7f33c48c30354486a4b294733d2abc26790f74feb01e334a8ce02adaed435287fe52ac4b91c'
+            '65334e1d6a94b15d28c30a2cf1eb86d40f96f4305308c451ff9b446a59fa98653400c9d5c047535375b5fc96d53dc70877eb20f8378b57516cd7292bec28c6f8'
+            '09c8d37ad34a2a715867ebddab71e9cef8a488114f6f16fe2892d7c45609252ead8a29a8f055ff3a8253a7c96502482a1bed407922dd142ec072af55d3bcecbc'
+            '690ddbebbbce9e0b52c9c401e668226cb0f9cea843d85ff5e5095e990df6a2905189dd9baaf21f71efc8153319a2cec16ded335bfdf40d34dbb2e33925c240ef'
+            '14212332af61a6d055acedc8f12be6f769b49568309d5b357c40b4263d087e83b3f71f2632385c5020d487f0420f978e53fe3c3dc7c3dead75216119412fd03d')
 __version="${pkgver}-${pkgrel}"
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
@@ -233,20 +146,27 @@ prepare() {
     fi
   done
 
-  # fix boost stuff for system-boost
-  find . -name '*.cmake' -or -name 'CMakeLists.txt' -print0 | xargs --null \
-    sed -r \
-    -e 's|Boost::|boost_|g' \
-    -e 's|Boost_|boost_|g' \
-    -e 's|[Bb]oost_boost|boost_system|g' -i || exit 1
+  # === Disable broken tests ===
 
-  # remove tests that require root privileges
-  rm src/test/cli/ceph-authtool/cap*.t
-  sed -i '/add_ceph_test(mgr-dashboard-smoke.sh/d' src/test/mgr/CMakeLists.txt
+  # The ceph tarballs do not include the ceph-erasure-code-corpus submodule so
+  # this test fails with: "FAILED no tests found to run"
+  sed -i '/add_ceph_test(readable.sh/d' src/test/encoding/CMakeLists.txt
 
-  # disable/remove broken tests
-  sed -i '/add_ceph_test(smoke.sh/d' src/test/CMakeLists.txt
-  sed -i '/add_ceph_test(safe-to-destroy.sh/d' src/test/osd/CMakeLists.txt
+  # === Python test & related machinery patching ===
+  #
+  # These are too small (or change too frequently) to be distinct patches, but
+  # are annoying and cause spurious test failures
+
+  # This test fails the entire suite, and doesn't actually test anything (see the TODO).
+  sed -i 's| hap.create_daemon_dirs("/var/tmp", 45, 54)| #hap.create_daemon_dirs("/var/tmp", 45, 54)|' \
+    src/cephadm/tests/test_ingress.py
+
+  # pyfakefs <=5.6.0 do not work on python >=3.13
+  # Note however, the test suite will still partially fail (wants root) but
+  # at least it runs
+  sed -i 's|pyfakefs == 5\.3\.5|pyfakefs == 5.10.2|' src/cephadm/tox.ini
+  sed -i 's|pyfakefs==4\.5\.0|pyfakefs==5.10.2|' src/pybind/mgr/dashboard/requirements-lint.txt
+  sed -i 's|pyfakefs==4\.5\.0|pyfakefs==5.10.2|' src/pybind/mgr/dashboard/requirements-test.txt
 
   # The mgr C++ daemon injects a 'ceph_module' python module into the context
   # of all python mgr modules, but this is absent from test code.
@@ -257,24 +177,12 @@ prepare() {
   #
   # Note: this must be removed from the installed files!
   install -vD src/pybind/mgr/tests/__init__.py src/pybind/ceph_module/__init__.py
-
-  # Monkey patch liburing's includes to forward declare `struct open_how`
-  #
-  # Something in a recent kernel-headers changed so that this is no longer
-  # transitively included.
-  #
-  # See: https://aur.archlinux.org/pkgbase/ceph#comment-1062706
-  # Reported-by: https://aur.archlinux.org/account/daurnimator
-  #
-  # TODO: Remove this patch before v20 (uses a much later liburing version)
-  sed -i '328a\#include <linux/openat2.h>\n' src/liburing/configure
 }
 
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
-  export CFLAGS+=" ${CPPFLAGS}"
-  export CXXFLAGS+=" ${CPPFLAGS}"
+  export CFLAGS+=' -Wno-maybe-uninitialized' CXXFLAGS+=' -Wno-maybe-uninitialized'
   export CMAKE_BUILD_TYPE='RelWithDebInfo'
   export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --ignore=1 || echo "4")
 
@@ -283,11 +191,10 @@ build() {
     -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
-    -DCMAKE_INSTALL_SBINDIR=/usr/bin \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-    -DCEPH_SYSTEMD_ENV_DIR=/etc/default \
-    -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.13 \
+    -DCMAKE_INSTALL_BINDIR=bin \
+    -DCMAKE_INSTALL_SBINDIR=bin \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DENABLE_GIT_VERSION=ON \
     -DWITH_BABELTRACE=OFF \
     -DWITH_LTTNG=OFF \
@@ -313,8 +220,7 @@ build() {
     -DWITH_LZ4=ON \
     -DWITH_XFS=ON \
     -DWITH_MGR=ON \
-    -DWITH_MGR_DASHBOARD_FRONTEND=ON \
-    -DDASHBOARD_FRONTEND_LANGS="en-US" \
+    -DWITH_MGR_DASHBOARD_FRONTEND=OFF \
     -DWITH_RADOSGW=ON \
     -DWITH_RADOSGW_BEAST_OPENSSL=ON \
     -DWITH_RADOSGW_AMQP_ENDPOINT=ON \
@@ -334,10 +240,6 @@ build() {
     -DWITH_TESTS=ON \
     -Wno-dev
 
-  # Ugly, ugly hack until I can figure out what is adding Boost::system to
-  # target_link_libraries
-  sed -i -e 's|-lboost_system ||g' build/build.ninja
-
   cmake --build build -t all tests
 }
 
@@ -350,6 +252,10 @@ check() {
       --progress \
       --output-on-failure \
       || true
+
+    # Expected test failures (as of 2025-11-19T12:01:57Z)
+    # - run-tox-cephadm
+    # - unittest_mds_quiesce_agent
   )
 }
 
@@ -430,21 +336,9 @@ _make_ceph_packages() {
     rm -rv $bin/ceph_multi_stress_watch
     rm -rv $bin/ceph-coverage
 
-    # Old ssh key stuff
-    rm -vf $share/ceph/*drop.ceph*
-
-    # TODO: Move this into a patch
-    # Fix EnvironmentFile location in systemd service files
-    sed -i -e 's|/etc/sysconfig/|/etc/conf.d/|g' $systemd/*.service
-
     # Fix bash completions path
     install -d -m 755 "$share/bash-completion"
     mv -v $etc/bash_completion.d $share/bash-completion/completions
-
-    # TODO: Move this into a patch
-    # Fix sbin dir (cmake opt seems to have no effect)
-    mv -v $sbin/* $bin/
-    rm -vrf $sbin
 
     ###############################################
     #         Ceph core libraries                 #
@@ -523,7 +417,7 @@ _make_ceph_packages() {
 
     _package ceph-osd \
       $bin/ceph-osd \
-      $bin/ceph-{osdomap,bluestore}-tool \
+      $bin/ceph-bluestore-tool \
       $bin/osdmaptool \
       $bin/crushdiff \
       $bin/ceph-objectstore-tool \
@@ -554,7 +448,7 @@ _make_ceph_packages() {
 
     _package librbd \
       $inc/rbd/* \
-      $lib/librbd.so{,.1,.1.19.0} \
+      $lib/librbd.so{,.1,.1.20.0} \
       $lib/ceph/librbd/*
 
     _package ceph-rbd \
@@ -571,9 +465,12 @@ _make_ceph_packages() {
 
     _package libcephfs \
       $inc/cephfs/* \
-      $lib/libcephfs.so{,.2,.2.0.0}
+      $lib/pkgconfig/cephfs.pc \
+      $lib/libcephfs.so{,.2,.2.0.0} \
+      $lib/libcephfs_proxy.so{,.2,.2.0.0}
 
     _package ceph-cephfs \
+      $bin/libcephfsd \
       $bin/cephfs-{data-scan,{journal,table}-tool,mirror} \
       $bin/ceph-fuse \
       $bin/mount.{ceph,fuse.ceph} \
@@ -634,6 +531,7 @@ _make_ceph_packages() {
       $bin/ceph_perf_objectstore \
       $bin/ceph_omapbench \
       $bin/ceph-syn \
+      $bin/ceph-dedup-daemon \
       $man/man8/ceph-syn.8
 
     ###############################################
@@ -749,7 +647,7 @@ package_librados() {
   depends=(
     "ceph-common=${__version}"
 
-    'bash'   'boost-libs'   'fmt'   'lua'   'oath-toolkit'
+    'bash'   'boost-libs'   'fmt'   'lua53'   'oath-toolkit'
   )
   provides=(
     'libradosstriper.so'   'librados.so'
@@ -846,10 +744,10 @@ package_ceph-mgr() {
 
     'sqlite'   'python'   'boost-libs'   'fmt'   'gperftools'
 
-    'python-bcrypt'     'python-cheroot'    'python-cherrypy'   'python-coverage'    'python-dateutil'
-    'python-jinja'      'python-jsonpatch'  'python-packaging'  'python-pecan'       'python-prettytable'
-    'python-pyopenssl'  'python-requests'   'python-scipy'      'python-setuptools'  'python-typing_extensions'
-    'python-urllib3'    'python-werkzeug'   'python-yaml'
+    'python-bcrypt'              'python-cheroot'     'python-cherrypy'    'python-coverage'    'python-dateutil'
+    'python-jinja'               'python-jmespath'    'python-jsonpatch'   'python-packaging'   'python-pecan'
+    'python-prettytable'         'python-pyopenssl'   'python-requests'    'python-scipy'       'python-setuptools'
+    'python-typing_extensions'   'python-urllib3'     'python-werkzeug'    'python-xmltodict'   'python-yaml'
   )
   optdepends=(
     'cephadm: Required if cluster is managed via cephadm'
@@ -905,7 +803,7 @@ package_ceph-mds() {
   depends=(
     "ceph-base=${__version}"
 
-    'lua'   'fmt'   'gperftools'
+    'lua53'   'fmt'   'gperftools'
   )
 
   mv __pkg__/$pkgname/* "$pkgdir"
@@ -924,7 +822,7 @@ package_ceph-rgw() {
     "librgw=${__version}"
 
     'gawk'            'oath-toolkit'   'boost-libs'   'expat'   'gperftools'
-    'librabbitmq-c'   'librdkafka'     'lua'
+    'librabbitmq-c'   'librdkafka'     'lua53'
   )
 
   # Prepare state dirs
@@ -996,7 +894,7 @@ package_ceph-cephfs() {
   depends=(
     "libcephfs=${__version}"
 
-    'fuse3'   'fmt'   'gperftools'   'libcap-ng'   'lua'   'python'
+    'fuse3'   'fmt'   'gperftools'   'libcap-ng'   'lua53'   'python'
   )
   optdepends=(
     "cephfs-shell: Shell access to a CephFS filesystem"
@@ -1012,7 +910,7 @@ package_librgw() {
   depends=(
     "librados=${__version}"
 
-    'librabbitmq-c'   'lua'   'librdkafka'   'expat'   'boost-libs'   'gperftools'
+    'librabbitmq-c'   'lua53'   'librdkafka'   'expat'   'boost-libs'   'gperftools'
   )
   provides=(
     'librgw.so'

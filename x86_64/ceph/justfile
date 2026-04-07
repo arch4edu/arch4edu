@@ -2,19 +2,26 @@ PkgBase       := "ceph"
 ChrootPath    := env_var("HOME") / "chroot"
 ChrootBase    := ChrootPath / "root"
 ChrootActive  := ChrootPath / PkgVer + "_" + PkgRel
+CCacheBase    := env_var("HOME") / "ccache"
+CCacheActive  := CCacheBase / PkgVer
 Scripts       := justfile_directory() / "scripts"
 
 Color         := env_var_or_default("USE_COLOR", "1")
-Chroot        := env_var_or_default("USE_CHROOT", "1")
 
 # Default to listing recipes
 _default:
   @just --list --list-prefix '  > '
 
 # Build the package in a clean chroot
-build:
+build: (_toggle_ccache ChrootBase "0")
   @$Say Building @{{PkgBuild}} via chroot
   makechrootpkg -r {{ChrootPath}} -l {{PkgVer}}_{{PkgRel}} -c -C -n
+
+# Build the package via ccache+chroot for faster rebuilds
+fastbuild: (_toggle_ccache ChrootBase "1")
+  @$Say Building @{{PkgBuild}} via chroot with ccache
+  mkdir -p {{CCacheActive}}
+  makechrootpkg -r {{ChrootPath}} -l {{PkgVer}}_{{PkgRel}} -c -C -n -I ccache -d {{CCacheActive}}:/ccache -- CCACHE_DIR=/ccache CCACHE_SLOPPINESS=locale,time_macros
 
 # Repackage without rebuilding
 repackage:
@@ -37,7 +44,7 @@ mkchroot: (_mkchroot ChrootBase)
 deps:
   pacman -S base-devel util-linux sudo devtools ripgrep --needed --noconfirm
 
-# Clean one or more of: chroot|deps|artifacts|logs
+# Clean one or more of: chroot|deps|artifacts|logs|ccache
 clean +what="chroot":
   #!/usr/bin/env bash
   set -euo pipefail
@@ -56,6 +63,9 @@ clean +what="chroot":
       ;;
       logs|l)
         (set -x; rm -vf *.log)
+      ;;
+      ccache|cc)
+        (set -x ; rm -rf {{CCacheActive}})
       ;;
       *)
         $Say unknown clean directive $item, ignoring
@@ -116,6 +126,23 @@ _upload $pkgstring:
       --tag v{{PkgVer}}-{{PkgRel}} \
       --file "$src:$dst"
   done
+
+_toggle_ccache $cbase $enable:
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  f=$cbase/etc/makepkg.conf
+  if grep -qP '^BUILDENV=\(.+ ccache.+\)' $f; then
+    if (( enable <= 0 )); then
+      $Say Disabling ccache in BUILDENV @$f
+      sed -i -e '/BUILDENV/s| ccache| !ccache|' $f
+    fi
+  else
+    if (( enable > 0 )); then
+      $Say Enabling ccache in BUILDENV @$f
+      sed -i -e '/BUILDENV/s| ccache| !ccache|' $f
+    fi
+  fi
 
 # ~~~ Global shell variables ~~~
 export Say              := "echo " + C_RED + "==> " + C_RESET + BuildId
