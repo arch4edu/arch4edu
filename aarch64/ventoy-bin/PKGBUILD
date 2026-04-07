@@ -4,7 +4,7 @@
 
 pkgname=ventoy-bin
 pkgver=1.1.11
-pkgrel=1
+pkgrel=3
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -45,7 +45,7 @@ sha256sums=('ddcbcbf3341225d0c5df43f1d7cc65de0b8b2131643184c1a3ea359107789faa'
             '51029745da197dded6e007aee3f30f7ea1aa6e898172a6ea176cc2f3a842d0ff'
             '00dec31721a052d5e6c928e3b38b870959bdb42188f34717898d99c0cef950df'
             'ea01c294b772818277a79b055e977550f99313506e874797ed9fe0e7ac7e7d98'
-            'f494cab67b4a5d1a755d693d8de058898c3c0ad4a6c9fb7feb7ecfc0a7662226')
+            '238d91b041c572628ce396a53e072ce30c0fa80ef5263e8915d3549fcfea2fc4')
 
 prepare() {
   cd "${pkgname%-bin}-$pkgver"
@@ -66,7 +66,8 @@ prepare() {
 
   # Log location
   sed -i 's|log\.txt|/var/log/ventoy.log|g' \
-    WebUI/static/js/languages.js tool/{languages.json,ventoy_lib.sh}
+    WebUI/static/js/languages.js tool/languages.json
+  sed -i 's|log.txt|var/log/ventoy.log|g' tool/ventoy_lib.sh
 
   # Non-POSIX compliant scripts
   sed -i 's|bin/sh|usr/bin/env bash|g' \
