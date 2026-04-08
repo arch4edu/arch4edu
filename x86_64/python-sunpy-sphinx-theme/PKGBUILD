@@ -5,8 +5,8 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=2.1.0
-pkgrel=2
+pkgver=2.1.1
+pkgrel=1
 pkgdesc="The sphinx theme for the SunPy website and documentation"
 arch=('any')
 url="https://github.com/sunpy/sunpy-sphinx-theme"
@@ -18,9 +18,12 @@ makedepends=('python-setuptools-scm'
 #            'python-pydata-sphinx-theme'
 checkdepends=('python-nose'    # pydata already in makedepends
               'python-pydata-sphinx-theme')
+#checkdepends=('python-pytest-import-check'
+#              'python-pydata-sphinx-theme'
+#)
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
         'Makefile')
-md5sums=('f4001dffc5373f88ec55e224d4b3c2ab'
+md5sums=('0a68d5033d6da411276520f5ab1a59ea'
          'a6aa4bc42b138d75f938065a0994c3e1')
 
 get_pyver() {
@@ -48,10 +51,11 @@ check() {
 
 #   pytest
     nosetests -v -x || warning "Tests failed"
+#   pytest --import-check -vv -l -ra --color=yes -o console_output_style=count #build/lib
 }
 
 package_python-sunpy-sphinx-theme() {
-    depends=('python-sphinx' 'python-pydata-sphinx-theme')
+    depends=('python-sphinx>=7.3.0' 'python-pydata-sphinx-theme')
     cd ${srcdir}/${_pyname}-${pkgver}
 
     install -D -m644 LICENSE.md -t "${pkgdir}/usr/share/licenses/${pkgname}"
