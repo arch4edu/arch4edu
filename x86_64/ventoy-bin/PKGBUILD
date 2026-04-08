@@ -4,7 +4,7 @@
 
 pkgname=ventoy-bin
 pkgver=1.1.11
-pkgrel=3
+pkgrel=4
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -67,7 +67,8 @@ prepare() {
   # Log location
   sed -i 's|log\.txt|/var/log/ventoy.log|g' \
     WebUI/static/js/languages.js tool/languages.json
-  sed -i 's|log.txt|var/log/ventoy.log|g' tool/ventoy_lib.sh
+  sed -i 's|\./log\.txt|/var/log/ventoy.log|g' \
+    Ventoy2Disk.sh tool/{ventoy_lib,VentoyWorker}.sh
 
   # Non-POSIX compliant scripts
   sed -i 's|bin/sh|usr/bin/env bash|g' \
