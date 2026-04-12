@@ -12,7 +12,7 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.44.8
+pkgver=3.44.9
 pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
@@ -47,20 +47,23 @@ depends=(
   python-owslib
   python-packaging
   python-psycopg2
-  python-pyqt5
-  python-qscintilla-qt5
+  python-pyqt6
+  python-qscintilla-qt6
   python-yaml
-  qca-qt5
-  qscintilla-qt5
-  qt5-3d
-  qt5-base
-  qt5-declarative
-  qt5-imageformats
-  qt5-location
-  qt5-multimedia
-  qt5-serialport
-  qt5-svg
-  qtkeychain-qt5
+  qca-qt6
+  qscintilla-qt6
+  qt6-3d
+  qt6-5compat
+  qt6-base
+  qt6-declarative
+  qt6-imageformats
+  qt6-multimedia
+  qt6-positioning
+  qt6-serialport
+  qt6-svg
+  qt6-tools
+  qt6-webengine
+  qtkeychain-qt6
   qwt
   sqlite
   zlib
@@ -72,7 +75,6 @@ makedepends=(
   ninja
   opencl-clhpp
   pyqt-builder
-  qt5-tools
   sip
 )
 optdepends=(
@@ -81,11 +83,21 @@ optdepends=(
 )
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
-source=("$url/downloads/$_pkgname-$pkgver.tar.bz2")
-sha256sums=('146e197f34f1f9ede8cfdf5b9cc4d76667771720a302172c32d4117367356e96')
+source=("$url/downloads/$_pkgname-$pkgver.tar.bz2"
+        https://github.com/JanCaha/QGIS/commit/67af3cdf8bfd8c482c718beb1452ac7dc0d3bd0c.patch)
+sha256sums=('0a6783ee3eb11cc63a36bde0666302b5b670c585ac08b3e451742a3a243daa4d'
+            '9cc3cc824792d5a3ede3ff499b77c81241a5451952c6e9ae8104c02b37737827')
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+  patch -p1 -i "$srcdir/67af3cdf8bfd8c482c718beb1452ac7dc0d3bd0c.patch"
+}
 
 build() {
   cmake -S $_pkgname-$pkgver -B build -G Ninja \
+    -DBUILD_WITH_QT6=ON \
+    -DWITH_QTWEBKIT=OFF \
+    -DWITH_QTWEBENGINE=ON \
     -DCMAKE_INSTALL_PREFIX='/usr' \
     -DWITH_3D=TRUE \
     -DWITH_QUICK=TRUE \
@@ -94,15 +106,7 @@ build() {
     -DWITH_CUSTOM_WIDGETS=TRUE \
     -DBINDINGS_GLOBAL_INSTALL=TRUE \
     -DQGIS_MANUAL_SUBDIR=share/man \
-    -DWITH_QTWEBKIT=FALSE \
-    -DWITH_QWTPOLAR=TRUE \
-    -DQWTPOLAR_LIBRARY=/usr/lib/libqwt.so \
-    -DQWTPOLAR_INCLUDE_DIR=/usr/include/qwt \
-    -DWITH_INTERNAL_QWTPOLAR=FALSE \
     -DWITH_PDAL=TRUE \
-    -DHAS_KDE_QT5_PDF_TRANSFORM_FIX=TRUE \
-    -DHAS_KDE_QT5_SMALL_CAPS_FIX=TRUE \
-    -DHAS_KDE_QT5_FONT_STRETCH_FIX=TRUE \
     -DWITH_INTERNAL_SPATIALINDEX=TRUE # https://github.com/libspatialindex/libspatialindex/issues/276
     # https://github.com/qgis/QGIS/issues/48374
     #-DWITH_INTERNAL_LAZPERF=FALSE \
