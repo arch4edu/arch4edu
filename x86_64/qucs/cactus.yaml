@@ -2,7 +2,6 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/adms
   - x86_64/qt4
 makedepends:
   - x86_64/cmake3
