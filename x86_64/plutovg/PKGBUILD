@@ -1,8 +1,8 @@
-# Maintainer:
+# Maintainer: aur.chaotic.cx
 
 _pkgname="plutovg"
 pkgname="$_pkgname"
-pkgver=1.3.2
+pkgver=1.3.3
 pkgrel=1
 pkgdesc="Tiny 2D vector graphics library in C"
 url="https://github.com/sammycage/plutovg"
@@ -22,7 +22,7 @@ provides=('libplutovg.so')
 
 _pkgsrc="$_pkgname"
 source=("$_pkgsrc"::"git+$url.git#tag=v$pkgver")
-sha256sums=('72952e7aab0ead0e2d667674699f63435f69421fac3fbe1ff4280900f73f093e')
+sha256sums=('03b09bab72cea11e56814b0821e7e046934d72ee224c10c91653fde8fb4aae31')
 
 build() {
   local _cmake_options=(
