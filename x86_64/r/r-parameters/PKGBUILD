@@ -1,7 +1,7 @@
 # Maintainer: Hu Butui <hot123tea123@gmail.com>
 
 _pkgname=parameters
-_pkgver=0.28.3
+_pkgver=0.29.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -29,6 +29,7 @@ optdepends=(
   r-brms
   r-broom
   r-broom.mixed
+  r-bsda
   r-caic4
   r-car
   r-cardata
@@ -75,6 +76,7 @@ optdepends=(
   r-ivreg
   r-knitr
   r-lavaan
+  r-lavaan.mi
   r-lcmm
   r-lfe
   r-lm.beta
@@ -82,6 +84,7 @@ optdepends=(
   r-lmertest
   r-lmtest
   r-logistf
+  r-logitr
   r-logspline
   r-lqmm
   r-m3c
@@ -96,6 +99,7 @@ optdepends=(
   r-mfx
   r-mice
   r-mmrm
+  r-modelbased
   r-multcomp
   r-mumin
   r-mvtnorm
@@ -140,12 +144,10 @@ optdepends=(
   r-weightit
   r-withr
   r-wrs2
-  r-logitr
-  r-modelbased
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ee18bb59bfcfab6b6dd725fda5600e6d')
-b2sums=('c68ac65e7ccf27b0993204c986c582cfdda16ca233ce7ca41eccf47790814d82d6a560b89ea4986c872f227f58246472dddac9a5cc63e836902350ff15c2a011')
+md5sums=('aadf1a61e3fab1b2e4da916a0907f568')
+b2sums=('585aec4f5b2950b641dce8a8657fd6ba9a9d62e88b2c53358c6e68da11266e46dd61b86c36d8535aac4daaad4e32648a7cc13bd37a791847306524b94f785e95')
 
 build() {
   mkdir build
