@@ -2,8 +2,8 @@
 _base=cppimport
 pkgname=python-${_base}
 pkgdesc="Import C++ files directly from Python!"
-pkgver=22.08.02
-pkgrel=7
+pkgver=26.04.17
+pkgrel=1
 arch=(any)
 url="https://github.com/tbenthompson/${_base}"
 license=(MIT)
@@ -11,7 +11,7 @@ depends=(python-mako pybind11 python-filelock)
 makedepends=(python-build python-installer python-setuptools-scm python-wheel)
 checkdepends=(python-pytest)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('8487672eeaa92ad6711f4328d8b082e2780aaaee2d9cf89560b61f01e95f200c91247db94bf7a07a5b15aff86ce4400d05acce28f19f623b2e62432f97531ef0')
+sha512sums=('71888a3485a278e92a832c2aabbda7deec957f647ff4baad2c6c942c7f6367ca678ee613043f4f814ae4d7a55c1ba9059fc5295abf7c97b24e2f6ad5d7340fa5')
 
 build() {
   cd ${_base}-${pkgver}
