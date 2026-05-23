@@ -3,7 +3,7 @@
 
 pkgname=lesstif
 pkgver=0.95.2
-pkgrel=9
+pkgrel=10
 pkgdesc="LGPL'd re-implementation of Motif"
 arch=('i686' 'x86_64')
 url="http://sourceforge.net/projects/lesstif/"
