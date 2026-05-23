@@ -4,7 +4,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=magrittr
-_cranver=2.0.4
+_cranver=2.0.5
 pkgname=r-${_cranname,,}
 pkgdesc="A Forward-Pipe Operator for R"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -44,7 +44,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("3324d54f49929d4a8b20ebacbed04042e24bc5c7916bd09aa52257b826e333645c8df8f70fb3631d184993c486f0d67523c29412861208fbe42f3ebb9f6d909d")
+b2sums=("74d89eb51fe582997b68094ce982c658f00618e1024b1755d4a091306458ebf7ad941a103f3fa8e3d2b071718f92e6c2d7fdb1f49361c76777826a0b9fddc8a2")
 
 build() {
     mkdir -p "${srcdir}/build/"
