@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=datawizard
-_pkgver=1.3.0
+_pkgver=1.3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,6 +21,7 @@ optdepends=(
   r-dplyr
   r-effectsize
   r-emmeans
+  r-fixest
   r-gamm4
   r-ggplot2
   r-gt
@@ -31,6 +32,7 @@ optdepends=(
   r-mediation
   r-modelbased
   r-nanoparquet
+  r-openssl
   r-parameters
   r-performance
   r-poorman
@@ -44,12 +46,12 @@ optdepends=(
   r-testthat
   r-tibble
   r-tidyr
-  r-withr
   r-tinytable
+  r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e46be1e38941442afbe791f03d1db3fe')
-b2sums=('743f939aa641f98b0de0995e812ccec74c445f560de1b2006771027b28d0c7dd4c0e1aea04a5a5784058a62fcc9683ad32fb559eb8800362af7fec38d1195276')
+md5sums=('2a97e7a3c1db0e6283fd4832262beb53')
+b2sums=('98f537781a033c857045c00153550fc027593ecae1661c325106d0e6d21818e83ec7af64237717b78a83c74eef0973028109fbb33083350dca50dab99e62d5c7')
 
 build() {
   mkdir build
