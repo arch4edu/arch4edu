@@ -5,7 +5,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=2.1.1
+pkgver=2.2.1
 pkgrel=1
 pkgdesc="The sphinx theme for the SunPy website and documentation"
 arch=('any')
@@ -23,7 +23,7 @@ checkdepends=('python-nose'    # pydata already in makedepends
 #)
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz"
         'Makefile')
-md5sums=('0a68d5033d6da411276520f5ab1a59ea'
+md5sums=('7a515cf8111940f8a7953b52fd115496'
          'a6aa4bc42b138d75f938065a0994c3e1')
 
 get_pyver() {
@@ -55,7 +55,7 @@ check() {
 }
 
 package_python-sunpy-sphinx-theme() {
-    depends=('python-sphinx>=7.3.0' 'python-pydata-sphinx-theme')
+    depends=('python-sphinx>=7.3.0' 'python-pydata-sphinx-theme' 'python-sphinxext-opengraph>=0.13')
     cd ${srcdir}/${_pyname}-${pkgver}
 
     install -D -m644 LICENSE.md -t "${pkgdir}/usr/share/licenses/${pkgname}"
