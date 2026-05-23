@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=cpp11
-_pkgver=0.5.4
+_pkgver=0.5.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -44,8 +44,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2397bc2d5d5c1993feb7954660c4a5d2')
-b2sums=('5df3d687d067b9c43a1e0664ae18fb7d380c9efcd9733393681db6ab28dfadc23a9dd5b6de233ccfc8c948990e8732b98cb451a793782a16a3d42912d9eba967')
+md5sums=('7c4c3f58ffa7adec25b85d0d99c0d7ed')
+b2sums=('82d163e0b162dad1e90f47d6509c4ea616a146fb36224ec3ca442fb650b2cb84dc4dacd97a3f9926935583ebd39d08d79f924ca7cfe388256cf48a0e982f5926')
 
 build() {
   mkdir build
