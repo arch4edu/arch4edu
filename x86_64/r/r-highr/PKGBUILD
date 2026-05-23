@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=highr
-_pkgver=0.11
+_pkgver=0.12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,8 +25,8 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6d32bee4188607bcc5d3676c5cd55197')
-b2sums=('5634ac9ecc714480ae858f45f9978b6b2d93f6c0885a95e8ee41c09443b3a0e0cd7f15225f6141f781d0bd1dcf22881db9b1da62fbf45ec809884de9d4ab3b4b')
+md5sums=('006fcfa8e16c72ecd1adffdf0cf87e43')
+b2sums=('264d5380f4b90ef39efb830cd912ade9b928afd2969824b6eddf69506563d8934c30e291e4ec98baf83f24f084e223ade6f38a9a52ece569475f023d412483ae')
 
 build() {
   mkdir build
