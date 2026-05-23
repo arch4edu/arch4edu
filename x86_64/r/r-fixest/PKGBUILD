@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=fixest
-_pkgver=0.14.0
+_pkgver=0.14.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -34,8 +34,8 @@ optdepends=(
   r-tinytex
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1b060230d38e4ec6df385a6be0ea1d6a')
-b2sums=('6e0607c0d43a3e3a5003850f651d82143823c47c1f94c39fa54d035cfbfa6f8661bb8859c5da13c3fdda34e7b7f46a19ec073a5a22403f70377cb7b79b905038')
+md5sums=('e969d8fbf2dd5996dd41decb159058fa')
+b2sums=('44183382dfd887583e3c92e74205c95704b824c0e705649060e23846db3de7f11149f10059fe7db6fa8b5e1625f3a7a968529079a6da0013aafea3b1726165ba')
 
 build() {
   mkdir build
