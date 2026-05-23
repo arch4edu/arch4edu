@@ -4,7 +4,7 @@
 pkgname=zoom
 pkgver=7.0.0
 _subver=1666
-pkgrel=1
+pkgrel=2
 pkgdesc="Video Conferencing and Web Conferencing Service"
 arch=('x86_64')
 license=('LicenseRef-zoom')
