@@ -2,13 +2,13 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=units
-_cranver=1.0-0
+_cranver=1.0-1
 pkgname=r-${_cranname,,}
 pkgdesc="Measurement Units for R Vectors"
 url="https://cran.r-project.org/package=units"
 license=("GPL2")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
@@ -52,7 +52,7 @@ optdepends=(
 # )
 
 source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("5e9c871c763fa7ea3747bdd8f728b516f0a2e781c8312f91c40120de1b136da037d91da0dabe8e7b05999a44be2d2f344d325eae59701a1905fca9daeab39223")
+b2sums=('b0357314050cec37c2914b1545252f498c6a85863d19675767ef910f9e36de234d3b12bbfbf93e6ca9251550e2acf77834b186aab5989b1c40ad683e35c0326d')
 
 build() {
     mkdir -p "${srcdir}/build/"
