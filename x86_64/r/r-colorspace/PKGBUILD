@@ -1,13 +1,13 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=colorspace
-_cranver=2.1-1
+_cranver=2.1-2
 pkgname=r-${_cranname,,}
 pkgdesc="A Toolbox for Manipulating and Assessing Colors and Palettes"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("BSD")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
@@ -37,7 +37,7 @@ optdepends=(
 makedepends=()
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("d18a20e16912775946f2afff2ad25e84d3275020134ae74a2e48d354414e8ce69334a3589bbfdff6617d1d447029abe29a95573854fe139054c6848348844bfb")
+b2sums=('0d68b13ed0a9bf743362e35a574f5889a338e48ce74d98a2647add3dd1133b6927d7e53adbb366c881cabbc42c3f0b1b84003923edf2fa516e11a4b2991ab610')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
