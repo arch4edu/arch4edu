@@ -4,13 +4,13 @@
 # Contributor: clintval <valentine.clint@gmail.com>
 # Contributor: Grey Christoforo <first name at last name dot net>
 _cranname=cli
-_cranver=3.6.5
+_cranver=3.6.6
 pkgname=r-${_cranname,,}
 pkgdesc="Helpers for Developing Command Line Interfaces"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 arch=("i686" "x86_64")
 depends=(
     "r>=3.4"
@@ -55,7 +55,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('bdc1ad647b3e33d8e39be07458e2f5b2858a2035cca8d76351486b13ff4593241c97ebb5d8125abb1afbb707c94d8f1e61277d7745d39b51d04517d0c95dd221')
+b2sums=('d42aeed1b9a6d390ce3ca56583f1833dd6365c184383954739ee452a40cd09012e5c3dea7df6eb731d105026a084db06d2fa3acbe4e01db9171eb227cdd8039c')
 
 build() {
     mkdir -p "${srcdir}/build/"
