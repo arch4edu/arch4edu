@@ -2,7 +2,7 @@
 # Contributor: peippo <christoph+aur@christophfink.com>
 
 _cranname=data.table
-_cranver=1.18.2.1
+_cranver=1.18.4
 pkgname=r-${_cranname,,}
 pkgdesc="Extension of ‘data.frame’"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -11,21 +11,21 @@ pkgver=${_cranver//[:-]/.}
 pkgrel=1
 arch=("i686" "x86_64")
 depends=(
-    "r>=3.3.0"
+    "r>=3.4.0"
     "zlib"
 )
 optdepends=(
     "r-bit64>=4.0.0"
     "r-bit>=4.0.4"
     "r-knitr"
-    "r-r.utils"
+    "r-r.utils>=2.13.0"
     "r-rmarkdown"
     "r-xts"
     "r-yaml"
     "r-zoo>=1.8.1"
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('cc8cb110752d699fea5d69ccbfccedc29dcae73e85801657f4a054bfc1d5dd9e5dae2291b38cfb6d370829cf0f559fb056871e2bf30bb4613643bf7937e9c221')
+b2sums=('39305a4d60ebae6fb701f8375581b5fa1b4a2cb933e053cf438677779538dd3cd9c96c4778f7bafc1ac84cf7227a1116f6710bdaf9c6cd3eaccd3e3b0fd40e7b')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
