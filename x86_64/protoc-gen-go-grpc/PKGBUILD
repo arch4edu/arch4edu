@@ -2,7 +2,7 @@
 # Contributor: Aliaksandr Mianzhynski <amenzhinsky@gmail.com>
 
 pkgname="protoc-gen-go-grpc"
-pkgver=1.6.1
+pkgver=1.6.2
 pkgrel=1
 epoch=1
 pkgdesc="gRPC bindings generator for Go language"
@@ -26,7 +26,7 @@ _pkgsrc="${url##*/}-cmd-${pkgname}-v${pkgver}"
 source=(
   "${url}/archive/refs/tags/cmd/${pkgname}/v${pkgver}/${_pkgsrc}.tar.gz"
 )
-sha256sums=('9dae3e712ceda8f3740511632bdb18872387bc4642131d05d190e65483f4a422')
+sha256sums=('a5f284c76292c8f4460aa57d0dfe81ee44f4670082a575f43324523ec6ef15e7')
 
 prepare() {
   export GOMODCACHE="${srcdir}/go-mod-cache"
@@ -56,8 +56,7 @@ build() {
 
 package() {
   cd "${srcdir}/${_pkgsrc}"
-  install -vDm755 "build/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
-  install -vDm644 "README.md"  "${pkgdir}/usr/share/doc/${pkgname}/README.md"
-  install -vDm644 "LICENSE"    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  install -vDm644 "NOTICE.txt" "${pkgdir}/usr/share/licenses/${pkgname}/NOTICE"
+  install -vDm755 "build/${pkgname}" -t "${pkgdir}/usr/bin"
+  install -vDm644 "README.md" -t "${pkgdir}/usr/share/doc/${pkgname}"
+  install -vDm644 "LICENSE" "NOTICE.txt" -t "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
