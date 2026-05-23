@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=nleqslv
-_pkgver=3.3.6
+_pkgver=3.3.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,12 +14,15 @@ depends=(
   lapack
   r
 )
+optdepends=(
+  r-testthat
+)
 makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8f5cad9c43dc5360b37bf271607a9a19')
-b2sums=('f1a3003ef330a03067c8f6830eb28a34d7c9a2e4ff5839dce0cec2264f07d444aa64e55af7adcc0989de0a7858fd91b6653ac791a22fec79a6026c5ff5e2b776')
+md5sums=('ec0e8fd1bafe686ed34d33298fbf02ed')
+b2sums=('5d02914b55c13499412f9c1dc6a3e53ae7cdee2fc3b095a1c58b88a5ab369b04a06a86832f88ff1ae03d4e46e65949344f76981fa4f87c23544672a1e6d42124')
 
 build() {
   mkdir build
