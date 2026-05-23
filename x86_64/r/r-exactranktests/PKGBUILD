@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=exactRankTests
-_pkgver=0.8-36
+_pkgver=0.8-37
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3a31d74c38dda248bab9d5725286cddb')
-b2sums=('08391486f04fbbe265856e4701d407afd0abfbaf0713b9994bd643412a0ad2d7d67cfc541558e83d00e0d884e5e861b9277bf9340f73ce36fa3ce9a97c0fdf47')
+md5sums=('6d9c70d1db292600dc2f227128742ea1')
+b2sums=('1012199541adcf3def02f3af340fafa8b55cae99713dfbe663ac908a1195d80a4d18458fce4a200a9f065351962704945bd571499316a4933f4089d2958e9985')
 
 build() {
   mkdir build
