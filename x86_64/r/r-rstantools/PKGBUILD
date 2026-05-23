@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rstantools
-_pkgver=2.5.0
+_pkgver=2.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -32,8 +32,8 @@ optdepends=(
   r-usethis
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1450094355f080a6fb1b998dd09d4b84')
-b2sums=('df13d7b3eeb560eaa1d0d50d6bd43d88f71657a5d8923ef7c71cc00529c35350ea486905775d4ecce42724a8bcfba7f8550c1b819bf78f83f3853722dbeb05c3')
+md5sums=('1201be7b7001a4b5e0a9168bb275520a')
+b2sums=('b8d9dec09cb803d467c773cfe44c6cfd016531475fdc6fb9259f4311f53bb699978f21075e869288a3b185bf1650aaac9b7430e2ef8155ec45da8b7893de411c')
 
 build() {
   mkdir build
