@@ -5,20 +5,20 @@
 # Contributor: Blair Bonnett <blair dot bonnett at gmail dot com>
 pkgname=micromamba
 _pkgname=${pkgname/micro/}
-pkgver=2.5.0
-pkgrel=3
+pkgver=2.6.2
+pkgrel=1
 pkgdesc="The fast cross-platform package manager"
 arch=(i686 x86_64)
 url="https://github.com/${_pkgname}-org/${_pkgname}"
 license=(BSD-3-Clause)
-depends=(python fmt libsolv reproc yaml-cpp simdjson)
+depends=(python fmt libsolv reproc yaml-cpp simdjson msgpack-c)
 makedepends=(cli11 spdlog tl-expected nlohmann-json cmake pybind11 ninja
   python-build python-installer python-scikit-build-core)
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz"
   etc-install.patch::https://github.com/mamba-org/mamba/commit/3dec9c0bc0e424749c649eae96de92c323e3b3d3.patch
   static-off.patch)
-sha512sums=('3deb0eef480aa011e9095ba5d2ab3d22539464df34aa98540ac9a7855d23aa9daa484ed77cee6e98a79bad2c96591fe37e3c1957c435c4fafec9e6ddc9c2019b'
-            '4e9230098bc1409e771d06811267c44d4ce95ce71ba9e5a2b63605e21302c94359d531a8f528944f09c76382468efda62daf51de171364c9198b2297111dff0e'
+sha512sums=('d27f26ac6f32ff55d06d0e6bfa2ff69317ff5128470bf92c33fe4b52d72dffdea782d0f4478927f8749660fb9c630ddf1b3b65e4f5ac7a918fd68663ff6b44c7'
+            '2fcbaf269412225fdf5e3afc9e5d8c8122b24ad9e576cb9ba8fdb6050c1d4ac61aa0dbc38f482b41b9c586a3a25ad773e141e302a50e25dacda00fa85ca15212'
             '36c1ff684597251aba0de64cfee372212cdfe51890e584c15798b37bd41c02ed929596368b2c743934cfab89ce31bf9ac6ba9ee7f17ab038feb87fdecbadf1d8')
 provides=(
   "libmamba=${pkgver}"
@@ -48,6 +48,7 @@ build() {
     -D BUILD_SHARED=ON \
     -D CMAKE_BUILD_WITH_INSTALL_RPATH=ON
   cmake --build build --parallel "$(nproc)"
+  # temporary install for use by libmambapy’s build via `-Dlibmamba_ROOT=…`
   cmake --install build --prefix install
 
   cd "${_pkgname}-${pkgver}/libmambapy"
