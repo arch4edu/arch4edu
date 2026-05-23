@@ -3,8 +3,8 @@
 # Contributor: KokaKiwi <kokakiwi+aur@kokakiwi.net>
 
 pkgname=ventoy-bin
-pkgver=1.1.11
-pkgrel=4
+pkgver=1.1.12
+pkgrel=1
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
@@ -37,7 +37,7 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}-extend-persistent"
         "${pkgname%-bin}.desktop"
         'sanitize.patch')
-sha256sums=('ddcbcbf3341225d0c5df43f1d7cc65de0b8b2131643184c1a3ea359107789faa'
+sha256sums=('04620b546bcc5eeeb5971767595b3713ee3de71580a82449053c53a7cb32fcd9'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
             'c3d4463a878a89d96e5f0bc4e1a43e48f27af5965bd4c977567695d7cf91fe5f'
@@ -51,10 +51,10 @@ prepare() {
   cd "${pkgname%-bin}-$pkgver"
 
   # Decompress tools
-  pushd tool/$CARCH
+  pushd "tool/${CARCH}"
   for file in *.xz; do
-    xzcat $file > ${file%.xz}
-    chmod +x ${file%.xz}
+    xzcat "${file}" > "${file%.xz}"
+    chmod +x "${file%.xz}"
   done
 
   # Cleanup .xz crap
@@ -77,7 +77,7 @@ prepare() {
   # Clean up unused binaries
   # Preserving mkexfatfs and mount.exfat-fuse because exfatprogs is incompatible
   for binary in xzcat hexdump; do
-    rm -fv tool/$CARCH/$binary
+    rm -fv "tool/${CARCH}/${binary}"
   done
 }
 
@@ -86,7 +86,7 @@ package() {
   install -Dm644 -vt      "$pkgdir/opt/${pkgname%-bin}/boot/"            boot/*
   install -Dm644 -vt      "$pkgdir/opt/${pkgname%-bin}/${pkgname%-bin}/" "${pkgname%-bin}"/*
   install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/tool/"            tool/*.{cer,glade,json,sh,xz}
-  install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/tool/$CARCH/"     tool/$CARCH/*
+  install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/tool/${CARCH}/"     "tool/${CARCH}"/*
   install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/"                 *.sh
   cp --no-preserve=o -avt "$pkgdir/opt/${pkgname%-bin}/"                 plugin WebUI
 
@@ -96,13 +96,13 @@ package() {
 
   # Link system binaries
   for binary in xzcat hexdump; do
-    ln -svf /usr/bin/$binary "$pkgdir/opt/${pkgname%-bin}/tool/$CARCH/"
+    ln -svf "/usr/bin/${binary}" "$pkgdir/opt/${pkgname%-bin}/tool/${CARCH}/"
   done
 
   install -Dm755 "$srcdir/${pkgname%-bin}"{,gui,web,plugson,-{,extend-}persistent} -vt "$pkgdir"/usr/bin/
 
   # Remove Gtk 2 files
-  if [ $CARCH == "x86_64" ]; then
-    rm "$pkgdir/opt/${pkgname%-bin}/tool/$CARCH/Ventoy2Disk.gtk2"
+  if [ "${CARCH}" == "x86_64" ]; then
+    rm "$pkgdir/opt/${pkgname%-bin}/tool/${CARCH}/Ventoy2Disk.gtk2"
   fi
 }
