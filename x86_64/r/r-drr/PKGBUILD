@@ -2,10 +2,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=DRR
-_pkgver=0.0.4
+_pkgver=0.0.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Dimensionality Reduction via Regression"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('54da2f97bd8b0dd57137f98523c3fa0a')
-b2sums=('d28e1e3a8bb13369318dca0913ecdac374bbaddd88ffe1de46185e38f52c79ff4ebb1f8ad592e155835317dd49a62b21063bee844210a19517320381862aa4c3')
+md5sums=('1583bed8db8ef77e7e96a86978db011c')
+b2sums=('167361d9ca9f379ebf86aaeb6334af3b6a2a0225f84d9aef2b1aa3e77a4556f0999ebb4a96a662e594b416e2cb76026a2ba4f422cc965be7c4f358413e66a620')
 
 build() {
   mkdir build
