@@ -7,12 +7,12 @@
 
 : ${_install_path:=usr/lib}
 
-: ${_commit:=5602f73f90c1fce7bb7683f17ba530c4121abadb} # 2025.12.8
+: ${_commit:=3bf09ad687c03b3d7ff80e9a7bef2d58c86f415d} # 2026.4
 _llvm_ver_maj=$(LC_ALL=C pacman -Si llvm | grep -Pom1 '^Version\s+:\s+\K[0-9]+')
 
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2025.12.8
+pkgver=2026.4
 pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url="https://github.com/petermost/Sourcetrail"
