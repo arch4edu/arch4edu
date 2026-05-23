@@ -5,7 +5,7 @@
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
 pkgver=20.2.1
-pkgrel=1
+pkgrel=3
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later' 'LGPL-3.0-or-later')
@@ -104,6 +104,12 @@ source=(
   # Fixes to a few non-configurable installation paths that do not match
   # Archlinux conventions
   'ceph-20.2.0-cmake-install-fixes.patch'
+
+  # Boost 1.91 broke some stuff, so fix that up
+  'ceph-20.2.1-backport-boost-191-fixes.patch'
+
+  # gcc 16 also broke some things, so get those fixed up too
+  'ceph-20.2.1-backport-gcc16-fixes.patch'
 )
 sha512sums=('bd178ddd5efa532c90bc7633892452d49570da71cc9cb8a448048a51f4e1487a59dba05bea78cc2e6c9c75d112ed6a4f5613f5ce7f30b107682c2be620f5e1a5'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
@@ -121,7 +127,9 @@ sha512sums=('bd178ddd5efa532c90bc7633892452d49570da71cc9cb8a448048a51f4e1487a59d
             '65334e1d6a94b15d28c30a2cf1eb86d40f96f4305308c451ff9b446a59fa98653400c9d5c047535375b5fc96d53dc70877eb20f8378b57516cd7292bec28c6f8'
             '09c8d37ad34a2a715867ebddab71e9cef8a488114f6f16fe2892d7c45609252ead8a29a8f055ff3a8253a7c96502482a1bed407922dd142ec072af55d3bcecbc'
             '690ddbebbbce9e0b52c9c401e668226cb0f9cea843d85ff5e5095e990df6a2905189dd9baaf21f71efc8153319a2cec16ded335bfdf40d34dbb2e33925c240ef'
-            '14212332af61a6d055acedc8f12be6f769b49568309d5b357c40b4263d087e83b3f71f2632385c5020d487f0420f978e53fe3c3dc7c3dead75216119412fd03d')
+            '14212332af61a6d055acedc8f12be6f769b49568309d5b357c40b4263d087e83b3f71f2632385c5020d487f0420f978e53fe3c3dc7c3dead75216119412fd03d'
+            '46866375f573505c04652b5679cecb138d8d53d772ace54e45a1e557bf0fe009e03d657b44cdbc33d8f96746760ae1c969ce2e30d0ea4a7933aa3ff28b9e2b4e'
+            'be44fae301ce3dc2cba90d3ef33849d3e4d5c0878948c2b389200e0cde9eb2e118d8b694f3b6343f86686d4c60988dd43ebc3408317cd0cfcdadbf0ed1ac38d2')
 __version="${pkgver}-${pkgrel}"
 
 # -fno-plt causes linker errors (undefined reference to internal methods)

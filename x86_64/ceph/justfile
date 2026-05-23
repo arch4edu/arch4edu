@@ -135,12 +135,12 @@ _toggle_ccache $cbase $enable:
   if grep -qP '^BUILDENV=\(.+ ccache.+\)' $f; then
     if (( enable <= 0 )); then
       $Say Disabling ccache in BUILDENV @$f
-      sed -i -e '/BUILDENV/s| ccache| !ccache|' $f
+      arch-nspawn $cbase sed -i -e '/BUILDENV/s| ccache| !ccache|' /etc/makepkg.conf
     fi
   else
     if (( enable > 0 )); then
       $Say Enabling ccache in BUILDENV @$f
-      sed -i -e '/BUILDENV/s| ccache| !ccache|' $f
+      arch-nspawn $cbase sed -i -e '/BUILDENV/s| !ccache| ccache|' /etc/makepkg.conf
     fi
   fi
 
