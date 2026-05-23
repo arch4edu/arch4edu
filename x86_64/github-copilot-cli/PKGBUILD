@@ -6,7 +6,7 @@ _npmmodule=@github/copilot
 pkgname=github-copilot-cli
 _pkgexec=copilot
 
-pkgver=1.0.24
+pkgver=1.0.51
 pkgrel=1
 
 pkgdesc="GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal."
@@ -30,8 +30,8 @@ source=("https://registry.npmjs.org/${_npmmodule}/-/copilot-${pkgver}.tgz"
 		"CHANGELOG-${pkgver}.md::${_urlraw}/changelog.md")
 noextract=("copilot-${pkgver}.tgz")
 
-b2sums=('f9c742dd1738cd72ac6b78b2d03be28ca7556c2528186208c356c3dcb3bee9742dcb3c10b912b663a5359e6c45b92609b2257948f83923f3383609643a5bfeb2'
-        '410d7da4449b02fa2f8932dc86cd4f646e6128435b26be3b210993b0fa766541bfbc1fd71c5b90fb2bad30e85214696efcb42d92bbf533dd67d8c1a029585226')
+b2sums=('807b1f6385f5b83e610340846c78a0f7e13b891493368565e611891094a47827c8688cf88026a4a970b21f818b79ff0ad952b7bff95677401730e7a7ca5518f8'
+        '6c5a48f7577d052079f8eece268f1c30be51e68cc4dab7275cdef91c5e2b5830f8f8feaa79cb3cb824497c2caa8ac168dfae3d310f51c90f3b9198f357fc3bdd')
 
 # Document: https://wiki.archlinux.org/title/Node.js_package_guidelines
 package() {
@@ -62,6 +62,18 @@ package() {
 		mv "${tmppackage}" "${pkgjson}"
 		chmod 644 "${pkgjson}"
 	done
+
+	msg2 "Generating autocompletions for Bash"
+	"${pkgdir}/usr/bin/copilot" completion bash > copilot
+	install -Dm644 copilot "${pkgdir}/usr/share/bash-completion/completions/copilot"
+
+	msg2 "Generating autocompletions for Zsh"
+	"${pkgdir}/usr/bin/copilot" completion zsh > _copilot
+	install -Dm644 _copilot "${pkgdir}/usr/share/zsh/site-functions/_copilot"
+
+	msg2 "Generating autocompletions for Fish"
+	"${pkgdir}/usr/bin/copilot" completion fish > copilot.fish
+	install -Dm644 copilot.fish "${pkgdir}/usr/share/fish/vendor_completions.d/copilot.fish"
 
 	msg2 "Install README file"
 	install -dm755 "${pkgdir}/usr/share/doc/${pkgname}/"
