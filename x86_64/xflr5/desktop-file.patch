@@ -1,0 +1,60 @@
+Index: linux/xflr5.desktop
+===================================================================
+--- linux/xflr5.desktop	(revision 1505)
++++ linux/xflr5.desktop	(working copy)
+@@ -1,18 +0,0 @@
+-[Desktop Entry]
+-Categories=Science;Math
+-Comment=xflr5 - Airfoil and plane analysis tool
+-Exec=/usr/local/bin/xflr5
+-GenericName=
+-Icon=/usr/local/share/xflr5/xflr5.png
+-MimeType=
+-Name=xflr5
+-NoDisplay=false
+-Path=
+-StartupNotify=true
+-Terminal=false
+-TerminalOptions=
+-Type=Application
+-X-DBUS-ServiceName=
+-X-DBUS-StartupType=
+-X-KDE-SubstituteUID=false
+-X-KDE-Username=
+Index: linux/xflr5.desktop.in
+===================================================================
+--- linux/xflr5.desktop.in	(nonexistent)
++++ linux/xflr5.desktop.in	(working copy)
+@@ -0,0 +1,18 @@
++[Desktop Entry]
++Categories=Science;Math
++Comment=xflr5 - Airfoil and plane analysis tool
++Exec=$${PREFIX}/bin/xflr5
++GenericName=
++Icon=$${SHAREDIR}/xflr5.png
++MimeType=
++Name=xflr5
++NoDisplay=false
++Path=
++StartupNotify=true
++Terminal=false
++TerminalOptions=
++Type=Application
++X-DBUS-ServiceName=
++X-DBUS-StartupType=
++X-KDE-SubstituteUID=false
++X-KDE-Username=
+Index: xflr5v6/xflr5v6.pro
+===================================================================
+--- xflr5v6/xflr5v6.pro	(revision 1505)
++++ xflr5v6/xflr5v6.pro	(working copy)
+@@ -70,7 +70,8 @@
+     BINDIR = $$PREFIX/bin
+     SHAREDIR = $$PREFIX/share/xflr5
+ 
+-    desktop.path = $$(HOME)/.local/share/applications
++    QMAKE_SUBSTITUTES += ../linux/$${TARGET}.desktop.in
++    desktop.path = $${PREFIX}/share/applications
+     desktop.files += ../linux/$${TARGET}.desktop
+ 
+     icon128.path = $$SHAREDIR
