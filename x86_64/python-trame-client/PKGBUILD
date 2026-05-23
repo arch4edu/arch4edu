@@ -2,16 +2,16 @@
 _base=trame-client
 pkgname=python-${_base}
 pkgdesc="Internal client of trame"
-pkgver=3.11.4
+pkgver=3.12.2
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
 license=(MIT)
 depends=(python-trame-common)
-makedepends=(python-build python-installer python-setuptools python-wheel nodejs npm)
+makedepends=(python-build python-installer python-setuptools nodejs npm)
 checkdepends=(python-pytest-xprocess python-pillow python-pixelmatch python-playwright)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('4275c061e1122385d9a3544f172da0662d02bbbbb9100835e05152740bc237e3aaaac8be62004a82f0e489f8ef45059ce7831203bea1947055223f580eda150e')
+sha512sums=('6c9c532169cdf21c09741c5ab72266158664883b61a5e5f467a884397b1422dbfe4e9434a113bb5b480fc3622187f2d891a58908952c140b67166af037c11c4b')
 
 build() {
   cd ${srcdir}/${_base}-${pkgver}/vue2-app
