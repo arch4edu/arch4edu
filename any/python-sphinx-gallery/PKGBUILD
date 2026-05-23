@@ -5,8 +5,8 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=0.20.0
-pkgrel=3
+pkgver=0.21.0
+pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
 url="http://sphinx-gallery.github.io"
@@ -27,7 +27,7 @@ checkdepends=('python-pytest-cov'
 ##              'python-joblib'
 ##             'mayavi'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('b1bb113c129e22496ee4f1d602b194ad')
+md5sums=('9821d451ad85ea0f9ea62474fcf9b4d9')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -52,9 +52,10 @@ check() {
 }
 
 package_python-sphinx-gallery() {
-    depends=('python-sphinx>=5' 'python-pillow')
+    depends=('python-sphinx>=6' 'python-pillow')
     optdepends=('python-seaborn'
 #               'mayavi'
+                'python-joblib'
                 'python-pypandoc')
 #               'python-sphinx-gallery-doc: Documentation of Sphinx-Gallery')
     cd ${srcdir}/${_pyname}-${pkgver}
