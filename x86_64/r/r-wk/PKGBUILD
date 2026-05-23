@@ -1,13 +1,13 @@
 # Maintainer: peippo <christoph+aur@christophfink.com>
 
 _cranname=wk
-_cranver=0.9.4
+_cranver=0.9.5
 pkgname=r-${_cranname,,}
 pkgdesc="Lightweight Well-Known Geometry Parsing"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 
 arch=("i686" "x86_64")
 depends=(
@@ -41,7 +41,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("7bf4576f6d53bce7456158a3136e261742c52f461b8962450ee8d4f452f3beb3d9c4d52cff0c1dea2c5405568ae6195690e6c63a5ac5a59450ee8b469d4b3988")
+b2sums=('1e033f89bb9e03a4b8c730ae21155299b262247a98c19323d5d8fa36204e52d1ce1e409f1fc4966b0d8b6093ed3ef1ec24a2736655c79e7efc5a7f50b6c29613')
 
 build() {
     mkdir -p "${srcdir}/build/"
