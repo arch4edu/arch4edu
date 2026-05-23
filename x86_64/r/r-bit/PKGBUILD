@@ -5,10 +5,10 @@
 # Contributor: fordprefect <fordprefect@dukun.de>
 
 _pkgname=bit
-_pkgver=4.5.0.1
+_pkgver=4.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Classes and Methods for Fast Memory-Efficient Boolean Selections"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('36794143b3cfc96be9829b5fe95a0d74')
-b2sums=('17e354f69102e60aa4af5ff1ea7fb73f9cf89f6cdd26e3d00d5c6c2fd5cf5939ef555437fbf99233e3255c16aac056edb02a1c73f9f3fe8ce6000d7f7f84f8e7')
+md5sums=('f36540550af63b0db8c78429d7366998')
+b2sums=('e15aa94d88f5de67b4b8c0c6be760e5f15dbc77263b90e6c762f06a76129c306da78ef45d3e6e5c50c7b54ef09960ef93d7f0b375b1e2779da17699d81f020f1')
 
 build() {
   mkdir build
