@@ -1,8 +1,8 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>; fanyujun <dlutfyj at outlook dot com>
 
 pkgname=python-pygmo
-pkgver=2.19.7
-pkgrel=2
+pkgver=2.19.8
+pkgrel=1
 pkgdesc="Perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model (Python version)"
 arch=('i686' 'x86_64')
 url="https://esa.github.io/pygmo2/"
@@ -12,7 +12,7 @@ optdepends=('python-matplotlib' 'python-dill')
 makedepends=('cmake' 'python' 'pybind11' 'pagmo' 'boost')
 _name=pygmo2
 source=(https://github.com/esa/${_name}/archive/v${pkgver}.tar.gz)
-sha256sums=('cfc49bb5b4ec9e96287895db9dcb322122f14c397ec466091aa635dbb31a5c9f')
+sha256sums=('0678900ff9b3ec458edf4fb2b2f5eb41d3f18b72b90e7e9aeee73964bdc0d19d')
 
 _buildtype="Release"
 
