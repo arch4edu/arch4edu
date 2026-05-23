@@ -2,7 +2,7 @@
 
 pkgname=gtest-src
 pkgver=1.17.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Google Test Source - C++ testing utility'
 url='https://github.com/google/googletest'
 arch=('x86_64')
@@ -23,8 +23,6 @@ prepare() {
 }
 
 package() {
-  find "${pkgdir}" -name '*.pump' -printf 'Removing %P\n' -delete
-
   cd ${_srcname}
   install -Dm 644 cmake/googletest-version.cmake -t "${pkgdir}/usr/src/cmake"
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
