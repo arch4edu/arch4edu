@@ -4,7 +4,7 @@ _pkgname=DoE.base
 _pkgver=1.2-5
 pkgname=r-${_pkgname,,}
 pkgver=1.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Full Factorials, Orthogonal Arrays and Base Utilities for DoE Packages'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
