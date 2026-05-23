@@ -4,7 +4,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=fs
-_pkgver=2.0.1
+_pkgver=2.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         )
-md5sums=('d6acfc5d51002f04a7f159131034b438')
-b2sums=('2db467d36c44f84b5650e2888afe575b01d03f91778919aea121e863e27b1ee350154eb5e40b71b2edfeadce3daee2a4efd83ac7b775095a2d5c903d209af593')
+md5sums=('6011a5e758c21acc297ed8bbcf97e7d9')
+b2sums=('64a62005c89938ee8c194cae50162ff73e4ae1515a78423786738ac334ddac99b9efac558368d24f9c677f4e8d9edd427e47b2429a416ac6161f3e593d24f416')
 
 build() {
   mkdir build
