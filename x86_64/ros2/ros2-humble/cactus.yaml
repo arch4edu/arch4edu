@@ -7,9 +7,22 @@ depends:
   - pacman: eigen3
 makedepends:
   - x86_64/cmake3
-  - x86_64/gcc13
+  - x86_64/gcc14
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed 's/D_FORTIFY_SOURCE=3/D_FORTIFY_SOURCE=[23]/g' -i PKGBUILD
+  # Use GCC 14 to avoid GCC 15 incompatibilities (char16_t ostream etc.)
+  echo 'export CC=gcc-14' >> PKGBUILD
+  echo 'export CXX=g++-14' >> PKGBUILD
+  echo 'CXXFLAGS+=" -Wno-error=array-bounds"' >> PKGBUILD
+  # Rename original package() to _package()
+  sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
+  # Append new package() that calls _package() then fixes paths
+  cat >> PKGBUILD <<'EOF'
+package() {
+    _package
+    # Fix hardcoded build paths in all text files
+    grep -rIl "/build/ros2-humble" "$pkgdir/opt/ros/humble" | xargs -n 10 -- sed -i "s|/build/ros2-humble/src/install|/opt/ros/humble|g; s|/build/ros2-humble/src/build|/opt/ros/humble/opt|g"
+}
+EOF
 post_build: aur-post-build
