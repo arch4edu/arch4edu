@@ -1,7 +1,6 @@
 nvchecker:
   - source: aur
     aur:
-group: GitHubActionsUnsafe
 build_prefix: extra-x86_64
 makechrootpkg_args: -d /mnt/tmp:/tmp
 pre_build: |
