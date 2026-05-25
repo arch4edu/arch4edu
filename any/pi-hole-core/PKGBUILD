@@ -4,8 +4,8 @@
 
 pkgname=pi-hole-core
 _pkgname=pi-hole
-pkgver=6.3
-pkgrel=1
+pkgver=6.4.2
+pkgrel=3
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
 license=('EUPL-1.2')
@@ -16,34 +16,31 @@ optdepends=()
 conflicts=('pi-hole-standalone' 'pi-hole-server')
 provides=('pi-hole-standalone' 'pi-hole-server')
 install=$pkgname.install
-backup=(''etc/pihole/adlists.list'' 'etc/sudoers.d/pihole')
+backup=('etc/pihole/pihole.toml' 'etc/sudoers.d/pihole')
 
 source=($pkgname-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/refs/tags/v$pkgver.tar.gz
-      "https://raw.githubusercontent.com/max72bra/pi-hole-core-archlinux-customization/main/arch-core-$pkgver-$pkgrel.patch"
+        arch-core.patch
 	    $_pkgname.tmpfile
 	    $_pkgname-gravity.service
 	    $_pkgname-gravity.timer
 	    $_pkgname-logtruncate.service
 	    $_pkgname-logtruncate.timer
-	    mimic_setupVars.conf.sh
 	    mimic_basic-install.sh
 	    piholeDebug.sh
 )
-
-sha256sums=('e026751de959ff747848b54ef2298c1fb77b5d35317ed3627b48ac7d5454937d'
-            '10c020c1a8db22240a031ecf4c603c34374a149df2d8e73402113141e5dbcf91'
+sha256sums=('49a766408659ac98094e9ed30f2666f41738a6a12828b089f235bcf7b13a0662'
+            '1e252691adef17a2d722217337745f29601f59d2957f51b6aa50507b01af96bf'
             'd09f9d10ebdfb6db24d4e1abff8cd09519a7b3f3878ef3974c26aa6838f74e7e'
             '9b72d7769036f8f4bb7121968d2ae4bdba427e4b16787ce340205a5f62b45c7c'
             '5228b4f923eab7784952a0fd6da895e7bff2f80a7f91c4a7c6350491dfdbb2e8'
             '88e3c78bbeaf5dc1100df65202ded8207877954a96bdf1b0ab3d9990d9fa759f'
             'ff507ce58c9492cce57e947696e1b814469fc2d856a1e303c6e68f98c62ebf46'
-            'd3bc841ce7f21b5a597dc47cdae23faeba64cb0bbb8c897d9daf1a2bc4fe0821'
             '27288535f7d5e18c73b9fe13aa0bcd78a2fd935cb2e978c70d51b0439c87844f'
             '69a71c29dbe42ef0cbd3655fd7ce5cf04e8a77e27a5b2c3a1fcce0b544223309')
 
 prepare() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
-  patch -Np1 -i "$srcdir"/arch-core-$pkgver-$pkgrel.patch
+  patch -Np1 -i "$srcdir"/arch-core.patch
 }
 
 package() {
@@ -56,7 +53,6 @@ package() {
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/api.sh "$pkgdir"/opt/pihole/api.sh
   install -Dm644 $_pkgname-$pkgver/advanced/Scripts/COL_TABLE "$pkgdir"/opt/pihole/COL_TABLE
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/list.sh "$pkgdir"/opt/pihole/list.sh
-  # install -Dm755 $_pkgname-$pkgver/advanced/Scripts/piholeARPTable.sh "$pkgdir"/opt/pihole/piholeARPTable.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/piholeLogFlush.sh "$pkgdir"/opt/pihole/piholeLogFlush.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/query.sh "$pkgdir"/opt/pihole/query.sh
   install -Dm755 $_pkgname-$pkgver/advanced/Scripts/updatecheck.sh "$pkgdir"/opt/pihole/updatecheck.sh
@@ -67,7 +63,6 @@ package() {
   install -Dm644 $_pkgname-$pkgver/advanced/Templates/gravity_copy.sql "$pkgdir"/opt/pihole/gravity_copy.sql
 
   install -Dm755 piholeDebug.sh "$pkgdir"/opt/pihole/piholeDebug.sh
-  install -Dm755 mimic_setupVars.conf.sh "$pkgdir"/opt/pihole/mimic_setupVars.conf.sh
   install -Dm755 mimic_basic-install.sh "$pkgdir"/opt/pihole/basic-install.sh
 
   cp -dpr --no-preserve=ownership $_pkgname-$pkgver/advanced/Scripts/database_migration "$pkgdir"/opt/pihole/
@@ -87,7 +82,6 @@ package() {
 
   install -dm755 "$pkgdir"/etc/pihole
   install -Dm644 $_pkgname-$pkgver/advanced/Templates/logrotate "$pkgdir"/etc/pihole/logrotate
-  install -Dm644 $_pkgname-$pkgver/adlists.list "$pkgdir"/etc/pihole/adlists.list
 
   install -dm755 "$pkgdir"/usr/share/licenses/pihole
   install -Dm644 ${pkgname%-*}-$pkgver/LICENSE "$pkgdir"/usr/share/licenses/pihole/Pi-hole

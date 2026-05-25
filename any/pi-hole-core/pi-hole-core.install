@@ -6,8 +6,6 @@ post_install() {
   /usr/bin/systemd-sysusers > /dev/null 2>&1
   /usr/bin/chown -R pihole:pihole /etc/pihole
 
-  sudo -u pihole bash /opt/pihole/mimic_setupVars.conf.sh;
-
   # update lists on first run
   echo -e "\e[1;33m==>\e[0m Creating initial adlists...\e[0m"
   sudo -u pihole bash /opt/pihole/gravity.sh --force > /dev/null 2>&1;
@@ -24,9 +22,6 @@ post_upgrade() {
   [ -e /etc/pihole/adlists.list ] && rm /etc/pihole/adlists.list
   [ -e /etc/pihole/dns-servers.conf ] && rm /etc/pihole/dns-servers.conf
 
-  # query logging disabling needs this
-  grep -qF 'QUERY_LOGGING=' /etc/pihole/setupVars.conf || echo 'QUERY_LOGGING=true' >> /etc/pihole/setupVars.conf
-  
   # /etc/pihole/versions file generation
   echo -e "\e[1;33m==>\e[0m Updating 'versions' file...\e[0m"
   sudo -u pihole bash /opt/pihole/updatecheck.sh;
