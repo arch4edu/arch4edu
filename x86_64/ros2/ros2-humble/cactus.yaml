@@ -19,10 +19,10 @@ pre_build: |
   sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
   # Append new package() that calls _package() then fixes paths
   cat >> PKGBUILD <<'EOF'
-package() {
-    _package
-    # Fix hardcoded build paths in all text files
-    grep -rIl "/build/ros2-humble" "$pkgdir/opt/ros/humble" | xargs -n 10 -- sed -i "s|/build/ros2-humble/src/install|/opt/ros/humble|g; s|/build/ros2-humble/src/build|/opt/ros/humble/opt|g"
-}
-EOF
+  package() {
+      _package
+      # Fix hardcoded build paths in all text files
+      grep -rIl "/build/ros2-humble" "$pkgdir/opt/ros/humble" | xargs -n 10 -- sed -i "s|/build/ros2-humble/src/install|/opt/ros/humble|g; s|/build/ros2-humble/src/build|/opt/ros/humble/opt|g"
+  }
+  EOF
 post_build: aur-post-build
