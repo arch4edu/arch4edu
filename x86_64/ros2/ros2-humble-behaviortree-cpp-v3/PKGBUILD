@@ -3,7 +3,7 @@
 _pkgname=BehaviorTree.CPP
 pkgname=ros2-humble-behaviortree-cpp-v3
 pkgver=3.8.7
-pkgrel=1
+pkgrel=2
 pkgdesc="Behavior Trees Library in C++. Batteries included."
 url="https://index.ros.org/p/behaviortree_cpp/"
 arch=('any')
