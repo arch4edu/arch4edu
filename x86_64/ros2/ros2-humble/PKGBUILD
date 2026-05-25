@@ -14,8 +14,8 @@
 # package, maintained by T. Borgert.
 
 pkgname=ros2-humble
-pkgver=2025.03.31
-pkgrel=4
+pkgver=2026.02.20
+pkgrel=1
 pkgdesc="A set of software libraries and tools for building robot applications"
 url="https://docs.ros.org/en/humble/"
 arch=('x86_64')
@@ -27,11 +27,11 @@ depends=(
     'assimp'
     'gmock'
 )
-makedepends=('cmake3' 'git' 'gcc13')
+makedepends=('cmake' 'git')
 provides=('ros2-humble-base')
 conflicts=('ros2-humble-base')
 source=(
-    "ros2::git+https://github.com/ros2/ros2#tag=humble-${pkgver//.}"
+    "ros2::git+https://github.com/ros2/ros2#tag=release-humble-${pkgver//.}"
 )
 sha256sums=('SKIP')
 install=ros2-humble.install
@@ -70,16 +70,27 @@ build() {
     ## For people with the new version of makepkg.conf
     CFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=[23]\s//g" <(echo $CFLAGS))
     CXXFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=[23]\s//g" <(echo $CXXFLAGS))
+    ## Fix missing cstdint headers in many packages
+    CXXFLAGS+=" --include=cstdint"
+
+    export CMAKE_POLICY_VERSION_MINIMUM=3.5
 
     # Build
-    ## Downgrade gcc to fix missing cstdint headers in many packages.
-    export CC=$(command -v gcc-13) CXX=$(command -v g++-13)
     ## To resolve the io_service removal in Asio 1.33.0, build FastRTPS against third-party Asio.
     colcon build --merge-install --packages-up-to fastrtps --cmake-args " -DTHIRDPARTY_Asio=FORCE"
+    ## Build all packages.
     colcon build --merge-install ${COLCON_EXTRA_ARGS} --cmake-args " -DBUILD_TESTING=OFF -Wno-dev" --packages-ignore qt_gui_cpp rqt_gui_cpp
 }
 
-package() {
+_package() {
     mkdir -p $pkgdir/opt/ros/humble
     cp -r $srcdir/install/* $pkgdir/opt/ros/humble/
+}
+export CC=gcc-14
+export CXX=g++-14
+CXXFLAGS+=" -Wno-error=array-bounds"
+package() {
+    _package
+    # Fix hardcoded build paths in all text files
+    grep -rIl "/build/ros2-humble" "$pkgdir/opt/ros/humble" | xargs -n 10 -- sed -i "s|/build/ros2-humble/src/install|/opt/ros/humble|g; s|/build/ros2-humble/src/build|/opt/ros/humble/opt|g"
 }
