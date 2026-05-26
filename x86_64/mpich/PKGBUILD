@@ -3,8 +3,8 @@
 # Contributor: George Eleftheriou <eleftg>
 
 pkgname=mpich
-pkgver=4.3.2
-pkgrel=2
+pkgver=5.0.1
+pkgrel=1
 pkgdesc="An improved implementation of the Message Passing Interface."
 url="https://mpich.org"
 arch=(x86_64)
@@ -16,7 +16,7 @@ optdepends=(perl python)
 install="${pkgname}.install"
 source=("https://www.mpich.org/static/downloads/${pkgver}/${pkgname}-${pkgver}.tar.gz"
 	      "mpich.profile")
-sha256sums=('47d774587a7156a53752218c811c852e70ac44db9c502dc3f399b4cb817e3818'
+sha256sums=('8c1832a13ddacf071685069f5fadfd1f2877a29e1a628652892c65211b1f3327'
             'b9716439a544511bf88618edeb40c3eb80f1b5d0d9369c30d750251feed02284')
 options=('!libtool')
 
