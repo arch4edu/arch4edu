@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/fbx-sdk
   - x86_64/mpir
+  - x86_64/qt5-websockets
 makedepends:
   - x86_64/pcl
 build_prefix: extra-x86_64

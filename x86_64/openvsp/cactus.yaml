@@ -5,6 +5,7 @@ depends:
   - x86_64/cminpack
   - x86_64/code-eli-git
   - x86_64/cpptest
+  - x86_64/gcc14
 makedepends:
   - x86_64/cmake3
 build_prefix: extra-x86_64
