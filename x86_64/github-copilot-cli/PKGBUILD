@@ -7,7 +7,7 @@ pkgname=github-copilot-cli
 _pkgexec=copilot
 
 pkgver=1.0.54
-pkgrel=1
+pkgrel=2
 
 pkgdesc="GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal."
 
@@ -40,6 +40,43 @@ package() {
 		--cache "${srcdir}/npm-cache" \
 		--prefix "${pkgdir}/usr" \
 		"${srcdir}/copilot-${pkgver}.tgz"
+
+	msg2 "Remove prebuilds and binaries for other platforms"
+	local _moddir="${pkgdir}/usr/lib/node_modules/${_npmmodule}"
+
+	local _arch
+	case "$CARCH" in
+		x86_64)  _arch="x64" ;;
+		aarch64) _arch="arm64" ;;
+		*)       error "Unsupported architecture: $CARCH"; exit 1 ;;
+	esac
+
+	msg2 "Cleaning non-native prebuilds for ${_arch}"
+	if [ -d "${_moddir}/prebuilds" ]; then
+		find "${_moddir}/prebuilds" -mindepth 1 -maxdepth 1 -type d ! -name "linux-${_arch}" -exec rm -rf {} +
+	fi
+	if [ -d "${_moddir}/mxc-bin" ]; then
+		find "${_moddir}/mxc-bin" -mindepth 1 -maxdepth 1 -type d ! -name "${_arch}" -exec rm -rf {} +
+	fi
+	if [ -d "${_moddir}/ripgrep/bin" ]; then
+		find "${_moddir}/ripgrep/bin" -mindepth 1 -maxdepth 1 -type d ! -name "linux-${_arch}" -exec rm -rf {} +
+	fi
+	if [ -d "${_moddir}/clipboard/node_modules/@teddyzhu" ]; then
+		find "${_moddir}/clipboard/node_modules/@teddyzhu" -mindepth 1 -maxdepth 1 -type d ! -name "clipboard-linux-${_arch}-gnu" -exec rm -rf {} +
+	fi
+	if [ -d "${_moddir}/foundry-local-sdk/node_modules/foundry-local-sdk/prebuilds" ]; then
+		find "${_moddir}/foundry-local-sdk/node_modules/foundry-local-sdk/prebuilds" -mindepth 1 -maxdepth 1 -type d ! -name "linux-${_arch}" -exec rm -rf {} +
+	fi
+
+	# pvrecorder only ships linux/x86_64; remove other OSes and non-native Linux archs
+	if [ -d "${_moddir}/pvrecorder/node_modules/@picovoice/pvrecorder-node/lib" ]; then
+		find "${_moddir}/pvrecorder/node_modules/@picovoice/pvrecorder-node/lib" -mindepth 1 -maxdepth 1 -type d ! -name 'linux' -exec rm -rf {} +
+		if [ "$CARCH" = "x86_64" ]; then
+			find "${_moddir}/pvrecorder/node_modules/@picovoice/pvrecorder-node/lib/linux" -mindepth 1 -maxdepth 1 -type d ! -name 'x86_64' -exec rm -rf {} +
+		else
+			rm -rf "${_moddir}/pvrecorder/node_modules/@picovoice/pvrecorder-node/lib/linux"
+		fi
+	fi
 
 	msg2 "Fix ownership of ALL FILES"
 	find "${pkgdir}/usr" -type d -exec chmod 755 {} +
