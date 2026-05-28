@@ -3,14 +3,14 @@
 # Maintainer: Grey Christoforo <first name at last name dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-_cranname=waldo
-_cranver=0.6.2
-pkgname=r-${_cranname,,}
+_pkgname=waldo
+_pkgver=0.6.2
+pkgname=r-${_pkgname,,}
 pkgdesc="Anything to ‘POSIXct’ or ‘Date’ Converter"
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=("MIT")
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 
 arch=("any")
 depends=(
@@ -48,23 +48,23 @@ optdepends=(
 #     "r-testthat"
 # )
 
-source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("fe4bd4b98135cb652b57999e314f3af81fb515375dbae5457e6b3632887236a90329df7a46914ce572fcceddd745ec364df226c1863ea0d51d904ef0e4944410")
+source=("https://cloud.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+b2sums=('fe4bd4b98135cb652b57999e314f3af81fb515375dbae5457e6b3632887236a90329df7a46914ce572fcceddd745ec364df226c1863ea0d51d904ef0e4944410')
 
 build() {
     mkdir -p "${srcdir}/build/"
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+    R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}/build/"
 }
 
 # check() {
 #     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
+#     R CMD check --no-manual "${_pkgname}"
 # }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_pkgname}" "${pkgdir}/usr/lib/R/library"
+    if [[ -f "${_pkgname}/LICENSE" ]]; then
+        install -Dm0644 "${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
 }
