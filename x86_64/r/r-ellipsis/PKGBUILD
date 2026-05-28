@@ -4,12 +4,12 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=ellipsis
-_pkgver=0.3.2
+_pkgver=0.3.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=13
+pkgrel=1
 pkgdesc="Tools for Working with ..."
-arch=(x86_64)
+arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
@@ -23,8 +23,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c453b4514da3717af5d5b97f0e3d2415')
-b2sums=('4dc77787aa019c720e96a6136a75b68a8ba94fd571cc2080c71188020f5c323712b23609c0cf22aba4eb2fcf75dd5d702c4c4ccfd442f15df6da8d9d7748260a')
+md5sums=('b6b48305f852e135632e8371c241a0b9')
+b2sums=('edd08d0c7b82e954519a90f758daeb0f51b81a090064dd5f749f6d51bcc2796d101d967a1e621cd6310417fdf817381a613fe68c8d4d76f9391cc280de4fbeaf')
 
 build() {
   mkdir build
