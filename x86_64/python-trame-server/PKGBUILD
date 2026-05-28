@@ -2,16 +2,16 @@
 _base=trame-server
 pkgname=python-${_base}
 pkgdesc="Internal server side implementation of trame"
-pkgver=3.10.0
+pkgver=3.12.4
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
 license=(Apache-2.0)
-depends=(python-wslink python-more-itertools)
-makedepends=(python-build python-installer python-setuptools python-wheel)
+depends=(python-wslink python-trame-common python-more-itertools)
+makedepends=(python-build python-installer python-hatchling)
 checkdepends=(python-pytest-asyncio)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('3b44dd3981f33dc304a0601ac8b915ad184548f38c8f65ce0c76078a2b1adf37a26aca24069a362bab6a4e69436d7deb2f32ffe52bb01a23440f6dc79556be21')
+sha512sums=('bba2c6315dbd5ee32fdf318d353194eb06807fce38c61691426daf02863cd6beaa5be6b517404cc773b647d36d6283d8109addb2146febab7ef1c1e28a7878e4')
 
 build() {
   cd ${_base}-${pkgver}
@@ -30,7 +30,4 @@ package() {
   cd ${_base}-${pkgver}
   PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  # Fix https://aur.archlinux.org/packages/python-trame-server#comment-1027059
-  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
-  rm -r "${pkgdir}${site_packages}/docs" "${pkgdir}${site_packages}/examples" "${pkgdir}${site_packages}/tests"
 }
