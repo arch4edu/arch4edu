@@ -4,7 +4,7 @@ _pkgname=daewr
 _pkgver=1.2-11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Design and Analysis of Experiments with R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
