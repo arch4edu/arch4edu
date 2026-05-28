@@ -4,7 +4,7 @@ _pkgname=BDgraph
 _pkgver=2.74
 pkgname=r-${_pkgname,,}
 pkgver=2.74
-pkgrel=1
+pkgrel=2
 pkgdesc='Bayesian Structure Learning in Graphical Models using Birth-Death MCMC'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
