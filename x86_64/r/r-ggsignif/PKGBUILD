@@ -5,7 +5,7 @@ _pkgname=ggsignif
 _pkgver=0.6.4
 pkgname=r-${_pkgname,,}
 pkgver=0.6.4
-pkgrel=5
+pkgrel=6
 pkgdesc="Significance Brackets for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
