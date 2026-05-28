@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=mlmRev
-_pkgver=1.0-8
+_pkgver=1.0-9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=1
 pkgdesc="Examples from Multilevel Modelling Software Review"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,8 +13,8 @@ depends=(
   r-lme4
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f4d61472c9dd70d0cfc7f31b8a046aa0')
-b2sums=('976c2b718444e191b501ef84e1049383c5ccd728cd905469eded1ae74aa5c8eaf9165815faec42ae8090bbf6f953f18a61e817cce922ed3d69ce86e0505b6fc5')
+md5sums=('7a4a0e729cb182b6f4477822ddb762c4')
+b2sums=('d7215da5f45748f18c42df880557af6d2520cbd10574abe55a0fe63b845478871dc0d0978576d29d707a2c60a01a00e8723fd1c13be71dd8f0a8fa8e44757d52')
 
 build() {
   mkdir build
