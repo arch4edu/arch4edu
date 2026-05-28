@@ -5,7 +5,7 @@ _pkgname=cowplot
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=1.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Streamlined Plot Theme and Plot Annotations for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
