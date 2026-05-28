@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspGraphs
-_pkgver=0.95.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.95.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Custom Graphs for JASP"
 arch=('any')
@@ -17,10 +17,12 @@ depends=(r
 'r-scales'
 'r-viridislite'
 'r-rcolorbrewer'
+'r-htmlwidgets'
+'r-plotly'
 )
 optdepends=('r-testthat')
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('9b796e82d32f719585a59618d02da819c6e1c1c4c270af37a8776ab92203377a')
+sha256sums=('45d02e60b78481c2e7d761da53d20aa243eecca8162fe0f1fc93e618f98ff1d7')
 
 
 build() {
