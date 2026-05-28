@@ -6,7 +6,7 @@
 
 pkgname=qt4
 pkgver=4.8.7
-pkgrel=38
+pkgrel=39
 arch=(i686 x86_64)
 url="https://www.qt.io"
 license=(GPL-3.0-only LGPL-3.0-only GFDL-1.3-only)
@@ -138,6 +138,9 @@ prepare() {
 
   # Fix linking step for JIT (Gentoo)
   patch -Np0 -i "${srcdir}/fix_jit.patch"
+
+  # Remove usage of "requires" reserved keyword in qmake
+  sed -i 's|requires|qmakeRequires|g' qmake/generators/makefile.cpp
 
   ### JavaScriptCore mess (TODO: Turn these into patches) ###
 
