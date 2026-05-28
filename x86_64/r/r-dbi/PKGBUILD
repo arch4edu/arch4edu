@@ -6,7 +6,7 @@
 # Contributor: Lydgate <archlinux@vo.racio.us>
 
 _pkgname=DBI
-_pkgver=1.2.3
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,6 +23,7 @@ checkdepends=(
 optdepends=(
   r-arrow
   r-blob
+  r-callr
   r-covr
   r-dbitest
   r-dbplyr
@@ -33,6 +34,8 @@ optdepends=(
   r-knitr
   r-magrittr
   r-nanoarrow
+  r-otel
+  r-otelsdk
   r-rmariadb
   r-rmarkdown
   r-rprojroot
@@ -42,8 +45,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('062e1bf5ed04772ecb1623c076c2128c')
-b2sums=('620906bd0f6b5cdf4f5926bb0cee80480456e907f071e03142a252156339e3e24b3d801cb34ef4e67a5c89992e860fa354010b4975fcd88657110169f43c0aa7')
+md5sums=('ce5e3153cc7395a2aac452db1099d003')
+b2sums=('7dab9b801ef28a8a24c3c59823812f9061037604136d796d0920b5f479a871ca1b46f5c716e8514c10352d9cea5500ad08bc4b194f89807af19bc24f476fbadc')
 
 build() {
   mkdir build
