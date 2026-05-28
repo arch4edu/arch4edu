@@ -4,7 +4,7 @@ _pkgname=bde
 _pkgver=1.0.1.1
 pkgname=r-${_pkgname,,}
 pkgver=1.0.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Bounded Density Estimation'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
