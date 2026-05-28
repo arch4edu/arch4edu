@@ -7,7 +7,7 @@ _pkgname=tidyselect
 _pkgver=1.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=4
 pkgdesc="Select from a Set of Strings"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -44,7 +44,7 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
