@@ -2,7 +2,7 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=survey
-_pkgver=4.4-8
+_pkgver=4.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,14 +24,16 @@ optdepends=(
   r-compquadform
   r-dbi
   r-hexbin
+  r-knitr
   r-quantreg
   r-r.rsp
   r-rsqlite
   r-summer
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0073d155ca38e08e4347f74f8b66b2af')
-b2sums=('9a2db93c4d882b84aa99f97dc45a586114bf05147b88e620611eb8ce90e457179bc54c7058afddbc57c65368848c9318117870ceb1ac0649954e3d93d67235f1')
+md5sums=('4d424593ffd252886cf6c9c81d4bcd26')
+b2sums=('51cdfde1375507711be8ea74febe38bbb769be848f7c08806976f6d600b8fa316406728a13e8f54f2dfa43c8790ad1909db35c89b7c8281a04d9b24efcc4b08a')
 
 build() {
   mkdir build
