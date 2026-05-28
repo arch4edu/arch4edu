@@ -6,7 +6,7 @@ _cranname=pillar
 _cranver=1.11.1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Coloured Formatting for Columns"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
