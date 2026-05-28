@@ -3,7 +3,7 @@
 
 pkgname=qucs
 pkgver=0.0.20
-pkgrel=1
+pkgrel=2
 pkgdesc="An integrated circuit simulator with a graphical user interface"
 arch=('x86_64')
 url="https://github.com/Qucs/qucs"
