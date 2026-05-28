@@ -5,7 +5,7 @@ _pkgname=htmlwidgets
 _pkgver=1.6.4
 pkgname=r-${_pkgname,,}
 pkgver=1.6.4
-pkgrel=1
+pkgrel=2
 pkgdesc='HTML Widgets for R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
