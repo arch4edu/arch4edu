@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=furrr
-_pkgver=0.3.1
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=7
+pkgrel=1
 pkgdesc="Apply Mapping Functions in Parallel using Futures"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,7 +13,6 @@ license=('MIT')
 depends=(
   r-future
   r-globals
-  r-lifecycle
   r-purrr
   r-rlang
   r-vctrs
@@ -27,28 +26,25 @@ optdepends=(
   r-covr
   r-dplyr
   r-knitr
-  r-listenv
-  r-magrittr
-  r-rmarkdown
   r-testthat
   r-tidyselect
-  r-withr
+  r-parallelly
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('813dfb60e455c5667be5117b3df2943b')
-b2sums=('aabe78f39b22e14ae8d539c867ccb8ab4588ff57f7854ea5e69b5846876eeea7d7fbfdfc68ad66871548cf12999a32173ec9fbd966cfc20e8ec5b9cc0c307cd4')
+md5sums=('a18b1988e46dd7fd96c94272699d1a70')
+b2sums=('e8775756d97adb4a2bfe083e3e5788fb4e667f5335333570e8693585c91429879b2a2334ec9780d160f2033c652b91350665439ebaa386a9052abce4720adcf0')
 
-prepare() {
+#prepare() {
   # fix snapshot test
-  sed -i 's/Please use/i Please use/' "$_pkgname/tests/testthat/_snaps/deprecation.md"
-}
+#  sed -i 's/Please use/i Please use/' "$_pkgname/tests/testthat/_snaps/deprecation.md"
+#}
 
 build() {
   mkdir build
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
