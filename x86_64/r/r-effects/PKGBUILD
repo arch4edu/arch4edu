@@ -2,7 +2,7 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=effects
-_pkgver=4.2-4
+_pkgver=4.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
   r-robustlmm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e8eb6970e1ed9e52cd18a537de6bbd06')
-b2sums=('d04d879abca85f3553447c668c852399ed775fbe0b04ab7cd67048e914e5ba808610228147c9682188bbef040859fca649eae4187e542c43642dd0721451158d')
+md5sums=('3fcd08fced1ca2b96578701f8bf1699a')
+b2sums=('a1dd776ad2fc9cb5a882f33133d9c9afe5c80db66e6004949e2e3bb2c4b39464d5e64940261eedaa1bc5e756d86aa959a440a62166d4e118354704574bc244a7')
 
 build() {
   mkdir build
