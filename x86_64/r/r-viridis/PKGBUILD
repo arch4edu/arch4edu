@@ -7,7 +7,7 @@ _pkgname=viridis
 _pkgver=0.6.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Colorblind-Friendly Color Maps for R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
