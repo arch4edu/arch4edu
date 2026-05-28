@@ -4,7 +4,7 @@ _pkgname=downlit
 _pkgver=0.4.5
 pkgname=r-${_pkgname,,}
 pkgver=0.4.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Syntax Highlighting and Automatic Linking'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
