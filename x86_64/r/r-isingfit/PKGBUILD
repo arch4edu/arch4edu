@@ -4,7 +4,7 @@ _pkgname=IsingFit
 _pkgver=0.4
 pkgname=r-${_pkgname,,}
 pkgver=0.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Fitting Ising Models Using the ELasso Method'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
