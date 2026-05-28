@@ -4,7 +4,7 @@ _pkgname=EnvStats
 _pkgver=3.1.0
 pkgname=r-${_pkgname,,}
 pkgver=3.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Package for Environmental Statistics, Including US EPA Guidance'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
