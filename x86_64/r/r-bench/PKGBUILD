@@ -4,7 +4,7 @@ _pkgname=bench
 _pkgver=1.1.4
 pkgname=r-${_pkgname,,}
 pkgver=1.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc='High Precision Timing of R Expressions'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
