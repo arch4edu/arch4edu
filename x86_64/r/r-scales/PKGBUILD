@@ -5,7 +5,7 @@ _cranver=1.4.0
 pkgname="r-${_cranname,,}"
 pkgdesc="Scale Functions for Visualization"
 pkgver="${_cranver//[:-]/.}"
-pkgrel=1
+pkgrel=2
 arch=(any)
 license=(MIT)
 url="https://cran.r-project.org/package=${_cranname}"
