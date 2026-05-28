@@ -4,7 +4,7 @@ _pkgname=threejs
 _pkgver=0.3.4
 pkgname=r-${_pkgname,,}
 pkgver=0.3.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Interactive 3D Scatter Plots, Networks and Globes'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
