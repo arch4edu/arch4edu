@@ -4,7 +4,7 @@ _pkgname=jomo
 _pkgver=2.7-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Multilevel Joint Modelling Multiple Imputation"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
