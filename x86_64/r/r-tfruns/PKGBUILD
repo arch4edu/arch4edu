@@ -4,7 +4,7 @@ _pkgname=tfruns
 _pkgver=1.5.4
 pkgname=r-${_pkgname,,}
 pkgver=1.5.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Training Run Tools for 'TensorFlow'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
