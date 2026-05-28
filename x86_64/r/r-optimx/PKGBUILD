@@ -5,7 +5,7 @@ _pkgname=optimx
 _pkgver=2025-4.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Expanded Replacement and Extension of the 'optim' Function"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
