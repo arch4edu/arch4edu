@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=rockchalk
-_pkgver=1.8.157
+_pkgver=1.8.164
 pkgname=r-${_pkgname,,}
-pkgver=1.8.157
+pkgver=1.8.164
 pkgrel=1
 pkgdesc='Regression Estimation and Presentation'
 arch=('any')
@@ -24,7 +24,7 @@ optdepends=(
   r-tables
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('814099ca8b1193992cd6e0af759a7d5bac74b891fbb4518c7f0e7fd56dcbe28d')
+sha256sums=('5c8e071eee7cc6bc22b43fd4ac9681182a3167191d372ee124912b87555d4d16')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
