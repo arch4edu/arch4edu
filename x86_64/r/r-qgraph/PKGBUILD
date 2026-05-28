@@ -4,7 +4,7 @@ _pkgname=qgraph
 _pkgver=1.9.8
 pkgname=r-${_pkgname,,}
 pkgver=1.9.8
-pkgrel=1
+pkgrel=2
 pkgdesc='Graph Plotting Methods, Psychometric Data Visualization and Graphical Model Estimation'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
