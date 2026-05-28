@@ -3,8 +3,8 @@
 _base=config-check
 pkgname=precice-${_base}
 pkgdesc="Python tool that checks a preCICE configuration file for logical errors"
-pkgver=1.0.3
-pkgrel=2
+pkgver=1.0.4
+pkgrel=1
 arch=(any)
 url="https://github.com/precice/${_base}"
 license=(MIT)
@@ -12,7 +12,7 @@ depends=(precice-config-graph)
 makedepends=(python-build python-installer python-setuptools-git-versioning git)
 checkdepends=(python-pytest)
 source=(git+${url}.git#tag=v${pkgver})
-sha512sums=('4bf22c1b59ff19b00999fb77b1437167e2c6f506b94600a8af6b07e1ff9566020034b94afa536ea1c0d5a017f62583dbf720b2ff3bd3387a436551618419cf3e')
+sha512sums=('c40e92ef3e95d429fdb3661504fe7f4772db39e8500fac8cf81b0f725e665b2598e460ad786bc302ee805bfe4e18a80685025eee5efaccbd2a7c4fdfb33cd689')
 
 build() {
   cd ${_base}
