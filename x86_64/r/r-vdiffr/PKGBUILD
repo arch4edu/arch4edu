@@ -5,7 +5,7 @@ _pkgname=vdiffr
 _pkgver=1.0.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Visual Regression Testing and Graphical Diffing"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -42,7 +42,7 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
