@@ -1,15 +1,16 @@
-# Maintainer: Elio <ancibrothers@gmail.com>
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: Christos Longros <chris.longros@gmail.com>
+# Contributor: Elio <ancibrothers@gmail.com>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-_cranname=pkgload
-_cranver=1.4.1
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=2
+_pkgname=pkgload
+_pkgver=1.5.2
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=3
 pkgdesc="Simulate Package Installation and Attach"
 arch=(any)
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=("MIT")
 depends=(
     "r>=3.4.0"
@@ -55,23 +56,23 @@ optdepends=(
 #     "r-testthat>=3.2.1.1"
 # )
 
-source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("420c80559a16a9feeced024a9e34dd175968a31d90bafd80522a86c03a65db617b7ee7a72df279e86dd4010765a1a1dde1dfb5cd4e91f826751684ef45e19bf9")
+source=("https://cloud.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+b2sums=('02e0cdd508248c50ade3782aaabdcec19803cc3f050cec95a1db0419481cd883fbe8b3ed8482e815256fde9089545af8fb2d19b4928463f5823f772658764f31')
 
 build() {
     mkdir -p "${srcdir}/build/"
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+    R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}/build/"
 }
 
 # check() {
 #     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
+#     R CMD check --no-manual "${_pkgname}"
 # }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_pkgname}" "${pkgdir}/usr/lib/R/library"
+    if [[ -f "${_pkgname}/LICENSE" ]]; then
+        install -Dm0644 "${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
 }
