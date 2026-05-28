@@ -1,22 +1,23 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: Christos Longros <chris.longros@gmail.com>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
-_cranname=vctrs
-_cranver=0.6.5
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=vctrs
+_pkgver=0.7.3
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Vector Helpers"
 arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=(MIT)
 depends=(
-    "r>=3.5.0"
+    "r>=4.0.0"
     "r-cli>=3.4.0"
     "r-glue"
     "r-lifecycle>=1.0.3"
-    "r-rlang>=1.1.0"
+    "r-rlang>=1.1.7"
 )
 optdepends=(
     "r-bit64"
@@ -47,24 +48,24 @@ optdepends=(
 #     "r-testthat>=3.0.0"
 # )
 
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("b48890fca0982b32c5d50c0d11221558fed8a2e50e4d3f5515d71f9eac4a79fd9823dbb866678d140a2c1e601f707daa0fbbf93f7e573d138d03e37850d77212")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+b2sums=('3aa6a262f852c92e6c7a09f45dabc047f2405a606048272c9d784344aa2eac145837cdb1c00a89f8b66e1cd0343c3276d2f690b73aded24eb9896a275068390c')
 
 build() {
     mkdir -p "${srcdir}/build/"
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+    R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}/build/"
 }
 
 # check() {
-#     cd "${srcdir}/${_cranname}/tests"
+#     cd "${srcdir}/${_pkgname}/tests"
 #     R_LIBS="${srcdir}/build" Rscript --vanilla testthat.R
 # }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_pkgname}" "${pkgdir}/usr/lib/R/library"
 
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    if [[ -f "${_pkgname}/LICENSE" ]]; then
+        install -Dm0644 "${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
 }
