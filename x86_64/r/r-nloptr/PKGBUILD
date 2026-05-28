@@ -6,7 +6,7 @@ _pkgname=nloptr
 _pkgver=2.2.1
 pkgname=r-${_pkgname,,}
 pkgver=2.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc='R Interface to NLopt'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
