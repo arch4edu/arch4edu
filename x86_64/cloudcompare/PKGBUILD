@@ -6,20 +6,34 @@
 # Contributor : Sylvain Poulain <sylvain.poulain at giscan dot com>
 # shellcheck disable=SC2034,SC2154 # allow unused/uninitialized variables.
 
+#Configuration environment variables:
+#Use: makepkg VAR1=0 VAR2=1 to enable(1) disable(0) a feature
+#Use: {yay,paru} --mflags=VAR1=0,VAR2=1
+#Use: aurutils --margs=VAR1=0,VAR2=1
+#Use: VAR1=0 VAR2=1 pamac
+
+: "${ENABLE_PCL:=0}"
+((ENABLE_PCL)) && { depends+=('pcl'); qPCL='ON'; } || qPCL='OFF'
+
+_backports=(
+  8e1c0562a7c19fd26ccd0c23bb05fb7c36980e0c
+)
 name=cloudcompare
 _fragment="#tag=v2.13.2"
 pkgname=${name}
 pkgver="${_fragment###tag=v}"
-pkgrel=2
+pkgrel=4
 pkgdesc="A 3D point cloud (and triangular mesh) processing software"
 arch=('i686' 'x86_64')
-url="http://www.danielgm.net/cc/"
+url="https://www.cloudcompare.org"
 license=('GPL2')
-depends=('cgal' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pcl' 'pdal' 'laszip' 'qt5-base' 'qt5-tools' 'qt5-svg' 'qt5-websockets' 'shapelib' 'tbb' 'opencv' 'gdal')
+depends+=('cgal' 'fbx-sdk' 'ffmpeg4.4' 'glew' 'glu' 'mesa' 'mpir' 'pdal' 'laszip' 'qt5-base' 'qt5-tools' 'qt5-svg' 'qt5-websockets' 'shapelib' 'tbb' 'opencv' 'gdal')
 #fix pcl:>vtk:>vtkm:>openmp missing deps
+((ENABLE_PCL)) && {
 depends+=(openmpi)
 depends+=(nlohmann-json fmt jsoncpp)
 depends+=(utf8cpp fast_float)
+}
 makedepends=('clang' 'cmake' 'doxygen' 'git' 'laz-perf' 'libharu' 'ninja' 'proj' 'python')
 source=("${name}::git+https://github.com/CloudCompare/CloudCompare.git${_fragment}"
         "${name}-cork::git+https://github.com/CloudCompare/cork.git"
@@ -46,8 +60,10 @@ sha256sums=('SKIP'
 
 prepare() {
   prepare_submodule
-  git -C "${srcdir}"/cloudcompare apply -v "${srcdir}"/vtk_jsoncpp.patch
+  git -C "$srcdir/cloudcompare" cherry-pick --no-commit -Xtheirs "${_backports[@]}" || git -C "$srcdir/cloudcompare" cherry-pick --abort
+  ((ENABLE_PCL)) && git -C "${srcdir}"/cloudcompare apply -v "${srcdir}"/vtk_jsoncpp.patch || true
 # sed "/CXX_STANDARD/s/14/17/" -i "${srcdir}/${name}"/cmake/CMakeSetCompilerOptions.cmake
+ sed "/target_include_directories/a target_compile_definitions(LASzip::LASzip INTERFACE LASZIP_API_VERSION)" -i "$(find "${srcdir}/${name}" -name FindLASzip.cmake)"
 }
 
 build() {
@@ -98,14 +114,14 @@ build() {
         -DPLUGIN_STANDARD_QHOUGH_NORMALS:BOOL=ON
         -DPLUGIN_STANDARD_QHPR:BOOL=ON
         -DPLUGIN_STANDARD_QM3C2:BOOL=ON
-        -DPLUGIN_STANDARD_QPCL:BOOL=ON
+        -DPLUGIN_STANDARD_QPCL:BOOL="$qPCL"
         -DPLUGIN_STANDARD_QPCV:BOOL=ON
         -DPLUGIN_STANDARD_QPOISSON_RECON:BOOL=ON
         -DPLUGIN_STANDARD_QRANSAC_SD:BOOL=ON
         -DPLUGIN_STANDARD_QSRA:BOOL=ON
         -DOPTION_USE_DXF_LIB:BOOL=ON # required by qsra plugin
-        -DPLUGIN_STANDARD_MASONRY_QAUTO_SEG=ON
-        -DPLUGIN_STANDARD_MASONRY_QMANUAL_SEG=ON
+        -DPLUGIN_STANDARD_MASONRY_QAUTO_SEG="$qPCL"
+        -DPLUGIN_STANDARD_MASONRY_QMANUAL_SEG="$qPCL"
         -DPLUGIN_STANDARD_QANIMATION=ON
         -DQANIMATION_WITH_FFMPEG_SUPPORT=ON
         -DPLUGIN_STANDARD_QBROOM=ON
@@ -116,6 +132,7 @@ build() {
         -DEIGEN_ROOT_DIR=/usr/include/eigen3
         -DJsonCpp_INCLUDE_DIR=/usr/include
         -DJsonCpp_LIBRARY=/usr/lib
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5
   )
   msg2 "Build Cork lib"
   make -C "${srcdir}/${name}-cork" CXXFLAGS="$CXXFLAGS -DSUPPORT_TOPO_STREAM_OPERATORS -fPIC" CXX="g++" CC="gcc" CXX="g++"
