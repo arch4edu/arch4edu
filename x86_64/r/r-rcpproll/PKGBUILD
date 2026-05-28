@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=RcppRoll
-_pkgver=0.3.1
+_pkgver=0.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,8 +23,8 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c6fccb2c91dd012c5169a0fe2dcb02ea')
-b2sums=('83c2f5dced8c47d94d5fd0cd3fe6cd6a2afb49e2c07bfdff4585f3ba696c13b61b27f3e50d3bf50e4055e9334608090212aa62d3437c34e1d041e053d0c1d488')
+md5sums=('a37571a0ce3b82fde1512f6c3d27e75b')
+b2sums=('2079ded7a2247812a26b8e6198e156eece551c3373cd5da9f9ba7b1de4885b534625dfdcf1c314a1b0cb1f8f135e7312c8555d42d09413b020fe04e42eb3ff9a')
 
 build() {
   mkdir build
