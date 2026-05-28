@@ -5,7 +5,7 @@ _pkgname=mgm
 _pkgver=1.2-15
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Estimating Time-Varying k-Order Mixed Graphical Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
