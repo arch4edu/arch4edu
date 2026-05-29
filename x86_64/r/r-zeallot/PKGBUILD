@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=zeallot
-_cranver=0.1.0
+_cranver=0.2.0
 pkgname=r-${_cranname,,}
 pkgdesc="Multiple, Unpacking, and Destructuring Assignment"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -42,7 +42,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("89f29b5d4a20dd6dfcbbe678ed11e59abffff1b93bfed9bccf9365eac910aed5036b2e4ab662700564687c38323d57e248963a59858c535b1852a19b619ae017")
+b2sums=('62e8718185029370b645bf0cfde3871bb53818b9bb2faa463fefb8fc5a836c891e5b8e5983a598cbfe2bbbca3b8e61ca049aaf28c33c600bea8c330d0b79329f')
 
 build() {
     mkdir -p "${srcdir}/build/"
