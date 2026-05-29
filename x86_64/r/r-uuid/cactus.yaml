@@ -5,5 +5,5 @@ build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
-  replace '1.2-1' '1.2-2'
+  replace -u '1.2-1' '1.2-2'
 post_build: aur-post-build
