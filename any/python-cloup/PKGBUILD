@@ -4,8 +4,8 @@
 _name=cloup
 
 pkgname=python-cloup
-pkgver=3.0.8
-pkgrel=3
+pkgver=3.1.0
+pkgrel=1
 pkgdesc="Cloup (= Click + groups) contains a set of Click extensions for multiple purposes."
 
 arch=("any")
@@ -13,7 +13,7 @@ license=("MIT")
 url="https://github.com/janLuke/cloup"
 
 source=("https://github.com/janLuke/$_name/archive/refs/tags/v$pkgver.tar.gz")
-sha512sums=('f14d5f68aeebb958acdf5812ff6c211db245103688006eba3f0afb82884a4c915bdd8753f2823a515b6acb571fb26d079a0ec3a68e894b365b25dc1b8ca8f6ac')
+sha512sums=('c9eed29f4b9ce6ccdb7b2e9b74f34922f4e1105b90da35cb652b20860a10409f9490a6966db58914454ffaabf53ea00641110b2ebb8e2f1f8f2f9240865af604')
 
 depends=(
     "python"
@@ -31,18 +31,23 @@ checkdepends=(
     "python-pytest"
 )
 
-build () {
+prepare() {
+    cd "$srcdir/$_name-$pkgver"
+    sed -i 's/setuptools_scm<10/setuptools_scm/' setup.py
+}
+
+build() {
     cd "$srcdir/$_name-$pkgver"
     SETUPTOOLS_SCM_PRETEND_VERSION=${pkgver} \
         python -m build --wheel --no-isolation
 }
 
-check () {
+check() {
     cd "$srcdir/$_name-$pkgver"
     pytest
 }
 
-package () {
+package() {
     cd "$srcdir/$_name-$pkgver"
     python -m installer --destdir="$pkgdir" dist/*.whl
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
