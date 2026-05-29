@@ -4,7 +4,7 @@ _pkgname=GLMMadaptive
 _pkgver=0.9-7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Generalized Linear Mixed Models using Adaptive Gaussian Quadrature"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
