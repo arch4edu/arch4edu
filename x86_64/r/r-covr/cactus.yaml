@@ -11,5 +11,7 @@ depends:
   - x86_64/r/r-yaml
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace -u '3.6.4' '3.6.5'
 post_build: aur-post-build
