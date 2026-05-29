@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=futile.logger
-_cranver=1.4.3
+_cranver=1.4.9
 pkgname=r-${_cranname,,}
 pkgdesc="A Logging Utility for R"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -40,7 +40,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("417b67e46adf74ae9bb9ed0093a325863ceaf3cbe68d2bc0171876be29c436286b0e7554520d8e588d46b83660a6a66bc838ccbd52ca44d3d2f155b7f3966134")
+b2sums=('cde14bd9bc8867288c3bf3007d731a6d4fe1deaafe914941ca826d8c5ed4956dec855bd79e938014fbd74d8dd64fd9e61e5389c735e1ec4c60b61603056c1df5')
 
 build() {
     mkdir -p "${srcdir}/build/"
