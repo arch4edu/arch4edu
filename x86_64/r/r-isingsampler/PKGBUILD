@@ -4,7 +4,7 @@ _pkgname=IsingSampler
 _pkgver=0.2.4
 pkgname=r-${_pkgname,,}
 pkgver=0.2.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Sampling Methods and Distribution Functions for the Ising Model'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
