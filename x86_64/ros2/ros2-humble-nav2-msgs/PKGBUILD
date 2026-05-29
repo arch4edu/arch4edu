@@ -4,7 +4,7 @@ _pkgroot=navigation2
 _pkgname=nav2_msgs
 pkgname=ros2-humble-nav2-msgs
 pkgver=1.1.7
-pkgrel=2
+pkgrel=3
 pkgdesc="Messages and service files for the Nav2 stack"
 url="https://index.ros.org/p/nav2_msgs/"
 arch=('any')
@@ -21,6 +21,8 @@ sha256sums=('1d89dc1ad7c75d4d1645c882a5aee037ca965908344a158bb9669ad80a85196b')
 
 build() {
     source /opt/ros/humble/setup.bash
+
+    export CXXFLAGS="${CXXFLAGS} --include=cstdint"
 
     cmake -B build -S "$_pkgroot-$pkgver/$_pkgname" \
         -DCMAKE_BUILD_TYPE='None' \
