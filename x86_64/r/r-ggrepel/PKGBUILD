@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=ggrepel
-_pkgver=0.9.6
+_pkgver=0.9.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,6 +15,7 @@ depends=(
   r-ggplot2
   r-rcpp
   r-rlang
+  r-s7
   r-scales
   r-withr
 )
@@ -31,18 +32,21 @@ optdepends=(
   r-gridextra
   r-knitr
   r-magrittr
+  r-marquee
   r-patchwork
   r-prettydoc
   r-readr
   r-rmarkdown
+  r-sf
   r-stringr
+  r-rsvg
   r-svglite
   r-testthat
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d84bbecfeb624fe1ec70f11712596b13')
-b2sums=('1dfc8e152a02e55fe176996707cf08fa063921346179d7a42ed0d3f370f3f941af8478a9bace48f29a34bd87bd67584a3831eb5cdd4c1aab0e8c2d0d8fbddb3f')
+md5sums=('33e4c1f39e92d9e828203b10e12f831c')
+b2sums=('f95b2aa520c6fdf650508d94231fa603a2434000d924fa19111d3ee3595a06c46a6948b80af91f7e9604a232888118976c872bf2b0d69f6751a5db5d67d61b85')
 
 build() {
   mkdir build
