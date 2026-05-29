@@ -5,7 +5,7 @@
 # Contributor: Oleg Smirnov <oleg.smirnov@gmail.com>
 
 _pkgname=igraph
-_pkgver=2.3.1
+_pkgver=2.3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -53,8 +53,8 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
 #        "igraph-system-libs20251202.patch")
-md5sums=('c35002b7bf8306384e27e8ea8580c6c5')
-b2sums=('006fee137176f6fa65acc9cc68f2a1e2f88abd40e6b12b4c530a07c7eea5b98b482bd17eed9bc1fbec9c79abd5b8631fa61fdc7c69e1873d0c477a4f53543b50')
+md5sums=('2ad887c09ac8f7712a1532d6bba64339')
+b2sums=('7d405fedc42e20e81b374370fc648e34be40b9bb97ac8047b8af2666526db3e2fcabb59859435bc0ee9d5dc9e9928d4f8ba689b4a52570f918175f6017a448c2')
 #         '4f7de12ace8af846bafcfe0358f00dd3')
 #        '1570ec5fd587860871962d5bf7a2c718b52e6b904a41d084f0df911f289d743bca51d6acc3d7e75f4faebeeb812cf869b2fb2eec20651f6b4ebb854e0935cb36')
 
