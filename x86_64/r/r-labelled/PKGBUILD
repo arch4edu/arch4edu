@@ -4,7 +4,7 @@ _pkgname=labelled
 _pkgver=2.16.0
 pkgname=r-${_pkgname,,}
 pkgver=2.16.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Manipulating Labelled Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
