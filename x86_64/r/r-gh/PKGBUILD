@@ -2,9 +2,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=gh
-_pkgver=1.5.0
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=1
 pkgdesc="'GitHub' 'API'"
 arch=('any')
@@ -30,7 +30,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('295a063084960fc790156d75e1db8b653d6123441079b2c94f1a8937e0329b8e')
+sha256sums=('91d3e15fd10835ed0b9b74b3fefa6deb56c25553108e1e8aeaed733365ef3be4')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
