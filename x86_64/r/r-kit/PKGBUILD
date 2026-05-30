@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=kit
-_pkgver=0.0.20
+_pkgver=0.0.21
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,8 +13,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d1060790c5949fcb83eb7ce8c4906517')
-b2sums=('71c4188a32c274efe2fce63bbaf51290894de483e60d2f5b1e2133489e50f0f16ef591cb1e9094bd51bd1d65d977e184d7f199ef749528d97ec55b045eec3f4c')
+md5sums=('43fa595b74137967ff57fb8664e030c0')
+b2sums=('b235a2dab1fad047263b439d351eb08c4dce2ea256b2a189de6b1e6ab929b67bd8b3fa35d6d221bc7cc76b4f8ab645c676d8e39e172cde2813bfa8dd7c708fe2')
 
 build() {
   mkdir build
