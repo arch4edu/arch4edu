@@ -2,7 +2,7 @@
 
 pkgname='python-optax'
 _pkgname=${pkgname#python-}
-pkgver=0.2.7
+pkgver=0.2.8
 pkgrel=1
 pkgdesc='A gradient processing and optimization library for JAX'
 arch=('any')
@@ -12,16 +12,24 @@ depends=('python-absl' 'python-jax' 'python-numpy')
 makedepends=('python-build' 'python-installer' 'python-flit-core' 'python-wheel')
 optdepends=('python-dm-haiku: Deep learning framework from DeepMind'
             'python-flax: Deep learning framework from Google')
-source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('7f40861598c3794be052908c15f8f9afc71c37a2ba2f411e1c3596ce66975fda')
+source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
+        'optax.diff')
+sha256sums=('c5864f15c7f9ddfa3f703d8a1f73d5a516db07d220fb0a434741d23f45da4559'
+            'SKIP')
 
 prepare() {
     cd "$_pkgname-$pkgver"
     sed -i "s/^__version__.*/__version__ = '$pkgver'/" optax/__init__.py
+    patch -p 1 -i ../optax.diff
 }
 
 build() {
     python -m build -n -w "$_pkgname-$pkgver"
+}
+
+check() {
+    cd "${_pkgname}-${pkgver}"
+    python -c 'import optax'
 }
 
 package() {
