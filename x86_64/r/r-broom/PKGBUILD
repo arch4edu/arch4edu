@@ -6,7 +6,7 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=broom
-_cranver=1.0.10
+_cranver=1.0.13
 pkgname=r-${_cranname,,}
 pkgdesc="Convert Statistical Objects into Tidy Tibbles"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -113,7 +113,7 @@ optdepends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('d9e128e30d9dce5f01578718c9984d154cfd97ae7505f725a4533dc955b52a87e3e9df01b6d2215a424673cf524298d2458cab2b64883d78ae438643ea83c3b8')
+b2sums=('4d469b46763e356c2c5385c3a9b96277fd60df36d76df1632f34fad0058fd07060dc007f2ee035d1bced12650d467eafd2f4657a79d8e029704e18ad64c037fd')
 
 build() {
     mkdir -p "${srcdir}/build/"
