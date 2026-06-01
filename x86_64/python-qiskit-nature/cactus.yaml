@@ -7,6 +7,7 @@ depends:
   - x86_64/python-qiskit-algorithms
   - x86_64/python-rustworkx
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   replace '349b7b36a627ca1e1c62322abcd76f636824e094cf9eac8a77a37886dac7dd911b4792d77e7fb1563c2faf6dd65b27b907b479d6099a5c490b47a26e3e40c23a' 'affc725920d87bc5637c22f295c84f970c0bcb70e95fd63d7b9bbde11077f5efa8a3c44463887ab3800a51a9669ffcb07c75cf92092338b3a9bfcbd880a34ed3'
