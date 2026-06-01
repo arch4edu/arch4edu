@@ -3,7 +3,9 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any/python-tokenizers
+  - any/python-docling-core
+  - any/python-transformers
+  - any/python-accelerate
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
