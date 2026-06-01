@@ -3,7 +3,7 @@
 _base=micro-manager
 pkgname=python-${_base}-precice
 pkgdesc="A tool which facilitates two-scale macro-micro coupled simulations using preCICE"
-pkgver=0.9.0
+pkgver=0.10.1
 pkgrel=1
 arch=(any)
 url="https://precice.org/tooling-${_base}-overview.html"
@@ -14,7 +14,7 @@ checkdepends=(python-scikit-learn python-h5py-openmpi pybind11)
 optdepends=('python-h5py: for snapshot computations'
   'python-scikit-learn: for crash handling by interpolation')
 source=(git+https://github.com/precice/${_base}.git#tag=v${pkgver})
-sha512sums=('6c5e6e4d82d5c8ba0efae91e6fc09aab5f501b7a347d9185f9d10c1b118056a32442b1bce7902683998fe8622ac9a17cf25490ce007b06f40badcc8d1845ac07')
+sha512sums=('626e7992f4e6f5122b9c86adab34a5994d9dc9e7522fb582365126f01334328e56a3aae4e65baae7fff6f6702e4ee3c95a7d5df7c013d81be4fff490001921f6')
 
 prepare() {
   sed -i 's/GPL/LGPL/' ${_base}/pyproject.toml
