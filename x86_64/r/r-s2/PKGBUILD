@@ -2,7 +2,7 @@
 # Contributor: peippo <christoph+aur@christophfink.com>
 
 _cranname=s2
-_cranver=1.1.9
+_cranver=1.1.11
 pkgname=r-${_cranname,,}
 pkgdesc="Spherical Geometry Operators Using the S2 Geometry Library"
 url="https://cran.r-project.org/package=s2"
@@ -45,7 +45,7 @@ optdepends=(
 
 # It uses cloud.r-project.org instead of cran to make use of the CDN.
 source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("d3793e05c6924bf8b7b9e78fcde21d5e44728313e4c7647ea131f482e6065555440a347706121f9eced51d2bffcb9ff854f91d622c5335a7a724d65bcd14e55f")
+b2sums=('e0903283afe88dcf61b5e63de86ba6fb3062863338a4ba7f0fbc0d9605207341104756798fe39124c9c75fb5ef8db3be5a3b3fe051a1a13411f641609bb58f77')
 
 build() {
     mkdir -p "${srcdir}/build/"
