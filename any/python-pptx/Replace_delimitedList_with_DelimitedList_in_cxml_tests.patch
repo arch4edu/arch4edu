@@ -1,0 +1,41 @@
+From 974ae2afa475e22cee517be414f61b1f2125f298 Mon Sep 17 00:00:00 2001
+From: Elenedeath Olawir <502132+Elenedeath@users.noreply.github.com>
+Date: Tue, 6 Jan 2026 01:56:22 +0100
+Subject: [PATCH] Replace delimitedList with DelimitedList in cxml tests
+
+Updated usage of pyparsing's delimitedList to DelimitedList in the cxml test grammar for compatibility with newer pyparsing versions.
+---
+ tests/unitutil/cxml.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tests/unitutil/cxml.py b/tests/unitutil/cxml.py
+index 79e217c20..62f38269f 100644
+--- a/tests/unitutil/cxml.py
++++ b/tests/unitutil/cxml.py
+@@ -19,7 +19,7 @@
+     alphanums,
+     alphas,
+     dblQuotedString,
+-    delimitedList,
++    DelimitedList,
+     removeQuotes,
+     stringEnd,
+ )
+@@ -254,7 +254,7 @@ def grammar():
+     attr_name = Word(alphas + ":")
+     attr_val = Word(alphanums + " %-./:_")
+     attr_def = Group(attr_name + equal + attr_val)
+-    attr_list = open_brace + delimitedList(attr_def) + close_brace
++    attr_list = open_brace + DelimitedList(attr_def) + close_brace
+ 
+     text = dblQuotedString.setParseAction(removeQuotes)
+ 
+@@ -271,7 +271,7 @@ def grammar():
+         element("element") + Group(Optional(slash + child_node_list))("child_node_list")
+     ).setParseAction(connect_node_children)
+ 
+-    child_node_list << (open_paren + delimitedList(node) + close_paren | node)
++    child_node_list << (open_paren + DelimitedList(node) + close_paren | node)
+ 
+     root_node = (
+         element("element") + Group(Optional(slash + child_node_list))("child_node_list") + stringEnd
