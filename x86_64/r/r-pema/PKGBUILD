@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=pema
-_pkgver=0.1.4
+_pkgver=0.1.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -41,8 +41,8 @@ optdepends=(
   r-metafor
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('699227662402fc34fdc7f508392db8c6')
-b2sums=('252fbcce69d310de74e9f79743b8c99fc3e6cc298485dafc86486e7b11529addce65868245403424f80d2f4f6fd5a5b5a4dbefae55a5c03911c27e1625baf798')
+md5sums=('0b7996f1151f4239e5cca9d093d051a7')
+b2sums=('a2f821a7376c35cb299be7aef68b7354a4ba65371747457642a0edcb564209ca55c2968ff897451a402a81bf418c8851ea36effb239436b72f4ae4a2faa193ce')
 
 build() {
   mkdir build
