@@ -1,0 +1,36 @@
+--- setup.py	2025-10-11 09:40:00.000000000 -0400
++++ setup.py	2025-11-29 14:58:32.319098927 -0500
+@@ -1,12 +1,10 @@
+ # -*- encoding: utf-8 -*-
+ # @Author: SWHL
+ # @Contact: liekkaskono@163.com
+-import sys
+ from pathlib import Path
+ from typing import List, Union
+ 
+ import setuptools
+-from get_pypi_latest_version import GetPyPiLatestVersion
+ 
+ 
+ def read_txt(txt_path: Union[Path, str]) -> List[str]:
+@@ -26,20 +24,6 @@
+ 
+ MODULE_NAME = "rapidocr"
+ 
+-obtainer = GetPyPiLatestVersion()
+-try:
+-    latest_version = obtainer(MODULE_NAME)
+-except Exception as e:
+-    latest_version = "0.0.0"
+-VERSION_NUM = obtainer.version_add_one(latest_version, add_patch=True)
+-
+-if len(sys.argv) > 2:
+-    match_str = " ".join(sys.argv[2:])
+-    matched_versions = obtainer.extract_version(match_str)
+-    if matched_versions:
+-        VERSION_NUM = matched_versions
+-sys.argv = sys.argv[:2]
+-
+ project_urls = {
+     "Documentation": "https://rapidai.github.io/RapidOCRDocs",
+     "Changelog": "https://github.com/RapidAI/RapidOCR/releases",
