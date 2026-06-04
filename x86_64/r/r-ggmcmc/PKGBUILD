@@ -4,7 +4,7 @@ _pkgname=ggmcmc
 _pkgver=1.5.1.2
 pkgname=r-${_pkgname,,}
 pkgver=1.5.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Tools for Analyzing MCMC Simulations from Bayesian Inference'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
