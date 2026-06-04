@@ -118,6 +118,7 @@ if __name__ == '__main__':
         logger.error('Unsupported architecture: %s (must be x86_64, aarch64, or any)', arch)
         sys.exit(1)
 
+    target_package = parts[-1]
     package = parts[-1]
     subdir = '/'.join(parts[1:-1]) if len(parts) > 2 else ''
 
@@ -173,7 +174,7 @@ if __name__ == '__main__':
     for package, info in reversed(resolved.items()):
         pkgbase = info['PackageBase']
 
-        if pkgbase in pkgbases and info['Name'] != package:
+        if pkgbase in pkgbases and info['Name'] != target_package:
             continue
 
         pkgbase = directory / pkgbase
