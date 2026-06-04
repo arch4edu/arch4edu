@@ -4,7 +4,7 @@ _pkgname=mgcViz
 _pkgver=0.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Visualisations for Generalized Additive Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
