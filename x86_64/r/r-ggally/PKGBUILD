@@ -5,7 +5,7 @@ _pkgname=GGally
 _pkgver=2.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Extension to 'ggplot2'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
