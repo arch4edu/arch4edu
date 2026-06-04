@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=prophet
-_pkgver=1.0
+_pkgver=1.1.7
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=8
+pkgrel=1
 pkgdesc="Automatic Forecasting Procedure"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -35,14 +35,16 @@ checkdepends=(
   r-testthat
 )
 optdepends=(
+  r-cmdstanr
   r-knitr
+  r-posterior
   r-readr
   r-rmarkdown
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8df583834d8cb58ebc4cd5421497d9dd')
-b2sums=('0d32ae2bac0ab2257643c2da03ae9372338f33b60e26f5a6d021de87214c9222481cb80517602d1c798a9de268ccb904daf5a6f8d53d2680c679e03866022a34')
+md5sums=('f3c44b3b6780dfe3b4c9d5652732e700')
+b2sums=('5a24b31a21c517a59e5916cb3eb3b58bce9fc40333af6bc7cc88202042acf2565b094053e514dd03c0ee2bed15b5dcd070ee1b51e718d703abfdd43707c6e894')
 
 build() {
   mkdir build
