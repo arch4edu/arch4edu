@@ -30,6 +30,12 @@ def load_pkgbases():
         pkgbases[pkgbase] = str(i.parent)
     return pkgbases
 
+def resolve_deps(raw, pacman_db, provides, exclude=None):
+    result = [i.split('<')[0].split('>')[0].split('=')[0] for i in raw]
+    result = [provides[i] if i in provides else i for i in result]
+    result = [i for i in result if i not in pacman_db and (exclude is None or i not in exclude)]
+    return result
+
 def load_pacman_and_provides(arch):
     pacman_dir = Path(f'.pacman/{arch}')
     pacman_dir.mkdir(parents=True, exist_ok=True)
@@ -153,18 +159,19 @@ if __name__ == '__main__':
                 sys.exit(1)
 
             aur_info[package]['Depends'] = [] if not 'Depends' in aur_info[package] else aur_info[package]['Depends']
-            aur_info[package]['Depends'] = [i.split('<')[0].split('>')[0].split('=')[0] for i in aur_info[package]['Depends']]
-            aur_info[package]['Depends'] = [provides[i] if i in provides else i for i in aur_info[package]['Depends']]
-            aur_info[package]['Depends'] = [i for i in aur_info[package]['Depends'] if not i in pacman_db]
+            aur_info[package]['Depends'] = resolve_deps(aur_info[package]['Depends'], pacman_db, provides)
             _unresolved.update([i for i in aur_info[package]['Depends'] if not i in resolved])
 
             aur_info[package]['MakeDepends'] = [] if not 'MakeDepends' in aur_info[package] else aur_info[package]['MakeDepends']
-            if not args.nocheck and 'CheckDepends' in aur_info[package]:
-                aur_info[package]['MakeDepends'] += aur_info[package]['CheckDepends']
-            aur_info[package]['MakeDepends'] = [i.split('>')[0].split('=')[0] for i in aur_info[package]['MakeDepends']]
-            aur_info[package]['MakeDepends'] = [provides[i] if i in provides else i for i in aur_info[package]['MakeDepends']]
-            aur_info[package]['MakeDepends'] = [i for i in aur_info[package]['MakeDepends'] if not i in pacman_db and not i in aur_info[package]['Depends']]
+            aur_info[package]['MakeDepends'] = resolve_deps(aur_info[package]['MakeDepends'], pacman_db, provides, aur_info[package]['Depends'])
             _unresolved.update([i for i in aur_info[package]['MakeDepends'] if not i in resolved])
+
+            if args.nocheck:
+                aur_info[package]['CheckDepends'] = []
+            else:
+                aur_info[package]['CheckDepends'] = [] if not 'CheckDepends' in aur_info[package] else aur_info[package]['CheckDepends']
+                aur_info[package]['CheckDepends'] = resolve_deps(aur_info[package]['CheckDepends'], pacman_db, provides, aur_info[package]['Depends'])
+                _unresolved.update([i for i in aur_info[package]['CheckDepends'] if not i in resolved])
 
             resolved[package] = aur_info[package]
             logger.info('Resolved %s', package)
@@ -182,7 +189,7 @@ if __name__ == '__main__':
         config = pkgbase / 'cactus.yaml'
         config.unlink(missing_ok=True)
 
-        if len(info['Depends']) + len(info['MakeDepends']) == 0:
+        if len(info['Depends']) + len(info['MakeDepends']) + len(info['CheckDepends']) == 0:
             symlink('../' * (len(directory.parents) + 1) + template, config)
             logger.info('Added %s with %s', package, template)
             pkgbases[pkgbase.name] = str(pkgbase)
@@ -205,6 +212,15 @@ if __name__ == '__main__':
                         if len(info['MakeDepends']) > 0:
                             f.write('makedepends:\n')
                         for i in info['MakeDepends']:
+                            _pkgbase = resolved[i]['PackageBase']
+                            _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
+                            if resolved[i]['PackageBase'] == i:
+                                f.write(f'  - {_pkgbase}\n')
+                            else:
+                                f.write(f'  - {_pkgbase}: {i}\n')
+                        if len(info['CheckDepends']) > 0:
+                            f.write('checkdepends:\n')
+                        for i in info['CheckDepends']:
                             _pkgbase = resolved[i]['PackageBase']
                             _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
                             if resolved[i]['PackageBase'] == i:
