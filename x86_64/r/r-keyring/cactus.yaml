@@ -2,7 +2,9 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-bibtex
+  - x86_64/r/r-askpass
+  - x86_64/r/r-filelock
+  - x86_64/r/r-yaml
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

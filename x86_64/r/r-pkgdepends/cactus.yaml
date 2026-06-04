@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-callr
+  - x86_64/r/r-cli
+  - x86_64/r/r-curl
+  - x86_64/r/r-desc
+  - x86_64/r/r-filelock
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-lpsolve
+  - x86_64/r/r-pkgbuild
+  - x86_64/r/r-pkgcache
+  - x86_64/r/r-processx
+  - x86_64/r/r-ps
+  - x86_64/r/r-r6
+  - x86_64/r/r-zip
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
