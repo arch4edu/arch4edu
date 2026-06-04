@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=doBy
-_pkgver=4.7.0
+_pkgver=4.7.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Groupwise Statistics, LSmeans, Linear Estimates, Utilities"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,9 +14,11 @@ depends=(
   r-cowplot
   r-deriv
   r-dplyr
+  r-forecast
   r-ggplot2
   r-microbenchmark
   r-modelr
+  r-purrr
   r-rlang
   r-tibble
   r-tidyr
@@ -27,12 +29,13 @@ optdepends=(
   r-lme4
   r-markdown
   r-multcomp
+  r-rmarkdown
   r-pbkrtest
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('368755bfed56596607935c4bc91ebc67')
-b2sums=('09cfdaf40917f4d25e71b4052a122818f7f1c2b6da4181f8f27936201439585d52de71a0eb33cc94e1c054b17b1bf408e40bd0536c68e8776b0a555356b70aff')
+md5sums=('095081ddc08b5324ab5999af1a9339fb')
+b2sums=('ba87f1194eb4bb4638ec3c50342901e78c54782a3c255b538add5515c96945cfda9bbe81386651277c884ae5e9960ef84e79513fb2f8b48087b231ff513b32eb')
 
 build() {
   mkdir build
