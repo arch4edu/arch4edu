@@ -5,7 +5,7 @@ _pkgname=coin
 _pkgver=1.4-3
 pkgname=r-${_pkgname,,}
 pkgver=1.4.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Conditional Inference Procedures in a Permutation Test Framework'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
