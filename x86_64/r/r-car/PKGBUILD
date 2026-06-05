@@ -6,7 +6,7 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=car
-_pkgver=3.1-3
+_pkgver=3.1-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -41,8 +41,8 @@ optdepends=(
   r-survey
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9103307ef76967da60b98da4f26f9ee9')
-b2sums=('7419e1734d04cbb26bf693e6e88f84cdd233966d0c301b5b249a5121d2d1c4dc9c3ad2f7b4bd6332010a15fcafd38b05221b95f833661b0afa04b2caa4029f74')
+md5sums=('bcc349a3c28cc57f431bcdcec31df241')
+b2sums=('a6436041f693acbf9df765a13d0b8ab5790e637330b83cf2cb0600b2f8af9f6b55a899956599e10f8a009537f343e920c04bb303c0e971ca6a5f11214ae5f237')
 
 build() {
   mkdir build
