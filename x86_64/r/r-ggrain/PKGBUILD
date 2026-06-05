@@ -1,17 +1,16 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=ggrain
-_pkgver=0.0.4
+_pkgver=0.1.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="A Rainclouds Geom for 'ggplot2'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
   r-cli
-  r-gghalves
   r-ggplot2
   r-ggpp
   r-rlang
@@ -22,8 +21,8 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8e24f1f21eac678fe6b1951e61022701')
-b2sums=('ad05d6c4e54e66b56dbffa97d03109ca19fcea26fb2d2fd8c99be408fafd81ab694f756e8fc295904eda20caa8eb94f89c8df03f2c93adc6e8d623e77ed67c35')
+md5sums=('29f622541c4ac66c9ebfa1617f960dc8')
+b2sums=('3f963413caa74405dd39b935030c3f6391520f79eecebffffba03627063e56b4c11c8da037ab46ffc8dcd8e47538e0928ec6b78cae85f871107ce9cc467342d1')
 
 build() {
   mkdir build
