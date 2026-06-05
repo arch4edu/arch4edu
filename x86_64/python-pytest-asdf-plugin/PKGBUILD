@@ -5,12 +5,12 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 # "python-${_pname}-doc")
-pkgver=0.1.2
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="Pytest plugin for testing ASDF schemas"
 arch=('any')
 url="https://github.com/asdf-format/pytest-asdf-plugin"
-license=('MIT')
+license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm>=8'
              'python-build'
              'python-installer')  # wheel required by new setuptools
@@ -18,7 +18,7 @@ checkdepends=('python-pytest'
 #             'python-pytest-xdist'
               'python-asdf')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('a34d1a0162761246e867a189fc0951d8')
+md5sums=('b1babec4836245af40b8a1e987ca0bcd')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
@@ -31,11 +31,11 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
+    PYTHONPATH="${PWD}/src" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-pytest-asdf-plugin() {
-    depends=('python>=3.9' 'python-pytest>=7' 'python-asdf')
+    depends=('python>=3.10' 'python-pytest>=7' 'python-asdf')
 #   optdepends=('python-pytest-asdf-plugin-doc: Documentation for pytest-asdf-plugin')
     cd ${srcdir}/${_pyname}-${pkgver}
 
