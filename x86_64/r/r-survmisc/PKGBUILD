@@ -4,7 +4,7 @@ _pkgname=survMisc
 _pkgver=0.5.6
 pkgname=r-${_pkgname,,}
 pkgver=0.5.6
-pkgrel=3
+pkgrel=4
 pkgdesc='Miscellaneous Functions for Survival Data'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ depends=(
   r-xtable
   r-zoo
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+source=("https://cran.r-project.org/src/contrib/Archive/survMisc/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('d911125bc374dfc67f31a81ebeaf98a09cac8f81e30259655ab136ebf4718c04')
 
 build() {
