@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=restriktor
-_pkgver=0.6-10
+_pkgver=0.6-30
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,12 +26,13 @@ depends=(
 optdepends=(
   r-bain
   r-knitr
+  r-metadat
   r-rmarkdown
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a24820deb75a3fc155709d54bd0ced81')
-b2sums=('a9fe3407a97b11c93696e6c550984eb343a31abcfd448d2d818f00d230243cf31b8226b38339e9f52a1ffd9f5dfde03f8487751ceea2c44c43cb10b6bdc977d9')
+md5sums=('35ccecb57bebcb751424532baaeab3af')
+b2sums=('49099a791fd1b0e7497d3dd000fe1d65d7a9144cc97f3fb4ff3ed905c3d8850530c23958ca560ddc914cbd7fd447a5e11c5d409796139ccfc77721c664d41420')
 
 build() {
   mkdir build
