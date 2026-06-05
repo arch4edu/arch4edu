@@ -4,7 +4,7 @@ _pkgname=chemometrics
 _pkgver=1.4.4
 pkgname=r-${_pkgname,,}
 pkgver=1.4.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Multivariate Statistical Analysis in Chemometrics'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
