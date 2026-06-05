@@ -4,7 +4,7 @@ _pkgname=C50
 _pkgver=0.2.0
 pkgname=r-${_pkgname,,}
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='C5.0 Decision Trees and Rule-Based Models'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
