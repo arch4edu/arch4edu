@@ -5,7 +5,7 @@ _pkgname=onewaytests
 _pkgver=3.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="One-Way Tests in Independent Groups Designs"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
