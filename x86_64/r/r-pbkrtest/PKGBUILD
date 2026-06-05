@@ -6,7 +6,7 @@ _pkgname=pbkrtest
 _pkgver=0.5.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Parametric Bootstrap, Kenward-Roger and Satterthwaite Based Methods for Test in Mixed Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
