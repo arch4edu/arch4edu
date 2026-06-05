@@ -5,7 +5,7 @@ _pkgname=metaBMA
 _pkgver=0.6.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Bayesian Model Averaging for Random and Fixed Effects Meta-Analysis"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
