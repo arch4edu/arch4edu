@@ -4,7 +4,7 @@ _pkgname=ICS
 _pkgver=1.4-2
 pkgname=r-${_pkgname,,}
 pkgver=1.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Tools for Exploring Multivariate Data via ICS/ICA'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
