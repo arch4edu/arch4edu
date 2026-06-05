@@ -4,7 +4,7 @@ _pkgname=mvnormalTest
 _pkgver=1.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Powerful Tests for Multivariate Normality"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
