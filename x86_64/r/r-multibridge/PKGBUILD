@@ -5,7 +5,7 @@ _pkgname=multibridge
 _pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=1.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Evaluating Multinomial Order Restrictions with Bridge Sampling'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
