@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=sessioninfo
-_pkgver=1.2.3
+_pkgver=1.2.4
 pkgname=r-${_pkgname,,}
-pkgver=1.2.3
-pkgrel=2
+pkgver=1.2.4
+pkgrel=1
 pkgdesc='R Session Information'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a02b90a8a6c49a499d972cebc5a15ab44e729b232d00516cb168414701e1c650')
+sha256sums=('fe855e84941126c272d5a0ae39b14f1c92d7076550d7be627389d452b7d61bd4')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
