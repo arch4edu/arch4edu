@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=heplots
-_pkgver=1.7.8
+_pkgver=1.8.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Visualizing Hypothesis Tests in Multivariate Linear Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -27,6 +27,7 @@ optdepends=(
   r-corrgram
   r-dplyr
   r-effects
+  r-effectsize
   r-ggplot2
   r-glue
   r-gplots
@@ -50,8 +51,8 @@ optdepends=(
   r-aplpack
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1cac55edc083ba2346c9ac7ce8c1cb12')
-b2sums=('e928fb78af6398678a5058657d9a24af926c8d952b99079c929cdad344d7e5635b3792259cef58ceb0e2d68543cd5e014e54664e3375683e42c604dd867018a7')
+md5sums=('f93c63368cc1ebc8c601bc4d8426db16')
+b2sums=('de1f47944d1058ae5faf7372bdae9bfd2ffaca1fa494e9b6ec76a71ef8acf145f0a0a3da847563da1665ca1038cf1a2232da21854d62636b6604f5882ede7319')
 
 build() {
   mkdir build
