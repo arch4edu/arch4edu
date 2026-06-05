@@ -5,6 +5,7 @@ depends:
   - x86_64/r/r-lme4
   - x86_64/r/r-numderiv
   - x86_64/r/r-reformulas
+  - x86_64/r/r-sandwich
   - x86_64/r/r-tmb
 makedepends:
   - x86_64/r/r-rcppeigen

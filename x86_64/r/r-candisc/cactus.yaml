@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-car
   - x86_64/r/r-heplots
+  - x86_64/r/r-insight
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
