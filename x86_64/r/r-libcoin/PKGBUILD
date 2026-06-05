@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=libcoin
-_pkgver=1.0-12
+_pkgver=1.0-13
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -19,8 +19,8 @@ optdepends=(
   r-coin
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a387c5d0252cba7deb19532f04f999ec')
-b2sums=('c1c144e443d0eb454f54d9972ca2d044733ce40df304943e95c7c9c7e0e4635e8a55257d69577e8990fa5383496c149e49849565fe5fb419a41180cb531d889c')
+md5sums=('0b06f2e2cfc30448179ace1b1a770c11')
+b2sums=('c0d69ed37a25c7f8b76202be91c2301ce446025efa3eb9282c45b99adfa077294560ed52fbbd2bddc5a1d97e8a98e5f23dc58145a2bc6a3eee209be3646e7881')
 
 build() {
   mkdir build
