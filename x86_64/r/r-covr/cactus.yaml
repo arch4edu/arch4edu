@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-cli
   - x86_64/r/r-crayon
   - x86_64/r/r-digest
   - x86_64/r/r-httr
@@ -14,4 +15,7 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   replace -u '3.6.4' '3.6.5'
+  sed -i '6,7d' fix-tests.patch
+  sed -i 's/attr(res, "status") == 0L/identical(attr(res, "status"), 0L)/' fix-tests.patch
+  sed -i 's/@@ -194,6 +194,7 @@/@@ -194,4 +194,5 @@/' fix-tests.patch
 post_build: aur-post-build
