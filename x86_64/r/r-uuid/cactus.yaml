@@ -6,4 +6,5 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   replace -u '1.2-1' '1.2-2'
+  sed -i 's/scrdir/srcdir/g' PKGBUILD
 post_build: aur-post-build
