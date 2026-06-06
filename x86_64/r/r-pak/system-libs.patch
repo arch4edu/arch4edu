@@ -1,0 +1,17 @@
+diff --git a/pak/src/Makevars.in b/pak/src/Makevars.in
+index c6c73fd..f012da3 100644
+--- a/pak/src/Makevars.in
++++ b/pak/src/Makevars.in
+@@ -7,10 +7,7 @@ clean:
+ 	@echo Nothing to clean.
+ 
+ mylibs:
+-	@unset SHLIB R_PACKAGE_NAME R_INSTALL_PKG MAKEFLAGS \
+-		R_DEFAULT_PACKAGES && \
+-	"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" --vanilla \
+-		"install-embedded.R" --build=$(BUILD_PLATFORM) \
+-		--target=$(TARGET_PLATFORM) 2>&1 | grep -v "^\\*"
++	ln -s /usr/lib/R/library $(R_PACKAGE_DIR)
++	touch DONE
+ 
+ .PHONY: all mylibs clean
