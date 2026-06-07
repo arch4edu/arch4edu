@@ -18,4 +18,5 @@ pre_build: |
   sed -i '6,7d' fix-tests.patch
   sed -i 's/attr(res, "status") == 0L/identical(attr(res, "status"), 0L)/' fix-tests.patch
   sed -i 's/@@ -194,6 +194,7 @@/@@ -194,4 +194,5 @@/' fix-tests.patch
+  replace 'd3729dbb95789a8622860678ed9fdb7a' '04b8eae75e6b95e2cc037db977d1191a'
 post_build: aur-post-build
