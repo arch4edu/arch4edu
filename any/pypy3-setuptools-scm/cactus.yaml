@@ -9,5 +9,8 @@ makedepends:
   - any/pypy3-installer
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i 's/cd ${_base}-${_base}-${pkgver}/cd ${_base}-${_base}-v${pkgver}/g' PKGBUILD
+  sed -i 's|install -Dm 644 LICENSE|install -Dm 644 setuptools-scm/LICENSE|' PKGBUILD
 post_build: aur-post-build
