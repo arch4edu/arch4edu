@@ -1,6 +1,9 @@
 nvchecker:
   - source: aur
     aur:
+depends:
+  - x86_64/qt5-charts
+  - x86_64/qt5-location
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
