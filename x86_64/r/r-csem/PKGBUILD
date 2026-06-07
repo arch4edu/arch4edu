@@ -4,7 +4,7 @@ _pkgname=cSEM
 _pkgver=0.6.1
 pkgname=r-${_pkgname,,}
 pkgver=0.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Composite-Based Structural Equation Modeling'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
