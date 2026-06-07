@@ -1,0 +1,22 @@
+# Maintainer: Alexander F. Rødseth <xyproto@archlinux.org>
+# Contributor: robertfoster <morf3089@gmail.com>
+# Contributor: Håvard Pettersson <mail@haavard.me>
+
+pkgname=python-sounddevice
+pkgver=0.5.5
+pkgrel=1
+pkgdesc='Record and play back sound'
+url='https://python-sounddevice.rtfd.io/'
+arch=(any)
+license=(MIT)
+depends=(portaudio python-cffi)
+makedepends=(python-setuptools)
+optdepends=('python-numpy: to play back and record NumPy arrays')
+source=("https://files.pythonhosted.org/packages/source/s/sounddevice/sounddevice-$pkgver.tar.gz")
+b2sums=('25da7f11bb20f115c828bfb4de00c7ced40224126b5da3a08027c0459d40e1300a4747305c25dab480f73db87c9ad6f0982d0af6adf8c3cc4d5de2e0e9ffaaff')
+
+package() {
+  cd sounddevice-$pkgver
+  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
