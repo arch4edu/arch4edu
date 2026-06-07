@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=NetworkComparisonTest
-_pkgver=2.2.2
+_pkgver=2.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Statistical Comparison of Two Networks Based on Several Invariance Measures"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -27,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c699e7be5bafd726a02a5721f625b4cc')
-b2sums=('9fbcb67264f5b61e5a569aae248ffe3b1ed9f30b704d9b9d4a38458a476e6d761dbe6d17b39faf57fe461cfc0fbacac7bca10ee84cbd59de36af28bb6219e1c4')
+md5sums=('54319c0e7efbeb201b2c2f29a7ec997f')
+b2sums=('c9eaafa5ca2f0135b1a7c15439172e531267a8cdd70be86f3f01e7140daafeda40397f339965ddc6d9802036127202ef098920a7c7efd0dc4fec669e583dcd98')
 
 build() {
   mkdir build
