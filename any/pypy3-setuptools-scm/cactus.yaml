@@ -9,9 +9,8 @@ makedepends:
   - any/pypy3-installer
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build:
-  - |-
-    aur-pre-build
-    sed -i 's|cd ${_base}-${_base}-${pkgver}$|cd ${_base}-${_base}-v${pkgver}/${_base}|g' PKGBUILD
-    sed -i "/pypy3 -m build --wheel/i\\  mkdir -p \"\$srcdir\/_bootstrap\"\n  cp -r ..\/vcs-versioning\/src\/vcs_versioning \"\$srcdir\/_bootstrap\/\"\n  export PYTHONPATH=\"\$srcdir\/_bootstrap:\${PYTHONPATH:-}\"" PKGBUILD
+pre_build: |
+  aur-pre-build
+  sed -i 's|cd ${_base}-${_base}-${pkgver}$|cd ${_base}-${_base}-v${pkgver}/${_base}|g' PKGBUILD
+  sed -i "/pypy3 -m build --wheel/i\\  mkdir -p \"\$srcdir\/_bootstrap\"\n  cp -r ..\/vcs-versioning\/src\/vcs_versioning \"\$srcdir\/_bootstrap\/\"\n  export PYTHONPATH=\"\$srcdir\/_bootstrap:\${PYTHONPATH:-}\"" PKGBUILD
 post_build: aur-post-build
