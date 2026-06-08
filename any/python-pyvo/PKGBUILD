@@ -3,8 +3,8 @@
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.8.1
-pkgrel=2
+pkgver=1.9.0
+pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
 url="https://pyvo.readthedocs.io"
@@ -13,19 +13,19 @@ makedepends=('python-setuptools-scm'
              'python-build'
              'python-installer'
              'python-sphinx-astropy'
-##           'python-matplotlib'
+#            'python-matplotlib'
              'python-astropy'
              'graphviz')  # wheel required by new setuptools
 # conftest.py
-checkdepends=('python-pytest-astropy-header'
+checkdepends=('python-pytest-astropy'
 #             'python-pytest-xdist'
-#             'python-pytest-timeout'
-              'python-pytest-doctestplus'
-              'python-pytest-remotedata'
+              'python-pytest-timeout'
+#             'python-pytest-doctestplus'
+#             'python-pytest-remotedata'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('16bb27c5ac6dd7729e16f2740edb4c11')
+md5sums=('344f585bf9721d34f4a95c7d5fb7ebe6')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
@@ -78,7 +78,7 @@ check() {
 }
 
 package_python-pyvo() {
-    depends=('python-astropy>=4.2' 'python-requests')
+    depends=('python-astropy>=5.0' 'python-requests')
     optdepends=('python-pillow: all functions'
                 'python-defusedxml: all functions'
                 'python-pyvo-doc: Documentation for PyVO')
