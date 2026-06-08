@@ -3,7 +3,7 @@ _base=setuptools-scm
 pkgname=pypy3-${_base}
 pkgdesc="the blessed package to manage your versions by scm tags"
 pkgver=10.0.5
-pkgrel=1
+pkgrel=2
 arch=(any)
 url="https://github.com/pypa/${_base}"
 license=(MIT)
@@ -13,13 +13,16 @@ source=(${_base}-${pkgver}.tar.gz::${url}/archive/${_base}-v${pkgver}.tar.gz)
 sha512sums=('a9d416cb56e7ff4007db436f4160c385a49394a287fdd6fc4727c748d13cc47a06cd4667e030288fe52317ce39bf7c1b78f7830b52f4e3c0da8777a9caf2a7c3')
 
 build() {
-  cd ${_base}-${_base}-v${pkgver}
+  cd ${_base}-${_base}-v${pkgver}/${_base}
   export SETUPTOOLS_SCM_PRETEND_VERSION=${pkgver}
+  mkdir -p "$srcdir/_bootstrap"
+  cp -r ../vcs-versioning/src/vcs_versioning "$srcdir/_bootstrap/"
+  export PYTHONPATH="$srcdir/_bootstrap:${PYTHONPATH:-}"
   pypy3 -m build --wheel --skip-dependency-check --no-isolation
 }
 
 package() {
-  cd ${_base}-${_base}-v${pkgver}
+  cd ${_base}-${_base}-v${pkgver}/${_base}
   PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" pypy3 -m installer --destdir="$pkgdir" dist/*.whl
-  install -Dm 644 setuptools-scm/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
