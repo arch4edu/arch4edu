@@ -1,1 +1,10 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed -i "s/'eigen'/'eigen3'/" PKGBUILD
+  sed -i 's/-DCMAKE_INSTALL_PREFIX=.\/usr./-DCMAKE_INSTALL_PREFIX="\/usr" -DCMAKE_POLICY_VERSION_MINIMUM=3.5/' PKGBUILD
+  sed -i '/cmake -B build/i\  sed -i '\''s/ system filesystem/ filesystem/;s/OR NOT Boost_SYSTEM_LIBRARY //;/Boost::system/d'\'' "gtsam-${pkgver}/cmake/HandleBoost.cmake"' PKGBUILD
+post_build: aur-post-build
