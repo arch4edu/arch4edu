@@ -1,1 +1,9 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed -i '/cmake -S/i\  sed -i "/add_subdirectory(doc)/d" "$srcdir/${pkgname%2}-$pkgver/CMakeLists.txt"' PKGBUILD
+  sed -i 's/-DCMAKE_INSTALL_PREFIX=\/usr/-DCMAKE_INSTALL_PREFIX=\/usr \\\n    -DCMAKE_POLICY_VERSION_MINIMUM=3.5/' PKGBUILD
+post_build: aur-post-build
