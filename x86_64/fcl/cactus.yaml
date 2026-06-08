@@ -5,5 +5,8 @@ depends:
   - x86_64/libccd
   - x86_64/octomap
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i "s/'eigen'/'eigen3'/" PKGBUILD
+  sed -i 's/-DCMAKE_BUILD_TYPE="Release"/-DCMAKE_BUILD_TYPE="Release" -DCMAKE_POLICY_VERSION_MINIMUM=3.5/' PKGBUILD
 post_build: aur-post-build
