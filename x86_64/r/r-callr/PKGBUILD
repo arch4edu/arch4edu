@@ -5,22 +5,24 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=callr
-_pkgver=3.7.6
+_pkgver=3.8.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Call R from R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
+  r-otel
   r-processx
   r-r6
 )
 optdepends=(
   r-asciicast
+  r-carrier
   r-cli
-  r-mockery
+  r-otelsdk
   r-ps
   r-rprojroot
   r-spelling
@@ -28,8 +30,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('9bd3ca85c73b182bce6367962ce8e59a')
-b2sums=('42b710af7fbf289bbce3d17263ae808ce40400a222a936d33ea3e5730fdaf31dfab6bb98624d8a8b9b0789aa2f3709aa9229691d220be8bf19d19abef83fba9f')
+md5sums=('6f2cca7ac13cfa5ef90288587f43de6f')
+b2sums=('9ce38597c78c65300c867cc1c6f09fa7c6da344d247497f1e1e4a6ee98e1cd85c1953e7b6ca0f8c0bb6712d5c58f2aa0b30021b760c2c60090928b1a8604b5ca')
 
 build() {
   mkdir build
