@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspSurvival
-_pkgver=0.19.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="A Survival analysis module required by JASP"
 arch=('any')
@@ -15,9 +15,10 @@ depends=(
   r-jaspbase
   r-jaspgraphs
   r-ggsurvfit
+  r-flexsurv
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('03a4417b9ebc6239624788415cf8b310a6843a50b3aec2d79947ad16917e4e09')
+sha256sums=('7e65fb95447b6ff183a174ad22155d2b0de1519dc33c9b762ca65afd60bb9448')
 
 
 build() {
@@ -27,6 +28,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
