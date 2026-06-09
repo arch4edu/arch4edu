@@ -2,11 +2,12 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/qt5-webchannel
   - x86_64/qt5-location
   - x86_64/qt5-sensors
+  - x86_64/qt5-webchannel
 makedepends:
   - x86_64/gtk2
+  - x86_64/qt5-doc
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
