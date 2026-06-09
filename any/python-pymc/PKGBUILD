@@ -1,0 +1,53 @@
+# Maintainer: Harriet O'Brien <harrietobrien at protonmail dot com>
+# Contributor: Carl Smedstad <carsme@archlinux.org>
+# Contributor: xia0er <xia0er@gmail.com>
+
+pkgname=python-pymc
+_pkgname=${pkgname#python-}
+pkgver=5.22.0
+pkgrel=1
+pkgdesc="Markov chain Monte Carlo for Python"
+arch=(any)
+url="https://github.com/pymc-devs/pymc"
+license=(MIT)
+depends=(
+  ipython
+  python
+  python-arviz
+  python-cachetools
+  python-cloudpickle
+  python-matplotlib
+  python-networkx
+  python-numpy
+  python-pandas
+  python-pytensor
+  python-pytest
+  python-rich
+  python-scipy
+  python-threadpoolctl
+  python-typing_extensions
+  python-xarray
+)
+makedepends=(
+  python-build
+  python-installer
+  python-setuptools
+  python-wheel
+  python-pip
+)
+
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('5d85950c47d2b229e47fd24e8985cc00f042393ad255fc0510396921679482d0')
+
+_archive="$_pkgname-$pkgver"
+
+build() {
+  cd "$_archive"
+  python -m build --wheel --no-isolation
+}
+package() {
+  cd "$_archive"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE
+}
+makedepends+=("python-versioneer")
