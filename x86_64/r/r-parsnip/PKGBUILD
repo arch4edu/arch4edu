@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=parsnip
-_pkgver=1.3.3
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -23,11 +23,10 @@ depends=(
   r-prettyunits
   r-purrr
   r-rlang
+  r-sparsevctrs
   r-tibble
   r-tidyr
   r-vctrs
-  r-withr
-  r-sparsevctrs
 )
 checkdepends=(
   r-bench
@@ -53,6 +52,7 @@ optdepends=(
   r-earth
   r-ggrepel
   r-keras
+  r-keras3
   r-kernlab
   r-kknn
   r-knitr
@@ -65,11 +65,12 @@ optdepends=(
   r-sparklyr
   r-tensorflow
   r-testthat
+  r-withr
   r-xgboost
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5561028fb18dff96abf0e781666e8812')
-b2sums=('9eb0894bd72f401a221ceac7b78c3b4c85891b9516461205920961bbc380c8562dd9c4eee7a86f781af9aa35a2dc6885e5fd307d1f43b69a80a167ade44f6c68')
+md5sums=('cde20f3081db2b0c1bfb86fe7925da72')
+b2sums=('91f26268563c43a556e1cf901652554b0a4c53008b66a07b6b213e95433689a20bb7bfa741bc4f6c6f1fd956bb05278808f1983ae4a6971ff60904ad54e70448')
 
 build() {
   mkdir build
