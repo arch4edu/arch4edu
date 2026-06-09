@@ -8,40 +8,45 @@
 # Contributor: TIanyi Cui <tianyicui@gmail.com>
 
 pkgname=libnode
-pkgver=23.11.1
+pkgver=26.2.0
 pkgrel=1
 pkgdesc='libnode.so from nodejs-shared'
 arch=('x86_64')
 url='https://nodejs.org/'
 license=('MIT')
-options=(!lto)
-depends=('icu' 'libuv' 'libnghttp2' 'libnghttp3' 'libngtcp2' 'openssl' 'zlib' 'brotli' 'c-ares') # 'http-parser' 'v8')
-makedepends=('python' 'procps-ng')
+depends=('ada' 'brotli' 'c-ares' 'icu' 'libffi' 'libnghttp2' 'libnghttp3' 'libngtcp2' 'libuv' 'openssl' 'simdjson' 'zlib' 'zstd')
+makedepends=('ninja' 'procps-ng' 'python')
 source=("nodejs-${pkgver}.tar.gz::https://github.com/nodejs/node/archive/refs/tags/v${pkgver}.tar.gz")
-sha512sums=('9003d38c888d23224c5d238bc59fcb5f3afa586bee3de00196a196e7db14c243b16cee47a09d669e32aa07144250af48e5aa4d00762015fe1049fba907eb685f')
+sha512sums=('ad746843b31ff9788ffa752c82b98970611e75dbdeed0cd3e44024f48a6746331f860217ddfec4665cdb0b848f47d0770bb97b1c5249d27e173f2f34ae6055f1')
+
+_set_flags() {
+  CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+  CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+}
 
 build() {
+  _set_flags
   cd node-${pkgver}
 
-  # /usr/lib/libnode.so uses malloc_usable_size, which is incompatible with fortification level 3
-  export CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
-  export CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
-
   ./configure \
+    --ninja \
+    --enable-lto \
     --prefix=/usr \
-    --without-npm \
     --with-intl=system-icu \
+    --without-npm \
     --shared \
+    --shared-ada \
+    --shared-brotli \
+    --shared-cares \
+    --shared-ffi \
     --shared-libuv \
     --shared-nghttp2 \
     --shared-nghttp3 \
     --shared-ngtcp2 \
     --shared-openssl \
+    --shared-simdjson \
     --shared-zlib \
-    --shared-brotli \
-    --shared-cares
-    # --shared-v8
-    # --shared-http-parser
+    --shared-zstd
 
   make
 }
@@ -58,7 +63,7 @@ package() {
 
   mv "$pkgdir"/usr/include/node "$pkgdir/usr/include/$pkgname"
 
-  rm -r "$pkgdir"/usr/{bin,lib/node_modules,share/doc,share/man}
+  rm -rf "$pkgdir"/usr/{bin,lib/node_modules,share/doc,share/man}
 }
 
 # vim:set ts=2 sw=2 et:
