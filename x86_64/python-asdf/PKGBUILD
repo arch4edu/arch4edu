@@ -4,7 +4,7 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=5.3.0
+pkgver=5.3.1
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
@@ -27,8 +27,7 @@ makedepends=('python-setuptools-scm>=8'
 ##           'python-asdf_transform_schemas>=0.3.0'
 ##           'python-sphinx-astropy'
 ##           'python-astropy>=5.0.4'
-##           'python-toml'
-#)  # wheel required by new setuptools
+##           'python-toml')  # wheel required by new setuptools
 checkdepends=('python-pytest'
 #checkdepends=('python-pytest-doctestplus'
 #             'python-pytest-xdist'
@@ -47,9 +46,9 @@ checkdepends=('python-pytest'
               'python-aiohttp'
               'python-requests')
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
-#             'python-virtualenv'
+             'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('eb9c87a5290c0cadcd8bec8a9c246456')
+md5sums=('2a515f35e5223806a0977a27ab3bf17a')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -70,10 +69,10 @@ build() {
     cd ${srcdir}/${_pyname}-${pkgver}
     python -m build --wheel --no-isolation
 
-#   msg "Building Docs"
-#   ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
-#       build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver).egg-info
-#   PYTHONPATH="../build/lib" make -C docs html
+#    msg "Building Docs"
+##   ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
+##       build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver).egg-info
+#    PYTHONPATH="../build/lib" make -C docs html
 }
 
 check() {
