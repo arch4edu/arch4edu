@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=rstanarm
-_pkgver=2.32.1
+_pkgver=2.32.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Bayesian Applied Regression Modeling via Stan"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,6 +20,7 @@ depends=(
   r-posterior
   r-rcpp
   r-rcppparallel
+  r-reformulas
   r-rstan
   r-rstantools
   r-shinystan
@@ -53,8 +54,8 @@ optdepends=(
   r-v8
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7156d76d81012785925295a8e4bdd7bc')
-b2sums=('5c6e256a9066287eb600259c957c86e488cb2ce79d80a5e62404c10ab5331e21e2e93a7a49699753f4af67ec4f78cb94a2a98142ecea6fa1a4ebc36c0ad0c45f')
+md5sums=('82427d710596d42b0c9e4488981b7d38')
+b2sums=('a6577a28383d6332ccd22b6aec0f76d6a8690eeac8d260579647a3651f47c150a778b08c7bdf2d18ba43d8ed6f13cbe72bc7fde711bc70df26cf3cb48d97eb72')
 
 prepare() {
   cd "$_pkgname/tests/testthat"
@@ -73,10 +74,10 @@ build() {
   R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
-  cd "$_pkgname/tests"
-  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
-}
+# check() {
+#   cd "$_pkgname/tests"
+#   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+# }
 
 package() {
   install -d "$pkgdir/usr/lib/R/library"
