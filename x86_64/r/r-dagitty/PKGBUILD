@@ -4,7 +4,7 @@ _pkgname=dagitty
 _pkgver=0.3-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=4
 pkgdesc="Graphical Analysis of Structural Causal Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
