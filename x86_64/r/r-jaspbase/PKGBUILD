@@ -1,10 +1,10 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBase
-_pkgver=0.95.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.95.3
-_ColumnEncoder_ver=0.19.0
-pkgrel=1
+pkgver=0.96.0
+_desktop_ver="0.96.0"
+pkgrel=2
 pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
 arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -40,16 +40,22 @@ depends=(r
 'r-jaspgraphs'
 )
 optdepends=()
-source=(
-"${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
-"jaspColumnEncoder-${_pkgver}.tar.gz::https://github.com/jasp-stats/jaspColumnEncoder/archive/refs/tags/v${_ColumnEncoder_ver}.tar.gz"
-)
-sha256sums=('41a9b79b0fd9adbac01a7d11b1e79370820f9eb3ac2fba48713858baea6d6851'
-            'd9e74e0ff2b7c6d15c109717c212480f9021f86fdd0c326088143476ba051033')
 
+source=(
+  "${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
+  "jasp-desktop-${_desktop_ver}.tar.gz::https://github.com/jasp-stats/jasp-desktop/archive/refs/tags/v${_desktop_ver}.tar.gz"
+)
+sha256sums=('47500e57613c703256c4a9258d893b42c04cbd3ed0e4923589b04b64a69309b9'
+            'fa274cdb9f59379cbdae026e8c12de17fcd1db2a5f9c3b4d08929e848c4d4167')
+
+prepare() {
+  install -d ${_pkgname}-${_pkgver}/inst/include
+  cp -rf jasp-desktop-${_desktop_ver}/Common ${_pkgname}-${_pkgver}/inst/include
+  tar -cvzf ${pkgname}_${_pkgver}.tar.gz ${_pkgname}-${_pkgver}
+}
 build() {
-  export INCLUDE_DIR=${srcdir}/jaspColumnEncoder-${_ColumnEncoder_ver}
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  export INCLUDE_DIR="${srcdir}/jasp-desktop-${_desktop_ver}/Common"
+  R CMD INSTALL ${pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
