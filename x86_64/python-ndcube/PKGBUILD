@@ -4,7 +4,7 @@ pkgbase=python-ndcube
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=2.3.4
+pkgver=2.4.0
 pkgrel=1
 pkgdesc="Package for multi-dimensional contiguious and non-contiguious coordinate aware arrays"
 arch=('any')
@@ -12,7 +12,7 @@ url="https://docs.sunpy.org/projects/ndcube"
 license=('BSD-2-Clause')
 makedepends=('python-setuptools-scm>=6.0.0'
              'python-build'
-             'python-installer'
+             'python-installer')
 #            'python-sphinx-automodapi'
 #            'python-sphinx-changelog'
 #            'python-sphinx-gallery'
@@ -21,11 +21,14 @@ makedepends=('python-setuptools-scm>=6.0.0'
 #            'python-gwcs'
 #            'python-sunpy'
 #            'python-mpl-animators'
+#            'python-reproject'
 #            'graphviz'
-             )  # wheel required by new setuptools, matplotlib <- mpl-animators
+#           )  # wheel required by new setuptools, matplotlib <- mpl-animators
 # circular deps
-#checkdepends=('python-pytest-doctestplus'
+#checkdepends=(
+#   'python-pytest-doctestplus'
 #              'python-pytest-mpl'
+#              'python-pytest-asdf-plugin'
 #              'python-pytest-xdist'
 #              'python-pytest-remotedata'
 #              'python-dask'
@@ -48,7 +51,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063305_1600_lowres.fits"
 #       "https://github.com/sunpy/ndcube/raw/main/changelog/README.rst"
 #)
-md5sums=('d0a78ce5eacd98216167e17eb98adb85')
+md5sums=('a2a20a3420d9fa389f63a38ceb5ec1e0')
 #        'SKIP')
 
 #prepare() {
@@ -83,10 +86,11 @@ build() {
 #}
 
 package_python-ndcube() {
-    depends=('python>=3.10' 'python-gwcs>=0.18' 'python-scipy>=1.8.0')
-    optdepends=('python-matplotlib>=3.5.0: plotting'
-                'python-mpl-animators>=1.0: plotting'
-                'python-reproject>=0.7.1: reproject'
+    depends=('python>=3.11' 'python-gwcs>=0.21' 'python-scipy>=1.12.0')
+    optdepends=('python-matplotlib>=3.9.0: plotting'
+                'python-mpl-animators>=1.2: plotting'
+                'python-reproject>=0.14: reproject'
+                'python-asdf-astropy=0.7.0: asdf'
                 'python-ndcube-doc: Documentation for ndcube')
     cd ${srcdir}/${_pyname}-${pkgver}
 
