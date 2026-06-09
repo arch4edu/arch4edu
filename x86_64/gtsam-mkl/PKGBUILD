@@ -1,7 +1,7 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 pkgname=gtsam-mkl
 pkgver=4.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A library of C++ classes that implement smoothing and mapping (SAM) in\
   robotics and vision, using factor graphs and Bayes networks as the underlying\
   computing paradigm rather than sparse matrices."
@@ -10,15 +10,16 @@ arch=('x86_64' 'i686')
 provides=("gtsam=${pkgver}")
 conflicts=('gtsam' 'gtsam-git')
 license=('BSD')
-depends=('boost-libs' 'eigen' 'intel-tbb' 'intel-mkl')
+depends=('boost-libs' 'eigen3' 'intel-tbb' 'intel-mkl')
 makedepends=('boost' 'cmake')
 source=("https://github.com/borglab/gtsam/archive/${pkgver}.tar.gz")
 sha256sums=('8b44d6b98a3b608664d1c9a7c1383a406550499d894533bb0183e6cf487e6457')
 
 build() {
+  sed -i 's/ system filesystem/ filesystem/;s/OR NOT Boost_SYSTEM_LIBRARY //;/Boost::system/d' "gtsam-${pkgver}/cmake/HandleBoost.cmake"
   cmake -B build -S "gtsam-${pkgver}" \
         -DCMAKE_BUILD_TYPE='None' \
-        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -DCMAKE_INSTALL_PREFIX="/usr" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
         -Wno-dev \
         -DGTSAM_BUILD_DOCS=OFF \
         -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
