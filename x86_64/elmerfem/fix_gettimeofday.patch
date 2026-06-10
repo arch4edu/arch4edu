@@ -1,0 +1,28 @@
+--- fem/src/CPUTime.c.orig	2020-11-10 19:52:44.000000000 +0000
++++ fem/src/CPUTime.c	2025-05-23 22:08:17.596859248 +0100
+@@ -72,7 +72,6 @@
+ static struct rusage usage;
+ 
+ static struct timeval tp;
+-static struct timezone tzp;
+ 
+ #ifdef USE_ISO_C_BINDINGS
+ double cputime ()
+@@ -83,7 +82,7 @@
+ 
+ double realtime()
+ {
+-  gettimeofday( &tp,&tzp );
++  gettimeofday(&tp, NULL);
+   return (double) tp.tv_sec + tp.tv_usec*1.0e-6;
+ }
+ 
+@@ -101,7 +100,7 @@
+ 
+ double FC_FUNC(realtime,REALTIME) () 
+ {
+-  gettimeofday( &tp,&tzp );
++  gettimeofday(&tp, NULL);
+   return (double) tp.tv_sec + tp.tv_usec*1.0e-6;
+ }
+ 
