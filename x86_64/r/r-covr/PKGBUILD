@@ -5,7 +5,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=covr
-_pkgver=3.6.4
+_pkgver=3.6.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=2
@@ -48,10 +48,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-tests.patch")
-md5sums=('8fadf3538ed1edfefb3a20bd5c5e887d'
-         'd3729dbb95789a8622860678ed9fdb7a')
-b2sums=('0d986635c4fb04e327d142e49290d3f4c8f062b8873f7a30cf8ee642be4cb1a8cde4882580eeba58565cfaf113e1bc94ff2ceb35fe1272d160a07f0e9f60a4f3'
-        '8f4241f4d0836c42b2c5257adbf418413681a9610c6fc105dc0022e923fa93b25752ce5c5aa5cd12b1571307fa022bb79cd70b3b6ac00a27e55fb609110d6df1')
+md5sums=('1414ace57aedd343a3992568538cc8ae'
+         '04b8eae75e6b95e2cc037db977d1191a')
+b2sums=('273aa1e9e3d24dd979a298fc583876bba5be0933b34aa3ee2cda09c5710d959a2e314547cc691b4a6d3ab1856cebd87cb3872d1cb5a24abbb201eb936fb9116e'
+        'ca7d370f21aa992f51b7036fa92274f1462a8a18052d0d438afe6a40044cc9fa178222c2fdbe37d8bba667fca58d76e6d63ded59292c0bccd0ac09d8f1e65482')
 
 prepare() {
   # skip failing test
