@@ -13,6 +13,7 @@ depends:
   - x86_64/r/r-proxy
   - x86_64/r/r-rcpp
   - x86_64/r/r-roi
+  - x86_64/r/r-reformulas
 makedepends:
   - x86_64/r/r-rcppeigen
   - x86_64/r/r-testthat
