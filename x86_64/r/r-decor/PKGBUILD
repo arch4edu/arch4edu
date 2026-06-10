@@ -7,7 +7,7 @@ pkgdesc="Retrieve Code Decorations"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=3
 
 arch=("i686" "x86_64")
 depends=(
@@ -39,7 +39,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("1cf4ee91f644265338317204e7d6351ce2c9665fce23a101cebe83073496842f716e200db391e02d0adc55d30595f3fab973078636e9327f93dd195a33819347")
+b2sums=('1cf4ee91f644265338317204e7d6351ce2c9665fce23a101cebe83073496842f716e200db391e02d0adc55d30595f3fab973078636e9327f93dd195a33819347')
 
 build() {
     mkdir -p "${srcdir}/build/"
