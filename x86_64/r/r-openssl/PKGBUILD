@@ -7,7 +7,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=openssl
-_pkgver=2.4.1
+_pkgver=2.4.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,8 +35,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c8a56de8258cd00721705a525229b20d')
-b2sums=('a9b5f80755b4644c885f82b2c8bd5b860bd6d36bd52295ac65a726a9dcfa147eaa6bb252df78ec2e25872aa1eb5491d669266fc96b462171d8642e64f27997fb')
+md5sums=('748b0fa601173da477706803783b6943')
+b2sums=('96092e9fe44ae4b9151e2e33cd049910d8abcfe12d9746f1cbd9d357885ec5ca987e4d51ce8e1e849755ecdf70ab7f5e7e25ed8cc44c20a4167bb3f6234a2647')
 
 build() {
   mkdir build
