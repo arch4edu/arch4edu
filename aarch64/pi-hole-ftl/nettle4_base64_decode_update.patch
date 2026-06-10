@@ -1,0 +1,20 @@
+--- a/src/config/password.c
++++ b/src/config/password.c
+@@ -170,13 +170,15 @@
+ 	// Base64 decoding requires 3 bytes for every 4 bytes of input, plus
+ 	// additional bytes for padding. The output buffer must be large enough
+ 	// to hold the decoded data.
+-	uint8_t *decoded = calloc(BASE64_DECODE_LENGTH(strlen(data)), sizeof(uint8_t));
++	size_t decoded_length = BASE64_DECODE_LENGTH(strlen(data));
++	uint8_t *decoded = calloc(decoded_length, sizeof(uint8_t));
+ 
+ 	// Decode the data
+ 	struct base64_decode_ctx ctx;
+ 	base64_decode_init(&ctx);
+-	base64_decode_update(&ctx, length, decoded, strlen(data), data);
++	base64_decode_update(&ctx, &decoded_length, decoded, strlen(data), data);
+ 	base64_decode_final(&ctx);
++	*length = decoded_length;
+ 
+ 	return decoded;
+ }

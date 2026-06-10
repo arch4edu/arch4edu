@@ -8,7 +8,7 @@ pkgname=pi-hole-ftl
 _pkgname=FTL
 _servicename=pihole-FTL
 pkgver=6.6.2
-pkgrel=2
+pkgrel=3
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 pkgdesc="The Pi-hole FTL engine"
 url="https://github.com/pi-hole/FTL"
@@ -22,14 +22,18 @@ backup=('etc/pihole/pihole-FTL.conf' 'etc/pihole/dhcp.leases')
 source=($pkgname-v$pkgver.tar.gz::"https://github.com/pi-hole/FTL/archive/v$pkgver.tar.gz"
         "$pkgname.tmpfile"
         "$pkgname.sysuser"
-        "$pkgname.service")
+        "$pkgname.service"
+        "nettle4_base64_decode_update.patch")
 sha256sums=('5827e6bfd7ff4a8ed8cd1e475f9bee66061533375ea5061ba1946c73992de082'
             '0feb4597a4afd9054553505d305b0feb7e1f6e1705b092561648ff37d0a2893c'
             'dd1d2a341e774d4e549373ae75604031b9af0ee44debcd71a89259d9110d2a77'
-            '0998da040d038ddbad129ba8e1ea74741bc912813407b579cab1b3b3f206e721')
+            '0998da040d038ddbad129ba8e1ea74741bc912813407b579cab1b3b3f206e721'
+            '998cb258704aeecd9a73aa566673b451be72c73be327987b14e0ffa7c9570dc6')
 
 prepare() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
+  # Fix nettle 4.0 API change: base64_decode_update dst_length is now also an input
+  patch -Np1 -i "$srcdir"/nettle4_base64_decode_update.patch
   # Fix strstr redefined warning treated as error (GCC 14+)
   sed -i '/#define memmove/a #undef strstr' src/FTL.h
   # Fix const qualifier warnings in webserver.c (GCC 14+)
