@@ -1,23 +1,22 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=jmvcore
-_pkgver=2.3.19
+_pkgver=2.7.7
 pkgname=r-${_pkgname,,}
-pkgver=2.3.19
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Dependencies for the 'jamovi' Framework"
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-base64enc
   r-jsonlite
   r-r6
   r-rlang
-  r-stringi
 )
 optdepends=(
+  r-export
   r-fastmap
   r-ggplot2
   r-knitr
@@ -27,14 +26,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('afbd51b229ce3ba004def57a8fcced5e44f6fc2a33305b8c8d5d8362cf878c33')
+md5sums=('df70719f55a52ae6f0d64cd58fa88f98')
+b2sums=('4d7f2120a34eb7e0b75783c64dc9dc969899a360b947200f01d0951e3794d493883aff4986bbf72a31c3d52d36d860b79459218ebc403fd85d9a2d79ee6b2f1f')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

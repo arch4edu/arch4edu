@@ -2,24 +2,23 @@
 # Contributor: Alexandre Petitjean <alpetitjean_gmail dot_com>
 
 pkgname=geographiclib
-_pkgname=GeographicLib
-pkgver=2.2
-pkgrel=1
+pkgver=2.7
+pkgrel=2
 pkgdesc="Set of C++ classes for conversions between geographic, UTM, UPS, MGRS, geocentric, and local cartesian coordinates, for gravity, geoid height, and geomagnetic field calculations and for solving geodesic problems. Geotrans replacement."
 arch=('i686' 'x86_64')
-url="https://geographiclib.sourceforge.io/"
+url="https://github.com/geographiclib/geographiclib"
 license=('MIT')
 depends=('bash')
 makedepends=('gcc' 'make' 'cmake')
-options=('staticlibs')
+options=('staticlibs' '!debug')
 
-source=(https://sourceforge.net/projects/geographiclib/files/distrib-C%2B%2B/${_pkgname}-${pkgver}.tar.gz/download)
-md5sums=('f611b212abf88aa6099a6a40f4ef8e38')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/geographiclib/geographiclib/archive/v${pkgver}.tar.gz")
+sha256sums=('78d77cc8216843b78d14b41970ed9de3dedc34b9cd50ad84af2849c63a41eff8')
 
 install=geographiclib.install
 
 build() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   cmake ./ \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_BOTH_LIBS=ON
@@ -27,7 +26,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${_pkgname}-${pkgver}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   make DESTDIR="${pkgdir}" install
   install -D -m644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 

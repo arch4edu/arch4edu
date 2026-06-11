@@ -2,33 +2,43 @@
 # Contributor: Benjamin Chretien <chretien at lirmm dot fr>
 # Contributor: Gonçalo Camelo Neves Pereira <goncalo_pereira@outlook.pt>
 # Contributor: midgard <arch dot midgard "at symbol" janmaes "youknowwhat" com>
+# Contributor: Zhirui Dai <daizhirui at hotmail dot com>
 
 pkgname=libdart
-pkgver=6.13.0
-pkgrel=3
+pkgver=6.15.0
+pkgrel=2
 pkgdesc="Dynamic Animation and Robotics Toolkit"
 arch=('i686' 'x86_64')
 url="https://dartsim.github.io"
 license=('BSD')
 depends=('assimp' 'boost' 'eigen' 'fcl' 'libccd' 'bullet' 'coin-or-ipopt'
          'nlopt' 'octomap' 'ode' 'openscenegraph' 'tinyxml2' 'urdfdom'
-         'glu' 'freeglut' 'libxi' 'libxmu' 'pagmo' 'fmt')
+         'glu' 'freeglut' 'libxi' 'libxmu' 'pagmo' 'fmt' 'spdlog')
 optdepends=('pagmo: pagmo optimizer support')
 makedepends=('cmake')
 provides=('dartsim')
 _pkgname=dart
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/dartsim/${_pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('4da3ff8cee056252a558b05625a5ff29b21e71f2995e6d7f789abbf6261895f7')
+source=(
+    "${pkgname}-${pkgver}.tar.gz::https://github.com/dartsim/${_pkgname}/archive/v${pkgver}.tar.gz"
+    "arch-fixes.patch"
+)
+sha256sums=(
+    'bbf954e283f464f6d0a8a5ab43ce92fd49ced357ccdd986c7cb4c29152df8692'
+    '4ee0b09c6cb1deff5c09a55114bd15ae13fe81128885e1ea1500fe81af87a360'
+)
 
-# Make libdart use pagmo 2.18.0 instead of 2.17.0
-prepare(){
-    sed -i '9s/7/8/' ${srcdir}/${_pkgname}-${pkgver}/cmake/DARTFindpagmo.cmake
+prepare() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    patch -p1 -i "${srcdir}/arch-fixes.patch"
 }
 
 build() {
     mkdir -p "${srcdir}/${_pkgname}-${pkgver}/build"
     cd "${srcdir}/${_pkgname}-${pkgver}/build"
 
+    # -include cassert: GCC 16's libstdc++ no longer transitively pulls in
+    # <cassert>, but many DART sources call assert() without including it.
+    export CXXFLAGS="$CFLAGS -include cassert"
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="/usr" \
         -DCMAKE_INSTALL_LIBDIR="lib" \
@@ -42,4 +52,4 @@ package() {
 
     make DESTDIR="${pkgdir}/" install
 }
-makedepends+=("fmt")
+makedepends+=("fmt" "git")

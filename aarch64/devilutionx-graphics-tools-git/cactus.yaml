@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: diasurgical/devilutionx-graphics-tools
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  add makedepends ninja
+post_build: aur-post-build

@@ -1,23 +1,26 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
 
 pkgbase=python-sphinx-automodapi
-_pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=0.15.0
-pkgrel=2
+_pname=${pkgbase#python-}
+_pyname=${_pname//-/_}
+pkgname=("python-${_pname}" "python-${_pname}-doc")
+pkgver=0.22.0
+pkgrel=3
 pkgdesc="Sphinx extension for generating API documentation."
 arch=('any')
 url="https://sphinx-automodapi.readthedocs.io"
-license=('BSD')
-makedepends=('python-setuptools-scm'
-             'python-wheel'
+license=('BSD-3-Clause')
+makedepends=('python-setuptools-scm>=8.0.0'
              'python-build'
              'python-installer'
              'python-sphinx'
-             'python-sphinx_rtd_theme')
-checkdepends=('python-pytest' 'graphviz') # sphinx already in makedepends
+             'python-sphinx_rtd_theme')  # wheel required by new setuptools
+checkdepends=('python-pytest'
+#             'python-pytest-xdist'
+              'cython'
+              'graphviz') # sphinx already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('fd5871e054df7f3e299dde959afffa849f4d01c6eac274c366b06472afcb06aa')
+sha256sums=('9a6745d606eb948321f0bb7bd4511dc6d8481da8819caa1604d7138910173b38')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -37,12 +40,15 @@ check() {
     #ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
     #    build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
     #PYTHONPATH="build/lib" pytest ${_pyname/-/_} || warning "Tests failed"
-    pytest || warning "Tests failed" # -vv --color=yes
+    # need docutils<0.22
+    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-sphinx-automodapi() {
-    depends=('python-sphinx>=2')
-    optdepends=('python-sphinx-automodapi-doc: Documentation for sphinx-automodapi')
+    depends=('python-sphinx>=5'
+             'python-packaging')
+    optdepends=('python-sphinx_rtd_theme: rtd'
+                'python-sphinx-automodapi-doc: Documentation for sphinx-automodapi')
     cd ${srcdir}/${_pyname}-${pkgver}
 
     install -D -m644 LICENSE.rst -t "${pkgdir}/usr/share/licenses/${pkgname}"

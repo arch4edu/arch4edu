@@ -9,19 +9,19 @@ pkgbase=netron
 pkgname=(netron)
 pkgname+=(netron-cli)
 pkgdesc='Visualizer for neural network, deep learning, and machine learning models'
-pkgver=6.9.7
+pkgver=9.1.1
 pkgrel=1
 url='https://netron.app/'
 arch=(x86_64)
 license=(MIT)
 depends=(python)
-makedepends=(gendesk npm python-setuptools python-build python-installer python-wheel)
+makedepends=(gendesk npm python-setuptools python-build python-installer python-wheel libxcrypt-compat)
 optdepends=(
   'python-onnx: serializing ONNX models'
   'python-pytorch: serializing PyTorch models'
 )
 source=("https://github.com/lutzroeder/netron/archive/v${pkgver}/netron-${pkgver}.tar.gz")
-sha256sums=('7197c271f8d456fe9235f168f4182569135259be991b45349bd94b7279cc2b2b')
+sha256sums=('6fecaa6e01eae02015b45dc9fc3d0217b17ff27c4d30637c5c2cdeaa8012cf9f')
 
 prepare() {
   cd "${pkgbase}-${pkgver}"
@@ -37,7 +37,7 @@ build() {
   cd "${pkgbase}-${pkgver}"
   npm run clean
   npm run build python
-  npm run build electron
+  npx electron-builder --linux dir --publish never
 }
 
 package_netron() {

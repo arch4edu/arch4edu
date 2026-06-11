@@ -1,0 +1,27 @@
+include:
+  - project: "common/gitlab-helper"
+    ref: master
+    file: "ci-helper.yml"
+
+workflow: !reference [ .common, workflow ]
+
+variables:
+  PKG_NAME: "plplot"
+
+stages:
+  - build
+  - test
+  - deploy
+
+build-plplot:
+  extends: .arch-buildx
+  image: ${CI_REGISTRY}/common/gitlab-helper/archlinux-yay:master
+  needs: []
+  
+test-plplot:
+  extends: .arch-test
+  image: ${CI_REGISTRY}/common/gitlab-helper/archlinux-yay:master
+  needs: ["build-plplot"]
+
+deploy-plplot:
+  extends: .arch-deploy

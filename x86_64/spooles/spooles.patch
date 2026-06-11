@@ -1,0 +1,408 @@
+diff -Nur spooles.orig/ETree/src/transform.c spooles/ETree/src/transform.c
+--- spooles.orig/ETree/src/transform.c	1998-12-07 19:47:00.000000000 +0100
++++ spooles/ETree/src/transform.c	2024-09-01 00:06:54.027352382 +0200
+@@ -1,6 +1,7 @@
+ /*  transform.c  */
+ 
+ #include "../ETree.h"
++#include <stdint.h>
+ 
+ #define MYDEBUG 0
+ 
+@@ -291,7 +292,7 @@
+    remap the nzeros[] vector
+    -------------------------
+ */
+-temp = IVinit(nfront, NULL) ;
++temp = IVinit(nfront, (int)(uintptr_t)NULL) ;
+ IVcopy(nfront, temp, nzeros) ;
+ IV_setSize(nzerosIV, nnew) ;
+ nzeros = IV_entries(nzerosIV) ;
+@@ -453,7 +454,7 @@
+    remap the nzeros[] vector
+    -------------------------
+ */
+-temp = IVinit(nfront, NULL) ;
++temp = IVinit(nfront, (int)(uintptr_t)NULL) ;
+ IVcopy(nfront, temp, nzeros) ;
+ IV_setSize(nzerosIV, nnew) ;
+ nzeros = IV_entries(nzerosIV) ;
+@@ -614,7 +615,7 @@
+    remap the nzeros[] vector
+    -------------------------
+ */
+-temp = IVinit(nfront, NULL) ;
++temp = IVinit(nfront, (int)(uintptr_t)NULL) ;
+ IVcopy(nfront, temp, nzeros) ;
+ IV_setSize(nzerosIV, nnew) ;
+ nzeros = IV_entries(nzerosIV) ;
+diff -Nur spooles.orig/Iter/makefile spooles/Iter/makefile
+--- spooles.orig/Iter/makefile	1970-01-01 01:00:00.000000000 +0100
++++ spooles/Iter/makefile	2024-09-01 00:07:12.220585881 +0200
+@@ -0,0 +1,10 @@
++all_drivers :
++	cd drivers ; make drivers
++
++lib :
++	cd src ; make makeLib
++
++clean :
++	cd src ; make clean
++	cd drivers ; make clean
++	cd doc ; make clean
+diff -Nur spooles.orig/Iter.h spooles/Iter.h
+--- spooles.orig/Iter.h	1970-01-01 01:00:00.000000000 +0100
++++ spooles/Iter.h	2024-09-01 00:06:54.027352382 +0200
+@@ -0,0 +1,4 @@
++#ifndef _Iter_
++#define _Iter_
++#include "Iter/Iter.h"
++#endif
+diff -Nur spooles.orig/makefile spooles/makefile
+--- spooles.orig/makefile	1999-01-25 21:39:39.000000000 +0100
++++ spooles/makefile	2024-09-01 00:06:54.027352382 +0200
+@@ -21,6 +21,7 @@
+ 	cd IVL              ; make all_drivers
+ 	cd Ideq             ; make all_drivers
+ 	cd InpMtx           ; make all_drivers
++	cd Iter             ; make all_drivers
+ 	cd Lock             ; make all_drivers
+ 	cd MPI              ; make all_drivers
+ 	cd MSMD             ; make all_drivers
+@@ -63,6 +64,7 @@
+ 	cd IVL              ; make clean
+ 	cd Ideq             ; make clean
+ 	cd InpMtx           ; make clean
++	cd Iter             ; make clean
+ 	cd Lock             ; make clean
+ 	cd MPI              ; make clean
+ 	cd MSMD             ; make clean
+@@ -107,6 +109,7 @@
+ 	cd IVL              ; make lib
+ 	cd Ideq             ; make lib
+ 	cd InpMtx           ; make lib
++	cd Iter             ; make lib
+ 	cd Lock             ; make lib
+ 	cd MSMD             ; make lib
+ 	cd Network          ; make lib
+@@ -124,7 +127,9 @@
+ 	cd ZV               ; make lib
+ 	cd misc             ; make lib
+ #cd MPI              ; make lib
+-#cd MT               ; make lib
++	cd MT               ; make lib
++	$(CC) -shared */*/*.lo -Wl,-soname,libspooles.so.2.2 -o libspooles.so.2.2 -lpthread -lm
++	ln -s libspooles.so.2.2 libspooles.so
+ 
+ global :
+ 	cd A2/src             ; make -f makeGlobalLib
+@@ -149,6 +154,7 @@
+ 	cd IVL/src            ; make -f makeGlobalLib
+ 	cd Ideq/src           ; make -f makeGlobalLib
+ 	cd InpMtx/src         ; make -f makeGlobalLib
++	cd Iter/src           ; make -f makeGlobalLib
+ 	cd Lock/src           ; make -f makeGlobalLib
+ 	cd MSMD/src           ; make -f makeGlobalLib
+ 	cd Network/src        ; make -f makeGlobalLib
+diff -Nur spooles.orig/Make.inc spooles/Make.inc
+--- spooles.orig/Make.inc	1999-01-18 22:48:55.000000000 +0100
++++ spooles/Make.inc	2024-09-01 00:06:54.027352382 +0200
+@@ -7,12 +7,13 @@
+ #
+ #----------------------------------------
+ #
++#
+ #  place your favorite compiler here
+ #
+ # for solaris
+ #
+ # CC = gcc
+-  CC = /usr/lang-4.0/bin/cc
++#  CC = /usr/lang-4.0/bin/cc
+ #
+ # for sgi
+ #
+@@ -28,14 +29,14 @@
+ # 
+ # OPTLEVEL = 
+ # OPTLEVEL = -g -v
+-  OPTLEVEL = -O
++  OPTLEVEL = -O2
+ # OPTLEVEL = -xO5 -v
+ # OPTLEVEL = -O3
+ # OPTLEVEL = -O4
+ # CFLAGS = -Wall -g
+ # CFLAGS = -Wall -pg
+-# CFLAGS = $(OPTLEVEL) -D_POSIX_C_SOURCE=199506L
+-  CFLAGS = $(OPTLEVEL)
++  CFLAGS = $(OPTLEVEL) -D_POSIX_C_SOURCE=199506L
++# CFLAGS = $(shell dpkg-buildflags --get CFLAGS)
+ # CFLAGS = -Wall $(OPTLEVEL)
+ #
+ #----------------------------------------
+@@ -43,7 +44,7 @@
+ #  set any load flags
+ #
+ #  LDFLAGS = -Wl,+parallel -Wl,+tm,spp2000 # for hp exemplar
+-   LDFLAGS =
++#   LDFLAGS =
+ #
+ #---------------------------------------------------------------------
+ #
+@@ -103,7 +104,7 @@
+ #  MPI install library
+ #
+ # MPI_INSTALL_DIR = 
+-  MPI_INSTALL_DIR = /usr/local/mpich-1.0.13
++  MPI_INSTALL_DIR = /usr/lib/$(DEB_HOST_MULTIARCH)
+ #
+ #---------------------------------------------------------------------
+ #
+@@ -115,7 +116,7 @@
+ #
+ # for solaris
+ #
+-  MPI_LIB_PATH = -L$(MPI_INSTALL_DIR)/lib/solaris/ch_p4
++  MPI_LIB_PATH = -L$(MPI_INSTALL_DIR)
+ #
+ # for hp
+ #
+@@ -142,6 +143,6 @@
+ #  MPI include path
+ #
+ # MPI_INCLUDE_DIR = 
+-  MPI_INCLUDE_DIR = -I$(MPI_INSTALL_DIR)/include
++  MPI_INCLUDE_DIR = -I/usr/include/$(DEB_HOST_MULTIARCH)/mpi
+ #
+ #---------------------------------------------------------------------
+diff -Nur spooles.orig/makeLib spooles/makeLib
+--- spooles.orig/makeLib	1998-12-16 18:47:58.000000000 +0100
++++ spooles/makeLib	2024-09-01 00:06:54.027352382 +0200
+@@ -64,14 +64,19 @@
+    $srcname = " \\\n     " . $src ;
+    print $srcname ;
+ }
++print "\n\n.SUFFIXES: .c .o .lo .a .so" ;
+ print "\n\nOBJ_FILES = \$\{SRC:.c=.o\}" ;
++print "\n\nLOBJ_FILES = \$\{SRC:.c=.lo\}" ;
+ print "\n\n" ;
+ print <<'EOF' ;
+ .c.o :
+-	$(PURIFY) $(CC) -c $(CFLAGS) $*.c -o $(OBJ)_$*.o
++	$(PURIFY) $(CC) -c $(CFLAGS) $*.c -o $(OBJ)_$*.o $(MPI_INCLUDE_DIR)
+ 
+-../../spooles.a : ${OBJ_FILES}
+-	$(AR) $(ARFLAGS) ../../spooles.a $(OBJ)_*.o
++.c.lo :
++	$(PURIFY) $(CC) -c $(CFLAGS) $*.c -fPIC -DPIC -o $(OBJ)_$*.lo $(MPI_INCLUDE_DIR)
++
++../../libspooles.a : ${OBJ_FILES} ${LOBJ_FILES}
++	$(AR) $(ARFLAGS) ../../libspooles.a $(OBJ)_*.o
+ 	rm -f $(OBJ)_*.o
+-	$(RANLIB) ../../spooles.a
++	$(RANLIB) ../../libspooles.a
+ EOF
+diff -Nur spooles.orig/MPI/makefile spooles/MPI/makefile
+--- spooles.orig/MPI/makefile	1998-12-17 16:47:44.000000000 +0100
++++ spooles/MPI/makefile	2024-09-01 00:06:54.027352382 +0200
+@@ -2,7 +2,7 @@
+ 	cd drivers ; make drivers
+ 
+ lib :
+-	cd src ; make spoolesMPI.a
++	cd src ; make makeLib
+ 
+ clean :
+ 	cd src ; make clean
+diff -Nur spooles.orig/MPI/src/makefile spooles/MPI/src/makefile
+--- spooles.orig/MPI/src/makefile	1998-12-16 22:54:41.000000000 +0100
++++ spooles/MPI/src/makefile	2024-09-01 00:06:54.027352382 +0200
+@@ -42,3 +42,8 @@
+ 
+ clean :
+ 	- rm -f *.a *.o
++
++makeLib :
++	perl ../../makeLib > makeG
++	make -f makeG
++	rm -f makeG
+diff -Nur spooles.orig/MT/makefile spooles/MT/makefile
+--- spooles.orig/MT/makefile	1998-12-17 16:47:48.000000000 +0100
++++ spooles/MT/makefile	2024-09-01 00:06:54.027352382 +0200
+@@ -2,7 +2,7 @@
+ 	cd drivers ; make drivers
+ 
+ lib :
+-	cd src ; make spoolesMT.a
++	cd src ; make makeLib
+ 
+ clean :
+ 	cd src ; make clean
+diff -Nur spooles.orig/timings.h spooles/timings.h
+--- spooles.orig/timings.h	1998-06-02 19:42:14.000000000 +0200
++++ spooles/timings.h	2024-09-01 00:06:54.027352382 +0200
+@@ -1,10 +1,12 @@
+ #ifndef _TIMINGS_
+ #define _TIMINGS_
+ #include <sys/time.h>
++#include <time.h>
++#include <stdlib.h>
++#include <stdio.h>
+ static struct timeval  TV ;
+-static struct timezone TZ ;
+ #define MARKTIME(t) \
+-   gettimeofday(&TV, &TZ) ; \
++   gettimeofday(&TV, NULL) ; \
+    t = (TV.tv_sec + 0.000001*TV.tv_usec)
+ #endif
+ 
+diff -Nur spooles.orig/Utilities/src/iohb.c spooles/Utilities/src/iohb.c
+--- spooles.orig/Utilities/src/iohb.c	1998-09-19 16:35:21.000000000 +0200
++++ spooles/Utilities/src/iohb.c	2024-09-01 00:06:54.027352382 +0200
+@@ -215,6 +215,7 @@
+ /*---------------------------------------------------------------------*/
+ 
+ #include "../Utilities.h"
++#include <stdint.h>
+ 
+ static int ParseIfmt(char* fmt, int* perline, int* width) ;
+ static int ParseRfmt(char* fmt, int* perline, int* width, 
+@@ -266,7 +267,7 @@
+                   &Ptrcrd, &Indcrd, &Valcrd, &Rhscrd, Rhstype);
+     fclose(in_file);
+     *Type = mat_type;
+-    *(*Type+3) = (char) NULL;
++    *(*Type+3) = (char)(uintptr_t) NULL;
+     *M    = Nrow;
+     *N    = Ncol;
+     *nz   = Nnzero;
+@@ -308,8 +309,8 @@
+     if ( sscanf(line,"%*s") < 0 ) 
+         IOHBTerminate("iohb.c: Null (or blank) first line of HB file.\n");
+     (void) sscanf(line, "%72c%8[^\n]", Title, Key);
+-    *(Key+8) = (char) NULL;
+-    *(Title+72) = (char) NULL;
++    *(Key+8) = (char)(uintptr_t) NULL;
++    *(Title+72) = (char)(uintptr_t) NULL;
+ 
+ /*  Second line:  */
+     fgets(line, BUFSIZ, in_file);
+@@ -344,10 +345,10 @@
+     if ( sscanf(line, "%*16c%*16c%20c",Valfmt) != 1) 
+         IOHBTerminate("iohb.c: Invalid format info, line 4 of Harwell-Boeing file.\n"); 
+     sscanf(line, "%*16c%*16c%*20c%20c",Rhsfmt);
+-    *(Ptrfmt+16) = (char) NULL;
+-    *(Indfmt+16) = (char) NULL;
+-    *(Valfmt+20) = (char) NULL;
+-    *(Rhsfmt+20) = (char) NULL;
++    *(Ptrfmt+16) = (char)(uintptr_t) NULL;
++    *(Indfmt+16) = (char)(uintptr_t) NULL;
++    *(Valfmt+20) = (char)(uintptr_t) NULL;
++    *(Rhsfmt+20) = (char)(uintptr_t) NULL;
+    
+ /*  (Optional) Fifth line: */
+     if (*Rhscrd != 0 )
+@@ -454,7 +455,7 @@
+ 
+     ThisElement = (char *) malloc(Ptrwidth+1);
+     if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-    *(ThisElement+Ptrwidth) = (char) NULL;
++    *(ThisElement+Ptrwidth) = (char)(uintptr_t) NULL;
+     count=0;
+     for (i=0;i<Ptrcrd;i++)
+     {
+@@ -477,7 +478,7 @@
+ 
+     ThisElement = (char *) malloc(Indwidth+1);
+     if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-    *(ThisElement+Indwidth) = (char) NULL;
++    *(ThisElement+Indwidth) = (char)(uintptr_t) NULL;
+     count = 0;
+     for (i=0;i<Indcrd;i++)
+     {
+@@ -505,7 +506,7 @@
+ 
+     ThisElement = (char *) malloc(Valwidth+1);
+     if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-    *(ThisElement+Valwidth) = (char) NULL;
++    *(ThisElement+Valwidth) = (char)(uintptr_t) NULL;
+     count = 0;
+     for (i=0;i<Valcrd;i++)
+     {
+@@ -705,7 +706,7 @@
+ 
+   ThisElement = (char *) malloc(Rhswidth+1);
+   if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-  *(ThisElement+Rhswidth) = (char) NULL;
++  *(ThisElement+Rhswidth) = (char)(uintptr_t) NULL;
+   for (rhsi=0;rhsi<Nrhs;rhsi++) {
+ 
+     for (i=0;i<Nentries;i++) {
+@@ -1018,7 +1019,7 @@
+ 
+     ThisElement = (char *) malloc(Ptrwidth+1);
+     if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-    *(ThisElement+Ptrwidth) = (char) NULL;
++    *(ThisElement+Ptrwidth) = (char)(uintptr_t) NULL;
+     count=0; 
+     for (i=0;i<Ptrcrd;i++)
+     {
+@@ -1041,7 +1042,7 @@
+ 
+     ThisElement = (char *) malloc(Indwidth+1);
+     if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-    *(ThisElement+Indwidth) = (char) NULL;
++    *(ThisElement+Indwidth) = (char)(uintptr_t) NULL;
+     count = 0;
+     for (i=0;i<Indcrd;i++)
+     {
+@@ -1069,7 +1070,7 @@
+ 
+     ThisElement = (char *) malloc(Valwidth+1);
+     if ( ThisElement == NULL ) IOHBTerminate("Insufficient memory for ThisElement.");
+-    *(ThisElement+Valwidth) = (char) NULL;
++    *(ThisElement+Valwidth) = (char)(uintptr_t) NULL;
+     count = 0;
+     for (i=0;i<Valcrd;i++)
+     {
+@@ -1629,7 +1630,7 @@
+        while ( strchr(tmp2+1,')') != NULL ) {
+           tmp2 = strchr(tmp2+1,')');
+        }
+-       *(tmp2+1) = (int) NULL;
++       *(tmp2+1) = (int)(uintptr_t) NULL;
+     }
+     if (strchr(fmt,'P') != NULL)  /* Remove any scaling factor, which */
+     {                             /* affects output only, not input */
+@@ -1639,11 +1640,11 @@
+         tmp3 = strchr(fmt,'(')+1;
+         len = tmp-tmp3;
+         tmp2 = tmp3;
+-        while ( *(tmp2+len) != (int) NULL ) {
++        while ( *(tmp2+len) != (int)(uintptr_t) NULL ) {
+            *tmp2=*(tmp2+len);
+            tmp2++; 
+         }
+-        *(strchr(fmt,')')+1) = (int) NULL;
++        *(strchr(fmt,')')+1) = (int)(uintptr_t) NULL;
+       }
+     }
+     if (strchr(fmt,'E') != NULL) { 
+@@ -1706,7 +1707,7 @@
+     SubS = (char *)malloc(len+1);
+     if ( SubS == NULL ) IOHBTerminate("Insufficient memory for SubS.");
+     for (i=0;i<len;i++) SubS[i] = S[pos+i];
+-    SubS[len] = (char) NULL;
++    SubS[len] = (char)(uintptr_t) NULL;
+     } else {
+       SubS = NULL;
+     }
+@@ -1725,7 +1726,7 @@
+ 
+ static void IOHBTerminate(char* message) 
+ {
+-   fprintf(stderr,message);
++   fprintf(stderr,"%s",message);
+    exit(1);
+ }
+ 

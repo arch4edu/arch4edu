@@ -5,10 +5,10 @@ depends:
   - x86_64/r/r-coda
   - x86_64/r/r-laplacesdemon
   - x86_64/r/r-lavaan
-  - x86_64/r/r-progress
   - x86_64/r/r-rcpp
   - x86_64/r/r-rcpparmadillo
   - x86_64/r/r-rdpack
+  - x86_64/r/r-psych
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-datawizard
+  - x86_64/r/r-insight
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace -u _pkgver=0.15.3 _pkgver=0.16.0
+post_build: aur-post-build

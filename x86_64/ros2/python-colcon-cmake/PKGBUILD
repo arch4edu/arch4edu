@@ -2,7 +2,7 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-cmake
 _name=${pkgname:7}
-pkgver=0.2.27
+pkgver=0.2.29
 pkgrel=2
 pkgdesc="An extension for colcon-core to support CMake projects."
 arch=(any)
@@ -11,7 +11,7 @@ license=('Apache')
 depends=('python-colcon-core')
 makedepends=('python-setuptools')
 source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('f5794550ca7f9ffb4555de454227e566a0beb5c8881d76509db3337b99370f26')
+sha256sums=('f1c0a14e2530d3b738f8d0659c27d59e2a0a03dfef601e61369bb5083ebf1f69')
 
 
 package() {
@@ -20,3 +20,4 @@ package() {
     python setup.py install --root=${pkgdir} --prefix=/usr --optimize=1 
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }
+makedepends+=("python-build" "python-installer" "python-wheel")

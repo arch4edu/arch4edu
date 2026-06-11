@@ -1,26 +1,31 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=estimability
-_pkgver=1.4.1
+_pkgver=1.5.1
 pkgname=r-${_pkgname,,}
-pkgver=1.4.1
-pkgrel=1
-pkgdesc='Tools for Assessing Estimability of Linear Predictions'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Tools for Assessing Estimability of Linear Predictions"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
 depends=(
   r
 )
+optdepends=(
+  r-knitr
+  r-rmarkdown
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('c65aaf1e452f3947013d3ce05ae674d48492081f615a942592dc91db780f1124')
+md5sums=('90c2834919962894b19fa023eed3072e')
+b2sums=('650c48287112b71922f603653b3f77107a8e1be1f5a671f7ad1cc80440096885be7f58eb3a3484a5668718ce8fd327bffc0eba7082850aecb611b9e3f24d76c2')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

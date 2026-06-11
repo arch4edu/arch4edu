@@ -1,0 +1,43 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index a0e8c583ab5..2cc424bf753 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -812,16 +812,6 @@ install(PROGRAMS
+   ceph-run
+   ceph-clsinfo
+   DESTINATION bin)
+-install(PROGRAMS
+-  ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/init-ceph
+-  DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/init.d
+-  RENAME ceph)
+-
+-install(FILES
+-  ${CMAKE_SOURCE_DIR}/share/id_rsa_drop.ceph.com
+-  ${CMAKE_SOURCE_DIR}/share/id_rsa_drop.ceph.com.pub
+-  ${CMAKE_SOURCE_DIR}/share/known_hosts_drop.ceph.com
+-  DESTINATION ${CMAKE_INSTALL_DATADIR}/ceph)
+
+ install(PROGRAMS
+   ceph_common.sh
+@@ -830,7 +820,7 @@ install(PROGRAMS
+
+ install(PROGRAMS
+   ceph-create-keys
+-  DESTINATION sbin)
++  DESTINATION bin)
+
+ add_subdirectory(bash_completion)
+
+diff --git a/systemd/CMakeLists.txt b/systemd/CMakeLists.txt
+index 366bab4195d..09d2cfa4c21 100644
+--- a/systemd/CMakeLists.txt
++++ b/systemd/CMakeLists.txt
+@@ -9,7 +9,7 @@ endif()
+ set(SYSTEMD_SYSTEM_UNIT_DIR "${SYSTEMD_SYSTEM_UNIT_DIR}"
+   CACHE PATH "Location for systemd system unit files")
+
+-set(CEPH_SYSTEMD_ENV_DIR "/etc/sysconfig"
++set(CEPH_SYSTEMD_ENV_DIR "/etc/default"
+   CACHE PATH "Location for systemd service environmental variable settings files")
+ set(SYSTEMD_ENV_FILE "${CEPH_SYSTEMD_ENV_DIR}/ceph")
+ foreach(service

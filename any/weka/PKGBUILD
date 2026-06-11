@@ -1,4 +1,5 @@
-# Maintainer: Jonathon Fernyhough <jonathon+m2x+dev>
+# Maintainer: Arne Brücher <archlinux [at] arne-bruecher[dot] de>
+# Contributor: Jonathon Fernyhough <jonathon+m2x+dev>
 # Contributor: Aitor Alonso <mail@aalonso.pw>
 # Contributor: Andrew Chen <andrew.chuanye.chen@gmail.com>
 # Contributor: mmm
@@ -7,7 +8,7 @@
 pkgname=weka
 pkgver=3.8.6
 _dlver=${pkgver//./-}
-pkgrel=2
+pkgrel=3
 pkgdesc="A collection of machine learning algorithms for data mining tasks"
 url="https://www.cs.waikato.ac.nz/ml/weka/"
 license=("GPL")

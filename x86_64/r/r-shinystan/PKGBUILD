@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=shinystan
-_pkgver=2.6.0
+_pkgver=2.7.0
 pkgname=r-${_pkgname,,}
-pkgver=2.6.0
-pkgrel=4
+pkgver=2.7.0
+pkgrel=1
 pkgdesc='Interactive Visual and Numerical Diagnostics and Posterior Analysis for Bayesian Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -39,7 +39,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a084856a2d66d8744f2c72e3e19ca35e600a508ed7ef1f7ebed8c7fc0738d529')
+sha256sums=('ca57fb4fe0fc926cd903f6a8da920273906b38258db371460064f1619d4f9eb9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

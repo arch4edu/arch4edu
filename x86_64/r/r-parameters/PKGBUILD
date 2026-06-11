@@ -1,0 +1,160 @@
+# Maintainer: Hu Butui <hot123tea123@gmail.com>
+
+_pkgname=parameters
+_pkgver=0.29.1
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Processing of Model Parameters"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
+depends=(
+  r-bayestestr
+  r-datawizard
+  r-insight
+)
+optdepends=(
+  r-aer
+  r-afex
+  r-aod
+  r-bayesfactor
+  r-bayesfm
+  r-bbmle
+  r-betareg
+  r-bh
+  r-biglm
+  r-blme
+  r-brglm2
+  r-brms
+  r-broom
+  r-broom.mixed
+  r-bsda
+  r-caic4
+  r-car
+  r-cardata
+  r-cgam
+  r-classdiscovery
+  r-clubsandwich
+  r-cobalt
+  r-coda
+  r-correlation
+  r-coxme
+  r-cplm
+  r-curl
+  r-dbscan
+  r-did
+  r-discovr
+  r-distributional
+  r-domir
+  r-drc
+  r-drr
+  r-effectsize
+  r-eganet
+  r-emmeans
+  r-epir
+  r-estimatr
+  r-factoextra
+  r-factominer
+  r-faraway
+  r-fastica
+  r-fixest
+  r-fpc
+  r-gam
+  r-gamlss
+  r-gee
+  r-geepack
+  r-ggplot2
+  r-glmmadaptive
+  r-glmmtmb
+  r-glmtoolbox
+  r-gparotation
+  r-gt
+  r-haven
+  r-hmisc
+  r-httr2
+  r-ivreg
+  r-knitr
+  r-lavaan
+  r-lavaan.mi
+  r-lcmm
+  r-lfe
+  r-lm.beta
+  r-lme4
+  r-lmertest
+  r-lmtest
+  r-logistf
+  r-logitr
+  r-logspline
+  r-lqmm
+  r-m3c
+  r-marginaleffects
+  r-mclogit
+  r-mclust
+  r-mcmcglmm
+  r-mediation
+  r-merderiv
+  r-metabma
+  r-metafor
+  r-mfx
+  r-mice
+  r-mmrm
+  r-modelbased
+  r-multcomp
+  r-mumin
+  r-mvtnorm
+  r-nbclust
+  r-nestedlogit
+  r-nfactors
+  r-openxlsx
+  r-ordinal
+  r-panelr
+  r-pbkrtest
+  r-pcdimension
+  r-performance
+  r-plm
+  r-pmcmrplus
+  r-poorman
+  r-posterior
+  r-proreg
+  r-pscl
+  r-psych
+  r-pvclust
+  r-quantreg
+  r-randomforest
+  r-rcppeigen
+  r-rmarkdown
+  r-rms
+  r-rstan
+  r-rstanarm
+  r-sampleselection
+  r-sandwich
+  r-see
+  r-serp
+  r-sparsepca
+  r-survey
+  r-svylme
+  r-testthat
+  r-tidyselect
+  r-tinytable
+  r-tmb
+  r-truncreg
+  r-vdiffr
+  r-vgam
+  r-weightit
+  r-withr
+  r-wrs2
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('a86ef631f60bab72050053ef27d79f61')
+b2sums=('8b3b46b0d72a34ca026fb744cd3ba28ce25bf6e978b8006d3c549a21fb872b9b38206aa38a4e38f8b3cd0960c976b9f21ea2567f54ddce26564ad922404441f9')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+}

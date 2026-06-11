@@ -2,13 +2,13 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=remotes
-_cranver=2.4.2
+_cranver=2.5.0
 pkgname=r-${_cranname,,}
 pkgdesc="R package installation from remote repositories, including GitHub"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=2
 
 arch=("any")
 depends=(
@@ -51,7 +51,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("f189cbdd6d687145a031f6e3e267e68db891f526e61acf16e93c7af3aa1af8fbffb713d8b00af9d9ad52c4dd1fedad72fed528b319f996ef6b0060ebf607102d")
+b2sums=("ee0959efb26f76e193c122797648bd1a52bc72154d5dce7707bc2198f7d79a9e33414157c6d964989709f4a06af3a429cbb74dc3b0c4c555861f11e0c5e3cc7c")
 
 build() {
     mkdir -p "${srcdir}/build/"

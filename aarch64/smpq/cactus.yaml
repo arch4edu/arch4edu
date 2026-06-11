@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - aarch64/stormlib
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build

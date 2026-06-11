@@ -1,0 +1,23 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-formula
+  - x86_64/r/r-generics
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rlang
+makedepends:
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-aer
+  - x86_64/r/r-car
+  - x86_64/r/r-clubsandwich
+  - x86_64/r/r-emmeans
+  - x86_64/r/r-fabricatr
+  - x86_64/r/r-randomizr
+  - x86_64/r/r-sandwich
+  - x86_64/r/r-stargazer
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

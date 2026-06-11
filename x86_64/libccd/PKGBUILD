@@ -2,7 +2,7 @@
 # Maintainer: acxz <akashpatel2008 at yahoo dot com>
 pkgname=libccd
 pkgver=2.1
-pkgrel=1
+pkgrel=3
 pkgdesc="Library for collision detection between two convex shapes."
 arch=('i686' 'x86_64')
 url='https://github.com/danfis/libccd'
@@ -23,7 +23,7 @@ build() {
   cmake ${srcdir}/${_dir} \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
   make
 }

@@ -1,0 +1,94 @@
+From 9745817370d1d504d45344959a000189bb9213cb Mon Sep 17 00:00:00 2001
+From: Zhirui Dai <daizhirui@hotmail.com>
+Date: Sat, 14 Sep 2024 20:56:28 -0700
+Subject: [PATCH] fix build with ArchLinux
+
+---
+ 3rdparty/find_dependencies.cmake              | 13 +++++++------
+ cpp/open3d/io/file_format/FilePCD.cpp         |  4 +++-
+ cpp/open3d/t/io/file_format/FilePCD.cpp       |  4 +++-
+ cpp/open3d/visualization/rendering/Renderer.h |  2 ++
+ cpp/pybind/CMakeLists.txt                     |  2 +-
+ 5 files changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/3rdparty/find_dependencies.cmake b/3rdparty/find_dependencies.cmake
+index 77b7085df69..6253ba734c3 100644
+--- a/3rdparty/find_dependencies.cmake
++++ b/3rdparty/find_dependencies.cmake
+@@ -224,6 +224,9 @@ function(open3d_pkg_config_3rdparty_library name)
+                 target_compile_definitions(${name} INTERFACE ${CMAKE_MATCH_1})
+             endif()
+         endforeach()
++        if (pc_${name}_LDFLAGS)
++            target_link_options(${name} INTERFACE ${pc_${name}_LDFLAGS})
++        endif()
+         if(NOT BUILD_SHARED_LIBS OR arg_PUBLIC)
+             install(TARGETS ${name} EXPORT ${PROJECT_NAME}Targets)
+         endif()
+@@ -767,9 +770,8 @@ endif()
+ 
+ # jsoncpp
+ if(USE_SYSTEM_JSONCPP)
+-    open3d_find_package_3rdparty_library(3rdparty_jsoncpp
+-        PACKAGE jsoncpp
+-        TARGETS jsoncpp_lib
++    open3d_pkg_config_3rdparty_library(3rdparty_jsoncpp
++        SEARCH_ARGS jsoncpp
+     )
+     if(NOT 3rdparty_jsoncpp_FOUND)
+         set(USE_SYSTEM_JSONCPP OFF)
+@@ -790,9 +792,8 @@ endif()
+ 
+ # liblzf
+ if(USE_SYSTEM_LIBLZF)
+-    open3d_find_package_3rdparty_library(3rdparty_liblzf
+-        PACKAGE liblzf
+-        TARGETS liblzf::liblzf
++    open3d_pkg_config_3rdparty_library(3rdparty_liblzf
++        SEARCH_ARGS liblzf
+     )
+     if(NOT 3rdparty_liblzf_FOUND)
+         set(USE_SYSTEM_LIBLZF OFF)
+diff --git a/cpp/open3d/io/file_format/FilePCD.cpp b/cpp/open3d/io/file_format/FilePCD.cpp
+index 17aa080cd29..6f190dba664 100644
+--- a/cpp/open3d/io/file_format/FilePCD.cpp
++++ b/cpp/open3d/io/file_format/FilePCD.cpp
+@@ -5,7 +5,9 @@
+ // SPDX-License-Identifier: MIT
+ // ----------------------------------------------------------------------------
+ 
+-#include <liblzf/lzf.h>
++extern "C" {
++#include <lzf.h>
++}
+ 
+ #include <cstdint>
+ #include <cstdio>
+diff --git a/cpp/open3d/t/io/file_format/FilePCD.cpp b/cpp/open3d/t/io/file_format/FilePCD.cpp
+index 2670e133d5a..0331b470291 100644
+--- a/cpp/open3d/t/io/file_format/FilePCD.cpp
++++ b/cpp/open3d/t/io/file_format/FilePCD.cpp
+@@ -5,7 +5,9 @@
+ // SPDX-License-Identifier: MIT
+ // ----------------------------------------------------------------------------
+ 
+-#include <liblzf/lzf.h>
++extern "C" {
++#include <lzf.h>
++}
+ 
+ #include <cinttypes>
+ #include <cstdint>
+diff --git a/cpp/open3d/visualization/rendering/Renderer.h b/cpp/open3d/visualization/rendering/Renderer.h
+index b642e4b6d46..2d23fd49074 100644
+--- a/cpp/open3d/visualization/rendering/Renderer.h
++++ b/cpp/open3d/visualization/rendering/Renderer.h
+@@ -10,6 +10,8 @@
+ #include "open3d/visualization/rendering/MaterialModifier.h"
+ #include "open3d/visualization/rendering/RendererHandle.h"
+ 
++#include <memory>
++
+ namespace open3d {
+ 
+ namespace t {

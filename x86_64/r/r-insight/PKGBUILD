@@ -1,0 +1,156 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=insight
+_pkgver=1.5.1
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Easy Access to Model Information for Various Model Objects"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-only')
+depends=(
+  r
+)
+optdepends=(
+  r-aer
+  r-afex
+  r-aod
+  r-ape
+  r-bayesfactor
+  r-bayestestr
+  r-bbmle
+  r-bdsmatrix
+  r-betareg
+  r-bh
+  r-biglm
+  r-blavaan
+  r-blme
+  r-brms
+  r-broom
+  r-bsda
+  r-car
+  r-cardata
+  r-censreg
+  r-cgam
+  r-clubsandwich
+  r-cobalt
+  r-coxme
+  r-cplm
+  r-crch
+  r-curl
+  r-datawizard
+  r-dbarts
+  r-effectsize
+  r-emmeans
+  r-epir
+  r-estimatr
+  r-feisr
+  r-fixest
+  r-fungible
+  r-fwb
+  r-gam
+  r-gamlss
+  r-gamlss.data
+  r-gamm4
+  r-gbm
+  r-gee
+  r-geepack
+  r-geor
+  r-glmmadaptive
+  r-glmmtmb
+  r-glmtoolbox
+  r-gmnl
+  r-gt
+  r-httptest2
+  r-httr2
+  r-interp
+  r-ivreg
+  r-jm
+  r-knitr
+  r-lavaan
+  r-lavasearch2
+  r-lcmm
+  r-lfe
+  r-lme4
+  r-lmertest
+  r-lmtest
+  r-logistf
+  r-logitr
+  r-marginaleffects
+  r-mclogit
+  r-mclust
+  r-mcmcglmm
+  r-mertools
+  r-metabma
+  r-metadat
+  r-metafor
+  r-metaplus
+  r-mhurdle
+  r-mice
+  r-mlogit
+  r-mmrm
+  r-modelbased
+  r-multgee
+  r-mumin
+  r-mvtnorm
+  r-nestedlogit
+  r-nonnest2
+  r-ordinal
+  r-panelr
+  r-parameters
+  r-parsnip
+  r-pbkrtest
+  r-performance
+  r-phylolm
+  r-plm
+  r-proreg
+  r-pscl
+  r-psych
+  r-quantreg
+  r-rcpp
+  r-rcppeigen
+  r-recipes
+  r-reformulas
+  r-rmarkdown
+  r-rms
+  r-robustbase
+  r-robustlmm
+  r-rstanarm
+  r-rstantools
+  r-rstpm2
+  r-rstudioapi
+  r-rwiener
+  r-sampleselection
+  r-sandwich
+  r-sdmtmb
+  r-serp
+  r-speedglm
+  r-statmod
+  r-survey
+  r-svylme
+  r-testthat
+  r-tidymodels
+  r-tinytable
+  r-tmb
+  r-truncreg
+  r-tune
+  r-tweedie
+  r-vgam
+  r-weightit
+  r-withr
+  r-workflows
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('e07b3d3ce79a19dcd5804c162b9e0b95')
+b2sums=('2988bb73b9a66ef3e4e4b516a3d6e2a3d9c66c838c8e0cc1d4dbd313cbda46d2de35cbd70f07968a1a51d4f299073a7bf10f12cf64d51989022d0d21d009d5ac')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+}

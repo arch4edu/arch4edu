@@ -1,0 +1,330 @@
+diff -uprN pi-hole-6.3/advanced/Scripts/database_migration/gravity-db.sh pi-hole-6.3.cust/advanced/Scripts/database_migration/gravity-db.sh
+--- pi-hole-6.3/advanced/Scripts/database_migration/gravity-db.sh	2025-11-27 19:10:51.000000000 +0100
++++ pi-hole-6.3.cust/advanced/Scripts/database_migration/gravity-db.sh	2025-11-27 23:02:14.735460514 +0100
+@@ -10,7 +10,7 @@
+ # This file is copyright under the latest version of the EUPL.
+ # Please see LICENSE file for your rights under this license.
+ 
+-readonly scriptPath="/etc/.pihole/advanced/Scripts/database_migration/gravity"
++readonly scriptPath="/opt/pihole/database_migration/gravity"
+ 
+ upgrade_gravityDB(){
+     local database version
+diff -uprN pi-hole-6.3/advanced/Scripts/piholeLogFlush.sh pi-hole-6.3.cust/advanced/Scripts/piholeLogFlush.sh
+--- pi-hole-6.3/advanced/Scripts/piholeLogFlush.sh	2025-11-27 19:10:51.000000000 +0100
++++ pi-hole-6.3.cust/advanced/Scripts/piholeLogFlush.sh	2025-11-27 23:02:14.748381267 +0100
+@@ -31,7 +31,7 @@ fi
+ # Determine log file location
+ LOGFILE=$(getFTLConfigValue "files.log.dnsmasq")
+ if [ -z "$LOGFILE" ]; then
+-    LOGFILE="/var/log/pihole/pihole.log"
++    LOGFILE="/run/log/pihole/pihole.log"
+ fi
+ FTLFILE=$(getFTLConfigValue "files.log.ftl")
+ if [ -z "$FTLFILE" ]; then
+@@ -105,13 +105,13 @@ else
+     fi
+ 
+     # Stop FTL to make sure it doesn't write to the database while we're deleting data
+-    service pihole-FTL stop
++    systemctl stop pihole-FTL
+ 
+     # Delete most recent 24 hours from FTL's database, leave even older data intact (don't wipe out all history)
+     deleted=$(pihole-FTL sqlite3 -ni "${DBFILE}" "DELETE FROM query_storage WHERE timestamp >= strftime('%s','now')-86400; select changes() from query_storage limit 1")
+ 
+     # Restart FTL
+-    service pihole-FTL restart
++    systemctl restart pihole-FTL
+     if [[ "$*" != *"quiet"* ]]; then
+         echo -e "${OVER}  ${TICK} Deleted ${deleted} queries from long-term query database"
+     fi
+diff -uprN pi-hole-6.3/advanced/Scripts/updatecheck.sh pi-hole-6.3.cust/advanced/Scripts/updatecheck.sh
+--- pi-hole-6.3/advanced/Scripts/updatecheck.sh	2025-11-27 19:10:51.000000000 +0100
++++ pi-hole-6.3.cust/advanced/Scripts/updatecheck.sh	2025-11-27 23:02:14.694012168 +0100
+@@ -71,13 +71,13 @@ fi
+ 
+ # get Core versions
+ 
+-CORE_VERSION="$(get_local_version /etc/.pihole)"
++CORE_VERSION="$(pacman -Q pi-hole-core | awk '{print $2}' | cut -d- -f1)"
+ addOrEditKeyValPair "${VERSION_FILE}" "CORE_VERSION" "${CORE_VERSION}"
+ 
+-CORE_BRANCH="$(get_local_branch /etc/.pihole)"
++CORE_BRANCH="master"
+ addOrEditKeyValPair "${VERSION_FILE}" "CORE_BRANCH" "${CORE_BRANCH}"
+ 
+-CORE_HASH="$(get_local_hash /etc/.pihole)"
++CORE_HASH="builtfromreleasetarball"
+ addOrEditKeyValPair "${VERSION_FILE}" "CORE_HASH" "${CORE_HASH}"
+ 
+ GITHUB_CORE_VERSION="$(get_remote_version pi-hole "${CORE_BRANCH}")"
+@@ -88,13 +88,13 @@ addOrEditKeyValPair "${VERSION_FILE}" "G
+ 
+ # get Web versions
+ 
+-WEB_VERSION="$(get_local_version "${ADMIN_INTERFACE_DIR}")"
++WEB_VERSION="$(pacman -Q pi-hole-web | awk '{print $2}' | cut -d- -f1)"
+ addOrEditKeyValPair "${VERSION_FILE}" "WEB_VERSION" "${WEB_VERSION}"
+ 
+-WEB_BRANCH="$(get_local_branch "${ADMIN_INTERFACE_DIR}")"
++WEB_BRANCH="master"
+ addOrEditKeyValPair "${VERSION_FILE}" "WEB_BRANCH" "${WEB_BRANCH}"
+ 
+-WEB_HASH="$(get_local_hash "${ADMIN_INTERFACE_DIR}")"
++WEB_HASH="builtfromreleasetarball"
+ addOrEditKeyValPair "${VERSION_FILE}" "WEB_HASH" "${WEB_HASH}"
+ 
+ GITHUB_WEB_VERSION="$(get_remote_version web "${WEB_BRANCH}")"
+diff -uprN pi-hole-6.3/advanced/Templates/logrotate pi-hole-6.3.cust/advanced/Templates/logrotate
+--- pi-hole-6.3/advanced/Templates/logrotate	2025-11-27 19:10:51.000000000 +0100
++++ pi-hole-6.3.cust/advanced/Templates/logrotate	2025-11-27 23:02:14.747450448 +0100
+@@ -1,4 +1,4 @@
+-/var/log/pihole/pihole.log {
++/run/log/pihole/pihole.log {
+     # su #
+     daily
+     copytruncate
+@@ -9,7 +9,7 @@
+     nomail
+ }
+ 
+-/var/log/pihole/FTL.log {
++/run/log/pihole/FTL.log {
+     # su #
+     weekly
+     copytruncate
+@@ -20,7 +20,7 @@
+     nomail
+ }
+ 
+-/var/log/pihole/webserver.log {
++/run/log/pihole/webserver.log {
+     # su #
+     weekly
+     copytruncate
+diff -uprN pi-hole-6.3/advanced/Templates/pihole.sudo pi-hole-6.3.cust/advanced/Templates/pihole.sudo
+--- pi-hole-6.3/advanced/Templates/pihole.sudo	1970-01-01 01:00:00.000000000 +0100
++++ pi-hole-6.3.cust/advanced/Templates/pihole.sudo	2025-11-27 23:02:14.748944993 +0100
+@@ -0,0 +1 @@
++pihole ALL=(ALL:ALL) NOPASSWD: /usr/bin/pihole
+diff -uprN pi-hole-6.3/gravity.sh pi-hole-6.3.cust/gravity.sh
+--- pi-hole-6.3/gravity.sh	2025-11-27 19:10:51.000000000 +0100
++++ pi-hole-6.3.cust/gravity.sh	2025-11-27 23:02:14.734281312 +0100
+@@ -22,10 +22,10 @@ coltable="${PI_HOLE_SCRIPT_DIR}/COL_TABL
+ # shellcheck source=./advanced/Scripts/COL_TABLE
+ . "${coltable}"
+ # shellcheck source=./advanced/Scripts/database_migration/gravity-db.sh
+-. "/etc/.pihole/advanced/Scripts/database_migration/gravity-db.sh"
++. "/opt/pihole/database_migration/gravity-db.sh"
+ 
+ basename="pihole"
+-PIHOLE_COMMAND="/usr/local/bin/${basename}"
++PIHOLE_COMMAND="/usr/bin/${basename}"
+ 
+ piholeDir="/etc/${basename}"
+ 
+@@ -41,8 +41,8 @@ adListFile="${piholeDir}/adlists.list"
+ piholeGitDir="/etc/.pihole"
+ GRAVITYDB=$(getFTLConfigValue files.gravity)
+ GRAVITY_TMPDIR=$(getFTLConfigValue files.gravity_tmp)
+-gravityDBschema="${piholeGitDir}/advanced/Templates/gravity.db.sql"
+-gravityDBcopy="${piholeGitDir}/advanced/Templates/gravity_copy.sql"
++gravityDBschema="/opt/pihole/gravity.db.sql"
++gravityDBcopy="/opt/pihole/gravity_copy.sql"
+ 
+ domainsExtension="domains"
+ curl_connect_timeout=10
+diff -uprN pi-hole-6.3/pihole pi-hole-6.3.cust/pihole
+--- pi-hole-6.3/pihole	2025-11-27 19:10:51.000000000 +0100
++++ pi-hole-6.3.cust/pihole	2025-11-27 23:02:14.736381542 +0100
+@@ -111,25 +111,6 @@ networkFlush() {
+   exit 0
+ }
+ 
+-updatePiholeFunc() {
+-  if [ -n "${DOCKER_VERSION}" ]; then
+-    unsupportedFunc
+-  else
+-    shift
+-    "${PI_HOLE_SCRIPT_DIR}"/update.sh "$@"
+-    exit 0
+-  fi
+-}
+-
+-repairPiholeFunc() {
+-  if [ -n "${DOCKER_VERSION}" ]; then
+-    unsupportedFunc
+-  else
+-    /etc/.pihole/automated\ install/basic-install.sh --repair
+-    exit 0;
+-  fi
+-}
+-
+ updateGravityFunc() {
+   exec "${PI_HOLE_SCRIPT_DIR}"/gravity.sh "$@"
+ }
+@@ -146,15 +127,6 @@ chronometerFunc() {
+ }
+ 
+ 
+-uninstallFunc() {
+-  if [ -n "${DOCKER_VERSION}" ]; then
+-    unsupportedFunc
+-  else
+-    "${PI_HOLE_SCRIPT_DIR}"/uninstall.sh
+-    exit 0
+-  fi
+-}
+-
+ versionFunc() {
+   exec "${PI_HOLE_SCRIPT_DIR}"/version.sh
+   exit 0
+@@ -289,9 +261,9 @@ Example: 'pihole logging on'
+ Specify whether the Pi-hole log should be used
+ 
+ Options:
+-  on                  Enable the Pi-hole log at /var/log/pihole/pihole.log
+-  off                 Disable and flush the Pi-hole log at /var/log/pihole/pihole.log
+-  off noflush         Disable the Pi-hole log at /var/log/pihole/pihole.log"
++  on                  Enable the Pi-hole log at /run/log/pihole/pihole.log
++  off                 Disable and flush the Pi-hole log at /run/log/pihole/pihole.log
++  off noflush         Disable the Pi-hole log at /run/log/pihole/pihole.log"
+     exit 0
+   elif [[ "${1}" == "off" ]]; then
+     # Disable logging
+@@ -419,60 +391,6 @@ tailFunc() {
+   exit 0
+ }
+ 
+-piholeCheckoutFunc() {
+-  if [ -n "${DOCKER_VERSION}" ]; then
+-    echo -e "${CROSS} Function not supported in Docker images"
+-    echo "Please build a custom image following the steps at"
+-    echo "https://github.com/pi-hole/docker-pi-hole?tab=readme-ov-file#building-the-image-locally"
+-    exit 0
+-  else
+-    if [[ "$2" == "-h" ]] || [[ "$2" == "--help" ]]; then
+-      echo "Switch Pi-hole subsystems to a different GitHub branch
+-    Usage: ${COL_GREEN}pihole checkout${COL_NC} ${COL_YELLOW}shortcut${COL_NC}
+-        or ${COL_GREEN}pihole checkout${COL_NC} ${COL_PURPLE}repo${COL_NC} ${COL_CYAN}branch${COL_NC}
+-
+-  Example: ${COL_GREEN}pihole checkout${COL_NC} ${COL_YELLOW}master${COL_NC}
+-       or  ${COL_GREEN}pihole checkout${COL_NC} ${COL_PURPLE}ftl ${COL_CYAN}development${COL_NC}
+-
+-  Shortcuts:
+-    ${COL_YELLOW}master${COL_NC}            Update all subsystems to the latest stable release
+-    ${COL_YELLOW}dev${COL_NC}               Update all subsystems to the latest development release
+-
+-  Individual components:
+-    ${COL_PURPLE}core${COL_NC} ${COL_CYAN}branch${COL_NC}       Change the branch of Pi-hole's core subsystem
+-    ${COL_PURPLE}web${COL_NC} ${COL_CYAN}branch${COL_NC}        Change the branch of the web interface subsystem
+-    ${COL_PURPLE}ftl${COL_NC} ${COL_CYAN}branch${COL_NC}        Change the branch of Pi-hole's FTL subsystem"
+-
+-      exit 0
+-    fi
+-
+-    #shellcheck source=./advanced/Scripts/piholeCheckout.sh
+-    source "${PI_HOLE_SCRIPT_DIR}"/piholeCheckout.sh
+-    shift
+-    checkout "$@"
+-  fi
+-}
+-
+-tricorderFunc() {
+-  local tricorder_token
+-  if [[ ! -p "/dev/stdin" ]]; then
+-    echo -e "  ${INFO} Please do not call Tricorder directly"
+-    exit 1
+-  fi
+-
+-  tricorder_token=$(curl --silent --fail --show-error --upload-file "-" https://tricorder.pi-hole.net/upload < /dev/stdin 2>&1)
+-  if [[ "${tricorder_token}" != "https://tricorder.pi-hole.net/"* ]]; then
+-      echo -e "${CROSS} uploading failed, contact Pi-hole support for assistance."
+-      # Log curl error (if available)
+-      if [ -n "${tricorder_token}" ]; then
+-          echo -e "${INFO} Error message: ${COL_RED}${tricorder_token}${COL_NC}\\n"
+-          tricorder_token=""
+-      fi
+-      exit 1
+-  fi
+-  echo "Upload successful, your token is: ${COL_GREEN}${tricorder_token}${COL_NC}"
+-  exit 0
+-}
+ 
+ updateCheckFunc() {
+   "${PI_HOLE_SCRIPT_DIR}"/updatecheck.sh "$@"
+@@ -499,11 +417,7 @@ Domain Options:
+                         Add '-h' for more info on allow/deny usage
+ 
+ Debugging Options:
+-  -d, debug           Start a debugging session
+-                        Add '-c' or '--check-database' to include a Pi-hole database integrity check
+-                        Add '-a' to automatically upload the log to tricorder.pi-hole.net
+   -f, flush           Flush the Pi-hole log
+-  -r, repair          Repair Pi-hole subsystems
+   -t, tail [arg]      View the live output of the Pi-hole log.
+                       Add an optional argument to filter the log
+                       (regular expressions are supported)
+@@ -521,10 +435,8 @@ Options:
+                         Add '-h' for more info on logging usage
+   -q, query           Query the adlists for a specified domain
+                         Add '-h' for more info on query usage
+-  -up, updatePihole   Update Pi-hole subsystems
+                         Add '--check-only' to exit script before update is performed.
+   -v, version         Show installed versions of Pi-hole, Web Interface & FTL
+-  uninstall           Uninstall Pi-hole from your system
+   status              Display the running status of Pi-hole subsystems
+   enable              Enable Pi-hole subsystems
+                         Add '-h' for more info on enable usage
+@@ -532,8 +444,6 @@ Options:
+                         Add '-h' for more info on disable usage
+   reloaddns           Update the lists and flush the cache without restarting the DNS server
+   reloadlists         Update the lists WITHOUT flushing the cache or restarting the DNS server
+-  checkout            Switch Pi-hole subsystems to a different GitHub branch
+-                        Add '-h' for more info on checkout usage
+   networkflush        Flush information stored in Pi-hole's network tables
+                         Add '--arp' to additionally flush the ARP table ";
+   exit 0
+@@ -551,7 +461,6 @@ case "${1}" in
+   "-c" | "chronometer"            ) chronometerFunc "$@";;
+   "-q" | "query"                  ) queryFunc "$@";;
+   "status"                        ) statusFunc "$2";;
+-  "tricorder"                     ) tricorderFunc;;
+   "allow" | "allowlist"           ) listFunc "$@";;
+   "deny" | "denylist"             ) listFunc "$@";;
+   "--wild" | "wildcard"           ) listFunc "$@";;
+@@ -564,16 +473,11 @@ case "${1}" in
+ 
+   # we need to add all arguments that require sudo power to not trigger the * argument
+   "-f" | "flush"                  ) need_root=true;;
+-  "-up" | "updatePihole"          ) need_root=true;;
+-  "-r"  | "repair"                ) need_root=true;;
+   "-l" | "logging"                ) need_root=true;;
+-  "uninstall"                     ) need_root=true;;
+-  "-d" | "debug"                  ) need_root=true;;
+   "-g" | "updateGravity"          ) need_root=true;;
+   "reloaddns"                     ) need_root=true;;
+   "reloadlists"                   ) need_root=true;;
+   "setpassword"                   ) need_root=true;;
+-  "checkout"                      ) need_root=true;;
+   "updatechecker"                 ) need_root=true;;
+   "arpflush"                      ) need_root=true;; # Deprecated, use networkflush instead
+   "networkflush"                  ) need_root=true;;
+@@ -598,17 +502,12 @@ fi
+ 
+ # Handle redirecting to specific functions based on arguments
+ case "${1}" in
+-  "-d" | "debug"                  ) debugFunc "$@";;
+   "-f" | "flush"                  ) flushFunc "$@";;
+-  "-up" | "updatePihole"          ) updatePiholeFunc "$@";;
+-  "-r"  | "repair"                ) repairPiholeFunc;;
+   "-g" | "updateGravity"          ) updateGravityFunc "$@";;
+   "-l" | "logging"                ) piholeLogging "$@";;
+-  "uninstall"                     ) uninstallFunc;;
+   "reloaddns"                     ) reloadDNS "reload";;
+   "reloadlists"                   ) reloadDNS "reload-lists";;
+   "setpassword"                   ) SetWebPassword "$@";;
+-  "checkout"                      ) piholeCheckoutFunc "$@";;
+   "updatechecker"                 ) shift; updateCheckFunc "$@";;
+   "arpflush"                      ) arpFunc "$@";; # Deprecated, use networkflush instead
+   "networkflush"                  ) networkFlush "$@";;

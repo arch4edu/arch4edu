@@ -1,67 +1,57 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
+# Contributor: Kibouo <csonka.mihaly@hotmail.com>
+# Contributor: Alex Branham <branham@utexas.edu>
 
-_cranname=openssl
-_cranver=2.0.6
-pkgname=r-${_cranname,,}
-pkgdesc="Encryption, Signatures and Certificates Based on OpenSSLi"
-url="https://cran.r-project.org/package=${_cranname}"
-license=("MIT")
-pkgver=${_cranver//[:-]/.}
-pkgrel=5
-
-arch=("i686" "x86_64")
+_pkgname=openssl
+_pkgver=2.4.2
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Toolkit for Encryption, Signatures and Certificates Based on OpenSSL"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
-    "r"
-    "r-askpass"
-    "openssl>=1.0.2"
+  openssl
+  r-askpass
+)
+checkdepends=(
+  r-curl
+  r-sodium
+  r-testthat
 )
 optdepends=(
-    "r-curl"
-    "r-digest"
-    "r-jose"
-    "r-jsonlite"
-    "r-knitr"
-    "r-rmarkdown"
-    "r-sodium"
+  r-curl
+  r-digest
+  r-jose
+  r-jsonlite
+  r-knitr
+  r-rmarkdown
+  r-sodium
+  r-testthat
 )
-# The unittests for `r-openssl` have multiple circular
-# dependency chains.
-
-# As such, the tests can not be run on first build.
-# While R packages from CRAN, generally, are well-tested
-# before they are released, in some situations, you want to
-# have thorough testing on your own end.
-
-# To run the tests, first build this package without `check()`
-# (i.e., as-is) to bootstrap `r-openssl`. Then, on subsequent builds,
-# (assumining you have a local repository that is accessible from
-# the build chroot), uncomment the lines defining `checkdepends`, below,
-# as well as the `check()` function further down
-
-# checkdepends=(
-#     "${optdepends[@]}"
-#     "r-testthat"
-# )
-
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("bda6521d2cbe79d5e4c89ef676e95a2cafa51cf363106244b75fca537db32fa48f85de335c761c6c28b77f5917abf1c9227dcbe9e862f5b875b9764becdccb29")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('748b0fa601173da477706803783b6943')
+b2sums=('96092e9fe44ae4b9151e2e33cd049910d8abcfe12d9746f1cbd9d357885ec5ca987e4d51ce8e1e849755ecdf70ab7f5e7e25ed8cc44c20a4167bb3f6234a2647')
 
 build() {
-    mkdir -p "${srcdir}/build/"
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
-# check() {
-#     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
-# }
+#check() {
+#  cd "$_pkgname/tests"
+#  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+#}
 
 package() {
-    install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    fi
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }

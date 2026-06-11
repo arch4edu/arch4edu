@@ -1,15 +1,16 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ucminf
-_pkgver=1.2.0
+_pkgver=1.2.3
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
+pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="General-Purpose Unconstrained Non-Linear Optimization"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
+  blas
   r
 )
 makedepends=(
@@ -19,12 +20,12 @@ optdepends=(
   r-numderiv
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('78b93a1975486d64c0534a1d8630e9da')
-sha256sums=('5add8f84aeb0910a7ebf796c9514d4a3998606c3e45fe97e55d84f000a1d6df4')
+md5sums=('fd18b6d10604083577a31da32b5e13f5')
+b2sums=('18d5f74d7bab27c9164d9a173855fd47ce112e98093518b695de90f17bbfd71a7fa456899d292bc60aa9fe9204faf2afb589aa995cc4cfed3f4f04d8966feb6b')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {

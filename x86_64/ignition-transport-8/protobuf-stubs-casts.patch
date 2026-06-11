@@ -1,0 +1,48 @@
+diff --color -Naur gz-transport-ignition-transport8_8.4.0/include/gz/transport/RepHandler.hh gz-transport-ignition-transport8_8.4.0_new/include/gz/transport/RepHandler.hh
+--- gz-transport-ignition-transport8_8.4.0/include/gz/transport/RepHandler.hh   2022-11-18 00:34:01.000000000 +0100
++++ gz-transport-ignition-transport8_8.4.0_new/include/gz/transport/RepHandler.hh   2023-07-17 11:00:52.110403431 +0200
+@@ -26,7 +26,7 @@
+ #pragma warning(pop)
+ #endif
+
+-#if GOOGLE_PROTOBUF_VERSION > 2999999
++#if GOOGLE_PROTOBUF_VERSION > 2999999 && GOOGLE_PROTOBUF_VERSION < 4022000
+ #include <google/protobuf/stubs/casts.h>
+ #endif
+
+@@ -140,7 +140,11 @@
+           return false;
+         }
+
+-#if GOOGLE_PROTOBUF_VERSION > 2999999
++#if GOOGLE_PROTOBUF_VERSION >= 4022000
++        auto msgReq =
++          google::protobuf::internal::DownCast<const Req*>(&_msgReq);
++        auto msgRep = google::protobuf::internal::DownCast<Rep*>(&_msgRep);
++#elif GOOGLE_PROTOBUF_VERSION > 2999999
+         auto msgReq = google::protobuf::down_cast<const Req*>(&_msgReq);
+         auto msgRep = google::protobuf::down_cast<Rep*>(&_msgRep);
+ #else
+diff --color -Naur gz-transport-ignition-transport8_8.4.0/include/gz/transport/SubscriptionHandler.hh gz-transport-ignition-transport8_8.4.0_new/include/gz/transport/SubscriptionHandler.hh
+--- gz-transport-ignition-transport8_8.4.0/include/gz/transport/SubscriptionHandler.hh  2022-11-18 00:34:01.000000000 +0100
++++ gz-transport-ignition-transport8_8.4.0_new/include/gz/transport/SubscriptionHandler.hh  2023-07-17 11:01:36.354294479 +0200
+@@ -28,7 +28,7 @@
+
+ #include <google/protobuf/stubs/common.h>
+
+-#if GOOGLE_PROTOBUF_VERSION >= 3000000
++#if GOOGLE_PROTOBUF_VERSION >= 3000000 && GOOGLE_PROTOBUF_VERSION < 4022000
+ #include <google/protobuf/stubs/casts.h>
+ #endif
+
+@@ -211,7 +211,9 @@
+         if (!this->UpdateThrottling())
+           return true;
+
+-#if GOOGLE_PROTOBUF_VERSION >= 3000000
++#if GOOGLE_PROTOBUF_VERSION >= 4022000
++        auto msgPtr = google::protobuf::internal::DownCast<const T*>(&_msg);
++#elif GOOGLE_PROTOBUF_VERSION >= 3000000
+         auto msgPtr = google::protobuf::down_cast<const T*>(&_msg);
+ #else
+         auto msgPtr = google::protobuf::internal::down_cast<const T*>(&_msg);

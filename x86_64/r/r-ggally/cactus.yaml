@@ -3,14 +3,14 @@ nvchecker:
     aur:
 depends:
   - x86_64/r/r-dplyr
-  - x86_64/r/r-forcats
   - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggstats
   - x86_64/r/r-gtable
   - x86_64/r/r-lifecycle
+  - x86_64/r/r-magrittr
   - x86_64/r/r-plyr
   - x86_64/r/r-progress
   - x86_64/r/r-rcolorbrewer
-  - x86_64/r/r-reshape
   - x86_64/r/r-rlang
   - x86_64/r/r-scales
   - x86_64/r/r-tidyr

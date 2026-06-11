@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-generics
   - x86_64/r/r-rcpp
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

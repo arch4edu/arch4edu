@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-costmap-queue
+  - x86_64/ros2/ros2-humble-dwb-core
+  - x86_64/ros2/ros2-humble-dwb-critics
+  - x86_64/ros2/ros2-humble-dwb-msgs
+  - x86_64/ros2/ros2-humble-dwb-plugins
+  - x86_64/ros2/ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-nav-2d-utils
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

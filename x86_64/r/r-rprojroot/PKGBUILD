@@ -1,14 +1,15 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=rprojroot
-_cranver=2.0.3
+_cranver=2.1.1
 pkgname=r-${_cranname,,}
 pkgdesc="Find Files in Project Subdirectories"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=2
 
 arch=("any")
 depends=(
@@ -18,8 +19,9 @@ optdepends=(
     "r-covr"
     "r-knitr"
     "r-lifecycle"
-    "r-mockr"
+    "r-rlang"
     "r-rmarkdown"
+    "r-testthat>=3.2.0"
     "r-withr"
 )
 
@@ -43,7 +45,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ccb1d8f06ada72aa666e7f81cfdf5ce77596fce543c525c80f6eb91a5239c78d42aa16f192d900f9a90fc98d8c283af1ec2eada755a2dff9147bcd03002ceca3")
+b2sums=('b725a4825729f00fb6e0ca9bb7998f43360d8ccf3a9547389f209a122b83800578f32c758c50d0c27a9eb87e0bf64b130a6f36f71c543f15bd7aee53d76e37b3')
 
 build() {
     mkdir -p "${srcdir}/build/"

@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspQualityControl
-_pkgver=0.17.2.1
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Quality Control Module for JASP"
 arch=('any')
@@ -12,6 +12,7 @@ replaces=('r-jaspprocesscontrol')
 depends=(r
   r-doe.base
   r-fitdistrplus
+  r-flexsurv
   r-frf2
   r-ggplot2
   r-ggrepel
@@ -38,7 +39,7 @@ depends=(r
   r-car
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('09a85ac4266753941a3f8db654a0e6beed6545abb4145d474edffb024e0f18d6')
+sha256sums=('6713e7f8a3896f135c44940b986de98b5d3e8fc8dc44ce70efbd5569d0656d66')
 
 
 build() {
@@ -49,6 +50,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

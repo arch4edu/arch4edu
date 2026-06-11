@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-base64enc
+  - x86_64/r/r-config
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-reticulate
+  - x86_64/r/r-rlang
+  - x86_64/r/r-rstudioapi
+  - x86_64/r/r-tidyselect
+  - x86_64/r/r-whisker
+  - x86_64/r/r-yaml
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

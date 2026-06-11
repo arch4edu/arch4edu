@@ -1,0 +1,62 @@
+# This file is part of AUR/cider
+# https://aur.archlinux.org/packages/cider
+#
+# Copyright Arch Linux Contributors
+#
+# Permission to use, copy, modify, and/or distribute this software for
+# any purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL
+# WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE
+# FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY
+# DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+# AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+print_instructions(){
+  cat << EOF
+################################################################################
+                 !!! IMPORTANT INSTRUCTIONS, READ CAREFULLY !!!
+################################################################################
+##
+##  AUR/cider needs an Apple Music Token to work!
+##
+##  An Apple Music Token can be created via the Apple Developer Program.
+##
+##  https://developer.apple.com/documentation/applemusicapi/generating-developer-tokens
+##
+##  Once created, edit Cider's .desktop file
+##
+##    sudo nano /usr/share/applications/sh.cider.Cider.desktop
+##  
+##  Then in the Exec line add the TOKEN value.
+##  For example, if your token is eyJhbGciOiJFUz, then Exec line will be:
+##
+##    Exec=env TOKEN=eyJhbGciOiJFUz CIDER_PORT=9000 /usr/bin/cider %U
+##
+##  Cider uses port 9000 by default. To change, edit CIDER_PORT variable.
+##
+##  Save the .desktop file and enjoy!
+##
+##
+##  Important Links:
+##
+##   Installation Support: https://aur.archlinux.org/packages/cider
+##  Current Upstream Fork: https://github.com/taoky/Cider
+##     Abandoned Upstream: https://github.com/ciderapp/Cider
+##
+################################################################################
+EOF
+}
+
+
+
+post_install() {
+  print_instructions
+}
+
+post_upgrade() {
+  print_instructions
+}
+

@@ -4,20 +4,19 @@
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _pkgname=psych
-_pkgver=2.3.3
+_pkgver=2.6.5
 pkgname=r-${_pkgname,,}
-pkgver=2.3.3
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Procedures for Psychological, Psychometric, and Personality Research'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgdesc="Procedures for Psychological, Psychometric, and Personality Research"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
+  r-gparotation
   r-mnormt
 )
 optdepends=(
-  r-gparotation
   r-graph
   r-knitr
   r-lavaan
@@ -27,14 +26,15 @@ optdepends=(
   r-rgraphviz
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('94a9f3c39f8243573752709b89eb8068e11dbe809f86ecf0225fb429556efb6f')
+md5sums=('4c3caa7931539c3d343e76932178a05e')
+b2sums=('35b723ddafd529b625d5df1212d31ee555375c7a18c8772c8b7813bf239cbe7e67e96f39079fc300b6cab90786e3a2541ef8fd8a09a1fef2ad23bd7f8b97fb44')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

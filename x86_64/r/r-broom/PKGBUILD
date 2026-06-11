@@ -1,10 +1,12 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
-# Maintainer: Alad Wenter <alad at archlinux dot org>
+# Maintainer: Serene-Arc <https://aur.archlinux.org/account/serene-arc>
+
+# Contributor: peippo <christoph+aur@christophfink.com>
+# Contributor: Alad Wenter <alad at archlinux dot org>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: frichtlm <frichtlm@gmail.com>
 
 _cranname=broom
-_cranver=1.0.4
+_cranver=1.0.13
 pkgname=r-${_cranname,,}
 pkgdesc="Convert Statistical Objects into Tidy Tibbles"
 url="https://cran.r-project.org/package=${_cranname}"
@@ -17,7 +19,6 @@ depends=(
     "r>=3.5"
     "r-backports"
     "r-dplyr>=1.0.0"
-    "r-ellipsis"
     "r-generics>=0.0.2"
     "r-glue"
     "r-lifecycle"
@@ -31,12 +32,12 @@ optdepends=(
     "r-aer"
     "r-auc"
     "r-bbmle"
-    "r-betareg"
+    "r-betareg>=3.2.1"
     "r-biglm"
     "r-bingroup"
     "r-boot"
     "r-btergm>=1.10.6"
-    "r-car"
+    "r-car>=3.1.2"
     "r-cardata"
     "r-caret"
     "r-cluster"
@@ -57,14 +58,14 @@ optdepends=(
     "r-glmnetutils"
     "r-gmm"
     "r-hmisc"
-    "r-irlba"
     "r-interp"
+    "r-irlba"
     "r-joinerml"
     "r-kendall"
     "r-knitr"
     "r-ks"
     "r-lahman"
-    "r-lavaan"
+    "r-lavaan>=0.6.8"
     "r-leaps"
     "r-lfe"
     "r-lm.beta"
@@ -73,7 +74,6 @@ optdepends=(
     "r-lmtest>=0.9.38"
     "r-lsmeans"
     "r-maps"
-    "r-maptools"
     "r-margins"
     "r-mass"
     "r-mclust"
@@ -83,7 +83,7 @@ optdepends=(
     "r-mgcv"
     "r-mlogit"
     "r-modeldata"
-    "r-modeltests"
+    "r-modeltests>=0.1.6"
     "r-muhaz"
     "r-multcomp"
     "r-network"
@@ -94,27 +94,26 @@ optdepends=(
     "r-polca"
     "r-psych"
     "r-quantreg"
-    "r-rgeos"
     "r-rmarkdown"
     "r-robust"
     "r-robustbase"
     "r-rsample"
     "r-sandwich"
-    "r-sp"
-    "r-spdep>=1.1"
     "r-spatialreg"
+    "r-spdep>=1.1"
     "r-speedglm"
     "r-spelling"
     "r-survey"
-    "r-survival"
+    "r-survival>=3.6.4"
     "r-systemfit"
+    "r-testthat>=2.1.0"
     "r-tseries"
     "r-vars"
     "r-zoo"
 )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=('05fa38c748a8f6eb37664773fa26e6a5bc5b8caebfe8336b5fc43fb633afacbe91db037b5bd4244def546645c1f5a52d290e1c5b6e72f2728691bbf93313c2c2')
+b2sums=('4d469b46763e356c2c5385c3a9b96277fd60df36d76df1632f34fad0058fd07060dc007f2ee035d1bced12650d467eafd2f4657a79d8e029704e18ad64c037fd')
 
 build() {
     mkdir -p "${srcdir}/build/"

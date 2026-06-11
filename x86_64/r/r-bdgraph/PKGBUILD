@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=BDgraph
-_pkgver=2.72
+_pkgver=2.74
 pkgname=r-${_pkgname,,}
-pkgver=2.72
-pkgrel=1
+pkgver=2.74
+pkgrel=2
 pkgdesc='Bayesian Structure Learning in Graphical Models using Birth-Death MCMC'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-tmvtnorm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7cf9cc1bccf2a56b518c88030e00e88217f571afcb250aa95c3bd2771a8b83cd')
+sha256sums=('af78a936a8887c4e5521e35356700b903f466ee1796464a2361585efb07814aa')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

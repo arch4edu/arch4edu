@@ -1,0 +1,11 @@
+diff --color -ur petsc-3.24.4.orig/src/binding/petsc4py/conf/confpetsc.py petsc-3.24.4/src/binding/petsc4py/conf/confpetsc.py
+--- petsc-3.24.4.orig/src/binding/petsc4py/conf/confpetsc.py	2025-07-30 18:58:34.000000000 +0200
++++ petsc-3.24.4/src/binding/petsc4py/conf/confpetsc.py	2026-02-21 11:01:22.351773069 +0100
+@@ -694,7 +694,6 @@
+             (config_file, config_data),
+             msg='writing %s' % config_file,
+             verbose=self.verbose,
+-            dry_run=self.dry_run,
+         )
+ 
+     def get_config_data(self, arch_list):

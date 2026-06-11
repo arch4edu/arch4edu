@@ -2,27 +2,9 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/apache-lucene
   - any/bwidget
-  - any/fop-hyph
-  - any/java-flexdock
-  - any/java-qdox
-  - any/java-skinlf
-  - any/java-testng
-  - any/javahelp2
-  - any/jeuclid-core
-  - any/jgoodies-looks
-  - any/jgraphx-jre8
-  - any/jlatexmath-fop
-  - x86_64/jogl
-  - any/jrosetta
-  - x86_64/saxon-he
-  - any/xalan-java
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed 's|${url}/download/${pkgver}/${pkgname}-${pkgver}-src.tar.gz|https://cgit.scilab.org/${pkgname}/snapshot/${pkgname}-${pkgver}.tar.gz|' -i PKGBUILD
-  sed 's|cd "${srcdir}/${pkgname}-${pkgver}"|cd "${srcdir}/${pkgname}-${pkgver}"/scilab|g' -i PKGBUILD
-  sudo pacman -S --noconfirm pacman-contrib
-  updpkgsums
+  add makedepends rapidjson
 post_build: aur-post-build

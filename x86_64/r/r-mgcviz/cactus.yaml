@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-gamm4
+  - x86_64/r/r-ggally
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gridextra
+  - x86_64/r/r-matrixstats
+  - x86_64/r/r-miniui
+  - x86_64/r/r-plyr
+  - x86_64/r/r-qgam
+  - x86_64/r/r-shiny
+  - x86_64/r/r-viridis
+makedepends:
+  - x86_64/r/r-hexbin
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

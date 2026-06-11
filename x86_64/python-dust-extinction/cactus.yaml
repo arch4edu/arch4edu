@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+makedepends:
+  - any/python-sphinx-astropy
+  - any/python-pytest-astropy-header
+  - any/python-pytest-doctestplus
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

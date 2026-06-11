@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+makedepends:
+  - x86_64/r/r-rcppeigen
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

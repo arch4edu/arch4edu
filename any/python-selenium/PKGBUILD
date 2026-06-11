@@ -1,53 +1,69 @@
-# Maintainer:  Anton Kudelin <kudelin at proton dot me>
+# Maintainer: txtsd <aur.archlinux@ihavea.quest>
+# Maintainer: Carl Smedstad <carsme@archlinux.org>
+# Contributor: kbipinkumar <kbipinkumar@pm.me>
+# Contributor: bpierre <benoit.pierre@gmail.com>
+# Contributor: Anton Kudelin <kudelin at proton dot me>
 # Contributor: Jelle van der Waa <jelle@vdwaa.nl>
 # Contributor: Aaron DeVore <aaron.devore@gmail.com>
 
-_pyname=selenium
-_suffix=''
-pkgname=python-$_pyname
-pkgver=4.10.0
-pkgrel=1
+pkgname=python-selenium
+_pkgname="${pkgname#python-}"
+pkgver=4.44.0
+pkgrel=2
 pkgdesc="Python language bindings for Selenium WebDriver"
-arch=(any)
-url="https://www.selenium.dev"
-license=(Apache)
-depends=(python-urllib3 python-certifi python-debugpy python-multidict
-         python-importlib-metadata python-trio-websocket
-         python-inflection geckodriver)
-makedepends=(python-build python-installer python-setuptools python-wheel)
-checkdepends=(python-pytest)
-source=(https://github.com/SeleniumHQ/${_pyname}/archive/refs/tags/${_pyname}-${pkgver}${suffix}.tar.gz)
-sha256sums=('873f8071df2dd0c175216721e39072f8a9821119ac21b1ddb52a21f6a0ad442e')
-options=(!makeflags)
+arch=(x86_64 aarch64)
+url="https://github.com/SeleniumHQ/selenium"
+license=(Apache-2.0)
+depends=(
+  bzip2
+  gcc-libs
+  glibc
+  python
+  python-certifi
+  python-trio
+  python-trio-websocket
+  python-typing_extensions
+  python-urllib3
+  python-websocket-client
+  zlib
+)
+makedepends=(
+  python-build
+  python-installer
+  python-setuptools
+  python-setuptools-rust
+  python-wheel
+)
+options=(!lto)
+source=(
+  "https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pkgname}-${pkgver}.tar.gz"
+)
+sha256sums=('b03a831fcfcab9d912b4682f60718c48a04560d6c62f7496c16b7498c9a4427e')
+
+_archive="${_pkgname}-${pkgver}"
 
 prepare() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${suffix}/py"
-  cp ../rb/lib/$_pyname/webdriver/atoms/* $_pyname/webdriver/remote
-  echo '{"frozen":{},"mutable":{}}' > \
-    $_pyname/webdriver/firefox/webdriver_prefs.json
+  cd "${_archive}"
+
+  # Ensure `selenium.webdriver.common.fedcm` gets packaged
+  touch ./selenium/webdriver/common/fedcm/__init__.py
+
+  cd src
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 build() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${suffix}/py"
-  python -m build \
-    --wheel \
-    --no-isolation \
-    --skip-dependency-check
-}
-
-check() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${suffix}/py"
-
-  python -m venv --system-site-packages test-env
-  test-env/bin/python -m installer dist/*.whl
-
-  test-env/bin/python -m pytest -v
+  cd "${_archive}"
+  export RUSTUP_TOOLCHAIN=stable
+  python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "${srcdir}/${_pyname}-${_pyname}-${pkgver}${suffix}/py"
-  python -m installer \
-    --destdir="$pkgdir" \
-    --compile-bytecode=2 \
-    dist/*.whl
+  cd "${_archive}"
+  python -m installer --destdir="${pkgdir}" dist/*.whl
+
+  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+  cp selenium/webdriver/remote/*.js "${pkgdir}/${site_packages}/selenium/webdriver/remote"
+  cp selenium/webdriver/common/*.js "${pkgdir}/${site_packages}/selenium/webdriver/common"
 }

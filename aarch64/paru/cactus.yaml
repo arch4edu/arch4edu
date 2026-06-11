@@ -1,1 +1,10 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  add makedepends clang
+  echo 'export _features+="generate,"' >> PKGBUILD
+post_build: aur-post-build

@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-checkmate
+  - x86_64/r/r-registry
+  - x86_64/r/r-slam
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

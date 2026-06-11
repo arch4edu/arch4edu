@@ -1,16 +1,17 @@
 nvchecker:
   - source: aur
     aur:
-makedepends:
-  - x86_64/hypre
+  - source: aur
+    aur: gklib
+  - source: aur
+    aur: mumps
+  - source: archpkg
+    archpkg: scotch
+depends:
   - x86_64/mumps
-  - x86_64/parmetis
-  - x86_64/pastix
-  - x86_64/scotch
-  - x86_64/superlu_dist
-  - x86_64/archimedes-tools: triangle
+  - x86_64/parmetis-git
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add makedepends fftw hdf5-openmpi hypre metis mumps parmetis pastix scotch suitesparse superlu superlu_dist triangle valgrind
+  add depends mumps parmetis-git
 post_build: aur-post-build

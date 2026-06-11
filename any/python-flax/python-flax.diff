@@ -1,0 +1,10 @@
+--- a/pyproject.toml	2024-10-17 04:27:12.740960982 +0300
++++ b/pyproject.toml	2024-10-17 04:27:20.457657615 +0300
+@@ -102,6 +102,7 @@
+ 
+ [tool.setuptools.packages.find]
+ include = ["flax*"]
++exclude = ["flaxlib*"]
+ 
+ [tool.setuptools.package-data]
+ flax = ["*py.typed"]

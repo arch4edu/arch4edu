@@ -1,0 +1,20 @@
+--- a/packages/flutter_tools/lib/src/cache.dart
++++ b/packages/flutter_tools/lib/src/cache.dart
+@@ -319,7 +319,7 @@
+   var fatalStorageWarning = true;
+ 
+   static RandomAccessFile? _lock;
+-  static var _lockEnabled = true;
++  static var _lockEnabled = false;
+ 
+   /// Turn off the [lock]/[releaseLock] mechanism.
+   ///
+@@ -722,7 +722,6 @@
+   }
+ 
+   void setStampFor(String artifactName, String version) {
+-    getStampFileFor(artifactName).writeAsStringSync(version);
+   }
+ 
+   File getStampFileFor(String artifactName) {
+

@@ -11,6 +11,7 @@ depends:
   - x86_64/r/r-rlang
   - x86_64/r/r-tibble
   - x86_64/r/r-tidyselect
+  - x86_64/r/r-tidyr
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

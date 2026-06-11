@@ -4,14 +4,14 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=fs
-_pkgver=1.6.2
+_pkgver=2.1.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=2
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Cross-Platform File System Operations Based on 'libuv'"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   libuv
   r
@@ -28,21 +28,14 @@ optdepends=(
   r-vctrs
   r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3827672b1f4747ce6bd3a224a74a9f61')
-sha256sums=('548b7c0ed5ab26dc4fbd88707ae12987bcaef834dbc6de4e17d453846dc436b2')
-
-prepare() {
-  # build against system libuv
-  sed -e 's#PKG_LIBS = ./$(LIBUV)/.libs/libuv.a#PKG_LIBS = -luv#' \
-      -e 's#-I./$(LIBUV)/include ##' \
-      -e '/$(SHLIB):/d' \
-      -i "$_pkgname/src/Makevars"
-}
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        )
+md5sums=('6011a5e758c21acc297ed8bbcf97e7d9')
+b2sums=('64a62005c89938ee8c194cae50162ff73e4ae1515a78423786738ac334ddac99b9efac558368d24f9c677f4e8d9edd427e47b2429a416ac6161f3e593d24f416')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {

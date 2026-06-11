@@ -3,7 +3,7 @@
 # Contributor: marauder <abhinav.kssk@gmail.com>
 pkgname=ignition-tools
 pkgver=2.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Command line tools for the Gazebo libraries"
 arch=('any')
 url="https://gazebosim.org/libs/tools"

@@ -1,0 +1,28 @@
+# Maintainer: Médéric Boquien <mboquien@free.fr>
+# Contributor: Philip Goto <philip.goto@gmail.com>
+
+_pkg=shap
+pkgname=python-${_pkg}
+pkgver=0.48.0
+pkgrel=2
+pkgdesc="Game theoretic approach to explain the output of any machine learning model"
+arch=(i686 x86_64 armv7h aarch64)
+url="https://github.com/slundberg/shap"
+license=(MIT)
+depends=(cython python python-numpy python-scipy python-scikit-learn python-pandas python-tqdm python-packaging python-slicer python-numba python-cloudpickle)
+makedepends=(python-build python-installer python-wheel)
+optdepends=(ipython python-matplotlib)
+source=(https://files.pythonhosted.org/packages/source/s/${_pkg}/${_pkg}-${pkgver}.tar.gz)
+sha512sums=('af84202c46592d8372b9ad438726bb1c383d26d84554406fba72086bff7e228e9d3cf584a5709f130515891ccc804486fafeb6926425675ea7b691fd5723df9c')
+
+build() {
+  cd ${_pkg}-${pkgver}
+  python -m build --wheel --no-isolation --skip-dependency-check
+}
+
+package(){
+    cd "${_pkg}-${pkgver}"
+    python -m installer --destdir="${pkgdir}" dist/*.whl
+    install -D LICENSE "${pkgdir}/usr/share/licenses/python-${_pkg}/LICENSE"
+}
+makedepends+=("python-setuptools")

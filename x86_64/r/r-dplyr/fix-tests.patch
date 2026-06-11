@@ -1,0 +1,242 @@
+diff --git a/dplyr/tests/testthat/_snaps/across.md b/dplyr/tests/testthat/_snaps/across.md
+index 28b90a7..ae9b082 100644
+--- a/dplyr/tests/testthat/_snaps/across.md
++++ b/dplyr/tests/testthat/_snaps/across.md
+@@ -88,7 +88,7 @@
+       Error in `summarise()`:
+       i In argument: `across(y, mean)`.
+       Caused by error in `across()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `y` doesn't exist.
+     Code
+       (expect_error(tibble(x = 1) %>% summarise(res = across(where(is.numeric), 42))))
+@@ -105,7 +105,7 @@
+       Error in `summarise()`:
+       i In argument: `z = across(y, mean)`.
+       Caused by error in `across()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `y` doesn't exist.
+     Code
+       (expect_error(tibble(x = 1) %>% summarise(res = sum(if_any(where(is.numeric),
+@@ -314,7 +314,7 @@
+       i In argument: `y = c_across(g)`.
+       i In group 1: `g = 1`.
+       Caused by error in `c_across()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `g` doesn't exist.
+ 
+ # across() applies old `.cols = everything()` default with a warning
+diff --git a/dplyr/tests/testthat/_snaps/by.md b/dplyr/tests/testthat/_snaps/by.md
+index 343d990..0147b13 100644
+--- a/dplyr/tests/testthat/_snaps/by.md
++++ b/dplyr/tests/testthat/_snaps/by.md
+@@ -4,7 +4,7 @@
+       compute_by(by = y, data = df)
+     Condition
+       Error:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `y` doesn't exist.
+ 
+ # can't set `.by` with a grouped-df
+diff --git a/dplyr/tests/testthat/_snaps/colwise-mutate.md b/dplyr/tests/testthat/_snaps/colwise-mutate.md
+index 3e512b8..98d7093 100644
+--- a/dplyr/tests/testthat/_snaps/colwise-mutate.md
++++ b/dplyr/tests/testthat/_snaps/colwise-mutate.md
+@@ -30,7 +30,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `tbl_at_vars()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `test` doesn't exist.
+     Code
+       tbl <- tibble(gr1 = rep(1:2, 4), gr2 = rep(1:2, each = 4), x = 1:8)
+@@ -39,7 +39,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `tbl_at_vars()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `gr1` doesn't exist.
+     Code
+       (expect_error(mutate_all(mtcars, length, 0, 0)))
+diff --git a/dplyr/tests/testthat/_snaps/conditions.md b/dplyr/tests/testthat/_snaps/conditions.md
+index 4f2446c..0012697 100644
+--- a/dplyr/tests/testthat/_snaps/conditions.md
++++ b/dplyr/tests/testthat/_snaps/conditions.md
+@@ -47,7 +47,7 @@
+       select(mtcars, 1 + "")
+     Condition
+       Error in `foo()`:
+-      ! Problem while evaluating `1 + ""`.
++      i In argument: `1 + ""`.
+       Caused by error in `1 + ""`:
+       ! non-numeric argument to binary operator
+     Code
+diff --git a/dplyr/tests/testthat/_snaps/context.md b/dplyr/tests/testthat/_snaps/context.md
+index a0b60d1..08b03fb 100644
+--- a/dplyr/tests/testthat/_snaps/context.md
++++ b/dplyr/tests/testthat/_snaps/context.md
+@@ -40,5 +40,5 @@
+     Code
+       group_labels_details(c(a = 1, b = 2))
+     Output
+-      [1] "`a = 1`, `b = 2`"
++      [1] "`a = 1` and `b = 2`"
+ 
+diff --git a/dplyr/tests/testthat/_snaps/group-by.md b/dplyr/tests/testthat/_snaps/group-by.md
+index 79d540f..0717593 100644
+--- a/dplyr/tests/testthat/_snaps/group-by.md
++++ b/dplyr/tests/testthat/_snaps/group-by.md
+@@ -44,7 +44,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `ungroup()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `z` doesn't exist.
+     Code
+       (expect_error(df %>% group_by(z = a + 1)))
+diff --git a/dplyr/tests/testthat/_snaps/pick.md b/dplyr/tests/testthat/_snaps/pick.md
+index 9142b2d..b722988 100644
+--- a/dplyr/tests/testthat/_snaps/pick.md
++++ b/dplyr/tests/testthat/_snaps/pick.md
+@@ -30,7 +30,7 @@
+       Error in `mutate()`:
+       i In argument: `y = pick(g)`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `g` doesn't exist.
+ 
+ ---
+@@ -42,7 +42,7 @@
+       i In argument: `y = pick_wrapper(g)`.
+       i In group 1: `g = 1`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `g` doesn't exist.
+ 
+ # must supply at least one selector to `pick()`
+@@ -73,7 +73,7 @@
+       Error in `mutate()`:
+       i In argument: `y = pick(x)`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `x` doesn't exist.
+ 
+ ---
+@@ -85,7 +85,7 @@
+       i In argument: `y = pick_wrapper(x)`.
+       i In group 1: `g = 1`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `x` doesn't exist.
+ 
+ # can call `pick()` from a user defined function
+@@ -96,9 +96,11 @@
+       Error in `mutate()`:
+       i In argument: `d = my_pick()`.
+       i In group 1: `a = 1`.
++      Caused by error in `pick()`:
++      i In argument: `all_of(x)`.
+       Caused by error in `all_of()`:
+-      ! Can't subset columns that don't exist.
+-      x Column `a` doesn't exist.
++      ! Can't subset elements that don't exist.
++      x Element `a` doesn't exist.
+ 
+ ---
+ 
+@@ -108,9 +110,11 @@
+       Error in `mutate()`:
+       i In argument: `d = my_pick(y)`.
+       i In group 1: `a = 1`.
++      Caused by error in `pick()`:
++      i In argument: `all_of(x)`.
+       Caused by error in `all_of()`:
+-      ! Can't subset columns that don't exist.
+-      x Column `a` doesn't exist.
++      ! Can't subset elements that don't exist.
++      x Element `a` doesn't exist.
+ 
+ # errors correctly outside mutate context
+ 
+@@ -168,7 +172,7 @@
+       Error in `arrange()`:
+       i In argument: `..1 = pick(y)`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `y` doesn't exist.
+ 
+ ---
+@@ -189,7 +193,7 @@
+       Error in `filter()`:
+       i In argument: `pick(x, a)`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `a` doesn't exist.
+ 
+ ---
+@@ -200,7 +204,7 @@
+       Error in `filter()`:
+       i In argument: `pick_wrapper(x, a)`.
+       Caused by error in `pick()`:
+-      ! Can't subset columns that don't exist.
++      ! Can't select columns that don't exist.
+       x Column `a` doesn't exist.
+ 
+ # `filter()` that doesn't use `pick()` result correctly errors
+diff --git a/dplyr/tests/testthat/_snaps/select.md b/dplyr/tests/testthat/_snaps/select.md
+index 9c7b1fd..70e7924 100644
+--- a/dplyr/tests/testthat/_snaps/select.md
++++ b/dplyr/tests/testthat/_snaps/select.md
+@@ -30,7 +30,7 @@
+     Output
+       <error/rlang_error>
+       Error in `select()`:
+-      ! Problem while evaluating `1 + ""`.
++      i In argument: `1 + ""`.
+       Caused by error in `1 + ""`:
+       ! non-numeric argument to binary operator
+ 
+@@ -41,7 +41,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `select()`:
+-      ! Can't subset columns past the end.
++      ! Can't select columns past the end.
+       i Location 2 doesn't exist.
+       i There is only 1 column.
+     Code
+@@ -60,7 +60,7 @@
+     Output
+       <error/vctrs_error_subscript_oob>
+       Error in `select()`:
+-      ! Can't subset columns past the end.
++      ! Can't select columns past the end.
+       i Location 2 doesn't exist.
+       i There is only 1 column.
+     Code
+diff --git a/dplyr/tests/testthat/_snaps/summarise.md b/dplyr/tests/testthat/_snaps/summarise.md
+index 318edcb..3f80a60 100644
+--- a/dplyr/tests/testthat/_snaps/summarise.md
++++ b/dplyr/tests/testthat/_snaps/summarise.md
+@@ -124,7 +124,7 @@
+       <error/rlang_error>
+       Error in `summarise()`:
+       i In argument: `a = rlang::env(a = 1)`.
+-      i In group 1: `x = 1`, `y = 1`.
++      i In group 1: `x = 1` and `y = 1`.
+       Caused by error:
+       ! `a` must be a vector, not an environment.
+     Code

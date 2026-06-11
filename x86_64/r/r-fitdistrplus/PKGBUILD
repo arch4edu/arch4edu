@@ -1,16 +1,16 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=fitdistrplus
-_pkgver=1.1-11
+_pkgver=1.2-6
 pkgname=r-${_pkgname,,}
-pkgver=1.1.11
-pkgrel=3
-pkgdesc='Help to Fit of a Parametric Distribution to Non-Censored or Censored Data'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Help to Fit of a Parametric Distribution to Non-Censored or Censored Data"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
+  r-rlang
 )
 optdepends=(
   r-actuar
@@ -25,14 +25,15 @@ optdepends=(
   r-rmarkdown
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('26274f2b710b2417a8bca314d400abf320d4ccf0387ad082743056699501b53d')
+md5sums=('19e0d8a6c830d393101306373334bc42')
+b2sums=('bf85e0343aa4b018fbbc72484ec2d4360bbb3b31b43ae7f9c5dd6f46ee9951784e91a711dcce71b6974dc3b86ac1b6169c7f5478b10188dd7f2074eca09c4df6')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

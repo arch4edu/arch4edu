@@ -1,1 +1,9 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  sed '/prepare()/a\  sed "/ubuntu1804/{n;s/ArchArm64/ArchAarch64/}" -i mongo-tools-$pkgver/release/platform/platform.go' -i PKGBUILD
+post_build: aur-post-build

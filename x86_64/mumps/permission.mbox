@@ -1,0 +1,275 @@
+From download-request@mumps-tech.com Tue May  7 08:06:39 2024
+Received: from DBBPR08MB6138.eurprd08.prod.outlook.com
+ (2603:10a6:10:205::11) by PAVPR08MB9820.eurprd08.prod.outlook.com with
+ HTTPS; Tue, 7 May 2024 08:06:39 +0000
+Received: from AM6P192CA0032.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:209:83::45) by DBBPR08MB6138.eurprd08.prod.outlook.com
+ (2603:10a6:10:205::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.42; Tue, 7 May
+ 2024 08:06:36 +0000
+Received: from AMS0EPF00000193.eurprd05.prod.outlook.com
+ (2603:10a6:209:83:cafe::d) by AM6P192CA0032.outlook.office365.com
+ (2603:10a6:209:83::45) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.43 via Frontend
+ Transport; Tue, 7 May 2024 08:06:35 +0000
+Authentication-Results: spf=softfail (sender IP is 134.58.240.235)
+ smtp.mailfrom=mumps-tech.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=mumps-tech.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ mumps-tech.com discourages use of 134.58.240.235 as permitted sender)
+Received: from kuleuven.be (134.58.240.235) by
+ AMS0EPF00000193.mail.protection.outlook.com (10.167.16.212) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384)
+ id 15.20.7544.18 via Frontend Transport; Tue, 7 May 2024 08:06:35 +0000
+Received: from ICTS-S-XMAIL2.luna.kuleuven.be (10.112.11.82) by kuleuven.be
+ (134.58.240.235) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.28; Tue, 7 May
+ 2024 10:06:31 +0200
+Received: from ICTS-S-XMAIL5.luna.kuleuven.be (10.112.11.85) by
+ ICTS-S-XMAIL2.luna.kuleuven.be (10.112.11.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Tue, 7 May 2024 10:06:30 +0200
+Received: from icts-p-cavrewrite-2.kulnet.kuleuven.be (134.58.240.38) by
+ ICTS-S-XMAIL5.luna.kuleuven.be (10.112.11.85) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28 via Frontend Transport; Tue, 7 May 2024 10:06:30 +0200
+Received: from icts-p-cavuit-3.kulnet.kuleuven.be
+ (icts-p-cavuit-3.kulnet.kuleuven.be [134.58.240.133]) by
+ icts-p-cavrewrite-2.kulnet.kuleuven.be (Postfix) with ESMTP id DFA7C20A73
+ for <martin.diehl@kuleuven.be>; Tue,  7 May 2024 10:06:30 +0200 (CEST)
+X-KULeuven-Envelope-From: download-request@mumps-tech.com
+X-Spam-Status: not spam, SpamAssassin (not cached, score=0.014, required 5,
+	autolearn=disabled, RCVD_CAVIN 0.01, RCVD_IN_DNSWL_NONE -0.00,
+	RCVD_IN_MSPIKE_H3 0.00, RCVD_IN_MSPIKE_WL 0.00, SPF_HELO_NONE 0.00,
+	URIBL_BLOCKED 0.00)
+X-KULeuven-Scanned: Found to be clean
+X-KULeuven-ID: 507CF201DA.A2B98
+X-KULeuven-Information: Katholieke Universiteit Leuven
+Received: from icts-p-ceifnet-cavin-0.kuleuven.be
+ (icts-p-ceifnet-cavin.service.icts.svcd
+ [IPv6:2a02:2c40:0:51:133:242:ac11:17]) by
+ icts-p-cavuit-3.kulnet.kuleuven.be (Postfix) with ESMTP id 507CF201DA for
+ <martin.diehl@kuleuven.be>; Tue,  7 May 2024 10:06:27 +0200 (CEST)
+BCmilterd-Mark-Subject: no
+BCmilterd-Errors: 
+BCmilterd-Report: 
+X-CAV-Cluster: cavin
+Received: from 3.mo561.mail-out.ovh.net (3.mo561.mail-out.ovh.net
+ [46.105.44.175]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256
+ bits) key-exchange X25519 server-signature RSA-PSS (2048 bits)
+ server-digest SHA256) (No client certificate requested) by
+ icts-p-ceifnet-cavin-0.kuleuven.be (Postfix) with ESMTPS id 323C5D4F2D660
+ for <martin.diehl@kuleuven.be>; Tue,  7 May 2024 10:06:27 +0200 (CEST)
+Received: from director9.ghost.mail-out.ovh.net (unknown [10.109.148.20])
+	by mo561.mail-out.ovh.net (Postfix) with ESMTP id 4VYW7k4XDjz19yn
+	for <martin.diehl@kuleuven.be>; Tue,  7 May 2024 08:06:26 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-l2mb9 (unknown [10.108.54.81])
+	by director9.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 443AC1FEA4;
+	Tue,  7 May 2024 08:06:26 +0000 (UTC)
+Received: from mumps-tech.com ([37.59.142.106]) by
+ ghost-submission-6684bf9d7b-l2mb9 with ESMTPSA id wqvtBQLhOWbeQwAAajesgA
+ (envelope-from <download-request@mumps-tech.com>); Tue, 07 May 2024
+ 08:06:26 +0000
+Authentication-Results-Original: garm.ovh; auth=pass
+ (GARM-106R00622de7b2c-9fa6-4c0c-a1fe-514f731fd4e7,
+                    E48F4737AD7C60F39DC3312539D55EB882C66529)
+ smtp.auth=chiara.puglisi@mumps-tech.com
+X-OVh-ClientIp: 82.174.148.16
+Message-ID: <f7c4a99f-7a87-4d56-802f-79713d238bdf@mumps-tech.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: MUMPS 5.7.1 Software Request
+To: <martin.diehl@kuleuven.be>
+References: <20240506125455.EB5A35F8AB@cluster027.hosting.ovh.net>
+Content-Language: fr
+From: Mumps Tech <download-request@mumps-tech.com>
+Organization: Mumps Technologies
+In-Reply-To: <20240506125455.EB5A35F8AB@cluster027.hosting.ovh.net>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 16213521612688527119
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE:
+ gggruggvucftvghtrhhoucdtuddrgedvledrvddvjedguddvvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkfffgggfuffvfhfhohgjtgfgsehtkeertddtvdejnecuhfhrohhmpefouhhmphhsucfvvggthhcuoeguohifnhhlohgrugdqrhgvqhhuvghsthesmhhumhhpshdqthgvtghhrdgtohhmqeenucggtffrrghtthgvrhhnpeejhfeghfefjeehleffheeugeeuffelvdeggeetuddtffehhfffteeuheelieelveenucffohhmrghinheprghrtghhlhhinhhugidrohhrghdpmhhumhhpshdqshholhhvvghrrdhorhhgpdgtvggtihhllhdrihhnfhhonecukfhppeduvdejrddtrddtrddupdekvddrudejgedrudegkedrudeipdefjedrheelrddugedvrddutdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeguohifnhhlohgrugdqrhgvqhhuvghsthesmhhumhhpshdqthgvtghhrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepmhgrrhhtihhnrdguihgvhhhlsehkuhhlvghuvhgvnhdrsggvpdfovfetjfhoshhtpehmohehiedupdhmohguvgepshhmthhpohhuth
+Return-Path: download-request@mumps-tech.com
+X-OrganizationHeadersPreserved: ICTS-S-XMAIL2.luna.kuleuven.be
+X-MS-Exchange-Organization-ExpirationStartTime: 07 May 2024 08:06:35.6186
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 9b7f05f5-38fd-458b-dca9-08dc6e6c9d68
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Organization-MessageDirectionality: Originating
+X-MS-Exchange-SkipListedInternetSender:
+ ip=[46.105.44.175];domain=3.mo561.mail-out.ovh.net
+X-CrossPremisesHeadersPromoted: AMS0EPF00000193.eurprd05.prod.outlook.com
+X-CrossPremisesHeadersFiltered: AMS0EPF00000193.eurprd05.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic:
+ AMS0EPF00000193:EE_|DBBPR08MB6138:EE_|PAVPR08MB9820:EE_
+X-MS-Exchange-Organization-AuthSource: ICTS-S-XMAIL5.luna.kuleuven.be
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-OriginatorOrg: KULeuven.onmicrosoft.com
+X-MS-Office365-Filtering-Correlation-Id:
+ 9b7f05f5-38fd-458b-dca9-08dc6e6c9d68
+X-MS-Exchange-Organization-SCL: -1
+X-Microsoft-Antispam: BCL:0;ARA:13230031|82310400017|34020700007;
+X-Forefront-Antispam-Report:
+ CIP:134.58.240.235;CTRY:BE;LANG:en;SCL:-1;SRV:;IPV:CAL;SFV:SKN;H:kuleuven.be;PTR:icts-s-xedge6.icts.kuleuven.be;CAT:NONE;SFS:(13230031)(82310400017)(34020700007);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 May 2024 08:06:35.5717
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id:
+ 9b7f05f5-38fd-458b-dca9-08dc6e6c9d68
+X-MS-Exchange-CrossTenant-Id: 3973589b-9e40-4eb5-800e-b0b6383d1621
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+ TenantId=3973589b-9e40-4eb5-800e-b0b6383d1621;Ip=[134.58.240.235];Helo=[kuleuven.be]
+X-MS-Exchange-CrossTenant-AuthSource: ICTS-S-XMAIL5.luna.kuleuven.be
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR08MB6138
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.5538000
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.7544.013
+X-Microsoft-Antispam-Mailbox-Delivery:
+ ucf:0;jmr:0;auth:0;dest:I;ENG:(910001)(944506478)(944626604)(920097)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?N1pub0tNYXFNQkVkbE4rb0ZlNEZoSnBVRUM4b0ZxaFRwSWVEUnpEZDBvMXNF?=
+ =?utf-8?B?RDNVYmhTVnZUbmhlbkxvaVRybkFtbWVxRHlzbm01ekExSnNucVRRUndqdU9V?=
+ =?utf-8?B?cEEySkFGN0l4OXZnSEVuUnBhcThGdmtKMEd0cS9zRmsrUzJiUTJXODFXSFdt?=
+ =?utf-8?B?Q2RhQ2ZQSUZIYWtTWC9GUHF5b3l5V2dndDg0bThYazdCMVBZcFZaUGIySjE1?=
+ =?utf-8?B?a1pxVDdVU0grWklSVVdaWUlzS0Y0S3V5cFBhV3FqZGkxQWd5aTlMRWNoZXdQ?=
+ =?utf-8?B?NzI0NFRFZXFyRFA3Y1lyNm9CUVc2NERVbFppTmM4TElaVVJ4SUFCWlpid0ht?=
+ =?utf-8?B?aXk1WVN4bHVDV09zNVRaT3VWRlJFZ1V3SVI0OXk3U3F3dlVwNzRjRThaMmRD?=
+ =?utf-8?B?NCsyTlRhV2FnY3dRNnZxRW5VUnBDMXJTSUdmaFFwN2s4S1lQY2JSVzBEdkxC?=
+ =?utf-8?B?L1ZiMWtmVFNjRU9Idm5nQlVIODhyZnJUQmpqMmd4cWlWdnExWkFWbDBXajBH?=
+ =?utf-8?B?MTZXeVJTa0d4blVjcXFNNW81NWZxRUpKZnBLNGJSYVk0ZFBKODlZQzhZS0FH?=
+ =?utf-8?B?QVZCM0I1MVZ0ZkM4aVpZMFhmdDZ3RHFMeVQ5SlpEdWpKZWtQL0QxMVVkL2ti?=
+ =?utf-8?B?enJLOGxjbXZ2azAwZU5DMmwraE54QndkaUl4K2w0TFVZODJvRUtPV1NlUHFa?=
+ =?utf-8?B?WWNMZmowWmJndzM4VjVoRFBLeGwvVk9TSmJQZm9EdDByUkphNkMwVTR6V1NY?=
+ =?utf-8?B?V1E3dmRmMXZRYnhzS2RDYi9lYVlZeWZjc1FCTXZhUm1SV3paZG91VEhmSzNp?=
+ =?utf-8?B?Yzl1YlQySEFwK3N2dlZYN2gzY2VGUW00TGdyMG9ZdHV2Q1Y1VnAvU3BWRGIw?=
+ =?utf-8?B?TFk0N0xaZmlXTVMrV2hialgyTnh2UlFoa0YwSFdKMzF4dllTWHJFcDIwZGNW?=
+ =?utf-8?B?dzlORHJ1YSs0YS9qU0VvazExM3pwbUVnMnVzT2NOUFA3YXRtaFRYcEVtbVR1?=
+ =?utf-8?B?YW1QNFlrMFMzeXBDZ2VXRjJWTk85NCtjakVMYkcvUEMyUFlKa1c4ZUVsMDJO?=
+ =?utf-8?B?bEtiMEZCbmh3WnFOanFlT2RXeWNtSWJPak5FNm9oNGk0RW4wQ1BDbW5QTFVi?=
+ =?utf-8?B?RUFzUkRsS0tPa2FnWHdXTEhvU2lOa2dTM0MvUVMzaTdtYlIyV2RHbkcxbDZH?=
+ =?utf-8?B?b042b2w4Z25QR01MNTBOTE5XSmZITktwMGo1eG5wdGFwbTNtT29ZT09GVld0?=
+ =?utf-8?B?Z0VuRHJlcFVtV0FSMDhBQkFlWEViWGdidExNMkpUbEEwR3ZsK3dDZG9JblFC?=
+ =?utf-8?B?Zm93TXhzMWR1dENXdDhhdXE2MytCTmRDNk5VV0NIaFNNQm8yVmxJditRTHNP?=
+ =?utf-8?B?L29pbHM5MXUrakFmaUZNZkp0K1BIUzZVellIS0QxeVlnQzUrekNzSDZId0VC?=
+ =?utf-8?B?MmpmVWVuS09mZmh0UnlHcDZGcVlkQmRuNDh0TUFxcDdaTkhTYmpqd1RKQlg5?=
+ =?utf-8?B?dlcrSURRVHM1dVEwZWJMRGgyQlJGSnduR05CdDRpTE9yNVo2UjJlZXBKVEli?=
+ =?utf-8?B?YnRvMkpyQkVLQ2VVWW1ZNGFqRTJGN05uUmdlNzNpZGVRWFZEN3ZZSlFwZTFV?=
+ =?utf-8?B?NGR2OXB1RDFaMjRiWkE3YlBsZUhXR211QUFybjRwVmdZcFJ1eFE0Tmt0dXpL?=
+ =?utf-8?B?ZExyNDN4YUFCVXU2bThjeVJoOWMxNGkxRkEwbU1nZWcvNzNYNGpwRThkWWpW?=
+ =?utf-8?B?TDBSbSs0dndhZ2hMenlaak8veUp1SGZwNitPcmlSdllJMnM3REdPb3B0YVNq?=
+ =?utf-8?B?N3laTjlhdzlSdkYyN2JwVmdDTytxUEs0WGN1NGh4aElvdEJsZkhwSmFRclMw?=
+ =?utf-8?B?RW5hdHdremRVbHd0NU5BMlFEYnNpcHNPRFdUejNEZFRudFFQQTd0S1Y5UUps?=
+ =?utf-8?B?UEN3QTZnZnhZTTdrNUVFSnVsU0JKRnphZ0xmSzNIM1NQZDE2ZGVXckRLc25y?=
+ =?utf-8?B?Z0JMQUNueFJsZG5sUEpSbERLaU0yd1pxVVdiTWJlSlhPS2Y1aFAyWkEwYkdh?=
+ =?utf-8?B?anJZd3ZveU1KNE9sT3dvK3hSWG1XNVhDeWVNS2gwYndwNHFaZ0ZRSFIxeURL?=
+ =?utf-8?B?SERkcTVuN2N2NFVub0hQOEp2ME5XdXZZTElKRHlldWZ6WW5KOU1iNGNtdm5Z?=
+ =?utf-8?B?a2U5L2t4WnZNc0lmdHV5NFpXL3pDL0NML0x1Z1F6RWJKSWhBczQxd3E4ZlZy?=
+ =?utf-8?B?QzNneGNBcytPWTNEOGZtWVlGT1h3Tjc1Wm9rSkhxcE9UVjQzSS9pZHo0bU5E?=
+ =?utf-8?B?cUtWdDZPSFRSNzUyWHQwQ3VqRE00QmNBdVdJOHRHbzNTTE5haVN2R2hWSzNO?=
+ =?utf-8?B?UUVJTVIzWFpYUFpkRVg0U0ExTVU0d3RqUC9ZYjNjTjRDcDVlVThnaWJDM1Rq?=
+ =?utf-8?B?WlVyTXMxV2dDOG5ERzNnaHUwa1BFdTd0bjRjQi9CaWprejFFV1lXWERDb2RI?=
+ =?utf-8?B?R0RRY0VoTEI1SmN5dGJiNDdPekpJTmhsL2RWelNCU3Z3PT0=?=
+MIME-Version: 1.0
+Date: Tue, 07 May 2024 10:06:24 +0200
+
+Dear Martin,
+
+There are no problems to downoload MUMPS from the known location.
+
+Best regards
+Chiara
+
+Le 06/05/2024 à 14:54, martin.diehl@kuleuven.be a écrit :
+> ===============================================================
+>   First Name: Martin
+>   Last Name: Diehl
+>   e-mail: martin.diehl@kuleuven.be
+>   Institution: KU Leuven
+>   Country: Belgium
+>   Platform(s): linux
+>   Type of matrices: multiple
+>   Application field/Type of activity:
+>   I maintain the Arch Linux package (https://aur.archlinux.org/packages/mumps) which downloads MUMPS from the known location. If that is not ok, pls. let me know.
+> ===============================================================
+>
+>
+>    Version 5.7.1 of MUMPS is available at:
+>       https://mumps-solver.org/MUMPS_5.7.1.tar.gz
+>       checksum (SHA256) : 43b3e7bcbf1d7c71e32b00b82c583931c2f6629a396799a0878518fa08dd4a64
+>
+>    Please read the README and INSTALL files included in the archive
+>    and the user's guide (in the directory doc/) for information on
+>    installation and usage of the package.
+>
+>    We look forward to hearing your experience with the package.
+>    If you have further questions on the package, you can use
+>    the generic email address mumps-dev@listes.ens-lyon.fr
+>
+>    If you want to discuss technical issues, share experiences of
+>    porting the code on different platforms, you can join the
+>    MUMPS users list (see main web site).
+>
+>    Please check https://mumps-solver.org/gdpr/gdpr_down.php regarding your rights
+>    concerning the personnal information above.
+>
+>                          -----------------
+>
+>
+>    Copyright 1991-2024 CERFACS, CNRS, ENS Lyon, INP Toulouse, Inria,
+>    Mumps Technologies, University of Bordeaux.
+>
+>    This version of MUMPS is provided to you free of charge. It is
+>    released under the CeCILL-C license
+>    (see doc/CeCILL-C_V1-en.txt, doc/CeCILL-C_V1-fr.txt, and
+>    https://cecill.info/licences/Licence_CeCILL-C_V1-en.html),
+>    except for variants of AMD ordering and [sdcz]MUMPS_TRUNCATED_RRQR
+>    derived from the LAPACK package distributed under BSD 3-clause
+>    license (see headers of ana_orderings.F and [sdcz]lr_core.F),
+>    and except for the external and optional ordering PORD provided
+>    in a separate directory PORD (see PORD/README for License information).
+>
+>    You can acknowledge (using references [1] and [2]) the contribution
+>    of this package in any scientific publication dependent upon the use
+>    of the package. Please use reasonable endeavours to notify the authors
+>    of the package of this publication.
+>
+>     [1] P. R. Amestoy, I. S. Duff, J. Koster and  J.-Y. L'Excellent,
+>     A fully asynchronous multifrontal solver using distributed dynamic
+>     scheduling, SIAM Journal on Matrix Analysis and Applications,
+>     Vol 23, No 1, pp 15-41 (2001).
+>
+>     [2] P. R. Amestoy, A. Buttari, J.-Y. L'Excellent and T. Mary,
+>     Performance and scalability of the block low-rank multifrontal
+>     factorization on multicore architectures,
+>     ACM Transactions on Mathematical Software,
+>     Vol 45, Issue 1, pp 2:1-2:26 (2019)
+>
+>    As a counterpart to the access to the source code and rights to copy,
+>    modify and redistribute granted by the license, users are provided only
+>    with a limited warranty  and the software's author,  the holder of the
+>    economic rights,  and the successive licensors  have only  limited
+>    liability.
+>
+>    In this respect, the user's attention is drawn to the risks associated
+>    with loading,  using,  modifying and/or developing or reproducing the
+>    software by the user in light of its specific status of free software,
+>    that may mean  that it is complicated to manipulate,  and  that  also
+>    therefore means  that it is reserved for developers  and  experienced
+>    professionals having in-depth computer knowledge. Users are therefore
+>    encouraged to load and test the software's suitability as regards their
+>    requirements in conditions enabling the security of their systems
+>    and/or data to be ensured and, more generally, to use and operate it
+>    in the same conditions as regards security.
+>
+>    The fact that you are presently reading this means that you have had
+>    knowledge of the CeCILL-C license and that you accept its terms.
+>
+>
+

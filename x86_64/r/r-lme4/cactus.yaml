@@ -4,6 +4,8 @@ nvchecker:
 depends:
   - x86_64/r/r-minqa
   - x86_64/r/r-nloptr
+  - x86_64/r/r-reformulas
+makedepends:
   - x86_64/r/r-rcpp
   - x86_64/r/r-rcppeigen
 build_prefix: extra-x86_64

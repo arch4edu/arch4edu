@@ -3,7 +3,7 @@
 
 pkgname=java-qdox
 pkgver=2.0.3
-pkgrel=1
+pkgrel=2
 pkgdesc='A high speed, small footprint parser for fully extracting class/interface/method definitions (including annotations, parameters, param names)'
 arch=('any')
 url="https://github.com/paul-hammant/qdox"

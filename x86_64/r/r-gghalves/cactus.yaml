@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-gtable
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace 'https://cran.r-project.org/src/contrib/' 'https://cran.r-project.org/src/contrib/Archive/gghalves/'
+post_build: aur-post-build

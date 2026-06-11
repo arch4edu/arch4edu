@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=latticeExtra
-_cranver=0.6-30
+_cranver=0.6-31
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
 pkgrel=1
@@ -28,7 +28,7 @@ optdepends=(
     r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=("c550a76913624818482bf237d48883c58e368ba356ced8ed5e76146672279eed")
+sha256sums=('be69d8014bf722fab00d1afc7a8b515fdba65b25c7700ef44d76f092c5b6e66e')
 
 build() {
     R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"

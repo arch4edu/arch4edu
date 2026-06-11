@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/dumux
+  - x86_64/precice
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

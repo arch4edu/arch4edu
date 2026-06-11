@@ -1,26 +1,27 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=scatterplot3d
-_pkgver=0.3-44
+_pkgver=0.3-45
 pkgname=r-${_pkgname,,}
-pkgver=0.3.44
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='3D Scatter Plot'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgdesc="3D Scatter Plot"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('1c9c08348c3ed925f59df40cb73accc9e1a169ccfb1e8571f105f40fa98e6ec2')
+md5sums=('05a7a9e977e5a3bde1b1de71d989c24f')
+b2sums=('26447e81f473d12396a515afa83dbefb473bd6489ce2f6889f327b11cdf7659681e766fd7e24ace9153c25e1f26486fd6f1068bf0b50671fe900373e20e5efdc')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

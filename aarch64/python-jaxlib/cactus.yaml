@@ -2,8 +2,6 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-depends:
-  - aarch64/python-ml-dtypes
 build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: |

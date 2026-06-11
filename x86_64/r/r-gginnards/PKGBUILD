@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=gginnards
-_pkgver=0.1.2
+_pkgver=0.2.0-2
 pkgname=r-${_pkgname,,}
-pkgver=0.1.2
-pkgrel=1
+pkgver=0.2.0.2
+pkgrel=2
 pkgdesc="Explore the Innards of 'ggplot2' Objects"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-sf
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('5c2d61936fefee5fef00a9a8eb33a470404fa0a134079944ee9bfbb8085c9cfc')
+sha256sums=('96036b7167460a0e4b01904bfbcdf1f901f85de85062d0de5764b586f3c8d8f0')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

@@ -5,5 +5,8 @@ depends:
   - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed 's/_cranver=1.8.4/_cranver=1.8.7/' -i PKGBUILD
+  updpkgsums
 post_build: aur-post-build

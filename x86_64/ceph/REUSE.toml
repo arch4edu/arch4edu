@@ -1,0 +1,42 @@
+version = 1
+
+[[annotations]]
+path = [
+    # Generic
+    "PKGBUILD",
+    "README.md",
+    "keys/**",
+    ".SRCINFO",
+    ".nvchecker.toml",
+    "*.install",
+    "*.sudoers",
+    "*.sysusers",
+    "*.tmpfiles",
+    "*.logrotate",
+    "*.pam",
+    "*.service",
+    "*.socket",
+    "*.timer",
+    "*.desktop",
+    "*.hook",
+    "*.conf",
+    "*.rules",
+
+    # Maintainer scripts
+    "justfile",
+    "scripts.gh-upload-artifact.sh",
+]
+SPDX-FileCopyrightText  = "Arch Linux contributors"
+SPDX-License-Identifier = "0BSD"
+
+# All patches to Ceph, backported or novel are licensed under the upstream's terms
+[[annotations]]
+path = [ "ceph-*.patch" ]
+SPDX-FileCopyrightText  = "Ceph contributors"
+SPDX-License-Identifier = "LGPL-2.1-or-later"
+
+# All patches to our bcrypt rebuild, backported or novel are licensed under the upstream's terms
+[[annotations]]
+path = [ "python-bcrypt-*.patch" ]
+SPDX-FileCopyrightText  = "Python bcrypt contributors"
+SPDX-License-Identifier = "Apache-2.0"

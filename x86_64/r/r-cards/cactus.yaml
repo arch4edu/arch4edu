@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-glue
+  - x86_64/r/r-rlang
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-tidyselect
+makedepends:
+  - x86_64/r/r-hms
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-classint
+  - x86_64/r/r-dbi
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-s2
+  - x86_64/r/r-units
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

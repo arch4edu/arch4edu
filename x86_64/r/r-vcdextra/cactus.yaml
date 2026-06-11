@@ -9,9 +9,15 @@ depends:
   - x86_64/r/r-here
   - x86_64/r/r-purrr
   - x86_64/r/r-readxl
+  - x86_64/r/r-rgl
   - x86_64/r/r-stringr
   - x86_64/r/r-tidyr
   - x86_64/r/r-vcd
+  - x86_64/r/r-scales
+  - x86_64/r/r-igraph
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace -u '0.9.0' '0.9.6'
 post_build: aur-post-build

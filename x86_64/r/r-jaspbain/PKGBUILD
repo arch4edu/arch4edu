@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBain
-_pkgver=0.17.2.1
+_pkgver=0.95.3
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.95.3
 pkgrel=1
 pkgdesc="Bain Module for JASP"
 arch=('any')
@@ -20,7 +20,7 @@ depends=(r
   r-jaspsem
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('ef01133bb8ecbd4d98140c9030548cb530b0dfe39fca9278f27b8bbca7ba3792')
+sha256sums=('58f610fcc20cf865f6e1802a1cc8a3738c923655b33a6d23b19bebc0c09fb53e')
 
 
 build() {
@@ -31,6 +31,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

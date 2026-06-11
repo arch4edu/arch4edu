@@ -3,14 +3,14 @@
 # Contributor: Robert Greener <me@r0bert.dev>
 
 _pkgname=rbibutils
-_pkgver=2.2.13
+_pkgver=2.4.1
 pkgname=r-${_pkgname,,}
-pkgver=2.2.13
+pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Read 'Bibtex' Files and Convert Between Bibliography Formats"
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
   r
 )
@@ -18,14 +18,15 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('ac235c60bf191ad1830b93045af1b2fe50a6978f6f63cecc4c514a8ba339efc2')
+md5sums=('dad8207e52a80a5a4a11b22339aae112')
+b2sums=('f6e9344bcc0ed2a64b8e1351eeb7964aaf2e57260418979ae3a4945dd61063fb032c21cd892f371b715a356f89d4210c27cc824ba4b9fe0fc87e20267efa7e82')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

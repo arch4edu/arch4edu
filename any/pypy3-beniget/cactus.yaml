@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - any/pypy3-gast
+makedepends:
+  - any/pypy3-setuptools
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

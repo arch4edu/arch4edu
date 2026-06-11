@@ -1,28 +1,28 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=polycor
-_pkgver=0.8-1
+_pkgver=0.8-2
 pkgname=r-${_pkgname,,}
-pkgver=0.8.1
-pkgrel=3
-pkgdesc='Polychoric and Polyserial Correlations'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Polychoric and Polyserial Correlations"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-admisc
   r-mvtnorm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f05f53e0b5c992de0e5b4c6b2e998148cf83310358821e1bba180d81face0509')
+md5sums=('6d60686d03d2c73c663d37c0829a3d9d')
+b2sums=('9bf8c364fdbd6ccba5b1c5b0fee4abb74d30fabfc358e2f37aa86cc53dd8e95344e687aeaa96948e27240db3afb52da2d375a0226944c9c7bb3a03dcefac74ca')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

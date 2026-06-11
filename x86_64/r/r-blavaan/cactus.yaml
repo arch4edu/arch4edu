@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bayesplot
+  - x86_64/r/r-coda
+  - x86_64/r/r-future.apply
+  - x86_64/r/r-lavaan
+  - x86_64/r/r-loo
+  - x86_64/r/r-mnormt
+  - x86_64/r/r-nonnest2
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rcppparallel
+  - x86_64/r/r-rstan
+  - x86_64/r/r-rstantools
+  - x86_64/r/r-tmvnsim
+makedepends:
+  - x86_64/r/r-bh
+  - x86_64/r/r-rcppeigen
+  - x86_64/r/r-stanheaders
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

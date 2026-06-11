@@ -11,7 +11,7 @@ pkgdesc="Praise users"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=4
+pkgrel=5
 
 arch=("any")
 depends=(

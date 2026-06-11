@@ -1,14 +1,14 @@
-# Maintainer: a821
+# Maintainer: a821 at mail de
 # Contributor: PumpkinCheshire <me at pumpkincheshire dot com>
 
 pkgname=python-xyzservices
 _name=xyzservices
-pkgver=2023.5.0
+pkgver=2026.3.0
 pkgrel=1
 pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles'
-arch=('x86_64')
+arch=('any')
 url="https://github.com/geopandas/xyzservices"
-license=('BSD')
+license=('BSD-3-Clause')
 depends=('python')
 makedepends=(
   'python-setuptools-scm'
@@ -16,8 +16,8 @@ makedepends=(
   'python-build'
   'python-installer'
 )
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-b2sums=('0bec019dd881ff7c4ec47a866883bd9f1339499d4bedc98dc087e3b8fb4cf56d1827f137eadd074f23e206f66be48b0e402391ea85291cb55f81e3dee6f4e0de')
+source=("$pkgname-$pkgver.tar.gz::$url/releases/download/$pkgver/$_name-$pkgver.tar.gz")
+b2sums=('2c6f8a09dcc035f9d25c9c54188b4fb0edbd02fcdece75d08ac343eb584153761a5ef8f97f522f1ce6b28e6714f5688de7bd35c7c5f8270d615b053cfe21273f')
 
 build() {
   cd "$_name-$pkgver"
@@ -27,6 +27,6 @@ build() {
 package() {
   cd "$_name-$pkgver"
   python -m installer --destdir="$pkgdir" dist/*.whl
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/python-$_name/LICENSE"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 makedepends+=("python-setuptools")

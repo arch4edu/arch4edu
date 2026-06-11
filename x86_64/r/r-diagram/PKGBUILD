@@ -1,0 +1,27 @@
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+
+_pkgname=diagram
+_pkgver=1.6.5
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=8
+pkgdesc="Functions for Visualising Simple Graphs (Networks), Plotting Flow Diagrams"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
+depends=(
+  r-shape
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('58198d8486863f032a89989c8b858f02')
+b2sums=('f58bf791e10e1a0a02931a78c02717c228eebddbc6e14a92b5b86397d19ebb8e9f4b46e9cce8bdafd49fbeb58c172565e2bbd58d0b3aec4f7717735b7244908b')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+}

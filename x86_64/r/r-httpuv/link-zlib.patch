@@ -1,0 +1,12 @@
+diff --git a/httpuv/src/Makevars.in b/httpuv/src/Makevars.in
+index f3b1af0..e000e1f 100644
+--- a/httpuv/src/Makevars.in
++++ b/httpuv/src/Makevars.in
+@@ -1,6 +1,6 @@
+ UNAME := $(shell uname)
+ 
+-PKG_LIBS = @libs@ ./http-parser/http_parser.o ./sha1/sha1.o ./base64/base64.o -pthread
++PKG_LIBS = @libs@ -lz ./http-parser/http_parser.o ./sha1/sha1.o ./base64/base64.o -pthread
+ 
+ ifeq ($(UNAME), Darwin)
+ PKG_LIBS += -framework CoreServices

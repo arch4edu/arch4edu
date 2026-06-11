@@ -1,0 +1,19 @@
+diff --git a/timechange/src/Makevars b/timechange/src/Makevars
+index f4c9fe2..36a8f54 100644
+--- a/timechange/src/Makevars
++++ b/timechange/src/Makevars
+@@ -1,4 +1,4 @@
+-PKG_CPPFLAGS= -I. -I./cctz/src/
++PKG_CPPFLAGS= -I.
+ PKG_LIBS= -L. -lcctz
+ 
+ LIBCCTZ=./cctz/src/time_zone_fixed.o \
+@@ -10,7 +10,7 @@ LIBCCTZ=./cctz/src/time_zone_fixed.o \
+     ./cctz/src/time_zone_posix.o \
+     ./cctz/src/zone_info_source.o
+ 
+-$(SHLIB): libcctz.a
++$(SHLIB):
+ 
+ libcctz.a: $(LIBCCTZ)
+ 	$(AR) rcs libcctz.a $(LIBCCTZ)

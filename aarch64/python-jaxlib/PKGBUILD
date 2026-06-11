@@ -1,33 +1,46 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname=python-jaxlib
-pkgver=0.4.12
+pkgver=0.6.0
 pkgrel=1
 pkgdesc='XLA library for JAX'
 arch=('x86_64')
-url='https://github.com/google/jax/'
-license=('Apache')
+url='https://github.com/jax-ml/jax/'
+license=('Apache-2.0')
 depends=('python-absl'
-         'python-flatbuffers'
-         'python-ml-dtypes'
+         'python-ml-dtypes>=0.4.0'
          'python-numpy'
          'python-scipy')
-makedepends=('python-installer' 'python-setuptools' 'python-wheel')
-conflicts=('python-jaxlib')
-provides=('python-jaxlib')
-source=("jaxlib-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jaxlib-v${pkgver}.tar.gz")
-sha256sums=('90bdaf1351809f6d73ffc20dbdd4390293742a62368e33870ef3a67e2ce52647')
+makedepends=('clang18' 'python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+_bazel_ver=7.4.1
+source=("jax-${pkgver}.tar.gz::$url/archive/refs/tags/jax-v${pkgver}.tar.gz"
+        "bazel-${_bazel_ver}-linux-x86_64::https://github.com/bazelbuild/bazel/releases/download/${_bazel_ver}/bazel-${_bazel_ver}-linux-x86_64")
+sha256sums=('07ec7a19c3a27c4cca88288f9e9477a62cd0b54bd43c4a77f497505ddadc72ed'
+            'c97f02133adce63f0c28678ac1f21d65fa8255c80429b588aeeba8a1fac6202b')
+
+prepare() {
+    ln -sf $(readlink bazel-${_bazel_ver}-linux-x86_64) $srcdir/jax-jax-v${pkgver}/build
+    chmod +x $srcdir/bazel-${_bazel_ver}-linux-x86_64
+}
 
 build() {
-    cd $srcdir/jax-jaxlib-v$pkgver
-    python build/build.py \
-        --target_cpu_features release
+    # Override default version.
+    export JAXLIB_RELEASE=$pkgver
+
+    cd $srcdir/jax-jax-v$pkgver
+    python build/build.py build \
+        --wheels=jaxlib \
+        --bazel_path="$srcdir/bazel-${_bazel_ver}-linux-x86_64" \
+        --bazel_startup_options="--output_user_root=$srcdir/bazel"\
+        --bazel_options='--action_env=JAXLIB_RELEASE' \
+        --use_clang --clang_path='/usr/lib/llvm18/bin/clang' \
+        --target_cpu_features=release \
+        --verbose
 }
 
 package() {
-    cd $srcdir/jax-jaxlib-v$pkgver
-    python -m installer \
-        --compile-bytecode 1 \
-        --destdir $pkgdir \
-        $srcdir/jax-jaxlib-v$pkgver/dist/jaxlib-$pkgver-*.whl
+    cd jax-jax-v$pkgver
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
+        dist/jaxlib-$pkgver-*.whl
 }

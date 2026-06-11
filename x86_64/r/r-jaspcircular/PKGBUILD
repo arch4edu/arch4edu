@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspCircular
-_pkgver=0.17.2.1
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="CircularStatistics Module for JASP"
 arch=('any')
@@ -15,7 +15,7 @@ depends=(r
   r-ggplot2
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('d088ce01e2d23c6b7a1934daac2f22a696437efc87b0ee1fc392d6646e2fcc1a')
+sha256sums=('1536b74a3749e32cda2cac6a1512f60f66a14a2fc890da6e9a03bd122760d695')
 
 
 build() {
@@ -26,6 +26,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

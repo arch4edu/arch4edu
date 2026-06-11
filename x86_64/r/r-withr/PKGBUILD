@@ -4,13 +4,13 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _cranname=withr
-_cranver=2.5.0
+_cranver=3.0.2
 pkgname=r-${_cranname,,}
 pkgdesc="Lightweight Well-Known Geometry Parsing"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=3
+pkgrel=2
 
 arch=("any")
 depends=(
@@ -18,10 +18,10 @@ depends=(
 )
 optdepends=(
     "r-callr"
-    "r-covr"
     "r-dbi"
     "r-knitr"
-    "r-rmarkdown"
+    "r-rlang"
+    "r-rmarkdown>=2.12"
     "r-rsqlite"
 )
 
@@ -41,12 +41,12 @@ optdepends=(
 
 # checkdepends=(
 #     "${optdepends[@]}"
-#     "r-testthat"
+#     "r-testthat>=3.0.0"
 #     "texlive-core"
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("b472aef752317feedab16ab01557f28cdd30d8f2c6902b1a496f308165c1e02f7a8859cc791acf714748ad0a1b2d58dc9567cacfa0083a8427eb487820d8ab10")
+b2sums=("8830717b487f02b46ef25979ca7e11621d7d745d4fead5577c886a590ac6e4b9ecb34ca6fa17bb0f377ea1b4025b28ced9ef11f49f29e4493eac6de3b8132499")
 
 build() {
     mkdir -p "${srcdir}/build/"

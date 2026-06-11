@@ -3,24 +3,24 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=DEoptimR
-_pkgver=1.0-14
+_pkgver=1.1-4
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
+pkgver=${_pkgver//-/.}
 pkgrel=2
 pkgdesc="Differential Evolution Optimization in Pure R"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('57ee44f6058867852035c2f7dc5c8e34')
-sha256sums=('d741ddb7bc7243567060c2f00b84f1e3bc709182db9ebd0a9ce94ace2c905134')
+md5sums=('a27703d078bbb0e46ca4b0d99fc0aced')
+b2sums=('a822824dcc3902e1096fa618dc6b32bf8b76b49f94ac1bc0144e94213133dfbc955ff44446514a56e416412cb4b86c11dead41fb8bd331ef58bad285fe4b6ad3')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {

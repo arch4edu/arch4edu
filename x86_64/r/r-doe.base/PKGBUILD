@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=DoE.base
-_pkgver=1.2-2
+_pkgver=1.2-5
 pkgname=r-${_pkgname,,}
-pkgver=1.2.2
-pkgrel=1
+pkgver=1.2.5
+pkgrel=2
 pkgdesc='Full Factorials, Orthogonal Arrays and Base Utilities for DoE Packages'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ optdepends=(
   r-rcolorbrewer
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('699f214b5ea23fc3908888be6c99b67f7366ba76f6b2cfd2617065d8ae09b180')
+sha256sums=('59cc4e2afe7bef792d454655258e8f4eb073cf3fdcb9639237f83e2fe1b7f4b9')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

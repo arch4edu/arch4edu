@@ -2,44 +2,70 @@
 # Maintainer: heavysink <winstonwu91 at gmail>
 
 pkgname=miktex
-pkgver=23.5
+pkgver=26.5
 pkgrel=1
 pkgdesc="a distribution of the TeX/LaTeX typesetting system"
 arch=('x86_64')
 url="https://miktex.org"
-license=('custom')
+license=('custom:MiKTeX License')
 depends=('apr' 'boost-libs' 'apr-util' 'bzip2' 'cairo' 'expat' 'fontconfig' 'freetype2'
-         'fribidi' 'gd' 'gmp' 'graphite' 'harfbuzz-icu' 'hunspell' 'icu'
+         'fribidi' 'gd' 'gmp' 'graphite' 'hunspell' 'icu'
          'libjpeg' 'log4cxx' 'xz' 'mpfr' 'libmspack' 'openssl' 'pixman' 'libpng'
-         'poppler' 'popt' 'potrace' 'uriparser' 'hicolor-icon-theme' 'zziplib' 'poppler-qt5' 'qt5-script' 'qt5-declarative')
-makedepends=('cmake' 'coreutils' 'fop' 'sed' 'libxslt' 'qt5-tools' 'boost')
+         'poppler' 'popt' 'potrace' 'uriparser' 'hicolor-icon-theme' 'zziplib' 'poppler-qt6'
+         'qt6-declarative' 'qt6-5compat' 'mpfi')
+makedepends=('cmake' 'coreutils' 'fop' 'sed' 'libxslt' 'qt6-tools' 'boost')
 source=("https://github.com/MiKTeX/miktex/archive/${pkgver}.tar.gz")
-md5sums=('bf09f5734954e11f21db534d84ea56ce')
+md5sums=('a7483979b0aa6c3812bd1c6e650e00d8')
 options=('!buildflags')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
     find . -name "*.h" -exec sed -i 's|log4cxx/rollingfileappender.h|log4cxx/rolling/rollingfileappender.h|g' {} +
     find . -name "*.cpp" -exec sed -i 's|log4cxx/rollingfileappender.h|log4cxx/rolling/rollingfileappender.h|g' {} +
+    cp cmake/modules/FindPOPPLER_QT5.cmake cmake/modules/FindPOPPLER_QT6.cmake
+    sed -i 's/QT5/QT6/g' cmake/modules/FindPOPPLER_QT6.cmake
+    sed -i 's/qt5/qt6/g' cmake/modules/FindPOPPLER_QT6.cmake
+    sed -i -e '1i #include <cstdint>' Programs/DviWare/dvisvgm/source/libs/woff2/include/woff2/output.h
 }
 build() {
     cd "$srcdir/$pkgname-$pkgver"
     [ -d build ] || mkdir build
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX=/opt/miktex -DWITH_UI_QT=ON -DUSE_SYSTEM_POPPLER=TRUE -DUSE_SYSTEM_POPPLER_QT=TRUE ..
+    #export MIKTEX_REPOSITORY=https://mirrors.aliyun.com/CTAN/systems/win32/miktex/tm/packages/
+    cmake -DCMAKE_BUILD_TYPE='None' -DCMAKE_INSTALL_PREFIX=/opt/miktex -DWITH_UI_QT=ON -DUSE_SYSTEM_POPPLER=TRUE -DUSE_SYSTEM_POPPLER_QT=TRUE -DUSE_SYSTEM_HARFBUZZ=FALSE -DUSE_SYSTEM_HARFBUZZ_ICU=FALSE ..
     make -j2
 }
 
 package() {
     cd "$srcdir/$pkgname-$pkgver/build"
     make DESTDIR="$pkgdir/" install
-    
-    cd $pkgdir
 
-    install -Dm644 opt/miktex/share/applications/miktex-console.desktop usr/share/applications/miktex-console.desktop
-    sed -i 's/^Exec=miktex-console$/Exec=\/opt\/miktex\/bin\/miktex-console/' usr/share/applications/miktex-console.desktop
-    cp -R opt/miktex/share/applications/icons usr/share/
+    cd "$srcdir/$pkgname-$pkgver"
+    install -vDm644 "README.md"    "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+    install -vDm644 "HACKING.md"   "${pkgdir}/usr/share/doc/${pkgname}/HACKING.md"
+    install -vDm644 "CHANGELOG.md" "${pkgdir}/usr/share/doc/${pkgname}/CHANGELOG.md"
+    install -vDm644 "COPYING.md"   "${pkgdir}/usr/share/licenses/${pkgname}/COPYING.md"
 
-    mv opt/miktex/man usr/share/man
-    #rm $pkgdir/usr/share/man/man5/updmap.cfg.5.gz
+    cd "${pkgdir}/opt/${pkgname}"
+    find "share" -type f -exec install -Dm644 "{}" "${pkgdir}/usr/{}" \;
+    find "man"   -type f -exec install -Dm644 "{}" "${pkgdir}/usr/share/{}" \;
+    rm -rf "share" "man"
+
+    cd "${pkgdir}/usr/share/applications"
+    find "icons" -type f -exec install -Dm644 "{}" "${pkgdir}/usr/share/{}" \;
+    rm -rf "icons"
+
+
+    sed -i 's|Exec=|Exec=/opt/miktex/bin/|' "miktex-console.desktop"
+
+    cd "${pkgdir}/usr/share/polkit-1/actions"
+    sed -i 's|/usr/bin|/opt/miktex/bin|' "miktex-console.policy"
+
+    cd "${pkgdir}/opt/${pkgname}/bin"
+    for _gsu in pkexec kdesu gksu; do
+        ln -s "/usr/bin/${_gsu}" "${_gsu}"
+    done
+
+    install -dm755 "${pkgdir}/usr/bin"
+    find . -type f -name 'miktex*' -exec ln -s "/opt/miktex/bin/{}" "${pkgdir}/usr/bin/{}" \;
 }

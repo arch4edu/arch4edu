@@ -1,0 +1,40 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bayestestr
+  - x86_64/r/r-datawizard
+  - x86_64/r/r-insight
+makedepends:
+  - x86_64/r/r-aer
+  - x86_64/r/r-afex
+  - x86_64/r/r-bayesfactor
+  - x86_64/r/r-betareg
+  - x86_64/r/r-bigutilsr
+  - x86_64/r/r-curl
+  - x86_64/r/r-dbscan
+  - x86_64/r/r-dharma
+  - x86_64/r/r-estimatr
+  - x86_64/r/r-fixest
+  - x86_64/r/r-glmmtmb
+  - x86_64/r/r-httr2
+  - x86_64/r/r-ics
+  - x86_64/r/r-icsoutlier
+  - x86_64/r/r-islr
+  - x86_64/r/r-ivreg
+  - x86_64/r/r-lavaan
+  - x86_64/r/r-lme4
+  - x86_64/r/r-mclogit
+  - x86_64/r/r-metafor
+  - x86_64/r/r-nonnest2
+  - x86_64/r/r-ordinal
+  - x86_64/r/r-parameters
+  - x86_64/r/r-pscl
+  - x86_64/r/r-randomforest
+  - x86_64/r/r-rstanarm
+  - x86_64/r/r-rstantools
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

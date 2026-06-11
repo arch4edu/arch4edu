@@ -5,7 +5,7 @@
 
 pkgname=jgraphx
 pkgver=4.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Open source graph drawing component."
 arch=('any')
 url="https://github.com/jgraph/jgraphx"

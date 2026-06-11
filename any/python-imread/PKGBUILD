@@ -5,29 +5,23 @@
 _base=imread
 pkgname=python-${_base}
 pkgdesc="Read images to numpy arrays"
-pkgver=0.7.4
-pkgrel=3
+pkgver=0.7.6
+pkgrel=4
 arch=(x86_64)
 url="https://github.com/luispedro/${_base}"
 license=(MIT)
 depends=(python-numpy)
-makedepends=(python-setuptools libpng libjpeg-turbo libtiff libwebp xcftools)
-checkdepends=(python-nose)
+makedepends=(python-build python-installer python-setuptools python-wheel libpng libjpeg-turbo libtiff libwebp xcftools)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('6ec445ede6a25f57f2ab6ab3b4a89b91015edc6a73cb03124c746a21c4fcb1486abb88cf8d9980347afb4ed6b916bfd450b003ded1dc21aa1732c84472a90d28')
+sha512sums=('7c51d891b28bf907c81c6ce0d69930fa4c090f0472f5ed001497e68c5ff3227d21e2e9b4f88f429082e64b7cf14600c14c4e20370ce39c0e855b2f8c50c2ef2b')
 
 build() {
   cd ${_base}-${pkgver}
-  python setup.py build
-}
-
-check() {
-  cd ${_base}-${pkgver}
-  python setup.py test
+  python -m build --wheel --skip-dependency-check --no-isolation
 }
 
 package() {
   cd ${_base}-${pkgver}
-  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+  PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
   install -Dm 644 COPYING.MIT -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }

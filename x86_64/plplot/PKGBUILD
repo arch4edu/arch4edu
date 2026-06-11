@@ -1,54 +1,90 @@
-# Maintainer: Miguel de Val-Borro <miguel dot deval at gmail dot com>
+# Maintainer: Jan Kohnert <bughunter at jan-kohnert dot de>
+# Contributor: Miguel de Val-Borro <miguel dot deval at gmail dot com>
 # Contributor: James Tappin <jtappinatgmaildotcom>
 # Contributor: Gergely Imreh <imrehgATgmailDOTcom>
 # Contributor: Eric Belanger <eric@archlinux.org>
 pkgname=plplot
 pkgver=5.15.0
-pkgrel=6
+pkgrel=14
 pkgdesc="A cross-platform software package for creating scientific plots"
-arch=('i686' 'x86_64')
+arch=("i686" "x86_64")
 url="http://plplot.sourceforge.net/"
-license=("LGPL" "custom")
-depends=('libtool' 'tk')
-makedepends=('cmake')
-optdepends=('qhull: calculating convex hulls'
-            'agg: high quality rendering engine in C++'
-            'swig: connects Plplot C library to Python, Java and Lua (must be present at compile time for Java)'
-            'gd: ability to output png, jpeg and gif files'
-            'qt4: display plots, output various formats  using the Qt UI framework'
-            'wxgtk: displays plots using wxWidgets library'
-            'freetype2: enables use of ttf fonts for some drivers'
-            'ttf-freefont: enables use of ttf fonts for some drivers'
-            'cairo: displays plots and save to different file formats')
-options=('!libtool' '!makeflags')
-source=(http://downloads.sourceforge.net/sourceforge/plplot/${pkgname}-${pkgver}.tar.gz plplot.patch)
-md5sums=('36aec5bfadc2e207cf8ee39f573c9303'
-         '16ed4043306ce791e28ef80a80c1fbfd')
+license=(
+    "LGPL-2.0-or-later"
+    "GPL-2.0-or-later"
+    "LicenseRef-custom"
+)
+depends=(
+    "cairo"
+    "gcc-libs"
+    "glib2"
+    "glibc"
+    "java-runtime"
+    "libtool"
+    "libx11"
+    "lua52"
+    "lua53"
+    "pango"
+    "python"
+    "python-numpy"
+    "python-pillow"
+    "qhull"
+    "shapelib"
+    "tcl"
+    "tk"
+    "wxwidgets-common"
+    "wxwidgets-gtk3"
+)
+makedepends=(
+    "cmake"
+    "jdk-openjdk"
+    "pkg-config"
+    "python-setuptools"
+    "swig"
+)
+optdepends=("bash")
+options=("!libtool")
+source=(
+    "http://downloads.sourceforge.net/sourceforge/plplot/${pkgname}-${pkgver}.tar.gz"
+    "plplot-numpy.patch"
+    "plplot-numpy-init.patch"
+    "plplot-signal.patch"
+    "plplot-swig.patch"
+)
+sha512sums=(
+    "54533245569b724a7ef90392cc6e9ae65873e6cbab923df0f841c8b43def5e4307690894c7681802209bd3c8df97f54285310a706428f79b3340cce3207087c8"
+    "f0ceba3f20f4dbccaf35a915e5b90718a61474f5e39dc8af69e735a77a2f2d6925fbb8e67c98a0db63a58f34ceac429550f89ae590ded31afa9cf353e1c486b6"
+    "872c53224de488a913ae80f7610b9541aec5a1c1c9f720b9512974938b7969a3e03eab89fae33456cb88e322026258f59ebe8c1bd52a4bcf69682661e95aecaf"
+    "39027a3980433728e660bf7eb26797fc3c0cb48873c1e387aa0f3475787b9fa163b573de13211fca047c5e0d72ed3e9a02b3895d50f6db24e5f93d70111bd2b1"
+    "d5be4e4a32481f27ef5c867435ae59297550b15f6db158f96bf97d948a59e041b87a29fed8e18386debaddc9f2a5648c0cef861a1be5f754a31ae60d657ee3d8"
+)
 
 prepare() {
     cd "$pkgname-$pkgver"
-    patch --forward --strip=1 --input="${srcdir}/plplot.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-numpy.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-numpy-init.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-signal.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-swig.patch"
 }
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
-  if [ -d build ]; then
-      rm -r build
-  fi
-  mkdir build
-  cd build
-  cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr \
-      -DENABLE_octave=off \
-      -DENABLE_tcl=ON \
-      -DENABLE_tk=ON \
-      -DPL_FREETYPE_FONT_PATH=/usr/share/fonts/TTF ..
-  find . -name '*.make' -exec sed -i 's|-isystem /usr/include ||g' '{}' ';'
-  make 
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    if [ -d build ]; then
+        rm -r build
+    fi
+    mkdir build
+    cd build
+    cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ada=OFF -DENABLE_c=ON -DENABLE_cxx=ON -DENABLE_d=OFF \
+        -DENABLE_fortran=ON -DENABLE_itcl=OFF -DENABLE_itk=OFF -DENABLE_java=ON -DENABLE_lua=ON \
+        -DENABLE_ocaml=OFF -DENABLE_octave=OFF -DENABLE_pyqt5=OFF -DENABLE_python=ON -DENABLE_qt=OFF \
+        -DENABLE_tcl=ON -DENABLE_tk=OFF -DENABLE_wxwidgets=ON -DPLD_wxwidgets=ON  ..
+
+    make
 }
 
 package() {
-    cd ${srcdir}/${pkgname}-${pkgver}/build
-    make DESTDIR=${pkgdir} install
-    install -D -m644 ../Copyright ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+    cd "${srcdir}/${pkgname}-${pkgver}/build"
+    make DESTDIR="${pkgdir}" install
+    install -D -m644 ../Copyright "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 depends+=("wxwidgets-gtk3")

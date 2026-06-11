@@ -1,0 +1,47 @@
+--- a/examples/creating_even_spaced_wavelength_visualisation.py	2025-01-16 16:56:52.000000000 +0800
++++ b/examples/creating_even_spaced_wavelength_visualisation.py	2025-01-16 19:29:45.798999388 +0800
+@@ -23,14 +23,23 @@
+ # We will use the sample data that ``sunpy`` provides to construct a sequence of AIA
+ # image files for different wavelengths using `sunpy.map.Map`.
+ 
+-aia_files = [sunpy.data.sample.AIA_094_IMAGE,
+-             sunpy.data.sample.AIA_131_IMAGE,
+-             sunpy.data.sample.AIA_171_IMAGE,
+-             sunpy.data.sample.AIA_193_IMAGE,
+-             sunpy.data.sample.AIA_211_IMAGE,
+-             sunpy.data.sample.AIA_304_IMAGE,
+-             sunpy.data.sample.AIA_335_IMAGE,
+-             sunpy.data.sample.AIA_1600_IMAGE]
++# Use local fits if no network while doc building
++#aia_files = [sunpy.data.sample.AIA_094_IMAGE,
++#             sunpy.data.sample.AIA_131_IMAGE,
++#             sunpy.data.sample.AIA_171_IMAGE,
++#             sunpy.data.sample.AIA_193_IMAGE,
++#             sunpy.data.sample.AIA_211_IMAGE,
++#             sunpy.data.sample.AIA_304_IMAGE,
++#             sunpy.data.sample.AIA_335_IMAGE,
++#             sunpy.data.sample.AIA_1600_IMAGE]
++aia_files = ['AIA20110607_063305_0094_lowres.fits',
++             'AIA20110607_063301_0131_lowres.fits',
++             'AIA20110607_063302_0171_lowres.fits',
++             'AIA20110607_063307_0193_lowres.fits',
++             'AIA20110607_063302_0211_lowres.fits',
++             'AIA20110607_063334_0304_lowres.fits',
++             'AIA20110607_063303_0335_lowres.fits',
++             'AIA20110607_063305_1600_lowres.fits']
+ # `sequence=True` causes a sequence of maps to be returned, one for each image file.
+ sequence_of_maps = sunpy.map.Map(aia_files, sequence=True)
+ # Sort the maps in the sequence in order of wavelength.
+--- a/examples/creating_ndcube_from_fitsfile.py	2025-01-16 16:56:52.000000000 +0800
++++ b/examples/creating_ndcube_from_fitsfile.py	2025-01-16 19:26:42.523016366 +0800
+@@ -20,7 +20,9 @@
+ # `~ndcube.NDCube` from data stored in a FITS file.
+ # Here we are using an example file from ``astropy``.
+ 
+-image_file = get_pkg_data_filename('tutorials/FITS-images/HorseHead.fits')
++# use local fits if no network while doc building
++try: image_file = get_pkg_data_filename('tutorials/FITS-images/HorseHead.fits')
++except Exception: image_file = 'HorseHead.fits'
+ 
+ ###########################################################################
+ # Lets extract the image data and the header information from the FITS file.

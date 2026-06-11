@@ -1,0 +1,27 @@
+diff -rupN xcftools-1.0.7.old/Makefile.in xcftools-1.0.7/Makefile.in
+--- xcftools-1.0.7.old/Makefile.in	2009-07-03 11:31:56.000000000 +0100
++++ xcftools-1.0.7/Makefile.in	2012-01-03 13:03:51.152358830 +0000
+@@ -79,7 +79,7 @@ xcf2pnm$e: xcf2pnm.$o $(FILEIO).$o enums
+ 
+ xcf2png$e: xcf2png.$o $(FILEIO).$o enums.$o xcf-general.$o utils.$o nlsini.$o \
+ 	   pixels.$o flatten.$o flatspec.$o scaletab.$o table.$o palette.$o
+-	$(CC) $(LDFLAGS) $(LIBS) -lpng $^ -o $@
++	$(CC) $(LDFLAGS) $(LIBS) $^ -lpng -o $@
+ 
+ xcfview: xcfview.in Makefile
+ 	sed '1s,/usr/bin/perl,@PERL@,' < $< > $@
+diff -rupN xcftools-1.0.7.old/xcf2png.c xcftools-1.0.7/xcf2png.c
+--- xcftools-1.0.7.old/xcf2png.c	2009-07-03 11:31:52.000000000 +0100
++++ xcftools-1.0.7/xcf2png.c	2012-01-03 13:03:36.262509165 +0000
+@@ -71,9 +71,9 @@ init_output(void)
+   
+   outfile = openout(flatspec.output_filename);
+   libpng = png_create_write_struct(PNG_LIBPNG_VER_STRING,
+-                                   png_voidp_NULL,
++                                   (png_voidp)NULL,
+                                    my_error_callback,
+-                                   png_error_ptr_NULL);
++                                   (png_voidp)NULL);
+   if( !libpng )
+     FatalUnexpected(_("Couldn't initialize libpng library"));
+   

@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bh
+  - x86_64/r/r-cpp11
+  - x86_64/r/r-futile.logger
+  - x86_64/r/r-snow
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace -u '1.38.0' '1.46.0'
+post_build: aur-post-build

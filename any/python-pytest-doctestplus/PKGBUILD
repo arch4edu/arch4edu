@@ -1,20 +1,25 @@
 # Maintainer: Astro Benzene <universebenzene at sina dot com>
+
 pkgbase=python-pytest-doctestplus
-_pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}")
-#"python-${_pyname}-doc")
-pkgver=0.13.0
-pkgrel=1
+_pname=${pkgbase#python-}
+_pyname=${_pname//-/_}
+pkgname=("python-${_pname}")
+#"python-${_pname}-doc")
+pkgver=1.7.1
+pkgrel=2
 pkgdesc="Pytest plugin that provides advanced features for testing example code in documentation"
 arch=('any')
 url="https://github.com/astropy/pytest-doctestplus"
-license=('BSD')
-makedepends=('python-setuptools-scm' 'python-wheel' 'python-build' 'python-installer')
+license=('BSD-3-Clause')
+makedepends=('python-setuptools-scm' 'python-build' 'python-installer')  # wheel required by new setuptools
 #'python-sphinx')
-checkdepends=('python-pytest-remotedata'
-              'python-numpy')
+#checkdepends=('python-pytest'
+checkdepends=('python-pytest-remotedata>=0.3.2'
+#             'python-pytest-xdist'
+              'python-numpy'
+              'git')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('f0ad13f205a300b79b5a5aa4fcab4309')
+md5sums=('82d8468a79fd6adfc5ea4c4b3fdca2fc')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -31,13 +36,14 @@ build() {
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
-        build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
-    PYTHONPATH="build/lib" pytest || warning "Tests failed" # -vv --color=yes
+#   ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
+#       build/lib/${_pyname/-/_}-${pkgver}-py$(get_pyver .).egg-info
+#   PYTHONPATH="build/lib" pytest -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 # || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
+    PYTHONPATH="." pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 #
 }
 
 package_python-pytest-doctestplus() {
-    depends=('python-pytest>=4.6' 'python-setuptools>=30.3.0' 'python-packaging>=17.0')
+    depends=('python-pytest>=7.0' 'python-packaging>=17.0')
 #   optdepends=('python-pytest-doctestplus-doc: Documentation for pytest-doctestplus')
     cd ${srcdir}/${_pyname}-${pkgver}
 

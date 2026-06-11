@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-pcapp
+  - x86_64/r/r-robustbase
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

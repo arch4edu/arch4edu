@@ -1,35 +1,30 @@
-# Maintainer: Norbert Weber <norbert.weber_at_hzdr.de>
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Norbert Weber <norbert.weber_at_hzdr.de>
 # Contributor: Marc Olesen
 # Contributor: Xwang <xwaang1976@gmail.com>
 # Contributor: George Eleftheriou <eleftg>
 # Contributor: Andrew Fischer <andrew_at_apastron.co>
 # Contributor: <gucong43216@gmail.com>
-# Contributor: Carlos Aznarán <caznaranl@uni.pe>
 
 # Installs as (for example)
-# /opt/OpenFOAM/OpenFOAM-v2212
+# /opt/OpenFOAM/OpenFOAM-v2506
 
-pkgname=openfoam-com
-pkgver=v2212
 _distname=OpenFOAM
-_dist=$_distname-$pkgver
+pkgname=${_distname,,}-com
+pkgver=v2512
+_dist=${_distname}-${pkgver}
 pkgrel=3
 pkgdesc="The open source CFD toolbox (www.openfoam.com)"
-arch=('i686' 'x86_64')
-url="http://www.openfoam.com"
-license=('GPL3')
+arch=(i686 x86_64)
+url="https://www.${pkgname//-/.}"
+license=(GPL-3.0-or-later)
 install="${pkgname}.install"
-depends=('gcc' 'cgal' 'fftw' 'boost' 'openmpi' 'paraview' 'utf8cpp' 'scotch' 'parmetis')
-
-source=('https://sourceforge.net/projects/openfoam/files/v2212/OpenFOAM-v2212.tgz'
-  gcc-13-compatibility.patch::https://develop.openfoam.com/Development/openfoam/-/commit/70451e680cd0987c8220a0276bba4ce6bba58e9e.patch)
-
-md5sums=('889c9a2169c0b6911050de149a5b459b'
-  '686c135b63e923de449763cf5f1ea6e9')
+depends=(cgal fftw boost openmpi paraview scotch parmetis-git kahip) # petsc hypre
+source=(https://dl.${pkgname//-/.}/source/${pkgver}/${_dist}.tgz)
+md5sums=('8a1abe3864851902bb77809efa94ba3e')
 
 prepare() {
-  if [ -n "$WM_PROJECT_DIR" ]
-  then
+  if [ -n "$WM_PROJECT_DIR" ]; then
     echo
     echo -e "\e[1m\e[5m\e[31mPlease make sure that no OpenFOAM version is sourced in bashrc.\e[0m"
     echo
@@ -43,31 +38,26 @@ prepare() {
 export WM_COMPILER_TYPE=system
 export WM_MPLIB=SYSTEMOPENMPI
 # End" \
-  > "${projectDir}"/etc/prefs.sh
-
+    >"${projectDir}"/etc/prefs.sh
 
   # Configure components.
-  # Use system values for boost/cgal, fftw, scotch, paraview
+  # Use system values for boost/cgal, fftw, kahip, metis, paraview, scotch
+  # -petsc petsc-system -hypre hypre-system -mpfr mpfr-system -gmp gmp-system
 
   "${projectDir}"/bin/tools/foamConfigurePaths \
+    -adios adios-system \
     -boost boost-system \
-    -cgal  cgal-system \
-    -fftw  fftw-system \
+    -cgal cgal-system \
+    -fftw fftw-system \
     -kahip kahip-system \
-    -scotch scotch-system \
+    -metis metis-system \
     -paraview paraview-system \
+    -scotch scotch-system \
     ;
-
-    # check this for next update!
-    # https://develop.openfoam.com/Development/openfoam/-/issues/2714
-    # gcc-13-compatibilty
-    cd "$projectDir"
-    patch -p1 -i ../gcc-13-compatibility.patch
 }
 
 build() {
-  if [ -n "$WM_PROJECT_DIR" ]
-  then
+  if [ -n "$WM_PROJECT_DIR" ]; then
     echo
     echo -e "\e[1m\e[5m\e[31mPlease make sure that no OpenFOAM version is sourced in bashrc.\e[0m"
     echo
@@ -76,31 +66,23 @@ build() {
 
   projectDir="${srcdir}/${_dist}"
   [ -f "$projectDir/etc/bashrc" ] || {
-      echo "No $projectDir/etc/bashrc found"
-      return 1
+    echo "No $projectDir/etc/bashrc found"
+    return 1
   }
-
-  # bugfix OpenFOAM-v2212
-  sed -i 's!#include "CGAL/Robust_circumcenter_filtered_traits_3.h"!#include "CGAL/Robust_weighted_circumcenter_filtered_traits_3.h"!g' $projectDir/applications/utilities/mesh/generation/foamyMesh/conformalVoronoiMesh/conformalVoronoiMesh/CGALTriangulation3DKernel.H
-
-  # changes to avoid linking problems related to gcc 11
-  # check this for the next upgrade!
-  pwd
-  sed -i 's/g++$(COMPILER_VERSION) -std=c++11/g++$(COMPILER_VERSION) -std=c++14 -D_GLIBCXX_USE_CXX14_ABI=0/g' $projectDir/wmake/rules/General/Gcc/c++
 
   # Avoid external influence on the environment
   export FOAM_CONFIG_MODE="o"
   unset FOAM_SETTINGS
 
-  set +e  # Turn errexit off
+  set +e # Turn errexit off
 
-  source "$projectDir"/etc/bashrc '' || \
+  source "$projectDir"/etc/bashrc '' ||
     echo "Ignore spurious sourcing error"
 
   # it seems, the bashrc file destroys 'projectDir'
   projectDir="${srcdir}/${_dist}"
 
-  set -e  # Turn errexit back on
+  set -e # Turn errexit back on
   cd "$projectDir" || exit
 
   # Dummy application for testing
@@ -116,26 +98,24 @@ build() {
   #   lib   = 139 entries
 
   [ -f log.build ] || {
-      echo "No log.build file - build failed entirely"
-      exit 1
+    echo "No log.build file - build failed entirely"
+    exit 1
   }
 
-  bins="$( cat log.build | sed -ne 's/.*bin *= *\([0-9][0-9]*\).*/\1/p;' | sed -ne '$p' )"
-  libs="$( cat log.build | sed -ne 's/.*lib *= *\([0-9][0-9]*\).*/\1/p;' | sed -ne '$p' )"
+  bins="$(cat log.build | sed -ne 's/.*bin *= *\([0-9][0-9]*\).*/\1/p;' | sed -ne '$p')"
+  libs="$(cat log.build | sed -ne 's/.*lib *= *\([0-9][0-9]*\).*/\1/p;' | sed -ne '$p')"
 
-  if [ "${bins:=0}" = 0 ] || [ "${libs:=0}" = 0 ]
-  then
-      echo
-      echo "Build failed with $bins executables and $libs libraries"
-      echo "Check the log.build file"
-      echo
-      exit 1
+  if [ "${bins:=0}" = 0 ] || [ "${libs:=0}" = 0 ]; then
+    echo
+    echo "Build failed with $bins executables and $libs libraries"
+    echo "Check the log.build file"
+    echo
+    exit 1
   fi
 
   # Remove intermediate build artifacts
   rm -rf "${projectDir}/build"
 }
-
 
 package() {
   cd ${srcdir}
@@ -155,25 +135,10 @@ package() {
   chmod -R 755 "${projectDir}"/bin
   chmod -R 755 "${projectDir}"/etc
 
-  [ -e "${projectDir}"/ThirdParty ] || \
-      echo "system dependencies" >| "${projectDir}"/ThirdParty
-
-#  # Install shell-session script. Could be via post-install
-#  session="/usr/bin/openfoam${pkgver#v}"
-#  wrapper="$projectDir/bin/tools/openfoam.in"
-#
-#  if [ -f "$wrapper" ]
-#  then
-#      echo "Create $session"
-#      sed -e "s#@PROJECT_DIR@#${projectDir}#" "$wrapper" >| "$session"
-#      chmod 0755 "$session"
-#  else
-#      echo "No method to create $session for openfoam${pkgver#v}"
-#  fi
+  [ -e "${projectDir}"/ThirdParty ] ||
+    echo "system dependencies" >|"${projectDir}"/ThirdParty
 
   # create aliases
-  echo "alias of='source /opt/${_distname}/${_dist}/etc/bashrc'" >> "${pkgdir}/etc/profile.d/openfoam-com.sh"
-  echo "alias paraFoam='paraFoam -builtin'" >> "${pkgdir}/etc/profile.d/openfoam-com.sh"
+  echo "alias of='source /opt/${_distname}/${_dist}/etc/bashrc'" >>"${pkgdir}/etc/profile.d/${pkgname}.sh"
+  echo "alias paraFoam='paraFoam -builtin'" >>"${pkgdir}/etc/profile.d/${pkgname}.sh"
 }
-
-# ---------------------------------------------------------------------------

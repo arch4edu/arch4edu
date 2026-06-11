@@ -1,21 +1,15 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=basix
 pkgdesc="FEniCS finite element basis evaluation library"
-pkgver=0.6.0
-pkgrel=2
+pkgver=0.11.0
+pkgrel=1
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
 license=(MIT)
-depends=(lapack)
-makedepends=(cmake)
-checkdepends=(python)
+depends=(gcc-libs lapack)
+makedepends=(cmake doxygen texlive-plaingeneric texlive-fontsrecommended texlive-latexextra)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('265be90be0790f0e5e2d5122ed5455bf0f3bf8ab359ccdc63f9a36c08f64fbc82cf2954a2a769f58bf1427232fe49b14764d7b3153e038f42036f98e5597c1de')
-
-prepare() {
-  # gcc-13-compatibilty
-  sed -i '/#include <vector>/a #include <cstdint>' ${pkgname}-${pkgver}/cpp/basix/finite-element.h
-}
+sha512sums=('2822efa94b43ce5e933861a596fd3ac251bb9e3622aada30890880d4096e119a1c992b5be8700741817b5d40e6d3786519c2f72180a085b4fa9b2bb8a2b5bf45')
 
 build() {
   cmake \
@@ -26,8 +20,15 @@ build() {
     -DBUILD_SHARED_LIBS=TRUE \
     -DCMAKE_CXX_STANDARD=20 \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DINSTALL_RUNTIME_DEPENDENCIES=OFF \
     -Wno-dev
   cmake --build build --target all
+
+  cd ${srcdir}/${pkgname}-${pkgver}/doc/cpp
+  doxygen -u Doxyfile
+  doxygen .
+  cd latex
+  make
 }
 
 check() {
@@ -37,9 +38,24 @@ check() {
     -B build_test
   cmake --build build_test
   build_test/a.out
+
+  CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
+    -S ${pkgname}-${pkgver}/demo/cpp/demo_create_and_tabulate \
+    -B build_demo_create_and_tabulate
+  cmake --build build_demo_create_and_tabulate
+  build_demo_create_and_tabulate/demo_create_and_tabulate
+
+  CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
+    -S ${pkgname}-${pkgver}/demo/cpp/demo_dof_transformations \
+    -B build_demo_dof_transformations
+  cmake --build build_demo_dof_transformations
+  build_demo_dof_transformations/demo_dof_transformations
 }
 
 package() {
   DESTDIR="${pkgdir}" cmake --build build --target install
+  install -d ${pkgdir}/usr/share/doc/${pkgname}
+  mv ${pkgname}-${pkgver}/doc/cpp/html ${pkgdir}/usr/share/doc/${pkgname}
+  install ${pkgname}-${pkgver}/doc/cpp/latex/*.pdf ${pkgdir}/usr/share/doc/${pkgname}
   install -Dm 644 ${pkgname}-${pkgver}/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }

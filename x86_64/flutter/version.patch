@@ -1,0 +1,122 @@
+--- ./packages/flutter_tools/lib/src/version.dart.orig
++++ ./packages/flutter_tools/lib/src/version.dart
+@@ -79,7 +79,7 @@
+   }) {
+     final File versionFile = getVersionFile(fs, flutterRoot);
+ 
+-    if (!fetchTags && versionFile.existsSync()) {
++    if (versionFile.existsSync()) {
+       final _FlutterVersionFromFile? version = _FlutterVersionFromFile.tryParseFromFile(
+         versionFile,
+         git: git,
+@@ -99,10 +99,7 @@
+       }
+     }
+ 
+-    final String frameworkRevision = git
+-        .logSync(['-n', '1', '--pretty=format:%H'], workingDirectory: flutterRoot)
+-        .stdout
+-        .trim();
++    final String frameworkRevision = "archlinuxaur0000000000000000000000000000";
+ 
+     return FlutterVersion.fromRevision(
+       clock: clock,
+@@ -137,7 +134,8 @@
+       workingDirectory: flutterRoot,
+       fetchTags: fetchTags,
+     );
+-    final String frameworkVersion = gitTagVersion.frameworkVersionFor(frameworkRevision);
++    final String frameworkVersion =
++        globals.fs.file(globals.fs.path.join(Cache.flutterRoot!, 'version')).readAsStringSync();
+     final result = _FlutterVersionGit._(
+       clock: clock,
+       flutterRoot: flutterRoot,
+@@ -222,10 +220,7 @@
+   final String flutterRoot;
+ 
+   String _getTimeSinceCommit({String? revision}) {
+-    return _git
+-        .logSync(['-n', '1', '--pretty=format:%ar', ?revision], workingDirectory: flutterRoot)
+-        .stdout
+-        .trim();
++    return 'unknown (arch linux aur package)';
+   }
+ 
+   // TODO(fujino): calculate this relative to frameworkCommitDate for
+@@ -345,6 +340,7 @@
+   /// Returns `null` if the cached version is out-of-date or missing, and we are
+   /// unable to reach the server to get the latest version.
+   Future<DateTime?> _getLatestAvailableFlutterDate() async {
++  	return null;
+     globals.cache.checkLockAcquired();
+     final VersionCheckStamp versionCheckStamp = await VersionCheckStamp.load(
+       globals.cache,
+@@ -464,6 +460,14 @@
+   required Git git,
+   required String? workingDirectory,
+ }) {
++  final File versionFile = globals.fs.file(
++    globals.fs.path.join(workingDirectory!, 'bin', 'cache', 'flutter.version.json'),
++  );
++
++  final _FlutterVersionFromFile version =
++      _FlutterVersionFromFile.tryParseFromFile(versionFile, flutterRoot: workingDirectory, git: git)!;
++  return version.frameworkCommitDate;
++
+   final RunResult result = git.logSync([
+     gitRef,
+     '-n',
+@@ -592,9 +596,7 @@
+   final String devToolsVersion;
+ 
+   @override
+-  void ensureVersionFile() {
+-    _ensureLegacyVersionFile(fs: fs, flutterRoot: flutterRoot, frameworkVersion: frameworkVersion);
+-  }
++  void ensureVersionFile() {}
+ }
+ 
+ class _FlutterVersionGit extends FlutterVersion {
+@@ -708,16 +710,7 @@
+   required FileSystem fs,
+   required String flutterRoot,
+   required String frameworkVersion,
+-}) {
+-  // TODO(matanlurey): https://github.com/flutter/flutter/issues/171900.
+-  if (featureFlags.isOmitLegacyVersionFileEnabled) {
+-    return;
+-  }
+-  final File legacyVersionFile = fs.file(fs.path.join(flutterRoot, 'version'));
+-  if (!legacyVersionFile.existsSync()) {
+-    legacyVersionFile.writeAsStringSync(frameworkVersion);
+-  }
+-}
++}) {}
+ 
+ /// Checks if the provided [version] is tracking a standard remote.
+ ///
+@@ -743,6 +736,7 @@
+   ///
+   /// Returns [VersionCheckError] if the tracking remote is not standard.
+   VersionCheckError? run() {
++  	return null;
+     final String? flutterGit = platform.environment['FLUTTER_GIT_URL'];
+     final String? repositoryUrl = version.repositoryUrl;
+ 
+@@ -950,7 +944,7 @@
+   if (revision == null) {
+     return '';
+   }
+-  return revision.length > 10 ? revision.substring(0, 10) : revision;
++  return revision.length > 12 ? revision.substring(0, 12) : revision;
+ }
+ 
+ /// Version of Flutter SDK parsed from Git.
+@@ -1011,6 +1005,7 @@
+     bool fetchTags = false,
+     String gitRef = 'HEAD',
+   }) {
++  	return parse(globals.fs.file(globals.fs.path.join(Cache.flutterRoot!, 'version')).readAsStringSync());
+     if (fetchTags) {
+       final String channel = git
+           .runSync(['symbolic-ref', '--short', 'HEAD'], workingDirectory: workingDirectory)

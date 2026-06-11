@@ -6,7 +6,7 @@
 pkgname=combblas
 _PkgName=CombBLAS
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A library offering a set of linear algebra primitives for graph analytics"
 arch=('x86_64')
 url="https://github.com/PASSIONLab/CombBLAS"
@@ -23,7 +23,8 @@ build() {
   cmake ../$_PkgName-$pkgver \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_SHARED_LIBS=ON \
-    -DBUILD_TESTING=OFF
+    -DBUILD_TESTING=OFF \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
   make
 }
 

@@ -1,22 +1,20 @@
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.7.4
+_pkgver=1.13.0
 pkgname=r-${_pkgname,,}
-pkgver=1.7.4
+pkgver=${_pkgver//-/.}
 pkgrel=1
-pkgdesc='Web Application Framework for R'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgdesc="Web Application Framework for R"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
-  r
   r-bslib
   r-cachem
   r-commonmark
-  r-crayon
-  r-ellipsis
   r-fastmap
   r-fontawesome
   r-glue
@@ -26,16 +24,27 @@ depends=(
   r-later
   r-lifecycle
   r-mime
+  r-otel
   r-promises
   r-r6
   r-rlang
   r-sourcetools
   r-withr
   r-xtable
+  r-cli
+)
+checkdepends=(
+  r-coro
+  r-future
+  r-ggplot2
+  r-otelsdk
+  r-testthat
+  ttf-font
 )
 optdepends=(
   r-cairo
-  r-datasets
+  r-coro
+  r-dt
   r-dygraphs
   r-future
   r-ggplot2
@@ -49,16 +58,28 @@ optdepends=(
   r-showtext
   r-testthat
   r-yaml
+  r-mirai
+  r-watcher
+  r-otelsdk
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('bbfcdd7375013b8f59248b3f3f4e752acd445feb25179f3f7f65cd69614da4b5')
+md5sums=('855af399bccf9df94450f850580012e5')
+b2sums=('f004ab7b4d5390d7e65f63136b0894bdb4a4cf8aa90da946e8a8e565823be996f5c95c7715c8cc7e4a03146b02ec2b8d3237295ae06ac7e58165fc26d86f50d0')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+_check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
-# vim:set ts=2 sw=2 et:

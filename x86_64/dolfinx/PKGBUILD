@@ -1,36 +1,24 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dolfinx
 pkgdesc="Next generation FEniCS problem solving environment"
-pkgver=0.6.0
-pkgrel=8
+pkgver=0.10.0.post5
+pkgrel=5
 arch=(x86_64)
 url="https://github.com/FEniCS/${pkgname}"
-license=(LGPL3)
-makedepends=(cmake)
-depends=(boost python-fenics-ffcx hdf5-openmpi parmetis petsc pugixml)
+license=(LGPL-3.0-or-later GPL-3.0-or-later)
+depends=(adios2 boost kahip parmetis-git pugixml python-fenics-ffcx scotch petsc spdlog) # slepc
+makedepends=(cmake doxygen texlive-plaingeneric texlive-fontsrecommended texlive-latexextra hdf5-openmpi)
 checkdepends=(catch2)
-optdepends=('adios2: for use ADIOS2 writer'
-  'slepc: for use SLEPc eigen solver'
-  'scotch: for compute graph partition'
-  'kahip: for compute graph partition in parallel')
-source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz
-  requires-fix.patch::${url}/pull/2513.patch
-  enum-fix.patch::${url}/pull/2646.patch)
-sha512sums=('6e4bbeca9045cdc558fa5cdfd23abe55bdb773b326381eaa25f843e70d9df39c5707bfdf5412ae1845fc680bbbc7cb641f9cf6e4eb2226a760ddaab8d04237bf'
-  '00c52da9c6af1babc57160930ff00e200cbfbe27baaa13874fa13dadbadfc03d42540873693cb451a5af6a9bc7bdab6d239b25ca5c8eecb21c40ea9cd47502c4'
-  '5c5ea77d17604b740419066f9342314461c9b48216b4021d6ee822338721859c2e9c5a4406fb489d03416567735f4238cc8900d592b87a13956c08010a35b856')
-
-prepare() {
-  sed -i '/#include <vector>/a #include <cstdint>' ${pkgname}-${pkgver}/cpp/dolfinx/graph/AdjacencyList.h
-  sed -i '/#include <vector>/a #include <cstdint>' ${pkgname}-${pkgver}/cpp/dolfinx/io/xdmf_mesh.h
-  cd ${pkgname}-${pkgver}
-  # https://github.com/FEniCS/dolfinx/issues/2645
-  patch -p1 -i ../requires-fix.patch
-  patch -p1 -i ../enum-fix.patch
-  # gcc-13-compatibilty
-}
+# optdepends=('adios2: for use ADIOS2 writer'
+#   'kahip: for compute graph partition in parallel'
+#   'parmetis: for parallel graph partitioning'
+#   'slepc: for use SLEPc eigen solver')
+source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
+sha512sums=('2a473f51e701311421d8963a5e1b84e2d8625f299d55692b2c4c8b27be4f01d5f22916b2d8c37f512424c61e30c386775538ecea6a7a0bb68d049843e4823676')
 
 build() {
+  export LDFLAGS="-lkahip $LDFLAGS"
+
   cmake \
     -S ${pkgname}-${pkgver}/cpp \
     -B build \
@@ -40,35 +28,51 @@ build() {
     -DCMAKE_CXX_STANDARD=20 \
     -DCMAKE_C_COMPILER=gcc \
     -DCMAKE_CXX_COMPILER=g++ \
+    -DDOLFINX_BASIX_PYTHON=ON \
     -DDOLFINX_ENABLE_ADIOS2=ON \
-    -DDOLFINX_ENABLE_KAHIP=ON \
+    -DDOLFINX_ENABLE_PETSC=ON \
     -DDOLFINX_ENABLE_PARMETIS=ON \
     -DDOLFINX_ENABLE_SCOTCH=ON \
-    -DDOLFINX_ENABLE_SLEPC=ON \
+    -DDOLFINX_ENABLE_SLEPC=OFF \
+    -DDOLFINX_ENABLE_KAHIP=ON \
+    -DDOLFINX_SKIP_BUILD_TESTS=OFF \
+    -DDOLFINX_UFCX_PYTHON=ON \
+    -DINSTALL_RUNTIME_DEPENDENCIES=OFF \
+    -DHDF5_IS_PARALLEL:BOOL=TRUE \
     -Wno-dev
   cmake --build build --target all
+
+  cd ${srcdir}/${pkgname}-${pkgver}/cpp/doc
+  doxygen -u Doxyfile
+  doxygen .
+  cd latex
+  make
 }
 
 check() {
-  if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
-    export OMPI_MCA_opal_warn_on_missing_libcuda=0
-  fi
   ffcx ${pkgname}-${pkgver}/cpp/test/poisson.py -o ${pkgname}-${pkgver}/cpp/test
   DESTDIR="${PWD}/tmp_install" cmake --build build --target install
+
   CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
     -S ${pkgname}-${pkgver}/cpp/test \
-    -B build_test
+    -B build_test \
+    -DHDF5_IS_PARALLEL=TRUE
   cmake --build build_test
   ctest --test-dir build_test
+
   CMAKE_PREFIX_PATH="${srcdir}/tmp_install/usr/lib/cmake/${pkgname}" cmake \
     -S ${pkgname}-${pkgver}/cpp/demo \
-    -B build_demo
+    -B build_demo \
+    -DHDF5_IS_PARALLEL=TRUE
   cmake --build build_demo
-  ctest -E "(demo_poisson_mpi_*|demo_hyperelasticity_mpi_*|demo_interpolation-io_mpi_*|demo_interpolation_different_meshes_mpi_*|demo_poisson_matrix_free_mpi_*)" --test-dir build_demo
+  ctest -E "(demo_biharmonic_mpi_*|demo_poisson_mpi_*|demo_hyperelasticity_mpi_*|demo_codim_0_assembly_mpi_*|demo_custom_kernel_mpi_*|demo_poisson_matrix_free_mpi_*|demo_interpolation-io_mpi_*|demo_interpolation_different_meshes_mpi_*)" --test-dir build_demo
 }
 
 package() {
   DESTDIR="${pkgdir}" cmake --build build --target install
+  install -d ${pkgdir}/usr/share/doc/${pkgname}
+  mv ${pkgname}-${pkgver}/cpp/demo ${pkgdir}/usr/share/${pkgname}
+  mv ${pkgname}-${pkgver}/cpp/doc/html ${pkgdir}/usr/share/doc/${pkgname}
+  install ${pkgname}-${pkgver}/cpp/doc/latex/*.pdf ${pkgdir}/usr/share/doc/${pkgname}
   install -Dm 644 ${pkgname}-${pkgver}/COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
-makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")

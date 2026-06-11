@@ -2,7 +2,7 @@
 
 pkgname=fakepkg
 pkgver=1.42.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Tool to reassemble installed packages from its deliverd files. It comes in handy if there is no internet connection available and you have no access to an up-to-date package cache"
 arch=('any')
 license=('GPL2')

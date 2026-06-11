@@ -1,33 +1,29 @@
-# Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
+# Maintainer: Alexander Bocken <alexander@bocken.org>
+# Contributor: Guillaume Horel <guillaume.horel@gmail.com>
 
 pkgname='python-sparse'
 _pkgname=sparse
-pkgver=0.13.0
-pkgrel=2
-pkgdesc="Sparse multidimensional arrays on top of numpy and scipy"
+pkgver=0.17.0
+pkgrel=3
+pkgdesc="Sparse n-dimensional arrays for the PyData ecosystem"
 arch=('any')
 url="https://sparse.pydata.org"
 license=('BSD-3-clause')
-checkdepends=('python-dask' 'python-pytest' 'python-pytest-black' 'python-pytest-cov' 'python-pytest-flake8' 'python-toolz')
-depends=('python-numpy' 'python-scipy' 'python-numba')
+depends=('python>=3.8' 'python-numpy>=1.17' 'python-scipy>=0.19' 'python-numba>=0.49')
 optdepends=()
-makedepends=('python-setuptools')
+makedepends=('python-setuptools' 'python-setuptools-scm' 'python-build' 'python-installer')
 source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
-sha256sums=('685dc994aa770ee1b23f2d5392819c8429f27958771f8dceb2c4fb80210d5915')
+sha256sums=(6b1ad51a810c5be40b6f95e28513ec810fe1c785923bd83b2e4839a751df4bf7)
 
 build(){
   cd "$_pkgname-$pkgver"
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package(){
   cd "$_pkgname-$pkgver"
   install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
-}
-
-check(){
-  cd "$_pkgname-$pkgver"
-  PYTHONPATH=. pytest sparse
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 # vim:ts=2:sw=2:et:
+makedepends+=("python-build" "python-installer" "python-setuptools-scm" "python-wheel")

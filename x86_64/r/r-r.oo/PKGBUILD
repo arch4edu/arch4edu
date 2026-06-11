@@ -4,30 +4,27 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=R.oo
-_pkgver=1.25.0
+_pkgver=1.27.1
 pkgname=r-${_pkgname,,}
-pkgver=1.25.0
-pkgrel=4
-pkgdesc='R Object-Oriented Programming with or without References'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('LGPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="R Object-Oriented Programming with or without References"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('LGPL-2.1-or-later')
 depends=(
-  r
   r-r.methodss3
 )
-optdepends=(
-  r-tools
-)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('b8b19061774918ee7d9d4330c16c0ea505f7cd02d01343df1e8b2e4fb847beef')
+md5sums=('506bc62c712cba39afd29aeb305b7312')
+b2sums=('f681f5a013f61d82e74dbbf19259a34259af4d95f3efd697c120968da91ac9cc69be23e0e262c9d5544028b1789c524cb77a4e41c241859eaf67679f28f5f771')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

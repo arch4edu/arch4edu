@@ -2,10 +2,8 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
-depends:
-  - x86_64/openni2
-  - x86_64/qt5-webkit
-group: x86_64
+makedepends:
+  - x86_64/gtest-src
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build

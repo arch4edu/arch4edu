@@ -1,35 +1,49 @@
+# Maintainer: John Lane <archlinux at jelmail dot com>
 # Contributor: Johannes Dewender  arch at JonnyJD dot net
+
 pkgname=targetcli-fb
-pkgver=2.1.54
-pkgrel=2
+pkgver=3.0.2
+pkgrel=1
 pkgdesc="free branch of the targetcli LIO administration shell (iSCSI + Co)"
 arch=('any')
 url="https://github.com/open-iscsi/targetcli-fb"
-license=('Apache')
-depends=('python-rtslib-fb>=2.1.fb52' 'python-configshell-fb>=1.1.fb17'
-         'python-dbus' 'python-gobject')
-makedepends=('python-setuptools')
-optdepends=('python-ethtool')
+license=('Apache-2.0')
+depends=(
+  'python'
+  'python-rtslib-fb'
+  'python-configshell-fb'
+  'python-gobject'
+)
+makedepends=(
+  'python-build'
+  'python-hatch-vcs'
+  'python-hatchling'
+  'python-installer'
+  'python-wheel'
+)
+optdepends=()
 provides=('targetcli')
 backup=()
 options=()
 install=
-source=(https://github.com/open-iscsi/targetcli-fb/archive/v${pkgver}.tar.gz)
-sha512sums=('dd008b8c47acc095078454c94b0c6f19ba88f86ddf1b5335eb050abf61d89ce1ffb7411ff3a174de60ed9759e6337206253aa9b2def6497b85c884a0a111308d')
+source=(${pkgname}-${pkgver}.tar.gz::https://github.com/open-iscsi/${pkgname}/archive/v${pkgver}.tar.gz)
+sha512sums=('9b7dbf2a924f3811895efa366ea69d846422da9a9e6d470c11d3eb0e04a41b6b9102999aadf98889a04cfac78fe01f5f4969a74088e3c8a12a86d1dad9b29a51')
 
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-  sed -i "s|/lib/systemd/system|lib/systemd/system|" setup.py
-  python setup.py build
+  SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver python -m build --wheel --no-isolation
   gzip --stdout targetcli.8 > "targetcli.8.gz"
 }
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
-  python setup.py install --skip-build --root="$pkgdir/" --optimize=1
+  python -m installer --destdir="$pkgdir" dist/*.whl
 
+  install -d -m 750 "${pkgdir}/etc/target"
   install -D -m 644 targetcli.8.gz "$pkgdir/usr/share/man/man8/targetcli.8.gz"
+  install -D -m 644 systemd/targetclid.service "$pkgdir/usr/lib/systemd/system/targetclid.service"
+  install -D -m 644 systemd/targetclid.socket "$pkgdir/usr/lib/systemd/system/targetclid.socket"
+  install -D -m 644 README.md "$pkgdir/usr/share/doc/targetcli/README.md"
+  install -D -m 644 THANKS "$pkgdir/usr/share/doc/targetcli/THANKS"
 }
-
-# vim:set ts=2 sw=2 et:

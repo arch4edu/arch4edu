@@ -1,41 +1,36 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 # Contributor: Grey Christoforo <first name at last name dot net>
 
-_cranname=future.apply
-_cranver=1.11.0
-pkgname="r-${_cranname,,}"
-pkgdesc="Apply Function to Elements in Parallel using Futures"
-url="https://cran.r-project.org/package=${_cranname}"
-license=("GPL2" "GPL3")
-pkgver="${_cranver//[:-]/.}"
+_pkgname=future.apply
+_pkgver=1.20.2
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
 pkgrel=1
-
-arch=("any")
+pkgdesc="Apply Function to Elements in Parallel using Futures"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-    "r>=3.2.0"
-    "r-future>=1.28.0"
-    "r-globals>=0.16.1"
+  r-future
+  r-globals
 )
 optdepends=(
-    "r-listenv>=0.8.0"
-    "r-r.rsp"
-    "r-markdown"
+  r-listenv
+  r-markdown
+  r-r.rsp
 )
-makedepends=()
-
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("94570b6aa84fa044566f7956392ef812bfe66e92edaf773b95eb0fa176584c66c40f128e6158afb6daa802831251bf183ffb4178fbd4223e9faf5c0ef5eea1b5")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('91e8f96d675501767eb79a42ea339bdc')
+b2sums=('ba1b28302f0796e2f385b0171802cf869091d956dcc47b28fd6ef76d5dc99cadec01eb17548342497bab6f5efd9acb8d2bdcbf51178b5be77d72a27a5f3e1db8')
 
 build() {
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-    install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
-
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    fi
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }

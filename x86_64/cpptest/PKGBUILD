@@ -3,7 +3,7 @@
 
 pkgname=cpptest
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="C++ Unit Testing Framework"
 url="https://github.com/cpptest/cpptest"
 license=('LGPL')

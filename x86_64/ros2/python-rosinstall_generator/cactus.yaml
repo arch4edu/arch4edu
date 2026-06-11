@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/ros2/python-catkin_pkg
+  - x86_64/ros2/python-rosdistro
+  - x86_64/ros2/python-rospkg
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

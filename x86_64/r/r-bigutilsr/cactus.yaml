@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bigassertr
+  - x86_64/r/r-bigparallelr
+  - x86_64/r/r-nabor
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-robustbase
+  - x86_64/r/r-rspectra
+makedepends:
+  - x86_64/r/r-gmedian
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-rrcov
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

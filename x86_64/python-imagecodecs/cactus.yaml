@@ -4,7 +4,6 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/brunsli
-  - x86_64/charls
   - x86_64/lerc
   - x86_64/lzfse
   - any/python-imread

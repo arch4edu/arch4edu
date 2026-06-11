@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-angles
+makedepends:
+  - x86_64/ros2/ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-nav2-map-server
+  - x86_64/ros2/ros2-humble-nav2-lifecycle-manager
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

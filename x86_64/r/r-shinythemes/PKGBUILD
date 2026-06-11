@@ -4,7 +4,7 @@ _pkgname=shinythemes
 _pkgver=1.2.0
 pkgname=r-${_pkgname,,}
 pkgver=1.2.0
-pkgrel=4
+pkgrel=5
 pkgdesc='Themes for Shiny'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"

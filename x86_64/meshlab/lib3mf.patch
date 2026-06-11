@@ -1,0 +1,30 @@
+diff --git a/src/external/lib3mf.cmake b/src/external/lib3mf.cmake
+index 1cd1b5dfa..d4e19b53f 100644
+--- a/src/external/lib3mf.cmake
++++ b/src/external/lib3mf.cmake
+@@ -42,6 +42,25 @@ if(MESHLAB_ALLOW_DOWNLOAD_SOURCE_LIB3MF)
+     if(NOT download_and_unzip_SUCCESS)
+       message(STATUS "- Lib3MF - download failed")
+     endif()
++    # Download and apply the patch
++    message(STATUS "- Lib3MF - Downloading and applying patch")
++    execute_process(
++      COMMAND curl -o ${CMAKE_BINARY_DIR}/lib3mf_patch.diff https://github.com/3MFConsortium/lib3mf/commit/96b2f5ec9714088907fe8a6f05633e2bbd82053f.diff
++      RESULT_VARIABLE CURL_RESULT
++    )
++    if(NOT CURL_RESULT EQUAL "0")
++      message(FATAL_ERROR "- Lib3MF - Failed to download patch")
++    endif()
++
++    execute_process(
++      COMMAND patch -p1 -i ${CMAKE_BINARY_DIR}/lib3mf_patch.diff
++      WORKING_DIRECTORY ${LIB3MF_DIR}
++      RESULT_VARIABLE PATCH_RESULT
++    )
++    if(NOT PATCH_RESULT EQUAL "0")
++      message(FATAL_ERROR "- Lib3MF - Patch application failed")
++    endif()
++    message(STATUS "- Lib3MF - Patch applied successfully")
+   endif()
+ 
+   if(EXISTS ${LIB3MF_CHECK})

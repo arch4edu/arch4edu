@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-generics
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace -u '0.52.0' '0.58.1'
+post_build: aur-post-build

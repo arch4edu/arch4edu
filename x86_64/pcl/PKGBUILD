@@ -1,4 +1,4 @@
-# Maintainer: Kino <cybaol292261 at 163 dot com>
+# Maintainer: Kino <cybao292261 at 163 dot com>
 # Contributor: Benjamin Chrétien <chretien dot b plus aur at gmail dot com>
 # Contributor: Fabio Loli <loli_fabio@protonmail.com>
 # Contributor: Yuxin Wu <ppwwyyxxc@gmail.com>
@@ -9,40 +9,59 @@
 # Contributor: ZiXiS
 
 pkgname=pcl
-pkgver=1.13.1
-pkgrel=1
-pkgdesc="A comprehensive open source library for n-D Point Clouds and 3D geometry processing"
-arch=('x86_64' 'i686')
-url='http://www.pointclouds.org'
-license=('BSD')
-depends=('boost' 'eigen' 'flann' 'vtk' 'libpcap' 'libpng' 'libusb' 'libx11')
+pkgver=1.15.1
+pkgrel=4
+pkgdesc="A standalone, large scale, open project for 2D/3D image and point cloud processing"
+arch=('x86_64')
+url='https://www.pointclouds.org'
+license=("BSD-3-Clause")
+depends=('boost' 'cjson' 'eigen' 'flann' 'freeglut' 'glew' 'vtk' 'libpcap' 'libpng' 'libusb' 'suitesparse' 'zlib')
 optdepends=('cuda' 'openmp' 'openni2' 'qhull')
-makedepends=('adios2' 'cgns' 'cli11' 'cmake' 'fmt' 'glew' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
-             'netcdf' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt5-base' 'utf8cpp')
-source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz")
+makedepends=('adios2' 'anari-sdk' 'cgns' 'cli11' 'cmake' 'fast_float' 'fmt' 'gl2ps' 'libharu' 'liblas' 'libxcursor'
+             'ninja' 'netcdf' 'nlohmann-json' 'openvr' 'ospray' 'pdal' 'python-mpi4py' 'qt6-base' 'utf8cpp' 'verdict')
+checkdepends=('gtest-src')
+source=("https://github.com/PointCloudLibrary/pcl/archive/${pkgname}-${pkgver}.tar.gz"
+        "https://github.com/PointCloudLibrary/pcl/pull/6354.diff")
+sha512sums=('ca9e742bc24b38f31c42c9ea08e19054e18d045f487269b64a7b831dada89936445d90a5b46870d8c24c2d25b33a59df2d904fe7e51bc0b231317cdb319951e9'
+            '92e6ebd060b29222e94de4b41be14891875cfd2c1cdf38c3a98b453045fb72c68e4fc2a6cde1dffb2380b94e46a0acd399bd339427eaa7d97dea27fb39671e3a')
+b2sums=('39dcb01d4409e3d4bc4241c5f48f0c450fea285cf3eaef5da6808aa4983ae56338a27e38bc4c77fe47354818564b495c63a6541a4ca9418a2336d0e8b92f4a0b'
+        '87fe710a282390d25d41bdf65b5e338989350703da88ef08fef9dc5737058f7d3ef3c36a1c59371ad21a1bd3a9a8af69771fc14712b53ce87a3be954a3cf75f4')
 
-sha256sums=('8ab98a9db371d822de0859084a375a74bdc7f31c96d674147710cf4101b79621')
+prepare() {
+  cd ${srcdir}/pcl-pcl-${pkgver}
+  sed -i "146i X11" visualization/CMakeLists.txt
+  patch -p1 < ${srcdir}/6354.diff
+}
 
 build() {
- # Create build directory
-  [ -d ${srcdir}/build ] || mkdir ${srcdir}/build
-  cd ${srcdir}/build
+  cmake -B build -S "${srcdir}/pcl-pcl-${pkgver}" \
+        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CUDA_STANDARD=17 \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+        -DBUILD_apps=ON \
+        -DBUILD_apps_3d_rec_framework=ON \
+        -DBUILD_apps_cloud_composer=ON \
+        -DBUILD_apps_in_hand_scanner=ON \
+        -DBUILD_apps_modeler=ON \
+        -DBUILD_apps_point_cloud_editor=ON \
+        -DBUILD_global_tests=ON \
+        -DBUILD_outofcore=OFF \
+        -DBUILD_simulation=ON \
+        -DBUILD_surface_on_nurbs=ON -DUSE_UMFPACK=ON \
+        -DBoost_USE_DEBUG_RUNTIME=OFF \
+        -DWITH_QT='QT6' \
+        -GNinja -Wno-dev
+  cmake --build build
+}
 
-  cmake ${srcdir}/pcl-pcl-${pkgver} \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DWITH_QT="QT5" \
-    -DCMAKE_CXX_STANDARD=14 \
-    -DBUILD_surface_on_nurbs=ON \
-    -DCUDA_HOST_COMPILER=/usr/bin/gcc
-
-  make
+check() {
+  ctest --test-dir build/test --output-on-failure
 }
 
 package() {
-  cd "${srcdir}/build"
-  make DESTDIR=${pkgdir} install
-
-  install -Dm644 ${srcdir}/pcl-pcl-${pkgver}/LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  DESTDIR="$pkgdir" cmake --install build
+  install -Dm644 ${srcdir}/pcl-pcl-${pkgver}/LICENSE.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt
 }
 options+=("!lto")

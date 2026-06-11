@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: python
 depends:
   - aarch64/libsearpc
 build_prefix: extra-aarch64

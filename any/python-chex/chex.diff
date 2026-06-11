@@ -1,0 +1,47 @@
+--- a/setup.py	2024-03-19 12:58:11.000000000 +0300
++++ b/setup.py	2024-04-17 15:19:33.593293889 +0300
+@@ -15,8 +15,11 @@
+ """Install script for setuptools."""
+ 
+ import os
+-from setuptools import find_packages
+-from setuptools import setup
++from pathlib import Path
++
++from setuptools import find_packages, setup
++from setuptools.command.build_py import build_py as _build_py
++
+ 
+ _CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+ 
+@@ -40,6 +43,15 @@
+     ]
+ 
+ 
++class build_py(_build_py):
++
++    def find_package_modules(self, package, package_dir):
++        modules = super().find_package_modules(package, package_dir)
++        return [(pkg, mod, file)
++                for pkg, mod, file in modules
++                if not Path(file).match('**/*_test.py')]
++
++
+ setup(
+     name='chex',
+     version=_get_version(),
+@@ -51,7 +63,7 @@
+     long_description_content_type='text/markdown',
+     author_email='chex-dev@google.com',
+     keywords='jax testing debugging python machine learning',
+-    packages=find_packages(exclude=['*_test.py']),
++    packages=find_packages(),
+     install_requires=_parse_requirements(
+         os.path.join(_CURRENT_DIR, 'requirements', 'requirements.txt')),
+     tests_require=_parse_requirements(
+@@ -73,4 +85,5 @@
+         'Topic :: Software Development :: Testing :: Unit',
+         'Topic :: Software Development :: Libraries :: Python Modules',
+     ],
++    cmdclass={'build_py': build_py},
+ )

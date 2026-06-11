@@ -1,0 +1,49 @@
+From 0c66b1c5b526373ea6aad421adeb18700647c8a4 Mon Sep 17 00:00:00 2001
+From: Kefu Chai <tchaikov@gmail.com>
+Date: Thu, 19 Jun 2025 16:19:04 +0800
+Subject: [PATCH] common/io_exerciser: fix buffer overread in DataGenerator
+
+Fix GCC-15 warning about reading uninitialized memory when copying
+random data to fill remaining bytes in generated blocks.
+
+The issue occurred when remainingBytes exceeded the 8-byte size of
+the uint64_t rand1 variable, causing memcpy to read beyond the
+variable's boundary. While this didn't cause crashes (reading from
+stack) and the buffer was still properly filled with rand2, it
+violated memory safety and generated compiler warnings.
+
+Fixed by limiting the copy size to the actual size of the source
+variable (sizeof(rand1)) to ensure we only read initialized memory.
+
+Resolves GCC-15 warnings:
+
+- DataGenerator.cc:76: memcpy reading 9-15 bytes from 8-byte region
+- DataGenerator.cc:108: memcpy reading 9-15 bytes from 8-byte region
+
+Signed-off-by: Kefu Chai <tchaikov@gmail.com>
+---
+ src/common/io_exerciser/DataGenerator.cc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/common/io_exerciser/DataGenerator.cc b/src/common/io_exerciser/DataGenerator.cc
+index e91b1df307479..573c38714b1c1 100644
+--- a/src/common/io_exerciser/DataGenerator.cc
++++ b/src/common/io_exerciser/DataGenerator.cc
+@@ -73,7 +73,7 @@ ceph::bufferptr SeededRandomGenerator::generate_block(uint64_t block_offset) {
+     size_t remainingBytes = block_size % (generation_length * 2);
+     if (remainingBytes > generation_length) {
+       size_t remainingBytes2 = remainingBytes - generation_length;
+-      std::memcpy(buffer + block_size - remainingBytes, &rand1, remainingBytes);
++      std::memcpy(buffer + block_size - remainingBytes, &rand1, generation_length);
+       std::memcpy(buffer + block_size - remainingBytes2, &rand2,
+                   remainingBytes2);
+     } else if (remainingBytes > 0) {
+@@ -105,7 +105,7 @@ ceph::bufferptr SeededRandomGenerator::generate_wrong_block(
+   size_t remainingBytes = block_size % (generation_length * 2);
+   if (remainingBytes > generation_length) {
+     size_t remainingBytes2 = remainingBytes - generation_length;
+-    std::memcpy(buffer + block_size - remainingBytes, &rand1, remainingBytes);
++    std::memcpy(buffer + block_size - remainingBytes, &rand1, generation_length);
+     std::memcpy(buffer + block_size - remainingBytes2, &rand2, remainingBytes2);
+   } else if (remainingBytes > 0) {
+     std::memcpy(buffer + block_size - remainingBytes, &rand1, remainingBytes);

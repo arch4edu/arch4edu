@@ -5,14 +5,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=highr
-_pkgver=0.10
+_pkgver=0.12
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Syntax Highlighting for R Source Code"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-xfun
 )
@@ -25,12 +25,12 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('75ac8d38e8c9b56e40220daebb00c4ea')
-sha256sums=('ec55bc1ff66390ed66806dc2a7b6c17dbfd089b3d73fe2e369017f8cb4bc347b')
+md5sums=('006fcfa8e16c72ecd1adffdf0cf87e43')
+b2sums=('264d5380f4b90ef39efb830cd912ade9b928afd2969824b6eddf69506563d8934c30e291e4ec98baf83f24f084e223ade6f38a9a52ece569475f023d412483ae')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {

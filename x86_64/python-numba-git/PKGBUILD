@@ -3,13 +3,21 @@
 # Contributor: Michael Schubert <mschu.dev at gmail>
 
 pkgname=python-numba-git
-pkgver=0.58.0dev0.r190.gc9cc06ba1
+pkgver=0.67.0dev0.r32.gd010e6ea7
 pkgrel=1
 pkgdesc='NumPy aware dynamic Python compiler using LLVM (Git version)'
 url='https://github.com/numba/numba'
 arch=('x86_64')
-license=('BSD')
-depends=('python-llvmlite>0.39.999' 'python-numpy' 'python-setuptools')
+license=('BSD-2-Clause')
+
+depends=(
+  'glibc'
+  'libgcc'
+  'libstdc++'
+  'python-llvmlite>=0.48.0dev0'
+  'python-numpy'
+  'python-setuptools'
+)
 optdepends=(
   'openmp: OpenMP threading backend'
   'tbb: TBB threading backend'
@@ -20,11 +28,23 @@ optdepends=(
   'python-colorama: error message highlighting'
   'python-pygments: “pretty” type annotation'
 )
-makedepends=('git' 'openmp' 'python-build' 'python-installer' 'python-wheel' 'tbb')
+makedepends=(
+  'git'
+  'openmp'
+  'python-build'
+  'python-installer'
+  'python-wheel'
+  'tbb'
+)
 conflicts=('python-numba')
 provides=("python-numba=$pkgver")
-source=('git+https://github.com/numba/numba.git')
-sha256sums=('SKIP')
+
+source=(
+  'git+https://github.com/numba/numba.git'
+)
+sha256sums=(
+  'SKIP'
+)
 
 pkgver() {
   cd numba
@@ -39,7 +59,11 @@ build() {
 package() {
   cd numba
   python -m installer --destdir="$pkgdir" dist/*.whl
-  install -dm755 "$pkgdir/usr/share/licenses/$pkgname"
   install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE LICENSES.third-party
+
+  # Remove tests from final package.
+  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+  rm -r "$pkgdir/$site_packages/numba/tests"
+  rm -r "$pkgdir/$site_packages/numba/cuda/tests"
 }
 makedepends+=("cython")

@@ -3,7 +3,7 @@
 
 pkgname=sge
 pkgver=8.1.9
-pkgrel=8
+pkgrel=9
 epoch=1
 pkgdesc="The Son of Grid Engine is a community project to continue Sun's old gridengine."
 arch=('x86_64')
@@ -19,7 +19,7 @@ depends=(
 	'python'
 	'tcsh'
 )
-makedepends=(inetutils make)
+makedepends=(db inetutils make python-fissix)
 install=${pkgname}.install
 source=(
 	#"https://arc.liv.ac.uk/downloads/SGE/releases/${pkgver}/${pkgname}_${pkgver}.tar.xz"
@@ -38,7 +38,19 @@ prepare() {
 
 	sed 's/} drmaa2_\(dict\|list\)_s;/};/g' -i source/libs/japi/drmaa2_list_dict.h
 
-	2to3 -w .
+	# termio.h removed from glibc, use termios.h
+	find source -name '*.c' -o -name '*.h' | xargs sed -i 's|<termio.h>|<termios.h>|g'
+
+	# struct winsize needs sys/ioctl.h
+	sed '/#include "uti\/sge_dstring.h"/i #include <sys/ioctl.h>' -i source/common/sge_ijs_comm.h
+
+	# Remove conflicting getpwuid/getpwnam declarations (pwd.h already declares them)
+	sed '/^extern struct passwd \*getpwuid/d' -i source/3rdparty/qmon/Xmt310/Xmt/FindFile.c
+
+	# Fix old-style function pointer typedefs for GCC 14 C23 compatibility
+	sed 's/typedef Widget (\*NameMatchProc)();/typedef Widget (*NameMatchProc)(...);/' -i source/3rdparty/qmon/Xmt310/Xmt/NameToWidget.c
+
+	python -m fissix -w .
 
 	sed '/AddSGEStartUpScript/s/^/#/' -i source/dist/inst_sge
 
@@ -58,7 +70,7 @@ prepare() {
 build() {
 	cd "${pkgname}-${pkgver}/source"
 
-	export SGE_INPUT_CFLAGS='-I/usr/include/tirpc -I/usr/include/openssl-1.0'
+	export SGE_INPUT_CFLAGS='-I/usr/include/tirpc -I/usr/include/openssl-1.0 -Wno-error=incompatible-pointer-types -Wno-error=int-conversion -Wno-error=implicit-function-declaration'
 	export SGE_INPUT_LDFLAGS='-ltirpc -L/usr/lib/openssl-1.0 -lssl -lcrypto'
 	flags='-no-java -no-jni -parallel 1'
 

@@ -1,29 +1,38 @@
-# Maintainer: Jonathon Fernyhough <jonathon + m2x + dev>
+# Maintainer:  Chris Severance aur.severach aATt spamgourmet dott com
+# Contributor: Jonathon Fernyhough <jonathon + m2x + dev>
 # Contributor: Konstantin Gizdov <arch at kge dot pw>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Daniel Kozak <kozzi11@gmail.com>
 
-pkgbase=gcc9
-pkgname=(${pkgbase} ${pkgbase}-libs ${pkgbase}-fortran)
-pkgver=9.5.0
-_majorver=${pkgver:0:1}
-_islver=0.24
-pkgrel=1
-pkgdesc='The GNU Compiler Collection'
-arch=(x86_64)
-license=(GPL LGPL FDL custom)
+set -u
+pkgbase='gcc9'
+pkgname=("${pkgbase}" "${pkgbase}-libs" "${pkgbase}-fortran")
+pkgver='9.5.0'
+_majorver="${pkgver: 0:1}"
+_islver='0.24'
+pkgrel=2
+pkgdesc="The GNU Compiler Collection (${_majorver}.x.x)"
+arch=('x86_64')
 url='https://gcc.gnu.org'
-makedepends=(binutils doxygen git libmpc python)
-checkdepends=(dejagnu inetutils)
-options=(!emptydirs !lto)
-_libdir=usr/lib/gcc/$CHOST/${pkgver%%+*}
+license=('GPL-2.0-only' 'LGPL-2.1-only' 'GPL-3.0-only' 'LGPL-3.0-only' 'GFDL-1.3-only' 'custom')
+makedepends=('binutils' 'doxygen' 'git' 'libmpc' 'python')
+checkdepends=('dejagnu' 'inetutils')
+options=('!emptydirs' '!strip' '!buildflags')
+options+=('!lto')
 # _commit=6957d3e4eef1f4243eb23ff62aea06139ef4415a
 # source=(git://gcc.gnu.org/git/gcc.git#commit=$_commit
-source=(https://ftp.gnu.org/gnu/gcc/gcc-$pkgver/gcc-$pkgver.tar.xz{,.sig}
-        https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2
-        c89 c99
-        fs64270.patch)
+source=(
+  "https://ftp.gnu.org/gnu/gcc/gcc-${pkgver}/gcc-${pkgver}.tar.xz"{,.sig}
+  "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2"
+  'c89'
+  'c99'
+  # Turn off SSP for nostdlib|nodefaultlibs|ffreestanding
+  # https://bugs.archlinux.org/task/64270
+  'fs64270.patch'
+  '78_all-libsanitizer-Fix-build-with-glibc-2.42.patch'
+  '79_all-sanitizer_common-Remove-reference-to-obsolete-termio.patch'
+)
 validpgpkeys=(F3691687D867B81B51CE07D9BBE43771487328A9  # bpiotrowski@archlinux.org
               86CFFCA918CF3AF47147588051E8B148A9999C34  # evangelos@foutrelis.com
               13975A70E63C361C73AE69EF6EEB81F8981C74C7  # richard.guenther@gmail.com
@@ -33,197 +42,251 @@ sha512sums=('cdd144ce4f747e051480410afc8506c90a57cb45da89071ddae377b1453bca30144
             'aab3bddbda96b801d0f56d2869f943157aad52a6f6e6a61745edd740234c635c38231af20bc3f1a08d416a5e973a90e18249078ed8e4ae2f1d5de57658738e95'
             '25f0e186388075e25c80c2322865e948f22678f6769886d30c09204eb0e7efd6653170b62e749ece674d0814843609be75a096fd54bb65a87fa4037cf2889d03'
             'a0589368eb84611e2fd7397c619b7f13700bfac8018a45c35bd1c0c3d59a2782609cb9d8d090696586ea721c6d93dca6f7f6c689ac729341ee62e035b1d5af14'
-            '38a0fedeac3eebe4a6a957792ba520225cf42663c96a171cd168fdb6c91ffa9a56b80351f8238c5d03b78d3ae2a6539a54481fe4848b4a395e2c87f2ff7adc08')
+            '38a0fedeac3eebe4a6a957792ba520225cf42663c96a171cd168fdb6c91ffa9a56b80351f8238c5d03b78d3ae2a6539a54481fe4848b4a395e2c87f2ff7adc08'
+            '6f730351be047b81dfbb9aef5132c39c4726939afc8ce3459d3d2bf36879282f7fd969c9332b6969f8efad0bc197ac6ecfcd67d37e212399aa61d2a6a1c0556f'
+            '166fdc8bdf02da112e4d5a9410c5fd7f5d17d96229365a7e65de48a2c0b801a6e9e870ff7738bf560e3dcc88824a1b0ac830823b979ff33591e0e55dcbd1dcc2')
+
+if [ -n "${_snapshot:-}" ]; then
+  _basedir="gcc-${_snapshot}"
+else
+  _basedir="gcc-${pkgver}"
+fi
+
+_fn_setlibdir() {
+  _libdir="usr/lib/gcc/${CHOST}/${pkgver%%+*}"
+}
 
 prepare() {
-  [[ ! -d gcc ]] && ln -s gcc-${pkgver/+/-} gcc
-  cd gcc
+  set -u
+  cd "${_basedir}"
 
   # link isl for in-tree build
-  ln -s ../isl-${_islver} isl
+  ln -s "../isl-${_islver}" 'isl'
 
   # Do not run fixincludes
-  sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+  sed -e 's@\./fixinc\.sh@-c true@' -i 'gcc/Makefile.in'
 
   # Arch Linux installs x86_64 libraries /lib
-  sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
+  case "${CARCH}" in
+  'x86_64') sed -e '/m64=/ s/lib64/lib/' -i 'gcc/config/i386/t-linux64' ;;
+  esac
 
   # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
+  sed -e '/ac_cpp=/ s/$CPPFLAGS/$CPPFLAGS -O2/' -i {libiberty,gcc}/configure
 
-  # Turn off SSP for nostdlib|nodefaultlibs|ffreestanding
-  # https://bugs.archlinux.org/task/64270
-  patch -p1 -i "$srcdir/fs64270.patch"
+  # Apply patches
+  local _pt
+  for _pt in "${source[@]%%::*}"; do
+    _pt="${_pt##*/}"
+    case "${_pt}" in
+    *.patch)
+      set +u; msg2 "*** Applying patch ${_pt}"; set -u
+      patch --no-backup-if-mismatch -Np1 -i "${srcdir}/${_pt}"
+      ;;
+    esac
+  done
 
-  mkdir -p "$srcdir/gcc-build"
+  rm -rf 'gcc-build'
+  mkdir 'gcc-build'
+
+  set +u
 }
 
 build() {
-  cd gcc-build
+  set -u
+  cd "${_basedir}/gcc-build"
 
   # using -pipe causes spurious test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
-  CFLAGS=${CFLAGS/-pipe/}
-  CXXFLAGS=${CXXFLAGS/-pipe/}
+  #CFLAGS="${CFLAGS/-pipe/}"
+  #CXXFLAGS="${CXXFLAGS/-pipe/}"
 
   # Force this for now, doesn't seem to be picked up via patch from https://bugs.archlinux.org/task/70701
-  CFLAGS+=" -Wno-format -Wno-format-security"
-  CXXFLAGS+=" -Wno-format -Wno-format-security"
+  #CFLAGS+=' -Wno-format -Wno-format-security'
+  #CXXFLAGS+=' -Wno-format -Wno-format-security'
 
-  "$srcdir/gcc/configure" --prefix=/usr \
-      --libdir=/usr/lib \
-      --libexecdir=/usr/lib \
-      --mandir=/usr/share/man \
-      --infodir=/usr/share/info \
-      --with-pkgversion="Arch Linux $pkgver-$pkgrel" \
-      --with-bugurl=https://bugs.archlinux.org/ \
-      --enable-languages=c,c++,fortran,lto \
-      --enable-shared \
-      --enable-threads=posix \
-      --with-system-zlib \
-      --with-isl \
-      --enable-__cxa_atexit \
-      --disable-libunwind-exceptions \
-      --enable-clocale=gnu \
-      --disable-libstdcxx-pch \
-      --disable-libssp \
-      --enable-gnu-unique-object \
-      --enable-linker-build-id \
-      --enable-lto \
-      --enable-plugin \
-      --enable-install-libiberty \
-      --with-linker-hash-style=gnu \
-      --enable-gnu-indirect-function \
-      --disable-werror \
-      --enable-checking=release \
-      --enable-default-pie \
-      --enable-default-ssp \
-      --enable-cet=auto \
-      --program-suffix=-${_majorver} \
-      --enable-version-specific-runtime-libs \
+  if [ ! -s 'Makefile' ]; then
+    # The following options are one per line, mostly sorted so they are easy to diff compare to other gcc packages.
+    local _conf=(
+      --disable-libssp
+      --disable-libstdcxx-pch
+      --disable-libunwind-exceptions
       --disable-multilib
-  make
+      --disable-werror
+      --enable-__cxa_atexit
+      --enable-cet='auto'
+      --enable-checking='release'
+      --enable-clocale='gnu'
+      --enable-default-pie
+      --enable-default-ssp
+      --enable-gnu-indirect-function
+      --enable-gnu-unique-object
+      --enable-install-libiberty
+      --enable-languages='c,c++,fortran,lto'
+      --enable-linker-build-id
+      --enable-lto
+      --enable-plugin
+      --enable-shared
+      --enable-threads='posix'
+      --enable-version-specific-runtime-libs
+      --infodir='/usr/share/info'
+      --libdir='/usr/lib'
+      --libexecdir='/usr/lib'
+      --mandir='/usr/share/man'
+      --program-suffix="-${_majorver}"
+      --with-bugurl="https://aur.archlinux.org/packages/${pkgname}/"
+      --with-isl
+      --with-linker-hash-style='gnu'
+      --with-pkgversion="Arch Linux ${pkgver}-${pkgrel}"
+      --with-system-zlib
+      --prefix='/usr'
+    )
+    ../configure "${_conf[@]}"
+
+    #sed -e 's/^STAGE1_CXXFLAGS.*$/& -std=gnu++11/' -i 'Makefile'
+  fi
+
+  # The system stdc must be used when gcc links to some system libraries.
+  LD_PRELOAD='/usr/lib/libstdc++.so' \
+  nice -n1 make -s
+
+  set +u; msg 'Compile complete'; set -u
 
   # make documentation
-  make -C $CHOST/libstdc++-v3/doc doc-man-doxygen
+  make -s -j1 -C "${CHOST}/libstdc++-v3/doc" 'doc-man-doxygen'
+  set +u
 }
 
-check() {
-  cd gcc-build
+check_disabled() {
+  set -u
+  cd "${_basedir}/gcc-build"
 
-  # disable libphobos test to avoid segfaults and other unfunny ways to waste my time  
-  sed -i '/maybe-check-target-libphobos \\/d' Makefile 
+  # disable libphobos test to avoid segfaults and other unfunny ways to waste my time
+  sed -e '/maybe-check-target-libphobos \\/d' -i 'Makefile'
 
   # do not abort on error as some are "expected"
   make -k check || true
-  "$srcdir/gcc/contrib/test_summary"
+  ../contrib/test_summary
+  set +u
 }
 
 package_gcc9-libs() {
-  pkgdesc='Runtime libraries shipped by GCC (9.x.x)'
+  set -u
+  pkgdesc="Runtime libraries shipped by GCC (${_majorver}.x.x)"
   depends=('glibc>=2.27')
-  options=(!emptydirs !strip)
-  provides=(libgfortran.so libubsan.so libasan.so libtsan.so liblsan.so)
+  options=('!emptydirs' '!strip')
+  provides=("libgfortran.so=${pkgver}" "libubsan.so=${pkgver}" "libasan.so=${pkgver}" "libtsan.so=${pkgver}" "liblsan.so=${pkgver}")
 
-  cd gcc-build
-  make -C $CHOST/libgcc DESTDIR="$pkgdir" install-shared
-  mv "${pkgdir}/${_libdir}"/../lib/* "${pkgdir}/${_libdir}"
-  rmdir "${pkgdir}/${_libdir}"/../lib
-  rm -f "$pkgdir/$_libdir/libgcc_eh.a"
+  cd "${_basedir}/gcc-build"
+  make -j1 -s -C "${CHOST}/libgcc" DESTDIR="${pkgdir}" 'install-shared'
+  local _libdir; _fn_setlibdir
+  mv "${pkgdir}/${_libdir}/../lib"/* "${pkgdir}/${_libdir}"
+  rmdir "${pkgdir}/${_libdir}/../lib"
+  rm -f "${pkgdir}/${_libdir}/libgcc_eh.a"
 
-  for lib in libatomic \
-             libgfortran \
-             libgomp \
-             libitm \
-             libquadmath \
-             libsanitizer/{a,l,ub,t}san \
-             libstdc++-v3/src \
-             libvtv; do
-    make -C $CHOST/$lib DESTDIR="$pkgdir" install-toolexeclibLTLIBRARIES
+  local _lib _libs=(
+    libatomic
+    libgfortran
+    libgomp
+    libitm
+    libquadmath
+    libsanitizer/{a,l,ub,t}san
+    libstdc++-v3/src
+    libvtv
+  )
+  for _lib in "${_libs[@]}"; do
+    make -j1 -s -C "${CHOST}/${_lib}" DESTDIR="${pkgdir}" 'install-toolexeclibLTLIBRARIES'
   done
 
-  make -C $CHOST/libstdc++-v3/po DESTDIR="$pkgdir" install
+  make -j1 -s -C "${CHOST}/libstdc++-v3/po" DESTDIR="${pkgdir}" install
 
   # Install Runtime Library Exception
-  install -Dm644 "$srcdir/gcc/COPYING.RUNTIME" \
-    "$pkgdir/usr/share/licenses/${pkgname}/RUNTIME.LIBRARY.EXCEPTION"
+  install -Dpm644 '../COPYING.RUNTIME' \
+    "${pkgdir}/usr/share/licenses/${pkgbase}-libs/RUNTIME.LIBRARY.EXCEPTION"
 
   # remove conflicting files
-  rm -rf "${pkgdir}"/usr/share/locale
+  rm -rf "${pkgdir}/usr/share/locale"
+  set +u
 }
 
 package_gcc9() {
-  pkgdesc="The GNU Compiler Collection - C and C++ frontends (9.x.x)"
-  depends=("${pkgbase}-libs=$pkgver-$pkgrel" 'binutils>=2.28' libmpc)
-  options=(!emptydirs staticlibs)
+  set -u
+  pkgdesc="The GNU Compiler Collection - C and C++ frontends (${_majorver}.x.x)"
+  depends=("${pkgbase}-libs=${pkgver}-${pkgrel}" 'binutils>=2.28' 'libmpc')
+  options=('!emptydirs' 'staticlibs')
 
-  cd gcc-build
+  cd "${_basedir}/gcc-build"
 
-  make -C gcc DESTDIR="$pkgdir" install-driver install-cpp install-gcc-ar \
-    c++.install-common install-headers install-plugin install-lto-wrapper
+  make -j1 -s -C 'gcc' DESTDIR="${pkgdir}" 'install-driver' 'install-cpp' 'install-gcc-ar' \
+    'c++.install-common' 'install-headers' 'install-plugin' 'install-lto-wrapper'
 
-  install -m755 -t "$pkgdir/${_libdir}/" gcc/{cc1,cc1plus,collect2,lto1,gcov{,-tool}}
+  local _libdir; _fn_setlibdir
+  install -m755 -t "${pkgdir}/${_libdir}/" gcc/{cc1,cc1plus,collect2,lto1,gcov{,-tool}}
 
-  make -C $CHOST/libgcc DESTDIR="$pkgdir" install
-  rm -rf "${pkgdir}/${_libdir}"/../lib
+  make -j1 -s -C "${CHOST}/libgcc" DESTDIR="${pkgdir}" install
+  rm -rf "${pkgdir}/${_libdir}/../lib"
 
-  make -C $CHOST/libstdc++-v3/src DESTDIR="$pkgdir" install
-  make -C $CHOST/libstdc++-v3/include DESTDIR="$pkgdir" install
-  make -C $CHOST/libstdc++-v3/libsupc++ DESTDIR="$pkgdir" install
-  make -C $CHOST/libstdc++-v3/python DESTDIR="$pkgdir" install
-  rm -f "${pkgdir}/${_libdir}"/libstdc++.so*
+  make -j1 -s -C "${CHOST}/libstdc++-v3/src" DESTDIR="${pkgdir}" install
+  make -j1 -s -C "${CHOST}/libstdc++-v3/include" DESTDIR="${pkgdir}" install
+  make -j1 -s -C "${CHOST}/libstdc++-v3/libsupc++" DESTDIR="${pkgdir}" install
+  make -j1 -s -C "${CHOST}/libstdc++-v3/python" DESTDIR="${pkgdir}" install
+  rm -f "${pkgdir}/${_libdir}/"libstdc++.so*
 
-  make DESTDIR="$pkgdir" install-fixincludes
-  make -C gcc DESTDIR="$pkgdir" install-mkheaders
+  make -j1 -s DESTDIR="${pkgdir}" 'install-fixincludes'
+  make -j1 -s -C 'gcc' DESTDIR="${pkgdir}" 'install-mkheaders'
+  make -j1 -s -C 'lto-plugin' DESTDIR="${pkgdir}" install
 
-  make -C lto-plugin DESTDIR="$pkgdir" install
+  make -j1 -s -C "${CHOST}/libgomp" DESTDIR="${pkgdir}" install-nodist_{libsubinclude,toolexeclib}HEADERS
+  make -j1 -s -C "${CHOST}/libitm" DESTDIR="${pkgdir}" 'install-nodist_toolexeclibHEADERS'
+  make -j1 -s -C "${CHOST}/libquadmath" DESTDIR="${pkgdir}" 'install-nodist_libsubincludeHEADERS'
+  make -j1 -s -C "${CHOST}/libsanitizer" DESTDIR="${pkgdir}" install-nodist_{saninclude,toolexeclib}HEADERS
+  make -j1 -s -C "${CHOST}/libsanitizer/asan" DESTDIR="${pkgdir}" 'install-nodist_toolexeclibHEADERS'
+  make -j1 -s -C "${CHOST}/libsanitizer/tsan" DESTDIR="${pkgdir}" 'install-nodist_toolexeclibHEADERS'
+  make -j1 -s -C "${CHOST}/libsanitizer/lsan" DESTDIR="${pkgdir}" 'install-nodist_toolexeclibHEADERS'
 
-  make -C $CHOST/libgomp DESTDIR="$pkgdir" install-nodist_{libsubinclude,toolexeclib}HEADERS
-  make -C $CHOST/libitm DESTDIR="$pkgdir" install-nodist_toolexeclibHEADERS
-  make -C $CHOST/libquadmath DESTDIR="$pkgdir" install-nodist_libsubincludeHEADERS
-  make -C $CHOST/libsanitizer DESTDIR="$pkgdir" install-nodist_{saninclude,toolexeclib}HEADERS
-  make -C $CHOST/libsanitizer/asan DESTDIR="$pkgdir" install-nodist_toolexeclibHEADERS
-  make -C $CHOST/libsanitizer/tsan DESTDIR="$pkgdir" install-nodist_toolexeclibHEADERS
-  make -C $CHOST/libsanitizer/lsan DESTDIR="$pkgdir" install-nodist_toolexeclibHEADERS
-
-  make -C libcpp DESTDIR="$pkgdir" install
-  make -C gcc DESTDIR="$pkgdir" install-po
+  make -j1 -s -C 'libcpp' DESTDIR="${pkgdir}" install
+  make -j1 -s -C 'gcc' DESTDIR="${pkgdir}" 'install-po'
 
   # many packages expect this symlink
-  ln -s gcc-${_majorver} "$pkgdir"/usr/bin/cc-${_majorver}
+  ln -s "gcc-${_majorver}" "${pkgdir}/usr/bin/cc-${_majorver}"
 
   # POSIX conformance launcher scripts for c89 and c99
-  install -Dm755 "$srcdir/c89" "$pkgdir/usr/bin/c89-${_majorver}"
-  install -Dm755 "$srcdir/c99" "$pkgdir/usr/bin/c99-${_majorver}"
+  install -Dm755 "${srcdir}/c89" "${pkgdir}/usr/bin/c89-${_majorver}"
+  install -Dm755 "${srcdir}/c99" "${pkgdir}/usr/bin/c99-${_majorver}"
 
   # byte-compile python libraries
-  python -m compileall "$pkgdir/usr/share/gcc-${pkgver%%+*}/"
-  python -O -m compileall "$pkgdir/usr/share/gcc-${pkgver%%+*}/"
+  python -m 'compileall' "${pkgdir}/usr/share/gcc-${pkgver%%+*}/"
+  python -O -m 'compileall' "${pkgdir}/usr/share/gcc-${pkgver%%+*}/"
 
   # Install Runtime Library Exception
-  install -d "$pkgdir/usr/share/licenses/$pkgname/"
-  ln -s /usr/share/licenses/${pkgbase}-libs/RUNTIME.LIBRARY.EXCEPTION \
-    "$pkgdir/usr/share/licenses/$pkgname/"
+  install -d "${pkgdir}/usr/share/licenses/${pkgname}/"
+  ln -s "/usr/share/licenses/${pkgbase}-libs/RUNTIME.LIBRARY.EXCEPTION" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/"
 
   # Remove conflicting files
-  rm -rf "$pkgdir"/usr/share/locale
+  rm -rf "${pkgdir}/usr/share/locale"
+  set +u
 }
 
 package_gcc9-fortran() {
-  pkgdesc='Fortran front-end for GCC (9.x.x)'
-  depends=("${pkgbase}=$pkgver-$pkgrel")
+  set -u
+  pkgdesc="Fortran front-end for GCC (${_majorver}.x.x)"
+  depends=("${pkgbase}=${pkgver}-${pkgrel}")
 
-  cd gcc-build
-  make -C $CHOST/libgfortran DESTDIR="$pkgdir" install-cafexeclibLTLIBRARIES \
+  cd "${_basedir}/gcc-build"
+  make -j1 -s -C "${CHOST}/libgfortran" DESTDIR="${pkgdir}" 'install-cafexeclibLTLIBRARIES' \
     install-{toolexeclibDATA,nodist_fincludeHEADERS,gfor_cHEADERS}
-  make -C $CHOST/libgomp DESTDIR="$pkgdir" install-nodist_fincludeHEADERS
-  make -C gcc DESTDIR="$pkgdir" fortran.install-common
-  install -Dm755 gcc/f951 "$pkgdir/${_libdir}/f951"
+  make -j1 -s -C "${CHOST}/libgomp" DESTDIR="${pkgdir}" 'install-nodist_fincludeHEADERS'
+  make -j1 -s -C 'gcc' DESTDIR="${pkgdir}" 'fortran.install-common'
+  local _libdir; _fn_setlibdir
+  install -Dm755 'gcc/f951' "${pkgdir}/${_libdir}/f951"
 
-  ln -s gfortran-${_majorver} "$pkgdir/usr/bin/f95-${_majorver}"
+  ln -s "gfortran-${_majorver}" "${pkgdir}/usr/bin/f95-${_majorver}"
 
   # Install Runtime Library Exception
-  install -d "$pkgdir/usr/share/licenses/$pkgname/"
-  ln -s /usr/share/licenses/${pkgbase}-libs/RUNTIME.LIBRARY.EXCEPTION \
-    "$pkgdir/usr/share/licenses/$pkgname/"
+  install -d "${pkgdir}/usr/share/licenses/${pkgname}/"
+  ln -s "/usr/share/licenses/${pkgbase}-libs/RUNTIME.LIBRARY.EXCEPTION" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/"
+  set +u
 }
+set +u

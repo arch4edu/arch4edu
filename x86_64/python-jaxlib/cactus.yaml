@@ -2,10 +2,8 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
-depends:
-  - x86_64/python-ml-dtypes
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed 's/--target_cpu_features native/--target_cpu_features release/' -i PKGBUILD
+  sed 's/--target_cpu_feature.*=release/--target_cpu_features=default/' -i PKGBUILD
 post_build: aur-post-build

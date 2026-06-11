@@ -1,0 +1,24 @@
+diff -rupN generic/tclXgeneral.c generic_fix/tclXgeneral.c
+--- generic/tclXgeneral.c	2002-04-04 01:09:05.000000000 -0500
++++ generic_fix/tclXgeneral.c	2013-07-19 17:49:57.726435546 -0400
+@@ -405,7 +405,7 @@ TclX_LoopObjCmd (dummy, interp, objc, ob
+ 		char buf [64];
+ 		
+ 		sprintf (buf, "\n    (\"loop\" body line %d)", 
+-			interp->errorLine);
++			Tcl_GetErrorLine(interp));
+ 		Tcl_AddErrorInfo (interp, buf);
+ 	    }
+ 	    break;
+diff -rupN generic/tclXlib.c generic_fix/tclXlib.c
+--- generic/tclXlib.c	2005-03-24 00:04:38.000000000 -0500
++++ generic_fix/tclXlib.c	2013-07-19 17:49:57.739768878 -0400
+@@ -239,7 +239,7 @@ EvalFilePart (interp, fileName, offset,
+      */
+     buf = ckalloc (strlen (fileName) + 64);
+     sprintf (buf, "\n    (file \"%s\" line %d)", fileName,
+-             interp->errorLine);
++             Tcl_GetErrorLine(interp));
+     Tcl_AddErrorInfo (interp, buf);
+     ckfree (buf);
+     goto errorExit;

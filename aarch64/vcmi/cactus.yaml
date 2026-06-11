@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - aarch64/fuzzylite
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  add makedepends qt5-tools
+post_build: aur-post-build

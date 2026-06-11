@@ -1,7 +1,7 @@
 # Contributor: Dmitriy Morozov <archlinux@foxcub.org>
 pkgname=ann
 pkgver=1.1.2
-pkgrel=3
+pkgrel=4
 pkgdesc="Approximate nearest neighbor library."
 url="http://www.cs.umd.edu/~mount/ANN/"
 arch=('i686' 'x86_64')

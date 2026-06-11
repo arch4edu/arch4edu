@@ -6,14 +6,14 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=evaluate
-_pkgver=0.21
+_pkgver=1.0.5
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=4
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Parsing and Evaluation Tools that Provide More Details than the Default"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -23,14 +23,18 @@ optdepends=(
   r-rlang
   r-testthat
   r-withr
+  r-callr
+  r-pkgload
+  r-knitr
+  r-ragg
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fcd53297915079edf4f846d0c6489379')
-sha256sums=('3178c99cee8917d7d128806d064d4fecce7845ed07f42e759dcc0adda89c22b9')
+md5sums=('64d96fee3845fd96d1eafaba37adf00e')
+b2sums=('ea33c07a4c5c57ebdf4b715b17ee4c95cca9558dcfb4df80d0c606fd428cd592c708469c367293d134b8f91744bc7c267241d1844f344020582bee1afd4b12b4')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {

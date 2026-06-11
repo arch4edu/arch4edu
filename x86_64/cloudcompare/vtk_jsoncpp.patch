@@ -1,0 +1,98 @@
+Submodule plugins/core/Standard/qMasonry contains modified content
+diff --git a/plugins/core/Standard/qMasonry/qAutoSeg/CMakeLists.txt b/plugins/core/Standard/qMasonry/qAutoSeg/CMakeLists.txt
+index 9865f33..b6b0d42 100644
+--- a/plugins/core/Standard/qMasonry/qAutoSeg/CMakeLists.txt
++++ b/plugins/core/Standard/qMasonry/qAutoSeg/CMakeLists.txt
+@@ -6,7 +6,7 @@ option( PLUGIN_STANDARD_MASONRY_QAUTO_SEG "Check to install QAutoSeg plugin" OFF
+ if ( PLUGIN_STANDARD_MASONRY_QAUTO_SEG )
+ 
+     project( QAUTO_SEG_PLUGIN )
+-    
++
+     AddPlugin( NAME ${PROJECT_NAME} )
+ 
+ 	target_sources( ${PROJECT_NAME}
+@@ -26,12 +26,14 @@ if ( PLUGIN_STANDARD_MASONRY_QAUTO_SEG )
+ 	# Find Packages
+ 	# Find PCL
+ 	#set( PCL_DIR "C:/Program Files/PCL 1.9.1") #DGM: can't do that as it will obviously conflict with most of the users settings ;)
++	set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/lib/cmake/vtk )
++	find_package( JsonCpp REQUIRED )
+ 	find_package( PCL 1.9.1 REQUIRED )
+ 
+ 	# Find OpenCV
+ 	#set( OpenCV_DIR "C:/opencv/build" ) #DGM: can't do that as it will obviously conflict with most of the users settings ;)
+ 	find_package( OpenCV REQUIRED )
+-	
++
+ 	if (WIN32)
+ 		# We need to copy the OpenCV "World" DLL file next to CloudCompare.exe
+ 		set( OpenCV_WORLD_DLL "" CACHE FILEPATH "Opencv 'World' DLL file path" )
+@@ -48,7 +50,7 @@ if ( PLUGIN_STANDARD_MASONRY_QAUTO_SEG )
+ 		# [C/C++]>[Preprocessor]>[Preprocessor Definitions]
+ 		add_definitions( ${PCL_DEFINITIONS} )
+ 
+-		# For Use Not PreCompiled Features 
++		# For Use Not PreCompiled Features
+ 		#add_definitions( -DPCL_NO_PRECOMPILE )
+ 
+ 		# [Linker]>[General]>[Additional Library Directories]
+@@ -67,7 +69,7 @@ if ( PLUGIN_STANDARD_MASONRY_QAUTO_SEG )
+ 				copy_files("${OpenCV_WORLD_DEBUG_DLL}" ${CLOUDCOMPARE_DEST_FOLDER} 2)
+ 			endif()
+ 		endif()
+-	  
++
+ 	endif()
+-	
++
+ endif()
+diff --git a/plugins/core/Standard/qMasonry/qManualSeg/CMakeLists.txt b/plugins/core/Standard/qMasonry/qManualSeg/CMakeLists.txt
+index 1c13d67..79ff351 100644
+--- a/plugins/core/Standard/qMasonry/qManualSeg/CMakeLists.txt
++++ b/plugins/core/Standard/qMasonry/qManualSeg/CMakeLists.txt
+@@ -6,7 +6,7 @@ option( PLUGIN_STANDARD_MASONRY_QMANUAL_SEG "Check to install qManualSeg plugin"
+ if ( PLUGIN_STANDARD_MASONRY_QMANUAL_SEG )
+ 
+     project( QMANUAL_SEG_PLUGIN )
+-    
++
+     AddPlugin( NAME ${PROJECT_NAME} )
+ 
+ 
+@@ -20,10 +20,12 @@ if ( PLUGIN_STANDARD_MASONRY_QMANUAL_SEG )
+ 		PRIVATE
+ 			${CMAKE_CURRENT_SOURCE_DIR}
+ 	)
+- 
++
+ 	# Find Packages
+ 	# Find PCL
+ 	#set( PCL_DIR "C:/Program Files/PCL 1.9.1") #DGM: can't do that as it will obviously conflict with most of the users settings ;)
++	set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/lib/cmake/vtk )
++	find_package( JsonCpp REQUIRED )
+ 	find_package( PCL 1.9.1 REQUIRED )
+ 
+ 	# Find OpenCV
+@@ -46,7 +48,7 @@ if ( PLUGIN_STANDARD_MASONRY_QMANUAL_SEG )
+ 		# [C/C++]>[Preprocessor]>[Preprocessor Definitions]
+ 		add_definitions( ${PCL_DEFINITIONS} )
+ 
+-		# For Use Not PreCompiled Features 
++		# For Use Not PreCompiled Features
+ 		#add_definitions( -DPCL_NO_PRECOMPILE )
+ 
+ 		# [Linker]>[General]>[Additional Library Directories]
+diff --git a/plugins/core/Standard/qPCL/PclUtils/CMakeLists.txt b/plugins/core/Standard/qPCL/PclUtils/CMakeLists.txt
+index a78dd7129..5b5c1e2af 100644
+--- a/plugins/core/Standard/qPCL/PclUtils/CMakeLists.txt
++++ b/plugins/core/Standard/qPCL/PclUtils/CMakeLists.txt
+@@ -2,6 +2,8 @@ project( QPCL_PLUGIN_UTILS_LIB )
+ 
+ find_package( Qt5 COMPONENTS Widgets REQUIRED )
+ 
++set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/lib/cmake/vtk )
++find_package( JsonCpp REQUIRED )
+ find_package( PCL 1.9 REQUIRED )
+ 
+ add_library( ${PROJECT_NAME} STATIC )

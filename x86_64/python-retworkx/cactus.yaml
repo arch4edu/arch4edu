@@ -1,9 +1,0 @@
-nvchecker:
-  - source: aur
-    aur:
-  - alias: python
-build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  sed '/build\/lib\/retworkx/d' -i PKGBUILD
-post_build: aur-post-build

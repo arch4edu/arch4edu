@@ -1,40 +1,51 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
-_cranname=timechange
-_cranver=0.2.0
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
+_pkgname=timechange
+_pkgver=0.4.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Efficient Manipulation of Date-Times"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(GPL3)
-depends=(cctz r)
-makedepends=(r-cpp11)
-checkdepends=(r-testthat)
-optdepends=(r-testthat r-knitr)
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('3d602008052123daef94a5c3f5154c5461b4ec0432ab70c37273d7ddd252f7f1')
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-3.0-or-later')
+depends=(
+  cctz
+  r
+)
+makedepends=(
+  r-cpp11
+)
+checkdepends=(
+  r-testthat
+)
+optdepends=(
+  r-knitr
+  r-testthat
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "system-cctz.patch")
+md5sums=('4cabacecbed68e3beb00e47d42fc9fca'
+         '0111def4195dc0497273ed1c287e1906')
+b2sums=('d037c1d8872583fe33b8f36b86d33ddac29fbb95114a6717e9dcb510d0be0595cb60ac1cbd75a04e08e62d1a907a8ab71e07b31c9b71fce4640902e3d10ed1ac'
+        'b3178081cb18390b88fc540fe5ea29393336b03bb51b582c281c5dee371d7b419f3dec7acd02f850f853bad3fc2bbe2173eb9c8526a28abde5d030f7b95feb15')
 
 prepare() {
   # build against system cctz
-  sed -i -e 's/$(SHLIB): libcctz.a/$(SHLIB):/' \
-      -e 's#PKG_CPPFLAGS= -I. -I./cctz/src/#PKG_CPPFLAGS= -I.#' \
-      "$_cranname/src/Makevars"
+  patch -Np1 -i system-cctz.patch
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "${_cranname}" -l "${srcdir}/build"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {
-  cd "${_cranname}/tests"
-  R_LIBS="${srcdir}/build" NOT_CRAN=true Rscript --vanilla testthat.R
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-  cp -a --no-preserve=ownership "build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }

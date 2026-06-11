@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspSem
-_pkgver=0.17.2.1
+_pkgver=0.95.3
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.95.3
 pkgrel=1
 pkgdesc="SEM Module for JASP"
 arch=('any')
@@ -21,9 +21,10 @@ depends=(r
   r-stringr
   r-tibble
   r-tidyr
+  r-semsens
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('0df1ea3fe7a2be29b9db8abb14286fbccab801bcdc61dc734a75ce75b2771e31')
+sha256sums=('0444d3a157b7a2719e12273157bdb3bf80fb253f045fd1bb98753ba761e945d7')
 
 
 build() {
@@ -34,6 +35,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

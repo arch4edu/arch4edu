@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspJags
-_pkgver=0.17.2.1
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="JAGS Module for JASP"
 arch=('any')
@@ -16,11 +16,12 @@ depends=(r
   r-jaspbase
   r-jaspgraphs
   r-rjags
+  r-runjags
   r-stringr
 )
 optdepends=()
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('b858814934ffc019dfcf651e68d5d91a69f519b9cde956e4265a8b63bea7c19e')
+sha256sums=('142ddf03cd209a6a0ff708509fca8a4bf370fa75a7b9bf0517128d2b2a61e5c0')
 
 
 build() {
@@ -31,6 +32,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

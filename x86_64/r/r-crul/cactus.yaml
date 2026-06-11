@@ -5,8 +5,10 @@ depends:
   - x86_64/r/r-curl
   - x86_64/r/r-httpcode
   - x86_64/r/r-jsonlite
+  - x86_64/r/r-lifecycle
   - x86_64/r/r-mime
   - x86_64/r/r-r6
+  - x86_64/r/r-rlang
   - x86_64/r/r-urltools
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

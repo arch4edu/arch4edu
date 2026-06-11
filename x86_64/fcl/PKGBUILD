@@ -5,10 +5,10 @@ url='https://github.com/flexible-collision-library/fcl'
 pkgname=fcl
 pkgver=0.7.0
 arch=('i686' 'x86_64')
-pkgrel=1
+pkgrel=2
 license=('BSD')
 makedepends=('cmake' 'octomap')
-depends=('libccd' 'eigen')
+depends=('libccd' 'eigen3')
 optdepends=('octomap: collision detection with octrees'
             'tinyxml: support for global penetration depth test'
             'flann: support for fast approximate nearest neighbor searches')
@@ -23,7 +23,7 @@ build() {
   cmake ${srcdir}/${_dir} \
     -DCMAKE_INSTALL_PREFIX="/usr" \
     -DCMAKE_INSTALL_LIBDIR="lib" \
-    -DCMAKE_BUILD_TYPE="Release"
+    -DCMAKE_BUILD_TYPE="Release" -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
   make
 }

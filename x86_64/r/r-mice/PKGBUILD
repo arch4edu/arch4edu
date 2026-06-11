@@ -1,61 +1,62 @@
-# system requirements: C++11
-# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mice
-_pkgver=3.15.0
+_pkgver=3.19.0
 pkgname=r-${_pkgname,,}
-pkgver=3.15.0
-pkgrel=3
-pkgdesc='Multivariate Imputation by Chained Equations'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Multivariate Imputation by Chained Equations"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  gcc
-  r
   r-broom
-  r-cpp11
   r-dplyr
-  r-generics
+  r-glmnet
+  r-mitml
   r-rcpp
-  r-rlang
   r-tidyr
+)
+makedepends=(
+  r-cpp11
+)
+checkdepends=(
+  r-testthat
 )
 optdepends=(
   r-broom.mixed
-  r-decor
   r-furrr
   r-future
-  r-glmnet
   r-haven
   r-knitr
+  r-literanger
   r-lme4
-  r-lmtest
-  r-mass
-  r-metafor
   r-miceadds
-  r-mitml
-  r-nnet
   r-pan
   r-parallelly
   r-purrr
   r-randomforest
   r-ranger
   r-rmarkdown
-  r-rpart
   r-rstan
-  r-survival
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('3d64dd260e3dce9c4c2f7be8c99f3063769df9ccfd3a0fc827c2de0ac842e87b')
+md5sums=('644ce5b607f5040154453b57df584372')
+b2sums=('f12e2b6121f8aa3b046cb46d82c6708a3383a3c794b0c5b149ae06643080068abd3458b3d60ae1e8354a8b5fc9feedaa1a893c97d7cf2a09b4a1f2c92258401b')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

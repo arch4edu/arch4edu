@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - source: github
+    github: JMUWRobotics/3DTK
+depends:
+  - x86_64/apriltag
+  - x86_64/ann
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -2,7 +2,7 @@
 
 pkgname=arch4edu-keyring
 pkgver=20200805
-pkgrel=1
+pkgrel=2
 pkgdesc='arch4edu PGP keyring'
 arch=('any')
 url='https://github.com/arch4edu/keyring'

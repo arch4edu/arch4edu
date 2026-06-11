@@ -1,0 +1,6 @@
+nvchecker:
+  - source: archpkg
+    archpkg: xonotic-data
+build_prefix: extra-x86_64
+pre_build: abs-pre-build
+post_build: abs-post-build

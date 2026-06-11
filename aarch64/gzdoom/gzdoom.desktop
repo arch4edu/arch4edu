@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GZDoom
+GenericName=Advanced Doom source port with OpenGL support
+Icon=gzdoom
+Exec=gzdoom %F
+Terminal=false
+MimeType=application/x-doom-wad;
+Categories=Game;ActionGame;

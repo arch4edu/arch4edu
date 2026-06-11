@@ -1,16 +1,16 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dumux
-_dunever=2.9.0
-_tarver=3.7.0
+_dunever=2.10.0
+_tarver=3.10.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
 pkgrel=4
 pkgdesc="An open-source simulator and research code in modern C++"
 arch=(x86_64)
 url="https://${pkgname}.org"
-license=(GPL3)
+license=(GPL-3.0-or-later)
 depends=("dune-grid>=${_dunever}" "dune-istl>=${_dunever}" "dune-localfunctions>=${_dunever}")
-makedepends=(doxygen graphviz python-scikit-build python-ninja)
+makedepends=(doxygen graphviz python-scikit-build)
 optdepends=('dune-alugrid: for grid manager ALUGrid support'
   'dune-foamgrid: for grid manager FoamGrids support'
   'dune-functions: for functions spaces support'
@@ -19,12 +19,13 @@ optdepends=('dune-alugrid: for grid manager ALUGrid support'
   'dune-spgrid: for grid manager SPGrid support'
   'dune-mmesh: for grid manager MMesh support')
 source=(https://git.iws.uni-stuttgart.de/${pkgname}-repositories/${pkgname}/-/archive/${_tar})
-sha512sums=('b68a75d73700c4cda4b65450b0b2f0a63521e3211c36f01be0d8c2ef5406d810c30b939042bd76edb90ed76f8d38da0e07becc6c94990a5f9d14c0dce36abc2e')
+sha512sums=('4f285e359fc999949ec347390bcc6feb5c291d10e974a720d1f1468a771177d231240da6094c2fa3941adb799ccd097fc58376c20fc7d0fd9518fa21ef0f6f01')
 
 prepare() {
   cd ${pkgname}-${pkgver}
   export _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
   sed -i 's/^Version: '"${pkgver%%.0}"'/Version: '"${pkgver}"'/' dune.module
+  sed -i "s/'requests',/'requests', 'dune-geometry',/" pyproject.toml
   sed -i 's/"python"/"\/usr\/include\/dumux\/common\/"/' python/dumux/common/properties.py
   python -m venv --system-site-packages _skbuild/linux-${CARCH}-${_pyversion}/cmake-build/dune-env
 }
@@ -58,6 +59,5 @@ package() {
   install -Dm 644 LICENSE.md -t "${pkgdir}/usr/share/licenses/${pkgname}"
   local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
   install -Dm 644 python/${pkgname}/__init__.py -t "${pkgdir}${site_packages}"/${pkgname}
-  mv "${pkgdir}"/usr/python/dune/data "${pkgdir}${site_packages}"/${pkgname}
   find "${pkgdir}" -type d -empty -delete
 }

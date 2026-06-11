@@ -1,0 +1,127 @@
+# Maintainer: Jingbei Li <i@jingbei.li>
+# Multi-package PKGBUILD for diagnostics - isolated staging per subpackage
+
+pkgbase='ros2-humble-diagnostics'
+pkgname=(
+  'ros2-humble-diagnostic-updater'  # Already exists in AUR
+    'ros2-humble-diagnostic-aggregator'
+    'ros2-humble-diagnostic-common-diagnostics'
+    'ros2-humble-diagnostic-remote-logging'
+    'ros2-humble-self-test'
+    'ros2-humble-diagnostics'
+)
+pkgver=4.0.6
+pkgrel=1
+pkgdesc="Diagnostics packages for ROS 2"
+arch=('x86_64')
+url="https://github.com/ros/diagnostics"
+license=('Apache-2.0')
+depends=(
+    'ros2-humble'
+)
+makedepends=(
+    'ros2-humble'
+    'cmake'
+    'python'
+)
+source=("https://github.com/ros/diagnostics/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('0bfde33160893104729188f5781db00cadd182af96ff10febfd5d2de0dd70f1c')
+
+build() {
+    local _staging="$srcdir/_staging"
+    rm -rf "$_staging"
+    mkdir -p "$_staging"
+
+    # Build in dependency order
+    # 1. diagnostic_updater (needs diagnostic_msgs from ros2-humble)
+    _build_install_isolated diagnostic_updater ""
+    # 2. diagnostic_common_diagnostics (needs diagnostic_updater)
+    _build_install_isolated diagnostic_common_diagnostics "$_staging/diagnostic_updater/opt/ros/humble"
+    # 3. diagnostic_aggregator (needs diagnostic_msgs)
+    _build_install_isolated diagnostic_aggregator ""
+    #  ️ diagnostic_remote_logging (needs diagnostic_updater implicitly)
+    _build_install_isolated diagnostic_remote_logging "$_staging/diagnostic_updater/opt/ros/humble"
+    # 5. self_test (needs diagnostic_updater)
+    _build_install_isolated self_test "$_staging/diagnostic_updater/opt/ros/humble"
+    # 6. diagnostics (meta package, no install)
+    :
+}
+
+# Helper: build and install one subdirectory to its own staging location
+_build_install_isolated() {
+    local _subdir="$1"
+    local _extra_prefix="$2"
+    msg2 "Building $1 ..."
+    cd "$srcdir/diagnostics-$pkgver/$_subdir"
+    source /opt/ros/humble/setup.bash
+    export CXXFLAGS="${CXXFLAGS} -include cstdint"
+    if [ -n "$_extra_prefix" ]; then
+        export CMAKE_PREFIX_PATH="${_extra_prefix}:${CMAKE_PREFIX_PATH}"
+    fi
+    cmake -B "build-$_subdir" -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/opt/ros/humble -Wno-dev
+    cmake --build "build-$_subdir"
+    local _pkg_staging="$_staging/$_subdir"
+    DESTDIR="$_pkg_staging" cmake --install "build-$_subdir"
+}
+
+package_ros2-humble-diagnostics() {
+    pkgdesc="Meta-package for ROS 2 diagnostics suite"
+    arch=('any')
+    depends=(
+        'ros2-humble-diagnostic-updater'
+        'ros2-humble-diagnostic-aggregator'
+        'ros2-humble-diagnostic-common-diagnostics'
+        'ros2-humble-self-test'
+    )
+    :
+}
+
+package_ros2-humble-diagnostic-aggregator() {
+    pkgdesc="diagnostic_aggregator aggregates diagnostic messages"
+    arch=('x86_64')
+    depends=('ros2-humble')
+    local _staging_pkg="$srcdir/_staging/diagnostic_aggregator"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+
+package_ros2-humble-diagnostic-common-diagnostics() {
+    pkgdesc="Predefined diagnostic nodes for monitoring Linux and ROS system"
+    arch=('any')
+    depends=(
+        'ros2-humble'
+        'ros2-humble-diagnostic-updater'
+        'lm-sensors'
+        'python-psutil'
+        'python-ntplib'
+    )
+    local _staging_pkg="$srcdir/_staging/diagnostic_common_diagnostics"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+
+package_ros2-humble-diagnostic-remote-logging() {
+    pkgdesc="Remote logging for diagnostics (InfluxDB)"
+    arch=('x86_64')
+    depends=('ros2-humble' 'curl')
+    local _staging_pkg="$srcdir/_staging/diagnostic_remote_logging"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+
+package_ros2-humble-self-test() {
+    pkgdesc="Self test tools for diagnostics"
+    arch=('x86_64')
+    depends=('ros2-humble' 'ros2-humble-diagnostic-updater')
+    local _staging_pkg="$srcdir/_staging/self_test"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}
+package_ros2-humble-diagnostic-updater() {
+    pkgdesc="diagnostic_updater contains tools for easily updating diagnostics"
+    arch=('x86_64')
+    depends=('ros2-humble')
+    local _staging_pkg="$srcdir/_staging/diagnostic_updater"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+}

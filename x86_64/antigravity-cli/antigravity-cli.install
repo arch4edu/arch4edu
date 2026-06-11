@@ -1,0 +1,4 @@
+post_install() {
+    echo ">>> To configure your shell environment for Antigravity CLI, run:"
+    echo ">>>   agy install"
+}

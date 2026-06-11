@@ -9,42 +9,38 @@
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 _base=petsc
 pkgname=${_base}-complex
-pkgver=3.19.2
-pkgrel=4
+pkgver=3.25.2
+pkgrel=1
 _config=linux-c-opt
 # if --with-debugging=yes is set then PETSC_ARCH is automatically set to
 #"linux-c-debug" for some things, so the _config should be changed too
 #_config=linux-c-debug
 pkgdesc="Portable, extensible toolkit for scientific computation (complex scalars)"
-arch=('i686' 'x86_64')
+arch=(i686 x86_64)
 url="https://${_base}.org"
-license=('custom:BSD-2-clause')
+license=(BSD-2-Clause)
 options=(staticlibs)
-conflicts=("${_base}")
+conflicts=(${_base})
 provides=("${_base}=${pkgver}")
-depends=('python-numpy' 'openmpi' 'boost' 'lapack')
-makedepends=('gcc' 'gcc-fortran' 'cmake' 'cython')
-checkdepends=('openssh')
-optdepends=('trilinos: support for zoltan'
-  'ptscotch: support for ptscotch sequential and parallel graph partitioning library'
-  'parmetis: support for parmetis parallel graph partitioning library'
+depends=(hdf5-openmpi fftw-openmpi gsl lapack libjpeg-turbo libyaml netcdf-openmpi
+  python-numpy python-mpi4py pastix scotch superlu suitesparse zfp zlib hwloc)
+makedepends=(cmake cython gcc gcc-fortran python-setuptools)
+# checkdepends=()
+optdepends=('hypre: support for the hypre sparse system solver'
+  'kokkos: support for Kokkos'
   'metis: support for metis graph partitioning library'
-  'pastix: support for the pastix solver'
-  'superlu: support for the superlu sparse solver'
-  'superlu_dist: support for the superlu_dist sparse solver'
-  'hypre: support for the hypre sparse system solver'
-  'hdf5-openmpi: support for the parallel version of HDF5'
   'mumps: support for the mumps sparse solver'
-  'fftw: support for the FFTW fast Fourier transform'
+  'parmetis: support for parmetis parallel graph partitioning library'
+  'scalapack: support for ScaLAPACK'
+  'superlu_dist: support for the superlu_dist sparse solver'
   'triangle: support for the two-dimensional quality mesh generator and Delaunay triangulator'
-  'suitesparse: support for the suitesparse sparse matrix libraries'
   'valgrind: support for valgrind to help find memory-management problems in programs'
-  'libyaml: support for YAML-formatted file')
+  'zoltan: support for zoltan')
 install=${_base}.install
-source=(https://ftp.mcs.anl.gov/pub/${_base}/release-snapshots/${_base}-lite-${pkgver}.tar.gz
+source=(https://web.cels.anl.gov/projects/${_base}/download/release-snapshots/${_base}-lite-${pkgver}.tar.gz
   test_optdepends.sh)
-sha512sums=('f8feeb66fa8bd2406227be0e2cc2946485238362270d40e3f07dc89491177751f6bf680f51b70696bc30b677624c0e525c3fa9784eabdeb2337697ec56f63fc1'
-  'b943a7add71dcc80fd8a68671398f4d5e70554b5bdba6199c440333ef6bbb4aa02cbdda5ab89f25b72389a5e3151a3c55878c0ad945c2a5769265a5601a0f90e')
+sha512sums=('2c2bb5845600d3a0dd1cc019ec026bbc6b105b4f3e81c28b311923e2e4269df6ad6e74ab25821eb75127a85fd6f95e833e80ccad0e83c8b62fd3c9431f2ef833'
+            'ecffd8038523be647d730d4148fc2edf68a7ac2681433ff1d8377ad65fc871c19b4de78e09796e3968d7589c506dd436c16a52927f8503bd6a44604c45ff30ce')
 
 _install_dir=/opt/${_base}/${_config}
 _petsc_arch=arch-${_config}
@@ -57,11 +53,27 @@ build() {
   export PETSC_DIR=${_build_dir}
 
   OPTFLAGS='-O3 -march=native'
-  CONFOPTS="--with-shared-libraries=1 \
+  CONFOPTS="
             --with-petsc4py=1 \
+            --with-shared-libraries=1 \
             --with-mpi-f90module-visibility=0 \
-            --with-cc=$(which mpicc) --with-cxx=$(which mpicxx) --with-fc=$(which mpifort) \
+            --with-bison=1 \
+            --with-cmake=0 \
+            --with-mpi-dir=/usr \
+            --with-netcdf=1 \
+            --with-libjpeg=1 \
+            --with-yaml=1 \
+            --with-fftw=1 \
+            --with-gsl=1 \
+            --with-zlib=1 \
+            --with-superlu-lib=-lsuperlu --with-superlu-include=/usr/include/superlu \
+            --with-suitesparse=1 \
+            --with-hdf5=1 --with-hdf5-fortran-bindings=1 \
+            --with-hwloc=1 \
+            --with-pastix=1 \
+            --with-ptscotch=1 --with-bison=1 --with-ptscotch-lib=[libesmumps.so,libptscotch.so,libptscotcherr.so,libscotch.so,libscotcherr.so] --with-ptscotch-include=/usr/include/scotch \
             --with-scalar-type=complex \
+            --without-zfp \
             $(sh ${srcdir}/test_optdepends.sh)"
 
   echo ${CONFOPTS}
@@ -72,14 +84,10 @@ build() {
   make DESTDIR=${srcdir}/tmp install
 }
 
-check() {
-  cd ${srcdir}/${_base}-${pkgver}
-
-  if [ -z "$(ldconfig -p | grep libcuda.so.1)" ]; then
-    export OMPI_MCA_opal_warn_on_missing_libcuda=0
-  fi
-  PYTHONPATH=${srcdir}/tmp/${_install_dir}/lib:${PYTHONPATH} make check
-}
+# check() {
+#   cd ${srcdir}/${_base}-${pkgver}
+#   PYTHONPATH=${srcdir}/tmp/${_install_dir}/lib:${PYTHONPATH} make check
+# }
 
 package() {
   _build_dir=${srcdir}/${_base}-${pkgver}
@@ -102,4 +110,4 @@ package() {
   # install pkgconfig settings
   install -Dm 644 ${_build_dir}/${_petsc_arch}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
-makedepends+=("fftw" "hdf5-openmpi" "hypre" "metis" "mumps" "parmetis" "pastix" "scotch" "suitesparse" "superlu" "superlu_dist" "triangle" "valgrind")
+depends+=("mumps" "parmetis-git")

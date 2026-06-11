@@ -1,31 +1,42 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 
 pkgname='python-jax'
-pkgver=0.4.12
+pkgver=0.9.0
 pkgrel=1
-pkgdesc='Differentiate, compile, and transform Numpy code.'
+pkgdesc='Composable transformations of Python+NumPy programs'
 arch=('any')
-url='https://github.com/google/jax/'
-license=('Apache')
-depends=('python-absl'
-         'python-jaxlib>=0.4.12'
-         'python-ml-dtypes'
-         'python-numpy'
-         'python-opt_einsum'
-         'python-scipy')
-optdepends=('python-protobuf: Australis')
+url='https://github.com/jax-ml/jax/'
+license=('Apache-2.0')
+depends=(
+    'python-jaxlib>=0.9.0'
+    'python-ml-dtypes'
+    'python-numpy'
+    'python-opt_einsum'
+    'python-scipy'
+)
+optdepends=(
+    'python-protobuf: Australis'
+    'python-requests: Distributed computations'
+    'python-kubernetes: Distributed support in k8s clusters'
+)
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
-source=("jax-${pkgver}.tar.gz::https://github.com/google/jax/archive/refs/tags/jax-v${pkgver}.tar.gz")
-sha256sums=('1eaac492af57959e5d12562888ce2cdda54c4d02121070bd4b2e933cdaf16e18')
+source=("jax-${pkgver}.tar.gz::$url/archive/refs/tags/jax-v${pkgver}.tar.gz"
+        'python-jax.diff')
+sha256sums=('8525c72ac7ea01851297df5b25ca4622c65299c265c87dfe78420bb29e7b1bb3'
+            'SKIP')
+
+prepare() {
+    cd jax-jax-v$pkgver
+    patch -p 1 -i ../python-jax.diff
+}
 
 build() {
-    cd jax-jax-v$pkgver
-    python -m build -n -w
+    JAX_RELEASE=$pkgver python -m build -nw jax-jax-v$pkgver
 }
 
 package() {
-    python -m installer \
-        --compile-bytecode 1 \
-        --destdir $pkgdir \
-        jax-jax-v$pkgver/dist/jax-$pkgver-py3-*-*.whl
+    cd jax-jax-v$pkgver
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
+        dist/jax-$pkgver-*.whl
 }

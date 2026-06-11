@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace -u '0.0.20' '0.0.21'
+post_build: aur-post-build

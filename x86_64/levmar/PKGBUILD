@@ -2,7 +2,7 @@
 # contributor: Carl Rogers <carl.rogers@gmail.com>
 pkgname=levmar
 pkgver=2.6
-pkgrel=3
+pkgrel=4
 pkgdesc='Levenberg-Marquardt nonlinear least squares algorithms in C/C++'
 url='http://users.ics.forth.gr/~lourakis/levmar'
 arch=('i686' 'x86_64' 'aarch64')

@@ -2,8 +2,8 @@
 # Contributor: farseerfc <farseerfc@archlinuxcn.org>
 
 pkgname=jfbview
-pkgver=0.6.0
-pkgrel=3
+pkgver=0.6.1
+pkgrel=1
 pkgdesc="PDF and image viewer for the Linux framebuffer"
 arch=('i686' 'pentium4' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/jichu4n/jfbview"
@@ -25,7 +25,7 @@ build(){
       -DBUILD_TESTING=OFF \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=/usr
-  cmake --build build
+  cmake --build build -j$(nproc)
 }
 
 package(){

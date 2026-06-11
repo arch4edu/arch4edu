@@ -1,0 +1,34 @@
+Removes the meson dependencies from pyproject.toml for the meson-pypy3 package.
+
+This dependency doesn't resolve, because meson is installed for CPython, not
+PyPy, so the PyPy module tools do not know about it. This is not a problem
+since the meson-pypy3 backend doesn't import meson directly, but instead invokes
+the /usr/bin/meson script which runs under CPython.
+
+In short, meson-pypy3 only requires meson to be installed globally, not as a PyPy
+package specifically, and since the PKGBUILD dependencies ensures that meson is
+installed as a dependency, it's safe to remove it here.
+
+  - Maks Verver.
+
+
+--- pyproject.toml.orig	2025-01-03 18:12:19.369524633 +0100
++++ pyproject.toml	2025-01-03 18:12:45.889803200 +0100
+@@ -6,8 +6,6 @@
+ build-backend = 'mesonpy'
+ backend-path = ['.']
+ requires = [
+-  'meson >= 0.64.0; python_version < "3.12"',
+-  'meson >= 1.2.3; python_version >= "3.12"',
+   'packaging >= 23.2',
+   'pyproject-metadata >= 0.9.0',
+   'tomli >= 1.0.0; python_version < "3.11"',
+@@ -35,8 +33,6 @@
+ ]
+ 
+ dependencies = [
+-  'meson >= 0.64.0; python_version < "3.12"',
+-  'meson >= 1.2.3; python_version >= "3.12"',
+   'packaging >= 23.2',
+   'pyproject-metadata >= 0.9.0',
+   'tomli >= 1.0.0; python_version < "3.11"',

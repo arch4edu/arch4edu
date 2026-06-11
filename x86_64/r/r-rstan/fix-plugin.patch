@@ -1,0 +1,17 @@
+diff --git a/rstan/R/plugin.R b/rstan/R/plugin.R
+index d254ce4..659c48a 100644
+--- a/rstan/R/plugin.R
++++ b/rstan/R/plugin.R
+@@ -96,8 +96,10 @@ rstanplugin <- function() {
+   else {
+     StanHeaders_pkg_libs <- system.file("lib", .Platform$r_arch,
+                                         package = "StanHeaders", mustWork = TRUE)
+-    RcppParallel_pkg_libs <- system.file("lib", .Platform$r_arch,
+-                                         package = "RcppParallel", mustWork = TRUE)
++    RcppParallel_pkg_libs <- file.path(system.file(package = "RcppParallel", mustWork = TRUE), "lib")
++    if (!dir.exists(RcppParallel_pkg_libs)) {
++      RcppParallel_pkg_libs <- "/usr/lib"
++    }
+     rstan_StanServices <- system.file("lib", .Platform$r_arch, "libStanServices.a",
+                                       package = "rstan", mustWork = TRUE)
+   }

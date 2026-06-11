@@ -2,30 +2,32 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=libcoin
-_pkgver=1.0-9
+_pkgver=1.0-13
 pkgname=r-${_pkgname,,}
-pkgver=1.0.9
-pkgrel=7
-pkgdesc='Linear Test Statistics for Permutation Inference'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Linear Test Statistics for Permutation Inference"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
-  r
+  lapack
   r-mvtnorm
 )
 optdepends=(
+  r-bibtex
   r-coin
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('2d7dd0b7c6dfc20472430570419ea36a714da7bbafd336da1fb53c5c6463d9eb')
+md5sums=('0b06f2e2cfc30448179ace1b1a770c11')
+b2sums=('c0d69ed37a25c7f8b76202be91c2301ce446025efa3eb9282c45b99adfa077294560ed52fbbd2bddc5a1d97e8a98e5f23dc58145a2bc6a3eee209be3646e7881')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

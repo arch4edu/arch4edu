@@ -4,8 +4,10 @@ nvchecker:
 depends:
   - x86_64/r/r-alabama
   - x86_64/r/r-nleqslv
-  - x86_64/r/r-randtoolbox
+  - x86_64/r/r-qrng
   - x86_64/r/r-rcpp
+  - x86_64/r/r-spacefillr
+makedepends:
   - x86_64/r/r-rcpparmadillo
 build_prefix: extra-x86_64
 makepkg_args: --nocheck

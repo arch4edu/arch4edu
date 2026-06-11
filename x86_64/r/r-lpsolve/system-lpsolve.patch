@@ -1,0 +1,9 @@
+diff --git a/lpSolve/src/Makevars b/lpSolve/src/Makevars
+index e0c65cc..0370c40 100644
+--- a/lpSolve/src/Makevars
++++ b/lpSolve/src/Makevars
+@@ -1 +1,3 @@
+-PKG_CPPFLAGS=-I . -DINTEGERTIME -DPARSER_LP -DBUILDING_FOR_R -DYY_NEVER_INTERACTIVE -DUSRDLL -DCLOCKTIME -DRoleIsExternalInvEngine -DINVERSE_ACTIVE=INVERSE_LUSOL -DINLINE=static -DParanoia
++PKG_CPPFLAGS = -I/usr/include/lpsolve -DINTEGERTIME -DPARSER_LP -DBUILDING_FOR_R -DYY_NEVER_INTERACTIVE -DUSRDLL -DCLOCKTIME -DRoleIsExternalInvEngine -DINVERSE_ACTIVE=INVERSE_LUSOL -DINLINE=static -DParanoia
++PKG_LIBS = -llpsolve55
++OBJECTS = init.o lpslink56.o

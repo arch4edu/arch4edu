@@ -4,7 +4,7 @@ _pkgname=ggpol
 _pkgver=0.0.7
 pkgname=r-${_pkgname,,}
 pkgver=0.0.7
-pkgrel=4
+pkgrel=10
 pkgdesc="Visualizing Social Science Data with 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ optdepends=(
   r-knitr
   r-rmarkdown
 )
-source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+source=("https://cran.r-project.org/src/contrib/Archive/${_pkgname}/${_pkgname}_${_pkgver}.tar.gz")
 sha256sums=('35684f5be49148e584269d63e5cc34cc46b6c16e9e90ca435952cecaa711b987')
 
 build() {

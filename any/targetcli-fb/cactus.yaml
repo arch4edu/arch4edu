@@ -3,7 +3,6 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any/python-configshell-fb
   - any/python-rtslib-fb
 build_prefix: extra-x86_64
 pre_build: aur-pre-build

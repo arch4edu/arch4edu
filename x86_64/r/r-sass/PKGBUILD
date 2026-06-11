@@ -1,57 +1,63 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-_cranname=sass
-_cranver=0.4.6
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+_pkgname=sass
+_pkgver=0.4.10
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=2
 pkgdesc="Syntactically Awesome Style Sheets ('Sass')"
-arch=(i686 x86_64)
-url="https://cran.r-project.org/package=${_cranname}"
-license=(MIT)
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
-    libsass
-    r-fs
-    r-rlang
-    r-htmltools
-    r-r6
-    r-rappdirs
+  libsass
+  r-fs
+  r-htmltools
+  r-r6
+  r-rappdirs
+  r-rlang
 )
-checkdepends=(r-curl r-testthat r-withr)
+checkdepends=(
+  r-curl
+  r-testthat
+  r-withr
+)
 optdepends=(
-    r-testthat
-    r-knitr
-    r-rmarkdown
-    r-withr
-    r-shiny
-    r-curl
+  r-curl
+  r-knitr
+  r-rmarkdown
+  r-shiny
+  r-testthat
+  r-withr
 )
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('2ee82ce709b7fdee78f7e2364d04f369f58fc2cda4bb5a235bd53c49d311c019')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
+        "system-libsass.patch")
+md5sums=('16054a7117a81ba75893fec17da62209'
+         'e10e29d8d704275081d06953467928d5')
+b2sums=('ffa2a4ffabea503c45d99cda26b62f75a5107e18caae6b40962901c090ac7031079b766f5556ca7815ca48438b7907cf537febe662be6682de39b9b55dd56805'
+        '8c0b765fefe74d1e93abcc3d0249044431ec75ad26a9df83548720c07fd795f70e2117867032e05a742fd2ff7e844606aa210456968080052e9815d025a81f69')
 
 prepare() {
   # build against system libsass
-  sed -e 's|PKG_LIBS = ./libsass/lib/libsass.a|PKG_LIBS = -lsass|' \
-      -e '/PKG_CPPFLAGS = -I/d' \
-      -e 's|$(SHLIB): libsass/lib/libsass.a|$(SHLIB):|' \
-      -i "$_cranname/src/Makevars"
+  patch -Np1 -i system-libsass.patch
 }
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_cranname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
-  cd "$_cranname/tests"
+_check() {
+  cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
 }
 
 package() {
   install -d "$pkgdir/usr/lib/R/library"
-  cp -a --no-preserve=ownership "build/$_cranname" "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 
   install -d "$pkgdir/usr/share/licenses/$pkgname"
-  ln -s "/usr/lib/R/library/$_cranname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }

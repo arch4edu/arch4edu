@@ -1,0 +1,39 @@
+diff --git a/src/crimson/os/seastore/segment_manager/zbd.cc b/src/crimson/os/seastore/segment_manager/zbd.cc
+index 22efbed5940..b8611a6c33f 100644
+--- a/src/crimson/os/seastore/segment_manager/zbd.cc
++++ b/src/crimson/os/seastore/segment_manager/zbd.cc
+@@ -22,7 +22,7 @@ SET_SUBSYS(seastore_device);
+ using z_op = crimson::os::seastore::segment_manager::zbd::zone_op;
+ template <> struct fmt::formatter<z_op>: fmt::formatter<std::string_view> {
+   template <typename FormatContext>
+-  auto format(z_op s, FormatContext& ctx) {
++  auto format(z_op s, FormatContext& ctx) const {
+     std::string_view name = "Unknown";
+     switch (s) {
+       using enum z_op;
+diff --git a/src/osd/PeeringState.h b/src/osd/PeeringState.h
+index ed531b7d121..a27f13b0d04 100644
+--- a/src/osd/PeeringState.h
++++ b/src/osd/PeeringState.h
+@@ -71,7 +71,7 @@ struct fmt::formatter<PGPool> {
+   constexpr auto parse(ParseContext& ctx) { return ctx.begin(); }
+ 
+   template <typename FormatContext>
+-  auto format(const PGPool& pool, FormatContext& ctx)
++  auto format(const PGPool& pool, FormatContext& ctx) const
+   {
+     return fmt::format_to(ctx.out(),
+                           "{}/{}({})",
+diff --git a/src/test/osd/scrubber_generators.h b/src/test/osd/scrubber_generators.h
+index 47f63e52401..7723209b0d3 100644
+--- a/src/test/osd/scrubber_generators.h
++++ b/src/test/osd/scrubber_generators.h
+@@ -247,7 +247,7 @@ struct fmt::formatter<ScrubGenerator::RealObj> {
+   constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+ 
+   template <typename FormatContext>
+-  auto format(const ScrubGenerator::RealObj& rlo, FormatContext& ctx)
++  auto format(const ScrubGenerator::RealObj& rlo, FormatContext& ctx) const
+   {
+     using namespace ScrubGenerator;
+     return fmt::format_to(ctx.out(),

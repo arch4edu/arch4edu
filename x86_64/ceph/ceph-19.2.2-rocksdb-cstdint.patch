@@ -1,0 +1,24 @@
+diff --git b/src/rocksdb/db/blob/blob_file_meta.h a/src/rocksdb/db/blob/blob_file_meta.h
+index d7c8a12..d688825 100644
+--- b/src/rocksdb/db/blob/blob_file_meta.h
++++ a/src/rocksdb/db/blob/blob_file_meta.h
+@@ -10,6 +10,7 @@
+ #include <memory>
+ #include <string>
+ #include <unordered_set>
++#include <cstdint>
+
+ #include "rocksdb/rocksdb_namespace.h"
+
+diff --git b/src/rocksdb/include/rocksdb/trace_record.h a/src/rocksdb/include/rocksdb/trace_record.h
+index c00f5ca..e6c9b7e 100644
+--- b/src/rocksdb/include/rocksdb/trace_record.h
++++ a/src/rocksdb/include/rocksdb/trace_record.h
+@@ -8,6 +8,7 @@
+ #include <memory>
+ #include <string>
+ #include <vector>
++#include <cstdint>
+
+ #include "rocksdb/rocksdb_namespace.h"
+ #include "rocksdb/slice.h"

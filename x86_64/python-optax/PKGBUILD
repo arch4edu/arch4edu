@@ -1,0 +1,40 @@
+# Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
+
+pkgname='python-optax'
+_pkgname=${pkgname#python-}
+pkgver=0.2.8
+pkgrel=1
+pkgdesc='A gradient processing and optimization library for JAX'
+arch=('any')
+url='https://github.com/google-deepmind/optax'
+license=('Apache-2.0')
+depends=('python-absl' 'python-jax' 'python-numpy')
+makedepends=('python-build' 'python-installer' 'python-flit-core' 'python-wheel')
+optdepends=('python-dm-haiku: Deep learning framework from DeepMind'
+            'python-flax: Deep learning framework from Google')
+source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
+        'optax.diff')
+sha256sums=('c5864f15c7f9ddfa3f703d8a1f73d5a516db07d220fb0a434741d23f45da4559'
+            'SKIP')
+
+prepare() {
+    cd "$_pkgname-$pkgver"
+    sed -i "s/^__version__.*/__version__ = '$pkgver'/" optax/__init__.py
+    patch -p 1 -i ../optax.diff
+}
+
+build() {
+    python -m build -n -w "$_pkgname-$pkgver"
+}
+
+check() {
+    cd "${_pkgname}-${pkgver}"
+    python -c 'import optax'
+}
+
+package() {
+    cd "${_pkgname}-${pkgver}"
+    install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
+        dist/$_pkgname-$pkgver-*.whl
+}

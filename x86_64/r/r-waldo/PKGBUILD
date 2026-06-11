@@ -1,30 +1,30 @@
+# Maintainer: Elio <ancibrothers@gmail.com>
 # Maintainer: peippo <christoph+aur@christophfink.com>
 # Maintainer: Grey Christoforo <first name at last name dot net>
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
-_cranname=waldo
-_cranver=0.5.1
-pkgname=r-${_cranname,,}
+_pkgname=waldo
+_pkgver=0.6.2
+pkgname=r-${_pkgname,,}
 pkgdesc="Anything to ‘POSIXct’ or ‘Date’ Converter"
-url="https://cran.r-project.org/package=${_cranname}"
+url="https://cran.r-project.org/package=${_pkgname}"
 license=("MIT")
-pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgver=${_pkgver//-/.}
+pkgrel=2
 
 arch=("any")
 depends=(
-    "r"
+    "r>=4.0"
     "r-cli"
     "r-diffobj>=0.3.4"
-    "r-fansi"
     "r-glue"
-    "r-rematch2"
-    "r-rlang>=1.0.0"
-    "r-tibble"
+    "r-rlang>=1.1.0"
 )
 optdepends=(
-    "r-covr"
+    "r-bit64"
     "r-r6"
+    "r-s7"
+    "r-testthat>=3.0.0"
     "r-withr"
     "r-xml2"
 )
@@ -48,23 +48,23 @@ optdepends=(
 #     "r-testthat"
 # )
 
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("019b9e17d5c4d9f3b687c03dffdffa640ee05abd52ad1b77651c698e3292e4229aa538336955d8cd4ef8ca4d75307647c8a4d259e27a404e048d394ec69604e4")
+source=("https://cloud.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+b2sums=('fe4bd4b98135cb652b57999e314f3af81fb515375dbae5457e6b3632887236a90329df7a46914ce572fcceddd745ec364df226c1863ea0d51d904ef0e4944410')
 
 build() {
     mkdir -p "${srcdir}/build/"
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+    R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}/build/"
 }
 
 # check() {
 #     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
+#     R CMD check --no-manual "${_pkgname}"
 # }
 
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_pkgname}" "${pkgdir}/usr/lib/R/library"
+    if [[ -f "${_pkgname}/LICENSE" ]]; then
+        install -Dm0644 "${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
 }

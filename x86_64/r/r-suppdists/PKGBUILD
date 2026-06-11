@@ -1,14 +1,14 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=SuppDists
-_pkgver=1.1-9.7
+_pkgver=1.1-9.9
 pkgname=r-${_pkgname,,}
-pkgver=1.1.9.7
-pkgrel=4
-pkgdesc='Supplementary Distributions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Supplementary Distributions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
 )
@@ -16,14 +16,15 @@ optdepends=(
   r-rcppziggurat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6b5527e2635c0ff762eb7af8154704c85e66d7f79a9524089a5c98dfa94dab08')
+md5sums=('f1a8585c9511b9d93788cf38b8207c48')
+b2sums=('e1a3e57a1f7b26b7ce369e53a11d11a7b9935f6cb5affbca1cab74288729223245c3a6cecc7aa7a366b919b1cb228e38f3d35c31a25274651ba656f8cb80c26e')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

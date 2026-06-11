@@ -1,6 +1,7 @@
 [__config__]
 oldver = "nvchecker-old.txt"
 newver = "nvchecker-new.txt"
+max_concurrency = 1
 
 [c-ares]
 source = "archpkg"
@@ -17,6 +18,10 @@ archpkg = "curl"
 [ssl]
 source = "archpkg"
 archpkg = "openssl"
+
+[brotli]
+source = "archpkg"
+archpkg = "brotli"
 
 [zlib]
 source = "archpkg"
@@ -49,3 +54,7 @@ archpkg = "libassuan"
 [gpgme]
 source = "archpkg"
 archpkg = "gpgme"
+
+[libseccomp]
+source = "archpkg"
+archpkg = "libseccomp"

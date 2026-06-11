@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-minqa
+  - x86_64/r/r-mitools
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-rcpp
+makedepends:
+  - x86_64/r/r-rcpparmadillo
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

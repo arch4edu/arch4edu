@@ -1,33 +1,33 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=randomForest
-_pkgver=4.7-1.1
+_pkgver=4.7-1.2
 pkgname=r-${_pkgname,,}
-pkgver=4.7.1.1
-pkgrel=3
-pkgdesc="Breiman and Cutler's Random Forests for Classification and Regression"
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Breiman and Cutlers Random Forests for Classification and Regression"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r
-)
-optdepends=(
-  r-mass
-  r-rcolorbrewer
 )
 makedepends=(
   gcc-fortran
 )
+optdepends=(
+  r-rcolorbrewer
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f59ea87534480edbcd6baf53d7ec57e8c69f4532c2d2528eacfd48924efa2cd6')
+md5sums=('31fe6885dccafec29a9315b771c25971')
+b2sums=('e5164dae8be0eb14f5f6fca9fbdde065b1479913ec0c1c0f77d7dc0be591efe903df9198c278d9fc99c432052b2f97b8632ea885b720dc4f59c353440d0d63ce')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

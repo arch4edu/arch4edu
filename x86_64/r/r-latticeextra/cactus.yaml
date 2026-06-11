@@ -8,5 +8,7 @@ depends:
   - x86_64/r/r-rcolorbrewer
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace -u '0.6-30' '0.6-31'
 post_build: aur-post-build

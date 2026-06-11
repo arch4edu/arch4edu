@@ -1,14 +1,14 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ordinal
-_pkgver=2022.11-16
+_pkgver=2025.12-29
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
+pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Regression Models for Ordinal Data"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(GPL)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
   r-numderiv
   r-ucminf
@@ -22,12 +22,12 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('66cc1aa18294ae6295d237b92e111817')
-sha256sums=('5488ad1dfa531a09d017d68d7393d376c8bc49cceeaa6a3e5f7d57b99168d493')
+md5sums=('3cde159a88b96ed9ac797dbe941e00ca')
+b2sums=('d6e03f200328ea86fa3d17ae2114ec11beacda62e2774a6d970b7253c018aee19a25cacf6feba64112e4cd9dc621676ac36873cbfd2fced9c744f2b5cd98a00a')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 check() {

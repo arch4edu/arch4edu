@@ -4,7 +4,7 @@ _pkgname=R.matlab
 _pkgver=3.7.0
 pkgname=r-${_pkgname,,}
 pkgver=3.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Read and Write MAT Files and Call MATLAB from Within R'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"

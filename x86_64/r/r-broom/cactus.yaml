@@ -15,5 +15,7 @@ depends:
   - x86_64/r/r-ggplot2
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace -u '1.0.12' '1.0.13'
 post_build: aur-post-build

@@ -1,0 +1,11 @@
+--- a/setup.py	2025-12-18 18:54:41.000000000 +0300
++++ b/setup.py	2026-01-12 22:38:22.667249007 +0300
+@@ -57,7 +57,7 @@
+     long_description_content_type='text/markdown',
+     author='JAX team',
+     author_email='jax-dev@google.com',
+-    packages=find_packages(exclude=["examples"]),
++    packages=find_packages(exclude=["*examples", "jax._src.internal_test_util*", "*tests"]),
+     package_data={'jax': ['py.typed', "*.pyi", "**/*.pyi"]},
+     python_requires='>=3.11',
+     install_requires=[

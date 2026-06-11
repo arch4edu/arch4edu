@@ -1,18 +1,30 @@
 # Maintainer: DuckSoft <realducksoft at gmail dot com>
-# Co-Maintainer: Mark Wagie <mark dot wagie at tutanota dot com>
+# Co-Maintainer: Mark Wagie <mark dot wagie at proton dot me>
 # Contributor: KokaKiwi <kokakiwi+aur@kokakiwi.net>
 
 pkgname=ventoy-bin
-pkgver=1.0.91
+pkgver=1.1.12
 pkgrel=1
-pkgdesc="A new multiboot USB solution"
+pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
 url="http://www.ventoy.net"
-license=('GPL3')
-depends=('bash' 'util-linux' 'xz' 'dosfstools')
-optdepends=('gtk3: GTK3 GUI'
-            'qt5-base: Qt5 GUI'
-            'polkit: run GUI from application menu')
+license=('GPL-3.0-or-later')
+depends=(
+  'bash'
+  'dosfstools'
+  'util-linux'
+  'which'
+  'xz'
+)
+optdepends=(
+  'e2fsprogs: EXT partition support'
+  'gtk3: GTK3 GUI'
+  'ntfs-3g: NTFS partition support'
+  'parted: Primary partitioning tool'
+  'qt5-base: Qt5 GUI'
+  'polkit: run GUI from application menu'
+  'xfsprogs: XFS partition support'
+)
 provides=("${pkgname%-bin}")
 conflicts=("${pkgname%-bin}")
 install="${pkgname%-bin}.install"
@@ -25,24 +37,24 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}-extend-persistent"
         "${pkgname%-bin}.desktop"
         'sanitize.patch')
-sha256sums=('f6fb0574ec6c5b50acd3a8153ef42eb23bb6fb0a783e90706c7654ba0c1bddca'
+sha256sums=('04620b546bcc5eeeb5971767595b3713ee3de71580a82449053c53a7cb32fcd9'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
             'c3d4463a878a89d96e5f0bc4e1a43e48f27af5965bd4c977567695d7cf91fe5f'
             '1bbe66b52398be96402604562bddb5c9fbebfe345f0de184709e1c74086f2be6'
             '51029745da197dded6e007aee3f30f7ea1aa6e898172a6ea176cc2f3a842d0ff'
             '00dec31721a052d5e6c928e3b38b870959bdb42188f34717898d99c0cef950df'
-            '22225d48023806d0d15e059216ef4921de70cdb78348630be109fa9c669e2900'
-            '993ffb6daa6b61efe81e9e2922b82a0588737406525c37e0eed682ed500914f6')
+            'ea01c294b772818277a79b055e977550f99313506e874797ed9fe0e7ac7e7d98'
+            '238d91b041c572628ce396a53e072ce30c0fa80ef5263e8915d3549fcfea2fc4')
 
 prepare() {
   cd "${pkgname%-bin}-$pkgver"
 
   # Decompress tools
-  pushd tool/$CARCH
+  pushd "tool/${CARCH}"
   for file in *.xz; do
-    xzcat $file > ${file%.xz}
-    chmod +x ${file%.xz}
+    xzcat "${file}" > "${file%.xz}"
+    chmod +x "${file%.xz}"
   done
 
   # Cleanup .xz crap
@@ -50,18 +62,22 @@ prepare() {
   popd
 
   # Apply sanitize patch
-  patch --verbose -p0 < "$srcdir/sanitize.patch"
+  patch --verbose -Np1 -i "$srcdir/sanitize.patch"
 
   # Log location
-  sed -i 's|log\.txt|/var/log/ventoy.log|g' WebUI/static/js/languages.js tool/languages.json
+  sed -i 's|log\.txt|/var/log/ventoy.log|g' \
+    WebUI/static/js/languages.js tool/languages.json
+  sed -i 's|\./log\.txt|/var/log/ventoy.log|g' \
+    Ventoy2Disk.sh tool/{ventoy_lib,VentoyWorker}.sh
 
   # Non-POSIX compliant scripts
-  sed -i 's|bin/sh|usr/bin/env bash|g' tool/{ventoy_lib.sh,VentoyWorker.sh}
+  sed -i 's|bin/sh|usr/bin/env bash|g' \
+    {Ventoy2Disk,VentoyVlnk,tool/{create_ventoy_iso_part_dm,ventoy_lib,VentoyWorker}}.sh
 
   # Clean up unused binaries
   # Preserving mkexfatfs and mount.exfat-fuse because exfatprogs is incompatible
   for binary in xzcat hexdump; do
-    rm -fv tool/$CARCH/$binary
+    rm -fv "tool/${CARCH}/${binary}"
   done
 }
 
@@ -70,7 +86,7 @@ package() {
   install -Dm644 -vt      "$pkgdir/opt/${pkgname%-bin}/boot/"            boot/*
   install -Dm644 -vt      "$pkgdir/opt/${pkgname%-bin}/${pkgname%-bin}/" "${pkgname%-bin}"/*
   install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/tool/"            tool/*.{cer,glade,json,sh,xz}
-  install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/tool/$CARCH/"     tool/$CARCH/*
+  install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/tool/${CARCH}/"     "tool/${CARCH}"/*
   install -Dm755 -vt      "$pkgdir/opt/${pkgname%-bin}/"                 *.sh
   cp --no-preserve=o -avt "$pkgdir/opt/${pkgname%-bin}/"                 plugin WebUI
 
@@ -80,13 +96,13 @@ package() {
 
   # Link system binaries
   for binary in xzcat hexdump; do
-    ln -svf /usr/bin/$binary "$pkgdir/opt/${pkgname%-bin}/tool/$CARCH/"
+    ln -svf "/usr/bin/${binary}" "$pkgdir/opt/${pkgname%-bin}/tool/${CARCH}/"
   done
 
   install -Dm755 "$srcdir/${pkgname%-bin}"{,gui,web,plugson,-{,extend-}persistent} -vt "$pkgdir"/usr/bin/
 
   # Remove Gtk 2 files
-  if [ $CARCH == "x86_64" ]; then
-    rm "$pkgdir/opt/${pkgname%-bin}/tool/$CARCH/Ventoy2Disk.gtk2"
+  if [ "${CARCH}" == "x86_64" ]; then
+    rm "$pkgdir/opt/${pkgname%-bin}/tool/${CARCH}/Ventoy2Disk.gtk2"
   fi
 }

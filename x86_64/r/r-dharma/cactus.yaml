@@ -1,0 +1,19 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ape
+  - x86_64/r/r-gap
+  - x86_64/r/r-lme4
+  - x86_64/r/r-lmtest
+  - x86_64/r/r-qgam
+makedepends:
+  - x86_64/r/r-glmmadaptive
+  - x86_64/r/r-glmmtmb
+  - x86_64/r/r-mgcviz
+  - x86_64/r/r-spamm
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -5,7 +5,5 @@ makedepends:
   - aarch64/pypy-bin
 build_prefix: extra-aarch64
 makepkg_args: -A
-pre_build: download-abs-snapshot
-post_build: |
-  git add PKGBUILD
-  git-commit
+pre_build: abs-pre-build
+post_build: abs-post-build

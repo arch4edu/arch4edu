@@ -6,7 +6,7 @@ _pkgname=cellranger
 _pkgver=1.1.0
 pkgname=r-${_pkgname,,}
 pkgver=1.1.0
-pkgrel=7
+pkgrel=8
 pkgdesc='Translate Spreadsheet Cell Ranges to Rows and Columns'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"

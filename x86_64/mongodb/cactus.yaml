@@ -2,7 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/mongodb-tools
+  - x86_64/gcc14: gcc14-libs
+makedepends:
+  - x86_64/gcc14
+  - x86_64/python-retry
+  - any/python-timeout-decorator
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build

@@ -1,0 +1,17 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/python-gwcs
+makedepends:
+  - any/python-sphinx-automodapi
+  - x86_64/python-sphinx-changelog
+  - any/python-sphinx-gallery
+  - x86_64/python-sunpy-sphinx-theme
+  - any/python-pytest-doctestplus
+  - x86_64/python-sunpy
+  - x86_64/python-mpl-animators
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

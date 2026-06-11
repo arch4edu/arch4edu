@@ -1,7 +1,8 @@
 nvchecker:
   - source: aur
     aur:
-group: x86_64
+makedepends:
+  - x86_64/gcc14: gcc14-fortran
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

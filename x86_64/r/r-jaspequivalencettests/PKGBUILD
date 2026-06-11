@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspEquivalenceTTests
-_pkgver=0.17.2.1
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Equivalence T-Tests Module for JASP"
 arch=('any')
@@ -18,7 +18,7 @@ depends=(r
   r-jaspttests
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('7214acf6e3921566d978617bd137d2d430098f8b41fe6922b5a3b8eb6959b7c4')
+sha256sums=('54e2e161128e03911db0c2d885b46f15042ff9a54d76471534432af8492db648')
 
 
 build() {
@@ -29,6 +29,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

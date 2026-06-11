@@ -5,23 +5,24 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=callr
-_pkgver=3.7.3
+_pkgver=3.8.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=5
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Call R from R"
 arch=(any)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
+  r-otel
   r-processx
   r-r6
 )
 optdepends=(
   r-asciicast
+  r-carrier
   r-cli
-  r-covr
-  r-mockery
+  r-otelsdk
   r-ps
   r-rprojroot
   r-spelling
@@ -29,12 +30,12 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('12151339c31433137a1534c2f5656206')
-sha256sums=('567bfedf073a1d4c5785f0553341608a214938110567b9a6495ff20ebb2fd04e')
+md5sums=('6f2cca7ac13cfa5ef90288587f43de6f')
+b2sums=('9ce38597c78c65300c867cc1c6f09fa7c6da344d247497f1e1e4a6ee98e1cd85c1953e7b6ca0f8c0bb6712d5c58f2aa0b30021b760c2c60090928b1a8604b5ca')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {

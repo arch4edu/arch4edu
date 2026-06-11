@@ -1,1 +1,8 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - any/qt5-webengine
+build_prefix: extra-aarch64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -15,6 +15,9 @@ depends:
   - x86_64/r/r-stringi
   - x86_64/r/r-stringr
   - x86_64/r/r-vdiffr
+  - x86_64/r/r-archive
+  - x86_64/r/r-dbi
+  - x86_64/r/r-rsqlite
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

@@ -1,0 +1,36 @@
+diff --git a/StanHeaders/R/Flags.R b/StanHeaders/R/Flags.R
+index 46c91ae..cd611e3 100644
+--- a/StanHeaders/R/Flags.R
++++ b/StanHeaders/R/Flags.R
+@@ -5,7 +5,12 @@ CxxFlags <- function(as_character = FALSE) {
+     TBB_INC <- system.file("include", package = "RcppParallel", mustWork = TRUE)
+   }
+ 
+-  if (file.exists(file.path(TBB_INC, "tbb", "version.h"))) {
++  TBB_DIR <- file.path(TBB_INC, "tbb")
++  if (!dir.exists(TBB_DIR)) {
++    TBB_DIR <- "/usr/include/tbb"
++  }
++
++  if (file.exists(file.path(TBB_DIR, "version.h"))) {
+     CXXFLAGS <- paste0("-I", shQuote(TBB_INC), " -D_REENTRANT -DSTAN_THREADS -DTBB_INTERFACE_NEW")
+   } else {
+     CXXFLAGS <- paste0("-I", shQuote(TBB_INC), " -D_REENTRANT -DSTAN_THREADS")
+@@ -20,10 +25,15 @@ LdFlags <- function(as_character = FALSE) {
+   if (dir.exists(Sys.getenv("TBB_LIB"))) {
+     TBB_LIB <- normalizePath(Sys.getenv("TBB_LIB"))
+   } else {
+-    TBB_LIB <- system.file("lib", .Platform$r_arch, package = "RcppParallel", mustWork = TRUE)
++    TBB_LIB <- file.path(system.file(package = "RcppParallel", mustWork = TRUE), "lib")
+   }
+ 
+-  PKG_LIBS <- paste0("-L", shQuote(TBB_LIB), " -Wl,-rpath,", shQuote(TBB_LIB), " -ltbb -ltbbmalloc")
++  if (dir.exists(TBB_LIB)) {
++    TBB_LIB <- normalizePath(TBB_LIB)
++    PKG_LIBS <- paste0("-L", shQuote(TBB_LIB), " -Wl,-rpath,", shQuote(TBB_LIB), " -ltbb -ltbbmalloc")
++  } else {
++    PKG_LIBS <- "-ltbb -ltbbmalloc"
++  }
+ 
+   if (isTRUE(as_character)) return(PKG_LIBS)
+   cat(PKG_LIBS, " ")

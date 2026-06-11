@@ -2,17 +2,18 @@
 _base=ffcx
 pkgname=python-fenics-${_base}
 pkgdesc="The FEniCSx Form Compiler"
-pkgver=0.6.0
+pkgver=0.10.1.post0
 pkgrel=2
 arch=(x86_64)
 url="https://github.com/FEniCS/${_base}"
-license=(MIT)
-depends=(python-setuptools python-fenics-ufl python-fenics-basix python-cffi)
+license=(LGPL-3.0-or-later GPL-3.0-or-later Unlicense)
+depends=(python-cffi python-fenics-basix python-fenics-ufl python-setuptools)
 makedepends=(python-build python-installer python-wheel)
-checkdepends=(python-pytest python-sympy python-pygraphviz)
-optdepends=('python-pygraphviz: utility to draw graph')
+checkdepends=(python-pytest python-numba python-pygraphviz python-sympy)
+optdepends=('python-numba: for Numba C signature for the UFCx support'
+  'python-pygraphviz: utility to draw graph')
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('2c0300f85045c2f63cbe76c72a6eb43781cfc9ba3b1a0c0e60571ae950fd608224002dc1462c12975040d6d88a3c02f9581306f202798125771045a731903939')
+sha512sums=('e8c79107fd9130c8232d375996cb69b8a4e9c96572d2c4273187f9deffe2b165e07c78f5a282280b3f0530e0ee7f35d8e425db8a81ff732e74f8ce864e5babab')
 
 build() {
   cd ${_base}-${pkgver}

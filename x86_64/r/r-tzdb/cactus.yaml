@@ -5,5 +5,7 @@ depends:
   - x86_64/r/r-cpp11
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed 's/_pkgver=0.4.0/_pkgver=0.5.0/' -i PKGBUILD && updpkgsums
 post_build: aur-post-build

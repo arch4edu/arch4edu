@@ -6,14 +6,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=curl
-_pkgver=5.0.1
+_pkgver=7.1.0
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
+pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="A Modern and Flexible Web Client for R"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   curl
   r
@@ -22,19 +22,19 @@ optdepends=(
   r-httpuv
   r-jsonlite
   r-knitr
-  r-magrittr
+  r-later
   r-rmarkdown
   r-spelling
   r-testthat
   r-webutils
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('32e8bd2e7f0322ee0e95fa8ce4a3ae1a')
-sha256sums=('b7058f9cc7fa8f649505583584b61383fc08dccf746faa5381ba3d0b8bdf93a6')
+md5sums=('8af2ccbf5d85dc18866f45f1f26f348d')
+b2sums=('dfe135e4b531a33ad72f5324bb34bfb4c9be1e8edbe3674271298015d49f527543cdbe22f0f516d996d2f58696a5247b4a9b9932c6d1ce128d0bd859697f9cf1')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {

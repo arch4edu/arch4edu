@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-futile.options
+  - x86_64/r/r-lambda.r
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  replace -u '1.4.3' '1.4.9'
+post_build: aur-post-build

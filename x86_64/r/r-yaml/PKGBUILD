@@ -5,39 +5,41 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=yaml
-_pkgver=2.3.7
+_pkgver=2.3.12
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=3
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="Methods to Convert R Data to YAML and Back"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(BSD)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('BSD-3-Clause')
 depends=(
   r
 )
-makedepends=(
-  re2c
-)
+#makedepends=(
+#  re2c
+#)
 checkdepends=(
   r-runit
 )
 optdepends=(
-  r-runit
+  r-knitr
+  r-rmarkdown
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('38607c0b966d0b3b6c4f00419d251c8d')
-sha256sums=('d20cb219e0f9c48aba02f132f81cfa9ecda5e22c925e36726840218ed56680ab')
+md5sums=('6beea9b09717960f6c79fcbc1e129c41')
+b2sums=('07dd7157ce25270caefe4b252e8339e5bf98b4ac42e9147a7ea1e460b254fd7bf9f1bb53da1d29850546ee74e43a07bce170049e238c06b0998f17d2053c3394')
 
 build() {
   # generate implicit tag discovery code
-  re2c -o "$_pkgname/src/implicit.c" --no-generation-date "$_pkgname/inst/implicit.re"
+  #re2c   #re2c -o "$_pkgname/src/implicit.c" --no-generation-date "$_pkgname/inst/impl
 
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
-check() {
+_check() {
   cd "$_pkgname/tests"
   R_LIBS="$srcdir/build" Rscript --vanilla RUnit.R
 }

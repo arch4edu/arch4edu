@@ -3,34 +3,33 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=Rdpack
-_pkgver=2.4
+_pkgver=2.6.6
 pkgname=r-${_pkgname,,}
-pkgver=2.4
-pkgrel=4
-pkgdesc='Update and Manipulate Rd Documentation Objects'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Update and Manipulate Rd Documentation Objects"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
-  r
   r-rbibutils
 )
 optdepends=(
   r-gbrd
-  r-grdevices
   r-rprojroot
   r-rstudioapi
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('7652add12b30fcba1f3a12493a089a4166079e78c47b95802a98595a3ff53581')
+md5sums=('3259eb847df896eff1d6f9aed7cf7497')
+b2sums=('11722a274caa85da5ac89511f355c1bc975b84e3607451e3b728e49f4aad5ad98111891ff95b6db28c14d1a9fe151cacb1d34796543a1a57bcb6a7d532ef9ac2')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

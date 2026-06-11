@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/python-openqasm3
+  - x86_64/python-qiskit
+makepkg_args: --nocheck
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

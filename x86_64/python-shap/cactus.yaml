@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - any/python-slicer
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  add makedepends python-setuptools
+post_build: aur-post-build

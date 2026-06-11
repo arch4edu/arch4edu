@@ -1,9 +1,10 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspBase
-_pkgver=0.17.2.1
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.17.2.1
-pkgrel=1
+pkgver=0.96.0
+_desktop_ver="0.96.0"
+pkgrel=2
 pkgdesc="Package contains the JASP Bayesian and Frequentist analyses."
 arch=('x86_64' 'aarch64')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -36,26 +37,29 @@ depends=(r
 'r-stringi'
 'r-stringr'
 'r-vdiffr'
+'r-jaspgraphs'
 )
-makedepends=('git')
 optdepends=()
+
 source=(
-"${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
-"jaspColumnEncoder::git+https://github.com/jasp-stats/jaspColumnEncoder.git#commit=c63c0203d7"
+  "${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz"
+  "jasp-desktop-${_desktop_ver}.tar.gz::https://github.com/jasp-stats/jasp-desktop/archive/refs/tags/v${_desktop_ver}.tar.gz"
 )
-sha256sums=('b93987377fe32b6550958a3ec75f81326e64b022632eb087d07d1f6ad521e259'
-            'SKIP')
+sha256sums=('47500e57613c703256c4a9258d893b42c04cbd3ed0e4923589b04b64a69309b9'
+            'fa274cdb9f59379cbdae026e8c12de17fcd1db2a5f9c3b4d08929e848c4d4167')
 
+prepare() {
+  install -d ${_pkgname}-${_pkgver}/inst/include
+  cp -rf jasp-desktop-${_desktop_ver}/Common ${_pkgname}-${_pkgver}/inst/include
+  tar -cvzf ${pkgname}_${_pkgver}.tar.gz ${_pkgname}-${_pkgver}
+}
 build() {
-  export INCLUDE_DIR=${srcdir}/jaspColumnEncoder
-
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  export INCLUDE_DIR="${srcdir}/jasp-desktop-${_desktop_ver}/Common"
+  R CMD INSTALL ${pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
   # we may or may not need this link.
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }

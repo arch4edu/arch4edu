@@ -1,32 +1,31 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=qvcalc
-_pkgver=1.0.3
+_pkgver=1.0.4
 pkgname=r-${_pkgname,,}
-pkgver=1.0.3
-pkgrel=1
-pkgdesc='Quasi Variances for Factor Effects in Statistical Models'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Quasi Variances for Factor Effects in Statistical Models"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
   r
 )
 optdepends=(
-  r-mass
-  r-psychotools
   r-relimp
-  r-survival
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8a9e0fa0719dc40c0857de97f6bd322754e2bac4bb6bb4c095c547064020599f')
+md5sums=('7267885fb26131f10f8d32d58e8d37e6')
+b2sums=('33652ef75b70cab25cd841d1245d7f58cc10c68a5b90da7c6569b077ba7bb295cdb11a4080ca5a00c314229e7a21e439c520ab1dc7c840540ab1c7d81c84282c')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

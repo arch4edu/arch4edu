@@ -1,0 +1,20 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-furrr
+  - x86_64/r/r-generics
+  - x86_64/r/r-glue
+  - x86_64/r/r-pillar
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rlang
+  - x86_64/r/r-slider
+  - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
+  - x86_64/r/r-tidyselect
+  - x86_64/r/r-vctrs
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=gridtext
-_pkgver=0.1.5
+_pkgver=0.1.6
 pkgname=r-${_pkgname,,}
-pkgver=0.1.5
+pkgver=0.1.6
 pkgrel=1
 pkgdesc="Improved Text Rendering Support for 'Grid' Graphics"
 arch=('x86_64')
@@ -30,7 +30,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6d98716461f8574b4c8f72c6b2163b92bb394e60e247e19f42912b871616f138')
+sha256sums=('2b380e133719582e37cbb68754b0e0b009d95c7ad7e9d3da40d38dd858ee81de')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"

@@ -2,7 +2,7 @@
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=muparserx
 pkgver=4.0.12
-pkgrel=1
+pkgrel=2
 pkgdesc="A fast math parser library with support for arrays, matrices and complex numbers"
 arch=('x86_64')
 url="https://github.com/beltoforion/${pkgname}"

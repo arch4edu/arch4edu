@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/python-asdf-standard
+  - x86_64/python-asdf_transform_schemas
+makedepends:
+  - any/python-pytest-remotedata
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

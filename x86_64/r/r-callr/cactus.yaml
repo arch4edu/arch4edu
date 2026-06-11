@@ -4,6 +4,7 @@ nvchecker:
 depends:
   - x86_64/r/r-processx
   - x86_64/r/r-r6
+  - x86_64/r/r-otel
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

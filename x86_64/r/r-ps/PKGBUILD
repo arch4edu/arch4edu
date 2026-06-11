@@ -4,14 +4,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ps
-_pkgver=1.7.5
+_pkgver=1.9.3
 pkgname=r-${_pkgname,,}
-pkgver=${_pkgver//[:-]/.}
-pkgrel=7
+pkgver=${_pkgver//-/.}
+pkgrel=1
 pkgdesc="List, Query, Manipulate System Processes"
 arch=(x86_64)
-url="https://cran.r-project.org/package=${_pkgname}"
-license=(MIT)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
   r
 )
@@ -26,14 +26,15 @@ optdepends=(
   r-rlang
   r-testthat
   r-webfakes
+  r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('62142c0448dd961f12955a8582e887fe')
-sha256sums=('1abc3ae3c55797b994973f7e43bf5c7bbb4da649a0dcfad36675e196dba4cb4e')
+md5sums=('a965ee358e18f9d6586f594487e1c2cf')
+b2sums=('ab78500328466685b3a6a568b5d0cdf5a9f3126eee2b941f4b6e373fd9f20088054f2aca2c65426ce61751fc21c8f1c5d2671c8f497188c0048a10feb1b08787')
 
 build() {
-  mkdir -p build
-  R CMD INSTALL "$_pkgname" -l build
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {

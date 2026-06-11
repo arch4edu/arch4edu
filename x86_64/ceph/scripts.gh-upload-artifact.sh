@@ -137,7 +137,12 @@ main() {
       -H "$GH_AUTH" \
       -H "Content-Type: $(file -b --mime-type $artifact)" \
       --data-binary @"$artifact" \
+      -o "$GH_RESPONSE" \
       $upload_uri
+
+    (( $? > 0 )) \
+      && die 1 "$(cat <(printf "Failed to upload $filename to $repo:\n") $GH_RESPONSE)" \
+      || jq '.' "$GH_RESPONSE"
   fi
 }
 

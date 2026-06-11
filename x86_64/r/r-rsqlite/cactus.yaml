@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bit64
+  - x86_64/r/r-blob
+  - x86_64/r/r-dbi
+  - x86_64/r/r-memoise
+  - x86_64/r/r-pkgconfig
+makedepends:
+  - x86_64/r/r-cpp11
+  - x86_64/r/r-plogr
+  - x86_64/r/r-dbitest
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

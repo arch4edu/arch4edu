@@ -1,0 +1,35 @@
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Contributor: Kibouo <csonka.mihaly@hotmail.com>
+# Contributor: Alex Branham <branham@utexas.edu>
+
+_pkgname=testit
+_pkgver=1.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="A Simple Package for Testing R Packages"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
+depends=(
+  r
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('39cf1e7294cbc8efa22f4a0d688fecf2')
+b2sums=('c4e3d81af471faf2eea1131aca2fcdafb589fbbc087426367b00d7d2c565249449149b2473e053aee95b73c99f0a79d806537e88c48b33eabc6dfb65af6ecff5')
+
+build() {
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
+}
+
+check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" _R_CHECK_PACKAGE_NAME_=false Rscript --vanilla test-all.R
+}
+
+package() {
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+}

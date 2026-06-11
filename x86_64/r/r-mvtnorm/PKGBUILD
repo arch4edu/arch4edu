@@ -3,29 +3,36 @@
 # Contributor: Kibouo <csonka.mihaly@hotmail.com>
 
 _pkgname=mvtnorm
-_pkgver=1.2-2
+_pkgver=1.4-0
 pkgname=r-${_pkgname,,}
-pkgver=1.2.2
-pkgrel=1
-pkgdesc='Multivariate Normal and t Distributions'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Multivariate Normal and t Distributions"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-only')
 depends=(
-  r
+  blas
+  lapack
+  r-bibtex
 )
 makedepends=(
   gcc-fortran
 )
+optdepends=(
+  r-numderiv
+  r-qrng
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6f5566b33f930334e07a9f5d3f17cdac8a0e1d86dc6b9d7ffd7a371fb626fe10')
+md5sums=('254fbd467ad04c724d17c6d6e9b85410')
+b2sums=('ae03a4ca572907fd9ee94281fa961d6270255c08fc9d323c37525fbff5aaa1dab950eba19abc06e75b9a724529ca71e009900200908505df41b9df4f60668dcf')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

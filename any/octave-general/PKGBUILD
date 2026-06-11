@@ -8,12 +8,12 @@
 
 _pack=general
 pkgname=octave-$_pack
-pkgver=2.1.2
+pkgver=2.1.4
 pkgrel=1
 pkgdesc="General tools for Octave."
 arch=(any)
-url="https://octave.sourceforge.io/$_pack/"
-license=('custom')
+url="https://gnu-octave.github.io/packages/$_pack/"
+license=('GPL-3.0-or-later AND BSD-3-Clause AND public domain')
 depends=('octave>=4.0.0')
 makedepends=()
 optdepends=()
@@ -23,7 +23,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("https://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-sha256sums=('a30cd1a79743c62528dae46ebd4a83f848ae46a1c1dac3eaabc36662d42294cf')
+sha256sums=('b13777d4f5932e6891f2aac13da17f22b8c9b8b4ff8ed0179659ebd19124148f')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"

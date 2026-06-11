@@ -7,6 +7,7 @@ depends:
   - x86_64/r/r-htmltools
   - x86_64/r/r-jquerylib
   - x86_64/r/r-jsonlite
+  - x86_64/r/r-lifecycle
   - x86_64/r/r-memoise
   - x86_64/r/r-mime
   - x86_64/r/r-rlang

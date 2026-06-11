@@ -5,7 +5,8 @@ import logging
 import requests
 import shutil
 import subprocess
-import yaml
+import gzip
+import tarfile
 from pathlib import Path
 
 def run(command, **kwargs):
@@ -22,21 +23,63 @@ def symlink(source, target):
         os.remove(target)
         os.symlink(source, target)
 
-def load_pacman_packages():
-    run(['sudo', 'pacman', '-Sy'])
-    results = set()
-    #for repository in ['core', 'extra', 'arch4edu']:
-    for repository in ['core', 'extra']:
-        packages = run(['sudo', 'pacman', '-Slq', repository], capture_output=True)
-        results.update(packages.stdout.decode('utf-8').split('\n')[:-1])
-    return results
-
 def load_pkgbases():
     pkgbases = {}
     for i in Path('.').rglob('cactus.yaml'):
         pkgbase = i.parent.name
         pkgbases[pkgbase] = str(i.parent)
     return pkgbases
+
+def resolve_deps(raw, pacman_db, provides, exclude=None):
+    result = [i.split('<')[0].split('>')[0].split('=')[0] for i in raw]
+    result = [provides[i] if i in provides else i for i in result]
+    result = [i for i in result if i not in pacman_db and (exclude is None or i not in exclude)]
+    return result
+
+def load_pacman_and_provides(arch):
+    pacman_dir = Path(f'.pacman/{arch}')
+    pacman_dir.mkdir(parents=True, exist_ok=True)
+
+    run(['fakeroot', 'pacman', '-Sy', '--config', f'.pacman/{arch}.conf'])
+    packages = set()
+    provides = {}
+    for repo in ['core', 'extra']:
+        db_file = Path(f'.pacman/{arch}/sync/{repo}.db')
+        if not db_file.is_file():
+            continue
+        try:
+            with tarfile.open(db_file, 'r:gz') as tar:
+                for member in tar.getmembers():
+                    if not member.name.endswith('/desc'):
+                        continue
+                    f = tar.extractfile(member)
+                    if not f:
+                        continue
+                    try:
+                        name = None
+                        in_provides = False
+                        for raw_line in f:
+                            line = raw_line.decode('utf-8', errors='ignore').strip()
+                            if line == '%NAME%':
+                                name_raw = f.readline()
+                                if name_raw:
+                                    name = name_raw.decode('utf-8', errors='ignore').strip()
+                                    packages.add(name)
+                            elif line == '%PROVIDES%':
+                                in_provides = True
+                            elif in_provides:
+                                if line.startswith('%'):
+                                    break
+                                if line:
+                                    pname = line.split('=')[0].split('<')[0].split('>')[0].strip()
+                                    if pname and name:
+                                        provides[pname] = name
+                    finally:
+                        f.close()
+        except Exception as e:
+            logger.debug(f'Failed to read {db_file}: {e}')
+    logger.info('Read %d packages and %d provides from sync db', len(packages), len(provides))
+    return packages, provides
 
 def read_aur_info(packages):
     logger.info('Reading AUR package information for %s', packages)
@@ -48,33 +91,6 @@ def read_aur_info(packages):
     results = {r['Name']: r for r in data['results']}
     return results
 
-def read_provides(package):
-    os.environ['LANG'] = 'C'
-    info = run(['sudo', 'pacman', '-Si', package], capture_output=True)
-    info = info.stdout.decode('utf-8').split('\n')
-    provides = [line for line in info if line.startswith('Provides')][0]
-    provides = provides.split(':')[-1].split(' ')
-    provides = [i.split('=')[0] for i in provides if len(i) > 0]
-    results = {}
-    for i in provides:
-        results[i] = package
-    return results
-
-def load_provides():
-    provides = {}
-    provides.update(read_provides('fuse2'))
-    provides.update(read_provides('libjpeg-turbo'))
-    provides.update(read_provides('ttf-dejavu'))
-    provides.update(read_provides('ruby-ronn-ng'))
-    provides.update(read_provides('libtool'))
-    provides.update(read_provides('util-linux-libs'))
-    provides.update(read_provides('pkgconf'))
-    provides.update(read_provides('gtest'))
-    provides.update(read_provides('dbus-python'))
-    provides.update(read_provides('jdk-openjdk'))
-    provides.update(read_provides('jre-openjdk'))
-    return provides
-
 if __name__ == '__main__':
     import argparse
     from tornado.log import enable_pretty_logging
@@ -82,31 +98,53 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--template', '-t', default='template/x86_64-simple.yaml', help='the template used to create cactus.yaml (default: template/x86_64-simple.yaml)')
-    #parser.add_argument('--repository', default='.', help='path to the repository (default: current directory)')
-    parser.add_argument('--provides', '-p', action='append', help='read the provides of a package')
-    parser.add_argument('--nocheck', action="store_true", help='disable check and ignore checkdepends')
-    parser.add_argument('package', help='the package to add (eg: yay)')
-    parser.add_argument('directory', help='the output directory (eg: x86_64, x86_64/directory)')
+    parser.add_argument('--provides', '-p', action='append', help='read the provides of a package (eg. libjpeg-turbo) or specific a provide (eg. libjpeg:libjpeg-turbo)')
+    parser.add_argument('--nocheck', action="store_true", help='disable check and ignore checkdepends (please remember to also use the nocheck template)')
+    parser.add_argument('target', help='target path with arch: arch[/subdir/]package (eg: x86_64/yay, aarch64/devtools/ytmdesktop)')
     args = parser.parse_args()
 
     options.logging = 'debug'
     logger = logging.getLogger()
     enable_pretty_logging(options=options, logger=logger)
 
-    directory = Path(args.directory)
-    directory.mkdir(exist_ok=True)
+    # Parse target: must be arch[/subdir/]package
+    parts = args.target.split('/')
+    if len(parts) < 2:
+        logger.error('Target must include architecture: arch[/subdir/]package')
+        sys.exit(1)
+
+    arch = parts[0]
+    # Determine which architecture to use for pacman database queries.
+    # For 'any' packages, we query the x86_64 database since dependencies
+    # are architecture-specific (e.g., gcc-libs, glibc) but the package itself is arch-independent.
+    query_arch = arch
+    if arch == 'any':
+        query_arch = 'x86_64'
+    elif arch not in ('x86_64', 'aarch64'):
+        logger.error('Unsupported architecture: %s (must be x86_64, aarch64, or any)', arch)
+        sys.exit(1)
+
+    target_package = parts[-1]
+    package = parts[-1]
+    subdir = '/'.join(parts[1:-1]) if len(parts) > 2 else ''
+
+    # Use the original arch for directory name to preserve 'any' path
+    directory = Path(arch) / subdir if subdir else Path(arch)
+    directory.mkdir(parents=True, exist_ok=True)
     template = args.template
 
-    pacman_db = load_pacman_packages()
+    pacman_db, provides = load_pacman_and_provides(query_arch)
     pkgbases = load_pkgbases()
-    provides = load_provides()
     if not args.provides is None:
         for i in args.provides:
-            provides.update(read_provides(i))
+            if ':' in i:
+                key, value = i.split(':')
+                provides[key] = value
+            else:
+                logger.warning('Invalid --provides: %s (use format virtual:real)', i)
 
-    unresolved = [args.package]
+    unresolved = [package]
     resolved = {}
-    reversed_depends = {}
     while len(unresolved) > 0:
         aur_info = read_aur_info(unresolved)
         _unresolved = set()
@@ -121,18 +159,19 @@ if __name__ == '__main__':
                 sys.exit(1)
 
             aur_info[package]['Depends'] = [] if not 'Depends' in aur_info[package] else aur_info[package]['Depends']
-            aur_info[package]['Depends'] = [i.split('>')[0].split('=')[0] for i in aur_info[package]['Depends']]
-            aur_info[package]['Depends'] = [provides[i] if i in provides else i for i in aur_info[package]['Depends']]
-            aur_info[package]['Depends'] = [i for i in aur_info[package]['Depends'] if not i in pacman_db]
+            aur_info[package]['Depends'] = resolve_deps(aur_info[package]['Depends'], pacman_db, provides)
             _unresolved.update([i for i in aur_info[package]['Depends'] if not i in resolved])
 
             aur_info[package]['MakeDepends'] = [] if not 'MakeDepends' in aur_info[package] else aur_info[package]['MakeDepends']
-            if not args.nocheck and 'CheckDepends' in aur_info[package]:
-                aur_info[package]['MakeDepends'] += aur_info[package]['CheckDepends']
-            aur_info[package]['MakeDepends'] = [i.split('>')[0].split('=')[0] for i in aur_info[package]['MakeDepends']]
-            aur_info[package]['MakeDepends'] = [provides[i] if i in provides else i for i in aur_info[package]['MakeDepends']]
-            aur_info[package]['MakeDepends'] = [i for i in aur_info[package]['MakeDepends'] if not i in pacman_db and not i in aur_info[package]['Depends']]
+            aur_info[package]['MakeDepends'] = resolve_deps(aur_info[package]['MakeDepends'], pacman_db, provides, aur_info[package]['Depends'])
             _unresolved.update([i for i in aur_info[package]['MakeDepends'] if not i in resolved])
+
+            if args.nocheck:
+                aur_info[package]['CheckDepends'] = []
+            else:
+                aur_info[package]['CheckDepends'] = [] if not 'CheckDepends' in aur_info[package] else aur_info[package]['CheckDepends']
+                aur_info[package]['CheckDepends'] = resolve_deps(aur_info[package]['CheckDepends'], pacman_db, provides, aur_info[package]['Depends'])
+                _unresolved.update([i for i in aur_info[package]['CheckDepends'] if not i in resolved])
 
             resolved[package] = aur_info[package]
             logger.info('Resolved %s', package)
@@ -141,20 +180,24 @@ if __name__ == '__main__':
 
     for package, info in reversed(resolved.items()):
         pkgbase = info['PackageBase']
-        if pkgbase in pkgbases:
+
+        if pkgbase in pkgbases and info['Name'] != target_package:
             continue
 
         pkgbase = directory / pkgbase
         pkgbase.mkdir(exist_ok=True)
+        config = pkgbase / 'cactus.yaml'
+        config.unlink(missing_ok=True)
 
-        if len(info['Depends']) + len(info['MakeDepends']) == 0:
-            symlink('../' * (len(directory.parents) + 1) + template, pkgbase / 'cactus.yaml')
+        if len(info['Depends']) + len(info['MakeDepends']) + len(info['CheckDepends']) == 0:
+            symlink('../' * (len(directory.parents) + 1) + template, config)
             logger.info('Added %s with %s', package, template)
             pkgbases[pkgbase.name] = str(pkgbase)
         else:
             with open(template) as f:
                 lines = f.readlines()
-            with open(pkgbase / 'cactus.yaml', 'w') as f:
+
+            with open(config, 'w') as f:
                 for line in lines:
                     if line.startswith('build_prefix'):
                         if len(info['Depends']) > 0:
@@ -169,6 +212,15 @@ if __name__ == '__main__':
                         if len(info['MakeDepends']) > 0:
                             f.write('makedepends:\n')
                         for i in info['MakeDepends']:
+                            _pkgbase = resolved[i]['PackageBase']
+                            _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
+                            if resolved[i]['PackageBase'] == i:
+                                f.write(f'  - {_pkgbase}\n')
+                            else:
+                                f.write(f'  - {_pkgbase}: {i}\n')
+                        if len(info['CheckDepends']) > 0:
+                            f.write('checkdepends:\n')
+                        for i in info['CheckDepends']:
                             _pkgbase = resolved[i]['PackageBase']
                             _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
                             if resolved[i]['PackageBase'] == i:

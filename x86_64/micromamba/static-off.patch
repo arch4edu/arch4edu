@@ -1,0 +1,12 @@
+--- CMakeLists.txt.orig 2025-05-27 19:39:41.831173013 +0000
++++ CMakeLists.txt  2025-05-27 19:40:21.521306004 +0000
+@@ -68,7 +68,8 @@
+
+ # micromamba requires static linkage
+ if(BUILD_MICROMAMBA)
+-    set(BUILD_STATIC ON)
++    set(BUILD_STATIC OFF)
++    set(BUILD_SHARED ON)
+ endif()
+
+ # libmamba library and tests

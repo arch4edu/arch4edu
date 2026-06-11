@@ -6,22 +6,22 @@
 
 _pkgname=instantclient-tools
 pkgname=oracle-${_pkgname}
-pkgver=21.9.0.0.0
-_pkgver_vendor_suffix=dbru
-_urlver=219000
-_unzippath=instantclient_21_9
-pkgrel=1
+pkgver=23.7.0.25.01
+_pkgver_vendor_suffix=
+_urlver=2370000
+_unzippath=instantclient_23_7
+pkgrel=2
 pkgdesc="Data Pump, SQL*Loader and Workload Replay Client for Oracle Instant Client"
 arch=('x86_64')
-url="http://www.oracle.com/technetwork/database/features/instant-client/"
+url="https://www.oracle.com/at/database/technologies/instant-client/downloads.html"
 license=('custom:OTN')
 depends=(oracle-instantclient-basic=$pkgver)
 replaces=('instantclient-sqlplus')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('927e6d374e4081fb2e4876f7af5f27a5')
-sha256sums=('e8ad8d8b466aaa9a82ac616b043d3ab3440d8cd103b4d3ebbc343553dee54ca6')
+md5sums=('78ab16ec0c6f5a0e7f883677283344bb')
+sha256sums=('4a31603e50dff7df18308fb60d11499748ec44c399de2fc4d4cb5cfd61cf79eb')
 
 package() {
 	cd "$srcdir/${_unzippath}/"
@@ -31,6 +31,7 @@ package() {
 	install -m 755 -t "$pkgdir/usr/bin" exp expdp imp impdp sqlldr wrc
 	install -m 755 -t "$pkgdir/usr/lib" *.so*
 	install -m 644 -t "$pkgdir/usr/share/doc/oracle" *README*
+	install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname" *LICENSE
 
 	# Avoid conflict with WINE
 	mv "$pkgdir/usr/bin/wrc" "$pkgdir/usr/bin/wrc-oracle"

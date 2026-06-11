@@ -4,21 +4,28 @@
 _name='pywbem'
 pkgbase="${_name}"
 pkgname=('python-pywbem')
-pkgver='1.4.1'
-pkgrel=4
+pkgver='1.9.0'
+pkgrel=2
 pkgdesc='A WBEM client and related utilities'
-arch=('any')
+arch=('x86_64' 'aarch64')
 url="https://github.com/${_name}/${_name}"
 depends=('python-pyyaml' 'python-six' 'python-requests'
 	 'python-urllib3' 'python-nocasedict' 'python-nocaselist'
-	 'python-yamlloader')
-makedepends=('python' 'python-setuptools' 'python-wheel'
-	     'python-mock' 'python-ply')
+	 'python-yamlloader' 'python-ply')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+	 'python-setuptools-scm' 'python-mock' 'python-wheel')
 license=('LGPLv2.1+')
 source=("${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('8c20d6e6e4a6987531180b3ddf51c04e175d3044359f3385d2fdac624b77af8b')
+sha256sums=('c6c19c3028dfefac7cd4e99c042719c29122eb1f59b21dd4bc87b53edb82eda5')
+
+build() {
+  cd "${_name}-${pkgver}"
+  export SETUPTOOLS_SCM_PRETEND_VERSION="${pkgver}"
+  python -m build --wheel --no-isolation
+}
 
 package() {
-  cd "${srcdir}/${_name}-${pkgver}"
-  python setup.py install -O1 --root="${pkgdir}"
+  cd "${_name}-${pkgver}"
+  python -m installer --destdir="${pkgdir}" "dist/"*".whl"
+  install -Dm0644 "LICENSE.txt" "${pkgdir}/usr/share/doc/${pkgname}/LICENSE"
 }

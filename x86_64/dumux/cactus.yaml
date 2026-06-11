@@ -6,8 +6,6 @@ depends:
   - x86_64/dune-grid
   - x86_64/dune-istl
   - x86_64/dune-localfunctions
-makedepends:
-  - x86_64/python-ninja
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

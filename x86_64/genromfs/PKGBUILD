@@ -3,7 +3,7 @@
 
 pkgname=genromfs
 pkgver=0.5.2
-pkgrel=2
+pkgrel=3
 pkgdesc="tool for creating romfs images"
 arch=(i686 x86_64)
 url="http://romfs.sourceforge.net"

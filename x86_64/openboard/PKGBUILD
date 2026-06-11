@@ -1,59 +1,47 @@
 # Maintainer: Frank Siegert <frank.siegert@googlemail.com>
+# Maintainer: Vekhir <vekhir at yahoo dot com>
 # Contributor: bartus <arch-user-repoᘓbartus.33mail.com>
+
+## Configuration env vars:
+((ENABLE_QT5)) && QT_VER="5" || QT_VER="6"
+qt="qt${QT_VER}"
+
 pkgname=openboard
-pkgver=1.6.4
+pkgver=1.7.7
 _src_folder="OpenBoard-${pkgver}"
-pkgrel=6
+pkgrel=2
 pkgdesc="Interactive whiteboard software for schools and universities"
 arch=('x86_64' 'i686')
 url="http://openboard.ch/index.en.html"
 license=('GPL3')
-depends=('qt5-base' 'qt5-multimedia' 'qt5-svg' 'qt5-script' 'qt5-webkit' 'qt5-tools' 'qt5-xmlpatterns' 'libpaper' 'bzip2' 'openssl' 'libfdk-aac' 'sdl' 'ffmpeg4.4')
-depends+=(quazip)  #drop internal quazip and use system one.
+# qt{5,6} libraries probed with `ldd -r /opt/openboard/OpenBoard` for both builds
+#             qt5-base qt5-declarative qt5-location qt5-multimedia                 qt5-svg qt5-webchannel qt5-webengine
+# qt6-5compat qt6-base qt6-declarative              qt6-multimedia qt6-positioning qt6-svg qt6-webchannel qt6-webengine
+depends+=(${qt}-{base,declarative,multimedia,svg,webchannel,webengine})
+depends+=('openssl' 'ffmpeg')
+depends+=(quazip-${qt})  #drop internal quazip and use system one.
 depends+=(poppler) #replace internal xpdf with poppler and drop freetype/xpdf from deps
-makedepends=('patch')
-source=("https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz"
-        openboard.desktop)
-source+=(qchar.patch)
-source+=(quazip.patch)
-source+=(drop_ThirdParty_repo.patch)
-source+=(ffmpeg.patch)
-sha256sums=('a64a575cbc8dd9265f542e361ab77cf7fa612dc9ca34cbcdd6129606403ac8af'
-            '64289f9d91cb25fa79fb988f19d43a542d67380fcf27668d0da1ee4ba1e705eb'
-            'b40fdab85f5921d0404c07db64628a2428a87d39193d2797bbef2e69b1d51549'
-            '62a70b4aef5e4ed1e41c32948ed529e3f167566517134461b4248a7c1ddad882'
-            'a6a9bc1f9c9bee0345b735fcf422245ae7946f96f6c34520dd63530a98978c14'
-            'b2c8d92275c976af195f1b8f8df0ae1a61781a1c20ccc10b41fdc81178427bd3')
+makedepends=('cmake' ${qt}-tools)
+source=("openboard-${pkgver}.tar.gz::https://github.com/OpenBoard-org/OpenBoard/archive/v${pkgver}.tar.gz"
+        "openboard-support-poppler-26.04.patch::https://github.com/OpenBoard-org/OpenBoard/commit/b68a0bed3caa5dfcfb9bbbb72cc8d78d95533eb3.patch")
+sha256sums=('2ea0989b8c304f64a124c09eb5e3cc71808c395f0942a26d5a3f79d4125df969'
+            '0056e6ec3ba5b7f96498e426bb15cde9908047280f20b285833e86b57c78477e')
 
 prepare() {
   cd "$srcdir"/$_src_folder
-  msg2 "drop_ThirdParty_repo"
-  patch -f -p1 < "$srcdir"/drop_ThirdParty_repo.patch || true
-  msg2 "qchar"
-  patch -p1 < "$srcdir"/qchar.patch
-  msg2 "quazip"
-  patch -f -p1 < "$srcdir"/quazip.patch
-  msg2 "gcc11"
-  sed 's/_serialize/serialize/g' -i src/pdf-merger/Object.{h,cpp}
-  msg2 "ffpmeg"
-  patch -f -p1 < "$srcdir"/ffmpeg.patch
+  patch -p1 -i ../openboard-support-poppler-26.04.patch
 }
 
 build() {
-  cd "$srcdir"/$_src_folder
-# convert translations to binary form
-  lrelease OpenBoard.pro
-  qmake OpenBoard.pro -spec linux-g++
-  make
+  cmake -B build -S "$srcdir"/$_src_folder \
+    -DCMAKE_BUILD_TYPE=None \
+    -DQT_VERSION=${QT_VER} \
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr \
+    -DCMAKE_CXX_STANDARD=20 \
+    -Wno-dev
+  cmake --build build
 }
 
 package() {
-  cd "$srcdir"/$_src_folder
-
-  install -Dm755 build/linux/release/product/OpenBoard -t "$pkgdir"/opt/openboard/
-  cp -rp "$srcdir"/$_src_folder/resources/{customizations,etc,i18n,library} -t "$pkgdir"/opt/openboard/
-  install -Dm644 "$srcdir"/$_src_folder/resources/images/OpenBoard.png -t "$pkgdir"/usr/share/icons/hicolor/64x64/apps/
-  install -Dm644 "$srcdir"/openboard.desktop -t "$pkgdir"/usr/share/applications/
-  install -dm755 "$pkgdir"/usr/bin/
-  ln -s /opt/openboard/OpenBoard "$pkgdir"/usr/bin/openboard
+  DESTDIR="$pkgdir" cmake --install build
 }

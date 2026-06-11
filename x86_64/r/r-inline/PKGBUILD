@@ -3,14 +3,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=inline
-_pkgver=0.3.19
+_pkgver=0.3.21
 pkgname=r-${_pkgname,,}
-pkgver=0.3.19
-pkgrel=9
-pkgdesc='Functions to Inline C, C++, Fortran Function Calls from R'
-arch=('any')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('LGPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Functions to Inline C, C++, Fortran Function Calls from R"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('LGPL-2.0-or-later')
 depends=(
   r
 )
@@ -19,14 +19,15 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('0ee9309bb7dab0b97761ddd18381aa12bd7d54678ccd7bec00784e831f4c99d5')
+md5sums=('acc2b04335978bf903c952d2a5139cd5')
+b2sums=('98df8e21aa30be8af0d0b52d9b50595b0d1610aff7c4bf8f359a8abc59a55d11cca3a55ba3410bb91c3ab22722890798f4ee0e081bdcbf535fce1851ce59b9ae')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

@@ -1,15 +1,16 @@
-# Maintainer: João Figueiredo <jf.mundox@gmail.com>
+# Maintainer: Pierce Thompson <pierce@insprill.net>
+# Contributor: João Figueiredo <islandc0der@chaotic.cx>
 # Contributor: Jan de Groot <jan@archlinux.org>
 
 pkgname=gconf
 pkgver=3.2.6+11+g07808097
-pkgrel=10
+pkgrel=16
 pkgdesc="An obsolete configuration database system"
-url="https://projects-old.gnome.org/gconf/"
+url="https://gitlab.gnome.org/Archive/gconf"
 arch=($CARCH)
-license=(LGPL)
-depends=(libxml2 polkit libldap dbus-glib python)
-makedepends=(git intltool gtk-doc gobject-introspection gnome-common)
+license=('LGPL-2.0-only')
+depends=(libxml2 polkit libldap dbus-glib)
+makedepends=(git intltool gtk-doc gobject-introspection gnome-common glib2-devel)
 install=gconf.install
 _commit=0780809731c8ab1c364202b1900d3df106b28626 # The latest and last commit, dug out from deep within the waves of time...
 source=("git+https://gitlab.gnome.org/Archive/gconf.git#commit=$_commit"
@@ -32,11 +33,15 @@ prepare() {
   # http://bugzilla.gnome.org/show_bug.cgi?id=568845
   patch -Np1 -i ../01_xml-gettext-domain.patch
 
-  # The following line copied from Fedora
-  # https://src.fedoraproject.org/rpms/GConf2/blob/70ed26d67b563d858a84505622d11f41879a6b37/f/GConf2.spec#_90
-  2to3 --write --nobackup gsettings/gsettings-schema-convert
-
-  sed -i '1s|#!/usr/bin/env python$|#!/usr/bin/python|' gsettings/gsettings-schema-convert
+  # TODO: Mega hack, needs a proper fix!
+  mkdir -p m4
+  if [ -f /usr/share/aclocal/nls.m4 ]; then
+    cp /usr/share/aclocal/nls.m4 m4/
+  elif [ -f /usr/share/gettext/m4/nls.m4 ]; then
+    cp /usr/share/gettext/m4/nls.m4 m4/
+  else
+    echo "ERROR: Could not find nls.m4. The build will likely fail."
+  fi
 
   NOCONFIGURE=1 ./autogen.sh
 }
@@ -51,9 +56,10 @@ build() {
     --enable-defaults-service \
     --disable-gtk-doc \
     --disable-static \
-    --disable-orbit
+    --disable-orbit \
+    --disable-gsettings-backend
   sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
-  make
+  make CFLAGS+="-DGLIB_DISABLE_DEPRECATION_WARNINGS -Wno-unused-result"
 }
 
 check() {

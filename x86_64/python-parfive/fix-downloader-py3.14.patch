@@ -1,0 +1,12 @@
+--- a/parfive/downloader.py	2025-05-07 00:51:54.000000000 +0800
++++ b/parfive/downloader.py	2026-01-15 14:41:38.298063190 +0800
+@@ -317,8 +317,7 @@
+                     task.cancel()
+                 dl_results = await asyncio.gather(*tasks, return_exceptions=True)
+ 
+-            finally:
+-                return self._format_results(dl_results, main_pb)
++            return self._format_results(dl_results, main_pb)
+ 
+     def _format_results(self, retvals, main_pb):
+         # Squash all nested lists into a single flat list

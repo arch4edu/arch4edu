@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fd16f046..5c195178 100644
+index 2e578c01..d20eba55 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -133,14 +133,14 @@ ENDIF()
@@ -19,3 +19,16 @@ index fd16f046..5c195178 100644
      OUTPUT_VARIABLE QT_VERSION_MAJOR
      OUTPUT_STRIP_TRAILING_WHITESPACE)
  MESSAGE("QT_VERSION_MAJOR: ${QT_VERSION_MAJOR}")
+diff --git a/src/message-poller.cpp b/src/message-poller.cpp
+index 2ab32c50..4b9b3d87 100644
+--- a/src/message-poller.cpp
++++ b/src/message-poller.cpp
+@@ -1,6 +1,8 @@
+ #include <QTimer>
+ #include <QDateTime>
+ #include <QJsonDocument>
++#include <QJsonValue>
++#include <QRegularExpression>
+ 
+ #include "utils/utils.h"
+ #include "utils/translate-commit-desc.h"

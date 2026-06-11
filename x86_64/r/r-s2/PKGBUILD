@@ -1,0 +1,67 @@
+# Contributor: Elio <ancibrothers@gmail.com>
+# Contributor: peippo <christoph+aur@christophfink.com>
+
+_cranname=s2
+_cranver=1.1.11
+pkgname=r-${_cranname,,}
+pkgdesc="Spherical Geometry Operators Using the S2 Geometry Library"
+url="https://cran.r-project.org/package=s2"
+license=(Apache)
+pkgver=${_cranver//[:-]/.}
+pkgrel=1
+
+arch=("i686" "x86_64")
+makedepends=(cmake)
+depends=(
+    "openssl>=1.0.1"
+    "r>=3.0.0"
+    "r-rcpp"
+    "r-wk>=0.6.0"
+)
+optdepends=(
+    "r-bit64"
+    "r-testthat>=3.0.0"
+    "r-vctrs"
+)
+
+# The unittests for `r-s2` have multiple circular
+# dependency chains.
+
+# As such, the tests can not be run on first build.
+# While R packages from CRAN, generally, are well-tested
+# before they are released, in some situations, you want to
+# have thorough testing on your own end.
+
+# To run the tests, first build this package without `check()`
+# (i.e., as-is) to bootstrap `r-s2`. Then, on subsequent builds,
+# (assumining you have a local repository that is accessible from
+# the build chroot), uncomment the lines defining `checkdepends`, below,
+# as well as the `check()` function further down
+
+# checkdepends=(
+#     "${optdepends[@]}"
+#     "r-testthat>=3.0.0"
+# )
+
+# It uses cloud.r-project.org instead of cran to make use of the CDN.
+source=("https://cloud.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+b2sums=('e0903283afe88dcf61b5e63de86ba6fb3062863338a4ba7f0fbc0d9605207341104756798fe39124c9c75fb5ef8db3be5a3b3fe051a1a13411f641609bb58f77')
+
+build() {
+    mkdir -p "${srcdir}/build/"
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+}
+
+# check() {
+#     export R_LIBS="build/"
+#     R CMD check --no-manual "${_cranname}"
+# }
+
+package() {
+    install -dm0755 "${pkgdir}/usr/lib/R/library"
+    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
+    if [[ -f "${_cranname}/LICENSE" ]]; then
+        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    fi
+}
+makedepends+=("abseil-cpp")

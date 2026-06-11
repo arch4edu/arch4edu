@@ -1,17 +1,17 @@
 # Contributor: krant <aleksey.vasilenko@gmail.com>
 
 _cranname=signal
-_cranver=0.7-7
+_cranver=1.8-1
 pkgname=r-${_cranname,,}
 pkgver=${_cranver//[:-]/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Signal Processing"
 arch=(any)
 url="https://cran.r-project.org/package=${_cranname}"
 license=(GPL2)
 depends=('r>=3.5' 'gcc-fortran')
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('67a015c46d67de7548c3adb83a1b22524de75501a861d91668c3c2ea761a4e61')
+sha256sums=('a322bc13c2d3ff43a7f24970e52277d3d8ebc47fdaa9f63e210ed53655e1eeb0')
 
 build() {
   R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"

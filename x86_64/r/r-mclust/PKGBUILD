@@ -1,36 +1,38 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mclust
-_pkgver=6.0.0
+_pkgver=6.1.2
 pkgname=r-${_pkgname,,}
-pkgver=6.0.0
-pkgrel=1
-pkgdesc='Gaussian Mixture Modelling for Model-Based Clustering, Classification, and Density Estimation'
-arch=('x86_64')
-url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+pkgver=${_pkgver//-/.}
+pkgrel=2
+pkgdesc="Gaussian Mixture Modelling for Model-Based Clustering, Classification, and Density Estimation"
+arch=(x86_64)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('GPL-2.0-or-later')
 depends=(
+  blas
+  lapack
   r
-)
-optdepends=(
-  r-geometry
-  r-knitr
-  r-mass
-  r-mix
-  r-rmarkdown
 )
 makedepends=(
   gcc-fortran
 )
+optdepends=(
+  r-geometry
+  r-knitr
+  r-mix
+  r-rmarkdown
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('de7c306ecba1ef0f4e4a56c748ce08149417496b711beefb032d561a4c28122a')
+md5sums=('51537ab6f40307c473b99ab959aa7cd3')
+b2sums=('439daca75cbd081b9adc44251fca44c630b1193b84b71ed95300699428022c9e67d50627237396e141c5e0d306141f3dc6f351927ee55ae806e8411bbc29d8f2')
 
 build() {
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
 package() {
-  install -dm0755 "${pkgdir}/usr/lib/R/library"
-  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
-# vim:set ts=2 sw=2 et:

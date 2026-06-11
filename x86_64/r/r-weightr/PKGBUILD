@@ -4,7 +4,7 @@ _pkgname=weightr
 _pkgver=2.0.2
 pkgname=r-${_pkgname,,}
 pkgver=2.0.2
-pkgrel=4
+pkgrel=5
 pkgdesc='Estimating Weight-Function Models for Publication Bias'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
