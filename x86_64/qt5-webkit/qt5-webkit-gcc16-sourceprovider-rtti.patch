@@ -1,0 +1,17 @@
+--- a/Source/JavaScriptCore/PlatformQt.cmake
++++ b/Source/JavaScriptCore/PlatformQt.cmake
+@@ -30,3 +30,14 @@
+         inspector/JSGlobalObjectInspectorController.cpp
+     )
+ endif ()
++
++# SourceProvider needs RTTI so its typeinfo is available to WebKit files
++# compiled with -frtti (e.g. qwebelement.cpp). Without this, GCC 16+
++# refuses to link because the base-class typeinfo is missing.
++if (COMPILER_IS_GCC_OR_CLANG)
++    set_source_files_properties(
++        parser/SourceProvider.cpp
++    PROPERTIES
++        COMPILE_FLAGS -frtti
++    )
++endif ()

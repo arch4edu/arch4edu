@@ -8,7 +8,7 @@ pkgname=qt5-webkit
 _pkgver=5.212.0-alpha4
 _basever=5.15.3
 pkgver=${_pkgver/-/}
-pkgrel=28
+pkgrel=29
 arch=(x86_64 aarch64)
 url="https://github.com/qtwebkit/qtwebkit"
 license=(LGPL-2.1-only)
@@ -23,6 +23,7 @@ source=("https://github.com/qtwebkit/qtwebkit/releases/download/qtwebkit-$_pkgve
          qt5-webkit-glib-2.68.patch
          qt5-webkit-python-3.9.patch
          qt5-webkit-bison-3.7.patch
+         qt5-webkit-gcc16-sourceprovider-rtti.patch
 
 )
 depends=(qt5-location qt5-sensors qt5-webchannel libwebp libxcomposite gst-plugins-base hyphen woff2
@@ -43,7 +44,8 @@ sha256sums=('9ca126da9273664dd23a3ccd0c9bebceb7bb534bddd743db31caf6a5a6d4a9e6'
             '0b40ed924f03ff6081af610bb0ee01560b7bd1fb68f8af02053304a01d4ccdf0'
             '4969dd03e482155e2490b50307dada81dda7bbc9e5398e3a53c20bc474f7c04e'
             '6e0cee08e4fa57b04752e80817f33562f48aa42608a3a620930b6040259b4932'
-            '34f37b53ee0bc31c63ce85ebd1ae95543a8ba28483e387b20efd50574bd813be')
+            '34f37b53ee0bc31c63ce85ebd1ae95543a8ba28483e387b20efd50574bd813be'
+            '96dcb8be81496bbdbe5d65d4f4417287a269898b681adf1144052d617822f750')
 
 prepare() {
   cd "qtwebkit-${_pkgver}"
@@ -55,6 +57,7 @@ prepare() {
   patch -p1 -i ../qtwebkit-fix-build-gcc14.patch # GCC 14.1
   patch -p1 -i ../qt5-webkit-icu75.patch         # Fix build with ICU 75
   patch -p1 -i ../qt5-webkit-icu76.patch         # Fix build with ICU 76
+  patch -p1 -i ../qt5-webkit-gcc16-sourceprovider-rtti.patch # Fix build with GCC 16
 
   patch -Np1 -i ../webkit-offlineasm-warnings-ruby27.patch
   echo "Done patch for Ruby 3.2"
@@ -63,6 +66,10 @@ prepare() {
 # disabling XSLT to build https://github.com/qtwebkit/qtwebkit/issues/1097
 
 build() {
+  # Disable all warnings
+  export CFLAGS+=" -w"
+  export CXXFLAGS+=" -w"
+
   local _flags=(
     -DCMAKE_CXX_FLAGS="${CXXFLAGS} -DNDEBUG"
     -DPORT=Qt
