@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=distributional
-_pkgver=0.7.0
+_pkgver=0.7.1
 pkgname=r-${_pkgname,,}
-pkgver=0.7.0
+pkgver=0.7.1
 pkgrel=1
 pkgdesc='Vectorised Probability Distributions'
 arch=('any')
@@ -30,7 +30,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('15f10bc388de532ba93a53af5048a4ecad9cde8d429e07299be70e05db7895a7')
+sha256sums=('1da0616b02a24a05dd49b19577c944fb3e48e1d2eae07efd56c03e45ba1a519e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
