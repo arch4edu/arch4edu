@@ -5,7 +5,7 @@
 # Contributor: Blair Bonnett <blair dot bonnett at gmail dot com>
 pkgname=micromamba
 _pkgname=${pkgname/micro/}
-pkgver=2.8.0
+pkgver=2.8.1
 pkgrel=1
 pkgdesc="The fast cross-platform package manager"
 arch=(i686 x86_64)
@@ -17,7 +17,7 @@ makedepends=(cli11 spdlog tl-expected nlohmann-json cmake pybind11 ninja
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz"
   etc-install.patch::https://github.com/mamba-org/mamba/commit/3dec9c0bc0e424749c649eae96de92c323e3b3d3.patch
   static-off.patch)
-sha512sums=('1d46fab323f98c85c41ea51f2ba480ec68a55d333fd464d3ca65ca5197cc9126e9ee98a400b2abab4291171d60065c903b1443c1515ea428b05521b6d567199b'
+sha512sums=('ba2949c32506bcf355d549f01e5a309a862ca5618bc618d1a6b8e74d8413dbd8abaa4f2b9aec39faa593627b05ca1c6a2835e4800d646fd9c8d3a73a3801e89a'
             '2fcbaf269412225fdf5e3afc9e5d8c8122b24ad9e576cb9ba8fdb6050c1d4ac61aa0dbc38f482b41b9c586a3a25ad773e141e302a50e25dacda00fa85ca15212'
             '36c1ff684597251aba0de64cfee372212cdfe51890e584c15798b37bd41c02ed929596368b2c743934cfab89ce31bf9ac6ba9ee7f17ab038feb87fdecbadf1d8')
 provides=(
