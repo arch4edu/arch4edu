@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=nonnest2
-_pkgver=0.5-8
+_pkgver=0.5-9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -38,8 +38,8 @@ optdepends=(
   r-tidysem
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7cdabf2deb5e63a1733b8e0b2a84b898')
-b2sums=('dc48b7ae6391ae0beef946715a232bf5a4de5de9b62bd368937c02a836f1821a85bb71cf788b67503746d0734821a7a53028fd80fc41a3bf895bbabb9e6e24b5')
+md5sums=('d73b64d4188c6491a4279d73bfe89de3')
+b2sums=('c30b4af68e12772b96555925d52ea5e45040d5ad906e272796aae7505ea57f42c376f709a795d721b21f6f8dcccc3d3e17e525839c8d4b0b3a1f04a1df6ab61d')
 
 build() {
   mkdir build
