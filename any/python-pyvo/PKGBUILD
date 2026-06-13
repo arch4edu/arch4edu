@@ -3,7 +3,7 @@
 pkgbase=python-pyvo
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.9.0
+pkgver=1.9.1
 pkgrel=1
 pkgdesc="Astropy affiliated package for accessing Virtual Observatory data and services"
 arch=('any')
@@ -25,7 +25,7 @@ checkdepends=('python-pytest-astropy'
               'python-requests-mock'
               'python-pillow')  #astropy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('344f585bf9721d34f4a95c7d5fb7ebe6')
+md5sums=('40429f198c33c32786b372b1395e953c')
 
 #prepare() {
 #    cd ${srcdir}/${_pyname}-${pkgver}
