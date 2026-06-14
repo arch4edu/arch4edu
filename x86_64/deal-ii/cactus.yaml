@@ -4,5 +4,13 @@ nvchecker:
 depends:
   - x86_64/kokkos
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  cat >> PKGBUILD <<'EOF'
+  prepare() {
+      curl -LO https://github.com/dealii/dealii/pull/19045.patch
+      cd ${srcdir}/${_realname}-$pkgver
+      patch -p1 -i ../19045.patch
+  }
+  EOF
 post_build: aur-post-build
