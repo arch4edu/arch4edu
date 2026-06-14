@@ -2,17 +2,16 @@
 # Contributor: Javier Tiá <javier dot tia at gmail dot com>
 
 # options
-: ${_ver_clang=20}
+: ${_ver_clang=21}
 : ${_ver_jdk:=21}
 
 : ${_install_path:=usr/lib}
 
-: ${_commit:=3bf09ad687c03b3d7ff80e9a7bef2d58c86f415d} # 2026.4
-_llvm_ver_maj=$(LC_ALL=C pacman -Si llvm | grep -Pom1 '^Version\s+:\s+\K[0-9]+')
+_llvm_ver_maj=$(LC_ALL=C pacman -Si "llvm${_ver_clang:-}" | grep -Pom1 '^Version\s+:\s+\K[0-9]+')
 
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
-pkgver=2026.4
+pkgver=2026.6
 pkgrel=1
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url="https://github.com/petermost/Sourcetrail"
@@ -23,14 +22,12 @@ depends=(
   "clang${_ver_clang:-}<$((_llvm_ver_maj + 1))"
   "llvm${_ver_clang:-}-libs<$((_llvm_ver_maj + 1))"
   'hicolor-icon-theme'
-  'libboost_chrono.so'          # boost-libs
   'libboost_filesystem.so'      # boost-libs
+  'libboost_locale.so'          # boost-libs
   'libboost_program_options.so' # boost-libs
-  'libboost_thread.so'          # boost-libs
-  'qt6-5compat'
+  'libsqlite3.so'
   'qt6-base'
   'qt6-svg'
-  'sqlite'
   'tinyxml'
 )
 makedepends=(
@@ -52,8 +49,8 @@ optdepends=(
 )
 
 _pkgsrc="petermost.sourcetrail"
-source=("$_pkgsrc"::"git+$url.git#commit=$_commit")
-sha256sums=('SKIP')
+source=("$_pkgsrc"::"git+$url.git#tag=$pkgver")
+sha256sums=('0c2f21e93427987f655d2b749afecf371062b29af644e044f667ac0e0a0b4184')
 
 prepare() {
   cd "$_pkgsrc"
