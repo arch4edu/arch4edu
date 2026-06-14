@@ -1,7 +1,7 @@
 # Maintainer:  Jason Kercher <jkercher 43 at gmail dot com>
 
 pkgname=linuxcnc-git
-pkgver=2.9.8.r4531.gf01903dac4
+pkgver=2.9.8.r4761.g1ed052dc99
 pkgrel=1
 pkgdesc="Controls CNC machines. It can drive milling machines, lathes, 3d printers, laser cutters, plasma cutters, robot arms, hexapods, and more (formerly EMC2)"
 arch=($CARCH)
@@ -12,19 +12,24 @@ depends=(
   cairo
   bash
   boost-libs
+  fmt
   freetype2
   fontconfig
-  gcc-libs
   gdk-pixbuf2
   glib2
   glibc
   gstreamer
   gtk3
   harfbuzz
+  libcap
+  libedit
   libepoxy
+  libgcc
+  libglvnd
   libmodbus
   #   libgpiod
   librsvg
+  libstdc++
   libtirpc
   libusb
   libx11
@@ -33,8 +38,6 @@ depends=(
   libxinerama
   libxmu
   libxss
-  #   readline
-  #   editline
   systemd-libs
   pango
   python
@@ -47,27 +50,17 @@ depends=(
   python-opengl
   python-numpy
   python-matplotlib
-  #   python-poppler-qt5
-  #   python-psycopg
-  #   python-pillow
   python-pyqt5
   python-pyserial
   python-pyzmq
   python-xlib
-  #   python-validate-pyproject
-  readline
   tk
   tcl
   zlib
-  # AUR
-  bwidget
-  python-yapps2
-  #   gtksourceview2
-  #   python-pyodbc
-  # python-espeak
 )
 makedepends=(
   asciidoc
+  asciidoctor
   bc
   boost
   dblatex
@@ -87,8 +80,8 @@ makedepends=(
   texlive-bin
   texlive-binextra
   #AUR
-  #   bwidget
-  #   tclx
+  # bwidget
+  python-yapps2
   linkchecker
   termcap
 )
