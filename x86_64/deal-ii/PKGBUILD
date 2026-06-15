@@ -90,7 +90,7 @@ build() {
   # standard repositories
   cmake_configuration_flags=" -DDEAL_II_ALLOW_BUNDLED=OFF -DDEAL_II_FORCE_BUNDLED_TASKFLOW=ON"
 
-  cmake_configuration_flags+=" -DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+  cmake_configuration_flags+=" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDEAL_II_COMPONENT_PYTHON_BINDINGS=ON"
 
   # deal.II does not use more aggressive search paths (which we need) for MPI
   # unless we explicitly enable it, so check for MPI and then turn it on:
@@ -173,14 +173,4 @@ package() {
 
   install -D -m755 "${srcdir}/build/deal-ii.sh" "${pkgdir}/etc/profile.d/deal-ii.sh"
   install -D -m644 "${srcdir}/${_realname}-$pkgver/LICENSE.md" "${pkgdir}/usr/share/licenses/${_realname}-$pkgver/LICENSE.md"
-}
-prepare() {
-    cd ${srcdir}/${_realname}-$pkgver
-    # Replace HostMirror with host_mirror_type for Kokkos >= 5.0
-    sed -i 's/::HostMirror/::host_mirror_type/g' \
-      include/deal.II/matrix_free/portable_matrix_free.h \
-      include/deal.II/matrix_free/portable_matrix_free.templates.h
-    # Move JxW to its own line to match other variable declarations
-    sed -i 's/::host_mirror_type JxW;/::host_mirror_type\n      JxW;/' \
-      include/deal.II/matrix_free/portable_matrix_free.h
 }
