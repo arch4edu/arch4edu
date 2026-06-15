@@ -6,16 +6,5 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  cat >> PKGBUILD <<'EOF'
-  prepare() {
-      cd ${srcdir}/${_realname}-$pkgver
-      # Replace HostMirror with host_mirror_type for Kokkos >= 5.0
-      sed -i 's/::HostMirror/::host_mirror_type/g' \
-        include/deal.II/matrix_free/portable_matrix_free.h \
-        include/deal.II/matrix_free/portable_matrix_free.templates.h
-      # Move JxW to its own line to match other variable declarations
-      sed -i 's/::host_mirror_type JxW;/::host_mirror_type\n      JxW;/' \
-        include/deal.II/matrix_free/portable_matrix_free.h
-  }
-  EOF
+  sed 's/cmake_configuration_flags+=" -DCMAKE_POLICY_VERSION_MINIMUM=3.5"/cmake_configuration_flags+=" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDEAL_II_COMPONENT_PYTHON_BINDINGS=ON"/' -i PKGBUILD
 post_build: aur-post-build
