@@ -4,7 +4,7 @@
 pkgname=deal-ii
 _realname=dealii
 pkgver=9.7.1
-pkgrel=1
+pkgrel=2
 pkgdesc="An Open Source Finite Element Differential Equations Analysis Library"
 arch=("i686" "x86_64")
 url="https://www.dealii.org/"
@@ -49,11 +49,19 @@ makedepends=('cmake')
 # LTO is too expensive to link and deal.II manages its own debug build
 options=(!lto !debug !strip)
 install=deal-ii.install
-source=(https://github.com/dealii/dealii/releases/download/v$pkgver/${_realname}-$pkgver.tar.gz)
-sha256sums=('0f2096ef83db54fdcebe9f3d148fa713f63f1c3f567941b53bcb4a1a8ea7de43')
+source=(https://github.com/dealii/dealii/releases/download/v$pkgver/${_realname}-$pkgver.tar.gz
+       kokkos5.patch)
+sha256sums=('0f2096ef83db54fdcebe9f3d148fa713f63f1c3f567941b53bcb4a1a8ea7de43'
+            '393b92468034cb6c28d721621ba012426d88ef5f08119d0b203f9f94ba8208b6')
 # where to install deal.II: change to something else (e.g., /opt/deal.II/)
 # if desired.
 _installation_prefix=/usr
+
+prepare() {
+  cd "$srcdir/dealii-$pkgver"
+  # fix compilation with Kokkos 5
+  patch -p1 -i "$srcdir/kokkos5.patch"
+}
 
 build() {
   # Since deal.II relies on a relatively large number of packages that are

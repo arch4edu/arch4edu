@@ -1,0 +1,66 @@
+diff --git a/include/deal.II/matrix_free/portable_matrix_free.h b/include/deal.II/matrix_free/portable_matrix_free.h
+index 6eb9f9da12..dc947a5f18 100644
+--- a/include/deal.II/matrix_free/portable_matrix_free.h
++++ b/include/deal.II/matrix_free/portable_matrix_free.h
+@@ -838,7 +838,7 @@ namespace Portable
+      * Kokkos::View of quadrature points on the host.
+      */
+     typename Kokkos::View<Point<dim, Number> **,
+-                          MemorySpace::Default::kokkos_space>::HostMirror
++                          MemorySpace::Default::kokkos_space>::host_mirror_type
+       q_points;
+ 
+     /**
+@@ -846,21 +846,21 @@ namespace Portable
+      * vector.
+      */
+     typename Kokkos::View<types::global_dof_index **,
+-                          MemorySpace::Default::kokkos_space>::HostMirror
++                          MemorySpace::Default::kokkos_space>::host_mirror_type
+       local_to_global;
+ 
+     /**
+      * Kokkos::View of inverse Jacobians on the host.
+      */
+     typename Kokkos::View<Number **[dim][dim],
+-                          MemorySpace::Default::kokkos_space>::HostMirror
++                          MemorySpace::Default::kokkos_space>::host_mirror_type
+       inv_jacobian;
+ 
+     /**
+      * Kokkos::View of Jacobian times the weights on the host.
+      */
+     typename Kokkos::View<Number **,
+-                          MemorySpace::Default::kokkos_space>::HostMirror JxW;
++                          MemorySpace::Default::kokkos_space>::host_mirror_type JxW;
+ 
+     /**
+      * Number of cells.
+@@ -882,7 +882,7 @@ namespace Portable
+      */
+     typename Kokkos::View<
+       dealii::internal::MatrixFreeFunctions::ConstraintKinds *,
+-      MemorySpace::Default::kokkos_space>::HostMirror constraint_mask;
++      MemorySpace::Default::kokkos_space>::host_mirror_type constraint_mask;
+ 
+     /**
+      * If true, use graph coloring has been used and we can simply add into
+diff --git a/include/deal.II/matrix_free/portable_matrix_free.templates.h b/include/deal.II/matrix_free/portable_matrix_free.templates.h
+index 1e55053dcc..bddf60d355 100644
+--- a/include/deal.II/matrix_free/portable_matrix_free.templates.h
++++ b/include/deal.II/matrix_free/portable_matrix_free.templates.h
+@@ -207,11 +207,11 @@ namespace Portable
+         Kokkos::create_mirror_view(data->constraint_mask[color]);
+ 
+       typename std::remove_reference_t<
+-        decltype(data->q_points[color])>::HostMirror q_points_host;
+-      typename std::remove_reference_t<decltype(data->JxW[color])>::HostMirror
++        decltype(data->q_points[color])>::host_mirror_type q_points_host;
++      typename std::remove_reference_t<decltype(data->JxW[color])>::host_mirror_type
+         JxW_host;
+       typename std::remove_reference_t<
+-        decltype(data->inv_jacobian[color])>::HostMirror inv_jacobian_host;
++        decltype(data->inv_jacobian[color])>::host_mirror_type inv_jacobian_host;
+ #if DEAL_II_KOKKOS_VERSION_GTE(3, 6, 0)
+       auto local_to_global_host =
+         Kokkos::create_mirror_view(Kokkos::WithoutInitializing,
