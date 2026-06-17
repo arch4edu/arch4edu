@@ -3,12 +3,12 @@
 pkgname=pi-hole-web
 _mainpkgname=pi-hole
 _pkgname=web
-pkgver=6.5
+pkgver=6.5.1
 pkgrel=1
 pkgdesc='Pi-hole Dashboard for stats and more.'
 arch=('any')
 license=('EUPL-1.2')
-url="https://github.com/pi-hole/pi-hole"
+url="https://github.com/pi-hole/web"
 depends=()
 makedepends=()
 conflicts=()
@@ -16,7 +16,7 @@ install=$pkgname.install
 backup=()
 
 source=($_pkgname-$pkgver.tar.gz::https://github.com/$_mainpkgname/$_pkgname/archive/refs/tags/v$pkgver.tar.gz)
-sha256sums=('e7261d6503c4a3d65aad2ae500dfc04163156403d29fddecd6dcfe7f9d679b1f')
+sha256sums=('db0603d1f1a3679cc2ee5b30bb738c178666c4230dd1a9b49917ed56ef9aa7e9')
 
 package() {
   cd "$srcdir"
