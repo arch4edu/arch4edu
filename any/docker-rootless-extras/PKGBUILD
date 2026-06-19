@@ -1,10 +1,11 @@
+#!/bin/bash -e
 # Maintainer: Ľubomír 'the-k' Kučera <lubomir.kucera.jr at gmail.com>
 # Contributor: Hugo Osvaldo Barrera <hugo@barrera.io>
 # Contributor: PastLeo <chgu82837@gmail.com>
 # Contributor: koba1t <kobdotsh at gmail dot com>
 
 pkgname=docker-rootless-extras
-pkgver=29.5.3
+pkgver=29.6.0
 pkgrel=1
 pkgdesc="Extras to run docker as non-root."
 arch=('any')
@@ -24,18 +25,35 @@ sha256sums=('904c9b9e35f6927c0a5e65afb4d35b6bc9eb1278c878044501281fc728c9be46'
             'd8695293e5d4a814763f13e1d36ed37273040666b4b91363d6c33171df8934c7'
             'd0d790d4c3d887b10b2b155b83a58a44980b9fa638f8c0f1faec0739dc0ef473')
 
+: "${arch[@]}"
+: "${conflicts[@]}"
+: "${install}"
+: "${license[@]}"
+: "${pkgdesc}"
+: "${pkgrel}"
+: "${provides[@]}"
+: "${sha256sums[@]}"
+: "${source[@]}"
+: "${url}"
+
 package() {
   depends=(
     'docker>=1:29.5.0'
     'rootlesskit>=3.0.0'
     sh
   )
+  # shellcheck disable=SC2016
   optdepends=(
     'fuse-overlayfs: overlayfs support'
     'lxc: experimental `lxc-user-nic` network driver'
     'passt: experimental `pasta` network driver'
     'slirp4netns: recommended network driver'
   )
+
+  : "${depends[@]}"
+  : "${optdepends[@]}"
+  : "${pkgdir:?}"
+  : "${srcdir:?}"
 
   install -Dm755 "$srcdir/dockerd-rootless-${pkgver}.sh" "$pkgdir/usr/bin/dockerd-rootless.sh"
   install -Dm644 "$srcdir/docker.socket" "$pkgdir/usr/lib/systemd/user/docker.socket"
@@ -46,6 +64,7 @@ package() {
   # similar paths, so would mess up the environment for users who run
   # `makepkg` on their host.
   # TODO: Send a patch upstream so we can make the script JUST print this.
+  # shellcheck disable=SC2016
   awk '/Unit/,/EOT/' "$srcdir/dockerd-rootless-setuptool-$pkgver.sh" | \
     head -n-1 | \
     sed 's/^[[:space:]]*//' | \
