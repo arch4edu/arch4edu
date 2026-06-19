@@ -1,0 +1,24 @@
+From e301e8593fd149433264bfe26d10a8840ee3e972 Mon Sep 17 00:00:00 2001
+From: Avia Avraham <145359432+AviaAv@users.noreply.github.com>
+Date: Sun, 31 May 2026 09:16:32 +0300
+Subject: [PATCH] rosbag2: cache-bust USES_GLIBC to force re-probe
+
+---
+ third-party/realsense-file/rosbag2/config.cmake | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/third-party/realsense-file/rosbag2/config.cmake b/third-party/realsense-file/rosbag2/config.cmake
+index 201d3ec9d..e738ecb96 100644
+--- a/third-party/realsense-file/rosbag2/config.cmake
++++ b/third-party/realsense-file/rosbag2/config.cmake
+@@ -76,6 +76,7 @@ if(UNIX AND NOT APPLE)
+     # (void*(*)[1]) to backtrace() which expects void**; gcc >= 14 errors on it,
+     # wrongly failing the check on glibc. Probe inline with the correct argument.
+     include(CheckCSourceCompiles)
++    unset(USES_GLIBC CACHE)  # force re-probe; old broken probe may have cached FALSE
+     check_c_source_compiles("
+         #include <execinfo.h>
+         int main() {
+-- 
+2.54.0
+
