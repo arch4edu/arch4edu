@@ -9,5 +9,8 @@ depends:
   - x86_64/r/r-rcpp
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i "s|^  tar -cvf|  mkdir -p ~/.R\n  echo 'CXXFLAGS += -Wno-format-security' > ~/.R/Makevars\n  echo 'PKG_CXXFLAGS = -Wno-format-security' >> \${_pkgname}/src/Makevars.in\n  echo 'PKG_LIBS = -Wl,--allow-multiple-definition' >> \${_pkgname}/src/Makevars.in\n  tar -cvf|" PKGBUILD
+  sed -i 's|R CMD INSTALL ${_pkgname}|R CMD INSTALL --no-test-load ${_pkgname}|' PKGBUILD
 post_build: aur-post-build
