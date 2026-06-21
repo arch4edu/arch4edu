@@ -8,5 +8,6 @@ makedepends:
   - x86_64/gcc11
   - x86_64/gcc11: gcc11-libs
 build_prefix: extra-x86_64
+group: GitHubActionsUnsafe
 pre_build: aur-pre-build
 post_build: aur-post-build
