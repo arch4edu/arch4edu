@@ -1,1 +1,11 @@
-../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/precice-config-graph
+  - x86_64/precice-adapter-schema
+  - x86_64/python-colored
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

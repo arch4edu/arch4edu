@@ -4,6 +4,8 @@ nvchecker:
 depends:
   - any/octave-general
   - x86_64/termcap
+makedepends:
+  - x86_64/units
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
