@@ -1,0 +1,8 @@
+[Unit]
+Description=Update units currency rates database
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/units_cur

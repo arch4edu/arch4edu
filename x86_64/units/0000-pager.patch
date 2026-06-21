@@ -1,0 +1,15 @@
+--- 1/units.c	2026-01-16 05:31:09.000000000 +0500
++++ 2/units.c	2026-01-31 15:10:49.560198944 +0500
+@@ -137,7 +137,11 @@
+ #ifdef _WIN32
+ #  define DEFAULTPAGER "more"             /* Default pager for Windows */
+ #else
+-#  define DEFAULTPAGER "/usr/bin/pager"   /* Default pager for Unix */
++// units uses /usr/bin/pager as the pager for the 'help' function, which seems
++// to be a Debian-ism: it is not provided by any Arch packages. Replace it with
++// less, which is shipped on ~95% of Arch systems, and will be called unless the
++// user sets their own pager through the $PAGER env var.
++#  define DEFAULTPAGER "less"   /* Default pager for Unix */
+ #endif
+ #define DEFAULTLOCALE "en_US"   /* Default locale */
+ #define MAXINCLUDE 5            /* Max depth of include files */
