@@ -7,7 +7,7 @@
 
 _pkgname=ffmpeg
 pkgname=${_pkgname}6.1
-pkgver=6.1.5
+pkgver=6.1.6
 pkgrel=1
 pkgdesc='Complete solution to record, convert and stream audio and video (legacy v6.1)'
 arch=(x86_64)
@@ -102,12 +102,12 @@ optdepends=(
   'nvidia-utils: Nvidia NVDEC/NVENC support'
   'onevpl-intel-gpu: Intel QuickSync support'
 )
-_tag='a44ab44236a99ae26594fb3e14fe0c956210673d'
+_tag='f1e3a2bf7a2f2cde936d1ed97f09a26853d20125'
 source=(
   "git+https://git.ffmpeg.org/ffmpeg.git#tag=${_tag}"
   'add-av_stream_get_first_dts-for-chromium.patch'
 )
-b2sums=('41434f697535f3c9637238382013a76564f91029baa8f2380d3301b37fc289dfdd163700c203210cb7f6a7e7564da5019e1d5977c8b98f8e6e9f57e484b525d5'
+b2sums=('d3e48be8dab1b7d0d2d8a8b4ec10edb99008beeafd6bf9a78953a1a3fa6efee4035ff541cc58ceb3a07cbcc70ba20e0d665764052f4658f1fb5e09e49b4380c6'
         '555274228e09a233d92beb365d413ff5c718a782008075552cafb2130a3783cf976b51dfe4513c15777fb6e8397a34122d475080f2c4483e8feea5c0d878e6de')
 #validpgpkeys=(DD1EC9E8DE085C629B3E1846B18E8928B3948D64) # Michael Niedermayer <michael@niedermayer.cc>
 
