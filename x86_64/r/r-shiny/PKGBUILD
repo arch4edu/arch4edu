@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.13.0
+_pkgver=1.14.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -14,6 +14,7 @@ license=('MIT')
 depends=(
   r-bslib
   r-cachem
+  r-cli
   r-commonmark
   r-fastmap
   r-fontawesome
@@ -31,7 +32,6 @@ depends=(
   r-sourcetools
   r-withr
   r-xtable
-  r-cli
 )
 checkdepends=(
   r-coro
@@ -51,20 +51,21 @@ optdepends=(
   r-knitr
   r-magrittr
   r-markdown
+  r-mirai
+  r-otelsdk
   r-ragg
   r-reactlog
   r-rmarkdown
   r-sass
+  r-shinytest2
   r-showtext
   r-testthat
-  r-yaml
-  r-mirai
   r-watcher
-  r-otelsdk
+  r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('855af399bccf9df94450f850580012e5')
-b2sums=('f004ab7b4d5390d7e65f63136b0894bdb4a4cf8aa90da946e8a8e565823be996f5c95c7715c8cc7e4a03146b02ec2b8d3237295ae06ac7e58165fc26d86f50d0')
+md5sums=('309459688ceae1e8b018d1595eae8879')
+b2sums=('bb712f0b2169936cab0d53afb202bd4226ee1432ed0c19a195e0b07a3db51498d3524dceba88254ba8d83a76e0bc48d2ada2cb24a2819864bb549cf8884609c2')
 
 build() {
   mkdir build
