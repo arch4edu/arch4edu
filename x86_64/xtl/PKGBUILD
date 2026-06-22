@@ -1,7 +1,7 @@
 # Maintainer: Simon Wilper <sxw@chronowerks.de>
 pkgname=xtl
 pkgver=0.8.2
-pkgrel=1
+pkgrel=2
 pkgdesc="The x template library"
 arch=('any')
 url="https://github.com/xtensor-stack/${pkgname}"
