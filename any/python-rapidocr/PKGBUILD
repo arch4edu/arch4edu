@@ -1,7 +1,7 @@
 # Maintainer: aliu <AA RON LIU <GMAIL.COM> >
 pkgname=python-rapidocr
 pkgver=3.8.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Cross-runtime OCR library'
 arch=('any')
 license=('Apache-2.0')
@@ -18,6 +18,7 @@ depends=('python>=3.8'
 	'python-requests'
 	'python-colorlog')
 optdepends=(
+	# Operation requires at least one of these and adjusted engine_type config
 	'python-onnxruntime: Recommended runtime'
 	'python-onnxruntime-cpu: Faster than GPU-accelerated onnxruntime (https://github.com/microsoft/onnxruntime/issues/13198)'
 	'python-openvino: Supported runtime'
@@ -31,7 +32,7 @@ source=("https://github.com/RapidAI/RapidOCR/archive/v${pkgver}.tar.gz"
 	'https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.8.0/onnx/PP-OCRv4/det/ch_PP-OCRv4_det_mobile.onnx'
 	'https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.8.0/onnx/PP-OCRv4/cls/ch_ppocr_mobile_v2.0_cls_mobile.onnx'
 	'https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.8.0/onnx/PP-OCRv4/rec/ch_PP-OCRv4_rec_mobile.onnx'
-	# patch in the version number
+	# patch-in version number
 	'pyproject.toml.patch')
 b2sums=('56e313f692823a1bd8b799bb3cb9d48980cd215dc0e23d1dba4e960e2c3c67282c994981a0383cae2b8c5344d1db74aa2a1a457e2122d42717c32c45e015af48'
         '67566aa137427a05919373bfee74ee69735d9b5d888f7f8b8fd9bf10e9e75e3b129e91a1ea74d1b8b2eb8b0be81576101d081c16530296385fd3c1bed107282a'
@@ -44,12 +45,12 @@ prepare() {
 
 	# Patch in version number without needing to install a nonce dependency
 	# that fetches the version number from git
-	patch < "$srcdir/pyproject.toml.patch"
+	patch < "${srcdir}/pyproject.toml.patch"
 	sed -i "s/VERSION_NUM/\"${pkgver}\"/" pyproject.toml
 
 	rm rapidocr/models/.gitkeep  # i don't like you
 	# From prepare_wheel_assets.py, run by gen_whl_to_pypi_rapidocr GH Action
-	mv "$srcdir/"*.onnx -t rapidocr/models/
+	mv "${srcdir}/"*.onnx -t rapidocr/models/
 	cat <<- EOF > MANIFEST.in
 	include rapidocr/models/ch_PP-OCRv4_det_mobile.onnx
 	include rapidocr/models/ch_ppocr_mobile_v2.0_cls_mobile.onnx
@@ -64,10 +65,24 @@ build() {
 
 check() {
 	cd "${srcdir}/RapidOCR-${pkgver}/python/build/lib"
+	if [[ -f /etc/rapidocr/config.yaml ]]; then
+		mv {rapidocr,"${srcdir}"}/config.yaml
+		cp /etc/rapidocr/config.yaml rapidocr/config.yaml
+	fi
 	PYTHONPATH="$PWD" python -m rapidocr.main check
 }
 
 package() {
 	cd "${srcdir}/RapidOCR-${pkgver}/python"
-	python -m installer --destdir="$pkgdir" dist/*.whl
+	python -m installer --destdir="${pkgdir}" dist/*.whl
+	# move config file to /etc
+	mkdir -p "${pkgdir}/etc/rapidocr/"
+	if [[ -f "${srcdir}/config.yaml" ]]; then  # created backup during check()
+		mv {"${srcdir}","${pkgdir}"}/etc/rapidocr}/config.yaml
+		rm "${pkgdir}"/usr/lib/python*/site-packages/rapidocr/config.yaml
+	else
+		mv "${pkgdir}"/usr/lib/python*/site-packages/rapidocr/config.yaml "${pkgdir}"/etc/rapidocr/config.yaml
+	fi
+	set -x
+	ln -s /etc/rapidocr/config.yaml "$(ls -d "${pkgdir}"/usr/lib/python*/site-packages/rapidocr)/config.yaml"
 }
