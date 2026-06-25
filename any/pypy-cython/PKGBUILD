@@ -6,7 +6,7 @@
 _base=cython
 pkgbase=pypy-${_base}
 pkgname=pypy3-cython
-pkgver=3.2.5
+pkgver=3.2.6
 pkgrel=1
 pkgdesc="C-Extensions for PyPy"
 arch=(i686 x86_64)
@@ -14,7 +14,7 @@ url="https://${_base}.org"
 license=(Apache-2.0)
 makedepends=(pypy3-setuptools)
 source=(https://pypi.org/packages/source/${_base::1}/${_base}/${_base}-${pkgver}.tar.gz)
-sha512sums=('d11feb71bf2dbbbdffcac3e71e28eaa4d2583431f24e1722df4c0ab3fc33afc763ba4468e3bc7b8620b6d486357b8aa85dee248a195570329648c6b84312657a')
+sha512sums=('85940b6313ceb83c06f2ddb67bfc5dfd7dc7957503cea2b68362eb71a0e594976bf86032b24a4db713c991bb7eae7cd31f6bb90b58449b0b36cff2423f954931')
 
 package_pypy3-cython() {
   depends=(pypy3)
