@@ -3,7 +3,7 @@
 # Contributor: KokaKiwi <kokakiwi+aur@kokakiwi.net>
 
 pkgname=ventoy-bin
-pkgver=1.1.12
+pkgver=1.1.14
 pkgrel=1
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
@@ -19,7 +19,7 @@ depends=(
 optdepends=(
   'e2fsprogs: EXT partition support'
   'gtk3: GTK3 GUI'
-  'ntfs-3g: NTFS partition support'
+  'ntfsprogs: NTFS partition support'
   'parted: Primary partitioning tool'
   'qt5-base: Qt5 GUI'
   'polkit: run GUI from application menu'
@@ -37,7 +37,7 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}-extend-persistent"
         "${pkgname%-bin}.desktop"
         'sanitize.patch')
-sha256sums=('04620b546bcc5eeeb5971767595b3713ee3de71580a82449053c53a7cb32fcd9'
+sha256sums=('96add45625f7634726bc64633ddaf93851f183e00beabf556c5ab7f1b080a81a'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
             'c3d4463a878a89d96e5f0bc4e1a43e48f27af5965bd4c977567695d7cf91fe5f'
@@ -79,6 +79,9 @@ prepare() {
   for binary in xzcat hexdump; do
     rm -fv "tool/${CARCH}/${binary}"
   done
+
+  # Correct package name containing ntfsresize
+  sed -i 's/ntfs-3g/ntfsprogs/g' tool/VentoyWorker.sh
 }
 
 package() {
