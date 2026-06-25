@@ -5,7 +5,7 @@
 pkgbase=open3d
 pkgname=( {,python-}open3d python-py3d )
 pkgver=0.19.0
-pkgrel=13
+pkgrel=14
 epoch=1
 pkgdesc="A Modern Library for 3D Data Processing"
 arch=('x86_64')
@@ -51,6 +51,9 @@ depends=(
     zeromq
     cppzmq
     intel-oneapi-basekit
+    minizip
+    nlohmann-json
+    fast_float
 )
 optdepends=(
     'openmp: Multiprocess support'
@@ -67,13 +70,15 @@ source=(
     "archlinux.patch"
     "librealsense.cmake.patch"
     "civetweb.cmake.patch"
+    "minizip.patch"
 )
 sha256sums=(
     'SKIP'
     'e58dacd86497e4d8a61fe00e4e41a4b8748e1dcca8d3172918d1bc5a1e7390cc'
     'b29065f9930ce58f09066bd8943be322c07454bfec7084c030ff8b7dd6185ac4'
     '601ecb81fe6b1b6b459bc9340e9c060e2fc991a004318d18803dffa23ffb078a'
-    '18a4dc14fc7d027b864575a856422c2a1b520cbbba47fb7e22300054e796d09b')
+    '18a4dc14fc7d027b864575a856422c2a1b520cbbba47fb7e22300054e796d09b'
+    'fab155297ebfffdd8a05af13006004e0a39daacc83c0ee6a43e5b9ace61d55e9')
 
 function prepare() {
     cd "${srcdir}/${pkgbase}"
@@ -81,6 +86,7 @@ function prepare() {
     patch -Np1 -i "${srcdir}/archlinux.patch"
     patch -Np1 -i "${srcdir}/librealsense.cmake.patch"
     patch -Np1 -i "${srcdir}/civetweb.cmake.patch"
+    patch -Np1 -i "${srcdir}/minizip.patch"
     # find . -name "CMakeLists.txt" -exec sed -i 's/-Werror//g' {} \;
     # grep --files-with-matches -r "_FORTIFY_SOURCE" | xargs -I {} sed -i 's/_FORTIFY_SOURCE=[0-9]/""/g' {}
     mkdir -p build
@@ -173,6 +179,9 @@ function package_open3d() {
         zeromq
         cppzmq
         intel-oneapi-basekit
+        minizip
+        nlohmann-json
+        fast_float
     )
     optdepends=(
         'openmp: Multiprocess support'
@@ -225,6 +234,9 @@ function package_python-open3d() {
         zeromq
         cppzmq
         intel-oneapi-basekit
+        minizip
+        nlohmann-json
+        fast_float
     )
     optdepends=(
         'jupyter-notebook: Jupyter notebook support'
@@ -284,6 +296,9 @@ function package_python-py3d() {
         zeromq
         cppzmq
         intel-oneapi-basekit
+        minizip
+        nlohmann-json
+        fast_float
     )
     optdepends=(
         'jupyter-notebook: Jupyter notebook support'

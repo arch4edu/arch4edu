@@ -1,0 +1,19 @@
+From: Zhirui Dai <daizhirui@hotmail.com>
+Subject: fix minizip include path on Arch Linux
+
+Arch Linux's minizip.pc only exposes -I/usr/include, but the actual
+unzip.h header lives at /usr/include/minizip/unzip.h. Add that
+subdirectory to the 3rdparty_minizip target's include dirs.
+
+--- a/3rdparty/find_dependencies.cmake
++++ b/3rdparty/find_dependencies.cmake
+@@ -1142,6 +1142,9 @@ if(WITH_MINIZIP)
+     open3d_pkg_config_3rdparty_library(3rdparty_minizip
+         SEARCH_ARGS minizip
+     )
++    if(TARGET 3rdparty_minizip)
++        target_include_directories(3rdparty_minizip SYSTEM INTERFACE /usr/include/minizip)
++    endif()
+     list(APPEND Open3D_3RDPARTY_PRIVATE_TARGETS_FROM_SYSTEM Open3D::3rdparty_minizip)
+ endif()
+
