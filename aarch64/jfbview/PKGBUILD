@@ -2,7 +2,7 @@
 # Contributor: farseerfc <farseerfc@archlinuxcn.org>
 
 pkgname=jfbview
-pkgver=0.6.1
+pkgver=0.7.0
 pkgrel=1
 pkgdesc="PDF and image viewer for the Linux framebuffer"
 arch=('i686' 'pentium4' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
