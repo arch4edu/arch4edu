@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=jmvcore
-_pkgver=2.7.7
+_pkgver=2.7.35
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Dependencies for the 'jamovi' Framework"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,6 +19,7 @@ optdepends=(
   r-export
   r-fastmap
   r-ggplot2
+  r-jmvreadwrite
   r-knitr
   r-ragg
   r-rcolorbrewer
@@ -26,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('df70719f55a52ae6f0d64cd58fa88f98')
-b2sums=('4d7f2120a34eb7e0b75783c64dc9dc969899a360b947200f01d0951e3794d493883aff4986bbf72a31c3d52d36d860b79459218ebc403fd85d9a2d79ee6b2f1f')
+md5sums=('e9be33a142748deba034ad7819145d5e')
+b2sums=('e4de62555684f1ee30e44721aa24aa35db124c99b1ae6c559c05b41419c1da3534e79efe0b1fc44ae327543fd9e9785d3c4989f166e3243e7a751a39fdea7670')
 
 build() {
   mkdir build
