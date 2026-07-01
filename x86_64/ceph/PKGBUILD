@@ -4,8 +4,8 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=20.2.1
-pkgrel=3
+pkgver=20.2.2
+pkgrel=1
 url='https://ceph.com/'
 arch=('x86_64')
 license=('GPL-2.0-or-later' 'LGPL-2.1-or-later' 'LGPL-3.0-or-later')
@@ -42,8 +42,7 @@ makedepends=(
 checkdepends=(
   'inetutils'     'xmlstarlet'
 
-  'python-nose'   'python-pycodestyle'   'python-pylint'   'python-pytest'   'python-pytest-cov'
-  'python-saml'   'python-xmlsec'
+  'python-nose'   'python-pycodestyle'   'python-pylint'   'python-saml'   'python-xmlsec'
 )
 
 # Despite the upstream suggesting that LTO is now possible, I still am unable
@@ -92,9 +91,6 @@ source=(
   # Quiet a bit of line noise in builds
   'ceph-20.2.0-backport-buffer-overread-in-datagenerator.patch'
 
-  # Backport of https://github.com/ceph/ceph/pull/67573
-  'ceph-20.2.0-backport-rgw-lc-do-not-delete-dm.patch'
-
   # Backport of three related fixes for boost 1.89 & 1.90
   'ceph-20.2.0-backport-boost-190-fixes.patch'
 
@@ -110,8 +106,11 @@ source=(
 
   # gcc 16 also broke some things, so get those fixed up too
   'ceph-20.2.1-backport-gcc16-fixes.patch'
+
+  # Always select lua 5.3 even if other versions exist
+  'ceph-20.2.2-lua-5-3-exact.patch'
 )
-sha512sums=('bd178ddd5efa532c90bc7633892452d49570da71cc9cb8a448048a51f4e1487a59dba05bea78cc2e6c9c75d112ed6a4f5613f5ce7f30b107682c2be620f5e1a5'
+sha512sums=('1977f384d2af5fde2a795e2eed71c12f519f1a2036ceb2e383c8534feca509740d744e99e77b73488f8e13193a83c7134e407fb6b21c4ba4c1f9ac9752b16fbc'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
@@ -124,12 +123,12 @@ sha512sums=('bd178ddd5efa532c90bc7633892452d49570da71cc9cb8a448048a51f4e1487a59d
             '9bc32100aeb10099c05bd175f422f30f4c415755129e675dfb52212a9f822fcdae40638fe8351eed03816aacf41290837d5a900e81d7d9760e8a8c7c97679ee3'
             '24ed165a1ea73a6ed7cf840a0d0ef8082e93ff9822ea9c3c4256d7de67deb485c7ca77f9f42f64e857a6f84fc137a73cf2458b08a50dd73caa4a42c7cf4a8f6f'
             'e07f77097b1ba49cdcbad432225f3b11b8df5dad003624f13bd5c7f33c48c30354486a4b294733d2abc26790f74feb01e334a8ce02adaed435287fe52ac4b91c'
-            '65334e1d6a94b15d28c30a2cf1eb86d40f96f4305308c451ff9b446a59fa98653400c9d5c047535375b5fc96d53dc70877eb20f8378b57516cd7292bec28c6f8'
             '09c8d37ad34a2a715867ebddab71e9cef8a488114f6f16fe2892d7c45609252ead8a29a8f055ff3a8253a7c96502482a1bed407922dd142ec072af55d3bcecbc'
             '690ddbebbbce9e0b52c9c401e668226cb0f9cea843d85ff5e5095e990df6a2905189dd9baaf21f71efc8153319a2cec16ded335bfdf40d34dbb2e33925c240ef'
             '14212332af61a6d055acedc8f12be6f769b49568309d5b357c40b4263d087e83b3f71f2632385c5020d487f0420f978e53fe3c3dc7c3dead75216119412fd03d'
             '46866375f573505c04652b5679cecb138d8d53d772ace54e45a1e557bf0fe009e03d657b44cdbc33d8f96746760ae1c969ce2e30d0ea4a7933aa3ff28b9e2b4e'
-            'be44fae301ce3dc2cba90d3ef33849d3e4d5c0878948c2b389200e0cde9eb2e118d8b694f3b6343f86686d4c60988dd43ebc3408317cd0cfcdadbf0ed1ac38d2')
+            'be44fae301ce3dc2cba90d3ef33849d3e4d5c0878948c2b389200e0cde9eb2e118d8b694f3b6343f86686d4c60988dd43ebc3408317cd0cfcdadbf0ed1ac38d2'
+            'ce1c5ccfdc595ce87ecf164a99d4205f7e303f527a9e3528c8a2e54ef387cff34eb03cbd9b25e6ba09fbc7efed23536d1612f57d0f9671a62e1e9dce05fdec35')
 __version="${pkgver}-${pkgrel}"
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
@@ -144,6 +143,7 @@ export CXXFLAGS="${CXXFLAGS/-fno-plt/}"
 prepare() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
+  printf '##### PREPARE PATCHES ' ; printf '%0.s#' {1..26} ; printf '\n'
   # apply patches from the source array
   local filename
   for filename in "${source[@]%%::*}"; do
@@ -155,6 +155,7 @@ prepare() {
   done
 
   # === Disable broken tests ===
+  printf '##### PREPARE MONKEY-PATCHING ' ; printf '%0.s#' {1..18} ; printf '\n'
 
   # The ceph tarballs do not include the ceph-erasure-code-corpus submodule so
   # this test fails with: "FAILED no tests found to run"
@@ -165,9 +166,16 @@ prepare() {
   # These are too small (or change too frequently) to be distinct patches, but
   # are annoying and cause spurious test failures
 
+  # Make the ceph test suite use the distro compiled packages so we don't have to
+  # roll the dice on if xmlsec or grpc pip wheel compiles are going to randomly
+  # break test suites depending on the current phase of the moon (:
+  sed -i '/export PIP_FIND_LINKS/a\    export VIRTUALENV_SYSTEM_SITE_PACKAGES=true' \
+    src/script/run_tox.sh
+  sed -i 's|\$PYTHON -m venv \$DIR|\$PYTHON -m venv --system-site-packages \$DIR|' \
+    src/tools/setup-virtualenv.sh
+
   # This test fails the entire suite, and doesn't actually test anything (see the TODO).
-  sed -i 's| hap.create_daemon_dirs("/var/tmp", 45, 54)| #hap.create_daemon_dirs("/var/tmp", 45, 54)|' \
-    src/cephadm/tests/test_ingress.py
+  sed -i '/test_haproxy_create_daemon_dirs/a\    Pass' src/cephadm/tests/test_ingress.py
 
   # pyfakefs <=5.6.0 do not work on python >=3.13
   # Note however, the test suite will still partially fail (wants root) but
@@ -185,75 +193,84 @@ prepare() {
   #
   # Note: this must be removed from the installed files!
   install -vD src/pybind/mgr/tests/__init__.py src/pybind/ceph_module/__init__.py
+
+  # === CMake ===
+  printf '##### PREPARE CMAKE ' ; printf '%0.s#' {1..28} ; printf '\n'
+  export CFLAGS+=' -Wno-maybe-uninitialized' CXXFLAGS+=' -Wno-maybe-uninitialized'
+  export CMAKE_BUILD_TYPE='RelWithDebInfo'
+  export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --ignore=1 || echo "4")
+
+  local cmake_options=(
+    -DCMAKE_INSTALL_PREFIX=/usr
+    -DCMAKE_INSTALL_SYSCONFDIR=/etc
+    -DCMAKE_INSTALL_BINDIR=bin
+    -DCMAKE_INSTALL_SBINDIR=bin
+    -DCMAKE_INSTALL_LIBDIR=lib
+    -DCMAKE_INSTALL_LIBEXECDIR=lib
+    -DENABLE_GIT_VERSION=ON
+    -DWITH_BABELTRACE=OFF
+    -DWITH_LTTNG=OFF
+    -DWITH_BLKIN=OFF
+    -DWITH_JAEGER=OFF
+    -DWITH_FIO=OFF
+    -DWITH_OPENLDAP=OFF
+    -DWITH_RDMA=OFF
+    -DWITH_OCF=OFF
+    -DWITH_DPDK=OFF
+    -DWITH_SPDK=OFF
+    -DWITH_QATDRV=OFF
+    -DWITH_QATLIB=OFF
+    -DWITH_QATZIP=OFF
+    -DWITH_RBD=ON
+    -DWITH_RBD_RWL=ON
+    -DWITH_RBD_SSD_CACHE=ON
+    -DWITH_RBD_MIRROR=ON
+    -DWITH_CEPHFS=ON
+    -DWITH_CEPHFS_JAVA=OFF
+    -DWITH_CEPHFS_SHELL=ON
+    -DWITH_FUSE=ON
+    -DWITH_LZ4=ON
+    -DWITH_XFS=ON
+    -DWITH_MGR=ON
+    -DWITH_MGR_DASHBOARD_FRONTEND=OFF
+    -DWITH_RADOSGW=ON
+    -DWITH_RADOSGW_BEAST_OPENSSL=ON
+    -DWITH_RADOSGW_AMQP_ENDPOINT=ON
+    -DWITH_RADOSGW_KAFKA_ENDPOINT=ON
+    -DWITH_RADOSGW_LUA_PACKAGES=ON
+    -DWITH_RADOSGW_DBSTORE=OFF
+    -DWITH_RADOSGW_SELECT_PARQUET=OFF
+    -DWITH_RADOSGW_MOTR=OFF
+    -DWITH_RADOSGW_DAOS=OFF
+    -DWITH_SYSTEMD=ON
+    -DWITH_SYSTEM_BOOST=ON
+    -DWITH_SYSTEM_ZSTD=ON
+    -DWITH_SYSTEM_UTF8PROC=ON
+    -DWITH_SYSTEM_GTEST=OFF
+    -DWITH_SYSTEM_NPM=OFF
+    -DENABLE_SHARED=ON
+    -DWITH_TESTS=ON
+    -Wno-dev
+  )
+ 
+  check_buildenv "ccache" "y" \
+    && cmake_options+=(-DWITH_CCACHE=ON)
+ 
+  cmake -G Ninja -B build "${cmake_options[@]}"
 }
 
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
-  export CFLAGS+=' -Wno-maybe-uninitialized' CXXFLAGS+=' -Wno-maybe-uninitialized'
-  export CMAKE_BUILD_TYPE='RelWithDebInfo'
-  export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --ignore=1 || echo "4")
-
-  cmake \
-    -G Ninja \
-    -B build \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_SYSCONFDIR=/etc \
-    -DCMAKE_INSTALL_BINDIR=bin \
-    -DCMAKE_INSTALL_SBINDIR=bin \
-    -DCMAKE_INSTALL_LIBDIR=lib \
-    -DCMAKE_INSTALL_LIBEXECDIR=lib \
-    -DENABLE_GIT_VERSION=ON \
-    -DWITH_BABELTRACE=OFF \
-    -DWITH_LTTNG=OFF \
-    -DWITH_BLKIN=OFF \
-    -DWITH_JAEGER=OFF \
-    -DWITH_FIO=OFF \
-    -DWITH_OPENLDAP=OFF \
-    -DWITH_RDMA=OFF \
-    -DWITH_OCF=OFF \
-    -DWITH_DPDK=OFF \
-    -DWITH_SPDK=OFF \
-    -DWITH_QATDRV=OFF \
-    -DWITH_QATLIB=OFF \
-    -DWITH_QATZIP=OFF \
-    -DWITH_RBD=ON \
-    -DWITH_RBD_RWL=ON \
-    -DWITH_RBD_SSD_CACHE=ON \
-    -DWITH_RBD_MIRROR=ON \
-    -DWITH_CEPHFS=ON \
-    -DWITH_CEPHFS_JAVA=OFF \
-    -DWITH_CEPHFS_SHELL=ON \
-    -DWITH_FUSE=ON \
-    -DWITH_LZ4=ON \
-    -DWITH_XFS=ON \
-    -DWITH_MGR=ON \
-    -DWITH_MGR_DASHBOARD_FRONTEND=OFF \
-    -DWITH_RADOSGW=ON \
-    -DWITH_RADOSGW_BEAST_OPENSSL=ON \
-    -DWITH_RADOSGW_AMQP_ENDPOINT=ON \
-    -DWITH_RADOSGW_KAFKA_ENDPOINT=ON \
-    -DWITH_RADOSGW_LUA_PACKAGES=ON \
-    -DWITH_RADOSGW_DBSTORE=OFF \
-    -DWITH_RADOSGW_SELECT_PARQUET=OFF \
-    -DWITH_RADOSGW_MOTR=OFF \
-    -DWITH_RADOSGW_DAOS=OFF \
-    -DWITH_SYSTEMD=ON \
-    -DWITH_SYSTEM_BOOST=ON \
-    -DWITH_SYSTEM_ZSTD=ON \
-    -DWITH_SYSTEM_UTF8PROC=ON \
-    -DWITH_SYSTEM_GTEST=OFF \
-    -DWITH_SYSTEM_NPM=OFF \
-    -DENABLE_SHARED=ON \
-    -DWITH_TESTS=ON \
-    -Wno-dev
-
+  printf '##### BUILD PROJECT ' ; printf '%0.s#' {1..28} ; printf '\n'
+  cmake --build build -t legacy-option-headers
   cmake --build build -t all tests
 }
 
 check() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
 
+  printf '##### CHECK PROJECT ' ; printf '%0.s#' {1..28} ; printf '\n'
   (
     cd build
     ctest -j $(nproc --ignore=1 || echo "4") \
@@ -261,7 +278,8 @@ check() {
       --output-on-failure \
       || true
 
-    # Expected test failures (as of 2025-11-19T12:01:57Z)
+    # Expected test failures (as of 2026-06-29T11:20:15Z)
+    # - run-tox-mgr
     # - run-tox-cephadm
     # - unittest_mds_quiesce_agent
   )
@@ -368,6 +386,7 @@ _make_ceph_packages() {
       $lib/ceph/ceph_common.sh \
       $lib/ceph/libceph-common.so.2 \
       $lib/ceph/extblkdev/libceph_ebd_vdo.so \
+      $lib/ceph/extblkdev/libceph_ebd_fcm.so \
       $lib/ceph/denc/* \
       $share/doc/ceph/sample.ceph.conf \
       $man/man8/crushtool.8 \

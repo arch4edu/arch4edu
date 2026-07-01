@@ -1,0 +1,13 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 5514f5381f5..d375f5d7cd1 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -636,7 +636,7 @@ add_subdirectory(global)
+
+ # RGW also support Lua scripting
+ if(WITH_CEPHFS OR WITH_RADOSGW)
+-  find_package(Lua 5.3 REQUIRED)
++  find_package(Lua 5.3 EXACT REQUIRED)
+ endif()
+
+ # rados object classes
