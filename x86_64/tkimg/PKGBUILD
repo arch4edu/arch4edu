@@ -6,12 +6,12 @@
 pkgname=tkimg
 _pkgname=Img
 pkgver=2.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Provides the handling of several image formats beyond the standard formats in Tk'
 url='https://wiki.tcl-lang.org/page/Img'
 arch=('x86_64')
 license=('TCL')
-depends=('zlib' 'libjpeg' 'libpng' 'libtiff' 'tcl' 'tk' 'tcllib')
+depends=('zlib' 'libjpeg-turbo' 'libpng' 'libtiff' 'tcl' 'tk' 'tcllib')
 source=("https://downloads.sourceforge.net/${pkgname}/${_pkgname}-${pkgver}.tar.gz")
 sha256sums=('0e41efa886c470ca0c38663e66640eb6d89e9e5f746724535ac224e2509ae34f')
 
