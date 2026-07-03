@@ -2,8 +2,8 @@
 # Contributor: Fabio 'Lolix' Loli <fabio.loli@disroot.org>
 
 pkgname=linuxcnc
-pkgver=2.9.8
-pkgrel=4
+pkgver=2.9.10
+pkgrel=1
 pkgdesc="Controls CNC machines (mills, lathes, 3D printers, robots, etc.)"
 arch=(x86_64)
 url="https://linuxcnc.org/"
@@ -24,7 +24,7 @@ source=(
   "unredestributable.txt"
 )
 
-sha256sums=('e106b0c41b15bb93da7308861b4754ca647d6f4a4f298ed419bf3d192aa4a42f'
+sha256sums=('9d1f7a9177ab133de340dcdc9036c9f225eb48aabfcbc87a3df3c78dcd226f24'
             '228a035c143ccbdd6056e1189267b034f046742cae034bff821eccc8dbc68ee3')
 
 prepare() {
