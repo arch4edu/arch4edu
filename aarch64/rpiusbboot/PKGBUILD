@@ -4,18 +4,18 @@
 
 pkgname=rpiusbboot
 _pkgname=usbboot
-_pkgver=20221215-105525
+_pkgver=20250908-162618
 pkgver=${_pkgver//-/_}
-pkgrel=2
+pkgrel=1
 pkgdesc="Raspberry Pi USB boot"
 arch=("i686" "x86_64")
 url="https://github.com/raspberrypi/usbboot"
-license=("Apache")
-depends=("libusb")
+license=("Apache-2.0")
+depends=("glibc" "libusb")
 conflict=()
 
 source=("https://github.com/raspberrypi/${_pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
-sha256sums=('2f02dbe9a88e9dfad5f05e513e1f30afd47b1575820f7c3b09665dfefc45bbaa')
+sha256sums=("956cd4e09050263e1f5ba126ecdb832b53fd0fdea06d1a85397d577bd8bc6ba0")
 
 #pkgver()
 #{
