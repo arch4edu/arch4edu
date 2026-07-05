@@ -4,10 +4,10 @@
 # Contributor: Matt Frichtl <frichtlm@gmail.com>
 
 _pkgname=Rcpp
-_pkgver=1.1.1-1.1
+_pkgver=1.1.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=7
 pkgdesc="Seamless R and C++ Integration"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -25,8 +25,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('ad526121c2f2b9b3be8ce1f36aff7888')
-b2sums=('6056559b54f62ece9652198d1a87bf53ee4d6bb87cd6fca8ca1c09839a089dcaea1f403d6dc13d166807c86c01795e26595f094e7c3d538b4ccba2b65fab8d53')
+md5sums=('353d35176db9c570705a0a324c06fdca')
+b2sums=('6242b9974f320320d7bde22badd52a56fe4f5af2b452088452451b53ef4035d4593c6574734960a92d509d15272dec4eaf250bd9e7e9918c7e44146718d73b3d')
 
 build() {
   mkdir build
