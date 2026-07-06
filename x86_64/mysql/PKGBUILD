@@ -6,7 +6,7 @@
 
 pkgname=('mysql' 'libmysqlclient' 'mysql-clients')
 pkgbase=mysql
-pkgver=9.7.0
+pkgver=9.7.1
 pkgrel=1
 pkgdesc="Fast SQL database server, community edition"
 arch=('x86_64')
@@ -22,7 +22,7 @@ source=("https://cdn.mysql.com/Downloads/MySQL-9.7/${pkgbase}-${pkgver}.tar.gz"{
         "mysqld_service.patch"
         "systemd-tmpfiles.patch"
         "systemd-sysusers.conf")
-sha256sums=('74b574babc56b0ecb632abd359d213c6794ecf442ae44928bfc581fb3d62306d'
+sha256sums=('dabff263022be6a09151c21812322873437e0d77aec8c4cc7381882c3ea1aeae'
             'SKIP'
             'edd5ffa5a982e47c5fcda5751b79690c38a5a57e32616df27631c51c2dfd5760'
             'e1c23fa0971a13d998f2790379b68c475438d05b6d6f2691b99051dbf497567f'
@@ -167,7 +167,7 @@ package_mysql(){
   rm "${pkgdir}/usr/lib/libmysqlclient.a"
   rm "${pkgdir}/usr/lib/libmysqlclient.so"
   rm "${pkgdir}/usr/lib/libmysqlclient.so.24"
-  rm "${pkgdir}/usr/lib/libmysqlclient.so.24.1.0"
+  rm "${pkgdir}/usr/lib/libmysqlclient.so.24.1.1"
   rm "${pkgdir}/usr/lib/libmysqlservices.a"
   rm "${pkgdir}/usr/lib/pkgconfig/mysqlclient.pc"
   rmdir "${pkgdir}/usr/lib/pkgconfig"
