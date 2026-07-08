@@ -8,13 +8,13 @@
 
 _pack=datatypes
 pkgname=octave-$_pack
-pkgver=1.2.0
+pkgver=1.2.5
 pkgrel=1
 pkgdesc="Extra data types for GNU Octave"
 arch=(any)
 url="https://gnu-octave.github.io/packages/$_pack/"
 license=('GPL-3.0-or-later')
-depends=('octave>=9.1.0')
+depends=('octave>=11.1.0')
 makedepends=()
 optdepends=()
 backup=()
@@ -23,7 +23,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("https://github.com/pr0m1th3as/$_pack/releases/download/release-$pkgver/$_pack-$pkgver.tar.gz")
 noextract=("$_archive")
-sha256sums=('f054213bfe79b604c97eab3d738624b7fdd5548b3c9631acf6222d97016e9861')
+sha256sums=('632d3acd525ad4f6a971dc2daa32db4d30d4408bcff23f0bc4298f94658b51d7')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
