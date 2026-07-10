@@ -3,7 +3,7 @@
 pkgname=pi-hole-web
 _mainpkgname=pi-hole
 _pkgname=web
-pkgver=6.5.1
+pkgver=6.6
 pkgrel=1
 pkgdesc='Pi-hole Dashboard for stats and more.'
 arch=('any')
@@ -16,7 +16,7 @@ install=$pkgname.install
 backup=()
 
 source=($_pkgname-$pkgver.tar.gz::https://github.com/$_mainpkgname/$_pkgname/archive/refs/tags/v$pkgver.tar.gz)
-sha256sums=('db0603d1f1a3679cc2ee5b30bb738c178666c4230dd1a9b49917ed56ef9aa7e9')
+sha256sums=('6792fa672317432161b7ece41862dba6c9a7aa2b6b98e2786f71c346ba3745f6')
 
 package() {
   cd "$srcdir"
