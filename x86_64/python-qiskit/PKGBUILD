@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit
 pkgname=python-${_pkgname}
-pkgver=2.4.2
+pkgver=2.5.0
 pkgrel=1
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
@@ -52,12 +52,16 @@ checkdepends=(
     python-stestr
 )
 provides=(libqiskit.so)
-source=($_pkgname::git+https://github.com/Qiskit/$_pkgname#tag=$pkgver)
-b2sums=('e28ae9d0ef69056dcfec7d3dda0138e48fd7b8c8b3ff4da6a5671a260a8449beb9b7d90f06698e6629decdd23a56afd59baab54942fd8dde098da49412c6a999')
+source=(
+    $_pkgname::git+https://github.com/Qiskit/$_pkgname#tag=$pkgver
+    fix-c-build.patch::https://patch-diff.githubusercontent.com/raw/Qiskit/qiskit/pull/16556.patch
+)
+b2sums=('a4ddddc69e5f9d865f8c63bc8321ea0d6812cd035a2bccb55240adfa11c119cefdb768181a4096d5375b3e292d6ee1c2b1f14f6cedb6e60ac0666e0b040bfd23'
+        'e8adb5acfcf2bad9a55b71f3c70440443309a2887157e636d0bdb28d1ec83a8d04c5a24bedab6500e6fc487fe20a09bb0d438ed5f86c1659d320e092b45ace03')
 
 prepare() {
-    cd $_pkgname
-    sed -i 's/setuptools-rust==1.12.0/setuptools-rust>=1.12.0/' pyproject.toml
+    # https://github.com/Qiskit/qiskit/issues/16555
+    patch -Np1 -d $_pkgname < fix-c-build.patch
 }
 
 build() {
