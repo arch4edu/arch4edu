@@ -83,25 +83,25 @@ diff -uprN pi-hole-6.3/advanced/Templates/logrotate pi-hole-6.3.cust/advanced/Te
 +/run/log/pihole/pihole.log {
      # su #
      daily
-     copytruncate
-@@ -9,7 +9,7 @@
-     nomail
+     create 640 pihole pihole
+@@ -13,7 +13,7 @@
  }
- 
+
+ # FTL.log and webserver.log are opened and closed for each line, therefore no postrotate is needed
 -/var/log/pihole/FTL.log {
 +/run/log/pihole/FTL.log {
      # su #
      weekly
-     copytruncate
-@@ -20,7 +20,7 @@
+     create 640 pihole pihole
+@@ -24,7 +24,7 @@
      nomail
  }
- 
+
 -/var/log/pihole/webserver.log {
 +/run/log/pihole/webserver.log {
      # su #
      weekly
-     copytruncate
+     create 640 pihole pihole
 diff -uprN pi-hole-6.3/advanced/Templates/pihole.sudo pi-hole-6.3.cust/advanced/Templates/pihole.sudo
 --- pi-hole-6.3/advanced/Templates/pihole.sudo	1970-01-01 01:00:00.000000000 +0100
 +++ pi-hole-6.3.cust/advanced/Templates/pihole.sudo	2025-11-27 23:02:14.748944993 +0100
