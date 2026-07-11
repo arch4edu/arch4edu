@@ -4,13 +4,13 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=rstudioapi
-_pkgver=0.18.0
+_pkgver=0.19.0
 pkgname=r-${_pkgname,,}
 pkgdesc="Safely Access the RStudio API"
 url="https://cran.r-project.org/package=${_pkgname}"
 license=("MIT")
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 
 arch=("any")
 depends=(
@@ -43,7 +43,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-b2sums=('6987b36944305a8b462cf53662c48ea4b17836aa5df2da9f2e35c297cc1bfedd5a6782be0d96479f4d4fbe5fa00fbdf10174c3ed2ef9c6185e5f7462ee96b42b')
+b2sums=('671965e22254d7914d33883c0c658c41803c665c84ce0b108fb7bd726f97b7ca8b7b64d9863a8674996aa2ec9126a83a6c40b30e5df2028c75736ae90b82c182')
 
 build() {
     mkdir -p "${srcdir}/build/"
