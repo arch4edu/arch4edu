@@ -4,10 +4,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=pkgload
-_pkgver=1.5.2
+_pkgver=1.5.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Simulate Package Installation and Attach"
 arch=(any)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -57,7 +57,7 @@ optdepends=(
 # )
 
 source=("https://cloud.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-b2sums=('02e0cdd508248c50ade3782aaabdcec19803cc3f050cec95a1db0419481cd883fbe8b3ed8482e815256fde9089545af8fb2d19b4928463f5823f772658764f31')
+b2sums=('9a8e795fe145b2408d5178a435f8fc1681593d359384b0e0037f68b37753ffd2693a4fa67125a01bc8d79020e027378d94f336e670f46950771889a69abf9ae0')
 
 build() {
     mkdir -p "${srcdir}/build/"
