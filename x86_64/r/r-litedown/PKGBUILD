@@ -1,7 +1,7 @@
 # Maintainer: Guoyi <kuoi@bioarchlinux.org>
 
 _pkgname=litedown
-_pkgver=0.9
+_pkgver=0.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//[:-]/.}
 pkgrel=1
@@ -16,11 +16,13 @@ depends=(
 optdepends=(
   r-rbibutils
   r-rstudioapi
+  r-testit
+  r-tinyimg
   r-tinytex
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('66459fa5112e91920a950fa10e3ae188')
-b2sums=('e0bb1d72507818cd94f14d9d865124b7afee8c7b29ab7464cf9175144453f87f603e69d84abac27cc1bfd24017c991a84503d9e9037d234200559845f4431e3c')
+md5sums=('96d248854e0275893e575842a9b31d79')
+b2sums=('e104a9e633644132a6897afcdc0205da95f48ec3cf9bee2450c69edc46959fdf72abc8016985c070f25dd1e7896e59255b667cc9192a50bf4b856899c89d4ba2')
 
 build() {
   mkdir build
