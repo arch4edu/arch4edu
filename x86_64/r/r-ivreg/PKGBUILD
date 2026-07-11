@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=ivreg
-_pkgver=0.6-7
+_pkgver=0.6-8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b79da16d7ea9b34b6274f00a007db256')
-b2sums=('c61fc8046b6adfd56a40a7cb94ea1db173921acf61b9f938e1b09275ab3b27d76a6038fe6e231a8284c42ee5ed008011320e9d5d467f77ca2fc57231ea3a5719')
+md5sums=('96067887e446ddc92adbd2bf0804160c')
+b2sums=('3088d955e6b9b7f189397f9482e309e380921dde878eb628efc94acc4238802deda8d2f34effea23364376a5743d39c9a8624cb96c06e67355621290c526b13d')
 
 build() {
   mkdir build
