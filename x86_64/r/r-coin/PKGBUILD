@@ -2,9 +2,9 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=coin
-_pkgver=1.4-4
+_pkgver=1.4-5
 pkgname=r-${_pkgname,,}
-pkgver=1.4.4
+pkgver=1.4.5
 pkgrel=1
 pkgdesc='Conditional Inference Procedures in a Permutation Test Framework'
 arch=('x86_64')
@@ -25,7 +25,7 @@ optdepends=(
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('f4e5c476b7a33907778db04a11ed24991cd17438ae904cc4bf029d07cb0529c3')
+sha256sums=('4d833b631c8bbea7c3cfb5761a096c93ddf8ab8b4f020939565ad20b167ecb64')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
