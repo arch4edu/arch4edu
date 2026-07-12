@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=AER
-_pkgver=1.2-16
+_pkgver=1.2-17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -41,8 +41,8 @@ optdepends=(
   r-vars
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('88bee5867e7063c2c27d04ba09211a7f')
-b2sums=('4f3d9f9ab48d3402b0fcbb533c26d8eb9425366df7ece1d675a9e5e4a33620d5d28edea1f753687b567e96a8dcb5eab58f1ed54926797f1e21601b0b00b26666')
+md5sums=('d30ad6dfbb52a9e19654403eb487d6cc')
+b2sums=('606475ff4b1c84a6cb97ad4256d250b01542a796cc11e8b66f18e2b4b91862434df493b1b203f465513838f1ffd874642f8cfe48c7104d32a767aa594ca4f036')
 
 build() {
   mkdir build
