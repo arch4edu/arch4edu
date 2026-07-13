@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=betareg
-_pkgver=3.2-4
+_pkgver=3.2-5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Beta Regression"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -28,8 +28,8 @@ optdepends=(
   r-bamlss
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d43ac56609dd9fe67f75591fea2369e1')
-b2sums=('58a454aa1bd32aded9bf5880de3630587e8a5404a8b0d1435a9ab6ce1eabe4ad47d9df8828879f3f927271566114a47fa114fcd7f2ca501d2a87128022e71bdd')
+md5sums=('5640969e432e635e67c6c1524dc877ee')
+b2sums=('5aba68fd809e8e6363af87573c18ab89ed2de8888b434be538b800a285e8542367a15c76daa7bfae8947845a57bd6fab8eedffcc22a44100861f035836191095')
 
 build() {
   mkdir build
