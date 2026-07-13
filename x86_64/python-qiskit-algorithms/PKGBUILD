@@ -2,7 +2,7 @@
 _pkgname=qiskit-algorithms
 pkgname=python-$_pkgname
 pkgver=0.4.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A library of quantum algorithms for Qiskit"
 arch=(any)
 url="https://github.com/qiskit-community/qiskit-algorithms"
@@ -11,6 +11,7 @@ depends=(
     python-qiskit
     python-numpy
     python-scipy
+    python-typing_extensions
 )
 makedepends=(
     python-build
@@ -42,10 +43,9 @@ check() {
     cd $_pkgname-$pkgver
     local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
     python -m installer --destdir=../test_dir dist/*.whl
-    # test_start() from test/optimizers/test_gradient_descent.py fails due to wrongly comparing NumPy arrays
-    # The other tests are nown to fail at the moment with Qiskit 2.1.x
+    # https://github.com/qiskit-community/qiskit-algorithms/issues/275
     PYTHONPATH=../test_dir/$_site_packages pytest -k \
-        "not test_start and not test_var_qte_ode_function_time_param and not test_run_d_1_time_dependent and not test_time_dependent_hamiltonian"
+        "not test_with_gradient_3 and not test_p_bfgs and not TestTrotterQRTE"
 }
 
 package() {
