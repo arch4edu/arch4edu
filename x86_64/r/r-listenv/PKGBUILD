@@ -2,14 +2,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=listenv
-_pkgver=0.10.1
+_pkgver=1.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Environments Behaving (Almost) as Lists"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('LGPL-2.1-or-later')
+license=('Apache')
 depends=(
   r
 )
@@ -19,8 +19,8 @@ optdepends=(
   r-r.utils
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6b93ad798245ea82a87117986b80aea5')
-b2sums=('3df43b2e35d8c10c1520dbd2d709d4693782d08c7454be9369b6079dec331053e4651dc02ec8991ca9bf76500378a3e741183e13f6925c0afe0fada7d33d00b0')
+md5sums=('3ba721b1dc3b5fcb83a2b4c0af0c0804')
+b2sums=('a808c55a7721d4890097225e4e6ebdf0d90274adc64f51a502e50b8dcfd13b9699ab81451b256ef956b8c90455f0074d8aa92d85af6149dd0fadf4cf7be270c2')
 
 build() {
   mkdir build
