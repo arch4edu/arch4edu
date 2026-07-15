@@ -1,0 +1,11 @@
+--- setup.py.orig	2026-03-28 17:23:53.400358151 +0100
++++ setup.py	2026-03-28 17:28:10.269341190 +0100
+@@ -114,7 +114,7 @@
+     extra_compile_args = {"cxx": []}
+     if BUILD_CUDA_SOURCES:
+         if IS_ROCM:
+-            define_macros += [("WITH_HIP", None)]
++            define_macros += [("WITH_HIP", None), ("GLOG_USE_GLOG_EXPORT", None)]
+             nvcc_flags = []
+         else:
+             define_macros += [("WITH_CUDA", None)]
