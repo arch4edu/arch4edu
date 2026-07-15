@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=emmeans
-_pkgver=2.0.3
+_pkgver=2.0.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -44,8 +44,8 @@ optdepends=(
   r-robmixglm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c3c8ea41048fcd0a221b5eba254affcd')
-b2sums=('d15c250c1e642c7bdfe649b0b6cde268fcbd1c2ee6e58ff3037275239a9747a2610696fb91e302a73c34407736d3119df1a0e7466bbbd1df70390734a005fdb1')
+md5sums=('5ddcca53290680d7f7753ed71892d887')
+b2sums=('34c15a7479fb2671c1f8934657cefa36ab21b7e60ac5ea8425be90410d6efcb38427c54910f8ac72a1db14a83c6b5f0b31b8498dda5fdb315c1c2d105c01f431')
 
 build() {
   mkdir build
