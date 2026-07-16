@@ -6,7 +6,7 @@ _npmmodule=@github/copilot
 pkgname=github-copilot-cli
 _pkgexec=copilot
 
-pkgver=1.0.70
+pkgver=1.0.71
 pkgrel=1
 
 pkgdesc="GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal."
@@ -30,8 +30,8 @@ source=("https://registry.npmjs.org/${_npmmodule}/-/copilot-${pkgver}.tgz"
 		"CHANGELOG-${pkgver}.md::${_urlraw}/changelog.md")
 noextract=("copilot-${pkgver}.tgz")
 
-b2sums=('d7f69c52ba523e2af5c810fe8733782180a16b89a00a6b7fbad803176392e7194d6109ecada31c681976efd72c5d8eaeddea97a211b54064bc31dd2150b758b8'
-        '488be37a9b4ba0779fd1effa89f8ac1321c2b66a53a58e28741df93b1eabd174b5e08f0270e4d0794a6f6b8a1149373267fd04c74f9b4de6ec528a72596d2634')
+b2sums=('600804a7ab5485421be0466b67ef2fc6ac684b63edac70ea2d4900873d7a38bbc711cb4e984f70bc75a89f95a9541d8ebacefa4398db5e81e0871dc77dcfccd7'
+        'c2244e71f3cf875349ee9b43c0326261f96884d1fa2f698bcfe8210e0870ac5babb4bef0d8427822826b2c2957b422f0c7999aaa04269b4a740adb75f45b1346')
 
 # Document: https://wiki.archlinux.org/title/Node.js_package_guidelines
 package() {
