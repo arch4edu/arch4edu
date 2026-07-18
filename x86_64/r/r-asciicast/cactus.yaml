@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-curl
+  - x86_64/r/r-jsonlite
+  - x86_64/r/r-magick
+  - x86_64/r/r-processx
+  - x86_64/r/r-tibble
+  - x86_64/r/r-v8
+  - x86_64/r/r-withr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-sp
+  - x86_64/r/r-terra
+checkdepends:
+  - x86_64/r/r-tinytest
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build

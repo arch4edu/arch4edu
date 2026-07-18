@@ -7,7 +7,7 @@ depends:
   - x86_64/r/r-lme4
   - x86_64/r/r-lmtest
   - x86_64/r/r-qgam
-makedepends:
+checkdepends:
   - x86_64/r/r-glmmadaptive
   - x86_64/r/r-glmmtmb
   - x86_64/r/r-mgcviz
