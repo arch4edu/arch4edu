@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=mixOmics
-_pkgver=6.32.0
+_pkgver=6.36.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -17,30 +17,30 @@ depends=(
   r-ggplot2
   r-ggrepel
   r-gridextra
-  r-gsignal
   r-igraph
   r-matrixstats
   r-rarpack
   r-rcolorbrewer
   r-reshape2
   r-rgl
+  r-rlang
   r-tidyr
 )
 optdepends=(
   r-biocstyle
+  r-devtools
+  r-kableextra
   r-knitr
   r-magick
   r-microbenchmark
+  r-mime
   r-rmarkdown
   r-testthat
-  r-mime
   r-vdiffr
-  r-kableextra
-  r-devtools
 )
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f2e3e8336ac86af54e7ea0c3b3b7f47a')
-b2sums=('47526ae081796f33b83ed01de10f4b1757496ccfde4b4ff92b4792076482067a67aacaecc9efe7f10133c70f2d85fc36b87a8e590124d79d56617b58c53f6e5f')
+md5sums=('fcae304a8d7a390f8ad20143c890b2c8')
+b2sums=('0f7ca62d08d462d9d4e526d8f62a0e4168cd843ef442381b5bd956c47f797bf67f6df802d0a509e8c6c15487ec75f45a0286c6d0d4ec2fa673c7f48eb36602b7')
 
 build() {
   mkdir build
