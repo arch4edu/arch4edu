@@ -2,7 +2,7 @@
 # Contributor: Christian Pfeiffer <cpfeiffer at live dot de>
 pkgname=muparserx
 pkgver=4.0.12
-pkgrel=2
+pkgrel=3
 pkgdesc="A fast math parser library with support for arrays, matrices and complex numbers"
 arch=('x86_64')
 url="https://github.com/beltoforion/${pkgname}"
@@ -13,7 +13,7 @@ source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
 sha512sums=('5be7d846105c2eae7f9a7929147ff6890496ca80348c1b08c62fdf199a6b33d48225c4aeec00e03283e233c91574943b60ee4282169715f5ded8aa18fd9a732d')
 
 build() {
-  cmake \
+  cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -S ${pkgname}-${pkgver} \
     -B build \
     -DCMAKE_BUILD_TYPE=None \
