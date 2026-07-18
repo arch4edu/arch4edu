@@ -11,4 +11,5 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   replace -u '1.38.0' '1.46.0'
+  sed -i 's|  R CMD INSTALL ${_bcname}_${_bcver}.tar.gz -l "${srcdir}"|  tar xzf ${_bcname}_${_bcver}.tar.gz\n  sed -i "s#boost_patch_1_87/interprocess/managed_shared_memory.hpp#boost/interprocess/managed_shared_memory.hpp#" ${_bcname}/src/ipcmutex.cpp\n  tar czf ${_bcname}_${_bcver}.tar.gz ${_bcname}\n  R CMD INSTALL ${_bcname}_${_bcver}.tar.gz -l "${srcdir}"|' PKGBUILD
 post_build: aur-post-build
