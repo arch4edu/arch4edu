@@ -3,7 +3,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _bcname=BiocParallel
-_bcver=1.38.0
+_bcver=1.46.0
 pkgname=r-${_bcname,,}
 pkgdesc="Bioconductor facilities for parallel evaluation"
 url="https://bioconductor.org/packages/release/bioc/html/${_bcname}.html"
@@ -41,9 +41,12 @@ optdepends=(
 )
 
 source=("https://bioconductor.org/packages/release/bioc/src/contrib/${_bcname}_${_bcver}.tar.gz")
-b2sums=("1a1d2dc9a8769156e16001ff3a353d007a3c0b6e0e4d5c64424ff7920735611dcafbb9f4fa1d7014655ca007afbf9742d7b0d90cce483d4b309b8e3b7aca6a3c")
+b2sums=('06df1a3c79ad2e43ad769e8f3a9680770526658b04144d5f133a1ffc785b916c422d12dc5793b9662c117fc01c5a6d9bd7eec81448d667af0b58f111b0c47f6c')
 
 build() {
+  tar xzf ${_bcname}_${_bcver}.tar.gz
+  sed -i "s#boost_patch_1_87/interprocess/managed_shared_memory.hpp#boost/interprocess/managed_shared_memory.hpp#" ${_bcname}/src/ipcmutex.cpp
+  tar czf ${_bcname}_${_bcver}.tar.gz ${_bcname}
   R CMD INSTALL ${_bcname}_${_bcver}.tar.gz -l "${srcdir}"
 }
 
