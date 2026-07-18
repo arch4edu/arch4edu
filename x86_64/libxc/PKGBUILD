@@ -3,24 +3,17 @@
 # Contributor: James Spencer <james.s.spencer@gmail.com>
 # Contributor: Anton Kudelin <kudelin at protonmail dot com>
 pkgname=libxc
-pkgver=7.0.0
-pkgrel=3
+pkgver=7.1.0
+pkgrel=1
 pkgdesc="A library of exchange-correlation functionals for density-functional theory"
 arch=(i686 x86_64 aarch64)
 url="https://${pkgname}.gitlab.io"
 license=(MPL-2.0)
 depends=(python-numpy)
-makedepends=(gcc-fortran cmake)
-source=(https://gitlab.com/${pkgname}/${pkgname}/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz
-cmake.patch::https://gitlab.com/${pkgname}/${pkgname}/-/merge_requests/696.patch)
-sha512sums=('ae50760cb4afb37af26cbc5cf819d1bfaa2fa1fc01509b73a4e2533ca772cff5750493974f63f573cf5748ed1007e21c7611d3840b3fa50a3e77e74f7a027988'
-            'de45e6ba6d8ce7daf192329a48f8969438f2a1b3965872138a0f603b8c90c2c70c92c584223ce102b039c949620aed136b7beab093e02d09afde301768e352aa')
+makedepends=(gcc-fortran cmake python-pytest)
+source=(https://gitlab.com/${pkgname}/${pkgname}/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz)
+sha512sums=('61cd13c8ee29a26a0a83d85b2564970d595e92a5ff0badd5174c5b14cbc2bebf2830989ab495dd5937c940818fe81503d988a4163bbd78f18bb830a28772b507')
 options=(staticlibs)
-
-prepare() {
-  cd ${pkgname}-${pkgver}
-  patch -p1 -i ../cmake.patch
-}
 
 build() {
   cmake \
