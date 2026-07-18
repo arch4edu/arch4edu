@@ -2,7 +2,7 @@
 
 pkgname=ncview
 pkgver=2.1.11
-pkgrel=1
+pkgrel=2
 pkgdesc="A visual browser for netCDF format files"
 arch=(i686 x86_64)
 url="https://cirrus.ucsd.edu/ncview/"
@@ -18,7 +18,7 @@ prepare() {
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-  CFLAGS="$CFLAGS -Wno-incompatible-pointer-types" CC="$(nc-config --cc)" CPPFLAGS="$CFLAGS" ./configure \
+  CFLAGS="$CFLAGS -Wno-incompatible-pointer-types -std=gnu17" CC="$(nc-config --cc)" CPPFLAGS="$CFLAGS" ./configure \
     --prefix=/usr \
     --with-ppm_incdir=/usr/include/netpbm \
     --with-ppm_libdir=/usr/lib
