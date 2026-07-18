@@ -14,12 +14,14 @@ pkgbase=python-dlib
 [[ $_build_cuda -eq 1 ]] && pkgname+=('python-dlib-cuda')
 _pkgname=dlib
 pkgver=20.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Dlib is a general purpose cross-platform C++ library designed using contract programming and modern C++ techniques."
 arch=('x86_64')
 url="http://www.dlib.net/"
 license=('BSL-1.0')
-depends=('cblas' 'giflib' 'lapack' 'libjpeg-turbo' 'libjxl' 'libpng' 'libx11')
+depends=('cblas' 'lapack' 'libx11'
+  'libgif.so' 'libjpeg.so' 'libjxl.so' 'libjxl_threads.so' 'libpng16.so' 'libwebp.so')
+
 makedepends=('boost' 'cmake' 'python-setuptools' 'sqlite')
 [[ $_build_cuda -eq 1 ]] && makedepends+=('ccache-ext' 'cuda' 'cudnn')
 optdepends=('sqlite')
