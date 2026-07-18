@@ -1,0 +1,49 @@
+# Maintainer: Mark Wagie <mark dot wagie at proton dot me>
+# Contributor: Filipe Nascimento <flipee at tuta dot io>
+# Contributor: Simon Doppler <dop dot simon at gmail dot com>
+pkgname=python-colored
+_name=${pkgname#python-}
+pkgver=2.3.2
+pkgrel=1
+pkgdesc="Simple python library for color and formatting to terminal"
+arch=('any')
+url="https://dslackw.gitlab.io/colored"
+license=('MIT')
+depends=('python')
+makedepends=(
+  'python-build'
+  'python-flit'
+  'python-installer'
+  'python-wheel'
+)
+checkdepends=('python-pytest')
+source=("https://gitlab.com/dslackw/colored/-/archive/$pkgver/$_name-$pkgver.tar.gz")
+sha256sums=('0eceada151aceac9197b783f1825a6c41115c7a39ab9e200e45d8e928b74e798')
+
+prepare() {
+  cd "$_name-$pkgver"
+  sed -i 's/,<4//' pyproject.toml
+
+  # remove shebangs
+  sed -i '/#!\/usr\/bin\/env python/d' "$_name"/*.py
+}
+
+build() {
+  cd "$_name-$pkgver"
+  sed -i 's/,<4//' pyproject.toml
+  python -m build --wheel --no-isolation
+}
+
+check() {
+  cd "$_name-$pkgver"
+  sed -i 's/,<4//' pyproject.toml
+  pytest
+}
+
+package() {
+  cd "$_name-$pkgver"
+  sed -i 's/,<4//' pyproject.toml
+  python -m installer --destdir="$pkgdir" dist/*.whl
+
+  install -Dm644 LICENSE.txt -t "$pkgdir/usr/share/licenses/$pkgname/"
+}
