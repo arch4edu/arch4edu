@@ -4,7 +4,7 @@
 # Contributor: Taekyung Kim <Taekyung.Kim.Maths@gmail.com>
 
 _pkgname=lme4
-_pkgver=2.0-1
+_pkgver=2.0-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,11 +13,10 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
-  r-rdpack
   r-minqa
   r-nloptr
+  r-rdpack
   r-reformulas
-  r-rlang
 )
 makedepends=(
   r-rcpp
@@ -26,9 +25,12 @@ makedepends=(
 optdepends=(
   r-car
   r-dfoptim
+  r-dharma
+  r-future.apply
   r-gamm4
   r-ggplot2
   r-glmmtmb
+  r-gridextra
   r-hsaur3
   r-knitr
   r-memss
@@ -37,16 +39,18 @@ optdepends=(
   r-numderiv
   r-optimx
   r-pbkrtest
+  r-performance
   r-rmarkdown
   r-rr2
+  r-see
   r-semeff
   r-statmod
   r-testthat
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e90aec2abcdc6919bf1041d968416b01')
-b2sums=('cd96c89668879e6ccc4a27b364253222a487f881d43fba2688de466058f52908feb92264891a56723d1146ae00fc38fbabcefcc0bc4bbd574eaf09eea7d736ce')
+md5sums=('cf60da58c196ac7f2ac8094b6a13b6ce')
+b2sums=('9c483d8a68c11940188e4080fa8ac06506b0d3b3675be430b5c693c2bfe51123659ff45ef03006a7ff357e11c6761a9dd149bfecf538dc68973344b8bc276eab')
 
 build() {
   mkdir build
