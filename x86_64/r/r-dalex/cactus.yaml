@@ -7,5 +7,7 @@ depends:
   - x86_64/r/r-ingredients
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  replace -u '2.5.3' '2.5.4'
 post_build: aur-post-build
