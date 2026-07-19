@@ -1,0 +1,10 @@
+diff --git a/asciicast/tests/testthat/test-gif.R b/asciicast/tests/testthat/test-gif.R
+index 9f52fad..b13983c 100644
+--- a/asciicast/tests/testthat/test-gif.R
++++ b/asciicast/tests/testthat/test-gif.R
+@@ -1,4 +1,5 @@
+ test_that("write_gif", {
++  skip("requires phantomjs")
+   if (!is_windows() && !is_macos() && !is_linux()) {
+     skip("Unsupported OS")
+   }
