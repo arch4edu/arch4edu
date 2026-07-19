@@ -1,0 +1,43 @@
+# Maintainer: Serene-Arc <https://aur.archlinux.org/account/serene-arc>
+
+_cranname=otelsdk
+_cranver=0.2.4
+pkgname=r-${_cranname,,}
+pkgver=${_cranver//[:-]/.}
+pkgrel=1
+pkgdesc="'OpenTelemetry' is a collection of tools, 'APIs', and 'SDKs' used to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) for analysis in order to understand your software's performance and behavior. "
+arch=('any')
+url="https://cran.r-project.org/package=${_cranname}"
+license=('MIT')
+depends=(
+    r
+    r-otel
+    r-utils
+)
+makedepends=(gcc)
+optdepends=(
+    r-callr
+    r-cli
+    r-curl
+    r-gh
+    r-jsonlite
+    r-processx
+    r-ps
+    r-spelling
+    r-testthat
+    r-webfakes
+    r-withr
+    )
+source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+sha256sums=('e4839bf6f3dd934f9c8d61d8d646a00c04447b6b304d531def40efab5a8ffab8')
+
+build() {
+  R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+}
+
+package() {
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+
+  cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+}
+makedepends+=("cmake" "protobuf")
