@@ -1,5 +1,5 @@
---- src/RapidOCR-3.8.4/python/pyproject.toml	2026-06-18 16:02:34.692772070 -0400
-+++ src/RapidOCR-3.8.4/python/pyprojectd.toml	2026-06-18 16:03:23.963705999 -0400
+--- a/pyproject.toml	2026-06-18 16:02:34.692772070 -0400
++++ b/pyproject.toml	2026-06-18 16:03:23.963705999 -0400
 @@ -2,13 +2,13 @@
  requires = [
      "setuptools>=77",
@@ -12,7 +12,7 @@
  name = "rapidocr"
 -dynamic = ["version", "dependencies"]
 +dynamic = ["dependencies"]
-+version = "3.8.4"
++version = VERSION_NUM
  description = "Awesome OCR Library"
  readme = { file = "README.md", content-type = "text/markdown" }
  requires-python = ">=3.8,<4"
