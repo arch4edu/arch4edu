@@ -1,0 +1,10 @@
+diff --git a/RPostgres/src/Makevars.in b/RPostgres/src/Makevars.in
+index 997f045..b606a3a 100644
+--- a/RPostgres/src/Makevars.in
++++ b/RPostgres/src/Makevars.in
+@@ -1,4 +1,4 @@
+-PKG_CPPFLAGS=@cflags@ -Ivendor -DRCPP_DEFAULT_INCLUDE_CALL=false -DRCPP_USING_UTF8_ERROR_STRING -DBOOST_NO_AUTO_PTR @plogr@
++PKG_CPPFLAGS=@cflags@ -DRCPP_DEFAULT_INCLUDE_CALL=false -DRCPP_USING_UTF8_ERROR_STRING -DBOOST_NO_AUTO_PTR @plogr@
+ 
+ PKG_CFLAGS=$(C_VISIBILITY)
+ PKG_CXXFLAGS=$(CXX_VISIBILITY)
