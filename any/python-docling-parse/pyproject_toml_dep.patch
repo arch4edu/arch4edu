@@ -1,0 +1,15 @@
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -44,10 +44,10 @@
+     "setuptools>=77.0.3",
+     "pybind11>=2.13.6",
+     "cibuildwheel>=2.19.2,<3.0.0; python_version < '3.11'",
+-    "cibuildwheel>=2.19.2,<4.0.0; python_version >= '3.11'",
++#    "cibuildwheel>=2.19.2,<4.0.0; python_version >= '3.11'",
+     "wheel>=0.43.0,<1.0.0",
+-    "delocate>=0.11.0,<1.0.0",
+-    "cmake>=3.27.0,<4.0.0"
++#    "delocate>=0.11.0,<1.0.0",
++#    "cmake>=3.27.0"
+ ]
+ build-backend = "setuptools.build_meta"
