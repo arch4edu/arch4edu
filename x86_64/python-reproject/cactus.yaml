@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - any/python-dask-image
+  - x86_64/python-astropy-healpix
+  - any/python-pyavm
+  - any/python-zarr
+makedepends:
+  - any/python-sphinx-astropy
+  - any/python-pyvo
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

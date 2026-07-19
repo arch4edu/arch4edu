@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - any/python-pims
+makedepends:
+  - any/python-dask-sphinx-theme
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
