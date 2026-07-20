@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspAnova
-_pkgver=0.18.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.18.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="ANOVA Module for JASP"
 arch=('any')
@@ -15,6 +15,7 @@ depends=(r
   r-car
   r-colorspace
   r-emmeans
+  r-effectsize
   r-ggplot2
   r-jaspbase
   r-jaspdescriptives
@@ -23,6 +24,8 @@ depends=(r
   r-kernsmooth
   r-matrixstats
   r-multcomp
+  r-multcompview
+  r-mvshapirotest
   r-onewaytests
   r-plyr
   r-stringi
@@ -31,7 +34,7 @@ depends=(r
 )
 optdepends=()
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('d7e8c07e27dd69199986473c3e1e4ced40b9450e267e5bb23bba06c994430ecb')
+sha256sums=('627b61f028bc9fdad725da49c4e62eb6576d801de107e6375c520ea97adf0fef')
 
 
 build() {
@@ -42,6 +45,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
