@@ -5,7 +5,7 @@ pkgname=dune-geometry
 _tarver=2.10.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=3
+pkgrel=4
 pkgdesc="Geometry Transformations, Reference Elements and Quadrature Rules"
 arch=(x86_64)
 url="https://dune-project.org/modules/${pkgname}"
@@ -44,7 +44,7 @@ build() {
     -DCMAKE_CXX_FLAGS="-O2 -Wall -fdiagnostics-color=always -mavx" \
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
     -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=FALSE \
-    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=TRUE \
     -DINKSCAPE=TRUE \
     -DENABLE_HEADERCHECK=ON \
     -DDUNE_ENABLE_PYTHONBINDINGS=ON \
