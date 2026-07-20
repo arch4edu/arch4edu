@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=caret
-_pkgver=6.0-94
+_pkgver=7.0-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Classification and Regression Training"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -60,14 +60,13 @@ optdepends=(
   r-rann
   r-rmarkdown
   r-spls
-  r-subselect
   r-superpc
   r-testthat
   r-themis
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5f4c1945b20e632187f5534a59a12c8c')
-b2sums=('d3b4baa5d6234f9c1c71b62ef0d5d7cccd50e3e71f4ae54638bb6af67331a20ff689a857568a4e1280d68b18b50808d570b080a3564c1cc59c0bf1625a71bab1')
+md5sums=('c11d2d954241566f577841a58d101f75')
+b2sums=('ccc91789541348ef43578db2e88d16df482b4cc95e90f26034da007a59f4bc5987022e16440d427b402dd980b74b21c7c74f40241d9d92b1b90373241451cc37')
 
 build() {
   mkdir build
