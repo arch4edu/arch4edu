@@ -5,6 +5,8 @@ nvchecker:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed -i '/tools\/install-build-deps/a\  printf '"'"'#define __builtin_clzg(x,y) ((x)!=0?__builtin_clz(x):(y))\\n'"'"' > /tmp/fix-clzg.h\n  mv buildtools/linux64/clang/bin/clang++ buildtools/linux64/clang/bin/clang++.real\n  printf '"'"'#!/bin/bash\\nfor arg in "$@"; do\\n  if [ "$arg" = "-c" ]; then\\n    exec "$(dirname "$0")/clang++.real" -include /tmp/fix-clzg.h "$@"\\n  fi\\ndone\\nexec "$(dirname "$0")/clang++.real" "$@"\\n'"'"' > buildtools/linux64/clang/bin/clang++\n  chmod +x buildtools/linux64/clang/bin/clang++' PKGBUILD
+  add makedepends gcc15
+  sed -i '/tools\/install-build-deps/a\  mv buildtools/linux64/clang/bin/clang++ buildtools/linux64/clang/bin/clang++.real 2>/dev/null || true\n  printf '"'"'#!/bin/bash\\nfor arg in "$@"; do\\n  if [ "$arg" = "-c" ]; then\\n    exec "$(dirname "$0")/clang++.real" --gcc-install-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/15.3.0 "$@"\\n  fi\\ndone\\nexec "$(dirname "$0")/clang++.real" "$@"\\n'"'"' > buildtools/linux64/clang/bin/clang++\n  chmod +x buildtools/linux64/clang/bin/clang++' PKGBUILD
+  sed -i '/tools\/gen_amalgamated/i\  mv buildtools/linux64/clang/bin/clang++ buildtools/linux64/clang/bin/clang++.real 2>/dev/null || true\n  printf '"'"'#!/bin/bash\\nfor arg in "$@"; do\\n  if [ "$arg" = "-c" ]; then\\n    exec "$(dirname "$0")/clang++.real" --gcc-install-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/15.3.0 "$@"\\n  fi\\ndone\\nexec "$(dirname "$0")/clang++.real" "$@"\\n'"'"' > buildtools/linux64/clang/bin/clang++\n  chmod +x buildtools/linux64/clang/bin/clang++' PKGBUILD
   sed -i "s/--args='is_debug=false'/--args='is_debug=false extra_ldflags=\"-lm\"'/" PKGBUILD
 post_build: aur-post-build
