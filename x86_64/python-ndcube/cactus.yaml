@@ -4,6 +4,7 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-gwcs
+  - x86_64/python-reproject
 makedepends:
   - any/python-sphinx-automodapi
   - x86_64/python-sphinx-changelog

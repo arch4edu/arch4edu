@@ -4,6 +4,9 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/python-ibm-platform-services
+  - any/python-ibm-quantum-schemas
+  - x86_64/python-pybase64
+  - any/python-samplomatic
   - x86_64/python-qiskit
   - x86_64/python-qiskit-aer
 build_prefix: extra-x86_64
