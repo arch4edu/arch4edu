@@ -1,0 +1,43 @@
+# Maintainer: Adam Schadler <ajschadler@gmail.com>
+
+_cranname=doFuture
+_cranver=1.2.2
+pkgname=r-${_cranname,,}
+pkgver=${_cranver//[:-]/.}
+pkgrel=2
+pkgdesc="Combines the best methods of both future and foreach for parallelization."
+arch=('any')
+url="https://cran.r-project.org/package=${_cranname}"
+license=('LGPL-2.1-or-later')
+depends=(
+    'r'
+    'r-foreach>=1.5.0'
+    'r-future>=1.32.0'
+    'r-future.apply'
+    'r-globals'
+    'r-iterators'
+)
+makedepends=()
+optdepends=(
+    'r-dorng>=1.8.2'
+    'r-markdown'
+    'r-r.rsp'
+)
+checkdepends=(${optdepends[@]})
+source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
+sha256sums=('db3a659b80ce9f18321129740d4035569feb7a01b47cef278f36be6e4d4da4b7')
+
+build() {
+    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+}
+
+# Check requires optional dependencies
+#check () {
+#    R CMD check --no-manual -l "${srcdir}" "${_cranname}_${_cranver}.tar.gz"
+#}
+
+package() {
+    install -dm0755 "${pkgdir}/usr/lib/R/library"
+
+    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+}
