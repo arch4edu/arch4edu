@@ -1,0 +1,19 @@
+From: Zhirui Dai <daizhirui@hotmail.com>
+Subject: fix build with gcc >= 15 (libstdc++ 15 no longer pulls in <cstdint>)
+
+SmallVector.h (Open3D's vendored copy of LLVM's SmallVector) uses uint32_t /
+uint64_t but only includes <cstddef>, <cstdlib> and <cstring>. libstdc++ 15
+stopped transitively including <cstdint> from those headers, so under gcc >= 15
+the types are undeclared and the whole core/Tensor/SizeVector chain fails to
+compile. Add the missing include (this mirrors the fix LLVM made upstream).
+
+--- a/cpp/open3d/core/SmallVector.h
++++ b/cpp/open3d/core/SmallVector.h
+@@ -29,6 +29,7 @@
+ #include <cassert>
+ #include <cstddef>
+ #include <cstdlib>
++#include <cstdint>
+ #include <cstring>
+ #include <functional>
+ #include <initializer_list>
