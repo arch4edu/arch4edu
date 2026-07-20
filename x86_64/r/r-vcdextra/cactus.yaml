@@ -4,17 +4,20 @@ nvchecker:
 depends:
   - x86_64/r/r-ca
   - x86_64/r/r-dplyr
+  - x86_64/r/r-forcats
   - x86_64/r/r-glue
   - x86_64/r/r-gnm
+  - x86_64/r/r-gt
   - x86_64/r/r-here
   - x86_64/r/r-purrr
   - x86_64/r/r-readxl
   - x86_64/r/r-rgl
+  - x86_64/r/r-scales
   - x86_64/r/r-stringr
   - x86_64/r/r-tidyr
   - x86_64/r/r-vcd
-  - x86_64/r/r-scales
   - x86_64/r/r-igraph
+  - x86_64/r/r-webshot2
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
