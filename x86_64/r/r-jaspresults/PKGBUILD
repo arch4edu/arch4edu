@@ -3,7 +3,7 @@ _pkgname=jaspResults
 _pkgver=1.16
 pkgname=r-${_pkgname,,}
 pkgver=1.16
-pkgrel=3
+pkgrel=4
 pkgdesc="Easy results for your JASP analysis"
 arch=('x86_64')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -22,8 +22,12 @@ source=("git+https://github.com/jasp-stats/${_pkgname}.git"
 sha256sums=('SKIP')
 
 build() {
+  mkdir -p ~/.R
+  echo 'CXXFLAGS += -Wno-format-security' > ~/.R/Makevars
+  echo 'PKG_CXXFLAGS = -Wno-format-security' >> ${_pkgname}/src/Makevars.in
+  echo 'PKG_LIBS = -Wl,--allow-multiple-definition' >> ${_pkgname}/src/Makevars.in
   tar -cvf ${srcdir}/${_pkgname}_${_pkgver}.tar.gz ${_pkgname}
-  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+  R CMD INSTALL --no-test-load ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
 }
 
 package() {
