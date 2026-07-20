@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-gparotation
+  - x86_64/r/r-gridextra
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-vegan
+  - x86_64/r/r-deriv
+  - x86_64/r/r-pbapply
+  - x86_64/r/r-dcurver
+  - x86_64/r/r-simdesign
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-beepr
+  - x86_64/r/r-clipr
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-e1071
+  - x86_64/r/r-future
+  - x86_64/r/r-future.apply
+  - x86_64/r/r-mirai
+  - x86_64/r/r-parallelly
+  - x86_64/r/r-pbapply
+  - x86_64/r/r-progressr
+  - x86_64/r/r-qs2
+  - x86_64/r/r-r.utils
+  - x86_64/r/r-sessioninfo
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
