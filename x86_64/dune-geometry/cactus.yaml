@@ -5,5 +5,7 @@ nvchecker:
 depends:
   - x86_64/dune-common
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i 's/-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE/-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=TRUE/' PKGBUILD
 post_build: aur-post-build
