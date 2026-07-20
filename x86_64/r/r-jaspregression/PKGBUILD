@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspRegression
-_pkgver=0.18.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.18.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Regression Module for JASP"
 arch=('x86_64')
@@ -32,7 +32,7 @@ depends=(r
   r-statmod
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('321da1ab46b186d6c4f0dd85854f3c7dbf737c796b6a8baf1dd7839509023f1a')
+sha256sums=('d482fc93a39c3dd45b1a99443d3ae1482b090ec3cb741d1ededde18d9420db58')
 
 
 build() {
@@ -43,6 +43,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
