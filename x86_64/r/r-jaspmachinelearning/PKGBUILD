@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspMachineLearning
-_pkgver=0.19.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc=" Machine Learning Module for JASP"
 arch=('any')
@@ -39,7 +39,7 @@ depends=(r
   r-kknn
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('c48653e42ca2a979c71ebcc77456913b7d6092bf2a0bae26c176d62b46c396c9')
+sha256sums=('74cc2de7437b4130d2fff3ed502f8b6f00a03d88ff1aaa63313cb9deac24f4f6')
 
 
 build() {
@@ -50,6 +50,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
