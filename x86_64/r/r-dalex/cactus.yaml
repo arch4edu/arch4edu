@@ -5,6 +5,7 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-ibreakdown
   - x86_64/r/r-ingredients
+  - x86_64/r/r-kernelshap
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |

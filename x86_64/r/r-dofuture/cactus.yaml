@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-foreach
+  - x86_64/r/r-future
+  - x86_64/r/r-future.apply
+  - x86_64/r/r-globals
+  - x86_64/r/r-iterators
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
