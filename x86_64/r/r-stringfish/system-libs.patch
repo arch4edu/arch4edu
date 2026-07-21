@@ -1,0 +1,24 @@
+diff --git a/stringfish/src/Makevars.in b/stringfish/src/Makevars.in
+index 821aaea..891d022 100644
+--- a/stringfish/src/Makevars.in
++++ b/stringfish/src/Makevars.in
+@@ -1,5 +1,5 @@
+ PKG_CPPFLAGS=-DRCPP_USE_UNWIND_PROTECT -DRCPP_NO_RTTI -DPCRE2_CODE_UNIT_WIDTH=8 -DHAVE_CONFIG_H @PCRE2_BUNDLED@ -I. @INCLUDE_PATHS@
+-PKG_LIBS=-lpthread -L. -lSFPCRE2 @ADD_LIBS@ $(shell ${R_HOME}/bin/Rscript -e "RcppParallel::RcppParallelLibs()")
++PKG_LIBS := -lxxhash -lpthread -L. -lSFPCRE2 @ADD_LIBS@ $(shell ${R_HOME}/bin/Rscript -e "RcppParallel::RcppParallelLibs()")
+ 
+ LIBPCRE2 = PCRE2/pcre2_chartables.o \
+ 	PCRE2/pcre2_auto_possess.o \
+diff --git a/stringfish/src/sf_functions.cpp b/stringfish/src/sf_functions.cpp
+index 17f545b..a43a87e 100644
+--- a/stringfish/src/sf_functions.cpp
++++ b/stringfish/src/sf_functions.cpp
+@@ -99,7 +99,7 @@ List get_pcre2_info() {
+ #include <unordered_map>
+ #include <fstream>
+ 
+-#include "xxhash/xxhash.c"
++#include <xxhash.h>
+ 
+ ////////////////////////////////////////////////////////////////////////////////
+ // iconv helper class
