@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspReliability
-_pkgver=0.19.0
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.0
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Reliability Module for JASP"
 arch=('any')
@@ -20,10 +20,11 @@ depends=(r
   r-psych
   r-lme4
   r-irr
+  r-mirt
 )
 optdepends=()
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('b8594cd485d2b496f9561beca5779afa48261b96b652592535141f00aac28203')
+sha256sums=('0dc63a7a89be1b54046759a6c67029523ae1caf4b8e7bbf83ff5a7962947429b')
 
 
 build() {
@@ -34,6 +35,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
