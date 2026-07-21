@@ -1,8 +1,8 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 pkgname=python-chex
 _pkgname=${pkgname#python-}
-pkgver=0.1.91
-pkgrel=4
+pkgver=0.1.92
+pkgrel=1
 pkgdesc="A library of utilities for helping to write reliable JAX code"
 arch=('any')
 url="https://github.com/google-deepmind/chex"
@@ -16,7 +16,12 @@ makedepends=('python-build' 'python-installer' 'python-flit-core'
              'python-wheel')
 checkdepends=('python-cloudpickle' 'python-dm-tree' 'python-pytest')
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/google-deepmind/$_pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('0e67bc74c6914f4515c45927ff396c3d242e7fd9fe5c1da45ec937b85ccfaefc')
+sha256sums=('f56c7b1c4bfc84a365414398f65e48e5925813dbb33858f490654be0d7a02e21')
+
+prepare() {
+    cd "$_pkgname-$pkgver"
+    sed -i -E 's/\["flit_core.*?"/["flit_core"/g' pyproject.toml
+}
 
 build() {
     python -m build -nw "$_pkgname-$pkgver"
