@@ -2,15 +2,15 @@
 _base=scikit-build-core
 pkgname=pypy3-${_base}
 pkgdesc="Build backend for CMake based projects"
-pkgver=0.12.2
-pkgrel=2
+pkgver=1.0.3
+pkgrel=1
 arch=(any)
 url="https://github.com/${_base/-core/}/${_base}"
 license=(Apache-2.0)
 depends=(cmake ninja pypy3-packaging pypy3-pathspec)
 makedepends=(pypy3-build pypy3-installer pypy3-hatch-vcs)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('02e0f92684b5f3678f64565e09c896748cbb5b8e03e004abfd108a6c435731cd49b23952566f215ca77813dfb8429cdb5aea7a1fcf5b8edc40fc60a14e7ec31c')
+sha512sums=('f5fb61a9d6fb91d59eb225344736104d18ec18ff93c5a6cdbb1861d7e07fd982cc760222d79e745c3ba8e98046c4165abc24a27d89b43bd450aab2c42bf75926')
 
 build() {
   cd ${_base}-${pkgver}
