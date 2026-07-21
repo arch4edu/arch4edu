@@ -3,7 +3,7 @@ _cranname=mirt
 _pkgver=1.46.1
 pkgname=r-mirt
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Multidimensional Item Response Theory"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
