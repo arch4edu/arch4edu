@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspFrequencies
-_pkgver=0.19.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Frequencies Module for JASP"
 arch=('any')
@@ -23,7 +23,7 @@ depends=(r
   r-vcdextra
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('06a1c68343c449d7819a3ff2bef90412a2c5a15dcf5afcda3092637f174d775e')
+sha256sums=('fcc8fa894ac5e7b23ab921ab4bfa0bbbb7ae7d95587d921d36e791ab0027bff4')
 
 
 build() {
@@ -34,6 +34,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
