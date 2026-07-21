@@ -6,6 +6,8 @@ depends:
   - x86_64/r/r-ggplot2
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
+  - x86_64/r/r-jaspsem
+  - x86_64/r/r-metasem
   - x86_64/r/r-metabma
   - x86_64/r/r-metafor
   - x86_64/r/r-pema

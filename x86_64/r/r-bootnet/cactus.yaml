@@ -10,6 +10,7 @@ depends:
   - x86_64/r/r-igraph
   - x86_64/r/r-isingfit
   - x86_64/r/r-isingsampler
+  - x86_64/r/r-mantar
   - x86_64/r/r-mgm
   - x86_64/r/r-mvtnorm
   - x86_64/r/r-networktoolbox

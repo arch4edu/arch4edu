@@ -7,6 +7,7 @@ depends:
   - x86_64/r/r-rcpp
   - x86_64/r/r-vegan
   - x86_64/r/r-deriv
+  - x86_64/r/r-splines2
   - x86_64/r/r-pbapply
   - x86_64/r/r-dcurver
   - x86_64/r/r-simdesign
