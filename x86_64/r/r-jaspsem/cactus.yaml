@@ -8,6 +8,7 @@ depends:
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-lavaan
+  - x86_64/r/r-mxsem
   - x86_64/r/r-reshape2
   - x86_64/r/r-semplot
   - x86_64/r/r-semtools
