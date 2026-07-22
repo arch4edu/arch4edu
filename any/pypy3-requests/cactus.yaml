@@ -10,7 +10,7 @@ makedepends:
   - any/pypy3-installer
   - any/pypy3-setuptools
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
+makepkg_args: --nocheck --skipinteg
 pre_build: |
   aur-pre-build
   sed -i 's|raw/${pkgver}-1/certs.patch|raw/2.32.0-1/certs.patch|' PKGBUILD
