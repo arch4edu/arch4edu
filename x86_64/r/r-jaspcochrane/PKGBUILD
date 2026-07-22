@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspCochrane
-_pkgver=0.19.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Cochrane Module for JASP"
 arch=('any')
@@ -16,7 +16,7 @@ depends=(r
 )
 optdepends=('r-testthat')
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('94a5c93991c1232a9c16d64e937defc247baee2db3ed2f15834eab4ee994baa8')
+sha256sums=('cfae0b7d2f4491fecb6e920841d230414d544640835eea7a4cf37bb0498321b7')
 
 
 build() {
@@ -27,6 +27,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
