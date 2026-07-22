@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspMetaAnalysis
-_pkgver=0.19.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.19.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Meta-Analysis Module for JASP"
 arch=('any')
@@ -13,6 +13,8 @@ depends=(r
   r-ggplot2
   r-jaspbase
   r-jaspgraphs
+  r-jaspsem
+  r-metasem
   r-mass
   r-metabma
   r-metafor
@@ -36,7 +38,7 @@ depends=(r
   r-patchwork
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('6e2ff5c9fb0f113236a767214bc02ad9673ba6657e2e46b235d3b97bf56eb7e7')
+sha256sums=('27bf762e66c9df64dd8a655ea570bd1e4938147b48a4d1aa4eb63aa80b8feef6')
 
 
 build() {
@@ -47,6 +49,4 @@ build() {
 package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
-  mkdir -p  ${pkgdir}/usr/lib/jasp-desktop/Modules
-  ln -s /usr/lib/R/library ${pkgdir}/usr/lib/jasp-desktop/Modules/${_pkgname}
 }
