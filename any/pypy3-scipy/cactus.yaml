@@ -14,5 +14,5 @@ build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
-  sed -i '/array_api_compat/d' PKGBUILD
+  sed -i '/git submodule set-url/d' PKGBUILD
 post_build: aur-post-build
