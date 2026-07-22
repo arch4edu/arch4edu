@@ -1,8 +1,8 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspFactor
-_pkgver=0.95.3
+_pkgver=0.96.0
 pkgname=r-${_pkgname,,}
-pkgver=0.95.3
+pkgver=0.96.0
 pkgrel=1
 pkgdesc="Factor Module for JASP"
 arch=('any')
@@ -22,7 +22,7 @@ depends=(r
   r-rcsdp
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('025fd773f8e179b2bcc0af68e5dc9d86e743ffb03bf1520de696c34697b99012')
+sha256sums=('18e50af0779e46512ff9cd4b07681aa8f1a6b9b7b9fdde1198f05bf229e014ca')
 
 
 build() {
