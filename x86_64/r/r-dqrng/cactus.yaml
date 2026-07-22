@@ -1,0 +1,14 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-rcpp
+makedepends:
+  - x86_64/r/r-bh
+  - x86_64/r/r-sitmo
+checkdepends:
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-testthat
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,18 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bain
+  - x86_64/r/r-bergm
+  - x86_64/r/r-berryfunctions
+  - x86_64/r/r-coda
+  - x86_64/r/r-ergm
+  - x86_64/r/r-lme4
+  - x86_64/r/r-metabma
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-pracma
+  - x86_64/r/r-qrm
+  - x86_64/r/r-sandwich
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

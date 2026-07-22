@@ -1,0 +1,15 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-coda
+  - x86_64/r/r-ergm
+  - x86_64/r/r-matrixcalc
+  - x86_64/r/r-mcmcpack
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-network
+  - x86_64/r/r-rglpk
+  - x86_64/r/r-statnet.common
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

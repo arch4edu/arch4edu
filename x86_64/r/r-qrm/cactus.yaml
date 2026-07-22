@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-gsl
+  - x86_64/r/r-mvtnorm
+  - x86_64/r/r-numderiv
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-timedate
+  - x86_64/r/r-timeseries
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

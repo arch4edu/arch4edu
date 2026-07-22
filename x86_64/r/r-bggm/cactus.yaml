@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-bfpack
+  - x86_64/r/r-ggally
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggridges
+  - x86_64/r/r-mvnfast
+  - x86_64/r/r-network
+  - x86_64/r/r-rcpp
+  - x86_64/r/r-rdpack
+  - x86_64/r/r-reshape
+  - x86_64/r/r-sna
+makedepends:
+  - x86_64/r/r-rcpparmadillo
+  - x86_64/r/r-rcppdist
+  - x86_64/r/r-rcppprogress
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,23 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-cli
+  - x86_64/r/r-coda
+  - x86_64/r/r-knitr
+  - x86_64/r/r-lpsolveapi
+  - x86_64/r/r-magrittr
+  - x86_64/r/r-memoise
+  - x86_64/r/r-network
+  - x86_64/r/r-purrr
+  - x86_64/r/r-rdpack
+  - x86_64/r/r-rlang
+  - x86_64/r/r-rle
+  - x86_64/r/r-robustbase
+  - x86_64/r/r-statnet.common
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tibble
+  - x86_64/r/r-trust
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
