@@ -1,0 +1,17 @@
+diff --git a/lpSolveAPI/src/Makevars b/lpSolveAPI/src/Makevars
+index bfb8a46..93671b8 100644
+--- a/lpSolveAPI/src/Makevars
++++ b/lpSolveAPI/src/Makevars
+@@ -1,9 +1,9 @@
+-PKG_CPPFLAGS=-I../inst/include
++PKG_CPPFLAGS=-Iinclude
+ OBJECTS=RlpSolve.o RlpSolveLink.o
+ 
+-PKG_LIBS=-Llp_solve -llp_solve $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
++PKG_LIBS=-llpsolve55 $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+ 
+-$(SHLIB): lp_solve/liblp_solve.a
++$(SHLIB):
+ 
+ lp_solve/liblp_solve.a:
+ 	@(cd lp_solve && $(MAKE) liblp_solve.a \
