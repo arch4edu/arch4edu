@@ -9,7 +9,7 @@
 # Contributor: Daffa Haj Tsaqif <narutohaj00@gmail.com>
 
 pkgname=cloudflare-warp-bin
-pkgver=2026.6.836
+pkgver=2026.6.880
 pkgrel=1
 pkgdesc="Cloudflare Warp Client"
 arch=('x86_64')
@@ -41,12 +41,13 @@ depends=('at-spi2-core'
          'tpm2-tss'
          'webkit2gtk-4.1'
          'zlib')
+makedepends=('patchelf')
 provides=('warp-cli' 'warp-diag' 'warp-svc')
 conflicts=("${pkgname%-bin}")
 options=('!strip')
 install="${pkgname}.install"
 source=("${pkgname}-${pkgver}.deb::https://pkg.cloudflareclient.com/pool/noble/main/c/cloudflare-warp/cloudflare-warp_${pkgver}.0_amd64.deb")
-sha256sums=('578cbda59b97015f90cf78648f6bf92d402d5b7b630036bb147e4f453659a9bd')
+sha256sums=('648a7c7e9085f8e50d32a2adcacb0c2049fb72ebeb02ebe913becadee3ab0d4c')
 
 prepare() {
     mkdir -p "${srcdir}/build"
@@ -62,4 +63,5 @@ package() {
     sed -e "s%ExecStart=/bin/warp-taskbar%ExecStart=/usr/bin/warp-taskbar%" \
         -e "s%BindsTo=graphical-session.target%PartOf=graphical-session.target%" \
         -i "${pkgdir}/usr/lib/systemd/user/warp-taskbar.service"
+    patchelf --remove-rpath "${pkgdir}/usr/lib/warp/lib/"{crashpad_handler,libdartjni.so,lib*_plugin.so}
 }
