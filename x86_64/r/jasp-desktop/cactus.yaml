@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/librdata-git
   - x86_64/r/r-rinside
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
