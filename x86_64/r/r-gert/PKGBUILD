@@ -4,7 +4,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=gert
-_pkgver=2.3.1
+_pkgver=2.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,23 +13,24 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  libgit2
   r-askpass
   r-credentials
   r-openssl
   r-rstudioapi
   r-sys
   r-zip
+  libgit2
 )
 optdepends=(
   r-knitr
   r-rmarkdown
+  r-roxygen2
   r-spelling
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a0da8c7cc93236d03ddcfe0beddb30b7')
-b2sums=('d26a781b96ad8c9234e7850e7f72928e7ac0689cba0483be268c225739842f393caac50f587d898b1d37188771989de4477a8d021e80d9a7cdb90ff4891181f2')
+md5sums=('6531f276c509d1565458b320bb60852d')
+b2sums=('42251651fc62e30715b99b578271192105a1f78ec1ef4ee0d3693ab28942de91a22b69ed95238f7da0a701bf730c82b3cd6acf9261821fe5bd885c035b28520d')
 
 build() {
   mkdir build
