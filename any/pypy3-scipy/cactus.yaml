@@ -12,5 +12,7 @@ makedepends:
   - any/pypy3-pythran
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i '/array_api_compat/d' PKGBUILD
 post_build: aur-post-build
