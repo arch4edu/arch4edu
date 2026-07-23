@@ -2,9 +2,8 @@
 
 pkgbase=python-ndcube
 _pyname=${pkgbase#python-}
-pkgname=("python-${_pyname}")
-#"python-${_pyname}-doc")
-pkgver=2.4.0
+pkgname=("python-${_pyname}" "python-${_pyname}-doc")
+pkgver=2.4.1
 pkgrel=1
 pkgdesc="Package for multi-dimensional contiguious and non-contiguious coordinate aware arrays"
 arch=('any')
@@ -12,18 +11,17 @@ url="https://docs.sunpy.org/projects/ndcube"
 license=('BSD-2-Clause')
 makedepends=('python-setuptools-scm>=6.0.0'
              'python-build'
-             'python-installer')
-#            'python-sphinx-automodapi'
-#            'python-sphinx-changelog'
-#            'python-sphinx-gallery'
-#            'python-sphinxext-opengraph'
-#            'python-sunpy-sphinx-theme'
-#            'python-gwcs'
-#            'python-sunpy'
-#            'python-mpl-animators'
-#            'python-reproject'
-#            'graphviz'
-#           )  # wheel required by new setuptools, matplotlib <- mpl-animators
+             'python-installer'
+             'python-sphinx-automodapi'
+             'python-sphinx-changelog'
+             'python-sphinx-gallery'
+             'python-sphinxext-opengraph'
+             'python-sunpy-sphinx-theme'
+             'python-gwcs'
+             'python-sunpy'
+             'python-mpl-animators'
+             'python-reproject'
+             'graphviz')  # wheel required by new setuptools, matplotlib <- mpl-animators
 # circular deps
 #checkdepends=(
 #   'python-pytest-doctestplus'
@@ -31,7 +29,6 @@ makedepends=('python-setuptools-scm>=6.0.0'
 #              'python-pytest-asdf-plugin'
 #              'python-pytest-xdist'
 #              'python-pytest-remotedata'
-#              'python-dask'
 #              'python-reproject'
 #              'python-specutils'
 #              'python-gwcs'
@@ -39,7 +36,7 @@ makedepends=('python-setuptools-scm>=6.0.0'
 #              'python-sunpy'
 #             )  # pytest-doctestplus gwcs mpl-animators sunpy{,sphinx-theme} already in makedep
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-#       'doc-use-local-fits.patch'
+#       '2.4.1-doc-use-local-fits.patch'
 #       "https://www.astropy.org/astropy-data/tutorials/FITS-images/HorseHead.fits"
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063305_0094_lowres.fits"
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063301_0131_lowres.fits"
@@ -51,7 +48,7 @@ source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname
 #       "https://github.com/sunpy/data/raw/404adbc/sunpy/v1/AIA20110607_063305_1600_lowres.fits"
 #       "https://github.com/sunpy/ndcube/raw/main/changelog/README.rst"
 #)
-md5sums=('a2a20a3420d9fa389f63a38ceb5ec1e0')
+md5sums=('6cdb25ecce1b4c7c6a203846b0a06eca')
 #        'SKIP')
 
 #prepare() {
@@ -60,7 +57,7 @@ md5sums=('a2a20a3420d9fa389f63a38ceb5ec1e0')
 ##   install -Dm644 -t changelog ${srcdir}/README.rst # README not needed
 ##   mkdir -p changelog
 #    cp ${srcdir}/*.fits examples
-#    patch -Np1 -i "${srcdir}/doc-use-local-fits.patch"
+#    patch -Np1 -i "${srcdir}/2.4.1-doc-use-local-fits.patch"
 ##   sed -e "/datfix/d" -e "/unitfix/d" -i setup.cfg
 ##   sed -e '/ignore:FLIP/a \	ignore:pkg_resources is deprecated:DeprecationWarning' \
 ##       -e '/ignore:FLIP/a \	ignore:jsonschema.exceptions.RefResolutionError is deprecated:DeprecationWarning' \
@@ -75,8 +72,8 @@ build() {
     python -m build --wheel --no-isolation
 
     # need new opengraph
-#   msg "Building Docs"
-#   PYTHONPATH="../build/lib" make -C docs html
+    msg "Building Docs"
+    PYTHONPATH="../build/lib" make -C docs html
 }
 
 #check() {
@@ -86,7 +83,7 @@ build() {
 #}
 
 package_python-ndcube() {
-    depends=('python>=3.11' 'python-gwcs>=0.21' 'python-scipy>=1.12.0')
+    depends=('python>=3.11' 'python-gwcs>=0.24.0' 'python-scipy>=1.14.1')
     optdepends=('python-matplotlib>=3.9.0: plotting'
                 'python-mpl-animators>=1.2: plotting'
                 'python-reproject>=0.14: reproject'
@@ -99,11 +96,11 @@ package_python-ndcube() {
     python -m installer --destdir="${pkgdir}" dist/*.whl
 }
 
-#package_python-ndcube-doc() {
-#    pkgdesc="Documentation for Python ndcube module"
-#    cd ${srcdir}/${_pyname}-${pkgver}/docs/_build
-#
-#    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../../licenses/*
-#    install -d -m755 "${pkgdir}/usr/share/doc/${pkgbase}"
-#    cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
-#}
+package_python-ndcube-doc() {
+    pkgdesc="Documentation for Python ndcube module"
+    cd ${srcdir}/${_pyname}-${pkgver}/docs/_build
+
+    install -D -m644 -t "${pkgdir}/usr/share/licenses/${pkgname}" ../../licenses/*
+    install -d -m755 "${pkgdir}/usr/share/doc/${pkgbase}"
+    cp -a html "${pkgdir}/usr/share/doc/${pkgbase}"
+}

@@ -1,0 +1,73 @@
+--- a/examples/changing_resolution_via_reproject.py	2026-06-11 00:15:00.000000000 +0800
++++ b/examples/changing_resolution_via_reproject.py	2026-06-16 12:30:50.439865473 +0800
+@@ -19,7 +19,8 @@
+ from astropy.io import fits
+ from astropy.wcs import WCS
+ 
+-from sunpy.data.sample import AIA_171_IMAGE
++# use local fits for no network while doc building
++# from sunpy.data.sample import AIA_171_IMAGE
+ from sunpy.visualization.colormaps import cm
+ 
+ from ndcube import NDCube
+@@ -28,8 +29,11 @@
+ # We start by creating an NDCube from sample solar data provided by SunPy.
+ # Here we use an AIA 171 image, but the same approach can be applied to other datasets, including those with non-celestial axes.
+ 
+-image_data = fits.getdata(AIA_171_IMAGE, ext=1)
+-image_header = fits.getheader(AIA_171_IMAGE, ext=1)
++# use local fits for no network while doc building
++# image_data = fits.getdata(AIA_171_IMAGE, ext=1)
++image_data = fits.getdata('AIA20110607_063302_0171_lowres.fits', ext=1)
++# image_header = fits.getheader(AIA_171_IMAGE, ext=1)
++image_header = fits.getheader('AIA20110607_063302_0171_lowres.fits', ext=1)
+ cube = NDCube(image_data, WCS(image_header))
+ 
+ ###########################################################################
+--- a/examples/creating_even_spaced_wavelength_visualisation.py	2026-06-11 00:15:00.000000000 +0800
++++ b/examples/creating_even_spaced_wavelength_visualisation.py	2026-06-16 11:41:21.927711846 +0800
+@@ -23,14 +23,23 @@
+ # We will use the sample data that ``sunpy`` provides to construct a sequence of AIA
+ # image files for different wavelengths using `sunpy.map.Map`.
+ 
+-aia_files = [sunpy.data.sample.AIA_094_IMAGE,
+-             sunpy.data.sample.AIA_131_IMAGE,
+-             sunpy.data.sample.AIA_171_IMAGE,
+-             sunpy.data.sample.AIA_193_IMAGE,
+-             sunpy.data.sample.AIA_211_IMAGE,
+-             sunpy.data.sample.AIA_304_IMAGE,
+-             sunpy.data.sample.AIA_335_IMAGE,
+-             sunpy.data.sample.AIA_1600_IMAGE]
++# Use local fits if no network while doc building
++#aia_files = [sunpy.data.sample.AIA_094_IMAGE,
++#             sunpy.data.sample.AIA_131_IMAGE,
++#             sunpy.data.sample.AIA_171_IMAGE,
++#             sunpy.data.sample.AIA_193_IMAGE,
++#             sunpy.data.sample.AIA_211_IMAGE,
++#             sunpy.data.sample.AIA_304_IMAGE,
++#             sunpy.data.sample.AIA_335_IMAGE,
++#             sunpy.data.sample.AIA_1600_IMAGE]
++aia_files = ['AIA20110607_063305_0094_lowres.fits',
++             'AIA20110607_063301_0131_lowres.fits',
++             'AIA20110607_063302_0171_lowres.fits',
++             'AIA20110607_063307_0193_lowres.fits',
++             'AIA20110607_063302_0211_lowres.fits',
++             'AIA20110607_063334_0304_lowres.fits',
++             'AIA20110607_063303_0335_lowres.fits',
++             'AIA20110607_063305_1600_lowres.fits']
+ # `sequence=True` causes a sequence of maps to be returned, one for each image file.
+ sequence_of_maps = sunpy.map.Map(aia_files, sequence=True)
+ # Sort the maps in the sequence in order of wavelength.
+--- a/examples/creating_ndcube_from_fitsfile.py	2026-06-11 00:15:00.000000000 +0800
++++ b/examples/creating_ndcube_from_fitsfile.py	2026-06-16 11:41:21.927809163 +0800
+@@ -20,7 +20,9 @@
+ # `~ndcube.NDCube` from data stored in a FITS file.
+ # Here we are using an example file from ``astropy``.
+ 
+-image_file = get_pkg_data_filename('tutorials/FITS-images/HorseHead.fits')
++# use local fits if no network while doc building
++try: image_file = get_pkg_data_filename('tutorials/FITS-images/HorseHead.fits')
++except Exception: image_file = 'HorseHead.fits'
+ 
+ ###########################################################################
+ # Lets extract the image data and the header information from the FITS file.
