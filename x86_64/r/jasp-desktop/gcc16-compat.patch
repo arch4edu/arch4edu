@@ -1,0 +1,19 @@
+diff --git a/PKGBUILD b/PKGBUILD
+index 7ad438e..06600ab 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -38,12 +38,13 @@ prepare() {
+ }
+ 
+ build() {
++  export GITHUB_PAT=dummy
+   export CMAKE_C_COMPILER_LAUNCHER=ccache
+   export CMAKE_CXX_COMPILER_LAUNCHER=ccache
+   export CMAKE_Fortran_COMPILER_LAUNCHER=ccache
+ 
+   export CFLAGS="${CFLAGS} -fPIC"
+-  export CXXFLAGS="${CXXFLAGS} -fPIC"
++  export CXXFLAGS="${CXXFLAGS} -fPIC -Wno-template-body"
+   export FCFLAGS="${FCFLAGS} -fPIC"
+   export FFLAGS="${FFLAGS} -fPIC"
+ 
