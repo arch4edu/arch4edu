@@ -4,7 +4,7 @@
 
 pkgname=ignition-common-3
 pkgver=3.16.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Provides a set of libraries that cover many different use cases."
 arch=('x86_64')
 url="https://gazebosim.org/libs/common"
@@ -19,12 +19,13 @@ _dir="gz-common-ignition-common3_${pkgver}"
 
 build() {
   cd "$srcdir/$_dir"
+  sed -i '1i #include <cstdint>' profiler/include/gz/common/Profiler.hh
 
   mkdir -p build
   cd build
 
   export PKG_CONFIG_PATH=/usr/lib/ffmpeg4.4/pkgconfig
-  cmake .. -DCMAKE_BUILD_TYPE="Release" \
+  cmake .. -DCMAKE_BUILD_TYPE="Release" -DCMAKE_CXX_FLAGS="-fpermissive" \
            -DCMAKE_INSTALL_PREFIX="/usr" \
            -DCMAKE_INSTALL_LIBDIR="lib" \
            -DBUILD_TESTING:BOOL=False
