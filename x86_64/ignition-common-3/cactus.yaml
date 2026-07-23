@@ -10,5 +10,6 @@ build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
+  git checkout HEAD -- gcc16-profiler-fix.patch
   patch -Np1 < gcc16-profiler-fix.patch
 post_build: aur-post-build
