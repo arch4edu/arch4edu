@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=DBItest
-_pkgver=1.8.2
+_pkgver=1.8.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Testing DBI Backends"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -29,14 +29,14 @@ optdepends=(
   r-debugme
   r-devtools
   r-knitr
-  r-lintr
   r-pkgload
   r-rmarkdown
   r-rsqlite
+  r-vctrs
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('6420d02b91f87dbb5e668ffba011488f')
-b2sums=('b47c83a6291bd2d2ce0db5edf420cbc7ee1e0041d0ebc582b92911775d41f8612fa9868b3b2a23fcf417180e98a465f22c2920b58a30667e0d5f715b3667d422')
+md5sums=('2caccc00b2ce721cb0e44e160cad7747')
+b2sums=('7969702bfe9283d65121cd84ac5b7a28d0e91f255e9c50fae3ee0d827e0e6dc236622d1f47dded0d8a25edf4cd9197735b1c596c27f4ac75cc746ef8e8c63b20')
 
 build() {
   mkdir build
