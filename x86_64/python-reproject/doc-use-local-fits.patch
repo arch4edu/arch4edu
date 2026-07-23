@@ -1,0 +1,76 @@
+--- a/docs/footprints.rst	2020-05-30 03:28:31.000000000 +0800
++++ b/docs/footprints.rst	2021-01-17 01:55:19.596425404 +0800
+@@ -24,8 +24,11 @@
+ 
+     from astropy.io import fits
+     from astropy.utils.data import get_pkg_data_filename
+-    hdu1 = fits.open(get_pkg_data_filename('galactic_center/gc_2mass_k.fits'))[0]
+-    hdu2 = fits.open(get_pkg_data_filename('galactic_center/gc_msx_e.fits'))[0]
++    # use local fits if no network
++    try: hdu1 = fits.open(get_pkg_data_filename('galactic_center/gc_2mass_k.fits'))[0]
++    except Exception: hdu1 = fits.open('gc_2mass_k.fits')[0]
++    try: hdu2 = fits.open(get_pkg_data_filename('galactic_center/gc_msx_e.fits'))[0]
++    except Exception: hdu2 = fits.open('gc_msx_e.fits')[0]
+ 
+ As before, we now reproject the MSX image to be in the same projection as the
+ 2MASS image, but we do this with two algorithms:
+--- a/docs/healpix.rst	2020-05-30 03:28:31.000000000 +0800
++++ b/docs/healpix.rst	2021-01-17 01:55:19.596425404 +0800
+@@ -37,7 +37,8 @@
+    :context:
+ 
+     from astropy.utils.data import get_pkg_data_filename
+-    filename_ligo = get_pkg_data_filename('allsky/ligo_simulated.fits.gz')
++    try: filename_ligo = get_pkg_data_filename('allsky/ligo_simulated.fits.gz')
++    except Exception: filename_ligo = 'ligo_simulated.fits.gz'    # use local fits if no network
+ 
+ We can then read in this dataset using Astropy (note that we access HDU 1
+ because HEALPIX data is stored as a binary table which cannot be in HDU 0):
+--- a/docs/index.rst	2020-05-30 03:28:31.000000000 +0800
++++ b/docs/index.rst	2021-01-17 01:55:19.596425404 +0800
+@@ -41,8 +41,11 @@
+ 
+     from astropy.io import fits
+     from astropy.utils.data import get_pkg_data_filename
+-    hdu1 = fits.open(get_pkg_data_filename('galactic_center/gc_2mass_k.fits'))[0]
+-    hdu2 = fits.open(get_pkg_data_filename('galactic_center/gc_msx_e.fits'))[0]
++    # use local fits if no network
++    try: hdu1 = fits.open(get_pkg_data_filename('galactic_center/gc_2mass_k.fits'))[0]
++    except Exception: hdu1 = fits.open('gc_2mass_k.fits')[0]
++    try: hdu2 = fits.open(get_pkg_data_filename('galactic_center/gc_msx_e.fits'))[0]
++    except Exception: hdu2 = fits.open('gc_msx_e.fits')[0]
+ 
+ We can examine the two images (this makes use of the
+ `wcsaxes <wcsaxes.readthedocs.io>`_ package behind the scenes):
+--- a/docs/mosaicking.rst	2021-01-17 01:41:40.106416626 +0800
++++ b/docs/mosaicking.rst	2021-01-17 01:57:35.216426859 +0800
+@@ -258,15 +258,23 @@
+     from astropy.coordinates import SkyCoord
+     from pyvo.dal import imagesearch
+ 
+-    pos = SkyCoord.from_name('M17')
+-    table = imagesearch('https://irsa.ipac.caltech.edu/cgi-bin/2MASS/IM/nph-im_sia?type=at&ds=asky&',
+-                       pos, size=0.25).to_table()
+-    table = table[(table['band'] == 'K') & (table['format'] == 'image/fits')]
+-    m17_hdus = [fits.open(row['download'])[0] for row in table]
++    try:
++        pos = SkyCoord.from_name('M17')
++        table = imagesearch('https://irsa.ipac.caltech.edu/cgi-bin/2MASS/IM/nph-im_sia?type=at&ds=asky&',
++                           pos, size=0.25).to_table()
++        table = table[(table['band'] == 'K') & (table['format'] == 'image/fits')]
++        m17_hdus = [fits.open(row['download'])[0] for row in table]
++    except Exception:
++        # if no network
++        from glob import glob
++        pos = SkyCoord(275.19583333, -16.17166667, unit="deg")
++        table = sorted(glob('ki*.fits'), key=lambda lab: int(lab[3: -5]))
++        m17_hdus = [fits.open(row) for row in table]
+ 
+     from astropy.coordinates import SkyCoord
+     from reproject.mosaicking import find_optimal_celestial_wcs
+-    coord = SkyCoord.from_name('M17')
++    try: coord = SkyCoord.from_name('M17')
++    except Exception: coord = SkyCoord(275.19583333, -16.17166667, unit="deg")    # if no network
+     wcs_out, shape_out = find_optimal_celestial_wcs(m17_hdus,
+                                              reference=coord)
+ 
