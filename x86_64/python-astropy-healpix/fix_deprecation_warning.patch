@@ -1,0 +1,27 @@
+--- a/astropy_healpix/core.py	2018-12-19 03:23:52.000000000 +0800
++++ b/astropy_healpix/core.py	2019-02-23 19:07:17.514787248 +0800
+@@ -38,9 +38,9 @@
+             return args[0].reshape(shape)
+     else:
+         if len(args) > 1:
+-            return [np.asscalar(arg) for arg in args]
++            return [arg.item() for arg in args]
+         else:
+-            return np.asscalar(args[0])
++            return args[0].item()
+ 
+ 
+ def _validate_order(order):
+--- a/astropy_healpix/healpy.py	2018-12-19 03:23:52.000000000 +0800
++++ b/astropy_healpix/healpy.py	2019-02-23 19:11:40.427182742 +0800
+@@ -121,8 +121,8 @@
+     theta, phi = vec2ang(np.transpose([x, y, z]))
+     # hp.vec2ang() returns raveled arrays, which are 1D.
+     if np.isscalar(x):
+-        theta = np.asscalar(theta)
+-        phi = np.asscalar(phi)
++        theta = theta.item()
++        phi = phi.item()
+     else:
+         shape = np.shape(x)
+         theta = theta.reshape(shape)

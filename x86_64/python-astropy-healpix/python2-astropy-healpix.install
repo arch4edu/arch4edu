@@ -1,0 +1,5 @@
+post_install() {
+    echo "
+    ==> If you want to run the testing for python2 version of astropy-healpix, you need to remove the python2-pytest-cov package first.
+    "
+}

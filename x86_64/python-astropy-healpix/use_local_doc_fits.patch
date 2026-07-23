@@ -1,0 +1,15 @@
+--- a/docs/interpolation.rst	2018-07-02 21:32:42.390297000 +0800
++++ b/docs/interpolation.rst	2021-01-15 14:50:10.578665985 +0800
+@@ -116,9 +118,10 @@
+ .. plot::
+    :include-source:
+ 
+-    # Get the data
++    # Get the data, use local fits if no network
+     from astropy.io import fits
+-    hdulist = fits.open('https://lambda.gsfc.nasa.gov/data/map/dr3/skymaps/5yr//wmap_band_imap_r9_5yr_K_v3.fits')
++    try: hdulist = fits.open('https://lambda.gsfc.nasa.gov/data/map/dr3/skymaps/5yr//wmap_band_imap_r9_5yr_K_v3.fits')
++    except Exception: hdulist = fits.open('wmap_band_imap_r9_5yr_K_v3.fits')
+ 
+     # Set up the HEALPix projection
+     from astropy_healpix import HEALPix
