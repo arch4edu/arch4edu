@@ -11,4 +11,6 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add makedepends cppzmq
+  git checkout HEAD -- protobuf-stringview.patch
+  sed -i '/patch -Np1 -i ${srcdir}\/protobuf-stubs-casts.patch/a\    patch -Np1 -i ${startdir}/protobuf-stringview.patch' PKGBUILD
 post_build: aur-post-build
