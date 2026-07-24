@@ -1,129 +1,101 @@
-#Maintainer: sukanka <su975853527 AT gmail.com>
-
-_pkgname=jasp
-_pkgver=0.18.3
 pkgname=jasp-desktop
-pkgver=0.18.3
-pkgrel=1
-pkgdesc="A complete statistical package for both Bayesian and Frequentist statistical methods"
-arch=('x86_64' 'aarch64')
+pkgver=0.96.0
+pkgrel=3
+pkgdesc="JASP Desktop"
+arch=('x86_64')
 url="https://github.com/jasp-stats/jasp-desktop"
-license=('AGPL3')
-makedepends=("cmake" 'boost' 'jsoncpp'
-'openssl'
-'autoconf'
-'zlib'
-'bison'
-'flex'
-'jags'
-'gcc-fortran'
-'qtcreator'
-'git'
-'patchelf'
-'ninja'
+license=('GPL3')
+
+depends=(
+  'qt6-base' 'qt6-declarative' 'qt6-svg' 'qt6-positioning' 'qt6-webchannel' 'qt6-webengine' 'boost-libs'
+  'r' 'librdata-git' 'jags' 'glpk' 'jsoncpp' 'libarchive' 'openssl' 'curl' 'sqlite' 'zlib' 'libfreexl' 'readstat'
 )
-depends=('r'
-'qt6-5compat'
-'readstat'
-'libarchive'
-'r-rinside'
-'qt6-base'
-'qt6-webengine'
-'qt6-shadertools'
 
-# jaspBase
-"r-jaspbase"
-"r-jaspgraphs"
-"r-jasptools"
-
-#jaspCommon
-"r-jaspdescriptives"
-"r-jaspttests"
-"r-jaspanova"
-"r-jaspmixedmodels"
-"r-jaspregression"
-"r-jaspfrequencies"
-"r-jaspfactor"
-
-#jaspExtra
-"r-jaspaudit"
-"r-jaspbain"
-"r-jaspbsts"
-"r-jaspcircular"
-"r-jaspcochrane"
-"r-jaspdistributions"
-"r-jaspequivalencettests"
-"r-jaspjags"
-"r-jasplearnbayes"
-"r-jaspmachinelearning"
-"r-jaspmetaanalysis"
-"r-jaspnetwork"
-"r-jasppower"
-"r-jaspprocess"
-"r-jaspprophet"
-"r-jaspreliability"
-"r-jasprobustttests"
-"r-jaspsem"
-"r-jaspsummarystatistics"
-"r-jaspsurvival"
-"r-jasptimeseries"
-"r-jaspvisualmodeling"
-"r-jaspacceptancesampling"
-"r-jaspqualitycontrol"
+makedepends=(
+  'git' 'cmake' 'ninja' 'gcc' 'gcc-fortran' 'make' 'pkgconf' 'patchelf' 'autoconf' 'automake'
+  'libtool' 'bison' 'flex' 'gettext' 'blas' 'lapack' 'ccache'
 )
-provides=($_pkgname)
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/jasp-stats/jasp-desktop/archive/refs/tags/v${pkgver}.tar.gz"
-'jasp.sh'
+
+optdepends=('v8: necessary for jaspProcess support, but there is no maintained PKGBUILD anymore so you are on you own here.')
+
+source=(
+  "git+https://github.com/jasp-stats/jasp-desktop.git#tag=v${pkgver}"
+  "org.jaspstats.JASP.desktop"
 )
-sha256sums=('d5a00fb1cbb3bda9b7017cd1a1436267d56bb9f58ff376936b544479b8bbfa92'
-            'e0714d980e7549b4c7dcbae50370e95b6ad2e7f0cf21a534ceb3a5a83ee583fd')
 
-prepare(){
-    cd $srcdir/${pkgname}-${pkgver}
+sha256sums=('SKIP'
+            '6415669f39de6484ce9a6a368caf69bb1db13b2e0e0388a15243bb09484f0d37')
 
-    find Tools/CMake -name *.cmake -print0 | xargs -0 sed -i "s|/usr/local|/usr|g"
-    sed -i "s|lib='\${R_LIBRARY_PATH}'|lib='${srcdir}/usr/lib/R'|g"  Tools/CMake/R.cmake
+_jasp_prefix="/opt/jasp-desktop"
 
-    # Do NOT install modules here, they are listed in dependencies
-    find Modules/ -name '*.in' -print0 | xargs -0 sed -i '1,$d;1a print("I am OK!")'
+prepare() {
+  cd "${srcdir}/jasp-desktop"
+  git submodule sync --recursive
+  git submodule update --init --recursive --jobs "$(nproc)"
+  # Prefer system RInside (r-rinside); fall back to renv-installed copy
+  sed -i 's|find_package_path(RINSIDE_PATH.*|if(EXISTS "/usr/lib/R/library/RInside")\n    set(RINSIDE_PATH "/usr/lib/R/library/RInside")\n  else()\n    find_package_path(RINSIDE_PATH ${R_CPP_INCLUDES_LIBRARY} "RInside")\n  endif()|' Tools/CMake/R.cmake
+  # System r-rinside ships libRInside.so, not .a
+  sed -i 's|NAMES "libRInside.a"|NAMES "libRInside.a" "libRInside.so"|' Tools/CMake/R.cmake
+  
+  # Fix Boost 1.90 compatibility
+  sed -i 's|find_package(Boost 1\.78 REQUIRED COMPONENTS system)|find_package(Boost 1.90 CONFIG REQUIRED COMPONENTS filesystem)|' Tools/CMake/Libraries.cmake
 }
 
+build() {
+  export GITHUB_PAT=dummy
+  mkdir -p ~/.R && echo "CXXFLAGS += -Wno-template-body" >> ~/.R/Makevars
+  export CMAKE_C_COMPILER_LAUNCHER=ccache
+  export CMAKE_CXX_COMPILER_LAUNCHER=ccache
+  export CMAKE_Fortran_COMPILER_LAUNCHER=ccache
 
-build(){
-    cd $srcdir/${pkgname}-${pkgver}
-    # this makes non-sense, but we need it.
-    export GITHUB_PAT="None"
+  export CFLAGS="${CFLAGS} -fPIC"
+  export CXXFLAGS="${CXXFLAGS} -fPIC -Wno-template-body"
+  export FCFLAGS="${FCFLAGS} -fPIC"
+  export FFLAGS="${FFLAGS} -fPIC"
 
-    mkdir -p ${srcdir}/usr/lib/R
-    cmake -S . -B build -DCUSTOM_R_PATH=/usr/lib/R -DLINUX_LOCAL_BUILD=OFF -DINSTALL_R_MODULES=OFF \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr/lib/${pkgname} -DCMAKE_INSTALL_LIBDIR=lib \
-        -GNinja
+  cd "${srcdir}/jasp-desktop" || return
+  rm -rf "${srcdir}/build"
 
-        # -DBUILD_TESTS=ON does not work on linux.
-    cd build
-    ninja
+  cmake -S . -B "${srcdir}/build" -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBoost_DEBUG=ON \
+    -DCMAKE_INSTALL_PREFIX="${_jasp_prefix}" \
+    -DLINUX_LOCAL_BUILD=ON \
+    -Wno-dev
+
+  ninja -C "${srcdir}/build"
+
+  mkdir -p "${srcdir}/build/Modules"/{binary_pkgs,manifests,module_libs,Tools}
+
+  cd "${srcdir}/jasp-desktop/Tools" || return
+  Rscript buildAllDefaultJaspModules.R
 }
 
 package() {
-    cd $srcdir/${pkgname}-${pkgver}/build
-    DESTDIR=${pkgdir} ninja -C . install
-    install -Dm755 $srcdir/jasp.sh ${pkgdir}/usr/bin/jasp
+  cd "${srcdir}"
+  DESTDIR="${pkgdir}" ninja -C "${srcdir}/build" install
 
-    cd ${pkgdir}/usr/lib/${pkgname}
-    mv share ${pkgdir}/usr
-    mv Resources ${pkgdir}/usr/share/${pkgname}
-    ln -s /usr/share/${pkgname} ${pkgdir}/usr/lib/${pkgname}/Resources
+  install -d "${pkgdir}${_jasp_prefix}/Modules"
+  cp -a "${srcdir}/jasp-desktop/Tools/ModuleBundleBuildDir/Modules/." \
+    "${pkgdir}${_jasp_prefix}/Modules/"
 
-    rm -rf lib64
-    rm -rf Modules/{renv-cache,*.log}
+  if [[ -d "${srcdir}/build/R/library" ]]; then
+    install -d "${pkgdir}${_jasp_prefix}/R/library"
+    cp -a "${srcdir}/build/R/library/." "${pkgdir}${_jasp_prefix}/R/library/"
+  fi
 
+  if [[ -d "${pkgdir}${_jasp_prefix}/share/icons/hicolor" ]]; then
+    install -d "${pkgdir}/usr/share/icons/hicolor"
+    cp -a "${pkgdir}${_jasp_prefix}/share/icons/hicolor/." "${pkgdir}/usr/share/icons/hicolor/"
+  fi
 
-    # fix RPATH
-    patchelf --add-rpath /usr/lib/R/library/RInside/lib/ \
-        ${pkgdir}/usr/lib/jasp-desktop/bin/JASPEngine
-    sed -i "s|^Exec.*|Exec=jasp %f|g" \
-        ${pkgdir}/usr/share/applications/org.jaspstats.JASP.desktop
+  install -Dm644 "${srcdir}/org.jaspstats.JASP.desktop" \
+    "${pkgdir}/usr/share/applications/org.jaspstats.JASP.desktop"
 
-    rm -rf ${pkgdir}/usr/lib/jasp-desktop/{renv-root,renv-cache,bin/org.jaspstats.JASP}
+  install -d "${pkgdir}/usr/share/licenses/${pkgname}"
+  cd "${srcdir}/jasp-desktop"
+  find . -name 'LICENSE*' -type f -exec install -m644 '{}' \
+    "${pkgdir}/usr/share/licenses/${pkgname}/" \;
 }
+
+makedepends+=("boost" "qt6-5compat" "vulkan-headers")
