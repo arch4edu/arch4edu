@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - x86_64/ignition-math-6
+  - x86_64/ruby2.7
   - x86_64/urdfdom
 makedepends:
   - x86_64/ignition-cmake-2
