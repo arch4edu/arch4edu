@@ -1,16 +1,18 @@
 diff --git a/PKGBUILD b/PKGBUILD
 --- a/PKGBUILD
 +++ b/PKGBUILD
-@@ -32,6 +32,8 @@
+@@ -32,6 +32,10 @@
    cd "${srcdir}/jasp-desktop"
    git submodule sync --recursive
    git submodule update --init --recursive --jobs "$(nproc)"
 +  # Prefer system RInside (r-rinside); fall back to renv-installed copy
 +  sed -i 's|find_package_path(RINSIDE_PATH.*|if(EXISTS "/usr/lib/R/library/RInside")\n    set(RINSIDE_PATH "/usr/lib/R/library/RInside")\n  else()\n    find_package_path(RINSIDE_PATH ${R_CPP_INCLUDES_LIBRARY} "RInside")\n  endif()|' Tools/CMake/R.cmake
++  # System r-rinside ships libRInside.so, not .a
++  sed -i 's|NAMES "libRInside.a"|NAMES "libRInside.a" "libRInside.so"|' Tools/CMake/R.cmake
    
    # Fix Boost 1.90 compatibility
    sed -i 's|find_package(Boost 1\.78 REQUIRED COMPONENTS system)|find_package(Boost 1.90 CONFIG REQUIRED COMPONENTS filesystem)|' Tools/CMake/Libraries.cmake
-@@ -40,9 +42,11 @@
+@@ -40,9 +44,11 @@
  build() {
 +  export GITHUB_PAT=dummy
 +  mkdir -p ~/.R && echo "CXXFLAGS += -Wno-template-body" >> ~/.R/Makevars
