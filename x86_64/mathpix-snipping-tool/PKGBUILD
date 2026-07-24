@@ -2,7 +2,7 @@
 # Contributor: HRKo <ootaharuki99 at gmail.com>
 pkgname=mathpix-snipping-tool
 pkgver=03.00.0138
-pkgrel=1
+pkgrel=2
 pkgdesc="Mathpix Snipping Tool"
 arch=('x86_64')
 url="https://mathpix.com/"
