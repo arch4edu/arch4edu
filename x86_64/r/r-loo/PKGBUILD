@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=loo
-_pkgver=2.10.0
+_pkgver=2.10.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,8 +30,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('bdebd9463f6bc87897d8f38bc724993d')
-b2sums=('10ac7edef37ed737d435de1ab86300c10f6676aae450bdb8b78a465434753bb147af6948564f007d82525f8f6e140fa584f3eb3f4c0a36dcf3909fa6dbca7105')
+md5sums=('6c0b2fb996c29a509f96c983e34fefe9')
+b2sums=('397574f6cc5349c9884a504bb04f0eea09ed5fd677e00332fbfcdbf4e273378ddecc9e570001c975250249aa4fbffe2d728a65834c889057f63dbd990a5aa630')
 
 build() {
   mkdir build
