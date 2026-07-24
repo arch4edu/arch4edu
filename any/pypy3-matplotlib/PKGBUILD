@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 _base=matplotlib
 pkgname=pypy3-${_base}
-pkgver=3.11.0
+pkgver=3.11.1
 pkgrel=1
 pkgdesc="A fast implementation of the Cassowary constraint solver"
 arch=(x86_64)
@@ -13,7 +13,7 @@ depends=(gcc-libs glibc freetype2 pypy3-contourpy pypy3-cycler
 makedepends=(git meson-pypy3 pypy3-build pypy3-installer pypy3-setuptools-scm pypy3-pybind11)
 source=(${_base}-${pkgver}::git+https://github.com/${_base}/${_base}.git?signed#tag=v${pkgver})
 validpgpkeys=('EB8322187FD451192E430A7279B3FEC456F12599') # Kyle Sunden (Git) <git@ksunden.space>
-sha512sums=('ea5fca833cfbc6dd1611be7a1deeb5888481be8ad3ce5feff62728ab0778b3193ba9c890dcc113429a0b36ed27395de32bf1c2596aa2e287b2cf19568b2edca9')
+sha512sums=('cea4cd789daaea1cc45e500bc2422b6ae1edf7590137e286a994871ac782f288978e1f87b8d6ce7c936d8cff10f1054f32c38891dcf1a09fd878c4322f5b9c37')
 
 prepare() {
   cd ${_base}-${pkgver}
