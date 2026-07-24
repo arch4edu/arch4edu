@@ -14,4 +14,5 @@ makepkg_args: --nocheck --skipinteg
 pre_build: |
   aur-pre-build
   sed -i '/certs.patch/d' PKGBUILD
+  sed -i '/^source=(/s/$/)/' PKGBUILD
 post_build: aur-post-build
