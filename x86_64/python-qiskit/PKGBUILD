@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit
 pkgname=python-${_pkgname}
-pkgver=2.5.0
+pkgver=2.5.1
 pkgrel=1
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
@@ -52,17 +52,8 @@ checkdepends=(
     python-stestr
 )
 provides=(libqiskit.so)
-source=(
-    $_pkgname::git+https://github.com/Qiskit/$_pkgname#tag=$pkgver
-    fix-c-build.patch::https://patch-diff.githubusercontent.com/raw/Qiskit/qiskit/pull/16556.patch
-)
-b2sums=('a4ddddc69e5f9d865f8c63bc8321ea0d6812cd035a2bccb55240adfa11c119cefdb768181a4096d5375b3e292d6ee1c2b1f14f6cedb6e60ac0666e0b040bfd23'
-        'e8adb5acfcf2bad9a55b71f3c70440443309a2887157e636d0bdb28d1ec83a8d04c5a24bedab6500e6fc487fe20a09bb0d438ed5f86c1659d320e092b45ace03')
-
-prepare() {
-    # https://github.com/Qiskit/qiskit/issues/16555
-    patch -Np1 -d $_pkgname < fix-c-build.patch
-}
+source=($_pkgname::git+https://github.com/Qiskit/$_pkgname#tag=$pkgver)
+b2sums=('29a5ebb8d4f453786191b112d278e0198516f1ec906ec04c22d86459e31db85c97d88948131b848e1d5536d96544b3872b039bf419bce329526a9d0a98a9f1d5')
 
 build() {
     cd $_pkgname
