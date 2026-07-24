@@ -1,1 +1,11 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+makepkg_args: --skipinteg
+pre_build: |
+  aur-pre-build
+  sed -i '/\.\/configure/i\  sed -i '\''s/char \*strerror()/char *strerror(int)/'\'' error.c' PKGBUILD
+  sed -i '/\.\/configure/i\  sed -i '\''s/void (\\*func) ();/void (*func) (VALUE);/'\'' eval_jump.c' PKGBUILD
+  sed -i 's/_FORTIFY_SOURCE=2}"/_FORTIFY_SOURCE=2} -Wno-incompatible-pointer-types -std=gnu11"/' PKGBUILD
+post_build: aur-post-build
