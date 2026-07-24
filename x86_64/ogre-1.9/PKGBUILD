@@ -4,7 +4,7 @@
 pkgbase=ogre-1.9
 pkgname=('ogre-1.9' 'ogre-docs-1.9')
 pkgver=1.9.1
-pkgrel=13
+pkgrel=14
 pkgdesc='Scene-oriented, flexible 3D engine written in C++'
 arch=('x86_64')
 url='https://www.ogre3d.org'
@@ -26,6 +26,7 @@ prepare() {
   cd "${srcdir}/ogre-${pkgver}"
   patch -l --strip=1 < "${srcdir}/sample-comparison-operator-const-args.patch"
   patch -l --strip=1 < "${srcdir}/sample-comparison-operator-const-callable.patch"
+  patch -Np1 < "${startdir}/allocator-void-const-pointer.patch"
 
   mkdir -p "${srcdir}/ogre-${pkgver}/build"
 }
@@ -33,7 +34,7 @@ prepare() {
 build() {
   cd "${srcdir}/ogre-${pkgver}/build"
 
-  cmake .. \
+  cmake .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DOGRE_BUILD_DEPENDENCIES=FALSE \
     -DCMAKE_BUILD_TYPE=Release \
