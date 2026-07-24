@@ -4,5 +4,8 @@ nvchecker:
 makedepends:
   - x86_64/ignition-cmake-2
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  git checkout HEAD -- cmake-policy.patch
+  patch -Np1 < cmake-policy.patch
 post_build: aur-post-build

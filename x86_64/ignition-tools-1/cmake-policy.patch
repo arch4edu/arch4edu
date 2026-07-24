@@ -1,0 +1,13 @@
+diff --git a/PKGBUILD b/PKGBUILD
+index 9ab9ade..5d31e9e 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -23,7 +23,7 @@ build() {
+   mkdir -p build
+   cd build
+ 
+-  cmake .. -DCMAKE_BUILD_TYPE="Release" \
++  cmake .. -DCMAKE_BUILD_TYPE="Release" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+            -DCMAKE_INSTALL_PREFIX="/usr" \
+            -DCMAKE_INSTALL_LIBDIR="lib"
+ 
