@@ -45,6 +45,6 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add makedepends boost qt6-5compat vulkan-headers
-  git checkout HEAD -- gcc16-compat.patch
-  patch -Np1 < gcc16-compat.patch
+  git checkout HEAD -- gcc16-rinside-compat.patch
+  patch -Np1 < gcc16-rinside-compat.patch
 post_build: aur-post-build
