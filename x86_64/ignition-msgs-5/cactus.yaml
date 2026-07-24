@@ -15,5 +15,12 @@ build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
+  git checkout HEAD -- protobuf-stringview.patch
   echo 'export LDFLAGS="-Wl,--copy-dt-needed-entries"' >> PKGBUILD
+  cat >> PKGBUILD << 'PREPARE'
+  prepare() {
+    cd "${srcdir}/${_dir}"
+    patch -Np1 < "$startdir/protobuf-stringview.patch"
+  }
+  PREPARE
 post_build: aur-post-build
