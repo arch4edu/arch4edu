@@ -7,5 +7,9 @@ depends:
 makedepends:
   - x86_64/cmake3
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  git checkout HEAD -- allocator-void-const-pointer.patch
+  sed -i '/patch -l --strip=1.*const-callable.patch/a\  patch -Np1 < "${startdir}/allocator-void-const-pointer.patch"' PKGBUILD
+  sed -i 's|cmake \.\. \\|cmake .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\|' PKGBUILD
 post_build: aur-post-build

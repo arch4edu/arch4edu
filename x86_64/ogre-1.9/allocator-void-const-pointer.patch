@@ -1,0 +1,11 @@
+diff --git a/OgreMain/include/OgreMemorySTLAllocator.h b/OgreMain/include/OgreMemorySTLAllocator.h
+--- a/OgreMain/include/OgreMemorySTLAllocator.h
++++ b/OgreMain/include/OgreMemorySTLAllocator.h
+@@ -123,7 +123,7 @@
+ 		/// memory allocation (elements, used by STL)
+ 		inline pointer allocate( size_type count,
+-			typename std::allocator<void>::const_pointer ptr = 0 )
++			const void* ptr = 0 )
+ 		{
+                         (void)ptr;
+ 			// convert request to bytes
