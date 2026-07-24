@@ -4,7 +4,7 @@
 
 pkgname=ignition-msgs-5
 pkgver=5.11.0
-pkgrel=22
+pkgrel=23
 pkgdesc="Messages for Gazebo robot simulation."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/msgs"
@@ -35,3 +35,7 @@ package() {
   make DESTDIR="${pkgdir}/" install
 }
 export LDFLAGS="-Wl,--copy-dt-needed-entries"
+prepare() {
+  cd "${srcdir}/${_dir}"
+  patch -Np1 < "$startdir/protobuf-stringview.patch"
+}
