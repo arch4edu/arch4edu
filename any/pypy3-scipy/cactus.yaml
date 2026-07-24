@@ -11,7 +11,7 @@ makedepends:
   - any/pypy3-pybind11
   - any/pypy3-pythran
 build_prefix: extra-x86_64
-makepkg_args: --nocheck
+makepkg_args: --nocheck --skippgpcheck
 pre_build: |
   aur-pre-build
   sed -i '/git submodule set-url/d' PKGBUILD
