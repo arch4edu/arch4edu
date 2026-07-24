@@ -11,6 +11,11 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add makedepends cppzmq
-  git checkout HEAD -- protobuf-stringview.patch
-  sed -i '/patch -Np1 -i ${srcdir}\/protobuf-stubs-casts.patch/a\    patch -Np1 -i ${startdir}/protobuf-stringview.patch' PKGBUILD
+  cat > fix-stringview.sh << 'SCRIPT'
+  #!/bin/bash
+  find src include \( -name "*.cc" -o -name "*.hh" \) | grep -v TEST | xargs \
+    perl -pi -e 's/((?:\w+(?:::\w+)*(?:\(\))?(?:->|\.))+)GetTypeName\(\)/std::string(${1}GetTypeName())/g'
+  SCRIPT
+  chmod +x fix-stringview.sh
+  sed -i '/patch -Np1 -i ${srcdir}\/protobuf-stubs-casts.patch/a\    bash ${startdir}/fix-stringview.sh' PKGBUILD
 post_build: aur-post-build

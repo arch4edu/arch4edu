@@ -17,8 +17,8 @@ diff --color -Naur gz-transport-ignition-transport8_8.4.0/include/gz/transport/R
 -#if GOOGLE_PROTOBUF_VERSION > 2999999
 +#if GOOGLE_PROTOBUF_VERSION >= 4022000
 +        auto msgReq =
-+          google::protobuf::internal::DownCast<const Req*>(&_msgReq);
-+        auto msgRep = google::protobuf::internal::DownCast<Rep*>(&_msgRep);
++          static_cast<const Req*>(&_msgReq);
++        auto msgRep = static_cast<Rep*>(&_msgRep);
 +#elif GOOGLE_PROTOBUF_VERSION > 2999999
          auto msgReq = google::protobuf::down_cast<const Req*>(&_msgReq);
          auto msgRep = google::protobuf::down_cast<Rep*>(&_msgRep);
@@ -41,7 +41,7 @@ diff --color -Naur gz-transport-ignition-transport8_8.4.0/include/gz/transport/S
 
 -#if GOOGLE_PROTOBUF_VERSION >= 3000000
 +#if GOOGLE_PROTOBUF_VERSION >= 4022000
-+        auto msgPtr = google::protobuf::internal::DownCast<const T*>(&_msg);
++        auto msgPtr = static_cast<const T*>(&_msg);
 +#elif GOOGLE_PROTOBUF_VERSION >= 3000000
          auto msgPtr = google::protobuf::down_cast<const T*>(&_msg);
  #else
