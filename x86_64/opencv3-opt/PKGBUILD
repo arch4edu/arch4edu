@@ -5,7 +5,7 @@
 pkgbase=opencv3-opt
 pkgname=("$pkgbase" "$pkgbase"-samples)
 pkgver=3.4.20
-pkgrel=2
+pkgrel=3
 pkgdesc="Open Source Computer Vision Library (Legacy Version & /opt directory version)"
 arch=(x86_64)
 license=(BSD)
@@ -45,7 +45,8 @@ prepare() {
 build() {
   cd build
   # cmake's FindLAPACK doesn't add cblas to LAPACK_LIBRARIES, so we need to specify them manually
-  cmake ../opencv-$pkgver \
+  sed -i 's/cmake_minimum_required(VERSION 2.8.12.2)/cmake_minimum_required(VERSION 3.5)/' ../opencv-$pkgver/cmake/OpenCVGenPkgconfig.cmake
+  cmake ../opencv-$pkgver -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_CXX_STANDARD=17 \
     -DWITH_OPENCL=ON \
     -DWITH_OPENGL=ON \
     -DWITH_TBB=ON \
