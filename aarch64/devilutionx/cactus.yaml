@@ -2,7 +2,7 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/simpleini
+  - aarch64/simpleini
 makedepends:
   - aarch64/devilutionx-graphics-tools-git
   - aarch64/smpq
