@@ -1,0 +1,9 @@
+nvchecker:
+  - source: archpkg
+    archpkg: jellyfin-ffmpeg
+depends:
+  - aarch64/svt-av1
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: abs-pre-build
+post_build: abs-post-build
