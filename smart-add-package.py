@@ -81,6 +81,48 @@ def load_pacman_and_provides(arch):
     logger.info('Read %d packages and %d provides from sync db', len(packages), len(provides))
     return packages, provides
 
+def read_pkg_info_from_db(arch, pkgname):
+    """Read depends/makedepends/checkdepends for a package from the pacman sync db."""
+    info = {'Name': pkgname, 'PackageBase': pkgname, '_source': 'archpkg'}
+    for repo in ['core', 'extra']:
+        db_file = Path(f'.pacman/{arch}/sync/{repo}.db')
+        if not db_file.is_file():
+            continue
+        try:
+            with tarfile.open(db_file, 'r:gz') as tar:
+                for member in tar.getmembers():
+                    if not member.name.endswith('/desc'):
+                        continue
+                    # desc path format: <pkgname>-<version>/desc
+                    entry_name = member.name.split('/')[0]
+                    entry_pkgname = entry_name.rsplit('-', 2)[0] if entry_name.count('-') >= 2 else entry_name
+                    if entry_pkgname != pkgname:
+                        continue
+                    f = tar.extractfile(member)
+                    if not f:
+                        continue
+                    try:
+                        content = f.read().decode('utf-8', errors='ignore')
+                        for field, key in [('%DEPENDS%', 'Depends'), ('%MAKEDEPENDS%', 'MakeDepends'), ('%CHECKDEPENDS%', 'CheckDepends')]:
+                            deps = []
+                            in_section = False
+                            for line in content.splitlines():
+                                if line.strip() == field:
+                                    in_section = True
+                                    continue
+                                if in_section:
+                                    if line.startswith('%'):
+                                        break
+                                    if line.strip():
+                                        deps.append(line.strip())
+                            info[key] = deps
+                        return info
+                    finally:
+                        f.close()
+        except Exception:
+            continue
+    return None
+
 def read_aur_info(packages):
     logger.info('Reading AUR package information for %s', packages)
     AUR_URL = 'https://aur.archlinux.org/rpc/'
@@ -134,6 +176,15 @@ if __name__ == '__main__':
     template = args.template
 
     pacman_db, provides = load_pacman_and_provides(query_arch)
+    # For aarch64, also load x86_64 db to detect packages that exist in x86_64
+    # official repos but not in aarch64 repos (archpkg fallback).
+    # Merge x86_64 provides so .so soname deps resolve correctly.
+    x86_64_db = None
+    if arch == 'aarch64':
+        x86_64_db, x86_64_provides = load_pacman_and_provides('x86_64')
+        for k, v in x86_64_provides.items():
+            if k not in provides:
+                provides[k] = v
     pkgbases = load_pkgbases()
     if not args.provides is None:
         for i in args.provides:
@@ -150,13 +201,24 @@ if __name__ == '__main__':
         _unresolved = set()
         for package in unresolved:
             if not package in aur_info:
-                logger.error('Cannot find %s in AUR.', package)
-                for _package, info in resolved.items():
-                    if 'Depends' in info and package in info['Depends']:
-                        logger.error('%s is required by %s', package, _package)
-                    if 'MakeDepends' in info and package in info['MakeDepends']:
-                        logger.error('%s is required by %s', package, _package)
-                sys.exit(1)
+                # archpkg fallback: package not in AUR, but exists in x86_64
+                # official repos and not in the target arch repos
+                if x86_64_db is not None and package in x86_64_db and package not in pacman_db:
+                    pkg_info = read_pkg_info_from_db('x86_64', package)
+                    if pkg_info:
+                        aur_info[package] = pkg_info
+                        logger.info('Found %s in x86_64 official repos (archpkg fallback)', package)
+                    else:
+                        logger.error('Cannot read package info for %s from x86_64 db.', package)
+                        sys.exit(1)
+                else:
+                    logger.error('Cannot find %s in AUR.', package)
+                    for _package, info in resolved.items():
+                        if 'Depends' in info and package in info['Depends']:
+                            logger.error('%s is required by %s', package, _package)
+                        if 'MakeDepends' in info and package in info['MakeDepends']:
+                            logger.error('%s is required by %s', package, _package)
+                    sys.exit(1)
 
             aur_info[package]['Depends'] = [] if not 'Depends' in aur_info[package] else aur_info[package]['Depends']
             aur_info[package]['Depends'] = resolve_deps(aur_info[package]['Depends'], pacman_db, provides)
@@ -189,7 +251,48 @@ if __name__ == '__main__':
         config = pkgbase / 'cactus.yaml'
         config.unlink(missing_ok=True)
 
-        if len(info['Depends']) + len(info['MakeDepends']) + len(info['CheckDepends']) == 0:
+        is_archpkg = info.get('_source') == 'archpkg'
+
+        if is_archpkg:
+            # archpkg: generate standalone cactus.yaml with abs-pre-build/abs-post-build
+            with open(config, 'w') as f:
+                f.write('nvchecker:\n')
+                f.write('  - source: archpkg\n')
+                f.write(f'    archpkg: {info["Name"]}\n')
+                if len(info['Depends']) > 0:
+                    f.write('depends:\n')
+                for i in info['Depends']:
+                    _pkgbase = resolved[i]['PackageBase']
+                    _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
+                    if resolved[i]['PackageBase'] == i:
+                        f.write(f'  - {_pkgbase}\n')
+                    else:
+                        f.write(f'  - {_pkgbase}: {i}\n')
+                if len(info['MakeDepends']) > 0:
+                    f.write('makedepends:\n')
+                for i in info['MakeDepends']:
+                    _pkgbase = resolved[i]['PackageBase']
+                    _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
+                    if resolved[i]['PackageBase'] == i:
+                        f.write(f'  - {_pkgbase}\n')
+                    else:
+                        f.write(f'  - {_pkgbase}: {i}\n')
+                if len(info['CheckDepends']) > 0:
+                    f.write('checkdepends:\n')
+                for i in info['CheckDepends']:
+                    _pkgbase = resolved[i]['PackageBase']
+                    _pkgbase = pkgbases[_pkgbase] if _pkgbase in pkgbases else str(directory / _pkgbase)
+                    if resolved[i]['PackageBase'] == i:
+                        f.write(f'  - {_pkgbase}\n')
+                    else:
+                        f.write(f'  - {_pkgbase}: {i}\n')
+                f.write(f'build_prefix: extra-{arch}\n')
+                f.write('makepkg_args: -A\n')
+                f.write('pre_build: abs-pre-build\n')
+                f.write('post_build: abs-post-build\n')
+            pkgbases[pkgbase.name] = str(pkgbase)
+            logger.info('Added %s (archpkg)', package)
+        elif len(info['Depends']) + len(info['MakeDepends']) + len(info['CheckDepends']) == 0:
             symlink('../' * (len(directory.parents) + 1) + template, config)
             logger.info('Added %s with %s', package, template)
             pkgbases[pkgbase.name] = str(pkgbase)
