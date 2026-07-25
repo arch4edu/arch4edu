@@ -2,7 +2,7 @@
 
 pkgname=python-healpy
 _pyname=${pkgname#python-}
-pkgver=1.19.0
+pkgver=1.20.0
 pkgrel=1
 pkgdesc="Python package to manipulate healpix maps"
 arch=('i686' 'x86_64')
@@ -16,31 +16,32 @@ makedepends=('python-setuptools-scm>=8.0'
 optdepends=('python-healpy-doc: Documentation for healpy')
 checkdepends=('python-pytest')   # requests -> pooch -> scipy
 source=("https://files.pythonhosted.org/packages/source/h/healpy/healpy-${pkgver}.tar.gz")
-md5sums=('e8f084aa64545af7c3efe692de268afc')
+md5sums=('d9f6cf988b96f06fc299fc1270c22d74')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
 }
 
-prepare() {
-    cd ${srcdir}/${_pyname}-${pkgver}
-
-    sed -i -e "/pykg/d" -e "/\"numpy>=2.0.0rc1\"/s/,/\]/" pyproject.toml
-#   sed -i -e "s/import trapz/import trapezoid as trapz/" healpy/sphtfunc.py
-}
+#prepare() {
+#    cd ${srcdir}/${_pyname}-${pkgver}
+#
+#    sed -i -e "/pykg/d" -e "/\"numpy>=2.0.0rc1\"/s/,/\]/" pyproject.toml
+##   sed -i -e "s/import trapz/import trapezoid as trapz/" healpy/sphtfunc.py
+#}
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
-    python -m build --wheel --no-isolation
+    python -m build --wheel --no-isolation --skip-dependency-check
 }
 
 check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
     # skip tests that cost lots of time
-    cp build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}/*-$(get_pyver)-*.so lib/healpy
-    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count #
+#   cp build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}/*-$(get_pyver)-*.so lib/healpy
+    rm -r lib/healpy
+    PYTHONPATH="build/lib.linux-${CARCH}-cpython-$(get_pyver)" pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count #
 #       --deselect=test/test_pixelweights.py::test_pixelweights_local_datapath #|| warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count #
 }
 
