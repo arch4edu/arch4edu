@@ -2,7 +2,9 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - aarch64/qt5-webengine
+  - aarch64/qt5-webchannel
+  - aarch64/qt5-location
 build_prefix: extra-aarch64
+makepkg_args: -A
 pre_build: aur-pre-build
 post_build: aur-post-build
