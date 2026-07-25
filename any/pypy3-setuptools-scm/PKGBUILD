@@ -2,15 +2,15 @@
 _base=setuptools-scm
 pkgname=pypy3-${_base}
 pkgdesc="the blessed package to manage your versions by scm tags"
-pkgver=10.2.0
-pkgrel=2
+pkgver=10.2.1
+pkgrel=1
 arch=(any)
 url="https://github.com/pypa/${_base}"
 license=(MIT)
 depends=(pypy3-packaging pypy3-setuptools)
 makedepends=(pypy3-build pypy3-installer)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${_base}-v${pkgver}.tar.gz)
-sha512sums=('108af06192e718819c006c6a667cb67684586e7818c5311823c2bf2e79c44cbbc53ccdf3c89f5b58342a8a47cdcc34f73490f935a8b4cfecab5d2b49a2e04a43')
+sha512sums=('212acd7b5df2a929ddf4f11b0bcb634a692008d74cf3361b6ebc369d03dc4f9cd9e6213d24500e68a440232d6981007f43a50795ecb9b3b0aa59a6fec4b85103')
 
 build() {
   cd ${_base}-${_base}-v${pkgver}/${_base}
