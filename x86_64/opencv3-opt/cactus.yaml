@@ -6,4 +6,6 @@ pre_build: |
   aur-pre-build
   add makedepends openmpi
   sed -i 's|cmake ../opencv-\$pkgver|cmake ../opencv-$pkgver -DCMAKE_POLICY_VERSION_MINIMUM=3.5|' PKGBUILD
+  sed -i '/cmake \.\.\/opencv/i\  sed -i '\''s/cmake_minimum_required(VERSION 2.8.12.2)/cmake_minimum_required(VERSION 3.5)/'\'' ../opencv-$pkgver/cmake/OpenCVGenPkgconfig.cmake' PKGBUILD
+  sed -i 's|-DCMAKE_POLICY_VERSION_MINIMUM=3.5|-DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_CXX_STANDARD=17|' PKGBUILD
 post_build: aur-post-build
