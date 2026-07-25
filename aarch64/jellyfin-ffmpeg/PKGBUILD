@@ -1,0 +1,150 @@
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: nyanmisaka <nst799610810@gmail.com>
+
+pkgname=jellyfin-ffmpeg
+epoch=1
+pkgver=7.1.4p1
+pkgrel=2
+pkgdesc='Jellyfin fork of ffmpeg'
+arch=(x86_64)
+url='https://github.com/jellyfin/jellyfin-ffmpeg'
+license=(GPL-3.0-only)
+depends=(
+  glibc
+  alsa-lib
+  bzip2
+  fontconfig
+  fribidi
+  gmp
+  gnutls
+  lame
+  libass.so
+  libbluray.so
+  libchromaprint.so
+  libdav1d.so
+  libdrm
+  libfreetype.so
+  libopenmpt.so
+  libplacebo.so
+  libtheora
+  libva.so
+  libva-drm.so
+  libvdpau
+  libvorbisenc.so
+  libvorbis.so
+  libvpx.so
+  libwebp
+  libx11
+  libx264.so
+  libx265.so
+  libxext
+  libxml2
+  libzimg.so
+  ocl-icd
+  onevpl
+  opus
+  shaderc
+  sndio
+  srt
+  svt-av1
+  vulkan-icd-loader
+  xz
+  zlib
+  zvbi
+)
+makedepends=(
+  git
+  nasm
+  clang
+  ffnvcodec-headers
+  amf-headers
+  opencl-headers
+  vulkan-headers
+)
+optdepends=(
+  'intel-media-driver: for Intel VAAPI support (Broadwell and newer)'
+  'intel-media-sdk: for Intel Quick Sync Video'
+  'onevpl-intel-gpu: for Intel Quick Sync Video (Alder Lake and newer)'
+  'intel-compute-runtime: for Intel OpenCL runtime based tonemapping'
+  'libva-intel-driver: for Intel legacy VAAPI support (Comet Lake and older)'
+  'libva-mesa-driver: for AMD VAAPI support'
+  'nvidia-utils: for Nvidia NVDEC/NVENC support'
+  'opencl-amd: for AMD OpenCL runtime based Tonemapping'
+  'vulkan-radeon: for AMD RADV Vulkan support'
+  'vulkan-intel: for Intel ANV Vulkan support'
+)
+options=(!lto)
+source=("$pkgname::git+$url#tag=v${pkgver/p/-}")
+sha512sums=('f77cd5732b7d5dfdfd35c9f0c1d7e2c40b87b2683be5489a12f2f22ad959f52dcd972e326f512f82ea7c481cd0da33599531901aa4c1c5e7af58a9a1d1797b4d')
+b2sums=('52d212de10cc2e78f6de519dc63ff2b9130b4c1650f0c5fa83a165791cc6f4ef7e0487f0bbe2c20ee72615e73271109f59c7ef76348a6c5139ec34a17628bab6')
+
+prepare() {
+  cd "$pkgname"
+
+  # apply jellyfin patches to ffmpeg
+  for i in debian/patches/*.patch; do
+    patch -p1 -i "$i"
+  done
+}
+
+build() {
+  cd "$pkgname"
+
+  ./configure \
+    --prefix="/usr/lib/jellyfin-ffmpeg" \
+    --target-os=linux \
+    --extra-version=Jellyfin \
+    --disable-doc \
+    --disable-ffplay \
+    --disable-ptx-compression \
+    --disable-shared \
+    --disable-libxcb \
+    --disable-sdl2 \
+    --disable-xlib \
+    --enable-gpl \
+    --enable-version3 \
+    --enable-static \
+    --enable-gmp \
+    --enable-gnutls \
+    --enable-chromaprint \
+    --enable-libfontconfig \
+    --enable-libass \
+    --enable-libbluray \
+    --enable-libdrm \
+    --enable-libfreetype \
+    --enable-libfribidi \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libopenmpt \
+    --enable-libtheora \
+    --enable-libvorbis \
+    --enable-libdav1d \
+    --enable-libsvtav1 \
+    --enable-libwebp \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libzvbi \
+    --enable-libzimg \
+    --enable-libshaderc \
+    --enable-libplacebo \
+    --enable-vulkan \
+    --enable-opencl \
+    --enable-vaapi \
+    --enable-amf \
+    --enable-libvpl \
+    --enable-ffnvcodec \
+    --enable-cuda \
+    --enable-cuda-llvm \
+    --enable-cuvid \
+    --enable-nvdec \
+    --enable-nvenc
+
+  make
+}
+
+package() {
+  cd "$pkgname"
+
+  install -vDm755 -t "$pkgdir/usr/lib/$pkgname" ff{mpeg,probe}
+}
