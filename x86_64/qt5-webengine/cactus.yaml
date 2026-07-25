@@ -3,7 +3,7 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any/qt5-webchannel
+  - x86_64/qt5-webchannel
   - x86_64/qt5-location
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
