@@ -1,0 +1,19 @@
+diff --git a/build-logic/basics/src/main/kotlin/gradlebuild/basics/BuildEnvironment.kt b/build-logic/basics/src/main/kotlin/gradlebuild/basics/BuildEnvironment.kt
+--- a/build-logic/basics/src/main/kotlin/gradlebuild/basics/BuildEnvironment.kt	(revision e9251e572c9bd1d01e503a0dfdf43aedaeecdc3f)
++++ b/build-logic/basics/src/main/kotlin/gradlebuild/basics/BuildEnvironment.kt	(date 1698014209745)
+@@ -26,6 +26,7 @@
+ import org.gradle.api.provider.Provider
+ import org.gradle.internal.os.OperatingSystem
+ import org.gradle.kotlin.dsl.*
++import java.util.Objects
+ 
+ 
+ abstract class BuildEnvironmentExtension {
+@@ -78,6 +79,7 @@
+         }
+     }
+     return if (execOutput.result.get().exitValue == 0) execOutput.standardOutput.asText.get().trim()
++    else if (Objects.nonNull(System.getenv("COMMIT_HASH"))) System.getenv("COMMIT_HASH")
+     else "<unknown>" // It's a source distribution, we don't know.
+ }
+ 
