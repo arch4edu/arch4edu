@@ -3,7 +3,7 @@
 # Contributor: KokaKiwi <kokakiwi+aur@kokakiwi.net>
 
 pkgname=ventoy-bin
-pkgver=1.1.16
+pkgver=1.1.17
 pkgrel=1
 pkgdesc="A new bootable USB solution"
 arch=('aarch64' 'i686' 'x86_64')
@@ -37,7 +37,7 @@ source=("https://github.com/ventoy/Ventoy/releases/download/v${pkgver}/${pkgname
         "${pkgname%-bin}-extend-persistent"
         "${pkgname%-bin}.desktop"
         'sanitize.patch')
-sha256sums=('a9ffd7bd5e26df486cafff924b8dbcb6caae20cbe2b179a009fe59ae740c7572'
+sha256sums=('7fb4ed08cef6a6b4d39dd19260d8c80291a78dfdf9af7d461571e23cbbc43805'
             '1ad5d314e02b84127a5a59f3871eb1d28617218cad07cde3eeddcac391473000'
             '0215dbaf2095f5eeb2d40d9731268ed724790565e1dcaad67ffa4af80b5d8330'
             'c3d4463a878a89d96e5f0bc4e1a43e48f27af5965bd4c977567695d7cf91fe5f'
@@ -45,7 +45,7 @@ sha256sums=('a9ffd7bd5e26df486cafff924b8dbcb6caae20cbe2b179a009fe59ae740c7572'
             '51029745da197dded6e007aee3f30f7ea1aa6e898172a6ea176cc2f3a842d0ff'
             '00dec31721a052d5e6c928e3b38b870959bdb42188f34717898d99c0cef950df'
             'ea01c294b772818277a79b055e977550f99313506e874797ed9fe0e7ac7e7d98'
-            '238d91b041c572628ce396a53e072ce30c0fa80ef5263e8915d3549fcfea2fc4')
+            '62aaef42c3c701307fa078deda00d7fb15bd3f67c0c28f101b3fecaf01ba2efa')
 
 prepare() {
   cd "${pkgname%-bin}-$pkgver"
@@ -66,7 +66,7 @@ prepare() {
 
   # Log location
   sed -i 's|log\.txt|/var/log/ventoy.log|g' \
-    WebUI/static/js/languages.js tool/languages.json
+    WebUI/static/js/languages.js tool/languages.json tool/VentoyWorker.sh
   sed -i 's|\./log\.txt|/var/log/ventoy.log|g' \
     Ventoy2Disk.sh tool/{ventoy_lib,VentoyWorker}.sh
 
