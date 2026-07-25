@@ -3,6 +3,7 @@ nvchecker:
     aur:
 depends:
   - aarch64/fuzzylite
+  - aarch64/libsquish
 build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: |
