@@ -4,7 +4,7 @@ _dunever=2.10.0
 _tarver=3.10.0
 _tar="${_tarver}/${pkgname}-${_tarver}.tar.gz"
 pkgver="${_tarver}"
-pkgrel=4
+pkgrel=5
 pkgdesc="An open-source simulator and research code in modern C++"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -46,7 +46,7 @@ build() {
     -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
     -DALLOW_CXXFLAGS_OVERWRITE=ON \
     -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=FALSE \
-    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=TRUE \
     -DENABLE_HEADERCHECK=ON \
     -DDUNE_ENABLE_PYTHONBINDINGS=ON \
     -DDUNE_PYTHON_INSTALL_LOCATION='none' \
