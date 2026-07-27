@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=multcompView
-_pkgver=0.1-11
+_pkgver=0.1-12
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,10 +16,11 @@ depends=(
 optdepends=(
   r-multcomp
   r-pgirmess
+  r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3c0a9b4cf2061837c0000f464f0dca8f')
-b2sums=('5f098010259920183799b91f61ce847e12b0e3cf82c037c6cdd0dc680fb9562dc98119f1d6f5b5bc93c63fc799e63299b2ec453e6dad46d5f24899d30669b360')
+md5sums=('d205a7fd15658c339ffe5eac8481e63d')
+b2sums=('18e3557a98e5ee5c7a16045d4567ee8dd4689ec6a9fd6a1fc85745b40ede51a683c29ff0de9e2975bcd0cc07094077f02cee96be7a952cd94d7bf2af9c92fb9f')
 
 build() {
   mkdir build
