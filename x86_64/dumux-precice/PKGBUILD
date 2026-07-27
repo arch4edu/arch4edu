@@ -2,7 +2,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=dumux-precice
 pkgver=2.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc="DuMuX-preCICE adapter"
 arch=(x86_64)
 url="https://github.com/precice/${pkgname/precice/adapter}"
