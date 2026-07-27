@@ -1,0 +1,526 @@
+diff -ruN a/examples/stand_alone/animated_box/independent_listener.cc b/examples/stand_alone/animated_box/independent_listener.cc
+--- a/examples/stand_alone/animated_box/independent_listener.cc	2026-07-26 02:37:22.866128421 +0800
++++ b/examples/stand_alone/animated_box/independent_listener.cc	2026-07-26 17:49:30.355946133 +0800
+@@ -34,7 +34,7 @@
+   for (int i =0; i < posesStamped->pose_size(); ++i)
+   {
+     const ::gazebo::msgs::Pose &pose = posesStamped->pose(i);
+-    std::string name = pose.name();
++    std::string name = std::string(pose.name());
+     if (name == std::string("box"))
+     {
+       const ::gazebo::msgs::Vector3d &position = pose.position();
+diff -ruN a/examples/stand_alone/animated_box/integrated_main.cc b/examples/stand_alone/animated_box/integrated_main.cc
+--- a/examples/stand_alone/animated_box/integrated_main.cc	2026-07-26 02:37:22.866158031 +0800
++++ b/examples/stand_alone/animated_box/integrated_main.cc	2026-07-26 17:49:30.355839456 +0800
+@@ -37,7 +37,7 @@
+   for (int i =0; i < posesStamped->pose_size(); ++i)
+   {
+     const ::gazebo::msgs::Pose &pose = posesStamped->pose(i);
+-    std::string name = pose.name();
++    std::string name = std::string(pose.name());
+     if (name == std::string("box"))
+     {
+       const ::gazebo::msgs::Vector3d &position = pose.position();
+diff -ruN a/gazebo/rendering/Camera.cc b/gazebo/rendering/Camera.cc
+--- a/gazebo/rendering/Camera.cc	2026-07-26 02:37:22.920223235 +0800
++++ b/gazebo/rendering/Camera.cc	2026-07-26 17:49:30.168405165 +0800
+@@ -488,7 +488,7 @@
+         result = this->AttachToVisualImpl(msg.id(),
+             msg.inherit_orientation(), msg.min_dist(), msg.max_dist());
+       else
+-        result = this->AttachToVisualImpl(msg.name(),
++        result = this->AttachToVisualImpl(std::string(msg.name()),
+             msg.inherit_orientation(), msg.min_dist(), msg.max_dist());
+ 
+       if (result)
+diff -ruN a/gazebo/rendering/COMVisual.cc b/gazebo/rendering/COMVisual.cc
+--- a/gazebo/rendering/COMVisual.cc	2026-07-26 02:37:22.920121445 +0800
++++ b/gazebo/rendering/COMVisual.cc	2026-07-26 17:49:30.170217120 +0800
+@@ -100,7 +100,7 @@
+   dPtr->inertiaPose = msgs::ConvertIgn(_msg->inertial().pose());
+ 
+   dPtr->mass = _msg->inertial().mass();
+-  dPtr->linkName = _msg->name();
++  dPtr->linkName = std::string(_msg->name());
+ 
+   this->Load();
+ }
+diff -ruN a/gazebo/rendering/Heightmap.cc b/gazebo/rendering/Heightmap.cc
+--- a/gazebo/rendering/Heightmap.cc	2026-07-26 02:37:22.921580550 +0800
++++ b/gazebo/rendering/Heightmap.cc	2026-07-26 17:49:30.158405214 +0800
+@@ -501,7 +501,7 @@
+        this->dataPtr->scene->Name(), "heightmap_data");
+ 
+     if (response->response() != "error" &&
+-        response->type() == geomMsg.GetTypeName())
++        response->type() == std::string(geomMsg.GetTypeName()))
+     {
+       geomMsg.ParseFromString(response->serialized_data());
+ 
+diff -ruN a/gazebo/rendering/InertiaVisual.cc b/gazebo/rendering/InertiaVisual.cc
+--- a/gazebo/rendering/InertiaVisual.cc	2026-07-26 02:37:22.921800971 +0800
++++ b/gazebo/rendering/InertiaVisual.cc	2026-07-26 17:49:30.156470037 +0800
+@@ -66,7 +66,7 @@
+   if (!m.EquivalentBox(boxScale, boxRot))
+   {
+     // Invalid inertia, load with default scale
+-    gzlog << "The link " << _msg->name() << " is static or has unrealistic "
++    gzlog << "The link " << std::string(_msg->name()) << " is static or has unrealistic "
+           << "inertia, so the equivalent inertia box will not be shown.\n";
+   }
+   else
+diff -ruN a/gazebo/rendering/Projector.cc b/gazebo/rendering/Projector.cc
+--- a/gazebo/rendering/Projector.cc	2026-07-26 02:37:22.923350719 +0800
++++ b/gazebo/rendering/Projector.cc	2026-07-26 17:49:30.145893986 +0800
+@@ -149,7 +149,7 @@
+   if (_msg.has_fov())
+     fov = _msg.fov();
+ 
+-  this->Load(_msg.name(), pose, textureName, nearClip, farClip, fov);
++  this->Load(std::string(_msg.name()), pose, textureName, nearClip, farClip, fov);
+ }
+ 
+ /////////////////////////////////////////////////
+diff -ruN a/gazebo/rendering/Road2d.cc b/gazebo/rendering/Road2d.cc
+--- a/gazebo/rendering/Road2d.cc	2026-07-26 02:37:22.924345733 +0800
++++ b/gazebo/rendering/Road2d.cc	2026-07-26 17:49:30.140239816 +0800
+@@ -117,7 +117,7 @@
+     this->points.push_back(msgs::ConvertIgn(_msg.point(i)));
+   }
+ 
+-  this->name = _msg.name();
++  this->name = std::string(_msg.name());
+ 
+   /// Create the mesh
+   Ogre::MeshPtr mesh =
+@@ -297,7 +297,7 @@
+           RenderEngine::Instance()->AddResourcePath(matUri);
+       }
+ 
+-      std::string matName = _msg.material().script().name();
++      std::string matName = std::string(_msg.material().script().name());
+ 
+       if (!matName.empty())
+         subMesh->setMaterialName(matName);
+diff -ruN a/gazebo/rendering/Scene.cc b/gazebo/rendering/Scene.cc
+--- a/gazebo/rendering/Scene.cc	2026-07-26 02:37:22.924412032 +0800
++++ b/gazebo/rendering/Scene.cc	2026-07-26 17:49:30.138405314 +0800
+@@ -93,7 +93,7 @@
+     bool operator() (boost::shared_ptr<msgs::Visual const> _i,
+                      boost::shared_ptr<msgs::Visual const> _j)
+     {
+-      return _i->name().size() < _j->name().size();
++      return std::string(_i->name()).size() < std::string(_j->name()).size();
+     }
+ } VisualMessageLessOp;
+ 
+@@ -1599,7 +1599,7 @@
+             std::make_pair(_msg->model(i).id(), _msg->model(i).pose()));
+ 
+       this->dataPtr->poseMsgs[_msg->model(i).id()].set_name(
+-          _msg->model(i).name());
++          std::string(_msg->model(i).name()));
+       this->dataPtr->poseMsgs[_msg->model(i).id()].set_id(_msg->model(i).id());
+ 
+       this->ProcessModelMsg(_msg->model(i));
+@@ -1686,7 +1686,7 @@
+ {
+   std::string modelName, linkName;
+ 
+-  modelName = _msg.name() + "::";
++  modelName = std::string(_msg.name()) + "::";
+   for (int j = 0; j < _msg.visual_size(); ++j)
+   {
+     boost::shared_ptr<msgs::Visual> vm(new msgs::Visual(
+@@ -1702,7 +1702,7 @@
+     if (_msg.has_id())
+       vm->set_id(_msg.id());
+     if (_msg.has_name())
+-      vm->set_name(_msg.name());
++      vm->set_name(std::string(_msg.name()));
+     vm->mutable_scale()->set_x(_msg.scale().x());
+     vm->mutable_scale()->set_y(_msg.scale().y());
+     vm->mutable_scale()->set_z(_msg.scale().z());
+@@ -1725,7 +1725,7 @@
+ 
+   for (int j = 0; j < _msg.link_size(); ++j)
+   {
+-    linkName = modelName + _msg.link(j).name();
++    linkName = modelName + std::string(_msg.link(j).name());
+ 
+     {
+       std::lock_guard<std::recursive_mutex> lock(this->dataPtr->poseMsgMutex);
+@@ -2212,7 +2212,7 @@
+       for (const auto &it : this->dataPtr->visuals)
+       {
+         Road2dPtr road = std::dynamic_pointer_cast<Road2d>(it.second);
+-        if (road && road->Name() == msg->name())
++        if (road && road->Name() == std::string(msg->name()))
+         {
+           addRoad = false;
+           break;
+@@ -2220,7 +2220,7 @@
+       }
+       if (addRoad)
+       {
+-        Road2dPtr road(new Road2d(msg->name(), this->dataPtr->worldVisual));
++        Road2dPtr road(new Road2d(std::string(msg->name()), this->dataPtr->worldVisual));
+         road->Load(*msg);
+         this->dataPtr->visuals[road->GetId()] = road;
+       }
+@@ -2250,7 +2250,7 @@
+        _msg->type() == "ray" || _msg->type() == "gpu_ray") && _msg->visualize()
+       && !_msg->topic().empty())
+   {
+-    std::string rayVisualName = _msg->parent() + "::" + _msg->name();
++    std::string rayVisualName = _msg->parent() + "::" + std::string(_msg->name());
+     if (this->dataPtr->visuals.find(_msg->id()) == this->dataPtr->visuals.end())
+     {
+       VisualPtr parentVis = this->GetVisual(_msg->parent_id());
+@@ -2267,7 +2267,7 @@
+   else if ((_msg->type() == "sonar") && _msg->visualize()
+       && !_msg->topic().empty())
+   {
+-    std::string sonarVisualName = _msg->parent() + "::" + _msg->name();
++    std::string sonarVisualName = _msg->parent() + "::" + std::string(_msg->name());
+     if (this->dataPtr->visuals.find(_msg->id()) == this->dataPtr->visuals.end())
+     {
+       VisualPtr parentVis = this->GetVisual(_msg->parent());
+@@ -2284,7 +2284,7 @@
+   else if ((_msg->type() == "force_torque") && _msg->visualize()
+       && !_msg->topic().empty())
+   {
+-    std::string wrenchVisualName = _msg->parent() + "::" + _msg->name();
++    std::string wrenchVisualName = _msg->parent() + "::" + std::string(_msg->name());
+     if (this->dataPtr->visuals.find(_msg->id()) == this->dataPtr->visuals.end())
+     {
+       if (this->dataPtr->joints.find(_msg->parent()) ==
+@@ -2325,7 +2325,7 @@
+       if (iter == this->dataPtr->visuals.end())
+       {
+         CameraVisualPtr cameraVis(new CameraVisual(
+-              _msg->name()+"_GUIONLY_camera_vis", parentVis));
++              std::string(_msg->name())+"_GUIONLY_camera_vis", parentVis));
+ 
+         // need to call AttachVisual in order for cameraVis to be added to
+         // parentVis' children list so that it can be properly deleted.
+@@ -2348,7 +2348,7 @@
+     if (iter == this->dataPtr->visuals.end())
+     {
+       LogicalCameraVisualPtr cameraVis(new LogicalCameraVisual(
+-            _msg->name()+"_GUIONLY_logical_camera_vis", parentVis));
++            std::string(_msg->name())+"_GUIONLY_logical_camera_vis", parentVis));
+ 
+       // need to call AttachVisual in order for cameraVis to be added to
+       // parentVis' children list so that it can be properly deleted.
+@@ -2368,7 +2368,7 @@
+            !_msg->topic().empty())
+   {
+     ContactVisualPtr contactVis(new ContactVisual(
+-          _msg->name()+"__GUIONLY_CONTACT_VISUAL__",
++          std::string(_msg->name())+"__GUIONLY_CONTACT_VISUAL__",
+           this->dataPtr->worldVisual, _msg->topic()));
+     contactVis->SetId(_msg->id());
+ 
+@@ -2383,7 +2383,7 @@
+       return false;
+ 
+     RFIDTagVisualPtr rfidVis(new RFIDTagVisual(
+-          _msg->name() + "_GUIONLY_rfidtag_vis", parentVis, _msg->topic()));
++          std::string(_msg->name()) + "_GUIONLY_rfidtag_vis", parentVis, _msg->topic()));
+     rfidVis->SetId(_msg->id());
+ 
+     this->dataPtr->visuals[rfidVis->GetId()] = rfidVis;
+@@ -2396,7 +2396,7 @@
+       return false;
+ 
+     RFIDVisualPtr rfidVis(new RFIDVisual(
+-          _msg->name() + "_GUIONLY_rfid_vis", parentVis, _msg->topic()));
++          std::string(_msg->name()) + "_GUIONLY_rfid_vis", parentVis, _msg->topic()));
+     rfidVis->SetId(_msg->id());
+     this->dataPtr->visuals[rfidVis->GetId()] = rfidVis;
+   }
+@@ -2408,7 +2408,7 @@
+       return false;
+ 
+     VisualPtr transmitterVis(new TransmitterVisual(
+-          _msg->name() + "_GUIONLY_transmitter_vis", parentVis, _msg->topic()));
++          std::string(_msg->name()) + "_GUIONLY_transmitter_vis", parentVis, _msg->topic()));
+     this->dataPtr->visuals[transmitterVis->GetId()] = transmitterVis;
+     transmitterVis->Load();
+   }
+@@ -2424,18 +2424,18 @@
+   if (_msg->has_id())
+     linkVis = this->GetVisual(_msg->id());
+   else
+-    linkVis = this->GetVisual(_msg->name());
++    linkVis = this->GetVisual(std::string(_msg->name()));
+ 
+   if (!linkVis)
+   {
+     gzerr << "No link visual with id[" << _msg->id() << "] and name["
+-      << _msg->name() << "]\n";
++      << std::string(_msg->name()) << "]\n";
+     return false;
+   }
+ 
+   for (int i = 0; i < _msg->projector_size(); ++i)
+   {
+-    std::string pname = _msg->name() + "::" + _msg->projector(i).name();
++    std::string pname = std::string(_msg->name()) + "::" + std::string(_msg->projector(i).name());
+ 
+     if (this->dataPtr->projectors.find(pname) ==
+         this->dataPtr->projectors.end())
+@@ -2478,7 +2478,7 @@
+   // childVis->ShowJoints(this->dataPtr->showJoints);
+ 
+   ConstJointPtr msgCopy(_msg);
+-  this->dataPtr->joints[_msg->name()] = msgCopy;
++  this->dataPtr->joints[std::string(_msg->name())] = msgCopy;
+ 
+   return true;
+ }
+@@ -2543,7 +2543,7 @@
+ 
+       std::string *serializedData = response.mutable_serialized_data();
+       lightMsg.SerializeToString(serializedData);
+-      response.set_type(lightMsg.GetTypeName());
++      response.set_type(std::string(lightMsg.GetTypeName()));
+ 
+       response.set_response("success");
+     }
+@@ -2800,7 +2800,7 @@
+     iter = this->dataPtr->visuals.find(_msg->id());
+   else
+   {
+-    VisualPtr vis = this->GetVisual(_msg->name());
++    VisualPtr vis = this->GetVisual(std::string(_msg->name()));
+     iter = vis ? this->dataPtr->visuals.find(vis->GetId()) :
+         this->dataPtr->visuals.end();
+   }
+@@ -2830,7 +2830,7 @@
+     // Collisions need a parent
+     if (!_msg->has_parent_name() && !_msg->has_parent_id())
+     {
+-      gzerr << "Missing parent for collision visual [" << _msg->name() << "]"
++      gzerr << "Missing parent for collision visual [" << std::string(_msg->name()) << "]"
+           << std::endl;
+       return false;
+     }
+@@ -2874,7 +2874,7 @@
+     if (!parent)
+       return false;
+ 
+-    visual.reset(new Visual(_msg->name(), parent));
++    visual.reset(new Visual(std::string(_msg->name()), parent));
+   }
+   else
+   {
+@@ -2883,7 +2883,7 @@
+       return false;
+ 
+     // Add a visual that is attached to the scene root
+-    visual.reset(new Visual(_msg->name(), this->dataPtr->worldVisual));
++    visual.reset(new Visual(std::string(_msg->name()), this->dataPtr->worldVisual));
+   }
+ 
+   if (_msg->has_id())
+@@ -2925,7 +2925,7 @@
+           if (!uri.empty())
+             RenderEngine::Instance()->AddResourcePath(uri);
+         }
+-        std::string matName = scriptMsg.name();
++        std::string matName = std::string(scriptMsg.name());
+         this->dataPtr->terrain->SetMaterial(matName);
+       }
+     }
+@@ -3053,7 +3053,7 @@
+   if (_msg->has_id())
+     light = this->LightById(_msg->id());
+   else
+-    light = this->LightByName(_msg->name());
++    light = this->LightByName(std::string(_msg->name()));
+ 
+   if (!light)
+   {
+@@ -3064,7 +3064,7 @@
+   }
+   else
+   {
+-    gzerr << "Light [" << _msg->name() << "] already exists."
++    gzerr << "Light [" << std::string(_msg->name()) << "] already exists."
+           << " Use topic ~/light/modify to modify it." << std::endl;
+     // we don't want to return false because it keeps the msg in the
+     // list and causes it to be processed again and again.
+@@ -3080,14 +3080,14 @@
+   if (_msg->has_id())
+     light = this->LightById(_msg->id());
+   else
+-    light = this->LightByName(_msg->name());
++    light = this->LightByName(std::string(_msg->name()));
+ 
+   if (!light)
+   {
+     // commented out for now as sometimes physics light messages could arrive
+     // before the rendering light is created, e.g. light pose updates.
+     // See issue #1778
+-    // gzerr << "Light [" << _msg->name() << "] not found."
++    // gzerr << "Light [" << std::string(_msg->name()) << "] not found."
+     //     << " Use topic ~/factory/light to spawn a new light." << std::endl;
+     return false;
+   }
+diff -ruN a/gazebo/rendering/selection_buffer/MaterialSwitcher.cc b/gazebo/rendering/selection_buffer/MaterialSwitcher.cc
+--- a/gazebo/rendering/selection_buffer/MaterialSwitcher.cc	2026-07-26 02:37:22.926966995 +0800
++++ b/gazebo/rendering/selection_buffer/MaterialSwitcher.cc	2026-07-26 17:49:30.173285082 +0800
+@@ -136,7 +136,7 @@
+     // else
+     //    gzerr << "Object is not a SubEntity["
+     //          << _rend->getMaterial()->getName() << "] Type[" <<
+-    //          typeid(*_rend).name() << "]\n";
++    //          std::string(typeid(*_rend).name()) << "]\n";
+   }
+   // else
+   //  gzerr << "Rendering scheme without a Renderable: " << _schemeName
+diff -ruN a/gazebo/rendering/Visual.cc b/gazebo/rendering/Visual.cc
+--- a/gazebo/rendering/Visual.cc	2026-07-26 02:37:22.925307528 +0800
++++ b/gazebo/rendering/Visual.cc	2026-07-26 17:49:30.131738680 +0800
+@@ -3229,7 +3229,7 @@
+       {
+         gzerr << "Wrong message to generate collision visual." << std::endl;
+       }
+-      else if (!this->dataPtr->scene->GetVisual(msg->name()))
++      else if (!this->dataPtr->scene->GetVisual(std::string(msg->name())))
+       {
+         // Set orange transparent material
+         msg->mutable_material()->mutable_script()->add_uri(
+@@ -3240,7 +3240,7 @@
+ 
+         // Create visual
+         VisualPtr visual;
+-        visual.reset(new Visual(msg->name(), shared_from_this()));
++        visual.reset(new Visual(std::string(msg->name()), shared_from_this()));
+ 
+         if (msg->has_id())
+           visual->SetId(msg->id());
+@@ -3343,7 +3343,7 @@
+         continue;
+       }
+ 
+-      std::string jointVisName = msg->name() + "_JOINT_VISUAL__";
++      std::string jointVisName = std::string(msg->name()) + "_JOINT_VISUAL__";
+       if (!this->dataPtr->scene->GetVisual(jointVisName))
+       {
+         JointVisualPtr jointVis(new JointVisual(jointVisName,
+@@ -3478,9 +3478,9 @@
+   for (int i = 0; i < _pose.pose_size(); i++)
+   {
+     const msgs::Pose& bonePose = _pose.pose(i);
+-    if (!this->dataPtr->skeleton->hasBone(bonePose.name()))
++    if (!this->dataPtr->skeleton->hasBone(std::string(bonePose.name())))
+       continue;
+-    Ogre::Bone *bone = this->dataPtr->skeleton->getBone(bonePose.name());
++    Ogre::Bone *bone = this->dataPtr->skeleton->getBone(std::string(bonePose.name()));
+     Ogre::Vector3 p(bonePose.position().x(),
+                     bonePose.position().y(),
+                     bonePose.position().z());
+@@ -3746,9 +3746,9 @@
+           _msg.script().uri(i));
+     }
+     if (_msg.script().has_name() &&
+-        !_msg.script().name().empty())
++        !std::string(_msg.script().name()).empty())
+     {
+-      this->SetMaterial(_msg.script().name());
++      this->SetMaterial(std::string(_msg.script().name()));
+     }
+   }
+ 
+@@ -3822,9 +3822,9 @@
+       RenderEngine::Instance()->AddResourcePath(
+           _msg.script().uri(i));
+     }
+-    if (!_msg.script().name().empty())
++    if (!std::string(_msg.script().name()).empty())
+     {
+-      this->SetMaterial(_msg.script().name());
++      this->SetMaterial(std::string(_msg.script().name()));
+     }
+   }
+ 
+diff -ruN a/plugins/events/RegionEventBoxPlugin.cc b/plugins/events/RegionEventBoxPlugin.cc
+--- a/plugins/events/RegionEventBoxPlugin.cc	2026-07-26 02:37:23.003192570 +0800
++++ b/plugins/events/RegionEventBoxPlugin.cc	2026-07-26 17:49:30.091264102 +0800
+@@ -92,7 +92,7 @@
+ void RegionEventBoxPlugin::OnModelMsg(ConstModelPtr &_msg)
+ {
+   std::lock_guard<std::mutex> lock(this->receiveMutex);
+-  if (_msg->has_name() && _msg->name() == this->modelName && _msg->has_scale())
++  if (_msg->has_name() && std::string(_msg->name()) == this->modelName && _msg->has_scale())
+   {
+     this->boxScale = msgs::ConvertIgn(_msg->scale());
+     this->hasStaleSizeAndPose = true;
+diff -ruN a/plugins/events/SimEventsPlugin.cc b/plugins/events/SimEventsPlugin.cc
+--- a/plugins/events/SimEventsPlugin.cc	2026-07-26 02:37:23.003294795 +0800
++++ b/plugins/events/SimEventsPlugin.cc	2026-07-26 17:49:30.090855406 +0800
+@@ -29,7 +29,7 @@
+ ////////////////////////////////////////////////////////////////////////////////
+ void SimEventsPlugin::OnModelInfo(ConstModelPtr &_msg)
+ {
+-  std::string modelName = _msg->name();
++  std::string modelName = std::string(_msg->name());
+   // only if the model is not already in the set...
+   if (models.insert(modelName).second)
+   {
+diff -ruN a/plugins/LedPlugin.cc b/plugins/LedPlugin.cc
+--- a/plugins/LedPlugin.cc	2026-07-26 02:37:23.000405188 +0800
++++ b/plugins/LedPlugin.cc	2026-07-26 17:49:30.073611284 +0800
+@@ -80,7 +80,7 @@
+   this->Link()->FillMsg(msg);
+   for (auto visualMsg : msg.visual())
+   {
+-    if (visualMsg.name()
++    if (std::string(visualMsg.name())
+       == this->Link()->GetScopedName() + "::" + this->Name())
+     {
+       if (visualMsg.has_transparency())
+diff -ruN a/plugins/rest_web/RestWebPlugin.cc b/plugins/rest_web/RestWebPlugin.cc
+--- a/plugins/rest_web/RestWebPlugin.cc	2026-07-26 02:37:23.003764472 +0800
++++ b/plugins/rest_web/RestWebPlugin.cc	2026-07-26 17:49:30.088801807 +0800
+@@ -127,7 +127,7 @@
+     // where to post the data on the REST server
+     std::string route = "/events/new";
+     std::string eType = _msg->type();
+-    std::string name = _msg->name();
++    std::string name = std::string(_msg->name());
+     std::string data = _msg->data();
+ 
+     msgs::WorldStatistics ws = _msg->world_statistics();
+diff -ruN a/plugins/SimpleTrackedVehiclePlugin_TEST.cc b/plugins/SimpleTrackedVehiclePlugin_TEST.cc
+--- a/plugins/SimpleTrackedVehiclePlugin_TEST.cc	2026-07-26 02:37:23.001650149 +0800
++++ b/plugins/SimpleTrackedVehiclePlugin_TEST.cc	2026-07-26 17:49:30.068127961 +0800
+@@ -126,8 +126,8 @@
+   auto joint = _model.add_joint();
+   joint->set_name(_name + "_j");
+   joint->set_type(msgs::Joint_Type::Joint_Type_FIXED);
+-  joint->set_parent(_body->name());
+-  joint->set_child(link->name());
++  joint->set_parent(std::string(_body->name()));
++  joint->set_child(std::string(link->name()));
+ 
+   return link;
+ }
+diff -ruN a/plugins/WheelTrackedVehiclePlugin_TEST.cc b/plugins/WheelTrackedVehiclePlugin_TEST.cc
+--- a/plugins/WheelTrackedVehiclePlugin_TEST.cc	2026-07-26 02:37:23.002630301 +0800
++++ b/plugins/WheelTrackedVehiclePlugin_TEST.cc	2026-07-26 17:49:30.062551581 +0800
+@@ -98,8 +98,8 @@
+   joint->mutable_pose()->mutable_position()->set_x(_x);
+   joint->mutable_pose()->mutable_position()->set_y(_y);
+   joint->mutable_axis1()->mutable_xyz()->set_y(1.);
+-  joint->set_parent(_body->name());
+-  joint->set_child(link->name());
++  joint->set_parent(std::string(_body->name()));
++  joint->set_child(std::string(link->name()));
+ }
+ 
+ /// \brief Test that reading parameters from the &lt;plugin&gt; tag works.

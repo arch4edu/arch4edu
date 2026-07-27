@@ -1,0 +1,1096 @@
+diff -ruN a/gazebo/gui/ConfigWidget.cc b/gazebo/gui/ConfigWidget.cc
+--- a/gazebo/gui/ConfigWidget.cc	2026-07-26 02:37:22.876623842 +0800
++++ b/gazebo/gui/ConfigWidget.cc	2026-07-26 17:49:30.277465416 +0800
+@@ -595,7 +595,7 @@
+     if (!ref)
+       return NULL;
+ 
+-    std::string name = field->name();
++    std::string name = std::string(field->name());
+ 
+     // Parse each field in the message
+     // TODO parse repeated fields
+@@ -731,7 +731,7 @@
+               ref->MutableMessage(_msg, field);
+ 
+           // parse and create custom geometry widgets
+-          if (field->message_type()->name() == "Geometry")
++          if (std::string(field->message_type()->name()) == "Geometry")
+           {
+             if (newWidget)
+             {
+@@ -754,7 +754,7 @@
+               if (typeValueDescriptor)
+               {
+                 geometryTypeStr =
+-                    QString(typeValueDescriptor->name().c_str()).toLower().
++                    QString(std::string(typeValueDescriptor->name()).c_str()).toLower().
+                     toStdString();
+               }
+ 
+@@ -779,7 +779,7 @@
+                 const google::protobuf::Descriptor *geomValueDescriptor =
+                     geomValueMsg->GetDescriptor();
+ 
+-                std::string geomMsgName = geomField->message_type()->name();
++                std::string geomMsgName = std::string(geomField->message_type()->name());
+                 if (geomMsgName == "BoxGeom" || geomMsgName == "MeshGeom")
+                 {
+                   int fieldIdx = (geomMsgName == "BoxGeom") ? 0 : 1;
+@@ -825,7 +825,7 @@
+             }
+           }
+           // parse and create custom pose widgets
+-          else if (field->message_type()->name() == "Pose")
++          else if (std::string(field->message_type()->name()) == "Pose")
+           {
+             if (newWidget)
+             {
+@@ -846,7 +846,7 @@
+                   google::protobuf::FieldDescriptor::TYPE_MESSAGE)
+                 continue;
+ 
+-              if (valueField->message_type()->name() == "Vector3d")
++              if (std::string(valueField->message_type()->name()) == "Vector3d")
+               {
+                 // pos
+                 google::protobuf::Message *posValueMsg =
+@@ -855,7 +855,7 @@
+                 auto vec3 = this->ParseVector3d(posValueMsg);
+                 value.Pos() = vec3;
+               }
+-              else if (valueField->message_type()->name() == "Quaternion")
++              else if (std::string(valueField->message_type()->name()) == "Quaternion")
+               {
+                 // rot
+                 google::protobuf::Message *quatValueMsg =
+@@ -879,7 +879,7 @@
+             this->UpdatePoseWidget(configChildWidget, value);
+           }
+           // parse and create custom vector3 widgets
+-          else if (field->message_type()->name() == "Vector3d")
++          else if (std::string(field->message_type()->name()) == "Vector3d")
+           {
+             if (newWidget)
+             {
+@@ -891,7 +891,7 @@
+             this->UpdateVector3dWidget(configChildWidget, vec3);
+           }
+           // parse and create custom color widgets
+-          else if (field->message_type()->name() == "Color")
++          else if (std::string(field->message_type()->name()) == "Color")
+           {
+             if (newWidget)
+             {
+@@ -922,7 +922,7 @@
+             this->UpdateColorWidget(configChildWidget, color);
+           }
+           // parse and create custom density widgets
+-          else if (field->message_type()->name() == "Density")
++          else if (std::string(field->message_type()->name()) == "Density")
+           {
+             if (newWidget)
+             {
+@@ -940,7 +940,7 @@
+               const google::protobuf::FieldDescriptor *valueField =
+                   valueDescriptor->field(j);
+ 
+-              if (valueField && valueField->name() == "density")
++              if (valueField && std::string(valueField->name()) == "density")
+                 density = valueMsg->GetReflection()->GetDouble(
+                     *valueMsg, valueField);
+             }
+@@ -1001,7 +1001,7 @@
+               const google::protobuf::EnumValueDescriptor *valueDescriptor =
+                   descriptor->value(j);
+               if (valueDescriptor)
+-                enumValues.push_back(valueDescriptor->name());
++                enumValues.push_back(std::string(valueDescriptor->name()));
+             }
+             configChildWidget =
+                 this->CreateEnumWidget(name, enumValues, _level);
+@@ -1015,7 +1015,7 @@
+ 
+             newFieldWidget = configChildWidget;
+           }
+-          this->UpdateEnumWidget(configChildWidget, value->name());
++          this->UpdateEnumWidget(configChildWidget, std::string(value->name()));
+           break;
+         }
+         default:
+@@ -2086,7 +2086,7 @@
+     if (!ref)
+       return;
+ 
+-    std::string name = field->name();
++    std::string name = std::string(field->name());
+ 
+     // Update each field in the message
+     // TODO update repeated fields
+@@ -2177,7 +2177,7 @@
+               (ref->MutableMessage(_msg, field));
+ 
+           // update geometry msg field
+-          if (field->message_type()->name() == "Geometry")
++          if (std::string(field->message_type()->name()) == "Geometry")
+           {
+             // manually retrieve values from widgets in order to update
+             // the message fields.
+@@ -2289,7 +2289,7 @@
+             }
+           }
+           // update pose msg field
+-          else if (field->message_type()->name() == "Pose")
++          else if (std::string(field->message_type()->name()) == "Pose")
+           {
+             const google::protobuf::Descriptor *valueDescriptor =
+                 valueMsg->GetDescriptor();
+@@ -2307,7 +2307,7 @@
+                   google::protobuf::FieldDescriptor::TYPE_MESSAGE)
+                 continue;
+ 
+-              if (valueField->message_type()->name() == "Vector3d")
++              if (std::string(valueField->message_type()->name()) == "Vector3d")
+               {
+                 // pos
+                 google::protobuf::Message *posValueMsg =
+@@ -2323,7 +2323,7 @@
+                 ignition::math::Vector3d vec3(values[0], values[1], values[2]);
+                 this->UpdateVector3dMsg(posValueMsg, vec3);
+               }
+-              else if (valueField->message_type()->name() == "Quaternion")
++              else if (std::string(valueField->message_type()->name()) == "Quaternion")
+               {
+                 // rot
+                 google::protobuf::Message *quatValueMsg =
+@@ -2356,7 +2356,7 @@
+               }
+             }
+           }
+-          else if (field->message_type()->name() == "Vector3d")
++          else if (std::string(field->message_type()->name()) == "Vector3d")
+           {
+             std::vector<double> values;
+             for (unsigned int j = 0; j < 3; ++j)
+@@ -2368,7 +2368,7 @@
+             ignition::math::Vector3d vec3(values[0], values[1], values[2]);
+             this->UpdateVector3dMsg(valueMsg, vec3);
+           }
+-          else if (field->message_type()->name() == "Color")
++          else if (std::string(field->message_type()->name()) == "Color")
+           {
+             const google::protobuf::Descriptor *valueDescriptor =
+                 valueMsg->GetDescriptor();
+@@ -2382,7 +2382,7 @@
+                   valueSpinBox->value());
+             }
+           }
+-          else if (field->message_type()->name() == "Density")
++          else if (std::string(field->message_type()->name()) == "Density")
+           {
+             DensityConfigWidget *densityWidget =
+                 qobject_cast<DensityConfigWidget *>(childWidget);
+diff -ruN a/gazebo/gui/ConfigWidget_TEST.cc b/gazebo/gui/ConfigWidget_TEST.cc
+--- a/gazebo/gui/ConfigWidget_TEST.cc	2026-07-26 02:37:22.876793245 +0800
++++ b/gazebo/gui/ConfigWidget_TEST.cc	2026-07-26 17:49:30.275840824 +0800
+@@ -110,7 +110,7 @@
+     QVERIFY(retJointMsg != NULL);
+ 
+     // joint
+-    QVERIFY(retJointMsg->name() == "test_joint");
++    QVERIFY(std::string(retJointMsg->name()) == "test_joint");
+     QCOMPARE(retJointMsg->id(), 1122u);
+     QVERIFY(retJointMsg->parent() == "test_joint_parent");
+     QCOMPARE(retJointMsg->parent_id(), 212121u);
+@@ -287,7 +287,7 @@
+     QVERIFY(retJointMsg != NULL);
+ 
+     // joint
+-    QVERIFY(retJointMsg->name() == "test_joint_updated");
++    QVERIFY(std::string(retJointMsg->name()) == "test_joint_updated");
+     QCOMPARE(retJointMsg->id(), 9999999u);
+     QVERIFY(retJointMsg->parent() == "test_joint_parent_updated");
+     QCOMPARE(retJointMsg->parent_id(), 1u);
+@@ -437,7 +437,7 @@
+     QVERIFY(retJointMsg != NULL);
+ 
+     // joint
+-    QVERIFY(retJointMsg->name() == "test_joint_updated2");
++    QVERIFY(std::string(retJointMsg->name()) == "test_joint_updated2");
+     QCOMPARE(retJointMsg->id(), 2222222u);
+     QVERIFY(retJointMsg->parent() == "test_joint_parent_updated2");
+     QCOMPARE(retJointMsg->parent_id(), 10u);
+@@ -540,7 +540,7 @@
+     QVERIFY(retVisualMsg != NULL);
+ 
+     // visual
+-    QVERIFY(retVisualMsg->name() == "test_visual");
++    QVERIFY(std::string(retVisualMsg->name()) == "test_visual");
+     QCOMPARE(retVisualMsg->id(), 12345u);
+     QVERIFY(retVisualMsg->parent_name() == "test_visual_parent");
+     QCOMPARE(retVisualMsg->parent_id(), 54321u);
+@@ -604,7 +604,7 @@
+     const gazebo::msgs::Material::Script scriptMsg = materialMsg.script();
+     QVERIFY(scriptMsg.uri(0) == "test_script_uri_0");
+     QVERIFY(scriptMsg.uri(1) == "test_script_uri_1");
+-    QVERIFY(scriptMsg.name() == "test_script_name");
++    QVERIFY(std::string(scriptMsg.name()) == "test_script_name");
+   }
+ 
+   // update fields in the config widget and
+@@ -705,7 +705,7 @@
+     QVERIFY(retVisualMsg != NULL);
+ 
+     // visual
+-    QVERIFY(retVisualMsg->name() == "test_visual_updated");
++    QVERIFY(std::string(retVisualMsg->name()) == "test_visual_updated");
+     QCOMPARE(retVisualMsg->id(), 11111u);
+     QVERIFY(retVisualMsg->parent_name() == "test_visual_parent_updated");
+     QCOMPARE(retVisualMsg->parent_id(), 55555u);
+@@ -771,7 +771,7 @@
+     const gazebo::msgs::Material::Script scriptMsg = materialMsg.script();
+     QVERIFY(scriptMsg.uri(0) == "test_script_uri_0");
+     QVERIFY(scriptMsg.uri(1) == "test_script_uri_1");
+-    QVERIFY(scriptMsg.name() == "test_script_name_updated");
++    QVERIFY(std::string(scriptMsg.name()) == "test_script_name_updated");
+   }
+ 
+   delete visualConfigWidget;
+@@ -802,7 +802,7 @@
+     QVERIFY(retPluginMsg != NULL);
+ 
+     // plugin
+-    QVERIFY(retPluginMsg->name() == "test_plugin");
++    QVERIFY(std::string(retPluginMsg->name()) == "test_plugin");
+     QVERIFY(retPluginMsg->filename() == "test_plugin_filename");
+     QVERIFY(retPluginMsg->innerxml() == "<param>1</param>\n");
+   }
+@@ -835,7 +835,7 @@
+     QVERIFY(retPluginMsg != NULL);
+ 
+     // plugin
+-    QVERIFY(retPluginMsg->name() == "test_plugin_updated");
++    QVERIFY(std::string(retPluginMsg->name()) == "test_plugin_updated");
+     QVERIFY(retPluginMsg->filename() == "test_plugin_filename_updated");
+     QVERIFY(retPluginMsg->innerxml() == "<param2>new_param</param2>\n");
+   }
+diff -ruN a/gazebo/gui/GLWidget_TEST.cc b/gazebo/gui/GLWidget_TEST.cc
+--- a/gazebo/gui/GLWidget_TEST.cc	2026-07-26 02:37:22.877399105 +0800
++++ b/gazebo/gui/GLWidget_TEST.cc	2026-07-26 17:49:30.272948613 +0800
+@@ -31,7 +31,7 @@
+ bool g_gotBoxSelection = false;
+ void OnSelection(ConstSelectionPtr &_msg)
+ {
+-  if (_msg->name() == "box" && _msg->has_selected() && _msg->selected())
++  if (std::string(_msg->name()) == "box" && _msg->has_selected() && _msg->selected())
+     g_gotBoxSelection = true;
+ }
+ 
+diff -ruN a/gazebo/gui/JointControlWidget.cc b/gazebo/gui/JointControlWidget.cc
+--- a/gazebo/gui/JointControlWidget.cc	2026-07-26 02:37:22.877923459 +0800
++++ b/gazebo/gui/JointControlWidget.cc	2026-07-26 17:49:30.269880845 +0800
+@@ -397,14 +397,14 @@
+         gui::get_world(), "entity_info", _modelName);
+ 
+     if (response->response() != "error" &&
+-        response->type() == modelMsg.GetTypeName())
++        response->type() == std::string(modelMsg.GetTypeName()))
+     {
+       modelMsg.ParseFromString(response->serialized_data());
+     }
+   }
+ 
+   this->dataPtr->modelLabel->setText(QString::fromStdString(
+-      std::string("Model: ") + modelMsg.name()));
++      std::string("Model: ") + std::string(modelMsg.name())));
+ 
+   this->LayoutForceTab(modelMsg);
+ 
+@@ -515,13 +515,13 @@
+   {
+     if (_rep.has_force_optional())
+     {
+-      auto slider = this->dataPtr->sliders[_rep.name()];
++      auto slider = this->dataPtr->sliders[std::string(_rep.name())];
+       GZ_ASSERT(slider, "Joint force controller is null");
+       slider->SetForce(_rep.force_optional().data());
+     }
+     if (_rep.has_position())
+     {
+-      auto slider = this->dataPtr->pidPosSliders[_rep.name()];
++      auto slider = this->dataPtr->pidPosSliders[std::string(_rep.name())];
+       GZ_ASSERT(slider, "Joint PID position controller is null");
+       if (_rep.position().has_target_optional())
+       {
+@@ -542,7 +542,7 @@
+     }
+     if (_rep.has_velocity())
+     {
+-      auto slider = this->dataPtr->pidVelSliders[_rep.name()];
++      auto slider = this->dataPtr->pidVelSliders[std::string(_rep.name())];
+       GZ_ASSERT(slider, "Joint PID velocity controller is null");
+       if (_rep.velocity().has_target_optional())
+       {
+@@ -793,7 +793,7 @@
+   int i = 0;
+   for (; i < _modelMsg.joint_size(); ++i)
+   {
+-    std::string jointName = _modelMsg.joint(i).name();
++    std::string jointName = std::string(_modelMsg.joint(i).name());
+ 
+     // Get the joint name minus the model name
+     int modelNameIndex = jointName.find("::") + 2;
+@@ -856,7 +856,7 @@
+   int i = 0;
+   for (; i < _modelMsg.joint_size(); ++i)
+   {
+-    std::string jointName = _modelMsg.joint(i).name();
++    std::string jointName = std::string(_modelMsg.joint(i).name());
+ 
+     // Get the joint name minus the model name
+     int modelNameIndex = jointName.find("::") + 2;
+@@ -926,7 +926,7 @@
+   int i = 0;
+   for (; i < _modelMsg.joint_size(); ++i)
+   {
+-    std::string jointName = _modelMsg.joint(i).name();
++    std::string jointName = std::string(_modelMsg.joint(i).name());
+ 
+     // Get the joint name minus the model name
+     int modelNameIndex = jointName.find("::") + 2;
+diff -ruN a/gazebo/gui/MainWindow.cc b/gazebo/gui/MainWindow.cc
+--- a/gazebo/gui/MainWindow.cc	2026-07-26 02:37:22.878876428 +0800
++++ b/gazebo/gui/MainWindow.cc	2026-07-26 17:49:30.265759586 +0800
+@@ -535,7 +535,7 @@
+ 
+     // Make sure the response is correct
+     if (response->response() != "error" &&
+-        response->type() == msg.GetTypeName())
++        response->type() == std::string(msg.GetTypeName()))
+     {
+       // Parse the response message
+       msg.ParseFromString(response->serialized_data());
+@@ -2060,9 +2060,9 @@
+       }
+ 
+       if (_msg->camera().track().has_name() &&
+-          _msg->camera().track().name() != "__default__")
++          std::string(_msg->camera().track().name()) != "__default__")
+       {
+-        std::string name = _msg->camera().track().name();
++        std::string name = std::string(_msg->camera().track().name());
+         cam->TrackVisual(name);
+         // Call the signal to track a visual in the main thread.
+         this->TrackVisual(name);
+@@ -2098,7 +2098,7 @@
+     {
+       // Try to create the plugin
+       gazebo::GUIPluginPtr plugin = gazebo::GUIPlugin::Create(
+-          (*iter)->filename(), (*iter)->name());
++          (*iter)->filename(), std::string((*iter)->name()));
+ 
+       if (!plugin)
+       {
+@@ -2130,14 +2130,14 @@
+ /////////////////////////////////////////////////
+ void MainWindow::OnModel(ConstModelPtr &_msg)
+ {
+-  this->dataPtr->entities[_msg->name()] = _msg->id();
++  this->dataPtr->entities[std::string(_msg->name())] = _msg->id();
+   for (int i = 0; i < _msg->link_size(); i++)
+   {
+-    this->dataPtr->entities[_msg->link(i).name()] = _msg->link(i).id();
++    this->dataPtr->entities[std::string(_msg->link(i).name())] = _msg->link(i).id();
+ 
+     for (int j = 0; j < _msg->link(i).collision_size(); j++)
+     {
+-      this->dataPtr->entities[_msg->link(i).collision(j).name()] =
++      this->dataPtr->entities[std::string(_msg->link(i).collision(j).name())] =
+         _msg->link(i).collision(j).id();
+     }
+   }
+@@ -2160,7 +2160,7 @@
+ 
+   msgs::Scene sceneMsg;
+ 
+-  if (_msg->has_type() && _msg->type() == sceneMsg.GetTypeName())
++  if (_msg->has_type() && _msg->type() == std::string(sceneMsg.GetTypeName()))
+   {
+     bool parseResult = sceneMsg.ParseFromString(_msg->serialized_data());
+     this->OnSceneInfo(sceneMsg, parseResult);
+@@ -2177,17 +2177,17 @@
+   {
+     for (int i = 0; i < sceneMsg.model_size(); ++i)
+     {
+-      this->dataPtr->entities[sceneMsg.model(i).name()] =
++      this->dataPtr->entities[std::string(sceneMsg.model(i).name())] =
+         sceneMsg.model(i).id();
+ 
+       for (int j = 0; j < sceneMsg.model(i).link_size(); ++j)
+       {
+-        this->dataPtr->entities[sceneMsg.model(i).link(j).name()] =
++        this->dataPtr->entities[std::string(sceneMsg.model(i).link(j).name())] =
+           sceneMsg.model(i).link(j).id();
+ 
+         for (int k = 0; k < sceneMsg.model(i).link(j).collision_size(); ++k)
+         {
+-          const auto &entity = sceneMsg.model(i).link(j).collision(k).name();
++          const auto &entity = std::string(sceneMsg.model(i).link(j).collision(k).name());
+           this->dataPtr->entities[entity] =
+             sceneMsg.model(i).link(j).collision(k).id();
+         }
+diff -ruN a/gazebo/gui/model/JointMaker.cc b/gazebo/gui/model/JointMaker.cc
+--- a/gazebo/gui/model/JointMaker.cc	2026-07-26 02:37:22.893367516 +0800
++++ b/gazebo/gui/model/JointMaker.cc	2026-07-26 17:49:30.307493812 +0800
+@@ -1077,10 +1077,10 @@
+   this->jointMsg->CopyFrom(*inspectorMsg);
+ 
+   // Name
+-  if (this->name != this->jointMsg->name())
++  if (this->name != std::string(this->jointMsg->name()))
+     gui::model::Events::jointNameChanged(this->hotspot->Name(),
+-        this->jointMsg->name());
+-  this->name = this->jointMsg->name();
++        std::string(this->jointMsg->name()));
++  this->name = std::string(this->jointMsg->name());
+ 
+   // Type
+   this->type = JointMaker::ConvertJointType(
+@@ -1501,7 +1501,7 @@
+   }
+ 
+   JointData *joint = new JointData();
+-  joint->name = jointMsg.name();
++  joint->name = std::string(jointMsg.name());
+   joint->parent = parentVis;
+   joint->child = childVis;
+   joint->type = this->ConvertJointType(msgs::ConvertJointType(jointMsg.type()));
+diff -ruN a/gazebo/gui/model/JointMaker_TEST.cc b/gazebo/gui/model/JointMaker_TEST.cc
+--- a/gazebo/gui/model/JointMaker_TEST.cc	2026-07-26 02:37:22.893493806 +0800
++++ b/gazebo/gui/model/JointMaker_TEST.cc	2026-07-26 17:49:30.306658127 +0800
+@@ -788,7 +788,7 @@
+ 
+   auto msg1 = jointData->jointMsg;
+   QVERIFY(msg1 != NULL);
+-  QVERIFY(msg1->name() == name1);
++  QVERIFY(std::string(msg1->name()) == name1);
+   QVERIFY(gui::JointMaker::ConvertJointType(
+       msgs::ConvertJointType(msg1->type())) == type1);
+   QVERIFY(msg1->has_axis1());
+@@ -844,8 +844,8 @@
+   auto msg2 = jointData->jointMsg;
+   QVERIFY(msg1 != msg2);
+ 
+-  QVERIFY(msg1->name() != msg2->name());
+-  QVERIFY(name2 == msg2->name());
++  QVERIFY(std::string(msg1->name()) != std::string(msg2->name()));
++  QVERIFY(name2 == std::string(msg2->name()));
+ 
+   QVERIFY(msg1->type() != msg2->type());
+   QVERIFY(gui::JointMaker::ConvertJointType(
+@@ -869,8 +869,8 @@
+   auto msg3 = jointData->jointMsg;
+   QVERIFY(msg2 != msg3);
+ 
+-  QVERIFY(msg2->name() != msg3->name());
+-  QVERIFY(name3 == msg3->name());
++  QVERIFY(std::string(msg2->name()) != std::string(msg3->name()));
++  QVERIFY(name3 == std::string(msg3->name()));
+ 
+   QVERIFY(msg2->type() != msg3->type());
+   QVERIFY(gui::JointMaker::ConvertJointType(
+@@ -894,8 +894,8 @@
+   auto msg4 = jointData->jointMsg;
+   QVERIFY(msg3 != msg4);
+ 
+-  QVERIFY(msg3->name() != msg4->name());
+-  QVERIFY(name4 == msg4->name());
++  QVERIFY(std::string(msg3->name()) != std::string(msg4->name()));
++  QVERIFY(name4 == std::string(msg4->name()));
+ 
+   QVERIFY(msg3->type() != msg4->type());
+   QVERIFY(gui::JointMaker::ConvertJointType(
+diff -ruN a/gazebo/gui/model/MEUserCmdManager.cc b/gazebo/gui/model/MEUserCmdManager.cc
+--- a/gazebo/gui/model/MEUserCmdManager.cc	2026-07-26 02:37:22.893866127 +0800
++++ b/gazebo/gui/model/MEUserCmdManager.cc	2026-07-26 17:49:30.305093535 +0800
+@@ -177,7 +177,7 @@
+   {
+     auto pluginMsg = msgs::PluginFromSDF(this->dataPtr->sdf);
+ 
+-    model::Events::requestModelPluginInsertion(pluginMsg.name(),
++    model::Events::requestModelPluginInsertion(std::string(pluginMsg.name()),
+         pluginMsg.filename(), pluginMsg.innerxml(), false);
+   }
+ }
+@@ -253,7 +253,7 @@
+   {
+     auto pluginMsg = msgs::PluginFromSDF(this->dataPtr->sdf);
+ 
+-    model::Events::requestModelPluginInsertion(pluginMsg.name(),
++    model::Events::requestModelPluginInsertion(std::string(pluginMsg.name()),
+         pluginMsg.filename(), pluginMsg.innerxml(), false);
+   }
+   // Deleting model plugin
+diff -ruN a/gazebo/gui/model/ModelCreator.cc b/gazebo/gui/model/ModelCreator.cc
+--- a/gazebo/gui/model/ModelCreator.cc	2026-07-26 02:37:22.893937483 +0800
++++ b/gazebo/gui/model/ModelCreator.cc	2026-07-26 17:49:30.303536414 +0800
+@@ -525,7 +525,7 @@
+ 
+   msgs::GzString msg;
+   // Make sure the response is correct
+-  if (response->type() == msg.GetTypeName())
++  if (response->type() == std::string(msg.GetTypeName()))
+   {
+     // Parse the response message
+     msg.ParseFromString(response->serialized_data());
+@@ -575,7 +575,7 @@
+   }
+   else
+   {
+-    GZ_ASSERT(response->type() == msg.GetTypeName(),
++    GZ_ASSERT(response->type() == std::string(msg.GetTypeName()),
+         "Received incorrect response from 'world_sdf' request.");
+   }
+ }
+diff -ruN a/gazebo/gui/model/ModelData.cc b/gazebo/gui/model/ModelData.cc
+--- a/gazebo/gui/model/ModelData.cc	2026-07-26 02:37:22.894135194 +0800
++++ b/gazebo/gui/model/ModelData.cc	2026-07-26 17:49:30.301803604 +0800
+@@ -1106,7 +1106,7 @@
+         // warnings when changing from/to polyline
+         for (auto &vis : this->visuals)
+         {
+-          if (vis.second.name() != updateMsg->name())
++          if (std::string(vis.second.name()) != std::string(updateMsg->name()))
+             continue;
+ 
+           if (vis.second.mutable_geometry()->type() != geomMsg->type())
+@@ -1180,7 +1180,7 @@
+         ignition::math::Color matDiffuse;
+         ignition::math::Color matSpecular;
+         ignition::math::Color matEmissive;
+-        rendering::Material::MaterialAsColor(scriptMsg->name(), matAmbient,
++        rendering::Material::MaterialAsColor(std::string(scriptMsg->name()), matAmbient,
+             matDiffuse, matSpecular, matEmissive);
+ 
+         ignition::math::Color emptyColor(0, 0, 0, 0);
+@@ -1210,7 +1210,7 @@
+           emissive = matEmissive;
+         }
+ 
+-        visualConfig->SetMaterial(leafName, scriptMsg->name(), ambient,
++        visualConfig->SetMaterial(leafName, std::string(scriptMsg->name()), ambient,
+             diffuse, specular, emissive);
+ 
+         visualMsg.CopyFrom(*updateMsg);
+@@ -1244,7 +1244,7 @@
+         // warnings when changing from/to polyline
+         for (auto &col : this->collisions)
+         {
+-          if (col.second.name() != updateMsg->name())
++          if (std::string(col.second.name()) != std::string(updateMsg->name()))
+             continue;
+ 
+           if (col.second.mutable_geometry()->type() != geomMsg->type())
+@@ -1749,7 +1749,7 @@
+     this->visualUpdateMsgs.erase(this->visualUpdateMsgs.begin());
+     for (auto &it : this->visuals)
+     {
+-      if (it.second.name() == updateMsgPtr->name())
++      if (std::string(it.second.name()) == std::string(updateMsgPtr->name()))
+       {
+         // make visual semi-transparent here
+         // but generated sdf will use the correct transparency value
+@@ -1771,7 +1771,7 @@
+     this->collisionUpdateMsgs.erase(this->collisionUpdateMsgs.begin());
+     for (auto &it : this->collisions)
+     {
+-      if (it.second.name() == collisionMsg.name())
++      if (std::string(it.second.name()) == std::string(collisionMsg.name()))
+       {
+         msgs::Visual collisionVisMsg;
+         msgs::Geometry *geomMsg = collisionVisMsg.mutable_geometry();
+diff -ruN a/gazebo/gui/model/ModelPluginInspector_TEST.cc b/gazebo/gui/model/ModelPluginInspector_TEST.cc
+--- a/gazebo/gui/model/ModelPluginInspector_TEST.cc	2026-07-26 02:37:22.894999566 +0800
++++ b/gazebo/gui/model/ModelPluginInspector_TEST.cc	2026-07-26 17:49:30.298295380 +0800
+@@ -187,7 +187,7 @@
+   QCOMPARE(plainTextEdits[0]->toPlainText(), QString());
+ 
+   gazebo::msgs::Plugin *pluginMsg = inspector->Data();
+-  QVERIFY(pluginMsg->name().empty());
++  QVERIFY(std::string(pluginMsg->name()).empty());
+   QVERIFY(pluginMsg->filename().empty());
+   QVERIFY(pluginMsg->innerxml().empty());
+ 
+@@ -215,7 +215,7 @@
+   QCOMPARE(plainTextEdits[0]->toPlainText(), QString());
+ 
+   gazebo::msgs::Plugin *pluginMsg = inspector->Data();
+-  QVERIFY(pluginMsg->name().empty());
++  QVERIFY(std::string(pluginMsg->name()).empty());
+   QVERIFY(pluginMsg->filename().empty());
+   QVERIFY(pluginMsg->innerxml().empty());
+ 
+@@ -232,7 +232,7 @@
+   // set read-only to false so plugin msg can be updated with new values
+   inspector->SetReadOnly(false);
+   pluginMsg = inspector->Data();
+-  QCOMPARE(pluginMsg->name(), std::string("my_plugin_name"));
++  QCOMPARE(std::string(pluginMsg->name()), std::string("my_plugin_name"));
+   QCOMPARE(pluginMsg->filename(), std::string("my_plugin_filename"));
+   QCOMPARE(pluginMsg->innerxml(), std::string("<data>test</data>"));
+ 
+diff -ruN a/gazebo/gui/model/ModelTreeWidget.cc b/gazebo/gui/model/ModelTreeWidget.cc
+--- a/gazebo/gui/model/ModelTreeWidget.cc	2026-07-26 02:37:22.895091155 +0800
++++ b/gazebo/gui/model/ModelTreeWidget.cc	2026-07-26 17:49:30.297810971 +0800
+@@ -732,6 +732,6 @@
+   msgs::Plugin *msg = this->modelPluginInspector->Data();
+ 
+   // User command from tree
+-  model::Events::requestModelPluginInsertion(msg->name(), msg->filename(),
++  model::Events::requestModelPluginInsertion(std::string(msg->name()), msg->filename(),
+       msg->innerxml(), true);
+ }
+diff -ruN a/gazebo/gui/ModelListWidget.cc b/gazebo/gui/ModelListWidget.cc
+--- a/gazebo/gui/ModelListWidget.cc	2026-07-26 02:37:22.879410692 +0800
++++ b/gazebo/gui/ModelListWidget.cc	2026-07-26 17:49:30.261738035 +0800
+@@ -379,7 +379,7 @@
+   {
+     std::string name = (*iter).name();
+ 
+-    QTreeWidgetItem *listItem = this->ListItem((*iter).name(),
++    QTreeWidgetItem *listItem = this->ListItem(std::string((*iter).name()),
+                                                   this->dataPtr->modelsItem);
+ 
+     if (!listItem)
+@@ -391,7 +391,7 @@
+             this->dataPtr->modelsItem,
+             QStringList(QString("%1").arg(QString::fromStdString(name))));
+ 
+-        topItem->setData(0, Qt::UserRole, QVariant((*iter).name().c_str()));
++        topItem->setData(0, Qt::UserRole, QVariant(std::string((*iter).name()).c_str()));
+         this->dataPtr->modelTreeWidget->addTopLevelItem(topItem);
+ 
+         if ((*iter).link_size() > 0)
+@@ -406,7 +406,7 @@
+ 
+         for (int i = 0; i < (*iter).link_size(); ++i)
+         {
+-          std::string linkName = (*iter).link(i).name();
++          std::string linkName = std::string((*iter).link(i).name());
+ 
+           // get unscoped name by stripping parent
+           int index = linkName.find(name) + name.length() + 2;
+@@ -418,7 +418,7 @@
+                   QString::fromStdString(linkNameShort))));
+ 
+           linkItem->setData(0, Qt::UserRole, QVariant(linkName.c_str()));
+-          linkItem->setData(1, Qt::UserRole, QVariant((*iter).name().c_str()));
++          linkItem->setData(1, Qt::UserRole, QVariant(std::string((*iter).name()).c_str()));
+           linkItem->setData(2, Qt::UserRole, QVariant((*iter).id()));
+           linkItem->setData(3, Qt::UserRole, QVariant("Link"));
+           this->dataPtr->modelTreeWidget->addTopLevelItem(linkItem);
+@@ -436,7 +436,7 @@
+ 
+         for (int i = 0; i < (*iter).joint_size(); ++i)
+         {
+-          std::string jointName = (*iter).joint(i).name();
++          std::string jointName = std::string((*iter).joint(i).name());
+ 
+           // get unscoped name by stripping parent
+           int index = jointName.find(name) + name.length() + 2;
+@@ -464,7 +464,7 @@
+ 
+         for (int i = 0; i < (*iter).plugin_size(); ++i)
+         {
+-          std::string pluginName = (*iter).plugin(i).name();
++          std::string pluginName = std::string((*iter).plugin(i).name());
+ 
+           QTreeWidgetItem *pluginItem = new QTreeWidgetItem(topItem,
+               QStringList(QString("%1").arg(
+@@ -476,7 +476,7 @@
+           pluginUri.Path().PushBack("world");
+           pluginUri.Path().PushBack(gui::get_world());
+           pluginUri.Path().PushBack("model");
+-          pluginUri.Path().PushBack((*iter).name());
++          pluginUri.Path().PushBack(std::string((*iter).name()));
+           pluginUri.Path().PushBack("plugin");
+           pluginUri.Path().PushBack(pluginName);
+ 
+@@ -497,8 +497,8 @@
+       }
+       else
+       {
+-        listItem->setText(0, (*iter).name().c_str());
+-        listItem->setData(1, Qt::UserRole, QVariant((*iter).name().c_str()));
++        listItem->setText(0, std::string((*iter).name()).c_str());
++        listItem->setData(1, Qt::UserRole, QVariant(std::string((*iter).name()).c_str()));
+       }
+     }
+   }
+@@ -512,7 +512,7 @@
+       this->dataPtr->requestMsg->id())
+     return;
+ 
+-  if (_msg->has_type() && _msg->type() == this->dataPtr->modelMsg.GetTypeName())
++  if (_msg->has_type() && _msg->type() == std::string(this->dataPtr->modelMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->modelMsg.ParseFromString(_msg->serialized_data());
+@@ -520,7 +520,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->linkMsg.GetTypeName())
++      std::string(this->dataPtr->linkMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->linkMsg.ParseFromString(_msg->serialized_data());
+@@ -528,7 +528,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->jointMsg.GetTypeName())
++      std::string(this->dataPtr->jointMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->jointMsg.ParseFromString(_msg->serialized_data());
+@@ -536,12 +536,12 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-    this->dataPtr->pluginMsg.GetTypeName())
++    std::string(this->dataPtr->pluginMsg.GetTypeName()))
+   {
+     gzerr << "Plugin requests should use OnPluginInfo callback" << std::endl;
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->sceneMsg.GetTypeName())
++      std::string(this->dataPtr->sceneMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->sceneMsg.ParseFromString(_msg->serialized_data());
+@@ -549,7 +549,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->physicsMsg.GetTypeName())
++      std::string(this->dataPtr->physicsMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->physicsMsg.ParseFromString(_msg->serialized_data());
+@@ -557,7 +557,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->atmosphereMsg.GetTypeName())
++      std::string(this->dataPtr->atmosphereMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->atmosphereMsg.ParseFromString(_msg->serialized_data());
+@@ -565,7 +565,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->windMsg.GetTypeName())
++      std::string(this->dataPtr->windMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->windMsg.ParseFromString(_msg->serialized_data());
+@@ -573,7 +573,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() && _msg->type() ==
+-      this->dataPtr->lightMsg.GetTypeName())
++      std::string(this->dataPtr->lightMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->lightMsg.ParseFromString(_msg->serialized_data());
+@@ -581,7 +581,7 @@
+     this->dataPtr->propMutex->unlock();
+   }
+   else if (_msg->has_type() &&
+-           _msg->type() == this->dataPtr->sphericalCoordMsg.GetTypeName())
++           _msg->type() == std::string(this->dataPtr->sphericalCoordMsg.GetTypeName()))
+   {
+     this->dataPtr->propMutex->lock();
+     this->dataPtr->sphericalCoordMsg.ParseFromString(_msg->serialized_data());
+@@ -1129,14 +1129,14 @@
+     // set link id and strip link name.
+     msgs::Link *linkMsg = msg.add_link();
+     linkMsg->set_id(this->dataPtr->linkMsg.id());
+-    std::string linkName = this->dataPtr->linkMsg.name();
++    std::string linkName = std::string(this->dataPtr->linkMsg.name());
+     linkMsg->set_name(linkName);
+     fillMsg = linkMsg;
+   }
+   else
+   {
+     msg.set_id(this->dataPtr->modelMsg.id());
+-    msg.set_name(this->dataPtr->modelMsg.name());
++    msg.set_name(std::string(this->dataPtr->modelMsg.name()));
+   }
+ 
+   const google::protobuf::Descriptor *descriptor = fillMsg->GetDescriptor();
+@@ -1747,7 +1747,7 @@
+   else
+   {
+     for (int i = 0; i < surfaceModelEnum->value_count(); ++i)
+-      types << surfaceModelEnum->value(i)->name().c_str();
++      types << std::string(surfaceModelEnum->value(i)->name()).c_str();
+   }
+ 
+   item->setAttribute("enumNames", types);
+@@ -1790,7 +1790,7 @@
+   // joint name
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+                                            tr("name"));
+-  item->setValue(_msg.name().c_str());
++  item->setValue(std::string(_msg.name()).c_str());
+   this->dataPtr->propTreeBrowser->addProperty(item);
+   item->setEnabled(false);
+ 
+@@ -1977,7 +1977,7 @@
+   // name
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+       tr("name"));
+-  item->setValue(_msg.name().c_str());
++  item->setValue(std::string(_msg.name()).c_str());
+   this->AddProperty(item, _parent);
+   // TODO: setting link name currently causes problems
+   item->setEnabled(false);
+@@ -2136,7 +2136,7 @@
+     QtVariantProperty *prop;
+     prop = this->dataPtr->variantManager->addProperty(
+         QtVariantPropertyManager::groupTypeId(), tr("collision"));
+-    prop->setToolTip(tr(_msg.collision(i).name().c_str()));
++    prop->setToolTip(tr(std::string(_msg.collision(i).name()).c_str()));
+     this->AddProperty(prop, _parent);
+ 
+     this->FillPropertyTree(_msg.collision(i), prop);
+@@ -2151,7 +2151,7 @@
+     QtVariantProperty *prop;
+     prop = this->dataPtr->variantManager->addProperty(
+         QtVariantPropertyManager::groupTypeId(), tr("visual"));
+-    prop->setToolTip(tr(_msg.visual(i).name().c_str()));
++    prop->setToolTip(tr(std::string(_msg.visual(i).name()).c_str()));
+     this->AddProperty(prop, _parent);
+ 
+     this->FillPropertyTree(_msg.visual(i), prop);
+@@ -2166,7 +2166,7 @@
+     QtVariantProperty *prop;
+     prop = this->dataPtr->variantManager->addProperty(
+         QtVariantPropertyManager::groupTypeId(), "sensor");
+-    prop->setToolTip(tr(_msg.sensor(i).name().c_str()));
++    prop->setToolTip(tr(std::string(_msg.sensor(i).name()).c_str()));
+     this->AddProperty(prop, _parent);
+ 
+     // this->FillPropertyTree(_msg.sensor(i), prop);
+@@ -2178,13 +2178,13 @@
+     QtVariantProperty *batteryItem;
+     batteryItem = this->dataPtr->variantManager->addProperty(
+         QtVariantPropertyManager::groupTypeId(), tr("battery"));
+-    batteryItem->setToolTip(tr(_msg.battery(i).name().c_str()));
++    batteryItem->setToolTip(tr(std::string(_msg.battery(i).name()).c_str()));
+     this->AddProperty(batteryItem, _parent);
+     batteryItem->setEnabled(false);
+ 
+     item = this->dataPtr->variantManager->addProperty(QVariant::String,
+         tr("name"));
+-    item->setValue(_msg.battery(i).name().c_str());
++    item->setValue(std::string(_msg.battery(i).name()).c_str());
+     batteryItem->addSubProperty(item);
+ 
+     // Battery::Voltage
+@@ -2220,7 +2220,7 @@
+   // name
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+                                            tr("name"));
+-  item->setValue(_msg.name().c_str());
++  item->setValue(std::string(_msg.name()).c_str());
+   _parent->addSubProperty(item);
+ 
+   // Laser Retro value
+@@ -2543,7 +2543,7 @@
+   // Name value
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+                                            tr("name"));
+-  item->setValue(_msg.name().c_str());
++  item->setValue(std::string(_msg.name()).c_str());
+   _parent->addSubProperty(item);
+ 
+   // Laser Retro value
+@@ -2598,7 +2598,7 @@
+ 
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+                                            tr("name"));
+-  item->setValue(_msg.name().c_str());
++  item->setValue(std::string(_msg.name()).c_str());
+   this->dataPtr->propTreeBrowser->addProperty(item);
+   // TODO: setting model name currently causes problems
+   item->setEnabled(false);
+@@ -2641,7 +2641,7 @@
+     QtVariantProperty *prop;
+     prop = this->dataPtr->variantManager->addProperty(
+         QtVariantPropertyManager::groupTypeId(), tr("link"));
+-    prop->setToolTip(tr(_msg.link(i).name().c_str()));
++    prop->setToolTip(tr(std::string(_msg.link(i).name()).c_str()));
+ 
+     bItem = this->dataPtr->propTreeBrowser->addProperty(prop);
+     this->dataPtr->propTreeBrowser->setExpanded(bItem, false);
+@@ -2659,7 +2659,7 @@
+   // name
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+       tr("name"));
+-  item->setValue(_msg.name().c_str());
++  item->setValue(std::string(_msg.name()).c_str());
+   item->setEnabled(false);
+   this->AddProperty(item, _parent);
+ 
+@@ -3274,7 +3274,7 @@
+   item = this->dataPtr->variantManager->addProperty(QVariant::String,
+       tr("name"));
+   if (_msg.has_name())
+-    item->setValue(_msg.name().c_str());
++    item->setValue(std::string(_msg.name()).c_str());
+   this->dataPtr->propTreeBrowser->addProperty(item);
+ 
+   topItem = this->dataPtr->variantManager->addProperty(
+@@ -3389,7 +3389,7 @@
+   {
+     std::string name = (*iter).name();
+ 
+-    QTreeWidgetItem *listItem = this->ListItem((*iter).name(),
++    QTreeWidgetItem *listItem = this->ListItem(std::string((*iter).name()),
+                                                   this->dataPtr->lightsItem);
+ 
+     if (!listItem)
+@@ -3398,12 +3398,12 @@
+       QTreeWidgetItem *item = new QTreeWidgetItem(this->dataPtr->lightsItem,
+           QStringList(QString("%1").arg(QString::fromStdString(name))));
+ 
+-      item->setData(0, Qt::UserRole, QVariant((*iter).name().c_str()));
++      item->setData(0, Qt::UserRole, QVariant(std::string((*iter).name()).c_str()));
+       this->dataPtr->modelTreeWidget->addTopLevelItem(item);
+     }
+     else
+     {
+-      listItem->setData(0, Qt::UserRole, QVariant((*iter).name().c_str()));
++      listItem->setData(0, Qt::UserRole, QVariant(std::string((*iter).name()).c_str()));
+     }
+   }
+   this->dataPtr->lightMsgs.clear();
+diff -ruN a/gazebo/gui/ModelListWidget_TEST.cc b/gazebo/gui/ModelListWidget_TEST.cc
+--- a/gazebo/gui/ModelListWidget_TEST.cc	2026-07-26 02:37:22.879635343 +0800
++++ b/gazebo/gui/ModelListWidget_TEST.cc	2026-07-26 17:49:30.260439889 +0800
+@@ -71,7 +71,7 @@
+ void ModelListWidget_TEST::OnResponse(ConstResponsePtr &_msg)
+ {
+   gazebo::msgs::Scene sceneMsg;
+-  if (_msg->has_type() && _msg->type() == sceneMsg.GetTypeName())
++  if (_msg->has_type() && _msg->type() == std::string(sceneMsg.GetTypeName()))
+   {
+     sceneMsg.ParseFromString(_msg->serialized_data());
+     for (int i = 0; i < sceneMsg.model_size(); i++)
+diff -ruN a/gazebo/gui/plot/IntrospectionCurveHandler.cc b/gazebo/gui/plot/IntrospectionCurveHandler.cc
+--- a/gazebo/gui/plot/IntrospectionCurveHandler.cc	2026-07-26 02:37:22.896261447 +0800
++++ b/gazebo/gui/plot/IntrospectionCurveHandler.cc	2026-07-26 17:49:30.293074275 +0800
+@@ -283,10 +283,10 @@
+   for (auto i = 0; i < _msg.param_size(); ++i)
+   {
+     auto param = _msg.param(i);
+-    if (param.name().empty() || !param.has_value())
++    if (std::string(param.name()).empty() || !param.has_value())
+       continue;
+ 
+-    std::string paramName = param.name();
++    std::string paramName = std::string(param.name());
+     auto paramValue = param.value();
+ 
+     // x axis is hardcoded to sim time for now
+diff -ruN a/gazebo/gui/plot/Palette.cc b/gazebo/gui/plot/Palette.cc
+--- a/gazebo/gui/plot/Palette.cc	2026-07-26 02:37:22.896420454 +0800
++++ b/gazebo/gui/plot/Palette.cc	2026-07-26 17:49:30.292025578 +0800
+@@ -810,7 +810,7 @@
+   for (auto i = 0; i < _msg.param_size(); ++i)
+   {
+     auto param = _msg.param(i);
+-    if (param.name().empty() || !param.has_value())
++    if (std::string(param.name()).empty() || !param.has_value())
+       continue;
+ 
+     items.insert(param.value().string_value());
+@@ -1179,7 +1179,7 @@
+     if (!field)
+       return;
+ 
+-    auto name = field->name();
++    auto name = std::string(field->name());
+ 
+     if (field->is_repeated())
+       continue;
+@@ -1242,7 +1242,7 @@
+       case google::protobuf::FieldDescriptor::TYPE_MESSAGE:
+       {
+         // Treat time as double
+-        if (field->message_type()->name() == "Time")
++        if (std::string(field->message_type()->name()) == "Time")
+         {
+           auto humanName = ConfigWidget::HumanReadableKey(name);
+           std::string dataName = _uri + "/" + name;
+@@ -1261,7 +1261,7 @@
+           _item->appendRow(childItem);
+         }
+         // Custom RPY widgets for orientation
+-        else if (field->message_type()->name() == "Quaternion")
++        else if (std::string(field->message_type()->name()) == "Quaternion")
+         {
+           auto *quatItem = new QStandardItem();
+           quatItem->setData(name.c_str(), PlotItemDelegate::DISPLAY_NAME);
+diff -ruN a/gazebo/gui/plot/TopicCurveHandler.cc b/gazebo/gui/plot/TopicCurveHandler.cc
+--- a/gazebo/gui/plot/TopicCurveHandler.cc	2026-07-26 02:37:22.897141273 +0800
++++ b/gazebo/gui/plot/TopicCurveHandler.cc	2026-07-26 17:49:30.288668240 +0800
+@@ -370,7 +370,7 @@
+     if (!field)
+       continue;
+ 
+-    std::string fieldName = field->name();
++    std::string fieldName = std::string(field->name());
+ 
+     // Check if message has timestamp and use it if it exists and is
+     // a top level msg field.
+@@ -381,7 +381,7 @@
+         !field->is_repeated())
+     {
+       auto valueMsg = ref->MutableMessage(_msg, field);
+-      if (field->message_type()->name() == "Time")
++      if (std::string(field->message_type()->name()) == "Time")
+       {
+         msgs::Time *msg = dynamic_cast<msgs::Time *>(valueMsg);
+         if (msg)
+@@ -457,7 +457,7 @@
+         {
+           auto valueMsg = ref->MutableMessage(_msg, field);
+ 
+-          if (field->message_type()->name() == "Time")
++          if (std::string(field->message_type()->name()) == "Time")
+           {
+             msgs::Time *msg = dynamic_cast<msgs::Time *>(valueMsg);
+ 
+@@ -467,7 +467,7 @@
+              common::Time time = msgs::Convert(*msg);
+              data = time.Double();
+           }
+-          else if (field->message_type()->name() == "Vector3d")
++          else if (std::string(field->message_type()->name()) == "Vector3d")
+           {
+             msgs::Vector3d *msg = dynamic_cast<msgs::Vector3d *>(valueMsg);
+ 
+@@ -493,7 +493,7 @@
+             else
+               continue;
+           }
+-          else if (field->message_type()->name() == "Quaternion")
++          else if (std::string(field->message_type()->name()) == "Quaternion")
+           {
+             msgs::Quaternion *msg =
+                 dynamic_cast<msgs::Quaternion *>(valueMsg);

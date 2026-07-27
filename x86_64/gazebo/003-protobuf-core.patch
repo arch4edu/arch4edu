@@ -1,0 +1,1190 @@
+diff -ruN a/gazebo/msgs/generator/GazeboGenerator.cc b/gazebo/msgs/generator/GazeboGenerator.cc
+--- a/gazebo/msgs/generator/GazeboGenerator.cc	2026-07-26 02:37:22.902492494 +0800
++++ b/gazebo/msgs/generator/GazeboGenerator.cc	2026-07-26 17:49:30.249036725 +0800
+@@ -41,10 +41,10 @@
+                                OutputDirectory *_generator_context,
+                                std::string * /*_error*/) const
+ {
+-  std::string headerFilename = _file->name();
++  std::string headerFilename = std::string(_file->name());
+   boost::replace_last(headerFilename, ".proto", ".pb.h");
+ 
+-  std::string sourceFilename = _file->name();
++  std::string sourceFilename = std::string(_file->name());
+   boost::replace_last(sourceFilename, ".proto", ".pb.cc");
+ 
+   // Suppress expected warnings
+@@ -80,12 +80,12 @@
+         _generator_context->OpenForInsert(headerFilename, "namespace_scope"));
+     io::Printer printer(output.get(), '$');
+ 
+-    std::string package = _file->package();
++    std::string package = std::string(_file->package());
+     boost::replace_all(package, ".", "::");
+ 
+     std::string ptrType = "typedef boost::shared_ptr<" + package
+-      + "::" + _file->message_type(0)->name() + "> "
+-      + _file->message_type(0)->name() + "Ptr;\n";
++      + "::" + std::string(_file->message_type(0)->name()) + "> "
++      + std::string(_file->message_type(0)->name()) + "Ptr;\n";
+ 
+     printer.Print(ptrType.c_str(), "name", "namespace_scope");
+   }
+@@ -96,12 +96,12 @@
+         _generator_context->OpenForInsert(headerFilename, "global_scope"));
+     io::Printer printer(output.get(), '$');
+ 
+-    std::string package = _file->package();
++    std::string package = std::string(_file->package());
+     boost::replace_all(package, ".", "::");
+ 
+     std::string constType = "typedef const boost::shared_ptr<" + package
+-      + "::" + _file->message_type(0)->name() + " const> Const"
+-      + _file->message_type(0)->name() + "Ptr;";
++      + "::" + std::string(_file->message_type(0)->name()) + " const> Const"
++      + std::string(_file->message_type(0)->name()) + "Ptr;";
+ 
+     printer.Print(constType.c_str(), "name", "global_scope");
+   }
+@@ -112,12 +112,12 @@
+         _generator_context->OpenForInsert(sourceFilename, "global_scope"));
+     io::Printer printer(output.get(), '$');
+ 
+-    std::string package = _file->package();
++    std::string package = std::string(_file->package());
+     boost::replace_all(package, ".", "::");
+ 
+-    std::string name = _file->message_type(0)->name();
++    std::string name = std::string(_file->message_type(0)->name());
+ 
+-    std::string constType = "GZ_REGISTER_STATIC_MSG(\"" + _file->package() +
++    std::string constType = "GZ_REGISTER_STATIC_MSG(\"" + std::string(_file->package()) +
+       "." + name + "\", " + name + ")\n";
+     printer.Print(constType.c_str(), "name", "namespace_scope");
+   }
+diff -ruN a/gazebo/msgs/msgs.cc b/gazebo/msgs/msgs.cc
+--- a/gazebo/msgs/msgs.cc	2026-07-26 02:37:22.903905664 +0800
++++ b/gazebo/msgs/msgs.cc	2026-07-26 17:49:30.246607843 +0800
+@@ -118,7 +118,7 @@
+ 
+       std::string *serialized_data = pkg.mutable_serialized_data();
+       if (!message.IsInitialized())
+-        gzthrow("Can't serialize message of type[" + message.GetTypeName() +
++        gzthrow("Can't serialize message of type[" + std::string(message.GetTypeName()) +
+             "] because it is missing required fields");
+ 
+       if (!message.SerializeToString(serialized_data))
+@@ -1533,7 +1533,7 @@
+       }
+ 
+       if (_msg.has_name())
+-        visualSDF->GetAttribute("name")->Set(_msg.name());
++        visualSDF->GetAttribute("name")->Set(std::string(_msg.name()));
+ 
+       if (_msg.has_cast_shadows())
+         visualSDF->GetElement("cast_shadows")->Set(_msg.cast_shadows());
+@@ -1593,7 +1593,7 @@
+         msgs::Material::Script script = _msg.script();
+ 
+         if (script.has_name())
+-          scriptElem->GetElement("name")->Set(script.name());
++          scriptElem->GetElement("name")->Set(std::string(script.name()));
+ 
+         if (script.uri_size() > 0)
+           while (scriptElem->HasElement("uri"))
+@@ -2107,7 +2107,7 @@
+         sdf::initFile("light.sdf", lightSDF);
+       }
+ 
+-      lightSDF->GetAttribute("name")->Set(_msg.name());
++      lightSDF->GetAttribute("name")->Set(std::string(_msg.name()));
+ 
+       if (_msg.has_type() && _msg.type() == msgs::Light::POINT)
+         lightSDF->GetAttribute("type")->Set("point");
+@@ -2468,7 +2468,7 @@
+       }
+ 
+       if (_msg.has_name())
+-        collisionSDF->GetAttribute("name")->Set(_msg.name());
++        collisionSDF->GetAttribute("name")->Set(std::string(_msg.name()));
+       if (_msg.has_laser_retro())
+         collisionSDF->GetElement("laser_retro")->Set(_msg.laser_retro());
+       if (_msg.has_max_contacts())
+@@ -2506,7 +2506,7 @@
+       }
+ 
+       if (_msg.has_name())
+-        linkSDF->GetAttribute("name")->Set(_msg.name());
++        linkSDF->GetAttribute("name")->Set(std::string(_msg.name()));
+       if (_msg.has_gravity())
+         linkSDF->GetElement("gravity")->Set(_msg.gravity());
+       if (_msg.has_self_collide())
+@@ -2926,7 +2926,7 @@
+ 
+       // Use the SDF parser to read all the inner xml.
+       std::string tmp = "<sdf version='" + std::string(SDF_VERSION) + "'>";
+-      tmp += "<plugin name='" + _msg.name() + "' filename='" +
++      tmp += "<plugin name='" + std::string(_msg.name()) + "' filename='" +
+         _msg.filename() + "'>";
+       tmp += _msg.innerxml();
+       tmp += "</plugin></sdf>";
+@@ -3056,7 +3056,7 @@
+       }
+ 
+       if (_msg.has_name())
+-        modelSDF->GetAttribute("name")->Set(_msg.name());
++        modelSDF->GetAttribute("name")->Set(std::string(_msg.name()));
+       // ignore the id field, since it's not used in sdformat
+       if (_msg.has_is_static())
+         modelSDF->GetElement("static")->Set(_msg.is_static());
+@@ -3123,7 +3123,7 @@
+       }
+ 
+       if (_msg.has_name())
+-        jointSDF->GetAttribute("name")->Set(_msg.name());
++        jointSDF->GetAttribute("name")->Set(std::string(_msg.name()));
+       if (_msg.has_type())
+         jointSDF->GetAttribute("type")->Set(ConvertJointType(_msg.type()));
+       // ignore the id field, since it's not used in sdformat
+@@ -3375,7 +3375,7 @@
+       }
+ 
+       if (_script.has_name())
+-        result.set_name(_script.name());
++        result.set_name(std::string(_script.name()));
+ 
+       return result;
+     }
+@@ -3391,7 +3391,7 @@
+         result.add_uri(s);
+       }
+ 
+-      result.set_name(_script.name());
++      result.set_name(std::string(_script.name()));
+ 
+       return result;
+     }
+diff -ruN a/gazebo/msgs/msgs_TEST.cc b/gazebo/msgs/msgs_TEST.cc
+--- a/gazebo/msgs/msgs_TEST.cc	2026-07-26 02:37:22.904042850 +0800
++++ b/gazebo/msgs/msgs_TEST.cc	2026-07-26 17:49:30.244317258 +0800
+@@ -702,7 +702,7 @@
+ 
+   msgs::Sensor msg = msgs::SensorFromSDF(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "gps");
++  EXPECT_EQ(std::string(msg.name()), "gps");
+   EXPECT_EQ(msg.type(), "gps");
+   EXPECT_EQ(msg.topic(), "/gazebo/test");
+   EXPECT_TRUE(msg.always_on());
+@@ -848,7 +848,7 @@
+ 
+   msgs::Sensor msg = msgs::SensorFromSDF(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "imu_sensor");
++  EXPECT_EQ(std::string(msg.name()), "imu_sensor");
+   EXPECT_EQ(msg.type(), "imu");
+   EXPECT_EQ(msg.topic(), "/gazebo/test");
+   EXPECT_TRUE(msg.always_on());
+@@ -894,7 +894,7 @@
+ 
+   msgs::Sensor msg = msgs::SensorFromSDF(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "camera");
++  EXPECT_EQ(std::string(msg.name()), "camera");
+   EXPECT_EQ(msg.type(), "logical_camera");
+   EXPECT_EQ(msg.topic(), "/gazebo/test");
+   EXPECT_TRUE(msg.always_on());
+@@ -964,7 +964,7 @@
+ 
+   msgs::Sensor msg = msgs::SensorFromSDF(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "camera");
++  EXPECT_EQ(std::string(msg.name()), "camera");
+   EXPECT_EQ(msg.type(), "camera");
+   EXPECT_EQ(msg.topic(), "/gazebo/test");
+   EXPECT_TRUE(msg.always_on());
+@@ -1016,7 +1016,7 @@
+ 
+   msgs::Sensor msg = msgs::SensorFromSDF(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "contact");
++  EXPECT_EQ(std::string(msg.name()), "contact");
+   EXPECT_EQ(msg.type(), "contact");
+   EXPECT_EQ(msg.topic(), "/test");
+   EXPECT_FALSE(msg.always_on());
+@@ -1072,7 +1072,7 @@
+ 
+   msgs::Sensor msg = msgs::SensorFromSDF(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "ray");
++  EXPECT_EQ(std::string(msg.name()), "ray");
+   EXPECT_EQ(msg.type(), "ray");
+   EXPECT_EQ(msg.topic(), "/test");
+   EXPECT_FALSE(msg.always_on());
+@@ -1197,7 +1197,7 @@
+   msgs::Plugin msg = msgs::PluginFromSDF(sdf);
+ 
+   EXPECT_TRUE(msg.has_name());
+-  EXPECT_EQ(msg.name(), "plugin_name");
++  EXPECT_EQ(std::string(msg.name()), "plugin_name");
+   EXPECT_TRUE(msg.has_filename());
+   EXPECT_EQ(msg.filename(), "plugin_filename");
+   EXPECT_TRUE(msg.has_innerxml());
+@@ -2092,7 +2092,7 @@
+   msgs::Joint msg = msgs::JointFromSDF(sdf);
+ 
+   EXPECT_TRUE(msg.has_name());
+-  EXPECT_EQ(msg.name(), "arm");
++  EXPECT_EQ(std::string(msg.name()), "arm");
+   EXPECT_TRUE(msg.has_type());
+   EXPECT_EQ(msgs::ConvertJointType(msg.type()), "revolute");
+   EXPECT_TRUE(msg.has_pose());
+@@ -2206,7 +2206,7 @@
+   msgs::Joint gearboxMsg = msgs::JointFromSDF(gearboxSdf);
+ 
+   EXPECT_TRUE(gearboxMsg.has_name());
+-  EXPECT_EQ(gearboxMsg.name(), "axle_wheel");
++  EXPECT_EQ(std::string(gearboxMsg.name()), "axle_wheel");
+   EXPECT_TRUE(gearboxMsg.has_type());
+   EXPECT_EQ(msgs::ConvertJointType(gearboxMsg.type()), "gearbox");
+   EXPECT_TRUE(gearboxMsg.has_pose());
+@@ -2339,7 +2339,7 @@
+   msgs::Joint screwMsg = msgs::JointFromSDF(screwSdf);
+ 
+   EXPECT_TRUE(screwMsg.has_name());
+-  EXPECT_EQ(screwMsg.name(), "box_cylinder");
++  EXPECT_EQ(std::string(screwMsg.name()), "box_cylinder");
+   EXPECT_TRUE(screwMsg.has_type());
+   EXPECT_EQ(msgs::ConvertJointType(screwMsg.type()), "screw");
+   EXPECT_TRUE(screwMsg.has_pose());
+@@ -3492,7 +3492,7 @@
+   EXPECT_EQ(model.link_size(), 1);
+   {
+     auto link = model.link(0);
+-    EXPECT_EQ(link.name(), std::string("link_1"));
++    EXPECT_EQ(std::string(link.name()), std::string("link_1"));
+ 
+     auto inertial = link.inertial();
+     EXPECT_DOUBLE_EQ(inertial.mass(), mass);
+@@ -3536,7 +3536,7 @@
+   {
+     auto link1 = model.link(0);
+     auto link2 = model.link(1);
+-    EXPECT_EQ(link2.name(), std::string("link_2"));
++    EXPECT_EQ(std::string(link2.name()), std::string("link_2"));
+ 
+     auto inertial1 = link1.inertial();
+     auto inertial2 = link2.inertial();
+@@ -3561,7 +3561,7 @@
+   EXPECT_EQ(model.link_size(), 1);
+   {
+     auto link = model.link(0);
+-    EXPECT_EQ(link.name(), std::string("link_1"));
++    EXPECT_EQ(std::string(link.name()), std::string("link_1"));
+ 
+     auto inertial = link.inertial();
+     EXPECT_DOUBLE_EQ(inertial.mass(), mass);
+@@ -3607,7 +3607,7 @@
+   {
+     auto link1 = model.link(0);
+     auto link2 = model.link(1);
+-    EXPECT_EQ(link2.name(), std::string("link_2"));
++    EXPECT_EQ(std::string(link2.name()), std::string("link_2"));
+ 
+     auto inertial1 = link1.inertial();
+     auto inertial2 = link2.inertial();
+@@ -3631,7 +3631,7 @@
+   EXPECT_EQ(model.link_size(), 1);
+   {
+     auto link = model.link(0);
+-    EXPECT_EQ(link.name(), std::string("link_1"));
++    EXPECT_EQ(std::string(link.name()), std::string("link_1"));
+ 
+     auto inertial = link.inertial();
+     EXPECT_DOUBLE_EQ(inertial.mass(), mass);
+@@ -3675,7 +3675,7 @@
+   {
+     auto link1 = model.link(0);
+     auto link2 = model.link(1);
+-    EXPECT_EQ(link2.name(), std::string("link_2"));
++    EXPECT_EQ(std::string(link2.name()), std::string("link_2"));
+ 
+     auto inertial1 = link1.inertial();
+     auto inertial2 = link2.inertial();
+@@ -3848,7 +3848,7 @@
+ 
+   // Back to Msg
+   msgs::Plugin msg2 = msgs::PluginFromSDF(sdf1);
+-  EXPECT_EQ(msg2.name(), name);
++  EXPECT_EQ(std::string(msg2.name()), name);
+   EXPECT_EQ(msg2.filename(), filename);
+   EXPECT_EQ(msg2.innerxml(), innerxml);
+ 
+@@ -3959,7 +3959,7 @@
+   auto gzMsg = msgs::ConvertIgnMsg(ignMsg);
+   auto ignMsg2 = msgs::ConvertIgnMsg(gzMsg);
+ 
+-  EXPECT_EQ(ignMsg.name(), ignMsg2.name());
++  EXPECT_EQ(std::string(ignMsg.name()), std::string(ignMsg2.name()));
+   ASSERT_EQ(ignMsg2.uri().size(), 3);
+ 
+   for (size_t i = 0; i < 3; ++i)
+@@ -3988,7 +3988,7 @@
+   auto gzMsg = msgs::ConvertIgnMsg(ignMsg);
+   auto ignMsg2 = msgs::ConvertIgnMsg(gzMsg);
+ 
+-  EXPECT_EQ(ignMsg.script().name(), ignMsg2.script().name());
++  EXPECT_EQ(std::string(ignMsg.script().name()), std::string(ignMsg2.script().name()));
+   EXPECT_EQ(ignMsg.script().uri(0), ignMsg2.script().uri(0));
+   EXPECT_EQ(ignMsg.normal_map(), ignMsg2.normal_map());
+   EXPECT_DOUBLE_EQ(ignMsg.ambient().r(), ignMsg2.ambient().r());
+diff -ruN a/gazebo/physics/AdiabaticAtmosphere.cc b/gazebo/physics/AdiabaticAtmosphere.cc
+--- a/gazebo/physics/AdiabaticAtmosphere.cc	2026-07-26 02:37:22.906388897 +0800
++++ b/gazebo/physics/AdiabaticAtmosphere.cc	2026-07-26 17:49:30.202131045 +0800
+@@ -87,7 +87,7 @@
+     atmosphereMsg.set_pressure(Atmosphere::Pressure());
+     atmosphereMsg.set_mass_density(Atmosphere::MassDensity());
+ 
+-    response.set_type(atmosphereMsg.GetTypeName());
++    response.set_type(std::string(atmosphereMsg.GetTypeName()));
+     atmosphereMsg.SerializeToString(serializedData);
+     this->Publish(response);
+   }
+diff -ruN a/gazebo/physics/Atmosphere_TEST.cc b/gazebo/physics/Atmosphere_TEST.cc
+--- a/gazebo/physics/Atmosphere_TEST.cc	2026-07-26 02:37:22.906575519 +0800
++++ b/gazebo/physics/Atmosphere_TEST.cc	2026-07-26 17:49:30.200874247 +0800
+@@ -48,7 +48,7 @@
+ /////////////////////////////////////////////////
+ void AtmosphereTest::OnAtmosphereMsgResponse(ConstResponsePtr &_msg)
+ {
+-  if (_msg->type() == atmospherePubMsg.GetTypeName())
++  if (_msg->type() == std::string(atmospherePubMsg.GetTypeName()))
+     atmosphereResponseMsg.ParseFromString(_msg->serialized_data());
+ }
+ 
+diff -ruN a/gazebo/physics/bullet/BulletPhysics.cc b/gazebo/physics/bullet/BulletPhysics.cc
+--- a/gazebo/physics/bullet/BulletPhysics.cc	2026-07-26 02:37:22.912579717 +0800
++++ b/gazebo/physics/bullet/BulletPhysics.cc	2026-07-26 17:49:30.239082847 +0800
+@@ -426,7 +426,7 @@
+     physicsMsg.set_real_time_factor(this->targetRealTimeFactor);
+     physicsMsg.set_max_step_size(this->maxStepSize);
+ 
+-    response.set_type(physicsMsg.GetTypeName());
++    response.set_type(std::string(physicsMsg.GetTypeName()));
+     physicsMsg.SerializeToString(serializedData);
+     this->responsePub->Publish(response);
+   }
+diff -ruN a/gazebo/physics/bullet/BulletPhysics_TEST.cc b/gazebo/physics/bullet/BulletPhysics_TEST.cc
+--- a/gazebo/physics/bullet/BulletPhysics_TEST.cc	2026-07-26 02:37:22.912685771 +0800
++++ b/gazebo/physics/bullet/BulletPhysics_TEST.cc	2026-07-26 17:49:30.238395314 +0800
+@@ -183,7 +183,7 @@
+ /////////////////////////////////////////////////
+ void BulletPhysics_TEST::OnPhysicsMsgResponse(ConstResponsePtr &_msg)
+ {
+-  if (_msg->type() == physicsPubMsg.GetTypeName())
++  if (_msg->type() == std::string(physicsPubMsg.GetTypeName()))
+     physicsResponseMsg.ParseFromString(_msg->serialized_data());
+ }
+ 
+diff -ruN a/gazebo/physics/Collision.cc b/gazebo/physics/Collision.cc
+--- a/gazebo/physics/Collision.cc	2026-07-26 02:37:22.906846863 +0800
++++ b/gazebo/physics/Collision.cc	2026-07-26 17:49:30.199168089 +0800
+@@ -318,7 +318,7 @@
+     return;
+   }
+ 
+-  this->SetName(_msg.name());
++  this->SetName(std::string(_msg.name()));
+   if (_msg.has_laser_retro())
+     this->SetLaserRetro(_msg.laser_retro());
+ 
+diff -ruN a/gazebo/physics/dart/DARTPhysics.cc b/gazebo/physics/dart/DARTPhysics.cc
+--- a/gazebo/physics/dart/DARTPhysics.cc	2026-07-26 02:37:22.915358666 +0800
++++ b/gazebo/physics/dart/DARTPhysics.cc	2026-07-26 17:49:30.229617840 +0800
+@@ -845,7 +845,7 @@
+     physicsMsg.set_real_time_factor(this->targetRealTimeFactor);
+     physicsMsg.set_max_step_size(this->maxStepSize);
+ 
+-    response.set_type(physicsMsg.GetTypeName());
++    response.set_type(std::string(physicsMsg.GetTypeName()));
+     physicsMsg.SerializeToString(serializedData);
+     this->responsePub->Publish(response);
+   }
+diff -ruN a/gazebo/physics/Entity.cc b/gazebo/physics/Entity.cc
+--- a/gazebo/physics/Entity.cc	2026-07-26 02:37:22.907250080 +0800
++++ b/gazebo/physics/Entity.cc	2026-07-26 17:49:30.197263988 +0800
+@@ -577,7 +577,7 @@
+ //////////////////////////////////////////////////
+ void Entity::OnPoseMsg(ConstPosePtr &_msg)
+ {
+-  if (_msg->name() == this->GetScopedName())
++  if (std::string(_msg->name()) == this->GetScopedName())
+   {
+     ignition::math::Pose3d p = msgs::ConvertIgn(*_msg);
+     this->SetWorldPose(p);
+diff -ruN a/gazebo/physics/HeightmapShape.cc b/gazebo/physics/HeightmapShape.cc
+--- a/gazebo/physics/HeightmapShape.cc	2026-07-26 02:37:22.907452118 +0800
++++ b/gazebo/physics/HeightmapShape.cc	2026-07-26 17:49:30.196283359 +0800
+@@ -70,7 +70,7 @@
+     this->FillMsg(msg);
+     this->FillHeights(msg);
+ 
+-    response.set_type(msg.GetTypeName());
++    response.set_type(std::string(msg.GetTypeName()));
+     std::string *serializedData = response.mutable_serialized_data();
+     msg.SerializeToString(serializedData);
+ 
+diff -ruN a/gazebo/physics/JointController.cc b/gazebo/physics/JointController.cc
+--- a/gazebo/physics/JointController.cc	2026-07-26 02:37:22.907793582 +0800
++++ b/gazebo/physics/JointController.cc	2026-07-26 17:49:30.193959564 +0800
+@@ -249,82 +249,82 @@
+ {
+   std::map<std::string, JointPtr>::iterator iter;
+   std::unique_lock<std::mutex> lock(this->dataPtr->jointsMutex);
+-  iter = this->dataPtr->joints.find(_msg.name());
++  iter = this->dataPtr->joints.find(std::string(_msg.name()));
+   if (iter != this->dataPtr->joints.end())
+   {
+     if (_msg.reset())
+     {
+-      if (this->dataPtr->forces.find(_msg.name()) !=
++      if (this->dataPtr->forces.find(std::string(_msg.name())) !=
+           this->dataPtr->forces.end())
+       {
+-        this->dataPtr->forces.erase(this->dataPtr->forces.find(_msg.name()));
++        this->dataPtr->forces.erase(this->dataPtr->forces.find(std::string(_msg.name())));
+       }
+ 
+-      if (this->dataPtr->positions.find(_msg.name()) !=
++      if (this->dataPtr->positions.find(std::string(_msg.name())) !=
+           this->dataPtr->positions.end())
+       {
+         this->dataPtr->positions.erase(
+-            this->dataPtr->positions.find(_msg.name()));
++            this->dataPtr->positions.find(std::string(_msg.name())));
+       }
+ 
+-      if (this->dataPtr->velocities.find(_msg.name()) !=
++      if (this->dataPtr->velocities.find(std::string(_msg.name())) !=
+           this->dataPtr->velocities.end())
+       {
+         this->dataPtr->velocities.erase(
+-            this->dataPtr->velocities.find(_msg.name()));
++            this->dataPtr->velocities.find(std::string(_msg.name())));
+       }
+     }
+ 
+     if (_msg.has_force_optional())
+-      this->dataPtr->forces[_msg.name()] = _msg.force_optional().data();
++      this->dataPtr->forces[std::string(_msg.name())] = _msg.force_optional().data();
+ 
+     if (_msg.has_position())
+     {
+       if (_msg.position().has_target_optional())
+       {
+-        if (!this->SetPositionTarget(_msg.name(),
++        if (!this->SetPositionTarget(std::string(_msg.name()),
+             _msg.position().target_optional().data()))
+         {
+           gzerr << "Unable to set position target for joint["
+-            << _msg.name() << "]. Joint is not found.\n";
++            << std::string(_msg.name()) << "]. Joint is not found.\n";
+         }
+       }
+ 
+       if (_msg.position().has_p_gain_optional())
+       {
+-        this->dataPtr->posPids[_msg.name()].SetPGain(
++        this->dataPtr->posPids[std::string(_msg.name())].SetPGain(
+             _msg.position().p_gain_optional().data());
+       }
+ 
+       if (_msg.position().has_i_gain_optional())
+       {
+-        this->dataPtr->posPids[_msg.name()].SetIGain(
++        this->dataPtr->posPids[std::string(_msg.name())].SetIGain(
+             _msg.position().i_gain_optional().data());
+       }
+ 
+       if (_msg.position().has_d_gain_optional())
+       {
+-        this->dataPtr->posPids[_msg.name()].SetDGain(
++        this->dataPtr->posPids[std::string(_msg.name())].SetDGain(
+             _msg.position().d_gain_optional().data());
+       }
+ 
+       if (_msg.position().has_i_max_optional())
+       {
+-        this->dataPtr->posPids[_msg.name()].SetIMax(
++        this->dataPtr->posPids[std::string(_msg.name())].SetIMax(
+             _msg.position().i_max_optional().data());
+       }
+ 
+       if (_msg.position().has_i_min_optional())
+       {
+-        this->dataPtr->posPids[_msg.name()].SetIMin(
++        this->dataPtr->posPids[std::string(_msg.name())].SetIMin(
+             _msg.position().i_min_optional().data());
+       }
+ 
+       if (_msg.position().has_limit_optional())
+       {
+-        this->dataPtr->posPids[_msg.name()].SetCmdMax(
++        this->dataPtr->posPids[std::string(_msg.name())].SetCmdMax(
+             _msg.position().limit_optional().data());
+-        this->dataPtr->posPids[_msg.name()].SetCmdMin(
++        this->dataPtr->posPids[std::string(_msg.name())].SetCmdMin(
+             -_msg.position().limit_optional().data());
+       }
+     }
+@@ -333,55 +333,55 @@
+     {
+       if (_msg.velocity().has_target_optional())
+       {
+-        if (!this->SetVelocityTarget(_msg.name(),
++        if (!this->SetVelocityTarget(std::string(_msg.name()),
+             _msg.velocity().target_optional().data()))
+         {
+           gzerr << "Unable to set velocity target for joint["
+-            << _msg.name() << "]. Joint is not found.\n";
++            << std::string(_msg.name()) << "]. Joint is not found.\n";
+         }
+       }
+ 
+       if (_msg.velocity().has_p_gain_optional())
+       {
+-        this->dataPtr->velPids[_msg.name()].SetPGain(
++        this->dataPtr->velPids[std::string(_msg.name())].SetPGain(
+             _msg.velocity().p_gain_optional().data());
+       }
+ 
+       if (_msg.velocity().has_i_gain_optional())
+       {
+-        this->dataPtr->velPids[_msg.name()].SetIGain(
++        this->dataPtr->velPids[std::string(_msg.name())].SetIGain(
+             _msg.velocity().i_gain_optional().data());
+       }
+ 
+       if (_msg.velocity().has_d_gain_optional())
+       {
+-        this->dataPtr->velPids[_msg.name()].SetDGain(
++        this->dataPtr->velPids[std::string(_msg.name())].SetDGain(
+             _msg.velocity().d_gain_optional().data());
+       }
+ 
+       if (_msg.velocity().has_i_max_optional())
+       {
+-        this->dataPtr->velPids[_msg.name()].SetIMax(
++        this->dataPtr->velPids[std::string(_msg.name())].SetIMax(
+             _msg.velocity().i_max_optional().data());
+       }
+ 
+       if (_msg.velocity().has_i_min_optional())
+       {
+-        this->dataPtr->velPids[_msg.name()].SetIMin(
++        this->dataPtr->velPids[std::string(_msg.name())].SetIMin(
+             _msg.velocity().i_min_optional().data());
+       }
+ 
+       if (_msg.velocity().has_limit_optional())
+       {
+-        this->dataPtr->velPids[_msg.name()].SetCmdMax(
++        this->dataPtr->velPids[std::string(_msg.name())].SetCmdMax(
+             _msg.velocity().limit_optional().data());
+-        this->dataPtr->velPids[_msg.name()].SetCmdMin(
++        this->dataPtr->velPids[std::string(_msg.name())].SetCmdMin(
+             -_msg.velocity().limit_optional().data());
+       }
+     }
+   }
+   else
+-    gzerr << "Unable to find joint[" << _msg.name() << "]\n";
++    gzerr << "Unable to find joint[" << std::string(_msg.name()) << "]\n";
+ }
+ 
+ //////////////////////////////////////////////////
+diff -ruN a/gazebo/physics/Light.cc b/gazebo/physics/Light.cc
+--- a/gazebo/physics/Light.cc	2026-07-26 02:37:22.908064914 +0800
++++ b/gazebo/physics/Light.cc	2026-07-26 17:49:30.192760233 +0800
+@@ -97,7 +97,7 @@
+ void Light::ProcessMsg(const msgs::Light &_msg)
+ {
+   // Get leaf name
+-  std::string lightName = _msg.name();
++  std::string lightName = std::string(_msg.name());
+   size_t idx = lightName.rfind("::");
+   if (idx != std::string::npos)
+     lightName = lightName.substr(idx+2);
+diff -ruN a/gazebo/physics/Light_TEST.cc b/gazebo/physics/Light_TEST.cc
+--- a/gazebo/physics/Light_TEST.cc	2026-07-26 02:37:22.908224490 +0800
++++ b/gazebo/physics/Light_TEST.cc	2026-07-26 17:49:30.192159064 +0800
+@@ -82,7 +82,7 @@
+   lightPtr->FillMsg(newLightMsg);
+ 
+   // Check message against original message
+-  EXPECT_EQ(lightMsg.name(), newLightMsg.name());
++  EXPECT_EQ(std::string(lightMsg.name()), std::string(newLightMsg.name()));
+ 
+   EXPECT_EQ(lightMsg.diffuse().r(), newLightMsg.diffuse().r());
+   EXPECT_EQ(lightMsg.diffuse().g(), newLightMsg.diffuse().g());
+diff -ruN a/gazebo/physics/Link.cc b/gazebo/physics/Link.cc
+--- a/gazebo/physics/Link.cc	2026-07-26 02:37:22.908260908 +0800
++++ b/gazebo/physics/Link.cc	2026-07-26 17:49:30.191292058 +0800
+@@ -379,7 +379,7 @@
+       delete deleteMsg;
+ 
+       msgs::Visual msg;
+-      msg.set_name(iter.second.name());
++      msg.set_name(std::string(iter.second.name()));
+       msg.set_id(iter.second.id());
+       if (this->parent)
+       {
+@@ -480,7 +480,7 @@
+       // TODO: Update visuals properly
+       msgs::Visual msg = msgs::VisualFromSDF(visualElem);
+ 
+-      msg.set_name(this->GetScopedName() + "::" + msg.name());
++      msg.set_name(this->GetScopedName() + "::" + std::string(msg.name()));
+       msg.set_parent_name(this->GetScopedName());
+       msg.set_is_static(this->IsStatic());
+       msg.set_type(msgs::Visual::VISUAL);
+@@ -1078,7 +1078,7 @@
+     return;
+   }
+ 
+-  this->SetName(this->StripParentScopedName(_msg.name()));
++  this->SetName(this->StripParentScopedName(std::string(_msg.name())));
+ 
+   if (_msg.has_self_collide())
+     this->SetSelfCollide(_msg.self_collide());
+@@ -1317,8 +1317,8 @@
+ {
+   for (auto &iter : this->visuals)
+   {
+-    if (iter.second.name() == _visName ||
+-        iter.second.name() == this->GetScopedName() + "::" + _visName)
++    if (std::string(iter.second.name()) == _visName ||
++        std::string(iter.second.name()) == this->GetScopedName() + "::" + _visName)
+     {
+       _visualId = iter.first;
+       return true;
+@@ -1375,7 +1375,7 @@
+         visualElem->Get<std::string>("name");
+ 
+       // update visual msg if it exists
+-      if (msg.name() == visName)
++      if (std::string(msg.name()) == visName)
+       {
+         visualElem->GetElement("pose")->Set(_pose);
+         break;
+@@ -1385,7 +1385,7 @@
+     }
+   }
+   msgs::Visual visual;
+-  visual.set_name(msg.name());
++  visual.set_name(std::string(msg.name()));
+   visual.set_id(_id);
+   visual.set_parent_name(linkName);
+   visual.set_parent_id(this->GetId());
+@@ -1545,13 +1545,13 @@
+       if (nullptr != this->dataPtr->linkSDFDom)
+       {
+         // TODO (addisu) Check the assumption that visualDom is always valid
+-        auto *visualDom = this->dataPtr->linkSDFDom->VisualByName(msg.name());
++        auto *visualDom = this->dataPtr->linkSDFDom->VisualByName(std::string(msg.name()));
+ 
+         msgs::Set(msg.mutable_pose(),
+                   common::resolveSdfPose(visualDom->SemanticPose()));
+       }
+       bool newVis = true;
+-      std::string visName = this->GetScopedName() + "::" + msg.name();
++      std::string visName = this->GetScopedName() + "::" + std::string(msg.name());
+ 
+       if (visualElem->HasElement("material"))
+       {
+@@ -1566,7 +1566,7 @@
+       // update visual msg if it exists
+       for (auto &iter : this->visuals)
+       {
+-        if (iter.second.name() == visName)
++        if (std::string(iter.second.name()) == visName)
+         {
+           iter.second.mutable_geometry()->CopyFrom(msg.geometry());
+           newVis = false;
+@@ -1587,7 +1587,7 @@
+ 
+         auto iter = this->visuals.find(msg.id());
+         if (iter != this->visuals.end())
+-          gzthrow(std::string("Duplicate visual name[")+msg.name()+"]\n");
++          gzthrow(std::string("Duplicate visual name[")+std::string(msg.name())+"]\n");
+         this->visuals[msg.id()] = msg;
+       }
+ 
+@@ -1784,7 +1784,7 @@
+ 
+   Visuals_M::const_iterator iter;
+   for (iter = this->visuals.begin(); iter != this->visuals.end(); ++iter)
+-    if (iter->second.name() == _name)
++    if (std::string(iter->second.name()) == _name)
+       break;
+ 
+   if (iter != this->visuals.end())
+diff -ruN a/gazebo/physics/Model.cc b/gazebo/physics/Model.cc
+--- a/gazebo/physics/Model.cc	2026-07-26 02:37:22.908691712 +0800
++++ b/gazebo/physics/Model.cc	2026-07-26 17:49:30.188960007 +0800
+@@ -1282,14 +1282,14 @@
+     return;
+   }
+   else if ((_msg.has_id() && _msg.id() != this->GetId()) &&
+-            _msg.name() != this->GetScopedName())
++            std::string(_msg.name()) != this->GetScopedName())
+   {
+-    gzerr << "Incorrect name[" << _msg.name() << " != " << this->GetName()
++    gzerr << "Incorrect name[" << std::string(_msg.name()) << " != " << this->GetName()
+       << "]\n";
+     return;
+   }
+ 
+-  this->SetName(this->StripParentScopedName(_msg.name()));
++  this->SetName(this->StripParentScopedName(std::string(_msg.name())));
+ 
+   if (_msg.has_pose())
+     this->SetWorldPose(msgs::ConvertIgn(_msg.pose()));
+diff -ruN a/gazebo/physics/Model_TEST.cc b/gazebo/physics/Model_TEST.cc
+--- a/gazebo/physics/Model_TEST.cc	2026-07-26 02:37:22.908956972 +0800
++++ b/gazebo/physics/Model_TEST.cc	2026-07-26 17:49:30.187831542 +0800
+@@ -181,7 +181,7 @@
+ 
+     EXPECT_TRUE(success);
+     ASSERT_EQ(plugins.plugins_size(), 1);
+-    EXPECT_EQ(plugins.plugins(0).name(), "submarine_propeller_3");
++    EXPECT_EQ(std::string(plugins.plugins(0).name()), "submarine_propeller_3");
+   }
+ 
+   gzmsg << "Get all plugins" << std::endl;
+@@ -191,11 +191,11 @@
+ 
+     EXPECT_TRUE(success);
+     ASSERT_EQ(plugins.plugins_size(), 5);
+-    EXPECT_EQ(plugins.plugins(0).name(), "submarine_propeller_1");
+-    EXPECT_EQ(plugins.plugins(1).name(), "submarine_propeller_2");
+-    EXPECT_EQ(plugins.plugins(2).name(), "submarine_propeller_3");
+-    EXPECT_EQ(plugins.plugins(3).name(), "submarine_propeller_4");
+-    EXPECT_EQ(plugins.plugins(4).name(), "buoyancy");
++    EXPECT_EQ(std::string(plugins.plugins(0).name()), "submarine_propeller_1");
++    EXPECT_EQ(std::string(plugins.plugins(1).name()), "submarine_propeller_2");
++    EXPECT_EQ(std::string(plugins.plugins(2).name()), "submarine_propeller_3");
++    EXPECT_EQ(std::string(plugins.plugins(3).name()), "submarine_propeller_4");
++    EXPECT_EQ(std::string(plugins.plugins(4).name()), "buoyancy");
+   }
+ }
+ 
+@@ -223,7 +223,7 @@
+ 
+   EXPECT_TRUE(success);
+   ASSERT_EQ(plugins.plugins_size(), 1);
+-  EXPECT_EQ(plugins.plugins(0).name(), "region_event_box");
++  EXPECT_EQ(std::string(plugins.plugins(0).name()), "region_event_box");
+ }
+ 
+ //////////////////////////////////////////////////
+diff -ruN a/gazebo/physics/ode/ODEPhysics.cc b/gazebo/physics/ode/ODEPhysics.cc
+--- a/gazebo/physics/ode/ODEPhysics.cc	2026-07-26 02:37:22.917365200 +0800
++++ b/gazebo/physics/ode/ODEPhysics.cc	2026-07-26 17:49:30.216734218 +0800
+@@ -284,7 +284,7 @@
+     physicsMsg.set_real_time_factor(this->targetRealTimeFactor);
+     physicsMsg.set_max_step_size(this->maxStepSize);
+ 
+-    response.set_type(physicsMsg.GetTypeName());
++    response.set_type(std::string(physicsMsg.GetTypeName()));
+     physicsMsg.SerializeToString(serializedData);
+     this->responsePub->Publish(response);
+   }
+diff -ruN a/gazebo/physics/ode/ODEPhysics_TEST.cc b/gazebo/physics/ode/ODEPhysics_TEST.cc
+--- a/gazebo/physics/ode/ODEPhysics_TEST.cc	2026-07-26 02:37:22.917494470 +0800
++++ b/gazebo/physics/ode/ODEPhysics_TEST.cc	2026-07-26 17:49:30.215673788 +0800
+@@ -377,7 +377,7 @@
+ /////////////////////////////////////////////////
+ void ODEPhysics_TEST::OnPhysicsMsgResponse(ConstResponsePtr &_msg)
+ {
+-  if (_msg->type() == physicsPubMsg.GetTypeName())
++  if (_msg->type() == std::string(physicsPubMsg.GetTypeName()))
+     physicsResponseMsg.ParseFromString(_msg->serialized_data());
+ }
+ 
+diff -ruN a/gazebo/physics/PhysicsEngine_TEST.cc b/gazebo/physics/PhysicsEngine_TEST.cc
+--- a/gazebo/physics/PhysicsEngine_TEST.cc	2026-07-26 02:37:22.909187616 +0800
++++ b/gazebo/physics/PhysicsEngine_TEST.cc	2026-07-26 17:49:30.186900790 +0800
+@@ -38,7 +38,7 @@
+ /////////////////////////////////////////////////
+ void PhysicsEngineTest::OnPhysicsMsgResponse(ConstResponsePtr &_msg)
+ {
+-  if (_msg->type() == physicsPubMsg.GetTypeName())
++  if (_msg->type() == std::string(physicsPubMsg.GetTypeName()))
+     physicsResponseMsg.ParseFromString(_msg->serialized_data());
+ }
+ 
+diff -ruN a/gazebo/physics/simbody/SimbodyPhysics.cc b/gazebo/physics/simbody/SimbodyPhysics.cc
+--- a/gazebo/physics/simbody/SimbodyPhysics.cc	2026-07-26 02:37:22.919034147 +0800
++++ b/gazebo/physics/simbody/SimbodyPhysics.cc	2026-07-26 17:49:30.206419795 +0800
+@@ -199,7 +199,7 @@
+     physicsMsg.set_real_time_factor(this->targetRealTimeFactor);
+     physicsMsg.set_max_step_size(this->maxStepSize);
+ 
+-    response.set_type(physicsMsg.GetTypeName());
++    response.set_type(std::string(physicsMsg.GetTypeName()));
+     physicsMsg.SerializeToString(serializedData);
+     this->responsePub->Publish(response);
+   }
+diff -ruN a/gazebo/physics/Wind.cc b/gazebo/physics/Wind.cc
+--- a/gazebo/physics/Wind.cc	2026-07-26 02:37:22.910842046 +0800
++++ b/gazebo/physics/Wind.cc	2026-07-26 17:49:30.180722193 +0800
+@@ -218,7 +218,7 @@
+       msgs::Convert(this->dataPtr->linearVel));
+     windMsg.set_enable_wind(this->dataPtr->world.WindEnabled());
+ 
+-    response.set_type(windMsg.GetTypeName());
++    response.set_type(std::string(windMsg.GetTypeName()));
+     windMsg.SerializeToString(serializedData);
+     this->dataPtr->responsePub->Publish(response);
+   }
+diff -ruN a/gazebo/physics/Wind_TEST.cc b/gazebo/physics/Wind_TEST.cc
+--- a/gazebo/physics/Wind_TEST.cc	2026-07-26 02:37:22.910925872 +0800
++++ b/gazebo/physics/Wind_TEST.cc	2026-07-26 17:49:30.180405412 +0800
+@@ -68,7 +68,7 @@
+ /////////////////////////////////////////////////
+ void WindTest::OnWindMsgResponse(ConstResponsePtr &_msg)
+ {
+-  if (_msg->type() == windPubMsg.GetTypeName())
++  if (_msg->type() == std::string(windPubMsg.GetTypeName()))
+     windResponseMsg.ParseFromString(_msg->serialized_data());
+ }
+ 
+diff -ruN a/gazebo/physics/World.cc b/gazebo/physics/World.cc
+--- a/gazebo/physics/World.cc	2026-07-26 02:37:22.910970457 +0800
++++ b/gazebo/physics/World.cc	2026-07-26 17:49:30.178704516 +0800
+@@ -1722,7 +1722,7 @@
+   int i = 0;
+   for (; i < this->dataPtr->sceneMsg.joint_size(); i++)
+   {
+-    if (this->dataPtr->sceneMsg.joint(i).name() == _msg->name())
++    if (std::string(this->dataPtr->sceneMsg.joint(i).name()) == std::string(_msg->name()))
+     {
+       this->dataPtr->sceneMsg.mutable_joint(i)->CopyFrom(*_msg);
+       break;
+@@ -1904,7 +1904,7 @@
+         }
+       }
+ 
+-      response.set_type(modelVMsg.GetTypeName());
++      response.set_type(std::string(modelVMsg.GetTypeName()));
+       std::string *serializedData = response.mutable_serialized_data();
+       modelVMsg.SerializeToString(serializedData);
+     }
+@@ -1927,7 +1927,7 @@
+ 
+           std::string *serializedData = response.mutable_serialized_data();
+           modelMsg.SerializeToString(serializedData);
+-          response.set_type(modelMsg.GetTypeName());
++          response.set_type(std::string(modelMsg.GetTypeName()));
+         }
+         else if (entity->HasType(Base::LINK))
+         {
+@@ -1937,7 +1937,7 @@
+ 
+           std::string *serializedData = response.mutable_serialized_data();
+           linkMsg.SerializeToString(serializedData);
+-          response.set_type(linkMsg.GetTypeName());
++          response.set_type(std::string(linkMsg.GetTypeName()));
+         }
+         else if (entity->HasType(Base::COLLISION))
+         {
+@@ -1948,7 +1948,7 @@
+ 
+           std::string *serializedData = response.mutable_serialized_data();
+           collisionMsg.SerializeToString(serializedData);
+-          response.set_type(collisionMsg.GetTypeName());
++          response.set_type(std::string(collisionMsg.GetTypeName()));
+         }
+         else if (entity->HasType(Base::JOINT))
+         {
+@@ -1958,7 +1958,7 @@
+ 
+           std::string *serializedData = response.mutable_serialized_data();
+           jointMsg.SerializeToString(serializedData);
+-          response.set_type(jointMsg.GetTypeName());
++          response.set_type(std::string(jointMsg.GetTypeName()));
+         }
+       }
+       else
+@@ -2008,7 +2008,7 @@
+ 
+       std::string *serializedData = response.mutable_serialized_data();
+       msg.SerializeToString(serializedData);
+-      response.set_type(msg.GetTypeName());
++      response.set_type(std::string(msg.GetTypeName()));
+     }
+     else if (requestMsg.request() == "scene_info")
+     {
+@@ -2018,7 +2018,7 @@
+ 
+       std::string *serializedData = response.mutable_serialized_data();
+       this->dataPtr->sceneMsg.SerializeToString(serializedData);
+-      response.set_type(this->dataPtr->sceneMsg.GetTypeName());
++      response.set_type(std::string(this->dataPtr->sceneMsg.GetTypeName()));
+ 
+       for (auto road : this->dataPtr->roads)
+       {
+@@ -2033,7 +2033,7 @@
+ 
+       std::string *serializedData = response.mutable_serialized_data();
+       sphereCoordMsg.SerializeToString(serializedData);
+-      response.set_type(sphereCoordMsg.GetTypeName());
++      response.set_type(std::string(sphereCoordMsg.GetTypeName()));
+     }
+     else
+       send = false;
+@@ -2057,11 +2057,11 @@
+     if (modelMsg.has_id())
+       model = this->ModelById(modelMsg.id());
+     else
+-      model = this->ModelByName(modelMsg.name());
++      model = this->ModelByName(std::string(modelMsg.name()));
+ 
+     if (!model)
+       gzerr << "Unable to find model["
+-            << modelMsg.name() << "] Id[" << modelMsg.id() << "]\n";
++            << std::string(modelMsg.name()) << "] Id[" << modelMsg.id() << "]\n";
+     else
+     {
+       model->ProcessMsg(modelMsg);
+@@ -2104,11 +2104,11 @@
+   std::lock_guard<std::recursive_mutex> lock(this->dataPtr->receiveMutex);
+   for (auto const &lightModifyMsg : this->dataPtr->lightModifyMsgs)
+   {
+-    LightPtr light = this->LightByName(lightModifyMsg.name());
++    LightPtr light = this->LightByName(std::string(lightModifyMsg.name()));
+ 
+     if (!light)
+     {
+-      gzerr << "Light [" << lightModifyMsg.name() << "] not found."
++      gzerr << "Light [" << std::string(lightModifyMsg.name()) << "] not found."
+           << " Use topic ~/factory/light to spawn a new light." << std::endl;
+       continue;
+     }
+@@ -2117,7 +2117,7 @@
+       // Update in scene message
+       for (int i = 0; i < this->dataPtr->sceneMsg.light_size(); ++i)
+       {
+-        if (this->dataPtr->sceneMsg.light(i).name() == lightModifyMsg.name())
++        if (std::string(this->dataPtr->sceneMsg.light(i).name()) == std::string(lightModifyMsg.name()))
+         {
+           this->dataPtr->sceneMsg.mutable_light(i)->MergeFrom(lightModifyMsg);
+           break;
+@@ -2152,7 +2152,7 @@
+ 
+   for (auto const &lightFactoryMsg : lightFactoryMsgsCopy)
+   {
+-    LightPtr light = this->LightByName(lightFactoryMsg.name());
++    LightPtr light = this->LightByName(std::string(lightFactoryMsg.name()));
+     if (light)
+     {
+       continue;
+@@ -2920,7 +2920,7 @@
+                 if (!v.second.has_geometry())
+                   continue;
+                 msgs::Visual *visualMsg = linkMsg->add_visual();
+-                visualMsg->set_name(v.second.name());
++                visualMsg->set_name(std::string(v.second.name()));
+                 visualMsg->set_id(v.second.id());
+                 visualMsg->set_parent_name(v.second.parent_name());
+                 visualMsg->set_parent_id(v.second.parent_id());
+@@ -3203,7 +3203,7 @@
+     // Find the light by name in the scene msg, and remove it.
+     for (int i = 0; i < this->dataPtr->sceneMsg.light_size(); ++i)
+     {
+-      if (this->dataPtr->sceneMsg.light(i).name() == _name)
++      if (std::string(this->dataPtr->sceneMsg.light(i).name()) == _name)
+       {
+         this->dataPtr->sceneMsg.mutable_light()->SwapElements(i,
+             this->dataPtr->sceneMsg.light_size()-1);
+diff -ruN a/gazebo/transport/CallbackHelper.hh b/gazebo/transport/CallbackHelper.hh
+--- a/gazebo/transport/CallbackHelper.hh	2026-07-26 02:37:22.932981566 +0800
++++ b/gazebo/transport/CallbackHelper.hh	2026-07-26 17:49:30.112154361 +0800
+@@ -136,7 +136,7 @@
+                 if ((m = dynamic_cast<google::protobuf::Message*>(&test))
+                     == NULL)
+                   gzthrow("Message type must be a google::protobuf type\n");
+-                return m->GetTypeName();
++                return std::string(m->GetTypeName());
+               }
+ 
+       // documentation inherited
+diff -ruN a/gazebo/transport/Node.hh b/gazebo/transport/Node.hh
+--- a/gazebo/transport/Node.hh	2026-07-26 02:37:22.933421923 +0800
++++ b/gazebo/transport/Node.hh	2026-07-26 17:49:30.110505817 +0800
+@@ -228,7 +228,7 @@
+                   const google::protobuf::Message &_message)
+               {
+                 transport::PublisherPtr pub = this->Advertise(_topic,
+-                    _message.GetTypeName());
++                    std::string(_message.GetTypeName()));
+                 pub->WaitForConnection();
+ 
+                 pub->Publish(_message, true);
+diff -ruN a/gazebo/transport/Publisher.cc b/gazebo/transport/Publisher.cc
+--- a/gazebo/transport/Publisher.cc	2026-07-26 02:37:22.933664706 +0800
++++ b/gazebo/transport/Publisher.cc	2026-07-26 17:49:30.109135112 +0800
+@@ -86,7 +86,7 @@
+ void Publisher::PublishImpl(const google::protobuf::Message &_message,
+                             bool _block)
+ {
+-  if (_message.GetTypeName() != this->msgType)
++  if (std::string(_message.GetTypeName()) != this->msgType)
+     gzthrow("Invalid message type\n");
+ 
+   if (!_message.IsInitialized())
+diff -ruN a/gazebo/transport/SubscribeOptions.hh b/gazebo/transport/SubscribeOptions.hh
+--- a/gazebo/transport/SubscribeOptions.hh	2026-07-26 02:37:22.933757044 +0800
++++ b/gazebo/transport/SubscribeOptions.hh	2026-07-26 17:49:30.108707424 +0800
+@@ -56,7 +56,7 @@
+ 
+                 this->node = _node;
+                 this->topic = _topic;
+-                this->msgType = msg->GetTypeName();
++                this->msgType = std::string(msg->GetTypeName());
+                 this->latching = _latching;
+               }
+ 
+diff -ruN a/gazebo/transport/TopicManager.hh b/gazebo/transport/TopicManager.hh
+--- a/gazebo/transport/TopicManager.hh	2026-07-26 02:37:22.934085902 +0800
++++ b/gazebo/transport/TopicManager.hh	2026-07-26 17:49:30.107023086 +0800
+@@ -160,7 +160,7 @@
+                 if (!msg)
+                   gzthrow("Advertise requires a google protobuf type");
+ 
+-                return this->Advertise(_topic, msg->GetTypeName(), _queueLimit,
++                return this->Advertise(_topic, std::string(msg->GetTypeName()), _queueLimit,
+                         _hzRate);
+               }
+ 
+diff -ruN a/gazebo/util/IgnMsgSdf.cc b/gazebo/util/IgnMsgSdf.cc
+--- a/gazebo/util/IgnMsgSdf.cc	2026-07-26 02:37:22.934569460 +0800
++++ b/gazebo/util/IgnMsgSdf.cc	2026-07-26 17:49:30.104606229 +0800
+@@ -39,7 +39,7 @@
+ 
+       // Use the SDF parser to read all the inner xml.
+       std::string tmp = "<sdf version='" SDF_VERSION "'>";
+-      tmp += "<plugin name='" + _msg.name() + "' filename='" +
++      tmp += "<plugin name='" + std::string(_msg.name()) + "' filename='" +
+         _msg.filename() + "'>";
+       tmp += _msg.innerxml();
+       tmp += "</plugin></sdf>";
+diff -ruN a/gazebo/util/IgnMsgSdf.hh b/gazebo/util/IgnMsgSdf.hh
+--- a/gazebo/util/IgnMsgSdf.hh	2026-07-26 02:37:22.934598842 +0800
++++ b/gazebo/util/IgnMsgSdf.hh	2026-07-26 17:49:30.104519440 +0800
+@@ -36,7 +36,7 @@
+     T Convert(const sdf::ElementPtr /*_sdf*/)
+     {
+       gzerr << "Invalid convertion of SDF to type["
+-            << typeid(T).name() << "]\n";
++            << std::string(typeid(T).name()) << "]\n";
+       return T();
+     }
+ 
+diff -ruN a/gazebo/util/IgnMsgSdf_TEST.cc b/gazebo/util/IgnMsgSdf_TEST.cc
+--- a/gazebo/util/IgnMsgSdf_TEST.cc	2026-07-26 02:37:22.934628322 +0800
++++ b/gazebo/util/IgnMsgSdf_TEST.cc	2026-07-26 17:49:30.104408529 +0800
+@@ -68,7 +68,7 @@
+        </sdf>", sdf));
+   auto msg = util::Convert<ignition::msgs::Plugin>(sdf);
+ 
+-  EXPECT_EQ(msg.name(), "plugin_name");
++  EXPECT_EQ(std::string(msg.name()), "plugin_name");
+   EXPECT_EQ(msg.filename(), "plugin_filename");
+   EXPECT_EQ(msg.innerxml(), "<param1>1</param1>\n<param2>1</param2>\n");
+ }
+@@ -115,7 +115,7 @@
+ 
+   // Back to Msg
+   auto msg2 = util::Convert<ignition::msgs::Plugin>(sdf1);
+-  EXPECT_EQ(msg2.name(), name);
++  EXPECT_EQ(std::string(msg2.name()), name);
+   EXPECT_EQ(msg2.filename(), filename);
+   EXPECT_EQ(msg2.innerxml(), innerxml);
+ 
+diff -ruN a/gazebo/util/IntrospectionClient_TEST.cc b/gazebo/util/IntrospectionClient_TEST.cc
+--- a/gazebo/util/IntrospectionClient_TEST.cc	2026-07-26 02:37:22.934759771 +0800
++++ b/gazebo/util/IntrospectionClient_TEST.cc	2026-07-26 17:49:30.103687642 +0800
+@@ -53,7 +53,7 @@
+       auto value = param.value();
+       EXPECT_EQ(value.type(), gazebo::msgs::Any::DOUBLE);
+       ASSERT_TRUE(value.has_double_value());
+-      receivedItems[param.name()] = value.double_value();
++      receivedItems[std::string(param.name())] = value.double_value();
+     }
+ 
+     ASSERT_TRUE(receivedItems.find("item1") != receivedItems.end());
+diff -ruN a/gazebo/util/IntrospectionManager.cc b/gazebo/util/IntrospectionManager.cc
+--- a/gazebo/util/IntrospectionManager.cc	2026-07-26 02:37:22.934800366 +0800
++++ b/gazebo/util/IntrospectionManager.cc	2026-07-26 17:49:30.103392209 +0800
+@@ -466,7 +466,7 @@
+     auto param = _req.param(i);
+     if (!this->ValidateParameter(param, {"item"}))
+     {
+-      gzwarn << "Invalid parameter[" << param.name() << "] "
++      gzwarn << "Invalid parameter[" << std::string(param.name()) << "] "
+         << "Ignoring request." << std::endl;
+       return false;
+     }
+@@ -511,12 +511,12 @@
+       return false;
+     }
+ 
+-    if (param.name() == "item")
++    if (std::string(param.name()) == "item")
+     {
+       // Update the new list of items.
+       newItems.emplace(param.value().string_value());
+     }
+-    else if (param.name() == "filter_id")
++    else if (std::string(param.name()) == "filter_id")
+     {
+       // Sanity check: Make sure that we didn't receive a 'filter_id' before.
+       if (!filterId.empty())
+@@ -531,7 +531,7 @@
+     }
+     else
+     {
+-      gzwarn << "Unexpected param name [" << param.name() << "]." << std::endl;
++      gzwarn << "Unexpected param name [" << std::string(param.name()) << "]." << std::endl;
+       gzwarn << "Ignoring request." << std::endl;
+       return false;
+     }
+@@ -610,12 +610,12 @@
+ bool IntrospectionManager::ValidateParameter(const gazebo::msgs::Param &_msg,
+     const std::set<std::string> &_allowedValues) const
+ {
+-  if (_allowedValues.find(_msg.name()) == _allowedValues.end())
++  if (_allowedValues.find(std::string(_msg.name())) == _allowedValues.end())
+   {
+     gzwarn << "Unexpected parameter name. Expected names: [";
+     for (auto const &v : _allowedValues)
+       gzerr << "'" << v << "' ";
+-    gzwarn << "]" << std::endl << "Received name: " << _msg.name() << std::endl;
++    gzwarn << "]" << std::endl << "Received name: " << std::string(_msg.name()) << std::endl;
+     return false;
+   }
+ 
+diff -ruN a/interfaces/player/Position2dInterface.cc b/interfaces/player/Position2dInterface.cc
+--- a/interfaces/player/Position2dInterface.cc	2026-07-26 02:37:22.936590039 +0800
++++ b/interfaces/player/Position2dInterface.cc	2026-07-26 17:49:30.094443049 +0800
+@@ -226,7 +226,7 @@
+   // Iterate through all the pose messages
+   for (int i = 0; i < _msg->pose_size(); ++i)
+   {
+-    if (_msg->pose(i).name() != this->modelName)
++    if (std::string(_msg->pose(i).name()) != this->modelName)
+       continue;
+ 
+     player_position2d_data_t data;

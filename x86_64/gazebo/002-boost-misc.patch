@@ -1,0 +1,104 @@
+diff -ruN a/cmake/SearchForStuff.cmake b/cmake/SearchForStuff.cmake
+--- a/cmake/SearchForStuff.cmake	2026-07-26 02:37:22.840030968 +0800
++++ b/cmake/SearchForStuff.cmake	2026-07-26 17:49:29.371585337 +0800
+@@ -660,7 +660,7 @@
+ ########################################
+ # Find Boost, if not specified manually
+ include(FindBoost)
+-find_package(Boost ${MIN_BOOST_VERSION} REQUIRED thread system filesystem program_options regex iostreams date_time)
++find_package(Boost ${MIN_BOOST_VERSION} REQUIRED thread filesystem program_options regex iostreams date_time)
+ 
+ if (NOT Boost_FOUND)
+   set (BUILD_GAZEBO OFF CACHE INTERNAL "Build Gazebo" FORCE)
+diff -ruN a/gazebo/common/CommonIface.hh b/gazebo/common/CommonIface.hh
+--- a/gazebo/common/CommonIface.hh	2026-07-26 02:37:22.871511755 +0800
++++ b/gazebo/common/CommonIface.hh	2026-07-26 17:49:30.326876117 +0800
+@@ -17,14 +17,13 @@
+ #ifndef GAZEBO_COMMON_COMMONIFACE_HH_
+ #define GAZEBO_COMMON_COMMONIFACE_HH_
+ 
++#include <openssl/sha.h>
+ #include <string>
+ #include <vector>
+ 
+ #include <boost/version.hpp>
+ #if BOOST_VERSION < 106600
+-#include <boost/uuid/sha1.hpp>
+ #else
+-#include <boost/uuid/detail/sha1.hpp>
+ #endif
+ 
+ #include <boost/filesystem.hpp>
+@@ -228,29 +227,14 @@
+   template<typename T>
+   std::string common::get_sha1(const T &_buffer)
+   {
+-    boost::uuids::detail::sha1 sha1;
+-    unsigned int hash[5];
++    unsigned char hash[SHA_DIGEST_LENGTH];
+     std::stringstream stream;
+-
+-    if (_buffer.size() == 0)
+-    {
+-      sha1.process_bytes(nullptr, 0);
+-    }
++    if (_buffer.size() > 0)
++      SHA1(reinterpret_cast<const unsigned char*>(&_buffer[0]), _buffer.size() * sizeof(_buffer[0]), hash);
+     else
+-    {
+-      sha1.process_bytes(&(_buffer[0]), _buffer.size() * sizeof(_buffer[0]));
+-    }
+-
+-    sha1.get_digest(hash);
+-
+-    for (std::size_t i = 0; i < sizeof(hash) / sizeof(hash[0]); ++i)
+-    {
+-      stream << std::setfill('0')
+-             << std::setw(sizeof(hash[0]) * 2)
+-             << std::hex
+-             << hash[i];
+-    }
+-
++      SHA1(nullptr, 0, hash);
++    for (std::size_t i = 0; i < SHA_DIGEST_LENGTH; ++i)
++      stream << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(hash[i]);
+     return stream.str();
+   }
+ }
+diff -ruN a/gazebo/common/Console.cc b/gazebo/common/Console.cc
+--- a/gazebo/common/Console.cc	2026-07-26 02:37:22.871682615 +0800
++++ b/gazebo/common/Console.cc	2026-07-26 17:49:30.327040778 +0800
+@@ -221,7 +221,7 @@
+   if (boost::filesystem::is_directory(logPath))
+     this->logDirectory = logPath.string();
+   else
+-    this->logDirectory = logPath.branch_path().string();
++    this->logDirectory = logPath.parent_path().string();
+ }
+ 
+ /////////////////////////////////////////////////
+diff -ruN a/gazebo/rendering/deferred_shading/MaterialGenerator.hh b/gazebo/rendering/deferred_shading/MaterialGenerator.hh
+--- a/gazebo/rendering/deferred_shading/MaterialGenerator.hh	2026-07-26 02:37:22.926482303 +0800
++++ b/gazebo/rendering/deferred_shading/MaterialGenerator.hh	2026-07-26 17:49:30.173435049 +0800
+@@ -18,6 +18,7 @@
+ #define _MATERIALGENERATOR_HH_
+ 
+ #include <OgreMaterial.h>
++#include <cstdint>
+ #include <OgreStringVector.h>
+ #include <map>
+ 
+diff -ruN a/gazebo/util/LogPlay.cc b/gazebo/util/LogPlay.cc
+--- a/gazebo/util/LogPlay.cc	2026-07-26 02:37:22.934973569 +0800
++++ b/gazebo/util/LogPlay.cc	2026-07-26 17:49:30.100197270 +0800
+@@ -414,8 +414,8 @@
+ /////////////////////////////////////////////////
+ std::string LogPlay::Filename() const
+ {
+-  return boost::filesystem::basename(this->dataPtr->filename) +
+-    boost::filesystem::extension(this->dataPtr->filename);
++  return boost::filesystem::path(this->dataPtr->filename).stem().string() +
++    boost::filesystem::path(this->dataPtr->filename).extension().string();
+ }
+ 
+ /////////////////////////////////////////////////
