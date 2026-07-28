@@ -3,14 +3,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=progressr
-_pkgver=0.19.0
+_pkgver=1.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="An Inclusive, Unifying API for Progress Updates"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('GPL-3.0-or-later')
+license=('Apache')
 depends=(
   r-digest
 )
@@ -35,8 +35,8 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('cd86a7e4e49895077b89b81833996487')
-b2sums=('bb7afa79a935d57ea8fc6d7cd9f1e5d15381399c89cffb6ff7af403066ab78ed2d0a91a841e46784a1f5d75d9951a234711ec2edfcc6a6a21665e87b54f343a0')
+md5sums=('c3672e20ef7ae91d8c14eedbf6e0a5a3')
+b2sums=('c30acc5fa5881436fca41f18648cf075574e8302f6cbc06dbd69d56ca0ca0b30f34e9f92878e779a6e208735c025448a54253252c11a6024b1aa9429f84a49d9')
 
 build() {
   mkdir build
