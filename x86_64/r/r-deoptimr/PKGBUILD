@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=DEoptimR
-_pkgver=1.1-4
+_pkgver=1.2-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Differential Evolution Optimization in Pure R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,9 +14,12 @@ license=('GPL-2.0-or-later')
 depends=(
   r
 )
+optdepends=(
+  r-mirai
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a27703d078bbb0e46ca4b0d99fc0aced')
-b2sums=('a822824dcc3902e1096fa618dc6b32bf8b76b49f94ac1bc0144e94213133dfbc955ff44446514a56e416412cb4b86c11dead41fb8bd331ef58bad285fe4b6ad3')
+md5sums=('9830d946041e8b640c38f61f17052f49')
+b2sums=('516dc2badc9be3f5b58fd499f2beb77c6a0bb68282738bacaf470886e0fef5003d4d2f7e73f57f5d72664bb8cf80951d9ce3543c280f705804b98d619c153d7a')
 
 build() {
   mkdir build
