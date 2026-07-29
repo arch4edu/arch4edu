@@ -2,7 +2,7 @@
 
 pkgname=gazebo
 pkgver=11.14.0
-pkgrel=3
+pkgrel=4
 pkgdesc="A multi-robot simulator for outdoor environments"
 arch=('x86_64')
 url="https://classic.gazebosim.org/"
@@ -17,8 +17,10 @@ source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gazebo-classi
         '003-protobuf-core.patch'
         '004-protobuf-gui.patch'
         '005-protobuf-render.patch'
+        '006-boost-config-system.patch'
         "graphviz9.patch::https://github.com/gazebosim/gazebo-classic/pull/3345.patch")
 sha256sums=('6b63d857399ba08190c331b545d24e8e3e308b840ff051bbf39e87879e37af50'
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -37,6 +39,7 @@ prepare() {
   patch -Np1 -i "${srcdir}/003-protobuf-core.patch" || true
   patch -Np1 -i "${srcdir}/004-protobuf-gui.patch" || true
   patch -Np1 -i "${srcdir}/005-protobuf-render.patch" || true
+  patch -Np1 -i "${srcdir}/006-boost-config-system.patch" || true
   sed -i 's/engineTypeEnum->value(_msg.type()-1)->name()\.c_str()/std::string(engineTypeEnum->value(_msg.type()-1)->name()).c_str()/' gazebo/gui/ModelListWidget.cc
   sed -i '/#include <cgraph.h>/a #ifndef TRUE\n#define TRUE 1\n#define FALSE 0\n#endif' gazebo/gui/qgv/private/QGVCore.h
 }
