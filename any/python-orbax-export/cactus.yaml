@@ -3,12 +3,10 @@ nvchecker:
     aur:
   - alias: python
 depends:
+  - any/python-etils
   - x86_64/python-jax
-  - x86_64/python-optax
+  - any/python-jaxtyping
   - any/python-orbax-checkpoint
-  - any/python-orbax-export
-  - x86_64/python-tensorstore
-  - x86_64/python-treescope
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
