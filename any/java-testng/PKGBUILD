@@ -6,16 +6,16 @@
 # Contributor: Alucryd <alucryd at gmail dot com>
 _base=testng
 pkgname=java-${_base}
-pkgver=7.10.2
+pkgver=7.12.0
 pkgrel=1
 arch=(any)
 pkgdesc="A testing framework inspired by JUnit and NUnit"
 url="https://${_base}.org"
 license=(Apache-2.0)
-depends=('java-runtime-openjdk=11')
-makedepends=(gradle)
+depends=('java-runtime-openjdk=17')
+makedepends=(java-environment-openjdk=17)
 source=(${_base}-${pkgver}.tar.gz::https://github.com/${_base}-team/${_base}/archive/${pkgver}.tar.gz)
-sha512sums=('15b32ca8706c54599692aa59b83e8ed4deadf1e407cfc015506f6af182b22a664ac196b07bc34fe40d57f1b24149aa18cc84bfb7f7ffbf3437e158676b646657')
+sha512sums=('6ec78fb5e43657431162f25cb9e1f4d8f687d7b84ae2882c95eb8dfc5b1d4237346f868c4028fac1be616aa0ace6c203804e8ccfc98191a277465c62d16c5967')
 
 prepare() {
   echo "It's recommended to build in a clean chroot"
@@ -24,11 +24,12 @@ prepare() {
   cd ${_base}-${pkgver}
   # https://github.com/testng-team/testng/issues/3054
   sed -i '/enableFeaturePreview("VERSION_CATALOGS")/d' settings.gradle.kts
+  find . -name '*.gradle.kts' -exec sed -i 's/listOf(21, 11)/listOf(21, 17, 11)/' {} +
 }
 
 build() {
   cd ${_base}-${pkgver}
-  gradle --daemon clean build || true
+  JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew clean build
 }
 
 package() {
