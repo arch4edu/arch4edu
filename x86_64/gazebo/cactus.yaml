@@ -17,10 +17,10 @@ makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add makedepends ffmpeg4.4 qt5-base
-  git checkout HEAD -- 001-boost-asio.patch 002-boost-misc.patch 003-protobuf-core.patch 004-protobuf-gui.patch 005-protobuf-render.patch
-  sed -i "/^source=(/a\\        '001-boost-asio.patch'\n        '002-boost-misc.patch'\n        '003-protobuf-core.patch'\n        '004-protobuf-gui.patch'\n        '005-protobuf-render.patch'" PKGBUILD
-  sed -i "s|            'SKIP')|            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP')|" PKGBUILD
+  git checkout HEAD -- 001-boost-asio.patch 002-boost-misc.patch 003-protobuf-core.patch 004-protobuf-gui.patch 005-protobuf-render.patch 006-boost-config-system.patch
+  sed -i "/^source=(/a\\        '001-boost-asio.patch'\n        '002-boost-misc.patch'\n        '003-protobuf-core.patch'\n        '004-protobuf-gui.patch'\n        '005-protobuf-render.patch'\n        '006-boost-config-system.patch'" PKGBUILD
+  sed -i "s|            'SKIP')|            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP'\n            'SKIP')|" PKGBUILD
   sed -i 's#patch -Np1 -i "${srcdir}/graphviz9.patch"#& || true#' PKGBUILD
-  sed -i '/patch -Np1 -i "${srcdir}\/graphviz9.patch"/a\  patch -Np1 -i "${srcdir}/001-boost-asio.patch" || true\n  patch -Np1 -i "${srcdir}/002-boost-misc.patch" || true\n  patch -Np1 -i "${srcdir}/003-protobuf-core.patch" || true\n  patch -Np1 -i "${srcdir}/004-protobuf-gui.patch" || true\n  patch -Np1 -i "${srcdir}/005-protobuf-render.patch" || true\n  sed -i '"'"'s/engineTypeEnum->value(_msg.type()-1)->name()\\.c_str()/std::string(engineTypeEnum->value(_msg.type()-1)->name()).c_str()/'"'"' gazebo/gui/ModelListWidget.cc\n  sed -i '"'"'/#include <cgraph.h>/a #ifndef TRUE\\n#define TRUE 1\\n#define FALSE 0\\n#endif'"'"' gazebo/gui/qgv/private/QGVCore.h' PKGBUILD
+  sed -i '/patch -Np1 -i "${srcdir}\/graphviz9.patch"/a\  patch -Np1 -i "${srcdir}/001-boost-asio.patch" || true\n  patch -Np1 -i "${srcdir}/002-boost-misc.patch" || true\n  patch -Np1 -i "${srcdir}/003-protobuf-core.patch" || true\n  patch -Np1 -i "${srcdir}/004-protobuf-gui.patch" || true\n  patch -Np1 -i "${srcdir}/005-protobuf-render.patch" || true\n  patch -Np1 -i "${srcdir}/006-boost-config-system.patch" || true\n  sed -i '"'"'s/engineTypeEnum->value(_msg.type()-1)->name()\\.c_str()/std::string(engineTypeEnum->value(_msg.type()-1)->name()).c_str()/'"'"' gazebo/gui/ModelListWidget.cc\n  sed -i '"'"'/#include <cgraph.h>/a #ifndef TRUE\\n#define TRUE 1\\n#define FALSE 0\\n#endif'"'"' gazebo/gui/qgv/private/QGVCore.h' PKGBUILD
   sed -i 's|cmake .. -DCMAKE_BUILD_TYPE="Release"|cmake .. -DCMAKE_BUILD_TYPE="Release" -DBoost_NO_BOOST_CMAKE=ON -DCMAKE_CXX_FLAGS="${CXXFLAGS} -Wno-template-body -include cstdint"|' PKGBUILD
 post_build: aur-post-build
