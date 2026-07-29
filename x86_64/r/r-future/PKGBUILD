@@ -3,14 +3,14 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=future
-_pkgver=1.70.0
+_pkgver=1.75.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Unified Parallel and Distributed Processing in R for Everyone"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('LGPL-2.1-or-later')
+license=('Apache')
 depends=(
   r-digest
   r-globals
@@ -23,8 +23,8 @@ optdepends=(
   r-rhpcblasctl
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('05d13de7cf1192c8a87a08d4ccd5377f')
-b2sums=('2f6b940745e66d549a23294a9a95d7282f281c877d4c7e336151c74ddf844ae6ac2f5fc0b975de8950785eaac1169c312e52cc279d242ad552e85e8c7209052d')
+md5sums=('ab6672f254e977c420487eb8c72ad5b5')
+b2sums=('aeb5b374ef0ffe74312224110de2bfeff6f62209ca182d1ce9a26528ae0d033f6bc40369ed4fcb8ae6ad6fa1699d7b2ef50ebac6fcbb1ca2a699c4b5f99da7ee')
 
 build() {
   mkdir build
