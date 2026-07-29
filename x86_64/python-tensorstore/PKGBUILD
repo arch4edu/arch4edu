@@ -1,13 +1,21 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 pkgname=python-tensorstore
 _pkgname=${pkgname#python-}
-pkgver=0.1.73
-pkgrel=2
+pkgver=0.1.84
+pkgrel=1
 pkgdesc='Library for reading and writing large multi-dimensional arrays.'
 arch=('x86_64')
 url='https://github.com/google/tensorstore'
 license=('Apache-2.0')
 depends=(
+    'aws-c-auth'
+    'aws-c-cal'
+    'aws-c-common'
+    'aws-c-compression'
+    'aws-c-http'
+    'aws-c-io'
+    'aws-c-sdkutils'
+    'aws-checksums'
     'blosc'
     'brotli'
     'bzip2'
@@ -20,37 +28,96 @@ depends=(
     'libtiff'
     'libwebp'
     'lz4'
-    'pybind11'
+    'openssl'
     'python-ml-dtypes'
     'python-numpy'
+    're2'
+    's2n-tls'
     'snappy'
+    'tinyxml2'
     'xz'
     'zlib'
     'zstd'
 )
 makedepends=(
+    'nlohmann-json'
+    'pybind11'
     'python-build'
     'python-installer'
     'python-setuptools'
     'python-setuptools-scm'
     'python-wheel'
 )
-source=("$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('c771586feaf1b736abcf81169dd0c6de9a4d00e2ab000f0e9f08ba68e4701d05')
+source=(
+    "$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
+    'system-libs.patch'
+)
+sha256sums=(
+    'd86fe9dca4b69e5c8b488562351dc654bce1400f5981f922e4be9ba4fafc95ce'
+    'b4dc028a5a9edb7822aa306b2ca31de9d8a9c72c69455e61ee2b630c1e2c4ef4'
+)
+
+prepare() {
+    cd "$_pkgname-$pkgver"
+
+    patch -Np1 -i "$srcdir/system-libs.patch"
+}
 
 build() {
     cd "$_pkgname-$pkgver"
 
-    export TENSORSTORE_SYSTEM_LIBS=com_google_brotli,org_sourceware_bzip2,c-ares,org_blosc_cblosc,net_zlib,se_curl,org_aomedia_avif,jpeg,png,libwebp,org_lz4,nasm,org_nghttp2,com_github_pybind_pybind11,com_google_snappy,libtiff,org_tukaani_xz,net_zstd
+    local _system_libs=(
+        aws_c_auth
+        aws_c_cal
+        aws_c_common
+        aws_c_compression
+        aws_c_http
+        aws_c_io
+        aws_c_sdkutils
+        aws_checksums
+        aws_s2n_tls
+        boringssl
+        brotli
+        bzip2
+        c-ares
+        com_github_pybind_pybind11
+        curl
+        libjpeg_turbo
+        libpng
+        libtiff
+        libwebp
+        lz4
+        nlohmann_json
+        org_aomedia_avif
+        org_blosc_cblosc
+        org_nghttp2
+        re2
+        snappy
+        tinyxml2
+        xz
+        zlib
+        zstd
+    )
+    export TENSORSTORE_SYSTEM_LIBS="${_system_libs[*]}"
+    export TENSORSTORE_SYSTEM_LIBS="${TENSORSTORE_SYSTEM_LIBS// /,}"
     export TENSORSTORE_SYSTEM_PYTHON_LIBS=numpy
-    # TODO(@daskol): Prebuilt manually?
-    # python -u bazelisk.py build -c opt \
-    #     --copt=-fvisibility=hidden \
-    #     --verbose_failures \
-    #     //python/tensorstore:_tensorstore__shared_objects
 
     export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
-    export TENSORSTORE_TENSORSTORE_PREBUILT_DIR=bazel-bin/python/tensorstore
+    python -u bazelisk.py build -c opt \
+        --copt=-O3 \
+        --//tensorstore/internal/version="$pkgver" \
+        //python/tensorstore:_tensorstore__shared_objects \
+        --verbose_failures \
+        '--remote_download_regex=.*/(_tensorstore\.(so|pyd))' \
+        --copt=-fvisibility=hidden
+
+    local _prebuilt_dir="$PWD/build/tensorstore-prebuilt"
+    local _ext_suffix
+    _ext_suffix="$(python -c 'import sysconfig; print(sysconfig.get_config_var("EXT_SUFFIX"))')"
+    install -Dm755 bazel-bin/python/tensorstore/_tensorstore.so \
+        "$_prebuilt_dir/tensorstore/_tensorstore${_ext_suffix}"
+
+    export TENSORSTORE_PREBUILT_DIR="$_prebuilt_dir"
     python -m build -n -w
 }
 
@@ -60,3 +127,4 @@ package() {
     python -m installer --compile-bytecode=1 --destdir=$pkgdir \
         dist/$_pkgname-$pkgver-*.whl
 }
+makedepends+=("python-pip")

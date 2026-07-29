@@ -1,0 +1,308 @@
+diff --git a/third_party/aws_c_auth/system.BUILD.bazel b/third_party/aws_c_auth/system.BUILD.bazel
+new file mode 100644
+index 0000000..af65f2f
+--- /dev/null
++++ b/third_party/aws_c_auth/system.BUILD.bazel
+@@ -0,0 +1,11 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_auth",
++    linkopts = ["-laws-c-auth"],
++    visibility = ["//visibility:public"],
++    deps = [
++        "@aws_c_http",
++        "@aws_c_sdkutils",
++    ],
++)
+diff --git a/third_party/aws_c_auth/workspace.bzl b/third_party/aws_c_auth/workspace.bzl
+index e9702bb..c6d94f3 100644
+--- a/third_party/aws_c_auth/workspace.bzl
++++ b/third_party/aws_c_auth/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-auth-0.9.6",
+         urls = mirror_url("https://github.com/awslabs/aws-c-auth/archive/v0.9.6.tar.gz"),
+         build_file = Label("//third_party:aws_c_auth/aws_c_auth.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_auth/system.BUILD.bazel"),
+         cmake_name = "aws_c_auth",
+         cmake_target_mapping = {
+             "@aws_c_auth//:aws_c_auth": "aws_c_auth::aws_c_auth",
+diff --git a/third_party/aws_c_cal/system.BUILD.bazel b/third_party/aws_c_cal/system.BUILD.bazel
+new file mode 100644
+index 0000000..1b1238c
+--- /dev/null
++++ b/third_party/aws_c_cal/system.BUILD.bazel
+@@ -0,0 +1,11 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_cal",
++    linkopts = ["-laws-c-cal"],
++    visibility = ["//visibility:public"],
++    deps = [
++        "@aws_c_common",
++        "@boringssl//:crypto",
++    ],
++)
+diff --git a/third_party/aws_c_cal/workspace.bzl b/third_party/aws_c_cal/workspace.bzl
+index f507a57..0b61d2e 100644
+--- a/third_party/aws_c_cal/workspace.bzl
++++ b/third_party/aws_c_cal/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-cal-0.9.13",
+         urls = mirror_url("https://github.com/awslabs/aws-c-cal/archive/v0.9.13.tar.gz"),
+         build_file = Label("//third_party:aws_c_cal/aws_c_cal.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_cal/system.BUILD.bazel"),
+         cmake_name = "aws_c_cal",
+         cmake_target_mapping = {
+             "@aws_c_cal//:aws_c_cal": "aws_c_cal::aws_c_cal",
+diff --git a/third_party/aws_c_common/system.BUILD.bazel b/third_party/aws_c_common/system.BUILD.bazel
+new file mode 100644
+index 0000000..a3fa21a
+--- /dev/null
++++ b/third_party/aws_c_common/system.BUILD.bazel
+@@ -0,0 +1,7 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_common",
++    linkopts = ["-laws-c-common"],
++    visibility = ["//visibility:public"],
++)
+diff --git a/third_party/aws_c_common/workspace.bzl b/third_party/aws_c_common/workspace.bzl
+index f036a4b..9a022d2 100644
+--- a/third_party/aws_c_common/workspace.bzl
++++ b/third_party/aws_c_common/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-common-0.12.6",
+         urls = mirror_url("https://github.com/awslabs/aws-c-common/archive/v0.12.6.tar.gz"),
+         build_file = Label("//third_party:aws_c_common/aws_c_common.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_common/system.BUILD.bazel"),
+         cmake_name = "aws_c_common",
+         cmake_target_mapping = {
+             "@aws_c_common//:aws_c_common": "aws_c_common::aws_c_common",
+diff --git a/third_party/aws_c_compression/system.BUILD.bazel b/third_party/aws_c_compression/system.BUILD.bazel
+new file mode 100644
+index 0000000..0eaac19
+--- /dev/null
++++ b/third_party/aws_c_compression/system.BUILD.bazel
+@@ -0,0 +1,8 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_compression",
++    linkopts = ["-laws-c-compression"],
++    visibility = ["//visibility:public"],
++    deps = ["@aws_c_common"],
++)
+diff --git a/third_party/aws_c_compression/workspace.bzl b/third_party/aws_c_compression/workspace.bzl
+index 072782d..2d606f8 100644
+--- a/third_party/aws_c_compression/workspace.bzl
++++ b/third_party/aws_c_compression/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-compression-0.3.2",
+         urls = mirror_url("https://github.com/awslabs/aws-c-compression/archive/v0.3.2.tar.gz"),
+         build_file = Label("//third_party:aws_c_compression/aws_c_compression.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_compression/system.BUILD.bazel"),
+         cmake_name = "aws_c_compression",
+         cmake_target_mapping = {
+             "@aws_c_compression//:aws_c_compression": "aws_c_compression::aws_c_compression",
+diff --git a/third_party/aws_c_http/system.BUILD.bazel b/third_party/aws_c_http/system.BUILD.bazel
+new file mode 100644
+index 0000000..71e5b36
+--- /dev/null
++++ b/third_party/aws_c_http/system.BUILD.bazel
+@@ -0,0 +1,11 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_http",
++    linkopts = ["-laws-c-http"],
++    visibility = ["//visibility:public"],
++    deps = [
++        "@aws_c_compression",
++        "@aws_c_io",
++    ],
++)
+diff --git a/third_party/aws_c_http/workspace.bzl b/third_party/aws_c_http/workspace.bzl
+index 03d2236..9b68462 100644
+--- a/third_party/aws_c_http/workspace.bzl
++++ b/third_party/aws_c_http/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-http-0.10.10",
+         urls = mirror_url("https://github.com/awslabs/aws-c-http/archive/v0.10.10.tar.gz"),
+         build_file = Label("//third_party:aws_c_http/aws_c_http.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_http/system.BUILD.bazel"),
+         cmake_name = "aws_c_http",
+         cmake_target_mapping = {
+             "@aws_c_http//:aws_c_http": "aws_c_http::aws_c_http",
+diff --git a/third_party/aws_c_io/system.BUILD.bazel b/third_party/aws_c_io/system.BUILD.bazel
+new file mode 100644
+index 0000000..f0f0428
+--- /dev/null
++++ b/third_party/aws_c_io/system.BUILD.bazel
+@@ -0,0 +1,13 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_io",
++    linkopts = ["-laws-c-io"],
++    visibility = ["//visibility:public"],
++    deps = [
++        "@aws_c_cal",
++        "@aws_c_common",
++        "@aws_s2n_tls//:s2n_tls",
++        "@boringssl//:crypto",
++    ],
++)
+diff --git a/third_party/aws_c_io/workspace.bzl b/third_party/aws_c_io/workspace.bzl
+index 0157de5..90e52b8 100644
+--- a/third_party/aws_c_io/workspace.bzl
++++ b/third_party/aws_c_io/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-io-0.26.1",
+         urls = mirror_url("https://github.com/awslabs/aws-c-io/archive/v0.26.1.tar.gz"),
+         build_file = Label("//third_party:aws_c_io/aws_c_io.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_io/system.BUILD.bazel"),
+         cmake_name = "aws_c_io",
+         cmake_target_mapping = {
+             "@aws_c_io//:aws_c_io": "aws_c_io::aws_c_io",
+diff --git a/third_party/aws_c_sdkutils/system.BUILD.bazel b/third_party/aws_c_sdkutils/system.BUILD.bazel
+new file mode 100644
+index 0000000..e372c6a
+--- /dev/null
++++ b/third_party/aws_c_sdkutils/system.BUILD.bazel
+@@ -0,0 +1,8 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_c_sdkutils",
++    linkopts = ["-laws-c-sdkutils"],
++    visibility = ["//visibility:public"],
++    deps = ["@aws_c_common"],
++)
+diff --git a/third_party/aws_c_sdkutils/workspace.bzl b/third_party/aws_c_sdkutils/workspace.bzl
+index 9bbd557..d843da7 100644
+--- a/third_party/aws_c_sdkutils/workspace.bzl
++++ b/third_party/aws_c_sdkutils/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-c-sdkutils-0.2.4",
+         urls = mirror_url("https://github.com/awslabs/aws-c-sdkutils/archive/v0.2.4.tar.gz"),
+         build_file = Label("//third_party:aws_c_sdkutils/aws_c_sdkutils.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_c_sdkutils/system.BUILD.bazel"),
+         cmake_name = "aws_c_sdkutils",
+         cmake_target_mapping = {
+             "@aws_c_sdkutils//:aws_c_sdkutils": "aws_c_sdkutils::aws_c_sdkutils",
+diff --git a/third_party/aws_checksums/system.BUILD.bazel b/third_party/aws_checksums/system.BUILD.bazel
+new file mode 100644
+index 0000000..c2d8e70
+--- /dev/null
++++ b/third_party/aws_checksums/system.BUILD.bazel
+@@ -0,0 +1,8 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "aws_checksums",
++    linkopts = ["-laws-checksums"],
++    visibility = ["//visibility:public"],
++    deps = ["@aws_c_common"],
++)
+diff --git a/third_party/aws_checksums/workspace.bzl b/third_party/aws_checksums/workspace.bzl
+index f5fd783..e926d88 100644
+--- a/third_party/aws_checksums/workspace.bzl
++++ b/third_party/aws_checksums/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "aws-checksums-0.2.10",
+         urls = mirror_url("https://github.com/awslabs/aws-checksums/archive/v0.2.10.tar.gz"),
+         build_file = Label("//third_party:aws_checksums/aws_checksums.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_checksums/system.BUILD.bazel"),
+         cmake_name = "aws_checksums",
+         cmake_target_mapping = {
+             "@aws_checksums//:aws_checksums": "aws_checksums::aws_checksums",
+diff --git a/third_party/aws_s2n_tls/system.BUILD.bazel b/third_party/aws_s2n_tls/system.BUILD.bazel
+new file mode 100644
+index 0000000..4bb8333
+--- /dev/null
++++ b/third_party/aws_s2n_tls/system.BUILD.bazel
+@@ -0,0 +1,8 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "s2n_tls",
++    linkopts = ["-ls2n"],
++    visibility = ["//visibility:public"],
++    deps = ["@boringssl//:crypto"],
++)
+diff --git a/third_party/aws_s2n_tls/workspace.bzl b/third_party/aws_s2n_tls/workspace.bzl
+index 7188d2e..9217c55 100644
+--- a/third_party/aws_s2n_tls/workspace.bzl
++++ b/third_party/aws_s2n_tls/workspace.bzl
+@@ -28,6 +28,7 @@ def repo():
+         strip_prefix = "s2n-tls-1.7.0",
+         urls = mirror_url("https://github.com/aws/s2n-tls/archive/v1.7.0.tar.gz"),
+         build_file = Label("//third_party:aws_s2n_tls/aws_s2n_tls.BUILD.bazel"),
++        system_build_file = Label("//third_party:aws_s2n_tls/system.BUILD.bazel"),
+         cmake_name = "s2n_tls",
+         cmake_target_mapping = {
+             "@aws_s2n_tls//:s2n_tls": "s2n_tls::s2n_tls",
+diff --git a/third_party/re2/system.BUILD.bazel b/third_party/re2/system.BUILD.bazel
+new file mode 100644
+index 0000000..2fb1e97
+--- /dev/null
++++ b/third_party/re2/system.BUILD.bazel
+@@ -0,0 +1,7 @@
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++
++cc_library(
++    name = "re2",
++    linkopts = ["-lre2"],
++    visibility = ["//visibility:public"],
++)
+diff --git a/third_party/re2/workspace.bzl b/third_party/re2/workspace.bzl
+index 8a87a25..1402708 100644
+--- a/third_party/re2/workspace.bzl
++++ b/third_party/re2/workspace.bzl
+@@ -32,6 +32,7 @@ def repo():
+         doc_version = "2025-11-05",
+         # Cloned from the repo in place of patching the bundled BUILD.bazel
+         build_file = Label("//third_party:re2/re2.BUILD.bazel"),
++        system_build_file = Label("//third_party:re2/system.BUILD.bazel"),
+         cmake_name = "Re2",
+         bazel_to_cmake = {
+             "include": [""],
+diff --git a/tensorstore/internal/aws/http_mocking.cc b/tensorstore/internal/aws/http_mocking.cc
+index 2073b18..3c6c928 100644
+--- a/tensorstore/internal/aws/http_mocking.cc
++++ b/tensorstore/internal/aws/http_mocking.cc
+@@ -30,7 +30,12 @@
+ #include "absl/strings/str_cat.h"
+ #include "absl/synchronization/mutex.h"
+ #include <aws/auth/credentials.h>
+-#include <aws/auth/private/credentials_utils.h>
++#if __has_include(<aws/auth/private/credentials_utils.h>)
++#include <aws/auth/private/credentials_utils.h>
++#define TENSORSTORE_AWS_HTTP_MOCKING_HAS_PRIVATE_AUTH_HEADER 1
++#else
++#define TENSORSTORE_AWS_HTTP_MOCKING_HAS_PRIVATE_AUTH_HEADER 0
++#endif
+ #include <aws/common/allocator.h>
+ #include <aws/common/byte_buf.h>
+ #include <aws/common/clock.h>
+@@ -266,6 +271,7 @@ aws_http_stream *s_aws_http_connection_make_request_mock(
+ }  // namespace
+ 
+ aws_auth_http_system_vtable *GetAwsHttpMockingIfEnabled() {
++#if TENSORSTORE_AWS_HTTP_MOCKING_HAS_PRIVATE_AUTH_HEADER
+   static aws_auth_http_system_vtable s_mock_function_table = []() {
+     aws_auth_http_system_vtable s;
+     s.aws_http_connection_manager_new = s_aws_http_connection_manager_new_mock;
+@@ -293,6 +299,9 @@ aws_auth_http_system_vtable *GetAwsHttpMockingIfEnabled() {
+     return &s_mock_function_table;
+   }
+   return nullptr;
++#else
++  return nullptr;
++#endif
+ }
+ 
+ void EnableAwsHttpMocking(
