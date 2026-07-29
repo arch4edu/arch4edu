@@ -1,0 +1,49 @@
+# Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
+_name=scipy-doctest
+pkgname=python-${_name}
+pkgver=2.2.0
+pkgrel=1
+pkgdesc="Floating-point aware doctesting "
+arch=(any)
+url=https://github.com/scipy/scipy_doctest
+license=(BSD-3-Clause)
+depends=(
+    python-numpy
+    python-pytest
+)
+makedepends=(
+    git
+    python-build
+    python-flit-core
+    python-installer
+)
+checkdepends=(
+    python-matplotlib
+    python-scipy
+)
+source=($_name::git+https://github.com/scipy/scipy_doctest.git#tag=v$pkgver)
+b2sums=('24cc9c9fcfcdc9107a72700ecb80c13745de62f11feed2370f5e1d32e35ddd15d34e7f0002e699e36ec19b2d9ad5c01e6b8acfb909d18eb56ab207748934c7ff')
+
+build() {
+    cd $_name
+    sed -i 's/,<4//' pyproject.toml
+    python -m build --wheel --no-isolation
+}
+
+check() {
+    cd $_name
+    python -m venv --system-site-packages test-env
+    test-env/bin/python -m installer dist/*.whl
+    mv scipy_doctest/tests .
+    rm -rf scipy_doctest
+    test-env/bin/python -P -m pytest -o addopts="" --pyargs scipy_doctest
+}
+
+package() {
+    cd $_name
+    python -m installer --destdir="$pkgdir" dist/*.whl
+    install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+    local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+    rm -rf "$pkgdir"/$site_packages/scipy_doctest/tests
+}
+makedepends+=("python-setuptools")
