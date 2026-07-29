@@ -1,1 +1,13 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # Use Java 17 toolchain (nmcp requires 17); AUR defaults to Java 11 + system gradle,
+  # and its `gradle ... || true` masks the build failure, leaving no jar for package().
+  sed -i 's/java-runtime-openjdk=11/java-runtime-openjdk=17/' PKGBUILD
+  sed -i 's/makedepends=(gradle)/makedepends=(java-environment-openjdk=17)/' PKGBUILD
+  sed -i '/VERSION_CATALOGS/a\  find . -name '"'"'*.gradle.kts'"'"' -exec sed -i '"'"'s/listOf(21, 11)/listOf(21, 17, 11)/'"'"' {} +' PKGBUILD
+  sed -i 's|gradle --daemon clean build \|\| true|JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew clean build|' PKGBUILD
+post_build: aur-post-build
