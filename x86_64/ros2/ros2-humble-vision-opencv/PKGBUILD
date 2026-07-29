@@ -1,0 +1,98 @@
+# Maintainer: AutoUpdateBot <auto-update-bot@arch4edu.org>
+# vision_opencv batch - cv_bridge + image_geometry + vision_opencv metapackage for ROS2 Humble
+
+pkgname=(
+ ros2-humble-cv-bridge       ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-image-geometry  ## already on AUR as a standalone package; commented out to avoid name conflict
+  'ros2-humble-vision-opencv'
+)
+pkgver=3.2.1
+pkgrel=1
+pkgdesc="ROS2 vision_opencv stack - cv_bridge, image_geometry, and metapackage"
+arch=('x86_64')
+url="https://github.com/ros-perception/vision_opencv"
+license=('Apache-2.0' 'BSD-3-Clause')
+depends=('ros2-humble' 'opencv4' 'boost' 'python-numpy')
+makedepends=('cmake' 'python-setuptools')
+source=("$url/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+_srcdir="vision_opencv-$pkgver"
+
+prepare() {
+  cd "$srcdir/$_srcdir"
+
+  # Fix for NumPy 2.0 (from existing AUR cv-bridge PKGBUILD)
+  sed -i "s/newbyteorder()/view(im.dtype.newbyteorder())/g" \
+    cv_bridge/python/cv_bridge/core.py
+
+  # JASPER is enabled by default on Arch Linux
+  sed -i "s/'tiff'\]/'tiff', 'jp2'\]/g" cv_bridge/test/conversions.py
+}
+
+build() {
+  source /opt/ros/humble/setup.bash
+
+  export CXXFLAGS="${CXXFLAGS} -Wno-error -Wno-missing-include-dirs -Wno-unused-parameter -include cstdint -I/usr/include/opencv4"
+  export CFLAGS="${CFLAGS} -Wno-error -I/usr/include/opencv4"
+
+  # Build cv_bridge
+  msg2 "Building cv_bridge ..."
+  cmake -B build-cv_bridge -S "$srcdir/$_srcdir/cv_bridge" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/opt/ros/humble \
+    -DOpenCV_DIR=/usr/lib/cmake/opencv4 \
+    -DBUILD_TESTING=OFF \
+    -Wno-dev
+  cmake --build build-cv_bridge
+
+  # Build image_geometry
+  msg2 "Building image_geometry ..."
+  cmake -B build-image_geometry -S "$srcdir/$_srcdir/image_geometry" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/opt/ros/humble \
+    -DOpenCV_DIR=/usr/lib/cmake/opencv4 \
+    -DBUILD_TESTING=OFF \
+    -Wno-dev
+  cmake --build build-image_geometry
+
+  # Build vision_opencv metapackage
+  msg2 "Building vision_opencv metapackage ..."
+  cmake -B build-vision_opencv -S "$srcdir/$_srcdir/vision_opencv" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/opt/ros/humble \
+    -DOpenCV_DIR=/usr/lib/cmake/opencv4 \
+    -DBUILD_TESTING=OFF \
+    -Wno-dev
+  cmake --build build-vision_opencv
+}
+
+package_ros2-humble-cv-bridge() {
+  pkgdesc="ROS2 cv_bridge - converts between ROS Image messages and OpenCV images"
+  depends=('ros2-humble' 'opencv4' 'boost' 'python-numpy' 'python-opencv')
+
+  source /opt/ros/humble/setup.bash
+  DESTDIR="$pkgdir" cmake --install build-cv_bridge
+  install -Dm644 "$srcdir/$_srcdir/LICENSE-Apache" "$pkgdir/usr/share/licenses/$pkgname/LICENSE-Apache"
+  install -Dm644 "$srcdir/$_srcdir/LICENSE-BSD" "$pkgdir/usr/share/licenses/$pkgname/LICENSE-BSD"
+}
+
+package_ros2-humble-image-geometry() {
+  pkgdesc="ROS2 image_geometry - camera projection geometry"
+  depends=('ros2-humble' 'opencv4' 'python-opencv')
+
+  source /opt/ros/humble/setup.bash
+  DESTDIR="$pkgdir" cmake --install build-image_geometry
+  install -Dm644 "$srcdir/$_srcdir/LICENSE-Apache" "$pkgdir/usr/share/licenses/$pkgname/LICENSE-Apache"
+  install -Dm644 "$srcdir/$_srcdir/LICENSE-BSD" "$pkgdir/usr/share/licenses/$pkgname/LICENSE-BSD"
+}
+
+package_ros2-humble-vision-opencv() {
+  pkgdesc="ROS2 vision_opencv metapackage"
+  depends=('ros2-humble-cv-bridge' 'ros2-humble-image-geometry')
+
+  source /opt/ros/humble/setup.bash
+  DESTDIR="$pkgdir" cmake --install build-vision_opencv
+  install -Dm644 "$srcdir/$_srcdir/LICENSE-Apache" "$pkgdir/usr/share/licenses/$pkgname/LICENSE-Apache"
+  install -Dm644 "$srcdir/$_srcdir/LICENSE-BSD" "$pkgdir/usr/share/licenses/$pkgname/LICENSE-BSD"
+}
