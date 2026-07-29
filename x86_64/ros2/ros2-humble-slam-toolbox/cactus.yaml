@@ -10,4 +10,4 @@ post_build: aur-post-build
 
 depends_ros2-humble-slam-toolbox:
   - x86_64/ros2/ros2-humble
-  - x86_64/ros2/ros2-humble-nav2-map-server
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-map-server
