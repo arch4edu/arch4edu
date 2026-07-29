@@ -3,33 +3,313 @@ nvchecker:
     aur:
 depends:
   - x86_64/ros2/ros2-humble
-  - x86_64/ros2/ros2-humble-nav2-amcl
-  - x86_64/ros2/ros2-humble-nav2-behavior-tree
-  - x86_64/ros2/ros2-humble-nav2-bt-navigator
-  - x86_64/ros2/ros2-humble-nav2-collision-monitor
-  - x86_64/ros2/ros2-humble-nav2-constrained-smoother
-  - x86_64/ros2/ros2-humble-nav2-controller
-  - x86_64/ros2/ros2-humble-nav2-core
-  - x86_64/ros2/ros2-humble-nav2-costmap-2d
-  - x86_64/ros2/ros2-humble-nav2-dwb-controller
-  - x86_64/ros2/ros2-humble-nav2-lifecycle-manager
-  - x86_64/ros2/ros2-humble-nav2-map-server
-  - x86_64/ros2/ros2-humble-nav2-msgs
-  - x86_64/ros2/ros2-humble-nav2-navfn-planner
-  - x86_64/ros2/ros2-humble-nav2-planner
-  - x86_64/ros2/ros2-humble-nav2-behaviors
-  - x86_64/ros2/ros2-humble-nav2-smoother
-  - x86_64/ros2/ros2-humble-nav2-regulated-pure-pursuit-controller
-  - x86_64/ros2/ros2-humble-nav2-rotation-shim-controller
-  - x86_64/ros2/ros2-humble-nav2-rviz-plugins
-  - x86_64/ros2/ros2-humble-nav2-simple-commander
-  - x86_64/ros2/ros2-humble-nav2-smac-planner
-  - x86_64/ros2/ros2-humble-nav2-theta-star-planner
-  - x86_64/ros2/ros2-humble-nav2-util
-  - x86_64/ros2/ros2-humble-nav2-velocity-smoother
-  - x86_64/ros2/ros2-humble-nav2-voxel-grid
-  - x86_64/ros2/ros2-humble-nav2-waypoint-follower
+  - x86_64/ros2/ros2-humble-bond_core
+  - x86_64/ros2/ros2-humble-bond_core: ros2-humble-smclib
+  - x86_64/ros2/ros2-humble-angles
+  - x86_64/ros2/ros2-humble-behaviortree-cpp-v3
+  - x86_64/ros2/ros2-humble-diagnostics: ros2-humble-diagnostic-updater
+  - x86_64/ros2/ros2-humble-vision-opencv: ros2-humble-cv-bridge
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  # Remove leading "##" from exclusion placeholders
+  sed -i 's/^##//' PKGBUILD
 post_build: aur-post-build
+
+
+depends_ros2-humble-costmap-queue:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+
+depends_ros2-humble-dwb-core:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-dwb-critics:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-costmap-queue
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+
+depends_ros2-humble-dwb-msgs:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+
+depends_ros2-humble-dwb-plugins:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-angles
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+
+depends_ros2-humble-nav-2d-msgs:
+  - x86_64/ros2/ros2-humble
+
+depends_ros2-humble-nav-2d-utils:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+
+depends_ros2-humble-nav2-amcl:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+
+depends_ros2-humble-nav2-behavior-tree:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-behaviortree-cpp-v3
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+
+depends_ros2-humble-nav2-behaviors:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-behavior-tree
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-bringup:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-navigation2
+  - x86_64/ros2/ros2-humble-slam-toolbox
+
+depends_ros2-humble-nav2-bt-navigator:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-behaviortree-cpp-v3
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-collision-monitor:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+
+depends_ros2-humble-nav2-common:
+  - x86_64/ros2/ros2-humble
+
+depends_ros2-humble-nav2-constrained-smoother:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-angles
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-controller:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-angles
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-core:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+
+depends_ros2-humble-nav2-costmap-2d:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-angles
+
+depends_ros2-humble-nav2-dwb-controller:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-costmap-queue
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-critics
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-dwb-plugins
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+
+depends_ros2-humble-nav2-graceful-controller:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+
+depends_ros2-humble-nav2-lifecycle-manager:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-bond_core: ros2-humble-bondcpp
+  - x86_64/ros2/ros2-humble-diagnostics: ros2-humble-diagnostic-updater
+
+depends_ros2-humble-nav2-map-server:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+
+depends_ros2-humble-nav2-mppi-controller:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-msgs:
+  - x86_64/ros2/ros2-humble
+
+depends_ros2-humble-nav2-navfn-planner:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-planner:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-regulated-pure-pursuit-controller:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-rotation-shim-controller:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-angles
+
+depends_ros2-humble-nav2-route:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-rviz-plugins:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-lifecycle-manager
+
+depends_ros2-humble-nav2-simple-commander:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+
+depends_ros2-humble-nav2-smac-planner:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+  - x86_64/ompl
+  - x86_64/ros2/ros2-humble-angles
+
+depends_ros2-humble-nav2-smoother:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-angles
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-utils
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav-2d-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-nav2-system-tests:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-navigation2
+
+depends_ros2-humble-nav2-theta-star-planner:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+
+depends_ros2-humble-nav2-util:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-bond_core: ros2-humble-bondcpp
+  - x86_64/ros2/ros2-humble-bond_core: ros2-humble-bond
+
+depends_ros2-humble-nav2-velocity-smoother:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+
+depends_ros2-humble-nav2-voxel-grid:
+  - x86_64/ros2/ros2-humble
+
+depends_ros2-humble-nav2-waypoint-follower:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-vision-opencv: ros2-humble-cv-bridge
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+
+depends_ros2-humble-navigation2:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-amcl
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-behavior-tree
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-bt-navigator
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-behaviors
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-collision-monitor
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-common
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-constrained-smoother
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-controller
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-core
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-costmap-2d
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-dwb-controller
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-graceful-controller
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-lifecycle-manager
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-map-server
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-msgs
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-navfn-planner
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-planner
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-regulated-pure-pursuit-controller
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-rotation-shim-controller
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-route
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-rviz-plugins
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-simple-commander
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-smac-planner
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-smoother
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-theta-star-planner
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-util
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-velocity-smoother
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-voxel-grid
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-waypoint-follower
+  - x86_64/ros2/ros2-humble-navigation2: ros2-humble-nav2-mppi-controller
