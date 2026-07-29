@@ -6,5 +6,6 @@ build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   add makedepends python-setuptools
-  sed -i 's/,<4//' scipy-doctest/pyproject.toml
+  # pyproject.toml lives in the (git) source tree, so patch it inside build() after `cd $_name`
+  sed -i '/python -m build/i\    sed -i '"'"'s/,<4//'"'"' pyproject.toml' PKGBUILD
 post_build: aur-post-build
