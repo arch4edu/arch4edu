@@ -3,5 +3,7 @@ nvchecker:
     archpkg: libsquish
 build_prefix: extra-aarch64
 makepkg_args: -A
-pre_build: abs-pre-build
+pre_build: |
+  abs-pre-build
+  sed -i 's|    -S .|    -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \\\n    -D BUILD_SQUISH_WITH_SSE2=OFF \\\n    -S .|' PKGBUILD
 post_build: abs-post-build
