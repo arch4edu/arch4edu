@@ -1,0 +1,34 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-humble
+  - x86_64/gazebo
+  - x86_64/ros2/ros2-humble-vision-opencv: ros2-humble-cv-bridge
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # Remove leading "##" from exclusion placeholders
+  sed -i 's/^##//' PKGBUILD
+post_build: aur-post-build
+
+depends_ros2-humble-gazebo-dev:
+  - x86_64/ros2/ros2-humble
+  - x86_64/gazebo
+depends_ros2-humble-gazebo-msgs:
+  - x86_64/ros2/ros2-humble
+depends_ros2-humble-gazebo-ros:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-dev
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-msgs
+depends_ros2-humble-gazebo-plugins:
+  - x86_64/ros2/ros2-humble
+  - x86_64/ros2/ros2-humble-vision-opencv: ros2-humble-cv-bridge
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-dev
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-msgs
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-ros
+depends_ros2-humble-gazebo-ros-pkgs:
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-dev
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-msgs
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-ros
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-plugins
