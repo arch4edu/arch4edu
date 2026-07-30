@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=archive
-_pkgver=1.1.13
+_pkgver=1.1.14
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,22 +10,21 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  libarchive
   r-cli
   r-glue
   r-rlang
   r-tibble
+  libarchive
 )
 checkdepends=(
   r-testthat
 )
 optdepends=(
-  r-covr
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b450ad9ad0c9b2855fefee0898c4b612')
-b2sums=('acc99b1c5c902872f33831476b29536f9395644a94a288d4b817744bfc6b2340eeb9f5d69937c553acf60bf9c1d38033cb5032f546208875d9fa1f5f92cfa574')
+md5sums=('64a45b9ae99c3bf46697cc8a33b793b8')
+b2sums=('3dd4977c6bb9f2e616c06443300e5a43766500f2a608231d313a9947e583ce7cbd796fea97b49c9b9dd128ead5307a7155214e064ba5e6f9643bb3c6266a46e0')
 
 build() {
   mkdir build
