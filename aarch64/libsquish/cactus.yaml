@@ -6,4 +6,5 @@ makepkg_args: -A
 pre_build: |
   abs-pre-build
   sed -i 's|    -S .|    -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \\\n    -D BUILD_SQUISH_WITH_SSE2=OFF \\\n    -S .|' PKGBUILD
+  sed -i 's/setconf config USE_SSE 1/setconf config USE_SSE 0/' PKGBUILD
 post_build: abs-post-build
