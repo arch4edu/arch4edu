@@ -1,0 +1,24 @@
+--- a/misc/CMake/BRLCAD_EXT_Setup.cmake
++++ b/misc/CMake/BRLCAD_EXT_Setup.cmake
+@@ -437,6 +437,21 @@
+     list(APPEND CMAKE_CMD_ARGS -DENABLE_EIGEN=ON -DENABLE_OPENCV=ON -DENABLE_ZLIB=ON)
+   endif(BEXT_ENABLE_ALL)
+ 
++  # In SYSTEM mode, disable local builds for packages provided by the system
++  if("${BRLCAD_BUNDLED_LIBS}" STREQUAL "SYSTEM")
++    set(BEXT_SYSTEM_DISABLE
++      ZLIB PNG EIGEN LMDB SQLITE3 PROJ GDAL PUGIXML ASSETIMPORT OPENCV
++      TCL TK ITK RE2C ASTYLE NETPBM ONETBB
++      )
++    foreach(_pkg ${BEXT_SYSTEM_DISABLE})
++      list(APPEND CMAKE_CMD_ARGS -DDISABLE_${_pkg}=ON)
++    endforeach()
++    # Also disable groups we don't need
++    if(NOT BRLCAD_ENABLE_QT)
++      list(APPEND CMAKE_CMD_ARGS -DDISABLE_QT=ON)
++    endif()
++  endif()
++
+   # If we're doing a components build, add the component list to the
+   # CMake arguments
+   if(BRLCAD_COMPONENTS)

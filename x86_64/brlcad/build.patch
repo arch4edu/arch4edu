@@ -1,42 +1,13 @@
---- db/nist/CMakeLists.txt
-+++ db/nist/CMakeLists.txt
-@@ -10,7 +10,8 @@ set(NIST_SAMPLE_MODELS
+diff --color --color -uraBN brlcad-rel-7-42-0/db/nist/CMakeLists.txt brlcad-rel-7-42-0-patched/db/nist/CMakeLists.txt
+--- brlcad-rel-7-42-0/db/nist/CMakeLists.txt	2025-08-11 15:50:22.000000000 -0500
++++ brlcad-rel-7-42-0-patched/db/nist/CMakeLists.txt	2025-12-31 14:28:56.611312350 -0500
+@@ -11,7 +11,8 @@
  )
  
  foreach(im ${NIST_SAMPLE_MODELS})
--  ADD_G_TARGET(${im} "BRL-CAD Geometry Models/Sample")
-+#  disabled because this often segfaults
-+#  ADD_G_TARGET(${im} "BRL-CAD Geometry Models/Sample")
+-  g_target(${im} "BRL-CAD Geometry Models/Sample")
++  # disabled because this often segfaults
++  # g_target(${im} "BRL-CAD Geometry Models/Sample")
  endforeach(im ${NIST_SAMPLE_MODELS})
  
- CMAKEFILES(
---- regress/coverage/covgcheck.cpp
-+++ regress/coverage/covgcheck.cpp
-@@ -43,6 +43,7 @@
- 
- #include <cctype>
- #include <cstdio>
-+#include <cstring>
- #include <algorithm>
- #include <locale>
- #include <fstream>
---- regress/repository/repocheck.cpp
-+++ regress/repository/repocheck.cpp
-@@ -43,6 +43,7 @@
- 
- #include <cctype>
- #include <cstdio>
-+#include <cstring>
- #include <algorithm>
- #include <locale>
- #include <fstream>
---- src/other/ext/assetimport.cmake
-+++ src/other/ext/assetimport.cmake
-@@ -68,6 +68,7 @@ if (BRLCAD_ASSETIMPORT_BUILD)
-     -DASSIMP_BUILD_MINIZIP=ON
-     -DASSIMP_INJECT_DEBUG_POSTFIX=OFF
-     -DASSIMP_INSTALL_PDB=OFF
-+    -DASSIMP_WARNINGS_AS_ERRORS=OFF
-     DEPENDS ${ASSETIMPORT_DEPS}
-     LOG_CONFIGURE ${EXT_BUILD_QUIET}
-     LOG_BUILD ${EXT_BUILD_QUIET}
+ cmakefiles(

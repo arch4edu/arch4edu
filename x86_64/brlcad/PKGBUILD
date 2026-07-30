@@ -1,78 +1,82 @@
 pkgname=brlcad
-pkgver=7.36.0
+pkgver=7.44.0
 pkgrel=1
-pkgdesc='An extensive 3D solid modeling system.'
+pkgdesc='Extensive 3D solid modeling system'
 url='https://brlcad.org'
-license=('LGPL' 'BSD' 'custom:BDL')
-arch=('i686' 'x86_64')
-depends=('gdal' 'libgl' 'libxft' 'libxi')
-makedepends=('cmake' 'ninja')
+license=('LGPL-2.1-only' 'BSD-3-Clause' 'LicenseRef-BDL')
+arch=(i686 x86_64)
+depends=(gdal libgl libxft libxi)
+makedepends=(cmake ninja git re2c astyle zlib netpbm libpng lmdb eigen sqlite proj gdal pugixml assimp opencv tcl tk itk onetbb)
 install="${pkgname}.install"
 _tag_name="rel-${pkgver//./-}"
 source=(
-    'build.patch'
-    "https://github.com/BRL-CAD/${pkgname}/archive/refs/tags/${_tag_name}.tar.gz")
-sha256sums=(
-    'SKIP'
-    '1108ae3bb031c5ab84c1c5eaf752bc253ae8a81853113afeba9d4b1ec61db835')
-
+  "${pkgname}-${_tag_name}.tar.gz::https://github.com/BRL-CAD/${pkgname}/archive/refs/tags/${_tag_name}.tar.gz"
+  "bext::git+https://github.com/BRL-CAD/bext.git#commit=12f7d5669eec143eb882a367fa2d2a56127d1942"
+  "fix-bext-system-mode.patch"
+)
+sha512sums=('c2c4c6be526f99179d3577b32c070438a4d60a1fb73c2ad96e0176d3529c5d21b2944d98d2dcc5e1172c23cbf97f0898b83e16c4125fba953d46587b6745386b'
+            'SKIP'
+            'SKIP')
 
 _build_config='Release'
 _prefix="/opt/${pkgname}"
 
-
 prepare() {
-    patch \
-        --strip=0 \
-        "--directory=${srcdir}/${pkgname}-${_tag_name}" \
-        "--input=${srcdir}/build.patch"
+  cd "${srcdir}/${pkgname}-${_tag_name}"
+  sed -i 's/g_target/#g_target/' db/nist/CMakeLists.txt
+  patch -Np1 -i "${srcdir}/fix-bext-system-mode.patch"
 }
-
 
 build() {
-    cmake \
-        -G Ninja \
-        -S "${srcdir}/${pkgname}-${_tag_name}" \
-        -B "${srcdir}/build" \
-        -Wno-dev \
-        "-DCMAKE_INSTALL_PREFIX=${_prefix}" \
-        "-DCMAKE_BUILD_TYPE=${_build_config}" \
-        -DBUILD_STATIC_LIBS=OFF \
-        -DBRLCAD_ENABLE_COMPILER_WARNINGS=OFF \
-        -DBRLCAD_ENABLE_STRICT=OFF \
-        -DBRLCAD_FLAGS_DEBUG=OFF \
-        -DBRLCAD_BUNDLED_LIBS=BUNDLED \
-        -DBRLCAD_GDAL=OFF \
-        -DBRLCAD_PNG=OFF \
-        -DBRLCAD_REGEX=OFF \
-        -DBRLCAD_ZLIB=OFF \
-        -DBRLCAD_ENABLE_OPENGL=ON \
-        -DBRLCAD_ENABLE_QT=OFF
+  export CXXFLAGS+=" -include cstdint -DSTRCASECMP=strcasecmp"
+  cmake \
+    -G Ninja \
+    -S "${srcdir}/${pkgname}-${_tag_name}" \
+    -B "${srcdir}/build" \
+    -Wno-dev \
+    "-DCMAKE_INSTALL_PREFIX=${_prefix}" \
+    "-DCMAKE_BUILD_TYPE=${_build_config}" \
+    -DBUILD_STATIC_LIBS=OFF \
+    -DBRLCAD_ENABLE_COMPILER_WARNINGS=OFF \
+    -DBRLCAD_ENABLE_STRICT=OFF \
+    -DBRLCAD_FLAGS_DEBUG=OFF \
+    -DBRLCAD_BUNDLED_LIBS=SYSTEM \
+    -DBRLCAD_ENABLE_MINIMAL=ON \
+    -DBRLCAD_PNG=OFF \
+    -DBRLCAD_REGEX=OFF \
+    -DBRLCAD_ZLIB=OFF \
+    -DBRLCAD_ENABLE_OPENGL=OFF \
+    -DBRLCAD_ENABLE_QT=OFF \
+    -DBRLCAD_ENABLE_TCL=OFF \
+    "-DBRLCAD_EXT_PARALLEL=$(nproc)" \
+    -DPNG_PNG_INCLUDE_DIR=/usr/include \
+    -DLMDB_LIBRARY=/usr/lib/liblmdb.so \
+    -DLMDB_INCLUDE_DIR=/usr/include \
+    -DSQLite3_LIBRARY=/usr/lib/libsqlite3.so \
+    -DSQLite3_INCLUDE_DIR=/usr/include \
+    "-DBRLCAD_EXT_SOURCE_DIR=${srcdir}/bext"
 
-    cmake --build "${srcdir}/build" --config "${_build_config}"
+  cmake --build "${srcdir}/build" --config "${_build_config}"
 
-    echo \
-        "export PATH=\"\$PATH:${_prefix}/bin\"" \
-        >"${srcdir}/build/${pkgname}.sh"
+  echo "export PATH=\"\$PATH:${_prefix}/bin\"" >"${srcdir}/build/${pkgname}.sh"
 }
 
-
 package() {
-    cmake \
-        --install "${srcdir}/build" \
-        --config "${_build_config}" \
-        --prefix "${pkgdir}${_prefix}"
+  cmake \
+    --install "${srcdir}/build" \
+    --config "${_build_config}" \
+    --prefix "${pkgdir}${_prefix}"
 
-    install \
-        -D \
-        --mode=u=rw,go=r \
-        "--target-directory=${pkgdir}/usr/share/licenses/${pkgname}" \
-        "${srcdir}/build/share/doc/legal/"{bdl,bsd}.txt
+  install \
+    -D \
+    -m644 \
+    "${srcdir}/build/share/doc/legal/"{bdl,bsd}.txt \
+    -t "${pkgdir}/usr/share/licenses/${pkgname}"
 
-    install \
-        -D \
-        --mode=u=rw,go=r \
-        "--target-directory=${pkgdir}/etc/profile.d" \
-        "${srcdir}/build/${pkgname}.sh"
+  install \
+    -D \
+    -m755 \
+    "${srcdir}/build/${pkgname}.sh" \
+    "${pkgdir}/etc/profile.d/${pkgname}.sh"
 }
 export CFLAGS="${CFLAGS} -lm"

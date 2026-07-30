@@ -1,0 +1,20 @@
+--- ./build/bext/geogram/geogram/src/lib/third_party/numerics/SUPERLU/slacon2.c	2024-11-08 16:45:57.828556643 -0500
++++ ./build/bext/geogram/geogram/src/lib/third_party/numerics/SUPERLU/slacon2.c_patched	2024-11-08 17:25:12.939279798 -0500
+@@ -22,7 +22,7 @@
+ #include <math.h>
+ #include "slu_Cnames.h"
+ 
+-extern int idamax_(int *, double *, int *);
++extern int isamax_(int *, float *, int *);
+ 
+ 
+ /*! \brief
+@@ -160,7 +160,7 @@
+ #ifdef _CRAY
+     isave[1] = ISAMAX(n, &x[0], &c__1);   /* j */
+ #else
+-    isave[1] = idamax_(n, &x[0], &c__1);  /* j */
++    isave[1] = isamax_(n, &x[0], &c__1);  /* j */
+ #endif
+     --isave[1];  /* --j; */
+     isave[2] = 2;  /* iter = 2; */
