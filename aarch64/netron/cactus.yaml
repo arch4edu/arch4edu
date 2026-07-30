@@ -1,1 +1,10 @@
-../../template/aarch64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: |
+  aur-pre-build
+  sed -i 's|dist/linux-unpacked|dist/linux-arm64-unpacked|' PKGBUILD
+post_build: aur-post-build
