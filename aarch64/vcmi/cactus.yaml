@@ -9,4 +9,5 @@ makepkg_args: -A
 pre_build: |
   aur-pre-build
   add makedepends qt5-tools
+  add depends qt6-svg
 post_build: aur-post-build
