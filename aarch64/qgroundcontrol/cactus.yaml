@@ -9,4 +9,5 @@ makepkg_args: -A
 pre_build: |
   aur-pre-build
   sed '/qmake/i\  echo "DEFINES = DISABLE_AIRMAP" > ../user_config.pri' -i PKGBUILD
+  sed -i '/git submodule init/i\  sed -i '"'"'s/-Werror//g'"'"' QGCCommon.pri' PKGBUILD
 post_build: aur-post-build
