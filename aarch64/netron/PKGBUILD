@@ -9,19 +9,19 @@ pkgbase=netron
 pkgname=(netron)
 ##pkgname+=(netron-cli)
 pkgdesc='Visualizer for neural network, deep learning, and machine learning models'
-pkgver=8.5.5
+pkgver=9.1.9
 pkgrel=1
 url='https://netron.app/'
 arch=(x86_64)
 license=(MIT)
 depends=(python)
-makedepends=(gendesk npm python-setuptools python-build python-installer python-wheel)
+makedepends=(gendesk npm python-setuptools python-build python-installer python-wheel libxcrypt-compat)
 optdepends=(
   'python-onnx: serializing ONNX models'
   'python-pytorch: serializing PyTorch models'
 )
 source=("https://github.com/lutzroeder/netron/archive/v${pkgver}/netron-${pkgver}.tar.gz")
-sha256sums=('9f9d94fe38d3a43a428805a72e60ce7e3831f3317e7addd48428de89b145fe35')
+sha256sums=('e9e217aff073fb55f6e628e439e6ba2fd4f4b1be4c806cc3efd4add947d71922')
 
 prepare() {
   cd "${pkgbase}-${pkgver}"
@@ -37,7 +37,7 @@ build() {
   cd "${pkgbase}-${pkgver}"
   npm run clean
   npm run build python
-  npm run build electron
+  npx electron-builder --linux dir --publish never
 }
 
 package_netron() {
@@ -50,7 +50,7 @@ package_netron() {
   #mv "${pkgdir}/usr/bin/${pkgbase}" "${pkgdir}/usr/bin/${pkgbase}-cli"
 
   mkdir -p "${pkgdir}/opt/"
-  cp -r dist/linux-unpacked "${pkgdir}/opt/${pkgname}"
+  cp -r dist/linux-arm64-unpacked "${pkgdir}/opt/${pkgname}"
   #ln -s "/opt/${pkgname}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
 
   install -Dm644 publish/icon.png "${pkgdir}/usr/share/pixmaps/${pkgbase}.png"
