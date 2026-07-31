@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=poorman
-_pkgver=0.2.7
+_pkgver=0.2.8
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="A Poor Man's Dependency Free Recreation of 'dplyr'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -19,8 +19,8 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4bbc26912e651669c58e9eab98856f0f')
-b2sums=('9193ee73722ee4e26ded6d258429f665e51d17cc3ce233822a708febd856a47669dc904b0c1323d15fc58c95067b409a1aefb5e8462116d826de20f0932da6ef')
+md5sums=('a53cc3f1a1f58f1d078e28ce9eed0dae')
+b2sums=('84f4bb2b3ae40ac11f85cd47b054bad0ce408b1cbcca364bd08ff67004cbfd4c5eb48624db2faafd7500f69d2280cfff11f97313c2d22bebce6928b5713f8c08')
 
 build() {
   mkdir build
