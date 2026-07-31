@@ -6,7 +6,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=zoo
-_pkgver=1.8-15
+_pkgver=1.9-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,20 +22,21 @@ optdepends=(
   r-chron
   r-coda
   r-ggplot2
+  r-knitr
   r-mondate
   r-scales
   r-stinepack
   r-strucchange
   r-timedate
   r-timeseries
+  r-tinyplot
   r-tis
   r-tseries
   r-xts
-  r-tinyplot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fcc3cf2d5eb4e94ecd89ac0fc985bc77')
-b2sums=('0dc761229ae8fba71f85c212447d03d60c9de6bbc6ddf7506bb09c2961bee74b78e8abba6cbf7dd862edb8052f29a88b6a3d902211ac370b01d5f9ef3ac7fefd')
+md5sums=('fba440a280e772990f55aeec7257ef85')
+b2sums=('c5cc6bffe849a9baf3b997847895b57cc9c0623eb29b841bb4bc37685b4904852a61ef3783553d4cf8fb332582a58790c71aeafcb1002ec000af6a57c7d8184a')
 
 build() {
   mkdir build
