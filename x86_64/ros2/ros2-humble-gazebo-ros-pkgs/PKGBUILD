@@ -1,0 +1,104 @@
+# Maintainer: AutoUpdateBot <auto-update-bot@arch4edu.org>
+# gazebo_ros_pkgs batch for ROS2 Humble: gazebo_dev, gazebo_msgs, gazebo_ros,
+# gazebo_plugins and the gazebo_ros_pkgs metapackage.
+
+pkgbase=ros2-humble-gazebo-ros-pkgs
+pkgname=(
+ ros2-humble-gazebo-dev      ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-gazebo-msgs     ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-gazebo-ros      ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-gazebo-plugins  ## already on AUR as a standalone package; commented out to avoid name conflict
+  'ros2-humble-gazebo-ros-pkgs'
+)
+pkgver=3.7.0
+pkgrel=2
+pkgdesc="ROS2 gazebo_ros_pkgs stack (classic Gazebo integration)"
+arch=('x86_64')
+url="https://index.ros.org/p/gazebo_ros_pkgs/"
+license=('Apache-2.0' 'BSD')
+depends=('ros2-humble')
+makedepends=('cmake' 'ros2-humble' 'ros2-humble-cv-bridge' 'gazebo' 'python-lxml')
+source=("https://github.com/ros-simulation/gazebo_ros_pkgs/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('69093e3cc7c4194f958bff777e76ab7c9a8f5c880f764332eb961f791a5a73a4')
+
+build() {
+    local _src="$srcdir/gazebo_ros_pkgs-$pkgver"
+    local _staging="$srcdir/_staging"
+    rm -rf "$_staging"
+    mkdir -p "$_staging"
+
+    _build_install_isolated() {
+        msg2 "Building $1 ..."
+        local _subdir="$1"
+        local _extra_prefix="$2"
+        cd "$_src/$_subdir"
+        source /opt/ros/humble/setup.bash
+        if [ -n "$_extra_prefix" ]; then
+            export AMENT_PREFIX_PATH="${_extra_prefix}:/opt/ros/humble"
+            export CMAKE_PREFIX_PATH="${_extra_prefix}:/opt/ros/humble"
+        else
+            export AMENT_PREFIX_PATH="/opt/ros/humble"
+            export CMAKE_PREFIX_PATH="/opt/ros/humble"
+        fi
+        export CXXFLAGS="${CXXFLAGS} -Wno-error -Wno-unused-parameter -I/usr/include/opencv4"
+        export CFLAGS="${CFLAGS} -Wno-error"
+        export LDFLAGS="${LDFLAGS} -Wl,-rpath-link,/opt/ros/humble/lib"
+        local _pkg_staging="$_staging/$_subdir"
+        local _bdir="build-$_subdir"
+        cmake -B "$_bdir" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/ros/humble -DBUILD_TESTING=OFF -Wno-dev
+        cmake --build "$_bdir" -j2
+        DESTDIR="$_pkg_staging" cmake --install "$_bdir"
+    }
+
+    _prefix() {
+        local _p="" _d
+        for _d in "$@"; do
+            _p="${_p:+$_p:}$_staging/$_d/opt/ros/humble"
+        done
+        printf '%s' "$_p"
+    }
+
+    # cv_bridge is provided by ros2-humble-cv-bridge under /opt/ros/humble
+    local _cvbridge="/opt/ros/humble"
+
+    _build_install_isolated gazebo_msgs ""
+    _build_install_isolated gazebo_dev ""
+    _build_install_isolated gazebo_ros "$(_prefix gazebo_dev gazebo_msgs)"
+    _build_install_isolated gazebo_plugins "$(_prefix gazebo_dev gazebo_msgs gazebo_ros):$_cvbridge"
+    _build_install_isolated gazebo_ros_pkgs "$(_prefix gazebo_dev gazebo_msgs gazebo_ros gazebo_plugins)"
+}
+
+_pkg_copy() {
+    local _subdir="$1"
+    local _staging_pkg="$srcdir/_staging/$_subdir"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    if [ -d "$_staging_pkg/opt/ros/humble" ]; then
+        cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+    fi
+}
+
+package_ros2-humble-gazebo-dev() {
+    depends=('ros2-humble' 'gazebo')
+    _pkg_copy gazebo_dev
+}
+
+package_ros2-humble-gazebo-msgs() {
+    depends=('ros2-humble')
+    _pkg_copy gazebo_msgs
+}
+
+package_ros2-humble-gazebo-ros() {
+    depends=('ros2-humble' 'ros2-humble-gazebo-dev' 'ros2-humble-gazebo-msgs' 'python-lxml')
+    _pkg_copy gazebo_ros
+}
+
+package_ros2-humble-gazebo-plugins() {
+    depends=('ros2-humble' 'ros2-humble-cv-bridge' 'ros2-humble-gazebo-dev' 'ros2-humble-gazebo-msgs' 'ros2-humble-gazebo-ros')
+    _pkg_copy gazebo_plugins
+}
+
+package_ros2-humble-gazebo-ros-pkgs() {
+    pkgdesc="ROS2 gazebo_ros_pkgs metapackage"
+    depends=('ros2-humble-gazebo-dev' 'ros2-humble-gazebo-msgs' 'ros2-humble-gazebo-ros' 'ros2-humble-gazebo-plugins')
+    _pkg_copy gazebo_ros_pkgs
+}
