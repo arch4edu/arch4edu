@@ -3,23 +3,35 @@
 pkgname=openface
 _pkgname=OpenFace
 pkgver=2.2.0
-pkgrel=4
+pkgrel=5
 pkgdesc="A state-of-the art tool intended for facial landmark detection, head pose estimation, facial action unit recognition, and eye-gaze estimation"
 arch=('x86_64')
 url="https://github.com/TadasBaltrusaitis/${_pkgname}"
 license=('custom')
-depends=('boost-libs' 'dlib' 'gcc-libs' 'glibc' 'openblas' 'opencv')
+depends=('boost-libs' 'dlib' 'gcc-libs' 'glibc' 'openblas' 'opencv4')
 makedepends=('cmake' 'qt6-base' 'tbb' 'wget' 'boost')
 source=("${url}/archive/refs/tags/${_pkgname}_${pkgver}.tar.gz")
 sha256sums=('928e6346bcff41393393a364df99bf09c3410fab85b569f2023e3224d2a1981a')
+
+prepare() {
+  cd "${srcdir}/${_pkgname}-${_pkgname}_${pkgver}"
+
+  # Boost 1.91: boost_system is header-only, no longer a compiled component
+  sed -i 's/COMPONENTS filesystem system/COMPONENTS filesystem/' CMakeLists.txt
+}
 
 build() {
   cd "${srcdir}/${_pkgname}-${_pkgname}_${pkgver}"
 
   bash download_models.sh
 
-  cmake -B build \
+  # opencv4's OpenCVConfig.cmake resolves OpenCV_INCLUDE_DIRS to a wrong prefix,
+  # so add its header directory explicitly.
+  export CXXFLAGS="$CXXFLAGS -I/usr/include/opencv4"
+
+  cmake -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DCMAKE_BUILD_TYPE=RELEASE \
+    -DOpenCV_DIR=/usr/lib/cmake/opencv4 \
     -DCMAKE_INSTALL_PREFIX=/opt/${pkgname}
 #    -DBUILD_SHARED_LIBS=ON \
 #    -S "$srcdir/$pkgname-$pkgver" \
