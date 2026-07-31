@@ -5,7 +5,7 @@
 pkgbase=open3d
 pkgname=( {,python-}open3d python-py3d )
 pkgver=0.19.0
-pkgrel=17
+pkgrel=18
 epoch=1
 pkgdesc="A Modern Library for 3D Data Processing"
 arch=('x86_64')
@@ -71,6 +71,7 @@ source=(
     "civetweb.cmake.patch"
     "minizip.patch"
     "cstdint.patch"
+    "backface_culling.patch"
 )
 sha256sums=(
     'SKIP'
@@ -79,7 +80,8 @@ sha256sums=(
     '601ecb81fe6b1b6b459bc9340e9c060e2fc991a004318d18803dffa23ffb078a'
     '18a4dc14fc7d027b864575a856422c2a1b520cbbba47fb7e22300054e796d09b'
     'fab155297ebfffdd8a05af13006004e0a39daacc83c0ee6a43e5b9ace61d55e9'
-    'c04a5540112dffe8dce5fdcf2799b7de9214003743b26a6724a23aab7503b2a7')
+    'c04a5540112dffe8dce5fdcf2799b7de9214003743b26a6724a23aab7503b2a7'
+    '427d066c27a5a4b1bceffca0502d7138bbaa34bde1323fa7ba020b0e32d0821a')
 
 function prepare() {
     cd "${srcdir}/${pkgbase}"
@@ -89,6 +91,7 @@ function prepare() {
     patch -Np1 -i "${srcdir}/civetweb.cmake.patch"
     patch -Np1 -i "${srcdir}/minizip.patch"
     patch -Np1 -i "${srcdir}/cstdint.patch"
+    patch -Np1 -i "${srcdir}/backface_culling.patch"
     # find . -name "CMakeLists.txt" -exec sed -i 's/-Werror//g' {} \;
     # grep --files-with-matches -r "_FORTIFY_SOURCE" | xargs -I {} sed -i 's/_FORTIFY_SOURCE=[0-9]/""/g' {}
     mkdir -p build

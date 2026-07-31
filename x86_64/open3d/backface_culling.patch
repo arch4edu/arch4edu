@@ -1,0 +1,189 @@
+diff --git a/cpp/open3d/visualization/rendering/MaterialRecord.h b/cpp/open3d/visualization/rendering/MaterialRecord.h
+index ef1b174d3..7b20e86e5 100644
+--- a/cpp/open3d/visualization/rendering/MaterialRecord.h
++++ b/cpp/open3d/visualization/rendering/MaterialRecord.h
+@@ -25,6 +25,12 @@ struct MaterialRecord {
+     // Rendering attributes
+     bool has_alpha = false;
+ 
++    // If true, cull back faces (single-sided); if false (default), draw both
++    // faces. Inverse of the legacy Visualizer's mesh_show_back_face. Honored
++    // only by the surface shaders defaultLit, defaultLitTransparency,
++    // defaultUnlit, normals, unlitGradient, unlitSolidColor.
++    bool backface_culling = false;
++
+     // PBR Material properties and maps
+     Eigen::Vector4f base_color = Eigen::Vector4f(1.f, 1.f, 1.f, 1.f);
+     float base_metallic = 0.f;
+diff --git a/cpp/open3d/visualization/rendering/Open3DScene.cpp b/cpp/open3d/visualization/rendering/Open3DScene.cpp
+index c0142da8f..e82fddfa6 100644
+--- a/cpp/open3d/visualization/rendering/Open3DScene.cpp
++++ b/cpp/open3d/visualization/rendering/Open3DScene.cpp
+@@ -363,6 +363,19 @@ void Open3DScene::ModifyGeometryMaterial(const std::string& name,
+     }
+ }
+ 
++void Open3DScene::SetGeometryBackfaceCulling(const std::string& name,
++                                             bool enable) {
++    auto scene = renderer_.GetScene(scene_);
++    auto g = geometries_.find(name);
++    if (g != geometries_.end()) {
++        scene->SetGeometryBackfaceCulling(name, enable);
++        if (!g->second.fast_name.empty()) {
++            scene->SetGeometryBackfaceCulling(g->second.fast_name, enable);
++        }
++        // Don't touch low_name: it is an orange bounding-box LineSet.
++    }
++}
++
+ void Open3DScene::ShowGeometry(const std::string& name, bool show) {
+     auto it = geometries_.find(name);
+     if (it != geometries_.end()) {
+diff --git a/cpp/open3d/visualization/rendering/Open3DScene.h b/cpp/open3d/visualization/rendering/Open3DScene.h
+index 5c3e0dce8..c30f5dbd3 100644
+--- a/cpp/open3d/visualization/rendering/Open3DScene.h
++++ b/cpp/open3d/visualization/rendering/Open3DScene.h
+@@ -96,6 +96,8 @@ public:
+ 
+     void ModifyGeometryMaterial(const std::string& name,
+                                 const MaterialRecord& mat);
++    /// Enables or disables back-face culling for the named geometry.
++    void SetGeometryBackfaceCulling(const std::string& name, bool enable);
+     void AddModel(const std::string& name, const TriangleMeshModel& model);
+ 
+     /// Updates all geometries to use this material
+diff --git a/cpp/open3d/visualization/rendering/Scene.h b/cpp/open3d/visualization/rendering/Scene.h
+index cbf9eb3ef..1546f2d87 100644
+--- a/cpp/open3d/visualization/rendering/Scene.h
++++ b/cpp/open3d/visualization/rendering/Scene.h
+@@ -97,6 +97,9 @@ public:
+                                  bool receive_shadows) = 0;
+     virtual void SetGeometryCulling(const std::string& object_name,
+                                     bool enable) = 0;
++    /// Enables/disables back-face culling for the named geometry.
++    virtual void SetGeometryBackfaceCulling(const std::string& object_name,
++                                            bool enable) = 0;
+     virtual void SetGeometryPriority(const std::string& object_name,
+                                      uint8_t priority) = 0;
+     virtual void QueryGeometry(std::vector<std::string>& geometry) = 0;
+diff --git a/cpp/open3d/visualization/rendering/filament/FilamentScene.cpp b/cpp/open3d/visualization/rendering/filament/FilamentScene.cpp
+index 0afb89853..bc40751db 100644
+--- a/cpp/open3d/visualization/rendering/filament/FilamentScene.cpp
++++ b/cpp/open3d/visualization/rendering/filament/FilamentScene.cpp
+@@ -801,6 +801,15 @@ void FilamentScene::SetGeometryCulling(const std::string& object_name,
+     }
+ }
+ 
++void FilamentScene::SetGeometryBackfaceCulling(const std::string& object_name,
++                                               bool enable) {
++    auto geoms = GetGeometry(object_name);
++    for (auto* g : geoms) {
++        g->mat.properties.backface_culling = enable;
++        UpdateBackfaceCulling(g->mat);
++    }
++}
++
+ void FilamentScene::SetGeometryPriority(const std::string& object_name,
+                                         uint8_t priority) {
+     auto geoms = GetGeometry(object_name);
+@@ -813,6 +822,29 @@ void FilamentScene::SetGeometryPriority(const std::string& object_name,
+     }
+ }
+ 
++void FilamentScene::UpdateBackfaceCulling(GeometryMaterialInstance& geom_mi) {
++    // Back-face culling maps to the rasterizer culling mode. Restrict it to the
++    // surface/mesh shaders where it is meaningful (ignore points, lines, depth,
++    // background, etc.).
++    static const std::unordered_set<std::string> kCullableShaders = {
++            "defaultLit",   "defaultLitTransparency", "defaultUnlit",
++            "normals",      "unlitGradient",          "unlitSolidColor"};
++    if (kCullableShaders.count(geom_mi.properties.shader) == 0) {
++        return;
++    }
++    auto w_mi = resource_mgr_.GetMaterialInstance(geom_mi.mat_instance);
++    if (auto mi = w_mi.lock()) {
++        // backface_culling == true  -> BACK: cull back faces.
++        // backface_culling == false -> NONE: draw both faces. Back-face
++        //                              lighting stays correct because these
++        //                              materials keep back-face normal flipping
++        //                              on by default.
++        mi->setCullingMode(geom_mi.properties.backface_culling
++                                   ? filament::MaterialInstance::CullingMode::BACK
++                                   : filament::MaterialInstance::CullingMode::NONE);
++    }
++}
++
+ void FilamentScene::UpdateDefaultLit(GeometryMaterialInstance& geom_mi) {
+     auto& material = geom_mi.properties;
+     auto& maps = geom_mi.maps;
+@@ -1163,6 +1195,8 @@ void FilamentScene::UpdateMaterialProperties(RenderableGeometry& geom) {
+     } else {
+         utility::LogWarning("'{}' is not a valid shader", props.shader);
+     }
++
++    UpdateBackfaceCulling(geom.mat);
+ }
+ 
+ void FilamentScene::OverrideMaterialInternal(RenderableGeometry* geom,
+@@ -1217,6 +1251,7 @@ void FilamentScene::OverrideMaterialInternal(RenderableGeometry* geom,
+         } else {
+             UpdateDepthShader(geom->mat);
+         }
++        UpdateBackfaceCulling(geom->mat);
+     } else {
+         UpdateMaterialProperties(*geom);
+     }
+diff --git a/cpp/open3d/visualization/rendering/filament/FilamentScene.h b/cpp/open3d/visualization/rendering/filament/FilamentScene.h
+index f6682851d..5ea6871d8 100644
+--- a/cpp/open3d/visualization/rendering/filament/FilamentScene.h
++++ b/cpp/open3d/visualization/rendering/filament/FilamentScene.h
+@@ -121,6 +121,8 @@ public:
+                          bool receive_shadows) override;
+     void SetGeometryCulling(const std::string& object_name,
+                             bool enable) override;
++    void SetGeometryBackfaceCulling(const std::string& object_name,
++                                    bool enable) override;
+     void SetGeometryPriority(const std::string& object_name,
+                              uint8_t priority) override;
+     void OverrideMaterial(const std::string& object_name,
+@@ -304,6 +306,10 @@ private:
+                                   const MaterialRecord& material,
+                                   bool shader_only = false);
+     void UpdateMaterialProperties(RenderableGeometry& geom);
++    // Applies the back-face-culling state to material instances whose shader
++    // was compiled with the double-sided capability. No-op for other shaders
++    // (points, lines, transparency/SSR, background, etc.).
++    void UpdateBackfaceCulling(GeometryMaterialInstance& geom_mi);
+     void UpdateDefaultLit(GeometryMaterialInstance& geom_mi);
+     void UpdateGaussianSplat(GeometryMaterialInstance& geom_mi);
+     void UpdateDefaultLitSSR(GeometryMaterialInstance& geom_mi);
+diff --git a/cpp/pybind/visualization/rendering/rendering.cpp b/cpp/pybind/visualization/rendering/rendering.cpp
+index 513a0f099..1a1881b4d 100644
+--- a/cpp/pybind/visualization/rendering/rendering.cpp
++++ b/cpp/pybind/visualization/rendering/rendering.cpp
+@@ -404,6 +404,12 @@ void pybind_rendering_definitions(py::module &m) {
+             m_rendering.attr("MaterialRecord"));
+     mat.def(py::init<>())
+             .def_readwrite("has_alpha", &MaterialRecord::has_alpha)
++            .def_readwrite("backface_culling",
++                           &MaterialRecord::backface_culling,
++                           "If True, back faces are culled (single-sided "
++                           "rendering). If False (default), both faces are "
++                           "drawn. Inverse of the legacy Visualizer's "
++                           "RenderOption.mesh_show_back_face.")
+             .def_readwrite("base_color", &MaterialRecord::base_color)
+             .def_readwrite("base_metallic", &MaterialRecord::base_metallic)
+             .def_readwrite("base_roughness", &MaterialRecord::base_roughness)
+@@ -710,6 +716,12 @@ void pybind_rendering_definitions(py::module &m) {
+             .def("modify_geometry_material",
+                  &Open3DScene::ModifyGeometryMaterial, "name"_a, "material"_a,
+                  "Modifies the material of the specified geometry")
++            .def("set_geometry_backface_culling",
++                 &Open3DScene::SetGeometryBackfaceCulling, "name"_a, "enable"_a,
++                 "Enables or disables back-face culling for the geometry with "
++                 "the given name. Pass enable=True to cull back faces "
++                 "(single-sided rendering), matching the legacy Visualizer's "
++                 "RenderOption.mesh_show_back_face=False.")
+             .def("show_geometry", &Open3DScene::ShowGeometry, "name"_a,
+                  "show"_a, "Shows or hides the geometry with the given name")
+             .def("update_material", &Open3DScene::UpdateMaterial, "material"_a,
