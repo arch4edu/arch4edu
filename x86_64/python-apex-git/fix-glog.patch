@@ -1,0 +1,220 @@
+--- a/setup.py
++++ b/setup.py
+@@ -20,6 +20,8 @@
+ # ninja build does not work unless include_dirs are abs path
+ this_dir = os.path.dirname(os.path.abspath(__file__))
+ 
++define_macros = [("GLOG_USE_GLOG_EXPORT", None)]
++
+ # Allow environment variables to specify build flags for PEP 517 compatibility
+ ENV_TO_FLAG = {
+     "APEX_CPP_EXT": "--cpp_ext",
+@@ -165,7 +167,7 @@
+ if has_flag("--cpp_ext", "APEX_CPP_EXT"):
+     if "--cpp_ext" in sys.argv:
+         sys.argv.remove("--cpp_ext")
+-    ext_modules.append(CppExtension("apex_C", ["csrc/flatten_unflatten.cpp"]))
++    ext_modules.append(CppExtension("apex_C", ["csrc/flatten_unflatten.cpp"], define_macros=define_macros))
+ 
+ 
+ _, bare_metal_version = get_cuda_bare_metal_version(CUDA_HOME)
+@@ -176,6 +178,7 @@
+     raise_if_cuda_home_none("--distributed_adam")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="distributed_adam_cuda",
+             sources=[
+                 "apex/contrib/csrc/optimizers/multi_tensor_distopt_adam.cpp",
+@@ -195,6 +198,7 @@
+     raise_if_cuda_home_none("--distributed_lamb")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="distributed_lamb_cuda",
+             sources=[
+                 "apex/contrib/csrc/optimizers/multi_tensor_distopt_lamb.cpp",
+@@ -216,6 +220,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="amp_C",
+             sources=[
+                 "csrc/amp_C_frontend.cpp",
+@@ -247,6 +252,7 @@
+     )
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="syncbn",
+             sources=["csrc/syncbn.cpp", "csrc/welford.cu"],
+             extra_compile_args={
+@@ -258,6 +264,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_layer_norm_cuda",
+             sources=["csrc/layer_norm_cuda.cpp", "csrc/layer_norm_cuda_kernel.cu"],
+             extra_compile_args={
+@@ -269,6 +276,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="mlp_cuda",
+             sources=["csrc/mlp.cpp", "csrc/mlp_cuda.cu"],
+             extra_compile_args={
+@@ -279,6 +287,7 @@
+     )
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_dense_cuda",
+             sources=["csrc/fused_dense.cpp", "csrc/fused_dense_cuda.cu"],
+             extra_compile_args={
+@@ -290,6 +299,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="scaled_upper_triang_masked_softmax_cuda",
+             sources=[
+                 "csrc/megatron/scaled_upper_triang_masked_softmax.cpp",
+@@ -311,6 +321,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="generic_scaled_masked_softmax_cuda",
+             sources=[
+                 "csrc/megatron/generic_scaled_masked_softmax.cpp",
+@@ -332,6 +343,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="scaled_masked_softmax_cuda",
+             sources=[
+                 "csrc/megatron/scaled_masked_softmax.cpp",
+@@ -353,6 +365,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="scaled_softmax_cuda",
+             sources=[
+                 "csrc/megatron/scaled_softmax.cpp",
+@@ -374,6 +387,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_rotary_positional_embedding",
+             sources=[
+                 "csrc/megatron/fused_rotary_positional_embedding.cpp",
+@@ -395,6 +409,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_weight_gradient_mlp_cuda",
+             include_dirs=[os.path.join(this_dir, "csrc")],
+             sources=[
+@@ -452,6 +467,7 @@
+     raise_if_cuda_home_none("--bnp")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="bnp",
+             sources=[
+                 "apex/contrib/csrc/groupbn/batch_norm.cu",
+@@ -482,6 +498,7 @@
+     print(f"`--xentropy` setting version of {xentropy_ver}")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="xentropy_cuda",
+             sources=[
+                 "apex/contrib/csrc/xentropy/interface.cpp",
+@@ -501,6 +518,7 @@
+     raise_if_cuda_home_none("--focal_loss")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="focal_loss_cuda",
+             sources=[
+                 "apex/contrib/csrc/focal_loss/focal_loss_cuda.cpp",
+@@ -521,6 +539,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="group_norm_cuda",
+             sources=[
+                 "apex/contrib/csrc/group_norm/group_norm_nhwc_op.cpp",
+@@ -580,6 +599,7 @@
+     raise_if_cuda_home_none("--index_mul_2d")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_index_mul_2d",
+             sources=[
+                 "apex/contrib/csrc/index_mul_2d/index_mul_2d_cuda.cpp",
+@@ -599,6 +619,7 @@
+     raise_if_cuda_home_none("--deprecated_fused_adam")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_adam_cuda",
+             sources=[
+                 "apex/contrib/csrc/optimizers/fused_adam_cuda.cpp",
+@@ -618,6 +639,7 @@
+     raise_if_cuda_home_none("--deprecated_fused_lamb")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fused_lamb_cuda",
+             sources=[
+                 "apex/contrib/csrc/optimizers/fused_lamb_cuda.cpp",
+@@ -646,6 +668,7 @@
+ 
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="fast_layer_norm",
+             sources=[
+                 "apex/contrib/csrc/layer_norm/ln_api.cpp",
+@@ -679,6 +702,7 @@
+     raise_if_cuda_home_none("--transducer")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="transducer_joint_cuda",
+             sources=[
+                 "apex/contrib/csrc/transducer/transducer_joint.cpp",
+@@ -695,6 +719,7 @@
+     )
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="transducer_loss_cuda",
+             sources=[
+                 "apex/contrib/csrc/transducer/transducer_loss.cpp",
+@@ -740,6 +765,7 @@
+     raise_if_cuda_home_none("--peer_memory")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="peer_memory_cuda",
+             sources=[
+                 "apex/contrib/csrc/peer_memory/peer_memory_cuda.cu",
+@@ -756,6 +782,7 @@
+     raise_if_cuda_home_none("--nccl_p2p")
+     ext_modules.append(
+         CUDAExtension(
++            define_macros=define_macros,
+             name="nccl_p2p_cuda",
+             sources=[
+                 "apex/contrib/csrc/nccl_p2p/nccl_p2p_cuda.cu",
