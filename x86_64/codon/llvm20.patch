@@ -1,0 +1,156 @@
+diff --git a/PKGBUILD b/PKGBUILD
+index 85bbe41..8a42110 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -7,8 +7,8 @@ pkgdesc="A high-performance, zero-overhead, extensible Python compiler using LLV
+ license=(Apache-2.0)
+ arch=(x86_64)
+ url="https://github.com/exaloop/${pkgname}"
+-depends=(llvm-libs ncurses gcc-libs glibc fast_float tomlplusplus semver fmt python)
+-makedepends=(cmake llvm git gcc-fortran clang) # cpp-peglib
++depends=(llvm20-libs ncurses gcc-libs glibc fast_float tomlplusplus semver fmt python)
++makedepends=(cmake llvm20 gcc15 gcc15-fortran git openblas) # cpp-peglib
+ source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
+   # googletest.zip::https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+ sha512sums=('beb0e6cfc048f3b413d165acd2dc0de5f03529a36f9425d49fdbd26105213da9de798fac60cbf6a73ff5f3e3e6a268af9da8b0a3c68e1b78c2257a9ff4a4e515')
+@@ -16,34 +16,116 @@ sha512sums=('beb0e6cfc048f3b413d165acd2dc0de5f03529a36f9425d49fdbd26105213da9de7
+ 
+ prepare() {
+   cd ${pkgname}-${pkgver}
+-  # sed -i 's|VERSION 2022-06-01|# VERSION 2022-06-01|g' cmake/deps.cmake
+-  # sed -i 's|CPMAddPackage(|# CPMAddPackage(|g' cmake/deps.cmake
+-  # link to the single lib
+-  # sed -i "s|\${LLVM_LIBS}|LLVM-20|g" CMakeLists.txt
+-  # undefined reference to symbol '_ZN4llvm27createRegionOnlyPrinterPassEv@@LLVM_17'
+-  # echo "target_link_libraries(codon PRIVATE LLVM-20)" >> CMakeLists.txt
+-  # echo "target_link_libraries(codon_test LLVM-20)" >> CMakeLists.txt
++  # Add LLVM library directory to linker search path and link against single LLVM dylib
++  sed -i '/find_package(LLVM REQUIRED)/a link_directories(${LLVM_LIBRARY_DIRS})' CMakeLists.txt
++  sed -i '/llvm_map_components_to_libnames/,/)/c\  set(LLVM_LIBS ${LLVM_LIBRARY_DIRS}/libLLVM.so)' CMakeLists.txt
++  sed -i 's/target_link_libraries(codonc PRIVATE/target_link_libraries(codonc PUBLIC/' CMakeLists.txt
++  sed -i 's/target_link_libraries(codonrt PRIVATE fmt omp backtrace LLVMSupport)/target_link_libraries(codonrt PUBLIC fmt omp backtrace hwy hwy_contrib gomp ${LLVM_LIBS})/' CMakeLists.txt
++  # CPM passes VERSION to find_package() which rejects date-based versions
++  sed -i '/NAME re2/,/)/{/VERSION 2022-06-01/d}' cmake/deps.cmake
++  # Force zlib-ng to build static lib (zlibstatic target) despite global BUILD_SHARED_LIBS=TRUE
++  sed -i '/NAME zlibng/,/)/{s|"CMAKE_POSITION_INDEPENDENT_CODE ON"|"CMAKE_POSITION_INDEPENDENT_CODE ON"\n            "BUILD_SHARED_LIBS OFF"|}' cmake/deps.cmake
++  # Bump highway 1.3.0 -> 1.4.0: evex512 target attribute removed in clang 22
++  sed -i '/NAME highway/,/)/{s|GIT_TAG 1.3.0|GIT_TAG 1.4.0|}' cmake/deps.cmake
++  # Fix jemalloc: std::__throw_bad_alloc removed in GCC 16 libstdc++
++  sed -i '/name = "jemalloc"/,/strip_prefix = "jemalloc-5.3.0"/{s|strip_prefix = "jemalloc-5.3.0",|strip_prefix = "jemalloc-5.3.0",\n        patch_cmds = ["sed -i '\''s/std::__throw_bad_alloc()/throw std::bad_alloc()/'\'' src/jemalloc_cpp.cpp"],|}' cmake/deps.cmake
++  # Fix fmt 12: move formatter specialization before first usage
++  python3 -c "
++import pathlib
++p = pathlib.Path('codon/cir/util/format.cpp')
++lines = p.read_text().splitlines(keepends=True)
++# Find and remove the specialization from the end
++spec_lines = []
++for i in range(len(lines)-1, -1, -1):
++  if 'fmt::formatter<codon::ir::util::NodeFormatter>' in lines[i]:
++    # Remove this line and the 'template <>' line before it
++    spec_lines = [lines[i-1], lines[i]]
++    del lines[i-1:i+1]
++    break
++if spec_lines:
++  # Find end of NodeFormatter struct (first '};' after 'struct NodeFormatter')
++  for i, line in enumerate(lines):
++    if 'struct NodeFormatter' in line:
++      for j in range(i, len(lines)):
++        if lines[j].strip() == '};':
++          # Insert: close namespaces, specialization, reopen namespaces
++          insert = ['} // namespace util\n', '} // namespace ir\n', '} // namespace codon\n', '\n'] + spec_lines + ['\n', 'namespace codon {\n', 'namespace ir {\n', 'namespace util {\n']
++          lines[j+1:j+1] = insert
++          break
++      break
++  p.write_text(''.join(lines))
++"
++  # Use system OpenBLAS instead of building from source (avoids clang/gcc object file incompatibility)
++  python3 -c "
++import pathlib, re
++p = pathlib.Path('cmake/deps.cmake')
++t = p.read_text()
++t = re.sub(r'if\(NOT APPLE\)\n *enable_language\(Fortran\)\n *CPMAddPackage\(\n *NAME openblas.*?\)\nendif\(\)\n', '', t, flags=re.DOTALL)
++p.write_text(t)
++"
++  python3 -c "
++import pathlib
++p = pathlib.Path('CMakeLists.txt')
++t = p.read_text()
++t = t.replace('add_dependencies(codonrt openblas)\n', '')
++t = t.replace('\$<TARGET_FILE:openblas> ', '/usr/lib/libopenblas.so ')
++p.write_text(t)
++"
++  # Fix xz: tuklib_cpucores/tuklib_physmem check fails in chroot, patch out FATAL_ERROR
++  python3 -c "
++import pathlib
++p = pathlib.Path('cmake/deps.cmake')
++t = p.read_text()
++t = t.replace('NAME xz', 'NAME xz\n    PATCH_COMMAND sed -i \"s/message(FATAL_ERROR/#message(FATAL_ERROR)/\" CMakeLists.txt', 1)
++p.write_text(t)
++"
++  # Add codon's patched OpenMP runtime (omp target) with GC hooks
++  cat >> cmake/deps.cmake << 'EOF'
++
++CPMAddPackage(
++    NAME omp
++    GITHUB_REPOSITORY "exaloop/openmp"
++    GIT_TAG master
++    GIT_SHALLOW_CLONE ON
++    DOWNLOAD_ONLY YES)
++if(omp_ADDED)
++  list(APPEND CMAKE_MODULE_PATH
++    "${omp_SOURCE_DIR}/cmake/Modules")
++  set(OPENMP_STANDALONE_BUILD ON)
++  set(LIBOMP_ARCH x86_64)
++  add_subdirectory("${omp_SOURCE_DIR}" "${omp_BINARY_DIR}" EXCLUDE_FROM_ALL)
++endif()
++EOF
+ }
+ 
+ build() {
+   export CODON_SYSTEM_LIBRARIES=/usr/lib
++  export LLVM_DIR=/usr/lib/llvm20/lib/cmake/llvm
+   cmake \
+     -S ${pkgname}-${pkgver} \
+     -B build \
+     -DBUILD_SHARED_LIBS=TRUE \
+     -DBUILD_TESTING=OFF \
+     -DCMAKE_BUILD_TYPE=Release \
+-    -DCMAKE_C_COMPILER=clang \
+-    -DCMAKE_CXX_COMPILER=clang++ \
++    -DCMAKE_C_COMPILER=gcc-15 \
++    -DCMAKE_CXX_COMPILER=g++-15 \
++    -DCMAKE_C_FLAGS="-fno-lto" \
++    -DCMAKE_CXX_FLAGS="-fno-lto" \
++    -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/llvm20/lib" \
++    -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/llvm20/lib" \
+     -DCMAKE_INSTALL_PREFIX=/usr \
+-    -DCMAKE_Fortran_COMPILER=gfortran \
+-    -DCMAKE_CXX_STANDARD=17 \
++    -DCMAKE_Fortran_COMPILER=gfortran-15 \
++    -DCMAKE_CXX_STANDARD=20 \
+     -DCODON_GPU=OFF \
+     -DCPM_USE_LOCAL_PACKAGES=ON \
++    -DCPM_DOWNLOAD_fmt=ON \
++    -DCPM_DOWNLOAD_openblas=OFF \
++    -DCPM_DOWNLOAD_zlibng=ON \
+     -DLIBOMP_USE_VERSION_SYMBOLS=OFF \
+-    -DLLVM_DIR=/usr/lib/cmake/llvm \
++    -DCMAKE_PREFIX_PATH=/usr/lib/llvm20 \
++    -DLLVM_DIR=/usr/lib/llvm20/lib/cmake/llvm \
+     -Wno-dev
+-  cmake --build build --target all
++  cmake --build build --target all --parallel $(nproc)
+ }
+ 
+ # -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+@@ -64,9 +146,8 @@ package() {
+   # install -Dm644 ${pkgname}-${pkgver}/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+   # rm -r "$pkgdir"/usr/python
+   # rm -r "$pkgdir"/usr/include/fmt
+-  # rm "$pkgdir"/usr/include/peglib.h  
++  # rm "$pkgdir"/usr/include/peglib.h
+   # rm "$pkgdir"/usr/lib/libfmt.a
+   # rm -r "$pkgdir"/usr/lib/cmake/fmt/
+   # rm "$pkgdir"/usr/lib/pkgconfig/fmt.pc
+ }
+-
