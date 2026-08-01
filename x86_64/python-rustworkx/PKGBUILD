@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _name=rustworkx
 pkgname=python-$_name
-pkgver=0.18.0
+pkgver=0.18.1
 pkgrel=1
 pkgdesc="A high performance Python graph library implemented in Rust"
 arch=(x86_64)
@@ -29,7 +29,7 @@ checkdepends=(
 )
 conflicts=(python-retworkx)
 source=($_name-$pkgver.tar.gz::https://github.com/Qiskit/$_name/archive/refs/tags/$pkgver.tar.gz)
-b2sums=('2e69a7e700309cecd5737d51df315572c67f6da3258adb3ab5b671c6264c0372b8a76005a23173d5144b7efe280af0c04a2f2f7bfbb95088c66f6aebcd4f3fd6')
+b2sums=('e93eb0a940a446165c60d521aeb7503c2f42b65723e027b05f01700c1da22c21620f2480ac1ef63ec2dc13d66ffe3f2720685474a685d0e4e262aeed483f708d')
 
 build() {
     cd $_name-$pkgver
@@ -38,10 +38,10 @@ build() {
 
 check() {
     cd $_name-$pkgver
-    local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-    python -m installer --destdir=../test_dir dist/*.whl
+    python -m venv --system-site-packages test-env
+    test-env/bin/python -m installer dist/*.whl
     rm -rf $_name
-    PYTHONPATH="$PWD/../test_dir/usr/lib/python$python_version/site-packages" pytest tests
+    test-env/bin/python -P -m pytest -o addopts=""
 }
 
 package() {
