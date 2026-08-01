@@ -7,4 +7,8 @@ build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   echo 'export HDFLIBS=/opt/hdf4' >> PKGBUILD
+  # Upstream GitHub release no longer ships the source tarball; use the GitHub archive instead
+  sed -i 's|source=.*releases/download.*|source=(https://github.com/HDFGroup/hdfview/archive/v${pkgver}.tar.gz)|' PKGBUILD
+  sed -i "s|sha256sums=.*|sha256sums=('6b65486e2d8f3601d9405b91003c7aef7454e4c27fdd59ded0877f715b1e984e')|" PKGBUILD
+  sed -i 's/^_base=HDFView/_base=hdfview/' PKGBUILD
 post_build: aur-post-build
