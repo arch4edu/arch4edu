@@ -2,8 +2,8 @@
 
 _name=cp2k
 pkgname=${_name}-bin
-pkgver=2026.1
-pkgrel=2
+pkgver=2026.2
+pkgrel=1
 pkgdesc="A quantum chemistry and solid state physics software package for atomistic simulations of solid state, liquid, molecular, periodic, material, crystal, and biological systems. (precompiled, OpenMP)"
 arch=("x86_64")
 url="https://www.cp2k.org"
@@ -12,7 +12,7 @@ provides=("${_name}")
 conflicts=("${_name}")
 source_x86_64=("https://github.com/${_name}/${_name}/releases/download/v${pkgver}/${_name}-${pkgver}-Linux-gnu-x86_64.ssmp")
 # No aarch64 binary available for 2026.1
-sha256sums_x86_64=('f18e78cada4e9d747afe66e600703794cee748f3ca21fc1808ea4de52f0788ba')
+sha256sums_x86_64=('1497870e84fc4092890d1345a7ea8f61922cc162ced32cab86e359a7b9142b6f')
 
 package() {
   cd "${srcdir}"
