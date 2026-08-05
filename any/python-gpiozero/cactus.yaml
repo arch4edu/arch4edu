@@ -1,10 +1,9 @@
 nvchecker:
   - source: aur
     aur:
-  - source: github
-    github: WiringPi/WiringPi-Python
   - alias: python
-build_prefix: extra-aarch64
-makepkg_args: -A
+depends:
+  - any/python-colorzero
+build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
