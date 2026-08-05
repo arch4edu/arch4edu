@@ -8,5 +8,7 @@ depends:
   - any/python-jaxtyping
   - any/python-orbax-checkpoint
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i '/python -m build -nw/i\    sed -i "s/flit_core >=3.5,<4/flit_core >=3.5/" orbax-$_pkgver/export/pyproject.toml' PKGBUILD
 post_build: aur-post-build
