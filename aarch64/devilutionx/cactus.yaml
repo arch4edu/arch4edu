@@ -8,5 +8,8 @@ makedepends:
   - aarch64/smpq
 build_prefix: extra-aarch64
 makepkg_args: -A
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i 's|cmake -S "${pkgbase}-src-${pkgver}"|cmake -S "${pkgbase}-src-${pkgver}" -DCMAKE_CXX_FLAGS="-include fmt/format.h"|' PKGBUILD
+  sed -i 's|^build() {|prepare() {\n  cd "${pkgbase}-src-${pkgver}"\n  sed -i "2i #include <fmt/format.h>" dist/sdl_audiolib-src/src/aulib_log.h\n}\n\nbuild() {|' PKGBUILD
 post_build: aur-post-build
