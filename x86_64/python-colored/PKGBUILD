@@ -4,7 +4,7 @@
 pkgname=python-colored
 _name=${pkgname#python-}
 pkgver=2.3.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Simple python library for color and formatting to terminal"
 arch=('any')
 url="https://dslackw.gitlab.io/colored"
@@ -12,7 +12,7 @@ license=('MIT')
 depends=('python')
 makedepends=(
   'python-build'
-  'python-flit'
+  'python-flit-core'
   'python-installer'
   'python-wheel'
 )
@@ -23,6 +23,9 @@ sha256sums=('0eceada151aceac9197b783f1825a6c41115c7a39ab9e200e45d8e928b74e798')
 prepare() {
   cd "$_name-$pkgver"
   sed -i 's/,<4//' pyproject.toml
+
+  # Relax requirements
+  sed -i 's/flit_core>=3.10.1,<4/flit_core>=3.10.1/g' pyproject.toml
 
   # remove shebangs
   sed -i '/#!\/usr\/bin\/env python/d' "$_name"/*.py
@@ -37,7 +40,9 @@ build() {
 check() {
   cd "$_name-$pkgver"
   sed -i 's/,<4//' pyproject.toml
-  pytest
+  python -m venv --clear --without-pip --system-site-packages test-env
+  test-env/bin/python -m installer dist/*.whl
+  test-env/bin/python -P -m pytest
 }
 
 package() {
