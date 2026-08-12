@@ -8,7 +8,7 @@
 # Contributor: Sebastien Binet <binet@lblbox>
 _base=pip
 pkgname=pypy3-${_base}
-pkgver=26.2
+pkgver=26.2.1
 pkgrel=1
 pkgdesc="The PyPA recommended tool for installing Python packages"
 url="https://${_base}.pypa.io"
@@ -17,7 +17,7 @@ license=(MIT)
 depends=(pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-flit-core)
 source=(https://pypi.org/packages/source/${_base::1}/${_base}/${_base}-${pkgver}.tar.gz)
-sha512sums=('e023260abf67c05612ba12d83c82100efea9aa1e6d7509aacedf890f01df213755ae75264f18bd3fbf055bec274548483a8a628443efc6c29f7dbeda65ff74c7')
+sha512sums=('8a892d364ad065c4f4371aa8b1b409155adde02a6103a8f2a90c592afc5cec6de02b75ff10f967aafcd2033a54156c02326f1e8e2503dd9f51f42995d9303f73')
 
 build() {
   cd ${_base}-${pkgver}
