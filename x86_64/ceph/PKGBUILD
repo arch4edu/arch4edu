@@ -4,7 +4,7 @@
 
 pkgbase='ceph'
 pkgdesc='Distributed, fault-tolerant storage platform delivering object, block, and file system'
-pkgver=20.2.2
+pkgver=20.2.3
 pkgrel=1
 url='https://ceph.com/'
 arch=('x86_64')
@@ -109,12 +109,20 @@ source=(
 
   # Always select lua 5.3 even if other versions exist
   'ceph-20.2.2-lua-5-3-exact.patch'
+
+  # Fix memory leak in ceph-mgr
+  # https://github.com/ceph/ceph/pull/70367
+  'ceph-20.2.3-fix-mgr-memory-leak.patch'
+
+  # Fix for the ceph-mgr progress module
+  # https://github.com/ceph/ceph/pull/70225
+  'ceph-20.2.3-fix-mgr-dashboard-progress.patch'
 )
-sha512sums=('1977f384d2af5fde2a795e2eed71c12f519f1a2036ceb2e383c8534feca509740d744e99e77b73488f8e13193a83c7134e407fb6b21c4ba4c1f9ac9752b16fbc'
+sha512sums=('c81fb4fea3bbd470a89e3784a86950280425b17ef6a4d606549e80b393d0dc178564245db49cfbde16f9f2ee107adcc7f4d380bcf3c7a46ec636bff53662d105'
             '4354001c1abd9a0c385ba7bd529e3638fb6660b6a88d4e49706d4ac21c81b8e829303a20fb5445730bdac18c4865efb10bc809c1cd56d743c12aa9a52e160049'
             '41dbc1c395cdf9b3edf5c5d91bbc90f416b4338ad964fa3471f26a4312d3ec2a5dcebbc351a1640dc4b047b4f71aa134ac7486747e5f62980092b0176e7567f5'
             'b12cabda7184721c494edd22250fd05019694d2bc445722d100cdefab5385bd25c2267a029d2f6053932fa6717e38c4314385afd986969ee2744d745b53c8b58'
-            'd12c19550c81be3068527a186602d8f1bb502e7fd5cdcd653c6ba9ade48ab45191fdc221e8214e1badbd992ef50c27696ee754761e91725804a55776457d9fb6'
+            '750f6a153d2e7aa8ca0a9e98e25256cc79515121e2a79ff6b6d274ea2821da116caf0cff6675cb4e4a4f742f31d4392d706dd41e69c04a6e0808c9cfc3f9f5c0'
             '781a01e622a70d56bf1948bdc0b427ffa95a86cec7dd9d26c6007a9ec024a942a8ca55f2acc3d37344862f1d6bf11cae998d8071754cd841a66bfba4ec9c58bf'
             '79be1630ae4a599509e5d789d4aefe412ce47e67ad482f853664fa4b01e063c20593e3da668e6a776ad038fb07606ae948eea41bab20776c33c87f9ab49505e0'
             '0c5124693bd317a73707dfd34b17664cc05233aec08e07739fe08fc9a73be7a1f4446052b1addde832cba141a382c35f45e60c89a00bb7dab81cee7ed6be07e1'
@@ -123,12 +131,14 @@ sha512sums=('1977f384d2af5fde2a795e2eed71c12f519f1a2036ceb2e383c8534feca509740d7
             '9bc32100aeb10099c05bd175f422f30f4c415755129e675dfb52212a9f822fcdae40638fe8351eed03816aacf41290837d5a900e81d7d9760e8a8c7c97679ee3'
             '24ed165a1ea73a6ed7cf840a0d0ef8082e93ff9822ea9c3c4256d7de67deb485c7ca77f9f42f64e857a6f84fc137a73cf2458b08a50dd73caa4a42c7cf4a8f6f'
             'e07f77097b1ba49cdcbad432225f3b11b8df5dad003624f13bd5c7f33c48c30354486a4b294733d2abc26790f74feb01e334a8ce02adaed435287fe52ac4b91c'
-            '09c8d37ad34a2a715867ebddab71e9cef8a488114f6f16fe2892d7c45609252ead8a29a8f055ff3a8253a7c96502482a1bed407922dd142ec072af55d3bcecbc'
+            '2b97b90bd2e942ec75f5b092c0ffa2a5e4c9e8992bbf96455de72a9462e1832f3703f0026fc1fcfddbad135024d134ce4a9b6adcd0d25dfb89fa625a7e0ea547'
             '690ddbebbbce9e0b52c9c401e668226cb0f9cea843d85ff5e5095e990df6a2905189dd9baaf21f71efc8153319a2cec16ded335bfdf40d34dbb2e33925c240ef'
             '14212332af61a6d055acedc8f12be6f769b49568309d5b357c40b4263d087e83b3f71f2632385c5020d487f0420f978e53fe3c3dc7c3dead75216119412fd03d'
             '46866375f573505c04652b5679cecb138d8d53d772ace54e45a1e557bf0fe009e03d657b44cdbc33d8f96746760ae1c969ce2e30d0ea4a7933aa3ff28b9e2b4e'
             'be44fae301ce3dc2cba90d3ef33849d3e4d5c0878948c2b389200e0cde9eb2e118d8b694f3b6343f86686d4c60988dd43ebc3408317cd0cfcdadbf0ed1ac38d2'
-            'ce1c5ccfdc595ce87ecf164a99d4205f7e303f527a9e3528c8a2e54ef387cff34eb03cbd9b25e6ba09fbc7efed23536d1612f57d0f9671a62e1e9dce05fdec35')
+            'ce1c5ccfdc595ce87ecf164a99d4205f7e303f527a9e3528c8a2e54ef387cff34eb03cbd9b25e6ba09fbc7efed23536d1612f57d0f9671a62e1e9dce05fdec35'
+            '017cc958c671c454e002b9d46a424901722728b40113b5eda65926a62684e1e2dfc9371fbc28223efaaee46078ce81fb186f865e63e8bbbf0575f5e459b5e0cc'
+            '587482b4943002290cef31b920cab0e798adbce4c9ac28211f1d67db5799f96254eeae22d38df15d59d97aadac62dcde416f90ca07b0b2a42656bec35ba0c21d')
 __version="${pkgver}-${pkgrel}"
 
 # -fno-plt causes linker errors (undefined reference to internal methods)
@@ -439,7 +449,7 @@ _make_ceph_packages() {
       $bin/ceph-mgr \
       $bin/ceph-exporter \
       $systemd/ceph-mgr{.target,@.service} \
-      $systemd/ceph-exporter.service \
+      $systemd/ceph-exporter@.service \
       $share/ceph/mgr/*
 
     _package ceph-osd \

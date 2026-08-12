@@ -1,8 +1,8 @@
 diff --git a/src/test/objectstore/CMakeLists.txt b/src/test/objectstore/CMakeLists.txt
-index dc51ee46584..24949f8783c 100644
+index d72d99ec37c..322b05d26da 100644
 --- a/src/test/objectstore/CMakeLists.txt
 +++ b/src/test/objectstore/CMakeLists.txt
-@@ -117,6 +117,102 @@ if(WITH_BLUESTORE)
+@@ -133,6 +133,102 @@ if(WITH_BLUESTORE)
    add_ceph_unittest(unittest_bluefs_ex)
    target_link_libraries(unittest_bluefs_ex os global)
  
@@ -106,10 +106,10 @@ index dc51ee46584..24949f8783c 100644
    add_executable(unittest_bluestore_types
      test_bluestore_types.cc
 diff --git a/src/test/objectstore/test_bluefs.cc b/src/test/objectstore/test_bluefs.cc
-index 4d055eca649..c5102a253e7 100644
+index ab0501cd8c2..c5102a253e7 100644
 --- a/src/test/objectstore/test_bluefs.cc
 +++ b/src/test/objectstore/test_bluefs.cc
-@@ -189,2283 +189,6 @@ TEST(BlueFS, small_appends) {
+@@ -189,2332 +189,6 @@ TEST(BlueFS, small_appends) {
    fs.umount();
  }
  
@@ -1096,6 +1096,55 @@ index 4d055eca649..c5102a253e7 100644
 -  fs.mount();
 -  bufferlist read_content;
 -  many_small_reads("db.wal", "wal1.log", read_content, 10);
+-  ASSERT_EQ(content, read_content);
+-  fs.umount();
+-}
+-
+-TEST_F(BlueFS_wal, wal_v2_check_split_header)
+-{
+-  // Check if wal v2 envelope header is properly located
+-  // when FileWrite'r buffer is exhausted.
+-  //
+-  ConfSaver conf(g_ceph_context->_conf);
+-  conf.SetVal("bluefs_min_flush_size", "65536");
+-  conf.SetVal("bluefs_wal_envelope_mode", "true");
+-  conf.SetVal("bluefs_alloc_size", "8192");
+-  conf.ApplyChanges();
+-
+-  Create(1048576 * 256, 1048576 * 128, 1048576 * 64);
+-  ASSERT_EQ(0, fs.mount());
+-
+-  bufferlist content;
+-  many_small_writes("db.wal", "wal1.log", content, 4076 + 4077, 4076, 4077);
+-  fs.umount();
+-  fs.mount();
+-  bufferlist read_content;
+-  many_small_reads("db.wal", "wal1.log", read_content, 4076 + 4077, 4076, 4077);
+-  ASSERT_EQ(content, read_content);
+-  fs.umount();
+-}
+-
+-TEST_F(BlueFS_wal, wal_v2_check_split_header_small_alloc)
+-{
+-  // Check if wal v2 envelope header is properly located
+-  // when FileWrite'r buffer is exhausted.
+-  // Case for single 4K page buffer.
+-  //
+-  ConfSaver conf(g_ceph_context->_conf);
+-  conf.SetVal("bluefs_min_flush_size", "65536");
+-  conf.SetVal("bluefs_wal_envelope_mode", "true");
+-  conf.SetVal("bluefs_alloc_size", "4096");
+-  conf.ApplyChanges();
+-
+-  Create(1048576 * 256, 1048576 * 128, 1048576 * 64);
+-  ASSERT_EQ(0, fs.mount());
+-
+-  bufferlist content;
+-  many_small_writes("db.wal", "wal1.log", content, 4076 + 4077, 4076, 4077);
+-  fs.umount();
+-  fs.mount();
+-  bufferlist read_content;
+-  many_small_reads("db.wal", "wal1.log", read_content, 4076 + 4077, 4076, 4077);
 -  ASSERT_EQ(content, read_content);
 -  fs.umount();
 -}
@@ -7173,10 +7222,10 @@ index 00000000000..87e043b48b0
 +}
 diff --git a/src/test/objectstore/test_bluefs_wal.cc b/src/test/objectstore/test_bluefs_wal.cc
 new file mode 100644
-index 00000000000..68ea80aa293
+index 00000000000..b9a331b76bf
 --- /dev/null
 +++ b/src/test/objectstore/test_bluefs_wal.cc
-@@ -0,0 +1,807 @@
+@@ -0,0 +1,856 @@
 +// -*- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -*-
 +// vim: ts=8 sw=2 smarttab
 +
@@ -7553,6 +7602,55 @@ index 00000000000..68ea80aa293
 +  fs.mount();
 +  bufferlist read_content;
 +  many_small_reads("db.wal", "wal1.log", read_content, 10);
++  ASSERT_EQ(content, read_content);
++  fs.umount();
++}
++
++TEST_F(BlueFS_wal, wal_v2_check_split_header)
++{
++  // Check if wal v2 envelope header is properly located
++  // when FileWrite'r buffer is exhausted.
++  //
++  ConfSaver conf(g_ceph_context->_conf);
++  conf.SetVal("bluefs_min_flush_size", "65536");
++  conf.SetVal("bluefs_wal_envelope_mode", "true");
++  conf.SetVal("bluefs_alloc_size", "8192");
++  conf.ApplyChanges();
++
++  Create(1048576 * 256, 1048576 * 128, 1048576 * 64);
++  ASSERT_EQ(0, fs.mount());
++
++  bufferlist content;
++  many_small_writes("db.wal", "wal1.log", content, 4076 + 4077, 4076, 4077);
++  fs.umount();
++  fs.mount();
++  bufferlist read_content;
++  many_small_reads("db.wal", "wal1.log", read_content, 4076 + 4077, 4076, 4077);
++  ASSERT_EQ(content, read_content);
++  fs.umount();
++}
++
++TEST_F(BlueFS_wal, wal_v2_check_split_header_small_alloc)
++{
++  // Check if wal v2 envelope header is properly located
++  // when FileWrite'r buffer is exhausted.
++  // Case for single 4K page buffer.
++  //
++  ConfSaver conf(g_ceph_context->_conf);
++  conf.SetVal("bluefs_min_flush_size", "65536");
++  conf.SetVal("bluefs_wal_envelope_mode", "true");
++  conf.SetVal("bluefs_alloc_size", "4096");
++  conf.ApplyChanges();
++
++  Create(1048576 * 256, 1048576 * 128, 1048576 * 64);
++  ASSERT_EQ(0, fs.mount());
++
++  bufferlist content;
++  many_small_writes("db.wal", "wal1.log", content, 4076 + 4077, 4076, 4077);
++  fs.umount();
++  fs.mount();
++  bufferlist read_content;
++  many_small_reads("db.wal", "wal1.log", read_content, 4076 + 4077, 4076, 4077);
 +  ASSERT_EQ(content, read_content);
 +  fs.umount();
 +}

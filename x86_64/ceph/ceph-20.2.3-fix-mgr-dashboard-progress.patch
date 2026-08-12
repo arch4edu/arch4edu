@@ -1,0 +1,47 @@
+From 3a08713a5e56d38db52113e2f9497ef4a2f01b91 Mon Sep 17 00:00:00 2001
+From: Aarti <Aarti.s.Dhikale@ibm.com>
+Date: Thu, 19 Mar 2026 23:33:32 +0530
+Subject: [PATCH] dashboard: use metadata = event.get('refs', {}) instead of
+ dict(event.get('refs', {}))
+
+Fixes: https://tracker.ceph.com/issues/75619
+
+Signed-off-by: Aarti Dhikale <aarti.s.dhikale@ibm.com>
+(cherry picked from commit e99e6e7ff9c681af3bfcfffd1c99d53bb04dff3f)
+---
+ src/pybind/mgr/dashboard/services/progress.py | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/src/pybind/mgr/dashboard/services/progress.py b/src/pybind/mgr/dashboard/services/progress.py
+index ff5caa5f1d9c..5af4543db07d 100644
+--- a/src/pybind/mgr/dashboard/services/progress.py
++++ b/src/pybind/mgr/dashboard/services/progress.py
+@@ -45,11 +45,27 @@ def _progress_event_to_dashboard_task_common(event, task):
+             })
+             return
+ 
++    refs = event.get('refs', {})
++
++    if isinstance(refs, dict):
++        metadata = refs
++    elif isinstance(refs, (list, tuple)):
++        if all(isinstance(i, (list, tuple)) and len(i) == 2 for i in refs):
++            metadata = dict(refs)
++        else:
++            metadata = {"raw_refs": refs}
++    elif isinstance(refs, str):
++        metadata = {"raw_refs": refs}
++    elif refs is None:
++        metadata = {}
++    else:
++        metadata = {"raw_refs": refs}
++
+     task.update({
+         # we're prepending the "progress/" prefix to tag tasks that come
+         # from the progress module
+         'name': "progress/{}".format(event['message']),
+-        'metadata': dict(event.get('refs', {})),
++        'metadata': metadata,
+         'begin_time': datetime.fromtimestamp(
+             event["started_at"], tz=timezone.utc).isoformat(),
+     })

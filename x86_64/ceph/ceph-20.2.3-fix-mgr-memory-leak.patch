@@ -1,0 +1,60 @@
+From e1edb48e850691aaaf7dfbdad2446557dc30dbb6 Mon Sep 17 00:00:00 2001
+From: Sunnatillo <sunnat.samadov@est.tech>
+Date: Tue, 21 Jul 2026 11:26:02 +0300
+Subject: [PATCH] mgr/DaemonServer: erase daemon_connections ref on reset for
+ all peer types
+
+handle_open() stores a strong ConnectionRef in daemon_connections for
+every non-client daemon (mon, mds, osd), but ms_handle_reset() erased
+it only for OSD peers.
+
+Any non-OSD daemon connection that ended without an explicit MMgrClose
+(idle timeout, network drop, daemon crash) left a permanent
+ConnectionRef behind. That leaked one AsyncConnection per reconnect
+cycle and caused unbounded ceph-mgr RSS growth.
+
+Erase daemon_connections unconditionally on reset while keeping
+osd_cons cleanup under the OSD peer-type guard.
+
+Fixes: https://tracker.ceph.com/issues/78408
+
+Signed-off-by: Sunnatillo <sunnat.samadov@est.tech>
+---
+ src/mgr/DaemonServer.cc | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/src/mgr/DaemonServer.cc b/src/mgr/DaemonServer.cc
+index 822b508cbd90..69d4fb0c4412 100644
+--- a/src/mgr/DaemonServer.cc
++++ b/src/mgr/DaemonServer.cc
+@@ -331,21 +331,20 @@ void DaemonServer::ms_handle_accept(Connection* con)
+ 
+ bool DaemonServer::ms_handle_reset(Connection *con)
+ {
++  std::lock_guard l(lock);
+   if (con->get_peer_type() == CEPH_ENTITY_TYPE_OSD) {
+     auto priv = con->get_priv();
+     auto session = static_cast<MgrSession*>(priv.get());
+-    if (!session) {
+-      return false;
++    if (session) {
++      dout(10) << "unregistering osd." << session->osd_id
++               << "  session " << session << " con " << con << dendl;
++      osd_cons[session->osd_id].erase(con);
+     }
+-    std::lock_guard l(lock);
+-    dout(10) << "unregistering osd." << session->osd_id
+-	     << "  session " << session << " con " << con << dendl;
+-    osd_cons[session->osd_id].erase(con);
++  }
+ 
+-    auto iter = daemon_connections.find(con);
+-    if (iter != daemon_connections.end()) {
+-      daemon_connections.erase(iter);
+-    }
++  auto iter = daemon_connections.find(con);
++  if (iter != daemon_connections.end()) {
++    daemon_connections.erase(iter);
+   }
+   return false;
+ }
