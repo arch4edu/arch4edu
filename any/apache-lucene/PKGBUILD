@@ -3,7 +3,7 @@
 
 _pkgname=lucene
 pkgname=apache-$_pkgname
-pkgver=10.5.0
+pkgver=10.5.1
 pkgrel=1
 pkgdesc="Apache Lucene is a high-performance, full-featured text search engine library written entirely in Java."
 arch=('any')
@@ -11,7 +11,7 @@ url="https://lucene.apache.org/"
 license=('Apache')
 depends=('java-runtime')
 source=("https://downloads.apache.org/$_pkgname/java/$pkgver/$_pkgname-$pkgver.tgz")
-sha256sums=('a0bc59bf3afdab11602dfa3ae45e40cb996ca2f0a02126d09a662ccc5e1d770c')
+sha256sums=('03015ad7390afe4532d91fb79ed169e4cdb30e10572c1897f62a70e1d7441355')
 
 package() {
 	cd "${srcdir}/$_pkgname-$pkgver"
