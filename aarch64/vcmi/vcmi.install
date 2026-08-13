@@ -1,6 +1,0 @@
-post_install() {
-	echo ">>>"
-	echo ">>> VCMI is a game engine and it doesn't contain data files. Therefore you have to have"
-	echo ">>> an original copy of Heroes of Might and Magic 3 Shadow of Death or Complete edition."
-	echo ">>> You can prepare the data files by using a vcmibuilder script (which is the easiest"
-	echo ">>> and recommended method
