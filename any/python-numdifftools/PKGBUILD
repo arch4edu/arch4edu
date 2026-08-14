@@ -3,8 +3,8 @@
 # Contributor: Hector <hsearaDOTatDOTgmailDOTcom>
 _base=numdifftools
 pkgname=python-${_base}
-pkgver=0.9.42
-pkgrel=5
+pkgver=0.10.1
+pkgrel=1
 pkgdesc="Solve automatic numerical differentiation problems in one or more variables"
 url="https://github.com/pbrod/${_base}"
 license=(BSD-3-Clause)
@@ -13,7 +13,7 @@ depends=(python-scipy)
 makedepends=(python-build python-installer python-pdm-backend python-wheel)
 checkdepends=(python-pytest-cov python-matplotlib python-lineprofiler python-hypothesis python-statsmodels python-algopy)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('6f4061961e6ef8042ea9a2e2cae50b32e6489b6e0d5f8acbb5988e4635a4e8e4e4c551f24fb5bd0ca5fbcb873c5be8cc8fda1e1140e3e3e264d798e7d0928a88')
+sha512sums=('18515ae66254d46290a044344de8e4fb114a33c8b9a98775bd5222c200789acddec770a190d154420f60a608c4cccf54b0f50001cd84244c491a973f71af6f73')
 
 build() {
   cd ${_base}-${pkgver}
