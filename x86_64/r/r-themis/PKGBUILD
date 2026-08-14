@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=themis
-_pkgver=1.0.3
+_pkgver=1.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,6 +10,7 @@ arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
+  r-cli
   r-dplyr
   r-generics
   r-glue
@@ -24,7 +25,6 @@ depends=(
   r-tibble
   r-vctrs
   r-withr
-  r-cli
 )
 checkdepends=(
   r-dials
@@ -35,16 +35,18 @@ optdepends=(
   r-covr
   r-dials
   r-ggplot2
+  r-kernlab
   r-modeldata
+  r-philentropy
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "$_pkgname-update-snapshots-1.patch::https://github.com/tidymodels/themis/commit/c9bdc843f3c299e668f1b41dee1d1f11deceb4ba.patch"
         "$_pkgname-update-snapshots-2.patch::https://github.com/tidymodels/themis/pull/147.patch")
-md5sums=('8220a867bb581450671d04e74f94b76a'
+md5sums=('6bd56ef362cdcc18e6428089522c12e9'
          '496f858927c6d9c45636a7066c75f0ea'
          '83ff2d077685659d80d42cd872be6bf3')
-b2sums=('62659e101d675111daec7c892df17cc3edc1524fd904c2ade6e4b80769f51681a4852122324b4bbf2736c140f26f6acd105ecd0a32d00490f3372c05a9bacb30'
+b2sums=('529596c3a0af4eb748abfee63c2b4a0e10378b3fa5738023adba5b25b372a17a1e09ecf15800986b6fe04aabc00b1105b360db1ec0dc28529880ca74601086c8'
         '533298a04a60962952db9ed1e4df10d1c0e047d2ae9b67a8461aeca83c424e4c0c4ef39c3b4eb5af1da59e3e3bdf6ec90ebfce4e271ad48908498b26cd3756db'
         'ca1ae6a57fc679538fe04462e6ae4bd748b24c868150bea955109d633410e76b7714b3db06b28515c214f63506f42c4c242ee7224e82b67c78b759ceacee5c06')
 
