@@ -3,7 +3,7 @@
 _pkgname="opencv4"
 pkgname="$_pkgname"
 pkgver="4.14.0"
-pkgrel=1
+pkgrel=2
 pkgdesc="Open Source Computer Vision Library (version 4.x)"
 url="https://github.com/opencv/opencv"
 license=('Apache-2.0')
@@ -71,28 +71,37 @@ _pkgext="tar.gz"
 source=(
   "$_pkgsrc.$_pkgext"::"$url/archive/refs/tags/$pkgver.$_pkgext"
   "$_pkgsrc_contrib.$_pkgext"::"${url}_contrib/archive/refs/tags/$pkgver.$_pkgext"
-  vtk9.patch
-  fix-cuda-flags.patch
-  fix-std.patch
+  vtk9.patch           # Don't require all vtk optdepends
+  fix-cuda-flags.patch # pass CXXFLAGS through CUDAFLAGS
+  ffmpeg-9.patch
+  contrib-fix-std.patch
 )
 sha256sums=('ee8fb9b30eb60850431b4656447080e3737b56e45719c92b67f245950609f86e'
             '4f17abd1bc7f88e19c3380c8de7cbf2d863aced5b5ee8d8934cc7902b67d42c9'
             'f35a2d4ea0d6212c7798659e59eda2cb0b5bc858360f7ce9c696c77d3029668e'
             '95472ecfc2693c606f0dd50be2f012b4d683b7b0a313f51484da4537ab8b2bfe'
+            '6246d08c2e272bc30bfcd8bc576e04504f238404823927f98f4def7d212eed74'
             'c05fe7572ee5193cf3de7f02a500f446f3457ec20c315590a326bf1bfb5552cc')
 
 # https://gitlab.archlinux.org/archlinux/packaging/packages/kdenlive/-/issues/8
 options=('!lto')
 
 prepare() {
-  # Don't require all vtk optdepends
-  patch -d "$_pkgsrc" -Np1 -F100 -i ../vtk9.patch
+  local src _path
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    src="${src%.zst}"
+    if [[ $src == *.patch ]]; then
+      _path="$_pkgsrc"
+      if [[ $src == contrib-* ]]; then
+        _path="$_pkgsrc_contrib"
+      fi
 
-  # OpenCV passes all CXXFLAGS to nvcc through -Xcompiler, which does not work for '-Wp,something' flags
-  # We remove the -Xcompiler and pass our CXXFLAGS through cmake's CUDAFLAGS
-  patch -d "$_pkgsrc" -Np1 -F100 -i ../fix-cuda-flags.patch
-
-  patch -d "$_pkgsrc_contrib" -Np1 -F100 -i ../fix-std.patch
+      printf '\nApplying patch: %s\n' "$src"
+      patch -d "$_path" -Np1 -F100 -i "${srcdir:?}/$src"
+    fi
+  done
 }
 
 build() {
@@ -105,7 +114,7 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr
     -DCMAKE_INSTALL_LIBDIR="lib/$_pkgname"
     -DCMAKE_CXX_STANDARD=17
-    -Wno-dev
+    -Wno-author
 
     -DBUILD_EXAMPLES=OFF
     -DINSTALL_C_EXAMPLES=OFF
