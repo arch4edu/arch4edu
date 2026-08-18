@@ -5,10 +5,10 @@
 
 pkgname=lammps
 pkgver=20250722
-_pkgver="stable_22Jul2025_update4"
-pkgrel=8
+_pkgver="stable_22Jul2025_update5"
+pkgrel=9
 pkgdesc="Public development project of the LAMMPS MD software package"
-url="https://lammps.org"
+url="https://github.com/lammps/lammps"
 arch=('x86_64')
 license=('GPL')
 depends=('fftw' 'openmpi' 'ffmpeg' 'libpng' 'python')
@@ -16,7 +16,7 @@ makedepends=('cmake>=3.1' 'python-pip' 'python-build')
 conflicts=('lammps-git')
 provides=('lammps')
 source=("https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${_pkgver}.zip")
-sha256sums=('ff61bb790a83407d93657e58b08333b48afe9ee724261a62f70768a7b5fe3eaa')
+sha256sums=('b245412081439fb2b107d6d382400859cb77894f3037bef8d9d8068b0a4d75fd')
 optdepends=('clang' 'python-mpi4py')
 
 prepare() {
