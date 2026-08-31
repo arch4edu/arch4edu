@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=modeldata
-_pkgver=1.5.1
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Data Sets Useful for Modeling Examples"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -25,8 +25,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('89e6ef8075ef1d8068bf0998b829548b')
-b2sums=('741528c5bbf3ca7e5317b107b02897a6c01c6526c39c9bf131dffd97a88b7c5ab088689f213d6138272c9ecce344a82a379146d917a54685d053f9c2d2ee80e7')
+md5sums=('6b9c97e9ba9be55bea924d8007ecbf0b')
+b2sums=('7962da3c8b44a8fdcb36de7ad9cbace4a3455d92ff5f7c01fda3d76cf982944fe4224096d70f332d67452486916fc51d28b3fbee1415055744beeacf51ff9973')
 
 build() {
   mkdir build
