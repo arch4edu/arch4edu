@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 pkgname=python-yfinance
 _name=${pkgname#python-}
-pkgver=1.6.0
+pkgver=1.7.0
 pkgrel=1
 pkgdesc="Yahoo! Finance market data downloader (+faster Pandas Datareader)"
 arch=(any)
@@ -36,10 +36,11 @@ makedepends=(
 )
 checkdepends=(
     python-pytest
+    python-scikit-learn
     python-scipy
 )
 source=($_name::git+https://github.com/ranaroussi/$_name.git#tag=$pkgver)
-b2sums=('e8edee2666c8e6eaf7af10aefed8615208ddf3f8ead0d73225419f510a2a365ee02af94c01ac9db942f4e95b4df4e84bf4cf05d5e28116d95c14aee8511183da')
+b2sums=('72549771629cb19c6018dddc41d707bb47bd2523798d120d2070b0c2f8b8eec54b0df84ba0195d05ae4aaec6fcf3510756bfdbd542c571d9e0cd0026fdcd0860')
 
 build() {
     cd $_name
@@ -50,8 +51,7 @@ check() {
     cd $_name
     python -m venv --system-site-packages test-env
     test-env/bin/python -m installer dist/*.whl
-    # https://github.com/ranaroussi/yfinance/issues/2926
-    test-env/bin/python -P -m pytest -o addopts="" -k "not test_repair_bad_stock_splits"
+    test-env/bin/python -P -m pytest -o addopts="" -k "not test_badTicker"
 }
 
 package() {
