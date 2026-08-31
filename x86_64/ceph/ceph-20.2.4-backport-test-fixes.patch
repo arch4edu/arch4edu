@@ -1,0 +1,672 @@
+From 3c86b2d880bba56f762540b4c1f152358e031405 Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 12:50:24 -0400
+Subject: [PATCH 1/8] mon/MonClient: delete MonConnection move assignment
+
+3e885abc2ae ("mon/MonClient: add assertions for monc lock in
+MonConnection") added a `ceph::mutex& monc_lock` reference member to
+MonConnection, which makes the explicitly defaulted move assignment
+operator implicitly deleted.  clang (-Wdefaulted-function-deleted,
+promoted by -Werror) rejects that, so every make check / API build on
+main fails since that merge:
+
+  src/mon/MonClient.h:70:18: error: explicitly defaulted move assignment
+  operator is implicitly deleted [-Werror,-Wdefaulted-function-deleted]
+
+Nothing move-assigns a MonConnection (pending_cons/active_con only ever
+move-construct), so spell out what the compiler already decided.
+
+Fixes: 3e885abc2ae3ae50fe443046594a01ece386657b
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+(cherry picked from commit 79296fc969e68bcc0656fd61411c28d318232a40)
+---
+ src/mon/MonClient.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/mon/MonClient.h b/src/mon/MonClient.h
+index 2e0c739f4b42..27ebc0e873f9 100644
+--- a/src/mon/MonClient.h
++++ b/src/mon/MonClient.h
+@@ -64,7 +64,7 @@ class MonConnection {
+                 ceph::mutex& m);
+   ~MonConnection();
+   MonConnection(MonConnection&& rhs) = default;
+-  MonConnection& operator=(MonConnection&&) = default;
++  MonConnection& operator=(MonConnection&&) = delete;
+   MonConnection(const MonConnection& rhs) = delete;
+   MonConnection& operator=(const MonConnection&) = delete;
+   int handle_auth(MAuthReply *m,
+
+From 89e648232399135f1e214076344fad9ef6311c53 Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 12:50:24 -0400
+Subject: [PATCH 2/8] qa/suites/rados/upgrade/cephx: add missing .qa symlinks
+
+The cephx upgrade suites added with the CVE-2025-30156 merge are missing
+the .qa links in X/ms_bind, X/tasks/07-client-auth-keys,
+X/tasks/08-allowed-ciphers and the release-X counterparts, so the
+"Check for missing .qa links" workflow (src/script/verify-qa) fails on
+every PR based on current main.  Add the links verify-qa asks for.
+
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+(cherry picked from commit 62c4d50f6ae3dd8ab61be2c774e6ca72ef0b18b1)
+---
+ qa/suites/rados/upgrade/cephx/X/ms_bind/.qa                      | 1 +
+ qa/suites/rados/upgrade/cephx/X/tasks/07-client-auth-keys/.qa    | 1 +
+ qa/suites/rados/upgrade/cephx/X/tasks/08-allowed-ciphers/.qa     | 1 +
+ qa/suites/rados/upgrade/cephx/release-X/ms_bind/.qa              | 1 +
+ .../rados/upgrade/cephx/release-X/tasks/07-client-auth-keys/.qa  | 1 +
+ .../rados/upgrade/cephx/release-X/tasks/08-allowed-ciphers/.qa   | 1 +
+ 6 files changed, 6 insertions(+)
+ create mode 120000 qa/suites/rados/upgrade/cephx/X/ms_bind/.qa
+ create mode 120000 qa/suites/rados/upgrade/cephx/X/tasks/07-client-auth-keys/.qa
+ create mode 120000 qa/suites/rados/upgrade/cephx/X/tasks/08-allowed-ciphers/.qa
+ create mode 120000 qa/suites/rados/upgrade/cephx/release-X/ms_bind/.qa
+ create mode 120000 qa/suites/rados/upgrade/cephx/release-X/tasks/07-client-auth-keys/.qa
+ create mode 120000 qa/suites/rados/upgrade/cephx/release-X/tasks/08-allowed-ciphers/.qa
+
+diff --git a/qa/suites/rados/upgrade/cephx/X/ms_bind/.qa b/qa/suites/rados/upgrade/cephx/X/ms_bind/.qa
+new file mode 120000
+index 000000000000..a602a0353e75
+--- /dev/null
++++ b/qa/suites/rados/upgrade/cephx/X/ms_bind/.qa
+@@ -0,0 +1 @@
++../.qa/
+\ No newline at end of file
+diff --git a/qa/suites/rados/upgrade/cephx/X/tasks/07-client-auth-keys/.qa b/qa/suites/rados/upgrade/cephx/X/tasks/07-client-auth-keys/.qa
+new file mode 120000
+index 000000000000..a602a0353e75
+--- /dev/null
++++ b/qa/suites/rados/upgrade/cephx/X/tasks/07-client-auth-keys/.qa
+@@ -0,0 +1 @@
++../.qa/
+\ No newline at end of file
+diff --git a/qa/suites/rados/upgrade/cephx/X/tasks/08-allowed-ciphers/.qa b/qa/suites/rados/upgrade/cephx/X/tasks/08-allowed-ciphers/.qa
+new file mode 120000
+index 000000000000..a602a0353e75
+--- /dev/null
++++ b/qa/suites/rados/upgrade/cephx/X/tasks/08-allowed-ciphers/.qa
+@@ -0,0 +1 @@
++../.qa/
+\ No newline at end of file
+diff --git a/qa/suites/rados/upgrade/cephx/release-X/ms_bind/.qa b/qa/suites/rados/upgrade/cephx/release-X/ms_bind/.qa
+new file mode 120000
+index 000000000000..a602a0353e75
+--- /dev/null
++++ b/qa/suites/rados/upgrade/cephx/release-X/ms_bind/.qa
+@@ -0,0 +1 @@
++../.qa/
+\ No newline at end of file
+diff --git a/qa/suites/rados/upgrade/cephx/release-X/tasks/07-client-auth-keys/.qa b/qa/suites/rados/upgrade/cephx/release-X/tasks/07-client-auth-keys/.qa
+new file mode 120000
+index 000000000000..a602a0353e75
+--- /dev/null
++++ b/qa/suites/rados/upgrade/cephx/release-X/tasks/07-client-auth-keys/.qa
+@@ -0,0 +1 @@
++../.qa/
+\ No newline at end of file
+diff --git a/qa/suites/rados/upgrade/cephx/release-X/tasks/08-allowed-ciphers/.qa b/qa/suites/rados/upgrade/cephx/release-X/tasks/08-allowed-ciphers/.qa
+new file mode 120000
+index 000000000000..a602a0353e75
+--- /dev/null
++++ b/qa/suites/rados/upgrade/cephx/release-X/tasks/08-allowed-ciphers/.qa
+@@ -0,0 +1 @@
++../.qa/
+\ No newline at end of file
+
+From d742babe59886393a10c9f6531f3b5ad00ebe2d6 Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 13:33:21 -0400
+Subject: [PATCH 3/8] mgr/cephadm: skip mgr/mon key rotation when no mon
+ daemons are known
+
+fae0d0db8db ("mgr/cephadm: rotate keyring for core ceph daemons during
+upgrade") made _upgrade_daemons() call _rotate_mgr_mon_auth_keys() on
+every pass.  That function indexes mon_daemons[0] unconditionally, and
+with an empty mon list _detect_need_upgrade() reports no mons needing
+upgrade, which is taken as "all mons upgraded" -- so it goes on to set
+auth_allowed_ciphers and rotate mgr keys before crashing with
+
+  IndexError: list index out of range
+  cephadm/upgrade.py:1795
+
+Since that merge four cephadm unit tests fail deterministically in
+run_tox_mgr on every PR (test_upgrade_daemons_offline_hosts,
+test_upgrade_run[False/True],
+test_do_upgrade_limit_exhausted_marks_complete_without_scope_check);
+they exercise the upgrade machinery without any mon daemons in the
+cache.
+
+Without any known mon daemons we cannot tell whether the mons have been
+upgraded and there is no mon keyring to rotate, so skip the rotation for
+this pass and let the next upgrade pass retry once the cache has mons.
+
+Fixes: fae0d0db8dbc9f883f43f36e4735f2b456e79a9d
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+(cherry picked from commit fa100f02071bd1dffe2ca3f5e9afdb1b06d8c85e)
+---
+ src/pybind/mgr/cephadm/upgrade.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/pybind/mgr/cephadm/upgrade.py b/src/pybind/mgr/cephadm/upgrade.py
+index 090c95fbf08e..6beb0f5ea99f 100644
+--- a/src/pybind/mgr/cephadm/upgrade.py
++++ b/src/pybind/mgr/cephadm/upgrade.py
+@@ -1081,6 +1081,12 @@ def _rotate_mgr_mon_auth_keys(self, target_image: str, target_digests: Optional[
+                 self.upgrade_state.rotated_mgr_mon_auth_key_daemons = []
+             # do mgr and mon keyrings as one off after mons have been upgraded
+             mon_daemons = self.mgr.cache.get_daemons_by_service('mon')
++            if not mon_daemons:
++                # Without any mon daemons in the cache we cannot tell whether
++                # the mons have been upgraded, and there is no mon keyring to
++                # rotate either.  Try again on the next upgrade pass.
++                self.mgr.log.debug('Skipping mgr/mon key rotation, no mon daemons known')
++                return
+             _, mons_needing_upgrade, __, ___ = self._detect_need_upgrade(mon_daemons, target_digests, target_image)
+             need_rotate_self = False
+             if not mons_needing_upgrade:
+
+From 36982bbe0f4f58e9ac0d3fbf5155a764e028975a Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 13:37:00 -0400
+Subject: [PATCH 4/8] common/entity_name: print type names in
+ get_valid_types_as_str()
+
+0753b1d5326 ("common/entity_name: dump type name as string") turned
+STR_TO_ENTITY_TYPE into a vector of (entity_type_t, std::string) pairs
+but left get_valid_types_as_str() streaming .first, i.e. the uint8_t
+type value, so e.g. `ceph-conf --name total.garbage` now says
+
+  valid types are:  , \x01, \x04, \x02, \x10, \x08
+
+instead of "auth, mon, osd, mds, mgr, client", and the
+src/test/cli/ceph-conf/invalid-args.t cram test fails in run-cli-tests.
+Stream the name (.second).
+
+Fixes: 0753b1d53262212fbc8e8ebc32cf6b695bf1ddf4
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+(cherry picked from commit 18e32faf20ad2cfde6ef74e8a505816365767618)
+---
+ src/common/entity_name.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/common/entity_name.cc b/src/common/entity_name.cc
+index 895f32f2b6fe..1cc46fa4dbb2 100644
+--- a/src/common/entity_name.cc
++++ b/src/common/entity_name.cc
+@@ -149,7 +149,7 @@ std::string EntityName::get_valid_types_as_str() {
+     if (i > 0) {
+       out << ", ";
+     }
+-    out << STR_TO_ENTITY_TYPE[i].first;
++    out << STR_TO_ENTITY_TYPE[i].second;
+   }
+   return out.str();
+ }
+
+From 7c4745bad91af9ebfb47a1c2c90a96b047bf24e0 Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 13:37:15 -0400
+Subject: [PATCH 5/8] test/cli: update cram expectations for cephx auth changes
+
+The CVE-2025-30156 cephx merge (96335615c1b) added a -t/--key-type
+option to ceph-authtool, --auth-service-cipher/--auth-allowed-ciphers/
+--auth-preferred-cipher options and auth_epoch/auth_*_cipher fields to
+monmaptool, and the cephx_auth_aes256k mon feature bit, without
+updating the cram expectations under src/test/cli, so run-cli-tests
+fails on every PR.  Update the ten affected .t files with the output
+the tools now produce.
+
+Fixes: 96335615c1bfdd598412d8768be09323d299ba33
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+Conflicts:
+	src/test/cli/monmaptool/feature-set-unset-list.t
+	  The mon feature lists in the expected output are release-specific,
+	  so the expectations were rebuilt from this branch's
+	  src/mon/mon_types.h (inserting cephx_auth_aes256k(2147483648) before nvmeof_beacon_diff(4294967296) in tentacle's supported/persistent feature sets)
+	  instead of taking main's lists.
+
+(cherry picked from commit a9351397d512c386c4a6582c7cd5f5beb7024653)
+---
+ src/test/cli/ceph-authtool/help.t             |  1 +
+ src/test/cli/monmaptool/add-exists.t          |  4 +++
+ src/test/cli/monmaptool/add-many.t            |  4 +++
+ src/test/cli/monmaptool/clobber.t             |  8 ++++++
+ src/test/cli/monmaptool/create-print.t        |  8 ++++++
+ src/test/cli/monmaptool/create-with-add.t     |  4 +++
+ .../cli/monmaptool/feature-set-unset-list.t   | 28 +++++++++----------
+ src/test/cli/monmaptool/help.t                |  3 ++
+ src/test/cli/monmaptool/rm-nonexistent.t      |  4 +++
+ src/test/cli/monmaptool/rm.t                  |  4 +++
+ 10 files changed, 54 insertions(+), 14 deletions(-)
+
+diff --git a/src/test/cli/ceph-authtool/help.t b/src/test/cli/ceph-authtool/help.t
+index 68f4a9699587..9d8b0cf67bc1 100644
+--- a/src/test/cli/ceph-authtool/help.t
++++ b/src/test/cli/ceph-authtool/help.t
+@@ -11,6 +11,7 @@
+                                   existing keyringfile
+     -g, --gen-key                 will generate a new secret key for the
+                                   specified entityname
++    -t, --key-type KEY_TYPE       set the key-type
+     --gen-print-key               will generate a new secret key without set it
+                                   to the keyringfile, prints the secret to stdout
+     --import-keyring FILE         will import the content of a given keyring
+diff --git a/src/test/cli/monmaptool/add-exists.t b/src/test/cli/monmaptool/add-exists.t
+index d223f7bec8d6..4220a4b75855 100644
+--- a/src/test/cli/monmaptool/add-exists.t
++++ b/src/test/cli/monmaptool/add-exists.t
+@@ -24,6 +24,10 @@
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
+   0: v1:2.3.4.5:6789/0 mon.foo
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+ 
+   $ NEW_FSID="$(monmaptool --print mymonmap|grep ^fsid)"
+   $ [ "$ORIG_FSID" = "$NEW_FSID" ]
+diff --git a/src/test/cli/monmaptool/add-many.t b/src/test/cli/monmaptool/add-many.t
+index 2f61888c9e9d..1d5de755846c 100644
+--- a/src/test/cli/monmaptool/add-many.t
++++ b/src/test/cli/monmaptool/add-many.t
+@@ -30,6 +30,10 @@
+   1: [v2:172.21.15.68:6791/0,v1:172.21.15.68:6792/0] mon.fiz
+   2: v2:3.4.5.6:7890/0 mon.bar
+   3: v2:4.5.6.7:8901/0 mon.baz
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+ 
+   $ NEW_FSID="$(monmaptool --print mymonmap|grep ^fsid)"
+   $ [ "$ORIG_FSID" = "$NEW_FSID" ]
+diff --git a/src/test/cli/monmaptool/clobber.t b/src/test/cli/monmaptool/clobber.t
+index 963e1ebeda1c..779ac895166c 100644
+--- a/src/test/cli/monmaptool/clobber.t
++++ b/src/test/cli/monmaptool/clobber.t
+@@ -21,6 +21,10 @@
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
+   0: v1:2.3.4.5:6789/0 mon.foo
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+ 
+   $ NEW_FSID="$(monmaptool --print mymonmap|grep ^fsid)"
+   $ [ "$ORIG_FSID" = "$NEW_FSID" ]
+@@ -42,3 +46,7 @@
+   created \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+.\d\d\d\d (re)
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+diff --git a/src/test/cli/monmaptool/create-print.t b/src/test/cli/monmaptool/create-print.t
+index bf99d2589930..542cab69eb37 100644
+--- a/src/test/cli/monmaptool/create-print.t
++++ b/src/test/cli/monmaptool/create-print.t
+@@ -12,6 +12,10 @@
+   created \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+.\d\d\d\d (re)
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+ 
+   $ monmaptool --print -- mymonmap
+   monmaptool: monmap file mymonmap
+@@ -21,3 +25,7 @@
+   created \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+.\d\d\d\d (re)
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+diff --git a/src/test/cli/monmaptool/create-with-add.t b/src/test/cli/monmaptool/create-with-add.t
+index 9aaaa7e6c8d3..8350c1c876f0 100644
+--- a/src/test/cli/monmaptool/create-with-add.t
++++ b/src/test/cli/monmaptool/create-with-add.t
+@@ -13,3 +13,7 @@
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
+   0: v1:2.3.4.5:6789/0 mon.foo
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+diff --git a/src/test/cli/monmaptool/feature-set-unset-list.t b/src/test/cli/monmaptool/feature-set-unset-list.t
+index 65841b7600ef..ca303ef39dc0 100644
+--- a/src/test/cli/monmaptool/feature-set-unset-list.t
++++ b/src/test/cli/monmaptool/feature-set-unset-list.t
+@@ -12,21 +12,21 @@
+       required:   [none]
+   
+   AVAILABLE FEATURES:
+-      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+   MONMAP FEATURES:
+       persistent: [none]
+       optional:   [none]
+       required:   [none]
+   
+   AVAILABLE FEATURES:
+-      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+   monmap:persistent:[none]
+   monmap:optional:[none]
+   monmap:required:[none]
+-  available:supported:[kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-  available:persistent:[kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++  available:supported:[kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++  available:persistent:[kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+ 
+   $ monmaptool --feature-set foo /tmp/test.monmap.1234
+   unknown features name 'foo' or unable to parse value: Expected option value to be integer, got 'foo'
+@@ -45,8 +45,8 @@
+       required:   [kraken(1),octopus(32),unknown(4096)]
+   
+   AVAILABLE FEATURES:
+-      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+ 
+   $ monmaptool --feature-unset 32 --optional --feature-list /tmp/test.monmap.1234
+   monmaptool: monmap file /tmp/test.monmap.1234
+@@ -56,8 +56,8 @@
+       required:   [kraken(1),octopus(32),unknown(4096)]
+   
+   AVAILABLE FEATURES:
+-      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+   monmaptool: writing epoch 0 to /tmp/test.monmap.1234 (1 monitors)
+ 
+   $ monmaptool --feature-unset 32 --persistent --feature-unset 4096 --optional --feature-list /tmp/test.monmap.1234
+@@ -68,8 +68,8 @@
+       required:   [kraken(1)]
+   
+   AVAILABLE FEATURES:
+-      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+   monmaptool: writing epoch 0 to /tmp/test.monmap.1234 (1 monitors)
+ 
+   $ monmaptool --feature-unset kraken --feature-list /tmp/test.monmap.1234
+@@ -80,8 +80,8 @@
+       required:   [none]
+   
+   AVAILABLE FEATURES:
+-      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
+-      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),nvmeof_beacon_diff(4294967296)]
++      supported:  [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
++      persistent: [kraken(1),luminous(2),mimic(4),osdmap-prune(8),nautilus(16),octopus(32),pacific(64),elector-pinging(128),quincy(256),reef(512),squid(1024),tentacle(2048),cephx_auth_aes256k(2147483648),nvmeof_beacon_diff(4294967296)]
+   monmaptool: writing epoch 0 to /tmp/test.monmap.1234 (1 monitors)
+ 
+   $ rm /tmp/test.monmap.1234
+diff --git a/src/test/cli/monmaptool/help.t b/src/test/cli/monmaptool/help.t
+index f12c1a07d003..e8c2223fe1f8 100644
+--- a/src/test/cli/monmaptool/help.t
++++ b/src/test/cli/monmaptool/help.t
+@@ -8,4 +8,7 @@
+           [--feature-set <value> [--optional|--persistent]]
+           [--feature-unset <value> [--optional|--persistent]]
+           [--set-min-mon-release <release-major-number>]
++          [--auth-service-cipher <cipher>]
++          [--auth-allowed-ciphers <cipher1,cipher2,...>]
++          [--auth-preferred-cipher <cipher>]
+           <mapfilename>
+diff --git a/src/test/cli/monmaptool/rm-nonexistent.t b/src/test/cli/monmaptool/rm-nonexistent.t
+index c6709f934d0b..dfb56a2a8e64 100644
+--- a/src/test/cli/monmaptool/rm-nonexistent.t
++++ b/src/test/cli/monmaptool/rm-nonexistent.t
+@@ -22,6 +22,10 @@
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
+   0: v1:2.3.4.5:6789/0 mon.foo
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+ 
+   $ NEW_FSID="$(monmaptool --print mymonmap|grep ^fsid)"
+   $ [ "$ORIG_FSID" = "$NEW_FSID" ]
+diff --git a/src/test/cli/monmaptool/rm.t b/src/test/cli/monmaptool/rm.t
+index b84d15ea23f1..6194a86ea41c 100644
+--- a/src/test/cli/monmaptool/rm.t
++++ b/src/test/cli/monmaptool/rm.t
+@@ -19,6 +19,10 @@
+   created \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+.\d\d\d\d (re)
+   min_mon_release 20 (tentacle)
+   election_strategy: 1
++  auth_epoch 0
++  auth_service_cipher aes256k
++  auth_allowed_ciphers aes256k
++  auth_preferred_cipher aes256k
+ 
+   $ NEW_FSID="$(monmaptool --print mymonmap|grep ^fsid)"
+   $ [ "$ORIG_FSID" = "$NEW_FSID" ]
+
+From 4d90e678de13494547b6e1c6fde665b86d1f816f Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 13:37:15 -0400
+Subject: [PATCH 6/8] qa/tasks: fix flake8 findings in ceph.py and
+ radosbench.py
+
+The cephx merge (96335615c1b) left four unused local variables in
+qa/tasks/ceph.py (key_prune/key_rotate/task) and an f-string without
+placeholders plus an unused exception binding in qa/tasks/radosbench.py,
+so run-tox-qa (flake8 --select=F,E9) fails on every PR.  No functional
+change.
+
+Fixes: 96335615c1bfdd598412d8768be09323d299ba33
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+(cherry picked from commit 297c44b7e3ef9affc05027f88ced69149ec67184)
+---
+ qa/tasks/ceph.py       | 5 -----
+ qa/tasks/radosbench.py | 4 ++--
+ 2 files changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/qa/tasks/ceph.py b/qa/tasks/ceph.py
+index 81dbdca2d498..84bdbeaaf27f 100644
+--- a/qa/tasks/ceph.py
++++ b/qa/tasks/ceph.py
+@@ -1725,8 +1725,6 @@ def key_prune(ctx, config):
+     elif isinstance(config, list):
+         config = {'keys': config}
+ 
+-    testdir = teuthology.get_testdir(ctx)
+-
+     cluster_name = config.setdefault('cluster', 'ceph')
+     manager = ctx.managers[cluster_name]
+ 
+@@ -1789,7 +1787,6 @@ def key_rotate(ctx, config):
+     ]
+ 
+     daemons = ctx.daemons.resolve_role_list(config.get('daemons', None), CEPH_ROLE_TYPES, True)
+-    clusters = set()
+ 
+     new_mon_key = None
+     for role in daemons:
+@@ -1831,7 +1828,6 @@ def key_rotate(ctx, config):
+         daemon.restart()
+ 
+     clients = config.get('clients', [])
+-    firstmon = teuthology.get_first_mon(ctx, config, cluster_name)
+     keyring = ctx.ceph[cluster_name].keyring
+     for client in clients:
+         if client == 'all':
+@@ -2272,7 +2268,6 @@ def task(ctx, config):
+ 
+             # stop logging health to clog during shutdown, or else we generate
+             # a bunch of scary messages unrelated to our actual run.
+-            firstmon = teuthology.get_first_mon(ctx, config, cluster_name)
+             ctx.ceph[cluster_name].admin.run(
+                 args=[
+                     'sudo',
+diff --git a/qa/tasks/radosbench.py b/qa/tasks/radosbench.py
+index 825b5c9c76b5..7bd97ea82fcd 100644
+--- a/qa/tasks/radosbench.py
++++ b/qa/tasks/radosbench.py
+@@ -110,7 +110,7 @@ def task(ctx, config):
+             extra_args.append(f'--auth_exit_on_failure={auth_exit_on_failure}')
+ 
+         bench_args = [
+-            f'bench',
++            'bench',
+             f'--concurrent-ios={concurrency}',
+         ]
+ 
+@@ -163,7 +163,7 @@ def task(ctx, config):
+         log.info('joining radosbench (timing out after %ss)', timeout)
+         try:
+             run.wait(radosbench.values(), timeout=timeout)
+-        except CommandFailedError as e:
++        except CommandFailedError:
+             for p in radosbench.values():
+                 if p.exitstatus == expected_rc:
+                     pass
+
+From 7fb3c927e31e430aa5795fd177e63134a06f7120 Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Wed, 19 Aug 2026 15:54:01 -0400
+Subject: [PATCH 7/8] cephadm: black-format OSD key rotation code in
+ daemons/ceph.py
+
+The OSD keyring rotation changes from the CVE-2025-30156 cephx merge
+(c9bc85adec3 "cephadm: restart OSD systemd unit after key rotation",
+24dc65ef20d "cephadm: Add retries to OSD key rotation") added lines to
+cephadmlib/daemons/ceph.py that are not formatted the way
+`tox -e check-black` (black>=23,<24, -l78) expects, so run-tox-cephadm
+fails on every PR now that the py3 env passes again:
+
+  would reformat /ceph/src/cephadm/cephadmlib/daemons/ceph.py
+  1 file would be reformatted, 50 files would be left unchanged.
+
+This is the output of `tox -e format-black` (black 23.12.1) on that
+file; no functional change.
+
+Fixes: 24dc65ef20defe9761036f10527e7c5ccbe057bd
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+(cherry picked from commit 6b206bc281c05b773b3e24c11b248a45c86ffed4)
+---
+ src/cephadm/cephadmlib/daemons/ceph.py | 27 +++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
+
+diff --git a/src/cephadm/cephadmlib/daemons/ceph.py b/src/cephadm/cephadmlib/daemons/ceph.py
+index 8d4bed0e9f24..b05bfaac198c 100644
+--- a/src/cephadm/cephadmlib/daemons/ceph.py
++++ b/src/cephadm/cephadmlib/daemons/ceph.py
+@@ -339,7 +339,8 @@ def rotate_osd_lv_keyring(
+         osd_lv_data = osd_bluestore_data.get(self.identity.daemon_id, [])
+         if not osd_lv_data:
+             logger.info(
+-                'No lv data found for OSD.%s, checking for raw OSD', self.identity.daemon_id
++                'No lv data found for OSD.%s, checking for raw OSD',
++                self.identity.daemon_id,
+             )
+             c_v_container = CephContainer(
+                 ctx,
+@@ -363,8 +364,13 @@ def rotate_osd_lv_keyring(
+             )
+             raw_list_data = json.loads(out)
+             for osd_data in raw_list_data.values():
+-                if str(osd_data.get('osd_id', -1)) == str(self.identity.daemon_id):
+-                    logger.info('Found data for osd.%s in raw list', str(self.identity.daemon_id))
++                if str(osd_data.get('osd_id', -1)) == str(
++                    self.identity.daemon_id
++                ):
++                    logger.info(
++                        'Found data for osd.%s in raw list',
++                        str(self.identity.daemon_id),
++                    )
+                     # misnomer since this isn't an LV, but it is the path
+                     # we need to pass to the bluestore tool
+                     lv_path = osd_data.get('device', None)
+@@ -476,10 +482,14 @@ def rotate_osd_lv_keyring(
+                         f'Out:{out}\n'
+                         f'Err:{err}'
+                     )
+-                logger.info(f'Got issue rotating osd keyring using ceph-bluestore-tool:\n{out}\n{err}\nRetrying in {i} seconds')
++                logger.info(
++                    f'Got issue rotating osd keyring using ceph-bluestore-tool:\n{out}\n{err}\nRetrying in {i} seconds'
++                )
+                 time.sleep(i)
+             else:
+-                logger.info(f'Successfully rotated osd.{self.identity.daemon_id} keyring')
++                logger.info(
++                    f'Successfully rotated osd.{self.identity.daemon_id} keyring'
++                )
+                 break
+ 
+         if encrypted:
+@@ -508,8 +518,11 @@ def rotate_osd_lv_keyring(
+                     f'Err:{err}'
+                 )
+ 
+-        call(ctx, ['systemctl', 'reset-failed', self.identity.unit_name],
+-             verbosity=CallVerbosity.QUIET_UNLESS_ERROR)
++        call(
++            ctx,
++            ['systemctl', 'reset-failed', self.identity.unit_name],
++            verbosity=CallVerbosity.QUIET_UNLESS_ERROR,
++        )
+         call(
+             ctx,
+             ['systemctl', 'start', self.identity.unit_name],
+
+From 01a873fc3970c6c18821df7d4b0bdf2708357731 Mon Sep 17 00:00:00 2001
+From: David Galloway <david.galloway@ibm.com>
+Date: Thu, 20 Aug 2026 13:53:46 -0400
+Subject: [PATCH 8/8] tentacle: test/osd: add missing stringify.h include for
+ TestOSDMap.cc
+
+TestOSDMap.cc uses stringify() but never includes include/stringify.h;
+until now it compiled via a transitive include that the CVE-2025-30156
+cephx merge removed, so once the MonClient.h build break earlier in the
+compile is fixed, make check dies here instead:
+
+  src/test/osd/TestOSDMap.cc: error: use of undeclared identifier 'stringify'
+
+main got the include from 073584877f5fee617645ec9845de90a38777161d
+("test: add missing includes", part of a 22-commit include-hygiene PR
+that is not worth backporting wholesale), hence this branch-local
+commit rather than a cherry-pick.
+
+Signed-off-by: David Galloway <david.galloway@ibm.com>
+Assisted-by: Claude Fable 5 (claude-fable-5)
+---
+ src/test/osd/TestOSDMap.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/test/osd/TestOSDMap.cc b/src/test/osd/TestOSDMap.cc
+index 6d480c9c9a77..878c1e945d9f 100644
+--- a/src/test/osd/TestOSDMap.cc
++++ b/src/test/osd/TestOSDMap.cc
+@@ -10,6 +10,7 @@
+ #include "common/common_init.h"
+ #include "common/ceph_argparse.h"
+ #include "common/ceph_json.h"
++#include "include/stringify.h"
+ 
+ #include <iostream>
+ #include <cmath>
