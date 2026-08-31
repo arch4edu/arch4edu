@@ -1,8 +1,8 @@
 # Maintainer: Gerasimos Chourdakis <chourdak at in dot tum dot de>
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 pkgname=calculix-precice
-pkgver=2.20.1
-pkgrel=7
+pkgver=2.20.2
+pkgrel=1
 pkgdesc="preCICE-adapter for the CSM code CalculiX"
 url="https://github.com/${pkgname/calculix-/}/${pkgname/precice/adapter}"
 license=(GPL-3.0-or-later)
@@ -12,7 +12,7 @@ makedepends=(gcc-fortran pandoc-cli)    # mono
 optdepends=('man-db: manual pages for ccx_preCICE')
 source=(${pkgname/precice/adapter}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz
   http://dhondt.de/ccx_${pkgver::4}.src.tar.bz2)
-sha512sums=('52fbef41b3eed6ce211bb09d22d40511392669dcf2144d0a83249c6bfd6bf3a81d4d68cd04085902d54e635ce2c0e7c2e57f492eef6dcb10906991dd611a4790'
+sha512sums=('fd71030b5b1f9f4275272cc58808fd343bc578703691eff1d9b26f025d5613c4a4fb4346a040b4978200fa5e7ead068f6b5eb0be80593f37fb09ba0485e301a3'
             '3888c1411ad42c6f2483cbf7d8994e8175ffa9ad4f0c4df224e2d16a7d80973d32f6a8cf10844255586d4f8e076fee99017cee5f2b9bb6576b82edcfe4b4ffb8')
 
 prepare() {
