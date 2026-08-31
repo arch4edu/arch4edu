@@ -4,7 +4,7 @@
 # Prior Maintainer: David Birks <david@birks.dev>
 
 pkgname=conftest
-pkgver=0.68.2
+pkgver=0.69.0
 pkgrel=1
 pkgdesc='A utility to help you write tests against structured configuration data'
 arch=(x86_64)
@@ -12,7 +12,7 @@ url='https://github.com/open-policy-agent/conftest'
 license=(Apache)
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/open-policy-agent/conftest/archive/v$pkgver.tar.gz")
-sha512sums=('41cdae8f034dfd50e01581c6a4270602f0c3ba213d8818ac26251c426ca6fe4017de1cf56ebabd3c7857693cacecffaf738b29eec2fa2a36a02e0bd5c41cb776')
+sha512sums=('0613ee20571699fd66b4ab2a1b5a1c181772b8847ce9d4f01b07eaf3aa9e437dc5e012ed80fe49880b2d7f0196c4abed51bf065647f6fdd9c36796aa38f246e8')
 
 build() {
   cd "$pkgname-$pkgver"
