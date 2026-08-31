@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=heplots
-_pkgver=1.8.1
+_pkgver=1.8.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Visualizing Hypothesis Tests in Multivariate Linear Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,6 +20,7 @@ depends=(
 )
 optdepends=(
   r-animation
+  r-aplpack
   r-archdata
   r-bookdown
   r-candisc
@@ -28,11 +29,14 @@ optdepends=(
   r-dplyr
   r-effects
   r-effectsize
+  r-ggbiplot
   r-ggplot2
   r-glue
   r-gplots
   r-here
   r-knitr
+  r-litedown
+  r-markdown
   r-mvinfluence
   r-patchwork
   r-qqtest
@@ -44,15 +48,11 @@ optdepends=(
   r-sleuth2
   r-tidyr
   r-tinytable
-  r-markdown
   r-vcdextra
-  r-r.rsp
-  r-litedown
-  r-aplpack
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('f93c63368cc1ebc8c601bc4d8426db16')
-b2sums=('de1f47944d1058ae5faf7372bdae9bfd2ffaca1fa494e9b6ec76a71ef8acf145f0a0a3da847563da1665ca1038cf1a2232da21854d62636b6604f5882ede7319')
+md5sums=('610125d1455ac5cbff1bcf1230840a54')
+b2sums=('8972498cbbf9092fd1fdebc8f41096445d1ab96941eb6342a910337fdb9560c0fad23a9382cae95c324e4ec8bf6eab16ea7b812a9d58958d30726d3495d057e8')
 
 build() {
   mkdir build
