@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=bain
-_pkgver=0.2.11
+_pkgver=0.2.12
 pkgname=r-${_pkgname,,}
-pkgver=0.2.11
-pkgrel=2
+pkgver=0.2.12
+pkgrel=1
 pkgdesc='Bayes Factors for Informative Hypotheses'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -23,7 +23,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8c7a8b07bc954231372c4551a5898ec21c8a9451f2ae14c4c107c534e208f18c')
+sha256sums=('88bd1ce56eacdf3000d70200e953e7bdc4b23977c7a7e3bd3a2622049aa5d8b0')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
