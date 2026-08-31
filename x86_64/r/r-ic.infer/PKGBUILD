@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=ic.infer
-_pkgver=1.1-7
+_pkgver=1.1-8
 pkgname=r-${_pkgname,,}
-pkgver=1.1.7
-pkgrel=2
+pkgver=1.1.8
+pkgrel=1
 pkgdesc='Inequality Constrained Inference in Linear Normal Situations'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -20,7 +20,7 @@ optdepends=(
 )
 
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('055329e68eb3b9ab5248a58ede2c6f45faa8b6678c938b8e287c4db0b53d213f')
+sha256sums=('d509b15b9dc0ce79374ee740ba4a188d51d43c13ad3ad752dc025a83e9274371')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
