@@ -5,7 +5,7 @@
 # Contributor: Nick B <Shirakawasuna at gmail _dot_com>
 
 _pkgname=XML
-_pkgver=3.99-0.23
+_pkgver=3.99-0.24
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,8 +22,8 @@ optdepends=(
   r-rcurl
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('dd657fefcac88442ccb0e3797b4e4969')
-b2sums=('4ffa71f54add736368fb58a75ca04a5ab94cbb2c456f5776f79ac9619e6c7d7116966ebb1fd7cac8646dcaf0331e5aa7aaea3668114fdc6180d96aeb99c6528a')
+md5sums=('446719b5291e40c5df512f34d1588444')
+b2sums=('d8a37f4f68c0f201ac76b8c07f1cf372ae725bd90ad406fdcd32e929d609e01fa7969c99ad24ecca56fe84c684f7448fb76cf57fbc283475e5e4a903d3c619ca')
 
 build() {
   mkdir build
