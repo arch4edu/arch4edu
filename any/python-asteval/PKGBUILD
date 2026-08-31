@@ -3,7 +3,7 @@
 # Contributor: NextHendrix <chris dot jones dot 492 at gmail dot com>
 _name=asteval
 pkgname=python-$_name
-pkgver=1.0.9
+pkgver=1.0.10
 pkgrel=1
 pkgdesc="Minimalistic evaluator of python expression using ast module"
 arch=(any)
@@ -20,7 +20,7 @@ makedepends=(
 )
 checkdepends=(python-pytest)
 source=($_name::git+https://github.com/lmfit/$_name#tag=$pkgver)
-b2sums=('0e9de863014dea6c5476cada0d9bc09fbf6d16f861d11979308d8f6221ef217eb811c9fcc025bfb5caa54aa786c566c300639fdb2a570fe85d2d597c55b1beba')
+b2sums=('75a32e1ca6a58f735f8e4adae76c051c8c27e71a9e0394da754168952384bf065db07aa5fa486ab7d9e72a0771d9ca7ad82b9350bc788a2bd4073f4aabb33915')
 
 build() {
     cd $_name
