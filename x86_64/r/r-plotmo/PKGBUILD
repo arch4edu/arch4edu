@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=plotmo
-_pkgver=3.7.0
+_pkgver=3.7.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,8 +26,8 @@ optdepends=(
   r-rpart.plot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e3750064bbe059bf4fa12ef93aee5ca5')
-b2sums=('6fb8a34511770f7f9f7371ad1c671c70da151c4338ea17aff908eb50e4e3592df14eb7bd2f6f061b302fe48db6af788b5f975b440039a4a43fd9ce9ba9757162')
+md5sums=('26f6079e76c4175b8e3a89629107a85c')
+b2sums=('9f2e5fe6f1ef30d930d1fe6d7d1f40fe1ab4940ac8f7a9585c6b24f69292463f7599377c8642a8513e7c02022f21b73ee41961d37d4346376108219e491e52fb')
 
 build() {
   mkdir build
