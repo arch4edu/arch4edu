@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=betareg
-_pkgver=3.2-5
+_pkgver=3.2-6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,8 +28,8 @@ optdepends=(
   r-bamlss
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5640969e432e635e67c6c1524dc877ee')
-b2sums=('5aba68fd809e8e6363af87573c18ab89ed2de8888b434be538b800a285e8542367a15c76daa7bfae8947845a57bd6fab8eedffcc22a44100861f035836191095')
+md5sums=('7ade6a3995ba1c2374a0c11e75828315')
+b2sums=('bce49206431b5c4cbcc115aab8399c650925bf7baeebe9cdb463fb49dd4f6a756e1f85aa6a8e6aa151fda5655ef960bf9f2085154075487362234a41e7ced461')
 
 build() {
   mkdir build
