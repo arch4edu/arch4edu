@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=ggtext
-_pkgver=0.1.2
+_pkgver=0.2.0
 pkgname=r-${_pkgname,,}
-pkgver=0.1.2
-pkgrel=2
+pkgver=0.2.0
+pkgrel=1
 pkgdesc="Improved Text Rendering Support for 'ggplot2'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,7 +26,7 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('8782171c44e5850e0c3a3c540e8db19b18b9b6e61b5ba5314dd7931d77cf7983')
+sha256sums=('76b23e91c7565b0a6e1ba5adeb3ab976b3f3ccc80886841417afbe80f9af1a9e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
