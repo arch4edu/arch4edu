@@ -2,7 +2,7 @@
 # Contributor: Excitable Snowball <excitablesnowball@gmail.com>
 
 pkgname=python-bokeh
-pkgver=3.9.2
+pkgver=3.10.0
 pkgrel=1
 pkgdesc='Interactive Web Plotting for Python'
 arch=('any')
@@ -12,14 +12,12 @@ source=(
   "https://pypi.io/packages/source/b/bokeh/bokeh-$pkgver.tar.gz"
 )
 sha256sums=(
-  '5be30d105b329d7d2ab1cb92f51e6bd44e23f0fe21ab8d49594b220b2ab11632'
+  '73f0b0c06d7925ca2b6d52b2dc51c2533a11f667cc6944f1f06c039ccc57c5ce'
 )
 depends=('python-jinja'
-         'python-contourpy'
          'python-narwhals'
          'python-numpy'
          'python-packaging'
-         'python-pandas'
          'python-pillow'
          'python-yaml'
          'python-tornado'
@@ -30,7 +28,9 @@ optdepends=('python-selenium: svg export'
             'nodejs: extending Bokeh'
             'python-psutil: detailed memory logging'
             'python-networkx: plot directly from NetworkX data'
-            'python-sphinx: support sphinx documentation')
+            'python-sphinx: support sphinx documentation'
+            'python-contourpy: contour plot'
+            'python-pandas: dataframe')
 makedepends=('python-build'
              'python-installer'
              'python-wheel'
