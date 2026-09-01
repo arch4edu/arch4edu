@@ -1,0 +1,267 @@
+diff -rauN ctags-5.8-arduino11/c.c ctags-5.8-arduino11-unused-patch/c.c
+--- ctags-5.8-arduino11/c.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/c.c	2025-12-13 12:34:50.168777118 +0100
+@@ -624,7 +624,7 @@
+ 	return name;
+ }
+ 
+-static void __unused__ pt (tokenInfo *const token)
++static void UNUSED pt (tokenInfo *const token)
+ {
+ 	if (isType (token, TOKEN_NAME))
+ 		printf ("type: %-12s: %-13s   line: %lu\n",
+@@ -639,7 +639,7 @@
+ 			tokenString (token->type), token->lineNumber);
+ }
+ 
+-static void __unused__ ps (statementInfo *const st)
++static void UNUSED ps (statementInfo *const st)
+ {
+ 	unsigned int i;
+ 	printf ("scope: %s   decl: %s   gotName: %s   gotParenName: %s isPointer: %s\n",
+diff -rauN ctags-5.8-arduino11/eiffel.c ctags-5.8-arduino11-unused-patch/eiffel.c
+--- ctags-5.8-arduino11/eiffel.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/eiffel.c	2025-12-13 12:30:21.876568816 +0100
+@@ -807,7 +807,7 @@
+ 
+ static boolean parseType (tokenInfo *const token);
+ 
+-static void parseGeneric (tokenInfo *const token, boolean declaration __unused__)
++static void parseGeneric (tokenInfo *const token, boolean declaration UNUSED)
+ {
+ 	unsigned int depth = 0;
+ #ifdef TYPE_REFERENCE_TOOL
+diff -rauN ctags-5.8-arduino11/general.h ctags-5.8-arduino11-unused-patch/general.h
+--- ctags-5.8-arduino11/general.h	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/general.h	2025-12-13 12:30:30.206935942 +0100
+@@ -57,10 +57,10 @@
+  *  to prevent warnings about unused variables.
+  */
+ #if (__GNUC__ > 2  ||  (__GNUC__ == 2  &&  __GNUC_MINOR__ >= 7)) && !defined (__GNUG__)
+-# define __unused__  __attribute__((unused))
++# define UNUSED  __attribute__((unused))
+ # define __printf__(s,f)  __attribute__((format (printf, s, f)))
+ #else
+-# define __unused__
++# define UNUSED
+ # define __printf__(s,f)
+ #endif
+ 
+diff -rauN ctags-5.8-arduino11/lregex.c ctags-5.8-arduino11-unused-patch/lregex.c
+--- ctags-5.8-arduino11/lregex.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/lregex.c	2025-12-13 12:31:07.545783078 +0100
+@@ -538,11 +538,11 @@
+ #endif  /* HAVE_REGEX */
+ 
+ extern void addTagRegex (
+-		const langType language __unused__,
+-		const char* const regex __unused__,
+-		const char* const name __unused__,
+-		const char* const kinds __unused__,
+-		const char* const flags __unused__)
++		const langType language UNUSED,
++		const char* const regex UNUSED,
++		const char* const name UNUSED,
++		const char* const kinds UNUSED,
++		const char* const flags UNUSED)
+ {
+ #ifdef HAVE_REGEX
+ 	Assert (regex != NULL);
+@@ -564,10 +564,10 @@
+ }
+ 
+ extern void addCallbackRegex (
+-		const langType language __unused__,
+-		const char* const regex __unused__,
+-		const char* const flags __unused__,
+-		const regexCallback callback __unused__)
++		const langType language UNUSED,
++		const char* const regex UNUSED,
++		const char* const flags UNUSED,
++		const regexCallback callback UNUSED)
+ {
+ #ifdef HAVE_REGEX
+ 	Assert (regex != NULL);
+@@ -581,7 +581,7 @@
+ }
+ 
+ extern void addLanguageRegex (
+-		const langType language __unused__, const char* const regex __unused__)
++		const langType language UNUSED, const char* const regex UNUSED)
+ {
+ #ifdef HAVE_REGEX
+ 	if (! regexBroken)
+@@ -602,7 +602,7 @@
+ */
+ 
+ extern boolean processRegexOption (const char *const option,
+-								   const char *const parameter __unused__)
++								   const char *const parameter UNUSED)
+ {
+ 	boolean handled = FALSE;
+ 	const char* const dash = strchr (option, '-');
+@@ -624,7 +624,7 @@
+ 	return handled;
+ }
+ 
+-extern void disableRegexKinds (const langType language __unused__)
++extern void disableRegexKinds (const langType language UNUSED)
+ {
+ #ifdef HAVE_REGEX
+ 	if (language <= SetUpper  &&  Sets [language].count > 0)
+@@ -639,8 +639,8 @@
+ }
+ 
+ extern boolean enableRegexKind (
+-		const langType language __unused__,
+-		const int kind __unused__, const boolean mode __unused__)
++		const langType language UNUSED,
++		const int kind UNUSED, const boolean mode UNUSED)
+ {
+ 	boolean result = FALSE;
+ #ifdef HAVE_REGEX
+@@ -660,7 +660,7 @@
+ 	return result;
+ }
+ 
+-extern void printRegexKinds (const langType language __unused__, boolean indent __unused__)
++extern void printRegexKinds (const langType language UNUSED, boolean indent UNUSED)
+ {
+ #ifdef HAVE_REGEX
+ 	if (language <= SetUpper  &&  Sets [language].count > 0)
+diff -rauN ctags-5.8-arduino11/lua.c ctags-5.8-arduino11-unused-patch/lua.c
+--- ctags-5.8-arduino11/lua.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/lua.c	2025-12-13 12:31:16.297782819 +0100
+@@ -37,7 +37,7 @@
+ */
+ 
+ /* for debugging purposes */
+-static void __unused__ print_string (char *p, char *q)
++static void UNUSED print_string (char *p, char *q)
+ {
+ 	for ( ; p != q; p++)
+ 		fprintf (errout, "%c", *p);
+diff -rauN ctags-5.8-arduino11/main.c ctags-5.8-arduino11-unused-patch/main.c
+--- ctags-5.8-arduino11/main.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/main.c	2025-12-13 12:31:25.162782726 +0100
+@@ -522,7 +522,7 @@
+  *		Start up code
+  */
+ 
+-extern int main (int __unused__ argc, char **argv)
++extern int main (int UNUSED argc, char **argv)
+ {
+ 	cookedArgs *args;
+ #ifdef VMS
+diff -rauN ctags-5.8-arduino11/options.c ctags-5.8-arduino11-unused-patch/options.c
+--- ctags-5.8-arduino11/options.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/options.c	2025-12-13 12:31:45.780782455 +0100
+@@ -731,7 +731,7 @@
+ }
+ 
+ static void processExcludeOption (
+-		const char *const option __unused__, const char *const parameter)
++		const char *const option UNUSED, const char *const parameter)
+ {
+ 	const char *const fileName = parameter + 1;
+ 	if (parameter [0] == '\0')
+@@ -869,7 +869,7 @@
+ }
+ 
+ static void processFilterTerminatorOption (
+-		const char *const option __unused__, const char *const parameter)
++		const char *const option UNUSED, const char *const parameter)
+ {
+ 	freeString (&Option.filterTerminator);
+ 	Option.filterTerminator = stringCopy (parameter);
+@@ -932,8 +932,8 @@
+ }
+ 
+ static void processHelpOption (
+-		const char *const option __unused__,
+-		const char *const parameter __unused__)
++		const char *const option UNUSED,
++		const char *const parameter UNUSED)
+ {
+ 	printProgramIdentification ();
+ 	putchar ('\n');
+@@ -1141,8 +1141,8 @@
+ }
+ 
+ static void processLicenseOption (
+-		const char *const option __unused__,
+-		const char *const parameter __unused__)
++		const char *const option UNUSED,
++		const char *const parameter UNUSED)
+ {
+ 	printProgramIdentification ();
+ 	puts ("");
+@@ -1168,8 +1168,8 @@
+ }
+ 
+ static void processListMapsOption (
+-		const char *const __unused__ option,
+-		const char *const __unused__ parameter)
++		const char *const UNUSED option,
++		const char *const UNUSED parameter)
+ {
+ 	if (parameter [0] == '\0' || strcasecmp (parameter, "all") == 0)
+ 	    printLanguageMaps (LANG_AUTO);
+@@ -1185,8 +1185,8 @@
+ }
+ 
+ static void processListLanguagesOption (
+-		const char *const option __unused__,
+-		const char *const parameter __unused__)
++		const char *const option UNUSED,
++		const char *const parameter UNUSED)
+ {
+ 	printLanguageList ();
+ 	exit (0);
+@@ -1360,8 +1360,8 @@
+ }
+ 
+ static void processVersionOption (
+-		const char *const option __unused__,
+-		const char *const parameter __unused__)
++		const char *const option UNUSED,
++		const char *const parameter UNUSED)
+ {
+ 	printProgramIdentification ();
+ 	exit (0);
+diff -rauN ctags-5.8-arduino11/parse.c ctags-5.8-arduino11-unused-patch/parse.c
+--- ctags-5.8-arduino11/parse.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/parse.c	2025-12-13 12:31:56.080782299 +0100
+@@ -376,7 +376,7 @@
+ */
+ 
+ extern void processLanguageDefineOption (
+-		const char *const option, const char *const parameter __unused__)
++		const char *const option, const char *const parameter UNUSED)
+ {
+ #ifdef HAVE_REGEX
+ 	if (parameter [0] == '\0')
+diff -rauN ctags-5.8-arduino11/python.c ctags-5.8-arduino11-unused-patch/python.c
+--- ctags-5.8-arduino11/python.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/python.c	2025-12-13 12:32:05.628782134 +0100
+@@ -135,7 +135,7 @@
+  * extract all relevant information and create a tag.
+  */
+ static void makeFunctionTag (vString *const function,
+-	vString *const parent, int is_class_parent, const char *arglist __unused__)
++	vString *const parent, int is_class_parent, const char *arglist UNUSED)
+ {
+ 	tagEntryInfo tag;
+ 	initTagEntry (&tag, vStringValue (function));
+diff -rauN ctags-5.8-arduino11/routines.c ctags-5.8-arduino11-unused-patch/routines.c
+--- ctags-5.8-arduino11/routines.c	2016-11-23 10:52:52.000000000 +0100
++++ ctags-5.8-arduino11-unused-patch/routines.c	2025-12-13 12:34:05.174778882 +0100
+@@ -526,7 +526,7 @@
+ 
+ #if ! defined (HAVE_STAT_ST_INO)
+ 
+-static void canonicalizePath (char *const path __unused__)
++static void canonicalizePath (char *const path UNUSED)
+ {
+ #if defined (MSDOS_STYLE_PATH)
+ 	char *p;
