@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=bbmle
-_pkgver=1.0.25.1
+_pkgver=1.0.26
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Tools for General Maximum Likelihood Estimation"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -20,15 +20,17 @@ optdepends=(
   r-ggplot2
   r-hmisc
   r-knitr
+  r-minqa
   r-mumin
   r-optimx
   r-rms
   r-runit
   r-testthat
+  r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('73de3800a92640884c5db0e85724cdd3')
-b2sums=('0c881ad4cb9ae16c660365b5abd2cd0e42893c614e0618b9505ad08d21df536d1f4cb5aa4d085e7fc77862a3e012a87458155e1abd13cf2731a857a3b4774af6')
+md5sums=('91c6fdb5331d44e6e6035e11997b3338')
+b2sums=('0c2c8a333f824eb62442bf43a6883dcbc2c02a535ce1273b391bdc12bd3fdd19223a11119f8e120e0170fd56ab39e435aa5149d43bb4fac521cb1b6c6c5e5ca0')
 
 build() {
   mkdir build
