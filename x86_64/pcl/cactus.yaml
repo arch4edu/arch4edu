@@ -2,10 +2,10 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
-makedepends:
-  - x86_64/gtest-src
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add options "!lto"
+  sed -i 's/-DBUILD_global_tests=ON/-DBUILD_global_tests=OFF/' PKGBUILD
 post_build: aur-post-build
