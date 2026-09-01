@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: 0BSD
+
+get_filename_component(_SAXONCHE_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../../.." ABSOLUTE)
+
+if(NOT TARGET SaxonCHE::saxonc-core-he)
+	add_library(SaxonCHE::saxonc-core-he SHARED IMPORTED)
+	set_target_properties(SaxonCHE::saxonc-core-he PROPERTIES
+		IMPORTED_LOCATION "${_SAXONCHE_PREFIX}/lib/libsaxonc-core-he.so.@SOVERSION@"
+		IMPORTED_SONAME "libsaxonc-core-he.so.@SOVERSION@"
+		INTERFACE_INCLUDE_DIRECTORIES "${_SAXONCHE_PREFIX}/include"
+	)
+endif()
+
+if(NOT TARGET SaxonCHE::saxonc-he)
+	add_library(SaxonCHE::saxonc-he SHARED IMPORTED)
+	set_target_properties(SaxonCHE::saxonc-he PROPERTIES
+		IMPORTED_LOCATION "${_SAXONCHE_PREFIX}/lib/libsaxonc-he.so.@SOVERSION@"
+		IMPORTED_SONAME "libsaxonc-he.so.@SOVERSION@"
+		INTERFACE_INCLUDE_DIRECTORIES "${_SAXONCHE_PREFIX}/include"
+		INTERFACE_LINK_LIBRARIES "SaxonCHE::saxonc-core-he"
+	)
+endif()
+
+set(SaxonCHE_VERSION "@PKGVER@")
+set(SaxonCHE_FOUND TRUE)
+unset(_SAXONCHE_PREFIX)

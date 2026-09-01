@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: 0BSD
+
+cmake_minimum_required(VERSION 3.23)
+project(saxonc_cmake_verification LANGUAGES CXX)
+
+find_package(SaxonCHE @PKGVER@ EXACT REQUIRED CONFIG)
+
+add_executable(saxonc-cmake-verification saxonc_cpp_verification.cpp)
+target_link_libraries(saxonc-cmake-verification PRIVATE SaxonCHE::saxonc-he)

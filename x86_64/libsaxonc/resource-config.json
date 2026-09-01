@@ -1,0 +1,21 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "META-INF/services/javax\\.xml\\.parsers\\.SAXParserFactory"
+      },
+      {
+        "pattern": "META-INF/services/javax\\.xml\\.transform\\.TransformerFactory"
+      },
+      {
+        "pattern": "net/sf/saxon/data/.*"
+      },
+      {
+        "pattern": "org/xmlresolver/.*"
+      },
+      {
+        "pattern": "xmlresolver\\.properties"
+      }
+    ]
+  }
+}
