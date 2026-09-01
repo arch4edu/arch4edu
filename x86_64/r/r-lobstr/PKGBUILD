@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=lobstr
-_pkgver=1.2.1
+_pkgver=1.2.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,8 +28,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e95987d7c059397aa0129a8ef35bcb04')
-b2sums=('96901e153d27f7b0e09791761099dff7540c52ab7f475492f24698d12d5ab454068e55d443e9d03cd2bca0084817952e66324bb163cfc75c05d47b843ef15fc9')
+md5sums=('571ea0c261b5d28cd033e1dd43d44b00')
+b2sums=('84237bf6ecfab1dea0a8ee33b7b9eb14a0a82ebeb858ed69f0e5423d2bf60323e6b07b4074847a6d9d027b0f3ba300a62c137f3fb7fa0177193cf088da84d99f')
 
 prepare() {
   # Fix test
