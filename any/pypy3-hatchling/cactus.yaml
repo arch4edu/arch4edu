@@ -11,5 +11,7 @@ makedepends:
   - any/pypy3-installer
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i 's/pypy3 -m build --wheel --no-isolation backend/pypy3 -m build --wheel --skip-dependency-check --no-isolation backend/' PKGBUILD
 post_build: aur-post-build
