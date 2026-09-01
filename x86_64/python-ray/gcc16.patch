@@ -8,16 +8,6 @@
      )
  
  
---- a/src/ray/observability/open_telemetry_metric_recorder.h
-+++ b/src/ray/observability/open_telemetry_metric_recorder.h
-@@ -14,6 +14,7 @@
- 
- #pragma once
- 
-+#include <cstdint>
- #include <opentelemetry/exporters/otlp/otlp_grpc_metric_exporter.h>
- #include <opentelemetry/metrics/meter.h>
- #include <opentelemetry/metrics/observer_result.h>
 --- a/src/ray/thirdparty/dlmalloc.c
 +++ b/src/ray/thirdparty/dlmalloc.c
 @@ -1,3 +1,4 @@

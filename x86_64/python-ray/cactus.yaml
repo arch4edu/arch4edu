@@ -8,5 +8,5 @@ pre_build: |
   git checkout HEAD -- gcc16.patch
   sed -i 's|tar.gz)$|tar.gz gcc16.patch)|' PKGBUILD
   sed -i "s|')|' 'SKIP')|" PKGBUILD
-  sed -i '/cd \${_base}-\${_base}-\${pkgver}$/a\  patch -Np1 -i "$srcdir/gcc16.patch" || true' PKGBUILD
+  sed -i '/^prepare() {/a\  patch -Np1 -d "${_base}-${_base}-${pkgver}" -i "$srcdir/gcc16.patch"' PKGBUILD
 post_build: aur-post-build
