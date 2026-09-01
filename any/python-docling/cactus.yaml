@@ -9,7 +9,6 @@ depends:
   - any/python-marko
   - any/python-polyfactory
   - any/python-pypdfium2
-  - any/python-docx
   - any/python-pptx
   - any/python-rapidocr
 build_prefix: extra-x86_64
