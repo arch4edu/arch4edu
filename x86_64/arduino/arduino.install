@@ -1,0 +1,40 @@
+post_install() {
+    echo ":: Add yourself to the uucp group to access the serial ports:"
+    echo "   sudo usermod -a -G uucp <user>"
+    echo "   Please checkout the wiki for further information."
+}
+
+pre_upgrade() {
+    if [[ $(vercmp 1:1.6.12-1 "$2") -eq 1 ]]; then
+        echo "If arduino fails to install try to manually remove it first:"
+        echo "sudo pacman -Rs arduino"
+    fi
+}
+
+_1:1.6.12_1_changes() {
+  echo ":: arduino is now split into arduino-builder, arduino-avr-core and arduino-docs"
+  echo "   If arduino fails to run, check for a zombie folder:"
+  echo "   ls -la /usr/share/arduino/hardware/avr"
+  echo "   It might be left from a very old upgrade. Please remove it."
+}
+
+_1:1.8.2_1_changes() {
+    echo ":: Setting new permissions (775 -> 755) for /usr/share/arduino/tools/WiFi101/ and subfolders"
+    chmod 755 /usr/share/arduino/tools/WiFi101/
+    chmod 755 /usr/share/arduino/tools/WiFi101/tool/
+    chmod 755 /usr/share/arduino/tools/WiFi101/tool/firmwares/
+    chmod 755 /usr/share/arduino/tools/WiFi101/tool/firmwares/19.4.4/
+}
+
+post_upgrade() {
+    local v upgrades=(
+      1:1.6.12-1
+      1:1.8.2-1
+    )
+
+    for v in "${upgrades[@]}"; do
+      if [[ $(vercmp "$v" "$2") -eq 1 ]]; then
+        "_${v//-/_}_changes"
+      fi
+    done
+}

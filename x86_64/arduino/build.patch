@@ -1,0 +1,122 @@
+diff -aur Arduino-1.6.13/build/build.xml Arduino-1.6.13_new/build/build.xml
+--- Arduino-1.6.13/build/build.xml	2016-11-22 15:49:35.000000000 +0100
++++ Arduino-1.6.13_new/build/build.xml	2016-12-12 18:37:31.499962000 +0100
+@@ -177,29 +177,7 @@
+ 
+     <mkdir dir="${target.path}/reference"/>
+ 
+-    <!-- Unzip documentation -->
+-    <antcall target="unzip">
+-      <param name="archive_file" value="shared/reference-1.6.6-3.zip" />
+-      <param name="archive_url" value="http://downloads.arduino.cc/reference-1.6.6-3.zip" />
+-      <param name="final_folder" value="${target.path}/reference/www.arduino.cc" />
+-      <param name="dest_folder" value="${target.path}/reference/" />
+-    </antcall>
+-    <antcall target="unzip">
+-      <param name="archive_file" value="shared/Galileo_help_files-1.6.2.zip" />
+-      <param name="archive_url" value="http://downloads.arduino.cc/Galileo_help_files-1.6.2.zip" />
+-      <param name="final_folder" value="${target.path}/reference/Galileo_help_files" />
+-      <param name="dest_folder" value="${target.path}/reference/" />
+-    </antcall>
+-    <antcall target="unzip">
+-      <param name="archive_file" value="shared/Edison_help_files-1.6.2.zip" />
+-      <param name="archive_url" value="http://downloads.arduino.cc/Edison_help_files-1.6.2.zip" />
+-      <param name="final_folder" value="${target.path}/reference/Edison_help_files" />
+-      <param name="dest_folder" value="${target.path}/reference/" />
+-    </antcall>
+-
+-    <!-- Fix wrong permissions from zip file root folder -->
+-    <chmod perm="755" dir="${target.path}/reference/Galileo_help_files" />
+-    <chmod perm="755" dir="${target.path}/reference/Edison_help_files" />
++    <antcall target="assemble-docs" />
+ 
+     <!-- Write the revision file! -->
+     <echo file="${target.path}/lib/version.txt" message="${version}" />
+@@ -215,8 +193,35 @@
+     </antcall>
+   </target>
+ 
++  <target name="assemble-docs" unless="no_docs">
++      <!-- Unzip documentation -->
++      <antcall target="unzip">
++        <param name="archive_file" value="shared/reference-1.6.6-3.zip" />
++        <param name="archive_url" value="http://downloads.arduino.cc/reference-1.6.6-3.zip" />
++        <param name="final_folder" value="${target.path}/reference/www.arduino.cc" />
++        <param name="dest_folder" value="${target.path}/reference/" />
++      </antcall>
++      <antcall target="unzip">
++        <param name="archive_file" value="shared/Galileo_help_files-1.6.2.zip" />
++        <param name="archive_url" value="http://downloads.arduino.cc/Galileo_help_files-1.6.2.zip" />
++        <param name="final_folder" value="${target.path}/reference/Galileo_help_files" />
++        <param name="dest_folder" value="${target.path}/reference/" />
++      </antcall>
++      <antcall target="unzip">
++        <param name="archive_file" value="shared/Edison_help_files-1.6.2.zip" />
++        <param name="archive_url" value="http://downloads.arduino.cc/Edison_help_files-1.6.2.zip" />
++        <param name="final_folder" value="${target.path}/reference/Edison_help_files" />
++        <param name="dest_folder" value="${target.path}/reference/" />
++      </antcall>
++
++      <!-- Fix wrong permissions from zip file root folder -->
++      <chmod perm="755" dir="${target.path}/reference/Galileo_help_files" />
++      <chmod perm="755" dir="${target.path}/reference/Edison_help_files" />
++  </target>
++
+   <!-- copy library folder -->
+-  <target name="assemble-libraries" unless="light_bundle">
++  <target name="assemble-libraries" depends="assemble-libraries-full, assemble-libraries-light" />
++  <target name="assemble-libraries-full" unless="light_bundle">
+     <copy todir="${target.path}/libraries">
+       <fileset dir="../libraries"/>
+     </copy>
+@@ -233,6 +238,9 @@
+     <download-library name="Keyboard" version="1.0.1"/>
+     <download-library name="SD" version="1.0.9"/>
+   </target>
++  <target name="assemble-libraries-light" if="light_bundle">
++    <mkdir dir="${target.path}/libraries" />
++  </target>
+ 
+   <macrodef name="download-library">
+     <attribute name="name"/>
+@@ -251,13 +259,17 @@
+   </macrodef>
+ 
+   <!-- copy hardware folder -->
+-  <target name="assemble-hardware" unless="light_bundle">
++  <target name="assemble-hardware" depends="assemble-hardware-full, assemble-hardware-light" />
++  <target name="assemble-hardware-full" unless="light_bundle">
+     <copy todir="${target.path}/hardware">
+       <fileset dir="../hardware">
+         <exclude name="arduino/sam/**"/>
+       </fileset>
+     </copy>
+   </target>
++  <target name="assemble-hardware-light" if="light_bundle">
++    <copy file="../hardware/package_index_bundled.json" todir="${target.path}/hardware" />
++  </target>
+ 
+   <!-- - - - - - - - - -->
+   <!-- Revision check  -->
+@@ -823,8 +835,21 @@
+ 
+   <!-- Retrieve tool -->
+   <target name="untar-unzip-download" depends="untar-unzip-check" unless="${archive_file}_available">
++      <antcall target="untar-unzip-download-web" />
++      <antcall target="untar-unzip-download-local" />
++  </target>
++  <target name="untar-unzip-download-web" unless="local_sources">
+     <get src="${archive_url}" dest="${archive_file}" verbose="true" ignoreerrors="true" />
+   </target>
++  <target name="untar-unzip-download-local" if="local_sources">
++    <basename file="${archive_file}" property="basename" />
++    <echo>Skipping download of ${archive_url}, using makepkg downloaded ${basename}</echo>
++    <exec executable="ln" failonerror="true">
++        <arg value="-s" />
++        <arg value="${basedir}/../../${basename}" />
++        <arg value="${archive_file}" />
++    </exec>
++  </target>
+ 
+   <target name="untar-unzip-checksum" depends="untar-unzip-download">
+     <echo>Testing checksum of "${archive_file}"</echo>
