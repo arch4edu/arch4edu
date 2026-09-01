@@ -1,0 +1,38 @@
+diff --git a/tests/opc/test_package.py b/tests/opc/test_package.py
+index d7fcf3f..0f7e71e 100644
+--- a/tests/opc/test_package.py
++++ b/tests/opc/test_package.py
+@@ -610,7 +610,8 @@ class Describe_ContentTypeMap:
+     # fixtures ---------------------------------------------
+ 
+     @pytest.fixture(scope="class")
+-    def content_type_map(self):
++    @classmethod
++    def content_type_map(cls):
+         return _ContentTypeMap.from_xml(testfile_bytes("expanded_pptx", "[Content_Types].xml"))
+ 
+ 
+diff --git a/tests/opc/test_serialized.py b/tests/opc/test_serialized.py
+index f864d9d..9c88d7a 100644
+--- a/tests/opc/test_serialized.py
++++ b/tests/opc/test_serialized.py
+@@ -262,7 +262,8 @@ class Describe_DirPkgReader:
+     # --- fixture components -------------------------------
+ 
+     @pytest.fixture(scope="class")
+-    def dir_pkg_reader(self):
++    @classmethod
++    def dir_pkg_reader(cls):
+         return _DirPkgReader(dir_pkg_path)
+ 
+ 
+@@ -293,7 +294,8 @@ class Describe_ZipPkgReader:
+     # --- fixture components -------------------------------
+ 
+     @pytest.fixture(scope="class")
+-    def zip_pkg_reader(self):
++    @classmethod
++    def zip_pkg_reader(cls):
+         return _ZipPkgReader(zip_pkg_path)
+ 
+ 
