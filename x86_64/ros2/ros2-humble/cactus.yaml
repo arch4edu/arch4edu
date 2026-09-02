@@ -4,25 +4,31 @@ nvchecker:
   - alias: python
 depends:
   - x86_64/ros2/ros2-arch-deps
-  - pacman: eigen3
-makedepends:
-  - x86_64/cmake3
-  - x86_64/gcc14
+  - pacman: eigen
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  # Use GCC 14 to avoid GCC 15 incompatibilities (char16_t ostream etc.)
-  echo 'export CC=gcc-14' >> PKGBUILD
-  echo 'export CXX=g++-14' >> PKGBUILD
-  echo 'CXXFLAGS+=" -Wno-error=array-bounds"' >> PKGBUILD
-  # Rename original package() to _package()
+  # Rename original build()/package() so we can wrap them.
+  sed -i '/^build() *{/,/^}/ s/^build()/_build()/' PKGBUILD
   sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
-  # Append new package() that calls _package() then fixes paths
-  cat >> PKGBUILD <<'EOF'
+  # GCC 16 removed char16_t operator<< -> skip the introspection test package.
+  sed -i 's/--packages-ignore qt_gui_cpp rqt_gui_cpp/& rosidl_typesupport_introspection_tests/' PKGBUILD
+  # Wrap build() to patch freshly-cloned sub-repos before building:
+  #  - eigen 5 only exposes Eigen3::Eigen and no longer sets Eigen3_INCLUDE_DIRS,
+  #    so derive it from the target for dependents that still read the variable.
+  #  - console_bridge_vendor mispasses -Wall/-Wextra/-Wpedantic as CMake args,
+  #    which CMake 3.31+ rejects.
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  build() {
+      printf '\nif(NOT DEFINED Eigen3_INCLUDE_DIRS AND TARGET Eigen3::Eigen)\n  get_target_property(Eigen3_INCLUDE_DIRS Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)\nendif()\n' >> "$srcdir/ros2/src/ros2/eigen3_cmake_module/cmake/Modules/FindEigen3.cmake"
+      sed -i '/^[[:space:]]*-Wall$/d;/^[[:space:]]*-Wextra$/d;/^[[:space:]]*-Wpedantic$/d' "$srcdir/ros2/src/ros2/console_bridge_vendor/CMakeLists.txt"
+      _build
+  }
+
   package() {
       _package
-      # Fix hardcoded build paths in all text files
       grep -rIl "/build/ros2-humble" "$pkgdir/opt/ros/humble" | xargs -n 10 -- sed -i "s|/build/ros2-humble/src/install|/opt/ros/humble|g; s|/build/ros2-humble/src/build|/opt/ros/humble/opt|g"
   }
-  EOF
+  CACTUSEOF
 post_build: aur-post-build
