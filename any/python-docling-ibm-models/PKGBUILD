@@ -1,39 +1,58 @@
-# Maintainer: Majorx234 <majorx234@gmail.com>
+# Maintainer: @RubenKelevra <rubenkelevra@gmail.com>
+# Contributor: Majorx234 <majorx234@gmail.com>
 
-_pkgname=docling-ibm-models
+_pkgname='docling-ibm-models'
 _pipname="${_pkgname//-/_}"
 pkgname="python-${_pkgname}"
-pkgver=3.13.0
+pkgver='3.14.0'
 pkgrel=1
-pkgdesc="A python library to define and validate data types in Docling."
+pkgdesc='AI models used by the Docling PDF conversion package'
 arch=('any')
-url="https://github.com/docling-project/docling-ibm-models"
+url="https://github.com/docling-project/${_pkgname}"
 license=('MIT')
-depends=(python-torchvision
-         python-jsonlines
-         python-docling-core
-         python-transformers
-         python-rtree
-         python-accelerate
-         # python-pytorch # already required by python-torchvision/python-accelerate
-         # python-pillow # already required by python-torchvision/python-docling-core
-         # python-tqdm # already required by python-transformers
-         # python-pydantic # already required by python-docling-core
-         # python-huggingface-hub # already required by python-transformers/python-accelerate
-         # python-safetensors # already required by python-transformers/python-accelerate
-         # python-numpy # already required by python-transformers/python-torchvision/python-accelerate
+depends=(
+	'python>=3.10'
+	'python<4.0'
+	'python-pytorch>=2.2.2'
+	'python-torchvision'
+	'python-jsonlines>=3.1.0'
+	'python-pillow>=10.0.0'
+	'python-tqdm>=4.64.0'
+	'python-huggingface-hub>=0.23.0'
+	'python-safetensors>=0.4.3'
+	'python-pydantic>=2.0.0'
+	'python-docling-core>=2.19.0'
+	'python-transformers>=5.4.0'
+	'python-numpy>=1.24.4'
+	'python-rtree>=1.0.0'
+	'python-accelerate>=1.2.1'
 )
-makedepends=('python-build' 'python-installer' 'python-pdm-backend' 'python-wheel' 'python-hatchling')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/docling-project/docling-ibm-models/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('2c6cd63aed8175e4c1cd616069742b523e813228c8c050ab870e58b4d177ce8f')
+makedepends=(
+	'python-build'
+	'python-installer'
+	'python-setuptools'
+	'python-wheel'
+)
+checkdepends=('python-pytest')
+optdepends=('python-opencv>=4.6.0: legacy TableFormer image preprocessing')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pipname}-${pkgver}.tar.gz")
+b2sums=('126d21f2e38bd8ba7acec86e06495e84b8494961c1e2b7def08b4466bebbed17e5785f0598a4c35fd8a8d9a1bf1a0fd82f782b88da7c9de9f1958235ba2c57d8')
 
 build() {
-    cd "${_pkgname}-${pkgver}"
-    python -m build --wheel --no-isolation
+	cd -- "${_pipname}-${pkgver}" || return 1
+	python -m build --wheel --no-isolation
+}
+
+check() {
+	cd -- "${_pipname}-${pkgver}" || return 1
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 python -m pytest -q \
+		tests/test_common.py \
+		tests/test_listitem_marker_model.py
 }
 
 package() {
-    cd "${_pkgname}-${pkgver}"
-    python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+	cd -- "${_pipname}-${pkgver}" || return 1
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+	install -D -m644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 makedepends+=("python-setuptools")
