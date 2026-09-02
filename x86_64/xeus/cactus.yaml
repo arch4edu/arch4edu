@@ -1,1 +1,10 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # AUR is stuck on 5.2.3, flagged out-of-date since 2026-07-19 with no
+  # maintainer response, while xeus-zmq 4.0.0 requires xeus>=6.
+  replace -u '5.2.3' '6.0.5'
+post_build: aur-post-build
