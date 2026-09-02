@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: haagch <christoph.haag@collabora.com>
 pkgname=perfetto
-pkgver=54.0
+pkgver=58.2
 pkgrel=1
 pkgdesc="Python APIs and bindings for Perfetto"
 arch=(x86_64)
@@ -10,13 +10,19 @@ license=(Apache-2.0)
 depends=(gcc-libs python-protobuf)
 makedepends=(git python-setuptools clang)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('340a6fa56962e18a9039977914a3e448c83566a51fd970bffabf32b28c03c3a2d5c29104ce23a0b2a84f684678eb4471bf8beddbf323056bc64e3c1d7a729a5f')
+sha512sums=('4a7d448fb70853ea7b45836f7a366cf09bd6201cc5acf178402be4b66108728d419e32cf6119242eebd28db400bf493d9d21f22356fac0e3ddf5acb594c1fcc1')
 
 build() {
   cd ${pkgname}-${pkgver}
   tools/install-build-deps
+  sed -i '/if (is_linux) {/,/^  }/{s/"rt",/"rt",\n      "m",\n      "stdc++",/}' gn/standalone/BUILD.gn
+  mv buildtools/linux64/clang/bin/clang++ buildtools/linux64/clang/bin/clang++.real 2>/dev/null || true
+  printf '#!/bin/bash\nexec "$(dirname "$0")/clang++.real" --gcc-install-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/15.3.0 "$@"\n' > buildtools/linux64/clang/bin/clang++
+  chmod +x buildtools/linux64/clang/bin/clang++
   tools/gn gen --args='is_debug=false' out/linux
   tools/ninja -C out/linux tracebox traced traced_probes perfetto
+  printf '#!/bin/bash\nexec "$(dirname "$0")/clang++.real" --gcc-install-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/15.3.0 "$@"\n' > buildtools/linux64/clang/bin/clang++
+  chmod +x buildtools/linux64/clang/bin/clang++
   tools/gen_amalgamated --output sdk/perfetto
   
   cd python
@@ -43,3 +49,4 @@ package() {
   cd python
   PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1 --skip-build
 }
+makedepends+=("gcc15")
