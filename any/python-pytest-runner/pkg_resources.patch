@@ -1,0 +1,52 @@
+--- a/ptr/__init__.py
++++ b/ptr/__init__.py
+@@ -10,7 +10,9 @@
+ import itertools as _itertools
+ import warnings as _warnings
+ 
+-import pkg_resources
++from importlib.metadata import version as _dist_version
++from packaging.markers import InvalidMarker as _InvalidMarker, Marker as _Marker
++from packaging.version import Version as _Version
+ import setuptools.command.test as orig
+ from setuptools import Distribution
+ 
+@@ -121,7 +123,8 @@
+         instead of declaring the dependency in the package
+         metadata, assert the requirement at run time.
+         """
+-        pkg_resources.require('setuptools>=27.3')
++        if _Version(_dist_version('setuptools')) < _Version('27.3'):
++            raise RuntimeError('pytest-runner requires setuptools>=27.3')
+ 
+     def finalize_options(self):
+         if self.addopts:
+@@ -133,11 +136,12 @@
+         Given an environment marker, return True if the marker is valid
+         and matches this environment.
+         """
+-        return (
+-            not marker
+-            or not pkg_resources.invalid_marker(marker)
+-            and pkg_resources.evaluate_marker(marker)
+-        )
++        if not marker:
++            return True
++        try:
++            return _Marker(marker).evaluate()
++        except _InvalidMarker:
++            return False
+ 
+     def install_dists(self, dist):
+         """
+@@ -175,9 +179,7 @@
+             "please upgrade to setuptools 30.4 or later or pin to "
+             "pytest-runner < 5."
+         )
+-        ver_str = pkg_resources.get_distribution('setuptools').version
+-        ver = pkg_resources.parse_version(ver_str)
+-        if ver < pkg_resources.parse_version('30.4'):
++        if _Version(_dist_version('setuptools')) < _Version('30.4'):
+             _warnings.warn(msg)
+ 
+     def run(self):

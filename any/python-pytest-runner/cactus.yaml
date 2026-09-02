@@ -1,1 +1,18 @@
-../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # ptr/__init__.py imports pkg_resources at module level, which setuptools 84
+  # no longer ships. ptr registers a distutils command entry point, so any
+  # "setup.py --help-commands" loads it and dies -- that call is what colcon
+  # runs for every ament_python package. Upstream is archived at 6.0.1 and will
+  # not fix this, so port the three call sites to importlib.metadata/packaging.
+  add depends python-packaging
+  git checkout HEAD -- pkg_resources.patch
+  sed -i 's|^source=(\(.*\))$|source=(\1 pkg_resources.patch)|' PKGBUILD
+  sed -i "s|^sha512sums=('SKIP')$|sha512sums=('SKIP' 'SKIP')|" PKGBUILD
+  sed -i '/^build() {/i prepare() {\n  patch -Np1 -d pytest-runner -i "$srcdir/pkg_resources.patch"\n}\n' PKGBUILD
+post_build: aur-post-build
