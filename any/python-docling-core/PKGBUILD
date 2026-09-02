@@ -1,36 +1,75 @@
-# Maintainer: Majorx234 <majorx234@gmail.com>
+# Maintainer: @RubenKelevra <rubenkelevra@gmail.com>
+# Contributor: Majorx234 <majorx234@gmail.com>
 
-_pkgname=docling-core
+_pkgname='docling-core'
 _pipname="${_pkgname//-/_}"
 pkgname="python-${_pkgname}"
-pkgver=2.70.2
-pkgrel=1
-pkgdesc="A python library to define and validate data types in Docling."
+pkgver='2.92.0'
+pkgrel=2
+pkgdesc='A python library to define and validate data types in Docling.'
 arch=('any')
-url="https://github.com/docling-project/docling-core"
+url="https://github.com/docling-project/${_pkgname}"
 license=('MIT')
-depends=(python-jsonschema
-         python-jsonref
-         python-tabulate
-         python-pandas
-         python-pillow
-         python-pydantic
-         python-pyyaml
-         python-typer
-         python-latex2mathml
-         # python-typing_extensions # already required by python-pydantic
+depends=(
+	'python>=3.10'
+	'python<4.0'
+	'python-jsonschema>=4.16.0'
+	'python-jsonref>=1.1.0'
+	'python-tabulate>=0.9.0'
+	'python-pandas>=2.1.4'
+	'python-pillow>=10.0.0'
+	'python-pydantic>=2.10.3'
+	'python-yaml>=5.1'
+	'python-typer026>=0.12.5'
+	'python-latex2mathml>=3.77.0'
+	'python-defusedxml>=0.7.1'
+	'python-pydantic-settings>=2.14.0'
+	'python-typing_extensions>=4.12.2'
+	'python-doclang>=0.7.0'
+	'python-requests' # imported unconditionally by docling_core.utils.file; omitted from upstream metadata
 )
-makedepends=('python-build' 'python-installer' 'python-pdm-backend' 'python-wheel' 'python-hatchling')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/docling-project/docling-core/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('de07a7230ee8eec315e4cbe017a878c93b8671a9f2f1d7ffd38ac5469d7cafda')
+makedepends=(
+	'python-build'
+	'python-installer'
+	'python-setuptools'
+	'python-wheel'
+)
+checkdepends=('python-pytest')
+optdepends=(
+	'python-opencv>=4.6.0: faster PNG encoding for embedded document images'
+	'python-semchunk>=2.2.0: semantic chunking support'
+	'python-tree-sitter>=0.25.0: code-aware semantic chunking'
+	'python-tree-sitter-python>=0.23.6: Python code chunking'
+	'python-tree-sitter-c>=0.23.4: C code chunking'
+	'python-tree-sitter-javascript>=0.23.1: JavaScript code chunking'
+	'python-tree-sitter-typescript>=0.23.2: TypeScript code chunking'
+	'python-transformers>=5.4.0: Hugging Face tokenization for chunking'
+	'python-huggingface-hub: Hugging Face model downloads for chunking tokenizers'
+	'python-tiktoken>=0.9.0: OpenAI tokenization for chunking'
+)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pipname}-${pkgver}.tar.gz")
+b2sums=('68a65e88556be66da581ce8a034b77fd863318bf8415bbc8803c7cdc98f69a86c24c4c322bee96967c1363cc9123641d0123381ef2e5b60fa687d68b32fa8e06')
 
 build() {
-    cd "${_pkgname}-${pkgver}"
-    python -m build --wheel --no-isolation
+	cd -- "${_pipname}-${pkgver}" || return 1
+	python -m build --wheel --no-isolation
+}
+
+check() {
+	cd -- "${_pipname}-${pkgver}" || return 1
+	python -m pytest -q --import-mode=importlib \
+		test/test_base.py \
+		test/test_doc_base.py \
+		test/test_page.py \
+		test/test_regions_to_table.py \
+		test/test_otsl_table_export.py \
+		test/test_deserializer_doclang_source_mapping.py \
+		test/test_utils.py
 }
 
 package() {
-    cd "${_pkgname}-${pkgver}"
-    python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+	cd -- "${_pipname}-${pkgver}" || return 1
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+	install -D -m644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 makedepends+=("python-hatch-vcs")
