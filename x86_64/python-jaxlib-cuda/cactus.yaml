@@ -5,5 +5,12 @@ nvchecker:
 depends:
   - x86_64/python-jaxlib
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  # XLA's genrule for embedded GPU specs shells out to xxd.
+  add makedepends tinyxxd
+  git checkout HEAD -- system-cuda.patch
+  patch -p1 -i system-cuda.patch
+  # Honour the builder's CPU count instead of the hardcoded upstream value.
+  sed -i "s/^build --jobs=.*/build --jobs=$(nproc)/; s/^build --local_resources=cpu=.*/build --local_resources=cpu=$(nproc)/" bazelrc.sh
 post_build: aur-post-build

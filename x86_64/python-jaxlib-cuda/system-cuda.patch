@@ -1,0 +1,70 @@
+Build against the system CUDA/cuDNN/NCCL instead of hermetic redistributions.
+
+rules_ml_toolchain expects each local redistribution root to contain only that
+one component, so prepare() stages symlink-only trees: Arch splits CUDA
+headers/libs under targets/x86_64-linux, and pointing LOCAL_CUDNN_PATH at /usr
+would make external/cuda_cudnn/include resolve to all of /usr/include, which
+displaces Clang's default /usr/include entry and breaks libstdc++'s
+"#include_next <stdlib.h>".
+
+The cuda_crt override is dropped because it referenced a directory that only
+exists in the maintainer's own tree; the local redistributions supply those
+headers. HERMETIC_CUDA_COMPUTE_CAPABILITIES moves out of the build:cuda section
+because nothing passes --config=cuda, so it never took effect.
+
+jax pins its build wheels to a Google artifact registry that is unreachable from
+the build host; PyPI serves the same artifacts and the lock file hashes match.
+
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -41,7 +41,16 @@
+             'SKIP')
+ 
+ prepare() {
+-    mkdir -p {base,cache,dist,repo,sandbox}
++    mkdir -p {base,cache,dist,repo,sandbox,local-cuda,local-cudnn/{include,lib},local-nccl/{include,lib}}
++    ln -sfn /opt/cuda/targets/x86_64-linux/include "$srcdir/local-cuda/include"
++    ln -sfn /opt/cuda/targets/x86_64-linux/lib "$srcdir/local-cuda/lib"
++    ln -sfn /opt/cuda/bin "$srcdir/local-cuda/bin"
++    ln -sfn /opt/cuda/nvvm "$srcdir/local-cuda/nvvm"
++    ln -sfn /usr/include/cudnn*.h "$srcdir/local-cudnn/include/"
++    ln -sfn /usr/lib/libcudnn.so* "$srcdir/local-cudnn/lib/"
++    ln -sfn /usr/include/nccl*.h "$srcdir/local-nccl/include/"
++    ln -sfn /usr/include/nccl_device "$srcdir/local-nccl/include/nccl_device"
++    ln -sfn /usr/lib/libnccl.so* "$srcdir/local-nccl/lib/"
+ 
+     ln -sf "$(readlink bazel-${_bazel_ver}-linux-x86_64)" "$srcdir/bazel"
+     chmod +x $srcdir/bazel-${_bazel_ver}-linux-x86_64
+@@ -68,8 +77,8 @@
+     export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=3/} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
+     export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE=3/} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
+ 
++    sed -i "s|^--index-url https://us-python.pkg.dev/ml-oss-artifacts-published/pypi-mirror/simple|--index-url https://pypi.org/simple|" build/requirements_lock_*.txt
+     ../bazel-${_bazel_ver}-linux-x86_64 --bazelrc=../bazelrc build \
+-        --override_repository=cuda_crt="$(realpath $srcdir/../cuda_crt)" \
+         --override_repository=xla="${srcdir}/xla-${_xla_sha}" \
+         //jaxlib/tools:jax_cuda13_plugin_wheel
+ }
+--- a/bazelrc.sh
++++ b/bazelrc.sh
+@@ -6,8 +6,9 @@
+ 
+ build --repo_env=HERMETIC_PYTHON_VERSION=3.14
+ 
+-build --repo_env=HERMETIC_CUDA_VERSION=13.1.1
+-build --repo_env=HERMETIC_CUDNN_VERSION=9.18.1.3
++build --repo_env=LOCAL_CUDA_PATH="${srcdir}/local-cuda"
++build --repo_env=LOCAL_CUDNN_PATH="${srcdir}/local-cudnn"
++build --repo_env=LOCAL_NCCL_PATH="${srcdir}/local-nccl"
+ #
+ # TODO(@daskol): This variables controls `@rules_ml_toolchain` in theory.
+ # build:cuda --repo_env=LOCAL_CUDA_PATH="/opt/cuda/targets/x86_64-linux"
+@@ -17,7 +18,7 @@
+ #
+ # NOTE Adjust HERMETIC_CUDA_COMPUTE_CAPABILITIES for actual devices.
+ # https://github.com/google-ml-infra/rules_ml_toolchain/tree/main/gpu
+-build:cuda --repo_env=HERMETIC_CUDA_COMPUTE_CAPABILITIES="sm_80,sm_86,sm_87,sm_90,sm_100,sm_103"
++build --repo_env=HERMETIC_CUDA_COMPUTE_CAPABILITIES="sm_80,sm_86,sm_87,sm_90,sm_100,sm_103"
+ 
+ build --repo_env=BAZEL_COMPILER="/usr/lib/llvm20/bin/clang-20"
+ build --repo_env=CC="/usr/lib/llvm20/bin/clang-20"
