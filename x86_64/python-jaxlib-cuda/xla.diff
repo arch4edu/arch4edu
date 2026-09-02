@@ -1,0 +1,26 @@
+--- a/xla/stream_executor/cuda/BUILD	2026-02-07 17:24:14.698853839 +0300
++++ b/xla/stream_executor/cuda/BUILD	2026-02-07 17:24:31.183377129 +0300
+@@ -396,6 +396,8 @@
+         "delay_kernel_cuda.cu.cc",
+     ],
+     hdrs = ["delay_kernel.h"],
++    copts = ["-U_FORTIFY_SOURCE", "-D_FORTIFY_SOURCE=0"],
++    cxxopts = ["-U_FORTIFY_SOURCE", "-D_FORTIFY_SOURCE=0"],
+     # copybara:uncomment compatible_with = ["//buildenv/target:non_prod"],
+     tags = [
+         "cuda-only",
+--- a/xla/stream_executor/cuda/delay_kernel_cuda.cu.cc	2026-02-07 19:12:38.866760145 +0300
++++ b/xla/stream_executor/cuda/delay_kernel_cuda.cu.cc	2026-02-07 19:13:45.685551663 +0300
+@@ -15,6 +15,12 @@
+ 
+ #include <cstdint>
+ 
++// Disable Clang builtins and features by shadowing it as a macro.
++#if defined(__CUDACC__)
++#define _Nullable
++#define __is_bitwise_cloneable(...) 0
++#endif
++
+ #include "absl/status/statusor.h"
+ #include "xla/stream_executor/cuda/delay_kernel.h"
+ #include "xla/stream_executor/gpu/gpu_semaphore.h"
