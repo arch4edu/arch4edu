@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=ipred
-_pkgver=0.9-15
+_pkgver=0.9-16
 pkgname=r-${_pkgname,,}
-pkgver=0.9.15
-pkgrel=2
+pkgver=0.9.16
+pkgrel=1
 pkgdesc='Improved Predictors'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -24,7 +24,7 @@ optdepends=(
   r-th.data
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a4752de11121262f3f4c43163efa34e05e42cdf4f8496d8897be6f410dc0ee4b')
+sha256sums=('8ad3a28abb63e3918fd83b153be0a2973d7576ac5e4819473a9c623dcf0d9303')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
