@@ -3,7 +3,7 @@
 
 pkgname=libsquish
 pkgver=1.15
-pkgrel=8
+pkgrel=9
 pkgdesc='DXT compression library'
 arch=(x86_64)
 url='https://sourceforge.net/projects/libsquish'
