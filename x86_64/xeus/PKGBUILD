@@ -1,7 +1,7 @@
 # Maintainer: Greg Land <landjgregory at gmail dot com>
 # Contributor: Tarn Burton <twburton at gmail dot com>
 pkgname=xeus
-pkgver=5.2.3
+pkgver=6.0.5
 pkgrel=1
 pkgdesc="C++ implementation of the Jupyter kernel protocol"
 arch=("x86_64")
@@ -10,7 +10,7 @@ license=('BSD')
 depends=('openssl' 'crypto++' 'nlohmann-json' 'xtl' 'zeromq')
 makedepends=('cmake' 'zeromq' 'cppzmq')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/QuantStack/xeus/archive/$pkgver.tar.gz")
-sha256sums=('37dfe990319901b3ad7f6ee7f5789bfc324e2d440ae821c1ea72a0b716de2103')
+sha256sums=('32a36d587c1dc4dee8e8f65dffb90e8bac910c5de3f723ed7f24a99aec447138')
 options=(staticlibs)
 
 build() {
