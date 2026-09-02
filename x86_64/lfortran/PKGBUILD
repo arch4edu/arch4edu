@@ -1,8 +1,8 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Ciappi <marco.scopesi@gmail.com>
 pkgname=lfortran
-pkgver=0.63.0
-pkgrel=2
+pkgver=0.65.0
+pkgrel=1
 pkgdesc="Modern interactive LLVM-based Fortran compiler"
 arch=(x86_64)
 url="https://${pkgname}.org"
@@ -12,7 +12,7 @@ makedepends=(llvm cmake cppzmq zstd libunwind pandoc-cli re2c)
 checkdepends=()
 optdepends=()
 source=(${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
-sha512sums=('317cca18dcc98287b750095f8c2bee6150b85e5d792c48804f6da441c7a48fb0dfda61bbb48b61187234b995f574f2c1e5dcd9657d84e04ae3ad10dfaed88400')
+sha512sums=('aac135b874a4a93f061f0958add6f4ef87fa6fc28af08c47f7ade9c72902a44070d6dd6ef97da2d9c27a620817525c42cfc6d5fd7561b566c1aeb8dbb6b719ba')
 
 build() {
   cmake \
@@ -42,3 +42,4 @@ package() {
   DESTDIR="${pkgdir}" cmake --build build --target install
   install -Dm 644 ${pkgname}-${pkgver}/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
+checkdepends+=("python-toml")
