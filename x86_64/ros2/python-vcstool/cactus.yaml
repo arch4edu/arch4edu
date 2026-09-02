@@ -1,1 +1,18 @@
-../../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # pkg_resources was removed from the ecosystem (setuptools 84, and the
+  # python-pkg_resources stub dropped from extra). vcstool's help.py imports it
+  # only to load console_scripts entry points; replace with importlib.metadata.
+  # The PKGBUILD has no prepare(), so append one that patches the extracted source.
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  prepare() {
+      sed -i 's/^from pkg_resources import load_entry_point$/from importlib.metadata import entry_points\n\n\ndef load_entry_point(dist, group, name):\n    for ep in entry_points(group=group):\n        if ep.name == name:\n            return ep.load()\n    raise ImportError(name)/' "$srcdir/$_module-$pkgver/vcstool/commands/help.py"
+  }
+  CACTUSEOF
+post_build: aur-post-build
