@@ -1,0 +1,70 @@
+--- a/cmake/extlib_blend2d.cmake
++++ b/cmake/extlib_blend2d.cmake
+@@ -2,12 +2,20 @@
+ message(STATUS "entering in extlib_blend2d.cmake")
+ 
+ if(USE_SYSTEM_DEPS)
+-    find_package(blend2d REQUIRED CONFIG)
+-    # The installed target is blend2d::blend2d; create a plain alias so the
+-    # name "blend2d" can be used uniformly in the DEPENDENCIES list.
+-    if(NOT TARGET blend2d)
+-        add_library(blend2d ALIAS blend2d::blend2d)
++    if(NOT DEFINED DOCLING_PARSE_ASMJIT_SOURCE_DIR OR NOT DEFINED DOCLING_PARSE_BLEND2D_SOURCE_DIR)
++        message(FATAL_ERROR "Local AsmJit and Blend2D source directories are required")
+     endif()
++
++    set(ASMJIT_DIR "${DOCLING_PARSE_ASMJIT_SOURCE_DIR}" CACHE PATH "Path to AsmJit source" FORCE)
++    set(BLEND2D_STATIC TRUE CACHE BOOL "Build blend2d as a static library" FORCE)
++    set(BLEND2D_NO_INSTALL TRUE CACHE BOOL "Disable blend2d install rules" FORCE)
++    set(BLEND2D_TEST FALSE CACHE BOOL "Disable blend2d tests" FORCE)
++    set(BLEND2D_DEMOS FALSE CACHE BOOL "Disable blend2d demos" FORCE)
++
++    add_subdirectory(
++        "${DOCLING_PARSE_BLEND2D_SOURCE_DIR}"
++        "${CMAKE_BINARY_DIR}/vendor/blend2d"
++    )
+ else()
+     include(FetchContent)
+ 
+--- a/cmake/extlib_loguru.cmake
++++ b/cmake/extlib_loguru.cmake
+@@ -6,14 +6,21 @@
+ if(USE_SYSTEM_DEPS)
+     message(STATUS "using system-deps in extlib_loguru.cmake")
+ 
+-    # this will define the loguru target
+-    # find_package(loguru REQUIRED)
++    if(NOT DEFINED DOCLING_PARSE_LOGURU_SOURCE_DIR)
++        message(FATAL_ERROR "Local Loguru source directory is required")
++    endif()
+ 
+-    # add_library(${ext_name_loguru} INTERFACE IMPORTED)
+-    # add_dependencies(${ext_name_loguru} loguru)
++    set(LOGURU_WITH_STREAMS TRUE CACHE BOOL "Enable Loguru stream logging" FORCE)
++    set(LOGURU_STACKTRACES TRUE CACHE BOOL "Enable Loguru stack traces" FORCE)
++    set(LOGURU_BUILD_EXAMPLES FALSE CACHE BOOL "Disable Loguru examples" FORCE)
++    set(LOGURU_BUILD_TESTS FALSE CACHE BOOL "Disable Loguru tests" FORCE)
++    set(LOGURU_INSTALL FALSE CACHE BOOL "Disable Loguru installation" FORCE)
++    set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
+ 
+-    find_package(loguru CONFIG REQUIRED)
+-    add_library(${ext_name_loguru} ALIAS loguru::loguru)
++    add_subdirectory(
++        "${DOCLING_PARSE_LOGURU_SOURCE_DIR}"
++        "${CMAKE_BINARY_DIR}/vendor/loguru"
++    )
+ 
+ else()
+     message(STATUS "ignoring system-deps extlib_loguru.cmake")
+--- a/cmake/extlib_utf8.git.cmake
++++ b/cmake/extlib_utf8.git.cmake
+@@ -9,8 +9,7 @@
+     # this will define the utf8cpp target
+     find_package(utf8cpp REQUIRED)
+ 
+-    add_library(${ext_name} INTERFACE IMPORTED)
+-    add_dependencies(${ext_name} utf8cpp)
++    add_library(${ext_name} ALIAS utf8cpp::utf8cpp)
+ 
+ else()
+     message(STATUS "ignoring system-deps extlib_utf8.cmake")

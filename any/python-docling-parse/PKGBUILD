@@ -1,37 +1,161 @@
-# Maintainer: Majorx234 <majorx234@gmail.com>
+# Maintainer: @RubenKelevra <rubenkelevra@gmail.com>
+# Contributor: Majorx234 <majorx234@gmail.com>
 
-_pkgname=docling-parse
+_pkgname='docling-parse'
 _pipname="${_pkgname//-/_}"
+_blend2d_commit='6dbc2cefbc996379e07104e34519a440b49b15d7'
+_asmjit_commit='0bd5787b54b575ed94bf32ac452153b34385c514'
+_loguru_commit='4adaa185883e3c04da25913579c451d3c32cfac1'
 pkgname="python-${_pkgname}"
-pkgver=5.6.1
+pkgver='7.16.0'
 pkgrel=1
-pkgdesc="Simple package to extract text with coordinates from programmatic PDFs"
-arch=('any')
-url="https://github.com/docling-project/docling-parse"
-license=('MIT')
-depends=(python-docling-core
-         # python-tabulate # already required by python-docling-core
-         # python-pillow # already required by python-docling-core
-         # python-pydantic # already required by python-docling-core
+pkgdesc='Simple package to extract text with coordinates from programmatic PDFs'
+arch=(
+	'x86_64'
+	'aarch64'
 )
-makedepends=('python-build' 'python-installer' 'python-pdm-backend' 'python-wheel' 'python-hatchling')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/docling-project/docling-parse/archive/refs/tags/v${pkgver}.tar.gz"
-        "pyproject_toml_dep.patch")
-sha256sums=('d976535236dce21938e48c0d52ea1e863b149894362c531fa1438878ad9ad36a'
-            '6aa1dbab5fce06713bdc6a4ba81edc167f7e6913563391207b13317816854336')
+url="https://github.com/docling-project/${_pkgname}"
+license=(
+	'MIT'
+	'Zlib'
+	'Unlicense'
+	'BSD-3-Clause'
+	'BSL-1.0'
+)
+depends=(
+	'python>=3.10'
+	'python-docling-core>=2.85.0'
+	'python-pillow>=10.0.0'
+	'python-pydantic>=2.0.0'
+	'qpdf'
+	'libjpeg-turbo'
+	'openjpeg2'
+	'lcms2'
+	'freetype2'
+	'zlib'
+)
+makedepends=(
+	'cmake'
+	'pkgconf'
+	'cxxopts'
+	'nlohmann-json'
+	'utf8cpp'
+	'python-build'
+	'python-installer'
+	'pybind11'
+	'python-setuptools'
+	'python-wheel'
+)
+checkdepends=(
+	'python-pytest'
+	'python-huggingface-hub>=1.11.0'
+)
+optdepends=('noto-fonts-cjk: CJK fallback rendering for PDFs with non-embedded CJK fonts')
+source=(
+	"https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pipname}-${pkgver}.tar.gz"
+	"blend2d-${_blend2d_commit}.tar.gz::https://github.com/blend2d/blend2d/archive/${_blend2d_commit}.tar.gz"
+	"asmjit-${_asmjit_commit}.tar.gz::https://github.com/asmjit/asmjit/archive/${_asmjit_commit}.tar.gz"
+	"loguru-${_loguru_commit}.tar.gz::https://github.com/emilk/loguru/archive/${_loguru_commit}.tar.gz"
+	'PDFIUM-LICENSE'
+	'CHROMIUM-LICENSE'
+	'pyproject_toml_dep.patch'
+	'system_deps.patch'
+	'skip_uninstalled_apps.patch'
+	'reproducible_paths.patch'
+)
+b2sums=(
+	'5495b812e9372119ee97ad2a0896be18ce139e1c23ecd9fdd3663eeb68afa54bb3c35ca3c60c7d5a8a9ba6e7f9b7589352571c152a5563367239e167fc8053df'
+	'b8c88f97d2c8bd291ef40a65bea30aa0dab0c5c8522d5f9a09ee7f06b866344614573f2e1cc39f49f83e9db38eeabc4034dfe3e65b6f37fbf4f758825e6d9c83'
+	'f806a7ec5419128269edb2c9e843c0d7303c78678bf4c90a734a672659f315e1f0c4232d0027cf93e9152f22cb23d0fc600cf994b45341aa1a2f8b569ece0e0c'
+	'40d8604d78460ca4e0a1f66470e40906e92cc4979dc2e409ea9f375daa3f4adf0e4b4001bda2eb407eca18ba4751d03570c244575039a134001cdffad8fe24f0'
+	'4c4793497ce37d8bbee3a080a8820332c981df43934a82a7a65533d89447f53a501a266edb19f0602a361572360a156d7368039091c0e954f67c7c65cf2cdc42'
+	'484ffb8ecf13635df16ca79c8dc59d802c2e1c2a2a3c38f774b38898f2ca1e553ac35b1da5acb1ca9bbfdc5245bb2961b977b5ac5707482a6ab88f58273711b8'
+	'1fe7a7b4baf87a3ca27e68302012e137505f3f10a0efcef67e757f2dcf401b38c3a22d1ddf98d53c63e66f6e57fb323169ae5999b03f4de1884dbd84e73d2f63'
+	'726c60ca3b4927ba92ef12c5ae0db40a08b1aa488b15334504c1307795979e719407d8a35a1e642441df8eb540e22e1fae535c75da784ad47496f6380f078388'
+	'ab141ded9670d2871dacc47f2b295d5bed7b31c0da80de19bdf5ec59d19f4df5154c5feb5f771fca5a51fad41c5e3e26a98d5d235dc949f4a2677c1c9c8d3a2d'
+	'7e3a4c2ea50dba64c7bf508f0da65d839b623a543cd157872ddeb966ed1c7969797427d3e6f6b4218904d4123d0b160b9f4e071aa63ae9aa8750b5a1f92f62b7'
+)
 
 prepare() {
-    cd "${_pkgname}-${pkgver}"
-    patch -Np1 -i "${srcdir}/pyproject_toml_dep.patch"
+	cd -- "${_pipname}-${pkgver}" || return 1
+	patch -Np1 -i "${srcdir}/pyproject_toml_dep.patch"
+	patch -Np1 -i "${srcdir}/system_deps.patch"
+	patch -Np1 -i "${srcdir}/skip_uninstalled_apps.patch"
+	patch -Np1 -i "${srcdir}/reproducible_paths.patch"
 }
 
 build() {
-    cd "${_pkgname}-${pkgver}"
-    python -m build --wheel --no-isolation
+	local _python_version
+	_python_version=$(python --version)
+	_python_version=${_python_version#Python }
+	_python_version=${_python_version%.*}
+	if [[ ! ${_python_version} =~ ^[0-9]+\.[0-9]+$ ]]; then
+		printf 'Unable to determine Python major.minor version: %s\n' "${_python_version}" >&2
+		return 1
+	fi
+
+	cd -- "${_pipname}-${pkgver}" || return 1
+	CFLAGS="${CFLAGS} -ffile-prefix-map=${srcdir}=/usr/src/debug/${pkgname}" \
+		CXXFLAGS="${CXXFLAGS} -ffile-prefix-map=${srcdir}=/usr/src/debug/${pkgname}" \
+		USE_SYSTEM_DEPS='ON' \
+		CMAKE_ARGS="-DDOCLING_PARSE_BLEND2D_SOURCE_DIR=${srcdir}/blend2d-${_blend2d_commit} -DDOCLING_PARSE_ASMJIT_SOURCE_DIR=${srcdir}/asmjit-${_asmjit_commit} -DDOCLING_PARSE_LOGURU_SOURCE_DIR=${srcdir}/loguru-${_loguru_commit} -DDOCLING_PARSE_ROOT_PATH=/usr/lib/python${_python_version}/site-packages" \
+		python -m build --wheel --no-isolation
+}
+
+check() {
+	local _python_version
+	local _checkdir="${srcdir}/${pkgname}-check"
+	local _source="${srcdir}/${_pipname}-${pkgver}"
+
+	_python_version=$(python --version)
+	_python_version=${_python_version#Python }
+	_python_version=${_python_version%.*}
+	if [[ ! ${_python_version} =~ ^[0-9]+\.[0-9]+$ ]]; then
+		printf 'Unable to determine Python major.minor version: %s\n' "${_python_version}" >&2
+		return 1
+	fi
+
+	rm -rf -- "${_checkdir}"
+	cd -- "${_source}" || return 1
+	python -m installer --destdir="${_checkdir}" dist/*.whl
+
+	cd -- "${srcdir}" || return 1
+	HF_HUB_OFFLINE=1 \
+		PYTHONPATH="${_checkdir}/usr/lib/python${_python_version}/site-packages:${_source}" \
+		python -m pytest -q --import-mode=importlib --noconftest \
+			"${_pipname}-${pkgver}/tests/test_unit_load_failure.py" \
+			"${_pipname}-${pkgver}/tests/test_unit_actual_text.py" \
+			"${_pipname}-${pkgver}/tests/test_unit_cmap_encoding.py" \
+			"${_pipname}-${pkgver}/tests/test_unit_standard_font_widths.py" \
+			"${_pipname}-${pkgver}/tests/test_unit_indexed_images.py" \
+			"${_pipname}-${pkgver}/tests/test_unit_font_fallback.py" \
+			"${_pipname}-${pkgver}/tests/test_unit_unicode_paths.py"
 }
 
 package() {
-    cd "${_pkgname}-${pkgver}"
-    python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+	cd -- "${_pipname}-${pkgver}" || return 1
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+
+	install -D -m644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	install -D -m644 -- "${srcdir}/blend2d-${_blend2d_commit}/LICENSE.md" \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.blend2d"
+	install -D -m644 -- "${srcdir}/asmjit-${_asmjit_commit}/LICENSE.md" \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.asmjit"
+	install -D -m644 -- "${srcdir}/loguru-${_loguru_commit}/LICENSE" \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.loguru"
+	install -D -m644 -- "${srcdir}/PDFIUM-LICENSE" \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.pdfium"
+	install -D -m644 -- "${srcdir}/CHROMIUM-LICENSE" \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.chromium"
+	install -D -m644 -- docling_parse/pdf_resources/cmap-resources/LICENSE.md \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.adobe-cmap"
+	install -D -m644 -- /usr/share/licenses/cxxopts/LICENSE \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.cxxopts"
+	install -D -m644 -- /usr/share/licenses/nlohmann-json/LICENSE.MIT \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.nlohmann-json"
+	install -D -m644 -- /usr/share/licenses/utf8cpp/LICENSE \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.utf8cpp"
+	install -D -m644 -- /usr/share/licenses/pybind11/LICENSE \
+		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.pybind11"
 }
 makedepends+=("python-setuptools" "pybind11" "cmake" "git")

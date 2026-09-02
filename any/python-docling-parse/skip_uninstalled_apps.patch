@@ -1,0 +1,18 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -180,10 +180,10 @@
+ message(STATUS "cmake lib-link: ${LIBLINK_SEMICOLON}")
+ 
+-add_executable(parse.exe "${TOPLEVEL_PREFIX_PATH}/app/parse.cpp")
+-add_executable(parse_fonts.exe "${TOPLEVEL_PREFIX_PATH}/app/parse_fonts.cpp")
+-add_executable(render.exe "${TOPLEVEL_PREFIX_PATH}/app/render.cpp")
+-add_executable(analyse.exe "${TOPLEVEL_PREFIX_PATH}/app/analyse.cpp")
+-add_executable(run_scaling.exe "${TOPLEVEL_PREFIX_PATH}/app/run_scaling.cpp")
++add_executable(parse.exe EXCLUDE_FROM_ALL "${TOPLEVEL_PREFIX_PATH}/app/parse.cpp")
++add_executable(parse_fonts.exe EXCLUDE_FROM_ALL "${TOPLEVEL_PREFIX_PATH}/app/parse_fonts.cpp")
++add_executable(render.exe EXCLUDE_FROM_ALL "${TOPLEVEL_PREFIX_PATH}/app/render.cpp")
++add_executable(analyse.exe EXCLUDE_FROM_ALL "${TOPLEVEL_PREFIX_PATH}/app/analyse.cpp")
++add_executable(run_scaling.exe EXCLUDE_FROM_ALL "${TOPLEVEL_PREFIX_PATH}/app/run_scaling.cpp")
+ # add_executable(page_images.exe "${TOPLEVEL_PREFIX_PATH}/app/page_images.cpp")
+ 
+ set_property(TARGET parse.exe PROPERTY CXX_STANDARD 20)
