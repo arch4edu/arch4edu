@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  git checkout HEAD -- gcc16-cstdint.patch
+  sed -i 's|source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")|source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz" gcc16-cstdint.patch)|' PKGBUILD
+  sed -i "s|sha256sums=('8dec266d59ab6e4829da5dacea764a02887eeff5a5501c9a51ce796e735b90de')|sha256sums=('8dec266d59ab6e4829da5dacea764a02887eeff5a5501c9a51ce796e735b90de' 'SKIP')|" PKGBUILD
+  sed -i '/^prepare(){/a\  patch -d "${pkgname}-${pkgver}" -Np1 -i "${srcdir}/gcc16-cstdint.patch"' PKGBUILD
+  sed -i 's/cmake -DCMAKE_BUILD_TYPE=Release \\/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\/' PKGBUILD
+  sed -i '/install -Dm644.*LICENSE.md/a\  sed -i '\''s|^includedir=include$|includedir=${prefix}/include|; s|^libdir=lib$|libdir=${prefix}/lib|'\'' "$pkgdir/usr/lib/pkgconfig/xlnt.pc"' PKGBUILD
+post_build: aur-post-build

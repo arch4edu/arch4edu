@@ -3,8 +3,16 @@ nvchecker:
     aur:
 depends:
   - any/bwidget
+  - x86_64/xlnt
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
+  add depends arrow libxslt
   add makedepends rapidjson
+  sed -i 's/scilab-2025.1.0/scilab-2026.1.0/g' scilab-num.patch libxml.patch
+  sed -i 's/@@ -930,11 +930,11 @@/@@ -930,12 +930,12 @@/' scilab-num.patch
+  sed -i '/^ OCAMLDEP = @OCAMLDEP@$/a\ OCAMLFIND = @OCAMLFIND@' scilab-num.patch
+  sed -i "/patch -p0.*libxml.patch/a\\  sed -i '/^      integer low,igh$/a\\\\      external split' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/elementary_functions/src/fortran/bdiag.f\\n  sed -i 's/std::cout << \"s42 = \"/std::wcout << L\"s42 = \"/' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/ast/src/cpp/types/test-types.cpp" PKGBUILD
+  sed -i 's/CXXFLAGS="$CXXFLAGS -fcommon"/CXXFLAGS="$CXXFLAGS -fcommon -std=c++20 -fno-char8_t"/' PKGBUILD
+  updpkgsums
 post_build: aur-post-build

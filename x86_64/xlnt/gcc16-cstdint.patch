@@ -1,0 +1,121 @@
+diff -ruN a/include/xlnt/cell/phonetic_run.hpp b/include/xlnt/cell/phonetic_run.hpp
+--- a/include/xlnt/cell/phonetic_run.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/cell/phonetic_run.hpp	2026-09-03 12:23:14.042160501 +0800
+@@ -23,6 +23,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <string>
+ 
+ #include <xlnt/xlnt_config.hpp>
+diff -ruN a/include/xlnt/styles/color.hpp b/include/xlnt/styles/color.hpp
+--- a/include/xlnt/styles/color.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/styles/color.hpp	2026-09-03 12:23:14.042327232 +0800
+@@ -24,6 +24,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <array>
+ #include <string>
+ 
+diff -ruN a/include/xlnt/utils/variant.hpp b/include/xlnt/utils/variant.hpp
+--- a/include/xlnt/utils/variant.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/utils/variant.hpp	2026-09-03 12:23:14.042463820 +0800
+@@ -23,6 +23,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff -ruN a/include/xlnt/workbook/streaming_workbook_reader.hpp b/include/xlnt/workbook/streaming_workbook_reader.hpp
+--- a/include/xlnt/workbook/streaming_workbook_reader.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/workbook/streaming_workbook_reader.hpp	2026-09-03 12:23:14.042605251 +0800
+@@ -23,6 +23,7 @@
+ // @author: see AUTHORS file
+ #pragma once
+ 
++#include <cstdint>
+ #include <functional>
+ #include <iostream>
+ #include <memory>
+diff -ruN a/include/xlnt/workbook/streaming_workbook_writer.hpp b/include/xlnt/workbook/streaming_workbook_writer.hpp
+--- a/include/xlnt/workbook/streaming_workbook_writer.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/workbook/streaming_workbook_writer.hpp	2026-09-03 12:23:14.042729189 +0800
+@@ -23,6 +23,7 @@
+ // @author: see AUTHORS file
+ #pragma once
+ 
++#include <cstdint>
+ #include <cstddef>
+ #include <iterator>
+ #include <string>
+diff -ruN a/include/xlnt/workbook/workbook.hpp b/include/xlnt/workbook/workbook.hpp
+--- a/include/xlnt/workbook/workbook.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/workbook/workbook.hpp	2026-09-03 12:23:14.042910160 +0800
+@@ -24,6 +24,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <functional>
+ #include <iterator>
+ #include <map>
+diff -ruN a/include/xlnt/worksheet/worksheet.hpp b/include/xlnt/worksheet/worksheet.hpp
+--- a/include/xlnt/worksheet/worksheet.hpp	2020-03-22 03:19:37.000000000 +0800
++++ b/include/xlnt/worksheet/worksheet.hpp	2026-09-03 12:23:14.043137710 +0800
+@@ -24,6 +24,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <iterator>
+ #include <memory>
+ #include <string>
+diff -ruN a/source/cell/cell.cpp b/source/cell/cell.cpp
+--- a/source/cell/cell.cpp	2020-03-22 03:19:37.000000000 +0800
++++ b/source/cell/cell.cpp	2026-09-03 12:23:14.043594550 +0800
+@@ -24,6 +24,7 @@
+ 
+ #include <algorithm>
+ #include <cmath>
++#include <limits>
+ #include <sstream>
+ 
+ #include <xlnt/cell/cell.hpp>
+diff -ruN a/source/detail/number_format/number_formatter.cpp b/source/detail/number_format/number_formatter.cpp
+--- a/source/detail/number_format/number_formatter.cpp	2020-03-22 03:19:37.000000000 +0800
++++ b/source/detail/number_format/number_formatter.cpp	2026-09-03 12:23:14.043963659 +0800
+@@ -24,6 +24,7 @@
+ #include <algorithm>
+ #include <cctype>
+ #include <cmath>
++#include <limits>
+ 
+ #include <xlnt/utils/exceptions.hpp>
+ #include <detail/default_case.hpp>
+diff -ruN a/source/utils/time.cpp b/source/utils/time.cpp
+--- a/source/utils/time.cpp	2020-03-22 03:19:37.000000000 +0800
++++ b/source/utils/time.cpp	2026-09-03 12:23:14.043324194 +0800
+@@ -20,6 +20,7 @@
+ //
+ // @license: http://www.opensource.org/licenses/mit-license.php
+ // @author: see AUTHORS file
++#include <cstdint>
+ #include <cmath>
+ #include <ctime>
+ 
+diff -ruN a/source/utils/timedelta.cpp b/source/utils/timedelta.cpp
+--- a/source/utils/timedelta.cpp	2020-03-22 03:19:37.000000000 +0800
++++ b/source/utils/timedelta.cpp	2026-09-03 12:23:14.043432466 +0800
+@@ -20,6 +20,7 @@
+ //
+ // @license: http://www.opensource.org/licenses/mit-license.php
+ // @author: see AUTHORS file
++#include <cstdint>
+ #include <cmath>
+ #include <ctime>
+ 
