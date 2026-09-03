@@ -2,12 +2,11 @@
 # Contributor: Majorx234 <majorx234@gmail.com>
 
 _pkgname='docling-parse'
-_pipname="${_pkgname//-/_}"
 _blend2d_commit='6dbc2cefbc996379e07104e34519a440b49b15d7'
 _asmjit_commit='0bd5787b54b575ed94bf32ac452153b34385c514'
 _loguru_commit='4adaa185883e3c04da25913579c451d3c32cfac1'
 pkgname="python-${_pkgname}"
-pkgver='7.16.0'
+pkgver='7.17.0'
 pkgrel=1
 pkgdesc='Simple package to extract text with coordinates from programmatic PDFs'
 arch=(
@@ -52,7 +51,7 @@ checkdepends=(
 )
 optdepends=('noto-fonts-cjk: CJK fallback rendering for PDFs with non-embedded CJK fonts')
 source=(
-	"https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pipname}-${pkgver}.tar.gz"
+	"${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
 	"blend2d-${_blend2d_commit}.tar.gz::https://github.com/blend2d/blend2d/archive/${_blend2d_commit}.tar.gz"
 	"asmjit-${_asmjit_commit}.tar.gz::https://github.com/asmjit/asmjit/archive/${_asmjit_commit}.tar.gz"
 	"loguru-${_loguru_commit}.tar.gz::https://github.com/emilk/loguru/archive/${_loguru_commit}.tar.gz"
@@ -64,7 +63,7 @@ source=(
 	'reproducible_paths.patch'
 )
 b2sums=(
-	'5495b812e9372119ee97ad2a0896be18ce139e1c23ecd9fdd3663eeb68afa54bb3c35ca3c60c7d5a8a9ba6e7f9b7589352571c152a5563367239e167fc8053df'
+	'c260885a1280c72eb9e6caf459ed4f7cf677b096be87a61c7f2565ca54e97906746422b7a6dc55be548bc689213aea984a99c19ee91084914488c3faf1b68b90'
 	'b8c88f97d2c8bd291ef40a65bea30aa0dab0c5c8522d5f9a09ee7f06b866344614573f2e1cc39f49f83e9db38eeabc4034dfe3e65b6f37fbf4f758825e6d9c83'
 	'f806a7ec5419128269edb2c9e843c0d7303c78678bf4c90a734a672659f315e1f0c4232d0027cf93e9152f22cb23d0fc600cf994b45341aa1a2f8b569ece0e0c'
 	'40d8604d78460ca4e0a1f66470e40906e92cc4979dc2e409ea9f375daa3f4adf0e4b4001bda2eb407eca18ba4751d03570c244575039a134001cdffad8fe24f0'
@@ -77,7 +76,7 @@ b2sums=(
 )
 
 prepare() {
-	cd -- "${_pipname}-${pkgver}" || return 1
+	cd -- "${_pkgname}-${pkgver}" || return 1
 	patch -Np1 -i "${srcdir}/pyproject_toml_dep.patch"
 	patch -Np1 -i "${srcdir}/system_deps.patch"
 	patch -Np1 -i "${srcdir}/skip_uninstalled_apps.patch"
@@ -94,7 +93,7 @@ build() {
 		return 1
 	fi
 
-	cd -- "${_pipname}-${pkgver}" || return 1
+	cd -- "${_pkgname}-${pkgver}" || return 1
 	CFLAGS="${CFLAGS} -ffile-prefix-map=${srcdir}=/usr/src/debug/${pkgname}" \
 		CXXFLAGS="${CXXFLAGS} -ffile-prefix-map=${srcdir}=/usr/src/debug/${pkgname}" \
 		USE_SYSTEM_DEPS='ON' \
@@ -105,7 +104,7 @@ build() {
 check() {
 	local _python_version
 	local _checkdir="${srcdir}/${pkgname}-check"
-	local _source="${srcdir}/${_pipname}-${pkgver}"
+	local _source="${srcdir}/${_pkgname}-${pkgver}"
 
 	_python_version=$(python --version)
 	_python_version=${_python_version#Python }
@@ -123,17 +122,17 @@ check() {
 	HF_HUB_OFFLINE=1 \
 		PYTHONPATH="${_checkdir}/usr/lib/python${_python_version}/site-packages:${_source}" \
 		python -m pytest -q --import-mode=importlib --noconftest \
-			"${_pipname}-${pkgver}/tests/test_unit_load_failure.py" \
-			"${_pipname}-${pkgver}/tests/test_unit_actual_text.py" \
-			"${_pipname}-${pkgver}/tests/test_unit_cmap_encoding.py" \
-			"${_pipname}-${pkgver}/tests/test_unit_standard_font_widths.py" \
-			"${_pipname}-${pkgver}/tests/test_unit_indexed_images.py" \
-			"${_pipname}-${pkgver}/tests/test_unit_font_fallback.py" \
-			"${_pipname}-${pkgver}/tests/test_unit_unicode_paths.py"
+			"${_pkgname}-${pkgver}/tests/test_unit_load_failure.py" \
+			"${_pkgname}-${pkgver}/tests/test_unit_actual_text.py" \
+			"${_pkgname}-${pkgver}/tests/test_unit_cmap_encoding.py" \
+			"${_pkgname}-${pkgver}/tests/test_unit_standard_font_widths.py" \
+			"${_pkgname}-${pkgver}/tests/test_unit_indexed_images.py" \
+			"${_pkgname}-${pkgver}/tests/test_unit_font_fallback.py" \
+			"${_pkgname}-${pkgver}/tests/test_unit_unicode_paths.py"
 }
 
 package() {
-	cd -- "${_pipname}-${pkgver}" || return 1
+	cd -- "${_pkgname}-${pkgver}" || return 1
 	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
 
 	install -D -m644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
