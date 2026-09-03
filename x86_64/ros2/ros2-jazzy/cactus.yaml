@@ -5,5 +5,16 @@ nvchecker:
 depends:
   - x86_64/ros2/ros2-arch-deps
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  # Rename original package() so we can wrap it.
+  sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
+  # colcon bakes the chroot build tree into the installed .pc/.cmake files.
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  package() {
+      _package
+      grep -rIl "/build/ros2-jazzy" "$pkgdir/opt/ros/jazzy" | xargs -r -n 10 -- sed -i "s|/build/ros2-jazzy/src/build/[^/]*/[^/]*_install|/opt/ros/jazzy|g; s|/build/ros2-jazzy/src/install|/opt/ros/jazzy|g"
+  }
+  CACTUSEOF
 post_build: aur-post-build
