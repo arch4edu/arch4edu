@@ -2,7 +2,7 @@
 
 _pkgname=3dtk
 pkgname="$_pkgname-git"
-pkgver=r2387.799a4e4
+pkgver=r2543.2ec5d28
 pkgrel=1
 pkgdesc='3D Toolkit with algorithms and methods to process 3D point clouds'
 url='https://slam6d.sourceforge.io'
@@ -13,16 +13,17 @@ conflicts=("$_pkgname-svn")
 replaces=("$_pkgname-svn")
 makedepends=(git cmake ninja openmp)
 depends=(findutils
-	 boost 
-	 opencv 
-	 cgal 
-	 eigen 
-	 gmp 
-	 mpfr 
+	 boost
+	 opencv4
+	 cgal
+	 eigen
+	 gmp
+	 mpfr
 	 onetbb
 	 suitesparse
 	 glu
 	 glut
+	 glfw
 	 libzip
 	 python
 	 qt5-base
@@ -54,6 +55,9 @@ prepare() {
 	git config submodule.libs/cctag.url "$srcdir/CCTag"
 	git config submodule.libs/paruco.url "$srcdir/PArUco"
 	git -c protocol.file.allow=always submodule update
+	sed -i "s/ Boost::system//g" 3rdparty/cctag/src/CMakeLists.txt
+	sed -i "s/find_package(Eigen3 \${CCTAG_EIGEN_REQUIRED_VERSION} REQUIRED)/find_package(Eigen3 REQUIRED)/" 3rdparty/cctag/CMakeLists.txt
+	sed -i "s/serialization;system;thread/serialization;thread/" 3rdparty/cctag/CMakeLists.txt
 	
 	# set package binary paths to /opt/3dtk in every included script
 	sed -i 's,\([^/]\)bin/,\1/opt/3dtk/,g' bin/*.sh
@@ -62,7 +66,7 @@ prepare() {
 build() {
 	cd "$srcdir"
 
-	cmake -B build -GNinja -Wno-dev \
+	cmake -B build -GNinja -Wno-dev -DOpenCV_DIR=/usr/lib/cmake/opencv4 -DCMAKE_CXX_FLAGS="-isystem/usr/include/opencv4 -include cassert" \
 		-DWITH_WXWIDGETS=OFF \
 		-DWITH_COMPACT_OCTREE=ON \
 		-DWITH_OPENMP=ON \
@@ -104,4 +108,3 @@ package() {
 
 	install -Dm 755 "$srcdir/3dtk.sh" "$pkgdir/usr/bin/$_pkgname"
 }
-
