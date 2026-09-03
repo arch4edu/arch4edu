@@ -12,6 +12,7 @@ depends:
 makedepends:
   - x86_64/nanoflann
   - x86_64/ompl
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-ros-pkgs
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
@@ -253,6 +254,7 @@ depends_ros2-humble-nav2-smoother:
 depends_ros2-humble-nav2-system-tests:
   - x86_64/ros2/ros2-humble
   - x86_64/ros2/ros2-humble-navigation2: ros2-humble-navigation2
+  - x86_64/ros2/ros2-humble-gazebo-ros-pkgs: ros2-humble-gazebo-ros-pkgs
 
 depends_ros2-humble-nav2-theta-star-planner:
   - x86_64/ros2/ros2-humble
