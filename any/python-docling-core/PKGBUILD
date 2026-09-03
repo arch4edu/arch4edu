@@ -2,17 +2,15 @@
 # Contributor: Majorx234 <majorx234@gmail.com>
 
 _pkgname='docling-core'
-_pipname="${_pkgname//-/_}"
 pkgname="python-${_pkgname}"
-pkgver='2.92.0'
-pkgrel=2
+pkgver='2.94.1'
+pkgrel=1
 pkgdesc='A python library to define and validate data types in Docling.'
 arch=('any')
 url="https://github.com/docling-project/${_pkgname}"
 license=('MIT')
 depends=(
 	'python>=3.10'
-	'python<4.0'
 	'python-jsonschema>=4.16.0'
 	'python-jsonref>=1.1.0'
 	'python-tabulate>=0.9.0'
@@ -43,20 +41,19 @@ optdepends=(
 	'python-tree-sitter-c>=0.23.4: C code chunking'
 	'python-tree-sitter-javascript>=0.23.1: JavaScript code chunking'
 	'python-tree-sitter-typescript>=0.23.2: TypeScript code chunking'
-	'python-transformers>=5.4.0: Hugging Face tokenization for chunking'
-	'python-huggingface-hub: Hugging Face model downloads for chunking tokenizers'
+	'python-transformers>=4.42.0: Hugging Face tokenization for chunking'
 	'python-tiktoken>=0.9.0: OpenAI tokenization for chunking'
 )
-source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/${_pkgname}/${_pipname}-${pkgver}.tar.gz")
-b2sums=('68a65e88556be66da581ce8a034b77fd863318bf8415bbc8803c7cdc98f69a86c24c4c322bee96967c1363cc9123641d0123381ef2e5b60fa687d68b32fa8e06')
+source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+b2sums=('c1574a6580ef8f1998c6c10156b9313c38a23ba8e833c39f7990c7b10daed4cebd96e1acca7ab928012d993e98acf4b556cea0d5e60535ab74710afa9ee7d20b')
 
 build() {
-	cd -- "${_pipname}-${pkgver}" || return 1
+	cd -- "${_pkgname}-${pkgver}" || return 1
 	python -m build --wheel --no-isolation
 }
 
 check() {
-	cd -- "${_pipname}-${pkgver}" || return 1
+	cd -- "${_pkgname}-${pkgver}" || return 1
 	python -m pytest -q --import-mode=importlib \
 		test/test_base.py \
 		test/test_doc_base.py \
@@ -64,11 +61,16 @@ check() {
 		test/test_regions_to_table.py \
 		test/test_otsl_table_export.py \
 		test/test_deserializer_doclang_source_mapping.py \
-		test/test_utils.py
+		test/test_utils.py \
+		test/test_docling_doc.py::test_save_as_json_encoding_options \
+		test/test_tokens.py \
+		test/test_serialization.py::test_md_heading_in_rich_table_cell_renders_as_plain_text \
+		test/test_serialization.py::test_escape_uri_path \
+		test/test_serialization.py::test_referenced_image_uri_is_encoded
 }
 
 package() {
-	cd -- "${_pipname}-${pkgver}" || return 1
+	cd -- "${_pkgname}-${pkgver}" || return 1
 	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
 	install -D -m644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
