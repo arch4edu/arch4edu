@@ -1,0 +1,79 @@
+# Maintainer: Kino <cybao292261@163.com>
+
+pkgname=ros2-jazzy
+pkgver=2026.06.18
+pkgrel=1
+pkgdesc="A set of software libraries and tools for building robot applications"
+url="https://docs.ros.org/en/jazzy/"
+arch=('x86_64')
+license=('Apache-2.0')
+depends=(
+    'ros2-arch-deps'
+    'qt6-base'
+    'nvidia-cg-toolkit'
+    'assimp'
+    'gmock'
+    'lttng-ust'
+)
+makedepends=('cmake' 'git' 'gcc')
+optdepends=('gz-harmonic: For Gazebo Simulation support')
+provides=('ros2-jazzy-base')
+conflicts=('ros2-jazzy-base')
+source=(
+    "ros2::git+https://github.com/ros2/ros2#tag=release-jazzy-${pkgver//.}"
+)
+sha256sums=('SKIP')
+install=ros2-jazzy.install
+
+prepare() {
+    # Check locale according to
+    # https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#set-locale
+    if ! locale | grep LANG | grep 'UTF-8\|utf8' > /dev/null; then
+        echo 'Your locale must support UTF-8. See ' \
+             'https://wiki.archlinux.org/index.php/locale and ' \
+             'https://docs.ros.org/en/rolling/Installation/Ubuntu-Development-Setup.html#set-locale'
+        exit 1
+    fi
+
+    # Clone the repos
+    mkdir -p $srcdir/ros2/src
+    vcs import $srcdir/ros2/src < $srcdir/ros2/ros2.repos
+
+    cd $srcdir/ros2/src/eProsima/Fast-DDS
+    git submodule update --init thirdparty/asio
+}
+
+build() {
+    # Disable parallel build if RAM is low
+    MIN_PARALLEL_BUILD_RAM_KB=16000000
+    if [[ $(free | grep -Po "Mem:\s+\K\d+") -lt $MIN_PARALLEL_BUILD_RAM_KB && $(grep MemTotal /proc/meminfo | grep -Po "MemTotal:\s+\K\d+") -lt $MIN_PARALLEL_BUILD_RAM_KB ]]; then
+        printf "\nRAM is smaller than 16 GB. Parallel build will be disabled for stability.\n\n"
+        export COLCON_EXTRA_ARGS="${COLCON_EXTRA_ARGS} --executor sequential"
+    fi
+
+    ## For people with the old version of makepkg.conf
+    unset CPPFLAGS
+    ## For people with the new version of makepkg.conf
+    CFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=[23]\s//g" <(echo $CFLAGS))
+    CXXFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=[23]\s//g" <(echo $CXXFLAGS))
+    ## Fix missing cstdiint headers in many packages
+    CXXFLAGS+=" --include=cstdint"
+
+    export CMAKE_POLICY_VERSION_MINIMUM=3.5
+
+    # Build
+    ## To resolve the io_service removal in Asio 1.33.0, build FastRTPS against third-party Asio.
+    colcon build --merge-install --packages-up-to fastrtps --cmake-args " -DTHIRDPARTY_Asio=FORCE"
+    ## Build all packages
+    colcon build --merge-install ${COLCON_EXTRA_ARGS} --cmake-args " -DBUILD_TESTING=OFF -Wno-dev" --packages-ignore lttngpy qt_gui_cpp rqt_gui_cpp
+}
+
+_package() {
+    mkdir -p $pkgdir/opt/ros/jazzy
+    cp -r $srcdir/install/* $pkgdir/opt/ros/jazzy/
+}
+
+package() {
+    _package
+    grep -rIl "/build/ros2-jazzy" "$pkgdir/opt/ros/jazzy" | xargs -r -n 10 -- sed -i "s|/build/ros2-jazzy/src/build/[^/]*/[^/]*_install|/opt/ros/jazzy|g; s|/build/ros2-jazzy/src/install|/opt/ros/jazzy|g"
+}
