@@ -6,10 +6,7 @@ nvchecker:
 depends:
   - x86_64/apriltag
   - x86_64/ann
+  - x86_64/opencv4
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  sed -i '/protocol.file.allow=always submodule update/a\  sed -i "s/serialization;system;thread/serialization;thread/" 3rdparty/cctag/CMakeLists.txt' PKGBUILD
-  sed -i '/protocol.file.allow=always submodule update/a\  sed -i "s/find_package(Eigen3 \\${CCTAG_EIGEN_REQUIRED_VERSION} REQUIRED)/find_package(Eigen3 REQUIRED)/" 3rdparty/cctag/CMakeLists.txt' PKGBUILD
-  sed -i '/protocol.file.allow=always submodule update/a\  sed -i "s/ Boost::system//g" 3rdparty/cctag/src/CMakeLists.txt' PKGBUILD
+pre_build: aur-pre-build
 post_build: aur-post-build
