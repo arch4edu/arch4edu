@@ -1,7 +1,7 @@
 # Maintainer: Hu Butui <hot123tea123@gmail.com>
 
 _pkgname=parameters
-_pkgver=0.29.2
+_pkgver=0.29.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -136,6 +136,7 @@ optdepends=(
   r-svylme
   r-testthat
   r-tidyselect
+  r-tinyplot
   r-tinytable
   r-tmb
   r-truncreg
@@ -146,8 +147,8 @@ optdepends=(
   r-wrs2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fccc1e5c273254ee3f02e8541db211fb')
-b2sums=('aef83801287b553cc58fe054e692385b8ceeb38b712d36f0d8113ce12591df4d8ccceae55117420a4c438a7f2d1bed71741959e4c33cee029951198a2a2bd237')
+md5sums=('0cdabc7dcec017d7feb6d90214cafa56')
+b2sums=('ff099c3228ce402bf17082ff34a4c08b1cc44ccf8427300eae8deb7bb40ae01e911ae7557bc644291746b69e501328b80284607042ec3433da2dcf9a712383e0')
 
 build() {
   mkdir build
