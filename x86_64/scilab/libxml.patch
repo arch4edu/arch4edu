@@ -1,6 +1,6 @@
-diff --color --color -uraBN scilab-2025.1.0/scilab/modules/scicos/src/cpp/XMIResource_load.cpp scilab-2025.1.0-patched/scilab/modules/scicos/src/cpp/XMIResource_load.cpp
---- scilab-2025.1.0/scilab/modules/scicos/src/cpp/XMIResource_load.cpp	2025-05-22 05:05:24.000000000 -0500
-+++ scilab-2025.1.0-patched/scilab/modules/scicos/src/cpp/XMIResource_load.cpp	2025-09-03 14:17:22.855242265 -0500
+diff --color --color -uraBN scilab-2026.1.0/scilab/modules/scicos/src/cpp/XMIResource_load.cpp scilab-2026.1.0-patched/scilab/modules/scicos/src/cpp/XMIResource_load.cpp
+--- scilab-2026.1.0/scilab/modules/scicos/src/cpp/XMIResource_load.cpp	2025-05-22 05:05:24.000000000 -0500
++++ scilab-2026.1.0-patched/scilab/modules/scicos/src/cpp/XMIResource_load.cpp	2025-09-03 14:17:22.855242265 -0500
 @@ -21,13 +21,13 @@
  #include <cstdlib> // for atoi and atof
  #include <cstring> // for strcmp and strchr

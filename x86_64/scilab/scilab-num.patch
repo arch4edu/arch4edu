@@ -1,7 +1,7 @@
-diff --color --color -uraBN scilab-2025.1.0/scilab/modules/scicos/Makefile.in scilab-2025.1.0-patched/scilab/modules/scicos/Makefile.in
---- scilab-2025.1.0/scilab/modules/scicos/Makefile.in	2025-05-22 05:05:24.000000000 -0500
-+++ scilab-2025.1.0-patched/scilab/modules/scicos/Makefile.in	2025-09-03 10:33:36.906413648 -0500
-@@ -930,11 +930,11 @@
+diff --color --color -uraBN scilab-2026.1.0/scilab/modules/scicos/Makefile.in scilab-2026.1.0-patched/scilab/modules/scicos/Makefile.in
+--- scilab-2026.1.0/scilab/modules/scicos/Makefile.in	2025-05-22 05:05:24.000000000 -0500
++++ scilab-2026.1.0-patched/scilab/modules/scicos/Makefile.in	2025-09-03 10:33:36.906413648 -0500
+@@ -930,12 +930,12 @@
  NMEDIT = @NMEDIT@
  OBJDUMP = @OBJDUMP@
  OBJEXT = @OBJEXT@
@@ -9,6 +9,7 @@ diff --color --color -uraBN scilab-2025.1.0/scilab/modules/scicos/Makefile.in sc
 +OCAMLC = ocamlfind @OCAMLC@ -package num
  OCAMLCFLAGS = @OCAMLCFLAGS@
  OCAMLDEP = @OCAMLDEP@
+ OCAMLFIND = @OCAMLFIND@
  OCAMLLEX = @OCAMLLEX@
 -OCAMLOPT = @OCAMLOPT@
 +OCAMLOPT = ocamlfind @OCAMLOPT@ -package num

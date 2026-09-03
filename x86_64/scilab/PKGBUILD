@@ -5,8 +5,8 @@
 # Contributor: Kurnevsky Evgeny <kurnevsky@gmail.com>
 # Contributor: Victor Dmitriyev <mrvvitek@gmail.com>
 pkgname=scilab
-pkgver=2025.1.0
-pkgrel=6
+pkgver=2026.1.0
+pkgrel=1
 pkgdesc="A scientific software package for numerical computations"
 arch=(i686 x86_64)
 url="https://www.${pkgname}.org"
@@ -23,9 +23,9 @@ makedepends=(ant curl gcc-fortran libxml2 ocaml-num ocaml-findlib pcre pkgconf r
 source=(https://gitlab.com/${pkgname}/${pkgname}/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz
   local://${pkgname}-num.patch
   local://libxml.patch) # hdf5-api.patch ${pkgname}-strict-jar.patch
-sha512sums=('964b2e0dccc46eaf32076b620b530216d9e177a243a6a165509667664f64381bd434abb1d1b7e6cef659ab01f444885c08bd53e6cf78ace8cd673e62d1e72dea'
-            '6d2e2548e2d33e830dba4a479787cd3f642afa63439d56cee650c50c49d980af9b50b4090732d9ca536322a6ff4a6763d015344f693d7e1d487e37dfb73d9605'
-            'dc067645fd1712733e9283585107191bb787cec3888109707a9ae146c27dca2be5e14790d84dd778705cad78d3d5def869a69628caf1c40059126f4c62b9dfee')
+sha512sums=('7312b266e844fdcaba31aae3746d158d1d4418ae127c53cdf18f6dcaaf2a10a38bbe901ce92a9cc4d00585ed4e0ba65d193961980926e32040994cf8f1d99551'
+            '0b27faa78880c729289513b30a015d5d2dc89bf84db27b6f834ff9a6000e7844e32bff2f5b7e18dd461ce48a53e01c1b18ce542cb7302556247c36ab0f90bf6d'
+            'f2231e4bb16628117800ff1f082311f24f1bbb473290881f85f291b8f662f6fbd01111478b667170d63522af50557ffa379c8b73e07b0825b83872dc937359a7')
 
 prepare() {
   # Fix path, to avoid the following error:
@@ -33,6 +33,8 @@ prepare() {
   sed -i '693 a \ \ \ \ LD_LIBRARY_PATH=/usr/lib/scilab${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/bin/scilab
   patch -p0 <"${srcdir}"/${pkgname}-num.patch
   patch -p0 <"${srcdir}"/libxml.patch
+  sed -i '/^      integer low,igh$/a\      external split' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/elementary_functions/src/fortran/bdiag.f
+  sed -i 's/std::cout << "s42 = "/std::wcout << L"s42 = "/' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/ast/src/cpp/types/test-types.cpp
   # Linked to: https://codereview.scilab.org/#/c/18089
   # patch <"${srcdir}"/${pkgname}-strict-jar.patch
   # Jakarta
@@ -76,7 +78,7 @@ build() {
     --disable-static-system-lib \
     FFLAGS="-fallow-argument-mismatch" \
     CFLAGS="$CFLAGS -fcommon -std=gnu11" \
-    CXXFLAGS="$CXXFLAGS -fcommon" # -DH5_USE_18_API -Wno-incompatible-pointer-types
+    CXXFLAGS="$CXXFLAGS -fcommon -std=c++20 -fno-char8_t" # -DH5_USE_18_API -Wno-incompatible-pointer-types
   make
   make doc
 }
@@ -90,4 +92,5 @@ package() {
   rm -r "${pkgdir}"/usr/include/sundials
   rm -r "${pkgdir}"/usr/include/sunmatrix
 }
+depends+=("arrow" "libxslt")
 makedepends+=("rapidjson")
