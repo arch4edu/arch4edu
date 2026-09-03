@@ -1,0 +1,248 @@
+# Maintainer: Angelo Elias Dal Zotto <angelodalzotto97@gmail.com>
+# Navigation2 full batch - all ~36 subpackages for ROS2 Humble
+
+pkgbase=ros2-humble-navigation2
+pkgname=(
+  # Batch1 - Core (7)
+ ros2-humble-nav2-common                  ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-msgs                   ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-util                   ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-voxel-grid             ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-costmap-2d             ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-core                   ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-theta-star-planner     ## already on AUR as a standalone package; commented out to avoid name conflict
+  # Batch2 - Mid-level (6)
+ ros2-humble-nav2-amcl                   ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-behavior-tree          ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-bt-navigator           ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-behaviors              ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-collision-monitor      ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-constrained-smoother   ## already on AUR as a standalone package; commented out to avoid name conflict
+  # Batch3 - DWB nested packages (8)
+ ros2-humble-nav-2d-msgs                 ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav-2d-utils                ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-dwb-msgs                    ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-costmap-queue               ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-dwb-core                    ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-dwb-plugins                 ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-dwb-critics                 ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-dwb-controller         ## already on AUR as a standalone package; commented out to avoid name conflict
+  # Batch4 - Controllers/planners (12)
+ ros2-humble-nav2-controller             ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-lifecycle-manager      ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-map-server             ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-navfn-planner          ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-planner                ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-smoother               ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-regulated-pure-pursuit-controller  ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-rotation-shim-controller           ## already on AUR as a standalone package; commented out to avoid name conflict
+  'ros2-humble-nav2-graceful-controller'
+ ros2-humble-nav2-rviz-plugins           ## already on AUR as a standalone package; commented out to avoid name conflict
+  # Batch5 - Remaining (2)
+ ros2-humble-nav2-simple-commander       ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-velocity-smoother      ## already on AUR as a standalone package; commented out to avoid name conflict
+  # Batch6 - Previously skipped, now buildable (6)
+  'ros2-humble-nav2-route'
+ ros2-humble-nav2-waypoint-follower      ## already on AUR as a standalone package; commented out to avoid name conflict
+ ros2-humble-nav2-smac-planner           ## already on AUR as a standalone package; commented out to avoid name conflict
+  'ros2-humble-nav2-mppi-controller'
+ ros2-humble-nav2-bringup                ## already on AUR as a standalone package; commented out to avoid name conflict
+  'ros2-humble-navigation2'
+  'ros2-humble-nav2-system-tests'
+)
+pkgver=1.1.20
+pkgrel=2
+pkgdesc="ROS 2 Navigation2 stack - full batch (all ~39 packages)"
+arch=('any')
+url="https://github.com/ros-navigation/navigation2"
+license=('Apache-2.0' 'BSD' 'MIT')
+depends=('ros2-humble')
+makedepends=(
+  'cmake' 'ros2-humble-bond_core' 'ros2-humble-smclib' 'boost'
+  'ros2-humble-angles' 'ros2-humble-behaviortree-cpp-v3' 'ceres-solver'
+  'ros2-humble-diagnostic-updater' 'graphicsmagick' 'ros2-humble-cv-bridge'
+  'nanoflann' 'ompl' 'xtensor' 'xsimd' 'xtl' 'nlohmann-json' 'benchmark'
+)
+source=("https://github.com/ros-navigation/navigation2/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('c965b7a36ef48cd7f35f01c1f98883741693d195dae582232d6d0444d2eedab6')
+
+prepare() {
+    # xtensor 0.27 reorganized its headers into subdirectories; remap the
+    # legacy include paths used by nav2_mppi_controller.
+    local _mppi="$srcdir/navigation2-$pkgver/nav2_mppi_controller"
+    find "$_mppi" -type f \( -name '*.hpp' -o -name '*.cpp' \) -exec sed -i \
+        -e 's|<xtensor/xarray\.hpp>|<xtensor/containers/xarray.hpp>|g' \
+        -e 's|<xtensor/xfixed\.hpp>|<xtensor/containers/xfixed.hpp>|g' \
+        -e 's|<xtensor/xtensor\.hpp>|<xtensor/containers/xtensor.hpp>|g' \
+        -e 's|<xtensor/xmath\.hpp>|<xtensor/core/xmath.hpp>|g' \
+        -e 's|<xtensor/xnoalias\.hpp>|<xtensor/core/xnoalias.hpp>|g' \
+        -e 's|<xtensor/xrandom\.hpp>|<xtensor/generators/xrandom.hpp>|g' \
+        -e 's|<xtensor/xio\.hpp>|<xtensor/io/xio.hpp>|g' \
+        -e 's|<xtensor/xsort\.hpp>|<xtensor/misc/xsort.hpp>|g' \
+        -e 's|<xtensor/xnorm\.hpp>|<xtensor/reducers/xnorm.hpp>|g' \
+        -e 's|<xtensor/xmasked_view\.hpp>|<xtensor/views/xmasked_view.hpp>|g' \
+        -e 's|<xtensor/xview\.hpp>|<xtensor/views/xview.hpp>|g' \
+        {} +
+
+    # xtensor 0.27 xmasked_view assignment is incompatible (ambiguous operator=);
+    # rewrite the Ackermann constraint using xt::where (equivalent semantics).
+    python3 - "$_mppi/include/nav2_mppi_controller/motion_models.hpp" <<'PY'
+import sys
+p = sys.argv[1]
+s = open(p).read()
+old = ("    auto view = xt::masked_view(wz, (xt::fabs(vx) / xt::fabs(wz)) < min_turning_r_);\n"
+       "    view = xt::sign(wz) * xt::fabs(vx) / min_turning_r_;")
+new = ("    wz = xt::where(\n"
+       "      (xt::fabs(vx) / xt::fabs(wz)) < min_turning_r_,\n"
+       "      xt::sign(wz) * xt::fabs(vx) / min_turning_r_, wz);")
+if old not in s:
+    sys.exit("ERROR: masked_view pattern not found in motion_models.hpp")
+open(p, "w").write(s.replace(old, new))
+print("Patched motion_models.hpp: masked_view -> xt::where")
+PY
+}
+
+build() {
+    local _src="$srcdir/navigation2-$pkgver"
+    local _staging="$srcdir/_staging"
+    rm -rf "$_staging"
+    mkdir -p "$_staging"
+
+    _build_install_isolated() {
+        msg2 "Building $1 ..."
+        local _subdir="$1"
+        local _extra_prefix="$2"
+        local _extra_cmake_args="$3"
+        cd "$_src/$_subdir"
+        # Use the installed ros2-humble environment
+        source "/opt/ros/humble/setup.bash"
+        # Clear stale CMake variables
+        unset rviz_common_DIR
+        # Build-time search paths: local staging prefixes first, then ros2-humble
+        # Set both AMENT_PREFIX_PATH (for ament) and CMAKE_PREFIX_PATH (for CMake)
+        if [ -n "$_extra_prefix" ]; then
+            export AMENT_PREFIX_PATH="${_extra_prefix}:/opt/ros/humble"
+            export CMAKE_PREFIX_PATH="${_extra_prefix}:/opt/ros/humble"
+        else
+            export AMENT_PREFIX_PATH="/opt/ros/humble"
+            export CMAKE_PREFIX_PATH="/opt/ros/humble"
+        fi
+        export CXXFLAGS="${CXXFLAGS} -Wall -Wextra -Wno-error -Wno-missing-include-dirs -Wno-unused-parameter -Wno-error=maybe-uninitialized -Wno-unused-but-set-variable -include cstdint -I/usr/include/opencv4"
+        export CFLAGS="${CFLAGS} -Wno-error -Wno-unused-but-set-variable"
+        export LDFLAGS="${LDFLAGS} -Wl,-rpath-link,/opt/ros/humble/lib"
+        local _pkg_staging="$_staging/$_subdir"
+        # Check if this is a Python-only package (no CMakeLists.txt but has setup.py)
+        if [ ! -f "CMakeLists.txt" ] && [ -f "setup.py" ]; then
+            msg2 "  -> Python-only package, using setup.py"
+            source "/opt/ros/humble/setup.bash"
+            PYTHONPATH="/opt/ros/humble/lib/python3.11/site-packages:${PYTHONPATH}" \
+                python setup.py install --root="$_pkg_staging" --prefix=/opt/ros/humble --optimize=1
+            return
+        fi
+        local _bdir="build-$_subdir"
+        cmake -B "$_bdir" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/ros/humble -DBUILD_TESTING=OFF $_extra_cmake_args
+        cmake --build "$_bdir" -j2
+        DESTDIR="$_pkg_staging" cmake --install "$_bdir"
+    }
+
+    # Build a search prefix from an explicit list of staged package subdirs,
+    # so each sub-package's cmake sees only its actual nav2-internal deps.
+    _prefix() {
+        local _p="" _d
+        for _d in "$@"; do
+            _p="${_p:+$_p:}$_staging/$_d/opt/ros/humble"
+        done
+        printf '%s' "$_p"
+    }
+
+    # cv_bridge + opencv4 come from -I local packages in the chroot's /opt/ros/humble
+    local _cvbridge="/opt/ros/humble"
+
+    # --- Foundation: no nav2-internal deps ---
+    _build_install_isolated nav2_common ""
+    _build_install_isolated "nav2_dwb_controller/nav_2d_msgs" ""
+
+    # --- msgs / voxel_grid / util ---
+    _build_install_isolated nav2_msgs "$(_prefix nav2_common)"
+    _build_install_isolated nav2_voxel_grid "$(_prefix nav2_common)"
+    _build_install_isolated nav2_util "$(_prefix nav2_common nav2_msgs)"
+    _build_install_isolated "nav2_dwb_controller/nav_2d_utils" "$(_prefix nav2_common nav2_msgs nav2_util nav2_dwb_controller/nav_2d_msgs)"
+
+    # --- costmap_2d / core ---
+    _build_install_isolated nav2_costmap_2d "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid)"
+    _build_install_isolated nav2_core "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d)"
+
+    # --- localization / behavior / lifecycle / map ---
+    _build_install_isolated nav2_amcl "$(_prefix nav2_common nav2_msgs nav2_util)"
+    _build_install_isolated nav2_behavior_tree "$(_prefix nav2_common nav2_msgs nav2_util)"
+    _build_install_isolated nav2_lifecycle_manager "$(_prefix nav2_common nav2_msgs nav2_util)"
+    _build_install_isolated nav2_map_server "$(_prefix nav2_common nav2_msgs nav2_util)"
+    _build_install_isolated nav2_velocity_smoother "$(_prefix nav2_common nav2_msgs nav2_util)"
+    _build_install_isolated nav2_simple_commander ""
+
+    # --- planners / controllers (transitive closure via costmap_2d + core) ---
+    _build_install_isolated nav2_theta_star_planner "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_collision_monitor "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d)"
+    _build_install_isolated nav2_constrained_smoother "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_navfn_planner "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_planner "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_regulated_pure_pursuit_controller "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_route "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_smac_planner "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)"
+    _build_install_isolated nav2_mppi_controller "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core)" "-DCMAKE_CXX_STANDARD=20"
+    _build_install_isolated nav2_waypoint_follower "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core):$_cvbridge"
+    _build_install_isolated nav2_controller "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils)"
+    _build_install_isolated nav2_smoother "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils)"
+    _build_install_isolated nav2_graceful_controller "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils)"
+
+    # --- depend on behavior_tree ---
+    _build_install_isolated nav2_bt_navigator "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_behavior_tree)"
+    _build_install_isolated nav2_behaviors "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_behavior_tree)"
+
+    # --- depend on lifecycle_manager ---
+    _build_install_isolated nav2_rviz_plugins "$(_prefix nav2_common nav2_msgs nav2_util nav2_lifecycle_manager)"
+
+    # --- depend on controller ---
+    _build_install_isolated nav2_rotation_shim_controller "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils nav2_controller)"
+
+    # --- DWB chain ---
+    _build_install_isolated "nav2_dwb_controller/dwb_msgs" "$(_prefix nav2_dwb_controller/nav_2d_msgs)"
+    _build_install_isolated "nav2_dwb_controller/costmap_queue" "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d)"
+    _build_install_isolated "nav2_dwb_controller/dwb_core" "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils nav2_dwb_controller/dwb_msgs)"
+    _build_install_isolated "nav2_dwb_controller/dwb_critics" "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils nav2_dwb_controller/dwb_msgs nav2_dwb_controller/dwb_core nav2_dwb_controller/costmap_queue)"
+    _build_install_isolated "nav2_dwb_controller/dwb_plugins" "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils nav2_dwb_controller/dwb_msgs nav2_dwb_controller/dwb_core)"
+    _build_install_isolated "nav2_dwb_controller/nav2_dwb_controller" "$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils nav2_dwb_controller/dwb_msgs nav2_dwb_controller/dwb_core nav2_dwb_controller/costmap_queue nav2_dwb_controller/dwb_critics nav2_dwb_controller/dwb_plugins)"
+
+    # --- metapackage + bringup ---
+    _build_install_isolated navigation2 ""
+    _build_install_isolated nav2_bringup "$(_prefix navigation2 nav2_common)"
+
+    # --- system tests (needs gazebo_ros_pkgs via /opt/ros/humble from -I, and
+    #     transitively nearly all nav2 packages via the packages it tests) ---
+    local _all_nav2="$(_prefix nav2_common nav2_msgs nav2_util nav2_voxel_grid nav2_costmap_2d nav2_core nav2_theta_star_planner nav2_amcl nav2_behavior_tree nav2_bt_navigator nav2_behaviors nav2_collision_monitor nav2_constrained_smoother nav2_controller nav2_lifecycle_manager nav2_map_server nav2_navfn_planner nav2_planner nav2_smoother nav2_regulated_pure_pursuit_controller nav2_rotation_shim_controller nav2_graceful_controller nav2_rviz_plugins nav2_simple_commander nav2_velocity_smoother nav2_route nav2_smac_planner nav2_mppi_controller nav2_waypoint_follower nav2_dwb_controller/nav_2d_msgs nav2_dwb_controller/nav_2d_utils nav2_dwb_controller/dwb_msgs nav2_dwb_controller/costmap_queue nav2_dwb_controller/dwb_core nav2_dwb_controller/dwb_plugins nav2_dwb_controller/dwb_critics nav2_dwb_controller/nav2_dwb_controller navigation2 nav2_bringup)"
+    _build_install_isolated nav2_system_tests "${_all_nav2}:/opt/ros/humble"
+}
+
+_pkg_copy() {
+    local _subdir="$1"
+    local _staging_pkg="$srcdir/_staging/$_subdir"
+    mkdir -p "$pkgdir/opt/ros/humble"
+    if [ -d "$_staging_pkg/opt/ros/humble" ]; then
+        cp -r "$_staging_pkg/opt/ros/humble/." "$pkgdir/opt/ros/humble/"
+    fi
+}
+
+# Generate package functions automatically
+for pkg in "${pkgname[@]}"; do
+    pkgfunc="package_$pkg"
+    # Extract subdir name from pkgname (e.g., ros2-humble-nav2-common -> nav2_common)
+    _subdir="${pkg#ros2-humble-}"
+    _subdir="$(echo "$_subdir" | sed 's/-/_/g')"
+    # Special cases: nested source directories within nav2_dwb_controller
+    if [[ "$_subdir" == "nav_2d_utils" || "$_subdir" == "nav_2d_msgs" || "$_subdir" == "costmap_queue" || "$_subdir" == "dwb_core" || "$_subdir" == "dwb_critics" || "$_subdir" == "dwb_msgs" || "$_subdir" == "dwb_plugins" ]]; then
+        _subdir="nav2_dwb_controller/$_subdir"
+    elif [[ "$_subdir" == "nav2_dwb_controller" ]]; then
+        _subdir="nav2_dwb_controller/nav2_dwb_controller"
+    fi
+    eval "$pkgfunc() { _pkg_copy $_subdir; }"
+done
