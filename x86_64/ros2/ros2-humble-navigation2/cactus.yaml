@@ -9,6 +9,9 @@ depends:
   - x86_64/ros2/ros2-humble-behaviortree-cpp-v3
   - x86_64/ros2/ros2-humble-diagnostics: ros2-humble-diagnostic-updater
   - x86_64/ros2/ros2-humble-vision-opencv: ros2-humble-cv-bridge
+makedepends:
+  - x86_64/nanoflann
+  - x86_64/ompl
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: |
