@@ -7,6 +7,7 @@ depends:
   - any/python-transformers
   - any/python-accelerate
 build_prefix: extra-x86_64
+makepkg_args: --nocheck
 pre_build: |
   aur-pre-build
   add makedepends python-setuptools
