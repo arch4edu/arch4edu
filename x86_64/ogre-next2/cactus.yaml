@@ -1,0 +1,8 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  replace '2253b5de3ea267f5e126d9204720d6b4f3f312fa32e3b10e16328120a893d64ef52a9d603e04c192c76f203b6b252de97cf77d24d61cebaf46b9dce7079eaab2' 'f0d772bebdac21a4b513f399a5cc1eb64401f00b669f3f872db2f8255e58a5ebf7390e0a850516aff48e6786215a48275df275b7a8c6a4c8928a37a4f0df4b5c'
+post_build: aur-post-build
