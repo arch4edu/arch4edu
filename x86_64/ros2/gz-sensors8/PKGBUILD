@@ -1,0 +1,45 @@
+# Maintainer: oysstu <oysstu at gmail dot com>
+
+pkgname=gz-sensors8
+pkgver=8.2.2
+pkgrel=2
+_pkgmaj=${pkgver%%.*}
+_pkgbase=${pkgname::-${#_pkgmaj}}
+pkgdesc="Provides numerous sensor models designed to generate realistic data from simulation environments."
+arch=('x86_64')
+url="https://github.com/gazebosim/${_pkgbase}"
+license=('Apache-2.0')
+depends=(
+  'gz-common=5'
+  'gz-math=7'
+  'gz-msgs=10'
+  'gz-rendering=8'
+  'gz-transport=13'
+  'protobuf'
+  'sdformat=14'
+  )
+makedepends=(
+  'cmake'
+  'doxygen'
+  'gz-cmake=3'
+  )
+provides=("${_pkgbase}=${_pkgmaj}")
+source=("https://github.com/gazebosim/${_pkgbase}/archive/${pkgname}_${pkgver}.tar.gz")
+sha256sums=('ce84249813e111bc192f341cb04292ea9cdf52fddb274516f387cc775ac783cb')
+
+_build_dir="${_pkgbase}-${pkgname}_${pkgver}/build"
+
+build() {
+  mkdir -p "$srcdir/$_build_dir" && cd $_
+  cmake .. -DCMAKE_BUILD_TYPE='None' \
+           -DCMAKE_INSTALL_PREFIX='/usr' \
+           -DCMAKE_INSTALL_LIBEXECDIR="lib/$pkgname" \
+           -DBUILD_TESTING=OFF \
+           -Wno-dev
+  cmake --build .
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install "$srcdir/$_build_dir"
+}
+depends+=("abseil-cpp" "glibc")
