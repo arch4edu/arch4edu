@@ -1,6 +1,9 @@
 nvchecker:
   - source: aur
     aur:
+group: GitHubActionsUnsafe
+use_cache: true
+makechrootpkg_args: -d /cache:/cache
 makedepends:
   - x86_64/python-retry
   - any/python-timeout-decorator
@@ -18,4 +21,15 @@ pre_build: |
   sed -i '/--toolchain_resolution_debug=/d' PKGBUILD
   # install-core = mongod + mongos only; drops jstestshell (deprecated legacy mongo shell) to fit the 6h build limit
   sed -i 's/install-devcore/install-core/g' PKGBUILD
+  sed -i '/^build() *{/,/^}/ s/^build()/_build()/' PKGBUILD
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  build() {
+      printf '\nbuild --disk_cache=/cache/bazel\n' >> "$srcdir/mongo-r${pkgver}/.bazelrc"
+      _build
+      cd "$srcdir/mongo-r${pkgver}"
+      # The server inherits makepkg's output pipe; stop it so tee sees EOF.
+      bazel shutdown >/dev/null 2>&1 || true
+  }
+  CACTUSEOF
 post_build: aur-post-build
