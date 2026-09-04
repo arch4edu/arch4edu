@@ -1,6 +1,6 @@
 # Maintainer: Coraline Shuryn <coraline.shuryn@gmail.com>
 pkgname=antigravity-cli
-pkgver=1.1.24_6130423206641664
+pkgver=1.1.26_5550154686791680
 pkgrel=1
 pkgdesc="Google's agentic development platform (CLI companion)"
 arch=('x86_64' 'aarch64')
@@ -15,8 +15,8 @@ install=antigravity-cli.install
 
 source=("LICENSE")
 sha256sums=('7bcdb3cf53451b33c75e04f1f0e623e8aa8b7943a72f54f4781a7ad545a7d1ce')
-sha256sums_x86_64=('cff1fb7ed735da72c35658645a4f916cf74f020d4cd30ab95ebe8c2a49a4d569')
-sha256sums_aarch64=('e601bde6dcb9caebf8a83de235a0e10a21192c7f9ca9ed459a120714e7d42399')
+sha256sums_x86_64=('c47c0726266b3513660b7094bceceecbd03d8ae907786aa269c507ceb7e4ee54')
+sha256sums_aarch64=('f595d2f1ae23001afffab9cb9012d054f0e8a02a1e848537f73239ae8d3fbd6d')
 
 source_x86_64=("${pkgname}-${pkgver}-x86_64.tar.gz::https://storage.googleapis.com/antigravity-public/antigravity-cli/${pkgver//_/-}/linux-x64/cli_linux_x64.tar.gz")
 source_aarch64=("${pkgname}-${pkgver}-aarch64.tar.gz::https://storage.googleapis.com/antigravity-public/antigravity-cli/${pkgver//_/-}/linux-arm/cli_linux_arm64.tar.gz")
