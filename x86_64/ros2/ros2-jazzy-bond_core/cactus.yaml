@@ -1,0 +1,26 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-bond:
+  - x86_64/ros2/ros2-jazzy
+depends_ros2-jazzy-smclib:
+  - x86_64/ros2/ros2-jazzy
+depends_ros2-jazzy-bondcpp:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-bond
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-smclib
+depends_ros2-jazzy-bondpy:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-bond
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-smclib
+depends_ros2-jazzy-bond_core:
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-bond
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-bondcpp
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-bondpy
+  - x86_64/ros2/ros2-jazzy-bond_core: ros2-jazzy-smclib
