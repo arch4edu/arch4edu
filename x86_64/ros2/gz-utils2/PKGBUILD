@@ -1,0 +1,36 @@
+# Maintainer: oysstu <oysstu at gmail dot com>
+
+pkgname=gz-utils2
+pkgver=2.2.1
+pkgrel=2
+_pkgmaj=${pkgver%%.*}
+_pkgbase=${pkgname::-${#_pkgmaj}}
+pkgdesc="Classes and functions for robot applications."
+arch=('x86_64')
+url="https://github.com/gazebosim/${_pkgbase}"
+license=('Apache-2.0')
+depends=('cli11')
+makedepends=(
+  'cmake'
+  'gz-cmake=3'
+  'doxygen'
+  )
+provides=("${_pkgbase}=${_pkgmaj}")
+source=("https://github.com/gazebosim/${_pkgbase}/archive/${pkgname}_${pkgver}.tar.gz")
+sha256sums=('1df0ae7ca621ecb7d8f632a41c556cc0f29175f296df355dde042f20fbb75235')
+
+build() {
+  cmake -B build -S "${_pkgbase}-${pkgname}_${pkgver}" \
+           -DCMAKE_BUILD_TYPE='None' \
+           -DCMAKE_INSTALL_PREFIX='/usr' \
+           -DCMAKE_INSTALL_LIBEXECDIR="lib/$pkgname" \
+           -DBUILD_TESTING=OFF \
+           -DGZ_UTILS_VENDOR_CLI11=false \
+           -Wno-dev
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
+depends+=("gcc-libs" "glibc")
