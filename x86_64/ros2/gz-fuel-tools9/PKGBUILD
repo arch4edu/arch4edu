@@ -1,0 +1,49 @@
+# Maintainer: oysstu <oysstu at gmail dot com>
+
+pkgname=gz-fuel-tools9
+pkgver=9.1.1
+pkgrel=2
+_pkgmaj=${pkgver%%.*}
+_pkgbase=${pkgname::-${#_pkgmaj}}
+pkgdesc="A client library and command line tools for interacting with Gazebo Fuel servers. "
+arch=('x86_64')
+url="https://github.com/gazebosim/${_pkgbase}"
+license=('Apache-2.0')
+depends=(
+  'curl'
+  'gz-common=5'
+  'gz-math=7'
+  'gz-msgs=10'
+  'gz-utils=2'
+  'jsoncpp'
+  'libyaml'
+  'libzip'
+  'protobuf'
+  'tinyxml2'
+  )
+makedepends=(
+  'cmake'
+  'doxygen'
+  'gz-cmake=3'
+  )
+optdepends=(
+  'ruby'
+  )
+provides=("${_pkgbase}=${_pkgmaj}")
+source=("https://github.com/gazebosim/${_pkgbase}/archive/${pkgname}_${pkgver}.tar.gz")
+sha256sums=('4993da77bfa128931b16abfba17c87a384c9aa9868c29172b246d4aa9e0ed338')
+
+build() {
+  cmake -B build -S "${_pkgbase}-${pkgname}_${pkgver}" \
+           -DCMAKE_BUILD_TYPE='None' \
+           -DCMAKE_INSTALL_PREFIX='/usr' \
+           -DCMAKE_INSTALL_LIBEXECDIR="lib/$pkgname" \
+           -DBUILD_TESTING=OFF \
+           -Wno-dev
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
+depends+=("abseil-cpp" "gcc-libs" "glibc")
