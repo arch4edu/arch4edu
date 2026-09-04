@@ -1,0 +1,38 @@
+# Maintainer: oysstu <oysstu at gmail dot com>
+
+pkgname=gz-plugin2
+pkgver=2.0.4
+pkgrel=2
+_pkgmaj=${pkgver%%.*}
+_pkgbase=${pkgname::-${#_pkgmaj}}
+pkgdesc="Cross-platform C++ library for dynamically loading plugins."
+arch=('x86_64')
+url="https://github.com/gazebosim/${_pkgbase}"
+license=('Apache-2.0')
+depends=(
+  'glibc'
+  'gz-utils=2'
+  )
+makedepends=(
+  'cmake'
+  'doxygen'
+  'gz-cmake=3'
+  )
+provides=("${_pkgbase}=${_pkgmaj}")
+source=("https://github.com/gazebosim/${_pkgbase}/archive/${pkgname}_${pkgver}.tar.gz")
+sha256sums=('b3d6d120c1379e904f7756d4031c5ae02a0d0ed0007bd5076d88a34c22f3e050')
+
+build() {
+  cmake -B build -S "${_pkgbase}-${pkgname}_${pkgver}" \
+           -DCMAKE_BUILD_TYPE='None' \
+           -DCMAKE_INSTALL_PREFIX='/usr' \
+           -DCMAKE_INSTALL_LIBEXECDIR="lib/$pkgname" \
+           -DBUILD_TESTING=OFF \
+           -Wno-dev
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
+depends+=("ruby" "gcc-libs")
