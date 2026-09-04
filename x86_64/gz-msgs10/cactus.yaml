@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - any/gz-cmake3
+  - x86_64/gz-math7
+  - x86_64/gz-tools2
+  - x86_64/gz-utils2
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  add depends python-protobuf gcc-libs glibc
+  # PR 499 is included in the 10.4.0 tag; applying it again fails.
+  sed -i '/^prepare() *{/,/^}/d' PKGBUILD
+  sed -i "s/^arch=('any')$/arch=('x86_64')/" PKGBUILD
+post_build: aur-post-build
