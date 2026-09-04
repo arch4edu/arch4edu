@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/gz-cmake3
+  - x86_64/ros2/gz-common5
+  - x86_64/ros2/gz-math7
+  - x86_64/ros2/gz-msgs10
+  - x86_64/ros2/gz-plugin2
+  - x86_64/ros2/gz-rendering8
+  - x86_64/ros2/gz-transport13
+  - x86_64/ros2/gz-utils2
+  - x86_64/qt5-charts
+  - x86_64/qt5-location
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  add depends ruby abseil-cpp glibc
+  add makedepends patchelf
+  sed -i "s/^arch=('any')$/arch=('x86_64')/" PKGBUILD
+  sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  package() {
+      _package
+      patchelf --remove-rpath "$pkgdir/usr/lib/gz-gui-8/plugins/libGrid3D.so"
+  }
+  CACTUSEOF
+post_build: aur-post-build
