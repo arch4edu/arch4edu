@@ -2,10 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/gz-cmake3
+  - x86_64/ros2/gz-cmake3
+  - x86_64/ros2/gz-utils2
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add depends gcc-libs glibc
+  add depends python ruby gcc-libs glibc
   sed -i "s/^arch=('any')$/arch=('x86_64')/" PKGBUILD
 post_build: aur-post-build

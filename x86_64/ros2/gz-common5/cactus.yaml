@@ -2,10 +2,10 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - any/gz-cmake3
+  - x86_64/ros2/gz-cmake3
   - x86_64/freeimage
-  - x86_64/gz-math7
-  - x86_64/gz-utils2
+  - x86_64/ros2/gz-math7
+  - x86_64/ros2/gz-utils2
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
