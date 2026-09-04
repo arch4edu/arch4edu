@@ -5,11 +5,11 @@ url='https://github.com/flexible-collision-library/fcl'
 pkgname=fcl
 pkgver=0.7.0
 arch=('i686' 'x86_64')
-pkgrel=2
-license=('BSD')
-makedepends=('cmake' 'octomap')
-depends=('libccd' 'eigen3')
-optdepends=('octomap: collision detection with octrees'
+pkgrel=3
+license=('BSD-3-Clause')
+makedepends=('cmake')
+depends=('libccd' 'eigen' 'octomap')
+optdepends=(
             'tinyxml: support for global penetration depth test'
             'flann: support for fast approximate nearest neighbor searches')
 _dir=fcl-${pkgver}
@@ -17,6 +17,7 @@ source=(https://github.com/flexible-collision-library/fcl/archive/${pkgver}.tar.
 sha256sums=('90409e940b24045987506a6b239424a4222e2daf648c86dd146cbcb692ebdcbc')
 
 build() {
+  export CXXFLAGS+=" -ffile-prefix-map=$srcdir=/usr/src/debug/$pkgname"
   mkdir -p ${srcdir}/build
   cd ${srcdir}/build
 
@@ -28,7 +29,19 @@ build() {
   make
 }
 
-package() {
+_package() {
   cd "${srcdir}/build"
   make DESTDIR="${pkgdir}/" install
+}
+
+prepare() {
+    sed -i 's/-std=c++11/-std=c++14/g' "$srcdir/$_dir/CMakeModules/CompilerSettings.cmake" "$srcdir/$_dir/CMakeLists.txt"
+    while IFS= read -r -d '' header; do
+        grep -qE '#include <(cassert|assert.h)>' "$header" || sed -i '0,/^#include /s//#include <cassert>\n&/' "$header"
+    done < <(grep -rIlZE '(^|[^[:alnum:]_])assert[[:space:]]*\(' "$srcdir/$_dir/include")
+}
+
+package() {
+    _package
+    install -Dm644 "$srcdir/$_dir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
