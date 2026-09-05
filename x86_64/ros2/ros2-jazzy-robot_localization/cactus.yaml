@@ -1,0 +1,11 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-angles
+  - x86_64/ros2/ros2-jazzy-geographic_info: ros2-jazzy-geographic_msgs
+  - x86_64/ros2/ros2-jazzy-diagnostics: ros2-jazzy-diagnostic_updater
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
