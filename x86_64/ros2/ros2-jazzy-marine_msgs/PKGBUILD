@@ -6,7 +6,7 @@ pkgname=(
     'ros2-jazzy-marine_sensor_msgs'
 )
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="ROS 2 message definitions for marine acoustic and sensor data"
 url="https://github.com/apl-ocean-engineering/marine_msgs"
 arch=('x86_64')
