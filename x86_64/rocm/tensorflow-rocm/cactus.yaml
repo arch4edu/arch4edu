@@ -28,8 +28,13 @@ pre_build: |
       cp -a "/usr/lib/python$(get_pyver)/site-packages/grpc" "$srcdir/system-grpcio/"
       printf '%s\n' 'workspace(name = "pypi_grpcio")' > "$srcdir/system-grpcio/WORKSPACE"
       printf '%s\n' 'load("@rules_python//python:defs.bzl", "py_library")' 'package(default_visibility = ["//visibility:public"])' 'py_library(' '    name = "pkg",' '    srcs = glob(["grpc/**/*.py"]),' '    data = glob(["grpc/**/*.so"]),' '    imports = ["."],' ')' > "$srcdir/system-grpcio/BUILD.bazel"
-      printf '\nbuild --override_repository=pypi_grpcio=%s\n' "$srcdir/system-grpcio" >> "$srcdir/tensorflow-rocm/.bazelrc"
-      printf '\nstartup --max_idle_secs=10\n' >> "$srcdir/tensorflow-rocm/.bazelrc"
+      # _prepare copies tensorflow-rocm into per-variant build dirs; write the
+      # override into each of those (build() cd's into them, not tensorflow-rocm).
+      for _d in "$srcdir"/python-tensorflow-*-rocm "$srcdir"/tensorflow-*-rocm; do
+          [ -d "$_d" ] || continue
+          printf '\nbuild --override_repository=pypi_grpcio=%s\n' "$srcdir/system-grpcio" >> "$_d/.bazelrc"
+          printf '\nstartup --max_idle_secs=10\n' >> "$_d/.bazelrc"
+      done
   }
   CACTUSEOF
 post_build: aur-post-build
