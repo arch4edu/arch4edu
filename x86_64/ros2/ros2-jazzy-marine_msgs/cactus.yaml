@@ -1,6 +1,6 @@
 nvchecker:
   - source: aur
-    aur:
+    aur: ros2-jazzy-marine_acoustic_msgs
 depends:
   - x86_64/ros2/ros2-jazzy
 build_prefix: extra-x86_64
