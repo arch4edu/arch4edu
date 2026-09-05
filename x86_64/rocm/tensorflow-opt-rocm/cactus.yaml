@@ -6,7 +6,7 @@ use_cache: true
 makechrootpkg_args: -d /cache:/cache
 build_prefix: extra-x86_64
 pre_build: |
-  aur-pre-build
+  aur-pre-build tensorflow-rocm
   # Build only the AVX-optimized variant (tensorflow-opt-rocm); the plain variant
   # is provided by the tensorflow-rocm package.
   sed -i 's/^_build_no_opt=1$/_build_no_opt=0/' PKGBUILD
