@@ -1,0 +1,29 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-xacro
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-nav2_minimal_tb3_sim:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-xacro
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_bridge
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_image
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_interfaces
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_sim
+depends_ros2-jazzy-nav2_minimal_tb4_description:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-xacro
+  - x86_64/ros2/ros2-jazzy-joint_state_publisher: ros2-jazzy-joint_state_publisher
+depends_ros2-jazzy-nav2_minimal_tb4_sim:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-xacro
+  - x86_64/ros2/ros2-jazzy-nav2_minimal_turtlebot_simulation: ros2-jazzy-nav2_minimal_tb4_description
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_bridge
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_image
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_interfaces
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_sim
