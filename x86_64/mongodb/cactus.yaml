@@ -10,17 +10,6 @@ makedepends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add options "!lto"
-  sed -i 's/--fission=yes/--fission=no/' PKGBUILD
-  sed -i 's#--//bazel/config:debug_symbols=True#--//bazel/config:debug_symbols=False#' PKGBUILD
-  # Avoid generating and compressing per-TU debug info even though final debug
-  # symbols are disabled; this is the main compile-time memory/time reduction.
-  sed -i 's#--//bazel/config:dbg_level=2#--//bazel/config:dbg_level=0#' PKGBUILD
-  sed -i 's#--//bazel/config:compress_debug_compile=True#--//bazel/config:compress_debug_compile=False#' PKGBUILD
-  sed -i '/--\/\/bazel\/config:dwarf_version=5/d' PKGBUILD
-  sed -i '/--toolchain_resolution_debug=/d' PKGBUILD
-  # install-core = mongod + mongos only; drops jstestshell (deprecated legacy mongo shell) to fit the 6h build limit
-  sed -i 's/install-devcore/install-core/g' PKGBUILD
   sed -i '/^build() *{/,/^}/ s/^build()/_build()/' PKGBUILD
   cat >> PKGBUILD <<'CACTUSEOF'
 
