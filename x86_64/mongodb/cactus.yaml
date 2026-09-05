@@ -10,6 +10,9 @@ makedepends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
+  sed -i 's/--fission=yes/--fission=no/' PKGBUILD
+  sed -i 's#--//bazel/config:dbg_level=2#--//bazel/config:dbg_level=0#' PKGBUILD
+  sed -i 's#--//bazel/config:debug_symbols=True#--//bazel/config:debug_symbols=False#' PKGBUILD
   sed -i '/^build() *{/,/^}/ s/^build()/_build()/' PKGBUILD
   cat >> PKGBUILD <<'CACTUSEOF'
 
