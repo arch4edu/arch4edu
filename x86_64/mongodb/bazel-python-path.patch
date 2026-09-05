@@ -1,0 +1,12 @@
+diff --git a/tools/bazel b/tools/bazel
+index 44bafbfb..3e6acdab 100755
+--- a/tools/bazel
++++ b/tools/bazel
+@@ -219,6 +219,7 @@ else
+   fi
+ fi
+ 
++python="/usr/bin/python"
+ # if no python use bazel to install one
+ if [[ "$python" = "" ]] || [ ! -f $python ]; then
+   >&2 echo "python prereq missing, using bazel to install python..."

@@ -1,0 +1,8 @@
+diff --git a/.bazelversion b/.bazelversion
+--- a/.bazelversion
++++ b/.bazelversion
+@@ -1 +1 @@
+-7.5.0-mongo_06d753863d
+\ No newline at end of file
++7.x
+\ No newline at end of file

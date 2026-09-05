@@ -1,0 +1,31 @@
+diff --git a/bazel/wrapper_hook/install_modules.py b/bazel/wrapper_hook/install_modules.py
+index 34d23b75..f0986956 100644
+--- a/bazel/wrapper_hook/install_modules.py
++++ b/bazel/wrapper_hook/install_modules.py
+@@ -112,17 +112,17 @@ def install_modules(bazel, args):
+             f.write(current_hash)
+ 
+     deps = ["retry", "gitpython", "requests", "timeout-decorator", "boto3", "pyyaml", "pymongo"]
+-    deps_installed = []
+-    deps_needed = search_for_modules(
+-        deps, deps_installed, lockfile_changed=old_hash != current_hash
+-    )
++    deps_installed = ["retry", "gitpython", "requests", "timeout-decorator", "boto3", "pyyaml", "pymongo"]
++    # deps_needed = search_for_modules(
++    #     deps, deps_installed, lockfile_changed=old_hash != current_hash
++    # )
+ 
+-    if deps_needed:
+-        need_to_install = True
++    # if deps_needed:
++    #     need_to_install = True
+ 
+-    if old_hash != current_hash:
+-        need_to_install = True
+-        deps_needed = deps
++    # if old_hash != current_hash:
++    #     need_to_install = True
++    #     deps_needed = deps
+ 
+     if need_to_install:
+         cmd = [
