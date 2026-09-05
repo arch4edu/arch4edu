@@ -1,0 +1,36 @@
+nvchecker:
+  - source: aur
+    aur: tensorflow-rocm
+group: GitHubActionsUnsafe
+use_cache: true
+makechrootpkg_args: -d /cache:/cache
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # Build only the AVX-optimized variant (tensorflow-opt-rocm); the plain variant
+  # is provided by the tensorflow-rocm package.
+  sed -i 's/^_build_no_opt=1$/_build_no_opt=0/' PKGBUILD
+  # clang20 requires the matching lld20.
+  sed -i "s/'clang20' 'lld'/'clang20' 'lld20'/" PKGBUILD
+  # Use Arch's python-grpcio (build + runtime) instead of building the pinned grpcio 1.71.0
+  # sdist, which has no CPython 3.14 wheel and fails the 600s Bazel fetch.
+  add makedepends python-grpcio
+  sed -i 's/python-protobuf absl-py$/python-protobuf absl-py python-grpcio/' PKGBUILD
+  # boringssl needs this warning suppressed under clang20; persist the Bazel cache in /cache.
+  sed -i 's#--copt=-Wno-c23-extensions"#--copt=-Wno-c23-extensions --copt=-Wno-incompatible-pointer-types-discards-qualifiers --disk_cache=/cache/bazel-disk-cache"#' PKGBUILD
+  # Override the grpcio repo with the system module and stop the Bazel daemon promptly so
+  # makepkg's output pipe closes (otherwise makepkg blocks until the 3h idle timeout).
+  sed -i '/^prepare() *{/,/^}/ s/^prepare()/_prepare()/' PKGBUILD
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  prepare() {
+      _prepare
+      mkdir -p "$srcdir/system-grpcio"
+      cp -a "/usr/lib/python$(get_pyver)/site-packages/grpc" "$srcdir/system-grpcio/"
+      printf '%s\n' 'workspace(name = "pypi_grpcio")' > "$srcdir/system-grpcio/WORKSPACE"
+      printf '%s\n' 'load("@rules_python//python:defs.bzl", "py_library")' 'package(default_visibility = ["//visibility:public"])' 'py_library(' '    name = "pkg",' '    srcs = glob(["grpc/**/*.py"]),' '    data = glob(["grpc/**/*.so"]),' '    imports = ["."],' ')' > "$srcdir/system-grpcio/BUILD.bazel"
+      printf '\nbuild --override_repository=pypi_grpcio=%s\n' "$srcdir/system-grpcio" >> "$srcdir/tensorflow-rocm/.bazelrc"
+      printf '\nstartup --max_idle_secs=10\n' >> "$srcdir/tensorflow-rocm/.bazelrc"
+  }
+  CACTUSEOF
+post_build: aur-post-build
