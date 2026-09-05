@@ -3,6 +3,8 @@ nvchecker:
     aur:
 depends:
   - x86_64/ros2/ros2-jazzy
+makedepends:
+  - x86_64/ros2/ros2-jazzy-angles
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build

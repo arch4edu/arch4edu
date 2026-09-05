@@ -1,6 +1,6 @@
 nvchecker:
   - source: aur
-    aur:
+    aur: ros2-jazzy-nav2_minimal_tb3_sim
 depends:
   - x86_64/ros2/ros2-jazzy
   - x86_64/ros2/ros2-jazzy-xacro
