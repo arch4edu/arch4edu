@@ -1,0 +1,70 @@
+# Maintainer: AutoUpdateBot <auto-update-bot@arch4edu.org>
+
+pkgbase=ros2-jazzy-marine_msgs
+pkgname=(
+    'ros2-jazzy-marine_acoustic_msgs'
+    'ros2-jazzy-marine_sensor_msgs'
+)
+pkgver=2.1.0
+pkgrel=1
+pkgdesc="ROS 2 message definitions for marine acoustic and sensor data"
+url="https://github.com/apl-ocean-engineering/marine_msgs"
+arch=('x86_64')
+license=('BSD-3-Clause')
+depends=('ros2-jazzy')
+makedepends=('cmake')
+source=("$pkgbase-$pkgver.tar.gz::https://github.com/apl-ocean-engineering/marine_msgs/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('67a4aab02f4ddee68b370c0bd819c57f3eaab3dc9f7997d3ca4e139fc55ac4f5')
+
+_srcname="marine_msgs-$pkgver"
+
+_build_cmake() {
+    local _sub="$1"
+    shift
+
+    source /opt/ros/jazzy/setup.bash
+
+    local _prefix='' _dep
+    for _dep in "$@"; do
+        _prefix+="$srcdir/_staging/$_dep/opt/ros/jazzy:"
+    done
+
+    CMAKE_PREFIX_PATH="${_prefix}${CMAKE_PREFIX_PATH}" \
+        cmake -B "$srcdir/build-$_sub" -S "$srcdir/$_srcname/$_sub" \
+            -DCMAKE_BUILD_TYPE='None' \
+            -DCMAKE_INSTALL_PREFIX='/opt/ros/jazzy' \
+            -DBUILD_TESTING=OFF \
+            -Wno-dev
+    cmake --build "$srcdir/build-$_sub"
+    DESTDIR="$srcdir/_staging/$_sub" cmake --install "$srcdir/build-$_sub"
+}
+
+build() {
+    rm -rf "$srcdir/_staging"
+
+    # rosidl generators embed __FILE__ of generated sources into the shared
+    # libraries; remap the build path so no $srcdir reference is retained.
+    export CFLAGS+=" -ffile-prefix-map=$srcdir=/usr/src/debug/$pkgbase"
+    export CXXFLAGS+=" -ffile-prefix-map=$srcdir=/usr/src/debug/$pkgbase"
+
+    _build_cmake marine_acoustic_msgs
+    _build_cmake marine_sensor_msgs
+}
+
+package_ros2-jazzy-marine_acoustic_msgs() {
+    pkgdesc="ROS 2 message definitions for marine acoustic data (sonar, echosounder)"
+    depends=('ros2-jazzy')
+
+    cp -a "$srcdir/_staging/marine_acoustic_msgs/." "$pkgdir/"
+    install -Dm644 "$srcdir/$_srcname/LICENSE.txt" \
+        "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+package_ros2-jazzy-marine_sensor_msgs() {
+    pkgdesc="ROS 2 message definitions for marine sensor data"
+    depends=('ros2-jazzy')
+
+    cp -a "$srcdir/_staging/marine_sensor_msgs/." "$pkgdir/"
+    install -Dm644 "$srcdir/$_srcname/LICENSE.txt" \
+        "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
