@@ -1,0 +1,21 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-gps_msgs:
+  - x86_64/ros2/ros2-jazzy
+depends_ros2-jazzy-gps_tools:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gps_msgs
+depends_ros2-jazzy-gpsd_client:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gps_msgs
+depends_ros2-jazzy-gps_umd:
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gps_msgs
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gps_tools
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gpsd_client

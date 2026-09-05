@@ -1,0 +1,12 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/opencv4
+  - x86_64/ros2/ros2-jazzy-vision_opencv: ros2-jazzy-cv_bridge
+  - x86_64/ros2/ros2-jazzy-qt_gui_cpp
+  - x86_64/ros2/ros2-jazzy-rqt_gui_cpp
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build

@@ -1,0 +1,55 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-gz-msgs-vendor
+  - x86_64/ros2/ros2-jazzy-gz-transport-vendor
+  - x86_64/ros2/ros2-jazzy-gz-sim-vendor
+  - x86_64/ros2/ros2-jazzy-actuator_msgs
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gps_msgs
+  - x86_64/ros2/ros2-jazzy-marine_msgs: ros2-jazzy-marine_acoustic_msgs
+  - x86_64/ros2/ros2-jazzy-vision_msgs: ros2-jazzy-vision_msgs
+  - x86_64/ros2/ros2-jazzy-simulation_interfaces
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-ros_gz_interfaces:
+  - x86_64/ros2/ros2-jazzy
+depends_ros2-jazzy-ros_gz_bridge:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_interfaces
+  - x86_64/ros2/ros2-jazzy-gz-msgs-vendor
+  - x86_64/ros2/ros2-jazzy-gz-transport-vendor
+  - x86_64/ros2/ros2-jazzy-actuator_msgs
+  - x86_64/ros2/ros2-jazzy-gps_umd: ros2-jazzy-gps_msgs
+  - x86_64/ros2/ros2-jazzy-marine_msgs: ros2-jazzy-marine_acoustic_msgs
+  - x86_64/ros2/ros2-jazzy-vision_msgs: ros2-jazzy-vision_msgs
+depends_ros2-jazzy-ros_gz_image:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_bridge
+  - x86_64/ros2/ros2-jazzy-gz-msgs-vendor
+  - x86_64/ros2/ros2-jazzy-gz-transport-vendor
+depends_ros2-jazzy-ros_gz_sim:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_interfaces
+  - x86_64/ros2/ros2-jazzy-gz-msgs-vendor
+  - x86_64/ros2/ros2-jazzy-gz-transport-vendor
+  - x86_64/ros2/ros2-jazzy-gz-sim-vendor
+  - x86_64/ros2/ros2-jazzy-simulation_interfaces
+depends_ros2-jazzy-ros_gz_sim_demos:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_bridge
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_image
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_sim
+  - x86_64/ros2/ros2-jazzy-image_transport_plugins: ros2-jazzy-image_transport_plugins
+  - x86_64/ros2/ros2-jazzy-rqt_image_view
+  - x86_64/ros2/ros2-jazzy-sdformat_urdf: ros2-jazzy-sdformat_urdf
+  - x86_64/ros2/ros2-jazzy-xacro
+  - x86_64/ros2/ros2-jazzy-marine_msgs: ros2-jazzy-marine_acoustic_msgs
+depends_ros2-jazzy-ros_gz:
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_bridge
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_image
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_sim
+  - x86_64/ros2/ros2-jazzy-ros_gz: ros2-jazzy-ros_gz_sim_demos
