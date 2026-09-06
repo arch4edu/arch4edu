@@ -12,4 +12,14 @@ build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   add makedepends pybind11
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  prepare() {
+      sed -i '/^namespace pinocchio$/i\
+  namespace pinocchio::graph {\
+    inline bool operator==(const Geometry & lhs, const Geometry & rhs) { return &lhs == &rhs; }\
+  }\
+  ' "$srcdir/$pkgbase-$pkgver/bindings/python/parsers/graph/expose-geometries.cpp"
+  }
+  CACTUSEOF
 post_build: aur-post-build
