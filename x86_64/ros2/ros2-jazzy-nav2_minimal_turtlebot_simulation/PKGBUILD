@@ -7,7 +7,7 @@ pkgname=(
     'ros2-jazzy-nav2_minimal_tb4_sim'
 )
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Minimal TurtleBot simulation assets for Nav2 on ROS 2 Jazzy"
 url="https://github.com/ros-navigation/nav2_minimal_turtlebot_simulation"
 arch=('any')
