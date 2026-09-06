@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=RcppRoll
-_pkgver=0.3.2
+_pkgver=0.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -12,7 +12,7 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
-  r-rcpp
+  r
 )
 checkdepends=(
   r-testthat
@@ -23,8 +23,8 @@ optdepends=(
   r-zoo
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a37571a0ce3b82fde1512f6c3d27e75b')
-b2sums=('2079ded7a2247812a26b8e6198e156eece551c3373cd5da9f9ba7b1de4885b534625dfdcf1c314a1b0cb1f8f135e7312c8555d42d09413b020fe04e42eb3ff9a')
+md5sums=('e4a8163da6cbbee15e2bc17d970cb9d8')
+b2sums=('3de99f0a86792ac47d8dfbb4e73d869c82d396a407b4289eae15de584b7ddfa3773213d44da7ac395e008da3cdee11ac8db82ae0d683f7ef2573e251b4fe04b9')
 
 build() {
   mkdir build
