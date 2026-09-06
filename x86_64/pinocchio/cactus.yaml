@@ -1,0 +1,13 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/coal
+  - x86_64/eigenpy
+  - x86_64/urdfdom
+  - x86_64/casadi
+makedepends:
+  - any/jrl-cmakemodules
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
