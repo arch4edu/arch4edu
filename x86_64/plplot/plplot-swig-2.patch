@@ -1,0 +1,63 @@
+diff --git a/bindings/python/plplotc.i b/bindings/python/plplotc.i
+index 9ffdcc57c..4027d22e8 100644
+--- a/bindings/python/plplotc.i
++++ b/bindings/python/plplotc.i
+@@ -750,7 +750,7 @@ typedef PLINT          PLBOOL;
+     $1 = buff;
+ }
+ %typemap( argout ) char *OUTPUT {
+-    PyObject *o = PyString_FromString( $1 );
++    PyObject *o = PyUnicode_FromString( $1 );
+     $result = SWIG_AppendOutput( $result, o );
+ }
+ 
+@@ -1137,12 +1137,6 @@ typedef void ( *label_func )( PLINT, PLFLT, char *, PLINT, PLPointer );
+                 fprintf( stderr, "label callback failed with 3 arguments\n" );
+                 PyErr_SetString( PyExc_RuntimeError, "label callback must take 3 arguments." );
+             }
+-            else if ( PyString_Check( result ) )
+-            {
+-                // should I test the type here?
+-                pystring = PyString_AsString( result );
+-                strncpy( string, pystring, len );
+-            }
+             else if ( PyUnicode_Check( result ) )
+             {
+                 // unicode_string is never freed? memory leak here?
+@@ -1258,10 +1252,6 @@ typedef void ( *label_func )( PLINT, PLFLT, char *, PLINT, PLPointer );
+                 PyObject *uni_str = PyUnicode_AsEncodedString( rep, "utf-8", "Error ~" );
+                 str = PyBytes_AS_STRING( uni_str );
+             }
+-            else
+-            {
+-                str = PyString_AsString( rep );
+-            }
+             if ( strstr( str, "function pltr0" ) != 0 )
+             {
+                 result      = pltr0;
+@@ -1581,11 +1571,7 @@ typedef void ( *label_func )( PLINT, PLFLT, char *, PLINT, PLPointer );
+     {
+         $1[i] = NULL;
+         elt   = PySequence_Fast_GET_ITEM( $input, i );
+-        if ( PyString_Check( elt ) )
+-        {
+-            $1[i] = PyString_AsString( elt );
+-        }
+-        else if ( PyUnicode_Check( elt ) )
++        if ( PyUnicode_Check( elt ) )
+         {
+             unicode_string = PyUnicode_AsEncodedString( elt, "utf-8", "Error ~" );
+             $1[i]          = PyBytes_AS_STRING( unicode_string );
+@@ -1620,11 +1606,7 @@ typedef void ( *label_func )( PLINT, PLFLT, char *, PLINT, PLPointer );
+     for ( i = 0; i < tmp; i++ )
+     {
+         PyObject *s = PyList_GetItem( $input, i );
+-        if ( PyString_Check( s ) )
+-        {
+-            $2[i] = PyString_AsString( s );
+-        }
+-        else if ( PyUnicode_Check( s ) )
++        if ( PyUnicode_Check( s ) )
+         {
+             // unicode_string is never freed? memory leak here?
+             unicode_string = PyUnicode_AsEncodedString( s, "utf-8", "Error ~" );

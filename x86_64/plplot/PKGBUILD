@@ -5,7 +5,7 @@
 # Contributor: Eric Belanger <eric@archlinux.org>
 pkgname=plplot
 pkgver=5.15.0
-pkgrel=14
+pkgrel=15
 pkgdesc="A cross-platform software package for creating scientific plots"
 arch=("i686" "x86_64")
 url="http://plplot.sourceforge.net/"
@@ -16,13 +16,13 @@ license=(
 )
 depends=(
     "cairo"
-    "gcc-libs"
     "glib2"
     "glibc"
     "java-runtime"
+    "libgcc"
+    "libstdc++"
     "libtool"
     "libx11"
-    "lua52"
     "lua53"
     "pango"
     "python"
@@ -31,7 +31,6 @@ depends=(
     "qhull"
     "shapelib"
     "tcl"
-    "tk"
     "wxwidgets-common"
     "wxwidgets-gtk3"
 )
@@ -50,13 +49,15 @@ source=(
     "plplot-numpy-init.patch"
     "plplot-signal.patch"
     "plplot-swig.patch"
+    "plplot-swig-2.patch"
 )
 sha512sums=(
     "54533245569b724a7ef90392cc6e9ae65873e6cbab923df0f841c8b43def5e4307690894c7681802209bd3c8df97f54285310a706428f79b3340cce3207087c8"
     "f0ceba3f20f4dbccaf35a915e5b90718a61474f5e39dc8af69e735a77a2f2d6925fbb8e67c98a0db63a58f34ceac429550f89ae590ded31afa9cf353e1c486b6"
-    "872c53224de488a913ae80f7610b9541aec5a1c1c9f720b9512974938b7969a3e03eab89fae33456cb88e322026258f59ebe8c1bd52a4bcf69682661e95aecaf"
+    "a3661d3d88ab92ddcbbf827c32ec7c7c68ed91e42f1829bef2d32f026932098f3a6e2a22b332a3c52685c8eff6c6f9df84c5af709df7090fc546618de7a46154"
     "39027a3980433728e660bf7eb26797fc3c0cb48873c1e387aa0f3475787b9fa163b573de13211fca047c5e0d72ed3e9a02b3895d50f6db24e5f93d70111bd2b1"
-    "d5be4e4a32481f27ef5c867435ae59297550b15f6db158f96bf97d948a59e041b87a29fed8e18386debaddc9f2a5648c0cef861a1be5f754a31ae60d657ee3d8"
+    "bc44cbaa6a5764bf347aa485430b3745fa614d1108ce1a42dbcd95ee46509f68a2240153a64786fa1f76c1fbf1464f17be0c95072c5d24b6128ccc292cd0d3ab"
+    "9afc015383c413a34b967bb1829f73132eb3361e1c77e5b07c36096d07dda64fe30dc15eb90383b0e4e8297414fb1e2cd7e5de190f00f117192aa246891aa646"
 )
 
 prepare() {
@@ -65,26 +66,44 @@ prepare() {
     patch -N -p 1 -i "${srcdir}/plplot-numpy-init.patch"
     patch -N -p 1 -i "${srcdir}/plplot-signal.patch"
     patch -N -p 1 -i "${srcdir}/plplot-swig.patch"
+    patch -N -p 1 -i "${srcdir}/plplot-swig-2.patch"
 }
 
 build() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-    if [ -d build ]; then
-        rm -r build
-    fi
-    mkdir build
-    cd build
-    cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ada=OFF -DENABLE_c=ON -DENABLE_cxx=ON -DENABLE_d=OFF \
-        -DENABLE_fortran=ON -DENABLE_itcl=OFF -DENABLE_itk=OFF -DENABLE_java=ON -DENABLE_lua=ON \
-        -DENABLE_ocaml=OFF -DENABLE_octave=OFF -DENABLE_pyqt5=OFF -DENABLE_python=ON -DENABLE_qt=OFF \
-        -DENABLE_tcl=ON -DENABLE_tk=OFF -DENABLE_wxwidgets=ON -DPLD_wxwidgets=ON  ..
-
-    make
+  # make sure we have a clean build environment
+  if [ -d build ]; then
+  rm -rf build
+  fi
+  local cmake_options=(
+    -B build
+    -S "$pkgname-$pkgver"
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=None
+    -D CMAKE_INSTALL_PREFIX=/usr
+    -D ENABLE_ada=OFF
+    -D ENABLE_c=ON
+    -D ENABLE_cxx=ON
+    -D ENABLE_d=OFF
+    -D ENABLE_fortran=ON
+    -D ENABLE_itcl=OFF
+    -D ENABLE_itk=OFF
+    -D ENABLE_java=ON
+    -D ENABLE_lua=ON
+    -D ENABLE_ocaml=OFF
+    -D ENABLE_octave=OFF
+    -D ENABLE_pyqt5=OFF
+    -D ENABLE_python=ON
+    -D ENABLE_qt=OFF
+    -D ENABLE_tcl=ON
+    -D ENABLE_tk=OFF
+    -D ENABLE_wxwidgets=ON
+    -D PLD_wxwidgets=ON
+  )
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}/build"
-    make DESTDIR="${pkgdir}" install
-    install -D -m644 ../Copyright "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  DESTDIR="$pkgdir" cmake --install build
+  install -D -m644 "$pkgname-$pkgver/Copyright" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
-depends+=("wxwidgets-gtk3")

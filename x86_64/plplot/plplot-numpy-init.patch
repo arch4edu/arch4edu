@@ -1,8 +1,8 @@
 diff --git a/bindings/python/plplotc.i b/bindings/python/plplotc.i
-index 050ef54e1..b7fc4ca88 100644
+index 7bc10335d..44a840d61 100644
 --- a/bindings/python/plplotc.i
 +++ b/bindings/python/plplotc.i
-@@ -84,7 +84,7 @@ typedef PLINT          PLBOOL;
+@@ -80,7 +80,7 @@ typedef PLINT          PLBOOL;
  // We have to get import_array called in our extension before we can use Numeric
  %init
  %{
