@@ -1,0 +1,41 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+makedepends:
+  - x86_64/ros2/ros2-jazzy-rsl
+  - x86_64/ros2/ros2-jazzy-cpp_polyfills: ros2-jazzy-tcb_span
+  - x86_64/ros2/ros2-jazzy-cpp_polyfills: ros2-jazzy-tl_expected
+  - x86_64/ros2/ros2-jazzy-ros2_control_cmake
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-parameter_traits:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-rsl
+  - x86_64/ros2/ros2-jazzy-cpp_polyfills: ros2-jazzy-tcb_span
+  - x86_64/ros2/ros2-jazzy-cpp_polyfills: ros2-jazzy-tl_expected
+depends_ros2-jazzy-generate_parameter_library:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library_py
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-parameter_traits
+  - x86_64/ros2/ros2-jazzy-rsl
+  - x86_64/ros2/ros2-jazzy-cpp_polyfills: ros2-jazzy-tcb_span
+  - x86_64/ros2/ros2-jazzy-cpp_polyfills: ros2-jazzy-tl_expected
+depends_ros2-jazzy-generate_parameter_library_example:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control_cmake
+depends_ros2-jazzy-generate_parameter_module_example:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library_py
+depends_ros2-jazzy-cmake_generate_parameter_module_example:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+depends_ros2-jazzy-generate_parameter_library_example_external:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library_example
+  - x86_64/ros2/ros2-jazzy-ros2_control_cmake
