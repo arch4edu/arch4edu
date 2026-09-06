@@ -1,0 +1,45 @@
+# Maintainer: Guilhem Saurel <saurel@laas.fr>
+
+_org='stack-of-tasks'
+_pkgname=eigenpy
+pkgname=("$_pkgname" "$_pkgname-docs")
+pkgver=3.13.0
+pkgrel=1
+pkgdesc="Bindings between numpy and eigen using boost::python"
+arch=('i686' 'x86_64')
+url="https://github.com/$_org/$_pkgname"
+license=('BSD-2-Clause')
+depends=('boost-libs' 'gcc-libs' 'glibc' 'python')
+optdepends=('doxygen')
+makedepends=('cmake' 'eigen' 'jrl-cmakemodules' 'boost' 'python-numpy' 'python-scipy')
+source=("${_pkgname}-${pkgver}.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('23a965268f896f45e4346eb7981c6d4af7dac16e4e08414a7e9a94b82164821f')
+
+build() {
+    cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -Wno-dev
+    # This require a lot of ram to build.
+    cmake --build "build-$pkgver" -j 1
+}
+
+check() {
+    cmake --build "build-$pkgver" -t test
+}
+
+package_eigenpy() {
+    DESTDIR="$pkgdir/" cmake --build "build-$pkgver" -t install
+    rm -rf "$pkgdir/usr/share/doc"
+    install -Dm644 "$pkgbase-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+package_eigenpy-docs() {
+    DESTDIR="$pkgdir/" cmake --build "build-$pkgver" -t install
+    rm -rf $pkgdir/usr/{lib,include,bin,share/{"$_pkgname",ament,ament_index}}
+    install -Dm644 "$pkgbase-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+prepare() {
+    sed -i '/add_subdirectory(unittest)/d' "$srcdir/$pkgbase-$pkgver/CMakeLists.txt"
+}
