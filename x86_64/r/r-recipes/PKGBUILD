@@ -4,10 +4,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=recipes
-_pkgver=1.3.3
+_pkgver=1.4.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Preprocessing and Feature Engineering Steps for Modeling"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -64,6 +64,7 @@ optdepends=(
   r-mixomics
   r-modeldata
   r-parsnip
+  r-quarto
   r-rann
   r-rcpproll
   r-rmarkdown
@@ -75,8 +76,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4f4b2cb7b29f330ae61b1b3e8caee36c')
-b2sums=('0a1b50f84a99d7f6bd3b4032d211c99b3aaeedd5293808a3a38ae46ab8f39b81f2b7b56dfa2f1df2a464ed96cf3c646bcbf70e0295945cf74483b7c211ac5c96')
+md5sums=('994100424cbf6287738c50c04ed91757')
+b2sums=('2f899cc69b80d455ce50cb7e95c61e7f2c6b248f4880ca1331ea6e4b79c058f22bfd8cbca127f2d83c56f04523a6f9fbc1065bd60fbd508b49e1f0c43ddfdb0e')
 
 build() {
   mkdir build
