@@ -1,0 +1,24 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+makedepends:
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control_cmake
+  - x86_64/pinocchio
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-kinematics_interface:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+depends_ros2-jazzy-kinematics_interface_kdl:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-kinematics_interface: ros2-jazzy-kinematics_interface
+depends_ros2-jazzy-kinematics_interface_pinocchio:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-kinematics_interface: ros2-jazzy-kinematics_interface
+  - x86_64/pinocchio

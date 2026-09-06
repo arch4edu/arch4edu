@@ -1,0 +1,306 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/ros2/ros2-jazzy
+makedepends:
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control_cmake
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_manager_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-angles
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-kinematics_interface: ros2-jazzy-kinematics_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+  - x86_64/ros2/ros2-jazzy-filters
+  - x86_64/ros2/ros2-jazzy-rsl
+  - x86_64/ros2/ros2-jazzy-ackermann_msgs
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
+
+depends_ros2-jazzy-ackermann_steering_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-steering_controllers_library
+
+depends_ros2-jazzy-admittance_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-angles
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-kinematics_interface: ros2-jazzy-kinematics_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-battery_state_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-bicycle_steering_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-steering_controllers_library
+
+depends_ros2-jazzy-chained_filter_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-filters
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+
+depends_ros2-jazzy-diff_drive_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-effort_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-forward_command_controller
+
+depends_ros2-jazzy-force_torque_sensor_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-filters
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+
+depends_ros2-jazzy-forward_command_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-gpio_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+
+depends_ros2-jazzy-gps_sensor_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-gripper_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-imu_sensor_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-joint_state_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-joint_trajectory_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-angles
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+  - x86_64/ros2/ros2-jazzy-rsl
+
+depends_ros2-jazzy-magnetometer_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-mecanum_drive_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-motion_primitives_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-omni_wheel_drive_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-parallel_gripper_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-pid_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-angles
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-control_toolbox
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-pose_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-position_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-forward_command_controller
+
+depends_ros2-jazzy-range_sensor_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-ros2_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-ackermann_steering_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-admittance_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-battery_state_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-bicycle_steering_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-chained_filter_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-diff_drive_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-effort_controllers
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-force_torque_sensor_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-forward_command_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-gpio_controllers
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-gps_sensor_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-gripper_controllers
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-imu_sensor_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-joint_state_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-joint_trajectory_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-magnetometer_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-mecanum_drive_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-omni_wheel_drive_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-parallel_gripper_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-pid_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-pose_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-position_controllers
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-range_sensor_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-state_interfaces_broadcaster
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-steering_controllers_library
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-tricycle_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-tricycle_steering_controller
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-velocity_controllers
+
+depends_ros2-jazzy-ros2_controllers_test_nodes:
+  - x86_64/ros2/ros2-jazzy
+
+depends_ros2-jazzy-rqt_joint_trajectory_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_manager_msgs
+
+depends_ros2-jazzy-state_interfaces_broadcaster:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-steering_controllers_library:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-tricycle_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-ackermann_msgs
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-realtime_tools
+
+depends_ros2-jazzy-tricycle_steering_controller:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-generate_parameter_library: ros2-jazzy-generate_parameter_library
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-control_msgs
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-controller_interface
+  - x86_64/ros2/ros2-jazzy-ros2_control: ros2-jazzy-hardware_interface
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-steering_controllers_library
+
+depends_ros2-jazzy-velocity_controllers:
+  - x86_64/ros2/ros2-jazzy
+  - x86_64/ros2/ros2-jazzy-backward_ros
+  - x86_64/ros2/ros2-jazzy-ros2_controllers: ros2-jazzy-forward_command_controller
