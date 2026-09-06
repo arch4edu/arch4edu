@@ -2,8 +2,5 @@ nvchecker:
   - source: aur
     aur:
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  sed 's/cmake /cmake -DENABLE_wxwidgets:BOOL=ON -DPLD_wxwidgets:BOOL=ON /' -i PKGBUILD
-  add depends wxwidgets-gtk3
+pre_build: aur-pre-build
 post_build: aur-post-build
