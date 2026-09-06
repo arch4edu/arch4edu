@@ -7,14 +7,14 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=rmarkdown
-_pkgver=2.31
+_pkgver=2.32
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
 pkgdesc="Dynamic Documents for R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
-license=('GPL-3.0-only')
+license=('MIT')
 depends=(
   pandoc
   r-bslib
@@ -54,8 +54,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8f7a4eef6b62e7f2284550c3134f28c8')
-b2sums=('192039a79fab32789e2d1e0413444cdcbd80622cdf1956c90a61ec5d852d0f8ce5b1075bfdf7383195de47665347ae6ac58b813e36461e8c29356061c0820014')
+md5sums=('01b497e82b287a2269a965119ed59271')
+b2sums=('ee574cdd3c3a1e0643740df56ff1815d630d041ae5b8714486957d5130d5fcd72c9e857245c31c4e558c6b5f7260e602e0d38a90426171d5d938417fdffd8c59')
 
 prepare() {
   # Skip a test that might fail depending on environment
