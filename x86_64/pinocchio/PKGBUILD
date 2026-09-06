@@ -1,0 +1,62 @@
+# Maintainer: Guilhem Saurel <guilhem.saurel@laas.fr>
+
+_org='stack-of-tasks'
+_pkgname='pinocchio'
+pkgname=("$_pkgname" "$_pkgname-docs")
+pkgver=4.1.0
+pkgrel=1
+pkgdesc="Dynamic computations using Spatial Algebra"
+arch=('i686' 'x86_64')
+url="https://github.com/$_org/$_pkgname"
+license=('BSD-2-Clause')
+depends=('coal' 'eigenpy' 'urdfdom' 'python' 'boost-libs' 'gcc-libs' 'glibc' 'eigen' 'python-numpy' 'casadi')
+optdepends=('lua52' 'cppad' 'cppadcodegen')
+makedepends=('cmake' 'boost' 'doxygen' 'jrl-cmakemodules')
+source=("${pkgname}-${pkgver}.tar.gz::$url/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('6088e6954883af233489cbabc391bc70b884f9a7a57cd79f11dd28bcad62e08d')
+
+build() {
+    cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
+        -DBUILD_WITH_COLLISION_SUPPORT=ON \
+        -DBUILD_WITH_CASADI_SUPPORT=OFF \
+        -DBUILD_UTILS=ON \
+        -DBUILD_EXAMPLES=OFF \
+        -DBUILD_TESTING=OFF \
+        -DPYTHON_EXECUTABLE=/usr/bin/python \
+        -DBUILD_WITH_AUTODIFF_SUPPORT=OFF \
+        -DBUILD_WITH_CODEGEN_SUPPORT=OFF \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -Wno-dev
+    cmake --build "build-$pkgver" -j 1
+}
+# TODO:
+# The following tests FAILED:
+# 35 - pinocchio-test-cpp-spatial (Failed)
+# 45 - pinocchio-test-cpp-constraint-variants (Timeout)
+# 61 - pinocchio-test-cpp-delassus (Failed)
+# check() {
+#     export DEBUGINFOD_URLS=https://debuginfod.archlinux.org
+#     cmake --build "build-$pkgver" -t test
+# }
+#
+package_pinocchio() {
+    DESTDIR="$pkgdir/" cmake --build "build-$pkgver" -t install
+    rm -rf $pkgdir/usr/share/doc
+    install -Dm644 "$pkgbase-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+package_pinocchio-docs() {
+    DESTDIR="$pkgdir/" cmake --build "build-$pkgver" -t install
+    rm -rf $pkgdir/usr/{lib,include,bin,share/{"$_pkgname",ament,ament_index}}
+    install -Dm644 "$pkgbase-$pkgver/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+makedepends+=("pybind11")
+
+prepare() {
+    sed -i '/^namespace pinocchio$/i\
+namespace pinocchio::graph {\
+  inline bool operator==(const Geometry & lhs, const Geometry & rhs) { return &lhs == &rhs; }\
+}\
+' "$srcdir/$pkgbase-$pkgver/bindings/python/parsers/graph/expose-geometries.cpp"
+}

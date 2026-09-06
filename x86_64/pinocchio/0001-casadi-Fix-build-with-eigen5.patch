@@ -1,0 +1,137 @@
+From 44dedb07124c8babb2a37d9250aa5f360e1c2dc5 Mon Sep 17 00:00:00 2001
+From: Joris Vaillant <joris.vaillant@inria.fr>
+Date: Mon, 4 May 2026 14:46:36 +0200
+Subject: [PATCH] casadi: Fix build with eigen5
+
+scalar: Add new Eigen::NumTraits methods
+
+mpfr: Add new NumTraits methods
+
+unittest: Fix build issue
+---
+ include/pinocchio/autodiff/casadi.hpp         | 28 +++++++++++++++++++
+ include/pinocchio/autodiff/cppad.hpp          | 12 ++++++++
+ include/pinocchio/src/math/multiprecision.hxx | 12 +++++++-
+ unittest/size-in-bytes.cpp                    |  4 +--
+ 4 files changed, 53 insertions(+), 3 deletions(-)
+
+diff --git a/include/pinocchio/autodiff/casadi.hpp b/include/pinocchio/autodiff/casadi.hpp
+index c95d17a12..e26732d6a 100644
+--- a/include/pinocchio/autodiff/casadi.hpp
++++ b/include/pinocchio/autodiff/casadi.hpp
+@@ -73,6 +73,22 @@ namespace Eigen
+       }
+     };
+   } // namespace internal
++
++#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
++  // The function Eigen::internal::gemv_dense_selector::run defined in
++  // Eigen/src/Core/GeneralProduct.h call at some point Eigen::numext::is_exactly_zero function.
++  // To avoid this issue we specialize this function for casadi.
++  namespace numext
++  {
++    template<>
++    EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC bool
++    is_exactly_zero(const ::casadi::Matrix<::casadi::SXElem> & x)
++    {
++      return x.is_zero();
++    }
++  } // namespace numext
++#endif // if EIGEN_VERSION_AT_LEAST(3, 4, 90)
++
+ } // namespace Eigen
+ 
+ namespace Eigen
+@@ -127,6 +143,18 @@ namespace Eigen
+     {
+       return std::numeric_limits<double>::digits10;
+     }
++
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline int digits()
++    {
++      return NumTraits<double>::digits();
++    }
++
++#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline int max_digits10()
++    {
++      return NumTraits<double>::max_digits10();
++    }
++#endif
+   };
+ } // namespace Eigen
+ 
+diff --git a/include/pinocchio/autodiff/cppad.hpp b/include/pinocchio/autodiff/cppad.hpp
+index 9238ad698..ba04c807d 100644
+--- a/include/pinocchio/autodiff/cppad.hpp
++++ b/include/pinocchio/autodiff/cppad.hpp
+@@ -147,6 +147,18 @@ namespace Eigen
+     {
+       return CppAD::numeric_limits<CppAD::AD<Base>>::digits10;
+     }
++
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline int digits()
++    {
++      return NumTraits<Base>::digits();
++    }
++
++#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline int max_digits10()
++    {
++      return NumTraits<Base>::max_digits10();
++    }
++#endif
+   };
+ } // namespace Eigen
+ 
+diff --git a/include/pinocchio/src/math/multiprecision.hxx b/include/pinocchio/src/math/multiprecision.hxx
+index d8b2f36b7..f64082cbb 100644
+--- a/include/pinocchio/src/math/multiprecision.hxx
++++ b/include/pinocchio/src/math/multiprecision.hxx
+@@ -115,10 +115,20 @@ namespace Eigen
+     }
+ 
+   #if EIGEN_VERSION_AT_LEAST(3, 4, 90)
+-    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline inline int max_digits10()
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline int max_digits10()
+     {
+       return internal::default_max_digits10_impl<Real>::run();
+     }
++
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline Real infinity()
++    {
++      return std::numeric_limits<Real>::infinity();
++    }
++
++    EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR static inline Real quiet_NaN()
++    {
++      return std::numeric_limits<Real>::quiet_NaN();
++    }
+   #endif
+   };
+ 
+diff --git a/unittest/size-in-bytes.cpp b/unittest/size-in-bytes.cpp
+index 0f929478e..b1b5e74c4 100644
+--- a/unittest/size-in-bytes.cpp
++++ b/unittest/size-in-bytes.cpp
+@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(test_std_array)
+ 
+ BOOST_AUTO_TEST_CASE(test_eigen_matrix)
+ {
+-  const Eigen::Matrix3d mat33;
++  const Eigen::Matrix3d mat33{};
+   BOOST_CHECK(internal::sizeInBytes(mat33) == sizeof(mat33));
+ 
+   const Eigen::MatrixXd mat(mat33);
+@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(test_eigen_matrix)
+ 
+ BOOST_AUTO_TEST_CASE(test_eigen_map)
+ {
+-  const Eigen::Matrix3d mat;
++  const Eigen::Matrix3d mat{};
+   const auto mat_map = make_default_map(mat);
+   BOOST_CHECK(internal::sizeInBytes(mat_map) == internal::sizeInBytes(mat));
+ }
+-- 
+2.52.0
+
