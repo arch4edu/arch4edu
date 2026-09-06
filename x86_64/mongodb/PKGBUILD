@@ -14,7 +14,7 @@ pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
 pkgver=8.3.7
-pkgrel=1
+pkgrel=2
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.mongodb.com/"
@@ -96,14 +96,15 @@ _build() {
   # core does not build the mongo shell (jstestshell)
   # bazelisk build install-core
 
-  # Build using the install-core target (includes mongod, mongos, and jstestshell/mongo)
+  # Build using the install-devcore target (includes mongod, mongos, and jstestshell/mongo)
   # Force Bazel to use system toolchain instead of MongoDB's custom toolchain
   # Override MongoDB's .bazelrc that disables native toolchain detection
   # Using some options from --config=opt
-  bazelisk build install-core \
+  bazelisk build install-devcore \
     --verbose_failures \
     --define=MONGO_VERSION=${pkgver} \
     --define=MONGO_DISTMOD=arch \
+    --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type' \
     --action_env=CC="${CC}" \
     --action_env=CXX="${CXX}" \
     --action_env=AR="${AR}" \
@@ -139,7 +140,8 @@ _build() {
     --//bazel/config:linker=lld \
     --compilation_mode=opt \
     --fission=no \
-    --//bazel/config:compress_debug_compile=False \
+    --//bazel/config:dwarf_version=5 \
+    --//bazel/config:compress_debug_compile=True \
     --//bazel/config:opt=on \
     --//bazel/config:dbg=False \
     --//bazel/config:dbg_level=0 \
@@ -152,13 +154,13 @@ package() {
   cd "${srcdir}/mongo-r${pkgver}"
 
   # Install binaries from Bazel install-core output
-  # Built binaries are in bazel-bin/install-core/bin/ (symlinks to real outputs)
-  install -D "bazel-bin/install-core/bin/mongod" "$pkgdir/usr/bin/mongod"
-  install -D "bazel-bin/install-core/bin/mongos" "$pkgdir/usr/bin/mongos"
+  # Built binaries are in bazel-bin/install-devcore/bin/ (symlinks to real outputs)
+  install -D "bazel-bin/install-devcore/bin/mongod" "$pkgdir/usr/bin/mongod"
+  install -D "bazel-bin/install-devcore/bin/mongos" "$pkgdir/usr/bin/mongos"
 
-  # install-core includes the mongo shell (jstestshell)
-  if [[ -f "bazel-bin/install-core/bin/mongo" ]]; then
-    install -D "bazel-bin/install-core/bin/mongo" "$pkgdir/usr/bin/mongo"
+  # install-devcore includes the mongo shell (jstestshell)
+  if [[ -f "bazel-bin/install-devcore/bin/mongo" ]]; then
+    install -D "bazel-bin/install-devcore/bin/mongo" "$pkgdir/usr/bin/mongo"
   fi
 
   # Keep historical Arch conf file name
@@ -179,7 +181,6 @@ package() {
   # Install license
   install -D LICENSE-Community.txt "$pkgdir/usr/share/licenses/mongodb/LICENSE"
 }
-options+=("!lto")
 
 build() {
     printf '\nbuild --disk_cache=/cache/bazel\n' >> "$srcdir/mongo-r${pkgver}/.bazelrc"
