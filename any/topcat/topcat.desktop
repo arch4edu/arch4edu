@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Topcat
+GenericName=Topcat
+Comment=Tool for OPerations on Catalogues And Tables
+Exec=topcat
+Icon=topcat
+Terminal=false
+Type=Application
+Categories=Science;Astronomy;Application
+MimeType=application/x-votable+xml;application/fits;image/fits;
