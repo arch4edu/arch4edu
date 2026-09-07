@@ -1,0 +1,13 @@
+diff --git a/third_party/tf_runtime/workspace.bzl b/third_party/tf_runtime/workspace.bzl
+index 69fc0f81f6f..214b558b56c 100644
+--- a/third_party/tf_runtime/workspace.bzl
++++ b/third_party/tf_runtime/workspace.bzl
+@@ -20,5 +20,7 @@ def repo():
+         },
+         # A patch file can be provided for atomic commits to both TF and TFRT.
+         # The job that bumps the TFRT_COMMIT also resets patch_file to 'None'.
+-        patch_file = None,
++        patch_file = [
++            "//third_party/tf_runtime:forward_decls.patch",
++        ],
+     )

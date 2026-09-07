@@ -1,0 +1,78 @@
+From 00931720105b0c427715ddc4b1bff3f46748970e Mon Sep 17 00:00:00 2001
+From: Peter Hawkins <phawkins@google.com>
+Date: Thu, 20 Nov 2025 17:52:28 -0800
+Subject: [PATCH] Define StructuredTensor.FieldName outside the class.
+
+Fixes a problem where structured_tensor fails to import under Python 3.14 with the error:
+
+```
+  File ".../tensorflow/python/ops/structured/structured_tensor.py", line 54, in <module>
+    class StructuredTensor(extension_type.BatchableExtensionType):
+    ...<1135 lines>...
+          return self._ragged_shape.rank
+  File ".../tensorflow/python/framework/extension_type.py", line 90, in __init__
+    _check_field_annotations(cls)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File ".../tensorflow/python/framework/extension_type.py", line 935, in _check_field_annotations
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The field annotations for StructuredTensor are invalid. Field FieldName is missing a type annotation.
+```
+PiperOrigin-RevId: 834982237
+---
+ .../ops/structured/structured_tensor.py       | 20 ++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/tensorflow/python/ops/structured/structured_tensor.py b/tensorflow/python/ops/structured/structured_tensor.py
+index 6942a755890bc6..0d68e5aa190654 100644
+--- a/tensorflow/python/ops/structured/structured_tensor.py
++++ b/tensorflow/python/ops/structured/structured_tensor.py
+@@ -14,6 +14,8 @@
+ # ==============================================================================
+ """Structured Tensors."""
+ 
++from __future__ import annotations
++
+ import re
+ from typing import Callable, Dict, List, Mapping, Optional, Sequence, Tuple, Union
+ 
+@@ -49,6 +51,10 @@
+ # FieldValue.
+ _FieldFn = Callable[[_FieldValue], _FieldValue]
+ 
++# Field names work as key, and they can be a sequence to refer to the
++# sub-levels (embedded) StructuredTensor's.
++FieldName = Union[str, Sequence[str]]
++
+ 
+ @tf_export('experimental.StructuredTensor')
+ class StructuredTensor(extension_type.BatchableExtensionType):
+@@ -99,15 +105,6 @@ class StructuredTensor(extension_type.BatchableExtensionType):
+   _ragged_shape: dynamic_ragged_shape.DynamicRaggedShape
+ 
+   __name__ = 'tf.StructuredTensor'
+-  #=============================================================================
+-  # Common Types
+-  #=============================================================================
+-  # pylint: disable=invalid-name
+-  # Field names work as key, and they can be a sequence to refer to the
+-  # sub-levels (embedded) StructuredTensor's.
+-  FieldName = Union[str, Sequence[str]]
+-
+-  # pylint: enable=invalid-name
+ 
+   #=============================================================================
+   # Constructor & Factory Methods
+@@ -1190,6 +1187,11 @@ def rank(self):
+       return self._ragged_shape.rank
+ 
+ 
++# We cannot define this inside the class in the usual way because under Python
++# 3.14 we attempt to interpret it as an ExtensionType field. It would be cleaner
++# not to define it inside the class at all, but we want to avoid an API break.
++StructuredTensor.FieldName = FieldName
++
+ # Regular expression used to determine whether a string is a valid field name.
+ # Note: we plan to relax (or possibly eliminate) this in the future; you
+ # should not rely on the fact that some field names are currently disallowed.
