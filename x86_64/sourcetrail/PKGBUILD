@@ -12,7 +12,7 @@ _llvm_ver_maj=$(LC_ALL=C pacman -Si "llvm${_ver_clang:-}" | grep -Pom1 '^Version
 _pkgname="sourcetrail"
 pkgname="$_pkgname"
 pkgver=2026.6
-pkgrel=1
+pkgrel=2
 pkgdesc='Interactive source explorer for C/C++ and Java'
 url="https://github.com/petermost/Sourcetrail"
 license=('GPL-3.0-only')
