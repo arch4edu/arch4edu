@@ -3,7 +3,7 @@
 
 _pkgname='docling-core'
 pkgname="python-${_pkgname}"
-pkgver='2.94.1'
+pkgver='2.95.0'
 pkgrel=1
 pkgdesc='A python library to define and validate data types in Docling.'
 arch=('any')
@@ -45,7 +45,7 @@ optdepends=(
 	'python-tiktoken>=0.9.0: OpenAI tokenization for chunking'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-b2sums=('c1574a6580ef8f1998c6c10156b9313c38a23ba8e833c39f7990c7b10daed4cebd96e1acca7ab928012d993e98acf4b556cea0d5e60535ab74710afa9ee7d20b')
+b2sums=('a21f5660d93ae935c43a4e7409e8dff899446e2844e8342a9dc983a4b8c2a81970f286993c69d51a2a8656e18732eef4e269a86347d4b6b6bd60c1c1a542d4fe')
 
 build() {
 	cd -- "${_pkgname}-${pkgver}" || return 1
@@ -55,18 +55,21 @@ build() {
 check() {
 	cd -- "${_pkgname}-${pkgver}" || return 1
 	python -m pytest -q --import-mode=importlib \
-		test/test_base.py \
-		test/test_doc_base.py \
-		test/test_page.py \
-		test/test_regions_to_table.py \
-		test/test_otsl_table_export.py \
-		test/test_deserializer_doclang_source_mapping.py \
-		test/test_utils.py \
-		test/test_docling_doc.py::test_save_as_json_encoding_options \
-		test/test_tokens.py \
-		test/test_serialization.py::test_md_heading_in_rich_table_cell_renders_as_plain_text \
-		test/test_serialization.py::test_escape_uri_path \
-		test/test_serialization.py::test_referenced_image_uri_is_encoded
+		tests/test_base.py \
+		tests/test_doc_base.py \
+		tests/test_page.py \
+		tests/test_regions_to_table.py \
+		tests/test_otsl_table_export.py \
+		tests/test_deserializer_doclang_source_mapping.py \
+		tests/test_utils.py \
+		tests/test_docling_doc.py::test_save_as_json_encoding_options \
+		tests/test_tokens.py \
+		tests/test_serialization.py::test_md_heading_in_rich_table_cell_renders_as_plain_text \
+		tests/test_serialization.py::test_escape_uri_path \
+		tests/test_serialization.py::test_referenced_image_uri_is_encoded \
+		tests/test_latex_serialization.py::test_inline_group_no_duplication \
+		tests/test_webvtt.py::test_webvttcueblock_parse \
+		tests/test_webvtt.py::test_webvtt_file
 }
 
 package() {
