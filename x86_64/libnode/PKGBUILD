@@ -9,7 +9,7 @@
 
 pkgname=libnode
 pkgver=26.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='libnode.so from nodejs-shared'
 arch=('x86_64')
 url='https://nodejs.org/'
