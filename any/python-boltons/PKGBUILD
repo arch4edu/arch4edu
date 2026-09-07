@@ -2,9 +2,9 @@
 # Co-maintainer: stickynotememo <samk26633@gmail.com>
 
 pkgname=python-boltons
-pkgver=25.0.0
-_commit=c23dbdadb6fecdf505eb4231559561913b84c13f
-pkgrel=6
+pkgver=26.1.0
+_commit=1d525271754ed7aea7f2347ed16ddbcedb1097a3
+pkgrel=1
 pkgdesc="Functionality that should be in the standard library. Like builtins, but Boltons."
 url="https://github.com/mahmoud/boltons"
 license=('BSD-3-Clause')
@@ -15,6 +15,10 @@ checkdepends=('python-pytest')
 source=("git+https://github.com/mahmoud/boltons.git#commit=$_commit")
 sha512sums=('SKIP')
 
+prepare() {
+  cd boltons
+}
+
 build() {
   cd boltons
   uv build
@@ -22,7 +26,7 @@ build() {
 
 check() {
   cd boltons
-  python -m pytest -W ignore::pytest.PytestRemovedIn9Warning
+  python -m pytest
 }
 
 package() {
