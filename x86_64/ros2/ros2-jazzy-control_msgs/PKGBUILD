@@ -5,16 +5,16 @@
 _pkgroot=control_msgs
 _pkgname=control_msgs
 pkgname=ros2-jazzy-control_msgs
-pkgver=5.5.0
+pkgver=5.9.0
 pkgrel=1
 pkgdesc="control_msgs contains base messages and actions useful for controlling robots. It provides representations for controller setpoints and joint and cartesian trajectories."
 url="https://github.com/ros-controls/control_msgs"
 license=('BSD-3-Clause')
-arch=('any')
+arch=('x86_64')
 makedepends=('cmake')
 depends=('ros2-jazzy')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/ros-controls/control_msgs/archive/${pkgver}.tar.gz")
-sha256sums=('217b87cc47a8ea4941ce59018a49adcec25c477cc887430d7b95775e42b52f0b')
+sha256sums=('0ab22909f8b3a40f4668807999e7ef5f68ae5a7116cd616424c26df2a82fb229')
 
 prepare() {
   mkdir -p $srcdir/build
