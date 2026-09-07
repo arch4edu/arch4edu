@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 depends:
   - x86_64/opencv4
 build_prefix: extra-x86_64

@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: libvpx
 depends:
   - x86_64/zmusic
 build_prefix: extra-x86_64

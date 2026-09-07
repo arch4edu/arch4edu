@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: protobuf
 depends:
   - x86_64/r/r-otel
 build_prefix: extra-x86_64

@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+  - alias: boost
 depends:
   - any/bwidget
   - any/python-yapps2

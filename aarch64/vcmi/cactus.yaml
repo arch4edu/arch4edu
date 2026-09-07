@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
 depends:
   - aarch64/fuzzylite
   - aarch64/libsquish

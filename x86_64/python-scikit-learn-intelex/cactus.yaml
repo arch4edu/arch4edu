@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+  - alias: sycl
 depends:
   - x86_64/python-daal
 build_prefix: extra-x86_64

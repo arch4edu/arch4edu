@@ -1,6 +1,8 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: boost
+  - alias: kokkos
 depends:
   - x86_64/kokkos
 build_prefix: extra-x86_64

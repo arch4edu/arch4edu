@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: jsoncpp
 depends:
   - x86_64/ignition-common-3
   - x86_64/ignition-msgs-5
