@@ -3,8 +3,8 @@
 
 pkgname=deal-ii
 _realname=dealii
-pkgver=9.7.1
-pkgrel=3
+pkgver=9.8.0
+pkgrel=1
 pkgdesc="An Open Source Finite Element Differential Equations Analysis Library"
 arch=("i686" "x86_64")
 url="https://www.dealii.org/"
@@ -24,7 +24,7 @@ optdepends=(
       'gmsh: An automatic 3D finite element mesh generator with pre and post-processing facilities'
       'gsl: A modern numerical library for C and C++ programmers'
       'hdf5-openmpi: General purpose library and file format for storing scientific data'
-      'intel-mkl: Intel Math Kernel Library'
+      'intel-oneapi-mkl: Intel Math Kernel Library'
       'lapack: Linear Algebra PACKage'
       'metis: partitioning graphs, finite element meshes, fill reducing orderings for sparse matrices.'
       'muparser: A fast math parser library'
@@ -49,19 +49,11 @@ makedepends=('cmake')
 # LTO is too expensive to link and deal.II manages its own debug build
 options=(!lto !debug !strip)
 install=deal-ii.install
-source=(https://github.com/dealii/dealii/releases/download/v$pkgver/${_realname}-$pkgver.tar.gz
-       kokkos5.patch)
-sha256sums=('0f2096ef83db54fdcebe9f3d148fa713f63f1c3f567941b53bcb4a1a8ea7de43'
-            '393b92468034cb6c28d721621ba012426d88ef5f08119d0b203f9f94ba8208b6')
+source=(https://github.com/dealii/dealii/releases/download/v$pkgver/${_realname}-$pkgver.tar.gz)
+sha256sums=('d8d66aac57baad145a752d3f11cf72cfa9457e3f99ae09e5c8d5c9259a83aee1')
 # where to install deal.II: change to something else (e.g., /opt/deal.II/)
 # if desired.
 _installation_prefix=/usr
-
-prepare() {
-  cd "$srcdir/dealii-$pkgver"
-  # fix compilation with Kokkos 5
-  patch -p1 -i "$srcdir/kokkos5.patch"
-}
 
 build() {
   # Since deal.II relies on a relatively large number of packages that are
@@ -90,8 +82,6 @@ build() {
   # standard repositories
   cmake_configuration_flags=" -DDEAL_II_ALLOW_BUNDLED=OFF -DDEAL_II_FORCE_BUNDLED_TASKFLOW=ON"
 
-  cmake_configuration_flags+=" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDEAL_II_COMPONENT_PYTHON_BINDINGS=ON"
-
   # deal.II does not use more aggressive search paths (which we need) for MPI
   # unless we explicitly enable it, so check for MPI and then turn it on:
   if pacman -Qs openmpi >/dev/null
@@ -111,11 +101,6 @@ build() {
   then
      cmake_configuration_flags+=" -DLAPACK_INCLUDE_DIRS=${MKLROOT}/include"
   fi
-
-  # For GSL compatibility we need the full link interface, which includes
-  # libgslcblas, so disable --as-needed with GCC:
-  sed -i '/ENABLE_IF_LINKS(DEAL_II_LINKER_FLAGS "-Wl,--as-needed")/d' \
-      "${srcdir}/${_realname}-$pkgver/cmake/setup_compiler_flags_gnu.cmake"
 
   sed -i '28i#include <cfenv>' \
       "${srcdir}/${_realname}-$pkgver/tests/quick_tests/scalapack.cc"
