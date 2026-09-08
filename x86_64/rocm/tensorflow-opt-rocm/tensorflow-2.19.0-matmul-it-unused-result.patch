@@ -1,0 +1,13 @@
+diff --git a/tensorflow/lite/toco/graph_transformations/resolve_tensorflow_matmul.cc b/tensorflow/lite/toco/graph_transformations/resolve_tensorflow_matmul.cc
+index ccca3f7a2e0..e961891dda4 100644
+--- a/tensorflow/lite/toco/graph_transformations/resolve_tensorflow_matmul.cc
++++ b/tensorflow/lite/toco/graph_transformations/resolve_tensorflow_matmul.cc
+@@ -174,7 +174,7 @@ TransposeOperator* FindTransposeOpWithInput(const Model& model,
+   fc_op->outputs = matmul_op->outputs;
+
+   // Insert the newly constructed FullyConnectedOperator.
+-  model->operators.emplace(matmul_it, fc_op) + 1;
++  model->operators.emplace(matmul_it, fc_op);
+
+   // Find the op producing the array passed to this MatMul
+   auto previous_op_it = model->operators.begin();

@@ -1,0 +1,132 @@
+diff --git a/tensorflow/c/BUILD b/tensorflow/c/BUILD
+index 864bdcfc74a..d675c247d0e 100644
+--- a/tensorflow/c/BUILD
++++ b/tensorflow/c/BUILD
+@@ -492,6 +492,7 @@ cc_library(
+     visibility = ["//visibility:public"],
+     deps = [
+         ":c_api_macros_hdrs",
++        "@local_tsl//tsl/platform:protobuf",
+     ] + select({
+         "//tensorflow:android": [
+             "//tensorflow/core:portable_tensorflow_lib_lite",  # TODO(annarev): exclude runtime srcs
+diff --git a/tensorflow/cc/saved_model/BUILD b/tensorflow/cc/saved_model/BUILD
+index 011ac8baee7..b774f7bddc5 100644
+--- a/tensorflow/cc/saved_model/BUILD
++++ b/tensorflow/cc/saved_model/BUILD
+@@ -414,7 +414,7 @@ cc_library(
+     ]) + if_android([
+         "//tensorflow/core:portable_tensorflow_lib_lite",
+     ]) + [
+-        "//tensorflow/core/protobuf:for_core_protos_cc",
++        "@local_tsl//tsl/platform:protobuf",
+         "@com_google_absl//absl/status",
+         "@com_google_absl//absl/status:statusor",
+         "@com_google_absl//absl/strings",
+diff --git a/tensorflow/core/BUILD b/tensorflow/core/BUILD
+index 69a2c5fcaad..9a1d4a694ff 100644
+--- a/tensorflow/core/BUILD
++++ b/tensorflow/core/BUILD
+@@ -303,6 +303,7 @@ cc_library(
+         "@com_google_absl//absl/strings",
+         "@com_google_absl//absl/strings:cord",
+         "@com_google_absl//absl/types:optional",
++        "@local_tsl//tsl/platform:protobuf",
+     ],
+ )
+ 
+diff --git a/tensorflow/core/common_runtime/BUILD b/tensorflow/core/common_runtime/BUILD
+index de70fa1548e..ac6a9f7c2de 100644
+--- a/tensorflow/core/common_runtime/BUILD
++++ b/tensorflow/core/common_runtime/BUILD
+@@ -1722,6 +1722,7 @@ cc_library(
+         "//tensorflow/core:lib_internal",
+         "@com_google_absl//absl/memory",
+         "@eigen_archive//:eigen3",
++        "@local_tsl//tsl/platform:protobuf",
+     ],
+ )
+ 
+diff --git a/tensorflow/core/graph/regularization/BUILD b/tensorflow/core/graph/regularization/BUILD
+index 188c78a2059..c79446080bc 100644
+--- a/tensorflow/core/graph/regularization/BUILD
++++ b/tensorflow/core/graph/regularization/BUILD
+@@ -34,6 +34,7 @@ cc_library(
+         "//tensorflow/core/platform:numbers",
+         "@com_google_absl//absl/status:statusor",
+         "@com_google_absl//absl/strings",
++        "@local_tsl//tsl/platform:protobuf",
+     ],
+ )
+ 
+diff --git a/tensorflow/core/profiler/BUILD b/tensorflow/core/profiler/BUILD
+index 8b26a517b4b..332e6a42231 100644
+--- a/tensorflow/core/profiler/BUILD
++++ b/tensorflow/core/profiler/BUILD
+@@ -154,6 +154,7 @@ cc_library(
+         "@com_google_absl//absl/status",
+         "@com_google_absl//absl/strings",
+         "@com_google_absl//absl/strings:str_format",
++        "@local_tsl//tsl/platform:protobuf",
+     ],
+ )
+ 
+diff --git a/tensorflow/lite/kernels/shim/BUILD b/tensorflow/lite/kernels/shim/BUILD
+index 5e199cd9e59..c4a86024c05 100644
+--- a/tensorflow/lite/kernels/shim/BUILD
++++ b/tensorflow/lite/kernels/shim/BUILD
+@@ -80,6 +80,7 @@ cc_library(
+         "@com_google_absl//absl/status",
+         "@com_google_absl//absl/status:statusor",
+         "@com_google_absl//absl/strings",
++        "@local_tsl//tsl/platform:protobuf",
+     ] + if_mobile([
+         "//tensorflow/core:portable_tensorflow_lib_lite",
+     ]) + if_not_mobile([
+diff --git a/tensorflow/python/framework/BUILD b/tensorflow/python/framework/BUILD
+index 7c710576b00..2e06c6ea119 100644
+--- a/tensorflow/python/framework/BUILD
++++ b/tensorflow/python/framework/BUILD
+@@ -68,7 +68,7 @@ tf_cc_shared_object(
+             ":test_file_system_stripped",
+             "//tensorflow/python:tensorflow_common_framework",
+         ],
+-    ) + ["@com_google_protobuf//:protobuf_headers"],
++    ) + ["@local_tsl//tsl/platform:protobuf"],
+ )
+ 
+ tf_py_strict_test(
+@@ -408,6 +408,7 @@ tf_python_pybind_extension(
+     deps = [
+         "//tensorflow/core:framework_headers_lib",
+         "//tensorflow/core:protos_all_cc",
++        "@local_tsl//tsl/platform:protobuf",
+         "@eigen_archive//:eigen3",
+         "@pybind11",
+     ],
+@@ -735,6 +736,7 @@ py_strict_library(
+         ":_op_def_registry",
+         "//tensorflow/core:protos_all_py",
+         "//tensorflow/python:pywrap_tensorflow",
++        "@local_tsl//tsl/platform:protobuf",
+     ],
+ )
+ 
+diff --git a/third_party/xla/xla/tsl/tsl.bzl b/third_party/xla/xla/tsl/tsl.bzl
+index b0f80338fbd..6c1a6327c41 100644
+--- a/third_party/xla/xla/tsl/tsl.bzl
++++ b/third_party/xla/xla/tsl/tsl.bzl
+@@ -133,12 +133,7 @@ def internal_visibility(internal_targets):
+ # TODO(jakeharmon): Use this to replace if_static
+ # TODO(b/356020232): remove completely after migration is done
+ def if_tsl_link_protobuf(if_true, if_false = []):
+-    if use_pywrap_rules():
+-        return if_true
+-    return select({
+-        "//conditions:default": if_true,
+-        clean_dep("//xla/tsl:tsl_protobuf_header_only"): if_false,
+-    })
++    return if_true
+ 
+ def if_libtpu(if_true, if_false = []):
+     """Shorthand for select()ing whether to build backend support for TPUs when building libtpu.so"""

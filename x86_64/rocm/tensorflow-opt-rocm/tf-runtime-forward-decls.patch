@@ -1,0 +1,12 @@
+diff --git a/include/tfrt/support/forward_decls.h b/include/tfrt/support/forward_decls.h
+index c3a42504..18c8ecac 100644
+--- a/include/tfrt/support/forward_decls.h
++++ b/include/tfrt/support/forward_decls.h
+@@ -21,6 +21,7 @@
+ #define TFRT_SUPPORT_FORWARD_DECLS_H_
+
+ #include <cstddef>
++#include <cstdint>
+ #include <memory>
+
+ #include "llvm/Support/Casting.h"
