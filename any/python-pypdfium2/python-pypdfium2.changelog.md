@@ -1,10 +1,154 @@
-<!-- SPDX-FileCopyrightText: 2025 geisserml <geisserml@gmail.com> -->
+<!-- SPDX-FileCopyrightText: 2026 geisserml <geisserml@gmail.com> -->
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 <!-- MyST Syntax -->
 
-
 # Changelog
+
+## 5.13.0 (2026-08-13)
+
+- Updated pdfium-binaries from `7947` to `7999`. Additional builds may use various other versions of pdfium.
+- Experimental ``pyemscripten_2026_0_wasm32`` (Pyodide) build support added. *However, the resulting builds are flaky at runtime and subject to various types of random crashes. Freezes on shutdown have also been observed.*<br>
+  While these issues persist, PyEmscripten wheels will not be uploaded to PyPI, but they are included in the release process and can be downloaded from GitHub on an experimental basis.
+  If you can help track down and fix these issues, please reach out.<br>
+  Note: Our PyEmscripten wheels are bigger than usual, as they are built with debug symbols (a non-debug build is not considered useful at this stage).
+- Fixed compatibility with Python 3.6 and 3.7.
+  * Runtime support was inadvertently broken due to a faulty cached property backport which held only one cache per class, not per instance as should have been.
+    The accidental loss of caches broke key assumptions of our autoclose logic, which relies on `cached_property` since 5.8.0. (Earlier versions that did not make extensive use of cached properties might work but have not been explicitly tested.)
+  * This release replaces both `functools.cached_property` and the faulty `functools.lru_cache()` based backport with our own, backward compatible `cached_property` implementation along with thorough documentation.
+  * Also, fixed setup (i.e. source installation) with Python 3.6 and its max available setup dependency versions (that is, `setuptools` 59). This had probably been broken for a long time. (A few non-breaking issues remain, e.g. for some reason we end up with a `purelib` directory, but it should be `platlib`.)
+  * Bear in mind that ctypesgen continues to require Python `>=3.8` at this time (3.6 compat not being a priority in that case), but you can install with `--no-build-isolation` and let the reference bindings be used, or try adding ctypesgen's `src/` to `PYTHONPATH` to bypass setup, and see how it goes.
+  * **Note: We do not plan to (and practically cannot) keep up compatibility with outdated Python versions indefinitely.** In particular, setup compatibility may be dropped sooner or later in favor of contemporary Python packaging concepts, like migrating as much as possible to `pyproject.toml`. That said, we are happy to restore compatibility at this point, and fix any *unintentional* breakage.
+- Fixed `MANIFEST.in` missing Windows spoof headers, which resulted in subtly incorrect bindings when installing from an sdist on Windows, as seen in test failures. (Release wheels have been unaffected and passed the test suite, so this issue went unnoticed for a while.)
+- Bumped `gn-dist` from `2407.1` to `2407.3`. Made its setup python 3.6 compatible likewise (wheels should have worked before now). Changed versioning and release process so that CI no longer needs to push to the repository (may eventually become a blueprint for pypdfium2 itself). More documentation added, including `manylinux2014` POC.
+- Internal improvements (non-exhaustive):
+  * Properly clean up `*.egg-info/` and `build/` before packaging, to avoid mad file inclusion bugs (ran into this while working on setup include rules).
+  * Migrated from requirements files to PEP 735 dependency groups (`pyproject.toml`).
+    Recent enough `pip` should be available to Python >= 3.9. For compatibility with older versions, feel free to use `./utils/misc/install_dep_group.py`.
+  * Applied dependency cooldowns to internal callers of `pip install`. Always use virtual environments in CI. Use lockfiles in sensitive areas (e.g. publish jobs).
+  * Rearranged & improved utilities. Cleaner distinction between `setupsrc/` and `utils/`.
+  * Work around persistent i686 container network issues by downgrading host runner to `ubuntu-24.04`.
+  * Let `setupsrc/` share code from `src/` through a `pypdfium2_cfg._shared` submodule that can be added to `sys.path`.
+
+
+## 5.12.1 (2026-07-17)
+
+- No pdfium-binaries update, still at `7947`. Additional builds may use various other versions of pdfium.
+- Fix missing mkdir call in bindings build (blunder). This particularly matters for `PDFIUM_PLATFORM=system-search` / fallback setup.
+
+
+## 5.12.0 (2026-07-15)
+
+*__NOTE__: This release has been yanked from PyPI. 5.12.1 is the drop-in replacement, which fixes a setup blunder but is otherwise identical to 5.12.0.*
+
+- Updated pdfium-binaries from `7920` to `7947`. Additional builds may use various other versions of pdfium.
+
+*Requirements*
+- macOS `13.0+` is now required for current PDFium (declared in upstream config and confirmed with dylib header inspection). Updated wheel tags accordingly.
+- Setup: Increased tool dependency requirements
+  + `build_native.py` now expects `git >= 2.49.0` so we can use modern `git clone --revision` features.
+  + If `gh` is installed, `gh >= 2.47.0` will be required, as we now assume availability of the `gh attestation` subcommand without consulting `gh --version`.
+
+*Packaging / CI*
+
+Largest CI/workflows rework yet ("Strategic builds"). Many testing gaps filled (see the updated platform support table).
+- Dynamic selection of targets and Python versions across 3 build strategies (pdfium-binaries, `build_toolchained.py`, cibuildwheel/`build_native.py`). This means releases can now be made using any selection of targets/strategies, configurable through workflow inputs on a per-run basis.
+- In principle, this would allow us to make releases just using our own builds, without external binaries. We plan to explore this from time to time. That said, pypdfium2's conda packages continue to be tied to the pdfium-binaries, and setup will continue to provide you with pdfium-binaries by default.
+- Test multiple Python versions in one job (either the build job, or a dedicated test job if another runner image is needed). Share testing across build strategies through composite action / reusable workflow. Use Docker testing where needed. Added ability to test macOS Intel from arm64 through Rosetta emulation (`arch -x86_64` prefix).
+- Split up pdfium-binaries packaging in individual jobs.
+- Hash-pinned all actions across `pypdfium2`, `gn-dist` and the `ctypesgen` fork. Tightened permissions. Replaced superfluous actions with built-in `gh` CLI. Use exact commit hash rather than branch name to transfer state between jobs. `zizmor` compliance (with a few intentional suppressions).
+
+*Setup*
+- With 32-bit interpreters running on 64-bit hosts, setup should now select the 32-bit target.
+- With pdfium-binaries, use (and cache) the included pdfium headers.
+  In most cases, this should let us avoid upstream Gitiles, which turns out to be flaky in automated access.
+
+
+## 5.11.0 (2026-06-29)
+
+- Updated pdfium-binaries from `7891` to `7920`. Additional builds may use various other versions of pdfium.
+- Build scripts: Updated PDFium pin from `7891` to `7913`.
+- New `PdfBookmark.get_color()` helper added. This is based on upstream's new `FPDFBookmark_GetColor()` API. Integrated `get_color()` into `pypdfium2 toc` CLI.
+  Thanks to Aryan Krishnan for the upstream part.
+  * **Note:** Since conda pdfium-binaries are built on a slower schedule (to preserve storage space), this new API is not available to conda users just yet, but once new pdfium-binaries are out, we will re-upload this release to conda with incremented build number & different pdfium version bounds. (Backward compatibility is provided, i.e. internal call sites like `pypdfium2 toc` will not attempt to call `get_color()` with older pdfium.)
+  * **Update (2026-07-07):** Released new conda builds as promised.
+- New platforms: `manylinux_2_17_{mips64le,mipsle}` wheels added to release.
+  * `build_toolchained.py` is now capable of building these, based on upstream's `mips64el` and `mipsel` targets (with minor patches). This took a great deal of tinkering, however.
+  * Like `loongarch64`, PyPI does not accept MIPS wheels (yet), so they are only released to GitHub.
+  * Note that `pip` actually rejects our wheels because MIPS is not officially part of the manylinux standard and thus not contained in pip's internal whitelist. This can be remedied by re-tagging with `wheel` locally to match the host's `sysconfig.get_platform()` value. See [pip ticket #14095](https://github.com/pypa/pip/issues/14095) for more info.
+  * The `mipsle` build is untested (apart from `file` showing the correct target signature), for lack of a container image and binfmt handler.
+- Docs: Comprehensive [platform support table](https://pypdfium2-team.github.io/pypdfium2/platforms.html) added – check it out!
+- Setup: Auto-detect minimum required macOS and iOS versions using `macholib`, which actually runs cross-platform.
+  This corrects the `iOS` min version to `26_0`. (We do not currently publish iOS wheels but it is handled in setup.)
+- Work around a bindings generation issue on Windows by avoiding inclusion of system `windows.h`.
+- Honor reference bindings properly: don't download headers or reuse cached bindings.
+  Make test suite pass when reference bindings are used.
+- Fix conda packaging of `pypdfium2_raw`, which was broken by setup changes in 5.10.
+  The root issue in setup with `PYPDFIUM_MODULES=raw` now requiring a pre-generated version file remains, though.
+- `sbuild_one.yaml` now also tests Linux targets in Docker, to make sure cross-compiled builds actually work.
+- Start using `ubuntu-26.04` runners. Some workflows intentionally stick with `ubuntu-24.04` for the time being so we can keep testing older Python versions.
+- `get_cross_deps.py`: Use GCC 16 on `ubuntu-26.04`, and GCC 14 on `ubuntu-24.04`.
+- Put up a notice that AI issues/PRs are banned from this project, and updated templates accordingly.
+  Any users who continue to file AI issues will be blocked.
+  After half a dozen consecutive issues and PRs full of confusion, bloat and wildly invented false claims, which nearly all turned out to have been produced by Claude Code, we feel compelled to take this step.
+  **If you encounter an issue, our condition for your chance to have us investigate (and hopefully fix) your issue is that you must act respectfully and provide a workable bug report without any AI involvement.**
+  TLDR pypdfium2's issue tracker is not a waste deposit for AI garbage.
+
+
+## 5.10.1 (2026-06-15)
+
+- Updated pdfium-binaries from `7869` to `7891`. Additional builds may use various other versions of pdfium.
+- The previous release failed to upload to PyPI (see below). This release fixes the publish issue but is effectively identical to `5.10.0`. Due to tag protection from immutable releases, `5.10.0` cannot be deleted.
+
+*Dependency updates*
+- Updated `build_toolchained.py` PDFium pin from `7191` to `7891`. Despite the gap, this turned out fairly straightforward.
+- Updated `build_native.py` PDFium pin from `7841` to `7891`.
+- Updated `gn-dist` from `2385` to `2407.1`, to match the revision specified in upstream's `DEPS` file.
+- Updated cibuildwheel to `4.1.0`.
+- Let `install-static-clang.sh` use latest.
+- We now try to track latest PDFium in CIBW targets that use `build_native.py` with GCC, as this mode needs few patches.
+  In releases, this affects `musllinux_{x86_64,i686,aarch64,armv7l}`. Let's see how this goes.
+  If it breaks too often, we may go back to the pinned version or even `pdfium-binaries` for some musl targets.
+
+*Packaging*
+- Corrected minimum macOS requirement to `12_0`, as determined by `vtool -show-build`.
+- Lowered `riscv64` wheel's glibc requirement from `2_38` to `2_34` by using upstream's sysroot.
+
+*API changes*
+- Fixed a long-standing issue concerning formenv autoclose logic.
+  `PdfDocument` stores the formenv, but `PdfFormEnv` referenced back to the parent `PdfDocument` including in the formenv's finalizer, forming a reference circle / indirect self-reference. This is illegal with `weakref.finalize()`.
+  Addressing this issue properly required some changes to the public API:
+  * `PdfFormEnv`: The `pdf` attribute and `parent` alias have been removed. Since `pdf` is created on the caller side, it is expected that callers would access their object directly rather than through the formenv.
+  * Formenv lifetime is now managed through `PdfDocument`.
+    `PdfFormEnv.close()` has been deprecated and is now a no-op. It is superseded by the new `PdfDocument.close_forms()` API.
+  * `PdfPage.parent` now always points to a `PdfDocument`, not sometimes a `PdfFormEnv`.
+    Conversely, page weakrefs are always stored on `PdfDocument`, not sometimes on `PdfFormEnv`.
+  
+  We are aware that, technically, this is an API-breaking change, but it has been decided not to increment the major version, given that `PdfFormEnv`'s `pdf` and `parent` attributes are insignificant to most callers, and removing them helps fix a real issue.
+  
+  The exact consequences of this self-reference are yet unclear to us, but memory leaks (due to finalizers not being called) and/or corruption seem possible.
+  Thanks to `@noxthot` for a report that triggered this investigation.
+
+*Setup, Build scripts & Workflows*
+- Finally, prevent custom setup code from running multiple times in `pip install` by deferring data files generation into `build_py`, as suggested in cibuildwheel FAQ.
+  Also, make the DLL path available to the tagging stage.
+  This took some refactoring the control flow.
+- `build_toolchained.py`: Significantly improved code style. In `PORTABLE_MODE`, added ability to use a sysroot and/or clang (requires passing `--clang-path ...`). Fix `install_buildtools()` by calling it before any depot_tools wrappers are added to `PATH`.
+- Pragmatic `build_native.py` changes to make updating a bit more feasible:
+  Patches for legacy GN and the transitional `--no-legacy-gn` option have been removed; recent GN is now required.
+  Clang patches now just aim for compatibility with clang >= 22, much reducing patch complexity. For clang versions older than that, `--clang-as-gcc` mode is implicitly enabled.
+  More patches have been simplified, removed, changed to autopatch or upstreamed (pending removal, need to await dependency rolls).
+  Overall, `build_native.py` is now more focused on producing builds with cibuildwheel; maintainability and easier updates are prioritized over excess compatibility with older dependencies. Basically, we will require what pdfium requires.
+- On Linux with glibc, `build_native.py` is now capable of using a sysroot. With our current cibuildwheel config, this can be used to lower the glibc requirements of `manylinux_{ppc64le,riscv64,armv7l}` (opt-in via `USE_SYSROOT=1`).
+- Made the PDFium version configurable in cibuildwheel config and workflows.
+- Added `secrets: inherit` to `trigger_conda_raw.yaml` to hopefully fix a publish issue caused by the change to reusable workflow calls.
+- Other setup improvements. Use plain `git` instead of GH API to get the ctypesgen revision. Drastically speed up attestation verification by sharing the trusted root.
+
+
+## 5.10.0 (2026-06-15)
+
+- PyPI upload of this release failed, due to an obscure issue with `pypa/gh-action-pypi-publish` being incompatible with reusable workflow calls. It will be immediately superseded by `5.10.1`.
+
 
 ## 5.9.0 (2026-06-01)
 
@@ -26,6 +170,7 @@
   `mara004`, the author and so far only active committer of pypdfium2, now is (and will remain) sole owner.
   Inactive co-maintainers no longer have access, but are welcome to submit PRs.
   In the event of the author being unable to pursue this project further, it can be forked and a new maintainer may build their own trust, but given the risks inherent to maintainer changes, it has been decided that pypdfium2 will remain `mara004`'s personal project. The existing userbase will not be handed over to another maintainer.
+
 
 ## 5.8.0 (2026-05-04)
 
@@ -273,9 +418,10 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 - Updated docs on licensing.
 - *This is expected to be the last release of the v4 series.*
 
+
 ## 4.30.0 (2024-05-09)
 
-*Backported bug fixes / corrections from current development branch to preferably leave v4 in a clean state.*
+*Backported bug fixes / corrections from current development branch.*
 
 - Updated PDFium from `6406` to `6462`.
 - Fixed blunder in `PdfImage.extract()` producing an incorrect output path for prefixes containing a dot. In the `extract-images` CLI, this caused all output images of a type to be written to the same path for a document containing a non-extension dot in the filename.
@@ -283,13 +429,17 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 - Made `get_text_range()` allocation adapt to pdfium version, as `FPDFText_GetText()` has been reverted to UCS-2. (See v4.28 changelog for background.)
 - Updated workflows to include both `macos-13` and `macos-14` in test matrices because v13 is Intel and v14 ARM64 on GH actions. Removed python 3.7 testing because not supported anymore on `macos-14` runners.
 
+
 ## 4.29.0 (2024-04-10)
+
 - Updated PDFium from `6337` to `6406`.
+
 
 ## 4.28.0 (2024-03-10)
 
 - Updated PDFium from `6281` to `6337`.
 - `get_text_range()`: Fixed a buffer size regression introduced in v4.26.0, caused by an unexpected behavior change in pdfium (thanks @elonzh for the bug report, {issue}`298`). Since that change, it is not possible anymore to tell the exact amount of memory needed, so we have to allocate for the worst case. Therefore, while this problem persists, it is recommended to instead use `get_text_bounded()` where possible.
+
 
 ## 4.27.0 (2024-02-10)
 
@@ -297,10 +447,11 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 - Added ability to define `$CTYPESGEN_PIN` when building sdist via `./run craft pypi --sdist`, which allows to reproduce our sdists when set to the head commit hash of `pypdfium2-team/ctypesgen` at the time of the build to reproduce. Alternatively, you may patch the relevant `pyproject.toml` entry yourself and use `PDFIUM_PLATFORM=sdist python -m build --sdist` as usual.
 - Set up Dependabot for GH Actions. Updated dependencies accordingly.
 
+
 ## 4.26.0 (2024-01-10)
 
 - Updated PDFium from `6164` to `6233`.
-- Pin ctypesgen in sdist to prevent reoccurrence of {issue}`264` / {issue}`286`. As a drawback, the pin is never committed, so the sdist is not simply reproducible at this time due to dependence on the latest commit hash of the ctypesgen fork at build time.
+- Pin ctypesgen in sdist to prevent re-occurrence of {issue}`264` / {issue}`286`. As a drawback, the pin is never committed, so the sdist is not simply reproducible at this time due to dependence on the latest commit hash of the ctypesgen fork at build time.
 - Wheel tags: Added back `manylinux2014` in addition to `manylinux_{glibc_ver}` to be on the safe side. Suspected relation to the above issues.
 
 
@@ -320,10 +471,10 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 #### Rationale for `PdfDocument.render()` deprecation
 
 - The parallel rendering API unfortunately was an inherent design mistake: Multiprocessing is not meant to transfer large amounts of pixel data from workers to the main process.
-- This was such a heavy drawback that it basically outweighed the parallelization, so there was no real performance advantage, only higher memory load.
-- As a related problem, the worker pool produces bitmaps at an indepedent speed, regardless of where the receiving iteration might be, so bitmaps could queue up in memory, possibly causing an enormeous rise in memory consumption over time. This effect was pronounced e.g. with PNG saving via PIL, as exhibited in Facebook's `nougat` project.
+- Bitmap transfer is so expensive that it essentially outweighed parallelization, so there was no real performance advantage, only higher memory load.
+- As a related problem, the worker pool produces bitmaps at an independent speed, regardless of where the receiving iteration might be, so bitmaps could queue up in memory, possibly causing an enormeous rise in memory consumption over time. This effect was pronounced e.g. with PNG saving via PIL, as seen in Facebook's `nougat` project.
 - Instead, each bitmap should be processed (e.g. saved) in the job which created it. Only a minimal, final result should be sent back to the main process (e.g. a file path).
-- This means we cannot reasonably provide a generic parallel renderer, instead it needs to be implemented by callers.
+- This means we cannot reasonably provide a generic parallel renderer; instead it needs to be implemented by callers.
 - Historically, note that there had been even more faults in the implementation:
   * Prior to `4.22.0`, the pool was always initialized with `os.cpu_count()` processes by default, even when rendering less pages.
   * Prior to `4.20.0`, a full-scale input transfer was conducted on each job (rendering it unusable with bytes input). However, this can and should be done only once on process creation.
@@ -331,10 +482,11 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 
 **Due to the potential for serious issues as outlined above, we strongly recommend that end users update and dependants bump their minimum requirement to this version. Callers should move away from `PdfDocument.render()` and use `PdfPage.render()` instead.**
 
+
 ## 4.24.0 (2023-11-10)
 
 - Updated PDFium from `6097` to `6110`.
-- Added GitHub issue templates
+- Added GitHub issue templates.
 
 
 ## 4.23.1 (2023-10-31)
@@ -358,10 +510,11 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
   * Added `PDFIUM_BINDINGS=reference` to use pre-built bindings when installing from source.
 - Updated Readme.
 
+
 ## 4.22.0 (2023-10-19)
 
 - Updated PDFium from `6056` to `6070`.
-- Changed `PDFIUM_PLATFORM=none` to strictly exclude all data files. Added new target `system` consuming bindings and version files supplied by the caller. Again, the setup API implications were accepted. Packagers that used `none` to bind to system pdfium will have to update.
+- Changed `PDFIUM_PLATFORM=none` to strictly exclude all data files. Added new target `system` consuming bindings and version files supplied by the caller.
 - Enhanced integration of separate modules. This blazes the trail for conda packaging. We had to move metadata back to `setup.cfg` since we need a dynamic project name, which `pyproject.toml` does not support.
 - Major improvements to version integration.
   * Ship version info as JSON files, separately for each submodule. Expose as immutable classes. Legacy members have been retained for backwards compatibility.
@@ -378,13 +531,15 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 
 - Setup changes (partly ported from the devel branch)
   * ctypesgen fork: replaced the old, bloated library loader with a new, lean version
-  * Merged `$PDFIUM_VERSION` and `$PDFIUM_USE_V8` into the existing `$PDFIUM_PLATFORM` specifier (see Readme for updated description). The relatively minor setup API breakage was considered tolerable; the core library API is not affected.
+  * Merged `$PDFIUM_VERSION` and `$PDFIUM_USE_V8` into the existing `$PDFIUM_PLATFORM` specifier (see Readme for updated description).
   * Removed the `build` package from pyproject buildsystem requires, where it was unnecessary. Thanks to Anaconda Team.
   * Split in two separate modules: pypdfium2 for helpers (pure-python), pypdfium2_raw for the core bindings (data files).
 
 - Switched PyPI upload to "trusted publishing" (OIDC), which is considered safer. Further, the core maintainers have set up 2FA as requested by PyPI.
 
 *Note: Earlier releases may fail to install from source due to API-breaking changes to our ctypesgen fork (see {issue}`264`). Where possible, avoid source installs and use the wheels instead (the default behavior). If you actually have to do this, consider `--no-build-isolation` and pre-installed dependencies, including ctypesgen prior to commit `61c638b`.*
+
+*Warning: musllinux wheels prior to pdfium-binaries `6043` might be invalid.*
 
 
 ## 4.21.0b1 (2023-09-14)
@@ -394,8 +549,9 @@ to install from the sdist with the previous pdfium version. Ideally, you'll want
 
 ## 4.20.0 (2023-09-10)
 
+*This release backports some key fixes/improvements from the development branch*
+
 - Updated PDFium from `5975` to `5989`.
-This release backports some key fixes/improvements from the development branch:
 - [V8/XFA] Fixed XFA init. This issue was caused by a typo in a struct field. Thanks to Benoît Blanchon.
 - [ctypesgen fork] Prevent setting nonexistent struct fields.
 - [V8/XFA] Expose V8/XFA exclusive members in the bindings file by passing ctypesgen the pre-processor defines in question.
@@ -411,10 +567,8 @@ This release backports some key fixes/improvements from the development branch:
 ## 4.19.0 (2023-08-28)
 
 - Updated PDFium from `5868` to `5975`.
-- Reset main branch to stable and shifted v5 development to a branch, so that pdfium updates (and possibly bug fixes) can still be handled.
-  v5 development is delayed and unexpectedly tough, so this seemed necessary.
-  The automated schedule has been slowed down from weekly to monthly for the time being.
-  Further manual releases may be triggered as necessary.
+- Reset main branch to stable and shifted v5 development to a branch, so that pdfium updates (and possibly bug fixes) can still be handled. v5 development is delayed and unexpectedly tough, so this seemed necessary.
+- The automated schedule has been slowed down from weekly to monthly for the time being. Further manual releases may be triggered as necessary.
 
 
 ## 4.18.0 (2023-07-04)
