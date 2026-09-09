@@ -1,21 +1,22 @@
-# system requirements: pandoc (>= 1.12.3), pandoc-citeproc
+# system requirements: pandoc (>= 1.12.3)
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=bayesplot
-_pkgver=1.15.0
+_pkgver=1.16.0
 pkgname=r-${_pkgname,,}
-pkgver=1.15.0
-pkgrel=1
+pkgver=1.16.0
+pkgrel=2
 pkgdesc='Plotting for Bayesian Models'
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=('GPL-3.0-or-later')
 depends=(
-  r
   r-dplyr
+  r-ggdist
   r-ggplot2
   r-ggridges
   r-glue
+  r-lifecycle
   r-posterior
   r-reshape2
   r-rlang
@@ -25,11 +26,14 @@ depends=(
   pandoc
 )
 optdepends=(
+  r-cmdstanr
   r-ggfortify
   r-gridextra
   r-hexbin
   r-knitr
   r-loo
+  r-monotone
+  r-patchwork
   r-rcolorbrewer
   r-rmarkdown
   r-rstan
@@ -37,12 +41,11 @@ optdepends=(
   r-rstantools
   r-scales
   r-shinystan
-  r-survival
   r-testthat
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('114a99322fea66e3db911a3ea9d9272ad8aa7d247991c8fe5d4fb6aa2629479c')
+sha256sums=('1602f1232ddc83c386e9964ac54eb9a10d51f562093b658836933aa6b6481aeb')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
