@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=xts
-_pkgver=0.14.2
+_pkgver=0.14.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,8 +22,8 @@ optdepends=(
   r-tseries
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b849cf42319eddff75468590764935a1')
-b2sums=('f9e1088d01b8fc50a8b45629f7f2147d73884966d5a2d8606472c83b3496e53a6477450b1a47910809d3ef0b274c6660ef219dff529f376c0eaba172b64ba424')
+md5sums=('c752b13fd32ee2044bc120bffd2b51d7')
+b2sums=('fd9840062e289f9069dd9ccb95f8fb7487a957b573c2ac4efd0eff9fa65c9cc25ca5a44883953db5743bfb2da8ba3a49c7b5453e1b6d474198d9dbc4e26ddb5b')
 
 build() {
   mkdir build
