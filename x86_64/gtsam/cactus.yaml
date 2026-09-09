@@ -5,6 +5,7 @@ nvchecker:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  sed -i "s/'eigen'/'eigen3'/" PKGBUILD
+  sed -i 's/Eigen::MatrixBase<[^>]*>::ConstantReturnType/auto/g' "${pkgname}-${pkgver}/gtsam/base/Vector.h"
+  sed -i 's/Eigen::MatrixBase<[^>]*>::ConstantReturnType/auto/g' "${pkgname}-${pkgver}/gtsam/base/Matrix.h"
   sed -i '/cmake -B build/i\  sed -i '\''s/ system filesystem/ filesystem/;s/OR NOT Boost_SYSTEM_LIBRARY //;/Boost::system/d'\'' "${pkgname}-${pkgver}/cmake/HandleBoost.cmake"' PKGBUILD
 post_build: aur-post-build
