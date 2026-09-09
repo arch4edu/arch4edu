@@ -2,7 +2,7 @@
 
 pkgname=gz-sensors8
 pkgver=8.2.2
-pkgrel=2
+pkgrel=3
 _pkgmaj=${pkgver%%.*}
 _pkgbase=${pkgname::-${#_pkgmaj}}
 pkgdesc="Provides numerous sensor models designed to generate realistic data from simulation environments."
