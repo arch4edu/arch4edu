@@ -6,6 +6,7 @@ depends:
   - x86_64/r/r-inum
   - x86_64/r/r-libcoin
   - x86_64/r/r-mvtnorm
+  - x86_64/r/r-strucchange
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build
