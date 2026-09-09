@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=nanonext
-_pkgver=1.10.1
+_pkgver=1.10.2
 pkgname=r-nanonext
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,4 +22,4 @@ package() {
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
   install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
-sha256sums=('ea575a20d6aaac3191e16d4931d08b8d5aabeca02bebc927d027d1e5cef9ed9f')
+sha256sums=('bcfe6bae45ced1cb3a9105f35addd5645b71a142096fc8870b0befc75d3b7856')
