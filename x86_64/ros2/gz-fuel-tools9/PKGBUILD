@@ -2,7 +2,7 @@
 
 pkgname=gz-fuel-tools9
 pkgver=9.1.1
-pkgrel=2
+pkgrel=3
 _pkgmaj=${pkgver%%.*}
 _pkgbase=${pkgname::-${#_pkgmaj}}
 pkgdesc="A client library and command line tools for interacting with Gazebo Fuel servers. "
