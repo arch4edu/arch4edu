@@ -1,42 +1,40 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=partykit
-_pkgver=1.2-29
+_pkgver=1.3-0
 pkgname=r-${_pkgname,,}
-pkgver=1.2.29
-pkgrel=1
+pkgver=1.3.0
+pkgrel=2
 pkgdesc='A Toolkit for Recursive Partytioning'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
-license=('GPL')
+license=('GPL-2.0-only OR GPL-3.0-only')
 depends=(
-  r
   r-formula
   r-inum
   r-libcoin
   r-mvtnorm
+  r-strucchange
 )
 optdepends=(
   r-aer
+  r-bibtex
   r-coin
-  r-datasets
+  r-knitr
   r-mlbench
-  r-parallel
   r-party
-  r-pmml
   r-psychotools
   r-psychotree
   r-randomforest
   r-rjava
   r-rweka
   r-sandwich
-  r-strucchange
   r-th.data
   r-vcd
   r-xml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('9b6a6f795262f0aa60aff7bfdf1f41aa819f6bc6d3d35219cef672aa5312a2a9')
+sha256sums=('1427b960dff3d988db499f1dbe8b43f395dfbc4057e3d827330ed4d27b6a403a')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
