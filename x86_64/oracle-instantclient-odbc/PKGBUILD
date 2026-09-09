@@ -6,9 +6,9 @@
 
 _pkgname=instantclient-odbc
 pkgname=oracle-${_pkgname}
-pkgver=23.26.2.0.0
+pkgver=23.26.3.0.0
 _pkgver_vendor_suffix=
-_urlver=2326200v2
+_urlver=2326300
 _unzippath=instantclient_23_26
 pkgrel=1
 pkgdesc="Additional libraries for enabling ODBC applications with Instant Client"
@@ -20,8 +20,8 @@ replaces=('instantclient-odbc')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('e86aa99545eba5300db5bc604e601dc7')
-sha256sums=('c3bfe1379457ca83ae907823c3165077957e9bb50938192962ff91972135b44d')
+md5sums=('c9bc500c48e59ceb5f4ea4c8276511b7')
+sha256sums=('263cfc77bbabb96484720edf17e83afb96c917d96f053ae762186f0abce6f40c')
 
 package() {
 	local basedir="$srcdir/${_unzippath}"
