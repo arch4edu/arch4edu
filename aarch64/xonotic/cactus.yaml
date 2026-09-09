@@ -1,6 +1,7 @@
 nvchecker:
-  - source: archpkg
-    archpkg: xonotic
+  - source: alpm
+    alpm: xonotic
+    arch: x86_64
 makedepends:
   - aarch64/xonotic-data
 build_prefix: extra-aarch64

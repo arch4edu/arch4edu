@@ -1,6 +1,7 @@
 nvchecker:
-  - source: archpkg
-    archpkg: svt-av1
+  - source: alpm
+    alpm: svt-av1
+    arch: x86_64
 build_prefix: extra-aarch64
 makepkg_args: -A
 pre_build: abs-pre-build

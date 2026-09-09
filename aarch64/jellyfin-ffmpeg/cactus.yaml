@@ -1,6 +1,7 @@
 nvchecker:
-  - source: archpkg
-    archpkg: jellyfin-ffmpeg
+  - source: alpm
+    alpm: jellyfin-ffmpeg
+    arch: x86_64
 depends:
   - aarch64/svt-av1
 build_prefix: extra-aarch64
