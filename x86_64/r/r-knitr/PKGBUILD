@@ -6,10 +6,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=knitr
-_pkgver=1.51
+_pkgver=1.52
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A General-Purpose Package for Dynamic Report Generation in R"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -34,7 +34,6 @@ optdepends=(
   r-juliacall
   r-litedown
   r-magick
-  r-markdown
   r-otel
   r-otelsdk
   r-png
@@ -56,8 +55,8 @@ optdepends=(
   r-webshot
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('79f32f24b572fe198baca8882d6aa87f')
-b2sums=('eb35a26242c198d8a0a280983258cef8be5252aa842918e003564db83f7f814f8bff12d3b6f322ba52026d7c2d46cb3ae648c8bccdcdf6e6860bccdb9d600ac1')
+md5sums=('0fc9f044e50fd86269f05b6067159bc6')
+b2sums=('cc0203ec1c129890cdc92d71a6e618d953f744f9a04a0ed6e9c7325ddd5e63081312f7987ef53bb7f6005ab0cb05e5be2e41f59a5fdf86fa272143e60e84bbbd')
 
 build() {
   mkdir build
