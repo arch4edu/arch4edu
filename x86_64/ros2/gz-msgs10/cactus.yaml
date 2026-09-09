@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: protobuf
 depends:
   - x86_64/ros2/gz-cmake3
   - x86_64/ros2/gz-math7
