@@ -10,7 +10,7 @@ pkgname=(
     'ros2-jazzy-ros_gz'
 )
 pkgver=1.0.24
-pkgrel=1
+pkgrel=2
 pkgdesc="ROS 2 Jazzy integration with the Gazebo (Harmonic) simulator"
 url="https://index.ros.org/p/ros_gz/"
 arch=('x86_64')
