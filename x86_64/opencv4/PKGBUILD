@@ -3,7 +3,7 @@
 _pkgname="opencv4"
 pkgname="$_pkgname"
 pkgver="4.14.0"
-pkgrel=3
+pkgrel=4
 pkgdesc="Open Source Computer Vision Library (version 4.x)"
 url="https://github.com/opencv/opencv"
 license=('Apache-2.0')
