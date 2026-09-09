@@ -4,11 +4,20 @@
 # Contributor: Viliam Pucik <viliam.pucik@gmail.com>
 # Maintainer: Adam Nielsen <malvineous@shikadi.net>
 
+# This package is also available as a Pacman repo, to simplify upgrades.
+# Add the following lines to the end of /etc/pacman.conf:
+#
+# [oracle]
+# SigLevel = Optional TrustAll
+# Server = http://linux.shikadi.net/arch/$repo/$arch/
+#
+# Then run `pacman -Sy` then `pacman -S oracle-instantclient-sqlplus`
+
 _pkgname=instantclient-sqlplus
 pkgname=oracle-${_pkgname}
-pkgver=23.26.2.0.0
+pkgver=23.26.3.0.0
 _pkgver_vendor_suffix=
-_urlver=2326200v2
+_urlver=2326300
 _unzippath=instantclient_23_26
 pkgrel=1
 pkgdesc="SQL*Plus for Oracle Instant Client"
@@ -20,8 +29,8 @@ replaces=('instantclient-sqlplus')
 options=(!strip)
 
 source=("https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
-md5sums=('56261bd9d512e7cbdd36a8fe63e47fb8')
-sha256sums=('5d3c916c0b7ff761d157edfb8da526b410a9cf40e3f01c02ea22c2654764d5f5')
+md5sums=('0e63f3c8644798ba37915c29a3006c0a')
+sha256sums=('6570d7939856767cdbb549b51e1423d6a5f53143c57c30c015669706f65a632a')
 
 package() {
 	cd "$srcdir/${_unzippath}"
