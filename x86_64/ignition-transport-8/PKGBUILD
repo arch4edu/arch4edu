@@ -3,7 +3,7 @@
 
 pkgname=ignition-transport-8
 pkgver=8.4.0
-pkgrel=6
+pkgrel=7
 pkgdesc="Transport library for component communication based on publication/subscription and service calls."
 arch=('i686' 'x86_64')
 url="https://gazebosim.org/libs/transport"
