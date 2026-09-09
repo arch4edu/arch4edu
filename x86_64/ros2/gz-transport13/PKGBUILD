@@ -2,7 +2,7 @@
 
 pkgname=gz-transport13
 pkgver=13.6.0
-pkgrel=1
+pkgrel=2
 _pkgmaj=${pkgver%%.*}
 _pkgbase=${pkgname::-${#_pkgmaj}}
 pkgdesc="Transport library for component communication based on publication/subscription and service calls."
