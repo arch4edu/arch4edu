@@ -5,11 +5,20 @@
 # Contributor: Geraldo Augusto Vecchiato <geraldoav@gmail.com>
 # Maintainer: Adam Nielsen <malvineous@shikadi.net>
 
+# This package is also available as a Pacman repo, to simplify upgrades.
+# Add the following lines to the end of /etc/pacman.conf:
+#
+# [oracle]
+# SigLevel = Optional TrustAll
+# Server = http://linux.shikadi.net/arch/$repo/$arch/
+#
+# Then run `pacman -Sy` then `pacman -S oracle-instantclient-basic`
+
 _pkgname=instantclient-basic
 pkgname=oracle-${_pkgname}
-pkgver=23.26.2.0.0
+pkgver=23.26.3.0.0
 _pkgver_vendor_suffix=
-_urlver=2326200v2
+_urlver=2326300
 _unzippath=instantclient_23_26
 pkgrel=1
 pkgdesc="Light replacement for the Oracle client (files to run OCI, OCCI and JDBC-OCI programs)"
@@ -26,10 +35,10 @@ source=(LICENSE
         "https://download.oracle.com/otn_software/linux/instantclient/${_urlver}/${_pkgname}-linux.x64-${pkgver}${_pkgver_vendor_suffix}.zip")
 md5sums=('2d62e22e4f2d7e6d220fafde0f692a7d'
          '784005aa31cb56bb2303179d98fccd8e'
-         'b89085f179e934ed74551f4b71ddae10')
+         '452fa5123bf3f912517a9249bed5ad40')
 sha256sums=('f904a30b07ddf7806a33620f93b94c3d315154d26a371ece48695bb3555064a2'
             '36b5ab97950f1667403dd9b59c3cad25d8f9e457702feaece835d1bff7c971c9'
-            '4c17d54d57db68d7af54009e99e9871a9f068ca93cbf4d81f1a6606f5f28ea05')
+            'fce485361332927f8328ea4b68d98968c6b0ea124e62470de8c9d0cef880130e')
 
 package() {
 	cd "$srcdir/${_unzippath}/"
