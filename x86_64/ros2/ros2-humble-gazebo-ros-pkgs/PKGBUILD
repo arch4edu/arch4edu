@@ -11,7 +11,7 @@ pkgname=(
   'ros2-humble-gazebo-ros-pkgs'
 )
 pkgver=3.7.0
-pkgrel=2
+pkgrel=3
 pkgdesc="ROS2 gazebo_ros_pkgs stack (classic Gazebo integration)"
 arch=('x86_64')
 url="https://index.ros.org/p/gazebo_ros_pkgs/"
