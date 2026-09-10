@@ -11,6 +11,7 @@ depends:
   - x86_64/r/r-pkgload
   - x86_64/r/r-purrr
   - x86_64/r/r-r6
+  - x86_64/r/r-rdtools
   - x86_64/r/r-rlang
   - x86_64/r/r-stringi
   - x86_64/r/r-stringr
