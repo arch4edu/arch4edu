@@ -1,5 +1,5 @@
 diff --git a/PKGBUILD b/PKGBUILD
-index 85bbe41..8a42110 100644
+index 73fa5cd..be6aa87 100644
 --- a/PKGBUILD
 +++ b/PKGBUILD
 @@ -7,8 +7,8 @@ pkgdesc="A high-performance, zero-overhead, extensible Python compiler using LLV
@@ -9,11 +9,11 @@ index 85bbe41..8a42110 100644
 -depends=(llvm-libs ncurses gcc-libs glibc fast_float tomlplusplus semver fmt python)
 -makedepends=(cmake llvm git gcc-fortran clang) # cpp-peglib
 +depends=(llvm20-libs ncurses gcc-libs glibc fast_float tomlplusplus semver fmt python)
-+makedepends=(cmake llvm20 gcc15 gcc15-fortran git openblas) # cpp-peglib
++makedepends=(cmake llvm20 compiler-rt20 gcc15 gcc15-fortran git openblas) # cpp-peglib
  source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
    # googletest.zip::https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
- sha512sums=('beb0e6cfc048f3b413d165acd2dc0de5f03529a36f9425d49fdbd26105213da9de798fac60cbf6a73ff5f3e3e6a268af9da8b0a3c68e1b78c2257a9ff4a4e515')
-@@ -16,34 +16,116 @@ sha512sums=('beb0e6cfc048f3b413d165acd2dc0de5f03529a36f9425d49fdbd26105213da9de7
+ sha512sums=('347528676d963498985b278a55272bb7bc5cda5acc08807d9613edcb4f58d4b278194cfd0533437767a92bc9fbe0ff2b529c030ee2d351acfe6e58fbda1c5d1d')
+@@ -16,34 +16,119 @@ sha512sums=('347528676d963498985b278a55272bb7bc5cda5acc08807d9613edcb4f58d4b2781
  
  prepare() {
    cd ${pkgname}-${pkgver}
@@ -26,6 +26,7 @@ index 85bbe41..8a42110 100644
 -  # echo "target_link_libraries(codon_test LLVM-20)" >> CMakeLists.txt
 +  # Add LLVM library directory to linker search path and link against single LLVM dylib
 +  sed -i '/find_package(LLVM REQUIRED)/a link_directories(${LLVM_LIBRARY_DIRS})' CMakeLists.txt
++  sed -i 's/set(COMPILER_RT_NAMES clang_rt.builtins /set(COMPILER_RT_NAMES clang_rt.builtins-${CMAKE_SYSTEM_PROCESSOR} clang_rt.builtins /' CMakeLists.txt
 +  sed -i '/llvm_map_components_to_libnames/,/)/c\  set(LLVM_LIBS ${LLVM_LIBRARY_DIRS}/libLLVM.so)' CMakeLists.txt
 +  sed -i 's/target_link_libraries(codonc PRIVATE/target_link_libraries(codonc PUBLIC/' CMakeLists.txt
 +  sed -i 's/target_link_libraries(codonrt PRIVATE fmt omp backtrace LLVMSupport)/target_link_libraries(codonrt PUBLIC fmt omp backtrace hwy hwy_contrib gomp ${LLVM_LIBS})/' CMakeLists.txt
@@ -76,7 +77,9 @@ index 85bbe41..8a42110 100644
 +p = pathlib.Path('CMakeLists.txt')
 +t = p.read_text()
 +t = t.replace('add_dependencies(codonrt openblas)\n', '')
++t = t.replace('add_dependencies(codonrt openblas_64)\n', '')
 +t = t.replace('\$<TARGET_FILE:openblas> ', '/usr/lib/libopenblas.so ')
++t = t.replace('\$<TARGET_FILE:openblas_64> ', '/usr/lib/libopenblas.so ')
 +p.write_text(t)
 +"
 +  # Fix xz: tuklib_cpucores/tuklib_physmem check fails in chroot, patch out FATAL_ERROR
@@ -143,7 +146,7 @@ index 85bbe41..8a42110 100644
  }
  
  # -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
-@@ -64,9 +146,8 @@ package() {
+@@ -64,9 +149,8 @@ package() {
    # install -Dm644 ${pkgname}-${pkgver}/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
    # rm -r "$pkgdir"/usr/python
    # rm -r "$pkgdir"/usr/include/fmt
