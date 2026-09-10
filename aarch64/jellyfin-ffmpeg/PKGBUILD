@@ -3,8 +3,8 @@
 
 pkgname=jellyfin-ffmpeg
 epoch=1
-pkgver=7.1.4p1
-pkgrel=4
+pkgver=8.1.2p4
+pkgrel=1
 pkgdesc='Jellyfin fork of ffmpeg'
 arch=(x86_64)
 url='https://github.com/jellyfin/jellyfin-ffmpeg'
@@ -24,6 +24,7 @@ depends=(
   libdav1d.so
   libdrm
   libfreetype.so
+  libgcc_s.so
   libopenmpt.so
   libplacebo.so
   libtheora
@@ -75,8 +76,8 @@ optdepends=(
 )
 options=(!lto)
 source=("$pkgname::git+$url#tag=v${pkgver/p/-}")
-sha512sums=('f77cd5732b7d5dfdfd35c9f0c1d7e2c40b87b2683be5489a12f2f22ad959f52dcd972e326f512f82ea7c481cd0da33599531901aa4c1c5e7af58a9a1d1797b4d')
-b2sums=('52d212de10cc2e78f6de519dc63ff2b9130b4c1650f0c5fa83a165791cc6f4ef7e0487f0bbe2c20ee72615e73271109f59c7ef76348a6c5139ec34a17628bab6')
+sha512sums=('8b66bb66bf1dd93490e3be0558528c0849f581181b2a91c436b6defd0843ad5dfeb5d4efb4688945ae10df4c65d5552384bf5a4f9ede5b41639d781bf552d935')
+b2sums=('6e28a7b3b7e1f5e667d0dbcfa494755d006cb230e106d5c5809257260dbf19fda40d0cd58b9f62d33077ea44de6a8d76653e4fd205396e031789a7e71bed0a45')
 
 prepare() {
   cd "$pkgname"
@@ -96,7 +97,6 @@ build() {
     --extra-version=Jellyfin \
     --disable-doc \
     --disable-ffplay \
-    --disable-ptx-compression \
     --disable-shared \
     --disable-libxcb \
     --disable-sdl2 \
