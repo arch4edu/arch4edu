@@ -5,8 +5,7 @@ nvchecker:
     aur: gklib
   - source: aur
     aur: mumps
-  - source: archpkg
-    archpkg: scotch
+  - alias: scotch
 depends:
   - x86_64/mumps
   - x86_64/parmetis-git
