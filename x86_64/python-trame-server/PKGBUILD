@@ -2,7 +2,7 @@
 _base=trame-server
 pkgname=python-${_base}
 pkgdesc="Internal server side implementation of trame"
-pkgver=3.15.0
+pkgver=4.0.0
 pkgrel=1
 arch=(any)
 url="https://github.com/Kitware/${_base}"
@@ -11,7 +11,7 @@ depends=(python-wslink python-trame-common python-more-itertools)
 makedepends=(python-build python-installer python-hatchling)
 checkdepends=(python-pytest-asyncio)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('4453be227a314c68300f052d98436f300b7d9fc16d7f5605855801e0ced83c56389fbe4f93a440e8b62462b8680051122d132ddeec4ca01c4d64d490ffcc69e8')
+sha512sums=('7688ffc72c9aa0e4f0b1b08284401d0b53640b4436d9505a3e05e3d05218d24d8779d99172b34baca25a6826f4e2e8a75afb2f8da02d29f7f04461790f5cd74d')
 
 build() {
   cd ${_base}-${pkgver}
