@@ -6,7 +6,7 @@ _blend2d_commit='6dbc2cefbc996379e07104e34519a440b49b15d7'
 _asmjit_commit='0bd5787b54b575ed94bf32ac452153b34385c514'
 _loguru_commit='4adaa185883e3c04da25913579c451d3c32cfac1'
 pkgname="python-${_pkgname}"
-pkgver='7.17.0'
+pkgver='7.18.0'
 pkgrel=1
 pkgdesc='Simple package to extract text with coordinates from programmatic PDFs'
 arch=(
@@ -23,7 +23,7 @@ license=(
 )
 depends=(
 	'python>=3.10'
-	'python-docling-core>=2.85.0'
+	'python-docling-core>=2.95.0'
 	'python-pillow>=10.0.0'
 	'python-pydantic>=2.0.0'
 	'qpdf'
@@ -63,7 +63,7 @@ source=(
 	'reproducible_paths.patch'
 )
 b2sums=(
-	'c260885a1280c72eb9e6caf459ed4f7cf677b096be87a61c7f2565ca54e97906746422b7a6dc55be548bc689213aea984a99c19ee91084914488c3faf1b68b90'
+	'10a6bf0503763f56766dcbb949caa6da63e6ea3288de3a2d7fbf8c044f48b3a17e8b9d888968b4af9067496ed67342c4a6211933c5311223aa85b23fc9b3c808'
 	'b8c88f97d2c8bd291ef40a65bea30aa0dab0c5c8522d5f9a09ee7f06b866344614573f2e1cc39f49f83e9db38eeabc4034dfe3e65b6f37fbf4f758825e6d9c83'
 	'f806a7ec5419128269edb2c9e843c0d7303c78678bf4c90a734a672659f315e1f0c4232d0027cf93e9152f22cb23d0fc600cf994b45341aa1a2f8b569ece0e0c'
 	'40d8604d78460ca4e0a1f66470e40906e92cc4979dc2e409ea9f375daa3f4adf0e4b4001bda2eb407eca18ba4751d03570c244575039a134001cdffad8fe24f0'
