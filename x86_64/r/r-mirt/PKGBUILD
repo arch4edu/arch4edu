@@ -1,9 +1,9 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=mirt
-_pkgver=1.46.1
+_pkgver=1.47
 pkgname=r-mirt
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Multidimensional Item Response Theory"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
@@ -21,4 +21,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-sha256sums=('d783f1b56ab3fafebe2c5108cc135cbb0adbcf51a6535503f59c95f65ade9e09')
+sha256sums=('f92727cdc00af8f0bf9d530480f80a88696682008ac36ff22829edf9d452472a')
