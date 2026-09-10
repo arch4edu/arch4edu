@@ -8,6 +8,7 @@ depends:
   - x86_64/r/r-rcpp
   - x86_64/r/r-rcppparallel
   - x86_64/r/r-rdpack
+  - x86_64/r/r-s7
 makedepends:
   - x86_64/r/r-bh
   - x86_64/r/r-rcpparmadillo
