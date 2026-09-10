@@ -5,41 +5,42 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=roxygen2
-_pkgver=8.0.0
+_pkgver=8.1.0
 pkgname=r-${_pkgname,,}
-pkgver=8.0.0
-pkgrel=1
+pkgver=8.1.0
+pkgrel=2
 pkgdesc='In-Line Documentation for R'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
 license=('MIT')
 depends=(
-  r
   r-brew
   r-cli
   r-commonmark
-  r-cpp11
   r-desc
   r-knitr
+  r-lifecycle
   r-pkgload
-  r-purrr
   r-r6
+  r-rdtools
   r-rlang
-  r-stringi
-  r-stringr
   r-withr
   r-xml2
+)
+makedepends=(
+  r-cpp11
 )
 optdepends=(
   r-covr
   r-r.methodss3
   r-r.oo
   r-rmarkdown
+  r-s7
   r-testthat
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('75816bf3a25554f5752254b985b7242490b0fabe68a5ada335c340b820ba34e8')
+sha256sums=('6ee35d555ba8cfdbb0ab9c419e4f4af03e6a7acd8a0eaa77bc31fd50941fb691')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
