@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=NetworkComparisonTest
-_pkgver=2.2.3
+_pkgver=2.2.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -27,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('54319c0e7efbeb201b2c2f29a7ec997f')
-b2sums=('c9eaafa5ca2f0135b1a7c15439172e531267a8cdd70be86f3f01e7140daafeda40397f339965ddc6d9802036127202ef098920a7c7efd0dc4fec669e583dcd98')
+md5sums=('81dbf71f2d20b2df5b49528c80d1a9a2')
+b2sums=('c5471906fbd3483c9764f6b2dfbe84a827214aa7a52b87cf3ba3141103384f54c975c880b3b0adb7b7438df5d0bd9551045b54d7f6dc0c5ce12ef592e6838596')
 
 build() {
   mkdir build
