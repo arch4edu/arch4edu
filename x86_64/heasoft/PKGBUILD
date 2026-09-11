@@ -1,8 +1,8 @@
 # Maintainer:  Yigit Dallilar <yigit.dallilar@gmail.com>
 
 pkgname=heasoft
-pkgver=6.36
-pkgrel=3
+pkgver=6.37.1
+pkgrel=1
 # _mod should be '', '_no_xspec_modeldata' or '_plus_older_xspec_modeldata'
 _mod=''
 pkgdesc='NASA high energy astrophysics library'
@@ -15,12 +15,13 @@ optdepends=(
 url="https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/"
 arch=('x86_64')
 license=('NASA' 'GPL')
+options=('!lto')
 source=("https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft${pkgver}/heasoft-${pkgver}src${_mod}.tar.gz")
 
 # You could use below to get offical md5
 # curl -s ${source}.md5  | awk '{print "md5sums=(", $1, ")"}'
-md5sums=('e7a6c03cc6877f7f82cf06746d0356de')
-sha256sums=('f509231f1c8fa8dc9aaac3d90d146ce68806513d55fe0f0e1d16508e9954be8b')
+md5sums=('b012d7b5ee7604ed712eca8d5d146f47')
+sha256sums=('e9877b4933743ad2f53328b4034e25694431bbcb6016f50b0328bbfa84a25662')
 
 install="$pkgname.install"
 
@@ -36,14 +37,27 @@ build() {
 }
 
 package(){
-  local glibcver HEADAS
+  local glibcver HEADAS hdhost components component
+
+  glibcver=$(ldd --version | sed -n 's/ldd (GNU libc) //p')
+  hdhost="${CHOST}-libc${glibcver}"
+  HEADAS="/opt/heasoft/${hdhost}"
+  components=$(sed -n 's/^HD_SELECTED[[:space:]]*=[[:space:]]*//p' "heasoft-$pkgver/BUILD_DIR/Makefile")
+
+  set -a
+  . "heasoft-$pkgver/heacore/BUILD_DIR/hmakerc"
 
   cd "heasoft-$pkgver/BUILD_DIR"
 
-  make -j1 DESTDIR="$pkgdir" install
+  for component in $components; do
+    HD_PREFIX="/opt/heasoft/${component}"
+    HD_EXEC_PFX="/opt/heasoft/${component}/${hdhost}"
+    HD_TOP_PFX="/opt/heasoft"
+    HD_TOP_EXEC_PFX="${HEADAS}"
+  done
+  set +a
 
-  glibcver=$(ldd --version | sed -n 's/ldd (GNU libc) //p')
-  HEADAS="/opt/heasoft/${CHOST}-libc${glibcver}"
+  make -j1 DESTDIR="$pkgdir" HD_EXEC_PFX="$pkgdir/opt/heasoft/heacore/${hdhost}" install
 
   install -d "$pkgdir/etc/profile.d"
   cat > "$pkgdir/etc/profile.d/heasoft.sh" <<EOF
