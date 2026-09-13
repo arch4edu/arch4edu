@@ -1,7 +1,7 @@
 # Maintainer: Coraline Shuryn <coraline.shuryn@gmail.com>
 pkgname=antigravity-cli
 pkgver=1.2.1_5123043593420800
-pkgrel=1
+pkgrel=2
 pkgdesc="Google's agentic development platform (CLI companion)"
 arch=('x86_64' 'aarch64')
 url="https://antigravity.google/product/antigravity-cli"
