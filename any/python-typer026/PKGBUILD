@@ -5,7 +5,7 @@
 _pkgname='typer'
 pkgname="python-${_pkgname}026"
 pkgver='0.26.8'
-pkgrel=1
+pkgrel=2
 pkgdesc='Build great CLIs using Python type hints, compatibility release for Typer 0.26'
 arch=('any')
 url='https://github.com/fastapi/typer'
@@ -33,7 +33,7 @@ build() {
 
 package() {
 	cd -- "${_pkgname}-${pkgver}" || return 1
-	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 dist/*.whl
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 0 --compile-bytecode 2 dist/*.whl
 
 	mv -- "${pkgdir}/usr/bin/typer" "${pkgdir}/usr/bin/python-typer"
 	install -Dm644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
