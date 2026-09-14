@@ -6,7 +6,7 @@ pkgver='12.9.0'
 _pkgver_dashed="${pkgver//./-}"
 _releasever="${pkgver%.*}"
 _releasever_dashed="${_releasever//./-}"
-pkgrel=1
+pkgrel=2
 pkgdesc='Python bindings for libsaxonc (SaxonC-HE)'
 url='https://github.com/Saxonica/Saxon-HE'
 license=('MPL-2.0')
@@ -79,7 +79,7 @@ check() {
 package() {
 	local _src="${srcdir}/SaxonCHE-source-${_pkgver_dashed}"
 
-	python -m installer --destdir="${pkgdir}" --compile-bytecode 2 "${_src}"/dist/*.whl
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 0 --compile-bytecode 2 "${_src}"/dist/*.whl
 	install -Dm644 -- "${_src}/notices/LICENSE.txt" \
 		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
