@@ -6,7 +6,7 @@
 
 pkgname=python-pptx
 pkgver=1.0.2
-pkgrel=7
+pkgrel=8
 pkgdesc="A Python library for creating and updating PowerPoint (.pptx) files"
 url="https://github.com/scanny/python-pptx"
 arch=('any')
@@ -59,6 +59,6 @@ check() {
 
 package() {
 	cd "${pkgname}-${pkgver}"
-	python -m installer --destdir="${pkgdir}" dist/*.whl
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 0 --compile-bytecode 2 dist/*.whl
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
