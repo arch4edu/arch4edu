@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=heplots
-_pkgver=1.8.4
+_pkgver=1.8.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -11,8 +11,8 @@ arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
-  r-broom
   r-car
+  r-generics
   r-magrittr
   r-purrr
   r-rgl
@@ -23,6 +23,7 @@ optdepends=(
   r-aplpack
   r-archdata
   r-bookdown
+  r-broom
   r-candisc
   r-cardata
   r-corrgram
@@ -34,10 +35,13 @@ optdepends=(
   r-glue
   r-gplots
   r-here
+  r-htmltools
   r-knitr
   r-litedown
+  r-lmtest
   r-markdown
   r-mvinfluence
+  r-parameters
   r-patchwork
   r-qqtest
   r-reshape
@@ -51,8 +55,8 @@ optdepends=(
   r-vcdextra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('610125d1455ac5cbff1bcf1230840a54')
-b2sums=('8972498cbbf9092fd1fdebc8f41096445d1ab96941eb6342a910337fdb9560c0fad23a9382cae95c324e4ec8bf6eab16ea7b812a9d58958d30726d3495d057e8')
+md5sums=('b115b4d28c34cc15ebc1f90114d029b5')
+b2sums=('6747bfd442128b950d1e12079603d7d78c387ddeca4c3a2b80b21ee7990867819b8d61e2843e3b4331c7531947d11e3a6d0e1791053e7400e0c0cff47b4346b3')
 
 build() {
   mkdir build
