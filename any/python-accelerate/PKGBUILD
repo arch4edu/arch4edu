@@ -1,46 +1,49 @@
-# Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
+# Maintainer: @RubenKelevra <rubenkelevra@gmail.com>
+# Contributor: Daniel Bershatsky <bepshatsky@yandex.ru>
 # Contributor: jzbor <zborof at posteo dot de>
 
-pkgname=python-accelerate
-_pkgname=${pkgname#python-}
-pkgver=1.12.0
+_pkgname='accelerate'
+pkgname="python-${_pkgname}"
+pkgver=1.15.0
 pkgrel=1
 pkgdesc='A simple way to train and use PyTorch models with multi-GPU, TPU, mixed-precision'
 arch=('any')
-url='https://github.com/huggingface/accelerate'
+url="https://github.com/huggingface/${_pkgname}"
 license=('Apache-2.0')
 depends=(
-    'python-huggingface-hub'
-    'python-numpy'
-    'python-packaging'
-    'python-psutil'
-    'python-pytorch'
-    'python-safetensors'
-    'python-yaml'
+	'python>=3.10'
+	'python-huggingface-hub>=0.21.0'
+	'python-numpy>=1.17'
+	'python-packaging>=20.0'
+	'python-psutil'
+	'python-pytorch>=2.0.0'
+	'python-safetensors>=0.4.3'
+	'python-tqdm'
+	'python-yaml'
 )
-makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
-checkdepends=('python-tokenizers' 'python-transformers')
+makedepends=(
+	'python-build'
+	'python-installer'
+	'python-setuptools'
+	'python-wheel'
+)
 optdepends=(
-    'python-deepspeed:  DeepSpeed for easy and efficient ditributive training'
-    'python-rich: Rich output to console'
-    'python-torchao: Architecture optimization in PyTorch'
+	'python-deepspeed: DeepSpeed integration for distributed training'
+	'python-rich: Rich terminal output'
+	'python-timm: Model memory estimation for timm models'
+	'python-torchao>=0.6.1: FP8 training support'
+	'python-transformers: Model memory estimation for Transformers models'
 )
-source=("$_pkgname-$pkgver.tar.gz::https://github.com/huggingface/$_pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('fb396a4d747d7dca72df559c59af54deec3874d89388ea4966098cec29b98188')
+source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+b2sums=('932a5db835e6cc7211352ce4a3ad271fb0a39c71732465c05d26d2934e7853c265fc0c8adf23a4b64ab56e985896981b913574de09322479eaf3a02c10ad51d4')
 
 build() {
-    cd $_pkgname-$pkgver
-    python -m build -n -w
-}
-
-check() {
-    cd $_pkgname-$pkgver/src
-    python -c 'import accelerate'
+	cd -- "${_pkgname}-${pkgver}" || return 1
+	python -m build --wheel --no-isolation
 }
 
 package() {
-    cd $_pkgname-$pkgver
-    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    python -m installer --compile-bytecode=1 --destdir=$pkgdir \
-        dist/$_pkgname-$pkgver-py3-*-*.whl
+	cd -- "${_pkgname}-${pkgver}" || return 1
+	install -Dm644 -- LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 0 --compile-bytecode 2 dist/*.whl
 }
