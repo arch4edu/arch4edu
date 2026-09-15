@@ -1,5 +1,5 @@
 pkgname=lief
-pkgver=0.17.6
+pkgver=1.0.0
 pkgrel=1
 pkgdesc='Library to instrument executable formats'
 arch=('x86_64')
@@ -42,11 +42,15 @@ makedepends=(
 #)
 provides=(libLIEF.so)
 source=(
-	"lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz"
+  "lief-${pkgver}.tar.gz::$url/archive/refs/tags/$pkgver.tar.gz"
 )
-b2sums=('5f06b8c35e245cf7a5fc1a394f30e060a939469120c2525bf83c7d9180cc165d11b08a43d5e0a71f7959adeabff4c7d76e52e80fe9ea47360598ff37a1729fad')
+noextract=('mbedtls-lief-${pkgver}.zip')
+b2sums=('30348059518d95a740a9e44bdac10426b719f2b2846577ef94d73a1756a53ab46b5f7cd1f2dea1814cbeeb5a92a1ac0d221a586b2a089b5d281a83a091082c41')
 
 prepare() {
+  mkdir -p mbedtls-lief
+  bsdtar -xf LIEF-${pkgver}/third-party/mbedtls*.zip -C mbedtls-lief
+
   cd "LIEF-$pkgver"
   # unpin versions
   sed 's/==.*//' --in-place api/python/build-requirements.txt
@@ -62,8 +66,8 @@ build() {
     -D LIEF_EXAMPLES=OFF
     -D LIEF_PYTHON_API=ON
     -D LIEF_OPT_NLOHMANN_JSON_EXTERNAL=ON
-    -D LIEF_OPT_MBEDTLS_EXTERNAL=ON
-    -D LIEF_OPT_EXTERNAL_EXPECTED=ON
+    -D FETCHCONTENT_SOURCE_DIR_LIEF_MBEDTLS="${srcdir}/mbedtls-lief"
+    -D LIEF_OPT_MBEDTLS_EXTERNAL=OFF
     -D LIEF_RUST_API=ON
     -D LIEF_DEX=ON
     -D LIEF_PE=ON
