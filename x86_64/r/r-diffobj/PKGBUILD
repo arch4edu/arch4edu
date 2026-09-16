@@ -2,10 +2,10 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=diffobj
-_pkgver=0.3.6
+_pkgver=0.3.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=4
+pkgrel=5
 pkgdesc="Diffs for R Objects"
 arch=(i686 x86_64)
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -21,7 +21,7 @@ optdepends=(
 
 # It uses cloud.r-project.org instead of cran to make use of the CDN.
 source=("https://cloud.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-b2sums=('f1dd3138845bf8617e98a07fe567f0a40e814113ccd2788f13af190423b809c751f3dc613854da78a4d151d4dc591bc1c1166f0d2a2f7eb06fdeaae9e76147da')
+b2sums=('3b06abbaa178c1724b7030722a533d6cc525a58526e3c9ccf270f4e59cdf79c78352b9c3e32a4afab8da666522edcd622d6e236ad3a7975cc578314bc9f0a6b8')
 
 build() {
   mkdir -p "${srcdir}/build/"
