@@ -5,7 +5,7 @@
 _pkgname=RcppParallel
 pkgname=r-${_pkgname,,}
 pkgdesc="Parallel Programming Tools for Rcpp"
-pkgver=5.1.11
+pkgver=6.2.1
 pkgrel=1
 url="https://cran.r-project.org/package=${_pkgname}"
 license=("GPL3")
@@ -23,10 +23,12 @@ optdepends=(
 )
 makedepends=()
 
-source=("https://cran.r-project.org/src/contrib/Archive/${_pkgname}/${_pkgname}_${pkgver}.tar.gz")
-sha256sums=("04b6d979e38d120049cb1f788873972ac3e65033d4c6878de4a3ee11e3484536")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${pkgver}.tar.gz")
+sha256sums=('6d076439020f64f502552ae924e93f62b6fefd2bb5c193987751dc7a48826ebc')
 
 build() {
+    # link against the system TBB instead of building the bundled copy
+    export TBB_LIB=/usr/lib TBB_INC=/usr/include
     R CMD INSTALL ${_pkgname}_${pkgver}.tar.gz \
     --library="${srcdir}" \
     --no-byte-compile \
