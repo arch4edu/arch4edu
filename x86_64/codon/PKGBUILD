@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Michel Zou <xantares09@hotmail.com>
 pkgname=codon
-pkgver=0.20.0
+pkgver=0.20.2
 pkgrel=1
 pkgdesc="A high-performance, zero-overhead, extensible Python compiler using LLVM"
 license=(Apache-2.0)
@@ -11,7 +11,7 @@ depends=(llvm20-libs ncurses gcc-libs glibc fast_float tomlplusplus semver fmt p
 makedepends=(cmake llvm20 compiler-rt20 gcc15 gcc15-fortran git openblas) # cpp-peglib
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
   # googletest.zip::https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-sha512sums=('347528676d963498985b278a55272bb7bc5cda5acc08807d9613edcb4f58d4b278194cfd0533437767a92bc9fbe0ff2b529c030ee2d351acfe6e58fbda1c5d1d')
+sha512sums=('6311dd16fcfc709fd17bb36ebb3fcb450a40f2e8fa93122c474931b014e59d0f3429445af92a2d7bbf6b392cd1cfc680682d5a08fcead565ca481eaee5ef22f0')
 # '404a954c72adfb4206c909bd59a0ab0d59d84bf8703c97133b52d0e6a58755310907db62bda13fe352e17250bd5c728fad1fd50d2cbf02154db930fe44754817'
 
 prepare() {
