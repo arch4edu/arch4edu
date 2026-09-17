@@ -6,7 +6,7 @@
 pkgname=tkimg
 _pkgname=Img
 pkgver=2.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Provides the handling of several image formats beyond the standard formats in Tk'
 url='https://wiki.tcl-lang.org/page/Img'
 arch=('x86_64')
@@ -18,6 +18,7 @@ sha256sums=('932d386142e5aaff74add63da283d0547f0515d6155b9a2b69b433f9c353271a')
 build() {
   cd "${_pkgname}-${pkgver}"
 
+  export LIBS="-lm"
   ./configure --prefix=/usr --enable-64bit --enable-threads
   make all
 }
