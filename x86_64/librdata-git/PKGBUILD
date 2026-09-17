@@ -1,8 +1,8 @@
 # Maintainer: John Boyd <boyd8444@sdf.org>
 
 pkgname=librdata-git
-pkgver=r125.33bd276
-pkgrel=2
+pkgver=r128.7ae01f6
+pkgrel=1
 pkgdesc="RData file parser library"
 arch=('x86_64')
 url="https://github.com/WizardMac/librdata"
