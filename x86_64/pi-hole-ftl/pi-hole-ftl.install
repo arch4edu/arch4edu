@@ -4,9 +4,10 @@ post_install() {
 }
 
 post_upgrade() {
-  # /etc/pihole/versions file generation
-  [ -f /opt/pihole/updatecheck.sh ] && sudo -u pihole bash /opt/pihole/updatecheck.sh;
-
+  # NOTE: /opt/pihole/updatecheck.sh is deliberately not run here. It queries
+  # GitHub for Core/Web/FTL versions, which stalls or errors during the pacman
+  # transaction when DNS is unavailable - likely, since Pi-hole serves it.
+  # /etc/pihole/versions is refreshed by the periodic update check instead.
   post_install $1
 }
 
