@@ -4,7 +4,7 @@
 _name=cloup
 
 pkgname=python-cloup
-pkgver=3.1.0
+pkgver=4.0.0
 pkgrel=1
 pkgdesc="Cloup (= Click + groups) contains a set of Click extensions for multiple purposes."
 
@@ -13,7 +13,7 @@ license=("MIT")
 url="https://github.com/janLuke/cloup"
 
 source=("https://github.com/janLuke/$_name/archive/refs/tags/v$pkgver.tar.gz")
-sha512sums=('c9eed29f4b9ce6ccdb7b2e9b74f34922f4e1105b90da35cb652b20860a10409f9490a6966db58914454ffaabf53ea00641110b2ebb8e2f1f8f2f9240865af604')
+sha512sums=('487c28ffc8f7e467da37bc45a7da2467fe57e2934bf51d8fb019eebdad9cb77e47f4547f789450a15d74e9c0cdadca98264ef7b0cf91c8a99ed1b112d0249ab8')
 
 depends=(
     "python"
@@ -22,6 +22,8 @@ depends=(
 )
 makedepends=(
     "python-build"
+    "python-hatchling"
+    "python-hatch-vcs"
     "python-installer"
     "python-setuptools"
     "python-setuptools-scm"
@@ -31,11 +33,6 @@ checkdepends=(
     "python-pytest"
 )
 
-prepare() {
-    cd "$srcdir/$_name-$pkgver"
-    sed -i 's/setuptools_scm<10/setuptools_scm/' setup.py
-}
-
 build() {
     cd "$srcdir/$_name-$pkgver"
     SETUPTOOLS_SCM_PRETEND_VERSION=${pkgver} \
@@ -44,11 +41,16 @@ build() {
 
 check() {
     cd "$srcdir/$_name-$pkgver"
-    pytest
+
+    python -m venv --system-site-packages venv
+    source venv/bin/activate
+    pip install ./dist/*.whl
+    python -m pytest
+    rm -rf venv
 }
 
 package() {
     cd "$srcdir/$_name-$pkgver"
-    python -m installer --destdir="$pkgdir" dist/*.whl
+    python -m installer --destdir="$pkgdir" ./dist/*.whl
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
