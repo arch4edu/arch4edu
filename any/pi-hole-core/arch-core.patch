@@ -38,10 +38,9 @@ diff -uprN pi-hole-6.3/advanced/Scripts/piholeLogFlush.sh pi-hole-6.3.cust/advan
      if [[ "$*" != *"quiet"* ]]; then
          echo -e "${OVER}  ${TICK} Deleted ${deleted} queries from long-term query database"
      fi
-diff -uprN pi-hole-6.3/advanced/Scripts/updatecheck.sh pi-hole-6.3.cust/advanced/Scripts/updatecheck.sh
---- pi-hole-6.3/advanced/Scripts/updatecheck.sh	2025-11-27 19:10:51.000000000 +0100
-+++ pi-hole-6.3.cust/advanced/Scripts/updatecheck.sh	2025-11-27 23:02:14.694012168 +0100
-@@ -71,13 +71,13 @@ fi
+--- pi-hole-6.3/advanced/Scripts/updatecheck.sh	2026-09-17 21:24:04.695634438 +0200
++++ pi-hole-6.3.cust/advanced/Scripts/updatecheck.sh	2026-09-17 21:24:23.221678486 +0200
+@@ -74,38 +74,26 @@ fi
  
  # get Core versions
  
@@ -57,9 +56,12 @@ diff -uprN pi-hole-6.3/advanced/Scripts/updatecheck.sh pi-hole-6.3.cust/advanced
 +CORE_HASH="builtfromreleasetarball"
  addOrEditKeyValPair "${VERSION_FILE}" "CORE_HASH" "${CORE_HASH}"
  
- GITHUB_CORE_VERSION="$(get_remote_version pi-hole "${CORE_BRANCH}")"
-@@ -88,13 +88,13 @@ addOrEditKeyValPair "${VERSION_FILE}" "G
- 
+-GITHUB_CORE_VERSION="$(get_remote_version pi-hole "${CORE_BRANCH}")"
+-addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_CORE_VERSION" "${GITHUB_CORE_VERSION}"
+-
+-GITHUB_CORE_HASH="$(get_remote_hash pi-hole "${CORE_BRANCH}")"
+-addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_CORE_HASH" "${GITHUB_CORE_HASH}"
+-
  # get Web versions
  
 -WEB_VERSION="$(get_local_version "${ADMIN_INTERFACE_DIR}")"
@@ -74,7 +76,28 @@ diff -uprN pi-hole-6.3/advanced/Scripts/updatecheck.sh pi-hole-6.3.cust/advanced
 +WEB_HASH="builtfromreleasetarball"
  addOrEditKeyValPair "${VERSION_FILE}" "WEB_HASH" "${WEB_HASH}"
  
- GITHUB_WEB_VERSION="$(get_remote_version web "${WEB_BRANCH}")"
+-GITHUB_WEB_VERSION="$(get_remote_version web "${WEB_BRANCH}")"
+-addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_WEB_VERSION" "${GITHUB_WEB_VERSION}"
+-
+-GITHUB_WEB_HASH="$(get_remote_hash web "${WEB_BRANCH}")"
+-addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_WEB_HASH" "${GITHUB_WEB_HASH}"
+-
+ # get FTL versions
+ 
+ FTL_VERSION="$(pihole-FTL version)"
+@@ -117,12 +105,6 @@ addOrEditKeyValPair "${VERSION_FILE}" "F
+ FTL_HASH="$(pihole-FTL --hash)"
+ addOrEditKeyValPair "${VERSION_FILE}" "FTL_HASH" "${FTL_HASH}"
+ 
+-GITHUB_FTL_VERSION="$(get_remote_version FTL "${FTL_BRANCH}")"
+-addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_FTL_VERSION" "${GITHUB_FTL_VERSION}"
+-
+-GITHUB_FTL_HASH="$(get_remote_hash FTL "${FTL_BRANCH}")"
+-addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_FTL_HASH" "${GITHUB_FTL_HASH}"
+-
+ # get Docker versions
+ 
+ if [[ "${DOCKER_TAG}" ]]; then
 diff -uprN pi-hole-6.3/advanced/Templates/logrotate pi-hole-6.3.cust/advanced/Templates/logrotate
 --- pi-hole-6.3/advanced/Templates/logrotate	2025-11-27 19:10:51.000000000 +0100
 +++ pi-hole-6.3.cust/advanced/Templates/logrotate	2025-11-27 23:02:14.747450448 +0100
@@ -102,11 +125,6 @@ diff -uprN pi-hole-6.3/advanced/Templates/logrotate pi-hole-6.3.cust/advanced/Te
      # su #
      weekly
      create 640 pihole pihole
-diff -uprN pi-hole-6.3/advanced/Templates/pihole.sudo pi-hole-6.3.cust/advanced/Templates/pihole.sudo
---- pi-hole-6.3/advanced/Templates/pihole.sudo	1970-01-01 01:00:00.000000000 +0100
-+++ pi-hole-6.3.cust/advanced/Templates/pihole.sudo	2025-11-27 23:02:14.748944993 +0100
-@@ -0,0 +1 @@
-+pihole ALL=(ALL:ALL) NOPASSWD: /usr/bin/pihole
 diff -uprN pi-hole-6.3/gravity.sh pi-hole-6.3.cust/gravity.sh
 --- pi-hole-6.3/gravity.sh	2025-11-27 19:10:51.000000000 +0100
 +++ pi-hole-6.3.cust/gravity.sh	2025-11-27 23:02:14.734281312 +0100
