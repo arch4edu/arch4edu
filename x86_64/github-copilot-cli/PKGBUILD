@@ -6,7 +6,7 @@ _npmmodule=@github/copilot
 pkgname=github-copilot-cli
 _pkgexec=copilot
 
-pkgver=1.0.85
+pkgver=1.0.86
 pkgrel=1
 
 pkgdesc="GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal."
@@ -30,8 +30,8 @@ source=("https://registry.npmjs.org/${_npmmodule}/-/copilot-${pkgver}.tgz"
 		"CHANGELOG-${pkgver}.md::${_urlraw}/changelog.md")
 noextract=("copilot-${pkgver}.tgz")
 
-b2sums=('15f81b652c9dcddfb690c468c581684c23f5b585bb0d6946a24662915e96ac5690890e3cbe9749d98185f75025bbba3b7e42820b4326b1862491bbe74daae194'
-        'e6c6be35a67a061c3b1f93527117c494d0b1feb33882fcae608ef2e8179826bae60ef6104fc00dae9050f53c869cc9e6e1a3788b4d622e3a3d484ec6a551e9dd')
+b2sums=('7cd36d7f7e0dd31770a7a6bc5d365b11dc02249baeeb701d5c7dcb19819ba4631689a1e7b848976362c3bcaa98dd8ad2c6c0d3b1bf0b54d1bdeb8e0abf902a83'
+        '7a3633ef10d877b2c0249862934cc15d0387d906322eb8b5f597a44ae56c41b12b1891f6b50a2e21076e50fc44aa45a27fc158c72a54224cec861105fdd314b0')
 
 # Document: https://wiki.archlinux.org/title/Node.js_package_guidelines
 package() {
@@ -53,18 +53,23 @@ package() {
 
 	msg2 "Cleaning non-native prebuilds for ${_arch}"
 	if [ -d "${_moddir}/prebuilds" ]; then
+		msg2 "Cleaning 'prebuilds'"
 		find "${_moddir}/prebuilds" -mindepth 1 -maxdepth 1 -type d ! -name "linux-${_arch}" -exec rm -rf {} +
 	fi
 	if [ -d "${_moddir}/mxc-bin" ]; then
+		msg2 "Cleaning 'mxc-bin'"
 		find "${_moddir}/mxc-bin" -mindepth 1 -maxdepth 1 -type d ! -name "${_arch}" -exec rm -rf {} +
 	fi
 	if [ -d "${_moddir}/ripgrep/bin" ]; then
+		msg2 "Cleaning 'ripgrep/bin'"
 		find "${_moddir}/ripgrep/bin" -mindepth 1 -maxdepth 1 -type d ! -name "linux-${_arch}" -exec rm -rf {} +
 	fi
 	if [ -d "${_moddir}/clipboard/node_modules/@teddyzhu" ]; then
+		msg2 "Cleaning 'clipboard/node_modules/@teddyzhu'"
 		find "${_moddir}/clipboard/node_modules/@teddyzhu" -mindepth 1 -maxdepth 1 -type d ! -name "clipboard-linux-${_arch}-gnu" -exec rm -rf {} +
 	fi
 	if [ -d "${_moddir}/foundry-local-sdk/node_modules/foundry-local-sdk/prebuilds" ]; then
+		msg2 "Cleaning 'foundry-local-sdk/node_modules/foundry-local-sdk/prebuilds'"
 		find "${_moddir}/foundry-local-sdk/node_modules/foundry-local-sdk/prebuilds" -mindepth 1 -maxdepth 1 -type d ! -name "linux-${_arch}" -exec rm -rf {} +
 	fi
 
