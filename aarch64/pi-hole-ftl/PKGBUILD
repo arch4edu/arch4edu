@@ -7,13 +7,21 @@
 pkgname=pi-hole-ftl
 _pkgname=FTL
 _servicename=pihole-FTL
-pkgver=6.6.2
-pkgrel=3
+pkgver=6.7
+pkgrel=1
+
+# Upstream release metadata, used to stamp the version into the binary.
+# Update both with every version bump.
+_commit='fa65a88f8cdef1013594d4de14108077954faea4'
+_commit_date='2026-07-06 21:07:11 +0100'
+
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 pkgdesc="The Pi-hole FTL engine"
 url="https://github.com/pi-hole/FTL"
 license=('EUPL-1.2')
-depends=('nettle' 'gmp' 'mbedtls' 'pi-hole-web')
+# mbedtls3: Arch's mbedtls 4.x is built without MBEDTLS_THREADING_C, which
+# civetweb's mod_mbedtls.inl requires (#error otherwise).
+depends=('nettle' 'gmp' 'mbedtls3' 'libidn2' 'dbus' 'pi-hole-web')
 makedepends=('cmake' 'xxd')
 conflicts=('dnsmasq')
 provides=('dnsmasq')
@@ -24,7 +32,7 @@ source=($pkgname-v$pkgver.tar.gz::"https://github.com/pi-hole/FTL/archive/v$pkgv
         "$pkgname.sysuser"
         "$pkgname.service"
         "nettle4_base64_decode_update.patch")
-sha256sums=('5827e6bfd7ff4a8ed8cd1e475f9bee66061533375ea5061ba1946c73992de082'
+sha256sums=('12100ef39800917a298f1cfc45c40df6b6a415953a5a47f62a94d24894443cde'
             '0feb4597a4afd9054553505d305b0feb7e1f6e1705b092561648ff37d0a2893c'
             'dd1d2a341e774d4e549373ae75604031b9af0ee44debcd71a89259d9110d2a77'
             '0998da040d038ddbad129ba8e1ea74741bc912813407b579cab1b3b3f206e721'
@@ -34,23 +42,34 @@ prepare() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
   # Fix nettle 4.0 API change: base64_decode_update dst_length is now also an input
   patch -Np1 -i "$srcdir"/nettle4_base64_decode_update.patch
-  # Fix strstr redefined warning treated as error (GCC 14+)
-  sed -i '/#define memmove/a #undef strstr' src/FTL.h
-  # Fix const qualifier warnings in webserver.c (GCC 14+)
-  sed -i 's/\bchar \*pos = strchr(host,/const char *pos = strchr(host,/g' src/webserver/webserver.c
-  sed -i 's/\bchar \*equal_sign = strchr(opt,/const char *equal_sign = strchr(opt,/g' src/webserver/webserver.c
-  # Fix mbedtls 3.x API changes
+  # GCC 16: sanitize_dns_hosts() increments this counter but never reads it.
+  # Scoped to that function only - the other validator loops do use their i.
+  sed -i '/^void sanitize_dns_hosts(/,/^}/ s/int i = 0;/int i __attribute__((unused)) = 0;/' src/config/validator.c
+  # x509.c targets the mbedtls 2.x API; mbedtls3 needs the extra RNG arguments
   sed -i 's/mbedtls_x509write_crt_pem(\([^,]*\), \([^,]*\), sizeof(\([^)]*\)))/mbedtls_x509write_crt_pem(\1, \2, sizeof(\3), NULL, NULL)/g' src/webserver/x509.c
   sed -i 's/mbedtls_pk_parse_keyfile(\([^,]*\), \([^,]*\), NULL);/mbedtls_pk_parse_keyfile(\1, \2, NULL, NULL, NULL);/g' src/webserver/x509.c
-  # Fix nettle 4.0 API change: digest functions no longer take a length argument
-  find src -name '*.[ch]' -print0 | \
-    xargs -0 sed -i 's/\(hmac_sha[0-9]*_digest\|sha[0-9]*_digest\)(\([^,]*\), [A-Z0-9_]*DIGEST_SIZE, \([^)]*\))/\1(\2, \3)/g'
-  sed -i 's/hash->digest(ctx, hash->digest_size, digest)/hash->digest(ctx, digest)/g' src/dnsmasq/dnssec.c
 }
 
 build() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
-  STATIC=false ./build.sh
+
+  # mbedtls3 lives in a parallel include tree. -isystem keeps FTL's -Werror
+  # from turning warnings inside the mbedTLS headers into build failures.
+  CFLAGS+=" -isystem /usr/include/mbedtls3"
+
+  # GitHub release tarballs ship no .git directory, so gen_version.cmake's
+  # fallback runs git in $srcdir and can pick up the AUR checkout above it
+  # (producing e.g. vDev-f2a924d). These overrides are supported upstream.
+  export GIT_BRANCH='master'
+  export GIT_HASH="${_commit:0:8}"
+  export GIT_VERSION="v$pkgver"
+  export GIT_DATE="$_commit_date"
+  export GIT_TAG="v$pkgver"
+
+  STATIC=false ./build.sh \
+    "-DLIBMBEDTLS=/usr/lib/mbedtls3/libmbedtls.so \
+     -DLIBMBEDX509=/usr/lib/mbedtls3/libmbedx509.so \
+     -DLIBMBEDCRYPTO=/usr/lib/mbedtls3/libmbedcrypto.so"
 }
 
 package() {
