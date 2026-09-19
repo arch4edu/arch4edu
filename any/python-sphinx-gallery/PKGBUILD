@@ -5,7 +5,7 @@ _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}")
 #"python-${_pyname}-doc")
-pkgver=0.22.0
+pkgver=0.22.1
 pkgrel=1
 pkgdesc="Sphinx extension to automatically generate an examples gallery"
 arch=('any')
@@ -13,7 +13,7 @@ url="http://sphinx-gallery.github.io"
 license=('BSD-3-Clause')
 makedepends=('python-setuptools-scm'
              'python-build'
-             'python-installer')  # wheel required by new setuptools
+             'python-installer')
 #            'python-sphinx'
 #            'python-pillow'
 #            'python-scipy'
@@ -28,7 +28,7 @@ checkdepends=('python-pytest-cov'
 #              'python-exceptiongroup'
 ##             'mayavi'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('70ad1e9dd7b58bffd033f94619af09b1')
+md5sums=('bc434530a84a7103c00b7d1dd17815cf')
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
