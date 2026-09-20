@@ -6,8 +6,10 @@ _blend2d_commit='6dbc2cefbc996379e07104e34519a440b49b15d7'
 _asmjit_commit='0bd5787b54b575ed94bf32ac452153b34385c514'
 _loguru_commit='4adaa185883e3c04da25913579c451d3c32cfac1'
 pkgname="python-${_pkgname}"
-pkgver='7.18.0'
+pkgver='7.20.0'
 pkgrel=1
+# makepkg's strip breaks this pybind module and removes PyInit_pdf_parsers.
+options=('!strip')
 pkgdesc='Simple package to extract text with coordinates from programmatic PDFs'
 arch=(
 	'x86_64'
@@ -63,7 +65,7 @@ source=(
 	'reproducible_paths.patch'
 )
 b2sums=(
-	'10a6bf0503763f56766dcbb949caa6da63e6ea3288de3a2d7fbf8c044f48b3a17e8b9d888968b4af9067496ed67342c4a6211933c5311223aa85b23fc9b3c808'
+	'3b076f066902916030cb8c61a89a4e7b1ec214ed77433491ad4349958f52eb6959474e06b7801efb88be5c1a9ab00f3b8f36bcb7e47b37734b10c56907c8a99a'
 	'b8c88f97d2c8bd291ef40a65bea30aa0dab0c5c8522d5f9a09ee7f06b866344614573f2e1cc39f49f83e9db38eeabc4034dfe3e65b6f37fbf4f758825e6d9c83'
 	'f806a7ec5419128269edb2c9e843c0d7303c78678bf4c90a734a672659f315e1f0c4232d0027cf93e9152f22cb23d0fc600cf994b45341aa1a2f8b569ece0e0c'
 	'40d8604d78460ca4e0a1f66470e40906e92cc4979dc2e409ea9f375daa3f4adf0e4b4001bda2eb407eca18ba4751d03570c244575039a134001cdffad8fe24f0'
