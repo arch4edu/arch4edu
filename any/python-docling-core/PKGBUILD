@@ -3,7 +3,7 @@
 
 _pkgname='docling-core'
 pkgname="python-${_pkgname}"
-pkgver='2.95.0'
+pkgver='2.97.1'
 pkgrel=1
 pkgdesc='A python library to define and validate data types in Docling.'
 arch=('any')
@@ -24,7 +24,7 @@ depends=(
 	'python-pydantic-settings>=2.14.0'
 	'python-typing_extensions>=4.12.2'
 	'python-doclang>=0.7.0'
-	'python-requests' # imported unconditionally by docling_core.utils.file; omitted from upstream metadata
+	'python-requests>=2.34.2'
 )
 makedepends=(
 	'python-build'
@@ -45,7 +45,7 @@ optdepends=(
 	'python-tiktoken>=0.9.0: OpenAI tokenization for chunking'
 )
 source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
-b2sums=('a21f5660d93ae935c43a4e7409e8dff899446e2844e8342a9dc983a4b8c2a81970f286993c69d51a2a8656e18732eef4e269a86347d4b6b6bd60c1c1a542d4fe')
+b2sums=('6aa55e9a2c82a22dd6247c2f11467e74e0d5cf4dc914bda18b528a6a30f1ca783ca95a53d68f86a85eb7fbd507075cbb2d881f532045297446316624f9388974')
 
 build() {
 	cd -- "${_pkgname}-${pkgver}" || return 1
