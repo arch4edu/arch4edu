@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: tbb
 depends:
   - x86_64/r/r-bayesplot
   - x86_64/r/r-bh
