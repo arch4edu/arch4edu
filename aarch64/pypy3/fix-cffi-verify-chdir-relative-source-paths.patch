@@ -1,0 +1,10 @@
+--- a/lib_pypy/cffi/ffiplatform.py	2026-09-21 01:29:52.999044624 +0000
++++ b/lib_pypy/cffi/ffiplatform.py	2026-09-21 01:30:02.570762224 +0000
+@@ -42,6 +42,7 @@
+ 
+     backend = _pypy_compile_backend()
+     if backend is not None:
++        ext.sources = [os.path.abspath(src) for src in ext.sources]
+         oldir = os.getcwd()
+         os.chdir(tmpdir)
+         try:
