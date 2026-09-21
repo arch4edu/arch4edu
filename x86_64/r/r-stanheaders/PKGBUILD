@@ -3,7 +3,7 @@
 # Contributor: Alex Branham <alex.branham@gmail.com>
 
 _pkgname=StanHeaders
-_pkgver=2.32.10
+_pkgver=2.39.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=2
@@ -28,10 +28,10 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-flags.patch")
-md5sums=('53864e02e94bc810844fe56dce3ca461'
-         '0d0c50619b42dc9d75209fc43320c71b')
-b2sums=('fe5c609e9fc6bac1d1490a64f4b9f129885875c371fe10242309214015bfc53875161b3be4ca8f0407324ff9c85284566ab7329ea5242edcb71fa032021ddaa9'
-        '11ef9d240340ee8aaee7d0786dfbd8b412c90b22289a4fc1b9787907b78c6fd75a401078f1be796833fbc87f18095a0960c1b132efc2481e339a10bccf8782aa')
+md5sums=('e0875d728217e5b33ff17700c2717c3e'
+         'fe22ab5369c21c8018635c2d61308830')
+b2sums=('53f022bf0df4faf55846f4b1072b6ffeac631882a0623718f61a1876df55bd5bec671c99ed4bb76ed275a9abddfc9e700fe8141d7ce7e55c6754fb0dad619da6'
+        '67c49e39f6445bb8335684d92c115d2295d46af8404abe344ef5a5dd027c007520cf69603392f5984a8d2bf25fa611462849260b4540d83f1b83fe8187204b4a')
 
 prepare() {
   # fix onetbb build flags
