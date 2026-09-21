@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=weibullness
-_pkgver=1.24.1
+_pkgver=2.26.9
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Goodness-of-Fit Test for Weibull Distribution (Weibullness)"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ optdepends=(
   r-bsgof
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3725675d4d305d1ffe3f7ca8d2392132')
-b2sums=('e720ac9abe50b74199c74ed717a1b0d5e7f2778eeef5e3b9b1a6b9b94e0781364e10687616d6aeea0d553e385c7384d1cba1d51a273ac40779cacd901e629bd4')
+md5sums=('10ab3669a9173ca3618a57d02661ec34')
+b2sums=('87de21332d15ff1ee5d06b27074b81bd873791da334066e9f703b197427325b93aa62f023823b4c1770ad8dc927110e45190c9e191880dc160669fa40370b21e')
 
 build() {
   mkdir build
