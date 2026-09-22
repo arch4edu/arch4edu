@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=tinytex
-_pkgver=0.60
+_pkgver=0.61
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -25,8 +25,8 @@ optdepends=(
   r-testit
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c680dc21cfd948a22a4f72427967e3e0')
-b2sums=('ff777df7d08f71f5b0ba32acad9a8c4023e37473b5233ff2876838dab429c5c66f814abe3c6f3aa72d4946593982e667d2efed3a0eae3046fc0b0355e4b5dc1f')
+md5sums=('67e114649aa529e1631baed939110e97')
+b2sums=('37f4b410cd437f98a3f998e47fe2844cc2f3b2df139f68698a90996bbd112b0b30964ba41e95a726387db6583690a3a1f0b44bf314757695e84fef08e77f08cc')
 
 build() {
   mkdir build
@@ -35,7 +35,7 @@ build() {
 
 check() {
   cd "$_pkgname/tests"
-  R_LIBS="$srcdir/build" _R_CHECK_PACKAGE_NAME_=false Rscript --vanilla test-cran.R
+  R_LIBS="$srcdir/build" _R_CHECK_PACKAGE_NAME_=false Rscript --vanilla test-all.R
 }
 
 package() {
