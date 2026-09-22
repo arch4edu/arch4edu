@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: tbb
 depends:
   - x86_64/r/r-bh
   - x86_64/r/r-digest
