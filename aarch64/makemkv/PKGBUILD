@@ -4,8 +4,8 @@
 # Contributor: Olaf Bauer <hydro@freenet.de>
 
 pkgname=makemkv
-pkgver=1.18.4
-pkgrel=3
+pkgver=2.0.0
+pkgrel=1
 pkgdesc="DVD and Blu-ray to MKV converter"
 arch=(x86_64 i686 aarch64)
 url="https://www.makemkv.com"
@@ -14,16 +14,14 @@ depends=(qt5-base ffmpeg libavcodec.so)
 optdepends=('java-runtime: bdjava https://www.makemkv.com/bdjava/')
 install=makemkv.install
 source=(
-    #${url}/download/${pkgname}-bin-${pkgver}.tar.gz
-    #${url}/download/${pkgname}-oss-${pkgver}.tar.gz
-    https://sourceforge.net/projects/fabiololix-os-archive/files/src/makemkv-bin-1.18.4.tar.gz
-    https://sourceforge.net/projects/fabiololix-os-archive/files/src/makemkv-oss-1.18.4.tar.gz
+    ${url}/download/${pkgname}-bin-${pkgver}.tar.gz
+    ${url}/download/${pkgname}-oss-${pkgver}.tar.gz
     ffmpeg9.patch
     makemkv.1
     makemkvcon.1
     )
-sha256sums=('cee56de0baa5531abed16bd862742d308d772b4ab4dae16ee865bf74f04a1608'
-            '8590063648d42ec2a958b74573d7022f0f4c334e4e4fe7dd53b70c6e748ba453'
+sha256sums=('f1265e74875a186efdfbbbec7459a64e969033515e53cbc4d805f0a374f0a124'
+            '435316b2d219eb48c880526557addd076b5f5e6de5171424c7651f9cac95b161'
             'd35ae9e841ac43297e17a08d8819b339c5058bbdfc150fab508a442365756929'
             '5573b2e4bade10d8cd258a7c235eb46f66ef8c8c97e5d5eb090c38fa0f94389b'
             'f12c0facf2f0071a9f728b138986f0a4c2b4ff6ace2dfb2e96364e215e9fda6f')
