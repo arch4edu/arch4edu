@@ -2,7 +2,7 @@
 # Contributor: Jingbei Li <i@jingbei.li>
 _base=flit_core
 pkgname=pypy3-${_base//_/-}
-pkgver=4.0.2
+pkgver=4.1.0
 pkgrel=1
 pkgdesc="A PEP 517 build backend for packages using Flit"
 arch=(any)
@@ -10,7 +10,7 @@ url="https://github.com/pypa/${_base::4}/tree/main/${_base}"
 license=(BSD-3-Clause)
 depends=(pypy3)
 source=(${_base::4}-${pkgver}.tar.gz::https://github.com/pypa/${_base::4}/archive/${pkgver}.tar.gz)
-sha512sums=('10086861c59047fad5b02b39b527f3e805bf93ea21d66879ce67743ab04fca4021b491963d89590821806c3747baccdc697f953a27ef50f0608eb0519f8a6909')
+sha512sums=('e31f86cb595f6749867da1173f56b9c2563fcb9c3c38cdbc637a511992e7b462f7627571aad3ef1da5cc6c6574448dc69cfeb9a37d3ed7a6ce5537e90dcb5fb9')
 
 build() {
   cd ${_base::4}-${pkgver}/${_base}
