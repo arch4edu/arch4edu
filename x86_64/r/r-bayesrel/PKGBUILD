@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=Bayesrel
-_pkgver=0.7.9
+_pkgver=0.8.0
 pkgname=r-${_pkgname,,}
-pkgver=0.7.9
+pkgver=0.8.0
 pkgrel=1
 pkgdesc='Bayesian Reliability Estimation'
 arch=('x86_64')
@@ -25,7 +25,7 @@ optdepends=(
   r-tinytest
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('91e21b0e64d17ddea86fae46647631f5af417265648c66b761b4d0a65bd0b24c')
+sha256sums=('e87e12bea90c636d0308715d5097c364564f30cb938812d5700d6c193a2bd03d')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
