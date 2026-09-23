@@ -1,10 +1,10 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=gfonts
-_pkgver=0.2.0
+_pkgver=0.2.1
 pkgname=r-${_pkgname,,}
-pkgver=0.2.0
-pkgrel=2
+pkgver=0.2.1
+pkgrel=1
 pkgdesc="Offline 'Google' Fonts for 'Markdown' and 'Shiny'"
 arch=('any')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -26,7 +26,7 @@ optdepends=(
   r-vcr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('72e2eead5280b45aadbbd9385971d65e9866fd659270b1c3c1eb98330f024aa6')
+sha256sums=('b970a877ee5a1b530aa6936309f7d81670ee8caf429c7b778755d8d7e8708dec')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
