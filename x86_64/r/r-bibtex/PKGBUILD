@@ -2,16 +2,16 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=bibtex
-_pkgver=0.5.2
+_pkgver=0.5.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Bibtex Parser"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
-  r-backports
+  r
 )
 checkdepends=(
   r-devtools
@@ -21,8 +21,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d825527513d2017da22e72141f184649')
-b2sums=('a57bd2e07e7dcdcf03537b2e1d9bab80828400825f82b0b7ff658f6c79d5080d472006092b4a3ac7d87d71d39cea959809ccb04d8b8b1e18d76ee9f6e41fc39a')
+md5sums=('fd227d3ccecccdf6581d84c393972da4')
+b2sums=('4131601408ae18ae847f1b4c6671c78bcf0a34293e63e75ff8a8d69c27cb56f6a216bcef7988af5ad3a8b9b3a6f568d906d790013b04acc895e2a74b4126a4d9')
 
 prepare() {
   cd "$_pkgname/tests/testthat"
