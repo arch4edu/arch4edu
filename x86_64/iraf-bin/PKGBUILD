@@ -3,8 +3,8 @@
 pkgbase_=iraf
 pkgname_=($pkgbase_{,-noao})
 pkgname=(${pkgname_[@]/%/-bin})
-debver=2.18.1-2
-pkgver=2.18.1
+debver=2.18.2-4
+pkgver=2.18.2
 pkgrel=1
 pkgdesc="IRAF - Image Reduction and Analysis Facility"
 arch=("x86_64")
@@ -15,8 +15,8 @@ options=(!debug)
 noextract=(${pkgname_[@]/%/_${debver}_amd64.deb})
 source=(${noextract[@]/#/${url_}/})
 sha256sums=(
-	"d6dec66efc57b6e5cf8086685efc18a95a0ec4936d5219e2c867c6c3a7de4e99"
-	"487d687a1e958b3c9abd4f4b6c180e6c1a7a22f85817013d011dd44381a50cdb"
+	"fd253133de6a1107683494eedcb8d69447e122a59b72e46115146474e4bc9426"
+	"950d9c79375558a0d4ca16179b48da9ad447dbffaa791097c3a2358889b8c5f7"
 )
 # https://tracker.debian.org/pkg/iraf
 
