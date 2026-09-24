@@ -1,7 +1,7 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=jmvcore
-_pkgver=2.7.38
+_pkgver=28.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -16,6 +16,7 @@ depends=(
   r-rlang
 )
 optdepends=(
+  r-commonmark
   r-export
   r-fastmap
   r-ggplot2
@@ -27,8 +28,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b7d3644b5f85fc45ea9325aa6942a95c')
-b2sums=('ac744662fdbd3fae176fa751bf5e563467048250ea6859aca4e61409d8536c6b679efda214e3f6a5238bf838b6405c8713a2e2bbbca2a9a72209e2a1ac900797')
+md5sums=('10effc81725efea7348e73dcb18a4178')
+b2sums=('42ddfdb90415126942575c18cc549dda99630a408e9ec29a4941861efb8692837f575345fa19fbaaa6be8595155b690f39f0410ab00b3c905aaeaa9fe72f051b')
 
 build() {
   mkdir build
