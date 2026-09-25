@@ -6,7 +6,7 @@
 # Contributor: wagnerflo <florian@wagner-flo.net>
 
 _pkgname=zoo
-_pkgver=1.9-0
+_pkgver=1.9-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -35,8 +35,8 @@ optdepends=(
   r-xts
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fba440a280e772990f55aeec7257ef85')
-b2sums=('c5cc6bffe849a9baf3b997847895b57cc9c0623eb29b841bb4bc37685b4904852a61ef3783553d4cf8fb332582a58790c71aeafcb1002ec000af6a57c7d8184a')
+md5sums=('d948b0cd582fea7c99faa2cdbe5cf305')
+b2sums=('6826fb866dce00a8cd19f82f55cef8b6ec7162dad14094cb77e051f9ad347dea1ac74aad6652b2ea03f82245397c80a7778486b556ba0dffa7cfa57208a24d92')
 
 build() {
   mkdir build
