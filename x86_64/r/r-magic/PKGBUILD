@@ -3,10 +3,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=magic
-_pkgver=1.6-1
+_pkgver=1.6-1-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=5
+pkgrel=1
 pkgdesc="Create and Investigate Magic Squares"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,8 +15,8 @@ depends=(
   r-abind
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('8b5ae0549795f46eba07cbc71c04b4a7')
-b2sums=('f7c24c4adb54cc624f40c421ee7e877158b5286ae0b024f0ebe8f8b791bb076bc73945bbdf4e88f5ab8d290969a5343d960445b08f0961e7236b230d337c6644')
+md5sums=('65c20718e6a32e9fbb863a30b81bad58')
+b2sums=('a7b8a8ecdedeca31c1b8cdda07bb25eb6e6a203ac78a4f39e7622e754c8225dfb0c02cdec78ff56ca25e738ed1fc1d0d6eaa16d5ebcb2336eab886d2446ebb01')
 
 build() {
   mkdir build
