@@ -5,7 +5,7 @@ _pkgname=ggdist
 _pkgver=3.3.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Visualizations of Distributions and Uncertainty"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -71,7 +71,9 @@ build() {
 
 check() {
   cd "$_pkgname/tests"
-  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+  # Upstream SVG snapshots use a different vdiffr graphics engine.
+  # CRAN mode keeps rendering and numerical checks, but skips SVG comparisons.
+  R_LIBS="$srcdir/build" NOT_CRAN=false Rscript --vanilla testthat.R
 }
 
 package() {
