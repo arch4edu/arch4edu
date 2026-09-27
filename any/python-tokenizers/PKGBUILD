@@ -4,11 +4,12 @@
 : ${CARGO_HOME:=$SRCDEST/cargo-home}
 : ${CARGO_TARGET_DIR:=target}
 : ${RUSTUP_TOOLCHAIN:=stable}
+export CARGO_HOME CARGO_TARGET_DIR RUSTUP_TOOLCHAIN
 
 _module="tokenizers"
 _pkgname="python-$_module"
 pkgname="$_pkgname"
-pkgver=0.23.1
+pkgver=0.23.2
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 url="https://github.com/huggingface/tokenizers"
@@ -27,8 +28,8 @@ makedepends=(
 )
 checkdepends=(
   'python-datasets'
-  #└─ 'python-huggingface-hub' # AUR
-  #└─ 'python-multiprocess' # AUR
+  #└─ 'python-huggingface-hub'
+  #└─ 'python-multiprocess'
   'python-numpy'
   'python-pyarrow'
   'python-pytest'
@@ -45,28 +46,19 @@ source=(
   "norvig-big.txt"::"https://norvig.com/big.txt"
   "roberta.json"::"https://huggingface.co/roberta-large/raw/main/tokenizer.json"
 )
-sha256sums=('aa906ad27ece40261e075e171e4a8873c2c5cfdbb64205170735d425f214c7ef'
-            'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
-            '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e')
-
-_rust_env() {
-  export CARGO_HOME CARGO_TARGET_DIR RUSTUP_TOOLCHAIN
-  export GIT_DIR='.'
-}
+sha256sums=(
+  '6f900d6be35eb71921339483937946a4f42167dec9c0102e51055874fb239b8b'
+  'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
+  '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e'
+)
 
 prepare() (
-  _rust_env
   cd "$_pkgsrc/bindings/python"
-
-  # fix typo
-  sed -E -e 's@defaut@default@' -i Cargo.toml
-
   cargo update
   cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 )
 
 build() (
-  _rust_env
   cd "$_pkgsrc/bindings/python"
   cargo build --frozen --release
   python -m build --no-isolation --wheel
