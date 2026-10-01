@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=R.matlab
-_pkgver=3.8.0
+_pkgver=3.8.1
 pkgname=r-${_pkgname,,}
-pkgver=3.8.0
+pkgver=3.8.1
 pkgrel=1
 pkgdesc='Read and Write MAT Files and Call MATLAB from Within R'
 arch=('any')
@@ -20,7 +20,7 @@ optdepends=(
   r-sparsem
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('29af23200fdddb21670e45516fa148f1b522efd453b05e9aef5410e1e60c4d1d')
+sha256sums=('4bebb8beafd29f4237ddb23e38ac568fe208b86a8209291b782e11ffcf63469d')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
