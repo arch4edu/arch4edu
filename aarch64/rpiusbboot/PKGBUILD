@@ -4,7 +4,7 @@
 
 pkgname=rpiusbboot
 _pkgname=usbboot
-_pkgver=20250908-162618
+_pkgver=20261002-115811
 pkgver=${_pkgver//-/_}
 pkgrel=1
 pkgdesc="Raspberry Pi USB boot"
@@ -15,7 +15,7 @@ depends=("glibc" "libusb")
 conflict=()
 
 source=("https://github.com/raspberrypi/${_pkgname}/archive/refs/tags/${_pkgver}.tar.gz")
-sha256sums=("956cd4e09050263e1f5ba126ecdb832b53fd0fdea06d1a85397d577bd8bc6ba0")
+sha256sums=("9312b27a85da28bf7b356f3955389f13314c3bba73f0f6bee2df95517d3d3a46")
 
 #pkgver()
 #{
@@ -34,8 +34,8 @@ package()
   cd "${srcdir}/${_pkgname}-${_pkgver}"
   #make DESTDIR="${pkgdir}/" install
   install -D rpiboot ${pkgdir}/usr/bin/rpiusbboot
-  #install -d ${pkgdir}/usr/lib/udev/rules.d/
-  #install -D -m 644 debian/70-rpiboot.rules ${pkgdir}/usr/lib/udev/rules.d/
+  install -d ${pkgdir}/etc/udev/rules.d/
+  install -D -m 644 debian/70-rpiboot.rules ${pkgdir}/etc/udev/rules.d/
 }
 
 #
