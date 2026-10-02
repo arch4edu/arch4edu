@@ -5,7 +5,7 @@
 
 pkgbase=rustdesk-appimage
 pkgname=(rustdesk-appimage)
-pkgver=1.4.9
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="Yet another remote desktop software, written in Rust. Works out of the box, no configuration required."
 url="https://github.com/rustdesk/rustdesk"
@@ -20,8 +20,8 @@ optdepends=(
 options=('!strip')
 source_x86_64=("${pkgbase%-appimage}-${pkgver}-${pkgrel}-x86_64.AppImage::${url}/releases/download/${pkgver}/${pkgbase%-appimage}-${pkgver}-x86_64.AppImage")
 source_aarch64=("${pkgbase%-appimage}-${pkgver}-${pkgrel}-aarch64.AppImage::${url}/releases/download/${pkgver}/${pkgbase%-appimage}-${pkgver}-aarch64.AppImage")
-sha256sums_x86_64=('7902cd60a4f29817eebe2668a15c9a1952ac690e8f7b07bfe7620fedd4e28217')
-sha256sums_aarch64=('a955a100d9c83ec7265a14ed74cf84368fce70fa9f3943b3996dab05599cc844')
+sha256sums_x86_64=('422ebb915b4c709f3511cfa2941abcefdcb1d3d60f673f5a20cf88a4ab2c9aa5')
+sha256sums_aarch64=('7a5d56ffb9f90650d298b39f682b33f5ee55e8acd7360033c7027f37e69c069f')
 _install_path="/opt/appimages"
 
 prepare() {
