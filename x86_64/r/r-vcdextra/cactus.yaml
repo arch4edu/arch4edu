@@ -5,6 +5,7 @@ depends:
   - x86_64/r/r-ca
   - x86_64/r/r-dplyr
   - x86_64/r/r-forcats
+  - x86_64/r/r-ggplot2
   - x86_64/r/r-glue
   - x86_64/r/r-gnm
   - x86_64/r/r-gt
