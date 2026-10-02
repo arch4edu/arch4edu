@@ -9,13 +9,13 @@
 
 _pack=statistics
 pkgname=octave-$_pack
-pkgver=1.8.3
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="Additional statistics functions for Octave."
 arch=('x86_64')
 url="https://gnu-octave.github.io/packages/$_pack/"
 license=('GPL-3.0-or-later')
-depends=('octave>=11.1.0' 'octave-datatypes>=1.2.3')
+depends=('octave>=11.1.0' 'octave-datatypes>=1.5.0')
 makedepends=()
 optdepends=()
 backup=()
@@ -24,7 +24,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("$_pack-$pkgver.tar.gz::https://github.com/gnu-octave/$_pack/archive/refs/tags/release-$pkgver.tar.gz")
 noextract=("$_archive")
-b2sums=('afdaff50650647e617bf86c12edb712c73c23bd270212d8d12c8b3269bba2f10d8cc15082a5e1eb527234bf4ee9211e9a63cb35e14fa6fbba9ba8adea1a0f780')
+b2sums=('422a79a3f30ebafcda186385f4c275cac70313544e6598f1bea9e1258172d0fbbfd459de12c59ff9eb09a1a30db22ebe0b0cd1ccee0eaf784070342e0d39727c')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
