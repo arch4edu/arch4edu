@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=estimatr
-_pkgver=1.0.6
+_pkgver=2.0.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Fast Estimators for Design-Based Inference"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,6 +14,7 @@ depends=(
   r-generics
   r-rcpp
   r-rlang
+  r-tibble
 )
 makedepends=(
   r-rcppeigen
@@ -33,21 +34,22 @@ optdepends=(
   r-aer
   r-car
   r-clubsandwich
+  r-declaredesign
+  r-dplyr
   r-emmeans
   r-estimability
-  r-fabricatr
-  r-margins
+  r-ivreg
+  r-knitr
   r-modelsummary
-  r-prediction
   r-randomizr
-  r-rcppeigen
+  r-rmarkdown
   r-sandwich
-  r-stargazer
   r-testthat
+  r-texreg
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('2aa81578a1dd27d38e2306998a5f68e3')
-b2sums=('f4706a204b3df8699fdc74408943d0aee804e4e4c222320b6d66417660819891c8bb48720c10fdfb96785ca1d786a1d70aac738943b321878ab7f5621726e6f6')
+md5sums=('57f66071f6ba482a6a9c626b48a76113')
+b2sums=('dafad8c35d84db1fa01857f4dbec0999a6dedb8d895bc0a71e070da7db8982e3d39ef1d57c07babce9c95eae5ab8d6dfd3b57811bbfc04d4f672a6707b92c4a0')
 
 build() {
   mkdir build
