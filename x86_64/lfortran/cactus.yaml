@@ -7,7 +7,7 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  # The test_asr_* ctest cases import toml, but upstream declares no
+  # The test_asr_* ctest cases import tomli, but upstream declares no
   # checkdepends at all.
-  add checkdepends python-toml
+  add checkdepends python-tomli
 post_build: aur-post-build
