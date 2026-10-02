@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: openexr
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
