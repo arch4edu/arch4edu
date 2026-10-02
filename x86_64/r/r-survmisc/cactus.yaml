@@ -12,7 +12,5 @@ depends:
   - x86_64/r/r-zoo
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: |
-  aur-pre-build
-  replace 'https://cran.r-project.org/src/contrib/' 'https://cran.r-project.org/src/contrib/Archive/survMisc/'
+pre_build: aur-pre-build
 post_build: aur-post-build
