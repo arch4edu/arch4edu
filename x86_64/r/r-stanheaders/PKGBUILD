@@ -6,7 +6,7 @@ _pkgname=StanHeaders
 _pkgver=2.39.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="C++ Header Files for Stan"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -29,9 +29,9 @@ optdepends=(
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "fix-flags.patch")
 md5sums=('e0875d728217e5b33ff17700c2717c3e'
-         'fe22ab5369c21c8018635c2d61308830')
+         'e23407a45306b87d5b039a40d4514d97')
 b2sums=('53f022bf0df4faf55846f4b1072b6ffeac631882a0623718f61a1876df55bd5bec671c99ed4bb76ed275a9abddfc9e700fe8141d7ce7e55c6754fb0dad619da6'
-        '67c49e39f6445bb8335684d92c115d2295d46af8404abe344ef5a5dd027c007520cf69603392f5984a8d2bf25fa611462849260b4540d83f1b83fe8187204b4a')
+        'ca707be3c8b827f0e1dad8167c015593dc4ba8e5bcbe7aec9de9d454e2d9a2af693cf8953c95638f7359073ddcd1b6892fa0c79f4254c6cdc89d1b8fd229dd93')
 
 prepare() {
   # fix onetbb build flags

@@ -2,7 +2,7 @@ diff --git a/StanHeaders/R/Flags.R b/StanHeaders/R/Flags.R
 index 244a856..d74217d 100644
 --- a/StanHeaders/R/Flags.R
 +++ b/StanHeaders/R/Flags.R
-@@ -5,8 +5,12 @@ CxxFlags <- function(as_character = FALSE) {
+@@ -5,8 +5,13 @@ CxxFlags <- function(as_character = FALSE) {
      TBB_INC <- system.file("include", package = "RcppParallel", mustWork = TRUE)
    }
  
@@ -14,10 +14,11 @@ index 244a856..d74217d 100644
 +  }
 +
 +  if (file.exists(file.path(TBB_DIR, "version.h"))) {
++    CXXFLAGS <- paste0("-I", shQuote(TBB_INC), " -D_REENTRANT -DSTAN_THREADS -DTBB_INTERFACE_NEW")
    } else {
      CXXFLAGS <- paste0("-I", shQuote(TBB_INC), " -D_REENTRANT -DSTAN_THREADS")
      # RcppParallel TBB does not have assembly code for Windows ARM64
-@@ -30,7 +34,7 @@ LdFlags <- function(as_character = FALSE) {
+@@ -30,7 +35,7 @@ LdFlags <- function(as_character = FALSE) {
    if (dir.exists(TBB_LIB)) {
      TBB_LIB <- normalizePath(TBB_LIB)
    } else {
@@ -26,7 +27,7 @@ index 244a856..d74217d 100644
    }
  
    PKG_LIBS <- paste0("-L", shQuote(TBB_LIB))
-@@ -38,7 +42,12 @@ LdFlags <- function(as_character = FALSE) {
+@@ -38,7 +43,12 @@ LdFlags <- function(as_character = FALSE) {
    if (!(.Platform$OS.type == "windows" && R.version$arch == "aarch64")) {
      PKG_LIBS <- paste0(PKG_LIBS, " -Wl,-rpath,", shQuote(TBB_LIB))
    }
