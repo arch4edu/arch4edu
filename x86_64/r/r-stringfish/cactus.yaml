@@ -6,5 +6,8 @@ depends:
   - x86_64/r/r-rcpp
   - x86_64/r/r-rcppparallel
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  # CRAN moved 0.19.0 to Archive when 0.19.2 shipped, so the AUR source URL 404s.
+  replace -u '0.19.0' '0.19.2'
 post_build: aur-post-build
