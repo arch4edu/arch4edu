@@ -5,7 +5,7 @@ _pkgname=OpenMx
 _pkgver=2.22.11
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Extended Structural Equation Modelling"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
