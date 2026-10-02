@@ -6,7 +6,7 @@ _pkgname=RcppParallel
 pkgname=r-${_pkgname,,}
 pkgdesc="Parallel Programming Tools for Rcpp"
 pkgver=6.2.1
-pkgrel=1
+pkgrel=2
 url="https://cran.r-project.org/package=${_pkgname}"
 license=("GPL3")
 
