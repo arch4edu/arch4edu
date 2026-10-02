@@ -10,7 +10,7 @@
 
 _pack=image
 pkgname=octave-$_pack
-pkgver=2.20.0
+pkgver=2.20.1
 pkgrel=1
 pkgdesc="Functions for image processing, feature extraction, image statistics, spatial and geometric transformations, morphological operations, linear filtering, and much more."
 arch=('x86_64')
@@ -25,7 +25,7 @@ install=$pkgname.install
 _archive=$_pack-$pkgver.tar.gz
 source=("https://downloads.sourceforge.net/octave/$_archive")
 noextract=("$_archive")
-sha256sums=('5f8d97ed7f7d18ce854a8174bbf819e9e3a703bcd1cb2ca8b1ad15b9ef329522')
+sha256sums=('b4b6865e7f65ee5b9c254a69128bf10e93b38bc27f5bc5b973fef300217fc725')
 
 _octave_run() {
 	octave --no-history --no-init-file --no-window-system -q -f --eval "$*"
