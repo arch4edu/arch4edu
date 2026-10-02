@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=randomizr
-_pkgver=1.0.1
+_pkgver=2.0.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,17 +10,27 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
 depends=(
-  r
+  r-rcpp
 )
 optdepends=(
+  r-balancedsampling
+  r-blocktools
+  r-declaredesign
   r-dplyr
+  r-estimatr
+  r-fabricatr
+  r-ggplot2
   r-knitr
+  r-purrr
+  r-readr
   r-rmarkdown
+  r-sampling
   r-testthat
+  r-tidyr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('48d39b829955b9c76bd23e0ad926625c')
-b2sums=('7395a14bf4bc582f93b819d5c0cb09ec11bccebf4597082e4de97e40c9fc867df6136d72a44e13fe10c96b74c5b91df0552ad1e382fd136af9610c9bd7d7e6d7')
+md5sums=('b5f5986f70836d372470bfa9bcd1b113')
+b2sums=('76daa1f17020cedcea52fb92e0b8a7dbff2a2e786c0953fd53b89b18a331a7885202e064df5e75bed8a70cda5e3cef1b946777e3203ae4b4b2f30e23d87d2ad9')
 
 build() {
   mkdir build
