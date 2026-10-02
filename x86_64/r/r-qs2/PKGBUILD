@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=qs2
-_pkgver=0.2.2
+_pkgver=0.3.1
 pkgname=r-qs2
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,4 +21,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-sha256sums=('c59ff879e858aef0afb13de25127239624e65b20179c8631fa1f62edea25f48f')
+sha256sums=('1d555e5c38cf352209aeefb0355aa95bc04cda4af229a2a32c26d5582723b942')
