@@ -2,8 +2,8 @@
 # Contributor: Tong Chunli<t.cunly at 163 dot com>
 pkgname=python-colcon-notification
 _name=${pkgname:7}
-pkgver=0.3.0
-pkgrel=3
+pkgver=0.3.3
+pkgrel=1
 pkgdesc="An extension for colcon-core to provide status notifications."
 arch=(any)
 url="https://pypi.org/project/colcon-notification"
@@ -15,7 +15,7 @@ source=(
     https://github.com/myint/scspell/archive/refs/tags/v2.2.tar.gz
 )
 sha256sums=(
-    'f82c6e3bcd558a9fbf4bf0b1cd0dab6a1f50c056b7b4db85c56878797d0489c2'
+    'fcf11a46b75ffc65260a7d43d458d8226be8091d1250f3204a0e5ceed087c7ac'
     '04c6a795a9e0ef4571678eb9fc503bcf39106a975691336af778f31a01027082'
 )
 
