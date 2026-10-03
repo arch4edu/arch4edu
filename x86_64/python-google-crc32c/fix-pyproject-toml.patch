@@ -1,0 +1,41 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 222a070..a2fce49 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -22,5 +22,11 @@ version = "1.9.0"
+ description = "A python wrapper of the C library 'Google CRC32C'"
+ readme = "README.md"
+ requires-python = ">=3.10"
+-license = {text = "Apache-2.0"}
++license = "Apache-2.0"
+ dynamic = ["classifiers"]
++authors = [
++  { name = "Google LLC", email = "googleapis-packages@google.com" },
++]
++
++[project.optional-dependencies]
++testing = [ "pytest" ]
+diff --git a/setup.cfg b/setup.cfg
+index 0130b6e..9ef2d9c 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -4,9 +4,6 @@ description = A python wrapper of the C library 'Google CRC32C'
+ url = https://github.com/googleapis/python-crc32c
+ long_description = file: README.md
+ long_description_content_type = text/markdown
+-author = Google LLC
+-author_email = googleapis-packages@google.com
+-license = Apache 2.0
+ license_files = LICENSE
+ platforms = Posix, MacOS X, Windows
+ classifiers = 
+@@ -25,9 +22,6 @@ classifiers =
+ zip_safe = True
+ python_requires = >=3.10
+ 
+-[options.extras_require]
+-testing = pytest
+-
+ [options.package_data]
+ google_crc32c = 
+ 	py.typed
