@@ -2,7 +2,7 @@
 
 pkgname=python-healpy
 _pyname=${pkgname#python-}
-pkgver=1.20.0
+pkgver=1.20.1
 pkgrel=1
 pkgdesc="Python package to manipulate healpix maps"
 arch=('i686' 'x86_64')
@@ -16,7 +16,7 @@ makedepends=('python-setuptools-scm>=8.0'
 optdepends=('python-healpy-doc: Documentation for healpy')
 checkdepends=('python-pytest')   # requests -> pooch -> scipy
 source=("https://files.pythonhosted.org/packages/source/h/healpy/healpy-${pkgver}.tar.gz")
-md5sums=('d9f6cf988b96f06fc299fc1270c22d74')
+md5sums=('0b4c717687b18d3761dd0ee6f87313e0')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
