@@ -4,7 +4,7 @@ pkgbase=python-astropy-sphinx-theme
 _pname=${pkgbase#python-}
 _pyname=${_pname//-/_}
 pkgname=("python-${_pname}" "python-${_pname}-doc")
-pkgver=3.2
+pkgver=3.3.1
 pkgrel=1
 pkgdesc="The sphinx theme for Astropy and affiliated packages."
 arch=('any')
@@ -16,7 +16,7 @@ makedepends=('python-setuptools-scm>=8'
              'python-sphinx')
 checkdepends=('python-pytest')   # sphinx already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('25b6290710089a2899c9c5325d89c544bb5397838ee1afafda54634607d636b5')
+sha256sums=('9894e7616f3e467f41550cec8d2be12559d902c8e3f0c0114a2c08f912c17f68')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -46,7 +46,7 @@ check() {
 
 package_python-astropy-sphinx-theme() {
     cd ${srcdir}/${_pyname}-${pkgver}
-    depends=('python-sunpy-sphinx-theme>=2.1.1')
+    depends=('python-sunpy-sphinx-theme>=2.4.0')
 
     install -D -m644 LICENSE.rst -t "${pkgdir}/usr/share/licenses/${pkgname}"
     install -D -m644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
