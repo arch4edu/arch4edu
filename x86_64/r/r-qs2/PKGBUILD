@@ -3,7 +3,7 @@ _cranname=qs2
 _pkgver=0.3.1
 pkgname=r-qs2
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Efficient Serialization of R Objects"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
