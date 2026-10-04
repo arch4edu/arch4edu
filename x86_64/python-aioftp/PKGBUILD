@@ -4,8 +4,8 @@ pkgbase=python-aioftp
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=0.27.2
-pkgrel=2
+pkgver=0.28.3
+pkgrel=1
 pkgdesc="ftp client/server for asyncio"
 arch=('any')
 url="https://aioftp.readthedocs.io"
@@ -22,7 +22,7 @@ checkdepends=('python-pytest-asyncio'
               'python-trustme'
               'python-siosocks')
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('7c048c3220081796c59832a6fd9fd8fad97e3cec12a50be3abccf2dcbbeb261a')
+sha256sums=('f054f3af285b4958621220f04ce755e58907140181e95efa859369091c92d040')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
