@@ -5,8 +5,8 @@
 _name=manimpango
 
 pkgname=python-manimpango
-pkgver=0.6.1
-pkgrel=3
+pkgver=0.7.0
+pkgrel=1
 pkgdesc="C binding for Pango using Cython used in Manim to render (non-LaTeX) text."
 
 arch=("x86_64")
@@ -14,7 +14,7 @@ license=("MIT")
 url="https://github.com/ManimCommunity/ManimPango"
 
 source=("$url/releases/download/v$pkgver/$_name-$pkgver.tar.gz")
-sha512sums=('0559cfda77a936d5453492a63410fa0f125b2babcb9f10fe2bab0a259f9fe3f928e97ffac72d7994fdfa43b9684c0fb60a86c1e90ad04be336d0491ae0132b2f')
+sha512sums=('f73ac8b396a416a14658349a6e689b4cad9d39109bd55070a26f51dd7ea6161868af7f20dfcacfa72a3e40a66fada7035c303fbb70f6597d0ac88c4b04955399')
 
 depends=(
     "cairo"
