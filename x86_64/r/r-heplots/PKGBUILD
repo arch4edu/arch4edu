@@ -2,7 +2,7 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=heplots
-_pkgver=1.8.5
+_pkgver=1.8.6
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -13,6 +13,7 @@ license=('GPL-2.0-or-later')
 depends=(
   r-car
   r-generics
+  r-glue
   r-magrittr
   r-purrr
   r-rgl
@@ -32,7 +33,6 @@ optdepends=(
   r-effectsize
   r-ggbiplot
   r-ggplot2
-  r-glue
   r-gplots
   r-here
   r-htmltools
@@ -55,8 +55,8 @@ optdepends=(
   r-vcdextra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b115b4d28c34cc15ebc1f90114d029b5')
-b2sums=('6747bfd442128b950d1e12079603d7d78c387ddeca4c3a2b80b21ee7990867819b8d61e2843e3b4331c7531947d11e3a6d0e1791053e7400e0c0cff47b4346b3')
+md5sums=('a2d4beb4e52bd204f5a0539a438060d7')
+b2sums=('a92f7a8e3455923f52c4fea25f7b9c7bc3f2583afa736b49257869aba1a78fbeb0faa21867b12ce70d6c5d9716fb15317f48942936b6d1d3b71d243c7746c568')
 
 build() {
   mkdir build
