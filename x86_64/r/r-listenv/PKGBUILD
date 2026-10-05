@@ -2,7 +2,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=listenv
-_pkgver=1.0.0
+_pkgver=1.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -19,8 +19,8 @@ optdepends=(
   r-r.utils
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('3ba721b1dc3b5fcb83a2b4c0af0c0804')
-b2sums=('a808c55a7721d4890097225e4e6ebdf0d90274adc64f51a502e50b8dcfd13b9699ab81451b256ef956b8c90455f0074d8aa92d85af6149dd0fadf4cf7be270c2')
+md5sums=('d46f5ee5a4fe464bb52a2a17289b7818')
+b2sums=('1fac1fad7c3d97d1c9f09ac3e04e1961fb4d079e445fe2ee196d691f441fbe7b6282a75b958e6b17012aae0f2dc41915ea8cf26b13fac7836bc2a1b43298934e')
 
 build() {
   mkdir build
