@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=glmmTMB
-_pkgver=1.1.14
+_pkgver=1.1.15.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Generalized Linear Mixed Models using Template Model Builder"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -15,6 +15,7 @@ depends=(
   r-numderiv
   r-pbkrtest
   r-reformulas
+  r-rtmb
   r-sandwich
   r-tmb
 )
@@ -55,6 +56,7 @@ optdepends=(
   r-mlmrev
   r-multcomp
   r-mumin
+  r-ordinal
   r-plyr
   r-png
   r-pscl
@@ -63,11 +65,12 @@ optdepends=(
   r-rmarkdown
   r-testthat
   r-texreg
+  r-withr
   r-xtable
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('adfb0befff58ba57647c796498adc0d0')
-b2sums=('18f70f641fbf76b9505df75b06d3d672935b427dff90f28b77a771ce52890a93bdb50ece44345dca0471ab05f23acf711974225ead2d4c50ef4124249f443d11')
+md5sums=('6e71df854fdceb4e1ef9facb931fe442')
+b2sums=('0f4727256c83da1c01aef6e2c5e562b7eeafab9a54990276515ce471cd1e3304e14983439176fc43172951130f8694e36ef62e800c16a9ede459e99020c93efc')
 
 build() {
   mkdir build
