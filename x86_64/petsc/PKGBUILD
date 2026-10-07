@@ -3,7 +3,7 @@
 # Contributor: Myles English <myles at rockhead dot biz>
 # Contributor: Lucas H. Gabrielli <heitzmann at gmail dot com>
 pkgver=3.25.3
-pkgrel=5
+pkgrel=6
 pkgname=petsc
 pkgdesc="Portable, extensible toolkit for scientific computation"
 arch=('i686' 'x86_64')
@@ -101,3 +101,10 @@ package() {
   install -Dm 644 ${PETSC_ARCH}/lib/pkgconfig/PETSc.pc ${pkgdir}/usr/share/pkgconfig/PETSc.pc
 }
 depends+=("mumps" "parmetis-git")
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  sed -i -e 's|cdef PetscMat \*RT_Pi_mat = NULL|cdef Py_ssize_t i\n        cdef PetscMat *RT_Pi_mat = NULL|' \
+         -e 's|ND_Pi_mat\[dim\]|ND_Pi_mat[i]|' \
+         src/binding/petsc4py/src/petsc4py/PETSc/PC.pyx
+}
