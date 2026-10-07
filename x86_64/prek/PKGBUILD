@@ -2,17 +2,18 @@
 # Contributor:
 
 pkgname=prek
-pkgver=0.5.4
-pkgrel=1
+pkgver=0.5.5
+pkgrel=3
 pkgdesc="⚡ Better 'pre-commit', re-engineered in Rust"
 arch=('x86_64')
 url='https://github.com/j178/prek'
 license=('MIT')
 depends=('gcc-libs')
 makedepends=('git' 'rust' 'libxml2')
-checkdepends=('cargo-nextest')
+# TODO: https://github.com/jmelahman/PKGBUILDs/issues/119
+# checkdepends=('cargo-nextest')
 options=('!lto')
-_commit='77c4056ce76b600de77d5d425e52844a76652a58'
+_commit='77cca6719ea8e3d9cc7a973e2c9e7648f4b0381d'
 source=("$pkgname::git+$url.git#commit=$_commit")
 md5sums=('SKIP')
 
@@ -31,7 +32,8 @@ prepare() {
 build() {
   cd "$pkgname" || exit
 
-  cargo build --frozen --release --target-dir target
+  CARGO_PROFILE_RELEASE_STRIP=false \
+    cargo build --frozen --release --target-dir target
 }
 
 # TODO: https://github.com/jmelahman/PKGBUILDs/issues/119
@@ -50,12 +52,16 @@ package() {
   install -Dm755 -t "$pkgdir/usr/bin" "target/release/$pkgname"
 
   # shell completion
-  install -Dm644 <(env PATH="$pkgdir/usr/bin" COMPLETE=bash "$pkgname") \
+  install -Dm644 <("$pkgdir/usr/bin/$pkgname" util generate-shell-completion bash) \
     "$pkgdir/usr/share/bash-completion/completions/$pkgname"
-  install -Dm644 <(env PATH="$pkgdir/usr/bin" COMPLETE=zsh "$pkgname") \
+  install -Dm644 <("$pkgdir/usr/bin/$pkgname" util generate-shell-completion zsh) \
     "$pkgdir/usr/share/zsh/site-functions/_$pkgname"
-  install -Dm644 <(env PATH="$pkgdir/usr/bin" COMPLETE=fish "$pkgname") \
+  install -Dm644 <("$pkgdir/usr/bin/$pkgname" util generate-shell-completion fish) \
     "$pkgdir/usr/share/fish/vendor_completions.d/$pkgname.fish"
+  install -Dm644 <("$pkgdir/usr/bin/$pkgname" util generate-shell-completion elvish) \
+    "$pkgdir/usr/share/elvish/lib/$pkgname.elv"
+  install -Dm644 <("$pkgdir/usr/bin/$pkgname" util generate-shell-completion nushell) \
+    "$pkgdir/usr/share/nu/scripts/$pkgname.nu"
 
   # documentation
   install -Dm644 -t "$pkgdir/usr/share/doc/$pkgname" README.md
