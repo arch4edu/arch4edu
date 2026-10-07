@@ -2,10 +2,10 @@
 # Contributor: Hu Butui <hot123tea123@gmail.com>
 
 _pkgname=performance
-_pkgver=0.17.1
+_pkgver=0.18.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Assessment of Regression Models Performance"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -64,6 +64,7 @@ optdepends=(
   r-dbscan
   r-dharma
   r-discovr
+  r-effectsize
   r-estimatr
   r-fixest
   r-flextable
@@ -116,14 +117,20 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7ba70145ef64eba0462b51c62b54b630')
-b2sums=('6752c1728304a68198b61348ddbdbcced9084423091f82acf91900c988f6e419a078ba186b34c41a540d2cbd872d5487b3f46bfe2f648d9f4f33b60a0a8ca2b6')
+md5sums=('0a04532d0f14f1b7481a9e538cc544fd')
+b2sums=('936fc88ee8628e87e4dd7e39979e0a3621c6b08045010616b805f67edd329f4f39135f166b7ce92b19a20c1e13c6f76c4add6b723bc28caab9a0fdbca2c0e861')
 
 prepare() {
   # skip failing tests
   cd "$_pkgname/tests/testthat"
   sed -i '/"brms_mixed_1"/i\ \ skip("fails")' test-icc.R
   sed -i '/"model_performance.brmsfit"/a\ \ skip("fails")' test-model_performance.bayesian.R
+  # effectsize depends on performance; avoid a circular check dependency.
+  sed -i \
+    -e '/^test_that("check_group_variation-1",/a\ \ skip_if_not_installed("effectsize")' \
+    -e '/^test_that("check_group_variation, multiple by",/a\ \ skip_if_not_installed("effectsize")' \
+    -e '/skip_if_not_installed("parameters")/i\ \ skip_if_not_installed("effectsize")' \
+    test-check_group_variation.R
 }
 
 build() {
