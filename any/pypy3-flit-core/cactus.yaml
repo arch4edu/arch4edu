@@ -1,1 +1,8 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed -i "s|/opt/pypy3/lib/pypy3\.[0-9]\+/site-packages|/opt/pypy3/lib/pypy3.\$(pypy3 -c 'import sys;print(sys.version_info[1])')/site-packages|" PKGBUILD
+post_build: aur-post-build
