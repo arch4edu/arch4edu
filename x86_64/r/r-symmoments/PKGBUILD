@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=symmoments
-_pkgver=1.2.1.1
+_pkgver=1.2.2
 pkgname=r-${_pkgname,,}
-pkgver=1.2.1.1
+pkgver=1.2.2
 pkgrel=1
 pkgdesc='Symbolic Central and Noncentral Moments of the Multivariate Normal Distribution'
 arch=('any')
@@ -15,13 +15,15 @@ depends=(
   r-cubature
   r-multipol
   r-mvtnorm
+  r-mpoly
+  r-rdpack
 )
 optdepends=(
   r-ape
-  r-mpoly
+
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('00c9bca2585c2a1ef9b6cc45e2da27117c622f4dc27a3c0b90c91decedc94fc4')
+sha256sums=('5a95ba3a27ba455c7e9f0f541a58a7e4ee5c715829dbba99e4008fbbe788adee')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
