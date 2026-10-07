@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=SimDesign
-_pkgver=2.27
+_pkgver=2.28
 pkgname=r-simdesign
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,4 +21,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-sha256sums=('af706fadb23e43ae6ae14bde90b454743571cd3a01788e4f501bcf98ea9c8bdd')
+sha256sums=('b5343bd0543ffe5b873a003437cc323c8bbe9419ae7a7e12f7f1123cf203e9f9')
