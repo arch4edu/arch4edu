@@ -1,15 +1,16 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspDistributions
-_pkgver=0.96.0
+_pkgver=0.97.1
 pkgname=r-${_pkgname,,}
-pkgver=0.96.0
-pkgrel=1
+pkgver=0.97.1
+pkgrel=2
 pkgdesc="Distributions Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
 license=('GPL')
 depends=(r
   r-car
+  r-distributions7
   r-fitdistrplus
   r-ggplot2
   r-goftest
@@ -21,7 +22,7 @@ depends=(r
   r-sn
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('c6f44141adf62d62dd97b83f72061966b75df230271ec6d0f3a577926c7e9d21')
+sha256sums=('664aa08e229e4868f18297b31e96d7bdfbb451f25a6a91cfc7647cf35bd82adc')
 
 
 build() {
