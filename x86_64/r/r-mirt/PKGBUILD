@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=mirt
-_pkgver=1.47
+_pkgver=1.48
 pkgname=r-mirt
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,4 +21,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-sha256sums=('f92727cdc00af8f0bf9d530480f80a88696682008ac36ff22829edf9d452472a')
+sha256sums=('748dc043825630b302eabc483ec8a718de4552ccf53c21c1d6bad8cf0fcb0d28')
