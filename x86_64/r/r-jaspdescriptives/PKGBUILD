@@ -1,9 +1,11 @@
 #Maintainer: sukanka <su975853527 AT gmail.com>
 _pkgname=jaspDescriptives
-_pkgver=1.0
+_pkgver=0.98.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0
+pkgver=0.98.1
 pkgrel=2
+# Upstream resumed the 0.x release series after v1.0.
+epoch=1
 pkgdesc="Descriptives Module for JASP"
 arch=('any')
 url="https://github.com/jasp-stats/${_pkgname}"
@@ -12,8 +14,11 @@ depends=(r
 'r-dplyr'
 'r-forecast'
 'r-flexplot'
+'r-forcats'
+'r-ggh4x'
 'r-ggpp'
 'r-ggplot2'
+'r-ggpubr'
 'r-ggrain'
 'r-ggrepel'
 'r-ggtext'
@@ -21,9 +26,11 @@ depends=(r
 'r-jaspbase'
 'r-jaspgraphs'
 'r-jaspttests'
+'r-patchwork'
+'r-tidyplots'
 )
 source=("${_pkgname}_${_pkgver}.tar.gz::${url}/archive/refs/tags/v${_pkgver}.tar.gz")
-sha256sums=('e82328f81c3e920308f72bec93555432cf45f93619cc991763babb565941e2dd')
+sha256sums=('db38089416e50c6dde3ecc89e4f3d109803a4b30dae2e78e2c6a9ab5b85a308a')
 
 
 build() {
