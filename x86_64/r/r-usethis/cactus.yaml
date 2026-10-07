@@ -13,6 +13,7 @@ depends:
   - x86_64/r/r-glue
   - x86_64/r/r-jsonlite
   - x86_64/r/r-lifecycle
+  - x86_64/r/r-pak
   - x86_64/r/r-purrr
   - x86_64/r/r-rappdirs
   - x86_64/r/r-rlang
