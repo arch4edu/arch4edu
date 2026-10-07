@@ -5,8 +5,20 @@ makedepends:
   - any/pypy3-build
   - any/pypy-cython: pypy3-cython
   - any/pypy3-installer
+  - any/pypy3-setuptools
   - any/meson-pypy3
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  cat >> PKGBUILD <<'PREPARE'
+
+  prepare() {
+    cd numpy-${pkgver}
+    sed -i "/env\['SETUPTOOLS_USE_DISTUTILS'\] = 'stdlib'/d" vendored-meson/meson/mesonbuild/dependencies/python.py
+    sed -i -e 's@^#if PY_VERSION_HEX < 0x030900B1 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900B1 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+           -e 's@^#if PY_VERSION_HEX < 0x030900A5 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900A5 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+           numpy/_core/src/common/pythoncapi-compat/pythoncapi_compat.h
+  }
+  PREPARE
 post_build: aur-post-build
