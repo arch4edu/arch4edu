@@ -2,15 +2,16 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-car
-  - x86_64/r/r-distributions7
-  - x86_64/r/r-fitdistrplus
+  - x86_64/r/r-assertthat
+  - x86_64/r/r-generics
   - x86_64/r/r-ggplot2
+  - x86_64/r/r-ggrepel
   - x86_64/r/r-gnorm
   - x86_64/r/r-goftest
-  - x86_64/r/r-jaspbase
-  - x86_64/r/r-jaspgraphs
   - x86_64/r/r-nortest
+  - x86_64/r/r-patchwork
+  - x86_64/r/r-rlang
+  - x86_64/r/r-s7
   - x86_64/r/r-sgt
   - x86_64/r/r-sn
 build_prefix: extra-x86_64

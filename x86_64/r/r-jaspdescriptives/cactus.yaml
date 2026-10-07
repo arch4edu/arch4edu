@@ -4,16 +4,21 @@ nvchecker:
 depends:
   - x86_64/r/r-dplyr
   - x86_64/r/r-flexplot
+  - x86_64/r/r-forcats
   - x86_64/r/r-forecast
+  - x86_64/r/r-ggh4x
   - x86_64/r/r-ggplot2
   - x86_64/r/r-ggpp
+  - x86_64/r/r-ggpubr
   - x86_64/r/r-ggrain
   - x86_64/r/r-ggrepel
   - x86_64/r/r-ggtext
   - x86_64/r/r-jaspbase
   - x86_64/r/r-jaspgraphs
   - x86_64/r/r-jaspttests
+  - x86_64/r/r-patchwork
   - x86_64/r/r-stringr
+  - x86_64/r/r-tidyplots
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

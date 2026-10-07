@@ -2,12 +2,11 @@ nvchecker:
   - source: aur
     aur:
 depends:
-  - x86_64/r/r-combinat
-  - x86_64/r/r-cubature
-  - x86_64/r/r-mpoly
-  - x86_64/r/r-multipol
-  - x86_64/r/r-mvtnorm
-  - x86_64/r/r-rdpack
+  - x86_64/r/r-beeswarm
+  - x86_64/r/r-cli
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-lifecycle
+  - x86_64/r/r-vipor
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
 pre_build: aur-pre-build

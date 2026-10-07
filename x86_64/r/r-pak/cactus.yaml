@@ -16,6 +16,8 @@ depends:
   - x86_64/r/r-processx
   - x86_64/r/r-ps
   - x86_64/r/r-r6
+  - x86_64/r/r-tsitter
+  - x86_64/r/r-tstoml
   - x86_64/r/r-zip
   - x86_64/r/r-keyring
   - x86_64/r/r-yaml

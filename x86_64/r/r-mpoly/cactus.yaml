@@ -1,0 +1,16 @@
+nvchecker:
+  - source: aur
+    aur:
+depends:
+  - x86_64/r/r-ggplot2
+  - x86_64/r/r-orthopolynom
+  - x86_64/r/r-partitions
+  - x86_64/r/r-plyr
+  - x86_64/r/r-polynom
+  - x86_64/r/r-stringi
+  - x86_64/r/r-stringr
+  - x86_64/r/r-tidyr
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: aur-pre-build
+post_build: aur-post-build
