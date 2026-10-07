@@ -5,7 +5,7 @@
 _base=setuptools
 pkgname=pypy3-${_base}
 pkgver=84.0.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
 arch=(any)
@@ -32,6 +32,6 @@ _check() {
 package() {
   depends=(pypy3)
   cd "${srcdir}/${_base}-${pkgver}"
-  pypy3 setup.py install --prefix=/opt/pypy3 --root="${pkgdir}" --optimize=1
+  pypy3 setup.py install --prefix=/opt/pypy3 --root="${pkgdir}" --no-compile
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
