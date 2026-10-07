@@ -3,7 +3,7 @@ _cranname=bgms
 _pkgver=0.2.0.0
 pkgname=r-bgms
 pkgver=${_pkgver//-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Bayesian Analysis of Networks of Binary and/or Ordinal Variables"
 arch=(x86_64)
 url="https://cran.r-project.org/package=${_cranname}"
