@@ -3,7 +3,7 @@ _base=Pillow
 pkgname=pypy3-${_base,,}
 pkgdesc="Python Imaging Library (fork)"
 pkgver=12.3.0
-pkgrel=1
+pkgrel=2
 arch=(any)
 url="https://github.com/python-${_base,,}/${_base}"
 license=(MIT-CMU)
@@ -23,4 +23,12 @@ package() {
   cd ${_base}-${pkgver}
   PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" pypy3 -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}
+
+prepare() {
+  cd ${_base}-${pkgver}
+  sed -i 's@^#if PY_MAJOR_VERSION > 3 || PY_MINOR_VERSION > 11$@#if (PY_MAJOR_VERSION > 3 || PY_MINOR_VERSION > 11) \&\& !defined(PYPY_VERSION)@' src/_imagingft.c
+  sed -i -e 's@^#if PY_VERSION_HEX < 0x030900B1 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900B1 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+         -e 's@^#if PY_VERSION_HEX < 0x030900A5 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900A5 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+         src/thirdparty/pythoncapi_compat.h
 }
