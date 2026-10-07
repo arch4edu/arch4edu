@@ -13,4 +13,13 @@ build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   add depends mumps parmetis-git
+  cat >> PKGBUILD <<'PREPARE'
+
+  prepare() {
+    cd ${pkgname}-${pkgver}
+    sed -i -e 's|cdef PetscMat \*RT_Pi_mat = NULL|cdef Py_ssize_t i\n        cdef PetscMat *RT_Pi_mat = NULL|' \
+           -e 's|ND_Pi_mat\[dim\]|ND_Pi_mat[i]|' \
+           src/binding/petsc4py/src/petsc4py/PETSc/PC.pyx
+  }
+  PREPARE
 post_build: aur-post-build
