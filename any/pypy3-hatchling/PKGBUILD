@@ -2,7 +2,7 @@
 _base=hatchling
 pkgname=pypy3-${_base}
 pkgdesc="Utility library for gitignore style pattern matching of file paths"
-pkgver=1.32.0
+pkgver=1.32.4
 pkgrel=1
 arch=(any)
 url="https://github.com/pypa/${_base::5}"
@@ -10,7 +10,7 @@ license=(MIT)
 depends=(pypy3-packaging pypy3-pathspec pypy3-pluggy pypy3-trove-classifiers)
 makedepends=(pypy3-build pypy3-installer)
 source=(${url}/archive/${_base}-v${pkgver}.tar.gz)
-sha512sums=('e8165a4444675382938502e692877cdad4a3f24e11f4b38bd0f6ae6ecc8a4fdde343ef5827719c803e5b40beddfd2a934d633270f0c200e3615c9b797038681e')
+sha512sums=('b595da39a0a614ba9f744f743be556be9a7be29a491646d64a2c206b044f2cda020120ebbf3d2975db8418af3b2c03152a3c3c82a8c60efae5ed0b6101f7ca7e')
 
 build() {
   cd ${_base::5}-${_base}-v${pkgver}
