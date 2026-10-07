@@ -2,7 +2,7 @@
 _base=gmpy2
 pkgname=pypy3-${_base}
 pkgdesc="Interface to GMP, MPFR, and MPC"
-pkgver=2.3.1
+pkgver=2.3.2
 pkgrel=1
 arch=(any)
 url="https://github.com/${_base}/${_base}"
@@ -10,7 +10,7 @@ license=(LGPL-3.0-or-later)
 depends=(glibc gmp libmpc mpfr pypy3)
 makedepends=(pypy3-build pypy3-installer pypy3-setuptools)
 source=(${url}/archive/v${pkgver}/${_base}-${pkgver}.tar.gz)
-sha512sums=('e3a1bb481e76baf1c365eaf34dd42cfd9ca49839d3d2f4c845ae462e8011f816174d73ced186f3eb24d928d3cf779defa7c2cd45da98842a8a57f886c741780b')
+sha512sums=('5d2d3314fc4e58504a31a4be9c4f71a8c9d83511a39bdffc6392b003cffa29a568fea8ce44fe2099cec5a4d6d31ebcec948f6b96c03b59860fb34ffa2da923d1')
 
 build() {
   cd ${_base}-${pkgver}
