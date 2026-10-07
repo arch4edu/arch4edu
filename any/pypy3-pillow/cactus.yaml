@@ -10,5 +10,16 @@ makedepends:
   - any/pypy3-setuptools
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  cat >> PKGBUILD <<'PREPARE'
+
+  prepare() {
+    cd ${_base}-${pkgver}
+    sed -i 's@^#if PY_MAJOR_VERSION > 3 || PY_MINOR_VERSION > 11$@#if (PY_MAJOR_VERSION > 3 || PY_MINOR_VERSION > 11) \&\& !defined(PYPY_VERSION)@' src/_imagingft.c
+    sed -i -e 's@^#if PY_VERSION_HEX < 0x030900B1 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900B1 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+           -e 's@^#if PY_VERSION_HEX < 0x030900A5 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900A5 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+           src/thirdparty/pythoncapi_compat.h
+  }
+  PREPARE
 post_build: aur-post-build
