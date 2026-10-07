@@ -12,6 +12,7 @@ depends:
   - x86_64/r/r-rdpack
   - x86_64/r/r-reshape
   - x86_64/r/r-sna
+  - x86_64/r/r-truncnorm
 makedepends:
   - x86_64/r/r-rcpparmadillo
   - x86_64/r/r-rcppdist
