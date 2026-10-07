@@ -3,7 +3,7 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 _base=ray
 pkgname=python-${_base}
-pkgver=2.58.0
+pkgver=2.59.0
 pkgrel=1
 pkgdesc="A fast and simple framework for building and running distributed applications"
 arch=(x86_64)
@@ -37,7 +37,7 @@ optdepends=('python-pandas: for ray[data, tune, rllib]'
   'python-rich: for ray[rllib]'
 )
 source=(${_base}-${_base}-${pkgver}.tar.gz::${url}/archive/${_base}-${pkgver}.tar.gz gcc16.patch)
-sha512sums=('3c6f2b7197d1f5178fc63e6f90d1b76c7c0dad20abcd5f58420167d1d93dc01485f7a9054a2a4e7d1bbba0d60e4450db0b901dbc254af0a0d392f324db24ec4c' 'SKIP')
+sha512sums=('99801b0eca43fb1a7cb75f964304dd4e6fb02df68d167104dec01bad13074e5d31fce64c63bb6c3538aa66bdb5b52a4d057583969311be8ada3084db8e4b434c' 'SKIP')
 
 prepare() {
   patch -Np1 -d "${_base}-${_base}-${pkgver}" -i "$srcdir/gcc16.patch"
