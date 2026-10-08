@@ -6,4 +6,5 @@ build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   echo 'export ROCM_HOME=/opt/rocm' >> PKGBUILD
+  replace -u '0.29.0' '0.29.1'
 post_build: aur-post-build
