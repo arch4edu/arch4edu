@@ -8,5 +8,38 @@ makedepends:
   - any/pypy3-flit-core
   - any/pypy3-installer
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  prepare() {
+    cd ${_base}-${pkgver}
+    cat > pyproject.toml <<'PYPROJECT'
+  [build-system]
+  requires = ["flit_core >=3.2"]
+  build-backend = "flit_core.buildapi"
+
+  [project]
+  name = "pep517"
+  authors = [{name = "Thomas Kluyver", email = "thomas@kluyver.me.uk"}]
+  urls = {Homepage = "https://github.com/pypa/pep517"}
+  readme = "README.rst"
+  requires-python = ">=3.6"
+  dependencies = [
+      "tomli >=1.1.0;python_version<'3.11'",
+      "importlib_metadata;python_version<'3.8'",
+      "zipp;python_version<'3.8'",
+  ]
+  classifiers = [
+      "License :: OSI Approved :: MIT License",
+      "Programming Language :: Python :: 3",
+      "Programming Language :: Python :: 3 :: Only",
+  ]
+  dynamic = ["version", "description"]
+
+  [tool.isort]
+  profile = "black"
+  PYPROJECT
+  }
+  CACTUSEOF
 post_build: aur-post-build
