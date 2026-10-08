@@ -2,7 +2,7 @@
 
 pkgname=pypy3-numpy
 pkgver=2.4.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Scientific tools for Python"
 arch=('x86_64')
 license=('custom')
@@ -37,3 +37,12 @@ package() {
   mkdir -p "$pkgdir"/usr/bin
   ln -s /opt/pypy3/bin/f2py "$pkgdir"/usr/bin/f2py-pypy3
 }
+
+prepare() {
+  cd numpy-${pkgver}
+  sed -i "/env\['SETUPTOOLS_USE_DISTUTILS'\] = 'stdlib'/d" vendored-meson/meson/mesonbuild/dependencies/python.py
+  sed -i -e 's@^#if PY_VERSION_HEX < 0x030900B1 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900B1 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+         -e 's@^#if PY_VERSION_HEX < 0x030900A5 || defined(PYPY_VERSION)$@#if PY_VERSION_HEX < 0x030900A5 || (defined(PYPY_VERSION) \&\& PY_VERSION_HEX < 0x030C0000)@' \
+         numpy/_core/src/common/pythoncapi-compat/pythoncapi_compat.h
+}
+options+=(!lto)
