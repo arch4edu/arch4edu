@@ -21,4 +21,5 @@ pre_build: |
            numpy/_core/src/common/pythoncapi-compat/pythoncapi_compat.h
   }
   PREPARE
+  echo 'options+=(!lto)' >> PKGBUILD
 post_build: aur-post-build
