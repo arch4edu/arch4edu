@@ -2,7 +2,7 @@
 _base=pyproject-hooks
 pkgname=pypy3-pep517
 pkgver=0.13.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Wrappers to build Python packages using PEP 517 hooks"
 arch=(any)
 url="https://github.com/pypa/${_base}"
@@ -21,4 +21,34 @@ package() {
   cd ${_base}-${pkgver}
   pypy3 -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}
+
+prepare() {
+  cd ${_base}-${pkgver}
+  cat > pyproject.toml <<'PYPROJECT'
+[build-system]
+requires = ["flit_core >=3.2"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pep517"
+authors = [{name = "Thomas Kluyver", email = "thomas@kluyver.me.uk"}]
+urls = {Homepage = "https://github.com/pypa/pep517"}
+readme = "README.rst"
+requires-python = ">=3.6"
+dependencies = [
+    "tomli >=1.1.0;python_version<'3.11'",
+    "importlib_metadata;python_version<'3.8'",
+    "zipp;python_version<'3.8'",
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dynamic = ["version", "description"]
+
+[tool.isort]
+profile = "black"
+PYPROJECT
 }
