@@ -1,1 +1,13 @@
-../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+makedepends:
+  - any/python-sphinx-automodapi
+  - any/python-sphinx-gallery
+  - any/python-sphinx-togglebutton
+  - any/python-sphinx_design
+  - x86_64/python-sunpy
+build_prefix: extra-x86_64
+pre_build: aur-pre-build
+post_build: aur-post-build
