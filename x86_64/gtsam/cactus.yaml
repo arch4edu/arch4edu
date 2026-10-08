@@ -13,4 +13,7 @@ pre_build: |
   }
   CACTUSEOF
   sed -i '/cmake -B build/i\  sed -i '\''s/ system filesystem/ filesystem/;s/OR NOT Boost_SYSTEM_LIBRARY //;/Boost::system/d'\'' "${pkgname}-${pkgver}/cmake/HandleBoost.cmake"' PKGBUILD
+  sed -i 's|-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\|-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\\n    -DGTSAM_BUILD_WITH_WERROR=OFF \\|' PKGBUILD
+  add makedepends boost
+  add depends boost-libs
 post_build: aur-post-build
