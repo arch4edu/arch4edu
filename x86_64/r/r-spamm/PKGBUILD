@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=spaMM
-_pkgver=4.6.65
+_pkgver=4.7.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,11 +10,11 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('CECILL-2.0')
 depends=(
-  gsl
   r-backports
   r-cli
   r-geometry
   r-gmp
+  r-matrixstats
   r-minqa
   r-nloptr
   r-numderiv
@@ -23,6 +23,7 @@ depends=(
   r-rcpp
   r-reformulas
   r-roi
+  gsl
 )
 makedepends=(
   r-rcppeigen
@@ -39,21 +40,25 @@ optdepends=(
   r-future.apply
   r-infusion
   r-isorix
+  r-knitr
   r-lme4
   r-maps
   r-multilevel
   r-rann
   r-rcdd
+  r-rmarkdown
   r-roi.plugin.glpk
   r-rsae
   r-rspectra
   r-testthat
+  r-tweedie
+  r-tweediedistr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "$_pkgname-LICENSE::http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt")
-md5sums=('763b6aa0eb6ae94f5f9899112c931393'
+md5sums=('a1d2822b3ded7a62d5750cf689c82b54'
          '599cf91b33571e942d3ba5f9623b8011')
-b2sums=('7c592f3da7f5d3dcfe64692efd5e04d6e27394d6afbf141909af62e5beec5ff5fefa85c3c2ca53e46422b2c3ece68f01dc0c3b97ae91db95cf3ac825f988c5be'
+b2sums=('6902e0797469c7559b9f18687c196896ae5f11c51ce39a4a7977385c9261ff07cffc134f9e14f8933a8bdeb3934b1b0af24585ece386e34851f003177b123a3f'
         'ff97dacc39b8597e670dbaf5bc0f0e4db73eada273708433fc227fa72c054a30a67dbc7b2416089d68f09ab65da721e5b30711022c41047d9cf706731d568038')
 
 build() {
