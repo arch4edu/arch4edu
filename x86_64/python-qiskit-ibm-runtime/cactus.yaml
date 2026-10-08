@@ -9,6 +9,7 @@ depends:
   - any/python-samplomatic
   - x86_64/python-qiskit
   - x86_64/python-qiskit-aer
+  - any/python-qiskit-mitigation
 build_prefix: extra-x86_64
 pre_build: aur-pre-build
 post_build: aur-post-build
