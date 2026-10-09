@@ -4,7 +4,7 @@
 # Prior Maintainer: David Birks <david@birks.dev>
 
 pkgname=conftest
-pkgver=0.69.0
+pkgver=0.70.1
 pkgrel=1
 pkgdesc='A utility to help you write tests against structured configuration data'
 arch=(x86_64)
@@ -12,7 +12,7 @@ url='https://github.com/open-policy-agent/conftest'
 license=(Apache)
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/open-policy-agent/conftest/archive/v$pkgver.tar.gz")
-sha512sums=('0613ee20571699fd66b4ab2a1b5a1c181772b8847ce9d4f01b07eaf3aa9e437dc5e012ed80fe49880b2d7f0196c4abed51bf065647f6fdd9c36796aa38f246e8')
+sha512sums=('86c26ff1a69b74caf569f6f444aa209891465181e7a3c9d38495bfb0fead33b438867f27b8ec2eb844e385e80297a92e06bfa33252010a0f8adaa43a896661ec')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -44,3 +44,4 @@ package() {
   install -vDm 644 "$srcdir/$pkgname-$pkgver/completion/_conftest" -t "$pkgdir/usr/share/zsh/site-functions/"
 }
 options+=("!lto")
+export TMPDIR="${GOTMPDIR:-/tmp}"
