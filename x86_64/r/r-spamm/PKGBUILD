@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=spaMM
-_pkgver=4.7.0
+_pkgver=4.7.17
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -56,9 +56,9 @@ optdepends=(
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz"
         "$_pkgname-LICENSE::http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt")
-md5sums=('a1d2822b3ded7a62d5750cf689c82b54'
+md5sums=('88b622a54a260c7c2bd19ade419751f7'
          '599cf91b33571e942d3ba5f9623b8011')
-b2sums=('6902e0797469c7559b9f18687c196896ae5f11c51ce39a4a7977385c9261ff07cffc134f9e14f8933a8bdeb3934b1b0af24585ece386e34851f003177b123a3f'
+b2sums=('c6019526a8eb62d55a6359db04e988e82fa02f4bc735082dd701912a562499315f1ef7c054154be5d0c3907ef049b5b09527b8ca32776c729abcc18129734af9'
         'ff97dacc39b8597e670dbaf5bc0f0e4db73eada273708433fc227fa72c054a30a67dbc7b2416089d68f09ab65da721e5b30711022c41047d9cf706731d568038')
 
 build() {
