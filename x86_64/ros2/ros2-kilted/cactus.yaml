@@ -1,0 +1,22 @@
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+depends:
+  - x86_64/ros2/ros2-arch-deps
+  - x86_64/sip4: python-sip4
+  - x86_64/ros2/lttng-tools
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # Rename original package() so we can wrap it.
+  sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
+  # colcon bakes the chroot build tree into the installed .pc/.cmake files.
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  package() {
+      _package
+      grep -rIl "/build/ros2-kilted" "$pkgdir/opt/ros/kilted" | xargs -r -n 10 -- sed -i "s|/build/ros2-kilted/src/build/[^/]*/[^/]*_install|/opt/ros/kilted|g; s|/build/ros2-kilted/src/install|/opt/ros/kilted|g"
+  }
+  CACTUSEOF
+post_build: aur-post-build

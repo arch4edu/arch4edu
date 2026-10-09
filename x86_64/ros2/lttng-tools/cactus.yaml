@@ -1,0 +1,9 @@
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  replace -u '2.13.8' '2.16.0'
+  replace './configure --prefix=/usr --sysconfdir=/etc --enable-man-pages' './configure --prefix=/usr --sysconfdir=/etc --enable-man-pages --disable-tests'
+post_build: aur-post-build
