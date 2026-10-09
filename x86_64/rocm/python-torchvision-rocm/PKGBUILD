@@ -14,7 +14,7 @@
 _pkgname='vision'
 pkgbase='python-torchvision-rocm'
 pkgname=('torchvision-rocm' 'python-torchvision-rocm')
-pkgver=0.28.0
+pkgver=0.29.1
 pkgrel=1
 pkgdesc='Datasets, transforms, and models specific to computer vision (with ROCm/HIP support)'
 arch=('x86_64')
@@ -45,11 +45,12 @@ source=(
     "${_pkgname}-${pkgver}.tar.gz::https://github.com/pytorch/vision/archive/v${pkgver}.tar.gz"
     "glog_use_glog_export_none.patch"
 )
-sha256sums=('ecc4451241c8eeadc0c88213bd65c7932c9622d1d0034254b938f25362283ee9'
+sha256sums=('0a14655bd32095148d93fa595f93aba45dda0d13b25cc7fe86a041340e4a4862'
             'a611dadf2e125a7b73a026bac05c8327e776c24d4876f1b0bdfc9249c6f4fe37')
 prepare() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
 
+    sed -i 's|^    _HIPIFIED = True|    (CSRS_DIR / "vision_stable_hip.cpp").unlink(missing_ok=True)\n    _HIPIFIED = True|' setup.py
     patch -N -i "${srcdir}/glog_use_glog_export_none.patch"
     # patch -p1 -i "${srcdir}"/ffmpeg-8.patch
 }
