@@ -5,7 +5,7 @@
 
 pkgname=hdf4
 pkgver=4.3.1
-pkgrel=2
+pkgrel=3
 pkgdesc="General purpose library and file format for storing scientific data"
 arch=('x86_64')
 url="https://portal.hdfgroup.org"
@@ -33,7 +33,7 @@ build() {
         --disable-static \
         --disable-fortran \
         --with-zlib \
-        --with-szlib=yes \
+        --with-szlib=yes --enable-java \
         --prefix=/opt/hdf4
     make
 }
@@ -47,3 +47,4 @@ package() {
     echo "/opt/${pkgname}/lib" > "${pkgdir}/etc/ld.so.conf.d/${pkgname}.conf"
 }
 
+makedepends+=("java-environment")
