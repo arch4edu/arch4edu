@@ -5,10 +5,10 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=roxygen2
-_pkgver=8.1.0
+_pkgver=8.1.1
 pkgname=r-${_pkgname,,}
-pkgver=8.1.0
-pkgrel=2
+pkgver=8.1.1
+pkgrel=1
 pkgdesc='In-Line Documentation for R'
 arch=('x86_64')
 url="https://cran.r-project.org/package=${_pkgname}"
@@ -40,7 +40,7 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('6ee35d555ba8cfdbb0ab9c419e4f4af03e6a7acd8a0eaa77bc31fd50941fb691')
+sha256sums=('9647718fc8f1ff31f5aee8e8cc0648a28c65d14f2e4f69019fe5f4e43728ed21')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
