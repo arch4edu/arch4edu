@@ -5,5 +5,13 @@ depends:
   - x86_64/openfoam-com
   - x86_64/precice
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  sed -i 's/_gitcommit=94e78eaaa011f3b9e73a7f76ed04f780ad159df7/_gitcommit=0801887b958f3101389cb719838dc8fc864d5369/' PKGBUILD
+  sed -i 's/pkgver=1.3.1/pkgver=1.4.0/' PKGBUILD
+  sed -i 's/pkgrel=2/pkgrel=1/' PKGBUILD
+  sed -i 's/_openfoam_version=v2506/_openfoam_version=v2606/' PKGBUILD
+  sed -i "s|sha512sums=.*|sha512sums=('d8c45b0aea56b9bad5e7bc92948dbbc84b6d5afcd7a6824f494ce314991216a9c7d52949e4cf0581d2bbbaa6927906017e873e69d3985798047c6f58f4147b6d')|" PKGBUILD
+  sed -i '/source \/opt\/OpenFOAM/a\  export PRECICE_OPENFOAM_TARGET_DIR="${pkgdir}${FOAM_LIBBIN}"' PKGBUILD
+  makepkg --printsrcinfo > .SRCINFO
 post_build: aur-post-build
