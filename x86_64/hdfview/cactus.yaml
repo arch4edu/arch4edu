@@ -6,9 +6,41 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  echo 'export HDFLIBS=/opt/hdf4' >> PKGBUILD
   # Upstream GitHub release no longer ships the source tarball; use the GitHub archive instead
   sed -i 's|source=.*releases/download.*|source=(https://github.com/HDFGroup/hdfview/archive/v${pkgver}.tar.gz)|' PKGBUILD
   sed -i "s|sha256sums=.*|sha256sums=('6b65486e2d8f3601d9405b91003c7aef7454e4c27fdd59ded0877f715b1e984e')|" PKGBUILD
   sed -i 's/^_base=HDFView/_base=hdfview/' PKGBUILD
+  sed -i 's|^depends=.*|depends=(hdf4 hdf5 java-runtime alsa-lib libxi libxrender libxtst)|' PKGBUILD
+  sed -i "s|^makedepends=.*|makedepends=(gendesk hdf4 hdf5 maven patchelf 'java-environment>=21')|" PKGBUILD
+  sed -i '/^optdepends=/d' PKGBUILD
+  cat > .mvnblock <<'MVNBLOCK'
+    mkdir -p "${srcdir}/hdf5-libs/plugin"
+    ln -s /usr/lib/libhdf5.so* /usr/lib/libhdf5_java.so /usr/lib/libhdf5.settings \
+        /usr/lib/jarhdf5-*.jar "${srcdir}/hdf5-libs/"
+    mkdir -p "${srcdir}/hdf4-libs"
+    cp /opt/hdf4/lib/*.so* /opt/hdf4/lib/libhdf4.settings /opt/hdf4/lib/jarhdf-*.jar \
+        "${srcdir}/hdf4-libs/"
+    patchelf --set-rpath '$ORIGIN' "${srcdir}"/hdf4-libs/*.so*
+    _hdf5ver=$(basename "$(ls /usr/lib/jarhdf5-*.jar)" | sed 's/^jarhdf5-//;s/\.jar$//')
+    sed -i "s|<hdf5.version>2.0.0</hdf5.version>|<hdf5.version>${_hdf5ver}</hdf5.version>|" pom.xml
+    cat > build.properties <<EOF
+  hdf5.lib.dir=${srcdir}/hdf5-libs
+  hdf5.plugin.dir=${srcdir}/hdf5-libs/plugin
+  hdf.lib.dir=${srcdir}/hdf4-libs
+  platform.hdf.lib=${srcdir}/hdf5-libs:${srcdir}/hdf4-libs
+  EOF
+    mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+        clean install -pl repository
+    mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+        clean install
+    mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+        package
+    mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+        verify -Pjpackage-app-image -pl hdfview
+  MVNBLOCK
+  replace 'ant createJPackage' "$(cat .mvnblock)"
+  rm .mvnblock
+  sed -i 's|cp -a ${_base} |cp -a hdfview/target/dist/HDFView |' PKGBUILD
+  sed -i 's|/bin/${_base}|/bin/HDFView|' PKGBUILD
+  sed -i 's|"src/HDFView.png"|package_files/hdfview.png|' PKGBUILD
 post_build: aur-post-build
