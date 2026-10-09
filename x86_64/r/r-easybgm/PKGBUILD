@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=easybgm
-_pkgver=0.5.0
+_pkgver=0.5.1
 pkgname=r-easybgm
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -12,7 +12,7 @@ depends=(r r-bdgraph r-bggm r-bgms r-coda r-dplyr r-ggplot2 r-hdinterval r-igrap
 makedepends=(gcc-fortran)
 optdepends=(r-testthat r-vdiffr)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_pkgver}.tar.gz")
-sha256sums=('f8a555c844e9c4f79d80991ab0a173c31ea9972e61dfae0581d6e479536a1adb')
+sha256sums=('270f4b707525f12893d5383be6b2649f75ab4fb5dfaff14391ae9d812de2c723')
 
 build() {
   R CMD INSTALL ${_cranname}_${_pkgver}.tar.gz -l "${srcdir}"
