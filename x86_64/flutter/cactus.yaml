@@ -1,1 +1,9 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  sed -i 's/^_dartmax="3.12.0"/_dartmax="3.14.0"/' PKGBUILD
+  sed -i "/^prepare() {/a\\  sed -i 's|List<io.InternetAddress> get addresses => _delegate.addresses;|List<io.InterfaceAddress> get addresses => _delegate.addresses;|' \$srcdir/flutter*/packages/flutter_tools/lib/src/base/io.dart\n  sed -i '/^        InternetAddress,\$/i\\\\        InterfaceAddress,' \$srcdir/flutter*/packages/flutter_tools/lib/src/base/io.dart" PKGBUILD
+post_build: aur-post-build
