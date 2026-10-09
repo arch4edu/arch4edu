@@ -1,1 +1,9 @@
-../../template/x86_64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  add makedepends java-environment
+  sed -i 's|--with-szlib=yes|--with-szlib=yes --enable-java|' PKGBUILD
+post_build: aur-post-build
