@@ -7,4 +7,6 @@ pre_build: |
   aur-pre-build
   echo 'export ROCM_HOME=/opt/rocm' >> PKGBUILD
   replace -u '0.29.0' '0.29.1'
+  replace '    patch -N -i "${srcdir}/glog_use_glog_export_none.patch"' "    sed -i 's|^    _HIPIFIED = True|    (CSRS_DIR / \"vision_stable_hip.cpp\").unlink(missing_ok=True)\\n    _HIPIFIED = True|' setup.py
+      patch -N -i \"\${srcdir}/glog_use_glog_export_none.patch\""
 post_build: aur-post-build
