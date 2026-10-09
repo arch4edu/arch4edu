@@ -11,11 +11,11 @@ _gradlewver=fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
 _flutterarch=$(echo "$CARCH" | sed s/aarch64/arm64/ | sed s/x86_64/x64/)
 _dartver="3.11.0"
 _dartmin="3.11.0"
-_dartmax="3.12.0"
+_dartmax="3.14.0"
 # this host is blocked in China, according to Flutter docs, the FLUTTER_STORAGE_BASE_URL environment variable
 # should be used to provide an alternative mirror
 _storagebase="${FLUTTER_STORAGE_BASE_URL:-"https://storage.googleapis.com"}"
-pkgrel=3
+pkgrel=4
 pkgdesc="A new mobile app SDK to help developers and designers build modern mobile apps for iOS and Android."
 _pkgdesc="Flutter SDK component"
 arch=("x86_64" "aarch64")
@@ -218,6 +218,8 @@ sha256sums_aarch64=('ac24f7b890aa168822014c69b603a7b1f7d9212f6f7544f2e8d7272c360
                     '662f67acfd82bc657870dc49458a2d2b08200b28d55bf1600c04be18f2db4406')
 
 prepare() {
+  sed -i 's|List<io.InternetAddress> get addresses => _delegate.addresses;|List<io.InterfaceAddress> get addresses => _delegate.addresses;|' $srcdir/flutter*/packages/flutter_tools/lib/src/base/io.dart
+  sed -i '/^        InternetAddress,$/i\        InterfaceAddress,' $srcdir/flutter*/packages/flutter_tools/lib/src/base/io.dart
   # SDK
 
   # this is required in case people try to build with `aur/dart-sdk-dev` instead of `extra/dart`
