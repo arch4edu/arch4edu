@@ -1,0 +1,11 @@
+--- a/setup.py
++++ b/setup.py
+@@ -77,7 +77,7 @@
+     print("\nCompiling cuda extensions with")
+     print(raw_output + "from " + cuda_dir + "/bin\n")
+ 
+-    if bare_metal_version != torch_binary_version:
++    if bare_metal_version.major != torch_binary_version.major:
+         raise RuntimeError(
+             "Cuda extensions are being compiled with a version of Cuda that does "
+             "not match the version used to compile Pytorch binaries.  "
