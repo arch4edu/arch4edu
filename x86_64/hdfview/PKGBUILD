@@ -1,21 +1,22 @@
-# Maintainer  : Grey Christoforo <first name at last name dot net>
-
-pkgname=hdfview
-_pkgname=HDFView
-pkgver=3.3.1
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Maintainer: Auto update bot <auto-update-bot@arch4edu.org>
+# Contributor: Jingbei Li <i@jingbei.li>
+# Contributor: Grey Christoforo <first name at last name dot net>
+_base=hdfview
+pkgname=${_base,,}
+pkgver=3.4.1
 pkgrel=1
-pkgdesc="A visual tool for browsing and editing HDF4 and HDF5 files."
-arch=('x86_64')
-url="https://portal.hdfgroup.org/display/HDFVIEW/HDFView"
+pkgdesc="A visual tool for browsing and editing HDF4 and HDF5 files"
+arch=(x86_64)
+url="https://github.com/HDFGroup/${pkgname}"
 license=('custom')
-depends=(hdf5 java-runtime)
-makedepends=(ant gendesk hdf4 inetutils 'java-environment>=15')
-optdepends=(hdf4)
-source=("https://support.hdfgroup.org/ftp/HDF5/releases/HDF-JAVA/hdfview-${pkgver}/src/hdfview-${pkgver}.tar.gz")
-sha256sums=('59c19871e30e07c802c9c2525b829d029cb68080604e713f7743f11990a552a8')
+depends=(hdf4 hdf5 java-runtime alsa-lib libxi libxrender libxtst)
+makedepends=(gendesk hdf4 hdf5 maven patchelf 'java-environment>=21')
+source=(https://github.com/HDFGroup/hdfview/archive/v${pkgver}.tar.gz)
+sha256sums=('6b65486e2d8f3601d9405b91003c7aef7454e4c27fdd59ded0877f715b1e984e')
 
 #check() {
-#  cd "${srcdir}/${pkgname}-${pkgver}"
+#  cd "${srcdir}/${_base}-${pkgver}"
 #
 #  export HDFLIBS=/opt/hdf4
 #  export HDF5LIBS=/usr
@@ -23,26 +24,44 @@ sha256sums=('59c19871e30e07c802c9c2525b829d029cb68080604e713f7743f11990a552a8')
 #}
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-
-  export HDFLIBS=/opt/hdf4
+  cd ${srcdir}/${_base}-${pkgver}
+  # export HDFLIBS=/opt/hdf4
   export HDF5LIBS=/usr
-  ant createJPackage
-
-  gendesk -n --pkgname "$pkgname" --pkgdesc "$pkgdesc" --name ${_pkgname}
+    mkdir -p "${srcdir}/hdf5-libs/plugin"
+  ln -s /usr/lib/libhdf5.so* /usr/lib/libhdf5_java.so /usr/lib/libhdf5.settings \
+      /usr/lib/jarhdf5-*.jar "${srcdir}/hdf5-libs/"
+  mkdir -p "${srcdir}/hdf4-libs"
+  cp /opt/hdf4/lib/*.so* /opt/hdf4/lib/libhdf4.settings /opt/hdf4/lib/jarhdf-*.jar \
+      "${srcdir}/hdf4-libs/"
+  patchelf --set-rpath '$ORIGIN' "${srcdir}"/hdf4-libs/*.so*
+  _hdf5ver=$(basename "$(ls /usr/lib/jarhdf5-*.jar)" | sed 's/^jarhdf5-//;s/\.jar$//')
+  sed -i "s|<hdf5.version>2.0.0</hdf5.version>|<hdf5.version>${_hdf5ver}</hdf5.version>|" pom.xml
+  cat > build.properties <<EOF
+hdf5.lib.dir=${srcdir}/hdf5-libs
+hdf5.plugin.dir=${srcdir}/hdf5-libs/plugin
+hdf.lib.dir=${srcdir}/hdf4-libs
+platform.hdf.lib=${srcdir}/hdf5-libs:${srcdir}/hdf4-libs
+EOF
+  mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+      clean install -pl repository
+  mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+      clean install
+  mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+      package
+  mvn -B -DskipTests -Djacoco.skip=true -Dpmd.skip=true -Ddependency-check.skip=true \
+      verify -Pjpackage-app-image -pl hdfview
+  gendesk -n --pkgname "$pkgname" --pkgdesc "$pkgdesc" --name ${_base}
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-
+  cd ${srcdir}/${_base}-${pkgver}
   mkdir -p "${pkgdir}/opt/"
   mkdir -p "${pkgdir}/usr/bin"
 
-  cp -a build/dist/${_pkgname} "${pkgdir}/opt/${pkgname}"
-  ln -s /opt/${pkgname}/bin/${_pkgname} "${pkgdir}/usr/bin/${pkgname}"
+  cp -a hdfview/target/dist/HDFView "${pkgdir}/opt/${pkgname}"
+  ln -s /opt/${pkgname}/bin/HDFView "${pkgdir}/usr/bin/${pkgname}"
 
-  install -Dm644 "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
-  install -Dm644 "src/HDFView.png" "$pkgdir/usr/share/pixmaps/$pkgname.png"
-
+  install -Dm644 "${pkgname}.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
+  install -Dm644 package_files/hdfview.png "${pkgdir}/usr/share/pixmaps/${pkgname}.png"
   install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
