@@ -9,7 +9,7 @@
 # Contributor: Daffa Haj Tsaqif <narutohaj00@gmail.com>
 
 pkgname=cloudflare-warp-bin
-pkgver=2026.7.1377
+pkgver=2026.8.2100.0
 pkgrel=1
 pkgdesc="Cloudflare Warp Client"
 arch=('x86_64')
@@ -41,27 +41,29 @@ depends=('at-spi2-core'
          'tpm2-tss'
          'webkit2gtk-4.1'
          'zlib')
-makedepends=('patchelf')
+makedepends=('chrpath')
 provides=('warp-cli' 'warp-diag' 'warp-svc')
 conflicts=("${pkgname%-bin}")
 options=('!strip')
 install="${pkgname}.install"
-source=("${pkgname}-${pkgver}.deb::https://pkg.cloudflareclient.com/pool/noble/main/c/cloudflare-warp/cloudflare-warp_${pkgver}.0_amd64.deb")
-sha256sums=('a73429701c47ee9dc3c8307a0ead67054530787239bd71a12e7f93acdbe96f65')
+source=("${pkgname}-${pkgver}.deb::https://pkg.cloudflareclient.com/pool/resolute/main/c/cloudflare-warp/cloudflare-warp_${pkgver}_amd64.deb")
+sha256sums=('28b8cf4c89084cf598065a328aef65e75af7fece382e38dd47a4c6caf1fca96b')
 
 prepare() {
-    mkdir -p "${srcdir}/build"
-    bsdtar -xzf data.tar.gz -C "${srcdir}/build"
+    mkdir -p build
+    bsdtar -xzf data.tar.gz -C build
+
+    sed -e "s%ExecStart=/bin/warp-svc%ExecStart=/usr/bin/warp-svc%" \
+        -i build/lib/systemd/system/warp-svc.service
+    sed -e "s%ExecStart=/bin/warp-taskbar%ExecStart=/usr/bin/warp-taskbar%" \
+        -e "s%BindsTo=graphical-session.target%PartOf=graphical-session.target%" \
+        -i build/usr/lib/systemd/user/warp-taskbar.service
+
+    chrpath --delete build/usr/lib/warp/lib/{crashpad_handler,libdartjni.so}
+    chrpath --replace /usr/lib/warp/lib build/usr/lib/warp/lib/*plugin.so
 }
 
 package() {
-    cp -R "${srcdir}/build/"{etc,usr} "${pkgdir}"
-    cp -R "${srcdir}/build/"{bin,lib} "${pkgdir}/usr"
-
-    sed -e "s%ExecStart=/bin/warp-svc%ExecStart=/usr/bin/warp-svc%" \
-        -i "${pkgdir}/usr/lib/systemd/system/warp-svc.service"
-    sed -e "s%ExecStart=/bin/warp-taskbar%ExecStart=/usr/bin/warp-taskbar%" \
-        -e "s%BindsTo=graphical-session.target%PartOf=graphical-session.target%" \
-        -i "${pkgdir}/usr/lib/systemd/user/warp-taskbar.service"
-    patchelf --remove-rpath "${pkgdir}/usr/lib/warp/lib/"{crashpad_handler,libdartjni.so,lib*_plugin.so}
+    cp -R build/{etc,usr} "${pkgdir}"
+    cp -R build/{bin,lib} "${pkgdir}/usr"
 }
