@@ -1,23 +1,26 @@
-# Maintainer: fromtheeast710 <theeast710@proton.me>
+# Maintainer: yuhldr <yuhldr@qq.com>
+# Contributor: fromtheeast710 <theeast710@proton.me>
 # Contributor: physkets <physkets // at // tutanota dot com>
 # Contributor: xpt <user.xpt@gmail.com>
-# Contributor: yuhldr <yuhldr@qq.com>
 
 pkgname=lammps
-pkgver=20250722
-_pkgver="stable_22Jul2025_update5"
-pkgrel=9
+pkgver=20260930
+_pkgver="stable_30Sep2026"
+pkgrel=1
 pkgdesc="Public development project of the LAMMPS MD software package"
 url="https://github.com/lammps/lammps"
 arch=('x86_64')
 license=('GPL')
-depends=('fftw' 'openmpi' 'ffmpeg' 'libpng' 'python')
-makedepends=('cmake>=3.1' 'python-pip' 'python-build')
+depends=('fftw' 'openmpi' 'libpng' 'python')
+makedepends=('cmake>=3.1' 'python-pip' 'python-build' 'ffmpeg')
 conflicts=('lammps-git')
 provides=('lammps')
 source=("https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${_pkgver}.zip")
-sha256sums=('b245412081439fb2b107d6d382400859cb77894f3037bef8d9d8068b0a4d75fd')
-optdepends=('clang' 'python-mpi4py')
+sha256sums=('89c39076d492b155fd9849cb022eb30dcf125460426e3318bd8854bb44cc7cd9')
+optdepends=(
+    'ffmpeg: required for dump movie video output'
+    'clang' 'python-mpi4py'
+)
 
 prepare() {
     cd "${pkgname}-${_pkgver}"
