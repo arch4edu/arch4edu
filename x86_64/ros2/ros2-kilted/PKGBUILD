@@ -1,0 +1,250 @@
+# Maintainer: Oystein Sture <oysstu at gmail.com>
+
+pkgname=ros2-kilted
+pkgver=2025.07.28
+pkgrel=1
+_rosdist="Kilted Kaiju"
+_rosdist_short_upper=${_rosdist%% *}
+_rosdist_short=${_rosdist_short_upper,}
+pkgdesc="A set of software libraries and tools for building robot applications (${_rosdist})"
+url="https://index.ros.org/p/ros_base/#${_rosdist_short}"
+arch=('any')
+license=('Apache-2.0')
+depends=(
+    'asio'
+    'bullet'
+    'cmake'
+    'eigen'
+    'git'
+    'libyaml'
+    'lttng-ust'
+    'nlohmann-json'
+    'pybind11'
+    'python'
+    'python-colcon-common-extensions'
+    'python-lark-parser'
+    'python-netifaces'
+    'python-numpy'
+    'python-psutil'
+    'python-yaml'
+    'tinyxml2'
+    'yaml-cpp'
+    'libxrandr'
+    'libxaw'
+    'freetype2'
+    'sip4'
+    'python-sip4'
+    'python-pyqt5'
+    'lttng-tools'
+    'qt5-base'
+    'glu'
+    'opencv'
+    'qt6-base'
+)
+makedepends=(
+  'python-rosinstall_generator'
+  'python-vcstool'
+  'rust'
+)
+provides=("$pkgname-base")
+conflicts=("$pkgname-base")
+source=(
+    "https://github.com/ros2/ros2/archive/release-${_rosdist_short}-${pkgver//.}.tar.gz"
+    "ros2-variants-0.12.0.tar.gz::https://github.com/ros2/variants/archive/0.12.0.tar.gz"
+    "mcap_vendor_cstdint.patch"
+)
+sha256sums=('b289c53e97d924209efb9ed9c6f30caafde965fa1c72a039e39a528fcc9045b3'
+            '5089bf2dea8368020243d40a2b513405cd060aacc42de6fae2289c1a87f74f99'
+            'f2ac0967f508f6a4f1fd4f278800e64052127859ee3e21cdf1b467b3ffe7563f'
+    )
+# Uncomment this if zenoh/transport_tls is needed in zenoh_cpp_vendor
+# TODO: find a way to disable LTO for only the zenoh_cpp_vendor package
+#options=(!debug !lto)
+options=(!debug)
+
+prepare() {
+    # Clone the repos
+    printf "Cloning ros2 repositories\n"
+    mkdir -p "$srcdir/ros2/src"
+    vcs import --retry 10 "$srcdir/ros2/src" < $srcdir/ros2-release-${_rosdist_short}-${pkgver//.}/ros2.repos
+
+    printf "Patching sources\n"
+    # Fix the vendored zenoh-c build for this environment (cbindgen signatures + static_init).
+    _zcv="$srcdir/ros2/src/ros2/rmw_zenoh/zenoh_cpp_vendor"
+    cat > "$_zcv/cactus-zenoh-build-fixes.patch" <<'CACTUSPATCH'
+diff --git a/build-resources/opaque-types/Cargo.toml b/build-resources/opaque-types/Cargo.toml
+index 9a1453c..e6b6aad 100644
+--- a/build-resources/opaque-types/Cargo.toml
++++ b/build-resources/opaque-types/Cargo.toml
+@@ -34,6 +34,11 @@ zenoh-ext = { version = "1.4.0", git = "https://github.com/eclipse-zenoh/zenoh.g
+     "internal",
+ ] }
+ zenoh-protocol = { version = "1.4.0", git = "https://github.com/eclipse-zenoh/zenoh.git", branch = "main" }
++
++# static_init 1.0.3 (pinned via the copied Cargo.lock) fails to compile in the dev
++# profile unless "debug_order" is enabled; dependency features are not recorded in
++# Cargo.lock, so enable it here (mirrors upstream zenoh-c fix #1333).
++static_init = { version = "1", features = ["debug_order"] }
+ const_format = "0.2.32"
+ flume = "*"
+ tokio = "*"
+diff --git a/buildrs/cbindgen_generator.rs b/buildrs/cbindgen_generator.rs
+index f7030dd..52a0ecd 100644
+--- a/buildrs/cbindgen_generator.rs
++++ b/buildrs/cbindgen_generator.rs
+@@ -450,7 +450,7 @@ fn evaluate_c_defines_line(line: &str) -> bool {
+ 
+ fn make_move_take_signatures(path_in: &str) -> (Vec<FunctionSignature>, Vec<FunctionSignature>) {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"(\w+)_drop\(struct (\w+) \*(\w+)\);").unwrap();
++    let re = Regex::new(r"(\w+)_drop\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+     let mut move_funcs = Vec::<FunctionSignature>::new();
+     let mut take_funcs = Vec::<FunctionSignature>::new();
+ 
+@@ -483,7 +483,7 @@ fn make_move_take_signatures(path_in: &str) -> (Vec<FunctionSignature>, Vec<Func
+ 
+ fn find_loan_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"const struct (\w+) \*(\w+)_loan\(const struct (\w+) \*(\w+)\);").unwrap();
++    let re = Regex::new(r"const (?:struct )?(\w+) \*(\w+)_loan\(const (?:struct )?(\w+) \*(\w+)\);").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [return_type, func_name, arg_type, arg_name]) in
+@@ -506,7 +506,7 @@ fn find_loan_functions(path_in: &str) -> Vec<FunctionSignature> {
+ 
+ fn find_loan_mut_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"struct (\w+) \*(\w+)_loan_mut\(struct (\w+) \*(\w+)\);").unwrap();
++    let re = Regex::new(r"(?:struct )?(\w+) \*(\w+)_loan_mut\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [return_type, func_name, arg_type, arg_name]) in
+@@ -526,7 +526,7 @@ fn find_loan_mut_functions(path_in: &str) -> Vec<FunctionSignature> {
+ 
+ fn find_take_from_loaned_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"void (\w+)_take_from_loaned\(struct (\w+) \*(\w+)").unwrap();
++    let re = Regex::new(r"void (\w+)_take_from_loaned\((?:struct )?(\w+) \*(\w+)").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [func_name, arg_type, arg_name]) in re.captures_iter(&bindings).map(|c| c.extract()) {
+@@ -549,7 +549,7 @@ fn find_take_from_loaned_functions(path_in: &str) -> Vec<FunctionSignature> {
+ 
+ fn find_drop_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"(.+?) +(\w+_drop)\(struct (\w+) \*(\w+)\);").unwrap();
++    let re = Regex::new(r"(.+?) +(\w+_drop)\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [return_type, func_name, arg_type, arg_name]) in
+@@ -576,7 +576,7 @@ fn find_drop_functions(path_in: &str) -> Vec<FunctionSignature> {
+ 
+ fn find_null_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r" (z.?_internal_\w+_null)\(struct (\w+) \*(\w+)\);").unwrap();
++    let re = Regex::new(r" (z.?_internal_\w+_null)\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [func_name, arg_type, arg_name]) in re.captures_iter(&bindings).map(|c| c.extract()) {
+@@ -594,7 +594,7 @@ fn find_null_functions(path_in: &str) -> Vec<FunctionSignature> {
+ 
+ fn find_check_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"bool (z.?_internal_\w+_check)\(const struct (\w+) \*(\w+)\);").unwrap();
++    let re = Regex::new(r"bool (z.?_internal_\w+_check)\(const (?:struct )?(\w+) \*(\w+)\);").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [func_name, arg_type, arg_name]) in re.captures_iter(&bindings).map(|c| c.extract()) {
+@@ -616,7 +616,7 @@ fn find_check_functions(path_in: &str) -> Vec<FunctionSignature> {
+ fn find_call_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+     let re = Regex::new(
+-        r"(\w+) (\w+)_call\(const struct (\w+) \*(\w+),\s+(\w*)\s*struct (\w+) (\*?)(\w+)\);",
++        r"(\w+) (\w+)_call\(const (?:struct )?(\w+) \*(\w+),\s+((?:const )?)(?:struct )?(\w+) (\*?)(\w+)\);",
+     )
+     .unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+@@ -684,7 +684,7 @@ fn find_closure_constructors(path_in: &str) -> Vec<FunctionSignature> {
+ 
+ fn find_recv_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+-    let re = Regex::new(r"(\w+)\s+z_(\w+)_handler_(\w+)_recv\(const\s+struct\s+(\w+)\s+\*(\w+),\s+struct\s+(\w+)\s+\*(\w+)\);").unwrap();
++    let re = Regex::new(r"(\w+)\s+z_(\w+)_handler_(\w+)_recv\(const\s+(?:struct\s+)?(\w+)\s+\*(\w+),\s+(?:struct\s+)?(\w+)\s+\*(\w+)\);").unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+ 
+     for (_, [return_type, handler_type, value_type, arg1_type, arg1_name, arg2_type, arg2_name]) in
+@@ -708,7 +708,7 @@ fn find_recv_functions(path_in: &str) -> Vec<FunctionSignature> {
+ fn find_clone_functions(path_in: &str) -> Vec<FunctionSignature> {
+     let bindings = std::fs::read_to_string(path_in).unwrap();
+     let re = Regex::new(
+-        r"(\w+)\s+z_(\w+)_clone\(struct\s+(\w+)\s+\*(\w+),\s+const\s+struct\s+(\w+)\s+\*(\w+)\);",
++        r"(\w+)\s+z_(\w+)_clone\((?:struct\s+)?(\w+)\s+\*(\w+),\s+const\s+(?:struct\s+)?(\w+)\s+\*(\w+)\);",
+     )
+     .unwrap();
+     let mut res = Vec::<FunctionSignature>::new();
+CACTUSPATCH
+    sed -i 's|PATCHES ${CMAKE_CURRENT_SOURCE_DIR}/pin-rust-1.75.0.patch|PATCHES ${CMAKE_CURRENT_SOURCE_DIR}/pin-rust-1.75.0.patch ${CMAKE_CURRENT_SOURCE_DIR}/cactus-zenoh-build-fixes.patch|' "$_zcv/CMakeLists.txt"
+    grep -q 'cactus-zenoh-build-fixes.patch' "$_zcv/CMakeLists.txt" || exit 1
+
+    # https://github.com/eProsima/Fast-DDS/issues/5790
+    # https://github.com/eProsima/Fast-DDS/issues/5792
+    git -C "$srcdir/ros2/src/eProsima/Fast-DDS" checkout v3.2.3
+    _fdds="$srcdir/ros2/src/eProsima/Fast-DDS/include/fastdds/rtps/common/CacheChange.hpp"
+    sed -i 's|i++, offset += fragment_size_)|i++)|' "$_fdds"
+    sed -i '/size_t offset = 0;$/d' "$_fdds"
+    if grep -q 'offset += fragment_size_' "$_fdds"; then exit 1; fi
+
+    # https://github.com/foxglove/mcap/pull/1371
+    git -C "$srcdir/ros2/src/ros2/rosbag2" checkout "mcap_vendor/src/main.cpp"
+    git -C "$srcdir/ros2/src/ros2/rosbag2" apply "$srcdir/mcap_vendor_cstdint.patch"
+
+    # https://github.com/ros2/rosidl/pull/864
+    git -C "$srcdir/ros2/src/ros2/rosidl" cherry-pick -n f02a0f1
+
+    # https://github.com/ros2/orocos_kdl_vendor/pull/39
+    git -C "$srcdir/ros2/src/ros2/orocos_kdl_vendor" cherry-pick -n 98a9e0686b58fb4684c77f28c824d86765a58bb9
+    
+    # https://github.com/ros2/ros2_tracing/pull/194
+    git -C "$srcdir/ros2/src/ros2/ros2_tracing" cherry-pick -n 6c5a704
+
+    # Disable the zenoh/transport_tls feature (TLS/QUIC secure transports)
+    # This is because GCC LTO is incompatible with the LLVM LTO
+    # Disable LTO if you need this feature (see options comment above).
+    # https://github.com/ros2/rmw_zenoh/issues/624
+    sed -i 's/ zenoh\/transport_tls//' "$srcdir/ros2/src/ros2/rmw_zenoh/zenoh_cpp_vendor/CMakeLists.txt"
+}
+
+build() {
+    # For low-mem high core count systems, add the following to disable parallel build
+    #export COLCON_EXTRA_ARGS="${COLCON_EXTRA_ARGS} --executor sequential"
+
+    # Remove D_FORTIFY_SOURCE to avoid compilation errors
+    CFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=[0-9]\s//g" <(echo $CFLAGS))
+    CXXFLAGS=$(sed "s/-Wp,-D_FORTIFY_SOURCE=[0-9]\s//g" <(echo $CXXFLAGS))
+
+    export CMAKE_POLICY_VERSION_MINIMUM=3.5
+
+    # Build
+    # THIRDPARTY_Asio: This forces Fast-DDS to use its internal ASIO version.
+    #                  They were using deprecated ASIO functionality, which is now removed.
+    #                  See the following issue: https://github.com/eProsima/Fast-DDS/issues/5726
+    colcon build --merge-install ${COLCON_EXTRA_ARGS} --cmake-args -DBUILD_TESTING=OFF -DCMAKE_IGNORE_PATH="/usr/share/orocos_kdl/cmake/"
+
+    # Replace all references to srcdir in colcon shell files
+     printf "Replace references to srcdir in colcon shell files\n"
+    _outdir="$srcdir/install"
+    _instdir="/opt/ros/${_rosdist_short}-base"
+    grep --include \*.sh --binary-files without-match -rl ${_outdir} . | xargs sed -i 's|'${_outdir}'|'${_instdir}'|g'
+}
+
+_package() {
+    mkdir -p "${pkgdir}/opt/ros"
+    cp -r "${srcdir}/install" "${pkgdir}/opt/ros/${_rosdist_short}"
+
+}
+
+
+package() {
+    _package
+    grep -rIl "/build/ros2-kilted" "$pkgdir/opt/ros/kilted" | xargs -r -n 10 -- sed -i "s|/build/ros2-kilted/src/build/[^/]*/[^/]*_install|/opt/ros/kilted|g; s|/build/ros2-kilted/src/install|/opt/ros/kilted|g"
+}

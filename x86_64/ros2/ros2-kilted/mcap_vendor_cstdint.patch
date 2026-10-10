@@ -1,0 +1,10 @@
+diff --git a/mcap_vendor/src/main.cpp b/mcap_vendor/src/main.cpp
+index 1e4a3114..6330bf77 100644
+--- a/mcap_vendor/src/main.cpp
++++ b/mcap_vendor/src/main.cpp
+@@ -13,4 +13,5 @@
+ // limitations under the License.
+ 
+ #define MCAP_IMPLEMENTATION
++#include <cstdint>
+ #include <mcap/mcap.hpp>
