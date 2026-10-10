@@ -5,6 +5,7 @@ nvchecker:
 depends:
   - x86_64/ros2/ros2-arch-deps
   - x86_64/sip4: python-sip4
+  - x86_64/sip4: sip4
   - x86_64/ros2/lttng-tools
 build_prefix: extra-x86_64
 pre_build: |
@@ -19,4 +20,135 @@ pre_build: |
       grep -rIl "/build/ros2-kilted" "$pkgdir/opt/ros/kilted" | xargs -r -n 10 -- sed -i "s|/build/ros2-kilted/src/build/[^/]*/[^/]*_install|/opt/ros/kilted|g; s|/build/ros2-kilted/src/install|/opt/ros/kilted|g"
   }
   CACTUSEOF
+  # The vendored zenoh-c cbindgen generator expects struct-style C signatures and its
+  # opaque-types build needs static_init with debug_order; patch both (see the patch).
+  cat > .zenohfix <<'ZFIX'
+      # Fix the vendored zenoh-c build for this environment (cbindgen signatures + static_init).
+      _zcv="$srcdir/ros2/src/ros2/rmw_zenoh/zenoh_cpp_vendor"
+      cat > "$_zcv/cactus-zenoh-build-fixes.patch" <<'CACTUSPATCH'
+  diff --git a/build-resources/opaque-types/Cargo.toml b/build-resources/opaque-types/Cargo.toml
+  index 9a1453c..e6b6aad 100644
+  --- a/build-resources/opaque-types/Cargo.toml
+  +++ b/build-resources/opaque-types/Cargo.toml
+  @@ -34,6 +34,11 @@ zenoh-ext = { version = "1.4.0", git = "https://github.com/eclipse-zenoh/zenoh.g
+       "internal",
+   ] }
+   zenoh-protocol = { version = "1.4.0", git = "https://github.com/eclipse-zenoh/zenoh.git", branch = "main" }
+  +
+  +# static_init 1.0.3 (pinned via the copied Cargo.lock) fails to compile in the dev
+  +# profile unless "debug_order" is enabled; dependency features are not recorded in
+  +# Cargo.lock, so enable it here (mirrors upstream zenoh-c fix #1333).
+  +static_init = { version = "1", features = ["debug_order"] }
+   const_format = "0.2.32"
+   flume = "*"
+   tokio = "*"
+  diff --git a/buildrs/cbindgen_generator.rs b/buildrs/cbindgen_generator.rs
+  index f7030dd..52a0ecd 100644
+  --- a/buildrs/cbindgen_generator.rs
+  +++ b/buildrs/cbindgen_generator.rs
+  @@ -450,7 +450,7 @@ fn evaluate_c_defines_line(line: &str) -> bool {
+   
+   fn make_move_take_signatures(path_in: &str) -> (Vec<FunctionSignature>, Vec<FunctionSignature>) {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"(\w+)_drop\(struct (\w+) \*(\w+)\);").unwrap();
+  +    let re = Regex::new(r"(\w+)_drop\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+       let mut move_funcs = Vec::<FunctionSignature>::new();
+       let mut take_funcs = Vec::<FunctionSignature>::new();
+   
+  @@ -483,7 +483,7 @@ fn make_move_take_signatures(path_in: &str) -> (Vec<FunctionSignature>, Vec<Func
+   
+   fn find_loan_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"const struct (\w+) \*(\w+)_loan\(const struct (\w+) \*(\w+)\);").unwrap();
+  +    let re = Regex::new(r"const (?:struct )?(\w+) \*(\w+)_loan\(const (?:struct )?(\w+) \*(\w+)\);").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [return_type, func_name, arg_type, arg_name]) in
+  @@ -506,7 +506,7 @@ fn find_loan_functions(path_in: &str) -> Vec<FunctionSignature> {
+   
+   fn find_loan_mut_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"struct (\w+) \*(\w+)_loan_mut\(struct (\w+) \*(\w+)\);").unwrap();
+  +    let re = Regex::new(r"(?:struct )?(\w+) \*(\w+)_loan_mut\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [return_type, func_name, arg_type, arg_name]) in
+  @@ -526,7 +526,7 @@ fn find_loan_mut_functions(path_in: &str) -> Vec<FunctionSignature> {
+   
+   fn find_take_from_loaned_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"void (\w+)_take_from_loaned\(struct (\w+) \*(\w+)").unwrap();
+  +    let re = Regex::new(r"void (\w+)_take_from_loaned\((?:struct )?(\w+) \*(\w+)").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [func_name, arg_type, arg_name]) in re.captures_iter(&bindings).map(|c| c.extract()) {
+  @@ -549,7 +549,7 @@ fn find_take_from_loaned_functions(path_in: &str) -> Vec<FunctionSignature> {
+   
+   fn find_drop_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"(.+?) +(\w+_drop)\(struct (\w+) \*(\w+)\);").unwrap();
+  +    let re = Regex::new(r"(.+?) +(\w+_drop)\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [return_type, func_name, arg_type, arg_name]) in
+  @@ -576,7 +576,7 @@ fn find_drop_functions(path_in: &str) -> Vec<FunctionSignature> {
+   
+   fn find_null_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r" (z.?_internal_\w+_null)\(struct (\w+) \*(\w+)\);").unwrap();
+  +    let re = Regex::new(r" (z.?_internal_\w+_null)\((?:struct )?(\w+) \*(\w+)\);").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [func_name, arg_type, arg_name]) in re.captures_iter(&bindings).map(|c| c.extract()) {
+  @@ -594,7 +594,7 @@ fn find_null_functions(path_in: &str) -> Vec<FunctionSignature> {
+   
+   fn find_check_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"bool (z.?_internal_\w+_check)\(const struct (\w+) \*(\w+)\);").unwrap();
+  +    let re = Regex::new(r"bool (z.?_internal_\w+_check)\(const (?:struct )?(\w+) \*(\w+)\);").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [func_name, arg_type, arg_name]) in re.captures_iter(&bindings).map(|c| c.extract()) {
+  @@ -616,7 +616,7 @@ fn find_check_functions(path_in: &str) -> Vec<FunctionSignature> {
+   fn find_call_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+       let re = Regex::new(
+  -        r"(\w+) (\w+)_call\(const struct (\w+) \*(\w+),\s+(\w*)\s*struct (\w+) (\*?)(\w+)\);",
+  +        r"(\w+) (\w+)_call\(const (?:struct )?(\w+) \*(\w+),\s+((?:const )?)(?:struct )?(\w+) (\*?)(\w+)\);",
+       )
+       .unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+  @@ -684,7 +684,7 @@ fn find_closure_constructors(path_in: &str) -> Vec<FunctionSignature> {
+   
+   fn find_recv_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+  -    let re = Regex::new(r"(\w+)\s+z_(\w+)_handler_(\w+)_recv\(const\s+struct\s+(\w+)\s+\*(\w+),\s+struct\s+(\w+)\s+\*(\w+)\);").unwrap();
+  +    let re = Regex::new(r"(\w+)\s+z_(\w+)_handler_(\w+)_recv\(const\s+(?:struct\s+)?(\w+)\s+\*(\w+),\s+(?:struct\s+)?(\w+)\s+\*(\w+)\);").unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+   
+       for (_, [return_type, handler_type, value_type, arg1_type, arg1_name, arg2_type, arg2_name]) in
+  @@ -708,7 +708,7 @@ fn find_recv_functions(path_in: &str) -> Vec<FunctionSignature> {
+   fn find_clone_functions(path_in: &str) -> Vec<FunctionSignature> {
+       let bindings = std::fs::read_to_string(path_in).unwrap();
+       let re = Regex::new(
+  -        r"(\w+)\s+z_(\w+)_clone\(struct\s+(\w+)\s+\*(\w+),\s+const\s+struct\s+(\w+)\s+\*(\w+)\);",
+  +        r"(\w+)\s+z_(\w+)_clone\((?:struct\s+)?(\w+)\s+\*(\w+),\s+const\s+(?:struct\s+)?(\w+)\s+\*(\w+)\);",
+       )
+       .unwrap();
+       let mut res = Vec::<FunctionSignature>::new();
+  CACTUSPATCH
+      sed -i 's|PATCHES ${CMAKE_CURRENT_SOURCE_DIR}/pin-rust-1.75.0.patch|PATCHES ${CMAKE_CURRENT_SOURCE_DIR}/pin-rust-1.75.0.patch ${CMAKE_CURRENT_SOURCE_DIR}/cactus-zenoh-build-fixes.patch|' "$_zcv/CMakeLists.txt"
+      grep -q 'cactus-zenoh-build-fixes.patch' "$_zcv/CMakeLists.txt" || exit 1
+  ZFIX
+  sed -i '/printf "Patching sources\\n"/r .zenohfix' PKGBUILD
+  rm -f .zenohfix
+  # Fix Fast-DDS unused-but-set-variable error with GCC 16 (mirrors upstream 754655e4).
+  cat > .fastddsfix <<'FFIX'
+      _fdds="$srcdir/ros2/src/eProsima/Fast-DDS/include/fastdds/rtps/common/CacheChange.hpp"
+      sed -i 's|i++, offset += fragment_size_)|i++)|' "$_fdds"
+      sed -i '/size_t offset = 0;$/d' "$_fdds"
+      if grep -q 'offset += fragment_size_' "$_fdds"; then exit 1; fi
+  FFIX
+  sed -i '/checkout v3.2.3/r .fastddsfix' PKGBUILD
+  rm -f .fastddsfix
 post_build: aur-post-build
