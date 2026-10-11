@@ -1,7 +1,7 @@
 # Maintainer: Jason Go <jasongo@jasongo.net>
 
 pkgname=kvrt-x86_64
-pkgver=24.0.6.0.202610101811
+pkgver=24.0.6.0.202610110614
 pkgrel=1
 pkgdesc='Kaspersky Virus Removal Tool - Runtime and Database Signature'
 arch=('x86_64')
@@ -15,7 +15,7 @@ optdepends_x86_64=(
   'kesl-gui: Kaspersky Endpoint Security for Linux'
 )
 options=(!debug)
-source_x86_64=("kvrt.run::https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run")
+source_x86_64=("kvrt.run::https://kvrt.arch4edu.org/x86_64/kvrt.run")
 b2sums_x86_64=('SKIP')
 
 prepare() {
@@ -55,8 +55,9 @@ package() {
   install -Dm644 -t "$pkgdir/usr/share/applications/" kvrt.desktop
 }
 
+source_x86_64+=("kvrt.stamp::https://kvrt.arch4edu.org/x86_64/stamp.txt")
+b2sums_x86_64+=('SKIP')
+
 pkgver() {
-    _stamp=$(curl -fsSI 'https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run' \
-        | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | date -u -f - +'%Y%m%d%H%M')
-    printf '%s.%s' "${pkgver%%.202[0-9]*}" "$_stamp"
+    printf '%s.%s' "${pkgver%%.202[0-9]*}" "$(<kvrt.stamp)"
 }
