@@ -1,0 +1,25 @@
+nvchecker:
+  - source: httpheader
+    url: https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run
+    header: Last-Modified
+    regex: '(\d{2} \w{3} \d{4} \d{2}:\d{2})'
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # The source is a rolling "latest" URL rebuilt daily: use a static source filename and
+  # derive pkgver from the Last-Modified header, like a VCS package. No static checksums;
+  # the self-extracting bundle verifies its own SHA256 at every run.
+  sed -i 's|source_x86_64=("$pkgname-$pkgver-$pkgrel.run::|source_x86_64=("kvrt.run::|' PKGBUILD
+  sed -i 's|binwalk -M -q -e $pkgname-$pkgver-$pkgrel.run|binwalk -M -q -e kvrt.run|' PKGBUILD
+  sed -i 's|install -Dm775 "$pkgname-$pkgver-$pkgrel.run"|install -Dm775 kvrt.run|' PKGBUILD
+  sed -i 's|extractions/kvrt-|extractions/kvrt|' PKGBUILD
+  sed -i "s|^b2sums_x86_64=('[a-f0-9]*')|b2sums_x86_64=('SKIP')|" PKGBUILD
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  pkgver() {
+      _stamp=$(curl -fsSI 'https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run' \
+          | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | date -u -f - +'%Y%m%d%H%M')
+      printf '%s.%s' "${pkgver%%.202[0-9]*}" "$_stamp"
+  }
+  CACTUSEOF
+post_build: aur-post-build
