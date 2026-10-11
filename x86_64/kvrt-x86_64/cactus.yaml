@@ -1,13 +1,13 @@
 nvchecker:
   - source: httpheader
-    url: https://kvrt.arch4edu.org/kvrt.run
+    url: https://kvrt-proxy.petronny.workers.dev/kvrt.run
     header: Last-Modified
     regex: '(\d{2} \w{3} \d{4} \d{2}:\d{2})'
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
   # CDN 403s runner networks: fetch via the arch4edu CF proxy; -R keeps the upstream mtime for pkgver.
-  sed -i 's|https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run|https://kvrt.arch4edu.org/kvrt.run|' PKGBUILD
+  sed -i 's|https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run|https://kvrt-proxy.petronny.workers.dev/kvrt.run|' PKGBUILD
   sed -i 's|source_x86_64=("$pkgname-$pkgver-$pkgrel.run::|source_x86_64=("kvrt.run::|' PKGBUILD
   sed -i 's|binwalk -M -q -e $pkgname-$pkgver-$pkgrel.run|binwalk -M -q -e kvrt.run|' PKGBUILD
   sed -i 's|install -Dm775 "$pkgname-$pkgver-$pkgrel.run"|install -Dm775 kvrt.run|' PKGBUILD
