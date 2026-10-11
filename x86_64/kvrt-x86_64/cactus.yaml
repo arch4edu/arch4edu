@@ -1,15 +1,13 @@
 nvchecker:
-  - source: httpheader
-    url: https://kvrt.arch4edu.org/kvrt.run
-    header: Last-Modified
-    regex: '(\d{2} \w{3} \d{4} \d{2}:\d{2})'
+  - source: http
+    url: https://kvrt.arch4edu.org/x86_64/stamp.txt
+    regex: '(\d{12})'
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  # CDN 403s runner networks: fetch via the arch4edu CF proxy; -R keeps the upstream mtime for pkgver.
-  # The CF bot filter 403s the curl UA from CI ranges (pacman's UA passes); present pacman's UA.
-  printf 'user-agent = "pacman/7.1.0 (Linux x86_64) libcurl/8.15.1 OpenSSL/3.5.3 zlib/1.3.1 brotli/1.1.0 zstd/1.5.7"\n' > kvrt-curlrc
-  sed -i 's|https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run|https://kvrt.arch4edu.org/kvrt.run|' PKGBUILD
+  # Upstream CDN blocks CI networks; payload + version stamp are mirrored to R2 (kvrt-sync worker, every 6h).
+  rm -f kvrt.stamp
+  sed -i 's|https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run|https://kvrt.arch4edu.org/x86_64/kvrt.run|' PKGBUILD
   sed -i 's|source_x86_64=("$pkgname-$pkgver-$pkgrel.run::|source_x86_64=("kvrt.run::|' PKGBUILD
   sed -i 's|binwalk -M -q -e $pkgname-$pkgver-$pkgrel.run|binwalk -M -q -e kvrt.run|' PKGBUILD
   sed -i 's|install -Dm775 "$pkgname-$pkgver-$pkgrel.run"|install -Dm775 kvrt.run|' PKGBUILD
@@ -17,10 +15,11 @@ pre_build: |
   sed -i "s|^b2sums_x86_64=('[a-f0-9]*')|b2sums_x86_64=('SKIP')|" PKGBUILD
   cat >> PKGBUILD <<'CACTUSEOF'
 
-  DLAGENTS=('https::/usr/bin/curl -K kvrt-curlrc -fL -R -C - --connect-timeout 20 --retry 5 --retry-all-errors --retry-delay 5 -o %o %u')
+  source_x86_64+=("kvrt.stamp::https://kvrt.arch4edu.org/x86_64/stamp.txt")
+  b2sums_x86_64+=('SKIP')
 
   pkgver() {
-      printf '%s.%s' "${pkgver%%.202[0-9]*}" "$(date -u -r kvrt.run +'%Y%m%d%H%M')"
+      printf '%s.%s' "${pkgver%%.202[0-9]*}" "$(<kvrt.stamp)"
   }
   CACTUSEOF
 post_build: aur-post-build
