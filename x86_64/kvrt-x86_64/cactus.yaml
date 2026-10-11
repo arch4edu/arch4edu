@@ -1,26 +1,13 @@
 nvchecker:
   - source: httpheader
-    arch: aarch64
-    url: https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run
+    url: https://kvrt.arch4edu.org/kvrt.run
     header: Last-Modified
     regex: '(\d{2} \w{3} \d{4} \d{2}:\d{2})'
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  # The source is a fixed "latest" URL serving a daily rolling build: pre-fetch it here so
-  # makepkg reuses the local file. The CDN can reject or truncate single-connection pulls
-  # from datacenter networks: prefer aria2 (multi-connection), fall back to curl + retries.
-  if command -v aria2c >/dev/null 2>&1; then
-    aria2c -c -x16 -s16 -k1M --allow-overwrite=true --auto-file-renaming=false \
-      --console-log-level=warn -o kvrt.run 'https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run' ||
-    curl -fLC - --retry 5 --retry-all-errors --retry-delay 5 -o kvrt.run 'https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run'
-  else
-    curl -fLC - --retry 5 --retry-all-errors --retry-delay 5 -o kvrt.run 'https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run'
-  fi
-  test -s kvrt.run
-  # Use a static source filename (makepkg picks it before pkgver() runs) and derive pkgver
-  # from the Last-Modified header, like a VCS package. No static checksums; the
-  # self-extracting bundle verifies its own SHA256 at every run.
+  # CDN 403s runner networks: fetch via the arch4edu CF proxy; -R keeps the upstream mtime for pkgver.
+  sed -i 's|https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run|https://kvrt.arch4edu.org/kvrt.run|' PKGBUILD
   sed -i 's|source_x86_64=("$pkgname-$pkgver-$pkgrel.run::|source_x86_64=("kvrt.run::|' PKGBUILD
   sed -i 's|binwalk -M -q -e $pkgname-$pkgver-$pkgrel.run|binwalk -M -q -e kvrt.run|' PKGBUILD
   sed -i 's|install -Dm775 "$pkgname-$pkgver-$pkgrel.run"|install -Dm775 kvrt.run|' PKGBUILD
@@ -28,10 +15,10 @@ pre_build: |
   sed -i "s|^b2sums_x86_64=('[a-f0-9]*')|b2sums_x86_64=('SKIP')|" PKGBUILD
   cat >> PKGBUILD <<'CACTUSEOF'
 
+  DLAGENTS=('https::/usr/bin/curl -fL -R -C - --connect-timeout 20 --retry 5 --retry-all-errors --retry-delay 5 -o %o %u')
+
   pkgver() {
-      _stamp=$(curl -fsSI --retry 3 --retry-all-errors 'https://devbuilds.s.kaspersky-labs.com/devbuilds/kvrt_linux/latest/kvrt.run' \
-          | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | date -u -f - +'%Y%m%d%H%M')
-      printf '%s.%s' "${pkgver%%.202[0-9]*}" "$_stamp"
+      printf '%s.%s' "${pkgver%%.202[0-9]*}" "$(date -u -r kvrt.run +'%Y%m%d%H%M')"
   }
   CACTUSEOF
 post_build: aur-post-build
