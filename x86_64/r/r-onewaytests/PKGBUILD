@@ -2,10 +2,10 @@
 # Contributor: sukanka <su975853527@gmail.com>
 
 _pkgname=onewaytests
-_pkgver=3.1
+_pkgver=3.2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="One-Way Tests in Independent Groups Designs"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -23,8 +23,8 @@ optdepends=(
   r-tibble
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0b1d140413abd6aeda7d96843dc90bf4')
-b2sums=('5583681efa7f48128f94b25347518af86b82d44faf058bf15d48c61ed79824a9aec246b0ae7ed74e8203c8b23d5130d55005bf424a64dc81d4716b9c2550c6aa')
+md5sums=('23f3e8f82a529f87ccfd5190c3d63ad2')
+b2sums=('aa25498a50139771a17c27496f2f302fd985b807f8a0022474d99c210cbe684d0a11b778367bb74d9ab654674a74b6ec2ff5cdb0ad1db6b9909a32be20e5af95')
 
 build() {
   mkdir build
