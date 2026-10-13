@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=mantar
-_pkgver=0.3.1
+_pkgver=0.3.2
 pkgname=r-mantar
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,4 +21,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-sha256sums=('4610d367325d7839954f2be22016ef91ee7ce927e37bb84ad3a07595fcf7e57b')
+sha256sums=('1237c20756e60ba4785fca708ad05b1b0d0f2b5521fceb6624a0248cb5886172')
