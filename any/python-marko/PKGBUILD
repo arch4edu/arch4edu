@@ -1,27 +1,47 @@
-# Maintainer: Joao Freitas <joaj dot freitas at gmail dot com>
+# Maintainer: @RubenKelevra <rubenkelevra@gmail.com>
+# Contributor: Joao Freitas <joaj.freitas@gmail.com>
 
-pkgname=python-marko
-_name=${pkgname#python-}
-pkgver=2.1.4
+_pkgname='marko'
+pkgname="python-${_pkgname}"
+pkgver=2.2.4
 pkgrel=1
 pkgdesc='A markdown parser with high extensibility'
 arch=('any')
-url='https://pypi.org/project/marko'
+url="https://github.com/frostming/${_pkgname}"
 license=('MIT')
-depends=('python')
-optdepends=()
-makedepends=('python-build' 'python-pdm-backend')
-provides=('python-marko')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha256sums=('dd7d66f3706732bf8f994790e674649a4fd0a6c67f16b80246f30de8e16a1eac')
+depends=('python>=3.9')
+makedepends=(
+	'python-build'
+	'python-installer'
+	'python-pdm-backend'
+	'python-wheel'
+)
+checkdepends=(
+	'python-pygments'
+	'python-pytest'
+	'python-slugify'
+)
+optdepends=(
+	'python-objprint: enhanced AST representations'
+	'python-pygments: syntax highlighting extension'
+	'python-slugify: table-of-contents slug generation'
+)
+source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+b2sums=('1ed0e525729cae387488355f8b2e03f9e9745441d65b9466a12a74b0ec99b922878f4c76089b4c1998946dcf7d7766a4908eb574eff14d50338659a3b8810a12')
 
 build() {
-    cd "$_name-$pkgver"
-    python -m build --wheel --no-isolation
+	cd -- "${_pkgname}-${pkgver}" || return 1
+	python -m build --wheel --no-isolation
+}
+
+check() {
+	cd -- "${_pkgname}-${pkgver}" || return 1
+	python -m pytest tests
 }
 
 package() {
-    cd "$_name-$pkgver"
-    python -m installer --destdir="$pkgdir" dist/*.whl
+	cd -- "${_pkgname}-${pkgver}" || return 1
+	python -m installer --destdir="${pkgdir}" --compile-bytecode 0 --compile-bytecode 2 dist/*.whl
+	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
 makedepends+=("python-installer")
