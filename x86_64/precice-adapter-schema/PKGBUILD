@@ -3,7 +3,7 @@
 _base=adapter-schema
 pkgname=precice-${_base}
 pkgdesc="Validation utility for preCICE adapter configurations"
-pkgver=0.4.1
+pkgver=0.4.3
 pkgrel=1
 arch=(any)
 url="https://github.com/precice/${_base}"
@@ -12,7 +12,7 @@ depends=(python-jsonschema)
 makedepends=(python-build python-installer python-setuptools-git-versioning git)
 checkdepends=(python-pytest)
 source=(git+${url}.git#tag=v${pkgver})
-sha512sums=('4e323a81eece9b3a4583199ff194f186c75256e8eaed9af245550b005861a9281269d2e840edd6ef0efe3e00955f5262c1408d3ce7782e21b467e8508c7b998f')
+sha512sums=('1684f7733b549bd07f3ca869a17169834301c7d4c25bcc2c9cace0e8e38e2a67a3a5c6351a55417a450e2acd8015605d3e5a03169c1668ae400507c311418267')
 
 build() {
   cd ${_base}
