@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+  - alias: jxrlib
 depends:
   - x86_64/brunsli
   - x86_64/lerc
