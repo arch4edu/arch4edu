@@ -4,7 +4,7 @@
 # Contributor: Jooa <aur at (name) dot xyz>
 
 _pkgname=sp
-_pkgver=2.2-3
+_pkgver=2.2-4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -28,8 +28,8 @@ optdepends=(
   r-terra
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('727d54966fbfdd2a644748a1a733f483')
-b2sums=('e2e64d0d2e08567d9a48e584ea45618c8c7d3c3d886523a34105af79adaa885553358100ab22b7e781d3c5ffb2d08efae82b242e17964ba8c1805b6055f4e3c4')
+md5sums=('5485b51e22935da8e8f43c3cb35afe0d')
+b2sums=('81b75f9271a87c5aa43ec1da3333b8e011f4958dd60e7cd4b63af076d3f25008beb73229ed473f35c472075bc4a8b9889ebbc0c9d218c8fd843ff8795a489a78')
 
 build() {
   mkdir build
