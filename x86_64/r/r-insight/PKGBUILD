@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=insight
-_pkgver=1.5.4
+_pkgver=1.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -52,6 +52,7 @@ optdepends=(
   r-gam
   r-gamlss
   r-gamlss.data
+  r-gamlss.dist
   r-gamm4
   r-gbm
   r-gee
@@ -116,6 +117,7 @@ optdepends=(
   r-rms
   r-robustbase
   r-robustlmm
+  r-rstan
   r-rstanarm
   r-rstantools
   r-rstpm2
@@ -142,8 +144,8 @@ optdepends=(
   r-workflows
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('b07580553b485ceba0969fb765087732')
-b2sums=('256a2825d33dd69efa577a5c01cf2edbfb81dbe983d45dfe277fbcab03d8fcf22ce44e81022167055469e2676ab506d8daa1062f44988fd22ce6be07b23ee85f')
+md5sums=('46cd85932575b851c618c46d589b8050')
+b2sums=('45999240085444cd5d28d546745eec85cad4c006bef723d1e9aef515a27d1630044e67ad99f1562cd85835c11a068264c79b54fece31f9c8d239c33b8653a860')
 
 build() {
   mkdir build
