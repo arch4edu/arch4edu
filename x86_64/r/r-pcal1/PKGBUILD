@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=pcaL1
-_pkgver=1.5.9
+_pkgver=1.5.10
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="L1-Norm PCA Methods"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -16,8 +16,8 @@ depends=(
   r
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('4f486874be86c1d141666d56b4f9f37c')
-b2sums=('dfb1be5d3baba5cdee806dc15a430302e1e5abe031420b12cfa2fe604ae6c17c3fd7b9796d77b10bd8b5ac1388cabfeb78a3f9f2a88b3a29b51aa0add39aad69')
+md5sums=('0b5694d6d7ad7d615cf15b8f033f8086')
+b2sums=('8ad8fae9fb1c0c7261e58fdd7ce94889752f902aeefa15b74563e09192a128ecb23bd3975efce2ee02fc5d0aa9a078c6feb10fc96b85eb562b2ecdea8a745ef2')
 
 build() {
   mkdir build
