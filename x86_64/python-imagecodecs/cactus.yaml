@@ -13,4 +13,6 @@ pre_build: |
   aur-pre-build
   sed '/del EXTENSIONS\["zfp"\]/d' -i PKGBUILD
   add depends zfp
+  # jxrlib moved its headers; pass its pkg-config flags into the wheel build
+  sed -i 's|python -m build --wheel|CFLAGS="$(pkg-config --cflags libjxr) ${CFLAGS:-}" python -m build --wheel|' PKGBUILD
 post_build: aur-post-build
