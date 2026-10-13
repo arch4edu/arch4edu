@@ -1,5 +1,5 @@
 nvchecker:
-  - source: http
+  - source: regex
     url: https://kvrt.arch4edu.org/x86_64/stamp.txt
     regex: '(\d{12})'
 build_prefix: extra-x86_64
