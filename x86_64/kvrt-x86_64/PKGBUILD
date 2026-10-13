@@ -2,7 +2,7 @@
 
 pkgname=kvrt-x86_64
 pkgver=24.0.6.0.202610110614
-pkgrel=1
+pkgrel=2
 pkgdesc='Kaspersky Virus Removal Tool - Runtime and Database Signature'
 arch=('x86_64')
 url='https://www.kaspersky.com/downloads/free-virus-removal-tool'
