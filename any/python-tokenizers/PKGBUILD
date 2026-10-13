@@ -1,87 +1,53 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 # Contributor: Filip Graliński <filipg@amu.edu.pl>
+# Maintainer: Mohamed Amine Zghal (medaminezghal) <medaminezghal at outlook dot com>
 
-: ${CARGO_HOME:=$SRCDEST/cargo-home}
-: ${CARGO_TARGET_DIR:=target}
-: ${RUSTUP_TOOLCHAIN:=stable}
-export CARGO_HOME CARGO_TARGET_DIR RUSTUP_TOOLCHAIN
-
-_module="tokenizers"
-_pkgname="python-$_module"
-pkgname="$_pkgname"
-pkgver=0.23.2
+_name=tokenizers
+pkgname=python-$_name
+pkgver=0.23.3
 pkgrel=1
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
+arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/huggingface/tokenizers"
 license=('Apache-2.0')
-arch=('i686' 'x86_64')
-
-depends=('python')
-makedepends=(
-  'clang'
-  'rust-bindgen'
-  'python-build'
-  'python-installer'
-  'python-maturin'
-  'python-setuptools-rust'
-  'python-wheel'
-)
-checkdepends=(
-  'python-datasets'
-  #└─ 'python-huggingface-hub'
-  #└─ 'python-multiprocess'
-  'python-numpy'
-  'python-pyarrow'
-  'python-pytest'
-  'python-requests'
-  'python-setuptools-rust'
-)
-
+depends=('python-huggingface-hub'
+         'libgcc'
+         'libstdc++'
+         'glibc')
+makedepends=('git'
+             'python-build'
+             'python-installer'
+             'python-maturin')
+checkdepends=('python-pytest'
+              'python-pytest-asyncio'
+              'python-numpy'
+              'python-datasets')
 options=('!lto')
+source=("$_name::git+$url.git#tag=v$pkgver")
+sha256sums=('3906634820f9e6e02d5c9c9c6c2deebb9ff164e7fcdac4d4015ca7e5997477f2')
 
-_pkgsrc="$_module-$pkgver"
-_pkgext="tar.gz"
-source=(
-  "$_pkgsrc.$_pkgext"::"$url/archive/refs/tags/v$pkgver.$_pkgext"
-  "norvig-big.txt"::"https://norvig.com/big.txt"
-  "roberta.json"::"https://huggingface.co/roberta-large/raw/main/tokenizer.json"
-)
-sha256sums=(
-  '6f900d6be35eb71921339483937946a4f42167dec9c0102e51055874fb239b8b'
-  'fa066c7d40f0f201ac4144e652aa62430e58a6b3805ec70650f678da5804e87b'
-  '847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e'
-)
-
-prepare() (
-  cd "$_pkgsrc/bindings/python"
-  cargo update
-  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
-)
-
-build() (
-  cd "$_pkgsrc/bindings/python"
-  cargo build --frozen --release
-  python -m build --no-isolation --wheel
-)
+build() {
+  cd "$srcdir"/$_name/bindings/python
+  python -m build --wheel --no-isolation
+}
 
 check() {
-  cd "$_pkgsrc/bindings/python"
-
-  # data
-  install -Dm644 "$srcdir/roberta.json" "data/roberta.json"
-  install -Dm644 "$srcdir/norvig-big.txt" "data/big.txt"
-  head -100 data/big.txt > data/small.txt
-
-  # test in venv
+  local pytest_options=(
+    -vv
+    --disable-warnings
+  )
+  cd "$srcdir"/$_name/bindings/python
+  export HF_HOME="$srcdir"/hf-home
+  export RUN_SLOW=1
+  make test-data
   python -m venv --system-site-packages test-env
   test-env/bin/python -m installer dist/*.whl
-  test-env/bin/python -m pytest -s -v tests || :
-
-  cargo test --no-default-features || :
+  test-env/bin/python -P -m pytest "${pytest_options[@]}" tests
+  cargo test --frozen --no-default-features
 }
 
 package() {
-  cd "$_pkgsrc"
+  cd "$srcdir"/$_name
   install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   cd "bindings/python"
   python -m installer --destdir="$pkgdir" dist/*.whl
