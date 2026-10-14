@@ -2,8 +2,8 @@
 # Contributor: Michel Zou <xantares09@hotmail.com>
 _base=scipy
 pkgname=pypy3-${_base}
-pkgver=1.17.1
-pkgrel=2
+pkgver=1.18.1
+pkgrel=1
 pkgdesc="Fundamental algorithms for scientific computing in Python"
 arch=(x86_64)
 url="https://${_base}.org"
@@ -18,7 +18,7 @@ source=(${_base}-${pkgver}::git+https://github.com/${_base}/${_base}.git?signed#
   git+https://github.com/${_base}/pocketfft
   git+https://github.com/${_base}/unuran)
 validpgpkeys=('AD0C5067D1DECED72F6245670196A9293365B112') # Tyler Reddy <tyler.je.reddy@gmail.com>
-sha512sums=('7a117faaddad3ff7d6a9944cac8c04f466d4dc965fca9bb3725f0ccb06b0782f3c4de3bc65b59a25ac84c71f41c163a4ccda9c6683a17acb76251758e307d27a'
+sha512sums=('4eb51a00b016ea6ab91a19eeeea85d3e9311a3b729e64922c4f1a20af02abd69e918e2235fcc212895d9f2d1f57ad69b7e88cba91a19402bcaaf857fb2592805'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -29,11 +29,6 @@ options=(!lto)
 prepare() {
   cd ${_base}-${pkgver}
   git submodule init
-  git submodule set-url scipy/_lib/array_api_compat "${srcdir}"/array-api-compat
-  git submodule set-url subprojects/boost_math/math "${srcdir}"/math
-  git submodule set-url scipy/_lib/cobyqa "${srcdir}"/cobyqa
-  git submodule set-url scipy/_lib/pocketfft "${srcdir}"/pocketfft
-  git submodule set-url scipy/_lib/unuran "${srcdir}"/unuran
   git -c protocol.file.allow=always submodule update
 }
 
