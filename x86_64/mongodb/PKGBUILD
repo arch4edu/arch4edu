@@ -13,8 +13,8 @@
 pkgname=mongodb
 _pkgname=mongodb
 # #.<odd number>.# releases are unstable development/testing
-pkgver=8.3.7
-pkgrel=2
+pkgver=8.3.13
+pkgrel=1
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 arch=("x86_64")
 url="https://www.mongodb.com/"
@@ -39,7 +39,7 @@ source=("https://github.com/mongodb/mongo/archive/refs/tags/r$pkgver.tar.gz"
         bazel-version.patch
         bazelisk-url.patch
 )
-sha256sums=('d0179a61d3e126a6fce328db38e5f7568f24dfb1a33748d1b994b7fe641c7d88'
+sha256sums=('667f4668da45101b7ac01cdf48ea8849d240aec9fa0413b0493302bb95dc1d3f'
             '3757d548cfb0e697f59b9104f39a344bb3d15f802608085f838cb2495c065795'
             'b7d18726225cd447e353007f896ff7e4cbedb2f641077bce70ab9d292e8f8d39'
             'f1b6bebc6223be86eeb8dc35814f6f2ce15a1748af036dbd777ab0e9e15af02e'
@@ -102,6 +102,8 @@ _build() {
   # Using some options from --config=opt
   bazelisk build install-devcore \
     --verbose_failures \
+    --local_resources=cpu=16 \
+    --local_resources=memory=HOST_RAM*.7 \
     --define=MONGO_VERSION=${pkgver} \
     --define=MONGO_DISTMOD=arch \
     --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type' \
