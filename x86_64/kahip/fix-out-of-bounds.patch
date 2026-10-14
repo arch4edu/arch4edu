@@ -1,0 +1,40 @@
+diff --git a/lib/data_structure/priority_queues/maxNodeHeap.h b/lib/data_structure/priority_queues/maxNodeHeap.h
+index 97fedc3..a6f9c3f 100644
+--- a/lib/data_structure/priority_queues/maxNodeHeap.h
++++ b/lib/data_structure/priority_queues/maxNodeHeap.h
+@@ -191,6 +191,9 @@ inline void maxNodeHeap::insert(NodeID node, Gain gain) {
+ }
+ 
+ inline void maxNodeHeap::deleteNode(NodeID node) {
++        // Same as changeKey(): ignore nodes that are not (or no longer) queued
++        // instead of inserting a bogus index via operator[].
++        if( !contains(node) ) return;
+         int element_index = m_element_index[node];
+         int heap_index    = m_elements[element_index].get_index();
+ 
+@@ -251,6 +254,9 @@ inline NodeID maxNodeHeap::deleteMax() {
+ }
+ 
+ inline void maxNodeHeap::changeKey(NodeID node, Gain gain) {
++        // Callers may ask to update nodes that are no longer queued; operator[]
++        // below would then insert a bogus index and touch an unrelated element.
++        if( !contains(node) ) return;
+         Gain old_gain = m_heap[m_elements[m_element_index[node]].get_index()].first;
+         if( old_gain > gain ) {
+                 decreaseKey(node, gain);
+diff --git a/lib/node_ordering/ordering_tools.cpp b/lib/node_ordering/ordering_tools.cpp
+index 141bb0d..530ed15 100644
+--- a/lib/node_ordering/ordering_tools.cpp
++++ b/lib/node_ordering/ordering_tools.cpp
+@@ -69,6 +69,11 @@ Count compute_fill(graph_access &graph, const std::vector<NodeID> &ordering) {
+                                 ++it;
+                         }
+                 }
++                // No neighbor ordered after 'node' (e.g. the last node): nothing to
++                // propagate, and node_order[k] would be out of range for k == n.
++                if (k == graph.number_of_nodes()) {
++                        continue;
++                }
+                 auto m = node_order[k];         // the node ordered in the k-th place
+                 for (auto it = adjacencies[node].begin(); it != adjacencies[node].end(); ++it) {
+                         auto neighbor = *it;

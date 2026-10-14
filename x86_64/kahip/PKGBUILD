@@ -1,54 +1,76 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: Mohamed Amine Zghal (medaminezghal) <medaminezghal at outlook dot com>
+
 _base=KaHIP
 pkgname=${_base,,}
 pkgver=3.25
-pkgrel=1
+pkgrel=2
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
-arch=(x86_64)
-url="https://github.com/${_base}/${_base}"
-license=(MIT)
-depends=(openmpi python)
-makedepends=(cmake pybind11) # python-build python-installer python-scikit-build-core python-setuptools-scm
-optdepends=('gurobi: for ILP solver in ilp_improve')
-options=(!emptydirs)
-source=(${_base}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('f1c20844a65dd0dcd8cbdb98b60279d5c5fd7d39ea1f3650b120331e7c99ecd7608a79c1c784562ef32f65334eeb92725483ba03dc35368ef80483fdfcfcf303')
+arch=('x86_64')
+url="https://github.com/KaHIP/KaHIP"
+license=('MIT' 'BSD-3-Clause') # BSD-3-Clause: bundled argtable3
+depends=('glibc'
+         'gperftools'
+         'libgcc'
+         'libgomp'
+         'libstdc++'
+         'metis'
+         'openmpi'
+         'python')
+makedepends=('cmake'
+             'pybind11')
+options=(!lto)
+source=("$url/archive/v$pkgver.tar.gz"
+        "fix-out-of-bounds.patch")
+sha256sums=('3abad20158887b585b4d4792c35fa9023b7fd634b2bc4494334a3951b69f4842'
+            '03250c9f51c4e6391d19549263a7a501d264c5c032a8ce35dab49ea599ec65d8')
 
-build() {
-  cmake \
-    -S ${_base}-${pkgver} \
-    -B build \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DBUILD_SHARED_LIBS=TRUE \
-    -DCMAKE_CXX_STANDARD=11 \
-    -DCMAKE_C_COMPILER=gcc \
-    -DCMAKE_CXX_COMPILER=g++ \
-    -DCMAKE_C_FLAGS="-O3 -DNDEBUG -fPIC" \
-    -DCMAKE_CXX_FLAGS="-O3 -DNDEBUG -fPIC -fpermissive" \
-    -DCMAKE_EXE_LINKER_FLAGS="-Wl,--as-needed -Wl,--no-as-needed" \
-    -DCMAKE_VERBOSE_MAKEFILE=OFF \
-    -DBUILDPYTHONMODULE=ON \
-    -DUSE_TCMALLOC=OFF \
-    -DUSE_ILP=OFF \
-    -D64BITMODE=OFF \
-    -Wno-dev
-  cmake --build build --target all
-  # cd ${_base}-${pkgver}
-  # export SETUPTOOLS_SCM_PRETEND_VERSION=${pkgver}
-  # python -m build --wheel --skip-dependency-check --no-isolation
+prepare() {
+  # Out-of-range accesses caught by Arch's -D_GLIBCXX_ASSERTIONS:
+  # compute_fill() (node_ordering, fast_node_ordering) and
+  # maxNodeHeap::changeKey()/deleteNode() on nodes no longer queued (node separators)
+  patch -d ${_base}-${pkgver} -Np1 -i ../fix-out-of-bounds.patch
 }
 
+build() {
+  local _site_packages=$(python -c "import sysconfig; print(sysconfig.get_path('platlib'))")
+
+  cmake \
+    -S $_base-$pkgver \
+    -B build \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_CXX_FLAGS_NONE="-DNDEBUG" \
+    -DCMAKE_C_FLAGS_NONE="-DNDEBUG" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS -Wl,-Bsymbolic" \
+    -DCMAKE_MODULE_LINKER_FLAGS="$LDFLAGS -Wl,-Bsymbolic" \
+    -DCMAKE_INSTALL_PYTHONDIR="$_site_packages" \
+    -DNONATIVEOPTIMIZATIONS=ON \
+    -DPARHIP=ON \
+    -DNOMPI=OFF \
+    -DBUILDPYTHONMODULE=ON \
+    -DUSE_TCMALLOC=ON \
+    -DUSE_ILP=OFF \
+    -D64BITMODE=OFF \
+    -DDETERMINISTIC_PARHIP=OFF \
+    -DOPTIMIZED_OUTPUT=OFF \
+    -Wno-dev
+  cmake --build build
+}
+
+
 package() {
-  DESTDIR="${pkgdir}" cmake --build build --target install
-  # cd ${_base}-${pkgver}
-  # PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python -m installer --destdir="${pkgdir}" dist/*.whl
-  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
-  local _pyversion=$(python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
-  install -dm755 "${pkgdir}${site_packages}/${_base,,}"
-  mv "build/${_base,,}.cpython-${_pyversion}-${CARCH}-linux-gnu.so" "${pkgdir}${site_packages}/${_base,,}"
-  install -Dm 644 ${_base}-${pkgver}/python/${_base,,}/__init__.py -t "${pkgdir}${site_packages}/${_base,,}"
-  install -Dm 644 ${_base}-${pkgver}/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  rm -r "${pkgdir}/${_base,,}"
+  DESTDIR="$pkgdir" cmake --install build
+
+  local _site_packages=$(python -c "import sysconfig; print(sysconfig.get_path('platlib'))")
+  install -Dm 644 $_base-$pkgver/python/$pkgname/__init__.py -t "$pkgdir$_site_packages/$pkgname"
+  echo "__version__ = \"$pkgver\"" > "$pkgdir$_site_packages/$pkgname/_version.py"
+  python -m compileall -q -d "$_site_packages" "$pkgdir$_site_packages/$pkgname"
+  python -O -m compileall -q -d "$_site_packages" "$pkgdir$_site_packages/$pkgname"
+
+  rm -f "$pkgdir"/usr/lib/lib{kahip,parhip_interface}_static.a
+  rm -f "$pkgdir"/usr/bin/interface_test
+
+  install -Dm 644 $_base-$pkgver/LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+  install -Dm 644 $_base-$pkgver/extern/argtable3-3.2.2/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE.argtable3"
 }
