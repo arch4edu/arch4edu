@@ -9,5 +9,9 @@ makedepends:
   - any/pypy3-installer
   - any/pypy3-setuptools
 build_prefix: extra-x86_64
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  # setuptools-scm >=10.3 needs vcs-versioning >=2.5; bump until the AUR package catches up.
+  replace 'https://files.pythonhosted.org/packages/09/95/c95bb74950763a163defcf4cedf6c5edfca1d623fd5031b76516ece85076/vcs_versioning-2.2.2.tar.gz' 'https://files.pythonhosted.org/packages/ad/e7/2a691db7d076b75d099fdba1a14cd966931f2aeb591e77f6d22f15097326/vcs_versioning-2.6.0.tar.gz'
+  replace -u '2.2.2' '2.6.0'
 post_build: aur-post-build
