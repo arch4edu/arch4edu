@@ -2,7 +2,7 @@
 
 pkgname=pypy3
 _pyversion=3.12
-pkgver=8.0.0
+pkgver=8.0.1
 pkgrel=1
 pkgdesc="A Python3 implementation written in Python, JIT enabled"
 url="https://pypy.org"
@@ -12,16 +12,8 @@ makedepends=('pypy' 'sqlite' 'tk')
 optdepends=('sqlite: sqlite module'
             'tk: tk module')
 license=('MIT')
-source=("https://downloads.python.org/pypy/pypy${_pyversion}-v${pkgver}-src.tar.gz"
-        fix-cffi-verify-chdir-relative-source-paths.patch)
-sha512sums=('7eb576fdec8d46e5889dd265951ad49985c7d25ff1f998be83d8f34a011bd2369e00f1e48f93767bcb503b92849d549ce41c97338d65708da42b9833aefb8a2f'
-            '7ff8002b51d8d405c752c3ce5ec29f560350f2e9a389bf2283d18380162807dbb6d4561296b8a29e7738b573b8cf7ae81cdfcd57f61e3730dbe9c089e8f7a8a5')
-
-prepare() {
-  cd pypy${_pyversion}-v${pkgver}-src
-
-  patch -p1 -i ../fix-cffi-verify-chdir-relative-source-paths.patch
-}
+source=("https://downloads.python.org/pypy/pypy${_pyversion}-v${pkgver}-src.tar.gz")
+sha512sums=('bb60f8107079188b9214907c1bdd8d8aebb912cf4beb55f6c8cf80e16029d5e677f18a2f13d3fe3bd11676944e8dca7335a0f52ae1d47dec9b6b4312ac6c1604')
 
 build() {
   cd pypy${_pyversion}-v${pkgver}-src/pypy/goal
