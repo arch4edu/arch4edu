@@ -1,1 +1,11 @@
-../../template/aarch64-simple.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-aarch64
+makepkg_args: -A
+pre_build: aur-pre-build
+post_build: aur-post-build
+scan-ignore:
+  - scanner: kvrt
+    path: opt/vscodium-bin/bin/codium-tunnel
+    threat: 'not-a-virus:HEUR:Server-Proxy.Linux.PingTunnel.gen'
