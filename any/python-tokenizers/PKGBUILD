@@ -5,7 +5,7 @@
 _name=tokenizers
 pkgname=python-$_name
 pkgver=0.23.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/huggingface/tokenizers"
@@ -14,20 +14,19 @@ depends=('python-huggingface-hub'
          'libgcc'
          'libstdc++'
          'glibc')
-makedepends=('git'
+makedepends=('python-maturin'
              'python-build'
-             'python-installer'
-             'python-maturin')
+             'python-installer')
 checkdepends=('python-pytest'
               'python-pytest-asyncio'
               'python-numpy'
               'python-datasets')
 options=('!lto')
-source=("$_name::git+$url.git#tag=v$pkgver")
-sha256sums=('3906634820f9e6e02d5c9c9c6c2deebb9ff164e7fcdac4d4015ca7e5997477f2')
+source=("$_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('2a0ff80c61f263cca608264a99b43dd487a3194a362d20c31193bc083e16a46b')
 
 build() {
-  cd "$srcdir"/$_name/bindings/python
+  cd "$srcdir"/$_name-$pkgver/bindings/python
   python -m build --wheel --no-isolation
 }
 
@@ -36,7 +35,7 @@ check() {
     -vv
     --disable-warnings
   )
-  cd "$srcdir"/$_name/bindings/python
+  cd "$srcdir"/$_name-$pkgver/bindings/python
   export HF_HOME="$srcdir"/hf-home
   export RUN_SLOW=1
   make test-data
@@ -47,7 +46,7 @@ check() {
 }
 
 package() {
-  cd "$srcdir"/$_name
+  cd "$srcdir"/$_name-$pkgver
   install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   cd "bindings/python"
   python -m installer --destdir="$pkgdir" dist/*.whl
