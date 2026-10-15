@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: boost
+  - alias: petsc
 depends:
   - x86_64/petsc
 build_prefix: extra-x86_64

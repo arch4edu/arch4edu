@@ -3,6 +3,7 @@ nvchecker:
     aur:
   - alias: boost
   - alias: python
+  - alias: petsc
 depends:
   - x86_64/kahip
   - x86_64/parmetis-git

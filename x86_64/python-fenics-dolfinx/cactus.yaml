@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+  - alias: petsc
 depends:
   - x86_64/dolfinx
 makedepends:
