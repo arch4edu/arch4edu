@@ -1,7 +1,7 @@
 # Maintainer: Hu Butui <hot123tea123@gmail.com>
 
 _pkgname=parameters
-_pkgver=0.29.3
+_pkgver=0.30.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -24,6 +24,7 @@ optdepends=(
   r-betareg
   r-bh
   r-biglm
+  r-blavaan
   r-blme
   r-brglm2
   r-brms
@@ -94,6 +95,7 @@ optdepends=(
   r-mcmcglmm
   r-mediation
   r-merderiv
+  r-mertools
   r-metabma
   r-metafor
   r-mfx
@@ -147,8 +149,8 @@ optdepends=(
   r-wrs2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('0cdabc7dcec017d7feb6d90214cafa56')
-b2sums=('ff099c3228ce402bf17082ff34a4c08b1cc44ccf8427300eae8deb7bb40ae01e911ae7557bc644291746b69e501328b80284607042ec3433da2dcf9a712383e0')
+md5sums=('eb9d4f17f1187acc3af0f577fe7319b2')
+b2sums=('f7decbf2011fb35069f146f2a5e8ecead092c08c1591b5f83bcf254dcec878586a7f58b9b6948848e1b2c696984294083bda32f538d479bf33602353612a4ce3')
 
 build() {
   mkdir build
