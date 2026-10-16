@@ -1,7 +1,7 @@
 # Maintainer: John Boyd <boyd8444@sdf.org>
 
 pkgname=librdata-git
-pkgver=r129.42099ee
+pkgver=r134.321fd18
 pkgrel=1
 pkgdesc="RData file parser library"
 arch=('x86_64')
