@@ -5,12 +5,13 @@
 _name=tokenizers
 pkgname=python-$_name
 pkgver=0.23.3
-pkgrel=2
+pkgrel=3
 pkgdesc='Fast State-of-the-Art Tokenizers optimized for Research and Production'
 arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/huggingface/tokenizers"
 license=('Apache-2.0')
-depends=('python-huggingface-hub'
+depends=('python'
+         'python-huggingface-hub'
          'libgcc'
          'libstdc++'
          'glibc')
@@ -25,8 +26,14 @@ options=('!lto')
 source=("$_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('2a0ff80c61f263cca608264a99b43dd487a3194a362d20c31193bc083e16a46b')
 
+prepare() {
+  cd "$_name-$pkgver/bindings/python"
+  # Remove the benchmark suite (dropped upstream after 0.23.3), its data isn't fetched by make test-data
+  rm tests/test_benchmarks.py
+}
+
 build() {
-  cd "$srcdir"/$_name-$pkgver/bindings/python
+  cd "$_name-$pkgver/bindings/python"
   python -m build --wheel --no-isolation
 }
 
@@ -35,7 +42,7 @@ check() {
     -vv
     --disable-warnings
   )
-  cd "$srcdir"/$_name-$pkgver/bindings/python
+  cd "$_name-$pkgver/bindings/python"
   export HF_HOME="$srcdir"/hf-home
   export RUN_SLOW=1
   make test-data
@@ -46,8 +53,6 @@ check() {
 }
 
 package() {
-  cd "$srcdir"/$_name-$pkgver
-  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-  cd "bindings/python"
+  cd "$_name-$pkgver/bindings/python"
   python -m installer --destdir="$pkgdir" dist/*.whl
 }
