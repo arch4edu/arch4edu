@@ -4,7 +4,7 @@
 # Contributor: Grey Christoforo <first name at last name dot net>
 
 _pkgname=future.apply
-_pkgver=1.20.2
+_pkgver=1.21.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,8 +22,8 @@ optdepends=(
   r-r.rsp
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('91e8f96d675501767eb79a42ea339bdc')
-b2sums=('ba1b28302f0796e2f385b0171802cf869091d956dcc47b28fd6ef76d5dc99cadec01eb17548342497bab6f5efd9acb8d2bdcbf51178b5be77d72a27a5f3e1db8')
+md5sums=('4aae6b7e660b430da06a5df549a2fc5c')
+b2sums=('ddecaf56bcffdb022f66846e916f4b9f1c86fbb963b1fd31678582b6de4606944749909a5e8bd1124a963e2e56ab8cd7907711b51f49c4d48643d3aeb77bb6b1')
 
 build() {
   mkdir build
