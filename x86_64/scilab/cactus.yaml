@@ -7,12 +7,40 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  add depends arrow libxslt
+  add depends arrow libxslt xlnt
   add makedepends rapidjson
-  sed -i 's/scilab-2025.1.0/scilab-2026.1.0/g' scilab-num.patch libxml.patch
-  sed -i 's/@@ -930,11 +930,11 @@/@@ -930,12 +930,12 @@/' scilab-num.patch
-  sed -i '/^ OCAMLDEP = @OCAMLDEP@$/a\ OCAMLFIND = @OCAMLFIND@' scilab-num.patch
-  sed -i "/patch -p0.*libxml.patch/a\\  sed -i '/^      integer low,igh$/a\\\\      external split' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/elementary_functions/src/fortran/bdiag.f\\n  sed -i 's/std::cout << \"s42 = \"/std::wcout << L\"s42 = \"/' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/ast/src/cpp/types/test-types.cpp" PKGBUILD
+  # 2027.0.0's webtools LSP/DAP endpoints need an external CppServer bundle that is not shipped;
+  # keep the module (core/functions_manager link against it) but drop the TCP/WebSocket endpoints.
+  # scilab-bin also references ConsolePrint, which the --without-gui minimal console does not provide.
+  sed -i "s/scilab-2025.1.0/scilab-$(sed -n 's/^pkgver=//p' PKGBUILD)/g" libxml.patch
+  cat > scilab-num.patch <<'PATCH'
+  --- scilab-VERSION/scilab/modules/scicos/Makefile.in
+  +++ scilab-VERSION/scilab/modules/scicos/Makefile.in
+  @@ -886,7 +886,7 @@
+   OCAML = @OCAML@
+   OCAMLBEST = @OCAMLBEST@
+   OCAMLBUILD = @OCAMLBUILD@
+  -OCAMLC = @OCAMLC@
+  +OCAMLC = ocamlfind @OCAMLC@ -package num
+   OCAMLDEP = @OCAMLDEP@
+   OCAMLDOC = @OCAMLDOC@
+   OCAMLFIND = @OCAMLFIND@
+  @@ -895,7 +895,7 @@
+   OCAMLLIB = @OCAMLLIB@
+   OCAMLMKLIB = @OCAMLMKLIB@
+   OCAMLMKTOP = @OCAMLMKTOP@
+  -OCAMLOPT = @OCAMLOPT@
+  +OCAMLOPT = ocamlfind @OCAMLOPT@ -package num
+   OCAMLVERSION = @OCAMLVERSION@
+   OCAMLYACC = @OCAMLYACC@
+   OCAML_PKG_num = @OCAML_PKG_num@
+  PATCH
+  sed -i "s/scilab-VERSION/scilab-$(sed -n 's/^pkgver=//p' PKGBUILD)/g" scilab-num.patch
+  sed -i "/patch -p0.*libxml.patch/a\  for f in lspEndpoint dapEndpoint lspDocumentSync lspSemanticTokens lspCompletionHelp lspNavigation lspFormatting; do echo 'static_assert(true);' > \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/webtools/src/cpp/\$f.cpp; done" PKGBUILD
+  sed -i "/patch -p0.*libxml.patch/a\  echo 'void ConsolePrint(const char *line, int severity) { (void)line; (void)severity; }' >> \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/console/src/noconsole/noconsole.c" PKGBUILD
+  sed -i "/patch -p0.*libxml.patch/a\  sed -i -e '/#include \"lspEndpoint.hxx\"/d' -e '/LspEndpoint::getInstance()/d' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/webtools/src/cpp/lsp_interface.cpp" PKGBUILD
+  sed -i "/patch -p0.*libxml.patch/a\  sed -i -e '/#include \"dapEndpoint.hxx\"/d' -e '/DapEndpoint::getInstance()/d' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/webtools/src/cpp/dap_interface.cpp" PKGBUILD
+  sed -i "/patch -p0.*libxml.patch/a\  sed -i '/^      integer low,igh$/a\\\\      external split' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/elementary_functions/src/fortran/bdiag.f\\n  sed -i 's/std::cout << \"s42 = \"/std::wcout << L\"s42 = \"/' \"\${srcdir}\"/\${pkgname}-\${pkgver}/\${pkgname}/modules/ast/src/cpp/types/test-types.cpp" PKGBUILD
   sed -i 's/CXXFLAGS="$CXXFLAGS -fcommon"/CXXFLAGS="$CXXFLAGS -fcommon -std=c++20 -fno-char8_t"/' PKGBUILD
   updpkgsums
 post_build: aur-post-build
