@@ -3,17 +3,17 @@
 
 _pkg=shap
 pkgname=python-${_pkg}
-pkgver=0.48.0
-pkgrel=2
+pkgver=0.54.1
+pkgrel=1
 pkgdesc="Game theoretic approach to explain the output of any machine learning model"
 arch=(i686 x86_64 armv7h aarch64)
 url="https://github.com/slundberg/shap"
 license=(MIT)
-depends=(cython python python-numpy python-scipy python-scikit-learn python-pandas python-tqdm python-packaging python-slicer python-numba python-cloudpickle)
-makedepends=(python-build python-installer python-wheel)
+depends=(python python-numpy python-scipy python-scikit-learn python-pandas python-tqdm python-packaging python-slicer python-cloudpickle)
+makedepends=(python-build python-installer python-wheel python-scikit-build-core nanobind)
 optdepends=(ipython python-matplotlib)
-source=(https://files.pythonhosted.org/packages/source/s/${_pkg}/${_pkg}-${pkgver}.tar.gz)
-sha512sums=('af84202c46592d8372b9ad438726bb1c383d26d84554406fba72086bff7e228e9d3cf584a5709f130515891ccc804486fafeb6926425675ea7b691fd5723df9c')
+source=(https://files.pythonhosted.org/packages/source/${_pkg::1}/${_pkg}/${_pkg}-${pkgver}.tar.gz)
+sha512sums=('71b9b5f7185bbee8de0e9918b52a22f5827ab4f5912c5739cd411e5fa953b5402e7f345459e9ed430bed4c470e626cfdf40268a7fe78271b3234b7979a0614fd')
 
 build() {
   cd ${_pkg}-${pkgver}
@@ -25,4 +25,4 @@ package(){
     python -m installer --destdir="${pkgdir}" dist/*.whl
     install -D LICENSE "${pkgdir}/usr/share/licenses/python-${_pkg}/LICENSE"
 }
-makedepends+=("python-setuptools")
+makedepends+=("python-setuptools" "python-setuptools-scm")
