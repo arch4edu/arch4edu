@@ -7,7 +7,7 @@
 _pkgname="octopi"
 pkgname="$_pkgname"
 pkgver=0.19.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A powerful Pacman frontend using Qt libs"
 url="https://github.com/aarnt/octopi"
 license=('GPL-2.0-or-later')
@@ -40,7 +40,11 @@ optdepends=(
   'yay: for AUR support'
 )
 
-conflicts=('alpm_octopi_utils')
+conflicts=(
+  # Manjaro
+  'alpm_octopi_utils'
+  'octopi-notifier'
+)
 
 options=('!lto')
 
