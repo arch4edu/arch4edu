@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=progressr
-_pkgver=1.0.0
+_pkgver=1.1.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -12,7 +12,7 @@ arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('Apache')
 depends=(
-  r-digest
+  r
 )
 optdepends=(
   r-base64enc
@@ -20,6 +20,7 @@ optdepends=(
   r-cli
   r-commonmark
   r-crayon
+  r-digest
   r-dofuture
   r-foreach
   r-furrr
@@ -35,8 +36,8 @@ optdepends=(
   r-shiny
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c3672e20ef7ae91d8c14eedbf6e0a5a3')
-b2sums=('c30acc5fa5881436fca41f18648cf075574e8302f6cbc06dbd69d56ca0ca0b30f34e9f92878e779a6e208735c025448a54253252c11a6024b1aa9429f84a49d9')
+md5sums=('5f24f376361e248fdef987d096c4a270')
+b2sums=('99f7662f7744f0ea4550cb355c6d64fbe4af54e76e8508e0b1a1cfb5973fe0588c7e2ab7d32ee0dc8718a794ba1229781ec3a09bb1456d38ca18ef05cfa73f65')
 
 build() {
   mkdir build
