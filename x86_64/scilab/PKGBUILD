@@ -5,7 +5,7 @@
 # Contributor: Kurnevsky Evgeny <kurnevsky@gmail.com>
 # Contributor: Victor Dmitriyev <mrvvitek@gmail.com>
 pkgname=scilab
-pkgver=2026.1.0
+pkgver=2027.0.0
 pkgrel=1
 pkgdesc="A scientific software package for numerical computations"
 arch=(i686 x86_64)
@@ -23,9 +23,9 @@ makedepends=(ant curl gcc-fortran libxml2 ocaml-num ocaml-findlib pcre pkgconf r
 source=(https://gitlab.com/${pkgname}/${pkgname}/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz
   local://${pkgname}-num.patch
   local://libxml.patch) # hdf5-api.patch ${pkgname}-strict-jar.patch
-sha512sums=('7312b266e844fdcaba31aae3746d158d1d4418ae127c53cdf18f6dcaaf2a10a38bbe901ce92a9cc4d00585ed4e0ba65d193961980926e32040994cf8f1d99551'
-            '0b27faa78880c729289513b30a015d5d2dc89bf84db27b6f834ff9a6000e7844e32bff2f5b7e18dd461ce48a53e01c1b18ce542cb7302556247c36ab0f90bf6d'
-            'f2231e4bb16628117800ff1f082311f24f1bbb473290881f85f291b8f662f6fbd01111478b667170d63522af50557ffa379c8b73e07b0825b83872dc937359a7')
+sha512sums=('a661577e7456a2c057438d531b8ea99e6155eab7419c3d5a5c8902e9bd0bec31501645602dffa1cb9b4c5d634de2af6d90b3bb89634d3ffabb2269af3f301c5a'
+            'e4ef0434390fc3b0fa660a0db02bd0c1df5f9d10dbc2e5c9ad7d4a63e5c6f277d7a22f8ae3ad0f1ce6614117608af4b03ade70454555b4221f341a803fcf4498'
+            '5a097d73096cfdfd14b21c01127219417db8c68dbaa099cc15624659c63b58cdb5a6d28890a190fc200a17683a2359a79225eac738fa32cf05eaf0b1ec814f4e')
 
 prepare() {
   # Fix path, to avoid the following error:
@@ -35,6 +35,10 @@ prepare() {
   patch -p0 <"${srcdir}"/libxml.patch
   sed -i '/^      integer low,igh$/a\      external split' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/elementary_functions/src/fortran/bdiag.f
   sed -i 's/std::cout << "s42 = "/std::wcout << L"s42 = "/' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/ast/src/cpp/types/test-types.cpp
+  sed -i -e '/#include "dapEndpoint.hxx"/d' -e '/DapEndpoint::getInstance()/d' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/webtools/src/cpp/dap_interface.cpp
+  sed -i -e '/#include "lspEndpoint.hxx"/d' -e '/LspEndpoint::getInstance()/d' "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/webtools/src/cpp/lsp_interface.cpp
+  echo 'void ConsolePrint(const char *line, int severity) { (void)line; (void)severity; }' >> "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/console/src/noconsole/noconsole.c
+  for f in lspEndpoint dapEndpoint lspDocumentSync lspSemanticTokens lspCompletionHelp lspNavigation lspFormatting; do echo 'static_assert(true);' > "${srcdir}"/${pkgname}-${pkgver}/${pkgname}/modules/webtools/src/cpp/$f.cpp; done
   # Linked to: https://codereview.scilab.org/#/c/18089
   # patch <"${srcdir}"/${pkgname}-strict-jar.patch
   # Jakarta
@@ -92,5 +96,5 @@ package() {
   rm -r "${pkgdir}"/usr/include/sundials
   rm -r "${pkgdir}"/usr/include/sunmatrix
 }
-depends+=("arrow" "libxslt")
+depends+=("arrow" "libxslt" "xlnt")
 makedepends+=("rapidjson")

@@ -1,18 +1,20 @@
-diff --color --color -uraBN scilab-2026.1.0/scilab/modules/scicos/Makefile.in scilab-2026.1.0-patched/scilab/modules/scicos/Makefile.in
---- scilab-2026.1.0/scilab/modules/scicos/Makefile.in	2025-05-22 05:05:24.000000000 -0500
-+++ scilab-2026.1.0-patched/scilab/modules/scicos/Makefile.in	2025-09-03 10:33:36.906413648 -0500
-@@ -930,12 +930,12 @@
- NMEDIT = @NMEDIT@
- OBJDUMP = @OBJDUMP@
- OBJEXT = @OBJEXT@
+--- scilab-2027.0.0/scilab/modules/scicos/Makefile.in
++++ scilab-2027.0.0/scilab/modules/scicos/Makefile.in
+@@ -886,7 +886,7 @@
+ OCAML = @OCAML@
+ OCAMLBEST = @OCAMLBEST@
+ OCAMLBUILD = @OCAMLBUILD@
 -OCAMLC = @OCAMLC@
 +OCAMLC = ocamlfind @OCAMLC@ -package num
- OCAMLCFLAGS = @OCAMLCFLAGS@
  OCAMLDEP = @OCAMLDEP@
+ OCAMLDOC = @OCAMLDOC@
  OCAMLFIND = @OCAMLFIND@
- OCAMLLEX = @OCAMLLEX@
+@@ -895,7 +895,7 @@
+ OCAMLLIB = @OCAMLLIB@
+ OCAMLMKLIB = @OCAMLMKLIB@
+ OCAMLMKTOP = @OCAMLMKTOP@
 -OCAMLOPT = @OCAMLOPT@
 +OCAMLOPT = ocamlfind @OCAMLOPT@ -package num
- OCAMLOPTFLAGS = @OCAMLOPTFLAGS@
+ OCAMLVERSION = @OCAMLVERSION@
  OCAMLYACC = @OCAMLYACC@
- OPENMPI_CC = @OPENMPI_CC@
+ OCAML_PKG_num = @OCAML_PKG_num@
