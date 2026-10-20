@@ -6,7 +6,7 @@
 # Contributor: Victor Dmitriyev <mrvvitek@gmail.com>
 pkgname=scilab
 pkgver=2027.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A scientific software package for numerical computations"
 arch=(i686 x86_64)
 url="https://www.${pkgname}.org"
