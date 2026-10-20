@@ -2,7 +2,7 @@
 _pkgname=qiskit
 pkgname=python-${_pkgname}
 pkgver=2.6.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="An open-source SDK for working with (IBM) quantum computers"
 arch=(x86_64)
@@ -15,6 +15,7 @@ depends=(
     python-rustworkx
     python-scipy
     python-stevedore
+    python-typing_extensions
 )
 optdepends=(
     'ipython: interactivity'
