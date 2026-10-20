@@ -14,4 +14,12 @@ pre_build: |
   aur-pre-build
   add depends libglvnd glibc
   sed -i "s/^arch=('any')$/arch=('x86_64')/" PKGBUILD
+  # 8.3.0 already contains PR 1128; drop the now-dead patch source, checksum and prepare().
+  if grep -q '/pull/1128.patch' PKGBUILD; then
+    sed -i '\|/pull/1128.patch")|d' PKGBUILD
+    replace '.tar.gz"' '.tar.gz")'
+    replace "'4ea8ebc394432cf782b7c0659c961bbb4e531a0cdb6953ee3acf86698ea58b9e'" "'4ea8ebc394432cf782b7c0659c961bbb4e531a0cdb6953ee3acf86698ea58b9e')"
+    sed -i "/'2c9939d6d5eeb4b669267d09266e45a7dc0d387bf3e1b01510acc5090a6be92d')/d" PKGBUILD
+    sed -i '/^prepare() {$/,/^}$/d' PKGBUILD
+  fi
 post_build: aur-post-build
