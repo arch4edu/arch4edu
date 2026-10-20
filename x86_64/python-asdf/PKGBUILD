@@ -4,7 +4,7 @@ pkgbase=python-asdf
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}")
 #"python-${_pyname}-doc")
-pkgver=5.4.0
+pkgver=6.0.0
 pkgrel=1
 pkgdesc="A Python tool for reading and writing Advanced Scientific Data Format (ASDF) files"
 arch=('any')
@@ -50,7 +50,7 @@ checkdepends=('python-pytest'
 # psutil pulled in by pytest-openfiles; attrs <- aiohttp, jsonschema
 #            'python-virtualenv'
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('e959675b916ea83c2cef3ef119cfd874')
+md5sums=('ec9ec1aa4348b854b701d50f2a2ac7df')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -86,7 +86,7 @@ check() {
 }
 
 package_python-asdf() {
-    depends=('python>=3.10'
+    depends=('python>=3.11'
              'python-numpy>=1.22'
              'python-jmespath>=0.6.2'
              'python-attrs>=22.2.0'
