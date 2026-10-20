@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=ibm-quantum-schemas
 pkgname=python-${_pkgname}
-pkgver=0.12.20260921
+pkgver=0.13.20261016
 pkgrel=1
 pkgdesc="IBM Quantum API Schemas"
 arch=(any)
@@ -24,7 +24,7 @@ makedepends=(
 )
 checkdepends=(python-pytest)
 source=($_pkgname::git+https://github.com/Qiskit/$_pkgname.git#tag=$pkgver)
-b2sums=('019e3644ffc305a4c766669e92328dac6aeec2ea9e8747dfd1911a0c1e14199140f47f16ccddb42964849cf8aae203082da3ee19cb9aa786863ed97623a779f6')
+b2sums=('0fbc0058426d22f06c76cac62fe6400665ee023a535dfe5c7f164ab4a8a294d1d1d8d9e2fb279e5faa7537fb9259bdfb6d895aa649ac89456b64bda42849b349')
 
 build() {
     cd $_pkgname
