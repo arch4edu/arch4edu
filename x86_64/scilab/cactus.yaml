@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: arrow
 depends:
   - any/bwidget
   - x86_64/xlnt
