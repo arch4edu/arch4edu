@@ -2,19 +2,20 @@
 # Contribuor: Jingbei Li
 # Contributor: Heavysink <winstonwu91@gmail.com>
 pkgname=code_saturne
-pkgver=9.1.0
-pkgrel=2
+pkgver=9.2.0
+pkgrel=1
 pkgdesc="An open source CFD software which solves the Navier-Stokes equations under different circumstances."
 arch=(x86_64)
 url="http://code-saturne.org"
 license=('GPL')
 depends=('libxml2' 'python-pyqt5' 'cgns' 'parmetis' 'scotch' 'med' 'hdf5')
-makedepends=('doxygen' 'graphviz' 'gcc-fortran' 'python-setuptools' 'python-pip')
-source=("http://code-saturne.org/releases/$pkgname-$pkgver.tar.gz")
-sha512sums=('f92c3ea1a44943376b29e3453dec95ca3497bf4d546f66f9c2dbe8fc72f0b6043f2e69a9af299cf2f185d665fe21c2ba74576538a53b2f36fce9fa4cb5ad4ba8')
+makedepends=('doxygen' 'graphviz' 'gcc-fortran' 'python-setuptools' 'python-pip' 'autoconf' 'automake' 'libtool')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/code-saturne/code_saturne/archive/refs/tags/v$pkgver.tar.gz")
+sha512sums=('f55cbf3209ac304732c2f07311a15ab4bcb803ab65e1aba918609706c7a9a44d29a5bcefb0e49521a8264661dbbc1c7a331dbcc1eb398c3192d5f8df0829ff2a')
 
 build() {
 	cd "$pkgname-$pkgver"
+	./sbin/bootstrap
 	./configure CC=cc CXX=g++ FC=gfortran --enable-shared --with-metis=/usr --with-scotch=/usr --prefix=/usr
 	make
 }
