@@ -1,9 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-$_pkgname
-pkgver=0.17.2
-pkgver_nlohmann_json=3.10.2
-pkgrel=3
+pkgver=0.18.0
+pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=(x86_64)
 url="https://github.com/Qiskit/qiskit-aer"
@@ -24,8 +23,10 @@ optdepends=(
 )
 makedepends=(
     cmake
+    git
     ipython
     ninja
+    nlohmann-json
     pybind11
     python-build
     python-installer
@@ -42,58 +43,47 @@ checkdepends=(
     python-stestr
 )
 source=(
-    $_pkgname-$pkgver.tar.gz::https://github.com/Qiskit/$_pkgname/archive/$pkgver.tar.gz
-    nlohmann-json-$pkgver_nlohmann_json.tar.gz::https://github.com/nlohmann/json/archive/refs/tags/v$pkgver_nlohmann_json.tar.gz
+    $_pkgname::git+https://github.com/Qiskit/$_pkgname.git#tag=$pkgver
+    fix-test-pauli-noise-with-shot-branching.patch
+    fix-test-mps-options.patch
 )
-b2sums=('49dafc4cba948b7e3d474b0b8c73075cc5135a7c8559eebc2c0d5578c19868b4dc0a1dd4e6ab199f67a3996eb35ea11c9e0d8da9d49835bd2d7119774f64d954'
-        'e7da213fb75d528b1f5425822f5b598e882f232a67670aaae2d8f89c76e72ee23fa3344d1acfef2b0338a6a423d17b231b7e047ff064c984c2ec7783b721a22c')
+b2sums=('b6649e5078a58e61ddb56954622ab615ec7ff0a8bab7896caec99021197452490bfce18a93d1407a74fafa97f748eb679a4df06d2e90353fee3b059ca2bcaa54'
+'6d622f326380020e8810cc727b760093d9abdc76a9e857f258bd0bab4354b4ebb1c44889013f66b4ff7ac73362d8b4d898c36c12e99dae1799b7342a81494f4d'
+'5696c4848440b432348b8c6d51ed29d4640a50aea5df14904c4f216a76e67722251bef7b27f630aed4d82bca7fd3869240be8b252478325e0d971e78d364137b')
 
 prepare() {
-    cd $_pkgname-$pkgver
+    cd $_pkgname
     sed -i -e '/conan/d' -e '/cmake/d' -e '/ninja/d' pyproject.toml
 
     # Fix legacy package name
     sed -i -e "s/qiskit.providers.aer.backends.controller_wrappers/qiskit_aer.backends.controller_wrappers/" test/terra/expression/test_classical_expressions.py
+
+    # Fix TestRuntimeParameterization::test_pauli_noise_with_shot_branching
+    patch -Np1 < ../fix-test-pauli-noise-with-shot-branching.patch
+
+    # Fix TestOptions::test_mps_options
+    patch -Np1 < ../fix-test-mps-options.patch
 }
 
 build() {
-    # We cannot use the header-only library from [extra] because of this issue:
-    # https://github.com/Qiskit/qiskit-aer/issues/1742
-    local cmake_options=(
-        -B build
-        -D JSON_BuildTests=OFF
-        -D CMAKE_BUILD_TYPE=None
-        -D CMAKE_INSTALL_PREFIX=/usr
-        -D CMAKE_INSTALL_LIBDIR=/usr
-        -D JSON_MultipleHeaders=OFF
-        -D CMAKE_POLICY_VERSION_MINIMUM=3.5
-        -S json-$pkgver_nlohmann_json
-        -W no-dev
-    )
-    cmake "${cmake_options[@]}"
-    cmake --build build --verbose
-    DESTDIR=tmp cmake --install build
-
-    cd $_pkgname-$pkgver
+    cd $_pkgname
     export DISABLE_CONAN=ON
-    export CPATH="$srcdir/tmp/usr/include:$CPATH"
-    export nlohmann_json_DIR="$srcdir"/tmp/usr/cmake/nlohmann_json
     python -m build --wheel --no-isolation
 }
 
 check() {
-    cd $_pkgname-$pkgver
+    cd $_pkgname
     python -m venv --system-site-packages test-env
     test-env/bin/python -m installer dist/*.whl
     rm -rf qiskit_aer
     # Tests that crash Python:
     # - test_mps_options
     # WARNING: on modern CPUs some additional tests might fail
-    test-env/bin/python -P -m pytest -o addopts="" -v test -k "not test_mps_options"
+    test-env/bin/python -P -m pytest -o addopts="" -v test
 }
 
 package() {
-    cd $_pkgname-$pkgver
+    cd $_pkgname
     python -m installer --destdir="$pkgdir" dist/*.whl
     install -D -m644 LICENSE.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
