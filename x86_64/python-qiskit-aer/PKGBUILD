@@ -2,13 +2,13 @@
 _pkgname=qiskit-aer
 pkgname=python-$_pkgname
 pkgver=0.18.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=(x86_64)
 url="https://github.com/Qiskit/qiskit-aer"
 license=(Apache-2.0)
 depends=(
-    blas-openblas
+    openblas
     python-dateutil
     python-numpy
     python-psutil
@@ -76,9 +76,6 @@ check() {
     python -m venv --system-site-packages test-env
     test-env/bin/python -m installer dist/*.whl
     rm -rf qiskit_aer
-    # Tests that crash Python:
-    # - test_mps_options
-    # WARNING: on modern CPUs some additional tests might fail
     test-env/bin/python -P -m pytest -o addopts="" -v test
 }
 
