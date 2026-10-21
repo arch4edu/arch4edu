@@ -4,7 +4,7 @@
 
 pkgname=python-conda
 _name=${pkgname#python-}
-pkgver=26.7.2
+pkgver=26.9.3
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem https://conda.io"
 arch=('any')
@@ -48,7 +48,7 @@ conflicts=(
 options=(!emptydirs)
 backup=(etc/conda/condarc)
 source=("$url/releases/download/$pkgver/$_name-$pkgver.tar.gz")
-sha256sums=('3b9ba0833a52a65960bfd9c40238f9700f673a70a540351b5c6312eedc97ab98')
+sha256sums=('62c99f6194811037ba39bbf38fee5e8167fe444be122905896b24810cb8e04b0')
 
 prepare() {
   cd "$srcdir/$_name-$pkgver" || exit
