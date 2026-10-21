@@ -2,20 +2,22 @@
 # Contributor: Jingbei Li <i@jingbei.li>
 _base=mkl_random
 pkgname=python-${_base/_/-}
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=1
 pkgdesc="NumPy-based Python interface to Intel (R) MKL Random Number Generation functionality"
 arch=(x86_64)
 url="https://github.com/IntelPython/${_base}"
 license=(BSD-3-Clause)
 depends=(intel-oneapi-mkl python-numpy)
-makedepends=(python-build python-installer python-setuptools cython python-wheel intel-oneapi-mkl)
+makedepends=(cmake cython meson-python python-build python-installer)
 source=(${_base}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz)
-sha512sums=('142170e80bf6b08ee0d35518d580639022eb7b183acd5ae6c2d84bda9d5726759f6d48157f30918ce5b4f33b88d879d188d8af646451daae0716b2aad36634f9')
+sha512sums=('8e7ec5d11007acf8098aff7ca7ebfa48d5a535443959fa7c7c5d52bbd7d946217b18da2c028a50f7e66525cf9a683cf4630b55c5e1b073943ad60f05760efa64')
 
 build() {
   cd ${_base}-${pkgver}
   CFLAGS='-I /opt/intel/mkl/include -L/opt/intel/mkl/lib/intel64' \
+    MKLROOT=/opt/intel/oneapi/mkl/latest \
+    CMAKE_PREFIX_PATH=/opt/intel/oneapi/mkl/latest \
     python -m build --wheel --skip-dependency-check --no-isolation
 }
 
