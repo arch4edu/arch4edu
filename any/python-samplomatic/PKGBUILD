@@ -2,13 +2,12 @@
 _name=samplomatic
 pkgname=python-${_name}
 pkgver=0.21.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A library that helps you sample randomizations of your quantum circuits"
 arch=(any)
 url=https://github.com/Qiskit/samplomatic
 license=(Apache-2.0)
 depends=(
-    blas-openblas
     python-numpy
     python-orjson
     python-pybase64
