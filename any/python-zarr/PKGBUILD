@@ -1,7 +1,7 @@
 # Maintainer: Philipp A. <flying-sheep@web.de>
 _name=zarr
 pkgname=python-zarr
-pkgver=3.4.0
+pkgver=3.4.1
 pkgrel=1
 pkgdesc='An implementation of chunked, compressed, N-dimensional arrays for Python'
 arch=(any)
@@ -18,7 +18,7 @@ depends=(
 )
 makedepends=(python-hatchling python-hatch-vcs python-build python-installer)
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha256sums=('b68676576a6fc42683dfcc0daeb3c0e994f71e1680696990bde056bd3acf3542')
+sha256sums=('b34bda11ceb199c81ee78ecd42cd02f46c7f67a6d8a1e9bc501cafd5a1795356')
 
 build() {
 	cd "$_name-$pkgver"
