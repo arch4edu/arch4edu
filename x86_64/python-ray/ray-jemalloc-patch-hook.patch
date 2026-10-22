@@ -1,0 +1,17 @@
+Apply the jemalloc GCC 16 backport to the allocator fetched by Bazel.
+
+diff --git a/bazel/ray_deps_setup.bzl b/bazel/ray_deps_setup.bzl
+--- a/bazel/ray_deps_setup.bzl
++++ b/bazel/ray_deps_setup.bzl
+@@ -476,7 +476,11 @@ def ray_deps_setup():
+     auto_http_archive(
+         name = "jemalloc",
+         url = "https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2",
+         build_file = "@io_ray//bazel:jemalloc.BUILD",
++        patches = [
++            "@io_ray//thirdparty/patches:jemalloc-gcc16.patch",
++        ],
++        patch_args = ["-p1"],
+         sha256 = "2db82d1e7119df3e71b7640219b6dfe84789bc0537983c3b7ac4f7189aecfeaa",
+         strip_prefix = "jemalloc-5.3.0",
+     )
