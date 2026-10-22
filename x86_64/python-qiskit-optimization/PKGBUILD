@@ -2,13 +2,12 @@
 _pkgname=qiskit-optimization
 pkgname=python-$_pkgname
 pkgver=0.7.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Quantum Optimization package for IBM qiskit framework"
 arch=(any)
 url=https://github.com/qiskit-community/qiskit-optimization
 license=(Apache-2.0)
 depends=(
-    blas-openblas
     python-docplex
     python-networkx
     python-numpy
