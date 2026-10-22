@@ -1,9 +1,10 @@
 # Maintainer: Jamison Lahman <jamison+aur@lahman.dev>
 # Contributor:
+# Source: https://github.com/jmelahman/pkgbuilds
 
 pkgname=prek
-pkgver=0.5.5
-pkgrel=3
+pkgver=0.5.7
+pkgrel=1
 pkgdesc="⚡ Better 'pre-commit', re-engineered in Rust"
 arch=('x86_64')
 url='https://github.com/j178/prek'
@@ -13,7 +14,7 @@ makedepends=('git' 'rust' 'libxml2')
 # TODO: https://github.com/jmelahman/PKGBUILDs/issues/119
 # checkdepends=('cargo-nextest')
 options=('!lto')
-_commit='77cca6719ea8e3d9cc7a973e2c9e7648f4b0381d'
+_commit='8569a4ac59a79212fe152f3c815505775301ec1d'
 source=("$pkgname::git+$url.git#commit=$_commit")
 md5sums=('SKIP')
 
@@ -31,6 +32,9 @@ prepare() {
 
 build() {
   cd "$pkgname" || exit
+
+  # aws-lc-sys compiles jitterentropy with -O0, which makepkg's -O2 overrides.
+  export CFLAGS="${CFLAGS/-O2/}"
 
   CARGO_PROFILE_RELEASE_STRIP=false \
     cargo build --frozen --release --target-dir target
