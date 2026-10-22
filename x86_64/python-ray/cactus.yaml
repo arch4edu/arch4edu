@@ -3,10 +3,5 @@ nvchecker:
     aur:
   - alias: python
 build_prefix: extra-x86_64
-pre_build: |
-  aur-pre-build
-  git checkout HEAD -- gcc16.patch
-  sed -i 's|tar.gz)$|tar.gz gcc16.patch)|' PKGBUILD
-  sed -i "s|')|' 'SKIP')|" PKGBUILD
-  sed -i '/^prepare() {/a\  patch -Np1 -d "${_base}-${_base}-${pkgver}" -i "$srcdir/gcc16.patch"' PKGBUILD
+pre_build: aur-pre-build
 post_build: aur-post-build
