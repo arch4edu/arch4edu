@@ -4,6 +4,7 @@ nvchecker:
   - alias: gdal
   - alias: abseil
   - alias: protobuf
+  - alias: draco
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
