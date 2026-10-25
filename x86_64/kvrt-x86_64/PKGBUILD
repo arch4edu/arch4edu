@@ -1,7 +1,7 @@
 # Maintainer: Jason Go <jasongo@jasongo.net>
 
 pkgname=kvrt-x86_64
-pkgver=24.0.6.0.202610240610
+pkgver=24.0.6.0.202610250613
 pkgrel=1
 pkgdesc='Kaspersky Virus Removal Tool - Runtime and Database Signature'
 arch=('x86_64')
