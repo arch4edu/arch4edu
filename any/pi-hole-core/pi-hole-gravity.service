@@ -4,6 +4,7 @@ Description=Ad-serving domains collector
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/pihole updateGravity
+User=pihole
 Nice=19
 IOSchedulingClass=best-effort
 IOSchedulingPriority=7

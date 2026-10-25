@@ -5,7 +5,7 @@
 pkgname=pi-hole-core
 _pkgname=pi-hole
 pkgver=6.5
-pkgrel=1
+pkgrel=2
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
 license=('EUPL-1.2')
@@ -16,29 +16,23 @@ optdepends=()
 conflicts=('pi-hole-standalone' 'pi-hole-server')
 provides=('pi-hole-standalone' 'pi-hole-server')
 install=$pkgname.install
-backup=('etc/pihole/pihole.toml' 'etc/sudoers.d/pihole')
+backup=('etc/pihole/pihole.toml')
 
 source=($pkgname-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/refs/tags/v$pkgver.tar.gz
         arch-core.patch
 	    $_pkgname.tmpfile
 	    $_pkgname-gravity.service
 	    $_pkgname-gravity.timer
-	    $_pkgname-logtruncate.service
-	    $_pkgname-logtruncate.timer
 	    mimic_basic-install.sh
 	    piholeDebug.sh
-	    pihole.sudo
 )
 sha256sums=('277a1115b3b3b3ee0c115a6496710539709eefcd34fb5015480cd0bf2785b3f7'
             '6dd5182c1b744a76a93a4eb959e5faa15b8d68e825eae4ff8ad2a1e13deb52df'
             'd09f9d10ebdfb6db24d4e1abff8cd09519a7b3f3878ef3974c26aa6838f74e7e'
-            '9b72d7769036f8f4bb7121968d2ae4bdba427e4b16787ce340205a5f62b45c7c'
+            'b8f93892c98f8e7cac4890dc510e38e0aa471387868a416fbb01f35576ab0c6f'
             '5228b4f923eab7784952a0fd6da895e7bff2f80a7f91c4a7c6350491dfdbb2e8'
-            '88e3c78bbeaf5dc1100df65202ded8207877954a96bdf1b0ab3d9990d9fa759f'
-            'ff507ce58c9492cce57e947696e1b814469fc2d856a1e303c6e68f98c62ebf46'
             '27288535f7d5e18c73b9fe13aa0bcd78a2fd935cb2e978c70d51b0439c87844f'
-            '69a71c29dbe42ef0cbd3655fd7ce5cf04e8a77e27a5b2c3a1fcce0b544223309'
-            '4bda286d2776edf43065e49474c156548b7e4cee26603cbba9c67602b3c8a3b5')
+            '69a71c29dbe42ef0cbd3655fd7ce5cf04e8a77e27a5b2c3a1fcce0b544223309')
 
 prepare() {
   cd "$srcdir"/"$_pkgname"-"$pkgver"
@@ -69,18 +63,12 @@ package() {
 
   cp -dpr --no-preserve=ownership $_pkgname-$pkgver/advanced/Scripts/database_migration "$pkgdir"/opt/pihole/
 
-  install -dm750 "$pkgdir"/etc/sudoers.d
-  install -Dm440 pihole.sudo "$pkgdir"/etc/sudoers.d/pihole
-
   install -Dm644 pi-hole.tmpfile "$pkgdir"/usr/lib/tmpfiles.d/pi-hole.conf
 
   install -Dm644 "$_pkgname-gravity.timer" "$pkgdir/usr/lib/systemd/system/$_pkgname-gravity.timer"
   install -Dm644 "$_pkgname-gravity.service" $pkgdir/usr/lib/systemd/system/$_pkgname-gravity.service
-  install -Dm644 "$_pkgname-logtruncate.timer" "$pkgdir/usr/lib/systemd/system/$_pkgname-logtruncate.timer"
-  install -Dm644 "$_pkgname-logtruncate.service" $pkgdir/usr/lib/systemd/system/$_pkgname-logtruncate.service
   install -dm755 "$pkgdir/usr/lib/systemd/system/multi-user.target.wants"
   ln -s ../$_pkgname-gravity.timer "$pkgdir/usr/lib/systemd/system/multi-user.target.wants/$_pkgname-gravity.timer"
-  ln -s ../$_pkgname-logtruncate.timer "$pkgdir/usr/lib/systemd/system/multi-user.target.wants/$_pkgname-logtruncate.timer"
 
   install -dm755 "$pkgdir"/etc/pihole
   install -Dm644 $_pkgname-$pkgver/advanced/Templates/logrotate "$pkgdir"/etc/logrotate.d/pihole
