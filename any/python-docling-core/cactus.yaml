@@ -3,7 +3,6 @@ nvchecker:
     aur:
   - alias: python
 depends:
-  - any/python-jsonref
   - any/python-typer026
   - any/python-doclang
 build_prefix: extra-x86_64
