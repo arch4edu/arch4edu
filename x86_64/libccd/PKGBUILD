@@ -1,35 +1,35 @@
 # Previous Maintainer: Benjamin Chretien <chretien at lirmm dot fr>
-# Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Previous Maintainer: acxz <akashpatel2008 at yahoo dot com>
+# Maintainer: oysstu <oysstu a protonmail d com>
 pkgname=libccd
 pkgver=2.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Library for collision detection between two convex shapes."
-arch=('i686' 'x86_64')
+arch=('any')
 url='https://github.com/danfis/libccd'
-license=('BSD')
+license=('BSD-3-Clause')
 depends=()
 makedepends=('cmake')
-source=(https://github.com/danfis/libccd/archive/v${pkgver}.tar.gz)
+source=("https://github.com/danfis/libccd/archive/v${pkgver}.tar.gz")
 sha256sums=('542b6c47f522d581fbf39e51df32c7d1256ac0c626e7c2b41f1040d4b9d50d1e')
 provides=('libccd')
 conflicts=('libccd-git')
 
-_dir=libccd-${pkgver}
-
 build() {
-  rm -rf ${srcdir}/build && mkdir -p ${srcdir}/build
-  cd ${srcdir}/build
-
-  cmake ${srcdir}/${_dir} \
+  cmake -B build -S "${pkgname}-${pkgver}" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
-    -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+    -DCMAKE_BUILD_TYPE='None' \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
-  make
+  cmake --build build
 }
 
 package() {
-  cd "${srcdir}/build"
-
-  make DESTDIR="${pkgdir}/" install
+  DESTDIR="${pkgdir}" cmake --install build
+  
+  # Install and rename license
+  install -Dm644 "${pkgname}-${pkgver}/BSD-LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}/"
+  mv "${pkgdir}/usr/share/licenses/${pkgname}/BSD-LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  rm -rf "${pkgdir}/usr/share/doc" # Remove license installed by CMakeLists
 }
