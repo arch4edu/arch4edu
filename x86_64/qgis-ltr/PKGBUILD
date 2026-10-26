@@ -12,8 +12,8 @@
 
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
-pkgver=3.44.12
-pkgrel=2
+pkgver=3.44.15
+pkgrel=1
 pkgdesc='Geographic Information System (GIS); Long Term Release'
 arch=(x86_64)
 url='https://qgis.org/'
@@ -85,13 +85,14 @@ provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
 source=("$url/downloads/$_pkgname-$pkgver.tar.bz2"
         https://github.com/JanCaha/QGIS/commit/67af3cdf8bfd8c482c718beb1452ac7dc0d3bd0c.patch)
-sha256sums=('62547cefa7818e7453e4043e6073797eb1a8886b7a8dfbc4765f57b931404a57'
+sha256sums=('1b508175a27272c68ca0f71f27d2b14711ab47b8ee2c003b56e36138420a75bc'
             '9cc3cc824792d5a3ede3ff499b77c81241a5451952c6e9ae8104c02b37737827')
 
 prepare() {
   cd "$_pkgname-$pkgver"
   patch -p1 -i "$srcdir/67af3cdf8bfd8c482c718beb1452ac7dc0d3bd0c.patch"
   sed -i 's#%MappedType std::unique_ptr< TYPE > /NoRelease,#%MappedType std::unique_ptr< TYPE > /Movable,NoRelease,#' python/PyQt6/core/conversions.sip
+  sed -i '/QTEST_DISABLE_KEYPAD_NAVIGATION/d' src/test/qgstest.h
 }
 
 build() {
