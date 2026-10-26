@@ -8,5 +8,9 @@ nvchecker:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
+  # AUR lags at 3.44.12, which fails crssync with PROJ 9.9's 'tmerczoned'; 3.44.15 includes the fix.
+  replace -u '3.44.12' '3.44.15'
+  # Newer Qt removed QTEST_DISABLE_KEYPAD_NAVIGATION; upstream 47ab0643 drops it (not in 3.44.15).
+  sed -i '/patch -p1 -i/a\  sed -i '\''/QTEST_DISABLE_KEYPAD_NAVIGATION/d'\'' src/test/qgstest.h' PKGBUILD
   sed -i '/patch -p1 -i/a\  sed -i '\''s#%MappedType std::unique_ptr< TYPE > /NoRelease,#%MappedType std::unique_ptr< TYPE > /Movable,NoRelease,#'\'' python/PyQt6/core/conversions.sip' PKGBUILD
 post_build: aur-post-build
