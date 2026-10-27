@@ -1,8 +1,8 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-aer
 pkgname=python-$_pkgname
-pkgver=0.18.0
-pkgrel=2
+pkgver=0.18.2
+pkgrel=1
 pkgdesc="A high performance simulator for quantum circuits that includes noise models"
 arch=(x86_64)
 url="https://github.com/Qiskit/qiskit-aer"
@@ -42,14 +42,8 @@ checkdepends=(
     python-seaborn
     python-stestr
 )
-source=(
-    $_pkgname::git+https://github.com/Qiskit/$_pkgname.git#tag=$pkgver
-    fix-test-pauli-noise-with-shot-branching.patch
-    fix-test-mps-options.patch
-)
-b2sums=('b6649e5078a58e61ddb56954622ab615ec7ff0a8bab7896caec99021197452490bfce18a93d1407a74fafa97f748eb679a4df06d2e90353fee3b059ca2bcaa54'
-'6d622f326380020e8810cc727b760093d9abdc76a9e857f258bd0bab4354b4ebb1c44889013f66b4ff7ac73362d8b4d898c36c12e99dae1799b7342a81494f4d'
-'5696c4848440b432348b8c6d51ed29d4640a50aea5df14904c4f216a76e67722251bef7b27f630aed4d82bca7fd3869240be8b252478325e0d971e78d364137b')
+source=($_pkgname::git+https://github.com/Qiskit/$_pkgname.git#tag=$pkgver)
+b2sums=('de3cbbb345ab9f78a937b46c00eb012c4dd38e78a6e49222be43f0236d670ef9a6ec6085434eabfe60f1e676ae268176e96300c3f1dec5c20a8401aeb0e5be67')
 
 prepare() {
     cd $_pkgname
@@ -57,12 +51,6 @@ prepare() {
 
     # Fix legacy package name
     sed -i -e "s/qiskit.providers.aer.backends.controller_wrappers/qiskit_aer.backends.controller_wrappers/" test/terra/expression/test_classical_expressions.py
-
-    # Fix TestRuntimeParameterization::test_pauli_noise_with_shot_branching
-    patch -Np1 < ../fix-test-pauli-noise-with-shot-branching.patch
-
-    # Fix TestOptions::test_mps_options
-    patch -Np1 < ../fix-test-mps-options.patch
 }
 
 build() {
