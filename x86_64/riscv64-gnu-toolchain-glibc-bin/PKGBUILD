@@ -1,6 +1,6 @@
 # Maintainer: Gilbert Gilb's <gilbsgilbert@gmail.com>
 pkgname=riscv64-gnu-toolchain-glibc-bin
-pkgver=2026.10.21
+pkgver=2026.10.26
 pkgrel=1
 pkgdesc="GNU toolchain for riscv64 Linux, including GCC."
 arch=('x86_64')
@@ -15,10 +15,10 @@ optdepends=()
 makedepends=()
 options=(!strip)
 source=(
-  "riscv64-gnu-toolchain-glibc-bin-2026.10.21-riscv64-glibc-ubuntu-24.04-gcc.tar.xz::https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2026.10.21/riscv64-glibc-ubuntu-24.04-gcc.tar.xz"
+  "riscv64-gnu-toolchain-glibc-bin-2026.10.26-riscv64-glibc-ubuntu-24.04-gcc.tar.xz::https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2026.10.26/riscv64-glibc-ubuntu-24.04-gcc.tar.xz"
 )
 sha512sums=(
-  "71e207cf003e0405581edc5a34f7e90a47292d6b11d0e7f3cc7d6f8740b27451e7a93a9e3bc77fb01b34e5aa6f200d9ba3164e12d9c8571b450c83313da53cc9"
+  "68738de87e0974ffc8d71adb4873fe4d684b93c9d573d5ae0ebb7c7b337e8568522d89315695dd64096f4378d114613d3efa0c1848888f96831a8bd5b84a899f"
 )
 
 package() {
