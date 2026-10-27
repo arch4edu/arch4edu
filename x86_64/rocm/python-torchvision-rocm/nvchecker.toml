@@ -2,4 +2,4 @@
 source = "git"
 git = "https://github.com/pytorch/vision.git"
 prefix = "v"
-exclude_regex = "v.*(pre|rc|alpha|beta|\\-).*"
+exclude_regex = ".*(pre|rc|alpha|beta|\\-).*"
