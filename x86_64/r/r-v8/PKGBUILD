@@ -4,7 +4,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=V8
-_pkgver=8.2.0
+_pkgver=8.2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -27,8 +27,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c8d926eb2f59ebe63debc864fa6a5096')
-b2sums=('56ccfc69e9ca3f190414659d8659feca17bf66f276071ef1b298c2d027d76f13c63633491f4c1933cdb090a645d61858a0bfd3a81bd0b3ab17ea245456d39ce5')
+md5sums=('6cae314842087ce6253117501f73a1ee')
+b2sums=('9e65b482cb279354028fb83aee0614fd06f411165373727c46286ee01c50ed01ec2f4f61ec27d70e1120cd6d235dc2c10f358030a0f3a5844c08a0bb5cb1cc92')
 
 build() {
   mkdir build
