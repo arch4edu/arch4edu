@@ -1,20 +1,20 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
-# Maintainer: Grey Christoforo <first name at last name dot net>
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Maintainer: Jose Riha <jose1711 gmail com>
+# Contributor: peippo <christoph+aur@christophfink.com>
 # Contributor: Grey Christoforo <first name at last name dot net>
+# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _cranname=withr
-_cranver=3.0.2
+_cranver=3.0.3
 pkgname=r-${_cranname,,}
-pkgdesc="Lightweight Well-Known Geometry Parsing"
+pkgdesc="Run Code 'With' Temporarily Modified Global State"
 url="https://cran.r-project.org/package=${_cranname}"
 license=("MIT")
 pkgver=${_cranver//[:-]/.}
-pkgrel=2
+pkgrel=1
 
 arch=("any")
 depends=(
-    "r>=3.2.0"
+    "r>=3.6.0"
 )
 optdepends=(
     "r-callr"
@@ -46,7 +46,7 @@ optdepends=(
 # )
 
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("8830717b487f02b46ef25979ca7e11621d7d745d4fead5577c886a590ac6e4b9ecb34ca6fa17bb0f377ea1b4025b28ced9ef11f49f29e4493eac6de3b8132499")
+b2sums=("12d91b7600b57b4816c5d9fcb1fbb1f4af0fb5a9dd1b28e79fe08d89a0c85ba35a202b2a48e9a6988e341ac50497d5ffdd5e1cc2776b89d5b45f2720d1a98b16")
 
 build() {
     mkdir -p "${srcdir}/build/"
@@ -61,7 +61,7 @@ build() {
 package() {
     install -dm0755 "${pkgdir}/usr/lib/R/library"
     cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    if [[ -f "${srcdir}/${_cranname}/LICENSE" ]]; then
+        install -Dm0644 "${srcdir}/${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
 }
