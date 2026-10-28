@@ -7,7 +7,7 @@ pkgname=(
   'ros2-humble-vision-opencv'
 )
 pkgver=3.2.1
-pkgrel=2
+pkgrel=3
 pkgdesc="ROS2 vision_opencv stack - cv_bridge, image_geometry, and metapackage"
 arch=('x86_64')
 url="https://github.com/ros-perception/vision_opencv"
