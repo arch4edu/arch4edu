@@ -2,9 +2,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=glmnet
-_pkgver=5.1
+_pkgver=5.2
 pkgname=r-${_pkgname,,}
-pkgver=5.1
+pkgver=5.2
 pkgrel=1
 pkgdesc='Lasso and Elastic-Net Regularized Generalized Linear Models'
 arch=('x86_64')
@@ -29,7 +29,7 @@ makedepends=(
   gcc-fortran
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('a6c23c906806f89a451de30b202e5bf088577f4da260d0b7f8887a7df3f22778')
+sha256sums=('5a3e4ce2ca463484e78c484a2cc4a7db8d079bc980f91aaae647694d3adb4fdf')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
