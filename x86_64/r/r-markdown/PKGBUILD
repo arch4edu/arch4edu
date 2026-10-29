@@ -5,11 +5,11 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=markdown
-_pkgver=2.0
+_pkgver=2.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
-pkgdesc="Render Markdown with 'commonmark'"
+pkgrel=1
+pkgdesc="A Thin Wrapper of 'litedown' to Render Markdown Documents"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('MIT')
@@ -24,8 +24,8 @@ optdepends=(
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c282c06e61ae9df4fe66d484792fe2b7')
-b2sums=('efe0c516e64d9acb58644ce42eb1b2ea59de33fd4cb960e0ed249a85339039f2c2b12bec5b56b057efc6630f23bd18e3cb557aa2cc1ab3571678d56f51b09d5a')
+md5sums=('2a14dbda86be03981a4a0245606dcc50')
+b2sums=('d8617271176f506bc58ca881a875592b13a59177015df697bae0a11e02e50b7918dc0586232f437d2e8707b8db6b638db3f2f20002720e7bbaa6a6475501f78b')
 
 build() {
   mkdir build
