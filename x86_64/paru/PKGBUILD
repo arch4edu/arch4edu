@@ -1,7 +1,7 @@
 # Maintainer: Morgan <morganamilo@archlinux.org>
 pkgname=paru
-pkgver=2.1.0
-pkgrel=2
+pkgver=2.2.0
+pkgrel=1
 pkgdesc='Feature packed AUR helper'
 url='https://github.com/morganamilo/paru'
 source=("$pkgname-$pkgver.tar.gz::https://github.com/Morganamilo/paru/archive/v$pkgver.tar.gz")
@@ -9,13 +9,12 @@ backup=("etc/paru.conf")
 arch=('i686' 'pentium4' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64')
 license=('GPL-3.0-or-later')
 makedepends=('cargo')
-depends=('git' 'pacman' 'libalpm.so>=14')
+depends=('git' 'pacman>=7.1' 'libalpm.so')
 optdepends=('bat: colored pkgbuild printing' 'devtools: build in chroot and downloading pkgbuilds')
-sha256sums=('eea4dbb524db765d5316f540f9ee670c0bf81aae4827b5417eebb4c9b5651727')
+sha256sums=('213d55a67605ff69faefa523917fee7168ea5bf143be8cef800fb48c9759f348')
 
 prepare() {
   cd "$pkgname-$pkgver"
-  cargo update alpm alpm-utils
   cargo fetch --locked --target "$(rustc -vV | sed -n 's|host: ||p')"
 }
 
