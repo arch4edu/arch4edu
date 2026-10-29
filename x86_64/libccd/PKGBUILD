@@ -3,7 +3,7 @@
 # Maintainer: oysstu <oysstu a protonmail d com>
 pkgname=libccd
 pkgver=2.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Library for collision detection between two convex shapes."
 arch=('any')
 url='https://github.com/danfis/libccd'
@@ -20,7 +20,8 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE='None' \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DENABLE_DOUBLE_PRECISION=ON
 
   cmake --build build
 }
