@@ -2,6 +2,10 @@
 Description=Weekly ad-serving domains gathering
 
 [Timer]
+OnActiveSec=10s
 OnCalendar=weekly
 AccuracySec=3h
 Persistent=true
+
+[Install]
+WantedBy=timers.target

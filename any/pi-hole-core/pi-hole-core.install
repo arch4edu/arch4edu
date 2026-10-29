@@ -1,15 +1,9 @@
 post_install() {
   echo -e "\e[1;33m==>\e[0m Read setup instructions at \e[1;36mhttps://wiki.archlinux.org/index.php/Pi-hole\e[0m"
-  echo -e "\e[1;33m==>\e[0m Generating initial block list, please wait...\e[0m"
 
   # pre apply sys user creation and rights
   /usr/bin/systemd-sysusers > /dev/null 2>&1
   /usr/bin/chown -R pihole:pihole /etc/pihole
-
-  # update lists on first run
-  echo -e "\e[1;33m==>\e[0m Creating initial adlists...\e[0m"
-  sudo -u pihole bash /opt/pihole/gravity.sh --force > /dev/null 2>&1;
-  # pihole -g > /dev/null
 
   # /etc/pihole/versions file generation
   echo -e "\e[1;33m==>\e[0m Creating 'versions' file...\e[0m"
@@ -31,8 +25,15 @@ post_upgrade() {
 }
 
 post_remove() {
-  # delete all temp files except those modified the user
-  # TODO - make this more intelligent to save *.pacsave.# where # is a number
-  find /etc/pihole -type f ! -name '*.pacsave' ! -name 'pihole-FTL.conf' ! -name 'pihole-FTL.db' ! -name 'gravity.db' -delete
-  id -u pihole > /dev/null 2>&1 && userdel -f pihole
+  # Do not delete anything in /etc/pihole and do not touch the pihole user:
+  # the config/data in there may have been created or changed by the user and
+  # the user itself is managed by the pi-hole-ftl package (sysusers).
+  if ! rmdir /etc/pihole 2>/dev/null && [[ -d /etc/pihole ]]; then
+    echo -e "\e[1;33m==>\e[0m Your Pi-hole configuration and databases were left untouched in \e[1;36m/etc/pihole\e[0m."
+    echo -e "\e[1;33m==>\e[0m Remove them manually if you no longer need them:"
+    echo -e "      \e[1;36mrm -rf /etc/pihole\e[0m"
+  fi
+
+  # keep pacman from throwing errors should none them be on the filesystem
+  return 0
 }
