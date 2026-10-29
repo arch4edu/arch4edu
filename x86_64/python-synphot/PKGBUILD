@@ -4,7 +4,7 @@
 pkgbase=python-synphot
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.7.0
+pkgver=1.8.0
 pkgrel=1
 pkgdesc="Synthetic Photometry using Astropy"
 arch=('i686' 'x86_64')
@@ -15,10 +15,11 @@ makedepends=('python-setuptools-scm'
              'python-installer'
              'python-numpy>=2.0.0'
              'python-sphinx-astropy'
-             'python-matplotlib'
+#            'python-matplotlib'
              'python-astropy'
              'python-scipy'
              'graphviz')  # wheel required by new setuptools
+# conftest.py
 checkdepends=('python-pytest-astropy-header'
               'python-pytest-doctestplus'
               'python-pytest-remotedata'
@@ -26,21 +27,21 @@ checkdepends=('python-pytest-astropy-header'
               'python-dust-extinction'
               'python-specutils')   # astropy scipy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('83c20d606f4774f2b1689fa91cc403c7')
+md5sums=('b351fef3ed6b619d59dfd25b0fe3ebcd')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
 }
 
-prepare() {
-    cd ${srcdir}/${_pyname}-${pkgver}
-
-    sed -i "/CCM89/a \	ignore:The Spectrum1D class is deprecated:astropy.utils.exceptions.AstropyDeprecationWarning" setup.cfg
-}
+#prepare() {
+#    cd ${srcdir}/${_pyname}-${pkgver}
+#
+#    sed -i "/CCM89/a \	ignore:The Spectrum1D class is deprecated:astropy.utils.exceptions.AstropyDeprecationWarning" setup.cfg
+#}
 
 build() {
     cd ${srcdir}/${_pyname}-${pkgver}
-    python -m build --wheel --no-isolation --skip-dependency-check
+    python -m build --wheel --no-isolation #--skip-dependency-check
 
     msg "Building Docs"
 #   ln -rs ${srcdir}/${_pyname}-${pkgver}/${_pyname/-/_}*egg-info \
@@ -53,13 +54,13 @@ check() {
 
 #   mv {,_}${_pyname}
     cp "build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}/"*-gnu.so ${_pyname}
-    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data=any
+    pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data #
 }
 
 package_python-synphot() {
-    depends=('python-numpy>=1.23'
-             'python-astropy>=6'
-             'python-scipy>=1.9')
+    depends=('python-numpy>=2'
+             'python-astropy>=7'
+             'python-scipy>=1.14')
     optdepends=('python-matplotlib: Plotting support'
                 'python-specutils>=1.10: Manipulating spectroscopic data'
                 'python-synphot-doc: Documentation for synphot')
