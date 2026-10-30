@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=BFpack
-_pkgver=1.6.1
+_pkgver=1.6.3
 pkgname=r-bfpack
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -12,7 +12,7 @@ depends=(r r-bain r-bergm r-berryfunctions r-coda r-ergm r-lme4 r-metabma r-mvtn
 makedepends=(gcc-fortran)
 optdepends=(r-knitr r-lmtest r-metafor r-polycor r-pscl r-remstimate r-rmarkdown r-testthat)
 source=("https://cran.r-project.org/src/contrib/${_cranname}_${_pkgver}.tar.gz")
-sha256sums=('a273fbdd91ec8381dbeec63d880b1ce8d85371f2c3cfd24700104ed34c8ca1e3')
+sha256sums=('7cde2b429c7c684a7f69b131d7b2226dc065f52524b5b46790ed53045678b660')
 
 build() {
   R CMD INSTALL ${_cranname}_${_pkgver}.tar.gz -l "${srcdir}"
