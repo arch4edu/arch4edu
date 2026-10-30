@@ -1,7 +1,7 @@
 # Maintainer: Kartik Mohta <kartikmohta@gmail.com>
 
 pkgname=('python-catkin_pkg')
-pkgver='1.1.0'
+pkgver='1.1.1'
 pkgrel=1
 pkgdesc='Standalone Python library for the catkin package system'
 arch=('any')
@@ -12,7 +12,7 @@ makedepends=('python-setuptools')
 provides=('python-catkin-pkg')
 conflicts=('python2-catkin_pkg' 'python-catkin-pkg')
 source=("https://github.com/ros-infrastructure/catkin_pkg/archive/${pkgver}.tar.gz")
-sha256sums=('32c0410cb815497a0253838ca8f7d222d345a3bbd189fa4e61374a8f77c42709')
+sha256sums=('a33230ae9f81482d9e9077bc55863408ba1310b050fe4f7e2f0a7f41ae94311e')
 
 _module='catkin_pkg'
 
