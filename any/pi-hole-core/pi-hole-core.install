@@ -8,6 +8,9 @@ post_install() {
   # /etc/pihole/versions file generation
   echo -e "\e[1;33m==>\e[0m Creating 'versions' file...\e[0m"
   sudo -u pihole bash /opt/pihole/updatecheck.sh;
+
+  # the gravity timer is not enabled by default
+  echo -e "\e[1;33m==>\e[0m For weekly blocklist updates: \e[1;36msystemctl enable --now pi-hole-gravity.timer\e[0m"
 }
 
 post_upgrade() {
@@ -19,6 +22,12 @@ post_upgrade() {
   # /etc/pihole/versions file generation
   echo -e "\e[1;33m==>\e[0m Updating 'versions' file...\e[0m"
   sudo -u pihole bash /opt/pihole/updatecheck.sh;
+
+  # 6.5-4 and older shipped an enable symlink: keep the timer on for those installs
+  if [ "$(vercmp "$2" 6.5-5)" -lt 0 ] &&
+     [ "$(systemctl is-enabled pi-hole-gravity.timer 2>/dev/null)" != masked ]; then
+    systemctl enable pi-hole-gravity.timer
+  fi
 
   # keep pacman from throwing errors should none them be on the filesystem
   return 0
