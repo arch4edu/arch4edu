@@ -5,6 +5,8 @@ nvchecker:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
+  # python-pkg-resources was dropped from the repos; the patched help.py no longer needs it.
+  sed -i "s/ 'python-pkg-resources'//" PKGBUILD
   # pkg_resources was removed from the ecosystem (setuptools 84, and the
   # python-pkg_resources stub dropped from extra). vcstool's help.py imports it
   # only to load console_scripts entry points; replace with importlib.metadata.
