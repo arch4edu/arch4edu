@@ -1,7 +1,7 @@
 # Maintainer: Carlos Aznarán <caznaranl@uni.pe>
 # Contributor: haagch <christoph.haag@collabora.com>
 pkgname=perfetto
-pkgver=58.3
+pkgver=59.1
 pkgrel=1
 pkgdesc="Python APIs and bindings for Perfetto"
 arch=(x86_64)
@@ -10,7 +10,7 @@ license=(Apache-2.0)
 depends=(gcc-libs python-protobuf)
 makedepends=(git python-setuptools clang)
 source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
-sha512sums=('680f833cda017563dc1b63d133167479d4aac9136c18540171149307d1af6a03bec6717ec5b3564f7f13bdac359450f6717c840db418ce2269a70144bed70b2f')
+sha512sums=('9223d446fddf83ebf0bf2a9553a77493939dca651ea70d58cebe2b9b57026e24ac9e2d5af0b12689dfeaf6bd01e3f6e411305b3b2158d043e2377bdbaf3b5b42')
 
 build() {
   cd ${pkgname}-${pkgver}
