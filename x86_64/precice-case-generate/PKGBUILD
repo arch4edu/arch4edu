@@ -3,7 +3,7 @@
 _base=case-generate
 pkgname=precice-${_base}
 pkgdesc="Generates File and Folder Structure, including all of the necessary files to quickly kickstart a simulation"
-pkgver=2.1.0
+pkgver=2.2.0
 pkgrel=1
 arch=(any)
 url="https://github.com/precice/${_base}"
@@ -13,7 +13,7 @@ depends=(precice-config-graph precice-adapter-schema python-ruamel-yaml
 makedepends=(python-build python-installer python-setuptools-git-versioning git)
 # checkdepends=(python-pytest precice-config-check)
 source=(git+${url}.git#tag=v${pkgver})
-sha512sums=('156b57e01887a0022d3328e52cd502e85bff26031607fe14945c24f3caee7d939635e22216cc636e4670e8c35bcb40aa6829886673d5d2d981d47ebe2836ed7b')
+sha512sums=('07f0c1df76b749cfabafc81edce23c112e47ee5e97e2a5d416d20c8588d0c5c3a847ef864b6208c0d100d50d7f0ecf37a2c4166be46c3594aaa0c0dc5c267803')
 
 build() {
   cd ${_base}
