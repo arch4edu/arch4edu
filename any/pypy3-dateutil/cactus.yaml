@@ -5,7 +5,21 @@ makedepends:
   - any/pypy3-build
   - any/pypy3-installer
   - any/pypy3-setuptools-scm
+  - any/pypy3-hatchling
+  - any/pypy3-hatch-vcs
 build_prefix: extra-x86_64
 makepkg_args: --nocheck
-pre_build: aur-pre-build
+pre_build: |
+  aur-pre-build
+  # dateutil 4.0.0 switched to hatchling; there is no pypy3 package for the
+  # fancy-pypi-readme metadata hook, so drop it and use a static README.
+  cat >> PKGBUILD <<'CACTUSEOF'
+
+  prepare() {
+      cd "${_base}-${pkgver}"
+      sed -i 's/, "hatch-fancy-pypi-readme>=24.1"//' pyproject.toml
+      sed -i 's/^dynamic = \["version", "readme"\]$/dynamic = ["version"]\nreadme = "README.rst"/' pyproject.toml
+      sed -i '/^\[tool\.hatch\.metadata\.hooks\.fancy-pypi-readme\]/,$d' pyproject.toml
+  }
+  CACTUSEOF
 post_build: aur-post-build
