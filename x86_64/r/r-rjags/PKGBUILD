@@ -1,10 +1,10 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=rjags
-_pkgver=4-17
+_pkgver=4-18
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Bayesian Graphical Models using MCMC"
 arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -14,8 +14,8 @@ depends=(
   r-coda
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('d458011b5a31ed62fea02dbf60181018')
-b2sums=('4b853f4ae4797413ff69f686961f1ecdff02a127969f3db697be5500bf086e55f3c3e1d3f74466ade85ec3fab0a0c023e96bacd6f62e3b0edf5f8cd09be10521')
+md5sums=('92386b499bdeef20c9d7d20b1525e6f7')
+b2sums=('205205495188912fe83f807a25a4a0ad909ed9cba4cec905acf19ef0b1434011ac984827c2113ca566fa075d7291481ec32872bf42f851b015f7f533296f6791')
 
 build() {
   mkdir build
