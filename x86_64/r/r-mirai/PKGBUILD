@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=mirai
-_pkgver=2.7.3
+_pkgver=2.7.4
 pkgname=r-mirai
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,4 +22,4 @@ package() {
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
   install -Dm644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
-sha256sums=('20bd6fb95c6262ae24649963c399f20ef3203cda46919f5669f823a2a56bb18a')
+sha256sums=('1129900452ecb5f7249accbbb96b8ed2e2ba2275012bd5f37334eca4589b02cd')
