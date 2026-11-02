@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=future
-_pkgver=1.80.0
+_pkgver=1.82.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -12,19 +12,19 @@ arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('Apache')
 depends=(
-  r-digest
   r-globals
   r-listenv
   r-parallelly
 )
 optdepends=(
+  r-digest
   r-markdown
   r-r.rsp
   r-rhpcblasctl
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('38c2ca027bf188fdb0555bcc03e50fe3')
-b2sums=('8df52654e29eb1becc72d45108400f218cb008640edbb6c560fe2190de2a8c745a728485354d285d296cac1faf03f4dae7d0832392a2df84d709e13943638da0')
+md5sums=('3d882bed5abca47103c949f4b4b27624')
+b2sums=('51a01906535739a6f2a9e7460dc4c33bae3176f6575865961622bed39f314b48653719c3025e9c6ced047562a39f8b679ac5df20255e77a4601fca2d3b3d8d2b')
 
 build() {
   mkdir build
