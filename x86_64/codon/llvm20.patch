@@ -13,7 +13,7 @@ index 73fa5cd..be6aa87 100644
  source=(${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz)
    # googletest.zip::https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
  sha512sums=('347528676d963498985b278a55272bb7bc5cda5acc08807d9613edcb4f58d4b278194cfd0533437767a92bc9fbe0ff2b529c030ee2d351acfe6e58fbda1c5d1d')
-@@ -16,34 +16,119 @@ sha512sums=('347528676d963498985b278a55272bb7bc5cda5acc08807d9613edcb4f58d4b2781
+@@ -16,34 +16,124 @@ sha512sums=('347528676d963498985b278a55272bb7bc5cda5acc08807d9613edcb4f58d4b2781
  
  prepare() {
    cd ${pkgname}-${pkgver}
@@ -107,6 +107,11 @@ index 73fa5cd..be6aa87 100644
 +  add_subdirectory("${omp_SOURCE_DIR}" "${omp_BINARY_DIR}" EXCLUDE_FROM_ALL)
 +endif()
 +EOF
++  # GCC 15 duplicates the TLS guard for the inline static thread_local member;
++  # use a function-local static thread_local instead (TinyORM #35 workaround).
++  sed -i 's|^  inline static thread_local std::unordered_map<Context \*, BindingCheckpoint \*>$|  static std::unordered_map<Context *, BindingCheckpoint *> \&getCheckpoints() {|' codon/parser/ctx.h
++  sed -i 's|^      checkpoints;$|    static thread_local std::unordered_map<Context *, BindingCheckpoint *> checkpoints;\n    return checkpoints;\n  }|' codon/parser/ctx.h
++  sed -i 's|checkpoints\[|Context::getCheckpoints()[|g; s|checkpoints\.|Context::getCheckpoints().|g' codon/parser/ctx.h
  }
  
  build() {
@@ -146,7 +151,7 @@ index 73fa5cd..be6aa87 100644
  }
  
  # -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
-@@ -64,9 +149,8 @@ package() {
+@@ -64,9 +154,8 @@ package() {
    # install -Dm644 ${pkgname}-${pkgver}/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
    # rm -r "$pkgdir"/usr/python
    # rm -r "$pkgdir"/usr/include/fmt
