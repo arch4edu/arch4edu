@@ -6,7 +6,7 @@
 pkgname=python-pybase64
 _pkgname=pybase64
 pkgver=1.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Fast Base64 encoding/decoding in Python"
 arch=(x86_64)
 url="https://github.com/mayeut/pybase64"
@@ -28,6 +28,7 @@ checkdepends=(
   'python-packaging'
   'python-typing_extensions'
 )
+options=(!strip !debug)
 provides=("${_pkgname}")
 _base64_commit=bf058e571ac5002b75b03fed38e33ed4e8d45eff
 source=(
