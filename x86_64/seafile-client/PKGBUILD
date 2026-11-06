@@ -4,7 +4,7 @@
 # Contributor: Edvinas Valatka <edacval@gmail.com>
 
 pkgname=seafile-client
-pkgver=9.0.21
+pkgver=9.0.22
 pkgrel=1
 pkgdesc='GUI client for synchronizing your local files with seafile server'
 arch=('i686' 'x86_64' 'armv7h' 'armv6h' 'aarch64')
@@ -23,8 +23,8 @@ source=(
     'fix_build_with_QT6.diff'
 )
 sha256sums=(
-    'a074031607c3a7948ff37fe2b4ac7d9653128a2f0edc5a1ba5797afb5870dd31'
-    '3b07339e4cd5f453d4cbec400201daa35c5813761f241b56793aab553362c068'
+    'e69acbff805a25d2e6b7a3bc3cb4a107f61d6e61d38e538018f0f0d6dbb5c836'
+    '6ceef1cb14af8ce3d06e17df67d0a80e5a22f3cd982792e517b7d85e8b695509'
 )
 
 prepare() {
