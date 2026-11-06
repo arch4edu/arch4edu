@@ -4,7 +4,7 @@
 # Automation repository: https://github.com/fabifont/claude-code-aur
 
 pkgname=claude-code
-pkgver=2.1.318
+pkgver=2.1.319
 pkgrel=1
 pkgdesc="An agentic coding tool that lives in your terminal"
 arch=('x86_64' 'aarch64')
@@ -29,8 +29,8 @@ source_x86_64=("claude-${pkgver}-x86_64::https://downloads.claude.ai/claude-code
 source_aarch64=("claude-${pkgver}-aarch64::https://downloads.claude.ai/claude-code-releases/${pkgver}/linux-arm64/claude")
 
 sha256sums=('SKIP')
-sha256sums_x86_64=('708c77b204db30086ff6f1ed34577bda03e1be74ced80557cbf7b54249ebf0bd')
-sha256sums_aarch64=('53a0d7e219d7b0804ecba5dbc002745e89f786cc946d2de85a6470d5b2d1fb06')
+sha256sums_x86_64=('dabafec82ca1319fa43d8be36a10fc61b1d11821cb98ad5df04ad95e199b8eed')
+sha256sums_aarch64=('a7e687fd1cb054d651c7588223de3786c99d4c682365e3c3ae1e59ce7f3a591f')
 
 package() {
 	install -Dm755 "${srcdir}/claude-${pkgver}-${CARCH}" "${pkgdir}/opt/claude-code/bin/claude"
