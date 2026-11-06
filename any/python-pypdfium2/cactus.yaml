@@ -1,1 +1,11 @@
-../../template/x86_64-python.yaml
+nvchecker:
+  - source: aur
+    aur:
+  - alias: python
+build_prefix: extra-x86_64
+pre_build: |
+  aur-pre-build
+  # libpdfium (Chromium source build) is not packaged; use upstream's bundled pdfium binary.
+  sed -i "/libpdfium.so=libpdfium.so-64/d" PKGBUILD
+  sed -i "/export PDFIUM_PLATFORM='system-search'/d; /export PDFIUM_HEADERS=/d" PKGBUILD
+post_build: aur-post-build
