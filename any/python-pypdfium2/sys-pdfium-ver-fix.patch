@@ -1,0 +1,14 @@
+--- a/setupsrc/system_pdfium.py
++++ b/setupsrc/system_pdfium.py
+@@ -61,9 +61,8 @@ def _get_sys_pdfium_ver(pdfium_lib):
+         return _parse_version(libname_parts[2])
+     
+     if shutil.which("pkg-config"):
+-        proc = run_cmd(["pkg-config", "--modversion", "libpdfium"], cwd=None, check=False)
+-        if proc.returncode == 0:
+-            version = proc.stdout.decode().strip()
++        version = run_cmd(["pkg-config", "--modversion", "libpdfium"], cwd=None, capture=True, check=False)
++        if version:
+             return _parse_version(version)
+     
+     log("Unable to identify version, will set NaN placeholders.")
