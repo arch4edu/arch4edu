@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=DHARMa
-_pkgver=0.5.0
+_pkgver=0.5.1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -36,8 +36,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('526afecc23a72067743268a25f97fab2')
-b2sums=('e2ead9086fa5265c1dfa7ed035d4c45c0a44b34d88e37f9d709072ff28efbdce45547a5ac29976fcf0b4e875e67125224ca5c5d88954507d79fab6ac6fe2f835')
+md5sums=('f3513971c8c37d7079fde869af6047cf')
+b2sums=('8f40340a0745aa628a4c4060473eadbbb68ebbaae409bfd07eefbc43d8364f6ccc20482d492b4cfa8c59adc5c22b5f482babf07db892ca706cb08cd85840ce6c')
 
 build() {
   mkdir build
