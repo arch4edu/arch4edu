@@ -1,7 +1,7 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=beepr
 pkgname=r-beepr
-pkgver=2.0
+pkgver=2.0.1
 pkgrel=1
 pkgdesc="Easily Play Notification Sounds on any Platform"
 arch=(x86_64)
@@ -21,4 +21,4 @@ package() {
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
 
-sha256sums=('620e5ec93c1a0991a9c8f60868153fee1e3918b1a784f50c0e35186780c60477')
+sha256sums=('48961a2b3e12a6f85a5e8099da20a91adc04af0eac1d5cf82fabba6ed61e4afd')
