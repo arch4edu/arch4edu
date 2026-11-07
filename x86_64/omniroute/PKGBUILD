@@ -15,7 +15,7 @@
 #   symlink-vs-copy pitfall).
 
 pkgname=omniroute
-pkgver=3.8.52
+pkgver=3.8.53
 pkgrel=1
 pkgdesc='Unified AI router with 160+ providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.'
 arch=('x86_64')
@@ -28,7 +28,7 @@ optdepends=(
 )
 makedepends=('npm')
 source=("https://registry.npmjs.org/${pkgname}/-/${pkgname}-${pkgver}.tgz")
-sha256sums=('4fb570f7db3099fc1cc01d16f4e37c0c1a1cb43049ff3e85fbfbfa86c66b86a7')
+sha256sums=('547fa5e84ece47def91a8ce786c4822b603be35b50c545a71c5fa659834200f0')
 
 build() {
   cd "${srcdir}"
