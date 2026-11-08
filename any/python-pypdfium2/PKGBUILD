@@ -8,8 +8,8 @@
 
 pkgname=python-pypdfium2
 _name=${pkgname#python-}
-pkgver=5.14.0
-pkgrel=2
+pkgver=5.15.1
+pkgrel=1
 pkgdesc='Python bindings to PDFium (community package)'
 arch=(x86_64)
 url='https://github.com/pypdfium2-team'
@@ -41,7 +41,7 @@ checkdepends=(
 source=("${_name}::git+${url}/${_name}.git#tag=${pkgver}"
         "${_name}-ctypesgen::git+${url}/ctypesgen.git"
         'sys-pdfium-ver-fix.patch')
-sha256sums=('059f64b99c3c5fd75467ba089ba0abc69c55244e83f993bb6ebd1ed59a2818b6'
+sha256sums=('32718a14faed073dabd058bd13bcbc567dc46ffcf1ac7192937d0fbb1ed5d285'
             'SKIP'
             '605bd13795cb2ca3bc112002983e7993c2add5dbf8ab6925b6e0b991f2dd91de')
 
