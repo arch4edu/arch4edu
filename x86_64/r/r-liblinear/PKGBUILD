@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=LiblineaR
-_pkgver=2.10-26
+_pkgver=2.50-2
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -20,8 +20,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('1132173157eec3991b118b55e15e2d81')
-b2sums=('31f35197bff8bc2c9b32640fe7f87e8023d28d07612121632ad4e31ed24602082449ded5107dcddd3e77b47c99b84429c91615699f1c992224e73e9458f9f48b')
+md5sums=('065aee428c08336d9c62f693ac8094a6')
+b2sums=('5bc996eaa87d207bb7902292dba779da013e631cd91ca5acad74486fb57ed0815651b6cc46a7cc72019517e74f96cfa0362a708f2d3634350038bd0d20383205')
 
 build() {
   mkdir build
