@@ -2,10 +2,10 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=GGally
-_pkgver=2.4.0
+_pkgver=2.5.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Extension to 'ggplot2'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -64,8 +64,8 @@ optdepends=(
   r-vdiffr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('10e743f036dd7a85cc00e5d726c35df5')
-b2sums=('0ebbcf104689a5f965f05e2f252ffcc0c347894db53ff0c619ea13c9738a3bff11241ecf1dbb163452e58b3d2fbcf1536c80fcb727c33b1487643c83ab6c0da8')
+md5sums=('2f147baec8f9568d38caf83e822808b2')
+b2sums=('b267476eeb92a49682167f3993e18d5e3f2e54f141a311e93e4ab7961010d9ff15c87b8d40de4d2cb5edec13839d2cdf99714c16c5f1026036f1db09a082b1c2')
 
 build() {
   mkdir build
