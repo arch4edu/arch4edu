@@ -4,7 +4,7 @@
 _org='ros'
 _pkgname=urdfdom
 pkgname="$_pkgname"
-pkgver=6.0.0
+pkgver=6.0.2
 pkgrel=1
 pkgdesc="The URDF (U-Robot Description Format) library provides core data structures and a simple XML parsers for populating the class data structures from an URDF file."
 arch=('i686' 'x86_64')
@@ -13,7 +13,7 @@ license=('BSD-3-Clause')
 depends=('tinyxml2' 'console-bridge' 'urdfdom-headers' 'gcc-libs' 'glibc')
 makedepends=('cmake')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha256sums=('3305bb725095c78ca3408a510e11f530cd9bb45229779084695b21b2e693bde9')
+sha256sums=('47e26b6553afe8bb49cc675a5209fb9f2feb91ab9310360f8015d4cb98cc094a')
 
 build() {
     cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
