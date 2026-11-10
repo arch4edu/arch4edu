@@ -3,7 +3,7 @@
 _org='jrl-umi3218'
 _pkgname=jrl-cmakemodules
 pkgname=$_pkgname
-pkgver=2.1.0
+pkgver=2.4.0
 pkgrel=1
 pkgdesc="CMake utility toolbox"
 arch=('any')
@@ -11,7 +11,7 @@ url="https://github.com/$_org/$_pkgname"
 license=('LGPL-3.0-or-later')
 makedepends=('cmake' 'python' 'python-numpy' 'perl' 'bash')
 source=("${_pkgname}-${pkgver}.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('a2427360fd3f0d53bc45b1977eb3d578a0edcb3ba899a508abd930d65762bc74')
+sha256sums=('1e810d43d471e9a172458187fd5ec0746d3155e173f4fb387e6c7fb56906d359')
 
 build() {
     cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
