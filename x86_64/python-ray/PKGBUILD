@@ -4,8 +4,8 @@
 # Contributor: acxz <akashpatel2008 at yahoo dot com>
 _base=ray
 pkgname=python-${_base}
-pkgver=2.59.0
-pkgrel=3
+pkgver=2.60.0
+pkgrel=1
 pkgdesc="A fast and simple framework for building and running distributed applications"
 arch=(x86_64)
 url="https://github.com/${_base}-project/${_base}"
@@ -52,11 +52,11 @@ source=(${_base}-${_base}-${pkgver}.tar.gz::${url}/archive/${_base}-${pkgver}.ta
   ray-jemalloc-patch-hook.patch
   dlmalloc-gcc16.patch
   ray-no-ci-pypi.patch)
-sha512sums=('99801b0eca43fb1a7cb75f964304dd4e6fb02df68d167104dec01bad13074e5d31fce64c63bb6c3538aa66bdb5b52a4d057583969311be8ada3084db8e4b434c'
-  '96f356845327ab1d1b8147877d5f3d78c871bcda1ad28c099cfd4e3190ef74c3b8e9d97910d902fa0eb118954ad3c359fea122fa0d4e6e8108c0ec221808f351'
-  'e156fdedc0775be785ed7651b83916f6c502eeb07e98a638340923299b2cab7826fc78da2916280a98b042a9294af6bf74b54b01c1838d899a2ca75b0eb74bda'
-  '745718484e8932b6eddf29fdc2796a13e4c02c3d4a17b0f27bfb61f35622fbf4eadefc235fc8a6d9229c19bd41c6960bb6506f548f2e5b686b9eb95e91532310'
-  'd57f5cefb0ace61d54c7bc229740eaab6681c21a4efd78b62495152892b1beb2558ab238413c1fe112427e6fe7c11420ed90b6d32451caf39333a59e272da114')
+sha512sums=('f8308d073713fe3669e3005f59a9cbeb2728e69c8aea4b7450d34b2e4b9ed7fbb551e4023e579fbf78a3a05f63e2dcbacbe670acc8b45e48ab0a35dabd878db2'
+            '96f356845327ab1d1b8147877d5f3d78c871bcda1ad28c099cfd4e3190ef74c3b8e9d97910d902fa0eb118954ad3c359fea122fa0d4e6e8108c0ec221808f351'
+            'e156fdedc0775be785ed7651b83916f6c502eeb07e98a638340923299b2cab7826fc78da2916280a98b042a9294af6bf74b54b01c1838d899a2ca75b0eb74bda'
+            '745718484e8932b6eddf29fdc2796a13e4c02c3d4a17b0f27bfb61f35622fbf4eadefc235fc8a6d9229c19bd41c6960bb6506f548f2e5b686b9eb95e91532310'
+            'd57f5cefb0ace61d54c7bc229740eaab6681c21a4efd78b62495152892b1beb2558ab238413c1fe112427e6fe7c11420ed90b6d32451caf39333a59e272da114')
 
 prepare() {
   cd ${_base}-${_base}-${pkgver}
