@@ -9,5 +9,5 @@ pre_build: |
   add makedepends libmatio python-numpy
   add checkdepends python-scipy
   # Doxygen formulas need LaTeX; use MathJax instead of pulling in texlive.
-  replace '-DBUILD_DOCUMENTATION=ON' '-DBUILD_DOCUMENTATION=ON -DPROXSUITE_DOXYGEN_USE_MATHJAX=ON'
+  sed -i 's|-DBUILD_DOCUMENTATION=ON|-DBUILD_DOCUMENTATION=ON -DPROXSUITE_DOXYGEN_USE_MATHJAX=ON|' PKGBUILD
 post_build: aur-post-build
