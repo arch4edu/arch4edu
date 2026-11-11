@@ -3,7 +3,7 @@
 # Contributor: Benjamin Chretien <chretien dot b +aur at gmail dot com>
 
 pkgname=casadi
-pkgver=3.8.0
+pkgver=3.8.2
 pkgrel=1
 pkgdesc="Symbolic framework for automatic differentiation and numeric optimization"
 arch=('i686' 'x86_64')
@@ -14,7 +14,7 @@ depends=('python' 'gcc-fortran' 'lapack' 'tinyxml' 'tinyxml2' 'swig' 'ipython'
          'osqp' 'proxsuite' 'coin-or-qpoases')
 makedepends=('cmake' 'eigen' 'simde' 'python-setuptools')
 source=("${pkgname}-${pkgver}.tar.gz"::"${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('c1daf1d4400f094ee775a792b1820deb8c8ca92b2db7d66c0d1005f86cce92dd')
+sha256sums=('095ddfc0b8e8a3d52b2ad2511bf9286c65eb3cb41d7ca9b904b8bfc0dc15d7f1')
 
 build() {
     cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
@@ -46,3 +46,4 @@ package() {
     DESTDIR="$pkgdir/" cmake --install "build-$pkgver"
     install -Dm644 "$pkgbase-$pkgver/LICENSE.txt" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
+makedepends+=("cereal")
