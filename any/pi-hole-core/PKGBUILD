@@ -4,8 +4,8 @@
 
 pkgname=pi-hole-core
 _pkgname=pi-hole
-pkgver=6.5
-pkgrel=5
+pkgver=6.6
+pkgrel=1
 pkgdesc='The Pi-hole is an advertising-aware DNS/Web server. Arch adaptation for lan wide DNS server.'
 arch=('any')
 license=('EUPL-1.2')
@@ -25,7 +25,7 @@ source=($pkgname-$pkgver.tar.gz::https://github.com/$_pkgname/$_pkgname/archive/
 	    mimic_basic-install.sh
 	    piholeDebug.sh
 )
-sha256sums=('277a1115b3b3b3ee0c115a6496710539709eefcd34fb5015480cd0bf2785b3f7'
+sha256sums=('0d2b8eafd888a59a16f08f9cef7b3ab6e55a7a5adc4878fd12126f7c61602c4a'
             '6dd5182c1b744a76a93a4eb959e5faa15b8d68e825eae4ff8ad2a1e13deb52df'
             'd09f9d10ebdfb6db24d4e1abff8cd09519a7b3f3878ef3974c26aa6838f74e7e'
             'b8f93892c98f8e7cac4890dc510e38e0aa471387868a416fbb01f35576ab0c6f'
