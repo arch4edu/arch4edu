@@ -1,0 +1,118 @@
+diff --git a/bazel/repo_rules/third_party_http_archive.bzl b/bazel/repo_rules/third_party_http_archive.bzl
+--- a/bazel/repo_rules/third_party_http_archive.bzl
++++ b/bazel/repo_rules/third_party_http_archive.bzl
+@@ -34,10 +34,72 @@
+ 
+ SYSTEM_LIBS_ENVVAR = "TENSORSTORE_SYSTEM_LIBS"
+ 
++def _system_pkg_config_query(ctx, logger, pkg_config, module, option):
++    return repo_utils.execute_checked_stdout(
++        ctx,
++        op = "PkgConfig({})".format(module),
++        arguments = [pkg_config, option, module],
++        logger = logger,
++        quiet = True,
++    ).strip()
++
++def _configure_system_pkg_config(ctx, logger):
++    """Creates Bazel package targets backed by installed pkg-config modules."""
++    pkg_config = ctx.which(repo_utils.getenv(ctx, "PKG_CONFIG", "pkg-config"))
++    if pkg_config == None:
++        logger.fail("pkg-config is required for system {}".format(ctx.attr.name))
++    repo_utils.watch(ctx, pkg_config)
++
++    # Declare the installed headers so all consumers use the same ABI settings.
++    first_module = sorted(ctx.attr.system_package_targets.values())[0]
++    includedir = _system_pkg_config_query(ctx, logger, pkg_config, first_module, "--variable=includedir")
++    header_dir = ctx.path(includedir + "/" + ctx.attr.system_include_subdir)
++    if not header_dir.exists:
++        logger.fail("System headers not found: {}".format(header_dir))
++    repo_utils.watch_tree(ctx, header_dir)
++    ctx.symlink(header_dir, "include/" + ctx.attr.system_include_subdir)
++    ctx.file("BUILD.bazel", """\
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
++cc_library(
++    name = "system_headers",
++    hdrs = glob(["include/**/*.h", "include/**/*.inc"]),
++    includes = ["include"],
++    visibility = ["//visibility:public"],
++)
++""")
++
++    packages = {}
++    for label, module in sorted(ctx.attr.system_package_targets.items()):
++        package, name = label[2:].split(":")
++        pcfiledir = _system_pkg_config_query(ctx, logger, pkg_config, module, "--variable=pcfiledir")
++        repo_utils.watch(ctx, ctx.path(pcfiledir + "/" + module + ".pc"))
++        linkopts = [x for x in _system_pkg_config_query(ctx, logger, pkg_config, module, "--libs").split(" ") if x]
++        defines = []
++        for flag in _system_pkg_config_query(ctx, logger, pkg_config, module, "--cflags").split(" "):
++            if flag.startswith("-D"):
++                defines.append(flag[2:])
++            elif flag and not flag.startswith("-I") and not flag.startswith("-W") and flag != "-pthread":
++                logger.fail("Unsupported system compiler flag: {}".format(flag))
++        target = """\
++cc_library(
++    name = {name},
++    defines = {defines},
++    linkopts = {linkopts},
++    deps = ["//:system_headers"],
++    visibility = ["//visibility:public"],
++)
++""".format(name = repr(name), defines = repr(defines), linkopts = repr(linkopts))
++        packages.setdefault(package, []).append(target)
++    for package, targets in packages.items():
++        ctx.file(package + "/BUILD.bazel", 'load("@rules_cc//cc:cc_library.bzl", "cc_library")\n' + "\n".join(targets))
++
+ def _handle_use_system_lib(ctx, logger):
+     use_syslib = repo_utils.use_system_lib(ctx, ctx.attr.name, SYSTEM_LIBS_ENVVAR)
+     if not use_syslib:
+         return False
++    if ctx.attr.system_package_targets:
++        _configure_system_pkg_config(ctx, logger)
++        return True
+     if ctx.attr.system_build_file == None:
+         logger.fail((
+             "{name} was specified in {envvar}, but no " +
+@@ -121,6 +183,8 @@
+     "system_build_file": attr.label(
+         allow_single_file = True,
+     ),
++    "system_package_targets": attr.string_dict(),
++    "system_include_subdir": attr.string(),
+     # documentation only
+     "doc_name": attr.string(),
+     "doc_version": attr.string(),
+@@ -133,6 +197,11 @@
+     attrs = _third_party_http_archive_attrs,
+     environ = repo_env_vars + [
+         SYSTEM_LIBS_ENVVAR,
++        "PATH",
++        "PKG_CONFIG",
++        "PKG_CONFIG_PATH",
++        "PKG_CONFIG_LIBDIR",
++        "PKG_CONFIG_SYSROOT_DIR",
+     ],
+     doc = """\
+ A repository rule for third-party http archives.
+diff --git a/third_party/abseil_cpp/workspace.bzl b/third_party/abseil_cpp/workspace.bzl
+--- a/third_party/abseil_cpp/workspace.bzl
++++ b/third_party/abseil_cpp/workspace.bzl
+@@ -35,6 +35,17 @@
+         repo_mapping = {
+             "@com_google_googletest": "@googletest",
+         },
++        system_package_targets = {
++            label: "absl_" + target[6:]
++            for label, target in ABSL_CMAKE_MAPPING.items()
++            if target and label != "//absl/utility:if_constexpr"
++        } | {
++            "//absl/log:globals": "absl_log_globals",
++            "//absl/log:initialize": "absl_log_initialize",
++            "//absl/status:status_matchers": "absl_status_matchers",
++            "//absl/strings:resize_and_overwrite": "absl_strings_resize_and_overwrite",
++        },
++        system_include_subdir = "absl",
+         cmake_name = "absl",
+         cmake_target_mapping = ABSL_CMAKE_MAPPING,
+         cmake_settings = {

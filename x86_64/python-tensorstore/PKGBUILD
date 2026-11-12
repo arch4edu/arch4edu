@@ -1,13 +1,14 @@
 # Maintainer: Daniel Bershatsky <bepshatsky@yandex.ru>
 pkgname=python-tensorstore
 _pkgname=${pkgname#python-}
-pkgver=0.1.84
-pkgrel=2
+pkgver=0.1.86
+pkgrel=1
 pkgdesc='Library for reading and writing large multi-dimensional arrays.'
 arch=('x86_64')
 url='https://github.com/google/tensorstore'
 license=('Apache-2.0')
 depends=(
+    'abseil-cpp'
     'aws-c-auth'
     'aws-c-cal'
     'aws-c-common'
@@ -21,14 +22,19 @@ depends=(
     'bzip2'
     'c-ares'
     'curl'
+    'glibc'
     'libavif'
+    'libblake3'
+    'libgcc'
     'libjpeg-turbo'
     'libnghttp2'
     'libpng'
+    'libstdc++'
     'libtiff'
     'libwebp'
     'lz4'
     'openssl'
+    'python'
     'python-ml-dtypes'
     'python-numpy'
     're2'
@@ -41,32 +47,48 @@ depends=(
 )
 makedepends=(
     'nlohmann-json'
+    'pkgconf'
     'pybind11'
     'python-build'
     'python-installer'
+    'python-pip'
     'python-setuptools'
     'python-setuptools-scm'
     'python-wheel'
 )
-source=(
-    "$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
-    'system-libs.patch'
-)
-sha256sums=(
-    'd86fe9dca4b69e5c8b488562351dc654bce1400f5981f922e4be9ba4fafc95ce'
-    'b4dc028a5a9edb7822aa306b2ca31de9d8a9c72c69455e61ee2b630c1e2c4ef4'
-)
+source=("$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
+        'system-libs.patch'
+        'system-abseil.patch'
+        'system-python-libs.patch'
+        'grpc-openssl4.patch')
+sha256sums=('fbc535275a766a17f636952cb10a766ed125f21282d4fd2bfdf95923c1c2cbe9'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP')
 
 prepare() {
     cd "$_pkgname-$pkgver"
 
-    patch -Np1 -i "$srcdir/system-libs.patch"
+    # Upstrem gRPC already has the patch.
+    install -m644 "$srcdir/grpc-openssl4.patch" third_party/grpc/patches/openssl4.diff
+
+    declare -a _patches=(
+        'system-libs.patch'
+        'system-abseil.patch'
+        'system-python-libs.patch'
+    )
+    local _patch
+    for _patch in "${_patches[@]}"; do
+        patch --fuzz=0 -Np1 -i "$srcdir/$_patch"
+    done
 }
 
 build() {
     cd "$_pkgname-$pkgver"
 
     local _system_libs=(
+        abseil-cpp
         aws_c_auth
         aws_c_cal
         aws_c_common
@@ -76,6 +98,7 @@ build() {
         aws_c_sdkutils
         aws_checksums
         aws_s2n_tls
+        blake3
         boringssl
         brotli
         bzip2
@@ -100,24 +123,11 @@ build() {
     )
     export TENSORSTORE_SYSTEM_LIBS="${_system_libs[*]}"
     export TENSORSTORE_SYSTEM_LIBS="${TENSORSTORE_SYSTEM_LIBS// /,}"
-    export TENSORSTORE_SYSTEM_PYTHON_LIBS=numpy
-
+    # Patch system-python-libs.patch restores this option for the Python repo
+    # rules in v0.1.86 .
+    export TENSORSTORE_SYSTEM_PYTHON_LIBS=numpy,ml_dtypes
+    export TENSORSTORE_BAZEL_BUILD_OPTIONS='--repo_env=BAZEL_LINKOPTS=-Wl,--as-needed'
     export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
-    python -u bazelisk.py build -c opt \
-        --copt=-O3 \
-        --//tensorstore/internal/version="$pkgver" \
-        //python/tensorstore:_tensorstore__shared_objects \
-        --verbose_failures \
-        '--remote_download_regex=.*/(_tensorstore\.(so|pyd))' \
-        --copt=-fvisibility=hidden
-
-    local _prebuilt_dir="$PWD/build/tensorstore-prebuilt"
-    local _ext_suffix
-    _ext_suffix="$(python -c 'import sysconfig; print(sysconfig.get_config_var("EXT_SUFFIX"))')"
-    install -Dm755 bazel-bin/python/tensorstore/_tensorstore.so \
-        "$_prebuilt_dir/tensorstore/_tensorstore${_ext_suffix}"
-
-    export TENSORSTORE_PREBUILT_DIR="$_prebuilt_dir"
     python -m build -n -w
 }
 

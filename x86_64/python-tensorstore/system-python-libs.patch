@@ -1,0 +1,96 @@
+diff --git a/bazel/repo_rules/third_party_pypa_package.bzl b/bazel/repo_rules/third_party_pypa_package.bzl
+--- a/bazel/repo_rules/third_party_pypa_package.bzl
++++ b/bazel/repo_rules/third_party_pypa_package.bzl
+@@ -31,6 +31,8 @@
+     "repo_utils",
+ )
+ 
++_SYSTEM_PYTHON_LIBS_ENVVAR = "TENSORSTORE_SYSTEM_PYTHON_LIBS"
++
+ _PYPA_BUILD_FILE_TEMPLATE = """
+ 
+ load("@rules_cc//cc:cc_library.bzl", "cc_library")
+@@ -69,6 +71,65 @@
+   visibility = ["//visibility:public"],
+ )
+ """
++
++_SYSTEM_NUMPY_HEADERS_TEMPLATE = """
++cc_library(
++  name = "headers",
++  hdrs = glob(["numpy_include/**/*.h"]),
++  includes = ["numpy_include"],
++  visibility = ["//visibility:public"],
++)
++"""
++
++_SYSTEM_PYTHON_INFO_SCRIPT = """
++import importlib
++import json
++import pathlib
++import sys
++
++module = importlib.import_module(sys.argv[1])
++print(json.dumps({
++    "package_dir": str(pathlib.Path(module.__file__).resolve().parent),
++    "include_dir": module.get_include() if sys.argv[1] == "numpy" else None,
++}))
++"""
++
++def _handle_use_system_package(ctx, *, interpreter_path, logger):
++    # Limit this switch to the packages whose import names and Bazel targets
++    # are supported here. A typo must not silently cause a pip download.
++    selected = [
++        name.strip()
++        for name in repo_utils.getenv(ctx, _SYSTEM_PYTHON_LIBS_ENVVAR, "").split(",")
++        if name.strip()
++    ]
++    for name in selected:
++        if name not in ["numpy", "ml_dtypes"]:
++            logger.fail("Unsupported package {} in {}".format(name, _SYSTEM_PYTHON_LIBS_ENVVAR))
++    if ctx.attr.target not in selected:
++        return False
++
++    info = json.decode(repo_utils.execute_checked_stdout(
++        ctx,
++        op = "GetSystemPythonPackage({})".format(ctx.attr.target),
++        arguments = [interpreter_path, "-c", _SYSTEM_PYTHON_INFO_SCRIPT, ctx.attr.target],
++        quiet = True,
++        logger = logger,
++    ))
++    package_dir = ctx.path(info["package_dir"])
++    repo_utils.watch_tree(ctx, package_dir)
++    ctx.symlink(package_dir, ctx.attr.target)
++
++    build_file_content = _PYPA_BUILD_FILE_TEMPLATE.format(
++        target = ctx.attr.target,
++        deps = repr(ctx.attr.deps),
++    )
++    if ctx.attr.target == "numpy":
++        include_dir = ctx.path(info["include_dir"])
++        repo_utils.watch_tree(ctx, include_dir)
++        ctx.symlink(include_dir, "numpy_include")
++        build_file_content += _SYSTEM_NUMPY_HEADERS_TEMPLATE
++    ctx.file("BUILD.bazel", content = build_file_content, executable = False)
++    return True
+ 
+ def _pip_install(
+         ctx,
+@@ -165,6 +226,9 @@
+     else:
+         interpreter_path = result.resolved_path
+ 
++    if _handle_use_system_package(ctx, interpreter_path = interpreter_path, logger = logger):
++        return
++
+     ctx.file(
+         "_requirements_frozen.txt",
+         content = _requirements_frozen_content(ctx.attr.requirement),
+@@ -209,5 +273,5 @@
+     configure = True,
+     local = True,
+     # toolchains = ["@rules_python//python:current_py_toolchain"],
+-    environ = PYTHON_ENV_VARS,
+-)
++    environ = PYTHON_ENV_VARS + [_SYSTEM_PYTHON_LIBS_ENVVAR],
++)
