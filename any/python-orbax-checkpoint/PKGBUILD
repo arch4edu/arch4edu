@@ -2,8 +2,8 @@
 
 pkgname=python-orbax-checkpoint
 _pkgname=${pkgname#python-}
-pkgver=0.11.32
-pkgrel=2
+pkgver=0.12.9
+pkgrel=1
 pkgdesc='Common utility libraries for JAX users (checkpoint).'
 arch=('any')
 url='https://github.com/google/orbax'
@@ -22,19 +22,33 @@ depends=(
     'python-simplejson'
     'python-tensorstore'
     'python-typing_extensions'  # etils[epy]
+    'python-uvloop'
     'python-yaml'
 )
 makedepends=('python-build' 'python-flit-core' 'python-installer')
 optdepends=(
-    'python-orbax-export: Serialization JAX to TensorFlow Saved Models.'
+    'python-orbax-export: Serialization JAX to TensorFlow Saved Models'
+    'python-prometheus-client: Expose telemetry to Prometheus'
 )
 conflicts=('python-orbax')
 replaces=('python-orbax')
-source=("$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('bb47e3d116377fb9b38c105fad4786b5ec57a8177fdd235de089e31d501ce43e')
+source=("$_pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
+    'python-orbax-checkpoint.diff')
+sha256sums=('f6fa81b7c8dbbad554cbb02d765660a2f0a9cd79306c240af5416e2205477455'
+            'SKIP')
+
+prepare() {
+    cd orbax-$pkgver/checkpoint
+    patch -p1 -i../../python-orbax-checkpoint.diff
+}
 
 build() {
     python -m build -nw orbax-$pkgver/checkpoint
+}
+
+check() {
+    cd orbax-$pkgver/checkpoint
+    PYTHONPATH="$PWD:$PYTHONPATH" python -c 'import orbax.checkpoint'
 }
 
 package() {
