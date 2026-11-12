@@ -1,6 +1,7 @@
 nvchecker:
   - source: aur
     aur:
+  - alias: simdjson
 depends:
   - x86_64/reproc
 build_prefix: extra-x86_64
