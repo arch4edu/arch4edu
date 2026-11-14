@@ -5,7 +5,7 @@
 
 pkgbase=gradle
 pkgname=('gradle' 'gradle-doc' 'gradle-src')
-pkgver=9.8.2
+pkgver=9.9.0
 pkgrel=1
 pkgdesc='Powerful build system for the JVM'
 url='https://gradle.org/'
@@ -32,11 +32,11 @@ makedepends=(
 source=(https://services.gradle.org/distributions/${pkgbase}-${pkgver}-src.zip
         https://services.gradle.org/distributions/${pkgbase}-${pkgver}-all.zip
         ${pkgbase}.sh)
-sha256sums=('96c9aba0564daa2998f578b589eba9ae1f6656e368fde85f7132e05321bab553'
-            'a1bb7e9651ef09e4cd9a62d471564e0ee23b5757e5f21fd7358d7cfc21018fdf'
+sha256sums=('c16d860198430fd8fd1c6914c4ca8283820d181ed0c5efa6fcce2275819a7bb4'
+            '7aaba33a6aa7d03e0c7890869da1f1b5e1765c4d71db981a9d5db5cc47a10a6d'
             '4728dbdbe9fe416b82977cb7e456457e3ff0b88129291ee28e0d874ce8cc4891')
-sha512sums=('6edc5e010d60efb61beea38e37de327143794a7b2e5fda5d7f76dc0e617e9710e03dbc6466afa6bbe22dceab9e51d75da08b091eea1d05d4436c3bd552896026'
-            'd5053902fee93ba46cf6c9951ab4af2fce04855cb89388362f704f37d8034bb4e198ef6aa32304449f52a39fbcab1ca3bc9bf15ae079fa66f2953e32746968ec'
+sha512sums=('45485b4b3c707b6473ead1408190343033208d405894832dbe71dc7952ff42078f56d24cd634c03f9468b41317032b77acd5f2a3e2eb63cc65c5ae4897d2d653'
+            '40468c2bd953b4057319cd2144d1a7e7a65f6b021186d051461785dda9ddda8ea7175d57d2348c3b73ab08359d4773ca8f5ea7d7bdfecd4b6e94bd6f44ceca62'
             '9054a13f13a0d04bffefb2e5c1bcabfcd7b11e4d83d9180f65e0a09eeb8fea407d8c4e1e1e9b79191ba99e4eb372dbbb3189dd30833170c64cdb4484ca559441')
 
 prepare() {
@@ -45,7 +45,8 @@ prepare() {
   grep -lr "vendor = JvmVendorSpec.ADOPTIUM" | xargs sed -i "/JvmVendorSpec.ADOPTIUM/d"
 
   # inhibit automatic download of binary gradle
-  sed -i "s#distributionUrl=.*#distributionUrl=file\:${srcdir}/${pkgbase}-${pkgver}-all.zip#" \
+  sed -i -e "s#distributionUrl=.*#distributionUrl=file\:${srcdir}/${pkgbase}-${pkgver}-all.zip#" \
+    -e '/^distributionSha256Sum=/d' \
     gradle/wrapper/gradle-wrapper.properties
 
   # isolated projects requires configuration cache; disable both so we can build without it
