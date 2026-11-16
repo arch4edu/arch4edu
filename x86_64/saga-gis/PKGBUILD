@@ -8,7 +8,7 @@
 pkgname=saga-gis
 _pkgname=saga
 pkgver=9.12.4
-pkgrel=2
+pkgrel=3
 pkgdesc="A Geographic Information System (GIS) software with immense capabilities for geodata processing and analysis."
 url="http://www.saga-gis.org"
 license=('GPL-2.0-only' 'LGPL-2.0-only')
