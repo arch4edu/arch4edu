@@ -1,7 +1,7 @@
 # Maintainer: David Wells <drwells.aur at fastmail dot com>
 
 pkgname=nanoflann
-pkgver=2.0.1
+pkgver=2.0.2
 pkgrel=1
 pkgdesc='a C++ header-only library for Nearest Neighbor (NN) search wih KD-trees'
 arch=('any')
@@ -10,13 +10,7 @@ license=('BSD')
 depends=('eigen' 'python')
 makedepends=('cmake' 'gtest')
 source=("https://github.com/jlblancoc/nanoflann/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('bb3991ad924248d3f20953a951c34878196c11ca112d800acc341c3808443896')
-
-
-prepare () {
-    sed -i '/EIGEN3_INCLUDE_DIR/d' ${srcdir}/${pkgname}-${pkgver}/tests/CMakeLists.txt
-    sed -i 's/Threads::Threads/Threads::Threads Eigen3::Eigen/' ${srcdir}/${pkgname}-${pkgver}/tests/CMakeLists.txt
-}
+sha256sums=('b1e7c95852576742ba9fd83392f19c1ba25e7ad13252f66b18c294e183feaf1a')
 
 build() {
     rm -rf ${srcdir}/build
