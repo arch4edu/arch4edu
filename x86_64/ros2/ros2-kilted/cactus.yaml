@@ -2,6 +2,7 @@ nvchecker:
   - source: aur
     aur:
   - alias: python
+  - alias: opencv
 depends:
   - x86_64/ros2/ros2-arch-deps
   - x86_64/sip4: python-sip4

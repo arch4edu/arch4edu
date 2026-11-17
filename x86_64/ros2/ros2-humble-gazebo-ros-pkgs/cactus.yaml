@@ -3,6 +3,7 @@ nvchecker:
     aur:
   - alias: boost
   - alias: protobuf
+  - alias: opencv
 depends:
   - x86_64/ros2/ros2-humble
   - x86_64/gazebo
