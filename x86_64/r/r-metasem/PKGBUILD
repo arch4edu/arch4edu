@@ -1,6 +1,6 @@
 # Maintainer: Jingbei Li <i@jingbei.li>
 _cranname=metaSEM
-_pkgver=1.5.0
+_pkgver=2.0
 pkgname=r-metasem
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,4 +21,4 @@ package() {
   install -dm0755 "${pkgdir}/usr/lib/R/library"
   cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
 }
-sha256sums=('356d9fe1cd1d83118d73a5ba6e7574e7894b7c50f50b8d5aacb2827a4cbc14b6')
+sha256sums=('461dbc57353706c4bca150ce1ed9c29d5445370921e2dcbedcbda57d47d35b44')
