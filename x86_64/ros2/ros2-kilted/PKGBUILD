@@ -2,7 +2,7 @@
 
 pkgname=ros2-kilted
 pkgver=2025.07.28
-pkgrel=1
+pkgrel=2
 _rosdist="Kilted Kaiju"
 _rosdist_short_upper=${_rosdist%% *}
 _rosdist_short=${_rosdist_short_upper,}
