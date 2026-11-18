@@ -9,10 +9,6 @@ depends:
 build_prefix: extra-x86_64
 pre_build: |
   aur-pre-build
-  # The asio submodule pinned by Fast-DDS predates OpenSSL 4 (opaque ASN1, const X509 APIs).
-  git checkout HEAD -- asio-openssl4.patch
-  echo 'source+=("asio-openssl4.patch")' >> PKGBUILD
-  echo 'sha256sums+=("ee443ebafb5b2d8d461c9787d43c260065ce782b93e34cec23c84c763812bda7")' >> PKGBUILD
   # Rename original build()/package() so we can wrap them.
   sed -i '/^build() *{/,/^}/ s/^build()/_build()/' PKGBUILD
   sed -i '/^package() *{/,/^}/ s/^package()/_package()/' PKGBUILD
@@ -26,7 +22,24 @@ pre_build: |
   cat >> PKGBUILD <<'CACTUSEOF'
 
   build() {
-      patch -Np1 -d "$srcdir/ros2/src/eProsima/Fast-DDS/thirdparty/asio" -i "$srcdir/asio-openssl4.patch"
+      # Fast-DDS's pinned asio predates OpenSSL 4: use accessor APIs and const X509 types.
+      asio_file="$srcdir/ros2/src/eProsima/Fast-DDS/thirdparty/asio/asio/include/asio/ssl/impl/rfc2818_verification.ipp"
+      sed -i \
+        -e 's/if (domain->type == V_ASN1_IA5STRING && domain->data && domain->length)/if (ASN1_STRING_type(domain) == V_ASN1_IA5STRING \&\& ASN1_STRING_get0_data(domain) \&\& ASN1_STRING_length(domain))/' \
+        -e 's/reinterpret_cast<const char\*>(domain->data)/reinterpret_cast<const char*>(ASN1_STRING_get0_data(domain))/' \
+        -e 's/std::size_t pattern_length = domain->length;/std::size_t pattern_length = ASN1_STRING_length(domain);/' \
+        -e 's/if (ip_address->type == V_ASN1_OCTET_STRING && ip_address->data)/if (ASN1_STRING_type(ip_address) == V_ASN1_OCTET_STRING \&\& ASN1_STRING_get0_data(ip_address))/' \
+        -e 's/if (address.is_v4() && ip_address->length == 4)/if (address.is_v4() \&\& ASN1_STRING_length(ip_address) == 4)/' \
+        -e 's/if (memcmp(bytes.data(), ip_address->data, 4) == 0)/if (memcmp(bytes.data(), ASN1_STRING_get0_data(ip_address), 4) == 0)/' \
+        -e 's/else if (address.is_v6() && ip_address->length == 16)/else if (address.is_v6() \&\& ASN1_STRING_length(ip_address) == 16)/' \
+        -e 's/if (memcmp(bytes.data(), ip_address->data, 16) == 0)/if (memcmp(bytes.data(), ASN1_STRING_get0_data(ip_address), 16) == 0)/' \
+        -e 's/^  X509_NAME\* name = X509_get_subject_name(cert);$/  const X509_NAME* name = X509_get_subject_name(cert);/' \
+        -e 's/^  ASN1_STRING\* common_name = 0;$/  const ASN1_STRING* common_name = 0;/' \
+        -e 's/^    X509_NAME_ENTRY\* name_entry = X509_NAME_get_entry(name, i);$/    const X509_NAME_ENTRY* name_entry = X509_NAME_get_entry(name, i);/' \
+        -e 's/if (common_name && common_name->data && common_name->length)/if (common_name \&\& ASN1_STRING_get0_data(common_name) \&\& ASN1_STRING_length(common_name))/' \
+        -e 's/reinterpret_cast<const char\*>(common_name->data)/reinterpret_cast<const char*>(ASN1_STRING_get0_data(common_name))/' \
+        -e 's/std::size_t pattern_length = common_name->length;/std::size_t pattern_length = ASN1_STRING_length(common_name);/' \
+        "$asio_file"
       printf '\nif(NOT DEFINED Eigen3_INCLUDE_DIRS AND TARGET Eigen3::Eigen)\n  get_target_property(Eigen3_INCLUDE_DIRS Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)\nendif()\n' >> "$srcdir/ros2/src/ros2/eigen3_cmake_module/cmake/Modules/FindEigen3.cmake"
       sed -i '/^[[:space:]]*-Wall$/d;/^[[:space:]]*-Wextra$/d;/^[[:space:]]*-Wpedantic$/d' "$srcdir/ros2/src/ros2/console_bridge_vendor/CMakeLists.txt"
       _build
