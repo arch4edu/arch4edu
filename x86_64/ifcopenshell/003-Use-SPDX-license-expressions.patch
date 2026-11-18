@@ -1,0 +1,214 @@
+diff --git a/src/bcf/pyproject.toml b/src/bcf/pyproject.toml
+index 2013388..d184844 100644
+--- a/src/bcf/pyproject.toml
++++ b/src/bcf/pyproject.toml
+@@ -20,12 +20,12 @@ dependencies = [
+ ]
+ version = "0.0.0"
+ classifiers = [
+-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+     "Operating System :: OS Independent",
+     "Programming Language :: Python :: 3",
+     "Topic :: Scientific/Engineering",
+     "Topic :: Utilities",
+ ]
++license = "LGPL-3.0-or-later"
+ 
+ [project.urls]
+ Source = "https://github.com/IfcOpenShell/IfcOpenShell"
+diff --git a/src/bsdd/pyproject.toml b/src/bsdd/pyproject.toml
+index 7a87ed7..ea3c3eb 100644
+--- a/src/bsdd/pyproject.toml
++++ b/src/bsdd/pyproject.toml
+@@ -22,8 +22,8 @@ classifiers = [
+     "Programming Language :: Python :: 3.14",
+     "Programming Language :: Python :: Implementation :: CPython",
+     "Programming Language :: Python :: Implementation :: PyPy",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "requests",
+     "typing-extensions",
+diff --git a/src/ifc4d/pyproject.toml b/src/ifc4d/pyproject.toml
+index adcab41..29bc68e 100644
+--- a/src/ifc4d/pyproject.toml
++++ b/src/ifc4d/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "4D", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+     "typing-extensions",
+diff --git a/src/ifc5d/pyproject.toml b/src/ifc5d/pyproject.toml
+index ed19a21..6396680 100644
+--- a/src/ifc5d/pyproject.toml
++++ b/src/ifc5d/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "5D", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+     "typing_extensions",
+diff --git a/src/ifccityjson/pyproject.toml b/src/ifccityjson/pyproject.toml
+index a4d7330..c9f56c7 100644
+--- a/src/ifccityjson/pyproject.toml
++++ b/src/ifccityjson/pyproject.toml
+@@ -14,8 +14,8 @@ readme = "README.md"
+ keywords = ["IFC", "CityJSON", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+     "cjio >=0.8, <0.10"
+diff --git a/src/ifcclash/pyproject.toml b/src/ifcclash/pyproject.toml
+index 3b510d4..e8cb53f 100644
+--- a/src/ifcclash/pyproject.toml
++++ b/src/ifcclash/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "clash", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+ ]
+diff --git a/src/ifccsv/pyproject.toml b/src/ifccsv/pyproject.toml
+index e5ca555..f0acad1 100644
+--- a/src/ifccsv/pyproject.toml
++++ b/src/ifccsv/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "CSV", "XLS", "XLSX", "ODS", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+ ]
+diff --git a/src/ifcdiff/pyproject.toml b/src/ifcdiff/pyproject.toml
+index b23b671..894f4f1 100644
+--- a/src/ifcdiff/pyproject.toml
++++ b/src/ifcdiff/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "Diff"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+     "deepdiff",
+diff --git a/src/ifcedit/pyproject.toml b/src/ifcedit/pyproject.toml
+index f50c0b3..af6d904 100644
+--- a/src/ifcedit/pyproject.toml
++++ b/src/ifcedit/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "BIM", "API"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = ["ifcopenshell", "ifc5d"]
+ 
+ [project.scripts]
+diff --git a/src/ifcfm/pyproject.toml b/src/ifcfm/pyproject.toml
+index c44f869..e07adfe 100644
+--- a/src/ifcfm/pyproject.toml
++++ b/src/ifcfm/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "FM", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+     "openpyxl",
+diff --git a/src/ifcmcp/pyproject.toml b/src/ifcmcp/pyproject.toml
+index 2463e5a..426e091 100644
+--- a/src/ifcmcp/pyproject.toml
++++ b/src/ifcmcp/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "BIM", "MCP"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = ["ifcopenshell", "ifcquery", "ifcedit"]
+ 
+ [project.optional-dependencies]
+diff --git a/src/ifcopenshell-python/pyproject.toml b/src/ifcopenshell-python/pyproject.toml
+index 607c704..3c4b334 100644
+--- a/src/ifcopenshell-python/pyproject.toml
++++ b/src/ifcopenshell-python/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ requires-python = ">=3.10,<3.16"
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "shapely",
+     "numpy",
+diff --git a/src/ifcpatch/pyproject.toml b/src/ifcpatch/pyproject.toml
+index 9395fe2..3fa9aca 100644
+--- a/src/ifcpatch/pyproject.toml
++++ b/src/ifcpatch/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = ["ifcopenshell", "numpy"]
+ 
+ [project.optional-dependencies]
+diff --git a/src/ifcquery/pyproject.toml b/src/ifcquery/pyproject.toml
+index 3c8e734..62dca84 100644
+--- a/src/ifcquery/pyproject.toml
++++ b/src/ifcquery/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "BIM", "Query"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = ["ifcopenshell"]
+ 
+ [project.scripts]
+diff --git a/src/ifctester/pyproject.toml b/src/ifctester/pyproject.toml
+index 37ac08d..9603ec3 100644
+--- a/src/ifctester/pyproject.toml
++++ b/src/ifctester/pyproject.toml
+@@ -13,8 +13,8 @@ readme = "README.md"
+ keywords = ["IFC", "IDS", "BIM"]
+ classifiers = [
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+ ]
++license = "LGPL-3.0-or-later"
+ dependencies = [
+     "ifcopenshell",
+     "python-dateutil",

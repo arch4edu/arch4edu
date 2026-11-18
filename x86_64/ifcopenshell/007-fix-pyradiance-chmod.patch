@@ -1,0 +1,15 @@
+diff --git a/src/bonsai/bonsai/bim/module/light/__init__.py b/src/bonsai/bonsai/bim/module/light/__init__.py
+--- a/src/bonsai/bonsai/bim/module/light/__init__.py
++++ b/src/bonsai/bonsai/bim/module/light/__init__.py
+@@ -64,7 +64,10 @@
+         if bin_path.exists():
+             for file in bin_path.iterdir():
+                 if file.is_file():
+-                    file.chmod(file.stat().st_mode | stat.S_IEXEC)
++                    try:
++                        file.chmod(file.stat().st_mode | stat.S_IEXEC)
++                    except PermissionError:
++                        pass
+ 
+ 
+ def unregister():

@@ -1,0 +1,13 @@
+diff --git a/src/ifcviewer/CMakeLists.txt b/src/ifcviewer/CMakeLists.txt
+index 3919713..4cb8458 100644
+--- a/src/ifcviewer/CMakeLists.txt
++++ b/src/ifcviewer/CMakeLists.txt
+@@ -251,7 +251,7 @@ if(EMSCRIPTEN)
+     target_include_directories(IfcViewerCore PRIVATE ${ZSTD_DEC_DIR})
+ else()
+     find_package(zstd ${ZSTD_MIN_VERSION} CONFIG REQUIRED)
+-    target_link_libraries(IfcViewerCore PUBLIC zstd::libzstd_static)
++    target_link_libraries(IfcViewerCore PUBLIC zstd::libzstd)
+ endif()
+ install(TARGETS IfcViewerCore EXPORT ${IFCOPENSHELL_EXPORT_TARGETS})
+ 

@@ -1,0 +1,65 @@
+diff --git a/src/bonsaiviewer/MainWindow.cpp b/src/bonsaiviewer/MainWindow.cpp
+index 35f9cec..e05bcf1 100644
+--- a/src/bonsaiviewer/MainWindow.cpp
++++ b/src/bonsaiviewer/MainWindow.cpp
+@@ -50,12 +50,14 @@
+ #include <QIcon>
+ #include <QLabel>
+ #include <QMenu>
++#include <QMenuBar>
+ #include <QMessageBox>
+ #include <QShortcut>
+ #include <QSignalBlocker>
+ #include <QStackedWidget>
+ #include <QStatusBar>
+ #include <QProgressBar>
++#include <QToolBar>
+ #include <QToolButton>
+ #include <QVBoxLayout>
+ 
+@@ -414,7 +416,21 @@ void MainWindow::setupRibbon() {
+     connect(ribbon_tabs_, &components::TabBar::currentChanged,
+             ribbon_pages_, &QStackedWidget::setCurrentIndex);
+ 
+-    setMenuWidget(shell);
++    // Host the ribbon in a toolbar rather than in the menu-widget slot.
++    // QMainWindow::menuBar() deletes a custom menu widget when it is called,
++    // and the Breeze style calls it while polishing the window, which removed
++    // the whole ribbon on KDE. Toolbars are not affected by that path.
++    auto* ribbon_bar = new QToolBar(this);
++    ribbon_bar->setObjectName("ribbonBar");
++    ribbon_bar->setMovable(false);
++    ribbon_bar->setFloatable(false);
++    ribbon_bar->setContentsMargins(0, 0, 0, 0);
++    shell->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
++    ribbon_bar->addWidget(shell);
++    addToolBar(Qt::TopToolBarArea, ribbon_bar);
++
++    // KDE creates an empty menu bar; keep it from adding a blank strip.
++    menuBar()->hide();
+ }
+ 
+ void MainWindow::setupViewport() {
+diff --git a/src/bonsaiviewer/components/Style.cpp b/src/bonsaiviewer/components/Style.cpp
+index 175c3d8..e8d29cf 100644
+--- a/src/bonsaiviewer/components/Style.cpp
++++ b/src/bonsaiviewer/components/Style.cpp
+@@ -94,6 +94,18 @@ QString buildAppStyleSheet() {
+             background: ${ribbon_background};
+             border-top: 1px solid ${border};
+         }
++        QToolBar#ribbonBar {
++            background: ${ribbon_background};
++            border: none;
++            margin: 0px;
++            padding: 0px;
++            spacing: 0px;
++        }
++        QToolBar#ribbonBar::handle,
++        QToolBar#ribbonBar::separator {
++            width: 0px;
++            image: none;
++        }
+         QTabWidget#appTabWidget::pane {
+             border: none;
+             background: transparent;

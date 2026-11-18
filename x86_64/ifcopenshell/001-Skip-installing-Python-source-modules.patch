@@ -1,0 +1,57 @@
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index 6e0e0f5..fb3e6ac 100644
+--- a/cmake/CMakeLists.txt
++++ b/cmake/CMakeLists.txt
+@@ -146,6 +146,11 @@ set(
+     "" CACHE PATH
+     "Directory to install IfcPython package to. By default package is installed in found Python's site-packages."
+ )
++set(INSTALL_PYTHON_WRAPPERS
++    OFF
++    CACHE BOOL
++    "Install IfcPython source modules."
++)
+ 
+ project(IfcOpenShell VERSION ${PROJECT_VERSION_NUMERIC})
+ 
+diff --git a/src/ifcwrap/CMakeLists.txt b/src/ifcwrap/CMakeLists.txt
+index f4b96e0..b43676b 100644
+--- a/src/ifcwrap/CMakeLists.txt
++++ b/src/ifcwrap/CMakeLists.txt
+@@ -269,20 +269,22 @@ IF(Python_Interpreter_FOUND OR PYTHON_MODULE_INSTALL_DIR)
+     IF("${python_package_dir}" STREQUAL "")
+         MESSAGE(WARNING "Unable to locate Python site-package directory, unable to install the Python wrapper")
+     ELSE()
+-        message(STATUS "Python wrapper will be installed to '${python_package_dir}'.")
+-        file(GLOB_RECURSE sourcefiles "${CMAKE_CURRENT_SOURCE_DIR}/../ifcopenshell-python/ifcopenshell/*")
+-        # Exclude compiled extensions and shared libraries (including versioned .so.X.Y) -
+-        # they're part of dev environment and shouldn't leak into installation.
+-        list(FILTER sourcefiles EXCLUDE REGEX [[\.(so(\.[0-9]+)*|pyd|dylib|dll)$]])
+-        # Exclude cached bytecode.
+-        list(FILTER sourcefiles EXCLUDE REGEX [[\.pyc$]])
+-        foreach(file ${sourcefiles})
+-            file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/../ifcopenshell-python/ifcopenshell/" "${file}")
+-            get_filename_component(dir "${relative}" DIRECTORY)
+-            if(NOT IS_DIRECTORY "${file}")
+-                install(FILES "${file}" DESTINATION "${python_package_dir}/ifcopenshell/${dir}")
+-            endif()
+-        endforeach()
++        if(INSTALL_PYTHON_WRAPPERS)
++            message(STATUS "Python wrapper will be installed to '${python_package_dir}'.")
++            file(GLOB_RECURSE sourcefiles "${CMAKE_CURRENT_SOURCE_DIR}/../ifcopenshell-python/ifcopenshell/*")
++            # Exclude compiled extensions and shared libraries (including versioned .so.X.Y) -
++            # they're part of dev environment and shouldn't leak into installation.
++            list(FILTER sourcefiles EXCLUDE REGEX [[\.(so(\.[0-9]+)*|pyd|dylib|dll)$]])
++            # Exclude cached bytecode.
++            list(FILTER sourcefiles EXCLUDE REGEX [[\.pyc$]])
++            foreach(file ${sourcefiles})
++                file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/../ifcopenshell-python/ifcopenshell/" "${file}")
++                get_filename_component(dir "${relative}" DIRECTORY)
++                if(NOT IS_DIRECTORY "${file}")
++                    install(FILES "${file}" DESTINATION "${python_package_dir}/ifcopenshell/${dir}")
++                endif()
++            endforeach()
++        endif()
+         install(
+             FILES "${CMAKE_CURRENT_BINARY_DIR}/ifcopenshell_wrapper.py"
+             DESTINATION "${python_package_dir}/ifcopenshell"

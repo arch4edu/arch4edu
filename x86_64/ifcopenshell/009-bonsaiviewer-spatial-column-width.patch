@@ -1,0 +1,123 @@
+diff --git a/src/bonsaiviewer/modules/spatial_hierarchy/Panel.cpp b/src/bonsaiviewer/modules/spatial_hierarchy/Panel.cpp
+index 26f535c..ef77320 100644
+--- a/src/bonsaiviewer/modules/spatial_hierarchy/Panel.cpp
++++ b/src/bonsaiviewer/modules/spatial_hierarchy/Panel.cpp
+@@ -25,8 +25,10 @@
+ 
+ #include <QHeaderView>
+ #include <QMenu>
++#include <QSettings>
+ #include <QShowEvent>
+ #include <QSizePolicy>
++#include <QTimer>
+ #include <QTreeWidget>
+ #include <QTreeWidgetItem>
+ 
+@@ -41,6 +43,10 @@ void setSubtreeExpanded(QTreeWidgetItem* item, bool expanded) {
+     }
+ }
+ 
++constexpr const char* kHeaderStateKey = "spatial_hierarchy/header_state";
++constexpr int kNameColumnMinWidth = 180;
++constexpr int kNameColumnMaxWidth = 320;
++
+ } // namespace
+ 
+ SpatialHierarchyPanel::SpatialHierarchyPanel(QWidget* parent)
+@@ -66,6 +72,26 @@ SpatialHierarchyPanel::SpatialHierarchyPanel(QWidget* parent)
+     tree_->header()->setSectionResizeMode(1, QHeaderView::Stretch);      // LongName / elevation
+     tree_->header()->setSectionResizeMode(2, QHeaderView::Fixed);        // visibility
+     tree_->header()->resizeSection(2, 28);
++
++    // Restore the column widths the user chose in a previous session, if any.
++    {
++        QSettings settings;
++        const QByteArray state = settings.value(kHeaderStateKey).toByteArray();
++        if (!state.isEmpty() && tree_->header()->restoreState(state)) {
++            column_widths_initialized_ = true;
++        }
++    }
++
++    // Persist column width changes (coalesced so a drag does not write on
++    // every pixel) so the layout survives restarts.
++    header_save_timer_ = new QTimer(this);
++    header_save_timer_->setSingleShot(true);
++    header_save_timer_->setInterval(400);
++    connect(header_save_timer_, &QTimer::timeout, this,
++            &SpatialHierarchyPanel::saveColumnWidths);
++    connect(tree_->header(), &QHeaderView::sectionResized, this,
++            [this](int, int, int) { header_save_timer_->start(); });
++
+     section->addBodyWidget(tree_);
+     addBodyWidget(section);
+ 
+@@ -89,20 +115,33 @@ SpatialHierarchyPanel::SpatialHierarchyPanel(QWidget* parent)
+     });
+ }
+ 
++SpatialHierarchyPanel::~SpatialHierarchyPanel() {
++    saveColumnWidths();
++}
++
+ void SpatialHierarchyPanel::showEvent(QShowEvent* event) {
+     components::Panel::showEvent(event);
+-    // Default the Name column to 20% of the width once the panel has a real
+-    // layout size; Long Name (stretch) takes the rest. Left interactive after,
+-    // so the user's own drag persists.
++    // Default the Name column to a width that fits a few levels of indentation
++    // plus a 16 px type icon. The previous 20%-of-width default was narrow
++    // enough to clip the icons and names of deeper rows (storeys and spaces)
++    // down to nothing. Long Name (stretch) keeps the rest; the section stays
++    // interactive so the user can drag it.
+     if (!column_widths_initialized_) {
+         const int available = tree_->viewport()->width();
+-        if (available > 100) {
+-            tree_->header()->resizeSection(0, available / 5);
++        if (available > 160) {
++            const int preferred = qBound(kNameColumnMinWidth, available * 2 / 5,
++                                         kNameColumnMaxWidth);
++            tree_->header()->resizeSection(0, qMin(preferred, available - 80));
+             column_widths_initialized_ = true;
+         }
+     }
+ }
+ 
++void SpatialHierarchyPanel::saveColumnWidths() const {
++    QSettings settings;
++    settings.setValue(kHeaderStateKey, tree_->header()->saveState());
++}
++
+ void SpatialHierarchyPanel::setNodes(const QList<TreeNode>& nodes) {
+     tree_->clear();
+     for (const auto& node : nodes) {
+diff --git a/src/bonsaiviewer/modules/spatial_hierarchy/Panel.h b/src/bonsaiviewer/modules/spatial_hierarchy/Panel.h
+index 1ff951c..707248b 100644
+--- a/src/bonsaiviewer/modules/spatial_hierarchy/Panel.h
++++ b/src/bonsaiviewer/modules/spatial_hierarchy/Panel.h
+@@ -28,6 +28,7 @@
+ class QTreeWidget;
+ class QTreeWidgetItem;
+ class QShowEvent;
++class QTimer;
+ 
+ namespace bonsaiviewer::modules::spatial_hierarchy {
+ 
+@@ -35,6 +36,7 @@ class SpatialHierarchyPanel : public components::Panel {
+     Q_OBJECT
+ public:
+     explicit SpatialHierarchyPanel(QWidget* parent = nullptr);
++    ~SpatialHierarchyPanel() override;
+ 
+     void setNodes(const QList<TreeNode>& nodes);
+ 
+@@ -48,8 +50,10 @@ private:
+     void addNode(QTreeWidgetItem* parent, const TreeNode& node);
+     NodePath itemPath(QTreeWidgetItem* item) const;
+     QString iconPath(ItemKind kind) const;
++    void saveColumnWidths() const;
+ 
+     QTreeWidget* tree_ = nullptr;
++    QTimer* header_save_timer_ = nullptr;
+     bool column_widths_initialized_ = false;
+ };
+ 
