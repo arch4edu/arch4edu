@@ -3,7 +3,7 @@
 
 _name=KaHIP
 pkgname=${_name,,}
-pkgver=3.28
+pkgver=3.29
 pkgrel=1
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=('x86_64')
@@ -22,7 +22,7 @@ makedepends=('cmake'
 options=(!lto)
 source=("$_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
         "fix-out-of-bounds.patch")
-sha256sums=('60a059a060e48b8f16575fb94dbd7ac548768f5e16b49e95e52b68d672d7ea53'
+sha256sums=('cf7f740000a8b26ce5568951a2847d4169b9b394983d7b5d1d77c9887183063e'
             '03250c9f51c4e6391d19549263a7a501d264c5c032a8ce35dab49ea599ec65d8')
 
 prepare() {
@@ -62,6 +62,8 @@ build() {
 package() {
   cd "$_name-$pkgver"
   DESTDIR="$pkgdir" cmake --install build
+  install -Dm 644 LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
+  install -Dm 644 extern/argtable3-3.2.2/LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE.argtable3
   local _site_packages=$(python -c "import sysconfig; print(sysconfig.get_path('platlib'))")
   install -Dm 644 python/$pkgname/__init__.py -t "$pkgdir$_site_packages/$pkgname"
   echo "__version__ = \"$pkgver\"" > "$pkgdir$_site_packages/$pkgname/_version.py"
@@ -69,6 +71,4 @@ package() {
   python -O -m compileall -q -d "$_site_packages" "$pkgdir$_site_packages/$pkgname"
   rm -f "$pkgdir"/usr/lib/lib{kahip,parhip_interface}_static.a
   rm -f "$pkgdir"/usr/bin/interface_test
-  install -Dm 644 LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
-  install -Dm 644 extern/argtable3-3.2.2/LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE.argtable3
 }
