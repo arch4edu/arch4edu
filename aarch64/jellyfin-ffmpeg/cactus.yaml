@@ -2,6 +2,7 @@ nvchecker:
   - source: alpm
     alpm: jellyfin-ffmpeg
     arch: x86_64
+  - alias: libplacebo
 depends:
   - aarch64/svt-av1
 build_prefix: extra-aarch64
