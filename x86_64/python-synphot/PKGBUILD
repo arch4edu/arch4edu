@@ -4,7 +4,7 @@
 pkgbase=python-synphot
 _pyname=${pkgbase#python-}
 pkgname=("python-${_pyname}" "python-${_pyname}-doc")
-pkgver=1.8.0
+pkgver=1.9.0
 pkgrel=1
 pkgdesc="Synthetic Photometry using Astropy"
 arch=('i686' 'x86_64')
@@ -27,7 +27,7 @@ checkdepends=('python-pytest-astropy-header'
               'python-dust-extinction'
               'python-specutils')   # astropy scipy already in makedepends
 source=("https://files.pythonhosted.org/packages/source/${_pyname:0:1}/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-md5sums=('b351fef3ed6b619d59dfd25b0fe3ebcd')
+md5sums=('88a4f906e08662371f17efe38141f671')
 
 get_pyver() {
     python -c "import sys; print('$1'.join(map(str, sys.version_info[:2])))"
@@ -53,7 +53,8 @@ check() {
     cd ${srcdir}/${_pyname}-${pkgver}
 
 #   mv {,_}${_pyname}
-    cp "build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}/"*-gnu.so ${_pyname}
+#   cp "build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}/"*-gnu.so ${_pyname}
+    cp "build/lib.linux-${CARCH}-cpython-$(get_pyver)/${_pyname}/"*abi3.so ${_pyname}
     pytest || warning "Tests failed" # -vv -l -ra --color=yes -o console_output_style=count -p xdist -n 4 --remote-data #
 }
 
