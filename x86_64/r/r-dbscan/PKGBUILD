@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=dbscan
-_pkgver=1.2.7
+_pkgver=1.3.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -26,8 +26,8 @@ optdepends=(
   r-tidyverse
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('fbdda33921d96961054b5d3ea0ba4f58')
-b2sums=('a871f67f9ffeafacb118e6f084675e70f6dbbddc2085d8b1f2abefbd8a09609408c7257fe39a3f36cd270f80171fc9a4350c023d64865278f803a6f4478bcad9')
+md5sums=('39fc873c7e75da327c4a1a75e52d6ae2')
+b2sums=('26c7f34c68bb091e4386f680e3e079395a33d5a88a572bdb9dd541ec8a576873785e1969854a4788a7c2fe318ea1690835839d8137c7d3709b53698e562c0b31')
 
 build() {
   mkdir build
