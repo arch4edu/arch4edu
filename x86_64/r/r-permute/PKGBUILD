@@ -1,7 +1,7 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=permute
-_pkgver=0.10-0
+_pkgver=0.10-1
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -21,8 +21,8 @@ optdepends=(
   r-vegan
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('adeaa5f1517f5de7fab9df51d7c90bb1')
-b2sums=('82d0a85800906904a75a5dd580a91d43c21acb27ca7f89c6a748a00bcd0eddbef757eed5f6d90ddd2e32ca297b52182683ee9d86444106c168cecf870bea34d0')
+md5sums=('77db61dea2fca235e65f05cf8cf041a0')
+b2sums=('b0daf3ea28bcd113e146937faa389bd7f66875273f8cb4010ef11f83cde8a0cd52498f04b6131d3b92a1e993ba810d4a82be66b5dfb17c2b21ec79dfc0b6f024')
 
 build() {
   mkdir build
