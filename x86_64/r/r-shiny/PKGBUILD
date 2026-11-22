@@ -3,7 +3,7 @@
 # Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
 
 _pkgname=shiny
-_pkgver=1.14.0
+_pkgver=1.15.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -30,6 +30,7 @@ depends=(
   r-r6
   r-rlang
   r-sourcetools
+  r-watcher
   r-withr
   r-xtable
 )
@@ -60,12 +61,11 @@ optdepends=(
   r-shinytest2
   r-showtext
   r-testthat
-  r-watcher
   r-yaml
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('309459688ceae1e8b018d1595eae8879')
-b2sums=('bb712f0b2169936cab0d53afb202bd4226ee1432ed0c19a195e0b07a3db51498d3524dceba88254ba8d83a76e0bc48d2ada2cb24a2819864bb549cf8884609c2')
+md5sums=('944e93bbd58350e085f1c4b317c8e159')
+b2sums=('ffc3d635792e308c0515318a51d9364c978f5316ea1dcfa990bf012199611cd13f62c288e8afd04cfb1d9d1d2e8bc43bab2b3936456b490ca68982ab3070ea54')
 
 build() {
   mkdir build
