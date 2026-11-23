@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=mlogit
-_pkgver=1.1-3
+_pkgver=2.0-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Multinomial Logit Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -13,21 +13,21 @@ depends=(
   r-dfidx
   r-formula
   r-lmtest
+  r-micsr
+  r-numderiv
   r-rdpack
-  r-statmod
-  r-zoo
 )
 optdepends=(
   r-aer
   r-car
+  r-dplyr
   r-ggplot2
   r-knitr
-  r-rmarkdown
-  r-texreg
+  r-quarto
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('7730ed9af843f513212338c062adae30')
-b2sums=('1f9ac927b4fc16b35f3f86e0ebf58ff700e66ebf9d7cf02aa0cca1f4aa9d4a6cb8027baadfddc91eb9f245da19379aa1126cd63f6cfaef598def8e97568b80e9')
+md5sums=('11500eb6d984e33e9e898274188ad450')
+b2sums=('100c7ae82777536883530d652ac8dc34856202497e4cecfe4d2a5c47e57de02984a441bb5a43c0fef02873c7bf2d80dbd8ad505a9a8dc2db094c05fd43018d39')
 
 build() {
   mkdir build
