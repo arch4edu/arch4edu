@@ -5,7 +5,7 @@
 # Contributor: portaloffreedom
 
 _pkgname=gdtools
-_pkgver=0.5.2
+_pkgver=0.6.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -31,8 +31,8 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('e907a613c135c7ab52adfbe1173972d5')
-b2sums=('1e021867e5ea9baf287cc8fd6d0134318e25bbfbfac01ad4e751b69a35fd338d01804fbc043f653596ded09b1335a411e1ee28c7c320e68423ec749c00492e37')
+md5sums=('a13f49fbca3517c2a82f5f9a7f0b18db')
+b2sums=('841fbe5651165f343bd84b0aec57825f3942741894ab9bbeda904a09d8f501e04d645a12d73debbc3e80ff6d6b64c76212a6b339af27349b5275cbd6dcc40d10')
 
 build() {
   mkdir build
