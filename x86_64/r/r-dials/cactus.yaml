@@ -15,6 +15,7 @@ depends:
   - x86_64/r/r-scales
   - x86_64/r/r-sfd
   - x86_64/r/r-tibble
+  - x86_64/r/r-tidyr
   - x86_64/r/r-vctrs
   - x86_64/r/r-withr
 makedepends:
