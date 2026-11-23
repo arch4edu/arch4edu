@@ -1,43 +1,43 @@
-# Maintainer: Adam Schadler <ajschadler@gmail.com>
+# Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
-_cranname=doFuture
-_cranver=1.2.2
-pkgname=r-${_cranname,,}
-pkgver=${_cranver//[:-]/.}
-pkgrel=2
-pkgdesc="Combines the best methods of both future and foreach for parallelization."
-arch=('any')
-url="https://cran.r-project.org/package=${_cranname}"
-license=('LGPL-2.1-or-later')
+_pkgname=doFuture
+_pkgver=1.4.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=1
+pkgdesc="Use Foreach to Parallelize via the Future Framework"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('Apache')
 depends=(
-    'r'
-    'r-foreach>=1.5.0'
-    'r-future>=1.32.0'
-    'r-future.apply'
-    'r-globals'
-    'r-iterators'
+  r-foreach
+  r-future
+  r-future.apply
+  r-globals
+  r-iterators
 )
-makedepends=()
+checkdepends=(
+)
 optdepends=(
-    'r-dorng>=1.8.2'
-    'r-markdown'
-    'r-r.rsp'
+  r-dorng
+  r-markdown
+  r-r.rsp
 )
-checkdepends=(${optdepends[@]})
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-sha256sums=('db3a659b80ce9f18321129740d4035569feb7a01b47cef278f36be6e4d4da4b7')
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('bb250435b5d35c57c0989c52bacf91a5')
+b2sums=('0cfff2d9deb6202c55bd6da737f005ef8a3b4ad08565975ae2efdea89925f31b872ef1dd60cad8538359cc33bc8e3b8b97ac478efa61cefe8e6e1774efb79d07')
 
 build() {
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
-# Check requires optional dependencies
-#check () {
-#    R CMD check --no-manual -l "${srcdir}" "${_cranname}_${_cranver}.tar.gz"
-#}
+_check() {
+  cd "$_pkgname/tests"
+  R_LIBS="$srcdir/build" NOT_CRAN=true Rscript --vanilla testthat.R
+}
 
 package() {
-    install -dm0755 "${pkgdir}/usr/lib/R/library"
-
-    cp -a --no-preserve=ownership "${_cranname}" "${pkgdir}/usr/lib/R/library"
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
 }
