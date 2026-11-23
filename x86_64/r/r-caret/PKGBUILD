@@ -6,7 +6,7 @@
 # Contributor: Alex Branham <branham@utexas.edu>
 
 _pkgname=caret
-_pkgver=7.0-1
+_pkgver=7.1-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -15,15 +15,16 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('GPL-2.0-or-later')
 depends=(
+  r-cli
   r-e1071
   r-foreach
   r-ggplot2
-  r-modelmetrics
   r-plyr
-  r-proc
   r-recipes
   r-reshape2
+  r-vctrs
   r-withr
+  r-yardstick
 )
 checkdepends=(
   r-earth
@@ -37,7 +38,9 @@ checkdepends=(
   r-themis
 )
 optdepends=(
+  r-biocmanager
   r-bradleyterry2
+  r-c50
   r-covr
   r-cubist
   r-dplyr
@@ -45,13 +48,13 @@ optdepends=(
   r-ellipse
   r-fastica
   r-gam
+  r-gbm
   r-ipred
   r-kernlab
   r-klar
   r-knitr
   r-mda
   r-mlbench
-  r-mlmetrics
   r-pamr
   r-party
   r-pls
@@ -59,14 +62,16 @@ optdepends=(
   r-randomforest
   r-rann
   r-rmarkdown
+  r-rrf
   r-spls
   r-superpc
   r-testthat
   r-themis
+  r-xgboost
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('c11d2d954241566f577841a58d101f75')
-b2sums=('ccc91789541348ef43578db2e88d16df482b4cc95e90f26034da007a59f4bc5987022e16440d427b402dd980b74b21c7c74f40241d9d92b1b90373241451cc37')
+md5sums=('05a3dcc39f6b7b3d881dbde6f68b0ed7')
+b2sums=('8b5f140de47332c65bbcf29df36033d60b6103521e1707cea498fdc040c086474026e92736010d608ad1737e2fb365b492ef8d24eef8504c06b71974736c4fee')
 
 build() {
   mkdir build
