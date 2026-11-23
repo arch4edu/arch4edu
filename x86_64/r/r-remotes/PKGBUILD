@@ -1,72 +1,48 @@
-# Maintainer: peippo <christoph+aur@christophfink.com>
-# Contributor: Viktor Drobot (aka dviktor) linux776 [at] gmail [dot] com
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=remotes
-_cranver=2.5.0
-pkgname=r-${_cranname,,}
-pkgdesc="R package installation from remote repositories, including GitHub"
-url="https://cran.r-project.org/package=${_cranname}"
-license=("MIT")
-pkgver=${_cranver//[:-]/.}
-pkgrel=2
-
-arch=("any")
+_pkgname=remotes
+_pkgver=2.5.0
+pkgname=r-${_pkgname,,}
+pkgver=${_pkgver//-/.}
+pkgrel=4
+pkgdesc="R Package Installation from Remote Repositories, Including 'GitHub'"
+arch=(any)
+url="https://cran.r-project.org/package=$_pkgname"
+license=('MIT')
 depends=(
-    "r>=3.0.0"
+  r
 )
 optdepends=(
-    "r-brew"
-    "r-callr"
-    "r-codetools"
-    "r-curl"
-    "r-covr"
-    "r-git2r>=0.23.0"
-    "r-knitr"
-    "r-mockery"
-    "r-pkgbuild>=1.0.1"
-    "r-pingr"
-    "r-rmarkdown"
-    "r-rprojroot"
-    "r-testthat"
-    "r-webfakes"
-    "r-withr"
+  "git: alternative install_git backend"
+  "subversion: install_svn"
+  r-brew
+  r-callr
+  r-covr
+  r-curl
+  r-git2r
+  r-knitr
+  r-mockery
+  r-pingr
+  r-pkgbuild
+  r-rmarkdown
+  r-rprojroot
+  r-testthat
+  r-webfakes
+  r-withr
 )
-
-# The unittests for `r-remotes` have multiple circular
-# dependency chains.
-
-# As such, the tests can not be run on first build.
-# While R packages from CRAN, generally, are well-tested
-# before they are released, in some situations, you want to
-# have thorough testing on your own end.
-
-# To run the tests, first build this package without `check()`
-# (i.e., as-is) to bootstrap `r-remotes`. Then, on subsequent builds,
-# (assumining you have a local repository that is accessible from
-# the build chroot), uncomment the lines defining `checkdepends`, below,
-# as well as the `check()` function further down
-
-# checkdepends=(
-#     "${optdepends[@]}"
-# )
-
-source=("https://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-b2sums=("ee0959efb26f76e193c122797648bd1a52bc72154d5dce7707bc2198f7d79a9e33414157c6d964989709f4a06af3a429cbb74dc3b0c4c555861f11e0c5e3cc7c")
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+md5sums=('4cb0cd9d66630548fedd4e56d3564b90')
+b2sums=('ee0959efb26f76e193c122797648bd1a52bc72154d5dce7707bc2198f7d79a9e33414157c6d964989709f4a06af3a429cbb74dc3b0c4c555861f11e0c5e3cc7c')
 
 build() {
-    mkdir -p "${srcdir}/build/"
-    R CMD INSTALL ${_cranname}_${_cranver}.tar.gz -l "${srcdir}/build/"
+  mkdir build
+  R CMD INSTALL -l build "$_pkgname"
 }
 
-# check() {
-#     export R_LIBS="build/"
-#     R CMD check --no-manual "${_cranname}"
-# }
-
 package() {
-    install -dm0755 "${pkgdir}/usr/lib/R/library"
-    cp -a --no-preserve=ownership "${srcdir}/build/${_cranname}" "${pkgdir}/usr/lib/R/library"
-    if [[ -f "${_cranname}/LICENSE" ]]; then
-        install -Dm0644 "${_cranname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    fi
+  install -d "$pkgdir/usr/lib/R/library"
+  cp -a --no-preserve=ownership "build/$_pkgname" "$pkgdir/usr/lib/R/library"
+
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "/usr/lib/R/library/$_pkgname/LICENSE" "$pkgdir/usr/share/licenses/$pkgname"
 }
