@@ -1,9 +1,9 @@
 # Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=C50
-_pkgver=1.0.0
+_pkgver=1.0.1
 pkgname=r-${_pkgname,,}
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc='C5.0 Decision Trees and Rule-Based Models'
 arch=('x86_64')
@@ -22,7 +22,7 @@ optdepends=(
   r-testthat
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('733382000499f4e5b9c5df2b97aead9ee8bc7f2cdb092aa8584879a9504416ed')
+sha256sums=('79596d8fa98f561fd181d92129ec582ca7890b29a875000ff45e7c61fe2c265e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
