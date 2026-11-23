@@ -11,6 +11,7 @@ depends:
   - x86_64/r/r-recipes
   - x86_64/r/r-reshape2
   - x86_64/r/r-withr
+  - x86_64/r/r-yardstick
 makedepends:
   - x86_64/r/r-earth
   - x86_64/r/r-fastica
