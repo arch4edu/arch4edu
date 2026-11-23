@@ -1,23 +1,34 @@
-# Maintainer: portaloffreedom
+# Maintainer: Guoyi Zhang <guoyizhang at malacology dot net>
 
-_cranname=gridExtra
-_cranver=2.3
-pkgname=r-gridextra
-pkgver=${_cranver}
-pkgrel=2
-pkgdesc='Provides a number of user-level functions to work with "grid" graphics, notably to arrange multiple grid-based plots on a page, and draw tables.'
-url="http://cran.r-project.org/web/packages/${_cranname}/index.html"
-arch=('i686' 'x86_64')
-license=('GPL3')
-depends=('r>=3.0.0' 'r-gtable')
-provides=("r-cran-gridextra")
-conflicts=("r-cran-gridextra")
-replaces=("r-cran-gridextra")
-source=("http://cran.r-project.org/src/contrib/${_cranname}_${_cranver}.tar.gz")
-md5sums=('01e0ea88610756a0fd3b260e83c9bd43')
+_pkgname=gridExtra
+_pkgver=2.3.1
+pkgname=r-${_pkgname,,}
+pkgver=2.3.1
+pkgrel=1
+pkgdesc='Miscellaneous Functions for "Grid" Graphics'
+arch=('any')
+url="https://cran.r-project.org/package=${_pkgname}"
+license=('GPL')
+depends=(
+  r
+  r-gtable
+)
+optdepends=(
+  r-egg
+  r-ggplot2
+  r-knitr
+  r-lattice
+  r-testthat
+)
+source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
+sha256sums=('de42e501ac2c6a70bd0ffc18d7703e9b0e6b878c610df09756183c3e52445c82')
+
+build() {
+  R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
+}
 
 package() {
-    mkdir -p ${pkgdir}/usr/lib/R/library
-    cd ${srcdir}
-    R CMD INSTALL ${_cranname} -l ${pkgdir}/usr/lib/R/library
+  install -dm0755 "${pkgdir}/usr/lib/R/library"
+  cp -a --no-preserve=ownership "${_pkgname}" "${pkgdir}/usr/lib/R/library"
 }
+# vim:set ts=2 sw=2 et:
