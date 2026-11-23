@@ -2,7 +2,7 @@
 # Contributor: Sven-Hendrik Haase <svenstaro@archlinux.org>
 pkgname=ogre-next2
 pkgver=2.3.3
-pkgrel=5
+pkgrel=6
 pkgdesc='Scene-oriented, flexible 3D engine written in C++'
 arch=('x86_64')
 url='http://www.ogre3d.org'
@@ -54,3 +54,4 @@ package() {
 }
 
 # vim:set ts=2 sw=2 et:
+depends+=("freeimage")
