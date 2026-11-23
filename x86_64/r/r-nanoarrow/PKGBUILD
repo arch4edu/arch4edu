@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=nanoarrow
-_pkgver=0.8.0-1
+_pkgver=0.9.0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -10,7 +10,9 @@ arch=(x86_64)
 url="https://cran.r-project.org/package=$_pkgname"
 license=('Apache')
 depends=(
+  lz4
   r
+  zstd
 )
 checkdepends=(
   r-bit64
@@ -33,8 +35,8 @@ optdepends=(
   r-reticulate
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('617a67573f2fae323681c2a3b1cd8841')
-b2sums=('222d702ecb611c836e3e66c5c52465155b79cdaa95598feed37c4bef5d460ee2b8e7e1174568e9431b753c882113d0a3c553c6e3a97929f186aff6f770ef068f')
+md5sums=('46568a875b4c8092a7169e87a0fff704')
+b2sums=('7e4a6b55baf45a6ebffb4b7ad485f0c3fb502c7ea12df0b19d046c248ae5f31a135822b1e8d46191898f63826402b547a875536ee52f62ac30f997308eff3df1')
 
 build() {
   mkdir build
