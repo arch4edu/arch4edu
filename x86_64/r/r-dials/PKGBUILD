@@ -1,7 +1,7 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=dials
-_pkgver=1.4.4
+_pkgver=1.4.5
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -22,6 +22,8 @@ depends=(
   r-scales
   r-sfd
   r-tibble
+  r-tidyr
+  r-tidyselect
   r-vctrs
   r-withr
 )
@@ -40,8 +42,8 @@ optdepends=(
   r-xml2
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('32ef415f6f0fbfd32f232128c59507af')
-b2sums=('b69077d19dbedfb45e946e845ccad7fd0963016c77f730365c640fd6edf0ada6981caaf93a3f6f965dd8a7f9e06f713791b7d29aecacde85476c4060ab7ab246')
+md5sums=('87a605298ab2a6b8828dcc67ea98b0c6')
+b2sums=('cbf41aae148712417873199ee067692d4738ed9a5a59bed863f6e441998df3799f83b928ec770f0aa1f6de8333ac31d4995159a424711fc422976d18b083bcd7')
 
 build() {
   mkdir build
