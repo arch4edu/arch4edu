@@ -2,6 +2,8 @@ nvchecker:
   - source: aur
     aur:
 depends:
+  - x86_64/r/r-dplyr
+  - x86_64/r/r-purrr
   - x86_64/r/r-rlang
 makedepends:
   - x86_64/r/r-testthat
