@@ -3,7 +3,7 @@
 
 _name=KaHIP
 pkgname=${_name,,}
-pkgver=3.29
+pkgver=3.30
 pkgrel=1
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=('x86_64')
@@ -21,9 +21,11 @@ makedepends=('cmake'
              'pybind11')
 options=(!lto)
 source=("$_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
-        "fix-out-of-bounds.patch")
-sha256sums=('cf7f740000a8b26ce5568951a2847d4169b9b394983d7b5d1d77c9887183063e'
-            '03250c9f51c4e6391d19549263a7a501d264c5c032a8ce35dab49ea599ec65d8')
+        "fix-out-of-bounds.patch"
+        "fix-ordered-edge-map-prefetch.patch")
+sha256sums=('9fe214ba2978951fdc75b3f4f2dc944e3279bb1ddeac32ae097121310b1c5c51'
+            '03250c9f51c4e6391d19549263a7a501d264c5c032a8ce35dab49ea599ec65d8'
+            '37d29ec6b489b68ddbf2041d3e98ff91bc6edfde33a83bc942f68c04b85134ff')
 
 prepare() {
   cd "$_name-$pkgver"
@@ -31,6 +33,9 @@ prepare() {
   # compute_fill() (node_ordering, fast_node_ordering) and
   # maxNodeHeap::changeKey()/deleteNode() on nodes no longer queued (node separators)
   patch -Np1 -i ../fix-out-of-bounds.patch
+  # The fallback ordered_edge_map (used for libstdc++ releases other than 11/13/15,
+  # e.g. GCC 16) lacks the prefetch() hint called by the parallel contraction code:
+  patch -Np1 -i ../fix-ordered-edge-map-prefetch.patch
 }
 
 build() {

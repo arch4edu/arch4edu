@@ -1,0 +1,11 @@
+--- a/parallel/parallel_src/lib/data_structure/ordered_edge_map.h
++++ b/parallel/parallel_src/lib/data_structure/ordered_edge_map.h
+@@ -194,6 +194,8 @@
+ 
+         size_t size() const { return m_map.size(); }
+ 
++        void prefetch( NodeID, NodeID ) const {}
++
+         template < typename F >
+         void for_each( F f ) {
+                 for( hashed_graph::iterator it = m_map.begin(); it != m_map.end(); ++it ) {
