@@ -1,4 +1,4 @@
-# Maintainer:
+# Maintainer: aur.chaotic.cx
 # Contributor: Patrick Northon <northon_patrick3@yahoo.ca>
 
 : ${CARGO_HOME:=$SRCDEST/cargo-home}
@@ -15,8 +15,8 @@ export FVM_CACHE_PATH
 
 _pkgname="localsend"
 pkgname="$_pkgname"
-pkgver=1.18.2
-pkgrel=2
+pkgver=1.19.0
+pkgrel=1
 pkgdesc="An open source cross-platform alternative to AirDrop"
 url="https://github.com/localsend/localsend"
 license=('Apache-2.0')
@@ -51,7 +51,7 @@ options=('!lto')
 _pkgsrc="$_pkgname-$pkgver"
 _pkgext="tar.gz"
 source=("$_pkgsrc.$_pkgext"::"$url/archive/refs/tags/v$pkgver.$_pkgext")
-sha256sums=('4425dfcf2e016d6540ea44941deb4ba6568201cc47d7f08753606e6e4b2769cd')
+sha256sums=('2906534b592685b98692d934805dbedd8158d62eec9931874250a010bfffa79b')
 
 _rust_setup() {
   if [ -n "$_arch" ]; then
