@@ -1,1 +1,14 @@
-../../../template/x86_64-nocheck.yaml
+nvchecker:
+  - source: aur
+    aur:
+build_prefix: extra-x86_64
+makepkg_args: --nocheck
+pre_build: |
+  aur-pre-build
+  # AUR is stuck on JAGS 4.3.2 while rjags 5.x requires JAGS 5.x.
+  if grep -q 'JAGS/4\.x/' PKGBUILD; then
+    sed -i 's|JAGS/4\.x/Source/JAGS-$pkgver|JAGS/5.x/Source/JAGS-$pkgver|' PKGBUILD
+    sed -i 's/^pkgver=4\.3\.2$/pkgver=5.0.2/' PKGBUILD
+    updpkgsums
+  fi
+post_build: aur-post-build
