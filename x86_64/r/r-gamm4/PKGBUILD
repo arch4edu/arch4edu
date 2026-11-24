@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=gamm4
-_pkgver=0.2-7
+_pkgver=0.3-0
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Generalized Additive Mixed Models using 'mgcv' and 'lme4'"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -12,9 +12,12 @@ license=('GPL-2.0-or-later')
 depends=(
   r-lme4
 )
+optdepends=(
+  r-reticulate
+)
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('20482b67d00335cf5c975eb9097716a1')
-b2sums=('9e71b450003464c853ab6d8e3128f424456076c4bd5399e99e9f4c46964e756e201dee52b7545aca3a847966e17178ec7d2024270d8bd629491b421345be8ad9')
+md5sums=('c7e564cd312013f12776df9714e0ba5c')
+b2sums=('c0fa2269c406eea1e0ce62cc626ddda8f892c46f761f2d6e1d76de74c67e48f1de50f40005435e12be6b4cd5defc740624c63d3809e744d77c0a5096ecbcaae9')
 
 build() {
   mkdir build
