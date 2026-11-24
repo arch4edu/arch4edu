@@ -3,8 +3,8 @@
 _org='stack-of-tasks'
 _pkgname=eigenpy
 pkgname=("$_pkgname" "$_pkgname-docs")
-pkgver=3.13.0
-pkgrel=2
+pkgver=3.14.0
+pkgrel=1
 pkgdesc="Bindings between numpy and eigen using boost::python"
 arch=('i686' 'x86_64')
 url="https://github.com/$_org/$_pkgname"
@@ -12,13 +12,8 @@ license=('BSD-2-Clause')
 depends=('boost-libs' 'gcc-libs' 'glibc' 'python')
 optdepends=('doxygen')
 makedepends=('cmake' 'eigen' 'jrl-cmakemodules' 'boost' 'python-numpy' 'python-scipy')
-source=("${_pkgname}-${pkgver}.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz" "673_provide-stdarrayclear-for-container-expose.patch")
-sha256sums=('23a965268f896f45e4346eb7981c6d4af7dac16e4e08414a7e9a94b82164821f'
-            '049ad20e4a672547cdc1eb6d80f800ef15cea8291d8d681b307b6dd252fc47ec')
-
-prepare() {
-    patch -d "$pkgbase-$pkgver" -p1 -i "$srcdir/673_provide-stdarrayclear-for-container-expose.patch"
-}
+source=("${_pkgname}-${pkgver}.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('96f2e75bb65d761b3ec6b2c1eb990c9046074ecfde978e1746fda2dc538f486a')
 
 build() {
     cmake -B "build-$pkgver" -S "$pkgbase-$pkgver" \
