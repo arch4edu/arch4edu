@@ -1,7 +1,7 @@
 # Maintainer: Thibaud Kehler <thibaud.kehler at gmx dot net>
 pkgname='fet-timetabling'
 _module='fet'
-pkgver=7.12.1
+pkgver=7.13.0
 pkgrel=1
 pkgdesc="A software for automatically scheduling the timetable of a school, high-school or university."
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('AGPL3')
 depends=('qt6-base' 'hicolor-icon-theme')
 makedepends=('cmake')
 source=("https://lalescu.ro/liviu/fet/download/fet-${pkgver}.tar.xz")
-sha256sums=('6a4305d5dda5efecde920fafc7c6b51d80ce47966b9e8e60bb76078da0bd4246')
+sha256sums=('5384438f2c3f12eeed311fa1fa2ec9ee42626c5dcb5255429894461e4009bc98')
 
 build() {
 	cd "$srcdir/$_module-$pkgver"
