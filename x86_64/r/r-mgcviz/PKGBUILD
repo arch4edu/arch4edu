@@ -1,10 +1,10 @@
 # Maintainer: Pekka Ristola <pekkarr [at] protonmail [dot] com>
 
 _pkgname=mgcViz
-_pkgver=0.2.1
+_pkgver=0.2.3
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Visualisations for Generalized Additive Models"
 arch=(any)
 url="https://cran.r-project.org/package=$_pkgname"
@@ -33,8 +33,8 @@ optdepends=(
   r-miniui
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('5f3a5fa196c9b19df7cfddcb0b368564')
-b2sums=('660c70633fd063fbcbefbedb69227e1dcc28a56e7da2d151839ef632a2f009b20b7d36864b4d735c23be0e6a983e7c18923275b0e09c6a642d9ce7cfd97b90e9')
+md5sums=('a7c4f8bfb0e3996c301ce34edca06c89')
+b2sums=('4b8a95fe57e99202c3a3c9a40081cd26965f8ab88b915a00019523b5b518977b0a2827874cf61043d9ae3e4e278e41c09664bb62b16d30f3c4952a7e084fe5e3')
 
 build() {
   mkdir build
