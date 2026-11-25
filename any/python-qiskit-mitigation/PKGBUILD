@@ -1,7 +1,7 @@
 # Maintainer: Iyán Méndez Veiga <me (at) iyanmv (dot) com>
 _pkgname=qiskit-mitigation
 pkgname=python-${_pkgname}
-pkgver=0.1.1
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="A toolbox for handling noise in quantum computations"
 arch=(any)
@@ -24,7 +24,7 @@ checkdepends=(
     python-pytest
 )
 source=($_pkgname::git+$url.git#tag=$pkgver)
-b2sums=('248c9dec6735faa9e40d894fc8ccf2757ac3a45390520aa74ecb3d97bc3287b51b99d03e0dc10c5d46a81a4b2cc09e5c7da893ce08e3fb3d308d44e7f666b763')
+b2sums=('0c0e49951f9be2d4426017c905b66a179874d356cfc4f030a8b8cba2c0fb712dcf2708a67a5630809ae6cc5c73eec0baac07597b288c522eede348ba9b31ccea')
 
 build() {
     cd $_pkgname
