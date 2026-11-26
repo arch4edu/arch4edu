@@ -8,7 +8,7 @@ pkgname=(
     'ros2-jazzy-gps_umd'
 )
 pkgver=3.1.1
-pkgrel=3
+pkgrel=4
 pkgdesc="ROS 2 GPS drivers and message definitions"
 url="https://github.com/swri-robotics/gps_umd"
 arch=('x86_64')
