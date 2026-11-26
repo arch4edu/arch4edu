@@ -2,7 +2,7 @@
 # Contributor: Guoyi Zhang <guoyizhang at malacology dot net>
 
 _pkgname=hardhat
-_pkgver=1.4.3
+_pkgver=1.4.4
 pkgname=r-${_pkgname,,}
 pkgver=${_pkgver//-/.}
 pkgrel=1
@@ -32,8 +32,8 @@ optdepends=(
   r-withr
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-md5sums=('a6365cb2e5a5b4dc8b6c0c6e583b333e')
-b2sums=('f8e70f2846fcfbb338d6661e98326dceea2709d51111644513906cf67a0ff5e0e5eda6526de9c3169d87b48d0deb3e5f49ff0fde6550781be8a546937245bf90')
+md5sums=('db564571fcfa69fcebc2cacd2af69f10')
+b2sums=('085bf536533129e5ce870b66d7783cb3f61b9e5579b42a94d4b22f7bcc1bafd7fa54f8cee93c1d18910b1af62a7cd70ee31e27c666f5fc4d91b0a5a6c51a4296')
 
 build() {
   mkdir build
