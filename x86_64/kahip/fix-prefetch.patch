@@ -1,0 +1,14 @@
+diff --git a/parallel/parallel_src/lib/data_structure/ordered_edge_map.h b/parallel/parallel_src/lib/data_structure/ordered_edge_map.h
+index b0f90f7..3db8105 100644
+--- a/parallel/parallel_src/lib/data_structure/ordered_edge_map.h
++++ b/parallel/parallel_src/lib/data_structure/ordered_edge_map.h
+@@ -192,6 +192,9 @@ public:
+                 return m_map[he].weight;
+         }
+ 
++        // no-op, the prefetch hint only applies to the emulated table
++        void prefetch( NodeID, NodeID ) const {}
++
+         size_t size() const { return m_map.size(); }
+ 
+         template < typename F >

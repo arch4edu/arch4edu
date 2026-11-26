@@ -4,7 +4,7 @@
 _name=KaHIP
 pkgname=${_name,,}
 pkgver=3.30
-pkgrel=1
+pkgrel=2
 pkgdesc="Karlsruhe HIGH Quality Partitioning"
 arch=('x86_64')
 url="https://github.com/KaHIP/KaHIP"
@@ -18,14 +18,15 @@ depends=('python'
          'metis'
          'openmpi')
 makedepends=('cmake'
+             'gcc-fortran'
              'pybind11')
 options=(!lto)
 source=("$_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
         "fix-out-of-bounds.patch"
-        "fix-ordered-edge-map-prefetch.patch")
+        "fix-prefetch.patch")
 sha256sums=('9fe214ba2978951fdc75b3f4f2dc944e3279bb1ddeac32ae097121310b1c5c51'
             '03250c9f51c4e6391d19549263a7a501d264c5c032a8ce35dab49ea599ec65d8'
-            '37d29ec6b489b68ddbf2041d3e98ff91bc6edfde33a83bc942f68c04b85134ff')
+            '78492503be743a72f1a4aae7d3f913ae8f6247e1641e16b8b3fa5fd6b872f2cd')
 
 prepare() {
   cd "$_name-$pkgver"
@@ -33,9 +34,8 @@ prepare() {
   # compute_fill() (node_ordering, fast_node_ordering) and
   # maxNodeHeap::changeKey()/deleteNode() on nodes no longer queued (node separators)
   patch -Np1 -i ../fix-out-of-bounds.patch
-  # The fallback ordered_edge_map (used for libstdc++ releases other than 11/13/15,
-  # e.g. GCC 16) lacks the prefetch() hint called by the parallel contraction code:
-  patch -Np1 -i ../fix-ordered-edge-map-prefetch.patch
+  # ParHIP fails to build with libstdc++ 16: the fallback ordered_edge_map lacks prefetch(), fixed upstream in KaHIP/KaHIP@bab6e0c
+  patch -Np1 -i ../fix-prefetch.patch
 }
 
 build() {
@@ -55,6 +55,7 @@ build() {
     -DPARHIP=ON \
     -DNOMPI=OFF \
     -DBUILDPYTHONMODULE=ON \
+    -DBUILDFORTRAN=ON \
     -DUSE_TCMALLOC=ON \
     -DUSE_ILP=OFF \
     -D64BITMODE=OFF \
@@ -62,6 +63,12 @@ build() {
     -DOPTIMIZED_OUTPUT=OFF \
     -Wno-dev
   cmake --build build
+}
+
+check() {
+  cd "$_name-$pkgver"
+  export OMPI_MCA_rmaps_base_oversubscribe=1
+  ctest --test-dir build --output-on-failure
 }
 
 package() {
