@@ -1,9 +1,9 @@
 # Maintainer: sukanka <su975853527@gmail.com>
 
 _pkgname=mi
-_pkgver=1.3.1
+_pkgver=1.3.3
 pkgname=r-${_pkgname,,}
-pkgver=1.3.1
+pkgver=1.3.3
 pkgrel=1
 pkgdesc='Missing Data Imputation and Model Checking'
 arch=('any')
@@ -26,7 +26,7 @@ optdepends=(
   r-truncnorm
 )
 source=("https://cran.r-project.org/src/contrib/${_pkgname}_${_pkgver}.tar.gz")
-sha256sums=('faa9835d296eb1305591e26139547cf5d57e753fe5aba70cd90b0e3586a5a642')
+sha256sums=('2c97435c4101cae9a866523427bb9a97afb4e9027230f3bd22f7866444d8f78e')
 
 build() {
   R CMD INSTALL ${_pkgname}_${_pkgver}.tar.gz -l "${srcdir}"
