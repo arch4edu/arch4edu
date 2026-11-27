@@ -1,5 +1,5 @@
 pkgname=cminpack
-pkgver=1.3.15
+pkgver=1.3.16
 pkgrel=1
 pkgdesc="A C/C++ rewrite of the MINPACK software"
 arch=('x86_64')
@@ -8,7 +8,7 @@ license=('LicenseRef-MINPACK')
 depends=('glibc')
 makedepends=('cmake')
 source=("https://github.com/devernay/cminpack/archive/v${pkgver}.tar.gz")
-sha256sums=('4bcc2fb514809eaa7bfecf2f2f663f3f0988a425ff64615316f5c4ed68757b97')
+sha256sums=('90f717a8e7fb212430d7fe5265ecc7ea24f669e4613e2a920fb9b1d3be9209d1')
 
 build() {
   cd $srcdir/cminpack-${pkgver}
