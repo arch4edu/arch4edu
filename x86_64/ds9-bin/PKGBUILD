@@ -2,7 +2,7 @@
 
 pkgname=ds9-bin  
 _pkgname=ds9
-pkgver=8.7
+pkgver=8.8.1
 pkgrel=1
 pkgdesc="SAOImage DS9: Astronomical Data Visualization Application"
 url="http://hea-www.harvard.edu/RD/ds9/"
@@ -15,13 +15,13 @@ makedepends=('patchelf')
 conflicts=(ds9)
 replaces=()
 backup=()
-# Arch build is not present for v8.7 currently... using debian build
-#https://ds9.si.edu/download/archlinuxx86/ds9.archlinuxx86.8.6.tar.gz
-#https://ds9.si.edu/download/archlinuxx86/${_pkgname}.archlinuxx86.${pkgver}.tar.gz
-source=(https://ds9.si.edu/download/debian12x86/ds9.debian12x86.${pkgver}.tar.gz
+# Arch back for 8.8.1, debian for reference in case of missing arch binary
+#https://ds9.si.edu/download/arch_x86_64/ds9.arch_x86_64.8.8.1.tar.gz
+#https://ds9.si.edu/download/debian12x86/ds9.debian12x86.${pkgver}.tar.gz
+source=(https://ds9.si.edu/download/arch_x86_64/ds9.arch_x86_64.${pkgver}.tar.gz
         ds9.desktop
         ds9.png)
-md5sums=('5bd941c697352ce442a4e1976622825a'
+md5sums=('1fd8066df924a0539601bf63086b9999'
          'f1738e4ec665ae9afd1b65b86e6a07f1'
          '9297d5738f5f462831075c483dc785d5')
 
