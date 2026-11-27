@@ -9,21 +9,21 @@
 pkgname=python-pypdfium2
 _name=${pkgname#python-}
 pkgver=5.15.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Python bindings to PDFium (community package)'
 arch=(x86_64)
 url='https://github.com/pypdfium2-team'
 license=('Apache-2.0 OR BSD-3-Clause')
 depends=(
-  'python'
+  python
 )
 makedepends=(
-  'git'
-  'pkgconf'
-  'python-build'
-  'python-installer'
-  'python-packaging'
-  'python-setuptools>=70.1.0'
+  git
+  pkgconf
+  python-build
+  python-installer
+  python-packaging
+  python-setuptools
 )
 optdepends=(
   'python-numpy: NumPy views of rendered bitmaps'
@@ -32,25 +32,26 @@ optdepends=(
   'python-tabulate: nicer table output in the CLI'
 )
 checkdepends=(
-  'python-pytest'
-  'python-numpy'
-  'python-opencv'
-  'python-pillow'
-  'python-tabulate'
+  python-pytest
+  python-numpy
+  python-opencv
+  python-pillow
+  python-tabulate
 )
+_ctypesgen_commit=4f5d6e46aa40bb6bc55c5377434eee75ec0ef346
 source=("${_name}::git+${url}/${_name}.git#tag=${pkgver}"
-        "${_name}-ctypesgen::git+${url}/ctypesgen.git"
-        'sys-pdfium-ver-fix.patch')
+        "${_name}-ctypesgen::git+${url}/ctypesgen.git#commit=${_ctypesgen_commit}"
+        sys-pdfium-ver-fix.patch)
 sha256sums=('7b408a70826eb9854d9724ff25b791221edfdc55449623de442190d71999e464'
-            'SKIP'
+            'ecd369d9dd6d640030c0088d8645afb1adede7117f9c4f46d48c431b9a93763b'
             '605bd13795cb2ca3bc112002983e7993c2add5dbf8ab6925b6e0b991f2dd91de')
 
 prepare() {
   cd "${_name}"
 
-  ln -s "${srcdir}/${_name}-ctypesgen" deps/ctypesgen
+  ln -sfn "${srcdir}/${_name}-ctypesgen" deps/ctypesgen
 
-  patch -Np1 -i ../sys-pdfium-ver-fix.patch
+  patch -Np1 -i "${srcdir}/sys-pdfium-ver-fix.patch"
 }
 
 build() {
@@ -75,5 +76,6 @@ package() {
 
   python -m installer --destdir="${pkgdir}" dist/*.whl
 
-  install -Dm644 LICENSES/BSD-3-Clause.txt -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 LICENSES/BSD-3-Clause.txt \
+    -t "${pkgdir}/usr/share/licenses/${pkgname}"
 }
